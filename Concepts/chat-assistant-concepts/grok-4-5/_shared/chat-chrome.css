@@ -2925,3 +2925,21 @@ html[data-motion='reduced'] .pm-lens-bar {
   color: var(--text-secondary);
 }
 
+/* Provider setup adjudication copy (Chat compact; Settings-owned) */
+.pm-provider-setup-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 8px;
+}
+.pm-provider-setup-copy {
+  flex: 1 1 100%;
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--text-secondary, #9aa3b2);
+}
+.pm-provider-setup-copy strong {
+  color: var(--text-primary, #e8ecf4);
+  font-weight: 650;
+}

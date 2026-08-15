@@ -308,7 +308,7 @@
    * not the same as telling the user what acquiring it will and will not do.
    *
    * The adjudication's direct decision, in its own terms: not bundled in core, not in the default
-   * execution baseline, not pre-seeded as a PM-distributed package, never silently installed by
+   * execution baseline, not pre-seeded as a PM-distributed package, never silently installed by  (pmx-scan-allow: the adjudication restated, not a claim)
    * Project/model/provider/Goal/Plan/WorkNode/agent or by Auto/On; acquired from the official
    * provider or package source, for the exact selected Host/Environment, on an explicit user action —
    * and installation and authentication remain separate steps.
@@ -339,7 +339,7 @@
     first: {
       headline: 'Install from the official source',
       /* The negative half is as load-bearing as the positive half: the adjudication supersedes an
-       * earlier bundle that permitted "Included with this Server" phrasing, so the copy has to deny
+       * earlier bundle that permitted "Included with this Server" phrasing, so the copy has to deny  (pmx-scan-allow: quoted to forbid it)
        * it in words rather than merely omit it. */
       source: 'Puppet Master does not bundle provider command line tools and does not include them in a server baseline. Installing fetches this provider from its official source.',
       separation: 'Installing does not sign you in. Authentication is a separate step you take afterwards.',

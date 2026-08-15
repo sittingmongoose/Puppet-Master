@@ -14,9 +14,9 @@
 <link rel="stylesheet" href="_shared/base.css">
 <link rel="stylesheet" href="_shared/usage-shared.css">
 <link rel="stylesheet" href="_shared/usage-widgets.css">
-<link rel="stylesheet" href="u11-widgets.css?v=20260811c">
-<link rel="stylesheet" href="u11-rundetail.css?v=20260811a">
-<link rel="stylesheet" href="u11-context.css?v=20260811a">
+<link rel="stylesheet" href="u11-widgets.css?v=20260813a">
+<link rel="stylesheet" href="u11-rundetail.css?v=20260813a">
+<link rel="stylesheet" href="u11-context.css?v=20260813a">
 <style>
 /* =====================================================================
    U11 — PRISM II
@@ -470,7 +470,7 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
               <p class="u11-kd">One immutable event per real provider attempt, grouped under the logical work you asked for. Failed, interrupted and queued attempts stay in history; removed accounts keep their identity but leave the picker.</p></div>
             <div class="u11-kmeta"><button class="u11-scope pm-hidden" data-scope></button><span class="u11-km" data-kmeta></span></div>
           </header>
-          <div class="uw-canvas" data-u11-page="u11-ledger" data-u11-types="ledger,runs"></div>
+          <div class="uw-canvas" data-u11-page="u11-ledger" data-u11-types="ledger,runs,operations"></div>
         </section>
 
         <section class="u11-pane pm-hidden" data-pane="attention" aria-label="Attention">
@@ -547,16 +547,16 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
 
 <script src="_shared/icons.js"></script>
 <script src="_shared/usage-icons.js"></script>
-<script src="u11-icons.js?v=20260811a"></script>
+<script src="u11-icons.js?v=20260813a"></script>
 <script src="_shared/menu.js"></script>
 <script src="_shared/usage-data.js"></script>
-<script src="u11-time.js?v=20260811a"></script>
-<script src="u11-data.js?v=20260811a"></script>
+<script src="u11-time.js?v=20260813a"></script>
+<script src="u11-data.js?v=20260813a"></script>
 <script src="_shared/usage-chrome.js"></script>
 <script src="_shared/usage-widgets.js"></script>
-<script src="u11-widgets.js?v=20260811a"></script>
-<script src="u11-rundetail.js?v=20260811a"></script>
-<script src="u11-context.js?v=20260811a"></script>
+<script src="u11-widgets.js?v=20260813a"></script>
+<script src="u11-rundetail.js?v=20260813a"></script>
+<script src="u11-context.js?v=20260813a"></script>
 <script>
 (function () {
   'use strict';
@@ -614,7 +614,7 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
     'u11-free': [{ type: 'free', c: 4, r: 11 }, { type: 'authority', c: 2, r: 8 }],
     'u11-context': [{ type: 'context', c: 2, r: 10 }, { type: 'cache', c: 2, r: 10 }],
     'u11-analytics': [{ type: 'analytics', c: 4, r: 11 }, { type: 'costs', c: 2, r: 9 }],
-    'u11-ledger': [{ type: 'ledger', c: 4, r: 12 }, { type: 'runs', c: 2, r: 10 }],
+    'u11-ledger': [{ type: 'ledger', c: 4, r: 12 }, { type: 'runs', c: 2, r: 10 }, { type: 'operations', c: 2, r: 10 }],
     'u11-attention': [{ type: 'attention', c: 3, r: 11 }],
     'u11-cache': [{ type: 'cache', c: 3, r: 11 }],
     'u11-tools': [{ type: 'tools', c: 3, r: 11 }],
@@ -1218,6 +1218,42 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
 
   /* ---------- export intent flow (§18) ---------- */
   var expSprout = $('u11ExportSprout');
+
+  /* U11 sprout lifecycle guard. The shared menu.js tracks these sprouts in
+     openMenus (openAt pushes them) and its document-level "outside click"
+     handler cannot tell sprout-internal clicks from real outside clicks —
+     so it closes the sheet/export mid-flow (packet §05 hard failure: dead
+     controls). U11-local fix, shared files untouched:
+     - a capture-phase click sets _keepOpen only for in-sprout clicks;
+     - a MutationObserver reasserts .is-open when menu.js strips it while
+       _keepOpen holds (the sprout's own target-phase handlers already ran);
+     - genuine outside clicks clear _keepOpen first and close via U11, so
+       Esc / trigger-toggle / outside-close all still work. */
+  (function () {
+    var sprouts = [sheetSprout, expSprout];
+    function isOpen(s2) { return !s2.hidden && s2.classList.contains('is-open'); }
+    function hideSprout(s2) { s2.classList.remove('is-open', 'is-closing'); s2.hidden = true; }
+    document.addEventListener('click', function (e) {
+      var inside = !!(e.target.closest && e.target.closest('#u11SheetSprout, #u11ExportSprout'));
+      var onTrigger = !!(e.target.closest && e.target.closest('#u11Settings, #u11Export'));
+      sprouts.forEach(function (s2) {
+        if (inside && e.target.closest('#' + s2.id)) { s2._keepOpen = true; return; }
+        s2._keepOpen = false;
+        if (!inside && !onTrigger && isOpen(s2)) hideSprout(s2);
+      });
+    }, true);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') sprouts.forEach(hideSprout);
+    }, true);
+    sprouts.forEach(function (s2) {
+      new MutationObserver(function () {
+        if (s2._keepOpen && !s2.classList.contains('is-open') && s2.classList.contains('is-closing')) {
+          s2.classList.remove('is-closing');
+          s2.classList.add('is-open');
+        }
+      }).observe(s2, { attributes: true, attributeFilter: ['class'] });
+    });
+  })();
   var expState = { intent: null, fmt: null };
   function exportHTML() {
     var html = '<div class="u11-sheet">';

@@ -22,29 +22,19 @@
      Header row [Q<i+1>/<n> · prompt] on an accent tint (no left border),
      one-line option rows below (row fill on select), tiny right-aligned
      actions. Advancing swaps the block content with a 150ms fade. One
-     question visible; Skip skips one; Cancel ends the flow; the last
-     question carries Submit, disabled until valid. */
+     question visible; Skip skips one and stays visible on every question
+     page; Cancel ends the flow; the last question carries Review answers
+     (disabled until valid), which swaps the block to dense review rows with
+     Back + Submit right-aligned. */
   function questRenderer(zoneEl, api) {
     const q = api.q;
 
-    const root = document.createElement("div");
-    root.className = "pmq-t6q";
-    root.innerHTML =
-      '<div class="pmq-t6q-block">' +
-        '<div class="pmq-t6q-head">' +
-          '<span class="pmq-t6q-qn" data-qn></span>' +
-          '<span class="pmq-t6q-prompt" data-qprompt></span>' +
-        "</div>" +
-        '<div class="pmq-t6q-body" data-qbody></div>' +
-        '<div class="pmq-t6q-foot" data-qfoot></div>' +
-      "</div>";
-    zoneEl.appendChild(root);
-
-    const qn = root.querySelector("[data-qn]");
-    const promptEl = root.querySelector("[data-qprompt]");
-    const bodyEl = root.querySelector("[data-qbody]");
-    const footEl = root.querySelector("[data-qfoot]");
+    let root = null, qn = null, promptEl = null, bodyEl = null, footEl = null;
     let lastIdx = api.index();
+    let reviewing = false;
+    let built = false;
+    let dead = false;
+    let timer = 0;
 
     function bodyHtml(question) {
       const ans = api.answer(question);
@@ -61,9 +51,9 @@
     function footHtml(idx) {
       const last = idx >= q.questions.length - 1;
       return '<button class="pmq-btn pmq-t6q-btn" type="button" data-qprev' + (idx === 0 ? " disabled" : "") + ">Prev</button>" +
-        (last ? "" : '<button class="pmq-btn pmq-t6q-btn" type="button" data-qskip>Skip</button>') +
+        '<button class="pmq-btn pmq-t6q-btn" type="button" data-qskip>Skip</button>' +
         (last ? "" : '<button class="pmq-btn pmq-btn-primary pmq-t6q-btn" type="button" data-qnext>Next</button>') +
-        (last ? '<button class="pmq-btn pmq-btn-primary pmq-t6q-btn" type="button" data-qsubmit' + (api.valid() ? "" : " disabled") + ">Submit</button>" : "") +
+        (last ? '<button class="pmq-btn pmq-btn-primary pmq-t6q-btn" type="button" data-qreview' + (api.valid() ? "" : " disabled") + ">Review answers</button>" : "") +
         '<button class="pmq-btn pmq-t6q-btn pmq-t6q-cancel" type="button" data-qcancel>Cancel</button>';
     }
 
@@ -75,25 +65,90 @@
       window.PMIcons.hydrate(bodyEl);
     }
 
-    root.addEventListener("click", e => {
-      const opt = e.target.closest("[data-opt]");
-      if (opt) { api.select(q.questions[lastIdx], opt.dataset.opt); return; }
-      if (e.target.closest("[data-qprev]")) { api.prev(); return; }
-      if (e.target.closest("[data-qskip]")) { api.skip(); return; }
-      if (e.target.closest("[data-qnext]")) { api.next(); return; }
-      if (e.target.closest("[data-qcancel]")) { api.cancel(); return; }
-      if (e.target.closest("[data-qsubmit]")) { api.submit(); return; }
-    });
+    /* Review page (video 02): dense rows listing every answer, right-aligned
+       Back + Submit. */
+    function paintReview() {
+      qn.textContent = "Review";
+      promptEl.textContent = "Your answers";
+      bodyEl.innerHTML = api.reviewHtml();
+      footEl.innerHTML =
+        '<button class="pmq-btn pmq-t6q-btn" type="button" data-qback>Back</button>' +
+        '<button class="pmq-btn pmq-btn-primary pmq-t6q-btn" type="button" data-qsubmit' + (api.valid() ? "" : " disabled") + ">Submit</button>" +
+        '<button class="pmq-btn pmq-t6q-btn pmq-t6q-cancel" type="button" data-qcancel>Cancel</button>';
+    }
 
-    root.addEventListener("input", e => {
-      if (e.target.matches("[data-free]")) api.setFree(q.questions[lastIdx], e.target.value);
-    });
+    function enterReview() {
+      reviewing = true;
+      paintReview();
+    }
 
-    paintContent(lastIdx);
+    function exitReview() {
+      reviewing = false;
+      paintContent(lastIdx);
+    }
+
+    function build(pillEl) {
+      if (dead) return;
+      if (pillEl && pillEl.parentNode) pillEl.parentNode.removeChild(pillEl);
+
+      root = document.createElement("div");
+      root.className = "pmq-t6q";
+      root.innerHTML =
+        '<div class="pmq-t6q-block">' +
+          '<div class="pmq-t6q-head">' +
+            '<span class="pmq-t6q-qn" data-qn></span>' +
+            '<span class="pmq-t6q-prompt" data-qprompt></span>' +
+          "</div>" +
+          '<div class="pmq-t6q-body" data-qbody></div>' +
+          '<div class="pmq-t6q-foot" data-qfoot></div>' +
+        "</div>";
+      zoneEl.appendChild(root);
+
+      qn = root.querySelector("[data-qn]");
+      promptEl = root.querySelector("[data-qprompt]");
+      bodyEl = root.querySelector("[data-qbody]");
+      footEl = root.querySelector("[data-qfoot]");
+
+      root.addEventListener("click", e => {
+        const rev = e.target.closest("[data-revto]");
+        if (rev) { const to = +rev.dataset.revto; if (to === lastIdx) exitReview(); else api.gotoQuestion(to); return; }
+        if (e.target.closest("[data-qback]")) { exitReview(); return; }
+        const opt = e.target.closest("[data-opt]");
+        if (opt) { api.select(q.questions[lastIdx], opt.dataset.opt); return; }
+        if (e.target.closest("[data-qprev]")) { api.prev(); return; }
+        if (e.target.closest("[data-qskip]")) { api.skip(); return; }
+        if (e.target.closest("[data-qnext]")) { api.next(); return; }
+        if (e.target.closest("[data-qreview]")) { enterReview(); return; }
+        if (e.target.closest("[data-qcancel]")) { api.cancel(); return; }
+        if (e.target.closest("[data-qsubmit]")) { if (api.valid()) api.submit(); return; }
+      });
+
+      root.addEventListener("input", e => {
+        if (e.target.matches("[data-free]")) api.setFree(q.questions[lastIdx], e.target.value);
+      });
+
+      paintContent(lastIdx);
+      built = true;
+      /* Entrance: the block fades in (150ms) where the preparing pill stood. */
+      const block = root.querySelector(".pmq-t6q-block");
+      if (!api.reduced() && block && typeof block.animate === "function") {
+        try { block.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 150, easing: "ease-out" }); } catch (e) {}
+      }
+    }
+
+    /* Lifecycle (video 04): the shared "Preparing questions…" pill holds the
+       zone first; the block fades in after a short beat (the pill never
+       paints under reduced motion — build resolves immediately). */
+    const pill = api.preparePill();
+    if (api.reduced()) build(pill);
+    else timer = setTimeout(() => build(pill), 350);
 
     return {
       update(nextQ, idx) {
+        if (!built) { lastIdx = idx; return; }
         if (idx !== lastIdx) {
+          /* Any jump back onto a question (review back-links) exits review. */
+          reviewing = false;
           lastIdx = idx;
           const block = root.querySelector(".pmq-t6q-block");
           /* Advance = content swap with a 150ms fade (75 out + 75 in). */
@@ -108,6 +163,7 @@
           } catch (e) { paintContent(idx); }
           return;
         }
+        if (reviewing) return;
         /* Same question: refresh state in place so the textarea keeps focus. */
         const question = nextQ.questions[idx];
         if (question.kind !== "freeform") {
@@ -122,11 +178,14 @@
           const ans = api.answer(question);
           if (ta && document.activeElement !== ta && ta.value !== (ans.draft || "")) ta.value = ans.draft || "";
         }
-        const submit = root.querySelector("[data-qsubmit]");
-        if (submit) submit.disabled = !api.valid();
+        const reviewBtn = root.querySelector("[data-qreview]");
+        if (reviewBtn) reviewBtn.disabled = !api.valid();
       },
       unmount() {
-        if (root.parentNode) root.parentNode.removeChild(root);
+        dead = true;
+        clearTimeout(timer);
+        if (pill && pill.parentNode) pill.parentNode.removeChild(pill);
+        if (root && root.parentNode) root.parentNode.removeChild(root);
       }
     };
   }

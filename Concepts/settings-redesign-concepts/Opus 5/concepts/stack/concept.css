@@ -571,3 +571,18 @@
   display: block; font-size: 12px; color: var(--pm-text-3);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace; overflow-wrap: anywhere;
 }
+
+.st-window { display: flex; align-items: center; justify-content: space-between; gap: var(--pm-space-3); margin-top: 8px; padding: 8px 0; border-top: var(--pm-border-w) solid var(--pm-border-1); }
+.st-window-count { font-size: 12px; color: var(--pm-text-3); }
+
+/* Keyboard focus must be visible on text inputs too, not only on buttons.
+ * Found by the 2026-08-13 correction's keyboard-focus probe. */
+.st-search input:focus-visible,
+.st-input:focus-visible,
+.st-field input:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--pm-focus);
+  outline-offset: 1px;
+}

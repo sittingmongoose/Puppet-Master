@@ -57,6 +57,19 @@ fixes verified in-browser through ConceptHub; evidence in TEST_REPORT.md.
    accordion auto-open are unchanged. Verified on Concord and on Vault's
    diagnostic-row-in-collapsed-accordion deep link, full and reduced motion.
 
+7. **Dependency-omission corrections (2026-08-13 correction packet).**
+   The original packet omitted the Performance decision register; the
+   build had absorbed only its principle-level summaries. Corrected and
+   browser-verified: truthful ObservableWork projection grammar (phase,
+   wait reason, real-denominator progress, source label, valid cancel) on
+   provider updates and the index rebuild; scenario-driven lazy-hydration
+   and offline/last-known-good states; domain-local refresh replacing
+   whole-view repaints; 100-installation collapse fixture; resource
+   policy rows (behavior profile incl. Legacy, background work, metered
+   connection, cache ceiling); SCM install flows; four missing deferred
+   insertion cards. See reference-review-report.json for the full
+   provenance and evidence list.
+
 ## Deferred by design (per packet)
 
 - **Servers module (Vault)** ships as an insertion shell only: six cards

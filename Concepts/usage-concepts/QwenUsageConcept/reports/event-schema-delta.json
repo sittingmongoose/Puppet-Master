@@ -16,7 +16,13 @@
       "requestedModelId": "stable model id | null",
       "effectiveModelId": "stable model id | null",
       "billingRoute": "plan_included | api_billed | free | usage_pack | extra_balance | no_charge_observed | unknown",
-      "tokens": { "input": "int", "output": "int", "cacheRead": "int | omitted", "cacheWrite": "int | omitted — omitted means 'not exposed', never zero", "reasoning": "int | omitted" },
+      "tokens": {
+        "input": "int",
+        "output": "int",
+        "cacheRead": "int | omitted",
+        "cacheWrite": "int | omitted — omitted means 'not exposed', never zero",
+        "reasoning": "int | omitted"
+      },
       "costMicro": "int (0 for plan-included/free)",
       "startedAt": "ISO UTC | null",
       "finishedAt": "ISO UTC | null",
@@ -36,10 +42,45 @@
       "hostId": "hosts[].id — execution host for server-executed attempts",
       "envId": "environments[].id — execution environment"
     },
-    "optional_existing": [ "note", "subagent{role,persona,child}", "mismatch{reason}", "failReason", "redirect{support,wastedTokens,resumed,note}", "branch{sourceThreadId,branchPoint,ancestry,note}", "crossProject{sourceProject,sourceProjectFriendly,sourceThreadId,spawnReason,note}", "sessionId", "conversationMode", "reasoningEffort", "speedMode", "requestedAccessProfile", "effectiveAccessProfile", "queuedReason", "historicalIdentity{accountId,label}" ]
+    "optional_existing": [
+      "note",
+      "subagent{role,persona,child}",
+      "mismatch{reason}",
+      "failReason",
+      "redirect{support,wastedTokens,resumed,note}",
+      "branch{sourceThreadId,branchPoint,ancestry,note}",
+      "crossProject{sourceProject,sourceProjectFriendly,sourceThreadId,spawnReason,note}",
+      "sessionId",
+      "conversationMode",
+      "reasoningEffort",
+      "speedMode",
+      "requestedAccessProfile",
+      "effectiveAccessProfile",
+      "queuedReason",
+      "historicalIdentity{accountId,label}"
+    ]
   },
   "purpose_taxonomy": {
-    "canonical_values": [ "user_work", "subagent", "crew_member", "moa_reference", "moa_aggregator", "vision", "compression", "web_extract", "approval_review", "mcp_router", "skill_search", "title_generation", "probe", "catalog_validation", "attachment_transform", "fallback_attempt", "conversation_replay", "bsd" ],
+    "canonical_values": [
+      "user_work",
+      "subagent",
+      "crew_member",
+      "moa_reference",
+      "moa_aggregator",
+      "vision",
+      "compression",
+      "web_extract",
+      "approval_review",
+      "mcp_router",
+      "skill_search",
+      "title_generation",
+      "probe",
+      "catalog_validation",
+      "attachment_transform",
+      "fallback_attempt",
+      "conversation_replay",
+      "bsd"
+    ],
     "aliases_old_to_new": {
       "main_work": "user_work",
       "specialist": "subagent",
@@ -59,19 +100,41 @@
     "rendering": "No renderer label map exists; purposes render via R().human() in ledger, run detail, and context details — renames required zero renderer edits."
   },
   "billing_route_enum": {
-    "existing": [ "plan_included", "api_billed", "free" ],
-    "added_2026_08": [ "extra_balance", "usage_pack", "no_charge_observed", "unknown" ],
-    "demonstrated": { "usage_pack": "ue-611 (Alibaba Extra Bundle)", "plan_included": "most attempts", "api_billed": "ue-551, ue-091, ue-092", "free": "ue-504, ue-603, ue-620" },
-    "not_yet_fixtured": [ "extra_balance", "no_charge_observed" ]
+    "existing": [
+      "plan_included",
+      "api_billed",
+      "free"
+    ],
+    "added_2026_08": [
+      "extra_balance",
+      "usage_pack",
+      "no_charge_observed",
+      "unknown"
+    ],
+    "demonstrated": {
+      "usage_pack": "ue-611 (Alibaba Extra Bundle)",
+      "plan_included": "most attempts",
+      "api_billed": "ue-551, ue-091, ue-092",
+      "free": "ue-504, ue-603, ue-620"
+    },
+    "not_yet_fixtured": [
+      "extra_balance",
+      "no_charge_observed"
+    ]
   },
   "settlement_enum": {
-    "values": [ "observed", "settled", "streaming_partial", "unknown" ],
+    "values": [
+      "observed",
+      "settled",
+      "streaming_partial",
+      "unknown"
+    ],
     "changed": false,
     "note": "Settlement is the source-quality of the settlement fact; billingRoute is what paid. Orthogonal by design — both now render in the attempt inspector."
   },
   "new_collections": {
     "bsdEvents[]": "{ id, eventId|null (null = duplicate suppressed, zero usage), requestedState, effectiveState, trigger, result: silent|advice_emitted|duplicate_suppressed, advice, latencyMs, overrideScope, copy, detail }",
-    "operational[]": "{ id, kind: cli_update|offline_outbox|server_continuity|sound_preview|notification_test|backup|project_move, title, status, hostId, envId, providerUsage: none|validation_only, validationEventId, phases[{label, ms}], failureClass, outcome, copy, detail } — NEVER token totals",
+    "operational[]": "{ id, kind: cli_update|offline_outbox|server_continuity|sound_preview|notification_test|backup|project_move|setup_required, title, status, hostId, envId, providerUsage: none|validation_only, validationEventId, phases[{label, ms}], failureClass, outcome, copy, detail, acquisition?{ consent: explicit_user_setup, source, acquiredAt, installation{version, targetVersion, provenance, arch} }, setupLink?{ surface, manager, section, focus_reason, continuation } } — NEVER token totals. Added 2026-08-13 per PROVIDER_CLI_FINAL_ADJUDICATION.md.",
     "hosts[]": "{ id, label, kind: desktop|home_server, os }",
     "environments[]": "{ id, label }"
   },
@@ -86,5 +149,13 @@
     "planIncludedMicro": 125570000,
     "spentMonthMicro": 187420000,
     "rule": "All 12 new attempts carry costMicro 0 with plan_included/free/usage_pack routes — identity untouched and re-verified by the harness."
+  },
+  "correction_2026_08_13": {
+    "source": "PM_Usage_Dependency_and_Work_Correction_2026-08-13 / PROVIDER_CLI_FINAL_ADJUDICATION.md (highest-precedence decision omitted from the original archive)",
+    "changes": [
+      "operational kind extended with setup_required (runtime demand without silent install)",
+      "operational.acquisition lineage added: explicit first acquisition vs post-consent update/repair; official source; exact host/env binding; installation provenance",
+      "setupLink carries the semantic deep-link to Provider Settings with continuation token; no new command family minted"
+    ]
   }
 }

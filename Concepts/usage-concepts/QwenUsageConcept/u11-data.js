@@ -761,6 +761,8 @@
     operational: [
       { id: 'ops-1', kind: 'cli_update', title: 'Codex CLI update', status: 'rolled_back',
         hostId: 'host:win-desktop', envId: 'env:native', providerUsage: 'validation_only', validationEventId: 'ue-609',
+        acquisition: { consent: 'explicit_user_setup', source: 'official OpenAI installer', acquiredAt: '2026-06-20T14:00:00Z',
+          installation: { version: '0.42.0', targetVersion: '0.43.1', provenance: 'publisher-signed release artifact', arch: 'x64' } },
         phases: [{ label: 'Check', ms: 2 * MIN }, { label: 'Wait for idle', ms: 9 * MIN }, { label: 'Install', ms: 3 * MIN }, { label: 'Verify', ms: 4 * MIN }, { label: 'Rollback', ms: 1 * MIN }],
         failureClass: 'verify_failed', outcome: 'rolled_back',
         copy: 'Update verified, then rolled back',
@@ -795,7 +797,13 @@
         hostId: 'host:truenas', envId: 'env:docker', providerUsage: 'none', validationEventId: null,
         phases: [], failureClass: null, outcome: 'completed',
         copy: 'Project moved to Vault',
-        detail: 'Moving a project between storage locations is not provider usage.' }
+        detail: 'Moving a project between storage locations is not provider usage.' },
+      { id: 'ops-8', kind: 'setup_required', title: 'Codex CLI requested on Home Server · not installed', status: 'completed',
+        hostId: 'host:truenas', envId: 'env:docker', providerUsage: 'none', validationEventId: null,
+        phases: [], failureClass: null, outcome: 'setup_required',
+        copy: 'Provider Setup Required — no compatible installation on this host/environment',
+        detail: 'The Studio PC installation is not assumed here: installations bind to the exact host and environment. Originating operation and continuation token preserved; Auto/On may maintain an approved installation but never perform first acquisition. Resume only after explicit Install from the official source and separate authentication.',
+        setupLink: { surface: 'settings', manager: 'providers', section: 'setup', focus_reason: 'setup_required', continuation: 'cont-8841' } }
     ],
 
     /* ================================================================

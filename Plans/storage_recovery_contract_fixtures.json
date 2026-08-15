@@ -1,0 +1,210 @@
+{
+  "schema_id": "pm.storage_recovery_contract_fixtures.v1",
+  "owner_schema": "Plans/storage_recovery_contracts.schema.json",
+  "valid": [
+    {
+      "name": "ready_preflight_with_exact_reserve",
+      "definition": "migration_preflight_result",
+      "value": {
+        "outcome": "ready",
+        "reason_code": null,
+        "filesystem_ref": "filesystem:project-vault:1",
+        "free_bytes": 300000000,
+        "required_free_bytes": 268437456,
+        "backup_bytes": 1000,
+        "staging_bytes": 1000,
+        "reserve_bytes": 268435456,
+        "checked_at_utc": "2026-08-14T00:00:00Z"
+      }
+    },
+    {
+      "name": "applying_progress_with_recursive_preflight",
+      "definition": "migration_progress_snapshot",
+      "value": {
+        "migration_id": "migration:1",
+        "journal_ref": "journal:migration:1",
+        "phase": "applying",
+        "stable_step_label": "copy canonical values",
+        "completed_steps": 2,
+        "total_steps": 4,
+        "bytes_done": 1000,
+        "bytes_total": 2000,
+        "cancellable": false,
+        "preflight_result": {
+          "outcome": "ready",
+          "reason_code": null,
+          "filesystem_ref": "filesystem:project-vault:1",
+          "free_bytes": 300000000,
+          "required_free_bytes": 268437456,
+          "backup_bytes": 1000,
+          "staging_bytes": 1000,
+          "reserve_bytes": 268435456,
+          "checked_at_utc": "2026-08-14T00:00:00Z"
+        },
+        "backup_ref": "backup:migration:1",
+        "data_loss_risk": {
+          "class": "none",
+          "backup_boundary_ref": null,
+          "affected_family_ids": [],
+          "summary_ref": null
+        },
+        "updated_at_utc": "2026-08-14T00:01:00Z"
+      }
+    },
+    {
+      "name": "committed_receipt_with_verified_steps",
+      "definition": "migration_receipt",
+      "value": {
+        "schema_id": "pm.storage_value.migration_receipt.v1",
+        "schema_version": "1.0.0",
+        "receipt_id": "receipt:migration:1",
+        "migration_id": "migration:1",
+        "from_version": "58",
+        "to_version": "79",
+        "schema_ids": ["pm.storage_value.migration_receipt.v1", "pm.shared_runtime.thread_command_outbox_record.v1"],
+        "store_transitions": [
+          {"store_or_family_id": "redb", "from_version": "58", "to_version": "79"}
+        ],
+        "family_transitions": [
+          {"store_or_family_id": "thread_command_outbox_record", "from_version": "absent", "to_version": "1.0.0"}
+        ],
+        "preflight_result": {
+          "outcome": "ready",
+          "reason_code": null,
+          "filesystem_ref": "filesystem:project-vault:1",
+          "free_bytes": 300000000,
+          "required_free_bytes": 268437456,
+          "backup_bytes": 1000,
+          "staging_bytes": 1000,
+          "reserve_bytes": 268435456,
+          "checked_at_utc": "2026-08-14T00:00:00Z"
+        },
+        "backup_ref": "backup:migration:1",
+        "applied_steps": [
+          {"step_id": "step:copy", "status": "applied", "evidence_ref": "evidence:step:copy"},
+          {"step_id": "step:verify", "status": "verified", "evidence_ref": "evidence:step:verify"}
+        ],
+        "verification_result": {"status": "passed", "detail_refs": ["verification:migration:1"]},
+        "rollback_available": true,
+        "rollback_result": null,
+        "data_loss_risk": {
+          "class": "none",
+          "backup_boundary_ref": null,
+          "affected_family_ids": [],
+          "summary_ref": null
+        },
+        "terminal_status": "committed",
+        "started_at_utc": "2026-08-14T00:00:00Z",
+        "completed_at_utc": "2026-08-14T00:03:00Z",
+        "app_version": "0.1.0",
+        "journal_ref": "journal:migration:1",
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "name": "blocked_receipt_after_ready_preflight",
+      "definition": "migration_receipt",
+      "value": {
+        "schema_id": "pm.storage_value.migration_receipt.v1",
+        "schema_version": "1.0.0",
+        "receipt_id": "receipt:migration:blocked-after-ready",
+        "migration_id": "migration:blocked-after-ready",
+        "from_version": "58",
+        "to_version": "84",
+        "schema_ids": ["pm.storage_value.migration_receipt.v1"],
+        "store_transitions": [],
+        "family_transitions": [],
+        "preflight_result": {
+          "outcome": "ready",
+          "reason_code": null,
+          "filesystem_ref": "filesystem:project-vault:1",
+          "free_bytes": 300000000,
+          "required_free_bytes": 268437456,
+          "backup_bytes": 1000,
+          "staging_bytes": 1000,
+          "reserve_bytes": 268435456,
+          "checked_at_utc": "2026-08-14T00:00:00Z"
+        },
+        "backup_ref": null,
+        "applied_steps": [],
+        "verification_result": {"status": "not_run", "detail_refs": []},
+        "rollback_available": false,
+        "rollback_result": null,
+        "data_loss_risk": {
+          "class": "none",
+          "backup_boundary_ref": null,
+          "affected_family_ids": [],
+          "summary_ref": null
+        },
+        "terminal_status": "blocked",
+        "started_at_utc": "2026-08-14T00:00:00Z",
+        "completed_at_utc": "2026-08-14T00:01:00Z",
+        "app_version": "0.1.0",
+        "journal_ref": "journal:migration:blocked-after-ready",
+        "redaction_profile": "no_secrets"
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "preflight_rejects_absolute_windows_path",
+      "base_valid": "ready_preflight_with_exact_reserve",
+      "patch": {"filesystem_ref": "C:\\Users\\someone\\project"}
+    },
+    {
+      "name": "preflight_enforces_reserve_arithmetic",
+      "base_valid": "ready_preflight_with_exact_reserve",
+      "patch": {"reserve_bytes": 268435457}
+    },
+    {
+      "name": "progress_recursively_enforces_preflight_arithmetic",
+      "base_valid": "applying_progress_with_recursive_preflight",
+      "patch": {"preflight_result.required_free_bytes": 1}
+    },
+    {
+      "name": "progress_rejects_completed_over_total",
+      "base_valid": "applying_progress_with_recursive_preflight",
+      "patch": {"completed_steps": 5}
+    },
+    {
+      "name": "receipt_rejects_completed_before_started",
+      "base_valid": "committed_receipt_with_verified_steps",
+      "patch": {"completed_at_utc": "2026-08-13T23:59:00Z"}
+    },
+    {
+      "name": "receipt_rejects_committed_with_blocked_preflight",
+      "base_valid": "committed_receipt_with_verified_steps",
+      "patch": {"preflight_result.outcome": "blocked", "preflight_result.reason_code": "blocked_insufficient_space", "preflight_result.free_bytes": 1}
+    },
+    {
+      "name": "receipt_rejects_empty_transition_and_step_proof",
+      "base_valid": "committed_receipt_with_verified_steps",
+      "patch": {"store_transitions": [], "family_transitions": [], "applied_steps": []}
+    },
+    {
+      "name": "receipt_rejects_failed_verification_on_commit",
+      "base_valid": "committed_receipt_with_verified_steps",
+      "patch": {"verification_result.status": "failed"}
+    },
+    {
+      "name": "receipt_rejects_rollback_result_when_unavailable",
+      "base_valid": "committed_receipt_with_verified_steps",
+      "patch": {"rollback_available": false, "rollback_result": {"outcome": "succeeded", "restore_ref": "restore:1", "verification_ref": "verification:restore:1"}}
+    },
+    {
+      "name": "receipt_rejects_absolute_backup_ref",
+      "base_valid": "committed_receipt_with_verified_steps",
+      "patch": {"backup_ref": "/tmp/migration-backup"}
+    },
+    {
+      "name": "receipt_rejects_contradictory_no_risk_payload",
+      "base_valid": "committed_receipt_with_verified_steps",
+      "patch": {"data_loss_risk.backup_boundary_ref": "backup-boundary:1", "data_loss_risk.affected_family_ids": ["family:1"], "data_loss_risk.summary_ref": "summary:risk:1"}
+    },
+    {
+      "name": "receipt_rejects_blocked_insufficient_space_as_terminal_receipt",
+      "base_valid": "blocked_receipt_after_ready_preflight",
+      "patch": {"preflight_result.outcome": "blocked", "preflight_result.reason_code": "blocked_insufficient_space", "preflight_result.free_bytes": 1}
+    }
+  ]
+}

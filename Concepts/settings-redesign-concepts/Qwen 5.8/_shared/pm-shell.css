@@ -453,3 +453,12 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .pm-app[data-wtier="squeezed"] .pm-inspect-row, .pm-app[data-wtier="squeezed"] .pm-reqeff-row { grid-template-columns: 1fr; }
 .pm-app[data-wtier="squeezed"] .pm-set-row { grid-template-columns: 1fr; }
 .pm-app[data-wtier="squeezed"] .pm-set-ctl { padding: 0 16px 12px; justify-content: flex-start; }
+
+/* Correction packet (decision register §7.3/§20.1): closed side panels stop being measured/laid out. */
+.pm-app:not([data-assistant="open"]) .pm-assistant-inner { display: none; }
+.pm-app:not([data-assistant="open"]) .pm-assistant { contain: strict; }
+
+/* Low-resource profile (decision register §3.1): lower decorative cadence. */
+.pm-app[data-low-resource="1"] .pm-skel-row { animation: none; }
+.pm-app[data-low-resource="1"] .pm-spinner { animation-duration: 2.4s; }
+.pm-app[data-low-resource="1"] * { transition-duration: .01s !important; }

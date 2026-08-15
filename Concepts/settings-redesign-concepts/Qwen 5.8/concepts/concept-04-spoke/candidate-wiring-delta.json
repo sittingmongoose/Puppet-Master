@@ -130,6 +130,20 @@
       "usage_diagnostic_attribution": "n/a",
       "recovery_deep_link": "#/w/system/search-index",
       "demo_note": "Concept-local demo state; simulated end-to-end and labeled as such in receipts. Never presented as production wiring."
+    },
+    {
+      "control_family": "provider runtime demand",
+      "trace_shape": "UI source \u2192 command \u2192 canonical owner \u2192 validation/permission \u2192 mutation/operation \u2192 event/receipt/ObservableWork \u2192 UI projection \u2192 Usage/diagnostic attribution \u2192 recovery/deep link",
+      "ui_source": "Provider family card \u2192 'Simulate a task needing this CLI'",
+      "command": "cmd.provider.setup_required (candidate)",
+      "canonical_owner": "Provider readiness / shared integration lifecycle",
+      "validation_permission": "no compatible ready installation; acquisition policy forbids silent install",
+      "mutation_or_operation": "none \u2014 operation preserved with continuation token",
+      "event_receipt": "ObservableWork-shaped receipt: Provider Setup Required, wait reason, deep link, can_retry",
+      "ui_projection": "setup-required chip + deep link to the exact provider row",
+      "usage_diagnostic_attribution": "demand attributed to originating operation, not model Usage",
+      "recovery_deep_link": "#/w/models/providers?provider=<id>; resume only when continuation still current",
+      "demo_note": "Concept-local demo state; simulated and labeled."
     }
   ]
 }

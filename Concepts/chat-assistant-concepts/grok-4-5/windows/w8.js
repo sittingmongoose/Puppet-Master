@@ -217,6 +217,7 @@
         if (env && env.toast) env.toast('History is pinned');
         return;
       }
+      if (kit.dismissHistoryPeek) kit.dismissHistoryPeek(store);
       if (!chatsOpen || motionBusy) {
         chatsOpen = false;
         paint();
@@ -259,7 +260,7 @@
       }
 
       syncTier();
-      if (kit.isHistoryPinned(store)) chatsOpen = true;
+      if (kit.isHistoryOpen ? kit.isHistoryOpen(store) : kit.isHistoryPinned(store) || (kit.isHistoryPeek && kit.isHistoryPeek(store))) chatsOpen = true;
       var histMode =
         kit.effectiveHistoryMode
           ? kit.effectiveHistoryMode(store, ID, env.chatWidthPx)
@@ -267,6 +268,10 @@
             ? 'pinned_full'
             : 'closed';
       root.classList.toggle('is-history-pinned', kit.isHistoryPinned(store));
+      root.classList.toggle(
+        'is-history-peek',
+        histMode === 'peek' || (kit.isHistoryPeek && kit.isHistoryPeek(store))
+      );
       root.classList.toggle('is-history-compact', histMode === 'pinned_compact');
       root.setAttribute('data-history-mode', histMode);
       root.classList.toggle('is-chats-open', chatsOpen);

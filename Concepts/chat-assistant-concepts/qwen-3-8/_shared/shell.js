@@ -188,7 +188,8 @@ window.PMChatShell = (() => {
     // ---- v3: offline/sync strip + notification inbox (title-bar boundary) ----
     const SYNC_LABELS = {
       live: "Live", cached: "Cached", synchronizing: "Syncing…",
-      offline: "Offline", reconnecting: "Reconnecting…", replaying: "Replaying…", snapshot: "Snapshot catch-up"
+      offline: "Offline", reconnecting: "Reconnecting…", replaying: "Replaying…", snapshot: "Snapshot catch-up",
+      failed: "Reconnect failed"
     };
     const titleRight = titlebar.querySelector(".pmq-titlebar-right");
     const syncstrip = document.createElement("button");
@@ -237,13 +238,14 @@ window.PMChatShell = (() => {
     function openOutboxPopup() {
       if (!store || !window.PMChatPopups) return;
       const conn = store.state.connection;
+      const errRow = conn.status === "failed" ? '<div class="pmq-obx-err">' + window.PMFmt.esc(conn.lastError || "Reconnect failed") + "</div>" : "";
       const rows = conn.outbox.length
         ? conn.outbox.map(e => '<div class="pmq-obx-row"><span class="pmq-obx-text">' + window.PMFmt.esc((e.draft.text || "").slice(0, 60)) + '</span><span class="pmq-obx-meta">queued ' + ago(e.at) + '</span><button class="pmq-btn pmq-btn-sm" type="button" disabled title="Available once back online">Send now</button></div>').join("")
         : '<div class="pmq-obx-empty">Outbox is empty.</div>';
       const wrap = document.createElement("div");
       wrap.className = "pmq-obx-pop";
       wrap.innerHTML = '<div class="pmq-popup-head"><i data-ico="activity"></i>Connection · ' + window.PMFmt.esc(syncLabel()) + '</div>' +
-        '<div class="pmq-popup-body pmq-scroll">' + rows + "</div>" +
+        '<div class="pmq-popup-body pmq-scroll">' + errRow + rows + "</div>" +
         '<div class="pmq-obx-foot">' +
         (conn.status === "live" ? "" : '<button class="pmq-btn pmq-btn-primary" type="button" data-reconnect>Reconnect now</button>') +
         "</div>";

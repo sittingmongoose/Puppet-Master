@@ -177,6 +177,9 @@
 .sp-longlabel .d { color: var(--text-3); font-size: 11.5px; font-weight: 400; margin-top: 2px; }
 .sp-progress { height: 6px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--border); max-width: 260px; }
 .sp-progress > i { display: block; height: 100%; border-radius: 999px; background: var(--accent); transition: width .3s ease; }
+.sp-progress-indet > i { width: 34% !important; animation: spIndet 1.2s ease-in-out infinite alternate; }
+@keyframes spIndet { from { margin-left: 0; } to { margin-left: 66%; } }
+[data-reduced-motion="1"] .sp-progress-indet > i { animation: none; margin-left: 33%; }
 [data-reduced-motion="1"] .sp-progress > i { transition: none; }
 
 /* Manager-level master-detail split: resource list left, inspector right */
@@ -625,11 +628,13 @@
 
   function mgSearchIndex() {
     var cfg = PMState.state.collections.searchIndexCfg;
-    var pct = parseInt(cfg.rebuild.progress, 10) || 0;
-    return M.managerShell({ id: "search-index", title: "Project Search Index", icon: "search", health: cfg.rebuild.state === "running" ? "Rebuilding " + cfg.rebuild.progress : "Disk " + cfg.disk, body:
+    // Truthful projection (decision register §11): phase + last activity, no fake denominator.
+    var phase = cfg.rebuild.progress || "idle";
+    return M.managerShell({ id: "search-index", title: "Project Search Index", icon: "search", health: cfg.rebuild.state === "running" ? "Rebuilding — " + phase : "Disk " + cfg.disk, body:
       M.inspector([
         ["Enabled", cfg.enabled ? "Yes" : "No"],
-        ["Rebuild state", cfg.rebuild.state + (cfg.rebuild.state === "running" ? " — " + cfg.rebuild.progress : "")],
+        ["Rebuild state", cfg.rebuild.state + (cfg.rebuild.state === "running" ? " — " + phase : "")],
+        ["ObservableWork", cfg.rebuild.work ? (cfg.rebuild.work.operation_id + " · " + cfg.rebuild.work.human_phase + " · last activity " + String(cfg.rebuild.work.last_activity).slice(11, 19)) : "none"],
         ["Last full rebuild", cfg.rebuild.lastFull],
         ["Phases", cfg.rebuild.phases.join(" → ")],
         ["Exclusions", cfg.exclusions.join(", ")],
@@ -638,7 +643,7 @@
         ["Disk use", cfg.disk],
         ["Remote cache", cfg.remoteCache]
       ]) +
-      (cfg.rebuild.state === "running" ? '<div class="sp-progress" role="progressbar" aria-valuenow="' + pct + '" aria-valuemin="0" aria-valuemax="100"><i style="width:' + pct + '%"></i></div>' : "") +
+      (cfg.rebuild.state === "running" ? '<div class="sp-progress sp-progress-indet" role="progressbar" aria-label="Rebuilding — ' + esc(phase) + '"><i></i></div>' : "") +
       '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-act="index.rebuild"' + (cfg.rebuild.state === "running" ? " disabled" : "") + ">Rebuild index</button></div>" +
       '<div class="pm-note">' + esc(cfg.rebuild.note) + "</div>"
     });

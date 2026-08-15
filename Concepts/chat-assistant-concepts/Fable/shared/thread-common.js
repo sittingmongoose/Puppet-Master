@@ -77,6 +77,30 @@ export function workCluster(threadId = store.state.currentThreadId) {
 }
 
 // ---------------------------------------------------------------------------
+// Live-phase contract (video 3): the active turn exposes a phase kind, a label,
+// detail rows that accumulate within the phase, and the kind sequence so far.
+// Concepts render these in their own voice; the data is shared.
+// ---------------------------------------------------------------------------
+export const PHASE_KIND_ICONS = {
+  thinking_summary: "eye", search: "search", read: "file", fetch: "cloud",
+  browser: "browser", test: "test", edit: "edit", generate: "spark",
+  thought: "eye", exploration: "search", import: "cloud", asset: "image",
+};
+
+export function liveTurn(threadId = store.state.currentThreadId) {
+  const turn = store.state.turns[threadId];
+  if (!turn || !turn.active) return null;
+  return {
+    summary: turn.summary,
+    phaseKind: turn.phaseKind || "generate",
+    items: turn.liveItems || [],
+    phaseKinds: turn.phaseKinds || [],
+    workedSeconds: turn.workedSeconds,
+    redirected: !!turn.redirected,
+  };
+}
+
+// ---------------------------------------------------------------------------
 // Scroll keeper — anchor preservation and truthful follow behavior.
 // ---------------------------------------------------------------------------
 export function createScrollKeeper(scrollEl) {
@@ -116,10 +140,17 @@ export function createScrollKeeper(scrollEl) {
         if (el) scrollEl.scrollTop = el.offsetTop - marker.offset;
       }
     },
-    followIfAtBottom() {
+    followIfAtBottom(smooth = false) {
       if (atBottom) {
         cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => { scrollEl.scrollTop = scrollEl.scrollHeight; });
+        raf = requestAnimationFrame(() => {
+          // Smooth follow lets the surrounding thread visibly yield while a new
+          // message arrives (video 1's shared-motion principle). Reduced motion
+          // lands instantly.
+          const rm = document.documentElement.getAttribute("data-reduced-motion") === "1";
+          if (smooth && !rm && scrollEl.scrollTo) scrollEl.scrollTo({ top: scrollEl.scrollHeight, behavior: "smooth" });
+          else scrollEl.scrollTop = scrollEl.scrollHeight;
+        });
       }
     },
     jumpToLatest() {

@@ -2,8 +2,8 @@
   "harness": "playwright-core + system Chrome (chrome.exe)",
   "concept": "QwenUsageConcept/u11-prism",
   "packet": "PM_Usage_Concept_Update_Final_Cumulative_2026-08-08",
-  "ran_at": "2026-08-11T18:59:19.347Z",
-  "duration_ms": 53891,
+  "ran_at": "2026-08-13T22:40:12.792Z",
+  "duration_ms": 64263,
   "cases": [
     {
       "name": "matrix friendly-dark @ 900px",
@@ -241,9 +241,24 @@
       "detail": ""
     },
     {
+      "name": "correction inspector acquisition note on verification call (ue-609)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
       "name": "new operations widget (CLI update · rolled back · 5 phases)",
       "status": "pass",
       "detail": "phases=5"
+    },
+    {
+      "name": "correction acquisition lineage on cli_update (explicit setup · official source · bound host/env)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "correction setup_required → provider setup deep-link, no silent install",
+      "status": "pass",
+      "detail": ""
     },
     {
       "name": "guard maintenance entries carry no token totals",
@@ -391,7 +406,7 @@
       "detail": ""
     }
   ],
-  "pass": 77,
+  "pass": 80,
   "fail": 0,
   "screenshots": [
     "verify-shots/theme-friendly-dark-1700.png",
@@ -404,6 +419,7 @@
     "verify-shots/theme-basic-light-1700.png",
     "verify-shots/bsd-inspector.png",
     "verify-shots/operations-widget.png",
+    "verify-shots/setup-required.png",
     "verify-shots/capacity-envelope.png",
     "verify-shots/accounts-usenext.png",
     "verify-shots/plans-estimate.png",

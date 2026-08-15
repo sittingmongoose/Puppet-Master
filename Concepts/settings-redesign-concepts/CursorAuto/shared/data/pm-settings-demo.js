@@ -17,6 +17,7 @@
 
   window.PM_SETTINGS_DEMO = {
     meta: {
+      fixtureFraming: "Post-consent scenario fixtures for bakeoff demos. Provider CLIs are not bundled, not baseline, not pre-seeded, and not silently Project-acquired.",
       model: "CursorAuto",
       topic: "settings-redesign",
       seededAt: "2026-08-05"
@@ -1883,6 +1884,7 @@
         tagline: "Claude models through the Claude CLI's own sign-in",
         connectionGroup: "installed-tools",
         installState: "installed-signed-in",
+        /* post-consent demo fixture — not a shipped/bundled baseline CLI */
         authModel: "cli-profile-oauth",
         authNote: "Sign-in is owned by the Claude CLI inside an isolated CLI profile. Puppet Master launches the native login and never sees your credentials.",
         accountSwitchNote: "Switching accounts affects future requests only. A request already in flight keeps the account it started with.",
@@ -2510,8 +2512,12 @@
           "Verify the connection with a test prompt"
         ],
         installAction: {
-          label: "Install",
-          receipt: "Install simulated — nothing was downloaded or changed"
+          label: "Install from official source",
+          source: "https://docs.vllm.ai/en/latest/getting_started/installation.html",
+          sourceLabel: "vLLM official installation docs",
+          host: "This PC",
+          environment: "Native Windows",
+          receipt: "Explicit Install started for This PC / Native Windows from the official source (simulated) — nothing was downloaded"
         },
         diagnostics: [
           "no vLLM tenant installation was found on this machine",

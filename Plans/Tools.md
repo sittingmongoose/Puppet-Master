@@ -26,7 +26,34 @@
 - **Permission model** -- Per-tool (or wildcard) control: **allow**, **deny**, or **ask** (require approval before running); defaults, precedence, granular rules (pattern-based), and interaction with FileSafe.
 - **Thin runtime tool contracts** -- This doc owns `question`, `todowrite`, `todoread`, `web*`, `skill`, `task`, and the richer `lsp` tool surface; chat-thread terminal/tool/search access resolves through these canonical tool/search (`/tool/search`) contracts rather than a parallel chat-thread-only tool model.
 
-**Secondary references:** Framework-specific testing tools (Playwright, headless runners) and their catalog are in **newtools.md** (GUI tool catalog). FileSafe (command blocklist, write scope, sensitive files) is in **FileSafe.md** and must align with the central tool policy. Permission semantics and granular rules align with [OpenCode Permissions](https://opencode.ai/docs/permissions/); cross-plan alignment with FileSafe, FileManager, assistant-chat-design, orchestrator, and interview is in §2.5 and §10.
+### 1.0A Progressive capability admission and catalog materialization
+
+Tool availability is a staged fact, not one Boolean. Every built-in, custom, Skill-backed, provider-native, and MCP-projected capability uses a `CapabilityStageRecord` with these independent stages in this exact order:
+
+1. `installed` — the implementation/package/adapter is present on the selected Host/Environment.
+2. `project_enabled` — the active Project/profile configuration enables it.
+3. `policy_available` — current route/model/account/runtime capability plus Permissions, FileSafe, host, network, trust, and resource policy permit it to be considered.
+4. `selected_for_request` — deterministic request-local selection admitted the capability for the current request.
+5. `invoked` — a concrete invocation passed pre-dispatch gates and received an attempt identity.
+
+Each stage carries `state`, `reason_code?`, `evidence_ref?`, and `generation`; a later stage cannot be true when an earlier stage is false. `selected_for_request` is request-local and never mutates installed or Project policy. `invoked` is evidence of an attempt, not proof of success.
+
+`CapabilityCatalogMaterialization` is bounded and progressive:
+
+- `L0` contains canonical refs plus bounded names/descriptions used for discovery.
+- `L1` contains request-selected metadata, provenance, readiness, and permission class.
+- `L2` contains the full validated schema or selected Skill instructions required for dispatch.
+- `L3` contains runtime documentation/examples and is loaded only by explicit request or a typed recovery action.
+
+Essential discovery and catalog-search tools may remain directly available as a small bootstrap set. All other large tool, Skill, plugin, provider, and MCP catalogs stay external to prompt context until selected. Puppet Master MUST NOT eagerly inject a complete catalog or every full schema/instruction body merely because entries are installed, enabled, or policy-available.
+
+Materialized schemas are ordered deterministically by `(capability_kind_rank, canonical_capability_ref, schema_version, schema_sha256)`, where `capability_kind_rank` is `builtin`, `custom`, `skill`, `mcp`, then `provider_native`, and strings use ascending UTF-8 byte order after canonical identity normalization. Selection scores, discovery completion order, server connection order, hash-map iteration, and locale MUST NOT perturb schema order. The ordered slice and its hash participate in the Prompt Pipeline context/cache epoch.
+
+Every request emits a bounded `CapabilityMaterializationReceipt` with `catalog_generation`, `policy_snapshot_id`, `request_id`, `budget_limit`, `materialized_refs[]`, `materialized_order_hash`, `omitted_count`, and bounded `omissions[]`. Each omission has `capability_ref`, `stage`, and one `reason_code` from `not_installed | project_disabled | policy_denied | incompatible_runtime | unavailable | not_selected | budget_deferred | schema_unavailable | collision_suppressed`. When individual omissions exceed the receipt cap, the receipt preserves per-reason counts plus a continuation/artifact ref rather than claiming completeness or silently dropping the fact of omission.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Skills_System.md, ContractName:Plans/MCP_Integration.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md
+
+**Secondary references:** Framework-specific external project test dependencies and headless runners are detailed in **newtools.md**. Puppet Master core uses its PM-native Browser Program and does not own a browser-test compatibility facade, package, port, command family, MCP route, or capture engine for an external framework. FileSafe (command blocklist, write scope, sensitive files) is in **FileSafe.md** and must align with the central tool policy. Permission semantics and granular rules align with [OpenCode Permissions](https://opencode.ai/docs/permissions/); cross-plan alignment with FileSafe, FileManager, assistant-chat-design, orchestrator, and interview is in §2.5 and §10.
 
 ### 1.1 GUI requirements
 
@@ -289,6 +316,54 @@ The following contracts define the minimum runtime envelopes for the core built-
 All core tool-contract (`/tool-contract`) adapters default to sync execution semantics unless/until a tool contract explicitly exposes async handles. When a call is blocked by permissions, FileSafe, or an unavailable MCP/service (`/service`), the result must include a structured recovery action rather than a passive error only. Non-terminal operation previews use the same mini-card family as terminal output: web/search results show source/result mini-cards, and code-edit previews expose `/diffs` cards that open the editor diff without treating the preview as the final mutation. Built-in tool contracts must keep concrete `I/O/limit/error` guidance, unknown-tool default handling, GUI permission/preset visibility (`/presets`), and usage `/token` / `/tokens` event linkage discoverable from this registry.
 
 `ToolTurnSettlement` uses the wire field `settlement_state`. Allowed values are `success`, `partial`, `partial_truncated`, `malformed`, `nullable_content`, `redacted`, `retained`, `retryable`, and `fatal`. Precedence when multiple conditions apply is: `fatal` > `malformed` > `partial_truncated` > `redacted` > `nullable_content` > `partial` > `retryable` > `retained` > `success`. `success` is legal only when required result, error, truncation, retention, and redaction metadata have been normalized and persisted or intentionally omitted by the specific tool contract.
+
+#### 3.5.0A Typed recovery and artifact-backed output
+
+Every failed, partial, truncated, or recoverable tool attempt returns a bounded `ToolRecoveryEnvelope` alongside `ToolTurnSettlement`. Canonical fields are:
+
+```text
+logical_operation_id
+original_tool_call_id
+attempt_id
+tool_ref
+status
+failure_class
+retryable
+retry_count
+final_outcome
+truncated
+visible_output_bytes
+original_output_bytes
+artifact_or_spill_ref?
+cwd_before?
+cwd_after?
+already_applied_noop
+no_match
+whitespace_mismatch
+ambiguous_match_locations[]
+verification_status
+negative_cache_hit
+recovery_hint_kind?
+recovery_hint_text?
+next_safe_action_ids[]
+```
+
+Fields that do not apply retain their typed empty/false state; adapters must not substitute ambiguous prose. `failure_class` is structured and is the only input to automatic retry policy. Permission denial, user decline, FileSafe block, schema mismatch, validation failure, safety stop, and secret-policy block are terminal policy outcomes and MUST NOT be relabeled transient.
+
+`status` is exactly `complete | partial | timed_out | truncated | unavailable | blocked | failed`. `next_safe_action_ids[]` contains stable preregistered action IDs only; it never embeds arbitrary commands, shell text, credentials, or provider-supplied remediation code.
+
+Recovery rules:
+
+- One failure never silently becomes multiple attempts. Every retry has a new `attempt_id`, remains under the same `logical_operation_id`, increments `retry_count`, and preserves the preceding settlement.
+- Blind reruns are prohibited. A retry requires a permitted failure class, remaining parent deadline/resource budget, a concrete changed recovery condition, and an unspent class-specific retry allowance.
+- MCP invocations use the stricter MCP-owner rule: at most one additional bounded invoke-time reconnect or noninteractive auth-refresh retry. The general tool retry allowance MUST NOT add retries above that MCP limit.
+- Complete large output is redacted before artifact spill. The model-visible result includes bounded head/tail, exact original size, truncation state, and a canonical artifact ref. If retention fails, settlement is `fatal` or `partial_truncated`, never success.
+- Artifact/spill refs follow canonical retention, access-control, cleanup, and redaction owners; raw secrets, decrypted headers, tokens, cookies, or unredacted environment values never enter the envelope, receipt, prompt, cache, or spill.
+- Terminal recovery reports `cwd_before`/`cwd_after`, bounded pattern-based hints, and the retained full redacted output ref. It tells the caller to inspect the artifact instead of rerunning only to recover omitted bytes.
+- Patch/write reports already-applied success/no-op only when post-read proof shows new content present and old content absent. Whitespace mismatch and ambiguous locations are explicit; mutation remains atomic, FileSafe-approved, and post-write verified.
+- Read/search uses bounded zero-match probes, case/hidden/ignored/nearby-path hints, multiline handling, repeated exact-read detection, and a bounded negative-result cache invalidated by relevant writes or catalog/filesystem generation changes.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md, ContractName:Plans/MCP_Integration.md
 
 #### 3.5.1 `bash` contract
 
@@ -730,7 +805,7 @@ Site Reader is part of the agent web-research seam, not a browser-display featur
 
 The Site Reader renderer pipeline MUST build a structured `PageRepresentation` rather than returning an untyped page dump. It extracts the accessibility tree, layout bounds for relevant nodes, landmarks, headings, interactive elements, forms, content summary/full content according to the requested detail level, and optionally discovered/merged iframe content. The representation carries typed page structure, interactive elements, forms, errors, optional interactive summary, optional iframes, console/network refs, screenshot/PDF artifact refs when requested, redaction profile IDs, and visible prompt-injection chips so downstream agents can reason about the page before acting. Prompt-injection indicators are visible chips and audit fields, not hidden prompt text.
 
-Site Reader iframe handling is read-target behavior, not inline visualizer sandboxing. During structured reading, PM recursively discovers nested iframes up to 3 levels deep, attempts cross-origin iframe content extraction only where browser security policy allows, gracefully skips blocked same-origin or X-Frame-Options cases with a warning, may use per-frame diagnostic sessions when the PM-managed native browser runtime is available, and merges iframe content into the parent `PageRepresentation` with source-frame attribution. Playwright and CDP are reference/fallback test-driver vocabulary only; they do not replace the PM-managed native browser runtime or become product terms.
+Site Reader iframe handling is read-target behavior, not inline visualizer sandboxing. During structured reading, PM recursively discovers nested iframes up to 3 levels deep, attempts cross-origin iframe content extraction only where browser security policy allows, gracefully skips blocked same-origin or X-Frame-Options cases with a warning, may use per-frame diagnostic sessions when the PM-managed native browser runtime is available, and merges iframe content into the parent `PageRepresentation` with source-frame attribution. This is PM-native Browser Program behavior and creates no external-framework compatibility promise.
 
 Navigation returns a rendered page representation after URL load. The default detail level is `minimal` for orientation, not full-page extraction; agents escalate detail or use `find` / `/observe` when they need more. Page/session state is owned by the Site Reader runtime: a `PageManager`-equivalent component tracks tabs, the active tab, console/network logs, pending dialogs, popup capture, and error queues. Browser sessions persist `browser_session_id`, `show_when_possible`, collapsed/detached/background/runtime-unavailable state, Open/Watch availability, and `runtime_unavailable` remediation action IDs so GUI and testing surfaces can explain degraded browser evidence without inventing separate routing.
 
@@ -1010,6 +1085,16 @@ The central tool registry should support:
 
 See [OpenCode -- Custom tools](https://opencode.ai/docs/tools/#custom-tools) for reference.
 
+### 4.4 Persistent EvalSession policy-consumer boundary
+
+`Persistent EvalSession` lifecycle, retained-variable/kernel identity, Host/Environment lease, resource accounting, restart, idle handling, cleanup, and durable session records are owned by `Plans/Shared_Integration_Runtime.md`. Tools does not create a second evaluator or kernel manager.
+
+An EvalSession may request nested Puppet Master tools only through the same `CapabilityStageRecord`, request selection, policy snapshot, schema validation, parent deadline, FileSafe, network/host, and `ToolRecoveryEnvelope` path as any other caller. Nested calls carry EvalSession/session/operation identity, but possession of a live kernel is never authority to widen the tool universe, access raw credentials, start hidden agents, bypass approval, or extend the parent deadline. Local evaluation time and external tool/provider wait remain separately attributable.
+
+The tool layer may expose an EvalSession-backed capability only when the Shared Integration Runtime reports a product-approved, sandboxed, resource-bounded session for the exact Host/Environment. Failure or cleanup of that session is projected as typed unavailable/recovery evidence; Tools MUST NOT silently create a global kernel or emulate persistence in process-global state. No EvalSession state uses SQLite. Browser actions, when selected as nested tools, remain PM-native Browser Program calls; an EvalSession does not establish a PM-owned external browser-test runtime or compatibility facade.
+
+ContractRef: ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md
+
 ---
 
 <a id="MCP-INTEGRATION"></a>
@@ -1035,7 +1120,7 @@ Consumer rules:
 | **MCP server** | New tools/resources/prompts from one server | Per-platform MCP config (see §7) | Single MCP server can expose many tools. Context7 and GUI automation remain representative examples; search/provider canon stays in the owner docs. |
 | **Platform CLI flags** | Allow/deny built-in tools (shell, write, MCP by name) | Run config / runner args | Copilot: `--allow-tool` / `--deny-tool`. Claude: `--allowedTools`. Gemini: N/A (Direct-provider; enforced by Puppet Master). |
 | **Central tool registry** | All tools (MCP + native) registered and gated by policy | Puppet Master core (rewrite) | Permissions, validation, normalized results; events in seglog; analytics on latency/errors. |
-| **GUI tool catalog** | Framework-specific tools (e.g. Playwright, headless runners) offered in Interview | DRY:DATA:gui_tool_catalog; interview config | newtools.md: discovery, user choice, test strategy and PRD wiring. |
+| **GUI tool catalog** | Framework-specific external project test tools and headless runners offered in Interview | DRY:DATA:gui_tool_catalog; interview config | newtools.md: discovery, user choice, test strategy and PRD wiring; no external framework becomes a PM-owned browser runtime. |
 | **GUI MCP settings** | Enable/disable MCP servers, API keys (e.g. Context7) | Settings → Advanced → MCP Configuration | newtools §8.1; MCP tools then integrated per §5 above. |
 
 Implementations should:
@@ -6104,7 +6189,7 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
 - GUI rows remain consumer surfaces over the central registry/MCP contract.
-- '`Playwright`, `Context7`, `DRY:DATA:gui_tool_catalog`, and `newtools.md` owner hints are preserved.'
+- '`Context7`, `DRY:DATA:gui_tool_catalog`, and `newtools.md` owner hints are preserved.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -6122,7 +6207,6 @@ preserved_exact_tokens:
 - GUI tool catalog
 - Interview
 - DRY:DATA:gui_tool_catalog
-- Playwright
 - headless runners
 - Settings → Advanced → MCP Configuration
 - Context7
@@ -11022,16 +11106,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  Tools consumes Automated_Testing_System capability discovery for browser automation, GUI automation, device/emulator automation, screenshot capture, logs, app launch, headless/headed modes, project-native test runners, and official testing option research. For web projects, once Puppet Master is built, Puppet Master built-in browser automation is the primary native web test automation path; Playwright can remain optional, fallback, or project-native. Slint live preview/live reload is a Puppet Master build example only and must not become the default testing assumption for all user projects.
-  For web testing, Playwright optional remains fallback or project-native rather than the native default.
+  Tools consumes Automated_Testing_System capability discovery for browser automation, GUI automation, device/emulator automation, screenshot capture, logs, app launch, headless/headed modes, project-native test runners, and official testing option research. Puppet Master's Browser Program and Expert Browser Program are the only PM-native web browser automation and testing paths. A user Project may independently depend on and run its own Playwright suite only as a generic external Project command/process under Project tooling policy; PM may ingest generic Test Capture or artifact refs with explicit external-Project attribution, but that process creates no PM browser authority or compatibility surface. Slint live preview/live reload is a Puppet Master build example only and must not become the default testing assumption for all user projects.
 gui_related: true
 gui_classification_reason: Browser automation, GUI automation, emulator sessions, screenshots, and visual evidence are user-visible tool surfaces.
 depends_on: [ATS-001, ATS-002, ATS-004]
 unblocks: [ATS-002, ATS-004, RAP-029]
 acceptance_criteria:
   - Tools can report browser, GUI, device/emulator, screenshot, log, launch, headless/headed, and native runner capabilities to Automated_Testing_System.
-  - Built-in browser automation is the preferred native path for web testing once available.
-  - Playwright remains optional/fallback/project-native and Slint remains an example only.
+  - Browser Program and Expert Browser Program remain the only PM-native web browser automation and testing paths.
+  - A user Project Playwright suite runs only as a generic external Project command/process; any ingested generic Test Capture or artifact refs carry explicit external-Project attribution and confer no PM browser authority or compatibility surface.
+  - Slint remains an example only.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
   - future tool capability discovery tests
@@ -11049,13 +11133,16 @@ source_lineage:
 preserved_exact_tokens:
   - "browser automation"
   - "emulator"
-  - "Puppet Master built-in browser automation"
-  - "Playwright optional"
+  - "Browser Program"
+  - "Expert Browser Program"
+  - "generic external Project command/process"
+  - "external-Project attribution"
   - "Slint"
   - "example only"
 negative_constraints:
   - Do not hyper-focus automated testing around Slint.
-  - Do not default native Puppet Master web testing to Playwright when the built-in browser can do it.
+  - Do not create or imply a PM Playwright runtime, facade, compatibility vocabulary or namespace, package, port, MCP route, command or alias, Settings/Doctor/support capability, or capture engine.
+  - Do not grant an external Project command/process PM browser authority through artifact ingestion.
 owner_hints:
   - Plans/Tools.md
   - Plans/Automated_Testing_System.md
@@ -12158,3 +12245,177 @@ These rows are preserved as audit-lineage notes only. They do not prove repair b
 - `registry_line 139` (explicitly_deferred; source line 598; `sfk-47f640ed50d4ed24f6b34c49`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] L11812-11885 (T-172): fields listed (configured/allowed/injected/visible_to_model/etc.) with no types, no example payload, no persistence location.
 
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->
+
+## Remaining Runtime Integration Addendum - 2026-08-13
+
+This addendum compiles the corrected remaining-runtime packet into the Tools owner only. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, generated governance artifacts, or governance seal.
+
+### T-176 - Progressive Capability Stages And Bounded Materialization
+
+```yaml
+plan_unit_id: T-176
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: >-
+  Every tool, Skill, provider, and MCP capability progresses through independently receipted installed,
+  project_enabled, policy_available, selected_for_request, and invoked stages. Prompt-facing catalogs use deterministic
+  L0-L3 materialization, stable schema ordering, and bounded omission receipts; no complete large catalog or all full
+  schemas/instructions are injected eagerly.
+gui_related: false
+gui_classification_reason: Backend tool admission, prompt-materialization, and receipt contract; not GUI implementation work.
+depends_on: [T-170, T-172, PP-072]
+unblocks: []
+acceptance_criteria:
+  - A later capability stage cannot be true when an earlier stage is false, and invoked records an attempt rather than success.
+  - One hundred installed capabilities materialize only the request-selected bounded slice while essential catalog search remains directly available.
+  - Identical inputs produce the same materialized order and order hash regardless of connection, scan, locale, or map iteration order.
+  - Omitted entries produce bounded per-entry or aggregated reason receipts with a continuation/artifact ref when capped.
+  - Permission or catalog generation changes invalidate the affected slice without eagerly injecting the full catalog.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - python3 scripts/pm-plan-index.py validate
+risk_class: progressive_capability_context_drift
+reasoning_tier: high
+context_scope: tools_capability_materialization
+implementation_surfaces:
+  - Plans/Tools.md
+  - Plans/Prompt_Pipeline.md
+  - Plans/Skills_System.md
+  - Plans/MCP_Integration.md
+node_compile_hint:
+  mode: progressive_capability_materialization
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - 03_PROVIDER_CONTEXT_TOOLS_RECOVERY_AND_COMPACTION.md#Progressive-capability-disclosure
+  - ACCOUNTABILITY_MATRIX.json:CTX-015
+  - reference/HERMES_V020_SOURCE_REVIEW.md#5.4-Tool-disclosure-and-schema-cost
+source_atom_ids: []
+preserved_exact_tokens:
+  - installed
+  - project_enabled
+  - policy_available
+  - selected_for_request
+  - invoked
+  - CapabilityMaterializationReceipt
+negative_constraints:
+  - Do not eagerly inject the complete tool, Skill, provider, plugin, or MCP catalog.
+  - Do not treat installed, enabled, selected, invoked, or omitted as synonyms.
+  - Do not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, generated governance artifacts, or governance seal outputs.
+owner_hints:
+  - Plans/Tools.md
+  - Plans/Prompt_Pipeline.md
+  - Plans/Skills_System.md
+  - Plans/MCP_Integration.md
+```
+
+### T-177 - Typed Tool Recovery And Artifact Spill Contract
+
+```yaml
+plan_unit_id: T-177
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: >-
+  ToolRecoveryEnvelope gives every partial, failed, truncated, or recoverable attempt typed failure, retry,
+  verification, cwd, match-diagnostic, and final-outcome evidence. Complete redacted large output spills to a canonical
+  artifact with bounded head/tail and exact size; blind retry and loss-shaped success are prohibited.
+gui_related: false
+gui_classification_reason: Backend result, retry, artifact, and verification contract; UI consumers only project its evidence.
+depends_on: [T-007, T-077, T-079, T-167, T-173, T-174]
+unblocks: []
+acceptance_criteria:
+  - Truncated terminal output retains complete redacted artifact evidence, bounded head/tail, original size, and cwd changes.
+  - Already-applied patch is success/no-op only with post-read proof; ambiguous or whitespace-mismatched patch does not mutate.
+  - Retention failure cannot settle as success, and policy/FileSafe/secret/schema denials cannot become transient retries.
+  - Every retry is a separate attempt under one logical operation and requires a typed changed recovery condition.
+  - MCP calls receive no more than the MCP owner's one additional invoke-time reconnect or noninteractive auth-refresh retry.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - python3 scripts/pm-plan-index.py validate
+risk_class: typed_tool_recovery_truthfulness
+reasoning_tier: high
+context_scope: tool_recovery_and_artifacts
+implementation_surfaces:
+  - Plans/Tools.md
+  - Plans/FileSafe.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: typed_tool_recovery_artifact_spill
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - 03_PROVIDER_CONTEXT_TOOLS_RECOVERY_AND_COMPACTION.md#Tool-recovery-envelope
+  - reference/HERMES_V020_SOURCE_REVIEW.md#5-Hermes-Tools-that-fix-themselves-source-audit
+  - reference/ASSISTANT_CHAT_SHARED_CONTRACTS.md#11-Tool-self-recovery
+source_atom_ids: []
+preserved_exact_tokens:
+  - ToolRecoveryEnvelope
+  - artifact_or_spill_ref
+  - already_applied_noop
+  - whitespace_mismatch
+  - ambiguous_match_locations
+  - verification_status
+negative_constraints:
+  - Do not blindly retry a failed tool call.
+  - Do not expose raw secrets in output, spills, receipts, prompts, caches, or recovery hints.
+  - Do not report success when full required output was not retained.
+  - Do not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, generated governance artifacts, or governance seal outputs.
+owner_hints:
+  - Plans/Tools.md
+  - Plans/FileSafe.md
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
+### T-178 - Persistent EvalSession Tool Policy Consumer Boundary
+
+```yaml
+plan_unit_id: T-178
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: >-
+  Persistent EvalSession may consume request-selected Puppet Master tools through the canonical policy, schema,
+  deadline, FileSafe, network, recovery, and receipt path, but its kernel/session lifecycle, leases, retained variables,
+  resource accounting, restart, and cleanup remain solely owned by Shared Integration Runtime.
+gui_related: false
+gui_classification_reason: Backend ownership and nested-tool authority boundary; not GUI implementation work.
+depends_on: [T-007, T-076, T-176, T-177]
+unblocks: []
+acceptance_criteria:
+  - A live EvalSession cannot widen its selected tool set, bypass approval/FileSafe, access raw credentials, or extend its parent deadline.
+  - Nested tool attempts preserve EvalSession and logical-operation identity while local compute and external wait remain separately attributable.
+  - Tools never creates a hidden global kernel or second EvalSession lifecycle store when the shared owner is unavailable.
+  - EvalSession state uses canonical PM storage and no SQLite; browser calls remain PM-native Browser Program tools.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - python3 scripts/pm-plan-index.py validate
+risk_class: evalsession_owner_boundary_drift
+reasoning_tier: high
+context_scope: evalsession_tool_policy
+implementation_surfaces:
+  - Plans/Tools.md
+  - Plans/Shared_Integration_Runtime.md
+node_compile_hint:
+  mode: evalsession_tool_policy_consumer
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - 04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md#Persistent-EvalSession
+  - ACCOUNTABILITY_MATRIX.json:PRM-011
+source_atom_ids: []
+preserved_exact_tokens:
+  - Persistent EvalSession
+  - retained variables
+  - controlled nested PM tools
+  - no hidden global kernel
+negative_constraints:
+  - Do not move EvalSession lifecycle ownership into Tools.
+  - Do not introduce raw secrets, SQLite, or a PM-owned external browser-test runtime through EvalSession.
+  - Do not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, generated governance artifacts, or governance seal outputs.
+owner_hints:
+  - Plans/Tools.md
+  - Plans/Shared_Integration_Runtime.md
+```

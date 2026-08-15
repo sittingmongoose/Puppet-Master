@@ -46,6 +46,11 @@
      DOM; the container query in t3.css decides placement (right margin gutter
      at >= 900px container, inline full-width below). */
   function questRenderer(zoneEl, api) {
+    /* Causal lifecycle (video 04): the "Preparing questions…" pill comes
+       first; the sidecar slides in after a beat (at once under reduced
+       motion). */
+    const pillEl = api.reduced() ? null : api.preparePill();
+
     const card = document.createElement("div");
     card.className = "pmq-t3-quest";
     card.innerHTML =
@@ -64,10 +69,10 @@
         '<button class="pmq-btn" type="button" data-qskip>Skip</button>' +
         '<span class="pmq-t3q-spacer"></span>' +
         '<button class="pmq-btn" type="button" data-qnext>Next<i data-ico="chevRight"></i></button>' +
-        '<button class="pmq-btn pmq-btn-primary" type="button" data-qsubmit>Submit</button>' +
+        '<button class="pmq-btn" type="button" data-qback hidden><i data-ico="chevRight" style="transform:scaleX(-1)"></i>Back</button>' +
+        '<button class="pmq-btn pmq-btn-primary" type="button" data-qreview hidden>Review answers</button>' +
+        '<button class="pmq-btn pmq-btn-primary" type="button" data-qsubmit hidden>Submit</button>' +
       "</div>";
-    zoneEl.appendChild(card);
-    window.PMIcons.hydrate(card);
 
     const slideEl = card.querySelector("[data-qslide]");
     const ticksEl = card.querySelector("[data-ticks]");
@@ -75,34 +80,73 @@
     const prevBtn = card.querySelector("[data-qprev]");
     const nextBtn = card.querySelector("[data-qnext]");
     const skipBtn = card.querySelector("[data-qskip]");
+    const backBtn = card.querySelector("[data-qback]");
+    const reviewBtn = card.querySelector("[data-qreview]");
     const submitBtn = card.querySelector("[data-qsubmit]");
     let curQ = api.q;
     let lastIdx = -1;
+    let reviewing = false;
+
+    let prepTimer = null;
+    let dead = false;
+    function mountCard() {
+      prepTimer = null;
+      if (dead) return;
+      if (pillEl && pillEl.parentNode) pillEl.parentNode.removeChild(pillEl);
+      zoneEl.appendChild(card);
+      window.PMIcons.hydrate(card);
+      /* Entrance: slide 8px in from the right + fade. */
+      if (!api.reduced()) {
+        try {
+          card.animate(
+            [{ opacity: 0, transform: "translateX(8px)" }, { opacity: 1, transform: "none" }],
+            { duration: 300, easing: "cubic-bezier(0.22, 1, 0.36, 1)" }
+          );
+        } catch (e) {}
+      }
+      reserve();
+    }
+    if (pillEl) prepTimer = setTimeout(mountCard, 350);
+    else mountCard();
 
     /* Progress: one small tick per question — filled when answered, accent
        for the current one. */
     function paintTicks(q, idx) {
       ticksEl.innerHTML = q.questions.map((x, i) =>
-        '<span class="pmq-t3q-tick' + (i === idx ? " pmq-here" : "") + (api.isAnswered(x) ? " pmq-answered" : "") + '"></span>').join("");
+        '<span class="pmq-t3q-tick' + (!reviewing && i === idx ? " pmq-here" : "") + (api.isAnswered(x) ? " pmq-answered" : "") + '"></span>').join("");
     }
 
     function paintChrome(q, idx) {
       const last = idx >= q.questions.length - 1;
-      const numText = (idx + 1) + " of " + q.questions.length;
+      const numText = reviewing ? "Review" : (idx + 1) + " of " + q.questions.length;
       if (numEl.textContent !== numText) api.A.crossfadeNum(numEl, numText);
+      if (reviewing) {
+        prevBtn.hidden = true;
+        nextBtn.hidden = true;
+        skipBtn.hidden = true;
+        reviewBtn.hidden = true;
+        backBtn.hidden = false;
+        submitBtn.hidden = false;
+        submitBtn.disabled = !api.valid();
+        return;
+      }
       prevBtn.disabled = idx === 0;
+      prevBtn.hidden = false;
       nextBtn.hidden = last;
-      skipBtn.hidden = last;
-      submitBtn.hidden = !last;
-      submitBtn.disabled = !api.valid();
+      skipBtn.hidden = false;
+      backBtn.hidden = true;
+      submitBtn.hidden = true;
+      reviewBtn.hidden = !last;
+      reviewBtn.disabled = !api.valid();
     }
 
     function renderSlide(q, idx) {
-      slideEl.innerHTML = questSlideHtml(api, q.questions[idx]);
+      slideEl.innerHTML = reviewing ? api.reviewHtml() : questSlideHtml(api, q.questions[idx]);
       window.PMIcons.hydrate(slideEl);
     }
 
     function refreshOptions(q, idx) {
+      if (reviewing) return;
       const question = q.questions[idx];
       if (question.kind === "freeform") return;
       const ans = api.answer(question);
@@ -115,10 +159,19 @@
 
     function update(q, idx) {
       curQ = q;
+      if (reviewing && idx !== lastIdx) {
+        /* Navigation back to a question index exits review. */
+        reviewing = false;
+        lastIdx = idx;
+        paintTicks(q, idx);
+        paintChrome(q, idx);
+        renderSlide(q, idx);
+        return;
+      }
       paintTicks(q, idx);
       paintChrome(q, idx);
-      if (idx !== lastIdx) {
-        const dir = lastIdx >= 0 ? (idx > lastIdx ? 1 : -1) : 0;
+      if (reviewing || idx !== lastIdx) {
+        const dir = reviewing ? 0 : (lastIdx >= 0 ? (idx > lastIdx ? 1 : -1) : 0);
         lastIdx = idx;
         renderSlide(q, idx);
         if (dir && !api.reduced()) {
@@ -128,13 +181,44 @@
               { duration: 220, easing: "cubic-bezier(0.22, 1, 0.36, 1)" }
             );
           } catch (e) {}
+        } else if (reviewing && !api.reduced()) {
+          try {
+            slideEl.animate(
+              [{ opacity: 0 }, { opacity: 1 }],
+              { duration: 200, easing: "cubic-bezier(0.22, 1, 0.36, 1)" }
+            );
+          } catch (e) {}
         }
       } else {
         refreshOptions(q, idx);
       }
     }
 
+    /* Video 02 review: the answers read as sidecar rows; Back returns to
+       the last question. */
+    function enterReview() {
+      if (reviewing) return;
+      reviewing = true;
+      update(curQ, api.index());
+    }
+    function exitReview() {
+      if (!reviewing) return;
+      reviewing = false;
+      lastIdx = -1; /* force the question slide to repaint */
+      update(curQ, api.index());
+    }
+
     card.addEventListener("click", e => {
+      const rev = e.target.closest("[data-revto]");
+      if (rev) {
+        const i = parseInt(rev.dataset.revto, 10);
+        if (!isNaN(i)) {
+          if (i === lastIdx) exitReview();
+          else { reviewing = false; api.gotoQuestion(i); }
+        }
+        return;
+      }
+      if (e.target.closest("[data-qback]")) { exitReview(); return; }
       const question = curQ.questions[api.index()];
       const opt = e.target.closest("[data-opt]");
       if (opt) { api.select(question, opt.dataset.opt); return; }
@@ -142,6 +226,7 @@
       if (e.target.closest("[data-qprev]")) { api.prev(); return; }
       if (e.target.closest("[data-qnext]")) { api.next(); return; }
       if (e.target.closest("[data-qskip]")) { api.skip(); return; }
+      if (e.target.closest("[data-qreview]")) { if (api.valid()) enterReview(); return; }
       if (e.target.closest("[data-qsubmit]")) { if (api.valid()) api.submit(); return; }
     });
 
@@ -150,16 +235,6 @@
     });
 
     update(api.q, api.index());
-
-    /* Entrance: slide 8px in from the right + fade. */
-    if (!api.reduced()) {
-      try {
-        card.animate(
-          [{ opacity: 0, transform: "translateX(8px)" }, { opacity: 1, transform: "none" }],
-          { duration: 300, easing: "cubic-bezier(0.22, 1, 0.36, 1)" }
-        );
-      } catch (e) {}
-    }
 
     /* In the wide layout the card is absolute in the margin gutter, so the
        zone must reserve its height to keep the composer clear. */
@@ -179,8 +254,11 @@
     return {
       update,
       unmount() {
+        dead = true;
+        if (prepTimer) { clearTimeout(prepTimer); prepTimer = null; }
         if (ro) ro.disconnect();
         zoneEl.style.minHeight = "";
+        if (pillEl && pillEl.parentNode) pillEl.parentNode.removeChild(pillEl);
         if (card.parentNode) card.parentNode.removeChild(card);
       }
     };

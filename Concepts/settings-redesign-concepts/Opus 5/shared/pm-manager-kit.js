@@ -67,7 +67,10 @@
 
   /* Built in every concept: the provider showcase, and the Usage boundary card
    * that has to exist wherever Settings talks about balances. */
-  var EVERYWHERE = ["manager-providers", "manager-usage"];
+  /* Built in every concept. The provider surface is the one the four designs
+   * are meant to disagree about; Usage and the resource governor are here so no
+   * concept can quietly reimplement a balance or a second scheduler. */
+  var EVERYWHERE = ["manager-providers", "manager-usage", "manager-performance"];
 
   var HOME = Object.create(null);
   Object.keys(ASSIGNMENT).forEach(function (conceptId) {
@@ -85,7 +88,7 @@
   }
 
   function assignedTo(conceptId) {
-    return CORE.concat(ASSIGNMENT[conceptId] || [], ["manager-usage"]);
+    return CORE.concat(ASSIGNMENT[conceptId] || [], ["manager-usage", "manager-performance"]);
   }
 
   /* -------------------------------------------------------- normalisation */
@@ -430,9 +433,93 @@
       outcome: (payload && payload.outcome) || (op && op.outcome) || "ok",
       detail: (payload && payload.detail) || (op && op.detail) ||
         "Simulated in this concept. A production build would run the owning service and receipt the result.",
-      phases: ((op && op.phases) || ["Working"]).map(function (label2) { return { label: label2, weight: 1 }; }),
-      onPhase: payload && payload.onPhase
+      ownerDomain: c.managerId || "settings",
+      objectRef: (payload && payload.id) || null,
+      steps: stepsFor(a, op),
+      canCancel: cancellable(a, op),
+      canBackground: backgroundable(a, op),
+      permit: permitFor(a, op),
+      onWork: payload && payload.onWork
     });
+  }
+
+  /* ------------------------------------------------- truthful wait choreography */
+
+  /* Which real wait an operation class actually sits in. A generic spinner must
+   * never conceal waiting for a host, a sign-in, a package manager, an approval
+   * or the network (PERFORMANCE_SETTINGS_RETURN §12), so every family below
+   * names its own states rather than sharing one "Working" placeholder. */
+  var STEPS = {
+    provider_auth: [
+      { state: "starting", phase: "Opening the official sign-in page" },
+      { state: "waiting_for_sign_in", phase: "Sign in on the provider's page", waitReason: "Puppet Master is waiting for you to finish signing in with the provider.", canCancel: true },
+      { state: "verifying", phase: "Checking the returned credential" }
+    ],
+    provider_catalog: [
+      { state: "starting", phase: "Reading the cached catalogue" },
+      { state: "waiting_provider", phase: "Asking each connected provider", waitReason: "The provider has not answered yet. The cached catalogue stays on screen until it does.", canCancel: true, canBackground: true },
+      { state: "verifying", phase: "Reconciling models against the cache" }
+    ],
+    installation: [
+      { state: "queued", phase: "Waiting for the package manager", waitReason: "One package-manager root mutates at a time; this request holds a lease.", canCancel: true },
+      { state: "waiting_host", phase: "Waiting for the target host", waitReason: "The selected Host/Environment has not accepted the transaction yet.", canCancel: true },
+      { state: "running", phase: "Staging the download", canBackground: true },
+      { state: "verifying", phase: "Verifying publisher and provenance" },
+      { state: "committing", phase: "Activating the new generation" }
+    ],
+    network: [
+      { state: "starting", phase: "Resolving the route" },
+      { state: "waiting_network", phase: "Waiting for the network", waitReason: "The owning host is remote and has not answered.", canCancel: true }
+    ],
+    destructive: [
+      { state: "starting", phase: "Taking a restore point" },
+      { state: "verifying", phase: "Checking the preview against the live values" },
+      { state: "committing", phase: "Applying atomically" }
+    ],
+    local: [
+      { state: "running", phase: "Working" }
+    ]
+  };
+
+  function familyOf(a, op) {
+    var id = String((a && a.id) || "");
+    if (op && op.family) return op.family;
+    if (/auth|sign_in|signin|start_setup|revalidate/.test(id)) return "provider_auth";
+    if (/catalog|catalogue|refresh/.test(id)) return "provider_catalog";
+    if (/install|update|adopt|rescan|repair|rollback/.test(id)) return "installation";
+    if (/test_send|test_all|connect|reconnect|ping|fetch|crawl/.test(id)) return "network";
+    if (/reset|delete|prune|clear|apply|migrate|restore/.test(id)) return "destructive";
+    return "local";
+  }
+
+  function stepsFor(a, op) {
+    if (op && op.steps) return op.steps;
+    return STEPS[familyOf(a, op)] || STEPS.local;
+  }
+
+  /* Cancel/background/retry appear only where they are semantically valid
+   * (register §11). A commit that is already atomic is not cancellable. */
+  function cancellable(a, op) {
+    if (op && op.canCancel !== undefined) return op.canCancel === true;
+    var f = familyOf(a, op);
+    return f === "provider_auth" || f === "provider_catalog" || f === "installation" || f === "network";
+  }
+
+  function backgroundable(a, op) {
+    if (op && op.canBackground !== undefined) return op.canBackground === true;
+    var f = familyOf(a, op);
+    return f === "provider_catalog" || f === "installation";
+  }
+
+  /* What the one governor is asked for. Settings never admits work itself. */
+  function permitFor(a, op) {
+    var f = familyOf(a, op);
+    return {
+      lane: f === "installation" ? "blocking" : (f === "network" || f === "provider_catalog" || f === "provider_auth") ? "io" : "cpu",
+      heavy: f === "installation",
+      needsNetwork: f !== "local" && f !== "destructive",
+      offline: (window.PMData && window.PMData.__offline === true) || false
+    };
   }
 
   window.PMManagerKit = {

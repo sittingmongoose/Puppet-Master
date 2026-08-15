@@ -11,6 +11,7 @@ try {
     const s = window.PMChatHost.api.store;
     return {
       threadCount: s.allThreads().length,
+      historyTitles: s.allThreads().map(x => x.title || x.name || ""),
       t18: !!s.demoThread("thread-18"),
       t18msgs: s.demoThread("thread-18") ? s.demoThread("thread-18").messages.length : 0,
       t18state: s.demoThread("thread-18") ? s.demoThread("thread-18").threadState : null,
@@ -26,14 +27,20 @@ try {
     };
   });
   R.check("zero page errors", errors.length === 0, errors.slice(0, 3).join(" | "));
-  R.check("18 threads", info.threadCount === 18, "count=" + info.threadCount);
+  /* Correction 2026-08-13: the pin fixture now also carries the manifest's 18
+     history_rows as stub threads (15 + 3 showcase + 18 = 36). */
+  R.check("36 threads incl. 18 manifest history rows", info.threadCount === 36 &&
+    ["Settings redesign bakeoff", "Slint 1.17.1 port notes", "Worktree collision recovery", "Assistant Chat visual testing"].every(t => info.historyTitles.includes(t)),
+    "count=" + info.threadCount);
   R.check("thread-18 offline story", info.t18 && info.t18msgs >= 12 && info.t18state === "waiting for reconnect", info.t18msgs + " msgs, " + info.t18state);
   R.check("thread-17 port 3000 seeded", info.t17ops.ports.some(p => p.port === 3000 && p.suggestion === 3001 && p.state === "conflict"));
   R.check("thread-17 worktrees + sessions", info.t17ops.worktrees.length === 2 && info.t17ops.sessions.length === 4);
   R.check("thread-17 admission receipt", info.t17admission === 8);
   R.check("thread-17 BSD advice seeded", info.t17bsdAdvice);
   const routes = new Set(info.t17subagents.map(x => x.split(":")[0]));
-  R.check("thread-17 >=3 routed subagents", info.t17subagents.length >= 3 && routes.size >= 3 && info.t17subagents.some(x => x.includes("queued")), info.t17subagents.join("|"));
+  /* Correction 2026-08-13: the Slint reviewer snapshot follows the manifest
+     sequence (failed -> retrying) instead of queued. */
+  R.check("thread-17 >=3 routed subagents", info.t17subagents.length >= 3 && routes.size >= 3 && info.t17subagents.some(x => x.includes("retrying")), info.t17subagents.join("|"));
   R.check("thread-17 all five warning kinds", ["collision", "route", "capacity", "cross-project", "attachment"].every(k => info.t17warnings.includes(k)), info.t17warnings.join(","));
   const setup = Object.fromEntries(info.catalog.map(g => [g.provider, g.setupState]));
   R.check("setup states seeded", setup.OpenAI === "update-available" && setup.Google === "install-required", JSON.stringify(setup));

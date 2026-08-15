@@ -1,0 +1,413 @@
+{
+  "harness": "playwright-core + system Chrome (chrome.exe)",
+  "concept": "QwenUsageConcept/u11-prism",
+  "packet": "PM_Usage_Concept_Update_Final_Cumulative_2026-08-08",
+  "ran_at": "2026-08-11T18:59:19.347Z",
+  "duration_ms": 53891,
+  "cases": [
+    {
+      "name": "matrix friendly-dark @ 900px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix friendly-dark @ 1280px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix friendly-dark @ 1700px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix friendly-dark @ 2200px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix friendly-dark @ 2500px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix friendly-light @ 900px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix friendly-light @ 1280px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix friendly-light @ 1700px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix friendly-light @ 2200px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix friendly-light @ 2500px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix glass-dark @ 900px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix glass-dark @ 1280px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix glass-dark @ 1700px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix glass-dark @ 2200px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix glass-dark @ 2500px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix glass-light @ 900px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix glass-light @ 1280px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix glass-light @ 1700px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix glass-light @ 2200px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix glass-light @ 2500px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix retro-dark @ 900px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix retro-dark @ 1280px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix retro-dark @ 1700px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix retro-dark @ 2200px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix retro-dark @ 2500px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix retro-light @ 900px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix retro-light @ 1280px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix retro-light @ 1700px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix retro-light @ 2200px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix retro-light @ 2500px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix basic-dark @ 900px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix basic-dark @ 1280px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix basic-dark @ 1700px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix basic-dark @ 2200px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix basic-dark @ 2500px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix basic-light @ 900px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix basic-light @ 1280px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix basic-light @ 1700px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix basic-light @ 2200px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix basic-light @ 2500px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "interaction scope picker → OpenAI chip",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "interaction disclosure Std→Adv toggles authority rail",
+      "status": "pass",
+      "detail": "hidden@std=true visible@adv=true"
+    },
+    {
+      "name": "interaction settings sheet deep link toast",
+      "status": "pass",
+      "detail": "Opening settings · providers (demo deep link)"
+    },
+    {
+      "name": "interaction export records → JSONL → cmd.usage.export",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "interaction refresh toasts",
+      "status": "pass",
+      "detail": "Usage projections refreshed (demo)"
+    },
+    {
+      "name": "interaction zero console errors",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "new BSD section in attempt inspector (ue-600)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "new operations widget (CLI update · rolled back · 5 phases)",
+      "status": "pass",
+      "detail": "phases=5"
+    },
+    {
+      "name": "guard maintenance entries carry no token totals",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "new capacity envelope line (sustainable)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "new forecast refresh dispatches cmd.usage.forecast.request",
+      "status": "pass",
+      "detail": "Forecast refreshed (demo)"
+    },
+    {
+      "name": "new account row Use next → switch_route + toast",
+      "status": "pass",
+      "detail": "Future work will prefer Alibaba · Personal. In-flight requests are never moved. | Priority 1last used 13m agoUse nextOpen provider console"
+    },
+    {
+      "name": "new plans estimate (unavailable → PM estimate 63%)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "guard unknown≠zero (kimi pool / zai limit unknown; estimate distinct)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "new free model cooldown row",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "guard unconfigured providers absent from DOM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "guard cost identity 61.85M + 125.57M = 187.42M",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "new-behavior zero console errors",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 1 Codex limit → credits continuation",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 2 Alibaba Extra Bundle consumption (ue-611 usage_pack)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 3 Work→Personal fallback (ue-608 requested≠effective)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 4 separately settled vision helper + attachment transform",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 5 model change replay/cache reset (cm-4 + replay ue-591)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 6 free model cooldown rendered",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 7 background validation consumes allowance (probe attribution)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 8 specialists admitted in waves (run:goal-47)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 9 provider unavailable → PM estimate (meter:oc-go-monthly)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 10 requested vs effective model (thread:t-91 switch)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 11 BSD silent + advice + duplicate suppressed",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 12 attachment transform event fields (ue-602)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 13 CLI update idle/verify/rollback (ops-1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 14 offline outbox + reconnect replay (ops-2 + ue-610)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 15 server work continues offline (ops-3 on TrueNAS)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 16 cross-project child (work-12 · Harbor)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 17 sound preview + notification test-send (ops-4/ops-5)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 18 unconfigured account absent from normal view",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "context details show stable prefix / cache epoch / tool schema overhead",
+      "status": "pass",
+      "detail": ""
+    }
+  ],
+  "pass": 77,
+  "fail": 0,
+  "screenshots": [
+    "verify-shots/theme-friendly-dark-1700.png",
+    "verify-shots/theme-friendly-light-1700.png",
+    "verify-shots/theme-glass-dark-1700.png",
+    "verify-shots/theme-glass-light-1700.png",
+    "verify-shots/theme-retro-dark-1700.png",
+    "verify-shots/theme-retro-light-1700.png",
+    "verify-shots/theme-basic-dark-1700.png",
+    "verify-shots/theme-basic-light-1700.png",
+    "verify-shots/bsd-inspector.png",
+    "verify-shots/operations-widget.png",
+    "verify-shots/capacity-envelope.png",
+    "verify-shots/accounts-usenext.png",
+    "verify-shots/plans-estimate.png",
+    "verify-shots/free-cooldown.png",
+    "verify-shots/context-details.png"
+  ]
+}

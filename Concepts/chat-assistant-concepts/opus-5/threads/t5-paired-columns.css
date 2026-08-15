@@ -232,6 +232,71 @@
   }
 }
 
+/* ---------------------------------------------------------------- arrival, out of the lane rule
+ * 01_message_arrival_spatial_continuity.mov, frames 47 to 63 (about 280ms at 57.6fps): the
+ * arriving message is first a flattened SLIVER at a seam, then expands into its own box, then
+ * settles with a small overshoot. At f.50 the glyphs are already at full size and simply cut off
+ * by the growing box — clipped, never scaled — which is why this is a clip animation.
+ *
+ * The reference's seam is a header, because its list inserts at the top. This concept has TWO
+ * lanes and a turn belongs to exactly one of them, so the seam is the rule BETWEEN the lanes and
+ * the arrival is the turn unrolling away from it into its own side. An assistant turn opens
+ * rightward out of the 1px rule that is literally its left border; a user turn opens leftward out
+ * of the gutter that same rule faces. The two directions mirror each other, so which lane a
+ * message belongs to is legible from the motion alone, before the text is.
+ *
+ * Below the 900px pairing breakpoint the lanes fold into one column and the rule is not drawn.
+ * The mirrored directions are kept there anyway: the role tag is visible in that mode, and an
+ * arrival that changed direction with the window would be a third thing to learn.
+ */
+@keyframes pmx-t5-arrive-assistant {
+  from { clip-path: inset(0 calc(100% - var(--xs)) 0 0); transform: translateX(-3px); }
+  to   { clip-path: inset(0 0 0 0);                      transform: none; }
+}
+@keyframes pmx-t5-arrive-user {
+  from { clip-path: inset(0 0 0 calc(100% - var(--xs))); transform: translateX(3px); }
+  to   { clip-path: inset(0 0 0 0);                      transform: none; }
+}
+
+/* Beats motion.css's blanket `[data-pmx-arrived] { animation: none }` on specificity. That rule is
+   right for the reference, where the arrival is genuinely static and only its neighbours move; in a
+   bottom-anchored list the neighbours do not move at all, so a static arrival would mean nothing
+   moved anywhere and the message would simply blink into existence.
+
+   The 3px push away from the rule is the f.63 settle; the overshoot is the spring token's, not a
+   hand-written keyframe step. */
+[data-pmx-thread="t5"] .t5-turn[data-pmx-arrived][data-pmx-role="assistant"] {
+  animation: pmx-t5-arrive-assistant var(--motion-med) var(--ease-spring-real) backwards;
+}
+[data-pmx-thread="t5"] .t5-turn[data-pmx-arrived][data-pmx-role="user"] {
+  animation: pmx-t5-arrive-user var(--motion-med) var(--ease-spring-real) backwards;
+}
+/* The prose does not float up inside a box that is already revealing it: f.50 has the glyphs at
+   full size and stationary, cut off by the box's edge and nothing else. */
+[data-pmx-thread="t5"] .t5-turn[data-pmx-arrived] .t5-prose {
+  animation: none;
+  opacity: 1;
+  transform: none;
+}
+
+/* Reduced motion lands the arrival instantly and FULLY REVEALED. A clip animation frozen at its
+   first frame would leave a 2px stripe at the lane rule and hide the message entirely, which is
+   worse than no animation at all. */
+[data-motion="reduced"][data-pmx-thread="t5"] .t5-turn[data-pmx-arrived] {
+  animation: none !important;
+  clip-path: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-pmx-thread="t5"] .t5-turn[data-pmx-arrived] {
+    animation: none !important;
+    clip-path: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
 /* ================================================================ packet: the lane dialogue, the third
  * work rail, the user-lane note and the artifact handoff.
  *
@@ -426,7 +491,10 @@
 
 [data-pmx-thread="t5"] .t5-lane-detail-head { display: flex; align-items: baseline; gap: var(--sm); }
 
-[data-pmx-thread="t5"] .t5-lane-close {
+/* One treatment for one kind of control. The run capsule's record lane dismisses itself exactly as a
+   borrowed lane does, so it shares the rule rather than restating it in a second vocabulary. */
+[data-pmx-thread="t5"] .t5-lane-close,
+[data-pmx-thread="t5"] .t5-run-close {
   margin-left: auto;
   padding: 0 7px;
   border: 1px dashed var(--border);
@@ -521,17 +589,214 @@
 [data-pmx-thread="t5"] .t5-handoff[data-state="loading"] .t5-handoff-state { font-style: italic; }
 [data-pmx-thread="t5"] .t5-handoff[data-state="error"] .t5-handoff-state { color: var(--accent-error); }
 
-/* ---- this concept's own choreography: the lanes CROSS-FADE ------------------------------------- */
+/* ---- the run capsule, folded (below 900px) -----------------------------------------------------
+   `reference/videos/03_compact_execution_activity.mov` read through this concept's two lanes. The
+   INDEX - the glyph chain and the one line that speaks for the run - is what the reader acts on, so it
+   belongs on the user side; the RECORD - what the disclosed phase actually did - is what was done, so
+   it belongs on the assistant side. Below 900px there is no opposite lane to answer in, so the record
+   simply follows the index, the same fold the rail detail and the question lanes take. This is the
+   DEFAULT rather than the fallback, because the narrow case is the harder one. */
 
-/* No height spring: the halves sit side by side at full width, so springing a height would shove the
-   conversation above them. A cross-fade changes what the lanes say without moving anything. */
+[data-pmx-thread="t5"] .t5-run {
+  display: flex;
+  flex-direction: column;
+  gap: var(--xs);
+  min-width: 0;
+  padding: var(--xs) 0;
+}
+
+/* The chain sits ABOVE the line rather than beside it, which is where this concept has to diverge from
+   the reference's own arrangement. A chain that gains a glyph per phase and sat on the same row would
+   take that width from the line next to it, so the count would relayout on exactly the tick that must
+   not move it. Giving the line the whole lane is the only way to keep behaviour 2 true in a 4fr
+   column, and stacked is also what the folded form wants. */
+[data-pmx-thread="t5"] .t5-run-index {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+  min-width: 0;
+}
+
+[data-pmx-thread="t5"] .t5-run-chain { gap: 1px; min-width: 0; min-height: 20px; }
+
+[data-pmx-thread="t5"] .t5-run-glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color var(--motion-fast) var(--ease-default),
+              border-color var(--motion-fast) var(--ease-default);
+}
+[data-pmx-thread="t5"] .t5-run-glyph:hover { color: var(--text-primary); }
+
+/* Running is DASHED and disclosed is SOLID, on a rule under the glyph: the same two-state distinction
+   the operation rows already draw on their left edge, so an unsettled thing looks unsettled the same
+   way everywhere in this concept. The reference rings its live glyph; a ring is its look, not its
+   logic, and this concept marks state with rules. */
+[data-pmx-thread="t5"] .t5-run-glyph[data-state="running"] {
+  color: var(--accent-primary);
+  border-bottom-style: dashed;
+  border-bottom-color: var(--accent-primary);
+}
+[data-pmx-thread="t5"] .t5-run-glyph[data-open="1"] {
+  color: var(--text-primary);
+  border-bottom-color: var(--accent-primary);
+}
+
+[data-pmx-thread="t5"] .t5-run-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--xs);
+  width: 100%;
+  min-width: 0;
+  padding: 2px 0;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 35%, transparent);
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  /* Tabular figures so 6 becoming 7 does not change the width of the number and shift the word beside
+     it - the layout half of what makes countMorph read as one running tally rather than a new line. */
+  font-variant-numeric: tabular-nums;
+}
+[data-pmx-thread="t5"] .t5-run-head:hover { background: color-mix(in srgb, var(--surface) 60%, transparent); }
+/* Disclosed state on the accent rule, exactly as an open rail row marks itself. */
+[data-pmx-thread="t5"] .t5-run[data-open="1"] .t5-run-head { border-bottom-color: var(--accent-primary); }
+
+/* Verb at full contrast, argument muted: a reader scanning a settled run reads a column of verbs, and
+   the tense flip on settle lands where the eye already is. */
+[data-pmx-thread="t5"] .t5-run-verb {
+  flex: 0 0 auto;
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+[data-pmx-thread="t5"] .t5-run-arg {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+}
+
+/* The record. It carries the same accent rule a borrowed lane does, because it IS a borrowed lane:
+   this is the assistant side answering a question asked from the user side. */
+[data-pmx-thread="t5"] .t5-run-report {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding: 0 0 var(--xs) var(--sm);
+  border-left: 2px solid var(--accent-primary);
+}
+[data-pmx-thread="t5"] .t5-run-report-head { display: flex; align-items: baseline; gap: var(--sm); }
+[data-pmx-thread="t5"] .t5-run-time {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+[data-pmx-thread="t5"] .t5-run-rows { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+[data-pmx-thread="t5"] .t5-run-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sm);
+  min-width: 0;
+  padding: 2px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 30%, transparent);
+  font-size: var(--fs-2xs);
+}
+[data-pmx-thread="t5"] .t5-run-row:last-child { border-bottom: none; }
+[data-pmx-thread="t5"] .t5-run-row-verb { flex: 0 0 auto; min-width: 58px; color: var(--text-muted); }
+[data-pmx-thread="t5"] .t5-run-row-target {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--text-primary);
+  overflow-wrap: anywhere;
+}
+/* The sign carries the difference between added and removed, so both are set in one colour. A green
+   and a red here would be a second, weaker channel for a fact `+92` and `-18` already state, and this
+   concept says its differences in words and rules rather than in hue. */
+[data-pmx-thread="t5"] .t5-run-delta {
+  flex: 0 0 auto;
+  display: inline-flex;
+  gap: var(--xs);
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+[data-pmx-thread="t5"] .t5-run-detail {
+  margin: 0;
+  font-size: var(--fs-2xs);
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+/* Compound, not descendant: the stage carries both attributes itself. See the note beside the
+   cross-fade override below. */
+[data-motion="reduced"][data-pmx-thread="t5"] .t5-run-glyph { transition: none !important; }
+
+/* ---- this concept's own choreography: the pair RESIZES, and the lanes cross-fade ---------------- */
+
+/* The cross-fade is now the ENTRANCE only - a lane saying something it has not said before - and it is
+   played on a first visit to a question, never on the way back to one already answered
+   (`motion.firstVisit`, reference 02). The change of SIZE is stated separately, by the bounce below,
+   because a page with two fewer options is a different height and a card that snapped between heights
+   read as a different card rather than the same card on a different page. */
 @keyframes t5-qlane-fade {
   from { opacity: .25; }
   to   { opacity: 1; }
 }
 [data-pmx-thread="t5"] .t5-qlane-fade { animation: t5-qlane-fade var(--motion-med) var(--ease-default) both; }
 
-[data-motion="reduced"] [data-pmx-thread="t5"] .t5-qlane-fade { animation: none !important; }
+/* Bottom-anchored growth, and the answer to the objection this block used to record.
+   `motion.css .pmx-resize-up` supplies `margin-top: auto`, which in the paired grid is what pins a
+   lane to the bottom of its row; the class is added by the concept ONLY where a window provides the
+   question region, because that is the case where the card sits directly above the composer. Growth
+   therefore moves the pair's own TOP edge into space the card already occupies rather than pushing the
+   conversation above it - the exact motion the old refusal was protecting against.
+
+   `justify-content: flex-end` is the other half, and it only matters DURING the resize: the lane is
+   clipped to an interpolating height, so bottom-aligned content means the box grows away from its
+   settled bottom edge instead of revealing new rows below a fixed top one. */
+[data-pmx-thread="t5"] .t5-qlane.pmx-resize-up { align-self: end; justify-content: flex-end; }
+
+/* An empty lane is out of the layout entirely. While the questionnaire is preparing there is nothing
+   for the reader to answer, and the user lane SURVIVES that state rather than being destroyed - it
+   still owns the pair's size and its record of what it has already shown - so it has to be hidden
+   rather than removed, or the accent rule would draw a 2px stub beside nothing. */
+[data-pmx-thread="t5"] .t5-qlane:empty { display: none; }
+
+/* The run's record lane arrives on the same keyframe, because it is the same event: a lane changing
+   what it says. Reopening a phase does move height - groupReopen springs the capsule and pushes what
+   is below it, which is the rule f.910 states - and that is a different statement from this one: the
+   record lane fades because its CONTENT changed, and the capsule springs because the reader asked for
+   content that was not on screen. The class is applied only when the disclosed phase actually CHANGED,
+   so a count growing on the line beside it never re-fades the record. */
+[data-pmx-thread="t5"] .t5-run-fade { animation: t5-qlane-fade var(--motion-med) var(--ease-default) both; }
+
+/* Both attributes sit on the SAME element - compose.js writes `data-motion` and `data-pmx-thread` onto
+   the stage - so the reduced-motion override has to be a compound selector. Written as a descendant
+   pair, which is what this rule was, it matched nothing at all and reduced motion did not reach either
+   fade. Measured in the page: `[data-motion="reduced"][data-pmx-thread="t5"]` matches one element and
+   the descendant form matches none. */
+[data-motion="reduced"][data-pmx-thread="t5"] .t5-qlane-fade,
+[data-motion="reduced"][data-pmx-thread="t5"] .t5-run-fade { animation: none !important; }
 
 /* ================================================================ 900px and up: three real columns
  *
@@ -563,10 +828,29 @@
   [data-pmx-thread="t5"] .t5-qlane[data-lane="assistant"] { grid-column: 2; grid-row: 1; }
   [data-pmx-thread="t5"] .t5-qreceipt { grid-column: 1 / -1; }
 
+  /* ROW 1 IS THE RUN'S. The capsule spans both lanes and splits them itself, so the run leads the
+     cluster and everything below it - the rail, the advice note, the handoff card - is what groupReopen
+     carries down when a phase is reopened. When there is no run the row holds no items, and a grid row
+     with no items in it is zero high, so the cluster looks exactly as it did before. */
+  [data-pmx-thread="t5"] .t5-run {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    display: grid;
+    /* The capsule's own split repeats the lane proportions it spans, so its index column lands on the
+       user lane and its record column on the assistant lane rather than merely near them. */
+    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+    column-gap: var(--xl);
+    align-items: start;
+  }
+  /* The index is the CONTROL, so it takes the user lane; opening a glyph fills the lane OPPOSITE it,
+     on the same row, which is this concept's signature move with the lanes swapped from the rail's. */
+  [data-pmx-thread="t5"] .t5-run-index { grid-column: 1; grid-row: 1; }
+  [data-pmx-thread="t5"] .t5-run-report { grid-column: 2; grid-row: 1; }
+
   /* The rail is the third column: right of the assistant lane, beside the conversation. Its detail
      borrows the user lane, on the same row, so the two read as one exchange. */
-  [data-pmx-thread="t5"] .t5-rail { grid-column: 2; grid-row: 1; }
-  [data-pmx-thread="t5"] .t5-lane-detail { grid-column: 1; grid-row: 1; }
+  [data-pmx-thread="t5"] .t5-rail { grid-column: 2; grid-row: 2; }
+  [data-pmx-thread="t5"] .t5-lane-detail { grid-column: 1; grid-row: 2; }
   [data-pmx-thread="t5"] .t5-bsd-host { grid-column: 1; }
   [data-pmx-thread="t5"] .t5-handoff-host { grid-column: 2; }
 }
@@ -582,8 +866,20 @@
   [data-pmx-thread="t5"] .t5-inline-question .t5-qlane[data-lane="user"] { grid-column: 1; grid-row: 1; }
   [data-pmx-thread="t5"] .t5-inline-question .t5-qlane[data-lane="assistant"] { grid-column: 2; grid-row: 1; }
   [data-pmx-thread="t5"] .t5-inline-question .t5-qreceipt { grid-column: 1 / -1; }
-  [data-pmx-thread="t5"] .t5-inline-surfaces .t5-rail { grid-column: 2; grid-row: 1; }
-  [data-pmx-thread="t5"] .t5-inline-surfaces .t5-lane-detail { grid-column: 1; grid-row: 1; }
+  /* Same three placements as the window regions above, for the same reason: row 1 is the run's, and the
+     capsule repeats the lane proportions it spans so its two halves land ON the lanes. */
+  [data-pmx-thread="t5"] .t5-inline-surfaces .t5-run {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+    column-gap: var(--xl);
+    align-items: start;
+  }
+  [data-pmx-thread="t5"] .t5-inline-surfaces .t5-run-index { grid-column: 1; grid-row: 1; }
+  [data-pmx-thread="t5"] .t5-inline-surfaces .t5-run-report { grid-column: 2; grid-row: 1; }
+  [data-pmx-thread="t5"] .t5-inline-surfaces .t5-rail { grid-column: 2; grid-row: 2; }
+  [data-pmx-thread="t5"] .t5-inline-surfaces .t5-lane-detail { grid-column: 1; grid-row: 2; }
   [data-pmx-thread="t5"] .t5-inline-surfaces .t5-bsd-host { grid-column: 1; }
   [data-pmx-thread="t5"] .t5-inline-surfaces .t5-handoff-host { grid-column: 2; }
 }

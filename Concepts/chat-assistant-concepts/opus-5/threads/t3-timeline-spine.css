@@ -557,6 +557,70 @@
   }
 }
 
+/* ---------------------------------------------------------------- arrival, along the spine
+ * 01_message_arrival_spatial_continuity.mov, frames 47 to 63 (about 280ms at 57.6fps): the
+ * arriving message is first a flattened SLIVER at a seam, then expands into its own box, then
+ * settles with a small overshoot. At f.50 the glyphs are already at full size and simply cut off
+ * by the growing box — clipped, never scaled — which is why this is a clip animation.
+ *
+ * The reference's seam is a header, because its list inserts at the top. This concept's seam is
+ * the SPINE: a literal line that every row already hangs off, so an event arrives along it. The
+ * clip starts at the 20px marker column, which is exactly the grid track the marker occupies — the
+ * marker lands on the line first, and the row then unrolls sideways out of it into the text
+ * column. Nothing about the line itself moves; it is drawn once for the whole list and stays put.
+ *
+ * Only the ARRIVING row gets this. motion.displace stamps data-pmx-arrived on the row it inserted,
+ * and because the append-only path no longer rebuilds the rest, no other marker pops.
+ */
+@keyframes pmx-t3-arrive {
+  from { clip-path: inset(0 calc(100% - 20px) 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+/* The row's content is pushed out of the marker column and springs to its column stop. This is the
+   f.63 overshoot, and it is on the BODY rather than the row so the marker stays welded to the
+   spine — a marker that drifted 4px off the line would break the one invariant this concept has. */
+@keyframes pmx-t3-arrive-body {
+  from { transform: translateX(-4px); }
+  to   { transform: none; }
+}
+
+/* Beats motion.css's blanket `[data-pmx-arrived] { animation: none }` on specificity. That rule is
+   right for the reference, where the arrival is genuinely static and only its neighbours move; in a
+   bottom-anchored list the neighbours do not move at all, so a static arrival would mean nothing
+   moved anywhere and the message would simply blink into existence. */
+[data-pmx-thread="t3"] .t3-row[data-pmx-arrived] {
+  animation: pmx-t3-arrive var(--motion-med) var(--ease-spring-real) backwards;
+}
+[data-pmx-thread="t3"] .t3-row[data-pmx-arrived] .t3-body {
+  animation: pmx-t3-arrive-body var(--motion-med) var(--ease-spring-real) backwards;
+}
+/* The wake delays above are for a spine being DRAWN from the top; an arriving row is a single
+   event, and a marker that waited 240ms for its turn in a queue that no longer exists would land
+   after the row had already finished. */
+[data-pmx-thread="t3"] .t3-row[data-pmx-arrived] .t3-marker {
+  animation-delay: 0ms;
+}
+
+/* Reduced motion lands the arrival instantly and FULLY REVEALED. A clip animation frozen at its
+   first frame would show the marker column and hide the message entirely, which is worse than no
+   animation at all. */
+[data-motion="reduced"][data-pmx-thread="t3"] .t3-row[data-pmx-arrived],
+[data-motion="reduced"][data-pmx-thread="t3"] .t3-row[data-pmx-arrived] .t3-body {
+  animation: none !important;
+  clip-path: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-pmx-thread="t3"] .t3-row[data-pmx-arrived],
+  [data-pmx-thread="t3"] .t3-row[data-pmx-arrived] .t3-body {
+    animation: none !important;
+    clip-path: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
 /* ---------------------------------------------------------------- jump pill clearance
  * The pill floats over the transcript, and nothing reserved space for it, so when it
  * appeared it sat directly on top of live message text and hid whole words. Readable
@@ -613,6 +677,22 @@
   gap: var(--sm);
   align-items: start;
 }
+
+/* WHERE THE RESIZE BOUNCE LANDS.
+ *
+ * Turning a page moves the option list from one node's body to another's, so the boxes that change
+ * size are two BODIES — never a marker, never the run. The origin is the top-left corner of the body
+ * because that corner is the one thing about it that does not move: it is pinned to its marker, and a
+ * body that flexed from its centre would drag the marker's row with it and put a wobble in the one
+ * column this concept promises never moves.
+ *
+ * The marker is explicitly excluded. It is a fixed-size square and the scale beat must not reach it,
+ * which is what keeps the rhythm of the spine intact while a body grows. */
+[data-pmx-thread="t3"] .t3-qbody.pmx-size-bounce,
+[data-pmx-thread="t3"] .t3-qbody.pmx-size-bounce-strong {
+  transform-origin: top left;
+}
+[data-pmx-thread="t3"] .t3-qnode > .t3-qmark { transform-origin: center; }
 
 /* The marker IS the state and the navigation. Square, because a spine of circles reads as a
  * timeline of moments and this is a sequence of decisions. */
@@ -852,3 +932,241 @@
   to   { transform: translateY(0); opacity: 1; }
 }[data-pmx-thread="t3"] .t3-qnode-travel { animation: t3-qnode-travel var(--motion-med) var(--ease-spring-real) both; }[data-motion="reduced"] [data-pmx-thread="t3"] .t3-qnode-travel { animation: none !important; }[data-motion="reduced"] [data-pmx-thread="t3"] .t3-qmark,
 [data-motion="reduced"] [data-pmx-thread="t3"] .t3-wunit-mark { transition: none !important; }
+
+/* ---- the run: a spur of the spine ------------------------------------------------------------
+   This concept's reading of 03_compact_execution_activity.mov. The chain is not a strip of glyphs
+   borrowed from elsewhere: it is this concept's own spine node — the same square, the same hairline,
+   the same click-to-expand — repeated once per entered phase. What it does not do is descend, and the
+   reason is behaviour 4 rather than taste. At f.910 a thirteen-tool run condenses to a SINGLE row, so
+   a rail that walked downward would make a run's resting height grow with how much work it did, which
+   is the exact inverse of condensing. The spine turns a corner at this node instead and the phases
+   walk along it: the first marker's centre lands on the vertical rule at 7.5px, where every other
+   marker in the cluster sits, and the segment they stand on is the same 1px --border hairline. */
+
+[data-pmx-thread="t3"] .t3-run {
+  position: relative;
+  display: grid;
+  /* The cluster's own two columns, so the headline lands in the same label column as every unit
+     beneath it and the run reads as one more node rather than as a panel parked on the spine. */
+  grid-template-columns: 16px minmax(0, 1fr);
+  column-gap: var(--sm);
+  row-gap: 2px;
+  padding: var(--xs) 0;
+  align-items: center;
+}
+
+/* The run's own segment of the vertical spine, at the same x as the cluster's and the transcript's,
+   so the run continues the column instead of standing beside it as a parallel structure. */
+[data-pmx-thread="t3"] .t3-run::before {
+  content: '';
+  position: absolute;
+  left: 7px; top: 0; bottom: 0;
+  width: 1px;
+  background: var(--border);
+}
+
+/* The horizontal segment the markers stand on, drawn as a BACKGROUND rather than as a child element.
+   The rail is a scroller, and a background at the default `scroll` attachment is fixed to the box
+   while the markers travel over it; a rule drawn as content would slide away with them and leave the
+   markers standing on nothing. It starts at 9px — the spine's x in the rail's own coordinates, once
+   the -2px offset below is accounted for — so the corner is a join and not a crossing. */
+[data-pmx-thread="t3"] .t3-run-rail {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  /* Only as wide as its markers until it reaches the column, so the LENGTH of the segment is the
+     number of phases entered. Past that it stops widening and scrolls, which is what keeps the
+     headline's x constant no matter how much work the run does. */
+  justify-self: start;
+  max-width: 100%;
+  /* -2px puts the first 19px marker's centre on the spine at 7.5px. The corner is exact rather than
+     approximately aligned, which is the whole claim this geometry is making. */
+  margin-left: -2px;
+  gap: 5px;
+  padding: 2px 0;
+  background: linear-gradient(var(--border), var(--border)) no-repeat 9px 50% / 100% 1px;
+}
+
+[data-pmx-thread="t3"] .t3-run-node {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 19px;
+  height: 19px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  /* Opaque, so the segment passes behind the marker rather than through it. */
+  background: var(--background);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color var(--motion-fast) var(--ease-default),
+              border-color var(--motion-fast) var(--ease-default),
+              transform var(--motion-fast) var(--ease-default);
+}
+
+/* The same 1.12 lift the question markers and the work-unit markers already answer hover with, so
+   the rail needs no interaction vocabulary of its own. */
+[data-pmx-thread="t3"] .t3-run-node:hover {
+  color: var(--text-primary);
+  border-color: var(--accent-primary);
+  transform: scale(1.12);
+}
+
+/* The RUNNING phase is accented and a finished one is a plain mark — the same distinction the
+   cluster's markers make between a working unit and a complete one. */
+[data-pmx-thread="t3"] .t3-run-node[data-state="running"] {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+/* The DISCLOSED phase wears the ring the cluster already uses for an open unit, so once the run has
+   settled the rail still says which node is being read (f.1170, f.1300). */
+[data-pmx-thread="t3"] .t3-run-node[data-open="1"] {
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary) 20%, transparent);
+}
+
+[data-pmx-thread="t3"] .t3-run-head {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  align-items: baseline;
+  gap: var(--xs);
+  justify-self: start;
+  max-width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  font-size: var(--fs-xs);
+  /* Tabular figures, so rewriting a 6 into a 7 cannot change the number's width and shove the word
+     beside it. This is the layout half of what makes countMorph read as one running tally rather
+     than as a series of different sentences. */
+  font-variant-numeric: tabular-nums;
+}
+
+/* Verb at full contrast, argument muted. A reader scanning a settled run reads a column of verbs,
+   which is what makes the past-tense flip legible without reading the whole line. */
+[data-pmx-thread="t3"] .t3-run-verb { color: var(--text-primary); font-weight: 600; white-space: nowrap; }
+[data-pmx-thread="t3"] .t3-run-arg {
+  min-width: 0;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* The chevron is one element for the whole life of the spur rather than one that comes and goes, so
+   the headline it sits in is never rebuilt around it. A run with a single phase and nothing condensed
+   has nothing to disclose, and an empty inline-flex box would still spend the row's gap — so it is
+   hidden outright rather than left standing empty. */
+[data-pmx-thread="t3"] .t3-run-chevron { display: inline-flex; align-self: center; color: var(--text-muted); }
+[data-pmx-thread="t3"] .t3-run-chevron[data-show="0"] { display: none; }
+
+[data-pmx-thread="t3"] .t3-run-detail {
+  grid-column: 2;
+  grid-row: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--xs) 0 var(--sm) 0;
+}
+
+/* The stage-row shape this concept already uses: a small-caps key in a fixed column, its subject
+   beside it. Reusing it is what keeps the run's rows and the activity detail's rows one vocabulary. */
+[data-pmx-thread="t3"] .t3-run-row { display: flex; align-items: baseline; gap: var(--xs); font-size: var(--fs-xs); }
+[data-pmx-thread="t3"] .t3-run-row-verb {
+  flex: 0 0 auto;
+  min-width: 62px;
+  font-size: var(--fs-2xs);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+[data-pmx-thread="t3"] .t3-run-row-target {
+  min-width: 0;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+[data-pmx-thread="t3"] .t3-run-delta {
+  margin-left: auto;
+  display: inline-flex;
+  gap: var(--xs);
+  font-size: var(--fs-2xs);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+[data-pmx-thread="t3"] .t3-run-add { color: var(--accent-lime); }
+[data-pmx-thread="t3"] .t3-run-rem { color: var(--accent-error); }
+
+/* The operation record. A hairline above it and nothing else: no card, no pill, no chip box, because
+   the record is part of the phase it belongs to rather than an object parked inside it. */
+[data-pmx-thread="t3"] .t3-run-op {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: var(--xs);
+  padding-top: var(--xs);
+  border-top: 1px solid var(--border);
+  max-width: 68ch;
+}
+[data-pmx-thread="t3"] .t3-run-op-head { display: flex; align-items: baseline; gap: var(--xs); flex-wrap: wrap; }
+[data-pmx-thread="t3"] .t3-run-op-title { font-size: var(--fs-xs); font-weight: 600; color: var(--text-primary); }
+
+/* Status as a WORD, in the same small-caps treatment every key in the record uses. A coloured
+   capsule here would be the first pill on a spine that has none. */
+[data-pmx-thread="t3"] .t3-run-op-status {
+  font-size: var(--fs-2xs);
+  letter-spacing: .04em;
+  color: var(--text-muted);
+}
+[data-pmx-thread="t3"] .t3-run-op[data-status="running"] .t3-run-op-status { color: var(--accent-primary); }
+[data-pmx-thread="t3"] .t3-run-op-why {
+  margin: 0 0 var(--xs) 0;
+  font-size: var(--fs-xs);
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+[data-pmx-thread="t3"] .t3-run-field { display: flex; align-items: baseline; gap: var(--xs); }
+[data-pmx-thread="t3"] .t3-run-key {
+  flex: 0 0 auto;
+  min-width: 62px;
+  font-size: var(--fs-2xs);
+  letter-spacing: .04em;
+  color: var(--text-muted);
+}
+[data-pmx-thread="t3"] .t3-run-val { min-width: 0; font-size: var(--fs-xs); color: var(--text-primary); overflow-wrap: anywhere; }
+
+/* The two fields that are literally code get the mono face the advice node's evidence refs use, so a
+   command id and an operation input are never mistaken for prose. */
+[data-pmx-thread="t3"] .t3-run-val[data-key="COMMAND"],
+[data-pmx-thread="t3"] .t3-run-val[data-key="OPERATION_INPUT"] { font-family: var(--mono-font); font-size: var(--fs-2xs); }
+
+[data-pmx-thread="t3"] .t3-run-chips { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--xs); margin-top: var(--xs); }
+[data-pmx-thread="t3"] .t3-run-chip { font-size: var(--fs-2xs); color: var(--text-muted); }
+[data-pmx-thread="t3"] .t3-run-chip-id { font-size: var(--fs-2xs); color: var(--text-muted); font-family: var(--mono-font); }
+
+[data-pmx-thread="t3"] .t3-run-foot {
+  grid-column: 2;
+  grid-row: 4;
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* At the width where the cluster's marker column widens to 18px, the rail's offset has to follow it
+   or the corner stops being a join. 19px marker in an 18px column: -1px puts its centre on 9px, which
+   is where the narrow spine sits. */
+@container pmx-thread (max-width: 620px) {
+  [data-pmx-thread="t3"] .t3-run { grid-template-columns: 18px minmax(0, 1fr); }
+  [data-pmx-thread="t3"] .t3-run::before { left: 9px; }
+  [data-pmx-thread="t3"] .t3-run-rail { margin-left: -1px; background-position: 10px 50%; }
+  [data-pmx-thread="t3"] .t3-run-key, [data-pmx-thread="t3"] .t3-run-row-verb { min-width: 72px; }
+}
+
+[data-motion="reduced"] [data-pmx-thread="t3"] .t3-run-node { transition: none !important; }

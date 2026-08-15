@@ -7,6 +7,13 @@ what it CONTRADICTS, and what it NEEDS from the owner to be implementable.
 "Contradicts: nothing" is a real answer and appears where it is true. Padding it with a
 hypothetical disagreement would make the sections that do contain one harder to find.
 
+**Updated 2026-08-14 for the reference-media correction.** The four raw recordings were missing from
+the original packet, and reproducing what they show added one runtime owner and two candidate command
+ids. The new material is at the end, in `Assistant activity run` and in the additions to
+`Testing/Browser/Artifacts` and `Unresolved questions`; every section above them is unchanged, which
+is itself the finding — reproducing the reference changed how this concept RENDERS work, not what it
+asks of any plan owner.
+
 | Owner | Contradicts something | Needs something new |
 |---|---|---|
 | assistant-chat-design | no | yes |
@@ -30,6 +37,7 @@ hypothetical disagreement would make the sections that do contain one harder to 
 | Server/Project Sync integration | YES | yes |
 | Notifications | YES | yes |
 | Settings inventory | no | yes |
+| Assistant activity run | no | yes |
 
 ## assistant-chat-design
 
@@ -175,6 +183,15 @@ hypothetical disagreement would make the sections that do contain one harder to 
 
 **Needs.** Confirmation of the vocabulary in the shipped strings, and an artifact identity for a TestCapture.
 
+**Added 2026-08-14.** A motion claim needs a measurement that can refute it. Two behaviours in this
+workspace passed review while moving nothing — ten of thirteen transition families added a CSS class
+no stylesheet defined, and every morphed count digit came to rest on its own first frame — and
+neither was catchable by reading the code or by an assertion counting dispatches. What caught them
+was sampling the rendered result: text, class, computed style and the y-coordinate of a row before
+and after a tick. If the platform intends motion to be part of its acceptance criteria at all, the
+owner needs to decide whether that kind of rendered-state assertion is in scope for its test estate,
+because a suite that only counts events cannot tell a played animation from a declared one.
+
 ## Server/Project Sync integration
 
 **Assumes.** Transport and domain are separate axes; host-owned Goals continue when the client closes; catch-up uses a snapshot.
@@ -198,6 +215,26 @@ hypothetical disagreement would make the sections that do contain one harder to 
 **Contradicts.** Nothing.
 
 **Needs.** A deep-link target per account plus a return context so the user lands back on the thread they left.
+
+## Assistant activity run
+
+**Assumes.** A turn's tool work is ONE run with ordered phases, not a flat list of tool calls: each
+phase has a kind, a present and a past label, a countable unit, and its own rows. The client is free
+to show a phase as running or settled, to grow its count in place, and to disclose any single phase
+of a finished run without replaying it.
+
+**Contradicts.** Nothing in canon, because canon does not model this. `03_compact_execution_activity.mov`
+shows behaviour no plan owner currently specifies — a condensed run that remains randomly accessible
+by phase — and this concept had to invent the record for it (`shared/runtrace.js`).
+
+**Needs.** A decision on where the run record lives. This concept keeps entry order, the running
+phase, partial counts and the disclosed phase in per-thread view state, and reads the phase FACTS
+(labels, target counts, durations, operation fields) from the turn's own record. If the platform
+intends the run to be durable — resumable across a reload, or readable by another surface — the
+ordering and the partial counts belong to the owner rather than to a view slice. Two candidate
+command ids are minted for the disclosure itself and recorded in `candidate-command-delta.json`
+(`cmd.chat.activity.open_phase`, `cmd.chat.activity.close_phase`); whether disclosing a record is a
+Command at all is the open question.
 
 ## Unresolved questions
 

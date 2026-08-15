@@ -1,0 +1,200 @@
+{
+  "schema_id": "pm.settings.reference_review_report.v1",
+  "model": "CursorAuto",
+  "folder": "Concepts/settings-redesign-concepts/CursorAuto",
+  "generated": "2026-08-14T02:02:43Z",
+  "correction_packet": "PM_Settings_Dependency_and_Work_Correction_2026-08-13",
+  "target_packet": "PM_Settings_Bakeoff_Final_Cumulative_2026-08-08",
+  "winner_selected": false,
+  "winner_selection_statement": "No winner is claimed or selected among Harbor, Score, Switchboard, or Archive.",
+  "references_opened": [
+    {
+      "path": "PM_Settings_Dependency_and_Work_Correction_2026-08-13/00_READ_ME_FIRST.md",
+      "opened": true,
+      "prior_omission": false,
+      "purpose": "Correction framing; required outputs"
+    },
+    {
+      "path": "PM_Settings_Dependency_and_Work_Correction_2026-08-13/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md",
+      "opened": true,
+      "prior_omission": true,
+      "purpose": "Performance/Settings authorities \u00a7\u00a77,8,11,12.4,20,23; RuntimeResourceGovernor; ObservableWork",
+      "note": "Omitted from original bakeoff archive root; not cited by prior CursorAuto FINDINGS/TEST_REPORT."
+    },
+    {
+      "path": "PM_Settings_Dependency_and_Work_Correction_2026-08-13/PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "opened": true,
+      "prior_omission": "path_misreference_risk",
+      "purpose": "Final provider-CLI acquisition adjudication"
+    },
+    {
+      "path": "PM_Settings_Dependency_and_Work_Correction_2026-08-13/REFERENCE_REVIEW_AND_REPAIR_REQUIREMENTS.md",
+      "opened": true,
+      "prior_omission": true,
+      "purpose": "Required review checklist"
+    },
+    {
+      "path": "PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/03_PROVIDER_AGENT_MODEL_AND_INSTALLATION.md",
+      "opened": true,
+      "prior_omission": false,
+      "purpose": "Original provider/install object model"
+    },
+    {
+      "path": "PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/MANAGER_COVERAGE_MATRIX.json",
+      "opened": true,
+      "prior_omission": false,
+      "purpose": "concept_1..4 required managers"
+    },
+    {
+      "path": "PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/IMPACT_REGISTER.template.json",
+      "opened": true,
+      "prior_omission": false,
+      "purpose": "Candidate impact schema"
+    }
+  ],
+  "prior_omissions": [
+    {
+      "id": "omit-perf-register",
+      "summary": "Full Performance decision register absent from original bakeoff packet tree used by prior CursorAuto pass.",
+      "material": true
+    },
+    {
+      "id": "omit-ow-projection",
+      "summary": "ObservableWork named only in wiring trace_rule; no shared projection helper.",
+      "material": true
+    },
+    {
+      "id": "omit-shell-first-hydration",
+      "summary": "defaultSeed eagerly cloned all manager keys; no disposeActiveScope; large lists fully materialized.",
+      "material": true
+    },
+    {
+      "id": "omit-cli-framing",
+      "summary": "Seeded installed fixtures lacked post-consent framing; baseline hint said shipped; raw paths in normal GUI.",
+      "material": true
+    }
+  ],
+  "affected_concepts": [
+    "concept-01-harbor",
+    "concept-02-score",
+    "concept-03-switchboard",
+    "concept-04-archive"
+  ],
+  "defects_and_changes": [
+    {
+      "id": "D1",
+      "authority": "PROVIDER_CLI_FINAL_ADJUDICATION + packet 03",
+      "change": "Fixture framing; installAction host/environment/official source; policy copy; Advanced-only paths; setup deep-link; baseline hint; Provider Setup Required notice"
+    },
+    {
+      "id": "D2",
+      "authority": "decision register \u00a711",
+      "change": "Added ca-observable-work.js; Install phases; manager OW hosts; CSS; script tags"
+    },
+    {
+      "id": "D3",
+      "authority": "decision register \u00a7\u00a77, 20.2",
+      "change": "Shell-first defaultSeed + hydrateManager; disposeActiveScope; virtualized lists; scope timers"
+    },
+    {
+      "id": "D4",
+      "authority": "REFERENCE_REVIEW + \u00a723",
+      "change": "loading/offline states; QA correction probes; candidate Plan/Command/Wiring/DRY/impact updates"
+    }
+  ],
+  "changed_paths": [
+    "Concepts/settings-redesign-concepts/CursorAuto/shared/lib/ca-observable-work.js",
+    "Concepts/settings-redesign-concepts/CursorAuto/shared/lib/ca-views.js",
+    "Concepts/settings-redesign-concepts/CursorAuto/shared/lib/ca-managers.js",
+    "Concepts/settings-redesign-concepts/CursorAuto/shared/lib/ca-states.js",
+    "Concepts/settings-redesign-concepts/CursorAuto/shared/css/ca-components.css",
+    "Concepts/settings-redesign-concepts/CursorAuto/shared/data/pm-settings-demo.js",
+    "Concepts/settings-redesign-concepts/CursorAuto/shared/data/pm-settings-demo-extra.js",
+    "Concepts/settings-redesign-concepts/CursorAuto/concept-01-harbor.html",
+    "Concepts/settings-redesign-concepts/CursorAuto/concept-02-score.html",
+    "Concepts/settings-redesign-concepts/CursorAuto/concept-03-switchboard.html",
+    "Concepts/settings-redesign-concepts/CursorAuto/concept-04-archive.html",
+    "Concepts/settings-redesign-concepts/CursorAuto/concepts/harbor/",
+    "Concepts/settings-redesign-concepts/CursorAuto/concepts/score/",
+    "Concepts/settings-redesign-concepts/CursorAuto/concepts/switchboard/",
+    "Concepts/settings-redesign-concepts/CursorAuto/concepts/archive/",
+    "Concepts/settings-redesign-concepts/CursorAuto/scripts/ca-interactive-qa.py",
+    "Concepts/settings-redesign-concepts/CursorAuto/reference-review-report.json",
+    "Concepts/settings-redesign-concepts/CursorAuto/FINDINGS.md",
+    "Concepts/settings-redesign-concepts/CursorAuto/TEST_REPORT.md",
+    "Concepts/settings-redesign-concepts/CursorAuto/IMPACT_REGISTER.json"
+  ],
+  "tests_rerun": [
+    {
+      "name": "ConceptHub validate",
+      "command": "python Concepts/ConceptHub/validate.py Concepts/settings-redesign-concepts/CursorAuto",
+      "result": "pass",
+      "evidence": "Concept validation passed: Concepts\\settings-redesign-concepts\\CursorAuto"
+    },
+    {
+      "name": "CursorAuto interactive QA (post-approval)",
+      "command": "python Concepts/settings-redesign-concepts/CursorAuto/scripts/ca-interactive-qa.py --json-out Concepts/settings-redesign-concepts/CursorAuto/scripts/qa-last-run.json",
+      "result": "pass",
+      "evidence": {
+        "ok": true,
+        "failures": [],
+        "concepts": [
+          {
+            "id": "harbor",
+            "ok": true,
+            "installations": true,
+            "correction_hydration_ow": true,
+            "correction_lazy_manager": true,
+            "correction_loading_offline_states": true,
+            "theme": true,
+            "motion": true,
+            "width": true
+          },
+          {
+            "id": "score",
+            "ok": true,
+            "installations": true,
+            "correction_hydration_ow": true,
+            "correction_lazy_manager": true,
+            "correction_loading_offline_states": true,
+            "theme": true,
+            "motion": true,
+            "width": true
+          },
+          {
+            "id": "switchboard",
+            "ok": true,
+            "installations": true,
+            "correction_hydration_ow": true,
+            "correction_lazy_manager": true,
+            "correction_loading_offline_states": true,
+            "theme": true,
+            "motion": true,
+            "width": true
+          },
+          {
+            "id": "archive",
+            "ok": true,
+            "installations": true,
+            "correction_hydration_ow": true,
+            "correction_lazy_manager": true,
+            "correction_loading_offline_states": true,
+            "theme": true,
+            "motion": true,
+            "width": true
+          }
+        ]
+      }
+    }
+  ],
+  "unresolved_defects": [
+    "Concept demos cannot host a real RuntimeResourceGovernor; permit outcomes are projected language only.",
+    "CDP fallback QA path may not include every new correction probe (Playwright path is primary).",
+    "Search index still builds from in-memory fixtures at open (no external probe storm); not fully split into shell vs manager detail indexes."
+  ],
+  "material_effect": {
+    "omission_materially_affected_work": true,
+    "evidence": "Prior CursorAuto bakeoff lacked decision-register citations, lacked CAObservableWork, eagerly seeded all manager keys, exposed raw installation paths in normal GUI, and framed baseline demo as shipped. Correction added OW projection, shell-first hydration, CLI policy copy, Advanced-only paths, and candidate register updates."
+  },
+  "approval": "User approved correction plan; post-approval validate + interactive QA re-run."
+}

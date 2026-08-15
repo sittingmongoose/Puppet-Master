@@ -1,421 +1,1241 @@
 {
-  "schema_id": "pm.settings_manager_coverage.v1",
+  "schema_id": "pm.settings_manager_coverage.v2",
   "concept_id": "concept-03-wayfinder",
   "model": "5.6 Sol",
-  "concept_thesis": "Guided toolchain routes with explicit setup, verification, and recovery checkpoints.",
-  "shared_required": [
+  "concept_thesis": "Tool-oriented wayfinding across files, terminals, language services, extensions, commands, and tests.",
+  "authority_basis": "40-row original manager matrix plus 7 correction extensions",
+  "source_family_count": 47,
+  "classification_vocabulary": [
+    "demonstrated",
+    "shared_grammar",
+    "deferred_named_owner",
+    "missing"
+  ],
+  "classification_counts": {
+    "demonstrated": 16,
+    "shared_grammar": 26,
+    "deferred_named_owner": 3,
+    "missing": 2
+  },
+  "full_classification_matrix": [
     {
-      "family": "Full quiet PM shell",
-      "route": "all concept pages",
-      "evidence": [
-        ".pm-shell",
-        ".shell-topbar",
-        ".activity-bar",
-        ".project-rail",
-        ".assistant-panel",
-        ".status-bar"
-      ],
-      "status": "demonstrated"
-    },
-    {
+      "source_family_id": "settings-home",
+      "source_group": "core",
       "family": "Settings Home",
-      "route": "#home",
-      "evidence": [
-        "[data-view-heading]",
-        ".manager-directory",
-        ".persistence-bar",
-        ".fixture-tray"
+      "destination_id": "settings-home",
+      "evidence_ids": [
+        "search-metadata:category.experience"
       ],
-      "status": "demonstrated"
+      "classification": "demonstrated",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "settings-home"
+      }
     },
     {
+      "source_family_id": "settings-search",
+      "source_group": "core",
       "family": "Settings Search",
-      "route": "#home and every workspace/manager",
-      "evidence": [
-        "[data-search-input]",
-        "[data-search-results]",
-        "aria-activedescendant",
-        "Cmd/Ctrl+K"
+      "destination_id": "settings-search",
+      "evidence_ids": [
+        "search-metadata:action.refresh-provider-catalogues"
       ],
-      "status": "demonstrated"
+      "classification": "demonstrated",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "settings-search"
+      }
     },
     {
+      "source_family_id": "settings-workspace",
+      "source_group": "core",
       "family": "Settings Workspace",
-      "route": "#category/<category>/<subcategory>",
-      "evidence": [
-        "category navigation",
-        "continuous setting document",
-        "scrollspy",
-        "deep-link focus"
+      "destination_id": "settings-workspace",
+      "evidence_ids": [
+        "search-metadata:setting.experience.startup.page"
       ],
-      "status": "demonstrated"
+      "classification": "demonstrated",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "settings-workspace"
+      }
     },
     {
+      "source_family_id": "provider-account-model-installation",
+      "source_group": "core",
+      "family": "Provider / Account / Model / Installation",
+      "destination_id": "providers",
+      "evidence_ids": [
+        "fixture:provider-selected-shadowed",
+        "fixture:provider-unknown-owner",
+        "fixture:provider-not-installed"
+      ],
+      "classification": "demonstrated",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "providers"
+      }
+    },
+    {
+      "source_family_id": "ordinary-setting-grammar",
+      "source_group": "core",
       "family": "Ordinary setting grammar",
-      "route": "all categories",
-      "evidence": [
-        "default/custom/inherited/managed/unavailable/validation/restart/reconnect/requested-effective"
+      "destination_id": "ordinary-setting-grammar",
+      "evidence_ids": [
+        "fixture:managed-setting",
+        "fixture:unavailable-setting",
+        "fixture:changed-elsewhere"
       ],
-      "status": "demonstrated"
+      "classification": "demonstrated",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "ordinary-setting-grammar"
+      }
     },
     {
-      "family": "Provider / Account / Model / Installation",
-      "route": "#manager/providers/<tab>",
-      "evidence": [
-        "overview",
-        "accounts",
-        "models",
-        "installations",
-        "usage",
-        "routing",
-        "roles",
-        "support"
+      "source_family_id": "context-instructions",
+      "source_group": "concept_1",
+      "family": "Context & Instructions",
+      "destination_id": "context",
+      "evidence_ids": [
+        "search-metadata:manager.context"
       ],
-      "status": "demonstrated"
-    }
-  ],
-  "assigned_manager_families": [
-    {
-      "manager_id": "providers",
-      "family": "Provider / Account / Model / Installation",
-      "assignment": "shared_core",
-      "route": "#manager/providers/installations",
-      "deep_link_example": "#manager/providers/installations",
-      "resource_count": 7,
-      "primary_actions": [
-        "discover installations",
-        "select installation",
-        "authenticate at correct owner",
-        "refresh catalogue",
-        "update",
-        "verify",
-        "roll back",
-        "select future account/model route"
-      ],
-      "deterministic_fixture_ids": [
-        "provider-selected-shadowed",
-        "provider-unknown-owner",
-        "provider-cli-oauth-signed-out",
-        "provider-not-installed",
-        "provider-catalog-stale",
-        "provider-refresh-last-good",
-        "provider-route-difference"
-      ],
-      "required_states_demonstrated": [
-        "loading/lazy hydration",
-        "empty or unconfigured",
-        "error/validation failure",
-        "unavailable",
-        "managed/inherited",
-        "requested/effective difference"
-      ],
-      "test_probe": "PMSettingsDemo.openManager('providers'); PMSettingsDemo.whenIdle();",
-      "status": "demonstrated",
-      "named_owner_docs": []
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "context"
+      }
     },
     {
-      "manager_id": "file-manager",
-      "family": "File Manager & Editor",
-      "assignment": "assigned",
-      "route": "#manager/file-manager/overview",
-      "deep_link_example": "#manager/file-manager/overview?resource=editor-default",
-      "resource_count": 3,
-      "primary_actions": [
-        "select editor/file route",
-        "inspect remote/local owner",
-        "test open behavior"
+      "source_family_id": "memory",
+      "source_group": "concept_1",
+      "family": "Memory",
+      "destination_id": "memory",
+      "evidence_ids": [
+        "search-metadata:manager.memory"
       ],
-      "deterministic_fixture_ids": [],
-      "required_states_demonstrated": [
-        "loading/lazy hydration",
-        "empty or unconfigured",
-        "error/validation failure",
-        "unavailable",
-        "managed/inherited",
-        "requested/effective difference"
-      ],
-      "test_probe": "PMSettingsDemo.openManager('file-manager'); PMSettingsDemo.whenIdle();",
-      "status": "demonstrated",
-      "named_owner_docs": []
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "memory"
+      }
     },
     {
-      "manager_id": "terminal",
+      "source_family_id": "personas",
+      "source_group": "concept_1",
+      "family": "Personas",
+      "destination_id": "personas",
+      "evidence_ids": [
+        "search-metadata:manager.personas"
+      ],
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "personas"
+      }
+    },
+    {
+      "source_family_id": "goal-automation",
+      "source_group": "concept_1",
+      "family": "Goal & Automation",
+      "destination_id": "goal-automation",
+      "evidence_ids": [
+        "search-metadata:manager.goal-automation"
+      ],
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "goal-automation"
+      }
+    },
+    {
+      "source_family_id": "crew",
+      "source_group": "concept_1",
+      "family": "Crew",
+      "destination_id": "crew",
+      "evidence_ids": [
+        "search-metadata:manager.crew"
+      ],
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "crew"
+      }
+    },
+    {
+      "source_family_id": "permissions-filesafe",
+      "source_group": "concept_1",
+      "family": "Permissions & FileSafe",
+      "destination_id": "permissions-filesafe",
+      "evidence_ids": [
+        "search-metadata:manager.permissions-filesafe"
+      ],
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "permissions-filesafe"
+      }
+    },
+    {
+      "source_family_id": "back-seat-driver",
+      "source_group": "concept_1",
+      "family": "Back Seat Driver",
+      "destination_id": "back-seat-driver",
+      "evidence_ids": [
+        "search-metadata:manager.back-seat-driver"
+      ],
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "back-seat-driver"
+      }
+    },
+    {
+      "source_family_id": "notifications-sounds",
+      "source_group": "concept_2",
+      "family": "Notifications & Sounds",
+      "destination_id": "notifications-sounds",
+      "evidence_ids": [
+        "search-metadata:manager.notifications-sounds"
+      ],
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "notifications-sounds"
+      }
+    },
+    {
+      "source_family_id": "sound-library-uploads-packs",
+      "source_group": "concept_2",
+      "family": "Sound Library / Uploads / Packs",
+      "destination_id": "notifications-sounds",
+      "evidence_ids": [
+        "search-metadata:manager.notifications-sounds"
+      ],
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "notifications-sounds"
+      }
+    },
+    {
+      "source_family_id": "appearance",
+      "source_group": "concept_2",
+      "family": "Appearance",
+      "destination_id": "appearance",
+      "evidence_ids": [
+        "search-metadata:manager.appearance"
+      ],
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "appearance"
+      }
+    },
+    {
+      "source_family_id": "spellcheck-dictionaries",
+      "source_group": "concept_2",
+      "family": "Spellcheck & Dictionaries",
+      "destination_id": "spellcheck",
+      "evidence_ids": [
+        "search-metadata:manager.spellcheck"
+      ],
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "spellcheck"
+      }
+    },
+    {
+      "source_family_id": "desktop-tray-window",
+      "source_group": "concept_2",
+      "family": "Desktop / Tray / Window",
+      "destination_id": "desktop",
+      "evidence_ids": [
+        "search-metadata:manager.desktop"
+      ],
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "desktop"
+      }
+    },
+    {
+      "source_family_id": "teacher-help",
+      "source_group": "concept_2",
+      "family": "Teacher / Help",
+      "destination_id": "teacher-help",
+      "evidence_ids": [
+        "search-metadata:manager.teacher-help"
+      ],
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "teacher-help"
+      }
+    },
+    {
+      "source_family_id": "file-manager-editor",
+      "source_group": "concept_3",
+      "family": "File Manager / Editor",
+      "destination_id": "file-manager",
+      "evidence_ids": [
+        "resource:editor-default"
+      ],
+      "classification": "demonstrated",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "file-manager"
+      }
+    },
+    {
+      "source_family_id": "terminal",
+      "source_group": "concept_3",
       "family": "Terminal",
-      "assignment": "assigned",
-      "route": "#manager/terminal/overview",
-      "deep_link_example": "#manager/terminal/overview",
-      "resource_count": 0,
-      "primary_actions": [
-        "select profile",
-        "edit draft",
-        "apply/reset",
-        "diagnose"
+      "destination_id": "terminal",
+      "evidence_ids": [
+        "resource:pm-default"
       ],
-      "deterministic_fixture_ids": [],
-      "required_states_demonstrated": [
-        "loading/lazy hydration",
-        "empty or unconfigured",
-        "error/validation failure",
-        "unavailable",
-        "managed/inherited",
-        "requested/effective difference"
-      ],
-      "test_probe": "PMSettingsDemo.openManager('terminal'); PMSettingsDemo.whenIdle();",
-      "status": "demonstrated",
-      "named_owner_docs": []
+      "classification": "demonstrated",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "terminal"
+      }
     },
     {
-      "manager_id": "lsp",
+      "source_family_id": "lsp",
+      "source_group": "concept_3",
       "family": "LSP",
-      "assignment": "assigned",
-      "route": "#manager/lsp/overview",
-      "deep_link_example": "#manager/lsp/overview?resource=rust-analyzer",
-      "resource_count": 5,
-      "primary_actions": [
-        "add/restart server",
-        "inspect language/capability evidence"
+      "destination_id": "lsp",
+      "evidence_ids": [
+        "resource:rust-analyzer"
       ],
-      "deterministic_fixture_ids": [],
-      "required_states_demonstrated": [
-        "loading/lazy hydration",
-        "empty or unconfigured",
-        "error/validation failure",
-        "unavailable",
-        "managed/inherited",
-        "requested/effective difference"
-      ],
-      "test_probe": "PMSettingsDemo.openManager('lsp'); PMSettingsDemo.whenIdle();",
-      "status": "demonstrated",
-      "named_owner_docs": []
+      "classification": "demonstrated",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "lsp"
+      }
     },
     {
-      "manager_id": "formatters",
+      "source_family_id": "formatters",
+      "source_group": "concept_3",
       "family": "Formatters",
-      "assignment": "assigned",
-      "route": "#manager/formatters/overview",
-      "deep_link_example": "#manager/formatters/overview?resource=formatter-js",
-      "resource_count": 3,
-      "primary_actions": [
-        "add/test formatter",
-        "resolve owner conflict",
-        "set requested/effective route"
+      "destination_id": "formatters",
+      "evidence_ids": [
+        "resource:formatter-js"
       ],
-      "deterministic_fixture_ids": [],
-      "required_states_demonstrated": [
-        "loading/lazy hydration",
-        "empty or unconfigured",
-        "error/validation failure",
-        "unavailable",
-        "managed/inherited",
-        "requested/effective difference"
-      ],
-      "test_probe": "PMSettingsDemo.openManager('formatters'); PMSettingsDemo.whenIdle();",
-      "status": "demonstrated",
-      "named_owner_docs": []
+      "classification": "demonstrated",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "formatters"
+      }
     },
     {
-      "manager_id": "commands-shortcuts",
+      "source_family_id": "commands-shortcuts",
+      "source_group": "concept_3",
       "family": "Commands & Shortcuts",
-      "assignment": "assigned",
-      "route": "#manager/commands-shortcuts/overview",
-      "deep_link_example": "#manager/commands-shortcuts/overview?resource=cmd-settings-open",
-      "resource_count": 3,
-      "primary_actions": [
-        "create/edit/dry-run command",
-        "record/reset/import/export shortcut"
+      "destination_id": "commands-shortcuts",
+      "evidence_ids": [
+        "resource:cmd-settings-open"
       ],
-      "deterministic_fixture_ids": [],
-      "required_states_demonstrated": [
-        "loading/lazy hydration",
-        "empty or unconfigured",
-        "error/validation failure",
-        "unavailable",
-        "managed/inherited",
-        "requested/effective difference"
-      ],
-      "test_probe": "PMSettingsDemo.openManager('commands-shortcuts'); PMSettingsDemo.whenIdle();",
-      "status": "demonstrated",
-      "named_owner_docs": []
+      "classification": "demonstrated",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "commands-shortcuts"
+      }
     },
     {
-      "manager_id": "mcp",
+      "source_family_id": "mcp",
+      "source_group": "concept_3",
       "family": "MCP",
-      "assignment": "assigned",
-      "route": "#manager/mcp/overview",
-      "deep_link_example": "#manager/mcp/overview?resource=github-server",
-      "resource_count": 4,
-      "primary_actions": [
-        "add/reconnect/restart server",
-        "inspect exposure and approvals"
+      "destination_id": "mcp",
+      "evidence_ids": [
+        "resource:github-server"
       ],
-      "deterministic_fixture_ids": [
-        "reconnect-required"
-      ],
-      "required_states_demonstrated": [
-        "loading/lazy hydration",
-        "empty or unconfigured",
-        "error/validation failure",
-        "unavailable",
-        "managed/inherited",
-        "requested/effective difference"
-      ],
-      "test_probe": "PMSettingsDemo.openManager('mcp'); PMSettingsDemo.whenIdle();",
-      "status": "demonstrated",
-      "named_owner_docs": []
+      "classification": "demonstrated",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "mcp"
+      }
     },
     {
-      "manager_id": "skills",
+      "source_family_id": "skills",
+      "source_group": "concept_3",
       "family": "Skills",
-      "assignment": "assigned",
-      "route": "#manager/skills/overview",
-      "deep_link_example": "#manager/skills/overview?resource=skill-plan-audit",
-      "resource_count": 2,
-      "primary_actions": [
-        "inspect source",
-        "set up dependency",
-        "review permission requirement"
+      "destination_id": "skills",
+      "evidence_ids": [
+        "resource:skill-plan-audit"
       ],
-      "deterministic_fixture_ids": [],
-      "required_states_demonstrated": [
-        "loading/lazy hydration",
-        "empty or unconfigured",
-        "error/validation failure",
-        "unavailable",
-        "managed/inherited",
-        "requested/effective difference"
-      ],
-      "test_probe": "PMSettingsDemo.openManager('skills'); PMSettingsDemo.whenIdle();",
-      "status": "demonstrated",
-      "named_owner_docs": []
+      "classification": "demonstrated",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "skills"
+      }
     },
     {
-      "manager_id": "plugins",
+      "source_family_id": "plugins",
+      "source_group": "concept_3",
       "family": "Plugins",
-      "assignment": "assigned",
-      "route": "#manager/plugins/overview",
-      "deep_link_example": "#manager/plugins/overview?resource=plugin-jj",
-      "resource_count": 2,
-      "primary_actions": [
-        "install/update/disable plugin",
-        "show restart requirement"
+      "destination_id": "plugins",
+      "evidence_ids": [
+        "resource:plugin-jj"
       ],
-      "deterministic_fixture_ids": [
-        "restart-required"
-      ],
-      "required_states_demonstrated": [
-        "loading/lazy hydration",
-        "empty or unconfigured",
-        "error/validation failure",
-        "unavailable",
-        "managed/inherited",
-        "requested/effective difference"
-      ],
-      "test_probe": "PMSettingsDemo.openManager('plugins'); PMSettingsDemo.whenIdle();",
-      "status": "demonstrated",
-      "named_owner_docs": []
+      "classification": "demonstrated",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "plugins"
+      }
     },
     {
-      "manager_id": "tools",
+      "source_family_id": "tools",
+      "source_group": "concept_3",
       "family": "Tools",
-      "assignment": "assigned",
-      "route": "#manager/tools/overview",
-      "deep_link_example": "#manager/tools/overview?resource=tool-ripgrep",
-      "resource_count": 3,
-      "primary_actions": [
-        "enable/disable/test tool",
-        "inspect unavailable reason"
+      "destination_id": "tools",
+      "evidence_ids": [
+        "resource:tool-ripgrep"
       ],
-      "deterministic_fixture_ids": [
-        "unavailable-setting"
-      ],
-      "required_states_demonstrated": [
-        "loading/lazy hydration",
-        "empty or unconfigured",
-        "error/validation failure",
-        "unavailable",
-        "managed/inherited",
-        "requested/effective difference"
-      ],
-      "test_probe": "PMSettingsDemo.openManager('tools'); PMSettingsDemo.whenIdle();",
-      "status": "demonstrated",
-      "named_owner_docs": []
+      "classification": "demonstrated",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "tools"
+      }
     },
     {
-      "manager_id": "testing-debug",
+      "source_family_id": "testing-debug",
+      "source_group": "concept_3",
       "family": "Testing & Debug",
-      "assignment": "assigned",
-      "route": "#manager/testing-debug/overview",
-      "deep_link_example": "#manager/testing-debug/overview?resource=test-browser",
-      "resource_count": 5,
-      "primary_actions": [
-        "set Auto/On/Off",
-        "run/watch test",
-        "open evidence",
-        "debug/stop/recover"
+      "destination_id": "testing-debug",
+      "evidence_ids": [
+        "resource:test-browser"
       ],
-      "deterministic_fixture_ids": [
-        "testing-unavailable",
-        "lazy-hydration"
+      "classification": "demonstrated",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "testing-debug"
+      }
+    },
+    {
+      "source_family_id": "storage-retention",
+      "source_group": "concept_4",
+      "family": "Storage & Retention",
+      "destination_id": "storage-retention",
+      "evidence_ids": [
+        "search-metadata:manager.storage-retention"
       ],
-      "required_states_demonstrated": [
-        "loading/lazy hydration",
-        "empty or unconfigured",
-        "error/validation failure",
-        "unavailable",
-        "managed/inherited",
-        "requested/effective difference"
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "storage-retention"
+      }
+    },
+    {
+      "source_family_id": "backup-restore",
+      "source_group": "concept_4",
+      "family": "Backup & Restore",
+      "destination_id": "backup-restore",
+      "evidence_ids": [
+        "search-metadata:manager.backup-restore"
       ],
-      "test_probe": "PMSettingsDemo.openManager('testing-debug'); PMSettingsDemo.whenIdle();",
-      "status": "demonstrated",
-      "named_owner_docs": []
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "backup-restore"
+      }
+    },
+    {
+      "source_family_id": "settings-lifecycle",
+      "source_group": "concept_4",
+      "family": "Settings Lifecycle",
+      "destination_id": "settings-lifecycle",
+      "evidence_ids": [
+        "search-metadata:manager.settings-lifecycle"
+      ],
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "settings-lifecycle"
+      }
+    },
+    {
+      "source_family_id": "history-sessions",
+      "source_group": "concept_4",
+      "family": "History & Sessions",
+      "destination_id": "history-sessions",
+      "evidence_ids": [
+        "search-metadata:manager.history-sessions"
+      ],
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "history-sessions"
+      }
+    },
+    {
+      "source_family_id": "runtime-artifacts",
+      "source_group": "concept_4",
+      "family": "Runtime Artifacts",
+      "destination_id": "runtime-artifacts",
+      "evidence_ids": [
+        "search-metadata:manager.runtime-artifacts"
+      ],
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "runtime-artifacts"
+      }
+    },
+    {
+      "source_family_id": "source-control-worktrees",
+      "source_group": "concept_4",
+      "family": "Source Control / Worktrees",
+      "destination_id": "source-control-worktrees",
+      "evidence_ids": [
+        "search-metadata:manager.source-control-worktrees"
+      ],
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "source-control-worktrees"
+      }
+    },
+    {
+      "source_family_id": "github-actions",
+      "source_group": "concept_4",
+      "family": "GitHub Actions",
+      "destination_id": "github-actions",
+      "evidence_ids": [
+        "search-metadata:manager.github-actions"
+      ],
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "github-actions"
+      }
+    },
+    {
+      "source_family_id": "containers-registries",
+      "source_group": "concept_4",
+      "family": "Containers & Registries",
+      "destination_id": "containers-registries",
+      "evidence_ids": [
+        "search-metadata:manager.containers-registries"
+      ],
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "containers-registries"
+      }
+    },
+    {
+      "source_family_id": "web-search-fetch",
+      "source_group": "concept_4",
+      "family": "Web / Search / Fetch",
+      "destination_id": "web-search-fetch",
+      "evidence_ids": [
+        "search-metadata:manager.web-search-fetch"
+      ],
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "web-search-fetch"
+      }
+    },
+    {
+      "source_family_id": "project-search-index",
+      "source_group": "concept_4",
+      "family": "Project Search Index",
+      "destination_id": "project-search-index",
+      "evidence_ids": [
+        "search-metadata:manager.project-search-index"
+      ],
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "project-search-index"
+      }
+    },
+    {
+      "source_family_id": "workspace-cleanup",
+      "source_group": "concept_4",
+      "family": "Workspace Cleanup",
+      "destination_id": "workspace-cleanup",
+      "evidence_ids": [
+        "search-metadata:manager.workspace-cleanup"
+      ],
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "workspace-cleanup"
+      }
+    },
+    {
+      "source_family_id": "future-server-module-shell",
+      "source_group": "concept_4",
+      "family": "Future Server Module Shell",
+      "destination_id": "future-server-shell",
+      "evidence_ids": [
+        "search-metadata:manager.future-server-shell"
+      ],
+      "owner": null,
+      "owner_status": "unresolved",
+      "residual_risk": "Canonical Server owner unresolved; this legacy insertion shell is inspect-only and mutation-blocked.",
+      "mutation_enabled": false,
+      "classification": "missing",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "future-server-shell"
+      }
+    },
+    {
+      "source_family_id": "media",
+      "source_group": "correction_extension",
+      "family": "Media",
+      "destination_id": "media",
+      "evidence_ids": [
+        "resource:openai-image-route"
+      ],
+      "classification": "demonstrated",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "media"
+      }
+    },
+    {
+      "source_family_id": "accessibility-input",
+      "source_group": "correction_extension",
+      "family": "Accessibility / Input",
+      "destination_id": "accessibility-input",
+      "evidence_ids": [
+        "search-metadata:manager.accessibility-input"
+      ],
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "accessibility-input"
+      }
+    },
+    {
+      "source_family_id": "dry-method",
+      "source_group": "correction_extension",
+      "family": "DRY Method visible state",
+      "destination_id": "dry-method",
+      "evidence_ids": [
+        "search-metadata:manager.dry-method"
+      ],
+      "classification": "shared_grammar",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "dry-method"
+      }
+    },
+    {
+      "source_family_id": "pm-app-content-updates",
+      "source_group": "correction_extension",
+      "family": "Puppet Master app / content updates",
+      "destination_id": "updates",
+      "owner": "Project Syncing and Updates",
+      "insertion_contract": "Insertion-only Settings destination for signed, host-scoped Puppet Master application and content update projections; no backend state machine is implemented here.",
+      "implementation_status": "not_implemented",
+      "classification": "deferred_named_owner",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "updates"
+      }
+    },
+    {
+      "source_family_id": "product-onboarding",
+      "source_group": "correction_extension",
+      "family": "Product Onboarding",
+      "destination_id": "product-onboarding",
+      "owner": "Product Onboarding",
+      "insertion_contract": "Insertion-only destination for welcome, defer/resume, Server choice, shared setup handoffs, and first Project transition.",
+      "implementation_status": "not_implemented",
+      "classification": "deferred_named_owner",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "product-onboarding"
+      }
+    },
+    {
+      "source_family_id": "doctor",
+      "source_group": "correction_extension",
+      "family": "Doctor",
+      "destination_id": "doctor",
+      "owner": "Doctor",
+      "insertion_contract": "Insertion-only destination pending reconciled cross-system health and repair handoffs.",
+      "implementation_status": "not_implemented",
+      "classification": "deferred_named_owner",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "doctor"
+      }
+    },
+    {
+      "source_family_id": "corrected-server-insertion",
+      "source_group": "correction_extension",
+      "family": "Corrected Server insertion",
+      "destination_id": "server-insertion",
+      "owner": null,
+      "owner_status": "unresolved",
+      "residual_risk": "Canonical Server owner unresolved; mutation is blocked and the insertion surface is inspect-only.",
+      "mutation_enabled": false,
+      "classification": "missing",
+      "required_state_evidence": {
+        "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+        "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+        "parameterized_fixture_ids": [
+          "manager-state.{destination_id}.loading",
+          "manager-state.{destination_id}.empty",
+          "manager-state.{destination_id}.error",
+          "manager-state.{destination_id}.offline",
+          "manager-state.{destination_id}.degraded",
+          "manager-state.{destination_id}.unavailable",
+          "manager-state.{destination_id}.managed_inherited",
+          "manager-state.{destination_id}.requested_effective"
+        ],
+        "destination_id": "server-insertion"
+      }
     }
   ],
-  "provider_fixture_coverage": {
-    "route": "#manager/providers/installations",
-    "fixtures": [
-      "ready/authenticated CLI",
-      "found but signed out",
-      "selected and shadowed installs",
-      "unknown ownership manual-only",
-      "explicit official-source install",
-      "Ask-first update",
-      "idle update",
-      "verify failure and rollback",
-      "Claude CLI-owned OAuth",
-      "OpenAI PM-direct OAuth",
-      "API key",
-      "OpenCode external server",
-      "Free Models underlying setup",
-      "ready with usage unavailable",
-      "catalog refresh last-known-good",
-      "account fallback requested/effective",
-      "Fast/Normal and effort variation"
-    ],
-    "deterministic_trigger_ids": [
-      "provider-selected-shadowed",
-      "provider-unknown-owner",
-      "provider-cli-oauth-signed-out",
-      "provider-not-installed",
-      "provider-catalog-stale",
-      "provider-refresh-last-good",
-      "provider-route-difference"
-    ],
-    "status": "demonstrated"
+  "generic_state_fixture_contract": {
+    "evidence_status": "demonstrated_by_causal_state_and_render_contract_tests",
+    "implementation_boundary": "State tests prove all eight fixtures are isolated and idempotent for every manager; renderer string tests prove every assigned route loads and one representative manager per concept renders all eight semantics. Full browser viewport and native Slint proof remain unresolved.",
+    "parameterized_fixture_ids": [
+      "manager-state.{destination_id}.loading",
+      "manager-state.{destination_id}.empty",
+      "manager-state.{destination_id}.error",
+      "manager-state.{destination_id}.offline",
+      "manager-state.{destination_id}.degraded",
+      "manager-state.{destination_id}.unavailable",
+      "manager-state.{destination_id}.managed_inherited",
+      "manager-state.{destination_id}.requested_effective"
+    ]
   },
-  "responsive_and_accessibility": {
-    "widths": [
-      900,
-      1280,
-      1700,
-      2200,
-      2500
+  "performance_review_profiles": {
+    "evidence_status": "deterministic_projection_fixture",
+    "fixture_ids": [
+      "review-profile.legacy-cpu",
+      "review-profile.low-memory",
+      "review-profile.slow-disk",
+      "review-profile.poor-network",
+      "review-profile.metered-network",
+      "review-profile.thermal-low-power",
+      "review-profile.large-catalog"
     ],
-    "squeezed_height": 640,
-    "reduced_motion": true,
-    "themes": 8,
-    "keyboard": true,
-    "focus_restoration": true,
-    "no_primary_filter_pills": true
+    "qualification": "Simulated review profiles, not hardware certification. Required review work runs in bounded waves and is never omitted."
   },
-  "missing": []
+  "unresolved_owner_questions": [
+    {
+      "source_family_id": "corrected-server-insertion",
+      "question": "What exact canonical owner and insertion contract govern the Server Settings module?",
+      "status": "unresolved",
+      "effect": "Classified missing; mutation blocked; inspect-only residual."
+    }
+  ]
 }

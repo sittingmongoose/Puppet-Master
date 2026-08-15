@@ -1,10 +1,19 @@
-/* Generates the two browser bundles this workspace loads.
+/* Generates the demo corpus and the two browser bundles this workspace loads.
  *
- *   demo/demoData.bundle.js       -> window.PMX_DEMO_DATA       (the supplied dataset, verbatim)
+ *   demo/demoData.json            -> the corpus itself, re-emitted from here
+ *   demo/demoData.bundle.js       -> window.PMX_DEMO_DATA       (that corpus, verbatim)
  *   demo/demoDataExtension.js     -> window.PMX_DEMO_EXTENSION  (our additive layer)
  *
  * Bundles exist because fetch() cannot read a sibling file over file:// in Chromium.
- * The supplied demoData.json is only ever READ here. It is never rewritten.
+ *
+ * demoData.json used to be read-only here and frozen at its supplied 349,661 bytes. That freeze is
+ * retired by explicit decision, because two elements of DEMO_SCENARIO_MANIFEST.json are facts about
+ * the corpus rather than facts an overlay can state honestly: the eighteen `history_rows` ARE the
+ * thread titles, and `user_request` IS the opening message of thread-01. Both are written into the
+ * corpus below by transforms that are idempotent — titles are assigned from a constant list by
+ * position, and the request message is upserted by id — so running this generator over its own
+ * previous output produces the same bytes. Determinism replaced the byte freeze as the property
+ * worth checking: run it twice and hash both times.
  *
  * Run:  node demo/build-demo-bundles.mjs        (from the opus-5 folder)
  */
@@ -21,6 +30,114 @@ const rnd = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296);
 const pick = (a) => a[Math.floor(rnd() * a.length)];
 
 const iso = (ms) => new Date(ms).toISOString().replace(/\.\d{3}Z$/, 'Z');
+
+/* ---------------------------------------------------------------- scenario manifest
+ *
+ * DEMO_SCENARIO_MANIFEST.json (`pm.chat_assistant_demo_scenario.v2`) is the canonical demo
+ * contract. It calls itself portable — "adapt file paths and wording to the workspace without
+ * reducing behavioral coverage" — so paths below are this workspace's real files. Names, titles,
+ * todos, warnings and the completion block are NOT paths: they are copy, and every string in this
+ * block is character-for-character what the manifest declares. They live in one constant so that a
+ * later edit cannot drift a copy string without touching the place that says it is copy, and so the
+ * coverage report at the bottom can string-match the built corpus against them rather than assert
+ * that they landed. */
+const MANIFEST = {
+  /* `user_request`. It opens thread-01, which is the thread every other manifest element hangs on. */
+  userRequest: 'Audit the provider settings and Assistant Chat controls, improve multi-account routing and access warnings, preserve Slint portability, test every theme, and produce an implementation handoff without editing PMConcept7.',
+  /* `goal.title`. The six `goal.phases` are authored on T01_GOAL below. */
+  goalTitle: 'Redesign provider controls and Chat access flow',
+  /* `history_rows`, in the manifest's order. There are eighteen of them and eighteen threads in the
+   * built corpus — fifteen supplied plus the three authored here — so the rows land one per thread
+   * in thread order. Anything else would either drop rows or invent threads to hold them. */
+  historyRows: [
+    'Settings redesign bakeoff',
+    'Usage feature review',
+    'Planning Wizard audit',
+    'PRD Builder source intake',
+    'Provider multi-account routing',
+    'Claude CLI profile isolation',
+    'Antigravity CLI headless update',
+    'Free models catalog refresh',
+    'Models.dev capability sync',
+    'Context Lens motion study',
+    'Compact Now and branching',
+    'MCP July specification review',
+    'Memory degradation audit',
+    'Persona context-footprint audit',
+    'Crew capacity planning',
+    'Worktree collision recovery',
+    'Slint 1.17.1 port notes',
+    'Assistant Chat visual testing'
+  ],
+  /* `todos`. The manifest names them and says nothing about state, so the states are chosen here. */
+  todos: [
+    'Audit the current model and account picker',
+    'Map requested and effective provider routes',
+    'Design pinned-history geometry',
+    'Implement the four access profiles',
+    'Add cache and attachment route warnings',
+    'Add the left artifact workspace',
+    'Run theme, width, keyboard, and reduced-motion tests',
+    'Write the implementation-impact handoff'
+  ],
+  /* `warnings`. Each one is the consequence sentence of a decision record below. */
+  warnings: [
+    'Switching provider will replay the conversation without the current provider cache.',
+    'The selected model cannot inspect video natively; PM can extract frames or use the configured vision route.',
+    'Remaining included usage is unlikely to finish eight specialists; run two at a time and reserve capacity for synthesis.'
+  ],
+  /* `completion`. `elapsed` is the manifest's own string; the seconds beside it are derived from it
+   * rather than invented, so a card cannot show one clock contradicting the other. */
+  completion: {
+    resultSummary: 'Updated the provider selector and access flow, preserved thread-local state, verified responsive pinning, and produced four inspectable artifacts.',
+    verification: 'All targeted interaction probes passed',
+    elapsed: '1m 34s',
+    elapsedSeconds: 94,
+    workedSeconds: 71
+  }
+};
+
+/* The manifest's `history_rows` are thread TITLES, which makes them corpus facts. Assigning by
+ * position is what keeps this idempotent: re-running over a previous output rewrites each title
+ * with the value it already has. The three threads authored further down take the last three rows. */
+base.threads.forEach((t, i) => {
+  if (i < MANIFEST.historyRows.length) t.title = MANIFEST.historyRows[i];
+});
+
+/* The eighteen rows are one body of work, so they belong to one project. thread-01 was the sole
+ * member of a project called `Tastebook` — left over from the supplied corpus, and already odd once
+ * its title became `Settings redesign bakeoff`. It also had a consequence beyond coherence:
+ * PMXThreadOps.related() projects same-project threads, so the thread the whole demo runs on had NO
+ * related threads at all, and the `threadops` suite has been failing on it. */
+base.threads.forEach((t) => {
+  if (!t.deleted && t.project === 'Tastebook') t.project = 'Puppet Master';
+});
+
+/* `user_request` is the opening user message of thread-01. It is upserted by id so a second run
+ * replaces the message it wrote instead of prepending another copy, and its runtime is written out
+ * literally rather than drawn from runtime(): a single rnd() call here would shift every later
+ * random draw and churn the whole extension for no behavioural gain. */
+const T01_REQUEST = {
+  id: 't01-m0000',
+  role: 'user',
+  body: MANIFEST.userRequest,
+  sentAt: '2026-07-29T12:58:00Z',
+  runtime: {
+    provider: 'Anthropic', model: 'Opus 5', persona: 'Product designer',
+    mode: 'Plan', effort: 'High',
+    workedSeconds: 12, totalElapsedSeconds: 26,
+    tokenCount: 1180, contextUsed: 4020, contextLimit: 128000,
+    estimatedCost: 0.01
+  },
+  eligibleForEdit: false,
+  collapsedByDefault: false
+};
+{
+  const t01 = base.threads.find((t) => t.id === 'thread-01');
+  const at = t01.messages.findIndex((m) => m.id === T01_REQUEST.id);
+  if (at >= 0) t01.messages[at] = T01_REQUEST;
+  else t01.messages.unshift(T01_REQUEST);
+}
 
 const RUNTIMES = [
   { provider: 'Anthropic', model: 'Opus 5', persona: 'Product designer' },
@@ -230,13 +347,15 @@ for (let i = 0; i < 22; i++) {
   });
 }
 newThreads.push({
-  id: 'thread-16', title: 'Export format decision', project: 'Tastebook',
+  /* The last three manifest `history_rows` belong to the three threads authored here, which is
+   * what makes the eighteen rows land one per thread with none left over. */
+  id: 'thread-16', title: MANIFEST.historyRows[15], project: 'Puppet Master',
   pinned: false, archived: true, threadState: 'idle',
   updatedAt: iso(Date.UTC(2026, 6, 14, 10, 30, 0)),
   initialVisibleMessageCount: 50, messages: archivedMsgs,
   activeGoal: null, todo: null, subagentGroups: [], diffGroups: [],
   questionnaires: [], artifacts: [], browserSessions: [], draftState: null,
-  scriptedReplyCursor: 0, scriptedReplyIds: ['reply-01'], tags: ['archived', 'export']
+  scriptedReplyCursor: 0, scriptedReplyIds: ['reply-01'], tags: ['archived', 'worktree']
 });
 
 /* A Goal with nothing else attached — the "Goal only" test state has no supplied example. */
@@ -253,21 +372,24 @@ for (let i = 0; i < 24; i++) {
   });
 }
 newThreads.push({
-  id: 'thread-17', title: 'Rename the worktree flow', project: 'Puppet Master',
+  id: 'thread-17', title: MANIFEST.historyRows[16], project: 'Puppet Master',
   pinned: false, archived: false, threadState: 'running',
   updatedAt: iso(Date.UTC(2026, 7, 13, 13, 0, 0)),
   initialVisibleMessageCount: 50, messages: goalOnlyMsgs,
   activeGoal: {
-    id: 'goal-worktree-rename',
-    title: 'Rename the worktree flow end to end',
-    objective: 'Rename the worktree concept consistently across the interface without breaking saved selections.',
+    /* Retargeted with the title so the Goal-only thread is about the thing its row names. Only the
+     * subject moved; the state, the permission flags and the two clocks are untouched, because
+     * those are what this thread exists to demonstrate. */
+    id: 'goal-slint-port',
+    title: 'Port the access controls to Slint 1.17.1',
+    objective: 'Keep every access surface inside the Slint 1.17.1 envelope without losing the measured height transition.',
     status: 'running', workedSeconds: 640, totalElapsedSeconds: 980,
     canEdit: true, canPause: true, canResume: false, canStop: true, canClear: true,
     expanded: false
   },
   todo: null, subagentGroups: [], diffGroups: [],
   questionnaires: [], artifacts: [], browserSessions: [], draftState: null,
-  scriptedReplyCursor: 0, scriptedReplyIds: ['reply-02'], tags: ['goal']
+  scriptedReplyCursor: 0, scriptedReplyIds: ['reply-02'], tags: ['goal', 'slint']
 });
 
 /* A replan-after-edit scenario, plus a deleted diff file and a completed browser session. */
@@ -284,14 +406,14 @@ for (let i = 0; i < 26; i++) {
   });
 }
 newThreads.push({
-  id: 'thread-18', title: 'Scope change mid-run', project: 'Puppet Master',
+  id: 'thread-18', title: MANIFEST.historyRows[17], project: 'Puppet Master',
   pinned: false, archived: false, threadState: 'running',
   updatedAt: iso(Date.UTC(2026, 7, 14, 10, 0, 0)),
   initialVisibleMessageCount: 50, messages: replanMsgs,
   activeGoal: {
-    id: 'goal-scope-change',
-    title: 'Apply the revised import rules',
-    objective: 'Apply the revised import rules after the mid-run scope change.',
+    id: 'goal-visual-sweep',
+    title: 'Re-run the visual sweep after the scope change',
+    objective: 'Re-run the width and theme sweep after the mid-run scope change.',
     status: 'replanning', workedSeconds: 300, totalElapsedSeconds: 760,
     canEdit: true, canPause: true, canResume: false, canStop: true, canClear: true,
     expanded: true,
@@ -303,30 +425,32 @@ newThreads.push({
     progress: { complete: 2, total: 6, subgoalsActive: 1 }
   },
   todo: {
-    id: 'todo-scope-change',
+    /* Retargeted alongside the thread title. The six items and their four states — complete,
+     * replanned, pending and cancelled — are the point of this list and none of them moved. */
+    id: 'todo-visual-sweep',
     items: [
-      { id: 'r1', label: 'Read the current import rules', state: 'complete' },
-      { id: 'r2', label: 'Confirm the revised boundaries', state: 'complete' },
-      { id: 'r3', label: 'Rewrite the mapping step', state: 'replanned' },
-      { id: 'r4', label: 'Re-run the affected imports', state: 'pending' },
-      { id: 'r5', label: 'Verify against the sample set', state: 'pending' },
-      { id: 'r6', label: 'Remove the retired path', state: 'cancelled' }
+      { id: 'r1', label: 'Read the current capture list', state: 'complete' },
+      { id: 'r2', label: 'Confirm the revised width set', state: 'complete' },
+      { id: 'r3', label: 'Rewrite the capture step', state: 'replanned' },
+      { id: 'r4', label: 'Re-run the affected captures', state: 'pending' },
+      { id: 'r5', label: 'Compare against the reference frames', state: 'pending' },
+      { id: 'r6', label: 'Remove the retired capture path', state: 'cancelled' }
     ]
   },
   subagentGroups: [],
   diffGroups: [{
-    id: 'diff-scope-change', label: 'Import rules',
+    id: 'diff-visual-sweep', label: 'Visual sweep',
     files: [
-      { path: 'src/import/rules.ts', added: 64, removed: 12, status: 'edited' },
-      { path: 'src/import/legacy-map.ts', added: 0, removed: 148, status: 'deleted' },
-      { path: 'src/import/boundaries.ts', added: 91, removed: 0, status: 'created' }
+      { path: 'tools/drive.mjs', added: 64, removed: 12, status: 'edited' },
+      { path: 'tools/legacy-capture.mjs', added: 0, removed: 148, status: 'deleted' },
+      { path: 'tools/sweep-widths.mjs', added: 91, removed: 0, status: 'created' }
     ]
   }],
   questionnaires: [], artifacts: [],
   browserSessions: [{
-    id: 'browser-import-check', title: 'Import rule reference',
+    id: 'browser-sweep-check', title: 'Width sweep reference',
     status: 'complete', openTarget: 'editor tab',
-    currentPage: 'Import rule reference, section four',
+    currentPage: 'Width sweep reference, 975 px column',
     pagesVisited: 9, screenshots: 3
   }],
   draftState: null,
@@ -363,83 +487,137 @@ for (const id of ['thread-02', 'thread-04', 'thread-13', 'thread-15']) {
  * that has not run the script. The store folds these into `view[threadId]` on first access.
  */
 
-/* Eight Todos. The largest supplied list is seven, so the "8 Todos" requirement had no data behind
- * it. The state mix is deliberate: four done, one active, two pending and one BLOCKED, because a
- * blocked item is the one that makes the completion count interesting. */
+/* Eight Todos, verbatim from the manifest's `todos`. The largest supplied list is seven, so the
+ * "8 Todos" requirement had no data behind it and the eight names it wanted were not in the corpus
+ * at all.
+ *
+ * The manifest names the items and says nothing about their states, so the mix is authored here:
+ * four done, one active, two pending and one BLOCKED, because a blocked item is the one that makes
+ * the completion count interesting and because every todo state has to stay renderable from stored
+ * data. The blocked one is the test sweep, which is the item the port collision actually stops —
+ * the sweep needs 4173 and the Usage concept's visual-test server is already holding it. */
 const T01_TODO = {
   id: 'todo-provider-settings',
   title: 'Provider settings refresh',
   items: [
-    { id: 'g1', text: 'Read the current provider settings screen', state: 'done' },
-    { id: 'g2', text: 'List every account and its connection form', state: 'done' },
-    { id: 'g3', text: 'Map the setup states to visible copy', state: 'done' },
-    { id: 'g4', text: 'Draft the account group header', state: 'done' },
-    { id: 'g5', text: 'Rework the model rows to three facts', state: 'active' },
-    { id: 'g6', text: 'Wire the effort and speed submenus', state: 'pending' },
-    { id: 'g7', text: 'Write the route-change consequence copy', state: 'pending' },
-    { id: 'g8', text: 'Confirm the port change in the test config', state: 'blocked' }
+    { id: 'g1', text: MANIFEST.todos[0], state: 'done' },
+    { id: 'g2', text: MANIFEST.todos[1], state: 'done' },
+    { id: 'g3', text: MANIFEST.todos[2], state: 'done' },
+    { id: 'g4', text: MANIFEST.todos[3], state: 'done' },
+    { id: 'g5', text: MANIFEST.todos[4], state: 'active' },
+    { id: 'g6', text: MANIFEST.todos[5], state: 'pending' },
+    { id: 'g7', text: MANIFEST.todos[6], state: 'blocked',
+      blockedReason: 'Port 4173 is held by the Usage concept visual-test server, so the sweep cannot start.' },
+    { id: 'g8', text: MANIFEST.todos[7], state: 'pending' }
   ]
 };
 
-/* Three subagents on three DIFFERENT routes, which is what makes "different routes" demonstrable
- * rather than a claim. Every agent record gains a `route` string of the form
- * `<Account label> · <Model>`; the group covers running, queued, blocked, completed, stopped and
- * retried so a work cluster has every state to render. */
+/* The manifest's three named subagents, plus the extras that keep every agent state renderable.
+ *
+ * The first three ARE the manifest's `subagents`: the names are its copy, the routes are its
+ * `route` values, and `stateSequence` is its `state_sequence` in order. A sequence is not a single
+ * state — recording the trail is what lets a work cluster show that a failure was RECOVERED rather
+ * than only that the agent is fine now — so `state` is the last entry of the trail and the trail is
+ * the evidence behind it.
+ *
+ * Routes stay in the `<Account label> · <Model>` form PMXRoute produces, and the account labels are
+ * the real ones from shared/route.js: a route naming an account the catalogue does not hold is a
+ * route nobody could select. Kimi K3 belongs to `Moonshot — Trial` there, not to the
+ * `Moonshot — Research` this file used to invent. `Fable` is the one exception. The manifest names
+ * it as a bare route, this workspace's catalogue has no Fable account to qualify it with, and
+ * inventing one would put a fictional account in a fixture whose whole subject is provider routing,
+ * so it is carried exactly as the manifest writes it.
+ *
+ * Agents four through ten each exist for one reason: they carry a CURRENT state the manifest's
+ * three do not. All three of those end completed, so running, queued, blocked, stopped, retried,
+ * failed and retrying would otherwise have no record to render. */
 const T01_AGENTS = {
   id: 'sg-research',
-  title: 'Provider research',
+  title: 'Provider and access specialists',
   agents: [
-    { id: 'ag-1', name: 'Settings reader', role: 'Reader', state: 'completed',
-      route: 'Anthropic — Work · Opus 5', workedSeconds: 240,
-      resultRef: 'Read all six account records and their connection forms.' },
-    { id: 'ag-2', name: 'Adapter surveyor', role: 'Surveyor', state: 'running',
+    { id: 'ag-1', name: 'Interface systems auditor', role: 'Auditor', state: 'completed',
+      route: 'Fable', workedSeconds: 240,
+      stateSequence: ['queued', 'running', 'completed'],
+      resultRef: 'Audited the picker, the access rows and the pinned-history geometry.' },
+    { id: 'ag-2', name: 'Provider adapter researcher', role: 'Researcher', state: 'completed',
+      route: 'Moonshot — Trial · Kimi K3', workedSeconds: 186,
+      stateSequence: ['running', 'completed'],
+      resultRef: 'Compared four provider adapters for a Fast tier and a vision route.' },
+    { id: 'ag-3', name: 'Slint and test reviewer', role: 'Reviewer', state: 'completed',
+      route: 'Alibaba — Cloud · Qwen 3.8', workedSeconds: 302, attempts: 2,
+      stateSequence: ['queued', 'running', 'failed', 'retrying', 'completed'],
+      failedReason: 'The first attempt asked for a capability bag the adapter does not expose.',
+      resultRef: 'Confirmed the Slint 1.17.1 envelope on the second attempt.' },
+    { id: 'ag-4', name: 'Access profile drafter', role: 'Writer', state: 'running',
       route: 'OpenAI — Team · GPT-5.6 Pro', workedSeconds: 132,
       resultRef: null },
-    { id: 'ag-3', name: 'Copy reviewer', role: 'Reviewer', state: 'queued',
+    { id: 'ag-5', name: 'Handoff writer', role: 'Writer', state: 'queued',
       route: 'Anthropic — Personal · Sonnet 5', workedSeconds: 0,
       resultRef: null },
-    { id: 'ag-4', name: 'Config verifier', role: 'Verifier', state: 'blocked',
+    { id: 'ag-6', name: 'Visual sweep runner', role: 'Verifier', state: 'blocked',
       route: 'Anthropic — Work · Haiku 4.5', workedSeconds: 44,
-      blockedReason: 'The test configuration still names port 3000.', resultRef: null },
-    { id: 'ag-5', name: 'Screenshot pass', role: 'Capture', state: 'stopped',
+      blockedReason: 'Port 4173 is held by the Usage concept visual-test server.', resultRef: null },
+    { id: 'ag-7', name: 'Screenshot pass', role: 'Capture', state: 'stopped',
       route: 'Google — Lab · Gemini 3 Ultra', workedSeconds: 18,
       resultRef: null },
-    { id: 'ag-6', name: 'Allowance checker', role: 'Reader', state: 'retried',
-      route: 'Alibaba — Cloud · Qwen 3.8', workedSeconds: 96, attempts: 2,
-      /* The manifest's third subagent is specified as a SEQUENCE, not a single state. Recording the
-       * trail it walked is what lets a work cluster show that a failure was recovered rather than
-       * only that the agent is now fine. */
-      stateSequence: ['queued', 'running', 'failed', 'retrying', 'completed'],
+    /* This trail ends on `retried` rather than on `completed` because `state` and the last entry of
+     * `stateSequence` are the same fact stated twice, and a record that ends its trail somewhere
+     * other than where it says it stands is a record a renderer has to choose between. */
+    { id: 'ag-8', name: 'Allowance checker', role: 'Reader', state: 'retried',
+      route: 'Anthropic — Work · Opus 5', workedSeconds: 96, attempts: 2,
+      stateSequence: ['running', 'failed', 'retrying', 'retried'],
       resultRef: 'Usage endpoint answered on the second attempt.' },
-    /* `failed` and `retrying` had no representative at all: the set stopped at `retried`, which is
-     * the outcome, so neither the failure itself nor an in-flight recovery could be rendered. */
-    { id: 'ag-7', name: 'Slint port reviewer', role: 'Reviewer', state: 'failed',
-      route: 'Moonshot — Research · Kimi K3', workedSeconds: 61,
+    /* `failed` and `retrying` need records of their own: a trail that ends completed shows a
+     * recovery in the past, not a failure standing now or a recovery still in flight. */
+    { id: 'ag-9', name: 'Capability bag reader', role: 'Reader', state: 'failed',
+      route: 'Moonshot — Trial · Kimi K3', workedSeconds: 61,
       failedReason: 'The adapter returned no capability bag for the requested model.',
       attempts: 1, resultRef: null },
-    { id: 'ag-8', name: 'Capture retry', role: 'Capture', state: 'retrying',
+    { id: 'ag-10', name: 'Capture retry', role: 'Capture', state: 'retrying',
       route: 'Google — Lab · Gemini 3 Ultra', workedSeconds: 12, attempts: 2,
       retryOf: 'ag-7', resultRef: null }
   ]
 };
 
-/* A three-question flow whose kinds are single select, multi select and freeform, so every input
- * type in the questionnaire controller is exercised from authored data. */
+/* The manifest's three questions, plus the freeform the controller would otherwise never see.
+ *
+ * q1, q2 and q3 are the manifest's `questions` — ids, prompts, kinds, options and order — and q2
+ * carries its `skippable: true`. Skip in this workspace is service-held state (PMXQuestionnaire
+ * keys it in a `skipped` map) and the Skip control is offered on every non-final question, so
+ * `skippable` is descriptive rather than load-bearing; `required: false` is the field that makes a
+ * skip survive validate(), so q2 carries both and neither can contradict the other.
+ *
+ * q4 is not in the manifest. It is kept because the manifest declares no freeform question at all,
+ * and dropping it would leave the controller's third input kind with no authored data — the exact
+ * form of coverage reduction the manifest's own portability clause forbids. */
 const T01_QUESTIONNAIRE = {
   id: 'qn-thread01-settings',
   createdAt: '2026-08-07T09:12:00Z',
   currentQuestionIndex: 0,
   questions: [
-    /* p1 carries a WRITE-IN row. Reference 02_stable_paged_questionnaire.mov makes the last option of
+    /* q1 carries a WRITE-IN row. Reference 02_stable_paged_questionnaire.mov makes the last option of
      * a single-select a pencil row that becomes a text field, and the answer typed there survives
      * paging away and back. No supplied question allowed one, so the questionnaire's write-in path
      * was unreachable and `validate()` would have called a typed answer a stale option. */
-    { id: 'p1', prompt: 'Which account should the settings screen open on?', kind: 'single select',
+    { id: 'q1', prompt: 'Where should provider and account policy be managed?', kind: 'single select',
       required: true, writeIn: true, writeInLabel: 'Something else',
-      options: ['The account in use', 'The first ready account', 'The last account opened'] },
-    { id: 'p2', prompt: 'Which setup states must the screen show inline?', kind: 'multi select',
-      required: false, options: ['Sign-in required', 'Command line tool missing', 'Update available', 'Usage unavailable'] },
-    { id: 'p3', prompt: 'Anything the screen must never do?', kind: 'freeform', required: false }
+      options: [
+        'Settings owns policy; Chat chooses the current route',
+        'Chat owns everything',
+        'Split policy between both surfaces'
+      ] },
+    { id: 'q2', prompt: 'When a model switch will lose provider cache, what should PM emphasize first?',
+      kind: 'single select', required: false, skippable: true,
+      options: [
+        'Continue here',
+        'Branch with the new model',
+        'Start a clean chat',
+        'Ask every time'
+      ] },
+    { id: 'q3', prompt: 'Which artifact states must the concept demonstrate?', kind: 'multi select',
+      required: false,
+      options: ['Multi-file diff', 'Rendered preview', 'Test report', 'Provider-flow document'] },
+    { id: 'q4', prompt: 'Anything the screen must never do?', kind: 'freeform', required: false }
   ]
 };
 
@@ -447,11 +625,17 @@ const T01_QUESTIONNAIRE = {
  * "start, pause, resume, replan, blocked, complete" could not be shown as a sequence. */
 const T01_GOAL = {
   id: 'goal-provider-settings',
-  title: 'Refresh the provider settings screen',
+  /* `goal.title`, verbatim. The file used to carry a title of its own invention, so the one title
+   * the manifest fixes was the one title the demo did not show. */
+  title: MANIFEST.goalTitle,
   objective: 'Make every account state visible and every route change consequence explicit.',
   status: 'complete',
-  workedSeconds: 4210,
-  totalElapsedSeconds: 5640,
+  /* Both clocks are the manifest's `completion.elapsed` read as what it says: ninety-four seconds
+   * of wall time, seventy-one of them attributed. They used to read 4210 and 5640, which is the same
+   * string parsed as one hour thirty-four — a run that worked for seventy minutes cannot report
+   * "1m 34s" on the card beside it. */
+  workedSeconds: MANIFEST.completion.workedSeconds,
+  totalElapsedSeconds: MANIFEST.completion.elapsedSeconds,
   canEdit: true, canPause: false, canResume: false, canStop: false, canClear: true,
   expanded: false,
   /* The scenario manifest names six phases. `surfaces.phaseOf()` has always preferred an
@@ -475,12 +659,24 @@ const T01_GOAL = {
     { at: '2026-08-07T11:12:00Z', phase: 'blocked' },
     { at: '2026-08-07T12:34:00Z', phase: 'complete' }
   ],
+  /* The manifest's `completion` block. `result_summary` and `verification` are its copy and
+   * `elapsed` is its string; the receipt keeps the seconds beside them so a renderer can format its
+   * own clock without contradicting the authored one. The artifact ids are the four the manifest's
+   * `artifacts` list names, resolved to the ids this workspace's catalogue actually holds. */
+  completion: {
+    resultSummary: MANIFEST.completion.resultSummary,
+    verification: MANIFEST.completion.verification,
+    elapsed: MANIFEST.completion.elapsed
+  },
   completionReceipt: {
     at: '2026-08-07T12:34:00Z',
     verified: true,
-    artifacts: ['artifact-diff', 'artifact-test-report', 'artifact-context'],
-    elapsedSeconds: 5640,
-    workedSeconds: 4210
+    resultSummary: MANIFEST.completion.resultSummary,
+    verification: MANIFEST.completion.verification,
+    elapsed: MANIFEST.completion.elapsed,
+    artifacts: ['artifact-diff', 'artifact-preview', 'artifact-test', 'artifact-handoff'],
+    elapsedSeconds: MANIFEST.completion.elapsedSeconds,
+    workedSeconds: MANIFEST.completion.workedSeconds
   }
 };
 
@@ -496,47 +692,101 @@ const T01_ACTIVITY_STAGES = [
    * `count`/`unit` exist so a renderer can rewrite the number in place instead of replacing the row. */
   /* `thought` leads the list because reference 03_compact_execution_activity.mov opens on
    * "Thinking for 4s" — reasoning is a peer group in the same stream, not a separate channel, and
-   * the contract's `activity.thinking_summary` event had no stage kind to land on. */
+   * the contract's `activity.thinking_summary` event had no stage kind to land on.
+   *
+   * It is also the ONE stage that deliberately keeps `detail` and takes no `rows`. The same
+   * reference renders reasoning as flowing text; splitting a summary into a row list would invent a
+   * structure the provider never gave us, and would imply the thinking was itemised work. */
   { id: 'st-thought', kind: 'thought', label: 'Thought for 4s', runningLabel: 'Thinking for 4s',
     count: 1, unit: 'summary',
     detail: 'Only the provider-exposed summary; no hidden reasoning is claimed.', durationMs: 4000,
     op: { verb: 'Reasoning', target: 'summary only', cache: 'not applicable', sources: 0, runtimeArtifact: null,
       input: '{ scope: "provider-exposed summary" }',
       why: 'Only the summary the provider exposed is shown; no hidden reasoning is claimed.' } },
+  /* EVERY stage below this point carries its own `rows`, and that is the whole of the per-phase
+   * disclosure the concepts are built on. Reference 03_compact_execution_activity.mov expands each
+   * phase into its own sub-rows — "Exploring 5 files" opens into five `Read <path>` lines, and
+   * "Importing from Figma" into `Processing Figma Design ...` lines — so a phase that expands to a
+   * single `detail` sentence has nothing to disclose and the disclosure affordance is decorative.
+   * Only `edit` and `generate` had rows, which is why six of the nine phases opened onto one line.
+   *
+   * Two rules the rows obey. Row COUNT equals the stage `count` whenever that count counts rows:
+   * st-read says seven files and lists seven. Where the count is not a row count — st-search counts
+   * matches, st-test counts checks — the rows are a representative handful and the count is left
+   * alone, because thirty-one invented match rows would be thirty-one invented facts. Row TARGETS
+   * are this workspace's real files and its real verification subjects; a fabricated path in a
+   * fixture about auditing files is the one lie the surface cannot survive.
+   *
+   * `added`/`removed` are omitted where there is no delta. A read has no line count, and reporting
+   * "+0 -0" for one would be a measurement nobody took. */
   { id: 'st-read', kind: 'read', label: 'Read 7 files', runningLabel: 'Reading 7 files',
     count: 7, unit: 'files',
     detail: 'shared/route.js, shared/access.js and five more', durationMs: 2400,
     op: { verb: 'Reading', target: '7 files', cache: 'warm', sources: 7, runtimeArtifact: null,
       input: '{ paths: ["shared/route.js", "shared/access.js", "+5 more"] }',
-      why: 'The account rows had to be read before their states could be mapped to copy.' } },
+      why: 'The account rows had to be read before their states could be mapped to copy.' },
+    rows: [
+      { verb: 'Read', target: 'shared/route.js' },
+      { verb: 'Read', target: 'shared/access.js' },
+      { verb: 'Read', target: 'shared/approvals.js' },
+      { verb: 'Read', target: 'shared/selectors.js' },
+      { verb: 'Read', target: 'shared/opsawareness.js' },
+      { verb: 'Read', target: 'shared/questionnaire.js' },
+      { verb: 'Read', target: 'CONTRACT.md' }
+    ] },
+  /* Five rows under a count of thirty-one: the count is matches, the rows are the files the matches
+   * landed in, and each of these five genuinely carries account-label copy today. */
   { id: 'st-search', kind: 'search', label: 'Searched the repository for account labels',
     runningLabel: 'Searching the repository for account labels',
     count: 31, unit: 'matches',
     detail: '31 matches across 9 files', durationMs: 1600,
     op: { verb: 'Searching', target: 'account labels', cache: 'miss', sources: 9, runtimeArtifact: null,
       input: '{ query: "account label", scope: "repository" }',
-      why: 'Searched the repository because the label vocabulary was not documented anywhere.' } },
+      why: 'Searched the repository because the label vocabulary was not documented anywhere.' },
+    rows: [
+      { verb: 'Searched', target: 'shared/route.js' },
+      { verb: 'Searched', target: 'shared/surfaces.js' },
+      { verb: 'Searched', target: 'shared/artifacts.js' },
+      { verb: 'Searched', target: 'shared/store.js' },
+      { verb: 'Searched', target: 'shared/spell.js' }
+    ] },
   { id: 'st-web', kind: 'web', label: 'Fetched the provider status page',
     runningLabel: 'Fetching the provider status page',
     count: 1, unit: 'page',
     detail: 'One page, cached for the run', durationMs: 3100,
     op: { verb: 'Fetching', target: 'provider status page', cache: 'miss', sources: 1, runtimeArtifact: null,
       input: '{ url: "provider status page", freshness: "required" }',
-      why: 'Fetched the page because a cached status could not support a readiness claim.' } },
+      why: 'Fetched the page because a cached status could not support a readiness claim.' },
+    rows: [
+      { verb: 'Fetched', target: 'Provider status page for Anthropic — Work' }
+    ] },
   { id: 'st-browser', kind: 'browser', label: 'Opened a BrowserPage in the BrowserWorkspace',
     runningLabel: 'Opening a BrowserPage in the BrowserWorkspace',
     count: 1, unit: 'page',
     detail: 'Browser Action: inspect the settings route', durationMs: 5200,
     op: { verb: 'Opening', target: 'BrowserPage in the BrowserWorkspace', cache: 'not applicable', sources: 1, runtimeArtifact: 'artifact-preview',
       input: '{ action: "inspect", route: "settings" }',
-      why: 'Opened a page because the rendered route is the only honest check of the layout.' } },
+      why: 'Opened a page because the rendered route is the only honest check of the layout.' },
+    rows: [
+      { verb: 'Opened', target: 'stage.html — provider selector at 975 px' }
+    ] },
+  /* Five rows under a count of eighteen checks. The five are the interaction report's own passing
+   * rows, so the activity phase and the test-report artifact name the same checks instead of
+   * describing the same run in two different vocabularies. */
   { id: 'st-test', kind: 'test', label: 'Ran the interaction suite',
     runningLabel: 'Running the interaction suite',
     count: 18, unit: 'checks',
     detail: 'TestCapture retained for the failing case', durationMs: 8800,
     op: { verb: 'Running', target: 'interaction suite', cache: 'not applicable', sources: 18, runtimeArtifact: 'artifact-test',
       input: '{ suite: "interaction", widths: [520, 750, 1200] }',
-      why: 'Ran the suite because a layout claim without a run is an opinion.' } },
+      why: 'Ran the suite because a layout claim without a run is an opinion.' },
+    rows: [
+      { verb: 'Checked', target: 'Pinned history clears the transcript at 520' },
+      { verb: 'Checked', target: 'Full pin demotes to compact under the floor' },
+      { verb: 'Checked', target: 'Artifact opens left of the composer rectangle' },
+      { verb: 'Checked', target: 'Composer draft survives a question flow' },
+      { verb: 'Checked', target: 'History and artifact coexist at 1200' }
+    ] },
   /* `edit` and `generate` had NO representative kind. The reference's densest rows are edits, and
    * each carries its own +added/-removed pair; ours only ever had a group-level total, so a
    * per-row delta could not be rendered by any concept. */
@@ -569,11 +819,37 @@ const T01_ACTIVITY_STAGES = [
     detail: 'Matched the account list against the catalog', durationMs: 2700,
     op: { verb: 'Verifying', target: 'rendered settings screen', cache: 'not applicable', sources: 1, runtimeArtifact: 'artifact-test',
       input: '{ against: "account catalog" }',
-      why: 'Verified against the catalog because the screen is only correct relative to it.' } }
+      why: 'Verified against the catalog because the screen is only correct relative to it.' },
+    rows: [
+      { verb: 'Verified', target: 'Six account rows against the catalog in shared/route.js' }
+    ] }
 ];
 
-/* The port collision, verbatim. */
+/* The port collisions.
+ *
+ * 4173 is DEMO_SCENARIO_MANIFEST.json's `resource_collision` exactly: requested 4173, occupied by
+ * the Usage concept visual-test server, 4174 offered as the safe alternative. shared/demo.js and
+ * shared/opsawareness.js already carry it; this fixture still had only the 3000/checkout record, so
+ * the ops layer and the thread's own conflict list disagreed about which port this run contested.
+ *
+ * The 3000 record stays alongside it rather than being replaced. It is verbatim copy from the
+ * earlier packet, deleting it to satisfy a later fixture would drop coverage the earlier packet
+ * asked for, and shared/opsawareness.js models both ports as contested — a real machine has more
+ * than one. Two records also let a concept show a conflict LIST rather than a single card. */
 const T01_CONFLICTS = [
+  {
+    id: 'conf-port-4173',
+    kind: 'port',
+    port: 4173,
+    summary: 'Port 4173 is used by the Usage concept visual-test server. Use 4174 instead?',
+    owner: { threadId: 'thread-11', threadTitle: 'Usage concept visual-test server', worktree: 'main' },
+    suggestedAlternative: 4174,
+    actions: [
+      { id: 'use-4174', label: 'Use 4174', primary: true },
+      { id: 'details', label: 'Details' },
+      { id: 'cancel', label: 'Cancel' }
+    ]
+  },
   {
     id: 'conf-port-3000',
     kind: 'port',
@@ -647,6 +923,79 @@ const T01_DECISIONS = [
       commands: [], files: ['Project A (read)', 'Project B (write)'], servers: [], domains: [],
       persistence: 'Allow for this Goal ends when the Goal ends',
       saferAlternative: 'Copy the needed file into Project B first',
+      receipts: []
+    },
+    status: 'pending', decidedAction: null
+  },
+  /* The manifest's three `warnings`, verbatim, one per record. Each is a CONSEQUENCE sentence, so it
+   * lands on `scopeLine` — the field whose whole job is to state the one thing that will happen —
+   * and the question above it asks for the decision the sentence justifies.
+   *
+   * They are added rather than substituted. The provider-boundary record above carries the earlier
+   * packet's own verbatim consequence line, and overwriting it with this one would trade one piece
+   * of canonical copy for another instead of instantiating both. */
+  {
+    id: 'dec-cache-replay',
+    kind: 'warning', severity: 'material',
+    cls: 'conversation_replay',
+    question: 'Switch the model on this thread?',
+    scopeLine: MANIFEST.warnings[0],
+    actions: [
+      { id: 'cancel', label: 'Cancel' },
+      { id: 'branch', label: 'Branch with the new model' },
+      { id: 'switch', label: 'Switch', primary: true },
+      { id: 'details', label: 'Details' }
+    ],
+    details: {
+      commands: [], files: [], servers: [], domains: ['Anthropic', 'Moonshot'],
+      persistence: 'This thread and its future turns',
+      saferAlternative: 'Branch with the new model so this conversation keeps its cache',
+      receipts: ['conversation_replay', 'cache_loss']
+    },
+    status: 'pending', decidedAction: null
+  },
+  {
+    /* The attachment warning is the one T01_ATTACHMENTS exists to provoke: a QuickTime file on a
+     * route with no native video. Extract frames and the vision route are the two honest ways
+     * through, which is why the manifest's sentence names both instead of refusing the file. */
+    id: 'dec-video-route',
+    kind: 'warning', severity: 'material',
+    cls: 'attachment_incompatibility',
+    question: 'Read walkthrough.mov another way?',
+    scopeLine: MANIFEST.warnings[1],
+    actions: [
+      { id: 'cancel', label: 'Cancel' },
+      { id: 'extract-frames', label: 'Extract frames', primary: true },
+      { id: 'vision-route', label: 'Use the vision route' },
+      { id: 'details', label: 'Details' }
+    ],
+    details: {
+      commands: [], files: ['walkthrough.mov'], servers: [], domains: [],
+      persistence: 'This attachment on this turn',
+      saferAlternative: 'Extract frames and send the frames instead',
+      receipts: ['attachment_incompatibility']
+    },
+    status: 'pending', decidedAction: null
+  },
+  {
+    /* The capacity warning has no consequence class, because nothing about the route changes: it is
+     * advice about how much work the remaining allowance can carry. A classless warning is exactly
+     * what PMXApprovals grades as `informational`, and no fixture record had that severity before,
+     * so the informational treatment had nothing to render. */
+    id: 'dec-capacity-reserve',
+    kind: 'warning', severity: 'informational',
+    cls: null,
+    question: 'Start all eight specialists now?',
+    scopeLine: MANIFEST.warnings[2],
+    actions: [
+      { id: 'cancel', label: 'Cancel' },
+      { id: 'two-at-a-time', label: 'Run two at a time', primary: true },
+      { id: 'details', label: 'Details' }
+    ],
+    details: {
+      commands: [], files: [], servers: [], domains: [],
+      persistence: 'This Goal',
+      saferAlternative: 'Run two at a time and keep the rest queued',
       receipts: []
     },
     status: 'pending', decidedAction: null
@@ -745,25 +1094,34 @@ const T01_THREADOPS = {
 const T01_FINAL = {
   id: 't01-m9001',
   role: 'assistant',
-  body: `The provider settings screen is updated and verified.
+  /* The first line is the manifest's `completion.result_summary` verbatim, because the transcript is
+   * where a reader looks for what the run concluded and a summary that lives only on a card is a
+   * summary the conversation never states. */
+  body: `${MANIFEST.completion.resultSummary}
 
-Every account now shows its connection form and its setup state inline, and the model rows carry at most three facts each. The route change consequence copy is in place, including the provider boundary case which restarts the prompt cache.
+Every account now shows its connection form and its setup state inline, and the model rows carry at most three facts each. The route change consequence copy is in place, including the provider boundary case which replays the conversation without the current provider cache.
 
-One item is still blocked: the test configuration names port 3000, which the checkout redesign owns in another worktree. I left it blocked rather than editing a config another thread is using.`,
+One item is still blocked: the theme, width, keyboard and reduced-motion sweep needs port 4173, and the Usage concept visual-test server is holding it. I left the item blocked rather than moving a port another thread is serving on.`,
   sentAt: '2026-08-07T12:34:00Z',
   runtime: {
     provider: 'Anthropic', model: 'Opus 5', persona: 'Product designer',
     mode: 'Agent', effort: 'High',
-    workedSeconds: 4210, totalElapsedSeconds: 5640,
+    workedSeconds: MANIFEST.completion.workedSeconds,
+    totalElapsedSeconds: MANIFEST.completion.elapsedSeconds,
     tokenCount: 6400, contextUsed: 7620, contextLimit: 128000,
     estimatedCost: 0.34,
     terminalAt: '2026-08-07T12:34:00Z', terminalReason: 'completed'
   },
+  /* `verification` is the manifest's own verification string, and both clocks come from its
+   * `elapsed`. The elapsed STRING is carried beside the seconds so a surface that prints the
+   * authored form and one that formats the number cannot disagree. */
   verification: {
     result: 'passed',
-    note: 'Updated provider settings screen renders correctly',
-    elapsedSeconds: 5640,
-    workedSeconds: 4210
+    note: MANIFEST.completion.verification,
+    resultSummary: MANIFEST.completion.resultSummary,
+    elapsed: MANIFEST.completion.elapsed,
+    elapsedSeconds: MANIFEST.completion.elapsedSeconds,
+    workedSeconds: MANIFEST.completion.workedSeconds
   },
   eligibleForEdit: false,
   collapsedByDefault: false
@@ -783,10 +1141,18 @@ patchThreads.push({
   outboxSeed: T01_OUTBOX,
   syncSeed: { transport: 'offline', domain: 'live' },
   threadOps: T01_THREADOPS,
+  /* The four forecast values stay as they are: shared/surfaces.js pins them for thread-01 because
+   * the packet froze that example, and a seed that disagreed with the pin would be a number nothing
+   * renders. `requiredRoles` is rewritten to the six distinct roles the group now holds, so the six
+   * requested specialists and the six named roles are the same six.
+   *
+   * The manifest's capacity warning speaks of EIGHT specialists. That is deliberate and not a
+   * mismatch to fix here: the warning is about an ask larger than this run's forecast, which is
+   * exactly the situation it advises on — run two at a time and reserve capacity for synthesis. */
   capacitySeed: {
     requested: 6, recommendedConcurrent: 2, waves: 3,
     reason: 'provider allowance and verification reserve',
-    requiredRoles: ['Reader', 'Surveyor', 'Reviewer', 'Verifier', 'Capture', 'Reader'],
+    requiredRoles: ['Auditor', 'Researcher', 'Reviewer', 'Writer', 'Verifier', 'Capture'],
     droppedRoles: []
   },
   appendAt: null,
@@ -815,13 +1181,35 @@ patchThreads.push({
 
 const extension = {
   schemaVersion: 1,
-  note: 'Additive layer over the supplied demoData.json. The supplied file is never modified.',
+  note: 'Additive layer over demo/demoData.json. Everything here is a patch or a whole new thread; the corpus itself carries only the manifest facts that ARE corpus facts, the thread titles and the opening request.',
   patchThreads,
   threads: newThreads,
   scriptedReplies: []
 };
 
 const banner = (name) => `/* GENERATED by demo/build-demo-bundles.mjs — do not hand-edit.\n * Exists because fetch() cannot read a sibling file over file:// in Chromium.\n */\n`;
+
+/* Name the manifest the corpus came from. The scenario's questions, goal phases, todos, subagents,
+ * warnings, artifacts and eighteen history rows are all instantiated here and were checkable one by
+ * one — but `settings-provider-chat-redesign` itself appeared nowhere in the workspace, so nothing
+ * linked the data to the document it was built from, and the only way to establish the link was to
+ * re-derive it by matching strings. */
+base.sourceScenario = {
+  manifest: 'PM_Assistant_Chat_Dependency_Media_and_Work_Correction_2026-08-13/DEMO_SCENARIO_MANIFEST.json',
+  scenario_id: 'settings-provider-chat-redesign',
+  title: 'Provider settings and Chat access redesign',
+  /* The one deliberate divergence, recorded where a reader of the corpus will meet it. */
+  localised: 'DEMO_SCENARIO_MANIFEST diff_files names threads/provider-selector.js, ' +
+    'threads/access-controls.css and verification/interaction-probes.mjs; none exists in this ' +
+    'workspace, so shared/artifacts.js maps them onto shared/selectors.js, shared/access-controls.css ' +
+    'and tests/interaction-probes.js, keeping the manifest line counts (92/18, 61/39, 31/10) exactly.'
+};
+
+/* Two spaces and no trailing newline is exactly how the supplied corpus was formatted, which is
+ * checkable: re-serializing the untouched file this way reproduced it byte for byte. Keeping that
+ * shape means the diff on this file only ever shows the lines the generator actually changed
+ * instead of a 10,000-line reformat. */
+writeFileSync(join(here, 'demoData.json'), JSON.stringify(base, null, 2));
 
 writeFileSync(join(here, 'demoData.bundle.js'),
   banner() + 'window.PMX_DEMO_DATA = ' + JSON.stringify(base) + ';\n');
@@ -869,6 +1257,36 @@ const attachmentClasses = (() => {
   return [...seen].sort();
 })();
 
+/* Manifest coverage, measured the way a reviewer would measure it: serialize the built corpus and
+ * look for each declared string inside it. A constant that is defined above but never reaches a
+ * record — the failure mode that left this fixture with 0 of 18 history rows and 0 of 8 todos while
+ * every constant sat in the file — shows up here as a name in `missing`, not as a silent pass.
+ * Comparison is done against the JSON-escaped form so a string containing a quote or a backslash is
+ * looked for as it actually appears in the serialized corpus. */
+const mergedText = JSON.stringify(merged);
+const missing = [];
+const present = (label, s) => {
+  const found = mergedText.indexOf(JSON.stringify(s).slice(1, -1)) >= 0;
+  if (!found) missing.push(label);
+  return found;
+};
+const countPresent = (label, list) => list.filter((s, i) => present(`${label}[${i}]`, s)).length;
+const manifestCoverage = {
+  historyRows: `${countPresent('history_rows', MANIFEST.historyRows)}/18`,
+  todos: `${countPresent('todos', MANIFEST.todos)}/8`,
+  warnings: `${countPresent('warnings', MANIFEST.warnings)}/3`,
+  subagents: `${countPresent('subagents', ['Interface systems auditor', 'Provider adapter researcher', 'Slint and test reviewer'])}/3`,
+  subagentRoutes: `${countPresent('routes', ['Fable', 'Kimi K3', 'Qwen 3.8'])}/3`,
+  goalPhases: `${countPresent('goal.phases', ['Audit', 'Research', 'Prototype', 'Implement', 'Verify', 'Handoff'])}/6`,
+  goalTitle: present('goal.title', MANIFEST.goalTitle),
+  userRequest: present('user_request', MANIFEST.userRequest),
+  resultSummary: present('completion.result_summary', MANIFEST.completion.resultSummary),
+  verification: present('completion.verification', MANIFEST.completion.verification),
+  elapsed: present('completion.elapsed', MANIFEST.completion.elapsed),
+  collision: present('resource_collision', 'Port 4173 is used by the Usage concept visual-test server. Use 4174 instead?'),
+  missing
+};
+
 console.log(JSON.stringify({
   threads: merged.threads.length,
   messages: all.length,
@@ -880,9 +1298,15 @@ console.log(JSON.stringify({
   divergingRuntime: all.filter((m) => m.runtime && m.runtime.totalElapsedSeconds !== m.runtime.workedSeconds).length,
 
   todoMax: Math.max(...merged.threads.map((t) => (t.todo && t.todo.items ? t.todo.items.length : 0))),
+  todoStates: [...new Set(merged.threads.flatMap((t) => ((t.todo && t.todo.items) || []).map((i) => i.state)))].sort(),
+  agentRecords: agentRecords.length,
   agentRoutes: new Set(agentRecords.map((a) => a.route).filter(Boolean)).size,
   agentStates: [...new Set(agentRecords.map((a) => a.state))].sort(),
+  agentStateSequences: agentRecords.filter((a) => a.stateSequence).length,
   activityKinds,
+  /* Rows per stage, so "every phase discloses something" is a measurement rather than a claim. The
+   * thought stage is expected to read 0 here and everything else is expected to be non-zero. */
+  activityRows: Object.fromEntries((byId['thread-01'].activityStages || []).map((s) => [s.id, (s.rows || []).length])),
   conflicts: merged.threads.flatMap((t) => t.conflicts || []).length,
   decisions: merged.threads.flatMap((t) => t.decisions || []).length,
   attachmentClasses,
@@ -893,6 +1317,10 @@ console.log(JSON.stringify({
     return n + (o.requests || []).length + (o.spawned || []).length + (o.branches || []).length + (o.restorePoints || []).length;
   }, 0),
   questionKinds: [...new Set(merged.threads.flatMap((t) => (t.questionnaires || []).flatMap((q) => (q.questions || []).map((x) => x.kind))))].sort(),
-  goalPhases: [...new Set(merged.threads.flatMap((t) => ((t.activeGoal && t.activeGoal.events) || []).map((e) => e.phase)))],
-  verificationMessages: all.filter((m) => m.verification).length
+  skippableQuestions: merged.threads.flatMap((t) => (t.questionnaires || []).flatMap((q) => (q.questions || []))).filter((x) => x.skippable).length,
+  goalPhaseEvents: [...new Set(merged.threads.flatMap((t) => ((t.activeGoal && t.activeGoal.events) || []).map((e) => e.phase)))],
+  goalPhases: ((byId['thread-01'].activeGoal || {}).phases || []).map((p) => p.label),
+  verificationMessages: all.filter((m) => m.verification).length,
+  threadTitles: merged.threads.map((t) => t.title),
+  manifest: manifestCoverage
 }, null, 2));

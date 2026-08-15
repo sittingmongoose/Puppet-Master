@@ -1,6 +1,12 @@
-/* Grok 4.5 — Slint-portable motion kit.
-   Springs, stagger, press squash, settle, panel enter/exit, Q height morph.
-   Prefer transform/opacity/explicit height. RM hard-kills bounce. */
+/* Grok 4.5 — Slint-portable motion kit (causal continuity).
+   Prefer transform/opacity/explicit height. RM hard-kills bounce / indefinite glow.
+
+   Video map → CSS hooks:
+   01 message arrival — .pm-msg-arrive / .pm-motion-enter-spatial (--pm-enter-ox|oy composer→bubble)
+   02 paged questionnaire — .pm-q-stage shell stable; .pm-q-carousel-pane leave/enter; .pm-q-page-morph height
+   03 compact activity — .pm-activity-evolve reopen; .pm-activity-index-detail.is-expanding|is-collapsing
+   04 Q morph — .is-preparing → .pm-q-height-morph expand → .is-submitting → .pm-q-settle compress
+*/
 
 :root {
   --pm-chat-motion-enter: var(--motion-med, 240ms);
@@ -314,6 +320,67 @@
   animation: pmGrokEnterSoft var(--pm-chat-motion-enter) var(--pm-spring-soft) both;
 }
 
+/* ---- Video 01: spatial continuity enter (origin → settle) ---- */
+@keyframes pmGrokEnterSpatial {
+  from {
+    opacity: 0;
+    transform: translate(var(--pm-enter-ox, 0px), var(--pm-enter-oy, 24px)) scale(0.96);
+  }
+  70% {
+    opacity: 1;
+    transform: translate(calc(var(--pm-enter-ox, 0px) * 0.08), calc(var(--pm-enter-oy, 24px) * 0.08)) scale(1.01);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+}
+.pm-motion-enter-spatial,
+.pm-msg-arrive {
+  animation: pmGrokEnterSpatial var(--pm-chat-motion-enter) var(--pm-spring-soft) both;
+}
+
+/* ---- Video 03: activity index evolve / condense / reopen ---- */
+.pm-activity-index-detail.is-expanding,
+.pm-activity-evolve.is-reopening .pm-activity-index-detail,
+.pm-activity-evolve [data-activity-stage-detail].is-expanding {
+  animation: pmGrokSlideUp 220ms var(--pm-spring-soft) both;
+}
+.pm-activity-index-detail.is-collapsing,
+.pm-activity-evolve [data-activity-stage-detail].is-collapsing {
+  animation: pmGrokExit 160ms var(--pm-ease-out) both;
+  pointer-events: none;
+}
+
+/* ---- Video 02: page morph marker (height owned by JS) ---- */
+.pm-q-stage.pm-q-page-morph {
+  transition:
+    height var(--pm-chat-motion-slow) var(--pm-spring-soft),
+    opacity var(--pm-chat-motion-fast) var(--pm-ease-out);
+}
+
+/* ---- Video 04: prepare → expand → submit → compress continuity ---- */
+.pm-q-stage.is-preparing {
+  /* pill shell stable; content hidden via .is-pill rules */
+}
+.pm-q-stage.is-preparing .pm-q-pill-label {
+  letter-spacing: 0.01em;
+}
+.pm-q-stage.is-submitting {
+  transform-origin: 50% 100%;
+}
+.pm-q-stage.is-submitting.is-pill {
+  /* compress back toward pill while submitting */
+  transition:
+    height var(--pm-chat-motion-surface) var(--pm-spring-soft),
+    opacity var(--pm-chat-motion-fast) var(--pm-ease-out);
+}
+.pm-q-stage.pm-q-settle.is-pill {
+  animation: pmGrokSettleY 360ms var(--pm-spring-soft) both;
+}
+
+
+
 .pm-motion-exit {
   animation: pmGrokExit var(--pm-chat-motion-fast) var(--pm-ease-out) both;
   pointer-events: none;
@@ -606,8 +673,16 @@ details.pm-folio-leaf[open] > summary .pm-work-chev {
 }
 .pm-q-stage.is-pill .pm-q-card-head,
 .pm-q-stage.is-pill .pm-q-carousel,
-.pm-q-stage.is-pill .pm-q-card-actions {
+.pm-q-stage.is-pill .pm-q-card-actions,
+.pm-q-stage.is-pill .pm-q-open-chrome {
   display: none;
+}
+.pm-q-stage.is-expanded .pm-q-open-chrome {
+  display: contents;
+}
+.pm-q-stage[data-q-phase='prepare'] .pm-q-pill,
+.pm-q-stage[data-q-phase='submit'] .pm-q-pill {
+  display: flex;
 }
 .pm-q-stage.is-expanded:not(.pm-q-height-morph) {
   max-height: min(52vh, 480px);
@@ -785,6 +860,10 @@ html[data-reduced-motion='1'] .pm-motion-exit,
 html[data-motion='reduced'] .pm-motion-exit,
 html[data-reduced-motion='1'] .pm-motion-pop,
 html[data-motion='reduced'] .pm-motion-pop,
+html[data-reduced-motion='1'] .pm-motion-enter-spatial,
+html[data-motion='reduced'] .pm-motion-enter-spatial,
+html[data-reduced-motion='1'] .pm-msg-arrive,
+html[data-motion='reduced'] .pm-msg-arrive,
 html[data-reduced-motion='1'] .pm-motion-settle,
 html[data-motion='reduced'] .pm-motion-settle,
 html[data-reduced-motion='1'] .pm-motion-slide-up,
@@ -890,7 +969,11 @@ html[data-motion='reduced'] .pm-btn:active {
     opacity: 1;
   }
   .pm-motion-enter,
+  .pm-motion-enter-spatial,
+  .pm-msg-arrive,
   .pm-motion-exit,
+  .pm-activity-index-detail.is-expanding,
+  .pm-activity-index-detail.is-collapsing,
   .pm-motion-pop,
   .pm-motion-settle,
   .pm-motion-slide-up,

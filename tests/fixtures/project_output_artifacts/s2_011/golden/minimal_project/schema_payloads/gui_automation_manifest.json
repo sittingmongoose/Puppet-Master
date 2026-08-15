@@ -14,6 +14,8 @@
   "browser_sessions": [
     {
       "browser_session_id": "browser-session-fr-001",
+      "session_security_class": "ordinary",
+      "session_epoch": 1,
       "visibility_state": "show_when_possible",
       "open_watch_state": "open_available",
       "stream_refs": [
@@ -29,6 +31,8 @@
     },
     {
       "browser_session_id": "browser-session-fr-unavailable-001",
+      "session_security_class": "ordinary",
+      "session_epoch": 1,
       "visibility_state": "runtime_unavailable",
       "open_watch_state": "unavailable",
       "evidence_refs": [

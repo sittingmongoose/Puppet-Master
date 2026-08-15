@@ -156,14 +156,30 @@
       this.windowInst.setMount(ui.mount);
       if (this.shell && this.shell.setRail) this.shell.setRail(ui.railOpen);
     }
-    try { this.windowInst.update(state, changed); } catch (e) { this._report(e); }
-    try { this.threadInst.update(state, changed); } catch (e) { this._report(e); }
-    for (var i = 0; i < this.attachments.length; i++) {
-      var a = this.attachments[i];
-      if (a && typeof a.update === 'function') {
-        try { a.update(state, changed); } catch (e) { this._report(e); }
+    /* Every store-driven re-render in the workspace passes through here, which makes it the one
+     * place where a reader's keyboard focus can be held across a rebuild. Seven of the eight thread
+     * concepts rebuild their activity capsule when the phase kind changes, so a chain glyph the
+     * reader has focused is replaced by an equal-looking new element and focus falls back to <body>
+     * — which for a keyboard reader means being returned to the top of the document by their own
+     * click. `activeElement` appeared nowhere in shared/, threads/ or windows/ before this.
+     *
+     * Doing it here rather than in eight concepts is not only less code: a concept can only protect
+     * the renders it knows it caused, and focus is lost by whichever render happens to land, which
+     * may be one a different surface triggered. */
+    var self = this;
+    var util = global.PMXUtil;
+    var paint = function () {
+      try { self.windowInst.update(state, changed); } catch (e) { self._report(e); }
+      try { self.threadInst.update(state, changed); } catch (e) { self._report(e); }
+      for (var i = 0; i < self.attachments.length; i++) {
+        var a = self.attachments[i];
+        if (a && typeof a.update === 'function') {
+          try { a.update(state, changed); } catch (e) { self._report(e); }
+        }
       }
-    }
+    };
+    if (util && util.keepFocusAcross) util.keepFocusAcross(this.stage, paint);
+    else paint();
   };
 
   Composition.prototype._report = function (e) {

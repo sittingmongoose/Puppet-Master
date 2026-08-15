@@ -170,6 +170,8 @@
       ],
       "required": [
         "browser_session_id",
+        "session_security_class",
+        "session_epoch",
         "visibility_state",
         "open_watch_state",
         "evidence_refs",
@@ -179,6 +181,14 @@
         "browser_session_id": {
           "type": "string",
           "minLength": 1
+        },
+        "session_security_class": {
+          "type": "string",
+          "const": "ordinary"
+        },
+        "session_epoch": {
+          "type": "integer",
+          "minimum": 0
         },
         "visibility_state": {
           "type": "string",

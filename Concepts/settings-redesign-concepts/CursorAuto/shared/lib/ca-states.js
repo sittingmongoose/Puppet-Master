@@ -9,7 +9,7 @@
   "use strict";
 
   var STATES = [
-    { id: "baseline", label: "Baseline", hint: "Seeded demo as shipped" },
+    { id: "baseline", label: "Baseline", hint: "Post-consent demo fixtures (not a shipped baseline)" },
     { id: "calm", label: "Calm", hint: "No notices on Home" },
     { id: "continue-setup", label: "Continue setup", hint: "Only setup notices" },
     { id: "recommended", label: "Recommended", hint: "Only recommended notices" },
@@ -20,7 +20,9 @@
     { id: "import-conflict", label: "Import conflict", hint: "Lifecycle import needs resolution" },
     { id: "rollback-complete", label: "Rollback complete", hint: "Last import rolled back" },
     { id: "sound-pack-blocked", label: "Sound pack blocked", hint: "License-blocked pack fixture" },
-    { id: "server-shell-deferred", label: "Server shell deferred", hint: "Named-owner insertion cards only" }
+    { id: "server-shell-deferred", label: "Server shell deferred", hint: "Named-owner insertion cards only" },
+    { id: "loading", label: "Loading / reconcile", hint: "Truthful wait projection without fake %" },
+    { id: "offline", label: "Offline / reconnect", hint: "Cached shell visible while reconnecting" }
   ];
 
   function applyState(id) {
@@ -164,6 +166,33 @@
       PMStore.receipt("Server shell deferred — named-owner insertion cards only; no fake bootstrap", "info");
       return;
     }
+    if (id === "loading") {
+      PMStore.set("demoNetwork", "online");
+      PMStore.set("demoLoading", {
+        state: "synchronizing",
+        human_phase: "Reconciling cached Settings projection",
+        wait_reason: "live Server/runtime refresh",
+        progress_kind: "indeterminate",
+        progress_source: "derived"
+      });
+      PMStore.receipt("Loading/reconcile demo — cached values stay visible; no fake percent", "info");
+      return;
+    }
+
+    if (id === "offline") {
+      PMStore.set("demoNetwork", "offline");
+      PMStore.set("demoLoading", {
+        state: "waiting_network",
+        human_phase: "Waiting to reconnect",
+        wait_reason: "network offline",
+        progress_kind: "indeterminate",
+        progress_source: "unknown",
+        last_known_good: true
+      });
+      PMStore.receipt("Offline demo — shell remains on last-known-good; reconnect when available", "warn");
+      return;
+    }
+
   }
 
   function refreshCatalogs() {

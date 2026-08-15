@@ -37,7 +37,8 @@
         subcategories: [
           { id: "startup", title: "Startup and restore", summary: "What Puppet Master restores and resumes on launch", settings: ["general.startup-restore", "general.startup-open", "general.resume-runs"] },
           { id: "updates", title: "App updates", summary: "How Puppet Master keeps itself current", settings: ["general.update-check", "general.update-channel", "general.update-download"] },
-          { id: "desktop", title: "Desktop and window", summary: "Tray, launch destination, and window protection", settings: ["general.tray-minimize", "general.launch-destination", "general.unsaved-protection"] }
+          { id: "desktop", title: "Desktop and window", summary: "Tray, launch destination, and window protection", settings: ["general.tray-minimize", "general.launch-destination", "general.unsaved-protection"] },
+          { id: "performance", title: "Performance and resources", summary: "Behavior profile, background work, and metered-network policy", settings: ["general.behavior-profile", "general.background-work", "general.metered-connection", "general.cache-ceiling"] }
         ]
       },
       {
@@ -249,6 +250,41 @@
         help: "Recommended: agent runs can hold editor state you have not reviewed yet.",
         type: "toggle", value: true, defaultValue: true, recommendedValue: true,
         state: "recommended", source: "Recommended default", exposure: "standard", scope: ["global"]
+      },
+      "general.behavior-profile": {
+        id: "general.behavior-profile", label: "Behavior profile",
+        description: "One human dial for how Puppet Master spends CPU, memory, and helpers.",
+        help: "Auto matches this machine. Performance favors speed, Efficiency favors battery and quiet, Legacy targets older 4-core desktops: smaller bounded caches, fewer helpers, no speculative prewarm, work scheduled in waves. A profile changes automatic policy — it never removes product capability.",
+        type: "segmented", value: "auto", defaultValue: "auto",
+        options: [{ value: "auto", label: "Auto" }, { value: "performance", label: "Performance" }, { value: "efficiency", label: "Efficiency" }, { value: "legacy", label: "Legacy" }],
+        state: "default", source: "System default", exposure: "standard", scope: ["global"],
+        search: "performance efficiency legacy slow old computer cpu memory profile"
+      },
+      "general.background-work": {
+        id: "general.background-work", label: "Background work",
+        description: "When maintenance, indexing, and prefetch may run.",
+        help: "The resource governor owns admission; this sets your policy. Paused on battery keeps the UI and active work responsive while maintenance waits for power.",
+        type: "segmented", value: "automatic", defaultValue: "automatic",
+        options: [{ value: "automatic", label: "Automatic" }, { value: "idle", label: "When idle" }, { value: "battery", label: "Paused on battery" }],
+        state: "default", source: "System default", exposure: "standard", scope: ["global"],
+        search: "background maintenance indexing prefetch battery idle"
+      },
+      "general.metered-connection": {
+        id: "general.metered-connection", label: "Respect metered connections",
+        description: "Hold background downloads, catalog refreshes, and non-essential sync on metered networks.",
+        help: "On means large downloads and automatic updates wait for an unmetered network. Explicit actions you start still run.",
+        type: "toggle", value: true, defaultValue: true,
+        state: "default", source: "System default", exposure: "standard", scope: ["global"],
+        search: "metered network data cap download sync wifi"
+      },
+      "general.cache-ceiling": {
+        id: "general.cache-ceiling", label: "Memory ceiling for caches",
+        description: "A plain-language cap for decoded media, diff, terminal, and index caches.",
+        help: "Every cache is byte-bounded; this sets the shared ceiling. Under pressure the governor sheds caches first and preserves the UI, active streams, and durable work.",
+        type: "select", value: "auto", defaultValue: "auto",
+        options: [{ value: "auto", label: "Automatic" }, { value: "2", label: "2 GB" }, { value: "4", label: "4 GB" }, { value: "8", label: "8 GB" }],
+        state: "default", source: "System default", exposure: "advanced", scope: ["global"],
+        search: "memory cache limit ceiling ram pressure"
       },
 
       /* ---------- Appearance ---------- */

@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_id": "pm.shared_runtime.command_bindings.v1",
+  "stage": "canonical_specification_closure_pre_worknodes",
+  "implementation_status": "not_started",
+  "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+  "candidate_census": {
+    "source": "PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/CANDIDATE_COMMAND_ID_REGISTER.json",
+    "candidate_count": 34,
+    "canonical_generalized_count": 26,
+    "compatibility_intent_count": 7,
+    "rejected_count": 1,
+    "retained_wrapper_count": 1
+  },
+  "bindings": [
+    {"command_id": "cmd.environment.connect", "handler": "handlers::environment::connect", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/environment_connection_command_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/environment_connection_command_result", "wiring_entry_id": "catalog.environment_connect"},
+    {"command_id": "cmd.environment.reconnect", "handler": "handlers::environment::reconnect", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/environment_connection_command_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/environment_connection_command_result", "wiring_entry_id": "catalog.environment_reconnect"},
+    {"command_id": "cmd.environment.disconnect", "handler": "handlers::environment::disconnect", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/environment_connection_command_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/environment_connection_command_result", "wiring_entry_id": "catalog.environment_disconnect"},
+    {"command_id": "cmd.thread.outbox.retry", "handler": "handlers::thread_outbox::retry", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_outbox_retry_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_outbox_command_result", "wiring_entry_id": "catalog.thread_outbox_retry"},
+    {"command_id": "cmd.thread.outbox.cancel", "handler": "handlers::thread_outbox::cancel", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_outbox_cancel_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_outbox_command_result", "wiring_entry_id": "catalog.thread_outbox_cancel"},
+    {"command_id": "cmd.thread.request", "handler": "handlers::thread::request", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_request_command_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_request_command_result", "wiring_entry_id": "catalog.thread_request"},
+    {"command_id": "cmd.thread.spawn", "handler": "handlers::thread::spawn", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_spawn_command_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_spawn_command_result", "wiring_entry_id": "catalog.thread_spawn"},
+    {"command_id": "cmd.thread.await", "handler": "handlers::thread::await_condition", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_await_command_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_await_command_result", "wiring_entry_id": "catalog.thread_await"},
+    {"command_id": "cmd.capability.ensure", "handler": "handlers::capability::ensure", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/capability_ensure_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/capability_ensure_result", "wiring_entry_id": "catalog.capability_ensure"},
+    {"command_id": "cmd.tool.discover", "handler": "handlers::tool::discover", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/tool_discover_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/tool_discover_result", "wiring_entry_id": "catalog.tool_discover"},
+    {"command_id": "cmd.tool.select", "handler": "handlers::tool::select", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/tool_select_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/tool_select_result", "wiring_entry_id": "catalog.tool_select"},
+    {"command_id": "cmd.installation.install", "handler": "handlers::installation::install", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/installation_lifecycle_command_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/installation_lifecycle_command_result", "wiring_entry_id": "catalog.installation_install"},
+    {"command_id": "cmd.installation.update", "handler": "handlers::installation::update", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/installation_lifecycle_command_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/installation_lifecycle_command_result", "wiring_entry_id": "catalog.installation_update"},
+    {"command_id": "cmd.installation.repair", "handler": "handlers::installation::repair", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/installation_lifecycle_command_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/installation_lifecycle_command_result", "wiring_entry_id": "catalog.installation_repair"},
+    {"command_id": "cmd.installation.rollback", "handler": "handlers::installation::rollback", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/installation_lifecycle_command_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/installation_lifecycle_command_result", "wiring_entry_id": "catalog.installation_rollback"},
+    {"command_id": "cmd.installation.verify", "handler": "handlers::installation::verify", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/installation_lifecycle_command_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/installation_lifecycle_command_result", "wiring_entry_id": "catalog.installation_verify"},
+    {"command_id": "cmd.authentication.start", "handler": "handlers::authentication::start", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/authentication_command_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/authentication_command_result", "wiring_entry_id": "catalog.authentication_start"},
+    {"command_id": "cmd.authentication.cancel", "handler": "handlers::authentication::cancel", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/authentication_command_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/authentication_command_result", "wiring_entry_id": "catalog.authentication_cancel"},
+    {"command_id": "cmd.authentication.resume", "handler": "handlers::authentication::resume", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/authentication_command_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/authentication_command_result", "wiring_entry_id": "catalog.authentication_resume"},
+    {"command_id": "cmd.eval.session.start", "handler": "handlers::eval_session::start", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/eval_session_command_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/eval_session_command_result", "wiring_entry_id": "catalog.eval_session_start"},
+    {"command_id": "cmd.eval.session.execute", "handler": "handlers::eval_session::execute", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/eval_session_command_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/eval_session_command_result", "wiring_entry_id": "catalog.eval_session_execute"},
+    {"command_id": "cmd.eval.session.stop", "handler": "handlers::eval_session::stop", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/eval_session_command_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/eval_session_command_result", "wiring_entry_id": "catalog.eval_session_stop"},
+    {"command_id": "cmd.mcp.server.connect", "handler": "handlers::mcp::connect_server", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/mcp_server_lifecycle_command_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/mcp_server_lifecycle_command_result", "wiring_entry_id": "catalog.mcp_server_connect"},
+    {"command_id": "cmd.mcp.server.reconnect", "handler": "handlers::mcp::reconnect_server", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/mcp_server_lifecycle_command_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/mcp_server_lifecycle_command_result", "wiring_entry_id": "catalog.mcp_server_reconnect"},
+    {"command_id": "cmd.resource.inspect", "handler": "handlers::runtime_resource::inspect", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/runtime_resource_inspect_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/runtime_resource_inspect_result", "wiring_entry_id": "catalog.resource_inspect"},
+    {"command_id": "cmd.bsd.set", "handler": "handlers::back_seat_driver::set_mode", "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/back_seat_driver_mode_set_request", "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/back_seat_driver_mode_set_result", "wiring_entry_id": "catalog.bsd_set"}
+  ],
+  "wrapper_binding": {
+    "command_id": "cmd.remote.reconnect",
+    "classification": "retained_exact_environment_wrapper",
+    "handler": "handlers::remote::reconnect",
+    "delegates_to": "cmd.environment.reconnect",
+    "delegate_handler": "handlers::environment::reconnect",
+    "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/remote_reconnect_wrapper_request",
+    "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/environment_connection_command_result",
+    "wiring_entry_id": "catalog.remote_reconnect",
+    "requires_exact_execution_environment_id": true,
+    "creates_peer_lifecycle": false,
+    "expected_event_types": []
+  },
+  "compatibility": [
+    {"candidate_id": "cmd.lsp.server.restart", "classification": "compatibility_spelling", "canonical_target_ids": ["cmd.lsp.restart_server"], "primary_wiring_for_candidate": false},
+    {"candidate_id": "cmd.lsp.server.diagnose", "classification": "compatibility_intent", "canonical_target_ids": ["cmd.lsp.open_problems"], "primary_wiring_for_candidate": false},
+    {"candidate_id": "cmd.debug.session.start", "classification": "compatibility_spelling", "canonical_target_ids": ["cmd.run_debug.start"], "primary_wiring_for_candidate": false},
+    {"candidate_id": "cmd.debug.session.stop", "classification": "compatibility_spelling", "canonical_target_ids": ["cmd.run_debug.stop"], "primary_wiring_for_candidate": false},
+    {"candidate_id": "cmd.worktree.provision", "classification": "compatibility_spelling", "canonical_target_ids": ["cmd.git.worktree.create"], "primary_wiring_for_candidate": false},
+    {"candidate_id": "cmd.worktree.release", "classification": "compatibility_spelling", "canonical_target_ids": ["cmd.git.worktree.release"], "primary_wiring_for_candidate": false},
+    {"candidate_id": "cmd.context.receipt.open", "classification": "compatibility_intent_by_subject_kind", "canonical_target_ids": ["cmd.nav.open_subject", "cmd.nav.open_usage_subject"], "primary_wiring_for_candidate": false}
+  ],
+  "rejected": [
+    {
+      "candidate_id": "cmd.debug.session.action",
+      "classification": "rejected_generic_dispatcher",
+      "replacement_rule": "use_exact_cmd.run_debug_verb",
+      "primary_wiring_for_candidate": false
+    }
+  ],
+  "binding_invariants": {
+    "each_canonical_id_has_exactly_one_binding": true,
+    "each_canonical_id_has_exactly_one_production_wiring_entry": true,
+    "compatibility_and_rejected_ids_have_zero_primary_wiring_entries": true,
+    "all_expected_event_types_are_empty": true,
+    "receipt_or_projection_effect_required": true,
+    "accepted_is_not_terminal_success": true,
+    "replay_reuses_original_operation_id": true,
+    "cancellation_acknowledgement_is_not_cleanup": true
+  }
+}

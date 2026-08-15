@@ -354,8 +354,78 @@
     return REDUCED_MOTION_STUB;
   }
 
+  /* keepFocusAcross(root, mutateFn) — run a re-render that may REBUILD `root`, and put the reader's
+   * keyboard focus back where it was.
+   *
+   * Why this exists. Seven of the eight thread concepts rebuild their activity capsule when the phase
+   * kind changes, and a reader can activate a chain glyph with the keyboard. The glyph they are
+   * standing on is then replaced by an equal-looking new element, focus falls back to <body>, and for
+   * a keyboard reader that means being returned to the top of the document by their own click.
+   * `activeElement` appeared nowhere in shared/, threads/ or windows/ before this, so nothing in the
+   * workspace was preserving it.
+   *
+   * Position, not identity. A rebuild destroys the element, so a reference to it is worthless by the
+   * time the mutation is done — what survives is WHERE it was. The path is child indices from `root`
+   * down to the focused element, and after the mutation the element now standing at that path takes
+   * focus. If nothing does, focus is left exactly as the mutation left it: a helper that guesses at a
+   * replacement would move the reader somewhere they never asked to be, which is worse than the
+   * fallback it was trying to avoid.
+   *
+   * Two hard rules. It never focuses anything if nothing inside `root` was focused to begin with —
+   * a re-render must not steal the caret out of the composer. And it restores with preventScroll
+   * where the browser supports it, because a focus() that scrolls would undo the scroll anchoring
+   * ScrollCtl.preserveAcross is doing around the same mutation.
+   *
+   * This lives here rather than in shared/motion.js deliberately: motion.js states as its third rule
+   * that not one of its helpers touches focus, and that rule is worth keeping true. */
+  function keepFocusAcross(root, mutateFn) {
+    var doc = global.document;
+    var active = doc && doc.activeElement;
+    var path = null;
+
+    if (root && active && active !== doc.body && root.contains(active)) {
+      path = [];
+      var node = active;
+      while (node && node !== root) {
+        var parent = node.parentNode;
+        if (!parent) { path = null; break; }
+        var kids = parent.children;
+        var at = -1;
+        for (var i = 0; i < kids.length; i++) if (kids[i] === node) { at = i; break; }
+        if (at < 0) { path = null; break; }
+        path.push(at);
+        node = parent;
+      }
+      if (path) path.reverse();
+    }
+
+    var result;
+    try {
+      result = mutateFn ? mutateFn() : undefined;
+    } finally {
+      /* Restore only what was DROPPED. If the mutation deliberately moved focus somewhere else
+       * inside `root` — a concept opening a field and focusing it — that is an intent, and putting
+       * the reader back where they were would fight it. So the restore runs only when focus has
+       * fallen out of `root` entirely, which is what a rebuild does and what a deliberate move does
+       * not. */
+      var now = doc && doc.activeElement;
+      var lost = !now || now === doc.body || !root || !root.contains(now);
+      if (path && root && lost) {
+        var target = root;
+        for (var j = 0; j < path.length && target; j++) {
+          target = target.children ? target.children[path[j]] : null;
+        }
+        if (target && typeof target.focus === 'function') {
+          try { target.focus({ preventScroll: true }); } catch (e) { try { target.focus(); } catch (e2) {} }
+        }
+      }
+    }
+    return result;
+  }
+
   global.PMXUtil = {
     el: el,
+    keepFocusAcross: keepFocusAcross,
     frag: frag,
     on: on,
     delegate: delegate,

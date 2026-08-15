@@ -2,7 +2,7 @@
   "schema_id": "pm.chat.5_6_sol.candidate_wiring_delta.v1",
   "model": "5.6 Sol",
   "status": "provisional_no_runtime_mutation",
-  "invariant": "Every production interaction must close UI source to typed command or event, canonical owner, validation, durable state, receipt, projection, and recovery. The prototype reducer is deterministic evidence only.",
+  "invariant": "Every production interaction must close UI source to typed command or event, canonical owner, validation, durable state, receipt, projection, and recovery. The prototype reducer is deterministic evidence only. Provider CLI first acquisition is never bundled, default-baseline, pre-seeded, silent, or inferred from Project/model/provider/Goal/Plan/WorkNode/agent/Auto/On; a named user-approved exception is required for any exact bundling case.",
   "flows": [
     {
       "id": "WIRE-SOL-001",
@@ -32,7 +32,7 @@
       "id": "WIRE-SOL-003",
       "ui_source": "Offline Send, Reconnect, Replay queued commands, Snapshot catch-up",
       "command_or_event": "canonical command envelope plus environment connection events",
-      "owner": "Project Home Server, outbox, environment connection supervision",
+      "owner": "Plans/Shared_Integration_Runtime.md ThreadCommandOutbox and EnvironmentConnectionSupervisor, with Project Home Server and domain projection owners",
       "payload_and_idempotency": "stable operation_id, client cursor, snapshot cursor, authenticated client and thread identity",
       "validation": "dedupe by operation identity; cursor monotonicity; target thread remains valid",
       "durable_state": "outbox item, replay result, delivered message, cursor checkpoint",
@@ -116,7 +116,7 @@
       "id": "WIRE-SOL-010",
       "ui_source": "Access and BSD pickers",
       "command_or_event": "candidate cmd.chat.access.set and cmd.chat.bsd.set",
-      "owner": "Permissions/FileSafe and BSD runtime/settings",
+      "owner": "Plans/Shared_Integration_Runtime.md BSD engine, assistant-chat visible controls, Permissions/FileSafe, and Settings default owner",
       "payload_and_idempotency": "thread id, requested value, expected policy revision, requested scope, idempotency key when persistent",
       "validation": "mode ceiling, policy, protected effect, scope confirmation",
       "durable_state": "thread-local request/effective snapshot; project/global default only in Settings",
@@ -171,11 +171,24 @@
       "receipt": "panel.undocked or panel.redocked",
       "projection": "same history, artifact, draft, scroll anchor, popup and selected thread after remount",
       "cancel_retry_restore": "retry stale layout or restore prior host"
+    },
+    {
+      "id": "WIRE-SOL-015",
+      "ui_source": "Provider Setup Required card and exact Agent-Config/provider setup-row deep link",
+      "command_or_event": "provisional unminted cmd.provider.setup.open followed only by explicit user-selected cmd.provider.cli.install or cmd.provider.cli.use_existing; authentication and continuation are separate provisional owner actions",
+      "owner": "Chat owns the blocked projection, exact-row deep link, and return context; Plans/Shared_Integration_Runtime.md owns InstallationResolver/InstallationLifecycleManager, shared continuation, coalescing, ObservableWork, and resource governance; Plans/CLI_Bridged_Providers.md owns provider acquisition/auth/readiness/route-resume policy; Plans/Release_Supply_Chain.md owns provenance; BinaryLocator owns discovery/validation only; Multi-Account and Models retain account/model truth; the originating domain owns operation validity",
+      "payload_and_idempotency": "provider_cli_id, host_id, environment_id, runtime_family, topology_generation, setup_row_target, originating_operation_ref, continuation_token, expected_operation_revision, expected_topology_generation, acquisition_choice, provider_cli_supply_chain_plan_ref before acquisition, provider_cli_supply_chain_proof_ref only after acquisition or validated adoption, discovered_installation_ref?, idempotency/coalescing key",
+      "validation": "inspect compatible existing installations first; if none is ready return Provider Setup Required; require explicit Install or existing-installation selection; keep pre-acquisition source/target planning distinct from completed ProviderCliSupplyChainProof; exact official provider/package source and Host/Environment/topology generation; publisher, artifact, manager/installer, version, channel, OS, architecture, artifact_sha256, signature_or_attestation_ref, trust_root_ref, license, redistribution, compatibility, known-bad, download, verification, rollback_artifact_proof_ref, and observed_at checks; begin separate authentication only after verified installation or validated existing-installation adoption; verify provider/model readiness separately; derive continuation currentness from intent, operation revision, expiry, topology generation, and one-time consumption; AuthBrowserSession human-only and opaque",
+      "durable_state": "pre-acquisition source/target plan, acquisition consent and install-generation receipts, post-acquisition or validated-adoption ProviderCliSupplyChainProof reference, exact topology generation, provider-owned profile ref, separate auth/account state, readiness snapshot, originating-operation continuation state; persistent Tool Store or managed host-local state only after consent",
+      "receipt": "setup_required, existing_installation_selected, install_requested/staged/verified/activated/failed, auth_required/authenticated, readiness_verified, continuation_resumed, continuation_stale_rejected, continuation_expired_rejected, or continuation_topology_mismatch_rejected",
+      "projection": "compact blocked card with exact Host/Environment, separate Installed/Auth/Ready states, exact setup deep link, truthful progress through ObservableWork, and return-to-operation status",
+      "cancel_retry_restore": "cancel preserves the originating operation without installing; retry explicit setup; coalesce the same install target; roll back later generations; reject stale continuation; never silently replay or acquire"
     }
   ],
   "closure_gaps": [
     "Exact production IDs for all-thread search scope, question lifecycle, Goal transitions beyond start/update, speed, access, BSD, artifact actions, attachment resolution, draft restore/clear, and thread request/await/spawn require catalog adjudication.",
     "The prototype cannot prove production handler reverse coverage or EventRecord registration because Commands/Wiring/runtime were read-only by task boundary.",
-    "The exact notification-inbox navigation row must be resolved in the shared title-bar owner before integration."
+    "The exact notification-inbox navigation row must be resolved in the shared title-bar owner before integration.",
+    "Provider setup/acquisition/authentication/continuation lifecycle semantics and owner routing are canonical in Plans/Shared_Integration_Runtime.md and Plans/CLI_Bridged_Providers.md; the proposed UICommand spellings and any unregistered event-family names remain provisional until Commands/UI catalog/Wiring/Contracts/storage census and registration close."
   ]
 }

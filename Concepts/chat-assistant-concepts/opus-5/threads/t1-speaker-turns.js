@@ -102,6 +102,17 @@
     var view = this.ctx.store.view(tid);
     var msgs = data.visibleSlice(tid, view.loadedFrom);
 
+    /* 01_message_arrival_spatial_continuity.mov conserves position: the arriving bubble is already
+     * at full opacity in its final place, and what tells you it is new is that the rows around it
+     * MOVED to make room. Rebuilding the whole list cannot express that — every turn is new, so
+     * every turn animates, and the one that actually arrived is indistinguishable from the twelve
+     * that did not. It is also why motion.displace(), written for exactly this, had no callers.
+     *
+     * So an append is an append. When the only difference is messages added at the END of the same
+     * thread and the same loaded range, the existing turns are kept and the new ones are inserted
+     * through displace; anything else is a genuine rebuild. */
+    if (this._canAppendOnly(tid, view, msgs)) { this._appendTurns(msgs); return; }
+
     U().empty(this.list);
     this.rendered = {};
     this.lastThreadId = tid;
@@ -116,6 +127,10 @@
       this.list.appendChild(turn);
       prevRole = msgs[i].role;
     }
+
+    this._renderedIds = msgs.map(function (m) { return m.id; });
+    this._renderedFrom = view.loadedFrom;
+    this._lastRole = prevRole;
 
     this.renderSurfaces();
     this.renderQuestion();
@@ -149,6 +164,56 @@
       self.scrollCtl.preserveAcross(self.list, function () { self.renderThread(); });
     });
     return u.el('div', { class: 't1-older-wrap' }, [btn]);
+  };
+
+  /* True only when this render differs from the last by messages APPENDED to the end. A changed
+   * thread, a changed loaded range, a removal, or any edit to an existing turn all fail this and
+   * fall back to the rebuild, because none of those is an arrival and pretending otherwise would
+   * animate a reflow as though something had just been said. */
+  T1Thread.prototype._canAppendOnly = function (tid, view, msgs) {
+    if (!this._renderedIds || tid !== this.lastThreadId) return false;
+    if (view.loadedFrom !== this._renderedFrom) return false;
+    if (msgs.length <= this._renderedIds.length) return false;
+    for (var i = 0; i < this._renderedIds.length; i++) {
+      if (msgs[i].id !== this._renderedIds[i]) return false;
+    }
+    return true;
+  };
+
+  T1Thread.prototype._appendTurns = function (msgs) {
+    var self = this;
+    var svc = this.ctx.services;
+    var start = this._renderedIds.length;
+    var prevRole = this._lastRole;
+
+    function insert() {
+      var last = null;
+      for (var i = start; i < msgs.length; i++) {
+        last = self.buildTurn(msgs[i], prevRole);
+        self.list.appendChild(last);
+        prevRole = msgs[i].role;
+      }
+      /* displace stamps the node this returns, so it names the turn that actually arrived. */
+      return last;
+    }
+
+    /* Measure, mutate, re-pin — in that order. A reader sitting at the bottom is carried with the
+     * new turn; a reader who has scrolled up is left where they are, which is the whole reason
+     * stickIfAtBottom measures BEFORE the mutation. It had no callers either, so neither half of
+     * that behaviour was reachable. */
+    var run = function () {
+      if (svc.motion && svc.motion.displace) svc.motion.displace(self.list, insert);
+      else insert();
+    };
+    if (this.scrollCtl && this.scrollCtl.stickIfAtBottom) this.scrollCtl.stickIfAtBottom(run);
+    else run();
+
+    this._renderedIds = msgs.map(function (m) { return m.id; });
+    this._lastRole = prevRole;
+
+    this.renderSurfaces();
+    this.renderQuestion();
+    this.syncLive();
   };
 
   T1Thread.prototype.buildTurn = function (msg, prevRole) {
@@ -456,6 +521,11 @@
         });
       }
 
+      /* The run capsule sits ABOVE the domain strip, because the run is what is happening now and
+       * the strip is what is true of the thread. */
+      var run = svc.runtrace ? svc.runtrace.read(this.tid()) : null;
+      if (run && run.started) host.appendChild(this._runCapsule(run));
+
       if (groups.length) host.appendChild(this._buildWorkStripRows(groups, openIds));
 
       /* Every operation the run performed, as marginalia beneath the strip that summarised them. The
@@ -470,6 +540,307 @@
     host.appendChild(this._handoffHost);
     this._renderBsdMargin(this._bsdHost);
     this._renderHandoff(this._handoffHost);
+  };
+
+  /* ---------------------------------------------------------------- the run capsule
+   *
+   * t1's reading of 03_compact_execution_activity.mov. The reference puts its glyph chain inline to
+   * the left of the headline; this concept already has a hanging margin that every other annotation
+   * uses, so the chain goes THERE — the run is indexed in the same column as speaker attribution and
+   * the reading measure is left alone. Same mechanism, this concept's geometry.
+   *
+   * What is carried over verbatim as behaviour:
+   *   - one glyph per entered phase, each a button that reopens THAT phase (f.1170, f.1300);
+   *   - the count rewritten in place, digits only (f.208 -> f.338);
+   *   - present participle while running, past tense once settled;
+   *   - two-beat handover, label first and then the glyph's slot (f.194-211);
+   *   - condensed is the resting state, and reopening pushes what is below it down.
+   *
+   * What is deliberately NOT carried over: the reference's colours, radii, ring treatment and
+   * easing. Those are its look; this is its logic. */
+  /* _runCapsule(run) — the capsule, REUSED when only a count changed.
+   *
+   * renderSurfaces empties its host and rebuilds on every store change. That is fine for everything
+   * else here and fatal for one thing: motion.countMorph animates digits only when the element it is
+   * handed is ALREADY showing the previous text. A freshly built element shows the empty string, so
+   * the digit comparison cannot match and countMorph silently falls back to a whole-label cross-fade.
+   * The number still lands correctly, which is exactly why this would not have looked broken — but
+   * `Exploring 5 files` becoming `6 files` would have read as the line being replaced instead of as a
+   * running tally, and that difference is the whole of frames 208 to 338.
+   *
+   * The structural signature decides: same structure means patch the element we already have,
+   * different structure means the run genuinely changed shape and a rebuild is the honest answer. */
+  T1Thread.prototype._runCapsule = function (run) {
+    var svc = this.ctx.services;
+    var sig = (svc.runtrace && svc.runtrace.signature ? svc.runtrace.signature(run) : '') + '@' + this.tid();
+    if (this._runEl && this._runSig === sig) {
+      this._syncRunCapsule(this._runEl, run);
+      return this._runEl;
+    }
+
+    /* A phase HANDING OVER is not an ordinary rebuild, and frames 194-211 say why: it has an order.
+     * Beat one is already running on the element we are holding, so hand that element straight back
+     * and let the timer bring beat two. */
+    if (this._runHandoverSig === sig && this._runEl) return this._runEl;
+    if (this._beginRunHandover(run, sig)) return this._runEl;
+
+    this._runHandoverSig = null;
+    this._runEl = this._buildRunCapsule(run);
+    this._runSig = sig;
+    this._runChainIds = runChainIds(run);
+    return this._runEl;
+  };
+
+  /* The chain as a list of phase ids, which is how "one more phase entered" is recognised. */
+  function runChainIds(run) {
+    var ids = [];
+    var chain = (run && run.chain) || [];
+    for (var i = 0; i < chain.length; i++) ids.push(chain[i].id);
+    return ids;
+  }
+
+  /* THE HANDOVER, AND WHY IT IS NOT motion.phaseHandover.
+   *
+   * 03_compact_execution_activity.mov, frames 194-211, is explicit about the ORDER and the order is the
+   * whole content of the beat: the outgoing phase lets go of its sentence FIRST and settles into a
+   * plain mark, and only THEN does the arriving phase's glyph appear. A single cross-fade of the whole
+   * row reads as the run being replaced, which loses the one fact the chain exists to carry - the
+   * finished phase survives, as an index entry you can still open.
+   *
+   * The shared primitive expresses that order by opening a slot from zero width, which PUSHES the label
+   * sideways by exactly one glyph. That push cannot come here. This concept's chain is right-aligned
+   * inside a fixed 126px margin column - `justify-content: flex-end` on `.t1-run-chain`, sized so the
+   * reading measure beside it never moves, and the CSS states the constraint outright: "the chain never
+   * pushes the prose". Opening a slot at the end of a right-aligned row moves every OLDER glyph LEFT,
+   * so the index would appear to scroll backwards at the moment the run moves forward. The reference's
+   * push is a consequence of its left-aligned geometry, not the meaning it was carrying.
+   *
+   * So t1 keeps the causality and drops the push. Beat one releases the outgoing sentence on the
+   * capsule that is already on screen; beat two rebuilds with the new glyph in the chain and the new
+   * sentence in the measure. What is assertable is the order itself: the outgoing sentence is empty
+   * while the chain is still the old length.
+   *
+   * Returns true when it has taken ownership of this render. */
+  T1Thread.prototype._beginRunHandover = function (run, sig) {
+    var self = this;
+    var svc = this.ctx.services;
+    var mo = svc.motion;
+    /* The element is DETACHED at this moment: renderSurfaces empties its host and then appends
+     * whatever this returns, so `_runEl` has no parent until the caller puts it back a few lines
+     * later. Beat two therefore checks for a parent and this does not. */
+    var el = this._runEl;
+    if (!el) return false;
+
+    /* Reduced motion gets no two-beat at all, and deliberately not a two-beat with the delay set to
+     * zero: a beat deferred to the next task is still a frame in which the sentence is missing, which
+     * is the "parked mid-animation" state the contract forbids. The ordinary rebuild below lands the
+     * new chain and the new sentence together, fully revealed, in one pass. */
+    if (!mo || !mo.swapText || (mo.reduced && mo.reduced(el))) return false;
+
+    var was = this._runChainIds || [];
+    var now = runChainIds(run);
+    if (!was.length || now.length <= was.length) return false;
+    for (var i = 0; i < was.length; i++) if (was[i] !== now[i]) return false;
+
+    var verbEl = el.querySelector('.t1-run-verb');
+    var argEl = el.querySelector('.t1-run-arg');
+    if (!verbEl && !argEl) return false;
+
+    this._runHandoverSig = sig;
+    el.setAttribute('data-handover', '1');
+
+    /* BEAT ONE - the outgoing sentence, both halves together. swapText fades the element out and
+     * empties it on the second frame, so the release is visible rather than a cut. */
+    if (verbEl) mo.swapText(verbEl, '');
+    if (argEl) mo.swapText(argEl, '');
+
+    /* 110ms is phaseHandover's own swapDuration, reused rather than re-guessed so the two concepts'
+     * handovers are the same length of beat even though only one of them pushes. */
+    global.setTimeout(function () { self._finishRunHandover(sig); }, 110);
+    return true;
+  };
+
+  /* BEAT TWO - the arriving glyph, and the sentence it brought with it. */
+  T1Thread.prototype._finishRunHandover = function (sig) {
+    if (this._runHandoverSig !== sig) return;
+    this._runHandoverSig = null;
+
+    var svc = this.ctx.services;
+    var old = this._runEl;
+    /* Read the run again rather than closing over it: the beat is 110ms long and the run may have
+     * moved on, in which case the honest thing to draw is where it is now, not where it was. */
+    var run = svc.runtrace ? svc.runtrace.read(this.tid()) : null;
+    if (old) old.removeAttribute('data-handover');
+    if (!run || !run.started) return;
+
+    /* Remember the new chain BEFORE building. From here this is an ordinary rebuild, and a rebuild
+     * that still saw the old chain would recognise the same growth a second time and open another
+     * handover on top of this one. */
+    this._runChainIds = runChainIds(run);
+    var next = this._buildRunCapsule(run);
+    this._runEl = next;
+    this._runSig = (svc.runtrace.signature ? svc.runtrace.signature(run) : '') + '@' + this.tid();
+
+    if (old && old.parentNode) old.parentNode.replaceChild(next, old);
+    /* No parent means the surfaces were re-rendered inside the beat and the old capsule was dropped.
+     * A full pass is the only thing that can place the new one, and it is cheap: `_runSig` now matches,
+     * so _runCapsule takes its patch path rather than building a third capsule. */
+    else this.renderSurfaces();
+  };
+
+  /* The patch path. Only the two things that can change WITHOUT changing the signature are touched:
+   * the headline's count, and the glyph tooltips that quote it. */
+  T1Thread.prototype._syncRunCapsule = function (el, run) {
+    var svc = this.ctx.services;
+    var subject = run.open || run.running || (run.chain.length ? run.chain[run.chain.length - 1] : null);
+    var verbEl = el.querySelector('.t1-run-verb');
+    var argEl = el.querySelector('.t1-run-arg');
+    var verbText = run.condensed && !run.open ? run.summaryLabel : (subject ? subject.verb : '');
+    var argText = run.condensed && !run.open ? '' : (subject ? subject.argument : '');
+    if (verbEl) {
+      if (svc.motion && svc.motion.countMorph) svc.motion.countMorph(verbEl, verbText);
+      else verbEl.textContent = verbText;
+    }
+    if (argEl) {
+      if (svc.motion && svc.motion.countMorph) svc.motion.countMorph(argEl, argText);
+      else argEl.textContent = argText;
+    }
+    var glyphs = el.querySelectorAll('.t1-run-glyph');
+    for (var i = 0; i < glyphs.length && i < run.chain.length; i++) {
+      glyphs[i].title = run.chain[i].headline;
+      glyphs[i].setAttribute('aria-label', run.chain[i].headline);
+    }
+  };
+
+  T1Thread.prototype._buildRunCapsule = function (run) {
+    var self = this;
+    var u = U();
+    var svc = this.ctx.services;
+    var open = run.open;
+    var showRows = !!open || (!run.condensed && !!run.running);
+    var subject = open || run.running || (run.chain.length ? run.chain[run.chain.length - 1] : null);
+
+    var cap = u.el('div', {
+      class: 't1-run',
+      data: { condensed: run.condensed ? '1' : '0', running: run.running ? '1' : '0' }
+    });
+
+    /* ---- the margin: the chain */
+    var chain = u.el('div', { class: 't1-run-chain pmx-chain' });
+    var activeGlyph = null;
+    run.chain.forEach(function (p) {
+      /* Each glyph lives in its own slot element so phaseHandover has a box whose width it can open.
+       * Without the slot the chain has nothing to animate and the label jumps a glyph-width. */
+      var slot = u.el('span', { class: 'pmx-chain-slot' });
+      var isOpen = subject && subject.id === p.id;
+      var btn = u.el('button', {
+        class: 't1-run-glyph', type: 'button',
+        data: { kind: p.kind, state: p.running ? 'running' : 'done', open: isOpen ? '1' : '0' },
+        aria: { expanded: isOpen ? 'true' : 'false', label: p.headline }
+      });
+      btn.title = p.headline;
+      if (svc.icons) btn.appendChild(svc.icons.get(p.glyph, 13));
+      self._on(btn, 'click', function () {
+        var next = self.surfaceHost();
+        /* groupReopen carries the siblings BELOW the capsule so the prose and the artifact card are
+         * pushed down as one block instead of jumping. */
+        if (svc.motion && svc.motion.groupReopen && next) {
+          svc.motion.groupReopen(cap, function () { svc.runtrace.open(self.tid(), p.id); });
+        } else {
+          svc.runtrace.open(self.tid(), p.id);
+        }
+      });
+      if (isOpen) activeGlyph = btn;
+      slot.appendChild(btn);
+      chain.appendChild(slot);
+    });
+    cap.appendChild(chain);
+
+    /* ---- the reading column: one headline, morphed in place */
+    var line = u.el('div', { class: 't1-run-line' });
+    var head = u.el('button', {
+      class: 't1-run-head', type: 'button',
+      aria: { expanded: showRows ? 'true' : 'false' }
+    });
+    var verbEl = u.el('span', { class: 't1-run-verb' });
+    var argEl = u.el('span', { class: 't1-run-arg' });
+
+    var headline = subject ? subject : null;
+    var verbText = run.condensed && !open ? run.summaryLabel : (headline ? headline.verb : '');
+    var argText = run.condensed && !open ? '' : (headline ? headline.argument : '');
+
+    /* countMorph, not swapText: `7 files` becoming `6 files` must move the digits and leave the word
+     * `files` in the layout box it already had. A whole-label cross-fade reads as the line being
+     * replaced, which is the difference between a running tally and a series of sentences. */
+    if (svc.motion && svc.motion.countMorph) {
+      svc.motion.countMorph(verbEl, verbText);
+      svc.motion.countMorph(argEl, argText);
+    } else {
+      verbEl.textContent = verbText;
+      argEl.textContent = argText;
+    }
+    head.appendChild(verbEl);
+    head.appendChild(argEl);
+    this._on(head, 'click', function () {
+      if (open) svc.runtrace.close(self.tid());
+      else if (run.condensed) svc.motion && svc.motion.groupReopen
+        ? svc.motion.groupReopen(cap, function () { svc.runtrace.open(self.tid()); })
+        : svc.runtrace.open(self.tid());
+      else svc.runtrace.condense(self.tid());
+    });
+    line.appendChild(head);
+
+    if (run.chain.length > 1 || run.condensed) {
+      var chev = u.el('span', { class: 't1-run-chevron' });
+      if (svc.icons) chev.appendChild(svc.icons.get(showRows ? 'chevron-up' : 'chevron-down', 12));
+      head.appendChild(chev);
+    }
+    cap.appendChild(line);
+
+    /* ---- the open phase's rows */
+    if (showRows && subject) {
+      var rows = u.el('div', { class: 't1-run-rows' });
+      var list = subject.rows && subject.rows.length ? subject.rows : null;
+      if (list) {
+        list.forEach(function (r, i) {
+          var row = u.el('div', { class: 't1-run-row' });
+          row.style.setProperty('--pmx-i', String(i));
+          row.appendChild(u.el('span', { class: 't1-run-row-verb', text: r.verb || '' }));
+          row.appendChild(u.el('span', { class: 't1-run-row-arg', text: r.target || r.label || '' }));
+          if (r.added != null || r.removed != null) {
+            var stat = u.el('span', { class: 't1-run-stat' });
+            if (r.added != null) stat.appendChild(u.el('span', { class: 't1-run-add', text: '+' + r.added }));
+            if (r.removed != null) stat.appendChild(u.el('span', { class: 't1-run-rem', text: '−' + r.removed }));
+            row.appendChild(stat);
+          }
+          rows.appendChild(row);
+        });
+      } else if (subject.detail) {
+        rows.appendChild(u.el('div', { class: 't1-run-row' , text: subject.detail }));
+      }
+      if (rows.firstChild) {
+        rows.classList.add('pmx-cascade');
+        cap.appendChild(rows);
+      }
+    }
+
+    /* ---- the footer, once the run has settled */
+    if (run.condensed && run.workedSeconds) {
+      cap.appendChild(u.el('div', {
+        class: 't1-run-foot',
+        text: 'Worked for ' + F().duration(run.workedSeconds)
+      }));
+    }
+
+    /* The chain scrolls rather than truncating, and brings the selected glyph back into view — the
+     * glyph IS the route to its phase, so dropping one would make part of the run unreachable. */
+    if (svc.motion && svc.motion.chainRoll) {
+      var into = activeGlyph;
+      global.requestAnimationFrame(function () {
+        if (chain.isConnected) svc.motion.chainRoll(chain, into ? { into: into } : null);
+      });
+    }
+    return cap;
   };
 
   T1Thread.prototype._activityShort = function (stages) {
@@ -759,11 +1130,23 @@
     if (rec.rows && rec.rows.length) {
       var rowsVal = u.el('dd', { class: 't1-op-val' });
       rec.rows.forEach(function (r) {
-        rowsVal.appendChild(u.el('div', { class: 't1-op-row' }, [
+        var opRow = u.el('div', { class: 't1-op-row' }, [
           u.el('span', { class: 't1-op-row-verb', text: r.verb }),
-          u.el('span', { class: 't1-annot-ev', text: r.target }),
-          u.el('span', { class: 't1-op-row-delta', text: '+' + r.added + ' \u2212' + r.removed })
-        ]));
+          u.el('span', { class: 't1-annot-ev', text: r.target })
+        ]);
+        /* A delta only exists for rows that changed lines. Reads, searches, fetches and checks have
+         * none, and concatenating an absent one prints the literal "+undefined -undefined" — a claim
+         * about a file that was never written. Omission is the truthful rendering; "+0 -0" would
+         * assert a zero-line edit that did not happen either. */
+        if (r.added != null || r.removed != null) {
+          opRow.appendChild(u.el('span', {
+            class: 't1-op-row-delta',
+            text: (r.added != null ? '+' + r.added : '') +
+                  (r.added != null && r.removed != null ? ' ' : '') +
+                  (r.removed != null ? '\u2212' + r.removed : '')
+          }));
+        }
+        rowsVal.appendChild(opRow);
       });
       fields.appendChild(u.el('div', { class: 't1-op-field' }, [
         u.el('dt', { class: 't1-op-key', text: 'FILES' }),
@@ -979,72 +1362,200 @@
      * second one into a host it already emptied - two identical interviews on screen. */
     if (this._inRenderQuestion) return;
 
-    var host = this.ctx.capabilities.questionHost ? this.ctx.regions.questionHost : this.inlineQuestion;
-    var prevKey = this._qkey || '';
-
+    /* The choreography used to be sequenced from here off a remembered key. It now runs at the tail of
+     * _renderQuestionBody, because it needs two facts only that function holds: the turn element that
+     * survived this pass, and whether this pass is the one that CREATED it. */
     this._inRenderQuestion = true;
     try { this._renderQuestionBody(); } finally { this._inRenderQuestion = false; }
-
-    this._choreographInterview(host, prevKey);
   };
 
   /* This concept's OWN choreography, composed from primitives.
    *
-   * A turn ARRIVES - it does not inflate. So the entrance is the cascade this concept already uses for
-   * appended prose (opacity plus a small rise, staggered down the option rows), and an advance between
-   * questions is a text swap inside a turn that stays exactly where it is. Nothing springs a height,
-   * because a bounded box springing open is the vocabulary of a card, and this concept has none. */
-  T1Thread.prototype._choreographInterview = function (host, prevKey) {
+   * A turn ARRIVES - it does not inflate. The entrance is therefore the cascade this concept already
+   * uses for appended prose: opacity plus a small rise, staggered down the option rows.
+   *
+   * THE HEIGHT DECISION, REVISITED. This comment used to end "Nothing springs a height, because a
+   * bounded box springing open is the vocabulary of a card, and this concept has none." Half of that
+   * still stands and is why the entrance above is a rise and not an inflation: a box that announces
+   * ITSELF by opening is card vocabulary, and there are no cards here. But it ruled out a second,
+   * different sentence a height change can speak - this turn is now a different SIZE, because of the
+   * answer you just gave - and refusing that left the turn jumping between sizes with nothing said
+   * about why. PMConcept7's model picker already answers exactly that in this product's own hand
+   * (a height on --ease-bounce plus a one-shot scale beat), so _renderQuestionBody now wraps every
+   * content rebuild in `motion.resizeBounce`. The turn carries `pmx-resize-up`, so the growth moves
+   * the turn's own TOP edge and the transcript above it is what yields - which is the thing the
+   * original refusal was really protecting.
+   *
+   * THE ENTRANCE IS GATED ON firstVisit. Reference 02 is a REVIEWABLE questionnaire: paging back to an
+   * answered question shows the answer sitting there and replays nothing. An entrance on the way back
+   * would tell the reader they had moved forward, which is the opposite of what happened. `firstVisit`
+   * stamps its answer on the turn, so this only works because the turn now survives across renders. */
+  T1Thread.prototype._choreographInterview = function (turn, fresh) {
     var R = global.PMXReveal;
-    if (!R || !host) return;
-
     var svc = this.ctx.services;
+    if (!R || !turn) return;
+
     var key = R.keyFor(svc, this.tid());
-    this._qkey = key;
 
-    /* Same question, one more keystroke: silence. A freeform answer re-renders per character because
-     * typing writes a draft and the draft notifies the store. */
-    if (prevKey === key) return;
+    /* Asked ONCE per render and before any early return, because firstVisit records the visit as a
+     * side effect: a pass that skipped the call would let the next one replay the entrance. It also
+     * subsumes the old "same key, one more keystroke" guard - a freeform answer re-renders per
+     * character, and the key does not change while you are typing into one question. */
+    var first = svc.motion && svc.motion.firstVisit ? svc.motion.firstVisit(turn, key) : !!fresh;
 
-    var turn = host.querySelector('.t1-qturn');
-    if (!turn || R.reduced(turn)) return;
-
+    /* The cascade ladder is `.pmx-cascade > *`, so it has to be added to the rows' OWN parent. Adding
+     * it to the turn animated the margin and the body as two blocks and left every option row still. */
+    var list = turn.querySelector('.t1-qrows') || turn;
     var rows = Array.prototype.slice.call(turn.querySelectorAll('.t1-qrow'));
 
-    if (!prevKey) {
+    /* Clear the ladder BEFORE deciding whether to play one, and do it on every pass.
+     *
+     * `clearStagger` runs on a 900ms timer, but the container outlives the rows inside it: paging back
+     * within that window rebuilt fresh rows into a list still carrying `pmx-cascade`, and they
+     * animated on their own. The guard below was already correct — firstVisit answers false on the way
+     * back — so the entrance was suppressed and the rows cascaded anyway, which is the half a reader
+     * actually notices. A class that outlives the elements it was applied for has to be cleared by the
+     * render, not by a timer racing it. */
+    R.clearStagger(list, rows);
+    if (!first || R.reduced(turn)) return;
+
+    if (fresh) {
       /* ENTRANCE: the turn arrives, and its option rows cascade down the measure. */
       R.oneShot(turn, 't1-qturn-arrive', 420);
-      R.stagger(turn, rows);
-      global.setTimeout(function () { R.clearStagger(turn, rows); }, 900);
+      R.stagger(list, rows);
+      global.setTimeout(function () { R.clearStagger(list, rows); }, 900);
       return;
     }
 
-    /* ADVANCE: the same turn now says something else. Only the rows move. */
-    R.stagger(turn, rows);
-    global.setTimeout(function () { R.clearStagger(turn, rows); }, 700);
+    /* ADVANCE to a question not seen before: the turn stays exactly where it is and only the rows
+     * move. The turn's own change of size is already being spoken by the bounce that wrapped this
+     * rebuild, so there is nothing left for this beat to say about the box. */
+    R.stagger(list, rows);
+    global.setTimeout(function () { R.clearStagger(list, rows); }, 700);
   };
 
+  /* How many options the turn is showing, which is what picks the bounce's amplitude.
+   *
+   * The reference itself draws this line: an ordinary change gets `pmx-size-bounce`, and a change to
+   * the option COUNT gets `pmx-size-bounce-strong`, because that is the box being re-shaped rather
+   * than nudged. The sentinels matter as much as the count - a freeform question shows zero options,
+   * so a list becoming a write-in field reads as a count change, which is honest, since that is the
+   * largest shape change this turn can make short of leaving. */
+  T1Thread.prototype._questionOptionCount = function (flow) {
+    if (!flow || flow.status !== 'active') return -1;
+    if (flow.atEnd) return -2;
+    var q = flow.question;
+    return q && q.options ? q.options.length : 0;
+  };
+
+  /* The turn ITSELF, which outlives every render of its contents.
+   *
+   * This function used to empty the host and build a new `.t1-qturn` on every pass. Two behaviours are
+   * impossible against a turn that is destroyed and replaced, and both are required now:
+   *
+   *   - `motion.resizeBounce` has to measure the SAME box before and after the change. A replaced
+   *     element has no previous height, so there is nothing to travel from;
+   *   - `motion.firstVisit` stamps its record on the element, so a turn that died each render would
+   *     report every page - including a page you are returning to - as a first visit, and the entrance
+   *     would replay on the way backwards.
+   *
+   * So the turn is created once per questionnaire and only its CONTENTS are rebuilt, inside the
+   * mutation the bounce wraps. A new questionnaire id gets a new turn, which is correct: that is a
+   * genuinely different thing being asked, and it should arrive rather than resize. */
   T1Thread.prototype._renderQuestionBody = function () {
     var self = this;
     var u = U();
     var svc = this.ctx.services;
     var host = this.ctx.capabilities.questionHost ? this.ctx.regions.questionHost : this.inlineQuestion;
     if (!host) return;
-    U().empty(host);
 
     var flow = svc.qflow ? svc.qflow.read(svc, this.tid()) : null;
-    if (!flow) return;
 
-    if (!flow.record) {
-      this._renderInterviewReceipt(host, flow.receipt);
+    if (!flow || !flow.record) {
+      /* The interview is over. The receipt is a DIFFERENT turn - `Puppet Master asked`, past tense,
+       * permanently in the transcript - so the question turn is released rather than reused. Reusing it
+       * would make firstVisit read the receipt as one more page of the same question. */
+      this._qturnEl = null;
+      this._qturnQid = null;
+      this._qOptionCount = null;
+      U().empty(host);
+      if (flow) this._renderInterviewReceipt(host, flow.receipt);
       return;
     }
 
     svc.qflow.claim(svc, this.tid());
 
-    var turn = u.el('div', { class: 't1-turn t1-qturn', data: { pmxRole: 'assistant', phase: flow.status } });
-    turn.classList.add('pmx-msg');
-    turn.setAttribute('data-turn-start', '1');
+    var fresh = false;
+    if (!this._qturnEl || this._qturnEl.parentNode !== host || this._qturnQid !== flow.id) {
+      U().empty(host);
+      /* `pmx-resize-up` is the shared opt-in for a bottom-anchored resize. It applies in both mounts:
+       * with a questionHost the turn is the region immediately above the window's composer, and
+       * without one `.t1-inline-question` is the last child of this thread's own root, which is the
+       * same place. Either way the transcript is the flexible sibling above, so the turn growing moves
+       * its own top edge and nothing below it shifts. */
+      this._qturnEl = u.el('div', {
+        class: 't1-turn t1-qturn pmx-msg pmx-resize-up',
+        data: { pmxRole: 'assistant', phase: flow.status, pmxQid: flow.id }
+      });
+      this._qturnEl.setAttribute('data-turn-start', '1');
+      this._qturnQid = flow.id;
+      this._qOptionCount = null;
+      host.appendChild(this._qturnEl);
+      fresh = true;
+    }
+
+    var turn = this._qturnEl;
+    turn.setAttribute('data-phase', flow.status);
+
+    var count = this._questionOptionCount(flow);
+    var countChanged = this._qOptionCount != null && this._qOptionCount !== count;
+    this._qOptionCount = count;
+
+    function rebuild() { self._fillQuestionTurn(turn, flow); }
+
+    if (fresh || !svc.motion || !svc.motion.resizeBounce) {
+      /* A first paint is an ENTRANCE, not a resize. There is no size the turn came from, and bouncing
+       * out of zero height would be the box announcing itself - the card vocabulary this concept does
+       * still refuse. The arrival above says everything this frame has to say. */
+      rebuild();
+    } else {
+      /* `t1-qturn-arrive` and `pmx-size-bounce` are both `animation` on this one element, and the
+       * arrival's rule is the more specific of the two. An advance landing inside the arrival's 420ms
+       * would therefore lose its beat silently, so the arrival is retired before the bounce starts. */
+      turn.classList.remove('t1-qturn-arrive');
+      this._endQuestionBounce();
+      this._qBounce = svc.motion.resizeBounce(turn, rebuild, {
+        bounceClass: countChanged ? 'pmx-size-bounce-strong' : 'pmx-size-bounce'
+      });
+    }
+
+    this._choreographInterview(turn, fresh);
+  };
+
+  /* Land any bounce still in flight before starting anything else on this element.
+   *
+   * One interaction can render the turn twice - answering notifies the store, which re-enters update()
+   * and renders, and the click handler then renders again on its own account. The second pass would
+   * otherwise measure a height that is mid-flight and pinned inline, and the first pass's own
+   * `transitionend` listener would fire on the SECOND bounce's transition and strip its inline height
+   * halfway through. `finish()` commits the previous change outright, so the new one measures a settled
+   * box. It is also the honest reading of an interrupted resize: the size it was travelling to is a
+   * fact that already happened, and only the travel is abandoned. */
+  T1Thread.prototype._endQuestionBounce = function () {
+    var h = this._qBounce;
+    this._qBounce = null;
+    if (h && h.state && h.state() === 'running' && h.finish) { try { h.finish(); } catch (e) {} }
+  };
+
+  /* The turn's CONTENTS, and nothing else: this runs inside the bounce's mutation, so it must not
+   * create or move the turn. Everything below is the form as it was, with `host.appendChild(turn)`
+   * removed because the turn is already where it belongs. */
+  T1Thread.prototype._fillQuestionTurn = function (turn, flow) {
+    var self = this;
+    var u = U();
+    var svc = this.ctx.services;
+
+    U().empty(turn);
 
     /* ---- the hanging margin: speaker label, then the progress beneath it */
     var margin = u.el('div', { class: 't1-speaker t1-qmargin' });
@@ -1067,13 +1578,11 @@
     if (flow.status === 'preparing') {
       body.appendChild(global.PMXReveal.capsule('Preparing questions', this.ctx));
       turn.appendChild(body);
-      host.appendChild(turn);
       return;
     }
     if (flow.status === 'submitting') {
       body.appendChild(global.PMXReveal.capsule('Submitting answers', this.ctx));
       turn.appendChild(body);
-      host.appendChild(turn);
       return;
     }
 
@@ -1183,7 +1692,6 @@
 
     body.appendChild(acts);
     turn.appendChild(body);
-    host.appendChild(turn);
   };
 
   /* The collapse into a one-line receipt turn. Falls straight through when motion is reduced or absent -
@@ -1191,6 +1699,9 @@
   T1Thread.prototype._condenseInterview = function (turn, done) {
     var svc = this.ctx.services;
     if (!turn || !svc.motion || !svc.motion.condense) { done(); return; }
+    /* condense drives the same element's height. Two owners of one property is how a bounce becomes a
+     * stutter, so the bounce is landed before the collapse takes the property over. */
+    this._endQuestionBounce();
     svc.motion.condense(turn, function (hostEl) {
       /* The summary is drawn by the caller's next render; this is only the transitional content, so it
        * must not claim a fact of its own. */
@@ -1332,6 +1843,10 @@
       var k = changed[i];
       if (k === 'session.activeThreadId') needsFull = true;
       if (k.indexOf('view') === 0) { needsSurfaces = true; needsQuestion = true; }
+      /* view.messages was missing here, so a sent message did not enter the list at all until some
+       * unrelated change forced a render: the reader pressed Enter, the composer emptied, and the
+       * transcript did not move. Every other concept already listed it. */
+      if (k === 'view.messages') needsFull = true;
       if (k === 'view.lens' || k === 'view.expanded') needsFull = true;
     }
     if (state.session.activeThreadId !== this.lastThreadId) needsFull = true;
@@ -1360,6 +1875,23 @@
     if (this.inlineSurfaces && this.inlineSurfaces.parentNode) this.inlineSurfaces.parentNode.removeChild(this.inlineSurfaces);
     if (this.inlineQuestion && this.inlineQuestion.parentNode) this.inlineQuestion.parentNode.removeChild(this.inlineQuestion);
     this.rendered = {};
+    /* The append-only path keys off these. A destroyed instance that left them behind would let
+     * the next render mistake a fresh mount for an append and skip building the turns already on
+     * screen. */
+    this._renderedIds = null;
+    this._renderedFrom = null;
+    this._lastRole = null;
+    this._runEl = null;
+    this._runSig = null;
+    this._runChainIds = null;
+    this._runHandoverSig = null;
+    /* The question turn now outlives its renders, so a destroyed instance has to let go of it
+     * explicitly - otherwise the next mount would adopt a turn belonging to a dead thread, carrying
+     * that turn's firstVisit record with it. */
+    this._qturnEl = null;
+    this._qturnQid = null;
+    this._qOptionCount = null;
+    this._endQuestionBounce();
   };
 
   global.PMX.thread.register('t1', {

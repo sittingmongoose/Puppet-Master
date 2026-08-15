@@ -45,6 +45,11 @@
      reads as vertical position along a mini rail of tick dots at the card's
      left edge. */
   function questRenderer(zoneEl, api) {
+    /* Causal lifecycle (video 04): the "Preparing questions…" pill comes
+       first; the stepper unfolds after a beat (at once under reduced
+       motion). */
+    const pillEl = api.reduced() ? null : api.preparePill();
+
     const root = document.createElement("div");
     root.className = "pmq-t4-quest";
     root.innerHTML =
@@ -67,12 +72,12 @@
             '<button class="pmq-btn" type="button" data-qskip>Skip</button>' +
             '<span class="pmq-t4q-spacer"></span>' +
             '<button class="pmq-btn" type="button" data-qnext>Next<i data-ico="chevRight"></i></button>' +
-            '<button class="pmq-btn pmq-btn-primary" type="button" data-qsubmit>Submit</button>' +
+            '<button class="pmq-btn" type="button" data-qback hidden><i data-ico="chevRight" style="transform:scaleX(-1)"></i>Back</button>' +
+            '<button class="pmq-btn pmq-btn-primary" type="button" data-qreview hidden>Review answers</button>' +
+            '<button class="pmq-btn pmq-btn-primary" type="button" data-qsubmit hidden>Submit</button>' +
           "</div>" +
         "</div>" +
       "</div>";
-    zoneEl.appendChild(root);
-    window.PMIcons.hydrate(root);
 
     const cardEl = root.querySelector(".pmq-t4q-card");
     const slideEl = root.querySelector("[data-qslide]");
@@ -81,9 +86,35 @@
     const prevBtn = root.querySelector("[data-qprev]");
     const nextBtn = root.querySelector("[data-qnext]");
     const skipBtn = root.querySelector("[data-qskip]");
+    const backBtn = root.querySelector("[data-qback]");
+    const reviewBtn = root.querySelector("[data-qreview]");
     const submitBtn = root.querySelector("[data-qsubmit]");
     let curQ = api.q;
     let lastIdx = -1;
+    let reviewing = false;
+
+    let prepTimer = null;
+    let dead = false;
+    function mountCard() {
+      prepTimer = null;
+      if (dead) return;
+      if (pillEl && pillEl.parentNode) pillEl.parentNode.removeChild(pillEl);
+      zoneEl.appendChild(root);
+      window.PMIcons.hydrate(root);
+      /* Entrance: the rail node pops first, then the card fades in from the
+         left along its dotted leader. */
+      if (!api.reduced()) {
+        api.A.pop(root.querySelector("[data-qnode]"));
+        try {
+          cardEl.animate(
+            [{ opacity: 0, transform: "translateX(-8px)" }, { opacity: 1, transform: "none" }],
+            { duration: 300, delay: 130, easing: "cubic-bezier(0.22, 1, 0.36, 1)", fill: "backwards" }
+          );
+        } catch (e) {}
+      }
+    }
+    if (pillEl) prepTimer = setTimeout(mountCard, 350);
+    else mountCard();
 
     /* Mini rail: 3-5 dots; each dot stands for one question (proportional
        positions when the questionnaire has more than five). */
@@ -100,27 +131,41 @@
     function paintDots(q, idx) {
       dotsEl.innerHTML = dotMap(q).map(qi => {
         const x = q.questions[qi];
-        return '<span class="pmq-t4q-dot' + (qi === idx ? " pmq-here" : "") + (api.isAnswered(x) ? " pmq-answered" : "") + '"></span>';
+        return '<span class="pmq-t4q-dot' + (!reviewing && qi === idx ? " pmq-here" : "") + (api.isAnswered(x) ? " pmq-answered" : "") + '"></span>';
       }).join("");
     }
 
     function paintChrome(q, idx) {
       const last = idx >= q.questions.length - 1;
-      const numText = (idx + 1) + " of " + q.questions.length;
+      const numText = reviewing ? "Review" : (idx + 1) + " of " + q.questions.length;
       if (numEl.textContent !== numText) api.A.crossfadeNum(numEl, numText);
+      if (reviewing) {
+        prevBtn.hidden = true;
+        nextBtn.hidden = true;
+        skipBtn.hidden = true;
+        reviewBtn.hidden = true;
+        backBtn.hidden = false;
+        submitBtn.hidden = false;
+        submitBtn.disabled = !api.valid();
+        return;
+      }
       prevBtn.disabled = idx === 0;
+      prevBtn.hidden = false;
       nextBtn.hidden = last;
-      skipBtn.hidden = last;
-      submitBtn.hidden = !last;
-      submitBtn.disabled = !api.valid();
+      skipBtn.hidden = false;
+      backBtn.hidden = true;
+      submitBtn.hidden = true;
+      reviewBtn.hidden = !last;
+      reviewBtn.disabled = !api.valid();
     }
 
     function renderSlide(q, idx) {
-      slideEl.innerHTML = questSlideHtml(api, q.questions[idx]);
+      slideEl.innerHTML = reviewing ? api.reviewHtml() : questSlideHtml(api, q.questions[idx]);
       window.PMIcons.hydrate(slideEl);
     }
 
     function refreshOptions(q, idx) {
+      if (reviewing) return;
       const question = q.questions[idx];
       if (question.kind === "freeform") return;
       const ans = api.answer(question);
@@ -133,10 +178,19 @@
 
     function update(q, idx) {
       curQ = q;
+      if (reviewing && idx !== lastIdx) {
+        /* Navigation back to a question index exits review. */
+        reviewing = false;
+        lastIdx = idx;
+        paintDots(q, idx);
+        paintChrome(q, idx);
+        renderSlide(q, idx);
+        return;
+      }
       paintDots(q, idx);
       paintChrome(q, idx);
-      if (idx !== lastIdx) {
-        const dir = lastIdx >= 0 ? (idx > lastIdx ? 1 : -1) : 0;
+      if (reviewing || idx !== lastIdx) {
+        const dir = reviewing ? 0 : (lastIdx >= 0 ? (idx > lastIdx ? 1 : -1) : 0);
         lastIdx = idx;
         renderSlide(q, idx);
         if (dir && !api.reduced()) {
@@ -146,13 +200,44 @@
               { duration: 220, easing: "cubic-bezier(0.22, 1, 0.36, 1)" }
             );
           } catch (e) {}
+        } else if (reviewing && !api.reduced()) {
+          try {
+            slideEl.animate(
+              [{ opacity: 0 }, { opacity: 1 }],
+              { duration: 200, easing: "cubic-bezier(0.22, 1, 0.36, 1)" }
+            );
+          } catch (e) {}
         }
       } else {
         refreshOptions(q, idx);
       }
     }
 
+    /* Video 02 review: the answers read as stepper summary rows; Back
+       returns to the last question. */
+    function enterReview() {
+      if (reviewing) return;
+      reviewing = true;
+      update(curQ, api.index());
+    }
+    function exitReview() {
+      if (!reviewing) return;
+      reviewing = false;
+      lastIdx = -1; /* force the question slide to repaint */
+      update(curQ, api.index());
+    }
+
     root.addEventListener("click", e => {
+      const rev = e.target.closest("[data-revto]");
+      if (rev) {
+        const i = parseInt(rev.dataset.revto, 10);
+        if (!isNaN(i)) {
+          if (i === lastIdx) exitReview();
+          else { reviewing = false; api.gotoQuestion(i); }
+        }
+        return;
+      }
+      if (e.target.closest("[data-qback]")) { exitReview(); return; }
       const question = curQ.questions[api.index()];
       const opt = e.target.closest("[data-opt]");
       if (opt) { api.select(question, opt.dataset.opt); return; }
@@ -160,6 +245,7 @@
       if (e.target.closest("[data-qprev]")) { api.prev(); return; }
       if (e.target.closest("[data-qnext]")) { api.next(); return; }
       if (e.target.closest("[data-qskip]")) { api.skip(); return; }
+      if (e.target.closest("[data-qreview]")) { if (api.valid()) enterReview(); return; }
       if (e.target.closest("[data-qsubmit]")) { if (api.valid()) api.submit(); return; }
     });
 
@@ -169,21 +255,12 @@
 
     update(api.q, api.index());
 
-    /* Entrance: the rail node pops first, then the card fades in from the
-       left along its dotted leader. */
-    if (!api.reduced()) {
-      api.A.pop(root.querySelector("[data-qnode]"));
-      try {
-        cardEl.animate(
-          [{ opacity: 0, transform: "translateX(-8px)" }, { opacity: 1, transform: "none" }],
-          { duration: 300, delay: 130, easing: "cubic-bezier(0.22, 1, 0.36, 1)", fill: "backwards" }
-        );
-      } catch (e) {}
-    }
-
     return {
       update,
       unmount() {
+        dead = true;
+        if (prepTimer) { clearTimeout(prepTimer); prepTimer = null; }
+        if (pillEl && pillEl.parentNode) pillEl.parentNode.removeChild(pillEl);
         if (root.parentNode) root.parentNode.removeChild(root);
       }
     };

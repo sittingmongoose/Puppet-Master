@@ -55,7 +55,7 @@
         },
         "Source Control/Worktrees": {
           "status": "demonstrated",
-          "where": "Worktree ledger, SVG branch graph, policy rows, tool health"
+          "where": "Worktrees/graph/policy plus exact tool health with official-source install flows (Jujutsu, Git LFS) for the exact host"
         },
         "GitHub Actions": {
           "status": "demonstrated",
@@ -71,7 +71,7 @@
         },
         "Project Search Index": {
           "status": "demonstrated",
-          "where": "Facts, truthful rebuild phases, clear cache"
+          "where": "Facts, truthful rebuild with real file-count denominator + Cancel, clear cache"
         },
         "Workspace Cleanup": {
           "status": "demonstrated",
@@ -79,7 +79,7 @@
         },
         "Future Server Module Shell": {
           "status": "demonstrated",
-          "where": "Servers & Hosting destination with six reserved insertion cards; modules below are deferred"
+          "where": "10 deferred insertion cards with named owners (Servers, Execution Hosts, Clients, Project Hosting & Files, Remote Access, Updates, Project Defaults & Templates, Integrations & Tools, Product Onboarding, Doctor)"
         }
       },
       "deferred_modules": [

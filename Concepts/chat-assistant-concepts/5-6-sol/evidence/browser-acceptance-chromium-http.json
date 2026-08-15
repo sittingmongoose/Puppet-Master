@@ -1,0 +1,259 @@
+{
+  "schema_id": "pm.chat.5_6_sol.browser_acceptance.v3",
+  "model_label": "5.6 Sol",
+  "generated_at": "2026-08-14T05:39:10.939Z",
+  "base_url": "http://127.0.0.1:4191/Concepts/chat-assistant-concepts/5-6-sol/index.html",
+  "screenshot_root": "/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5-6-sol/evidence/chromium-http-frames",
+  "source_fingerprint": {
+    "algorithm": "sha256",
+    "aggregate_sha256": "4392f156cad4eb5f8761cdf1b40e9cbc370209c0e63b47684a6c063cc477f7bb",
+    "files": [
+      {
+        "file": "index.html",
+        "sha256": "f0602ef6960a9a4a5020ad73241f1390165613837fa7a6213ecbbcafcfd7efe9",
+        "bytes": 1146
+      },
+      {
+        "file": "window-01.html",
+        "sha256": "4869e916032a4658ad4eaa4da717dc932f210c55a90ef449fa4863505b7e29c2",
+        "bytes": 1130
+      },
+      {
+        "file": "window-02.html",
+        "sha256": "8646624884dddb756f98b4e38e96c35127fba4de8244e06f409a21949fdff076",
+        "bytes": 1126
+      },
+      {
+        "file": "window-03.html",
+        "sha256": "f5b30997fa8ae648381480613d6a79948ea9d9f328f5c85c66789e118186d04d",
+        "bytes": 1132
+      },
+      {
+        "file": "window-04.html",
+        "sha256": "7d760d8c4b47e5716df9b711d15aed36a7541e64cda0cdec453a75eb3df594cc",
+        "bytes": 1132
+      },
+      {
+        "file": "window-05.html",
+        "sha256": "52494e7b82292f791762d469e49e7c1ba1a28649b767c44c1a9c9f74c4fbd5c9",
+        "bytes": 1128
+      },
+      {
+        "file": "window-06.html",
+        "sha256": "5b7567d41411d14abc31872eb3f9048c0600b9f94028adff4662a6240744d613",
+        "bytes": 1130
+      },
+      {
+        "file": "window-07.html",
+        "sha256": "2b1eadff32d39fb80c56501e30af388f01319036ac3ba8b52aa7d8ee16b4e460",
+        "bytes": 1126
+      },
+      {
+        "file": "window-08.html",
+        "sha256": "7fca3771ee7507480c7c47ed4812d0524ee94b76e0e2185571b91cf62d56f8f4",
+        "bytes": 1130
+      },
+      {
+        "file": "thread-01.html",
+        "sha256": "a70750e4681156d7f9fc47bfb8d651e88980447f7edc3014e762241ad67b35af",
+        "bytes": 1122
+      },
+      {
+        "file": "thread-02.html",
+        "sha256": "502e6ba323ca18c37bafe1d0962b2eee976910deca2ee3520408eaa4028e041a",
+        "bytes": 1136
+      },
+      {
+        "file": "thread-03.html",
+        "sha256": "57a0403ad13cc8ac7756607a720065c3cf96c76fcdf210c5bc870c3e00ca0307",
+        "bytes": 1126
+      },
+      {
+        "file": "thread-04.html",
+        "sha256": "2fc8565bc5211b5158c94b6b4487446ed9c9f23a302d81af5154a9955d9289f7",
+        "bytes": 1128
+      },
+      {
+        "file": "thread-05.html",
+        "sha256": "5e2dc45b5f49254c8903bde28e2024dd20d19e3ecd2b68ab20c2ba53db12fa55",
+        "bytes": 1124
+      },
+      {
+        "file": "thread-06.html",
+        "sha256": "c8bf63dcea2aa98f92da14dbea9a414eb7ce3e05e0cb7030201fadf50e37c953",
+        "bytes": 1122
+      },
+      {
+        "file": "thread-07.html",
+        "sha256": "22a12157f2ed7fa605d03deb434484bbc25f334549a03b5fc8ae45ad4daea845",
+        "bytes": 1118
+      },
+      {
+        "file": "thread-08.html",
+        "sha256": "f4afe5dae9572d3d50d020cc4516d075ec42698bbffec109de9b995b8481b91d",
+        "bytes": 1134
+      },
+      {
+        "file": "shared/app.js",
+        "sha256": "9c2247392b6355ae9286d45cc1a4343ba8e5599c40fc1f1b87536f44768b5a1c",
+        "bytes": 26777
+      },
+      {
+        "file": "shared/base.css",
+        "sha256": "a39a15d545dc4c4abc61faa652f6a644f435ef01986c739d316de2e69cfe0434",
+        "bytes": 128475
+      },
+      {
+        "file": "shared/concept-hub-bridge.js",
+        "sha256": "0b6f4655615a458a1c2dc9febf1f6d61c778375972e16caf36409d1554d23d4d",
+        "bytes": 1431
+      },
+      {
+        "file": "shared/definitions.js",
+        "sha256": "b040870b3ebfb48edc2c776dd408160dcdedfa19f9d897bcd5149694d32ebe86",
+        "bytes": 4563
+      },
+      {
+        "file": "shared/icons.js",
+        "sha256": "2e3d7c28f1418ef6eb779c4a66fa99532aeec968b21fb4ee6f8fc2007bb71d64",
+        "bytes": 3397
+      },
+      {
+        "file": "shared/primitives.js",
+        "sha256": "372502f6cf33f0d6ad17c38e43f15397acc591987a8abee3f461b4e4cf025f3c",
+        "bytes": 37585
+      },
+      {
+        "file": "shared/selectors.js",
+        "sha256": "24c8f9af70b466076c25f8b4c0c0d957d3e17263d56de1eb1a76e9f2404fd144",
+        "bytes": 4734
+      },
+      {
+        "file": "shared/state.js",
+        "sha256": "012657c804daeb48c53afb16b3713b556e3e59a55818523157640123ac32c234",
+        "bytes": 84841
+      },
+      {
+        "file": "windows/windows.js",
+        "sha256": "ee2d638a8171bdcd55e301a68e684d919092689d061ff4fffe96c6415b2728c0",
+        "bytes": 11583
+      },
+      {
+        "file": "threads/threads.js",
+        "sha256": "d4885c1f6dfc969ab53e94df732a2161b1722228bfab4aa41acf01a5537cd40f",
+        "bytes": 42968
+      },
+      {
+        "file": "data/original_demoData.json",
+        "sha256": "92ec368493534cfeb514c75cb036c76a8cf28335bd3b0cb2aae61335110db264",
+        "bytes": 349661
+      },
+      {
+        "file": "data/sol-extensions.json",
+        "sha256": "c34b55373b2d830f2cc9a0e8c2914128e4aee2343bb87f2209fb9111015d37b5",
+        "bytes": 19402
+      },
+      {
+        "file": "data/extended_demo_scenario.json",
+        "sha256": "a43811b003b1746d6fad65e07595bb529bb79e7dede5000b98d5b300ebe237ae",
+        "bytes": 3020
+      },
+      {
+        "file": "data/original_testMatrix.json",
+        "sha256": "17e7e22e9d60aa85f863eab0dc22c9e64e5d664a5aa5eac54715c1a8903d27be",
+        "bytes": 6858
+      },
+      {
+        "file": "data/demo-scenario-manifest.json",
+        "sha256": "042a8637b6e8b1e66f6e6752811fae0c4d338caa283e3361c4201a2340db8e3d",
+        "bytes": 4933
+      },
+      {
+        "file": "data/demo-trigger-contract.json",
+        "sha256": "6d9148a73e92f3018aa834b1e9187e4d75814c2e16ecf1446c7ef6cdd0eb8c86",
+        "bytes": 1319
+      },
+      {
+        "file": "tests/browser-acceptance.mjs",
+        "sha256": "7811f0a49744ecc5095983a87657c5326ef67778f194e2faa660517fcc19c647",
+        "bytes": 184855
+      }
+    ]
+  },
+  "execution_scope": {
+    "exact_check_name": "all entry pages boot with exact model label",
+    "check_filter": null,
+    "skip_filters": [],
+    "matrix_themes": [
+      "friendly-dark",
+      "friendly-light",
+      "retro-dark",
+      "retro-light",
+      "basic-dark",
+      "basic-light",
+      "glass-dark",
+      "glass-light"
+    ],
+    "matrix_widths": [
+      520,
+      750,
+      975,
+      1200
+    ],
+    "matrix_windows": [
+      "window-01",
+      "window-02",
+      "window-03",
+      "window-04",
+      "window-05",
+      "window-06",
+      "window-07",
+      "window-08"
+    ],
+    "boot_pages": [
+      "index.html",
+      "window-01.html",
+      "window-02.html",
+      "window-03.html",
+      "window-04.html",
+      "window-05.html",
+      "window-06.html",
+      "window-07.html",
+      "window-08.html",
+      "thread-01.html",
+      "thread-02.html",
+      "thread-03.html",
+      "thread-04.html",
+      "thread-05.html",
+      "thread-06.html",
+      "thread-07.html",
+      "thread-08.html"
+    ]
+  },
+  "environment": {
+    "product": "Chromium 151.0.7922.34",
+    "engine": "Blink",
+    "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+    "viewport": "2400x1200",
+    "automation": "Chrome DevTools Protocol 1.3"
+  },
+  "passed": 0,
+  "failed": 1,
+  "checks": [
+    {
+      "name": "all entry pages boot with exact model label",
+      "status": "fail",
+      "duration_ms": 30049,
+      "error": "Timed out waiting for: document.readyState === 'complete' && window.__SOL_STORE__ && document.querySelector('.window-concept')"
+    }
+  ],
+  "matrices": {},
+  "console_errors": [],
+  "runtime_exceptions": [],
+  "observations": [],
+  "screenshot_manifest": [],
+  "browser_stderr_tail": [
+    "DevTools listening on ws://127.0.0.1:37429/devtools/browser/974fa7ec-3fe7-4e96-ad52-0ef6d8911e2d",
+    "[0814/053911.165382:WARNING:sandbox/policy/linux/sandbox_linux.cc:405] InitializeSandbox() called with multiple threads in process gpu-process."
+  ]
+}

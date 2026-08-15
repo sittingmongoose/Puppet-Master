@@ -108,7 +108,7 @@
       "secondary_detail_strategy": "Hover-revealed times and text-only action rows; flags (lens, redirect, stopped) as quiet outline chips.",
       "narrow_width_strategy": "Margin folds; directions and scenes keep full width; the form scene keeps its footprint.",
       "motion_thesis": "Rise-and-settle entries; in-place text replacement for directions; reduced motion = instant final states.",
-      "question_strategy": "Inline form scene: lettered options, dots, stable footprint, skip reversal, required-answer error, cancel record.",
+      "question_strategy": "Inline form scene: lettered options, dots, stable footprint, skip reversal, required-answer error, cancel record. Freeform renders as a 'Something else' option row that expands into an inline input (video 2).",
       "activity_strategy": "Live bracketed direction + ruled scene blocks (Goal/Tasks/Agents/Diffs) with independent collapse; history condenses to reopenable directions.",
       "history_strategy": "Virtualized older messages behind a 'Load earlier' seam that names the unloaded count; search reveals hidden regions and preserves the anchor.",
       "artifact_relationship": "Diff scene lines and artifact mentions open the window's left workspace; the script never embeds a viewer."
@@ -119,9 +119,9 @@
       "conversation_reading_strategy": "Asymmetric bubbles capped at 78% width; hover stamps; sibling action rows.",
       "narrow_width_strategy": "Bubbles widen toward full measure; the manifest and question card span the column.",
       "secondary_detail_strategy": "The dockband (locus pill + manifest) holds all secondary state below the transcript, above the composer.",
-      "motion_thesis": "FLIP travel from composer to slot; pill transforms in place; morph card from pill silhouette.",
+      "motion_thesis": "FLIP travel from composer to slot; pill transforms in place; morph card from pill silhouette. Sent deliveries ride a smooth scroll-follow so the thread visibly yields during travel (video 1).",
       "question_strategy": "Pill → card → pill morph with a segment trail, skip reversal, and required-answer error in the card.",
-      "activity_strategy": "Locus pill (summary + timer) and the delivery manifest (goal/tasks/agents/diffs as one expandable strip); completed work is the reply's tools seam.",
+      "activity_strategy": "Locus pill (summary + timer) and the delivery manifest (goal/tasks/agents/diffs as one expandable strip); completed work is the reply's tools seam. The locus pill carries live phase detail rows; the condensed seam wears the phase-icon strip (video 3).",
       "history_strategy": "Sealed earlier deliveries with count; search unseals the needed slice exactly.",
       "artifact_relationship": "Manifest diff rows and seam entries hand off to the left workspace."
     },
@@ -192,10 +192,11 @@
       "secondary_detail_strategy": "The troupe block and stack chip hold secondary state; docked satellites mark recorded work.",
       "narrow_width_strategy": "Cards widen; the troupe wraps its dancers; the dealt card spans the column.",
       "motion_thesis": "Arc + anticipation + settle; orbit only during true activity; reduced motion swaps orbit for a solid ring.",
-      "question_strategy": "The dealt hand: cards deal in, answered cards tuck into the stack chip, fan-out review before submit.",
+      "question_strategy": "The dealt hand: cards deal in, answered cards tuck into the stack chip, fan-out review before submit. Single-select answers auto-advance the dealt card (video 4).",
       "activity_strategy": "Orbit frame (live summary + timer), troupe (dancer discs, step bars, goal badge), dock-on-complete into the message.",
       "history_strategy": "Scenes in the wings; recalled on demand; anchors preserved.",
       "artifact_relationship": "Troupe diff lines open the left workspace."
     }
-  }
+  },
+  "correction_2026_08_13": "After opening the raw videos (correction packet): all eight thread concepts render rich live activity phases in their own voice; Courier adds smooth-yield delivery, a phase-icon seam strip, and the Skip-slot swap; Screenplay renders freeform as a 'Something else' expandable option row; Choreograph auto-advances single-select cards. Concept identities and the nine-attribute theses are otherwise unchanged — the corrections deepened each thesis rather than replacing it."
 }

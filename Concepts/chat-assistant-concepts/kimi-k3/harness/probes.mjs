@@ -270,6 +270,78 @@ export async function pinnedGeometry(page, ctx, pinKey) {
   return ok('chatWidth=' + r.chatWidth);
 }
 
+export async function pinSurvival(page, ctx, pinKey) {
+  if (!pinKey) return ok('window has no pin toggle (persistent idiom)');
+  const r = await page.evaluate(async function (pinKey2) {
+    function sleep(ms) { return new Promise(function (r2) { setTimeout(r2, ms); }); }
+    var k3 = window.__k3;
+    var out = { steps: [] };
+    function pinnedSurface() {
+      // scope to the chat module root — it moves dock<->float on pop-out, so
+      // the finder follows the module and never mistakes shell chrome (empty
+      // dock placeholder, rail) for the pinned surface.
+      var mod = document.querySelector('[data-k3-window]');
+      if (!mod) return null;
+      var thread = mod.querySelector('[data-k3-slot="thread"]');
+      var composer = mod.querySelector('[data-k3-slot="composer"]');
+      if (!thread || !composer) return null;
+      var found = null;
+      mod.querySelectorAll('[class*="history"], [class*="pin"], [class*="dock"], [class*="chats"], [class*="drawer"], [class*="band"]').forEach(function (n) {
+        if (found) return;
+        if (thread.contains(n) || composer.contains(n) || n.contains(thread) || n.contains(composer)) return;
+        var rr = n.getBoundingClientRect();
+        if (rr.width < 40 || rr.height < 40) return;
+        found = n;
+      });
+      return found;
+    }
+    function chatWidth() {
+      var thread = document.querySelector('[data-k3-slot="thread"]');
+      return thread ? Math.round(thread.getBoundingClientRect().width) : 0;
+    }
+    // 1. pin at 520
+    k3.store.set('activeThreadId', 'thread-16');
+    k3.store.set('surfaceView.thread-16.' + pinKey2, true);
+    window.K3.emit('data', { type: 'threads-changed' });
+    await sleep(450);
+    out.pinnedAt520 = !!pinnedSurface();
+    out.chat520 = chatWidth();
+    // 2. resize 520 -> 1200 -> 520
+    window.K3.setEnv({ width: 1200 });
+    await sleep(500);
+    out.pinnedAt1200 = !!pinnedSurface();
+    window.K3.setEnv({ width: 520 });
+    await sleep(500);
+    out.pinnedBack520 = !!pinnedSurface();
+    // 3. thread switch round-trip: pinned history SURVIVES (required proof) —
+    // the surface stays pinned and follows the newly active thread
+    k3.store.set('activeThreadId', 'thread-17');
+    window.K3.emit('data', { type: 'threads-changed' });
+    await sleep(450);
+    out.survivesOn17 = !!pinnedSurface();
+    k3.store.set('activeThreadId', 'thread-16');
+    window.K3.emit('data', { type: 'threads-changed' });
+    await sleep(450);
+    out.restoredOn16 = !!pinnedSurface();
+    // 4. pop-out round-trip (full remount)
+    window.K3.setEnv({ mode: 'popout' });
+    await sleep(650);
+    out.pinnedInPopout = !!pinnedSurface();
+    window.K3.setEnv({ mode: 'docked' });
+    await sleep(650);
+    out.pinnedBackDocked = !!pinnedSurface();
+    out.chatFinal = chatWidth();
+    return out;
+  }, pinKey);
+  if (!r.pinnedAt520) return fail('pin did not open at 520');
+  if (ctx.width === 520 && r.chat520 < 300) return fail('chat compressed to ' + r.chat520 + 'px at 520');
+  if (!r.pinnedAt1200 || !r.pinnedBack520) return fail('pin lost across resize: ' + JSON.stringify(r));
+  if (!r.survivesOn17) return fail('pin did not survive the thread switch');
+  if (!r.restoredOn16) return fail('pin pref lost after thread round-trip');
+  if (!r.pinnedInPopout || !r.pinnedBackDocked) return fail('pin lost across pop-out: ' + JSON.stringify(r));
+  return ok('chat520=' + r.chat520);
+}
+
 export async function artifactLeftOfChat(page, ctx) {
   // draft setup
   await page.evaluate(async function () {
@@ -390,6 +462,132 @@ export async function questionFlow(page) {
   return ok();
 }
 
+export async function questionLifecycle(page) {
+  const r = await page.evaluate(async function () {
+    function sleep(ms) { return new Promise(function (r2) { setTimeout(r2, ms); }); }
+    var k3 = window.__k3;
+    var out = {};
+    k3.store.set('activeThreadId', 'thread-02'); // questionnaire-free: fabricated flow is a first appearance
+    window.K3.emit('data', { type: 'threads-changed' });
+    await sleep(320);
+    var ctx = { env: window.K3.env, store: k3.store, data: k3.data, ui: window.K3UI, on: window.K3.on, off: window.K3.off, emit: window.K3.emit };
+    window.K3Demo.triggerQuestionFlow(ctx);
+    await sleep(140);
+    out.preparePill = !!document.querySelector('[data-testid="k3-quest-prepare"]');
+    await sleep(700);
+    out.cardAfterPrepare = !!document.querySelector('[data-testid="k3-quest-skip"], [data-testid="k3-quest-submit"]');
+    // answer required questions via data, then submit through the UI button
+    var q = k3.data.activeQuestionnaire('thread-02');
+    if (!q) return { step: 'no active questionnaire after prepare' };
+    q.questions.forEach(function (qq) {
+      if (!qq.required) return;
+      k3.data.answerQuestion('thread-02', q.id, qq.id, [qq.options[0]]);
+    });
+    await sleep(250);
+    var mq = k3.data.activeQuestionnaire('thread-02');
+    k3.data.navigateQuestion('thread-02', q.id, mq.questions.length - 1);
+    await sleep(250);
+    var submitBtn = document.querySelector('[data-testid="k3-quest-submit"]');
+    out.submitShown = !!submitBtn;
+    if (submitBtn && !submitBtn.disabled) submitBtn.click();
+    await sleep(160);
+    out.submittingPill = !!document.querySelector('[data-testid="k3-quest-submitting"]');
+    await sleep(700);
+    out.composerBack = !!document.querySelector('[data-testid="k3-composer-input"]');
+    out.receipt = k3.data.messages('thread-02').some(function (m) { return m.completedQuestionnaire && m.completedQuestionnaire.id === q.id; });
+    return out;
+  });
+  if (r.step) return fail(r.step);
+  if (!r.preparePill) return fail('no prepare beat pill');
+  if (!r.cardAfterPrepare) return fail('card did not follow the prepare pill');
+  if (!r.submitShown) return fail('submit button not shown on last page');
+  if (!r.submittingPill) return fail('no submitting beat pill');
+  if (!r.composerBack) return fail('composer did not return after the beat');
+  if (!r.receipt) return fail('no durable answer receipt');
+  return ok();
+}
+
+export async function questionPaging(page) {
+  const r = await page.evaluate(async function () {
+    function sleep(ms) { return new Promise(function (r2) { setTimeout(r2, ms); }); }
+    var k3 = window.__k3;
+    k3.store.set('activeThreadId', 'thread-02');
+    window.K3.emit('data', { type: 'threads-changed' });
+    await sleep(320);
+    var ctx = { env: window.K3.env, store: k3.store, data: k3.data, ui: window.K3UI, on: window.K3.on, off: window.K3.off, emit: window.K3.emit };
+    window.K3Demo.triggerQuestionFlow(ctx);
+    await sleep(850); // through the prepare beat + entrance
+    var out = { heights: [], composerTops: [] };
+    var q = k3.data.activeQuestionnaire('thread-02');
+    if (!q) return { step: 'no questionnaire' };
+    for (var i = 0; i < q.questions.length; i++) {
+      k3.data.navigateQuestion('thread-02', q.id, i);
+      await sleep(280);
+      var card = document.querySelector('[data-testid="k3-quest-prev"]');
+      var rootEl = card ? card.closest('div') : null;
+      // measure the questionnaire region: parent chain up to the slot child
+      var region = document.querySelector('[data-k3-slot="composer"]').firstElementChild;
+      var comp = document.querySelector('[data-testid="k3-composer-input"]');
+      if (region) out.heights.push(Math.round(region.getBoundingClientRect().height));
+      if (comp) out.composerTops.push(Math.round(comp.getBoundingClientRect().top));
+    }
+    return out;
+  });
+  if (r.step) return fail(r.step);
+  if (r.heights.length < 2) return fail('could not measure pages: ' + JSON.stringify(r));
+  var min = Math.min.apply(null, r.heights), max = Math.max.apply(null, r.heights);
+  if (max - min > 4) return fail('card geometry jumps between pages: ' + JSON.stringify(r.heights));
+  return ok('heights=' + JSON.stringify(r.heights));
+}
+
+export async function triggerCoverage(page) {
+  const r = await page.evaluate(async function () {
+    function sleep(ms) { return new Promise(function (r2) { setTimeout(r2, ms); }); }
+    var k3 = window.__k3;
+    var D = window.K3Demo;
+    var out = {};
+    var ctx = { env: window.K3.env, store: k3.store, data: k3.data, ui: window.K3UI, on: window.K3.on, off: window.K3.off, emit: window.K3.emit };
+    k3.store.set('activeThreadId', 'thread-16');
+    window.K3.emit('data', { type: 'threads-changed' });
+    await sleep(320);
+    // todo.block
+    D.todoBlock(ctx);
+    await sleep(150);
+    out.todoBlocked = (k3.data.thread('thread-16').todo.items || []).some(function (i) { return i.state === 'blocked'; });
+    // subagent.retry (blocked local scout -> retrying)
+    D.subagentRetry(ctx);
+    await sleep(150);
+    out.agentRetrying = (k3.data.thread('thread-16').subagentGroups[0].agents || []).some(function (a) { return a.status === 'retrying'; });
+    // decision.branch (injects a warning if none open, resolves with branch)
+    var threadsBefore = k3.data.listThreads().length;
+    D.decisionBranch(ctx);
+    await sleep(250);
+    out.branchResolved = k3.data.messages('thread-16').some(function (m) {
+      return m.routeWarningCard && m.routeWarningCard.status === 'resolved-branch';
+    }) || k3.data.listThreads().length > threadsBefore;
+    // history.peek (transient open) + history.switch_thread
+    D.historyPeek(ctx);
+    await sleep(200);
+    out.historyOpen = !!document.querySelector('[data-testid="k3w-kit-history"], .k3w-kit-history, [class*="history"]');
+    var curBefore = k3.store.get('activeThreadId');
+    var switched = D.historySwitchThread(ctx);
+    await sleep(200);
+    out.switched = !!switched && k3.store.get('activeThreadId') === switched && switched !== curBefore;
+    // system.worktree_collision
+    D.worktreeCollision(ctx);
+    await sleep(150);
+    out.wtCollision = k3.data.worktrees().some(function (w) { return w.id === 'wt-docs' && w.state === 'conflict-detected'; });
+    return out;
+  });
+  if (!r.todoBlocked) return fail('todo.block did not block an item');
+  if (!r.agentRetrying) return fail('subagent.retry did not produce a retrying agent');
+  if (!r.branchResolved) return fail('decision.branch did not resolve');
+  if (!r.historyOpen) return fail('history.peek did not open history');
+  if (!r.switched) return fail('history.switch_thread did not switch');
+  if (!r.wtCollision) return fail('worktree_collision did not flip the worktree');
+  return ok();
+}
+
 export async function compactWork(page) {
   const r = await page.evaluate(async function () {
     function sleep(ms) { return new Promise(function (r2) { setTimeout(r2, ms); }); }
@@ -456,7 +654,7 @@ export async function routePicker(page) {
       out.hasFavorites = /Favorites/.test(text);
       out.hasRecents = /Recents/.test(text);
       out.hasAccountLine = /Anthropic · Work|API key|Claude CLI/.test(text);
-      out.hasUnavailableReason = /CLI not found|sign-in|API key required/i.test(text);
+      out.hasUnavailableReason = /not installed|sign-in|API key required/i.test(text);
       out.railIcons = pop.querySelectorAll('svg').length > 3;
     }
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
@@ -480,6 +678,152 @@ export async function routePicker(page) {
   if (!r.selected) return fail('route selection did not take effect');
   if (!r.recents) return fail('recents not updated');
   if (!r.scopeOverride) return fail('thread-local override not recorded');
+  return ok();
+}
+
+export async function providerSetupCopy(page) {
+  const r = await page.evaluate(async function () {
+    function sleep(ms) { return new Promise(function (r2) { setTimeout(r2, ms); }); }
+    var k3 = window.__k3;
+    var out = {};
+    var btn = document.querySelector('[data-testid="k3w-kit-model"]');
+    if (!btn) return { step: 'no route button' };
+    btn.click();
+    await sleep(350);
+    var pop = document.querySelector('.k3-pop');
+    if (!pop) return { step: 'picker did not open' };
+    function clickRow(re) {
+      var rows = Array.from(pop.querySelectorAll('.k3r-row'));
+      var row = rows.find(function (x) { return re.test(x.textContent || ''); });
+      if (row) row.click();
+      return !!row;
+    }
+    // cli-not-found route (Ollama) -> adjudication copy
+    out.rowCli = clickRow(/Qwen3 32B/);
+    await sleep(250);
+    var setup = pop.querySelector('.k3r-setup');
+    out.setupShown = !!setup;
+    var st = setup ? setup.textContent || '' : '';
+    out.neverBundles = /never bundles provider CLIs/.test(st);
+    out.officialSource = /official source/.test(st);
+    out.continuation = /resumes after setup/.test(st);
+    out.forbidden = /included with|comes with|ships with|pre-?installed|bundled (with|in|into)/i.test(pop.textContent || '');
+    // back to list, then the update-available route (xAI)
+    var back = pop.querySelector('[aria-label="Back to routes"]');
+    if (back) back.click();
+    await sleep(200);
+    out.rowUpd = clickRow(/Grok 4\.5/);
+    await sleep(250);
+    var setup2 = pop.querySelector('.k3r-setup');
+    out.updateNote = setup2 ? /never silently/.test(setup2.textContent || '') : false;
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await sleep(200);
+    return out;
+  });
+  if (r.step) return fail(r.step);
+  if (!r.rowCli || !r.setupShown) return fail('cli-not-found setup box not shown: ' + JSON.stringify(r));
+  if (!r.neverBundles || !r.officialSource || !r.continuation) return fail('adjudication copy missing: ' + JSON.stringify(r));
+  if (r.forbidden) return fail('bundling-implying copy present in picker');
+  if (!r.rowUpd || !r.updateNote) return fail('update-available note missing: ' + JSON.stringify(r));
+  return ok();
+}
+
+export async function motionContinuity(page) {
+  const r = await page.evaluate(async function () {
+    function sleep(ms) { return new Promise(function (r2) { setTimeout(r2, ms); }); }
+    var k3 = window.__k3;
+    var out = {};
+    // (a) message arrival: a live append carries the entrance animation
+    k3.store.set('activeThreadId', 'thread-02');
+    window.K3.emit('data', { type: 'threads-changed' });
+    await sleep(350);
+    k3.data.send('thread-02', 'motion probe message');
+    await sleep(120);
+    var arts = document.querySelectorAll('.k3t-msg.k3t-enter');
+    out.enterClass = arts.length > 0;
+    if (arts.length) {
+      var cs = getComputedStyle(arts[arts.length - 1]);
+      out.animName = cs.animationName;
+    }
+    await sleep(600);
+    // (b) activity kind cluster on thread-16 (distinct kinds, first-appearance order)
+    k3.store.set('activeThreadId', 'thread-16');
+    window.K3.emit('data', { type: 'threads-changed' });
+    await sleep(400);
+    var cl = document.querySelector('[data-testid="k3t-kindcluster"]');
+    out.clusterIcons = cl ? cl.querySelectorAll('.k3t-kindcluster-ic').length : 0;
+    // (c) working artifact card on thread-19
+    k3.store.set('activeThreadId', 'thread-19');
+    window.K3.emit('data', { type: 'threads-changed' });
+    await sleep(400);
+    var wa = document.querySelector('.k3t-shortcut.is-working');
+    out.workingArtifact = !!wa;
+    out.workingMeta = wa ? /Building/.test(wa.textContent || '') : false;
+    out.workingOrbit = wa ? !!wa.querySelector('.k3-orbit') : false;
+    return out;
+  });
+  if (!r.enterClass) return fail('live message append lacks the arrival class');
+  if (r.animName !== 'k3-msg-arrive') return fail('arrival animation not applied: ' + r.animName);
+  if (!r.clusterIcons || r.clusterIcons < 3) return fail('kind cluster missing/thin: ' + r.clusterIcons);
+  if (!r.workingArtifact || !r.workingMeta || !r.workingOrbit) return fail('working artifact state missing: ' + JSON.stringify(r));
+  return ok();
+}
+
+export async function keyboardFocus(page) {
+  const r = await page.evaluate(async function () {
+    function sleep(ms) { return new Promise(function (r2) { setTimeout(r2, ms); }); }
+    function key(el, k) { el.dispatchEvent(new KeyboardEvent('keydown', { key: k, bubbles: true, cancelable: true })); }
+    var out = {};
+    var btn = document.querySelector('[data-testid="k3w-kit-model"]');
+    if (!btn) return { step: 'no route button' };
+    btn.click();
+    await sleep(350);
+    var pop = document.querySelector('.k3-pop');
+    if (!pop) return { step: 'picker did not open' };
+    var input = pop.querySelector('.k3r-search input');
+    out.inputFocused = document.activeElement === input;
+    // ArrowDown from search -> first row; again -> second row
+    key(input, 'ArrowDown');
+    await sleep(80);
+    var rows = Array.from(pop.querySelectorAll('.k3r-row'));
+    out.row0Focus = document.activeElement === rows[0];
+    key(document.activeElement, 'ArrowDown');
+    await sleep(80);
+    out.row1Focus = document.activeElement === rows[1];
+    out.roving = rows[0].tabIndex === -1 && rows[1].tabIndex === 0;
+    key(document.activeElement, 'Home');
+    await sleep(60);
+    out.homeFocus = document.activeElement === rows[0];
+    // Enter opens the detail step for the focused route
+    key(document.activeElement, 'Enter');
+    document.activeElement.click();
+    await sleep(220);
+    out.detailShown = /Apply|official source|Sign in/.test(pop.textContent || '');
+    // Esc contract from the detail step: first Esc returns to the list, second closes
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await sleep(220);
+    var stillOpen = document.querySelector('.k3-pop');
+    out.escBackToList = !!stillOpen && stillOpen.querySelectorAll('.k3r-row').length > 0;
+    if (stillOpen) {
+      document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+      await sleep(220);
+    }
+    out.escCloses = !document.querySelector('.k3-pop');
+    // focus ring rule exists for picker controls
+    var cssText = '';
+    Array.from(document.styleSheets).forEach(function (ss) {
+      try { Array.from(ss.cssRules).forEach(function (r2) { cssText += r2.cssText; }); } catch (e) {}
+    });
+    out.focusRingRule = /\.k3r-row:focus-visible/.test(cssText);
+    return out;
+  });
+  if (r.step) return fail(r.step);
+  if (!r.inputFocused) return fail('search input not autofocused');
+  if (!r.row0Focus || !r.row1Focus || !r.roving) return fail('arrow navigation broken: ' + JSON.stringify(r));
+  if (!r.homeFocus) return fail('Home did not jump to first row');
+  if (!r.detailShown) return fail('Enter did not open the detail step');
+  if (!r.escCloses) return fail('Esc did not close the picker (back-to-list: ' + r.escBackToList + ')');
+  if (!r.focusRingRule) return fail('focus-visible ring rule missing');
   return ok();
 }
 
@@ -1059,10 +1403,17 @@ export const HISTORICAL = [
 export const PACKET = [
   ['goalLifecycle', goalLifecycle],
   ['pinnedGeometry', pinnedGeometry],
+  ['pinSurvival', pinSurvival],
   ['artifactLeftOfChat', artifactLeftOfChat],
   ['questionFlow', questionFlow],
+  ['questionLifecycle', questionLifecycle],
+  ['questionPaging', questionPaging],
+  ['triggerCoverage', triggerCoverage],
   ['compactWork', compactWork],
   ['routePicker', routePicker],
+  ['providerSetupCopy', providerSetupCopy],
+  ['motionContinuity', motionContinuity],
+  ['keyboardFocus', keyboardFocus],
   ['bsdStates', bsdStates],
   ['offlineIdempotency', offlineIdempotency],
   ['approvalFlow', approvalFlow],

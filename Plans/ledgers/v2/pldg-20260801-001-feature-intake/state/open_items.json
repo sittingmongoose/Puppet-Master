@@ -1,69 +1,39 @@
 {
   "schema_id": "pm.bootstrap_open_items.v1",
   "ledger_id": "pldg-20260801-001-feature-intake",
-  "updated_at_utc": "2026-08-13T16:55:00Z",
-  "last_event_id": "evt-0029",
+  "updated_at_utc": "2026-08-15T01:34:12Z",
+  "last_event_id": "evt-0034",
   "governance_status": "not_started",
   "open_questions": [],
-  "deferred_questions": [
+  "deferred_questions": [],
+  "in_progress_questions": [
     {
-      "question_id": "q-0022",
-      "status": "deferred",
-      "question": "What exact subject-model roster and test method should qualify the final course-corrected automated prompt system?",
-      "owner": "Jared at READY_FOR_JARED_TEST_PLAN",
-      "historical_thread_id": "019fc3fd-4061-7d01-9c22-a3c82f34de1f",
-      "successor_thread_id": "019ffbff-994a-76f0-9c06-57bab28b7ee3",
-      "artifact_root": "tests/agent_packet_restrictions/successor_20260813/",
-      "historical_terminal_status": "STOPPED_BEFORE_SUBJECT_LAUNCH",
-      "reason": "The Sol max controller and medium/easier plus xhigh/harder preparation roles are fixed, but Jared will provide the exact tested subject models and how they are tested only after deterministic preflight is ready.",
-      "verified_draft_inputs": {
-        "surfaces": 54,
-        "blocked_production_surfaces": 51,
-        "isolated_contract_simulations": 2,
-        "currently_runnable_deterministic_surfaces": 1,
-        "implementation_gated_tests": 24,
-        "semantic_cases": 7,
-        "deterministic_checks": 222
-      },
-      "successor_readiness_before_user_plan": [
-        "The attached course-correction sources and provider adjudication have exact custody and precedence.",
-        "The affected automated-surface census is refreshed without compiling canonical Plans.",
-        "The active GPT-5.6 Sol max successor classifies all inherited artifacts and uses medium/easier plus xhigh/harder bounded preparation subagents.",
-        "Controller, scorer, capture, lineage, and write-boundary preflight passes deterministically with zero subject-test provider calls.",
-        "The successor then stops and asks Jared for the exact roster and method before any subject call."
-      ],
-      "claim_boundary": "Preregistration drafts only. No empirical model-performance, production-enforcement, readiness, weak-model-success, or high-model-success claim is supported.",
-      "deferred_inputs": [
-        "Reject packet, source, attachment, or route mutation after admission.",
-        "Reject hidden outside-source bytes, answer keys, prior outputs, or unclassified host instructions.",
-        "Test write and network denial separately from read confinement; a cooperative read boundary is not OS read isolation or FileSafe security.",
-        "Cap total model-controlled evidence requests before executing any of them.",
-        "Preserve zero, empty, and over-cap output as distinct terminals.",
-        "Require exact started-prefix plus absorbed-suffix accounting after the first nonpass.",
-        "Evaluate fresh-context and retry policy only under Jared's future frozen method; the old zero-retry proposal is not current authority.",
-        "Test duplicate or conflicting IDs and evidence joins.",
-        "Preserve provider-effective model identity as an attested residual unless signed evidence exists."
-      ],
-      "source_refs": [
-        "chat:testing-deferred-chat-initiation-and-planunit-acceptance",
-        "thread:019faf32-0047-7e10-ba41-a9f46ac89b79:coordination-reply",
-        "chat:cross-system-testing-delegated-to-sol-ultra",
-        "chat:local-folder-eight-low-two-high-correction",
-        "corr-0013",
-        "corr-0014",
-        "corr-0015",
-        "thread:019fc3fd-4061-7d01-9c22-a3c82f34de1f",
-        "thread:019fc3fd-4061-7d01-9c22-a3c82f34de1f:terminal-preflight-closeout",
-        "tests/agent_packet_restrictions/reports/terminal_preflight_closeout-20260802.md",
-        "tests/agent_packet_restrictions/charter/control_plane_defect-0004-v4-boundary-invalid.md",
-        "codex-client:client-new-thread:2076030f-f4b8-46b6-93c9-3512ee2c19c8",
-        "chat:final-course-correction-and-future-testing-plan-hold",
-        "thread:019ffbff-994a-76f0-9c06-57bab28b7ee3",
-        "file:/home/sittingmongoose/.codex/attachments/14bc63c4-575c-43eb-ae0d-33debc653a75/PROVIDER_CLI_FINAL_ADJUDICATION.md"
-      ]
+      "schema_id": "pm.bootstrap_question.v1",
+      "ledger_id": "pldg-20260801-001-feature-intake",
+      "question_id": "q-0047",
+      "status": "in_progress",
+      "question": "Does one fresh start-to-finish replicate under the unchanged frozen R6-v7 architecture pass all three configured model paths without retries, best-of, replacement, or prior subject-result reuse?",
+      "recommendation": "Preserve the valid GPT-5.4 mini xhigh S10A failure and all 66 passing results, recover only provably unstarted controller-invalid cells under identical frozen bytes, finish the two unaffected medium paths, and then compare the complete honest R7 terminal against R6. Do not rerun the failed xhigh result or start a second replicate.",
+      "disposition": "R7 was interrupted before terminal after 67 valid scored cells: 66 PASS and one permanent xhigh S10A FAIL. Each medium path passed 33 cells through S30_B02; three later creations were controller-invalid and unstarted during file-descriptor exhaustion. Exact continuation of only the unfinished medium cells has been dispatched under the existing Goal. Await its durable validated terminal without polling.",
+      "linked_atom_ids": ["atom-0080", "atom-0081", "atom-0082", "atom-0083"],
+      "source_refs": ["evt-0031", "evt-0032", "evt-0033", "dec-0067", "thread:019ffbff-994a-76f0-9c06-57bab28b7ee3", "tests/agent_packet_restrictions/successor_20260813/model_retest_r7_replication_20260814_v1/execution/slot-alpha/scores/S10A.json", "tests/agent_packet_restrictions/successor_20260813/model_retest_r7_replication_20260814_v1/execution/controller_invalid/create_batch6_initial.json"],
+      "created_at_utc": "2026-08-14T22:12:24Z",
+      "updated_at_utc": "2026-08-15T00:14:18Z"
+    },
+    {
+      "schema_id": "pm.bootstrap_question.v1",
+      "ledger_id": "pldg-20260801-001-feature-intake",
+      "question_id": "q-0048",
+      "status": "in_progress",
+      "question": "Can one generically repaired and frozen final architecture complete two consecutive full matrices across all three configured model paths with a new test-taker thread for every invocation and no failures?",
+      "recommendation": "Separate development from qualification. Preserve and close each failed frozen run, make only evidence-driven generic revisions protected by structurally distinct holdouts, and reset the streak after every failure or change. Count success only when the same byte-identical final candidate completes two consecutive independent full matrices with fresh test-taker tasks, zero failed, invalid, or missing cells, and no retries, replacements, best-of, or between-pass tuning.",
+      "disposition": "Authorized by Jared through corr-0018 and dec-0068. It is queued behind the honest R7 closeout in successor task 019ffbff-994a-76f0-9c06-57bab28b7ee3 and will run under a new non-budgeted PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815 Goal. Await a validated two-consecutive-pass terminal or genuine Goal-rule blocker without polling.",
+      "linked_atom_ids": ["atom-0078", "atom-0079", "atom-0080", "atom-0081", "atom-0082", "atom-0083", "atom-0084"],
+      "source_refs": ["corr-0018", "evt-0034", "dec-0068", "q-0047", "thread:019ffbff-994a-76f0-9c06-57bab28b7ee3"],
+      "created_at_utc": "2026-08-15T01:34:12Z",
+      "updated_at_utc": "2026-08-15T01:34:12Z"
     }
   ],
-  "in_progress_questions": [],
   "open_blockers": [],
   "unclassified_candidates": [],
   "unresolved_contradictions": [],
@@ -312,11 +282,11 @@
   "compile_open_items": [
     {
       "item_id": "precompile-testing-prerequisite",
-      "status": "held_by_explicit_user_phase_order",
-      "summary": "Successor deterministic preflight, Jared's subject plan, authorized testing to an honest terminal, ledger reconciliation of findings, and a later explicit Jared compile request must occur before canonical Plans compilation."
+      "status": "held_by_r7_closeout_r8_two_clean_run_qualification_and_explicit_user_compile_authority",
+      "summary": "R7 must close honestly, then the authorized R8 repair lane must reach two consecutive clean unchanged full matrices or a genuine Goal-rule blocker and return its findings to this ledger before any later explicit Jared compile request can be considered."
     }
   ],
   "post_compile_pending_items": [],
   "unsealed_governance": [],
-  "notes": "Successor task `019ffbff-994a-76f0-9c06-57bab28b7ee3` runs independently. This task will not use wait_threads, poll it, request status, or emit routine progress updates; it will respond only to a successor-initiated boundary notification or Jared's direction. q-0022 and the compile hold remain unchanged."
+  "notes": "Successor task `019ffbff-994a-76f0-9c06-57bab28b7ee3` must close R7 first, then begin the queued non-budgeted R8 iterative repair and two-clean-run qualification Goal. This task will not use wait_threads, poll it, request routine status, or emit progress updates; it will respond to terminal notification, a genuine input request, or Jared's direction. q-0047, q-0048, and the compile hold remain active."
 }

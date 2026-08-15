@@ -60,3 +60,6 @@ Map closed gaps to handoff `09` register sections when an integration agent upda
 | GAP-021 | Packet vs catalog restore/rewind/pin/compact aliases | Packet IDs conflict with catalog tokens (`history.pin`, `restore_point.create`, `thread.rewind`, `context.compact_now`). | conflicting | Reuse catalog; flag alias/conflict in reports | Catalog / wiring integration |
 | GAP-022 | verification/ ship folder | ConceptHub forbids `verification/` temp dirs in concept tree. | process | Probes live under `%TEMP%/pm-grok45-probes/` only; durable reports at concept root | Concept maintainers |
 
+## Correction 2026-08-14 cross-ref
+
+See `known-gaps.md` (KG-CORR-001..004) for residual honesty after media/dependency correction.

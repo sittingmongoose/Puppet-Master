@@ -1,0 +1,1020 @@
+{
+  "schema_id": "pm.chat.5_6_sol.reference_review_report.v2",
+  "model": "5.6 Sol",
+  "reviewed_at": "2026-08-13T22:11:22Z",
+  "repository_head_at_correction_start": "df9dfa9eb0765f84392b146570f73b2427132953",
+  "scope": {
+    "concept_root": "Concepts/chat-assistant-concepts/5-6-sol",
+    "other_assistant_chat_concepts_inspected": false,
+    "writes_authorized_outside_concept_root": false,
+    "sol_scoped_changed_path_set_within_concept_root": true,
+    "repository_wide_change_attribution_proven": false,
+    "git_attribution_boundary": "The repository was already dirty and no correction-start dirty-status/path receipt exists. Current Git state therefore cannot independently attribute pre-existing changes in PMConcept7, Plans/canon, another Assistant Chat folder, or other out-of-scope paths to a particular task.",
+    "review_purpose": "Correction custody and exact downstream impact mapping; this file does not claim that sibling implementation or validation work is complete."
+  },
+  "packet_bindings": {
+    "original_packet": {
+      "archive_name": "PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10.zip",
+      "archive_sha256": "a391ed571c9a2f27adb14c923c7a914f685a6486d4944a000e1ec5d6bd6083fc",
+      "archive_hash_verified": true,
+      "packet_manifest_sha256": "cbf7c1f2fd08980c242cfef265c36461927d23aab8250325e0b1d789a0757ad7",
+      "manifest_sha256_file_sha256": "5baca524fa96aac35d6ba39f85d4461587797b9c86965cb00608c298238429e3",
+      "stale_self_hash_caveat": {
+        "manifest_path": "PACKET_MANIFEST.json",
+        "self_entry_recorded_sha256": "cc660f65e6d02dad9ca76e89e4f3665180f29551f92fa526055d4913121e00e3",
+        "actual_manifest_sha256": "cbf7c1f2fd08980c242cfef265c36461927d23aab8250325e0b1d789a0757ad7",
+        "matches": false,
+        "meaning": "The original JSON manifest attempted to hash itself and its embedded self-entry is stale. MANIFEST.sha256 separately records the actual extracted manifest hash; no completeness claim is inferred from the stale self-entry."
+      }
+    },
+    "correction_packet": {
+      "archive_name": "PM_Assistant_Chat_5_6_Sol_Dependency_Path_and_Work_Correction_2026-08-13.zip",
+      "archive_sha256": "3ac3d191f98371f5802dd0db71127627be8612c9daff460b973455574ef11603",
+      "archive_hash_verified": true,
+      "manifest_path": "CORRECTION_PACKET_MANIFEST.json",
+      "manifest_sha256": "3b9d880bd8452381b0b010ebbe36f8a3847a34580d90a897de8623fa998e3bb0",
+      "listed_payload_file_count": 60,
+      "listed_payload_hash_and_size_failures": 0,
+      "sorted_listed_payload_digest_algorithm": "SHA-256 over UTF-8 lines '<sha256>  <path>\\n' sorted by path; correction manifest excluded as designed",
+      "sorted_listed_payload_digest_sha256": "83c8f805589159dd57dad07ce2fddcbc3fe4267713a6b59f149faa40888d9c6f",
+      "self_hash_policy": "The correction manifest intentionally excludes itself from its own file table."
+    },
+    "binding_result": "Original archive, correction archive, extracted manifests, and every correction-listed payload are content-addressed. Archive hashes bind the transported packets; manifest and payload digests bind the extracted review set."
+  },
+  "standalone_provider_adjudication": {
+    "attachment_name": "PROVIDER_CLI_FINAL_ADJUDICATION.md",
+    "attachment_context": "PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13",
+    "bytes": 4857,
+    "sha256": "9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1",
+    "opened": true,
+    "review_status": "text_opened_and_policy_adjudication_reviewed",
+    "identical_to_correction_packet_copy": true,
+    "impact_profile_id": "provider_adjudication"
+  },
+  "review_evidence_boundary": {
+    "hash_evidence": "SHA-256 and byte counts establish identity/integrity only; they do not establish textual, visual, or motion review.",
+    "text_and_json_evidence": "Text files were opened; JSON files were parsed. Large machine aliases received targeted schema/coverage review plus byte-identity comparison to their original counterparts.",
+    "still_image_evidence": "Both screenshot aliases, all four contact sheets, and all 37 keyframes were decoded and visually inspected.",
+    "raw_video_evidence": "All four raw MOV streams were fully decoded from first frame through terminal frame with a temporary, SHA-256-verified imageio-ffmpeg 0.6.0 wheel containing ffmpeg 7.0.2. In addition to the supplied contact sheets and all 37 packet keyframes, 16 evenly spaced frames per raw stream were decoded into four temporary 4x4 review sheets and directly inspected at original sheet resolution. The temporary decoder and derived review sheets were not copied into the concept or treated as product sources.",
+    "browser_native_boundary": "The concept deliverables are HTML/CSS/JavaScript browser prototypes. Browser interaction, geometry, screenshot, Firefox, or Chromium/CDP evidence does not prove a native Rust + Slint 1.17.1 implementation. Native Slint translation and native tests remain required for detached-window DPI, platform fonts, IME, accessibility semantics, renderer behavior, live services, and host integration.",
+    "completion_boundary": "This custody report proves source acquisition, identity, opening status, still-image review, and impact mapping. It does not by itself prove that every causal implementation change or rerun in sibling deliverables passed."
+  },
+  "impact_profiles": {
+    "correction_directive": {
+      "concept": "Forces reinspection of all eight window concepts, all eight thread concepts, and all 64 pairings without importing another agent's design.",
+      "behavior": "Requires any omission caused by missing dependencies or broken paths to be repaired across pin, artifact, question, Goal, child, diff, selector, branch, redirect, offline/replay, warning, and attachment states.",
+      "motion": "Requires the supplied film evidence to be treated causally and requires reduced-motion final-state equivalence.",
+      "test": "Requires the full interaction/visual matrix, including non-showcase pairings and long, dense, and error states, to be rerun.",
+      "register": "Requires custody and downstream impact evidence to be refreshed; it does not itself mint canonical Plan, Command, Wiring, or DRY truth."
+    },
+    "correction_manifest": {
+      "concept": "No visual design instruction; binds the exact correction payload that the concepts must be checked against.",
+      "behavior": "Prevents omitted dependencies from being treated as absent requirements.",
+      "motion": "Binds the republished raw-video, contact-sheet, and keyframe evidence.",
+      "test": "Provides byte and SHA-256 integrity checks for 60 listed payload files; the manifest intentionally excludes itself.",
+      "register": "Updates source-receipt and reference-review custody only; no product register semantics are created by hashing."
+    },
+    "demo_scenario": {
+      "concept": "Supplies the dense settings/provider redesign story that every concept must render without collapsing its distinct spatial grammar.",
+      "behavior": "Covers questions, Goal phases/states, todos, subagents including retry, grouped activity, port collision, warnings, diffs, four artifacts, long history, and completion.",
+      "motion": "Provides ordered state changes for active work, questionnaire progression, artifact readiness, collision disclosure, and completion.",
+      "test": "Requires fixture coverage for all scenario states across themes, widths, mounts, and representative/non-showcase pairings.",
+      "register": "Feeds impact-register.json and Plan/Command/Wiring/DRY delta review; its demo paths and events are fixtures, not canonical production IDs."
+    },
+    "demo_trigger": {
+      "concept": "Requires every concept grammar to expose a deterministic demo path for the same behavioral surface.",
+      "behavior": "Defines harness events for history, question, Goal, todo, subagent, activity, diff, artifact, decision, thread, and system families.",
+      "motion": "Requires deterministic intermediate and terminal states plus reduced-motion final-state equivalence for every motion-bearing trigger.",
+      "test": "Defines the trigger coverage denominator used by demo-trigger-report.json and browser interaction probes.",
+      "register": "Must not be promoted into production toolbar commands or canonical Command IDs; only candidate-impact evidence may reference it."
+    },
+    "provider_adjudication": {
+      "concept": "Requires provider-missing and setup-required states to read as explicit user-controlled setup, not an invisible baseline capability.",
+      "behavior": "Provider CLIs are not bundled, pre-seeded, or silently first-installed; missing demand deep-links to exact Provider Settings, preserves a continuation token, separates install from auth, verifies route/model readiness, and rejects stale continuation.",
+      "motion": "Requires visible, interruptible setup-required, installing, authenticating, verifying, ready, failed/rollback, and resumed-operation transitions with reduced-motion equivalents.",
+      "test": "Requires negative tests for silent acquisition and Auto/On first install, plus host/environment isolation, stale continuation, coalescing, rollback, and readiness separation.",
+      "register": "Feeds provider-policy findings in impact-register.json and plan-owner-delta.md; it creates no implicit acquisition class, command, wiring, or DRY owner."
+    },
+    "path_alias_map": {
+      "concept": "Restores paths referenced by preserved source documents without changing the eight-by-eight creative brief.",
+      "behavior": "Makes the full requirements, demo, tests, Plan-unit inventory, source inventory, and video timeline addressable at the paths the sources cite.",
+      "motion": "Restores the path to film-timeline evidence and PMConcept7 screenshots used as functional evidence.",
+      "test": "Requires aliases to be byte-identical and parseable and prevents broken-path skips from counting as review.",
+      "register": "Records compatibility identity only; aliases are not new requirements or duplicate register authority."
+    },
+    "machine_requirements": {
+      "concept": "Reasserts the complete feature/state denominator across every distinct window and thread grammar.",
+      "behavior": "Controls required selectors, history, pinning, branching, questions, Goals, todos, subagents, artifacts, warnings, composer, search, mounts, and recovery behavior.",
+      "motion": "Identifies motion-bearing states that need causal transitions and reduced-motion endpoints.",
+      "test": "Defines requirement coverage that interaction and visual tests must trace.",
+      "register": "Feeds impact-register review and candidate Plan/Command/Wiring/DRY deltas without becoming canonical."
+    },
+    "machine_demo_data": {
+      "concept": "Provides dense, realistic content needed to reveal clipping, hierarchy, containment, and rhythm failures.",
+      "behavior": "Exercises long messages, history, active/completed work, questions, Goals, todos, subagents, diffs, artifacts, warnings, collisions, and completion.",
+      "motion": "Supplies the state changes and content density used to judge continuity, compaction, morphing, and final-state equivalence.",
+      "test": "Feeds long/dense/error and full fixture-state probes.",
+      "register": "Fixture-only input; affects demo-trigger-report and evidence, not canonical Plan/Command/Wiring/DRY ownership."
+    },
+    "machine_test_matrix": {
+      "concept": "Preserves all eight themes, four widths, rail states, docked/popout mounts, and the eight-by-eight concept pairing scope.",
+      "behavior": "Requires all listed feature states and assertions to remain functional under each applicable configuration.",
+      "motion": "Requires a separate reduced-motion check for every motion-bearing interaction.",
+      "test": "Defines 32 core theme-width configurations, 64 pairing smoke tests, state coverage, geometry assertions, and direct visual review obligations.",
+      "register": "Feeds visual-test-matrix.json and interaction-test-report.json; passing browser checks is not native Slint certification."
+    },
+    "machine_plan_units": {
+      "concept": "Keeps concept decisions traceable to current PlanUnit candidates without turning the concept into canon.",
+      "behavior": "Surfaces product contracts the prototype must not contradict.",
+      "motion": "Constrains motion and state semantics where Plan units own lifecycle or accessibility behavior.",
+      "test": "Provides traceability targets for impact evidence, not proof of implementation.",
+      "register": "Feeds plan-owner-delta.md and impact-register.json; no Plans mutation or ownership transfer is authorized."
+    },
+    "machine_source_inventory": {
+      "concept": "Preserves source precedence and distinguishes canon, lineage, functional references, and external research.",
+      "behavior": "Prevents source-lineage examples from silently overriding current product behavior.",
+      "motion": "Classifies videos/screenshots as functional evidence rather than visual templates.",
+      "test": "Defines which sources must be opened and how review evidence is bounded.",
+      "register": "Feeds source-receipt.json and reference-review-report.json only; it does not create product authority."
+    },
+    "machine_video_timeline": {
+      "concept": "Provides activity and questionnaire temporal structure without prescribing palette or silhouette.",
+      "behavior": "Requires one evolving active-work location, expandable completed history, separate artifacts/prose, stable questionnaire footprint, progress, answer retention, skip, gating, and reverse navigation.",
+      "motion": "Defines temporal segments for replacement, condensation, expansion, stable-footprint transitions, and reduced-motion equivalents.",
+      "test": "Supplies sequence checkpoints for motion and interaction assertions.",
+      "register": "Feeds motion-storyboards.md and demo-trigger-report.json; visual style remains non-authoritative."
+    },
+    "screenshot_pm7": {
+      "concept": "PMConcept7 screenshots establish shell context, docked rail density, popout geometry, composer placement, and artifact/work visibility as functional evidence only.",
+      "behavior": "Requires docked/popout continuity, usable selector/composer affordances, history access, and preserved thread state.",
+      "motion": "Suggests spatial attachment and mount continuity; no PMConcept7 palette, exact layout, or choreography may be copied as a requirement.",
+      "test": "Requires docked and popout geometry/state checks at supported widths.",
+      "register": "Source-lineage evidence only; PMConcept7 and canonical registers remain untouched."
+    },
+    "video_source_map": {
+      "concept": "Maps the four raw films to stable packet names, dimensions, durations, and contact sheets.",
+      "behavior": "Prevents a film or derived review surface from being silently skipped.",
+      "motion": "Binds each motion family to its corresponding contact sheet and keyframe sequence.",
+      "test": "Supports complete media-denominator and duration/dimension checks.",
+      "register": "Custody-only mapping; no product or command authority."
+    },
+    "video_a": {
+      "concept": "Message-arrival evidence requires conversation geometry that keeps context legible while new content enters.",
+      "behavior": "New messages must arrive without teleporting unrelated history or losing the anchor.",
+      "motion": "Demonstrates causal incoming-message reveal, local reflow, settling, and repeatable anchor preservation; reduced motion must jump to the same settled geometry.",
+      "test": "Requires arrival/reflow/anchor and reduced-motion endpoint probes.",
+      "register": "Feeds motion-storyboards.md and interaction evidence only."
+    },
+    "video_b": {
+      "concept": "Questionnaire evidence requires a stable work-card footprint with visible progress and retained answers.",
+      "behavior": "Supports next/back review, selection retention, freeform/skip paths, close, and completion gating.",
+      "motion": "Demonstrates contents replacing within a stable container rather than stacked dialogs; reduced motion must preserve progress and focus.",
+      "test": "Requires forward/back, retention, skip, validation, close, and submit-gating probes.",
+      "register": "Feeds motion-storyboards.md, demo-trigger-report.json, and test evidence only."
+    },
+    "video_c": {
+      "concept": "Execution evidence requires a compact active-work surface that can expand historical categories without displacing final prose or artifacts.",
+      "behavior": "Supports thought, search/read, import, edit, generation, completion, tool-summary, artifact compilation, elapsed time, and retrospective category inspection.",
+      "motion": "Demonstrates one evolving foreground activity region, completed condensation, artifact separation, and historical expansion; reduced motion must preserve category and final state.",
+      "test": "Requires activity replacement/condensation, artifact-state, elapsed-time, and history-expansion probes.",
+      "register": "Feeds motion-storyboards.md, demo-trigger-report.json, and activity/artifact evidence only."
+    },
+    "video_d": {
+      "concept": "Question preparation and submission must remain attached to the composer and morph into a bounded questionnaire surface.",
+      "behavior": "Supports prepare, open, select, page advance, submit, and return-to-composer states.",
+      "motion": "Demonstrates prepare-to-card morph, in-card question replacement, selection feedback, submit-to-progress morph, and final collapse; reduced motion must preserve focus and endpoints.",
+      "test": "Requires prepare/open/select/next/submit/collapse and reduced-motion endpoint probes.",
+      "register": "Feeds motion-storyboards.md and question-trigger evidence only."
+    }
+  },
+  "correction_documents_and_manifests": [
+    {
+      "path": "00_READ_ME_FIRST.md",
+      "bytes": 1021,
+      "sha256": "df57e35169542b7ae6b5ae7d65097f5b779c33f6091e3e8f66686cdf9d431e62",
+      "opened": true,
+      "review_status": "text_opened_and_reviewed",
+      "impact_profile_id": "correction_directive"
+    },
+    {
+      "path": "CORRECTION_GOAL_PROMPT.md",
+      "bytes": 2563,
+      "sha256": "e6d8a8361511161f9589082c274f72f7b03b75e30f41c81ae76d37331beee8e9",
+      "opened": true,
+      "review_status": "text_opened_and_reviewed",
+      "impact_profile_id": "correction_directive"
+    },
+    {
+      "path": "CORRECTION_PACKET_MANIFEST.json",
+      "bytes": 11338,
+      "sha256": "3b9d880bd8452381b0b010ebbe36f8a3847a34580d90a897de8623fa998e3bb0",
+      "opened": true,
+      "review_status": "json_parsed_all_60_listed_files_hash_and_size_verified",
+      "impact_profile_id": "correction_manifest"
+    },
+    {
+      "path": "DEMO_SCENARIO_MANIFEST.json",
+      "bytes": 5571,
+      "sha256": "6913d8e678ae4d01cb79d59b1c308c2a759eca94e20b46de166ac845ab9402dc",
+      "opened": true,
+      "review_status": "json_parsed_and_behavioral_scenario_reviewed",
+      "impact_profile_id": "demo_scenario"
+    },
+    {
+      "path": "DEMO_TRIGGER_CONTRACT.json",
+      "bytes": 1739,
+      "sha256": "6ffb3e70962a746b4618c63cefaddf14fa56f463be870eda2ded02b3a7fa4dfd",
+      "opened": true,
+      "review_status": "json_parsed_and_all_trigger_families_reviewed",
+      "impact_profile_id": "demo_trigger"
+    },
+    {
+      "path": "PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "bytes": 4857,
+      "sha256": "9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1",
+      "opened": true,
+      "review_status": "text_opened_and_policy_adjudication_reviewed",
+      "impact_profile_id": "provider_adjudication"
+    },
+    {
+      "path": "REFERENCE_PATH_FIXES.md",
+      "bytes": 804,
+      "sha256": "1269921158f3098ef08fa6b8ca373fb2f9743f6c0b0aaefb30156353bfd700b8",
+      "opened": true,
+      "review_status": "text_opened_and_alias_map_reviewed",
+      "impact_profile_id": "path_alias_map"
+    }
+  ],
+  "machine_aliases_and_original_counterparts": [
+    {
+      "alias": {
+        "path": "machine/requirements.json",
+        "bytes": 9848,
+        "sha256": "a57caa2f58bacbf7d3ae2bfa5a96fb8962f8b335e1fe1fc6514cea6290ea6025",
+        "opened": true,
+        "review_status": "json_parsed_targeted_schema_and_coverage_fields_reviewed",
+        "impact_profile_id": "machine_requirements"
+      },
+      "original_counterpart": {
+        "path": "machine/original_requirements.json",
+        "bytes": 9848,
+        "sha256": "a57caa2f58bacbf7d3ae2bfa5a96fb8962f8b335e1fe1fc6514cea6290ea6025",
+        "opened": true,
+        "review_status": "opened_for_hash_identity_and_source_lineage",
+        "impact_profile_id": "path_alias_map"
+      },
+      "alias_identity": {
+        "method": "byte_length_and_sha256",
+        "sha256_equal": true,
+        "bytes_equal": true,
+        "disposition": "compatibility_alias_not_new_requirement"
+      }
+    },
+    {
+      "alias": {
+        "path": "machine/demoData.json",
+        "bytes": 349661,
+        "sha256": "92ec368493534cfeb514c75cb036c76a8cf28335bd3b0cb2aae61335110db264",
+        "opened": true,
+        "review_status": "json_parsed_targeted_schema_and_coverage_fields_reviewed",
+        "impact_profile_id": "machine_demo_data"
+      },
+      "original_counterpart": {
+        "path": "machine/original_demoData.json",
+        "bytes": 349661,
+        "sha256": "92ec368493534cfeb514c75cb036c76a8cf28335bd3b0cb2aae61335110db264",
+        "opened": true,
+        "review_status": "opened_for_hash_identity_and_source_lineage",
+        "impact_profile_id": "path_alias_map"
+      },
+      "alias_identity": {
+        "method": "byte_length_and_sha256",
+        "sha256_equal": true,
+        "bytes_equal": true,
+        "disposition": "compatibility_alias_not_new_requirement"
+      }
+    },
+    {
+      "alias": {
+        "path": "machine/testMatrix.json",
+        "bytes": 6858,
+        "sha256": "17e7e22e9d60aa85f863eab0dc22c9e64e5d664a5aa5eac54715c1a8903d27be",
+        "opened": true,
+        "review_status": "json_parsed_targeted_schema_and_coverage_fields_reviewed",
+        "impact_profile_id": "machine_test_matrix"
+      },
+      "original_counterpart": {
+        "path": "machine/original_testMatrix.json",
+        "bytes": 6858,
+        "sha256": "17e7e22e9d60aa85f863eab0dc22c9e64e5d664a5aa5eac54715c1a8903d27be",
+        "opened": true,
+        "review_status": "opened_for_hash_identity_and_source_lineage",
+        "impact_profile_id": "path_alias_map"
+      },
+      "alias_identity": {
+        "method": "byte_length_and_sha256",
+        "sha256_equal": true,
+        "bytes_equal": true,
+        "disposition": "compatibility_alias_not_new_requirement"
+      }
+    },
+    {
+      "alias": {
+        "path": "machine/relevantPlanUnits.json",
+        "bytes": 389224,
+        "sha256": "86703c45eddef36a389e9cebd90d843dc77d67c79fa9bff38b6f91068310f188",
+        "opened": true,
+        "review_status": "json_parsed_targeted_schema_and_coverage_fields_reviewed",
+        "impact_profile_id": "machine_plan_units"
+      },
+      "original_counterpart": {
+        "path": "machine/original_relevant_plan_units.json",
+        "bytes": 389224,
+        "sha256": "86703c45eddef36a389e9cebd90d843dc77d67c79fa9bff38b6f91068310f188",
+        "opened": true,
+        "review_status": "opened_for_hash_identity_and_source_lineage",
+        "impact_profile_id": "path_alias_map"
+      },
+      "alias_identity": {
+        "method": "byte_length_and_sha256",
+        "sha256_equal": true,
+        "bytes_equal": true,
+        "disposition": "compatibility_alias_not_new_requirement"
+      }
+    },
+    {
+      "alias": {
+        "path": "machine/sourceInventory.json",
+        "bytes": 18540,
+        "sha256": "ed8cbdabfb615cbfb6ec0827187f77636137a5b5c08b448fe0555d272b7d0847",
+        "opened": true,
+        "review_status": "json_parsed_targeted_schema_and_coverage_fields_reviewed",
+        "impact_profile_id": "machine_source_inventory"
+      },
+      "original_counterpart": {
+        "path": "machine/original_source_inventory.json",
+        "bytes": 18540,
+        "sha256": "ed8cbdabfb615cbfb6ec0827187f77636137a5b5c08b448fe0555d272b7d0847",
+        "opened": true,
+        "review_status": "opened_for_hash_identity_and_source_lineage",
+        "impact_profile_id": "path_alias_map"
+      },
+      "alias_identity": {
+        "method": "byte_length_and_sha256",
+        "sha256_equal": true,
+        "bytes_equal": true,
+        "disposition": "compatibility_alias_not_new_requirement"
+      }
+    },
+    {
+      "alias": {
+        "path": "machine/videoTimeline.json",
+        "bytes": 8450,
+        "sha256": "0101e03fc929ca81d0dc2ea01eb04e951e8fbbc0d0dad26ebf157ef4c791c833",
+        "opened": true,
+        "review_status": "json_parsed_targeted_schema_and_coverage_fields_reviewed",
+        "impact_profile_id": "machine_video_timeline"
+      },
+      "original_counterpart": {
+        "path": "machine/original_videoTimeline.json",
+        "bytes": 8450,
+        "sha256": "0101e03fc929ca81d0dc2ea01eb04e951e8fbbc0d0dad26ebf157ef4c791c833",
+        "opened": true,
+        "review_status": "opened_for_hash_identity_and_source_lineage",
+        "impact_profile_id": "path_alias_map"
+      },
+      "alias_identity": {
+        "method": "byte_length_and_sha256",
+        "sha256_equal": true,
+        "bytes_equal": true,
+        "disposition": "compatibility_alias_not_new_requirement"
+      }
+    }
+  ],
+  "screenshot_aliases_and_original_counterparts": [
+    {
+      "alias": {
+        "path": "reference/pm7_chat_open.png",
+        "bytes": 533396,
+        "sha256": "8d91c19f7d5e806a0b5678c8445d89e103cdf97b48273c70260752f6b4c0d5c4",
+        "opened": true,
+        "review_status": "image_decoded_and_visually_inspected",
+        "impact_profile_id": "screenshot_pm7",
+        "visual_observation": "Docked Assistant Chat in the PMConcept7 shell: narrow right chat rail, dense adjacent work surfaces, message/composer continuity, and visible shell context."
+      },
+      "original_counterpart": {
+        "path": "reference/screenshots/pm7_chat_open.png",
+        "bytes": 533396,
+        "sha256": "8d91c19f7d5e806a0b5678c8445d89e103cdf97b48273c70260752f6b4c0d5c4",
+        "opened": true,
+        "review_status": "opened_for_hash_identity_visual_equivalence_by_byte_identity",
+        "impact_profile_id": "path_alias_map"
+      },
+      "alias_identity": {
+        "method": "byte_length_and_sha256",
+        "sha256_equal": true,
+        "bytes_equal": true,
+        "disposition": "compatibility_alias_of_visually_inspected_source"
+      }
+    },
+    {
+      "alias": {
+        "path": "reference/pm7_popout.png",
+        "bytes": 423127,
+        "sha256": "0783109cf57e03cc240f45433b0153d1a26c17aa75e3984f3bc861f58e5ece42",
+        "opened": true,
+        "review_status": "image_decoded_and_visually_inspected",
+        "impact_profile_id": "screenshot_pm7",
+        "visual_observation": "Centered popout over dimmed shell: history rail, conversation/work card, composer, selectors, and preserved background context."
+      },
+      "original_counterpart": {
+        "path": "reference/screenshots/pm7_popout.png",
+        "bytes": 423127,
+        "sha256": "0783109cf57e03cc240f45433b0153d1a26c17aa75e3984f3bc861f58e5ece42",
+        "opened": true,
+        "review_status": "opened_for_hash_identity_visual_equivalence_by_byte_identity",
+        "impact_profile_id": "path_alias_map"
+      },
+      "alias_identity": {
+        "method": "byte_length_and_sha256",
+        "sha256_equal": true,
+        "bytes_equal": true,
+        "disposition": "compatibility_alias_of_visually_inspected_source"
+      }
+    }
+  ],
+  "video_source_map": {
+    "path": "reference/videos/VIDEO_SOURCE_MAP.json",
+    "bytes": 1225,
+    "sha256": "a1095ec42047c5696f5406912fc0cc984e2024cdd19471d47d4ac0b869d2e8e4",
+    "opened": true,
+    "review_status": "json_parsed_all_four_video_mappings_reviewed",
+    "impact_profile_id": "video_source_map"
+  },
+  "raw_videos": [
+    {
+      "path": "reference/videos/01_message_arrival_spatial_continuity.mov",
+      "bytes": 476884,
+      "sha256": "aa8bb0855ee90fac051bf76f5e043949d10308b626783ca553ccc76970c0ef6a",
+      "opened": true,
+      "review_status": "raw_stream_fully_decoded_and_16_evenly_spaced_frames_directly_inspected",
+      "impact_profile_id": "video_a",
+      "video_group": "a",
+      "source_map_duration_seconds": 3.94,
+      "source_map_dimensions": {
+        "width": 460,
+        "height": 640
+      },
+      "inspection_evidence": "QuickTime identity, SHA-256, and bytes verified; ffmpeg 7.0.2 decoded 227 frames through the 3.93 second terminal time. A separately decoded 16-frame 4x4 review sheet (SHA-256 7ae2d7e5ca65f53d69ded3ca371a456c94c94b4658788c7c50df885411b9deed) was directly inspected together with the supplied contact sheet and all 11 packet keyframes. The raw sequence confirmed composer-adjacent message arrival, local reflow, and a stable containing viewport rather than whole-transcript entrance motion."
+    },
+    {
+      "path": "reference/videos/02_stable_paged_questionnaire.mov",
+      "bytes": 2465474,
+      "sha256": "b03137b95e353792691c72ade6427dd53f1450459c425a3ceecfdfb83c10dbc3",
+      "opened": true,
+      "review_status": "raw_stream_fully_decoded_and_16_evenly_spaced_frames_directly_inspected",
+      "impact_profile_id": "video_b",
+      "video_group": "b",
+      "source_map_duration_seconds": 19.85,
+      "source_map_dimensions": {
+        "width": 308,
+        "height": 640
+      },
+      "inspection_evidence": "QuickTime identity, SHA-256, and bytes verified; ffmpeg 7.0.2 decoded 1190 frames through the 19.83 second terminal time. A separately decoded 16-frame 4x4 review sheet (SHA-256 27e546845e2a000100e8ce63e4ca5c04cd2a875e2ff7c78b3321b5be6c9c390a) was directly inspected together with the supplied contact sheet and all 7 packet keyframes. The raw sequence confirmed stable questionnaire bounds, in-place page replacement, retained progress, reversible navigation, skip, and submit gating."
+    },
+    {
+      "path": "reference/videos/03_compact_execution_activity.mov",
+      "bytes": 9859160,
+      "sha256": "bef74d37cb2ed932a5a3c03fd7e53a7e66ab1bef4d4970d1803afa4bea8c55ef",
+      "opened": true,
+      "review_status": "raw_stream_fully_decoded_and_16_evenly_spaced_frames_directly_inspected",
+      "impact_profile_id": "video_c",
+      "video_group": "c",
+      "source_map_duration_seconds": 36.435,
+      "source_map_dimensions": {
+        "width": 640,
+        "height": 508
+      },
+      "inspection_evidence": "QuickTime identity, SHA-256, and bytes verified; ffmpeg 7.0.2 decoded 1417 frames through the 36.43 second terminal time. A separately decoded 16-frame 4x4 review sheet (SHA-256 6885fe7566d6b4b0ec1376da407188902838ec42d211daa2dbee59b52fc16d0a) was directly inspected together with the supplied contact sheet and all 10 packet keyframes. The raw sequence confirmed one evolving activity locus, cumulative domain cues, compact completion, independently reopenable history, artifact separation, and final worked-time receipt."
+    },
+    {
+      "path": "reference/videos/04_questionnaire_morph_prepare_submit.mov",
+      "bytes": 1214238,
+      "sha256": "8cd8edbd8f81ff5e44b5068334e083d2de51908f1ec036da7e67899cba24dc5a",
+      "opened": true,
+      "review_status": "raw_stream_fully_decoded_and_16_evenly_spaced_frames_directly_inspected",
+      "impact_profile_id": "video_d",
+      "video_group": "d",
+      "source_map_duration_seconds": 8.135,
+      "source_map_dimensions": {
+        "width": 500,
+        "height": 640
+      },
+      "inspection_evidence": "QuickTime identity, SHA-256, and bytes verified; ffmpeg 7.0.2 decoded 488 frames through the 8.13 second terminal time. A separately decoded 16-frame 4x4 review sheet (SHA-256 a3b92ba059dc37b91d66d4cb59b32265b56bdfd9e405df0a9716a272b14494ea) was directly inspected together with the supplied contact sheet and all 9 packet keyframes. The raw sequence confirmed composer-to-preparation continuity, morph into a stable questionnaire footprint, causal selection feedback, in-place page changes, and submit-to-progress collapse."
+    }
+  ],
+  "contact_sheets": [
+    {
+      "path": "reference/videos/contact_sheets/01_message_arrival_spatial_continuity_contact.jpg",
+      "bytes": 76807,
+      "sha256": "1ad4411a24e5d2f0d10cee7bca7a88cd23995d906ed423d95c842a34d0501d53",
+      "opened": true,
+      "review_status": "image_decoded_and_visually_inspected",
+      "impact_profile_id": "video_a",
+      "visual_observation": "Twelve sampled states show repeated message arrival, local vertical reflow, disappearance/reappearance phases, and settled bubbles in a stable chat container."
+    },
+    {
+      "path": "reference/videos/contact_sheets/02_stable_paged_questionnaire_contact.jpg",
+      "bytes": 81995,
+      "sha256": "13ca01701f92f8b9c2f9a6ff90a61c9dd495713ac47d4f75c5273ba3d83bd55f",
+      "opened": true,
+      "review_status": "image_decoded_and_visually_inspected",
+      "impact_profile_id": "video_b",
+      "visual_observation": "Twelve sampled states show a stable outer questionnaire card, progress 1-of-4 through 4-of-4, forward/back navigation, retained answers, skip, and disabled completion before validity."
+    },
+    {
+      "path": "reference/videos/contact_sheets/03_compact_execution_activity_contact.jpg",
+      "bytes": 128957,
+      "sha256": "2068d11bc8972032dd5d41e6c4db20ae4162dca95210e2c235005b8150bad69b",
+      "opened": true,
+      "review_status": "image_decoded_and_visually_inspected",
+      "impact_profile_id": "video_c",
+      "visual_observation": "Twelve sampled states show thinking, exploration, import, edit, generation, condensed tool history, artifact compilation/completion, elapsed work, and retrospective category expansion."
+    },
+    {
+      "path": "reference/videos/contact_sheets/04_questionnaire_morph_prepare_submit_contact.jpg",
+      "bytes": 84587,
+      "sha256": "fbe2c8de06b28540e37b21345827267c664244b33190fab9dd10ffffd76e4986",
+      "opened": true,
+      "review_status": "image_decoded_and_visually_inspected",
+      "impact_profile_id": "video_d",
+      "visual_observation": "Twelve sampled states show prepare, morph to a three-question card, selection, submit, submission progress, and collapse back to the composer."
+    }
+  ],
+  "keyframe_groups": [
+    {
+      "video_group": "a",
+      "impact_profile_id": "video_a",
+      "keyframe_count": 11,
+      "group_review_status": "every_keyframe_individually_decoded_and_visually_inspected",
+      "keyframes": [
+        {
+          "path": "reference/videos/keyframes/video_a_00_00.00s.png",
+          "bytes": 26832,
+          "sha256": "2ce780211f88908d53b52fe37a62f9e1e5faf3efb360bdd3c6496455d9dda29b",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_a",
+          "video_group": "a",
+          "timestamp_label": "00.00s",
+          "visual_observation": "Baseline/preceding conversation with the incoming region still below the visible anchor."
+        },
+        {
+          "path": "reference/videos/keyframes/video_a_01_00.50s.png",
+          "bytes": 28304,
+          "sha256": "08e3cdb234d33fbb3378d39070b90d3ffe068fcdaab3260bbbce364cd25ec8eb",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_a",
+          "video_group": "a",
+          "timestamp_label": "00.50s",
+          "visual_observation": "Pre-arrival local reflow begins while the shell and prior messages stay fixed."
+        },
+        {
+          "path": "reference/videos/keyframes/video_a_02_00.75s.png",
+          "bytes": 23071,
+          "sha256": "e839d2751a7a9357089ca4dced4801210a7892bc01ec4447b69a23d2c63fd28e",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_a",
+          "video_group": "a",
+          "timestamp_label": "00.75s",
+          "visual_observation": "Transition midpoint clears the incoming bubble while preserving the same container anchor."
+        },
+        {
+          "path": "reference/videos/keyframes/video_a_03_01.00s.png",
+          "bytes": 28981,
+          "sha256": "de6786671505cb0193ede5139848de82b91644658b05ced7e3fcf902c8d6bca3",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_a",
+          "video_group": "a",
+          "timestamp_label": "01.00s",
+          "visual_observation": "First incoming message becomes visible at its settled horizontal attachment."
+        },
+        {
+          "path": "reference/videos/keyframes/video_a_04_01.50s.png",
+          "bytes": 30103,
+          "sha256": "4909f1526eaf889f6aecaf13410681d71f5592418f6cfe8b32475018fabff600",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_a",
+          "video_group": "a",
+          "timestamp_label": "01.50s",
+          "visual_observation": "First message remains settled and context stays spatially continuous."
+        },
+        {
+          "path": "reference/videos/keyframes/video_a_05_01.75s.png",
+          "bytes": 23844,
+          "sha256": "9919afe1e5e25c5f93f70a6cf6f23bb539bb2cde0dc879a8003b201b0a7dfb9d",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_a",
+          "video_group": "a",
+          "timestamp_label": "01.75s",
+          "visual_observation": "First-message exit/reflow midpoint is represented by a narrow attached trace rather than an unrelated jump."
+        },
+        {
+          "path": "reference/videos/keyframes/video_a_06_02.25s.png",
+          "bytes": 35016,
+          "sha256": "88ab67a47987efb859d66e6fbd7464515a2cd79b1bcf412659c4344ede9d3e43",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_a",
+          "video_group": "a",
+          "timestamp_label": "02.25s",
+          "visual_observation": "Second incoming message enters at the lower edge with prior context retained."
+        },
+        {
+          "path": "reference/videos/keyframes/video_a_07_02.50s.png",
+          "bytes": 37258,
+          "sha256": "3b2900d91c99d6d60a0d4d76cbe0d8286275a96ded9a5858b78beb8ae648f619",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_a",
+          "video_group": "a",
+          "timestamp_label": "02.50s",
+          "visual_observation": "Second message reaches a legible settled position."
+        },
+        {
+          "path": "reference/videos/keyframes/video_a_08_03.00s.png",
+          "bytes": 30966,
+          "sha256": "26e11ac78d8bc98b47cdeeb3cfbb487e644bc90c8fa0a0beabf846a533ba880d",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_a",
+          "video_group": "a",
+          "timestamp_label": "03.00s",
+          "visual_observation": "Cycle reset preserves the same shell and conversation anchor."
+        },
+        {
+          "path": "reference/videos/keyframes/video_a_09_03.50s.png",
+          "bytes": 28623,
+          "sha256": "bd17a80b915a53c8c77fe40250b4bf26b9930085338b280c5329fd2beaba9985",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_a",
+          "video_group": "a",
+          "timestamp_label": "03.50s",
+          "visual_observation": "First incoming message repeats at the same attachment point."
+        },
+        {
+          "path": "reference/videos/keyframes/video_a_10_03.75s.png",
+          "bytes": 30018,
+          "sha256": "8bf7c5c767ad16979d5603260d84df67179a6dd37f2a774b327e829a2cfa10bd",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_a",
+          "video_group": "a",
+          "timestamp_label": "03.75s",
+          "visual_observation": "Repeated message settles to the same final geometry."
+        }
+      ]
+    },
+    {
+      "video_group": "b",
+      "impact_profile_id": "video_b",
+      "keyframe_count": 7,
+      "group_review_status": "every_keyframe_individually_decoded_and_visually_inspected",
+      "keyframes": [
+        {
+          "path": "reference/videos/keyframes/video_b_00_00.00s.png",
+          "bytes": 54215,
+          "sha256": "988b36e1b5881e8aef468f2c134cea679be43c83a9f9d84fce59424f5b8e63f8",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_b",
+          "video_group": "b",
+          "timestamp_label": "00.00s",
+          "visual_observation": "Question 1 of 4: options, freeform row, Skip, close, previous/next affordances, and stable outer footprint are visible."
+        },
+        {
+          "path": "reference/videos/keyframes/video_b_01_05.00s.png",
+          "bytes": 66305,
+          "sha256": "99c6791af07e836c7ef8ded5a0ba88192a21a24f79ed0a2dbcfb4b0b67cee651",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_b",
+          "video_group": "b",
+          "timestamp_label": "05.00s",
+          "visual_observation": "Transition to question 2 retains the same outer card while prior contents fade."
+        },
+        {
+          "path": "reference/videos/keyframes/video_b_02_07.00s.png",
+          "bytes": 38225,
+          "sha256": "647b424b7e8cc8223f144fab631b09c614d285738392ec8b73834b97f258710f",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_b",
+          "video_group": "b",
+          "timestamp_label": "07.00s",
+          "visual_observation": "Question 2 of 4 is visible during backward/forward control use."
+        },
+        {
+          "path": "reference/videos/keyframes/video_b_03_09.00s.png",
+          "bytes": 17441,
+          "sha256": "b1d759f8aaa4785ec368d8739f744b99c149e69f89e4f8e90cd508f024abcc59",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_b",
+          "video_group": "b",
+          "timestamp_label": "09.00s",
+          "visual_observation": "Question 3 transition midpoint keeps navigation and Skip anchored while contents replace."
+        },
+        {
+          "path": "reference/videos/keyframes/video_b_04_13.00s.png",
+          "bytes": 43024,
+          "sha256": "1b86799082169fee43a8ca663fc2462a3bdb4d86d4d548dc1b3715cf56d36d3c",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_b",
+          "video_group": "b",
+          "timestamp_label": "13.00s",
+          "visual_observation": "Question 3 of 4 shows scheduling choices in the same footprint."
+        },
+        {
+          "path": "reference/videos/keyframes/video_b_05_16.00s.png",
+          "bytes": 27143,
+          "sha256": "d292e1aad634d4c059981b7fc30504cee6c01d4f55f2e23b72563445d4829887",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_b",
+          "video_group": "b",
+          "timestamp_label": "16.00s",
+          "visual_observation": "Question 4 of 4 shows duration choices and a disabled Submit before a valid answer."
+        },
+        {
+          "path": "reference/videos/keyframes/video_b_06_19.00s.png",
+          "bytes": 32029,
+          "sha256": "7b4edc888d317dbc42babaa8e3c2024314ff9d297dbf48ee0901ffdc5401aa04",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_b",
+          "video_group": "b",
+          "timestamp_label": "19.00s",
+          "visual_observation": "Backward review returns to question 2 with the same card geometry and retained navigation state."
+        }
+      ]
+    },
+    {
+      "video_group": "c",
+      "impact_profile_id": "video_c",
+      "keyframe_count": 10,
+      "group_review_status": "every_keyframe_individually_decoded_and_visually_inspected",
+      "keyframes": [
+        {
+          "path": "reference/videos/keyframes/video_c_00_00.00s.png",
+          "bytes": 84909,
+          "sha256": "34e15e47e3e725eb52bcb015feaf50887a1f1e8af2a24b28e0fc555dfc9fd4f5",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_c",
+          "video_group": "c",
+          "timestamp_label": "00.00s",
+          "visual_observation": "Initial request and start state before foreground work detail."
+        },
+        {
+          "path": "reference/videos/keyframes/video_c_01_04.00s.png",
+          "bytes": 149179,
+          "sha256": "ceda81e8c3678561f0c721d303fe256465819ba6977982b99d47e060050a91a1",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_c",
+          "video_group": "c",
+          "timestamp_label": "04.00s",
+          "visual_observation": "Thinking detail occupies the single active-work location."
+        },
+        {
+          "path": "reference/videos/keyframes/video_c_02_08.00s.png",
+          "bytes": 138499,
+          "sha256": "13326674514d7360f8ba7dd25d8993a1a2f6c573441c82a0f6006ba90f04d236",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_c",
+          "video_group": "c",
+          "timestamp_label": "08.00s",
+          "visual_observation": "Exploration replaces thinking and expands to a seven-file list."
+        },
+        {
+          "path": "reference/videos/keyframes/video_c_03_12.00s.png",
+          "bytes": 97562,
+          "sha256": "095c13153609d767c4f1d86f0d86e672887b16e48705bce74ab5f7cd5a01dc4a",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_c",
+          "video_group": "c",
+          "timestamp_label": "12.00s",
+          "visual_observation": "Edit detail replaces exploration and reports per-file line totals."
+        },
+        {
+          "path": "reference/videos/keyframes/video_c_04_18.00s.png",
+          "bytes": 80972,
+          "sha256": "f2934d749212811676a314460a6a2814b2805223f70a5ba85c0dcb72634cd83c",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_c",
+          "video_group": "c",
+          "timestamp_label": "18.00s",
+          "visual_observation": "Updated-screens completion replaces the active generation/edit state."
+        },
+        {
+          "path": "reference/videos/keyframes/video_c_05_23.00s.png",
+          "bytes": 112810,
+          "sha256": "562b9e5741c5c5f3edb8f80f12cd91764deb37dd55c5999e6b37727d3fe1769f",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_c",
+          "video_group": "c",
+          "timestamp_label": "23.00s",
+          "visual_observation": "Completed work condenses to a 13-tools summary with final prose and verification separate."
+        },
+        {
+          "path": "reference/videos/keyframes/video_c_06_26.00s.png",
+          "bytes": 113154,
+          "sha256": "f8327ee0c1a266789e4061e9753c1aa7e6631e5a6fdfb98ae084839ac612d4f8",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_c",
+          "video_group": "c",
+          "timestamp_label": "26.00s",
+          "visual_observation": "Artifact appears in compiling state beneath the condensed work summary."
+        },
+        {
+          "path": "reference/videos/keyframes/video_c_07_29.00s.png",
+          "bytes": 128334,
+          "sha256": "9b990cb396c9b223a4fb6f532ba989bd94bdda5690ae3f428f8f0e6cf76717ff",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_c",
+          "video_group": "c",
+          "timestamp_label": "29.00s",
+          "visual_observation": "Artifact reaches a versioned completed state and total elapsed work is separately visible."
+        },
+        {
+          "path": "reference/videos/keyframes/video_c_08_33.00s.png",
+          "bytes": 151146,
+          "sha256": "a65d8805ecd9214ef37a49299535b7129c7093aea6516d23e9f420604ea27624",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_c",
+          "video_group": "c",
+          "timestamp_label": "33.00s",
+          "visual_observation": "Retrospective exploration expands while final prose, artifact, and elapsed time remain anchored."
+        },
+        {
+          "path": "reference/videos/keyframes/video_c_09_36.00s.png",
+          "bytes": 157900,
+          "sha256": "c84988afea83621bb86e67024a9f184c49b704e03b2c793ca76214dc78a3a0a4",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_c",
+          "video_group": "c",
+          "timestamp_label": "36.00s",
+          "visual_observation": "Retrospective thought detail expands in the same historical region without recreating conversation messages."
+        }
+      ]
+    },
+    {
+      "video_group": "d",
+      "impact_profile_id": "video_d",
+      "keyframe_count": 9,
+      "group_review_status": "every_keyframe_individually_decoded_and_visually_inspected",
+      "keyframes": [
+        {
+          "path": "reference/videos/keyframes/video_d_00_00.00s.png",
+          "bytes": 24500,
+          "sha256": "8238314c7effee6559380e7afc4fe7358a6b7635adec7ef1ea8bd7d57749bb83",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_d",
+          "video_group": "d",
+          "timestamp_label": "00.00s",
+          "visual_observation": "Preparing-questions state is attached above the composer."
+        },
+        {
+          "path": "reference/videos/keyframes/video_d_01_01.50s.png",
+          "bytes": 34705,
+          "sha256": "bf7a62782a3db690f8557aafa684c3b2cdacf0452a75a9f0575ef11865f773ee",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_d",
+          "video_group": "d",
+          "timestamp_label": "01.50s",
+          "visual_observation": "Preparation persists while the host remains visible and attached."
+        },
+        {
+          "path": "reference/videos/keyframes/video_d_02_02.00s.png",
+          "bytes": 63703,
+          "sha256": "c6c25b1a9161a53c15764f48213e78fbced965a65eab633b48cc2d27ae9f4861",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_d",
+          "video_group": "d",
+          "timestamp_label": "02.00s",
+          "visual_observation": "Question 1 opens in a bounded card with progress and Skip."
+        },
+        {
+          "path": "reference/videos/keyframes/video_d_03_03.00s.png",
+          "bytes": 47839,
+          "sha256": "391e993b9a7b5e45f2692c1caf2adef09d1e75e4cedaffb07504f4b1f1d975bd",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_d",
+          "video_group": "d",
+          "timestamp_label": "03.00s",
+          "visual_observation": "Question content replaces inside the same card for the next page."
+        },
+        {
+          "path": "reference/videos/keyframes/video_d_04_04.00s.png",
+          "bytes": 56354,
+          "sha256": "9ca83731d17fd2aa6b9790b0a2e975e92213b5cb707c30c3bd80d49da81e88be",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_d",
+          "video_group": "d",
+          "timestamp_label": "04.00s",
+          "visual_observation": "Question 2 selection feedback appears without changing the outer footprint."
+        },
+        {
+          "path": "reference/videos/keyframes/video_d_05_05.50s.png",
+          "bytes": 59616,
+          "sha256": "922a4657fc9fed80664507ea6c7577e1a3a01d4fb5f6bc8710fb6f672e5b1e56",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_d",
+          "video_group": "d",
+          "timestamp_label": "05.50s",
+          "visual_observation": "Question 3 shows retained selection and enabled Submit."
+        },
+        {
+          "path": "reference/videos/keyframes/video_d_06_06.50s.png",
+          "bytes": 22619,
+          "sha256": "1a73363063705c063c1511db8bdfbb3f6cfddb938f7834a37ddb6c59280b0414",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_d",
+          "video_group": "d",
+          "timestamp_label": "06.50s",
+          "visual_observation": "Submit morphs the card back into a compact submitting state."
+        },
+        {
+          "path": "reference/videos/keyframes/video_d_07_07.50s.png",
+          "bytes": 19170,
+          "sha256": "16120b0558a3c98d968c53e6f16569a7d3fa1190a6dcb10c60c4ce68a4ab53d7",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_d",
+          "video_group": "d",
+          "timestamp_label": "07.50s",
+          "visual_observation": "Submitting progress persists above the composer."
+        },
+        {
+          "path": "reference/videos/keyframes/video_d_08_08.00s.png",
+          "bytes": 11842,
+          "sha256": "ea651c57c5a484e6c13713539e71269afc0b668bdfedee81dc572a7f89863f5c",
+          "opened": true,
+          "review_status": "image_decoded_and_individually_visually_inspected",
+          "impact_profile_id": "video_d",
+          "video_group": "d",
+          "timestamp_label": "08.00s",
+          "visual_observation": "Question surface collapses completely and returns to the composer endpoint."
+        }
+      ]
+    }
+  ],
+  "coverage_summary": {
+    "correction_documents_and_manifests": 7,
+    "demo_contracts": 2,
+    "machine_aliases": 6,
+    "machine_original_counterparts": 6,
+    "screenshot_aliases": 2,
+    "screenshot_original_counterparts": 2,
+    "video_source_maps": 1,
+    "raw_videos": 4,
+    "contact_sheets": 4,
+    "keyframe_groups": 4,
+    "individually_enumerated_keyframes": 37,
+    "expected_keyframes": 37,
+    "all_alias_identities_verified": true,
+    "all_correction_manifest_payloads_verified": true
+  },
+  "register_disposition": {
+    "impact_register": "Every source impact is mapped above; completion status belongs to Concepts/chat-assistant-concepts/5-6-sol/impact-register.json.",
+    "plan_owner_delta": "Plan implications are evidence candidates only; Plans are canonical and were not changed by this custody lane.",
+    "candidate_command_delta": "Demo triggers are harness events, not production Command IDs; provider setup may require candidate routing evidence but no command is minted here.",
+    "candidate_wiring_delta": "Setup deep-link/continuation, mount continuity, artifact/question/activity transitions, and restored paths are wiring review inputs only.",
+    "candidate_dry_delta": "Alias identity avoids duplicate authority; source ownership remains with original/canonical owners.",
+    "motion_storyboards": "All four film families and reduced-motion endpoints are motion-storyboard inputs.",
+    "test_reports": "DEMO_TRIGGER_CONTRACT, testMatrix, 64 pairings, 32 theme-width configurations, dense/error states, mounts, and browser-vs-native scope must remain explicit in downstream results."
+  }
+}

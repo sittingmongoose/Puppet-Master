@@ -1,0 +1,215 @@
+{
+  "schema_id": "pm.protected_auth_browser_contract_fixtures.v1",
+  "owner_schema": "Plans/protected_auth_browser_contracts.schema.json",
+  "valid": [
+    {
+      "name": "ordinary_agent_navigation_is_discriminated",
+      "value": {
+        "schema_id": "pm.protected_auth_browser_contracts.schema.v1",
+        "record_kind": "ordinary_browser_operation",
+        "subject": {
+          "browser_session_id": "browser-session-ordinary-1",
+          "session_class": "automation_session",
+          "session_security_class": "ordinary",
+          "session_epoch": 4
+        },
+        "operation_id": "operation-1",
+        "operation": "navigate",
+        "actor_kind": "agent",
+        "permission_snapshot_ref": "permission:snapshot:1"
+      }
+    },
+    {
+      "name": "ordinary_recording_artifact_is_discriminated",
+      "value": {
+        "schema_id": "pm.protected_auth_browser_contracts.schema.v1",
+        "record_kind": "ordinary_browser_artifact",
+        "subject": {
+          "browser_session_id": "browser-session-ordinary-2",
+          "session_class": "testing",
+          "session_security_class": "ordinary",
+          "session_epoch": 2
+        },
+        "artifact_id": "artifact-1",
+        "artifact_kind": "recording",
+        "artifact_ref": "artifact:browser-recording:1",
+        "redaction_manifest_ref": "redaction:manifest:1"
+      }
+    },
+    {
+      "name": "protected_auth_exposes_only_safe_lifecycle",
+      "value": {
+        "schema_id": "pm.protected_auth_browser_contracts.schema.v1",
+        "record_kind": "protected_auth_browser_lifecycle_projection",
+        "subject": {
+          "browser_session_id": "auth-browser-session-1",
+          "session_class": "auth_browser",
+          "session_security_class": "protected_auth",
+          "session_epoch": 1,
+          "domain_policy_ref": "policy:auth-domain:1"
+        },
+        "state": "awaiting_human",
+        "human_presence_required": true,
+        "ephemeral": true,
+        "content_observation_allowed": false,
+        "persistence_allowed": false,
+        "denied_capability_codes": [
+          "agent_access",
+          "tool_access",
+          "bsd_access",
+          "operational_awareness_detail",
+          "navigation_command",
+          "dom_inspection",
+          "console_inspection",
+          "network_inspection",
+          "screenshot",
+          "recording",
+          "storage_state",
+          "clipboard",
+          "share_export",
+          "artifact_creation",
+          "restore_or_promotion"
+        ],
+        "redaction_profile_ref": "redaction:protected-auth",
+        "safe_attention_state": "human_action_required",
+        "updated_at_utc": "2026-08-14T00:00:00Z"
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "protected_auth_cannot_be_navigation_subject",
+      "value": {
+        "schema_id": "pm.protected_auth_browser_contracts.schema.v1",
+        "record_kind": "ordinary_browser_operation",
+        "subject": {
+          "browser_session_id": "auth-browser-session-1",
+          "session_class": "auth_browser",
+          "session_security_class": "protected_auth",
+          "session_epoch": 1,
+          "domain_policy_ref": "policy:auth-domain:1"
+        },
+        "operation_id": "operation-bad-1",
+        "operation": "navigate",
+        "actor_kind": "human"
+      }
+    },
+    {
+      "name": "protected_auth_cannot_create_recording",
+      "value": {
+        "schema_id": "pm.protected_auth_browser_contracts.schema.v1",
+        "record_kind": "ordinary_browser_artifact",
+        "subject": {
+          "browser_session_id": "auth-browser-session-1",
+          "session_class": "auth_browser",
+          "session_security_class": "protected_auth",
+          "session_epoch": 1,
+          "domain_policy_ref": "policy:auth-domain:1"
+        },
+        "artifact_id": "artifact-bad-1",
+        "artifact_kind": "recording"
+      }
+    },
+    {
+      "name": "protected_lifecycle_cannot_include_url",
+      "value": {
+        "schema_id": "pm.protected_auth_browser_contracts.schema.v1",
+        "record_kind": "protected_auth_browser_lifecycle_projection",
+        "subject": {
+          "browser_session_id": "auth-browser-session-1",
+          "session_class": "auth_browser",
+          "session_security_class": "protected_auth",
+          "session_epoch": 1,
+          "domain_policy_ref": "policy:auth-domain:1"
+        },
+        "state": "active_human_only",
+        "human_presence_required": true,
+        "ephemeral": true,
+        "content_observation_allowed": false,
+        "persistence_allowed": false,
+        "denied_capability_codes": [
+          "agent_access",
+          "tool_access",
+          "bsd_access",
+          "operational_awareness_detail",
+          "navigation_command",
+          "dom_inspection",
+          "console_inspection",
+          "network_inspection",
+          "screenshot",
+          "recording",
+          "storage_state",
+          "clipboard",
+          "share_export",
+          "artifact_creation",
+          "restore_or_promotion"
+        ],
+        "redaction_profile_ref": "redaction:protected-auth",
+        "updated_at_utc": "2026-08-14T00:00:00Z",
+        "active_url": "https://identity.example.test/consent"
+      }
+    },
+    {
+      "name": "protected_lifecycle_cannot_include_page_or_storage",
+      "value": {
+        "schema_id": "pm.protected_auth_browser_contracts.schema.v1",
+        "record_kind": "protected_auth_browser_lifecycle_projection",
+        "subject": {
+          "browser_session_id": "auth-browser-session-1",
+          "session_class": "auth_browser",
+          "session_security_class": "protected_auth",
+          "session_epoch": 1,
+          "domain_policy_ref": "policy:auth-domain:1"
+        },
+        "state": "completed",
+        "human_presence_required": true,
+        "ephemeral": true,
+        "content_observation_allowed": false,
+        "persistence_allowed": false,
+        "denied_capability_codes": [
+          "agent_access",
+          "tool_access",
+          "bsd_access",
+          "operational_awareness_detail",
+          "navigation_command",
+          "dom_inspection",
+          "console_inspection",
+          "network_inspection",
+          "screenshot",
+          "recording",
+          "storage_state",
+          "clipboard",
+          "share_export",
+          "artifact_creation",
+          "restore_or_promotion"
+        ],
+        "redaction_profile_ref": "redaction:protected-auth",
+        "updated_at_utc": "2026-08-14T00:00:00Z",
+        "page_representation_ref": "page:1",
+        "storage_state_ref": "secret:1"
+      }
+    },
+    {
+      "name": "protected_lifecycle_must_remain_human_only_ephemeral",
+      "value": {
+        "schema_id": "pm.protected_auth_browser_contracts.schema.v1",
+        "record_kind": "protected_auth_browser_lifecycle_projection",
+        "subject": {
+          "browser_session_id": "auth-browser-session-1",
+          "session_class": "auth_browser",
+          "session_security_class": "protected_auth",
+          "session_epoch": 1,
+          "domain_policy_ref": "policy:auth-domain:1"
+        },
+        "state": "active_human_only",
+        "human_presence_required": false,
+        "ephemeral": false,
+        "content_observation_allowed": true,
+        "persistence_allowed": true,
+        "denied_capability_codes": [],
+        "redaction_profile_ref": "redaction:protected-auth",
+        "updated_at_utc": "2026-08-14T00:00:00Z"
+      }
+    }
+  ]
+}

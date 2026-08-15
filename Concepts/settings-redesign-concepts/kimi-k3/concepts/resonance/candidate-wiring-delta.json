@@ -6,38 +6,79 @@
   "families": [
     {
       "family": "navigation and values",
-      "controls": ["destination tiles", "workspace nav", "search results", "all setting rows"],
-      "trace": "Identical to the shared spine: UI source → cmd.settings.navigate / cmd.settings.value.set → Settings owner → registry/schema validation → route or value mutation → event + receipt → projection → diagnostics attribution → recovery via Back/forward or cmd.settings.default.restore"
+      "controls": [
+        "destination tiles",
+        "workspace nav",
+        "search results",
+        "all setting rows"
+      ],
+      "trace": "Identical to the shared spine: UI source \u2192 cmd.settings.navigate / cmd.settings.value.set \u2192 Settings owner \u2192 registry/schema validation \u2192 route or value mutation \u2192 event + receipt \u2192 projection \u2192 diagnostics attribution \u2192 recovery via Back/forward or cmd.settings.default.restore"
     },
     {
       "family": "notification destinations",
-      "controls": ["destination enable switches", "Send test"],
-      "trace": "UI source → cmd.notifications.destination.toggle (canon) / cmd.notifications.destination.test (reused canon ID) → Notifications owner → credential-vault permission (masked references only) → destination state mutation or one-shot send → delivery receipt with masked payload + rate-limit note → destination card re-projection with the receipt → Usage: none; diagnostics log the send → recovery: disable the destination; deep link to its card"
+      "controls": [
+        "destination enable switches",
+        "Send test"
+      ],
+      "trace": "UI source \u2192 cmd.notifications.destination.toggle (canon) / cmd.notifications.destination.test (reused canon ID) \u2192 Notifications owner \u2192 credential-vault permission (masked references only) \u2192 destination state mutation or one-shot send \u2192 delivery receipt with masked payload + rate-limit note \u2192 destination card re-projection with the receipt \u2192 Usage: none; diagnostics log the send \u2192 recovery: disable the destination; deep link to its card"
     },
     {
       "family": "event routing",
-      "controls": ["event → destination badges", "event → sound selects"],
-      "trace": "UI source → cmd.notifications.mapping.update (canon near-match) → Notifications owner → destination-exists validation → mapping mutation → event + receipt → matrix re-projection → diagnostics attribution → recovery: change the mapping back; the visual-state pairing is never removable"
+      "controls": [
+        "event \u2192 destination badges",
+        "event \u2192 sound selects"
+      ],
+      "trace": "UI source \u2192 cmd.notifications.mapping.update (canon near-match) \u2192 Notifications owner \u2192 destination-exists validation \u2192 mapping mutation \u2192 event + receipt \u2192 matrix re-projection \u2192 diagnostics attribution \u2192 recovery: change the mapping back; the visual-state pairing is never removable"
     },
     {
       "family": "sound library",
-      "controls": ["upload", "replace", "delete", "preview", "export", "pack import"],
-      "trace": "UI source → cmd.notifications.sound.* → Media owner → local-file picker (upload) or pack format+license validation (import) → library mutation (registered asset with metadata) → event + receipt → tile re-projection with waveform → Usage: none; preview is local WebAudio, no fetch → recovery: delete restores the default mapping; unverified packs never register"
+      "controls": [
+        "upload",
+        "replace",
+        "delete",
+        "preview",
+        "export",
+        "pack import"
+      ],
+      "trace": "UI source \u2192 cmd.notifications.sound.* \u2192 Media owner \u2192 local-file picker (upload) or pack format+license validation (import) \u2192 library mutation (registered asset with metadata) \u2192 event + receipt \u2192 tile re-projection with waveform \u2192 Usage: none; preview is local WebAudio, no fetch \u2192 recovery: delete restores the default mapping; unverified packs never register"
     },
     {
       "family": "theme studio",
-      "controls": ["swatch hover/commit", "TOML validate-and-apply", "create/import/export/open-folder"],
-      "trace": "UI source → cmd.theme.preview (reused canon) on hover, cmd.theme.apply on commit; custom themes → cmd.theme.create → Appearance owner → TOML schema validation → theme registry mutation on success ONLY (invalid input produces diagnostics + base fallback, never a broken apply) → theme-changed event → full-surface re-projection → diagnostics record validation output → recovery: base theme fallback is automatic; export before import"
+      "controls": [
+        "swatch hover/commit",
+        "TOML validate-and-apply",
+        "create/import/export/open-folder"
+      ],
+      "trace": "UI source \u2192 cmd.theme.preview (reused canon) on hover, cmd.theme.apply on commit; custom themes \u2192 cmd.theme.create \u2192 Appearance owner \u2192 TOML schema validation \u2192 theme registry mutation on success ONLY (invalid input produces diagnostics + base fallback, never a broken apply) \u2192 theme-changed event \u2192 full-surface re-projection \u2192 diagnostics record validation output \u2192 recovery: base theme fallback is automatic; export before import"
     },
     {
       "family": "spellcheck",
-      "controls": ["suggestion menu", "ignore/add-to-dictionary", "grammar disclosure"],
-      "trace": "UI source → local spellcheck service (no command ID — never leaves the machine) → dictionary mutation for ignore/add → receipt → paragraph re-projection → Usage: none; the grammar opt-in would route through a disclosed provider with cost/Usage attribution before enabling → recovery: dictionaries are editable rows"
+      "controls": [
+        "suggestion menu",
+        "ignore/add-to-dictionary",
+        "grammar disclosure"
+      ],
+      "trace": "UI source \u2192 local spellcheck service (no command ID \u2014 never leaves the machine) \u2192 dictionary mutation for ignore/add \u2192 receipt \u2192 paragraph re-projection \u2192 Usage: none; the grammar opt-in would route through a disclosed provider with cost/Usage attribution before enabling \u2192 recovery: dictionaries are editable rows"
     },
     {
       "family": "teacher",
-      "controls": ["guided overlay", "explain this screen", "handoff"],
-      "trace": "UI source → cmd.settings.navigate (handoff target) → Teacher context owner (Personas) → overlay presents, never mutates → handoff closes the overlay and performs the real deep link → receipt records the transition → recovery: End tour at any step; no state changes during a tour"
+      "controls": [
+        "guided overlay",
+        "explain this screen",
+        "handoff"
+      ],
+      "trace": "UI source \u2192 cmd.settings.navigate (handoff target) \u2192 Teacher context owner (Personas) \u2192 overlay presents, never mutates \u2192 handoff closes the overlay and performs the real deep link \u2192 receipt records the transition \u2192 recovery: End tour at any step; no state changes during a tour"
+    },
+    {
+      "family": "settings shell performance (correction pass)",
+      "controls": [
+        "domain-local refresh",
+        "lazy manager hydration",
+        "offline last-known-good banner",
+        "100-installation collapse",
+        "behavior profile rows"
+      ],
+      "trace": "store change \u2192 key-domain classification \u2192 repaint only the owning surface (console meters and bench board render fresh on entry) \u2192 no per-row repaint storms; slow-hydration scenario \u2192 truthful Loading projection \u2192 content; offline scenario \u2192 cached catalog/connection state stays visible, zero probes; production owner: RuntimeResourceGovernor owns admission, ObservableWork owns the operation projection \u2014 Settings owns policy and presentation only"
     }
   ]
 }

@@ -684,8 +684,9 @@
     var top = currentTop();
     if (top) {
       // Home refreshes on reveal so plate footnotes and Resume affordances
-      // reflect what just happened one layer up.
-      if (top.kind === 'home') rerenderLayer(top);
+      // reflect what just happened one layer up; any layer that data events
+      // marked stale while it was covered re-renders now, once.
+      if (top.kind === 'home' || top.stale) rerenderLayer(top);
       if (top.onReveal) { try { top.onReveal(top); } catch (e) { /* ignore */ } }
       var bottomMost = removed[0];
       var refocus = bottomMost && bottomMost.invoker;
@@ -712,11 +713,20 @@
     layer.bodyEl.innerHTML = '';
     try { layer.render(layer.bodyEl, layer); } catch (e) { layer.bodyEl.appendChild(elm('p', 'fs-quiet', 'This surface could not render.')); }
     layer.bodyEl.scrollTop = scrollPos;
+    layer.stale = false;
     if (layer.spy) { try { layer.spy.refresh(); } catch (e) { /* ignore */ } }
   }
 
   function rerenderAll() {
-    layers.forEach(rerenderLayer);
+    /* Performance-register rule (§7.3): only the live top surface pays for
+       data events. Covered lower layers are inert and dimmed; they mark
+       themselves stale and re-render exactly once, on reveal, instead of
+       rebuilding the whole stack on every provider/catalog event. */
+    var top = currentTop();
+    layers.forEach(function (layer) {
+      if (layer === top) { rerenderLayer(layer); }
+      else { layer.stale = true; }
+    });
     updateSpine();
   }
 

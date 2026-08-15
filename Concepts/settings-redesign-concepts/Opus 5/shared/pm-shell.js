@@ -189,11 +189,85 @@
     clearBtn.type = "button";
     notifyHead.appendChild(clearBtn);
     var notifyList = el("div", "pm-notify-list");
+    /* ObservableWork lives above the receipts: what is happening NOW, with the
+     * reason it is waiting, is more useful than what already finished. One
+     * renderer for the singular owner — no concept draws its own spinner. */
+    var workList = el("div", "pm-work-list");
+    workList.setAttribute("aria-label", "Operations in progress");
     notifyPanel.appendChild(notifyHead);
+    notifyPanel.appendChild(workList);
     notifyPanel.appendChild(notifyList);
+    var workBar = el("div", "pm-work-bar-lead");
+    workBar.hidden = true;
+    topbar.appendChild(workBar);
     notifyWrap.appendChild(notifyBtn);
     notifyWrap.appendChild(notifyPanel);
     topbar.appendChild(notifyWrap);
+
+    /* -------------------------------------------------------- ObservableWork */
+
+    function renderWork(ops) {
+      var live = (ops || []).filter(function (o) { return !o.terminal; });
+      workList.innerHTML = "";
+      workBar.innerHTML = "";
+      if (!live.length) { workBar.hidden = true; return; }
+      workBar.hidden = false;
+
+      /* Title-bar summary: the most important wait, never a bare spinner. */
+      var lead = live[0];
+      var summary = el("span", "pm-work-summary");
+      summary.innerHTML = escapeHtml(lead.title) + ' <span class="pm-work-state">' + escapeHtml(lead.state_word) + "</span>" +
+        (live.length > 1 ? ' <span class="pm-work-more">+' + (live.length - 1) + "</span>" : "");
+      workBar.appendChild(summary);
+
+      live.forEach(function (op) {
+        var row = el("div", "pm-work-item");
+        row.setAttribute("data-state", op.state);
+        var head = '<div class="pm-work-title">' + escapeHtml(op.title) + "</div>" +
+          '<div class="pm-work-phase">' + escapeHtml(op.state_word) + (op.phase ? " \u00b7 " + escapeHtml(op.phase) : "") + "</div>";
+        if (op.wait_reason) head += '<div class="pm-work-reason">' + escapeHtml(op.wait_reason) + "</div>";
+        /* A determinate bar only exists when a real denominator does. */
+        if (op.determinate) {
+          var pct = Math.max(0, Math.min(100, Math.round((op.completed / op.total) * 100)));
+          head += '<div class="pm-work-bar"><span style="width:' + pct + '%"></span></div>' +
+            '<div class="pm-work-count">' + op.completed + " of " + op.total + " \u00b7 " + escapeHtml(op.progress_source) + "</div>";
+        } else {
+          head += '<div class="pm-work-count">No trustworthy total \u00b7 ' + escapeHtml(op.progress_source) + "</div>";
+        }
+        row.innerHTML = head;
+
+        if (op.can_cancel || op.can_background) {
+          var acts = el("div", "pm-work-actions");
+          if (op.can_cancel) {
+            var c = el("button", "pm-work-btn", "Cancel");
+            c.type = "button";
+            c.addEventListener("click", function () { cancelWork(op.operation_id); });
+            acts.appendChild(c);
+          }
+          if (op.can_background) {
+            var b = el("button", "pm-work-btn", "Run in background");
+            b.type = "button";
+            b.addEventListener("click", function () { backgroundWork(op.operation_id); });
+            acts.appendChild(b);
+          }
+          row.appendChild(acts);
+        }
+        workList.appendChild(row);
+      });
+    }
+
+    function cancelWork(id) {
+      var W = window.PMWork;
+      if (!W) return;
+      /* The handle is not exported; cancellation goes through the projection so
+       * the governor and the operation stay the single source of truth. */
+      W.list().forEach(function (o) { if (o.operation_id === id && o.can_cancel) W.cancelById && W.cancelById(id); });
+      if (W.cancelById) W.cancelById(id);
+    }
+    function backgroundWork(id) {
+      var W = window.PMWork;
+      if (W && W.backgroundById) W.backgroundById(id);
+    }
 
     function renderNotices() {
       notifyList.innerHTML = "";
@@ -237,6 +311,10 @@
       notifyBtn.setAttribute("aria-expanded", "true");
       notifySeen = notices.length;
       renderNotices();
+
+    /* One subscription for the page, released with the shell. */
+    var releaseWork = window.PMWork ? window.PMWork.onChange(renderWork) : function () {};
+    if (window.PMWork) renderWork(window.PMWork.list());
       document.addEventListener("mousedown", onNotifyDown, true);
       document.addEventListener("keydown", onNotifyKey, true);
     }

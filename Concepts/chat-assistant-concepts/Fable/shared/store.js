@@ -84,6 +84,8 @@ export class Store {
       titlebarNotifications: 2,
       // receipts (compact now, goal completion, redirects, grants)
       receipts: [],
+      // provider-CLI runtime-demand flow (final adjudication)
+      providerSetup: null,
       // context ring
       ring: {},                          // threadId -> { used, limit, segments:[{kind,label,tokens}], cacheNote }
       // capacity / crew
@@ -387,11 +389,28 @@ export class Store {
     const t = s.threads[threadId];
     const replyId = t.scriptedReplyIds && t.scriptedReplyIds[t.scriptedReplyCursor % (t.scriptedReplyIds.length || 1)];
     const reply = replyId ? s.scriptedReplies[replyId] : null;
-    const seq = reply ? reply.workingSummarySequence : ["Working"];
-    const durations = reply ? reply.stepDurationsMs : [1200];
+
+    // Live locus contract (video 3): phases carry a kind, a label, and detail
+    // rows that accumulate within the phase; the next phase replaces them.
+    // Rich replies declare workingPhases; legacy workingSummarySequence maps to
+    // single-line phases so the fixture's scripted replies stay valid.
+    let phases;
+    if (reply && reply.workingPhases) {
+      phases = reply.workingPhases;
+    } else if (reply) {
+      phases = reply.workingSummarySequence.map((label, i) => ({
+        kind: "generate", label, items: [], durationMs: reply.stepDurationsMs[i] || 1000,
+      }));
+    } else {
+      phases = [{ kind: "generate", label: "Working", items: [], durationMs: 1200 }];
+    }
+
     const turn = {
       active: true, phase: "working", stepIndex: 0,
-      summary: seq[0], workedSeconds: 0, startedAt: Date.now(),
+      summary: phases[0].label, phaseKind: phases[0].kind,
+      liveItems: [],                 // detail rows accumulated in the current phase
+      phaseKinds: [phases[0].kind],  // sequence so far (condensed icon strip)
+      workedSeconds: 0, startedAt: Date.now(),
       replyId, redirected: false,
     };
     s.turns[threadId] = turn;
@@ -408,20 +427,74 @@ export class Store {
     this._turnTimers.push(tick);
 
     let elapsed = 0;
-    seq.forEach((label, i) => {
-      if (i === 0) return;
-      elapsed += durations[i - 1] || 1000;
-      const h = setTimeout(() => {
-        if (!turn.active) return;
-        turn.stepIndex = i;
-        turn.summary = label;
-        this.emit("work");
-      }, elapsed);
-      this._turnTimers.push(h);
+    phases.forEach((ph, i) => {
+      const dur = ph.durationMs || 1000;
+      // items tick in progressively inside the phase window
+      (ph.items || []).forEach((item, ii) => {
+        const at = elapsed + Math.round(((ii + 1) / ((ph.items.length || 1) + 1)) * dur);
+        const h = setTimeout(() => {
+          if (!turn.active || turn.stepIndex !== i) return;
+          turn.liveItems = turn.liveItems.concat([item]);
+          if (item.countLabel) turn.summary = item.countLabel;
+          this.emit("work");
+        }, at);
+        this._turnTimers.push(h);
+      });
+      if (i > 0) {
+        const h = setTimeout(() => {
+          if (!turn.active) return;
+          turn.stepIndex = i;
+          turn.summary = ph.label;
+          turn.phaseKind = ph.kind;
+          turn.liveItems = [];               // replacement, not accumulation
+          turn.phaseKinds = turn.phaseKinds.concat([ph.kind]);
+          this.emit("work");
+        }, elapsed);
+        this._turnTimers.push(h);
+      }
+      elapsed += dur;
     });
-    elapsed += durations[durations.length - 1] || 1000;
     const done = setTimeout(() => this._completeTurn(threadId), elapsed + 400);
     this._turnTimers.push(done);
+  }
+  // Deterministic phase injection for the activity.* trigger family.
+  injectTurnPhase(threadId, kind, label, items = []) {
+    const s = this.state;
+    let turn = s.turns[threadId];
+    if (!turn || !turn.active) {
+      turn = {
+        active: true, phase: "working", stepIndex: 0,
+        summary: label, phaseKind: kind, liveItems: [],
+        phaseKinds: [kind], workedSeconds: 0, startedAt: Date.now(),
+        replyId: null, redirected: false, injected: true,
+      };
+      s.turns[threadId] = turn;
+      s.threads[threadId].threadState = "running";
+      const tick = setInterval(() => {
+        if (!turn.active) return clearInterval(tick);
+        turn.workedSeconds = Math.round((Date.now() - turn.startedAt) / 1000);
+        this.emit("turn-tick");
+      }, 1000);
+      this._turnTimers.push(tick);
+      this.emit("composer");
+      this.emit("thread");
+    } else {
+      turn.stepIndex += 1;
+      turn.summary = label;
+      turn.phaseKind = kind;
+      turn.liveItems = [];
+      turn.phaseKinds = turn.phaseKinds.concat([kind]);
+    }
+    items.forEach((item, ii) => {
+      const h = setTimeout(() => {
+        if (!turn.active || turn.phaseKind !== kind) return;
+        turn.liveItems = turn.liveItems.concat([item]);
+        if (item.countLabel) turn.summary = item.countLabel;
+        this.emit("work");
+      }, 260 * (ii + 1));
+      this._turnTimers.push(h);
+    });
+    this.emit("work");
   }
   _completeTurn(threadId) {
     const s = this.state;
@@ -651,6 +724,7 @@ export class Store {
     if (!t.activeGoal) return;
     const g = t.activeGoal;
     g.status = status.toLowerCase();
+    delete g.replanApplied;
     if (status === "Blocked") {
       g.blocked = extra.blocked || {
         cause: "Port 8080 is held by the preview server",
@@ -693,7 +767,18 @@ export class Store {
     if (!g || !g.pendingEdit) return;
     g.objective = g.pendingEdit.objective;
     delete g.pendingEdit;
+    // Scenario v2's updated_replan: a distinct visible state after an applied
+    // material update, until the next status change clears it.
+    g.replanApplied = { at: new Date().toISOString(), note: "Objective updated — plan revalidated" };
     this.addReceipt({ kind: "goal", title: "Goal replanned", detail: "Objective updated with visible impact analysis; frozen running turns keep prior state until their safe boundary." });
+    this.emit("work");
+  }
+  advanceGoalPhase() {
+    const g = this.thread.activeGoal;
+    if (!g || !g.phases || !g.phases.length) return;
+    g.phaseIndex = Math.min(g.phases.length - 1, (g.phaseIndex || 0) + 1);
+    delete g.replanApplied;
+    this.addReceipt({ kind: "goal", title: `Goal phase — ${g.phases[g.phaseIndex]}`, detail: `Phase ${g.phaseIndex + 1} of ${g.phases.length}.` });
     this.emit("work");
   }
 
@@ -712,15 +797,46 @@ export class Store {
     if (a) {
       a.status = status;
       if (activity) a.currentActivity = activity;
-      g.counts = { working: 0, complete: 0, blocked: 0, waiting: 0 };
-      for (const ag of g.agents) {
-        if (ag.status === "working") g.counts.working++;
-        else if (ag.status === "complete") g.counts.complete++;
-        else if (ag.status === "blocked") g.counts.blocked++;
-        else g.counts.waiting++;
-      }
+      this.recountSubagents(g);
       this.emit("work");
     }
+  }
+  recountSubagents(g) {
+    g.counts = { working: 0, complete: 0, blocked: 0, waiting: 0, failed: 0, retrying: 0 };
+    for (const ag of g.agents) {
+      if (ag.status === "working") g.counts.working++;
+      else if (ag.status === "complete") g.counts.complete++;
+      else if (ag.status === "blocked") g.counts.blocked++;
+      else if (ag.status === "failed") g.counts.failed++;
+      else if (ag.status === "retrying") g.counts.retrying++;
+      else g.counts.waiting++;
+    }
+  }
+  failSubagent(groupId, agentName, reason) {
+    const g = (this.thread.subagentGroups || []).find((x) => x.id === groupId);
+    const a = g && g.agents.find((x) => x.name === agentName);
+    if (!a) return;
+    a.status = "failed";
+    a.currentActivity = reason || "Failed — see run detail";
+    this.recountSubagents(g);
+    this.emit("work");
+  }
+  retrySubagent(groupId, agentName) {
+    const g = (this.thread.subagentGroups || []).find((x) => x.id === groupId);
+    const a = g && g.agents.find((x) => x.name === agentName);
+    if (!a) return;
+    a.status = "retrying";
+    a.currentActivity = "Retrying with the same bounded task";
+    this.recountSubagents(g);
+    this.emit("work");
+    setTimeout(() => {
+      if (a.status === "retrying") {
+        a.status = "working";
+        a.currentActivity = "Resumed after retry";
+        this.recountSubagents(g);
+        this.emit("work");
+      }
+    }, 1800);
   }
 
   // ---------- context lens ----------
@@ -917,6 +1033,92 @@ export class Store {
       this.selectThread(branchId);
     }
     return branchId;
+  }
+
+  // ---------- provider-CLI runtime demand (final adjudication flow) ----------
+  // requirement detected → inspect existing installs → Provider Setup Required
+  // → deep-link with preserved continuation → explicit Install (official source)
+  // → separate authenticate → readiness verify → resume only if continuation
+  // is still current; stale continuations are rejected with a receipt.
+  demandProviderSetup(providerId, operation, routeRef) {
+    const ps = {
+      provider: providerId,
+      operation,
+      routeRef,
+      continuationId: this.nextSeq("cont"),
+      current: true,
+      stage: "inspecting",
+    };
+    this.state.providerSetup = ps;
+    this.emit("provider-setup");
+    setTimeout(() => {
+      if (this.state.providerSetup !== ps) return;
+      ps.stage = "required";
+      this.addReceipt({
+        kind: "provider",
+        title: "Provider Setup Required",
+        detail: `No compatible installation for this route. Continuation ${ps.continuationId} preserved for: ${operation}. Setup opens the exact Provider Settings row.`,
+      });
+      this.emit("provider-setup");
+    }, 700);
+    return ps;
+  }
+  providerSetupInstall() {
+    const ps = this.state.providerSetup;
+    if (!ps || ps.stage !== "required") return;
+    ps.stage = "installing";
+    this.emit("provider-setup");
+    setTimeout(() => {
+      if (this.state.providerSetup !== ps) return;
+      ps.stage = "verifying-install";
+      this.emit("provider-setup");
+      setTimeout(() => {
+        if (this.state.providerSetup !== ps) return;
+        ps.stage = "authenticating";
+        this.addReceipt({
+          kind: "provider",
+          title: "Provider CLI installed",
+          detail: "Acquired from the official provider source for the exact selected Host. Publisher, provenance, version, architecture, license, and adapter compatibility verified. Authentication is a separate step.",
+        });
+        this.emit("provider-setup");
+      }, 900);
+    }, 1100);
+  }
+  providerSetupAuthenticate() {
+    const ps = this.state.providerSetup;
+    if (!ps || ps.stage !== "authenticating") return;
+    ps.stage = "verifying-readiness";
+    this.emit("provider-setup");
+    setTimeout(() => {
+      if (this.state.providerSetup !== ps) return;
+      ps.stage = "ready";
+      this.emit("provider-setup");
+      setTimeout(() => {
+        if (this.state.providerSetup !== ps) return;
+        if (ps.current) {
+          ps.stage = "resumed";
+          if (ps.routeRef) {
+            const route = this.state.local[this.state.currentThreadId];
+            route.route = ps.routeRef;
+            route.requestedRoute = null;
+            this.emit("route");
+          }
+          this.addReceipt({ kind: "provider", title: "Continuation resumed", detail: `${ps.operation} resumed — continuation ${ps.continuationId} was still current.` });
+        } else {
+          ps.stage = "stale";
+          this.addReceipt({ kind: "provider", title: "Stale continuation rejected", detail: `${ps.operation} was NOT resumed — the originating operation changed while setup ran. Start it again from its surface.` });
+        }
+        this.emit("provider-setup");
+      }, 700);
+    }, 800);
+  }
+  invalidateProviderContinuation() {
+    const ps = this.state.providerSetup;
+    if (ps) { ps.current = false; this.emit("provider-setup"); }
+  }
+  dismissProviderSetup() {
+    this.state.providerSetup = null;
+    this.emit("provider-setup");
   }
 
   // ---------- ring ----------

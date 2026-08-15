@@ -212,6 +212,60 @@ hand-edited stored value can no longer strand the page.
 
 ---
 
+## 15. A dependency you never opened is indistinguishable from one that agrees with you
+
+The original build read 14 of the packet's references and skipped 13, including the two the correction
+packet later named. Nothing failed. The concepts validated, 2,352 layout cells passed, and every claim in
+the test report was true — about the things that were tested.
+
+What the skipped authorities actually contained was a whole axis of requirements: one resource owner, a
+truthful progress projection, virtualized lists, byte-bounded caches, a low-resource profile, and a
+provider-CLI policy with a runtime-demand flow. Sixteen defects, none of which any existing test could
+have caught, because the tests were written from the same partial reading as the build.
+
+**The finding for the plan:** a packet's reference list is a dependency graph, not a bibliography. An
+agent that reads the summary map and treats it as coverage will produce work that is internally
+consistent and externally wrong. Proving *which* references were opened has to be a deliverable, not an
+assumption — which is exactly what the correction packet asked for and why it found real defects.
+
+## 16. Fake progress is the default, not the mistake
+
+`pm-sim.js` advanced phases on a timer with jitter. It looked convincing, it was seeded and repeatable,
+and it was exactly what `02_FULL_THREAD_CURRENT_DECISION_REGISTER.md` §11 forbids: a clock moving a bar
+whether or not anything is happening, with no way to say *what* is being waited on.
+
+Replacing it required admitting that "Loading…" is not a state. The 24 states in `pm-work.js` are mostly
+waits — `waiting_provider`, `waiting_host`, `waiting_for_sign_in`, `waiting_permission` — because that is
+what an operation is usually doing. The rule that made the difference is small: a determinate bar
+requires a real denominator, and the *source* of that number travels with it. Pass a completed count with
+no total and the projection refuses it and stays honest.
+
+## 17. Two references can both be canon and still disagree
+
+`SERVER_BACKBONE_SETTINGS_RETURN.md` §6 asks for per-tool acquisition states and lists **"Included with
+this Server"** as valid. `PROVIDER_CLI_FINAL_ADJUDICATION.md` explicitly supersedes that exact string for
+provider CLIs absent a named user exception.
+
+Both are in the packet. The resolution is not to pick one: it is to implement the state family *and*
+encode the precedence, so `acquisitionLabel()` returns "Included with this Server" for Git on a server
+and silently refuses it for a provider CLI, downgrading to "Available to install". A test asserts it, so
+the conflict cannot quietly reopen the next time someone adds a fixture.
+
+## 18. The second scan is the one that finds it
+
+Raw enum strings were found and fixed in ManagerSpec fields — `channel_not_found`, `homebrew_formula`.
+The scan reported zero leaks afterwards and it was telling the truth about what it looked at.
+
+Then the full probe suite rendered Stack's **bespoke** provider surface, which reads `D.installations`
+directly rather than going through a ManagerSpec, and there they were: `strongly_identified`, `npm_global`,
+`homebrew_formula`, in badges, in the normal GUI.
+
+**The finding for the plan:** a scan that walks the shared contract cannot see the surfaces that
+deliberately bypass it. The bespoke provider manager is the one thing every concept hand-writes, which
+makes it the one place a shared-layer audit is guaranteed to miss.
+
+---
+
 ## What could not be settled here
 
 - Whether Settings may refresh Usage, or only display it.

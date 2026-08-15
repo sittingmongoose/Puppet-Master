@@ -1704,3 +1704,47 @@ mark {
 [data-tip]::after { visibility: hidden; }
 [data-tip]:hover::after,
 [data-tip]:focus-visible::after { visibility: visible; }
+
+/* ---------- ObservableWork operation projection + environment banners ---------- */
+.pm-op {
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius, 10px);
+  padding: 10px 12px;
+  display: grid;
+  gap: 7px;
+  background: var(--pm-surface-2, transparent);
+}
+.pm-op-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.pm-op-title { font-weight: 600; font-size: 12.5px; }
+.pm-op-meter {
+  block-size: 6px;
+  border-radius: 999px;
+  background: var(--pm-track, var(--pm-line));
+  overflow: hidden;
+}
+.pm-op-fill {
+  display: block;
+  block-size: 100%;
+  background: var(--pm-accent);
+  transition: inline-size calc(200ms * var(--pm-motion-scale, 1)) ease;
+}
+.pm-op-nums { font-size: 11.5px; color: var(--pm-ink-dim); font-variant-numeric: tabular-nums; }
+.pm-op-wait {
+  display: flex; gap: 7px; align-items: baseline;
+  font-size: 12px; color: var(--pm-ink-dim);
+}
+.pm-op-wait .pm-icon { inline-size: 12px; block-size: 12px; transform: translateY(1.5px); }
+.pm-op-source { font-size: 11px; letter-spacing: .02em; color: var(--pm-ink-faint); text-transform: uppercase; }
+.pm-op-actions { display: flex; gap: 8px; }
+.pm-env-banner {
+  display: flex; gap: 10px; align-items: flex-start;
+  border: 1px solid var(--pm-line);
+  border-inline-start: 3px solid var(--pm-info, var(--pm-accent));
+  border-radius: var(--pm-radius, 10px);
+  padding: 10px 12px;
+  font-size: 12.5px;
+  margin-block-end: 10px;
+  background: var(--pm-surface-2, transparent);
+}
+.pm-env-banner .pm-icon { inline-size: 15px; block-size: 15px; flex: none; margin-block-start: 1px; }
+.pm-env-banner[data-kind="offline"] { border-inline-start-color: var(--pm-warn); }

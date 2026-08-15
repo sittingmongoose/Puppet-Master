@@ -108,6 +108,11 @@ window.PMChatThreadKit = (() => {
     root.className = "pmq-troot" + (opts.rootClass ? " " + opts.rootClass : "");
     slotEl.appendChild(root);
 
+    const sweepEl = document.createElement("div");
+    sweepEl.className = "pmq-sweep";
+    sweepEl.setAttribute("aria-hidden", "true");
+    root.appendChild(sweepEl);
+
     if (opts.surfacesPlacement === "band") {
       bandEl = document.createElement("div");
       bandEl.className = "pmq-surfaceband pmq-scroll";
@@ -139,6 +144,14 @@ window.PMChatThreadKit = (() => {
     questZone = document.createElement("div");
     questZone.className = "pmq-questzone";
     root.appendChild(questZone);
+    /* Escape cancels an active questionnaire from any renderer (a11y).
+       Document-level so it works regardless of focus; popup Escape handlers
+       stop propagation first, so open popups keep precedence. */
+    document.addEventListener("keydown", e => {
+      if (e.key !== "Escape" || e.defaultPrevented) return;
+      const q = store.activeQuestionnaire(activeKey());
+      if (q) { e.preventDefault(); e.stopPropagation(); store.questCancel(q); }
+    });
 
     const composerEl = document.createElement("div");
     composerEl.className = "pmq-composerzone";
@@ -393,11 +406,25 @@ window.PMChatThreadKit = (() => {
           '<span class="pmq-ag-dur">' + fmt.dur(stg.durationSeconds) + "</span></span>" + summary + items + "</div>";
       }).join("");
       const draw = justOpened("ag:" + ag.id, open);
+      /* Two-chip condense strip + persistent Verified row (video 03). */
+      const tools = ag.stages.filter(x => x.kind !== "edit" && x.kind !== "completion" && x.kind !== "verify").reduce((n, x) => n + (x.count || 1), 0);
+      const edits = ag.stages.filter(x => x.kind === "edit");
+      const creates = edits.reduce((n, x) => n + (x.created || 0), 0);
+      const editN = edits.length;
+      const added = edits.reduce((n, x) => n + (x.added || 0), 0);
+      const removed = edits.reduce((n, x) => n + (x.removed || 0), 0);
+      const verify = ag.stages.find(x => x.kind === "verify" || x.kind === "completion" || x.kind === "test");
+      const chips = '<span class="pmq-ag-chips">' +
+        '<span class="pmq-ag-chip"><i data-ico="activity"></i>' + tools + " tools used</span>" +
+        (editN ? '<span class="pmq-ag-chip"><i data-ico="edit"></i>Made ' + creates + " create" + (creates === 1 ? "" : "s") + ", " + editN + " edit" + (editN === 1 ? "" : "s") + ' <span class="pmq-ag-add">+' + added + '</span><span class="pmq-ag-del">−' + removed + "</span></span>" : "") +
+        "</span>";
+      const verified = verify ? '<div class="pmq-ag-verified"><i data-ico="check"></i><span>' + esc(verify.label || "Verified") + "</span></div>" : "";
       return '<div class="pmq-agroup' + (open ? " pmq-open" : "") + '" data-ag="' + ag.id + '">' +
         '<button class="pmq-ag-head" type="button" data-agtoggle aria-expanded="' + open + '">' +
-        '<i data-ico="activity"></i><span class="pmq-ag-compact">' + esc(ag.compactLabel) + "</span>" +
+        '<i data-ico="activity"></i><span class="pmq-ag-compact">' + esc(ag.compactLabel) + "</span>" + chips +
         '<span class="pmq-ag-worked">Worked for ' + fmt.dur(ag.workedSeconds) + "</span>" +
         '<i data-ico="' + (open ? "collapse" : "expand") + '" class="pmq-ag-chev"></i></button>' +
+        verified +
         gridWrap(open, '<div class="pmq-ag-stages pmq-timeline' + (draw ? " pmq-tl-draw" : "") + '">' + stages + "</div>", null, "ag-" + ag.id) + "</div>";
     }
 
@@ -615,12 +642,29 @@ window.PMChatThreadKit = (() => {
         if (!nextIds.has(id)) { delete enteredAt[id]; delete enteredEl[id]; }
       });
 
-      if (s.stickToBottom) scrollBottom(false);
-      else if (anchorId) {
+      if (s.stickToBottom) {
+        /* Spatial continuity (video 01): small arrivals glide; a multi-viewport
+           catch-up stays instant so long jumps never swim. */
+        const away = scrollerEl.scrollHeight - scrollerEl.scrollTop - scrollerEl.clientHeight;
+        scrollBottom(away < 2 * scrollerEl.clientHeight);
+      } else if (anchorId) {
         const el = streamEl.querySelector('[data-msgid="' + CSS.escape(anchorId) + '"], [data-firstid="' + CSS.escape(anchorId) + '"]');
         if (el && anchorTop != null) scrollerEl.scrollTop += el.getBoundingClientRect().top - anchorTop;
       }
+      if (!s.stickToBottom && fresh.length) sweepNew(fresh.length);
       updateJump();
+    }
+
+    /* Header sweep (video 01): a theme-aware band sweeps when content arrives
+       while the user is scrolled up. Reduced motion shows a static bar instead. */
+    let sweepTimer = null;
+    function sweepNew(n) {
+      sweepEl.setAttribute("data-count", n + " new");
+      root.classList.remove("pmq-sweeping");
+      void sweepEl.offsetWidth;
+      root.classList.add("pmq-sweeping");
+      if (sweepTimer) clearTimeout(sweepTimer);
+      sweepTimer = setTimeout(() => root.classList.remove("pmq-sweeping"), 1000);
     }
 
     /* Persistent working row: created ONCE on run start, removed on run end.
@@ -1494,6 +1538,15 @@ window.PMChatThreadKit = (() => {
         const i = s.expandedActivity.indexOf("live");
         if (i >= 0) s.expandedActivity.splice(i, 1); else s.expandedActivity.push("live");
       })));
+      /* Gradual condense beat (video 03): when the run finishes, the live card
+         settles into its compact strip before the completed group replaces it. */
+      if (live.status !== "running" && window.PMAnim && !A.reduced()) {
+        try {
+          el.animate([{ opacity: 1, transform: "none" }, { opacity: 0.35, transform: "scale(0.985)" }, { opacity: 1, transform: "none" }], { duration: 320, easing: "ease-out" });
+          const head = el.querySelector(".pmq-ag-head");
+          if (head) head.animate([{ boxShadow: "0 0 0 0 transparent" }, { boxShadow: "0 0 0 2px color-mix(in srgb, var(--accent-primary) 25%, transparent)" }, { boxShadow: "0 0 0 0 transparent" }], { duration: 480, easing: "ease-out" });
+        } catch (e) {}
+      }
       return el;
     }
 
@@ -1776,10 +1829,23 @@ window.PMChatThreadKit = (() => {
       doSubmit(q) {
         this.submitting = true;
         const el = this.shell;
+        if (!el) {
+          /* Custom-renderer path: show the shared submitting pill in the quest
+             zone, then resolve (video 04). */
+          questZone.innerHTML = "";
+          const pe = document.createElement("div");
+          pe.className = "pmq-quest pmq-pill";
+          pe.innerHTML = '<div class="pmq-quest-shell"><div class="pmq-quest-pillform">' + orbitHtml("pmq-quest-orbit") + '<span class="pmq-pill-text">Submitting answers…</span></div></div>';
+          window.PMIcons.hydrate(pe);
+          questZone.appendChild(pe);
+          const done = () => { this.submitting = false; store.questSubmit(q); env.hostApi.toast("Questionnaire submitted"); };
+          if (window.PMAnim && !A.reduced()) setTimeout(done, 420); else done();
+          return;
+        }
         const card = el.querySelector(".pmq-quest-card");
         const pill = el.querySelector(".pmq-quest-pillform");
         const pillText = el.querySelector("[data-pilltext]");
-        if (pillText) pillText.textContent = "Submitting…";
+        if (pillText) pillText.textContent = "Submitting answers…";
         el.classList.remove("pmq-open");
         el.classList.add("pmq-pill");
         if (card) card.style.opacity = "0";
@@ -1793,6 +1859,48 @@ window.PMChatThreadKit = (() => {
             env.hostApi.toast("Questionnaire submitted");
           }
         });
+      },
+
+      reviewMode: false,
+
+      /* Visible "Preparing questions…" pill (video 04) shown before the card
+         morphs in; custom renderers call api.preparePill() at mount. */
+      preparePill(q) {
+        questZone.innerHTML = "";
+        const el = document.createElement("div");
+        el.className = "pmq-quest pmq-pill";
+        el.innerHTML = '<div class="pmq-quest-shell"><div class="pmq-quest-pillform">' + orbitHtml("pmq-quest-orbit") + '<span class="pmq-pill-text">Preparing questions…</span></div></div>';
+        window.PMIcons.hydrate(el);
+        questZone.appendChild(el);
+        return el;
+      },
+
+      submittingPill(q) {
+        const el = this.shell;
+        const pill = el && el.querySelector(".pmq-quest-pillform");
+        const txt = el && el.querySelector("[data-pilltext]");
+        if (txt) txt.textContent = "Submitting answers…";
+        if (el) {
+          el.classList.remove("pmq-open"); el.classList.add("pmq-pill");
+          const card = el.querySelector(".pmq-quest-card"); if (card) card.style.opacity = "0";
+          if (pill) pill.hidden = false;
+        }
+        return el;
+      },
+
+      /* Pre-submit review page (video 02): every answer listed with per-question
+         Back links; Submit lives here. */
+      reviewHtml(q) {
+        this.reviewMode = true;
+        const rows = q.questions.map((x, i) => {
+          const a = store.questAnswer(q, x);
+          const val = x.kind === "freeform" ? (a.draft || "") : (a.selected || []).join(", ");
+          const skipped = !this.isAnswered(q, x);
+          return '<div class="pmq-quest-revrow"><button class="pmq-quest-revback" type="button" data-revto="' + i + '">Q' + (i + 1) + "</button>" +
+            '<div class="pmq-quest-revbody"><div class="pmq-quest-revprompt">' + esc(x.prompt) + "</div>" +
+            '<div class="pmq-quest-revans' + (skipped ? " pmq-skipped" : "") + '">' + (skipped ? "Skipped" : esc(val)) + "</div></div></div>";
+        }).join("");
+        return '<div class="pmq-quest-review"><div class="pmq-quest-revhead">Review your answers</div>' + rows + "</div>";
       },
 
       updateChrome(q, idx) {
@@ -1909,8 +2017,16 @@ window.PMChatThreadKit = (() => {
           prev: () => store.questGoTo(q, store.questIndex(q, key) - 1),
           skip: () => store.questSkip(q),
           cancel: () => store.questCancel(q),
-          submit: () => { store.questSubmit(q); env.hostApi.toast("Questionnaire submitted"); },
-          reduced: () => A.reduced()
+          submit: () => self.doSubmit(q),
+          reduced: () => A.reduced(),
+          /* Causal lifecycle hooks (video 04): concepts express
+             prepare -> card -> review -> submitting -> receipt in their own
+             idiom using the shared morph primitive. */
+          preparePill: () => self.preparePill(q),
+          submittingPill: () => self.submittingPill(q),
+          reviewHtml: () => self.reviewHtml(q),
+          reviewMode: () => self.reviewMode,
+          gotoQuestion: i => store.questGoTo(q, i)
         };
       },
 

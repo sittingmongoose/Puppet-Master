@@ -4,89 +4,297 @@
   "model": "fable",
   "generated": "2026-08-11",
   "plan_owner_impacts": [
-    { "owner": "Plans/Permissions_System.md", "kind": "extends", "evidence": "Appendix I renders the ordered last-match-wins rulebook with functional reorder, renumbering, live re-evaluation trace, presets, per-Persona narrowing profiles, requested/effective/origin, and ELI5/Expert copy depth; the plan must specify rule ordering semantics, managed-rule pinning, and the trace contract." },
-    { "owner": "Plans/FileSafe.md", "kind": "extends", "evidence": "Appendix I.4 renders the non-bypassable floor: protected scopes, read-only external allowlist entries, repair guidance, explicit no-bypass copy, and a propose-for-review flow that never mutates the list; the plan should adopt the review-gated allowlist addition." },
-    { "owner": "Plans/Personas.md", "kind": "extends", "evidence": "Appendix F renders mission/use boundary, model-facing capsule preview with footprint, source/version/provenance, eligible-not-eager skills, thread/project/global defaults, and a blocked import with diff/trust/secret/prompt-injection findings and no import-anyway affordance." },
-    { "owner": "Plans/assistant-memory-subsystem.md", "kind": "extends", "evidence": "Appendix B adds capsule token estimates, functional version restore (edit stores previous wording), summarize/archive/redact maintenance actions with honest receipts, the half-life-is-retrieval-activation explanation, and the Assistant-only visibility statute." },
-    { "owner": "Plans/Goal_Runtime_System.md", "kind": "extends", "evidence": "Appendix G separates configured ceiling from read-only sustainable-now (PM_DATA.operational), pairs the wave warning with the fan-out row, and resolves planning/worker/reviewer route classes through requested/effective with a shown fallback reason." },
-    { "owner": "Plans/orchestrator-subagent-integration.md", "kind": "extends", "evidence": "Appendix H renders Crew templates with requested 5 / effective 2 concurrency plus queued waves, guards, reserve, board topology, diversity/corroboration, reducer/synthesis, and failure/stop; the H.2 boundary list (not a Persona/mode/provider/permission/memory) needs plan-level confirmation." },
-    { "owner": "Plans/agent-rules-context.md", "kind": "extends", "evidence": "Appendix E renders the AGENTS.md precedence chain, source hashes, admitted/omitted blocks with token counts and reasons, persona footprint, selected-vs-installed tools, compaction strategy, and cache compatibility; the exposing-never-injects boundary is stated in copy and should be canonized." },
-    { "owner": "Plans/FinalGUISpec.md", "kind": "extends", "evidence": "Atlas proves the reference-manual composition: numbered sections, appendix-stub cross-references between concepts, deterministic deep links (#/home, #/dest, #/manager, #/setting, #/search) with real Back/forward, and the marginalia column as a first-class status surface." },
-    { "owner": "Plans/settings_inventory.json", "kind": "conflicts", "evidence": "New rows demonstrated here (BSD mode, goal defaults/ceilings, permission-rule model, FileSafe allowlist, doom-loop threshold) are absent from the inventory; see settings_inventory_impacts including the census discrepancy." },
-    { "owner": "Plans/settings-schema (registry)", "kind": "extends", "evidence": "The demonstrated value-source/exposure model (nine value states, requested/effective, managed reasons, expert unlock) exceeds a simple|advanced tiering; see settings_schema_impacts." },
-    { "owner": "Plans/Models_System.md", "kind": "extends", "evidence": "Appendix A renders effort arrays, Fast flags with capability evidence, the never-inferred-from-names fastNote on Haiku, and requested/effective routes resolved via PMProvider.resolveRoute for both models and roles." },
-    { "owner": "Plans/Multi-Account.md", "kind": "extends", "evidence": "Account rows keep nickname/identity/auth-owner/isolation/priority/use-next/sticky/health/usage; the role-batch-reviewer row shows account-level fallback with the continuation-policy reason surfaced." },
-    { "owner": "Plans/CLI_Bridged_Providers.md", "kind": "extends", "evidence": "Auth boundary is rendered per provider from PMProvider.resolveAuthBoundary (CLI-owned for Claude/Antigravity with no PM OAuth screen; PM-direct for OpenAI/Copilot); installation resolution cards carry confidence, shadowing, manual-only, and the seven-condition verification checklist." },
-    { "owner": "Plans/Provider_OpenCode.md", "kind": "extends", "evidence": "The OpenCode entry renders serverInfo (url, version, reachability, last handshake, server-supplied catalog) and the access token strictly as a vault reference." },
-    { "owner": "Plans/Wiring_Matrix (canonical wiring owner)", "kind": "extends", "evidence": "Ten keystone traces are registered in candidate-wiring-delta.json; every one is concept-local state in this demo and is flagged as such." }
+    {
+      "owner": "Plans/Permissions_System.md",
+      "kind": "extends",
+      "evidence": "Appendix I renders the ordered last-match-wins rulebook with functional reorder, renumbering, live re-evaluation trace, presets, per-Persona narrowing profiles, requested/effective/origin, and ELI5/Expert copy depth; the plan must specify rule ordering semantics, managed-rule pinning, and the trace contract."
+    },
+    {
+      "owner": "Plans/FileSafe.md",
+      "kind": "extends",
+      "evidence": "Appendix I.4 renders the non-bypassable floor: protected scopes, read-only external allowlist entries, repair guidance, explicit no-bypass copy, and a propose-for-review flow that never mutates the list; the plan should adopt the review-gated allowlist addition."
+    },
+    {
+      "owner": "Plans/Personas.md",
+      "kind": "extends",
+      "evidence": "Appendix F renders mission/use boundary, model-facing capsule preview with footprint, source/version/provenance, eligible-not-eager skills, thread/project/global defaults, and a blocked import with diff/trust/secret/prompt-injection findings and no import-anyway affordance."
+    },
+    {
+      "owner": "Plans/assistant-memory-subsystem.md",
+      "kind": "extends",
+      "evidence": "Appendix B adds capsule token estimates, functional version restore (edit stores previous wording), summarize/archive/redact maintenance actions with honest receipts, the half-life-is-retrieval-activation explanation, and the Assistant-only visibility statute."
+    },
+    {
+      "owner": "Plans/Goal_Runtime_System.md",
+      "kind": "extends",
+      "evidence": "Appendix G separates configured ceiling from read-only sustainable-now (PM_DATA.operational), pairs the wave warning with the fan-out row, and resolves planning/worker/reviewer route classes through requested/effective with a shown fallback reason."
+    },
+    {
+      "owner": "Plans/orchestrator-subagent-integration.md",
+      "kind": "extends",
+      "evidence": "Appendix H renders Crew templates with requested 5 / effective 2 concurrency plus queued waves, guards, reserve, board topology, diversity/corroboration, reducer/synthesis, and failure/stop; the H.2 boundary list (not a Persona/mode/provider/permission/memory) needs plan-level confirmation."
+    },
+    {
+      "owner": "Plans/agent-rules-context.md",
+      "kind": "extends",
+      "evidence": "Appendix E renders the AGENTS.md precedence chain, source hashes, admitted/omitted blocks with token counts and reasons, persona footprint, selected-vs-installed tools, compaction strategy, and cache compatibility; the exposing-never-injects boundary is stated in copy and should be canonized."
+    },
+    {
+      "owner": "Plans/FinalGUISpec.md",
+      "kind": "extends",
+      "evidence": "Atlas proves the reference-manual composition: numbered sections, appendix-stub cross-references between concepts, deterministic deep links (#/home, #/dest, #/manager, #/setting, #/search) with real Back/forward, and the marginalia column as a first-class status surface."
+    },
+    {
+      "owner": "Plans/settings_inventory.json",
+      "kind": "conflicts",
+      "evidence": "New rows demonstrated here (BSD mode, goal defaults/ceilings, permission-rule model, FileSafe allowlist, doom-loop threshold) are absent from the inventory; see settings_inventory_impacts including the census discrepancy."
+    },
+    {
+      "owner": "Plans/settings-schema (registry)",
+      "kind": "extends",
+      "evidence": "The demonstrated value-source/exposure model (nine value states, requested/effective, managed reasons, expert unlock) exceeds a simple|advanced tiering; see settings_schema_impacts."
+    },
+    {
+      "owner": "Plans/Models_System.md",
+      "kind": "extends",
+      "evidence": "Appendix A renders effort arrays, Fast flags with capability evidence, the never-inferred-from-names fastNote on Haiku, and requested/effective routes resolved via PMProvider.resolveRoute for both models and roles."
+    },
+    {
+      "owner": "Plans/Multi-Account.md",
+      "kind": "extends",
+      "evidence": "Account rows keep nickname/identity/auth-owner/isolation/priority/use-next/sticky/health/usage; the role-batch-reviewer row shows account-level fallback with the continuation-policy reason surfaced."
+    },
+    {
+      "owner": "Plans/CLI_Bridged_Providers.md",
+      "kind": "extends",
+      "evidence": "Auth boundary is rendered per provider from PMProvider.resolveAuthBoundary (CLI-owned for Claude/Antigravity with no PM OAuth screen; PM-direct for OpenAI/Copilot); installation resolution cards carry confidence, shadowing, manual-only, and the seven-condition verification checklist."
+    },
+    {
+      "owner": "Plans/Provider_OpenCode.md",
+      "kind": "extends",
+      "evidence": "The OpenCode entry renders serverInfo (url, version, reachability, last handshake, server-supplied catalog) and the access token strictly as a vault reference."
+    },
+    {
+      "owner": "Plans/Wiring_Matrix (canonical wiring owner)",
+      "kind": "extends",
+      "evidence": "Ten keystone traces are registered in candidate-wiring-delta.json; every one is concept-local state in this demo and is flagged as such."
+    },
+    {
+      "owner": "Performance decision register (02_FULL_THREAD_CURRENT_DECISION_REGISTER.md, correction packet 2026-08-13)",
+      "kind": "extends",
+      "summary": "Coordination authority reviewed after the original packet omitted it. Concepts align to: RuntimeResourceGovernor as the sole resource/admission owner (no concept invents a second governor); ObservableWork as the sole truthful progress projection (op events now carry progressKind, source, completed/total only with a real denominator, and waitReason); the seven-execution-lane model, hot/warm/cold state, low-resource/legacy profile, and lazy Settings opening model (register sections 2, 7, 8, 11, 13, 20) as Slint-port constraints recorded in slint_port_impacts and test fixtures.",
+      "evidence": "reference-review-report.json; TEST_REPORT.md correction section"
+    }
   ],
   "settings_inventory_impacts": [
-    { "row": "planning.bsd.mode", "status": "missing-from-inventory", "note": "Off/Auto/On radio demonstrated in Appendix J and as a settings row; Auto is the default." },
-    { "row": "planning.goal.* defaults and ceilings", "status": "missing-from-inventory", "note": "Checkpoint policy, pause/resume, verification strength, fan-out sustainable+ceiling, capacity reserve, worker/reviewer route class, cross-project policy, worktree policy — demonstrated in Appendix G." },
-    { "row": "permissions.rules (ordered rule model)", "status": "missing-from-inventory", "note": "The inventory has scalar permission rows but no ordered-rule collection with tool/pattern/decision/origin/scope and last-match-wins evaluation; Appendix I demonstrates the model the registry needs." },
-    { "row": "permissions.filesafe.external-allowlist", "status": "missing-from-inventory", "note": "Read-only allowlist entries (path, mode, added) plus the review-gated addition flow." },
-    { "row": "permissions.doom-loop.threshold / permissions.doom-loop.action", "status": "missing-from-inventory", "note": "Threshold (default 3) and tripped action (pause-and-ask | stop-run) demonstrated with the fx.doom-loop-tripped fixture." },
-    { "census_note": "Artifacts disagree on the inventory count: figures between 817 and 826 appear across the settings artifacts (this repo's demo gist even cites 825). The audit must fix one census number before rows are minted against it." }
+    {
+      "row": "planning.bsd.mode",
+      "status": "missing-from-inventory",
+      "note": "Off/Auto/On radio demonstrated in Appendix J and as a settings row; Auto is the default."
+    },
+    {
+      "row": "planning.goal.* defaults and ceilings",
+      "status": "missing-from-inventory",
+      "note": "Checkpoint policy, pause/resume, verification strength, fan-out sustainable+ceiling, capacity reserve, worker/reviewer route class, cross-project policy, worktree policy \u2014 demonstrated in Appendix G."
+    },
+    {
+      "row": "permissions.rules (ordered rule model)",
+      "status": "missing-from-inventory",
+      "note": "The inventory has scalar permission rows but no ordered-rule collection with tool/pattern/decision/origin/scope and last-match-wins evaluation; Appendix I demonstrates the model the registry needs."
+    },
+    {
+      "row": "permissions.filesafe.external-allowlist",
+      "status": "missing-from-inventory",
+      "note": "Read-only allowlist entries (path, mode, added) plus the review-gated addition flow."
+    },
+    {
+      "row": "permissions.doom-loop.threshold / permissions.doom-loop.action",
+      "status": "missing-from-inventory",
+      "note": "Threshold (default 3) and tripped action (pause-and-ask | stop-run) demonstrated with the fx.doom-loop-tripped fixture."
+    },
+    {
+      "census_note": "Artifacts disagree on the inventory count: figures between 817 and 826 appear across the settings artifacts (this repo's demo gist even cites 825). The audit must fix one census number before rows are minted against it."
+    }
   ],
   "settings_schema_impacts": [
-    { "area": "value-source", "note": "Nine value states are demonstrated (default, recommended, inherited, auto, not-configured, managed, custom, unavailable, effective-differs); the schema needs a valueSource enum plus managedReason/unavailableReason strings, not a boolean." },
-    { "area": "exposure", "note": "standard | advanced | expert | managed | diagnostic | unavailable are all rendered distinctly (expert requires deliberate unlock; diagnostic lives in a per-domain drawer). A simple|advanced two-tier model cannot express this." },
-    { "area": "requested-effective", "note": "Roles, models, goal route classes, BSD route, crew concurrency, and permission rules all need paired requested/effective values with a human 'why'; the schema should make this a first-class shape rather than per-feature ad hoc fields." },
-    { "area": "non-scalar settings", "note": "Ordered rule collections (permissions), keyed template collections (crew), and structured route classes (goal) do not fit scalar rows; the registry needs collection-valued settings with their own event grammar." }
+    {
+      "area": "value-source",
+      "note": "Nine value states are demonstrated (default, recommended, inherited, auto, not-configured, managed, custom, unavailable, effective-differs); the schema needs a valueSource enum plus managedReason/unavailableReason strings, not a boolean."
+    },
+    {
+      "area": "exposure",
+      "note": "standard | advanced | expert | managed | diagnostic | unavailable are all rendered distinctly (expert requires deliberate unlock; diagnostic lives in a per-domain drawer). A simple|advanced two-tier model cannot express this."
+    },
+    {
+      "area": "requested-effective",
+      "note": "Roles, models, goal route classes, BSD route, crew concurrency, and permission rules all need paired requested/effective values with a human 'why'; the schema should make this a first-class shape rather than per-feature ad hoc fields."
+    },
+    {
+      "area": "non-scalar settings",
+      "note": "Ordered rule collections (permissions), keyed template collections (crew), and structured route classes (goal) do not fit scalar rows; the registry needs collection-valued settings with their own event grammar."
+    }
   ],
   "command_id_impacts": [
-    { "pointer": "See candidate-command-delta.json in this directory; no canon is minted here. Census block flags cmd.settings.bloom.open (retire), two open_* aliases (supersede-into-family), cmd.settings.category.reset (merge-flag), cmd.theme.* (reuse-flag), and preserves seven existing ids." }
+    {
+      "pointer": "See candidate-command-delta.json in this directory; no canon is minted here. Census block flags cmd.settings.bloom.open (retire), two open_* aliases (supersede-into-family), cmd.settings.category.reset (merge-flag), cmd.theme.* (reuse-flag), and preserves seven existing ids."
+    }
   ],
   "wiring_impacts": [
-    { "pointer": "See candidate-wiring-delta.json in this directory: ten keystone traces (permission rule add/reorder/test, access profile set, memory verify/restore, persona import scan, BSD mode set, goal ceiling set, provider account use-next, installation select, installation update happy and fail paths). Every trace carries concept_local_state: true." }
+    {
+      "pointer": "See candidate-wiring-delta.json in this directory: ten keystone traces (permission rule add/reorder/test, access profile set, memory verify/restore, persona import scan, BSD mode set, goal ceiling set, provider account use-next, installation select, installation update happy and fail paths). Every trace carries concept_local_state: true."
+    }
   ],
   "dry_component_impacts": [
-    { "pointer": "See candidate-dry-delta.json in this directory for the per-family concretized/reused/not-exercised classification with anti-clone variance notes." }
+    {
+      "pointer": "See candidate-dry-delta.json in this directory for the per-family concretized/reused/not-exercised classification with anti-clone variance notes."
+    }
   ],
   "schema_event_storage_impacts": [
-    { "area": "permission evaluation trace", "note": "The trace (input, matched rule numbers, winner, explanation) is a queryable event product; rule reorders must re-emit it. Storage owner should keep traces with run evidence for audit." },
-    { "area": "installation update history", "note": "Update attempts are two-entry honest histories (verification-failed then rolled-back) with per-condition verification results; exit code alone is never success and must not be an event terminal state." },
-    { "area": "memory versions", "note": "Gist edits must store the previous wording in the version entry for restore to be real; this concept demonstrates restore failing honestly when older versions lack stored text." },
-    { "area": "context admission receipt", "note": "Per-request admitted/omitted blocks with token counts are receipts, implying an event stream from the prompt assembler that Settings only projects." }
+    {
+      "area": "permission evaluation trace",
+      "note": "The trace (input, matched rule numbers, winner, explanation) is a queryable event product; rule reorders must re-emit it. Storage owner should keep traces with run evidence for audit."
+    },
+    {
+      "area": "installation update history",
+      "note": "Update attempts are two-entry honest histories (verification-failed then rolled-back) with per-condition verification results; exit code alone is never success and must not be an event terminal state."
+    },
+    {
+      "area": "memory versions",
+      "note": "Gist edits must store the previous wording in the version entry for restore to be real; this concept demonstrates restore failing honestly when older versions lack stored text."
+    },
+    {
+      "area": "context admission receipt",
+      "note": "Per-request admitted/omitted blocks with token counts are receipts, implying an event stream from the prompt assembler that Settings only projects."
+    },
+    {
+      "area": "observable-work-projection",
+      "impact": "Demo op events aligned to the ObservableWork contract: progressKind (determinate|indeterminate), progress source (measured|derived|unknown), completed/total emitted only when a real denominator exists (bare percentages are stripped at the emitter), waitReason from the register's waiting_* vocabulary where applicable (e.g. waiting_resource on rate-limited test sends, waiting_for_idle surfaced through installation update states). Production schema should adopt the full state grammar: accepted..recovery_required.",
+      "source": "2026-08-13 dependency correction"
+    }
   ],
   "migration_supersession_impacts": [
-    { "supersedes": "Old Settings chip/bloom no-sidebar contract", "note": "The workspace is a persistent two-pane manual with a TOC column; cmd.settings.bloom.open is flagged retire (compatibility alias to cmd.settings.open only if needed)." },
-    { "supersedes": "Stale right-side-panel language", "note": "All navigation copy and layout here assumes the left Activity Bar with one adjacent left side-panel slot; no right-panel wording survives." },
-    { "supersedes": "Stale conversation-mode/access coupling", "note": "The retired pairing of the 'regular' conversation mode with an unrestricted access profile is explicitly severed: access profiles are the four canonical choices in Appendix I, Personas cannot grant them, and Plan/Review are effect-limited, not tool-free." },
-    { "supersedes": "Invalid inventory values", "note": "Blank-means-auto rows are replaced by explicit value chips; unexplained empty strings are banned in this composition." }
+    {
+      "supersedes": "Old Settings chip/bloom no-sidebar contract",
+      "note": "The workspace is a persistent two-pane manual with a TOC column; cmd.settings.bloom.open is flagged retire (compatibility alias to cmd.settings.open only if needed)."
+    },
+    {
+      "supersedes": "Stale right-side-panel language",
+      "note": "All navigation copy and layout here assumes the left Activity Bar with one adjacent left side-panel slot; no right-panel wording survives."
+    },
+    {
+      "supersedes": "Stale conversation-mode/access coupling",
+      "note": "The retired pairing of the 'regular' conversation mode with an unrestricted access profile is explicitly severed: access profiles are the four canonical choices in Appendix I, Personas cannot grant them, and Plan/Review are effect-limited, not tool-free."
+    },
+    {
+      "supersedes": "Invalid inventory values",
+      "note": "Blank-means-auto rows are replaced by explicit value chips; unexplained empty strings are banned in this composition."
+    },
+    "Fabricated percentages in progress displays (register sections 11 and 16.6): the index-rebuild fixture previously emitted invented pct values; it now emits an honest indeterminate scanning phase followed by measured file counts.",
+    "Startup discovery scans implied by copy (register section 13): the skills-discovery row description no longer claims a startup scan; discovery is bounded and demand-driven."
   ],
   "slint_port_impacts": [
-    { "area": "marginalia column", "note": "Two-column grid rows (content | marginalia) map to a Slint HorizontalLayout with a fixed-preferred-width side column; the hairline is an inset shadow in web, a 1px Rectangle in Slint." },
-    { "area": "leader-dot TOC", "note": "CSS dotted-border leaders map to a custom drawn dotted line element; the sliding ink marker maps to an animated y-property on a small Rectangle, teleporting under reduced motion." },
-    { "area": "reorderable rule list", "note": "Move up/down buttons (no drag) were chosen deliberately so the statute book ports to Slint as a plain model reorder without drag-and-drop infrastructure." },
-    { "area": "evaluation trace rendering", "note": "The trace is a pure data projection (rows with matched/winner flags); no DOM measurement is involved, so it ports as a ListView over a computed model." },
-    { "area": "sticky running header", "note": "position:sticky maps to a fixed header row above a Flickable, as noted inline in the CSS." },
-    { "area": "lazy appendix hydration", "note": "Appendix bodies render on entry open (aria-expanded state), never eagerly; in Slint this is conditional component instantiation per expanded row." }
+    {
+      "area": "marginalia column",
+      "note": "Two-column grid rows (content | marginalia) map to a Slint HorizontalLayout with a fixed-preferred-width side column; the hairline is an inset shadow in web, a 1px Rectangle in Slint."
+    },
+    {
+      "area": "leader-dot TOC",
+      "note": "CSS dotted-border leaders map to a custom drawn dotted line element; the sliding ink marker maps to an animated y-property on a small Rectangle, teleporting under reduced motion."
+    },
+    {
+      "area": "reorderable rule list",
+      "note": "Move up/down buttons (no drag) were chosen deliberately so the statute book ports to Slint as a plain model reorder without drag-and-drop infrastructure."
+    },
+    {
+      "area": "evaluation trace rendering",
+      "note": "The trace is a pure data projection (rows with matched/winner flags); no DOM measurement is involved, so it ports as a ListView over a computed model."
+    },
+    {
+      "area": "sticky running header",
+      "note": "position:sticky maps to a fixed header row above a Flickable, as noted inline in the CSS."
+    },
+    {
+      "area": "lazy appendix hydration",
+      "note": "Appendix bodies render on entry open (aria-expanded state), never eagerly; in Slint this is conditional component instantiation per expanded row."
+    }
   ],
   "test_fixtures": [
-    { "id": "fx.doom-loop-tripped", "proof": "Appendix I.5 renders the tripped panel (operation, attempts, outcome) plus the home notice; 'Run the rule test on this operation' feeds the tripped operation through permission-test." },
-    { "id": "permission-test", "proof": "I.2 rule test input runs PMState.trigger('permission-test', input); the returned trace renders with rules 1, 4, 5 matching and rule 5 deciding on the canonical input." },
-    { "id": "install-update", "proof": "Codex npm installation card offers Install update wired to PMState.trigger('install-update','openai-codex/inst.codex.npm'); op phases (updating, verifying with the seven-condition checklist, ready, done) render truthfully." },
-    { "id": "install-update-fail", "proof": "The rolled-back Copilot card offers 'Retry the 1.7.0 update' wired to install-update-fail; verification-failed and rolled-back phases and both history entries render." },
-    { "id": "install-select", "proof": "Non-selected installations offer 'Use this installation'; shadowing recomputes via the shared trigger." },
-    { "id": "scenario:first-run", "proof": "Memory renders its real empty state; Personas and Crew render honest empty states with a functional starter path; the rulebook shrinks to the locked wildcard floor." },
-    { "id": "scenario:offline", "proof": "Providers show Unreachable with last-known-good catalogs; free catalog sources show stale validation with last-known-good kept; local Ollama keeps working." },
-    { "id": "scenario:managed-workspace", "proof": "The access profile renders read-only with a managed chip; safety-preset rules pin their positions and show managed reasons." }
+    {
+      "id": "fx.doom-loop-tripped",
+      "proof": "Appendix I.5 renders the tripped panel (operation, attempts, outcome) plus the home notice; 'Run the rule test on this operation' feeds the tripped operation through permission-test."
+    },
+    {
+      "id": "permission-test",
+      "proof": "I.2 rule test input runs PMState.trigger('permission-test', input); the returned trace renders with rules 1, 4, 5 matching and rule 5 deciding on the canonical input."
+    },
+    {
+      "id": "install-update",
+      "proof": "Codex npm installation card offers Install update wired to PMState.trigger('install-update','openai-codex/inst.codex.npm'); op phases (updating, verifying with the seven-condition checklist, ready, done) render truthfully."
+    },
+    {
+      "id": "install-update-fail",
+      "proof": "The rolled-back Copilot card offers 'Retry the 1.7.0 update' wired to install-update-fail; verification-failed and rolled-back phases and both history entries render."
+    },
+    {
+      "id": "install-select",
+      "proof": "Non-selected installations offer 'Use this installation'; shadowing recomputes via the shared trigger."
+    },
+    {
+      "id": "scenario:first-run",
+      "proof": "Memory renders its real empty state; Personas and Crew render honest empty states with a functional starter path; the rulebook shrinks to the locked wildcard floor."
+    },
+    {
+      "id": "scenario:offline",
+      "proof": "Providers show Unreachable with last-known-good catalogs; free catalog sources show stale validation with last-known-good kept; local Ollama keeps working."
+    },
+    {
+      "id": "scenario:managed-workspace",
+      "proof": "The access profile renders read-only with a managed chip; safety-preset rules pin their positions and show managed reasons."
+    },
+    {
+      "id": "corr-observable-work",
+      "note": "2026-08-13 dependency correction: op-event progressKind/source/denominator assertions and lazy-hydration DOM evidence probes (see TEST_REPORT correction section)"
+    }
   ],
   "deferred_named_owners": [
-    { "area": "Product onboarding / first-run wizard", "owner": "Onboarding_Master_Plan.md", "note": "The first-run scenario shows honest empty states; the guided setup journey is deferred to its owner." },
-    { "area": "Doctor / diagnostics repair flows", "owner": "Doctor subsystem plan", "note": "Boundary check and repair guidance surface here as receipts; deep diagnosis is Doctor's." },
-    { "area": "Installation/Deployment of PM itself", "owner": "Release_Supply_Chain.md", "note": "Provider CLI lifecycle is shown; PM application updates are not." },
-    { "area": "Server claim/bootstrap", "owner": "Server Backbone return (Post-Return Reconciliation v6)", "note": "PM_DATA.serverModules.reserved carries the insertion contract; c4 renders the shell." },
-    { "area": "Project sync/move", "owner": "storage-plan.md (Project Sync owner)", "note": "Cross-project policy in Appendix G points at consent only, not the sync machinery." },
-    { "area": "App update state machines", "owner": "Release_Supply_Chain.md", "note": "Reserved destination in serverModules; no UI minted here." }
+    {
+      "area": "Product onboarding / first-run wizard",
+      "owner": "Onboarding_Master_Plan.md",
+      "note": "The first-run scenario shows honest empty states; the guided setup journey is deferred to its owner."
+    },
+    {
+      "area": "Doctor / diagnostics repair flows",
+      "owner": "Doctor subsystem plan",
+      "note": "Boundary check and repair guidance surface here as receipts; deep diagnosis is Doctor's."
+    },
+    {
+      "area": "Installation/Deployment of PM itself",
+      "owner": "Release_Supply_Chain.md",
+      "note": "Provider CLI lifecycle is shown; PM application updates are not."
+    },
+    {
+      "area": "Server claim/bootstrap",
+      "owner": "Server Backbone return (Post-Return Reconciliation v6)",
+      "note": "PM_DATA.serverModules.reserved carries the insertion contract; c4 renders the shell."
+    },
+    {
+      "area": "Project sync/move",
+      "owner": "storage-plan.md (Project Sync owner)",
+      "note": "Cross-project policy in Appendix G points at consent only, not the sync machinery."
+    },
+    {
+      "area": "App update state machines",
+      "owner": "Release_Supply_Chain.md",
+      "note": "Reserved destination in serverModules; no UI minted here."
+    }
   ],
   "unresolved_questions": [
     "Should a user-authored rule be able to out-rank a workspace-managed deny by position, or do managed rules always pin to the tail of the book? This concept pins managed rows in place and blocks displacement; canon must decide the general rule.",
     "Per-Persona profiles: is the narrower-only constraint enforced by construction (profiles are subsets) or by evaluation-time flooring? The UI asserts narrower-only; the mechanism is unspecified.",
     "Goal fan-out: is the configured ceiling per Goal, per project, or global? Rendered here as global+project scope; the runtime owner must fix the scope chain.",
     "Does the BSD latency budget stack with provider timeout budgets or subsume them?",
-    "Settings census: 817 vs 825 vs 826 rows across artifacts — which figure is canon before new rows are minted?",
-    "Should the retained appendix stubs (C, D) appear in this concept's search as native rows, receipts, or not at all? Here they surface as manager-receipt rows linking to Focus Stack while the stub pages keep the numbered citations."
+    "Settings census: 817 vs 825 vs 826 rows across artifacts \u2014 which figure is canon before new rows are minted?",
+    "Should the retained appendix stubs (C, D) appear in this concept's search as native rows, receipts, or not at all? Here they surface as manager-receipt rows linking to Focus Stack while the stub pages keep the numbered citations.",
+    "Register section 23 calibration gates recorded, not claimed: 825+-setting search responsiveness, 100 detected installations collapsed to human summaries, Settings Home with all manager summaries plus exactly one lazy-hydrated manager, and old-hardware (Ivy Bridge/Xeon) / poor-network operation are implementation benchmarks; the demo proves the design shapes (humanized collapse, lazy hydration, cached-catalog-first copy) but measures nothing."
   ]
 }

@@ -3148,7 +3148,7 @@ There is no auto-cleanup for `completed` or `failed` threads.
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md
 
-Compare buttons open committed branch-to-branch review only: worktree branch HEAD against base branch HEAD through `cmd.git.open_diff`. Source Control merge buttons route through the same `cmd.chat.worktree.merge` command with `thread_id=null` for non-thread worktrees; the command handler detects null `thread_id` and omits thread-specific behaviors such as unbind, thread status update, or chat notification.
+Compare buttons open committed branch-to-branch review only: worktree branch HEAD against base branch HEAD through `cmd.git.open_diff`. Source Control project-scope merge buttons route through `cmd.git.worktree.merge`; `cmd.chat.worktree.merge` remains the thread-bound Assistant Chat wrapper and is never invoked with `thread_id=null`. The project-scope handler does not perform thread-specific behaviors such as unbind, thread status update, or chat notification.
 
 #### W.8.1 Merge confirmation dialog
 
@@ -3586,6 +3586,120 @@ compatibility_only_notes:
   - "The old source-preserving bridge is retained only so migration lineage and historical references to ACD-001 remain auditable."
 owner_hints:
   - Plans/assistant-chat-design.md
+```
+
+## Shared runtime projection addendum (2026-08-13)
+
+Assistant Chat consumes `EnvironmentConnectionSupervisor`, `ThreadCommandOutbox`, `ProjectionReplayCoordinator`, `StreamCoalescer`, `ObservableWork`, `OperationalAwarenessService`, and `BackSeatDriverService` from `Plans/Shared_Integration_Runtime.md`. It owns Chat presentation, selection, controls, route context, and disabled/recovery copy, not those lifecycle services or canonical Goal/Usage truth.
+
+The thread rail/history consumes lightweight `ThreadShell` records for every listed thread. A visibly pinned thread may consume a richer but bounded `PinnedSummary`. Only the focused thread consumes `ThreadDetail` transcript/tool/activity streams; large artifacts and older passages remain separately fetched by typed ref. Pinning, searching, or showing a status does not subscribe to every transcript/tool stream or inject that material into context. Cached content remains visible with explicit `cached`, `synchronizing`, `current`, `stale`, or `failed` domain state.
+
+Messages, answers, redirects, approvals, Goal controls, create/request operations, attachments, and exact next-turn route/model/mode context use the shared durable outbox. Chat shows queued, waiting, retryable, cancelled, rejected-stale, and accepted states without implying a provider attempt occurred. Server-owned work continues after client close/disconnect; reconnect shows bounded catch-up through shared cursor/snapshot/epoch state, while deduplication and terminal ordering remain runtime-owned. Chat never offers resend as a way to bypass idempotency.
+
+Goal, Todo, child, diff, verification, and activity cards are compact projections of durable Goal/Plan/thread/agent lineage and `ObservableWork`. Completed groups condense to result/evidence refs. Switching threads never retargets an active Goal, and the composer does not narrate or receive an ever-growing activity log. `OperationalAwarenessService` may supply compact freshness-labeled summaries and on-demand inspector refs; raw registries, secrets, all process state, and protected `AuthBrowserSession` are excluded.
+
+BSD presentation consumes the effective Off/Auto/On policy from Run Modes and the shared assignment state. The effective default and recommended value are Auto; an explicit stored Off remains Off. Auto shows evaluation only for owner-defined risk/phase triggers; On may evaluate each turn within quota. A silent or duplicate-suppressed result adds no transcript message. Material advice appears as one compact, attributable advisory note with details/receipt drill-through. Failure, timeout, refusal, quota, fallback loss, or unhealthy state cannot block the primary turn. Chat cannot use BSD to grant tools, approve, mutate, inspect secrets, or access `AuthBrowserSession`.
+
+Time-Traveling conditional-rule effects appear only as a bounded activity/receipt explanation when material. They are not conversation rewind, restore points, branch navigation, or an alternate safety UI.
+
+Command fail closure is explicit. `cmd.chat.goal.start` and `cmd.chat.goal.update` remain the currently evidenced Chat Goal entrypoints. Pause/resume/stop/clear/edit/replan and BSD mode controls are actionable only after Commands and production Wiring register their exact scoped command, payload/result/error, revision/currentness, disabled reason, handler, event/receipt, and recovery contract. This document invents no missing IDs. Source Control project-scope merge uses `cmd.git.worktree.merge`; only a real thread-bound merge uses `cmd.chat.worktree.merge`.
+
+### ACD-445 - Thread Shell, Pinned Summary, And Focused Detail Projection
+
+```yaml
+plan_unit_id: ACD-445
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Assistant Chat lists threads from lightweight ThreadShell records, watches pinned threads through bounded PinnedSummary records, and subscribes to full ThreadDetail only for the focused thread. Server-owned work continues through client loss; queued commands and cursor/snapshot catch-up are visibly truthful without full-transcript fanout or duplicate effects.
+gui_related: true
+gui_classification_reason: This unit defines thread rail, pin, detail, queued, reconnect, catch-up, and server-continuation presentation.
+depends_on: [ACD-006, ACD-423, SIR-005, SIR-006]
+unblocks: []
+acceptance_criteria:
+  - ThreadShell, PinnedSummary, and ThreadDetail use the closed definitions in Plans/shared_runtime_contracts.schema.json and are registered only as derived, rebuildable projections.
+  - Fifty-thread fixtures load shell state without subscribing to every transcript/tool stream.
+  - Pinned summaries remain bounded and focused detail catches up without loss or duplication.
+  - Client close/disconnect shows server continuation and does not cancel admitted work.
+  - Stale outbox continuations are visibly rejected and cannot create another effect.
+validation_surfaces: [python3 scripts/pm-shared-runtime-contracts.py --self-test, python3 scripts/pm-shared-runtime-storage-materialize.py check, future Chat shell-detail and reconnect fixtures]
+risk_class: chat_projection_fanout_or_continuation_drift
+reasoning_tier: high
+context_scope: chat_thread_runtime_projection
+implementation_surfaces: [Plans/assistant-chat-design.md, Plans/Shared_Integration_Runtime.md]
+node_compile_hint: {mode: chat_thread_projection_consumer, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/02_T3_DURABLE_THREADS_NETWORK_AND_OUTBOX.md
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/ASSISTANT_CHAT_SHARED_CONTRACTS.md
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/T3_OMP_COMPLETE_SOURCE_REVIEW.md
+preserved_exact_tokens: [ThreadShell, PinnedSummary, ThreadDetail, continuing on the server]
+negative_constraints: [Do not fan out full detail to the thread list., Do not make client cache canonical., Do not treat disconnect as cancellation.]
+owner_hints: [Plans/assistant-chat-design.md, Plans/Shared_Integration_Runtime.md, Plans/storage-plan.md]
+```
+
+### ACD-447 - Branch Restore And Server First Chat Boundary
+
+```yaml
+plan_unit_id: ACD-447
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Branch, rewind, restore, and sibling re-answer create explicit lineage over a selected message or restore point and may choose a new model or Persona only through a new requested/effective resolution; they never mutate the original branch, retarget an active Goal, infer current-server execution from client focus, or recreate provider state by transcript rewriting. Chat remains a server-first projection, and every ordinary browser reference uses the PM-native Browser Program with no PM Playwright runtime or facade.
+gui_related: true
+gui_classification_reason: Branch, restore, sibling answer, server continuation, and browser wording are visible Chat behavior.
+depends_on: [ACD-445, ACD-446, GRS-044, GRS-046, P-056]
+unblocks: []
+acceptance_criteria:
+  - AGT-012 covers model and Persona branch selection plus sibling re-answer lineage, not only restore-point branching.
+  - CHAT-018 performance guidance remains a future runtime budget and does not justify context or projection fanout.
+  - CHAT-019 distinguishes server execution ownership from client focus, transport, and cached projection state.
+  - CHAT-020 contains no active PM Playwright runtime, facade, compatibility, command, or capture promise.
+validation_surfaces: [branch and sibling-resolution fixtures, server-first Chat owner audit, prohibited browser terminology scan]
+risk_class: chat_branch_or_execution_owner_drift
+reasoning_tier: high
+context_scope: chat_branch_restore_server_boundary
+implementation_surfaces: [Plans/assistant-chat-design.md, Plans/Goal_Runtime_System.md, Plans/Personas.md]
+node_compile_hint: {mode: chat_branch_restore_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#AGT-012
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#CHAT-018
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#CHAT-019
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#CHAT-020
+negative_constraints: [Do not mutate the original branch., Do not infer execution ownership from focus., Do not expose a PM Playwright surface.]
+```
+
+### ACD-446 - Chat Work, Awareness, And Advisory Projection
+
+```yaml
+plan_unit_id: ACD-446
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Assistant Chat projects Goal, Plan, Todo, child, agent, diff, verification, ObservableWork, and bounded Operational Awareness without making transcript narration or raw registries runtime truth. BSD supports Off/Auto/On with effective default Auto, silent and duplicate-suppressed outcomes stay out of the transcript, and advice never widens authority or blocks primary work.
+gui_related: true
+gui_classification_reason: The unit defines visible compact work, awareness, BSD, receipt, disabled, and failure presentation.
+depends_on: [ACD-017, GRS-044, GRS-045, SIR-007, SIR-010]
+unblocks: []
+acceptance_criteria:
+  - Compact activity remains inspectable without injecting a growing event log into prompts.
+  - BSD silent/duplicate/failure/timeout/quota cases preserve primary turn completion and expose appropriate details only.
+  - Thread selection cannot retarget a Goal and AuthBrowserSession is absent from Chat awareness/advice detail.
+  - Unregistered Goal/BSD controls are disabled or omitted rather than routed through look-alike IDs.
+validation_surfaces: [python3 scripts/pm-plan-index.py validate, future Chat work/advisory/disabled-control fixtures]
+risk_class: chat_projection_or_advisory_authority_drift
+reasoning_tier: high
+context_scope: chat_operational_advisory_projection
+implementation_surfaces: [Plans/assistant-chat-design.md, Plans/Goal_Runtime_System.md, Plans/Run_Modes.md, Plans/Shared_Integration_Runtime.md]
+node_compile_hint: {mode: chat_work_advisory_projection, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/05_BSD_TIME_TRAVEL_GOAL_AND_OPERATIONAL_AWARENESS.md
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/09_TEST_MIGRATION_AND_ACCEPTANCE_MATRIX.md
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/ASSISTANT_CHAT_SHARED_CONTRACTS.md
+preserved_exact_tokens: [ObservableWork, OperationalAwarenessService, Off, Auto, On, AuthBrowserSession]
+negative_constraints: [Do not let BSD widen authority., Do not expose raw registries or protected sessions., Do not invent command IDs here.]
+owner_hints: [Plans/assistant-chat-design.md, Plans/Shared_Integration_Runtime.md, Plans/Goal_Runtime_System.md, Plans/UI_Command_Catalog.md]
 ```
 
 ### ACD-002 - Assistant Chat Scope And Source Authority
@@ -19320,15 +19434,16 @@ plan_unit_id: ACD-348
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Compare buttons open committed branch-to-branch review through `cmd.git.open_diff`; Source Control merge buttons route through `cmd.chat.worktree.merge` with `thread_id=null`, omitting thread-specific behaviors.
+canonical_text: Compare buttons open committed branch-to-branch review through `cmd.git.open_diff`; Source Control project-scope merge buttons route through `cmd.git.worktree.merge`, while `cmd.chat.worktree.merge` remains thread-bound and never accepts `thread_id=null`.
 gui_related: false
 gui_classification_reason: Compare and merge command routing are command-contract behavior.
 depends_on: [ACD-347]
 unblocks: [ACD-361]
 acceptance_criteria:
   - Compare buttons open committed branch-to-branch review through `cmd.git.open_diff`.
-  - Source Control merge buttons call `cmd.chat.worktree.merge` with `thread_id=null`.
-  - Null thread ID omits thread-specific unbind, status update, and chat notification behavior.
+  - Source Control project-scope merge buttons call `cmd.git.worktree.merge`.
+  - The thread-bound `cmd.chat.worktree.merge` wrapper requires a real thread binding and never accepts `thread_id=null`.
+  - The project-scope handler omits thread-specific unbind, status update, and chat notification behavior by command scope, not by a null thread sentinel.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -19347,10 +19462,11 @@ source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0155
 preserved_exact_tokens:
   - "cmd.git.open_diff"
+  - "cmd.git.worktree.merge"
   - "cmd.chat.worktree.merge"
-  - "thread_id=null"
 negative_constraints:
   - "Compare buttons open committed branch-to-branch review only."
+  - "Do not pass thread_id=null to cmd.chat.worktree.merge."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/UI_Command_Catalog.md

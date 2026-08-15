@@ -348,6 +348,8 @@
                     "agent_reason": "fixture dynamic page evidence"
                 },
       "session_class": "testing",
+      "session_security_class": "ordinary",
+      "session_epoch": 1,
       "state": "active",
       "show_when_possible": true,
       "open_watch_state": "open_available",
@@ -355,8 +357,7 @@
                 "runtime_state": {
                     "runtime_state": "available",
                     "requested_runtime": "pm_native_browser",
-                    "effective_runtime": "pm_native_browser",
-                    "playwright_cdp_role": "fallback_only"
+                    "effective_runtime": "pm_native_browser"
                 },
                 "actions": [
                     {
@@ -518,6 +519,8 @@
                     "agent_reason": "fixture proves unavailable native browser remediation"
                 },
       "session_class": "testing",
+      "session_security_class": "ordinary",
+      "session_epoch": 1,
       "state": "runtime_unavailable",
       "show_when_possible": true,
       "open_watch_state": "unavailable",
@@ -530,8 +533,7 @@
                     "remediation_action_ids": [
                         "open_settings_browser_runtime",
                         "retry_with_plain_fetch"
-                    ],
-                    "playwright_cdp_role": "fallback_only"
+                    ]
                 },
                 "actions": [],
                 "artifact_refs": [
@@ -2197,6 +2199,8 @@
                         "invocation_source": "agent_initiated"
                     },
                     "session_class": "testing",
+                    "session_security_class": "ordinary",
+                    "session_epoch": 1,
                     "state": "active",
                     "recording_ref": "recordings/session.webm",
                     "actions": [
@@ -2236,6 +2240,8 @@
                         "invocation_source": "agent_initiated"
                     },
                     "session_class": "testing",
+                    "session_security_class": "ordinary",
+                    "session_epoch": 1,
                     "state": "active",
                     "recording_ref": "recordings/session.webm",
                     "actions": []
@@ -2266,13 +2272,14 @@
                         "agent_reason": "fixture missing remediation should fail"
                     },
                     "session_class": "testing",
+                    "session_security_class": "ordinary",
+                    "session_epoch": 1,
                     "state": "runtime_unavailable",
                     "recording_ref": "recordings/browser-unavailable.json",
                     "runtime_state": {
                         "runtime_state": "runtime_unavailable",
                         "requested_runtime": "pm_native_browser",
-                        "effective_runtime": "none",
-                        "playwright_cdp_role": "fallback_only"
+                        "effective_runtime": "none"
                     },
                     "actions": []
                 }
@@ -2302,6 +2309,8 @@
                         "agent_reason": "fixture unavailable state must carry runtime_state"
                     },
                     "session_class": "testing",
+                    "session_security_class": "ordinary",
+                    "session_epoch": 1,
                     "state": "runtime_unavailable",
                     "show_when_possible": true,
                     "open_watch_state": "unavailable",
@@ -2338,6 +2347,8 @@
                         "agent_reason": "fixture fallback Open state must name the route"
                     },
                     "session_class": "testing",
+                    "session_security_class": "ordinary",
+                    "session_epoch": 1,
                     "state": "detached",
                     "show_when_possible": true,
                     "open_watch_state": "fallback_open_external",
@@ -2345,8 +2356,7 @@
                     "runtime_state": {
                         "runtime_state": "degraded",
                         "requested_runtime": "pm_native_browser",
-                        "effective_runtime": "external_browser",
-                        "playwright_cdp_role": "fallback_only"
+                        "effective_runtime": "external_browser"
                     },
                     "actions": [],
                     "artifact_refs": [

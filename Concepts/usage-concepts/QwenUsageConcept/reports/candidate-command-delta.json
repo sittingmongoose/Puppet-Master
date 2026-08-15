@@ -77,6 +77,11 @@
       "command": "cmd.provider.switch_route",
       "verdict": "reused-canonical",
       "rationale": "Reused verbatim for 'Use next' with U11's semantics toast: future work only, in-flight requests never moved (packet §01 Multi-account)."
+    },
+    {
+      "command": "provider setup (first acquisition)",
+      "verdict": "no-command",
+      "rationale": "Correction packet: initial acquisition is an explicit user-triggered setup action in Provider Settings, not a dispatched command; U11 deep-links semantically (semantic.deep_link with focus_reason setup_required + continuation token). Auto/On maintain already-approved installations only."
     }
   ],
   "census": {

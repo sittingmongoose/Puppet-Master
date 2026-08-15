@@ -1,59 +1,66 @@
 {
-  "schema_id": "pm.chat.5_6_sol.direct_visual_inspection.v1",
+  "schema_id": "pm.chat.5_6_sol.direct_visual_inspection.v2",
   "model": "5.6 Sol",
-  "generated_at": "2026-08-12T07:47:30Z",
-  "status": "pass",
+  "generated_at": "2026-08-14T05:47:37Z",
+  "status": "pass_browser_prototype_visual_review_with_declared_residuals",
+  "production_readiness_claimed": false,
   "winner_recommendation": null,
+  "source_fingerprint_sha256": "4392f156cad4eb5f8761cdf1b40e9cbc370209c0e63b47684a6c063cc477f7bb",
+  "canonical_engine": "Firefox 153.0.4 / Gecko",
+  "canonical_receipt": "evidence/browser-acceptance-firefox.json",
   "frame_root": "evidence/frames",
-  "frame_count": 55,
-  "inspection_method": "Direct creative-director review of every final PNG at original pixel resolution after the authored entrance choreography settled. This is visual judgment, separate from automated geometry and state assertions.",
+  "inspection_count": 115,
+  "expected_frame_count": 115,
+  "inspection_method": "One-at-a-time direct creative-director review of every current canonical Firefox PNG at original resolution. No contact-sheet thumbnail, automated geometry assertion, or Chromium capture was counted as direct visual inspection.",
   "inspection_batches": [
     {
-      "category": "theme and width",
+      "category": "theme_and_width",
+      "status": "pass",
       "frame_count": 32,
       "frames": [
-        "friendly-dark-520.png",
-        "friendly-dark-750.png",
-        "friendly-dark-975.png",
-        "friendly-dark-1200.png",
-        "friendly-light-520.png",
-        "friendly-light-750.png",
-        "friendly-light-975.png",
-        "friendly-light-1200.png",
-        "retro-dark-520.png",
-        "retro-dark-750.png",
-        "retro-dark-975.png",
-        "retro-dark-1200.png",
-        "retro-light-520.png",
-        "retro-light-750.png",
-        "retro-light-975.png",
-        "retro-light-1200.png",
+        "basic-dark-1200.png",
         "basic-dark-520.png",
         "basic-dark-750.png",
         "basic-dark-975.png",
-        "basic-dark-1200.png",
+        "basic-light-1200.png",
         "basic-light-520.png",
         "basic-light-750.png",
         "basic-light-975.png",
-        "basic-light-1200.png",
+        "friendly-dark-1200.png",
+        "friendly-dark-520.png",
+        "friendly-dark-750.png",
+        "friendly-dark-975.png",
+        "friendly-light-1200.png",
+        "friendly-light-520.png",
+        "friendly-light-750.png",
+        "friendly-light-975.png",
+        "glass-dark-1200.png",
         "glass-dark-520.png",
         "glass-dark-750.png",
         "glass-dark-975.png",
-        "glass-dark-1200.png",
+        "glass-light-1200.png",
         "glass-light-520.png",
         "glass-light-750.png",
         "glass-light-975.png",
-        "glass-light-1200.png"
+        "retro-dark-1200.png",
+        "retro-dark-520.png",
+        "retro-dark-750.png",
+        "retro-dark-975.png",
+        "retro-light-1200.png",
+        "retro-light-520.png",
+        "retro-light-750.png",
+        "retro-light-975.png"
       ],
       "findings": [
-        "All eight diagonal concept pairings retain distinct spatial and reading grammars at 520, 750, 975, and 1200 px.",
-        "Body copy remains readable and metadata remains visible in friendly, retro, basic, and glass treatments; dark and retro surfaces no longer lose secondary text.",
-        "No settled frame contains a mid-entrance opacity state, clipped prose, dense-header collision, or root overflow.",
-        "Pinned history and left artifact regions yield outside the requested Chat measure instead of compressing the transcript below usability."
+        "All eight diagonal window-thread compositions remain visually distinct across 520, 750, 975, and 1200 px.",
+        "Body copy, metadata, actions, and dense status text remain readable across friendly, retro, basic, and glass light/dark treatments.",
+        "The narrow Timefield vertical-label clipping found during correction review is absent from the frozen final frames.",
+        "No inspected settled frame shows clipped prose, dense-header collision, popup collision, root overflow, or an unintended mid-animation state."
       ]
     },
     {
-      "category": "questionnaire grammars",
+      "category": "questionnaire_grammars",
+      "status": "pass",
       "frame_count": 8,
       "frames": [
         "question-thread-01.png",
@@ -66,13 +73,14 @@
         "question-thread-08.png"
       ],
       "findings": [
-        "Each questionnaire has a concept-specific composition, progress language, and motion origin rather than a shared renderer with a visual skin.",
-        "Dialogue Score, Branchbook, and Workshop were compacted after inspection so choices and bottom commit controls remain fully visible above the held-composer panel.",
-        "Question prompt, options, progress, cancel, skip, back, and forward actions are legible and spatially stable in all eight final frames."
+        "All eight persistent questionnaire compositions remain structurally distinct rather than one skinned renderer.",
+        "Prompt, progress, choices, validation, navigation, cancel, skip, and commit regions remain legible and spatially resolved.",
+        "Dense variants keep choices and commit controls visible above the held composer."
       ]
     },
     {
-      "category": "work systems",
+      "category": "work_systems",
+      "status": "pass",
       "frame_count": 8,
       "frames": [
         "work-thread-01.png",
@@ -85,13 +93,14 @@
         "work-thread-08.png"
       ],
       "findings": [
-        "The eight work compositions remain structurally distinct: publication notes, score, time bands, revision layers, instrument bench, strands, relay zones, and quiet register.",
-        "Dialogue Score and Workshop headers separate label, active summary, time, and state without collision; dense rows retain readable type and status contrast.",
-        "Persistent composers, work controls, progress, and scroll boundaries remain coherent without obscuring active content."
+        "Publication notes, score, time bands, revision layers, instrument bench, strands, relay zones, and quiet register remain eight distinct work compositions.",
+        "Dense headers separate label, active summary, time, and state without collision; row type and status contrast remain readable.",
+        "Persistent composer, work controls, progress, and scroll boundaries remain coherent."
       ]
     },
     {
-      "category": "stress states",
+      "category": "focused_states",
+      "status": "pass",
       "frame_count": 7,
       "frames": [
         "state-artifact-error.png",
@@ -103,41 +112,104 @@
         "state-search-all-520.png"
       ],
       "findings": [
-        "Artifact error, compact approval, material route warning, offline state, durable draft, route selection, all-thread search, Context Ring, pop-out, and deterministic-controller surfaces remain distinguishable and readable.",
-        "The 520 px route/search/context popups remain within the viewport and do not collide with their origin controls or hide their close action.",
-        "Prototype-only controller framing is explicit and does not visually impersonate the proposed production Chat surface."
+        "Artifact error, approval and offline, durable draft, pop-out Context Lens, route picker, and all-thread search states are readable and recoverable.",
+        "The 520 px popups remain inside the viewport with visible close paths and no origin-control collision.",
+        "The prototype-only deterministic controller is clearly outside the proposed production Chat surface."
+      ]
+    },
+    {
+      "category": "revision_2_corrected_triggers",
+      "status": "pass",
+      "frame_count": 59,
+      "frames": [
+        "trigger-activity-browser.png",
+        "trigger-activity-edit.png",
+        "trigger-activity-fetch.png",
+        "trigger-activity-generate.png",
+        "trigger-activity-read.png",
+        "trigger-activity-search.png",
+        "trigger-activity-test.png",
+        "trigger-activity-thinking_summary.png",
+        "trigger-artifact-close.png",
+        "trigger-artifact-error.png",
+        "trigger-artifact-loading.png",
+        "trigger-artifact-ready.png",
+        "trigger-artifact-switch.png",
+        "trigger-decision-approval_open.png",
+        "trigger-decision-approve.png",
+        "trigger-decision-branch.png",
+        "trigger-decision-deny.png",
+        "trigger-decision-details.png",
+        "trigger-diff-create.png",
+        "trigger-diff-open.png",
+        "trigger-diff-update.png",
+        "trigger-goal-blocked.png",
+        "trigger-goal-complete.png",
+        "trigger-goal-pause.png",
+        "trigger-goal-progress.png",
+        "trigger-goal-replan.png",
+        "trigger-goal-resume.png",
+        "trigger-goal-start.png",
+        "trigger-goal-update.png",
+        "trigger-history-peek.png",
+        "trigger-history-pin_compact.png",
+        "trigger-history-pin_full.png",
+        "trigger-history-switch_thread.png",
+        "trigger-history-unpin.png",
+        "trigger-question-cancel.png",
+        "trigger-question-next.png",
+        "trigger-question-open.png",
+        "trigger-question-prepare.png",
+        "trigger-question-select.png",
+        "trigger-question-skip.png",
+        "trigger-question-submit.png",
+        "trigger-question-validation_error.png",
+        "trigger-subagent-complete.png",
+        "trigger-subagent-fail.png",
+        "trigger-subagent-progress.png",
+        "trigger-subagent-queue.png",
+        "trigger-subagent-retry.png",
+        "trigger-subagent-spawn.png",
+        "trigger-system-port_collision.png",
+        "trigger-system-reset.png",
+        "trigger-system-worktree_collision.png",
+        "trigger-thread-branch.png",
+        "trigger-thread-receive_response.png",
+        "trigger-thread-send_request.png",
+        "trigger-thread-spawn_related.png",
+        "trigger-todo-add.png",
+        "trigger-todo-block.png",
+        "trigger-todo-complete.png",
+        "trigger-todo-reopen.png"
+      ],
+      "findings": [
+        "Every corrected trigger frame is visually clean and carries the exact visible trigger receipt.",
+        "Artifact, decision, history, question, subagent-spawn, thread-branch, and collision frames expose especially prominent visible consequences.",
+        "Many lifecycle frames intentionally retain the same primary composition and expose the exact bottom receipt; their required non-receipt semantic mutations are established by automated before-after assertions in the browser receipt rather than inferred from pixels alone.",
+        "system.reset visibly restores the known fixture state and retains its exact reset receipt."
+      ]
+    },
+    {
+      "category": "scenario_reset",
+      "status": "pass",
+      "frame_count": 1,
+      "frames": [
+        "trigger-scenario-reset.png"
+      ],
+      "findings": [
+        "scenario.reset intentionally clears trigger receipts and returns the visible fixture-ready state; the automated reset matrix proves the canonical fingerprint twice."
       ]
     }
   ],
-  "cross_engine_spot_check": {
-    "engine": "Chromium 151.0.7922.34 / Blink",
-    "frame_root": "evidence/chromium-frames",
-    "frame_count": 12,
-    "scope": "Representative parity review only; this is not a claim that all 55 Chromium frames received direct visual inspection.",
-    "frames": [
-      "friendly-dark-520.png",
-      "retro-dark-520.png",
-      "basic-dark-520.png",
-      "glass-dark-520.png",
-      "friendly-light-1200.png",
-      "retro-light-1200.png",
-      "basic-light-1200.png",
-      "glass-light-1200.png",
-      "question-thread-02.png",
-      "work-thread-05.png",
-      "state-route-picker-520.png",
-      "state-popout-context.png"
-    ],
-    "findings": [
-      "Sampled Chromium frames preserve the Firefox layout geometry, type hierarchy, surface contrast, and settled authored state across all four theme families.",
-      "The repaired Dialogue Score questionnaire keeps all choices and commit controls above the held composer in Blink.",
-      "Workshop workbench, narrow route picker, and pop-out Context Ring remain readable and collision-free in Blink."
-    ]
-  },
-  "global_findings": [
-    "All 55 final evidence frames were directly inspected; none is counted from an automated assertion alone.",
-    "The larger 512-cell baseline and 896-cell feature matrices remain automated geometry and state coverage and are not represented as human visual reviews.",
-    "No concept is ranked, selected, or implied as the winner."
+  "correction_findings": [
+    "Correction review exposed an earlier retained-focus/compositor evidence issue and narrow Timefield label clipping; both were fixed before the frozen final capture.",
+    "Provider supply-chain, authentication-order, and continuation-currentness corrections changed the frozen source fingerprint; all 115 regenerated Firefox canonical frames were then re-opened and inspected at original resolution.",
+    "No remaining visual defect was found in the inspected final set."
   ],
-  "residual_boundary": "This receipt covers the browser concept evidence only. Native Slint, detached-window DPI, platform font metrics, IME, assistive technology, and live-service behavior remain production validation work."
+  "evidence_boundaries": [
+    "The 512 baseline cells, 896 feature-state cells, 432 continuous-resize cells, and other large matrices are automated geometry and semantic-state checks, not individual human image reviews.",
+    "Chromium produced 115 current frames and passed the same complete 33-check suite from a file URL, but those Chromium frames are not included in this direct-inspection claim.",
+    "Browser evidence does not establish native Slint rendering, detached-window DPI, platform font metrics, IME, assistive-technology behavior, or live-service behavior."
+  ],
+  "residual_boundary": "This receipt covers visual judgment of the browser concept evidence only. The implementation is HTML/CSS/JavaScript with Slint-portable translation guidance; it is not native, compiled, drop-in, or production-validated Slint."
 }

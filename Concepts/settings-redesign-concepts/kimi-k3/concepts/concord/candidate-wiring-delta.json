@@ -6,53 +6,115 @@
   "families": [
     {
       "family": "navigation",
-      "controls": ["category rows", "outline subcategory jumps", "search results", "notice actions", "recents", "manager tabs"],
-      "trace": "UI source → cmd.settings.navigate (or category/subcategory/setting.focus, manager.open) → Settings owner → target validation against the registry → route state mutation (hash + history) → route-change event → workspace/manager projection with focus settle → Usage: none; diagnostics record the deep link → recovery: Back/forward restores the previous route"
+      "controls": [
+        "category rows",
+        "outline subcategory jumps",
+        "search results",
+        "notice actions",
+        "recents",
+        "manager tabs"
+      ],
+      "trace": "UI source \u2192 cmd.settings.navigate (or category/subcategory/setting.focus, manager.open) \u2192 Settings owner \u2192 target validation against the registry \u2192 route state mutation (hash + history) \u2192 route-change event \u2192 workspace/manager projection with focus settle \u2192 Usage: none; diagnostics record the deep link \u2192 recovery: Back/forward restores the previous route"
     },
     {
       "family": "setting values",
-      "controls": ["toggles", "selects", "segmented", "sliders", "steppers", "text/path fields", "Reset"],
-      "trace": "UI source → cmd.settings.value.set → settings inventory owner → schema validation + managed-policy permission (managed/unavailable refuse) → persistent value mutation with scope → value-changed event + receipt → row re-projection with resolved state badge → Usage: none; diagnostics log the change → recovery: cmd.settings.default.restore + deep link to the row"
+      "controls": [
+        "toggles",
+        "selects",
+        "segmented",
+        "sliders",
+        "steppers",
+        "text/path fields",
+        "Reset"
+      ],
+      "trace": "UI source \u2192 cmd.settings.value.set \u2192 settings inventory owner \u2192 schema validation + managed-policy permission (managed/unavailable refuse) \u2192 persistent value mutation with scope \u2192 value-changed event + receipt \u2192 row re-projection with resolved state badge \u2192 Usage: none; diagnostics log the change \u2192 recovery: cmd.settings.default.restore + deep link to the row"
     },
     {
       "family": "validation and conflicts",
-      "controls": ["Default shell path validation", "changed-elsewhere bar"],
-      "trace": "UI source → cmd.settings.value.set → inventory owner → field validator (absolute .exe path) → refusal leaves the stored value untouched and raises the row error slot → error event → row re-projection with role=alert → diagnostics attribute the failed attempt → recovery: correct the value or clear for Auto"
+      "controls": [
+        "Default shell path validation",
+        "changed-elsewhere bar"
+      ],
+      "trace": "UI source \u2192 cmd.settings.value.set \u2192 inventory owner \u2192 field validator (absolute .exe path) \u2192 refusal leaves the stored value untouched and raises the row error slot \u2192 error event \u2192 row re-projection with role=alert \u2192 diagnostics attribute the failed attempt \u2192 recovery: correct the value or clear for Auto"
     },
     {
       "family": "provider accounts and routing",
-      "controls": ["Use for future work", "account enable", "failover priority", "continuation select", "role routes"],
-      "trace": "UI source → cmd.account.select_profile / cmd.provider.switch_route (both reused canon IDs) → Multi-Account / Models System owner → permission check → connection state mutation → account-changed event + receipt ('future requests only') → accounts tab re-projection → Usage attribution follows the new account on subsequent work → recovery: re-select the previous account; deep link to the accounts tab"
+      "controls": [
+        "Use for future work",
+        "account enable",
+        "failover priority",
+        "continuation select",
+        "role routes"
+      ],
+      "trace": "UI source \u2192 cmd.account.select_profile / cmd.provider.switch_route (both reused canon IDs) \u2192 Multi-Account / Models System owner \u2192 permission check \u2192 connection state mutation \u2192 account-changed event + receipt ('future requests only') \u2192 accounts tab re-projection \u2192 Usage attribution follows the new account on subsequent work \u2192 recovery: re-select the previous account; deep link to the accounts tab"
     },
     {
       "family": "provider installations and updates",
-      "controls": ["Use this installation", "Update now", "Roll back", "policy selects", "Install from the official source"],
-      "trace": "UI source → cmd.provider.installation.* → Binary Locator / Release owner → ownership-confidence + policy validation (unknown owner is manual-only; idle-auto needs proven ownership) → installation/update state machine mutation → ObservableWork phases (updating → verifying) + receipts → Installation tab re-projection → diagnostics log each phase → recovery: cmd.provider.installation.rollback returns to the last verified version; deep link to the tab"
+      "controls": [
+        "Use this installation",
+        "Update now",
+        "Roll back",
+        "policy selects",
+        "Install from the official source"
+      ],
+      "trace": "UI source \u2192 cmd.provider.installation.* \u2192 Binary Locator / Release owner \u2192 ownership-confidence + policy validation (unknown owner is manual-only; idle-auto needs proven ownership) \u2192 installation/update state machine mutation \u2192 ObservableWork phases (updating \u2192 verifying) + receipts \u2192 Installation tab re-projection \u2192 diagnostics log each phase \u2192 recovery: cmd.provider.installation.rollback returns to the last verified version; deep link to the tab"
     },
     {
       "family": "catalog refresh",
-      "controls": ["Refresh catalog"],
-      "trace": "UI source → cmd.provider.catalog.refresh (alias of cmd.model.refresh) → Models System → coalesced refresh permission → catalog version mutation with last-known-good retained → refresh events + receipt → models tab re-projection with timestamp → Usage: one probe-sized request when probes are on → recovery: last-known-good list never leaves the screen"
+      "controls": [
+        "Refresh catalog"
+      ],
+      "trace": "UI source \u2192 cmd.provider.catalog.refresh (alias of cmd.model.refresh) \u2192 Models System \u2192 coalesced refresh permission \u2192 catalog version mutation with last-known-good retained \u2192 refresh events + receipt \u2192 models tab re-projection with timestamp \u2192 Usage: one probe-sized request when probes are on \u2192 recovery: last-known-good list never leaves the screen"
     },
     {
       "family": "memory ledger",
-      "controls": ["verify", "pin", "edit", "delete", "version restore", "rebuild/dedupe/summarize/archive/redact"],
-      "trace": "UI source → cmd.memory.* → Assistant Memory owner → review-policy validation → gist mutation (status/pin/text/version) → memory-changed event + receipt → ledger re-projection with activation bar → Usage: none (retrieval only) → recovery: version restore; deleted gists keep evidence in the receipt"
+      "controls": [
+        "verify",
+        "pin",
+        "edit",
+        "delete",
+        "version restore",
+        "rebuild/dedupe/summarize/archive/redact"
+      ],
+      "trace": "UI source \u2192 cmd.memory.* \u2192 Assistant Memory owner \u2192 review-policy validation \u2192 gist mutation (status/pin/text/version) \u2192 memory-changed event + receipt \u2192 ledger re-projection with activation bar \u2192 Usage: none (retrieval only) \u2192 recovery: version restore; deleted gists keep evidence in the receipt"
     },
     {
       "family": "personas and crews",
-      "controls": ["persona detail actions", "import with scans", "crew route policy"],
-      "trace": "UI source → cmd.persona.manage (alias over the canon persona verbs) / cmd.crew.template.update → Personas / Orchestrator owner → trust + injection-scan validation on import → template/default mutation → event + receipt → gallery/card re-projection → Usage attribution stays on the role routes → recovery: cancel import; strict policy restore"
+      "controls": [
+        "persona detail actions",
+        "import with scans",
+        "crew route policy"
+      ],
+      "trace": "UI source \u2192 cmd.persona.manage (alias over the canon persona verbs) / cmd.crew.template.update \u2192 Personas / Orchestrator owner \u2192 trust + injection-scan validation on import \u2192 template/default mutation \u2192 event + receipt \u2192 gallery/card re-projection \u2192 Usage attribution stays on the role routes \u2192 recovery: cancel import; strict policy restore"
     },
     {
       "family": "permissions rules",
-      "controls": ["drag reorder", "trace a sample path", "ELI5/Expert toggle", "presets"],
-      "trace": "UI source → cmd.permissions.rule.reorder (alias cmd.permissions.reorder_rule) / cmd.permissions.rule.test → Permissions owner → order mutation or dry evaluation → rule-trace event → ordered list re-projection with last-match-wins trace → diagnostics record the trace sample → recovery: reorder back; presets receipt before apply"
+      "controls": [
+        "drag reorder",
+        "trace a sample path",
+        "ELI5/Expert toggle",
+        "presets"
+      ],
+      "trace": "UI source \u2192 cmd.permissions.rule.reorder (alias cmd.permissions.reorder_rule) / cmd.permissions.rule.test \u2192 Permissions owner \u2192 order mutation or dry evaluation \u2192 rule-trace event \u2192 ordered list re-projection with last-match-wins trace \u2192 diagnostics record the trace sample \u2192 recovery: reorder back; presets receipt before apply"
     },
     {
       "family": "back seat driver",
-      "controls": ["Off/Auto/On", "Run a review now"],
-      "trace": "UI source → cmd.settings.value.set (goal.bsd-mode) → Goal Runtime owner → bounded-delta privacy validation → mode mutation → event + receipt → BSD manager re-projection with health → Usage attribution per review → recovery: set Auto; a failed review never blocks primary work"
+      "controls": [
+        "Off/Auto/On",
+        "Run a review now"
+      ],
+      "trace": "UI source \u2192 cmd.settings.value.set (goal.bsd-mode) \u2192 Goal Runtime owner \u2192 bounded-delta privacy validation \u2192 mode mutation \u2192 event + receipt \u2192 BSD manager re-projection with health \u2192 Usage attribution per review \u2192 recovery: set Auto; a failed review never blocks primary work"
+    },
+    {
+      "family": "settings shell performance (correction pass)",
+      "controls": [
+        "domain-local refresh",
+        "lazy manager hydration",
+        "offline last-known-good banner",
+        "100-installation collapse",
+        "behavior profile rows"
+      ],
+      "trace": "store change \u2192 key-domain classification \u2192 repaint only the owning surface (card-wall Home and margin notes render fresh on entry) \u2192 no per-row repaint storms; slow-hydration scenario \u2192 truthful Loading projection \u2192 content; offline scenario \u2192 cached catalog/connection state stays visible, zero probes; production owner: RuntimeResourceGovernor owns admission, ObservableWork owns the operation projection \u2014 Settings owns policy and presentation only"
     }
   ]
 }

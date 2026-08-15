@@ -367,3 +367,35 @@ html[data-reduced-motion='1'] .pm-msg.is-tick-target { animation: none !importan
 [data-reduced-motion='1'] .t6-tick.is-flash {
   animation: none !important;
 }
+
+/* Work margin sidecar ticks */
+.t6-work-sidecar {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid color-mix(in srgb, var(--border, #666) 50%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.t6-work-tick {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  padding: 4px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  font: inherit;
+  display: block;
+  width: 100%;
+}
+.t6-work-tick:hover,
+.t6-work-tick.is-active,
+.t6-work-tick[aria-pressed='true'] {
+  background: rgba(127,127,127,0.14);
+}
+.t6-work-detail { margin-top: 8px; }
+.t6-work-leaf { margin-bottom: 4px; }
+.pm-t6-margin .pm-cw-margin-sidecar { margin: 6px 0; }
+

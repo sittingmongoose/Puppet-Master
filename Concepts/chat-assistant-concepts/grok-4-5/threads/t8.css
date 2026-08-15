@@ -331,3 +331,42 @@ html[data-reduced-motion='1'] .t8-exhale { animation: none !important; }
 [data-reduced-motion='1'] .t8-breath.is-exhale-only::after {
   animation: none !important;
 }
+
+/* Paired inhale/exhale work lanes */
+.t8-work-breath {
+  display: grid;
+  grid-template-columns: 1fr 12px 1fr;
+  gap: 8px;
+  align-items: start;
+  margin: 8px 0 12px;
+}
+.t8-work-inhale,
+.t8-work-exhale { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.t8-work-gutter {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  position: relative;
+}
+.t8-work-gutter::before {
+  content: '';
+  width: 1px;
+  background: color-mix(in srgb, var(--border, #666) 55%, transparent);
+  position: absolute;
+  top: 8px; bottom: 8px;
+}
+.t8-work-empty { font-size: 11px; opacity: 0.55; padding: 4px 0; }
+.t8-work-leaf { margin: 0; }
+.pm-t8-breath[data-chat-tier='min'] .t8-work-breath,
+.pm-t8-breath[data-narrow='1'] .t8-work-breath {
+  grid-template-columns: 1fr;
+}
+.pm-t8-breath[data-chat-tier='min'] .t8-work-gutter,
+.pm-t8-breath[data-narrow='1'] .t8-work-gutter {
+  height: 1px; margin: 2px 0;
+}
+.pm-t8-breath[data-chat-tier='min'] .t8-work-gutter::before,
+.pm-t8-breath[data-narrow='1'] .t8-work-gutter::before {
+  width: auto; height: 1px; left: 0; right: 0; top: 50%; bottom: auto;
+}
+

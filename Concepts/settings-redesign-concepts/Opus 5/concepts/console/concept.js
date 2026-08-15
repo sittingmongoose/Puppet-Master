@@ -1362,6 +1362,49 @@
    * manager goes through this one path. */
   function hydrated() { window.__pmHydrated = (window.__pmHydrated || 0) + 1; }
 
+
+  /* ------------------------------------------------- windowed long lists */
+
+  /* Added by the 2026-08-13 dependency correction. Register §7.3 and §20.2
+   * require long lists to be virtualized. Rendering one node per record turns a
+   * hundred-installation host into a hundred-row DOM; this keeps the node count
+   * bounded and discloses the rest progressively, which is what the packet's
+   * "50 MCP entries progressively disclosed" test asks for. */
+
+  /* A windowed table still tells the truth about how many rows exist. */
+  function tbodyNote(section, shown) {
+    pendingTableNote = { id: section.id, shown: shown, total: section.items.length };
+  }
+  var pendingTableNote = null;
+
+  function windowedItems(section, host, renderOne) {
+    var items = section.items || [];
+    var V = window.PMVirtual;
+    if (!V || !V.shouldVirtualize(items.length)) {
+      items.forEach(function (it) { host.appendChild(renderOne(it)); });
+      return;
+    }
+    var shown = windowSizes[section.id] || 24;
+    var slice = items.slice(0, shown);
+    slice.forEach(function (it) { host.appendChild(renderOne(it)); });
+
+    var more = el("div", "co-window");
+    more.appendChild(el("span", "co-window-count",
+      E("Showing " + slice.length + " of " + items.length + " · the rest are not rendered until you ask")));
+    if (shown < items.length) {
+      var btn = el("button", "co-btn", "<span>Show " + Math.min(24, items.length - shown) + " more</span>");
+      btn.type = "button";
+      btn.addEventListener("click", function () {
+        windowSizes[section.id] = shown + 24;
+        applyRoute(currentRoute());
+      });
+      more.appendChild(btn);
+    }
+    host.appendChild(more);
+  }
+
+  var windowSizes = {};
+
   function renderManager(spec, ctx, body, tools) {
     hydrated();
 
@@ -1436,7 +1479,7 @@
     }
     if (section.items.length === 0) { mv.appendChild(emptyMovement(section)); return mv; }
     if (section.kind === "table" || section.kind === "matrix") { mv.appendChild(movementTable(section, ctx)); return mv; }
-    section.items.forEach(function (it) { mv.appendChild(movementItem(it, ctx)); });
+    windowedItems(section, mv, function (it) { return movementItem(it, ctx); });
     return mv;
   }
 
@@ -1458,7 +1501,11 @@
     thead.appendChild(hr);
     t.appendChild(thead);
     var tb = el("tbody");
-    section.items.forEach(function (it) {
+    var tableItems = (window.PMVirtual && window.PMVirtual.shouldVirtualize(section.items.length))
+      ? section.items.slice(0, windowSizes[section.id] || 24)
+      : section.items;
+    if (tableItems.length < section.items.length) tbodyNote(section, tableItems.length);
+    tableItems.forEach(function (it) {
       var tr = el("tr");
       var td = el("td");
       td.appendChild(el("div", "co-item-name", E(it.name)));
@@ -1480,6 +1527,31 @@
       }
     });
     t.appendChild(tb);
+
+    var tableWindowNote = null;
+    if (pendingTableNote && pendingTableNote.id === section.id) {
+      var note = pendingTableNote; pendingTableNote = null;
+      var shownNow = note.shown;
+      var wrapN = el("div", "co-window");
+      wrapN.appendChild(el("span", "co-window-count",
+        E("Showing " + shownNow + " of " + note.total + " · the rest are not rendered until you ask")));
+      if (shownNow < note.total) {
+        var moreBtn = el("button", "co-btn", "<span>Show " + Math.min(24, note.total - shownNow) + " more</span>");
+        moreBtn.type = "button";
+        moreBtn.addEventListener("click", function () {
+          windowSizes[note.id] = shownNow + 24;
+          applyRoute(currentRoute());
+        });
+        wrapN.appendChild(moreBtn);
+      }
+      tableWindowNote = wrapN;
+    }
+    if (tableWindowNote) {
+      var holder = el("div");
+      holder.appendChild(t);
+      holder.appendChild(tableWindowNote);
+      return holder;
+    }
     return t;
   }
 

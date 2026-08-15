@@ -142,6 +142,38 @@
     return '<div class="pm-q-condenser-meter" aria-hidden="true">' + bits + '</div>';
   }
 
+  /** Per-paradigm prepare copy — distinct from open-state kickers. */
+  function prepareLabel(cid) {
+    switch (cid) {
+      case 't1':
+        return 'Preparing folio leaf…';
+      case 't2':
+        return 'Attaching question to beat…';
+      case 't3':
+        return 'Sliding shelf card in…';
+      case 't4':
+        return 'Yielding composer for questions…';
+      case 't5':
+        return 'Condensing question stage…';
+      case 't6':
+        return 'Marking margin callout…';
+      case 't7':
+        return 'Focusing question turn…';
+      case 't8':
+        return 'Inhale · preparing paired prompt…';
+      default:
+        return 'Preparing questions…';
+    }
+  }
+
+  /**
+   * Shared stage shell. Prepare vs open choreography (Video 04):
+   * - prepare: is-pill + is-preparing + data-q-phase=prepare (pill visible, open chrome latent)
+   * - open: is-expanded + data-q-phase=open (pill hidden, head/carousel/actions live)
+   * - submit: is-pill + is-submitting (compress toward pill)
+   * armQuestionnaireMorph drives prepare→expand; settle drives submit→compress.
+   * phase='preparing' from harness/store is visualized here (not open chrome).
+   */
   function coreStage(q, cid, headHtml, extraClass) {
     var idx = q.currentQuestionIndex | 0;
     var questions = q.questions || [];
@@ -149,8 +181,18 @@
     var current = questions[idx] || questions[0];
     if (!current) return '';
     var id = RENDERER_IDS[cid] || 'q-shared-fallback';
+    var phase = q.phase === 'preparing' ? 'prepare' : q.phase === 'submitting' ? 'submit' : 'open';
+    var phaseClass =
+      phase === 'prepare'
+        ? 'is-pill is-preparing pm-q-phase-prepare'
+        : phase === 'submit'
+          ? 'is-pill is-submitting pm-q-phase-submit'
+          : 'is-expanded pm-q-phase-open';
+    var prepareActive = phase !== 'open';
     return (
-      '<section class="pm-q-stage is-expanded pm-q-card pm-q-paradigm-' +
+      '<section class="pm-q-stage ' +
+      phaseClass +
+      ' pm-q-card pm-q-paradigm-' +
       escapeHtml(cid) +
       (extraClass ? ' ' + extraClass : '') +
       '" data-questionnaire-id="' +
@@ -163,11 +205,22 @@
       escapeHtml(id) +
       '" data-q-concept="' +
       escapeHtml(cid) +
+      '" data-q-phase="' +
+      escapeHtml(phase) +
+      '" data-q-prepare="' +
+      (prepareActive ? '1' : '0') +
+      '" data-q-morph-path="prepare→expand→submit→compress">' +
+      '<div class="pm-q-pill" data-q-pill data-q-prepare-chrome aria-hidden="' +
+      (prepareActive ? 'false' : 'true') +
       '">' +
-      '<div class="pm-q-pill" data-q-pill aria-hidden="true">' +
-      '<span class="pm-q-pill-label" data-q-pill-label>Preparing questions…</span>' +
+      '<span class="pm-q-pill-label" data-q-pill-label>' +
+      escapeHtml(prepareLabel(cid)) +
+      '</span>' +
       '<span class="pm-q-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></span>' +
       '</div>' +
+      '<div class="pm-q-open-chrome" data-q-open-chrome aria-hidden="' +
+      (prepareActive ? 'true' : 'false') +
+      '">' +
       headHtml +
       '<div class="pm-q-carousel">' +
       '<div class="pm-q-carousel-pane" data-q-pane>' +
@@ -177,6 +230,7 @@
       optionBody(current) +
       '</div></div>' +
       actionsHtml() +
+      '</div>' +
       '</section>'
     );
   }

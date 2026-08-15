@@ -1,0 +1,343 @@
+{
+  "schema_id": "pm.chat_assistant_reference_review.v1",
+  "model": "qwen-3-8",
+  "packet": "PM_Assistant_Chat_Dependency_Media_and_Work_Correction_2026-08-13",
+  "generated_at": "2026-08-14T04:17:53.628Z",
+  "playback_limitation": "No GUI video playback in this environment; every video inspected via ffprobe plus its complete keyframe set and contact sheet, per REFERENCE_MEDIA_INDEX.md allowance.",
+  "items": [
+    {
+      "path": "00_READ_ME_FIRST.md",
+      "sha256": "6a41182ccb02628d51fccd9cb2cab690678d80af1f153e69abb36ce306fa5470",
+      "kind": "doc",
+      "opened": true,
+      "method": "read",
+      "observations": "States omission scope and the work-reinspection requirement; drove this audit.",
+      "changed": [],
+      "no_change_warranted": "No change warranted: process document."
+    },
+    {
+      "path": "DEMO_SCENARIO_MANIFEST.json",
+      "sha256": "6913d8e678ae4d01cb79d59b1c308c2a759eca94e20b46de166ac845ab9402dc",
+      "kind": "json_fixture",
+      "opened": true,
+      "method": "read",
+      "observations": "Canonical fixture. Built demo-extend.js consumes questions/diffs/artifacts verbatim; collisions/warnings adapted. Gaps: Slint reviewer route/state inconsistent with manifest and with built message text; manifest history_rows absent from pin fixture.",
+      "changed": [
+        "_shared/demo-extend.js: reviewer route Qwen 3.8 + retrying with failed attempt; pin history rows seeded from manifest"
+      ],
+      "no_change_warranted": null
+    },
+    {
+      "path": "DEMO_TRIGGER_CONTRACT.json",
+      "sha256": "6ffb3e70962a746b4618c63cefaddf14fa56f463be870eda2ded02b3a7fa4dfd",
+      "kind": "json_fixture",
+      "opened": true,
+      "method": "read",
+      "observations": "v2 contract: 11 families, 59 ids. Diff vs built registry (_shared/demo-triggers.js): all 59 present (84 built incl. extensions).",
+      "changed": [],
+      "no_change_warranted": "No change warranted: contract fully covered; extras are packet-mandated extensions."
+    },
+    {
+      "path": "PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "sha256": "9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1",
+      "kind": "doc",
+      "opened": true,
+      "method": "read",
+      "observations": "Provider CLI: never bundled/baseline/pre-seeded/silent; explicit user-triggered install from official source; exact Host/Environment; install vs auth separate; Auto/On maintains but does not consent; post-consent lifecycle (discover/verify/rollback). Built copy lacked most affirmative concepts (no banned claims though).",
+      "changed": [
+        "windows/_window-kit.js: adjudication copy set + row-exact deep-link with continuation token + discover/verify states; threads/_thread-kit.js send-blocked copy verbatim 'Provider Setup Required'"
+      ],
+      "no_change_warranted": null
+    },
+    {
+      "path": "REFERENCE_MEDIA_INDEX.md",
+      "sha256": "39c62310d79fa4a1b3ba47f26e366ed3bc32837715306e2b0c2733435ce4da28",
+      "kind": "doc",
+      "opened": true,
+      "method": "read",
+      "observations": "Index + 'do not claim inspected unless opened' rule; this report is the compliance artifact.",
+      "changed": [],
+      "no_change_warranted": "No change warranted."
+    },
+    {
+      "path": "reference/compact_activity_motion_contact_sheet.jpg",
+      "sha256": "9ba7f1f50e7c17723a6c431299977c533a41dcdb933401dda5f53f57613f9922",
+      "kind": "motion_sheet",
+      "opened": true,
+      "method": "opened as image",
+      "observations": "Live activity grows row-by-row, condenses to chip strip with counts, Verified row persists, reopen restores full list.",
+      "changed": [
+        "threads/_thread-kit.js condense"
+      ],
+      "no_change_warranted": null
+    },
+    {
+      "path": "reference/questionnaire_motion_contact_sheet.jpg",
+      "sha256": "c590467f6c0fe2cb3e52c76df97a15774acc7b65d351e14120c4b3dae38f183c",
+      "kind": "motion_sheet",
+      "opened": true,
+      "method": "opened as image",
+      "observations": "Full lifecycle: prepare pill -> card morph -> pages -> review -> submit pill -> receipt; card frame stable, composer pushed not covered.",
+      "changed": [
+        "threads/_thread-kit.js lifecycle hooks"
+      ],
+      "no_change_warranted": null
+    },
+    {
+      "path": "reference/screenshots/T3_MODEL_PICKER_REFERENCE.png",
+      "sha256": "76915ba3abb456415fe1acaf0f76dd84750cf2a9b8f1c6e5ff2efa16022c7963",
+      "kind": "screenshot",
+      "opened": true,
+      "method": "opened as image",
+      "observations": "Picker reference: provider icon rail, search, two-line rows, per-row kbd chips, favorites stars. Built picker had rail/search/stars but Recent-before-Favorites, no kbd chips, account-only sub-row.",
+      "changed": [
+        "windows/_window-kit.js: Favorites->Recents order, per-row shortcut chips + activation, provider text in sub-row"
+      ],
+      "no_change_warranted": null
+    },
+    {
+      "path": "reference/screenshots/pm7_chat_open.png",
+      "sha256": "8d91c19f7d5e806a0b5678c8445d89e103cdf97b48273c70260752f6b4c0d5c4",
+      "kind": "screenshot",
+      "opened": true,
+      "method": "opened as image",
+      "observations": "PMConcept7 chat as floating panel with chat-list rail; interaction reference only (popup family, selector order). Workspace already mirrors popup family per FINDINGS.md.",
+      "changed": [],
+      "no_change_warranted": "No change warranted: PMConcept7 is interaction reference, not editable canon; built popups already follow it."
+    },
+    {
+      "path": "reference/screenshots/pm7_popout.png",
+      "sha256": "0783109cf57e03cc240f45433b0153d1a26c17aa75e3984f3bc861f58e5ece42",
+      "kind": "screenshot",
+      "opened": true,
+      "method": "opened as image",
+      "observations": "PMConcept7 chat docked as right rail; confirms pop-out/dock duality. Built shell supports dock/pop-out; combined pin+artifact pop-out was untested -> new probe.",
+      "changed": [
+        "_build/tests probe-popout-combined (coverage expansion)"
+      ],
+      "no_change_warranted": null
+    },
+    {
+      "path": "reference/videos/01_message_arrival_spatial_continuity.mov",
+      "sha256": "aa8bb0855ee90fac051bf76f5e043949d10308b626783ca553ccc76970c0ef6a",
+      "kind": "video",
+      "opened": true,
+      "method": "ffprobe (h264 460x640, 3.94s, 120fps) + all 11 keyframes + contact sheet; no GUI playback in this environment (limitation recorded per REFERENCE_MEDIA_INDEX.md)",
+      "observations": "Message send/arrival: composer stays fixed; transcript advances with a blue header-band sweep while content arrives/scrolls; arriving rows settle with a short rise; no jump-cut.",
+      "changed": [
+        "threads/_thread-kit.js: smooth arrival scroll + header sweep on arrival while scrolled up (probe-motion-continuity)"
+      ],
+      "no_change_warranted": null
+    },
+    {
+      "path": "reference/videos/02_stable_paged_questionnaire.mov",
+      "sha256": "b03137b95e353792691c72ade6427dd53f1450459c425a3ceecfdfb83c10dbc3",
+      "kind": "video",
+      "opened": true,
+      "method": "ffprobe (h264 308x640, 19.83s) + all 7 keyframes + contact sheet",
+      "observations": "Paged questionnaire: stable card frame; pager 'Question N of 4'; answers persist; Skip visible on every page; review page lists all chosen answers with Back links; Submit on review.",
+      "changed": [
+        "threads/_thread-kit.js + t1..t8 renderers: pre-submit review step; Skip always visible (probe-motion-continuity, probe-phase6)"
+      ],
+      "no_change_warranted": null
+    },
+    {
+      "path": "reference/videos/03_compact_execution_activity.mov",
+      "sha256": "bef74d37cb2ed932a5a3c03fd7e53a7e66ab1bef4d4970d1803afa4bea8c55ef",
+      "kind": "video",
+      "opened": true,
+      "method": "ffprobe (h264 640x508, 36.44s) + all 10 keyframes + contact sheet",
+      "observations": "Activity rows appear incrementally (Thinking/Exploring N files/Reading/Importing/Making), condense gradually into a two-chip strip ('13 tools used', 'Made 1 create, 3 edits' with +/-) plus a persistent 'Verified …' row; condensed group stays reopenable.",
+      "changed": [
+        "threads/_thread-kit.js: gradual condense transition, two-chip strip, persistent Verified row (probe-motion-continuity)"
+      ],
+      "no_change_warranted": null
+    },
+    {
+      "path": "reference/videos/04_questionnaire_morph_prepare_submit.mov",
+      "sha256": "8cd8edbd8f81ff5e44b5068334e083d2de51908f1ec036da7e67899cba24dc5a",
+      "kind": "video",
+      "opened": true,
+      "method": "ffprobe (h264 500x640, 8.14s) + all 9 keyframes + contact sheet",
+      "observations": "Lifecycle: 'Preparing questions…' pill with spinner -> morphs into focused single-question card -> answer -> Submit -> 'Submitting answers…' pill -> resolves. One causal geometry, not pop-ins.",
+      "changed": [
+        "threads/_thread-kit.js + t1..t8 renderers: visible prepare pill and submitting pill wired through the custom-renderer path with shared morph primitive (probe-motion-continuity)"
+      ],
+      "no_change_warranted": null
+    },
+    {
+      "path": "reference/videos/VIDEO_SOURCE_MAP.json",
+      "sha256": "a1095ec42047c5696f5406912fc0cc984e2024cdd19471d47d4ac0b869d2e8e4",
+      "kind": "json_fixture",
+      "opened": true,
+      "method": "read",
+      "observations": "Maps packet names to original upload names; durations/resolutions match ffprobe output.",
+      "changed": [],
+      "no_change_warranted": "No change warranted: informational mapping only."
+    },
+    {
+      "path": "reference/videos/contact_sheets/01_message_arrival_spatial_continuity_contact.jpg",
+      "sha256": "1ad4411a24e5d2f0d10cee7bca7a88cd23995d906ed423d95c842a34d0501d53",
+      "kind": "contact_sheet",
+      "opened": true,
+      "method": "opened as image",
+      "observations": "12 frames confirm fixed composer, smooth push, header sweep, settle.",
+      "changed": [],
+      "no_change_warranted": "No change beyond video-driven items."
+    },
+    {
+      "path": "reference/videos/contact_sheets/02_stable_paged_questionnaire_contact.jpg",
+      "sha256": "13ca01701f92f8b9c2f9a6ff90a61c9dd495713ac47d4f75c5273ba3d83bd55f",
+      "kind": "contact_sheet",
+      "opened": true,
+      "method": "opened as image",
+      "observations": "12 frames confirm stable frame, pager, review page with answer list.",
+      "changed": [],
+      "no_change_warranted": "No change beyond video-driven items."
+    },
+    {
+      "path": "reference/videos/contact_sheets/03_compact_execution_activity_contact.jpg",
+      "sha256": "2068d11bc8972032dd5d41e6c4db20ae4162dca95210e2c235005b8150bad69b",
+      "kind": "contact_sheet",
+      "opened": true,
+      "method": "opened as image",
+      "observations": "12 frames confirm incremental rows, condense, verified card.",
+      "changed": [],
+      "no_change_warranted": "No change beyond video-driven items."
+    },
+    {
+      "path": "reference/videos/contact_sheets/04_questionnaire_morph_prepare_submit_contact.jpg",
+      "sha256": "fbe2c8de06b28540e37b21345827267c664244b33190fab9dd10ffffd76e4986",
+      "kind": "contact_sheet",
+      "opened": true,
+      "method": "opened as image",
+      "observations": "12 frames confirm prepare pill, morph, submit pill, resolution.",
+      "changed": [],
+      "no_change_warranted": "No change beyond video-driven items."
+    },
+    {
+      "path": "reference/videos/keyframes/video_a_* (11 frames)",
+      "sha256": [
+        "2ce780211f88908d53b52fe37a62f9e1e5faf3efb360bdd3c6496455d9dda29b",
+        "08e3cdb234d33fbb3378d39070b90d3ffe068fcdaab3260bbbce364cd25ec8eb",
+        "e839d2751a7a9357089ca4dced4801210a7892bc01ec4447b69a23d2c63fd28e",
+        "de6786671505cb0193ede5139848de82b91644658b05ced7e3fcf902c8d6bca3",
+        "4909f1526eaf889f6aecaf13410681d71f5592418f6cfe8b32475018fabff600",
+        "9919afe1e5e25c5f93f70a6cf6f23bb539bb2cde0dc879a8003b201b0a7dfb9d",
+        "88ab67a47987efb859d66e6fbd7464515a2cd79b1bcf412659c4344ede9d3e43",
+        "3b2900d91c99d6d60a0d4d76cbe0d8286275a96ded9a5858b78beb8ae648f619",
+        "26e11ac78d8bc98b47cdeeb3cfbb487e644bc90c8fa0a0beabf846a533ba880d",
+        "bd17a80b915a53c8c77fe40250b4bf26b9930085338b280c5329fd2beaba9985",
+        "8bf7c5c767ad16979d5603260d84df67179a6dd37f2a774b327e829a2cfa10bd"
+      ],
+      "kind": "keyframe_set",
+      "opened": true,
+      "method": "opened every frame as image",
+      "observations": "11 frames: send -> header sweep during arrival/scroll -> settle; composer fixed.",
+      "changed": [],
+      "no_change_warranted": "Individual frames drive the video-level changes above; no separate change per frame."
+    },
+    {
+      "path": "reference/videos/keyframes/video_b_* (7 frames)",
+      "sha256": [
+        "988b36e1b5881e8aef468f2c134cea679be43c83a9f9d84fce59424f5b8e63f8",
+        "99c6791af07e836c7ef8ded5a0ba88192a21a24f79ed0a2dbcfb4b0b67cee651",
+        "647b424b7e8cc8223f144fab631b09c614d285738392ec8b73834b97f258710f",
+        "b1d759f8aaa4785ec368d8739f744b99c149e69f89e4f8e90cd508f024abcc59",
+        "1b86799082169fee43a8ca663fc2462a3bdb4d86d4d548dc1b3715cf56d36d3c",
+        "d292e1aad634d4c059981b7fc30504cee6c01d4f55f2e23b72563445d4829887",
+        "7b4edc888d317dbc42babaa8e3c2024314ff9d297dbf48ee0901ffdc5401aa04"
+      ],
+      "kind": "keyframe_set",
+      "opened": true,
+      "method": "opened every frame as image",
+      "observations": "7 frames: stable paged card, pager, Skip always visible, Next kbd chip, Submit enabled on answer.",
+      "changed": [],
+      "no_change_warranted": "Individual frames drive the video-level changes above; no separate change per frame."
+    },
+    {
+      "path": "reference/videos/keyframes/video_c_* (10 frames)",
+      "sha256": [
+        "34e15e47e3e725eb52bcb015feaf50887a1f1e8af2a24b28e0fc555dfc9fd4f5",
+        "ceda81e8c3678561f0c721d303fe256465819ba6977982b99d47e060050a91a1",
+        "13326674514d7360f8ba7dd25d8993a1a2f6c573441c82a0f6006ba90f04d236",
+        "095c13153609d767c4f1d86f0d86e672887b16e48705bce74ab5f7cd5a01dc4a",
+        "f2934d749212811676a314460a6a2814b2805223f70a5ba85c0dcb72634cd83c",
+        "562b9e5741c5c5f3edb8f80f12cd91764deb37dd55c5999e6b37727d3fe1769f",
+        "f8327ee0c1a266789e4061e9753c1aa7e6631e5a6fdfb98ae084839ac612d4f8",
+        "9b990cb396c9b223a4fb6f532ba989bd94bdda5690ae3f428f8f0e6cf76717ff",
+        "a65d8805ecd9214ef37a49299535b7129c7093aea6516d23e9f420604ea27624",
+        "c84988afea83621bb86e67024a9f184c49b704e03b2c793ca76214dc78a3a0a4"
+      ],
+      "kind": "keyframe_set",
+      "opened": true,
+      "method": "opened every frame as image",
+      "observations": "10 frames: incremental activity rows, two-chip condensed strip with +/- counts, persistent Verified row, reopenable groups.",
+      "changed": [],
+      "no_change_warranted": "Individual frames drive the video-level changes above; no separate change per frame."
+    },
+    {
+      "path": "reference/videos/keyframes/video_d_* (9 frames)",
+      "sha256": [
+        "8238314c7effee6559380e7afc4fe7358a6b7635adec7ef1ea8bd7d57749bb83",
+        "bf7a62782a3db690f8557aafa684c3b2cdacf0452a75a9f0575ef11865f773ee",
+        "c6c25b1a9161a53c15764f48213e78fbced965a65eab633b48cc2d27ae9f4861",
+        "391e993b9a7b5e45f2692c1caf2adef09d1e75e4cedaffb07504f4b1f1d975bd",
+        "9ca83731d17fd2aa6b9790b0a2e975e92213b5cb707c30c3bd80d49da81e88be",
+        "922a4657fc9fed80664507ea6c7577e1a3a01d4fb5f6bc8710fb6f672e5b1e56",
+        "1a73363063705c063c1511db8bdfbb3f6cfddb938f7834a37ddb6c59280b0414",
+        "16120b0558a3c98d968c53e6f16569a7d3fa1190a6dcb10c60c4ce68a4ab53d7",
+        "ea651c57c5a484e6c13713539e71269afc0b668bdfedee81dc572a7f89863f5c"
+      ],
+      "kind": "keyframe_set",
+      "opened": true,
+      "method": "opened every frame as image",
+      "observations": "9 frames: prepare pill -> Q1..Q3 morph -> Submit replaces Skip on last -> 'Submitting answers…' pill -> resolve.",
+      "changed": [],
+      "no_change_warranted": "Individual frames drive the video-level changes above; no separate change per frame."
+    }
+  ],
+  "finalized_at": "2026-08-14T06:04:01.391Z",
+  "implementation_outcomes": {
+    "interaction-test-report.json": "288/0 across 11 runs (9 mandated suites + probe-motion-continuity + probe-coverage-expansion)",
+    "gates": "19/19 probe scripts green (incl. 7 phase gates + smoke + attachment regression)",
+    "per_media": [
+      {
+        "media": "videos 01 + keyframes a + contact sheet",
+        "outcome": "arrival glide + header sweep implemented (kit), probe-motion-continuity asserts both, reduced-motion static bar"
+      },
+      {
+        "media": "videos 02 + keyframes b",
+        "outcome": "pre-submit review page + Skip-on-all-pages implemented across t1-t8; probe asserts review rows + back links"
+      },
+      {
+        "media": "videos 03 + keyframes c + compact sheet",
+        "outcome": "two-chip condense strip + persistent Verified row + gradual condense beat; reopen retained"
+      },
+      {
+        "media": "videos 04 + keyframes d + questionnaire sheet",
+        "outcome": "prepare/submitting pills wired through the custom-renderer path; shared morph; probe asserts pill->card->review->pill->receipt"
+      },
+      {
+        "media": "T3_MODEL_PICKER_REFERENCE.png",
+        "outcome": "Favorites->Recents, kbd chips + activation, provider sub-row"
+      },
+      {
+        "media": "pm7_chat_open.png / pm7_popout.png",
+        "outcome": "no visual change (already compliant); pop-out combined pin+artifact resize now tested (probe-coverage-expansion)"
+      },
+      {
+        "media": "DEMO_TRIGGER_CONTRACT.json",
+        "outcome": "no change warranted (all 59 ids present); conn.reconnect_fail added as extension; demo-trigger-report updated (85 triggers)"
+      },
+      {
+        "media": "DEMO_SCENARIO_MANIFEST.json",
+        "outcome": "reviewer route/state aligned; 18 history rows seeded into pin fixture"
+      },
+      {
+        "media": "PROVIDER_CLI_FINAL_ADJUDICATION.md",
+        "outcome": "adjudication copy set + exact-row deep-link with continuation token + discover/verify states"
+      }
+    ]
+  }
+}

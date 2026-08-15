@@ -400,3 +400,32 @@ html[data-reduced-motion='1'] .t7-thumb.is-active::after { animation: none !impo
 [data-reduced-motion='1'] .t7-room-inner[data-slide-dir] {
   animation: none !important;
 }
+
+/* Focus work filmstrip */
+.t7-work-focus { margin: 8px 0 12px; }
+.t7-work-film {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  margin-bottom: 6px;
+}
+.t7-work-thumb {
+  appearance: none;
+  border: 1px solid var(--pm-border, rgba(127,127,127,0.35));
+  background: transparent;
+  color: inherit;
+  border-radius: 6px;
+  min-width: 72px;
+  padding: 6px 8px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 600;
+}
+.t7-work-thumb.is-active,
+.t7-work-thumb[aria-pressed='true'] {
+  outline: 1px solid rgba(180,180,190,0.5);
+}
+.t7-work-panels { display: grid; gap: 4px; }
+

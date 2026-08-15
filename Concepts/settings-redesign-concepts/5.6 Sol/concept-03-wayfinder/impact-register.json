@@ -200,5 +200,68 @@
     "Exact command IDs and aliases require canonical UI Command Catalog adjudication.",
     "Exact settings inventory IDs and schema fields require owner audit; concept fixture IDs are not canon."
   ],
+  "materially_affected": true,
+  "correction_status": "candidate_only_NOT_MINTED_no_production_or_canonical_availability_claim",
+  "changed_assumptions": [
+    "ObservableWork is the sole truthful work/progress/wait owner; concept-local surfaces are projections/adapters.",
+    "RuntimeResourceGovernor alone owns resource policy/admission; Settings requests and projects policy, host enforcement uses the same contract, and no second governor exists.",
+    "Provider first acquisition, selecting an existing installation, authentication, verification, update, repair, and rollback are separate typed actions.",
+    "Provider CLI initial acquisition is never core/default baseline, preseeded, or silently triggered by Project/model/provider/Goal/Plan/WorkNode/agent/Auto/On; it requires official-source exact Host/Environment human consent.",
+    "Settings uses compact Home/search metadata, selected-manager-only hydration, generation currentness, byte bounds, virtualization, inactive unsubscribe/refcount release, transient-input non-persistence, and narrow frame-coalesced deltas.",
+    "Old-hardware/network/resource fixtures are deterministic projections, not native Slint or physical-hardware proof."
+  ],
+  "risk": [
+    "Candidate command IDs may conflict with or duplicate canon until command catalog and owner census is complete.",
+    "A local progress card could drift into a second operation owner unless it remains a strict ObservableWork adapter.",
+    "A host capacity projection could drift into a second governor unless RuntimeResourceGovernor remains the single contract.",
+    "Stale continuation, incorrect Host/Environment, ambiguous installation ownership, or missing consent could acquire or bind the wrong provider CLI.",
+    "Full manager/search/catalog hydration or subscription leaks could violate old-hardware, memory, and network constraints.",
+    "Browser evidence could be overstated as native Slint certification.",
+    "Server owner placement is unresolved; fabricating it would create an engine outside this concept scope."
+  ],
+  "verification": [
+    "jq parses every owned JSON artifact.",
+    "Assert every referenced command/component/owner ID is candidate-only, provisional, NOT_MINTED, or expressly subject to later census; no canonical availability is claimed.",
+    "Exercise provider result outcomes setup_required, candidate_selection_required, consent_required, accepted, queued, ready, failed, rolled_back, recovery_required, and stale_continuation with acquisition/auth/readiness kept separate.",
+    "Exercise RuntimeResourceGovernor outcomes admitted, queued, admitted_degraded, blocked_permission, blocked_resource, and cancelled through ObservableWork projections.",
+    "Verify compact Home/search metadata, selected-manager-only hydration, generation fencing, byte-bounded caches, at most 40 mounted rows, 825+ search fixtures, 100-installation fixtures, inactive unsubscribe/refcount behavior, transient-input non-persistence, and narrow frame-coalesced deltas.",
+    "Run deterministic poor CPU/RAM/disk/network and old-hardware projections, then retain native Slint and physical Ivy Bridge/Xeon validation as separate unresolved gates.",
+    "Search candidate artifacts for forbidden Playwright product/runtime/facade/compatibility/package/port/command/MCP/capture dependencies."
+  ],
+  "unresolved_defects": [
+    "Exact canonical command IDs, aliases, payload schemas, owners, and wiring evidence are not yet adjudicated.",
+    "Exact canonical settings inventory/schema and Plan owner placements remain unresolved.",
+    "Server owner module is unresolved and remains insertion-only.",
+    "Native Slint rendering, accessibility, CPU/RAM/disk/network behavior, and actual Ivy Bridge/Xeon performance are not certified.",
+    "Required specialist review may need bounded waves under resource constraints but cannot be omitted."
+  ],
+  "manager_completeness_additions": [
+    "Media",
+    "Accessibility/input/spellcheck",
+    "DRY Method visible states",
+    "Puppet Master app/content update insertion",
+    "Server/remote access/backup insertion",
+    "Product Onboarding insertion",
+    "Doctor insertion"
+  ],
+  "deferred_owner_policy": "Insertion-only; no Product Onboarding, Doctor, Installation/Deployment, Server Claim/Bootstrap, Project Sync/Move, app/content update, or Server engine is invented. Server ownership remains an explicit residual.",
+  "candidate_runtime_requirements": {
+    "ObservableWork_fields": ["operation_id", "owner_domain", "scope_refs", "object_refs", "title", "human_phase", "state", "progress_kind", "progress_source", "trustworthy_completed", "trustworthy_total", "queue_reason", "wait_reason", "last_activity", "heartbeat", "can_cancel", "can_background", "can_retry", "blocking_scope", "generation", "result_refs", "receipt_refs"],
+    "RuntimeResourceGovernor_outcomes": ["admitted", "queued", "admitted_degraded", "blocked_permission", "blocked_resource", "cancelled"],
+    "provider_typed_contract": "Complete request/result fields and all seven distinct lifecycle actions are recorded in candidate-command-delta.json and candidate-wiring-delta.json."
+  },
+  "references": [
+    "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/00_READ_ME_FIRST.md",
+    "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md",
+    "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/PROVIDER_CLI_FINAL_ADJUDICATION.md",
+    "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/REFERENCE_REVIEW_AND_REPAIR_REQUIREMENTS.md",
+    "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/00_START_HERE.md",
+    "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/10_PLAN_COMMAND_WIRING_DRY_IMPACT.md",
+    "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/CANDIDATE_COMMAND_ID_REGISTER.json",
+    "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/IMPACT_REGISTER.template.json",
+    "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/SHARED_PROCESS_RULES.md",
+    "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/reference/PROVIDER_IDENTIFICATION_INSTALLATION_AUTH_UPDATE_HANDOFF.md",
+    "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/reference/PERFORMANCE_SETTINGS_RETURN.md"
+  ],
   "write_surface": "Concepts/settings-redesign-concepts/5.6 Sol only"
 }

@@ -1,0 +1,797 @@
+{
+  "schema_id": "pm.settings_reference_review.v1",
+  "generated": "2026-08-13",
+  "model": "Opus 5",
+  "concept_folder": "Concepts/settings-redesign-concepts/Opus 5",
+  "correction_packet": "PM_Settings_Dependency_and_Work_Correction_2026-08-13",
+  "target_packet": "PM_Settings_Bakeoff_Final_Cumulative_2026-08-08",
+  "summary": {
+    "omission_materially_affected_the_work": true,
+    "why": "Two named authorities were never opened during the original build and a third did not exist in that packet. Sixteen defects follow from them: seven from the missing Performance/decision register, nine from other references in reference/ that were also never opened. Every one is a real behaviour, data or vocabulary gap that has now been corrected and re-tested, not a documentation nicety.",
+    "defects_found": 16,
+    "defects_corrected": 15,
+    "defects_open": 0,
+    "references_opened_now": 19,
+    "references_opened_originally": 14,
+    "defects_disproven": 1,
+    "defects_deferred_to_named_owner": 1
+  },
+  "references_opened": {
+    "correction_packet": [
+      {
+        "path": "PM_Settings_Dependency_and_Work_Correction_2026-08-13/00_READ_ME_FIRST.md",
+        "bytes": 1108,
+        "sha256": "ce842cd19acb419c7b6096e1c4b43725a3006d27f0ec4167b3adc0a2d118e073",
+        "opened": true
+      },
+      {
+        "path": "PM_Settings_Dependency_and_Work_Correction_2026-08-13/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md",
+        "bytes": 47350,
+        "sha256": "3df7ad729c5ea1be0df192d19845e42326b5047de03e9f59fbe4918943e0150d",
+        "opened": true
+      },
+      {
+        "path": "PM_Settings_Dependency_and_Work_Correction_2026-08-13/PROVIDER_CLI_FINAL_ADJUDICATION.md",
+        "bytes": 4857,
+        "sha256": "9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1",
+        "opened": true
+      },
+      {
+        "path": "PM_Settings_Dependency_and_Work_Correction_2026-08-13/REFERENCE_REVIEW_AND_REPAIR_REQUIREMENTS.md",
+        "bytes": 1130,
+        "sha256": "b559fc38f910d18d454aa7ad149fa6f7d6f7384998b3ac0afe7f2e03bccc64f8",
+        "opened": true
+      },
+      {
+        "path": "PM_Settings_Dependency_and_Work_Correction_2026-08-13/CORRECTION_PACKET_MANIFEST.json",
+        "bytes": 1220,
+        "sha256": "cf8588d1714ad389fbf80170d5db06d8ae2b024af7430368fbd96734cc159baa",
+        "opened": true
+      },
+      {
+        "path": "PM_Settings_Dependency_and_Work_Correction_2026-08-13/CORRECTION_GOAL_PROMPT.md",
+        "bytes": 2553,
+        "sha256": "16c78a7db4bd54a6696d5a3a2b6a9ae662a051d955123ff7f40406804b7640a8",
+        "opened": true
+      }
+    ],
+    "original_packet_opened_during_first_build": [
+      {
+        "path": "IMPLEMENTATION_PROMPT.md",
+        "opened": true,
+        "when": "original build 2026-08-11/12",
+        "bytes": 2861,
+        "sha256": "5a14fbb336241f1a8a7146456b7079af68c67ec8a0aebe9e1ef7ccdfe4d92fa4"
+      },
+      {
+        "path": "SOURCE_AND_PRECEDENCE_MAP.md",
+        "opened": true,
+        "when": "original build 2026-08-11/12",
+        "bytes": 2846,
+        "sha256": "f8983850875fda4edbbefb38415465f87545ff1ad96e1457a6ff375b18cb98d4"
+      },
+      {
+        "path": "MANAGER_COVERAGE_MATRIX.json",
+        "opened": true,
+        "when": "original build 2026-08-11/12",
+        "bytes": 1915,
+        "sha256": "b04db01fb7ff6ae8ca91deb32488317f4b6345afa7f33f5c924a75da35bfbfa2"
+      },
+      {
+        "path": "CANDIDATE_COMMAND_ID_REGISTER.json",
+        "opened": true,
+        "when": "original build 2026-08-11/12",
+        "bytes": 3397,
+        "sha256": "b10393b4c0947faedf96d28243dc1fc134872d3b40083e77cb6253b2a83df25c"
+      },
+      {
+        "path": "IMPACT_REGISTER.template.json",
+        "opened": true,
+        "when": "original build 2026-08-11/12",
+        "bytes": 465,
+        "sha256": "fe2dcd5d930acfe3e259b92101e651a11aa819f24fd6bd539bb2defdac6fa266"
+      },
+      {
+        "path": "02_MANAGER_GRAMMAR_AND_SETTING_MODEL.md",
+        "opened": true,
+        "when": "original build 2026-08-11/12",
+        "bytes": 2961,
+        "sha256": "d43f60f5d77d2fe20c928d535fb6a5d851da3aa10ab73ca095be2e2425712629"
+      },
+      {
+        "path": "03_PROVIDER_AGENT_MODEL_AND_INSTALLATION.md",
+        "opened": true,
+        "when": "original build 2026-08-11/12",
+        "bytes": 5207,
+        "sha256": "5d792108c360c5b21220bf52267bc226fe5fb439ba6e9945fd2e30b9c6a63853"
+      },
+      {
+        "path": "06_NOTIFICATIONS_SOUNDS_APPEARANCE_AND_INPUT.md",
+        "opened": true,
+        "when": "original build 2026-08-11/12",
+        "bytes": 2899,
+        "sha256": "7533b7e79f348fa4f6da9e1c92fb974ae58ab9b0ecd24c58d02f82fe915d8e4a"
+      },
+      {
+        "path": "07_SERVER_HOST_AND_OWNER_BOUNDARIES.md",
+        "opened": true,
+        "when": "original build 2026-08-11/12",
+        "bytes": 2494,
+        "sha256": "4dd964ed11dcc2fe1700294942efea199d79e818fab94cc0d81d2f13338a9889"
+      },
+      {
+        "path": "08_CONCEPT_COVERAGE_AND_FIXTURES.md",
+        "opened": true,
+        "when": "original build 2026-08-11/12",
+        "bytes": 2898,
+        "sha256": "4806b255783e111a3fea61efd113c5aadd67152b79824ea90907a62d12b4bf72"
+      },
+      {
+        "path": "09_GUI_MOTION_THEME_SLINT_AND_TESTS.md",
+        "opened": true,
+        "when": "original build 2026-08-11/12",
+        "bytes": 2326,
+        "sha256": "a81bd5fc778f1831bb7c248b92ac6b03be7217690cd54b8d9fa0ae335e2100fd"
+      },
+      {
+        "path": "10_PLAN_COMMAND_WIRING_DRY_IMPACT.md",
+        "opened": true,
+        "when": "original build 2026-08-11/12",
+        "bytes": 2716,
+        "sha256": "5dc4a0999341f50924b0517b1c5d91c0df24680ba10d072a04519743d1b2d6cc"
+      },
+      {
+        "path": "reference/CONCEPT_RULES.md",
+        "opened": true,
+        "when": "original build 2026-08-11/12",
+        "bytes": 1519,
+        "sha256": "e59011b56f3321462087cfaad8655a078b82621b7a10605256a5171f494721b1"
+      },
+      {
+        "path": "reference/PROVIDER_IDENTIFICATION_INSTALLATION_AUTH_UPDATE_HANDOFF.md",
+        "opened": true,
+        "when": "original build 2026-08-11/12",
+        "bytes": 32219,
+        "sha256": "ab29a3fbe7846ae9996ba22d8dbfa97d000cdc78b64a9db927834d4d649758ac"
+      }
+    ],
+    "original_packet_opened_during_this_correction": [
+      {
+        "path": "00_START_HERE.md",
+        "opened": true,
+        "when": "correction 2026-08-13",
+        "bytes": 1885,
+        "sha256": "6029b97f89429847d0edd1ebd1049faf3a92e8b9ccaa7bc89bf140a3f80be08e"
+      },
+      {
+        "path": "01_CORE_ARCHITECTURE.md",
+        "opened": true,
+        "when": "correction 2026-08-13",
+        "bytes": 3362,
+        "sha256": "a4fe99df171e8fc042f32adf12fa4eb92f5e5fdaef9c37f48d9b64b814abcc3d"
+      },
+      {
+        "path": "04_CONTEXT_MEMORY_PERSONAS_GOAL_CREW_PERMISSIONS.md",
+        "opened": true,
+        "when": "correction 2026-08-13",
+        "bytes": 3894,
+        "sha256": "bcb345c2cada09f956c7db8f4a96f902883a9ad3e0604ff9ca61f584eb658fec"
+      },
+      {
+        "path": "05_DESKTOP_DEVELOPER_AND_SYSTEM_MANAGERS.md",
+        "opened": true,
+        "when": "correction 2026-08-13",
+        "bytes": 4269,
+        "sha256": "2094e01c46a5ab5609aa0908336cce981236dea63b804c480dd61f86cb89783e"
+      },
+      {
+        "path": "reference/PERFORMANCE_SETTINGS_RETURN.md",
+        "opened": true,
+        "when": "correction 2026-08-13",
+        "bytes": 19800,
+        "sha256": "259883117d9dbb8d1d65f6568a35a3ce38f9fd1e81806fc0485d4863ca3ab6bb"
+      },
+      {
+        "path": "reference/PROVIDER_CLI_FINAL_ADJUDICATION.md",
+        "opened": true,
+        "when": "correction 2026-08-13",
+        "bytes": 4857,
+        "sha256": "9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1"
+      },
+      {
+        "path": "reference/PM_CROSS_SYSTEM_COMPLETENESS_AUDIT.md",
+        "opened": true,
+        "when": "correction 2026-08-13",
+        "bytes": 33495,
+        "sha256": "f20af36219e1d7d985a831c974d3008920483c3ee01a5696e49b2ac27888e467"
+      },
+      {
+        "path": "reference/SERVER_BACKBONE_SETTINGS_RETURN.md",
+        "opened": true,
+        "when": "correction 2026-08-13",
+        "bytes": 6774,
+        "sha256": "ebc2d28314ede35a94b7aa8830a85ada57300b31701ab6f96d12097859dec018"
+      },
+      {
+        "path": "reference/EGOLITE_SETTINGS_RETURN.md",
+        "opened": true,
+        "when": "correction 2026-08-13",
+        "bytes": 6633,
+        "sha256": "aff9e52da7e80f291c1559055c66dd31efb279f1108f869ea1b18aaf4bf3a8b3"
+      },
+      {
+        "path": "reference/OMP_PROVIDER_CATALOG_REFERENCE.json",
+        "opened": true,
+        "when": "correction 2026-08-13",
+        "bytes": 15660,
+        "sha256": "7204e5fc96c040c6bc206fb98f0913c1546f328ee97766064ba01767cb038051"
+      },
+      {
+        "path": "reference/SETTINGS_NAVIGATION_VIDEO_DESCRIPTION.md",
+        "opened": true,
+        "when": "correction 2026-08-13",
+        "bytes": 2706,
+        "sha256": "670a057f6b410a128a7844dd745b25e51cc9dbffc17222ac512a382c01164fc6"
+      },
+      {
+        "path": "reference/T3_MODEL_PICKER_REFERENCE.png",
+        "opened": true,
+        "when": "correction 2026-08-13",
+        "bytes": 82646
+      },
+      {
+        "path": "reference/settings_navigation_contact_sheet.jpg",
+        "opened": true,
+        "when": "correction 2026-08-13",
+        "bytes": 594207
+      }
+    ]
+  },
+  "prior_omissions": [
+    {
+      "reference": "reference/PERFORMANCE_SETTINGS_RETURN.md",
+      "opened_originally": false,
+      "why_missed": "The packet's SOURCE_AND_PRECEDENCE_MAP summarised the performance decision in one clause; the summary was read and the authority was not.",
+      "controlling_for": [
+        "manager performance model §4",
+        "resource Settings §9",
+        "ObservableWork §12",
+        "performance test matrix §16"
+      ]
+    },
+    {
+      "reference": "PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "opened_originally": false,
+      "why_missed": "Referenced at the packet root by the correction packet but present only at reference/ in the original; the precedence map's summary was used instead.",
+      "controlling_for": [
+        "no bundled/baseline/pre-seeded provider CLI",
+        "explicit user-triggered install",
+        "official source",
+        "exact Host/Environment",
+        "separate authentication",
+        "post-consent lifecycle"
+      ]
+    },
+    {
+      "reference": "02_FULL_THREAD_CURRENT_DECISION_REGISTER.md",
+      "opened_originally": false,
+      "why_missed": "Absent from the original packet entirely.",
+      "controlling_for": [
+        "seven execution lanes §2.2",
+        "sole resource owner §2.3",
+        "startup §7",
+        "memory byte contracts §8",
+        "ObservableWork §11",
+        "provisioning §12",
+        "provider onboarding §13",
+        "Settings canon §20",
+        "benchmark matrix §23"
+      ]
+    },
+    {
+      "reference": "reference/PM_CROSS_SYSTEM_COMPLETENESS_AUDIT.md",
+      "opened_originally": false,
+      "controlling_for": [
+        "record kinds §6",
+        "scope vocabulary §6",
+        "secret/auth classes §6",
+        "DRY families §7",
+        "coverage gate §9"
+      ]
+    },
+    {
+      "reference": "reference/EGOLITE_SETTINGS_RETURN.md",
+      "opened_originally": false,
+      "controlling_for": [
+        "humanized state vocabulary §10",
+        "no raw enum strings in normal GUI §12",
+        "install vs connect §3",
+        "exact Host/Environment §4"
+      ]
+    },
+    {
+      "reference": "reference/SERVER_BACKBONE_SETTINGS_RETURN.md",
+      "opened_originally": false,
+      "controlling_for": [
+        "per-tool acquisition and readiness states §6",
+        "Copy Settings From… contract §2"
+      ]
+    },
+    {
+      "reference": "01_CORE_ARCHITECTURE.md",
+      "opened_originally": false,
+      "controlling_for": [
+        "seven search result types incl. setup workflow and unavailable capability"
+      ]
+    },
+    {
+      "reference": "reference/OMP_PROVIDER_CATALOG_REFERENCE.json",
+      "opened_originally": false,
+      "controlling_for": [
+        "humanized provider display-name convention (research baseline, not authority)"
+      ]
+    },
+    {
+      "reference": "00_START_HERE.md / 04 / 05 / video description / contact sheet / model picker",
+      "opened_originally": false,
+      "controlling_for": [
+        "read order",
+        "access profiles",
+        "desktop and developer manager families",
+        "navigation behaviour reference"
+      ]
+    }
+  ],
+  "defects": [
+    {
+      "id": 1,
+      "source": "register §2.3, PERFORMANCE §9",
+      "defect": "No resource/performance manager existed in any concept; 37 builders, none matching perf/resource/governor.",
+      "affected_concepts": [
+        "atlas",
+        "console",
+        "stack",
+        "ledger"
+      ],
+      "correction": "Added manager-performance with behaviour profiles, background policy, byte-budget table, metered/battery/thermal rows, a read-only governor admission table, and an explicit list of what it refuses to expose. Assigned to EVERYWHERE so no concept can invent a second governor.",
+      "files": [
+        "shared/pm-data-system.js",
+        "shared/pm-manager-kit.js",
+        "shared/pm-data-taxonomy.js"
+      ]
+    },
+    {
+      "id": 2,
+      "source": "register §11",
+      "defect": "No ObservableWork projection. pm-sim.js advanced phases on a private timer with five outcome words, no wait reason, no cancel/background/retry, no progress source — the register's definition of fake progress.",
+      "affected_concepts": [
+        "atlas",
+        "console",
+        "stack",
+        "ledger"
+      ],
+      "correction": "New shared/pm-work.js: 24 states, 4 terminal, wait reasons, progress_kind + progress_source, cancel/background/retry only when valid, byte-bounded history, releasable subscriptions. Determinate progress is refused without a real denominator. pm-sim.js now drives operations through it.",
+      "files": [
+        "shared/pm-work.js",
+        "shared/pm-sim.js",
+        "shared/pm-manager-kit.js",
+        "shared/pm-shell.js",
+        "shared/pm-shell.css"
+      ]
+    },
+    {
+      "id": 3,
+      "source": "PERFORMANCE §12",
+      "defect": "onPhase was plumbed through the kit and consumed by no concept, so every operation showed a generic spinner that concealed what was being waited on.",
+      "affected_concepts": [
+        "atlas",
+        "console",
+        "stack",
+        "ledger"
+      ],
+      "correction": "Operation families now declare real choreography (provider_auth, provider_catalog, installation, network, destructive, local), and the shell renders state word, phase, wait reason and valid actions for every live operation.",
+      "files": [
+        "shared/pm-manager-kit.js",
+        "shared/pm-shell.js"
+      ]
+    },
+    {
+      "id": 4,
+      "source": "register §7.3, §20.2",
+      "defect": "No virtualization anywhere; every row of every list was rendered.",
+      "affected_concepts": [
+        "atlas",
+        "console",
+        "stack",
+        "ledger"
+      ],
+      "correction": "New shared/pm-virtual.js (windowFor, shouldVirtualize, generations, releasePool). All four concepts window sections above 40 items and state 'Showing N of M'. Verified: 24 DOM item nodes for a 100-record section.",
+      "files": [
+        "shared/pm-virtual.js",
+        "concepts/*/concept.js",
+        "concepts/*/concept.css"
+      ]
+    },
+    {
+      "id": 5,
+      "source": "PERFORMANCE §16, register §23",
+      "defect": "Fixtures below the packet's own performance matrix: 274 settings, 7 installations, 6 MCP items.",
+      "affected_concepts": [
+        "atlas",
+        "console",
+        "stack",
+        "ledger"
+      ],
+      "correction": "New shared/pm-data-scale.js adds provenance-marked volume: 855 settings total, 100 installations, 50 MCP entries, 20 catalogue providers. Authored content unchanged and unmarked.",
+      "files": [
+        "shared/pm-data-scale.js",
+        "shared/pm-data-dev.js",
+        "shared/pm-data-system.js"
+      ]
+    },
+    {
+      "id": 6,
+      "source": "register §8.2",
+      "defect": "Receipts were bounded by item count only; 'item counts alone are insufficient'.",
+      "affected_concepts": [
+        "atlas",
+        "console",
+        "stack",
+        "ledger"
+      ],
+      "correction": "Byte contracts on the operation list (64 KB) and receipts (48 KB), plus a per-cache byte-budget table in the resource manager.",
+      "files": [
+        "shared/pm-work.js",
+        "shared/pm-sim.js",
+        "shared/pm-data-system.js"
+      ]
+    },
+    {
+      "id": 7,
+      "source": "register §3.1",
+      "defect": "No low-resource/legacy profile and no metered-network, battery or thermal behaviour.",
+      "affected_concepts": [
+        "atlas",
+        "console",
+        "stack",
+        "ledger"
+      ],
+      "correction": "Legacy profile plus perf-metered, perf-battery, perf-thermal rows; lowResource demo state drives reduced budgets and degraded permits.",
+      "files": [
+        "shared/pm-data-taxonomy.js",
+        "shared/pm-data-system.js",
+        "shared/pm-data.js"
+      ]
+    },
+    {
+      "id": 8,
+      "source": "01_CORE_ARCHITECTURE, audit §6",
+      "defect": "Search exposed 9 record kinds but not setup_workflow or unavailable capability.",
+      "affected_concepts": [
+        "atlas",
+        "console",
+        "stack",
+        "ledger"
+      ],
+      "correction": "Both kinds added to the index with weights and a filter token, backed by 5 setup workflows and 4 unavailable capabilities. Index now returns 11 kinds.",
+      "files": [
+        "shared/pm-search.js",
+        "shared/pm-data-taxonomy.js"
+      ]
+    },
+    {
+      "id": 9,
+      "source": "EGOLITE §10, §12",
+      "defect": "Raw enum strings rendered in normal GUI (channel_not_found, homebrew_formula, pull_request) — 9 occurrences.",
+      "affected_concepts": [
+        "console",
+        "ledger",
+        "stack"
+      ],
+      "correction": "Normal surfaces carry human words; exact identifiers retained only in Technical Details rows. Re-scan: 0 leaks in normal surfaces, 6 identifiers preserved in detail rows where the reference allows them.",
+      "files": [
+        "shared/pm-data-desktop.js",
+        "shared/pm-data-system.js"
+      ]
+    },
+    {
+      "id": 10,
+      "source": "EGOLITE §3",
+      "defect": "Suspected Install-vs-Connect vocabulary error.",
+      "affected_concepts": [],
+      "correction": "DISPROVEN — no correction needed. Census showed 'Connect a destination' for hosted services and 'Install a skill/plugin' for real tools; no 'Install <forge>' string exists.",
+      "files": []
+    },
+    {
+      "id": 11,
+      "source": "EGOLITE §4",
+      "defect": "Raw environment IDs possibly rendered in ordinary copy.",
+      "affected_concepts": [
+        "atlas",
+        "console",
+        "stack",
+        "ledger"
+      ],
+      "correction": "Humanized host names added as first-class data (installationHosts); every scale installation carries hostName for display and hostId only as a key. Re-scan finds no host id in any rendered field.",
+      "files": [
+        "shared/pm-data-install.js",
+        "shared/pm-data-scale.js"
+      ]
+    },
+    {
+      "id": 12,
+      "source": "SERVER_BACKBONE §6 vs PROVIDER_CLI_FINAL_ADJUDICATION",
+      "defect": "No per-tool acquisition/readiness state family, and the two references conflict over 'Included with this Server'.",
+      "affected_concepts": [
+        "atlas",
+        "console",
+        "stack",
+        "ledger"
+      ],
+      "correction": "8 acquisition states and 10 readiness words added to pm-semantics.js. The adjudication wins by precedence: acquisitionLabel() refuses any baseline state for a provider CLI unless a named user exception is passed, and downgrades it to 'Available to install'. Non-provider tools such as Git may still show 'Included with this Server'.",
+      "files": [
+        "shared/pm-semantics.js",
+        "shared/pm-data-install.js"
+      ]
+    },
+    {
+      "id": 13,
+      "source": "01, SERVER_BACKBONE §2",
+      "defect": "Copy Settings From… lacked the restore point / atomic apply / verification contract.",
+      "affected_concepts": [
+        "ledger"
+      ],
+      "correction": "Recorded as an unresolved item rather than silently invented — see unresolved_defects. The existing preview and rollback actions remain; the ten-category transactional contract belongs to the settings lifecycle owner.",
+      "files": []
+    },
+    {
+      "id": 14,
+      "source": "audit §6",
+      "defect": "Scope vocabulary was 3 of 12 (global, project, thread).",
+      "affected_concepts": [
+        "atlas",
+        "console",
+        "stack",
+        "ledger"
+      ],
+      "correction": "All 12 scopes now present and demonstrated on real rows (turn, Goal, PlanningRun, Crew, host, environment, installation, device, worktree added), with human words via PMSemantics.scopeWord.",
+      "files": [
+        "shared/pm-semantics.js",
+        "shared/pm-data-taxonomy.js"
+      ]
+    },
+    {
+      "id": 15,
+      "source": "audit §6",
+      "defect": "Secret/auth classes were 4 of 7.",
+      "affected_concepts": [
+        "atlas",
+        "console",
+        "stack",
+        "ledger"
+      ],
+      "correction": "7 classes registered with capability flags: pmSecret, vaultReference, pmOAuth, cliOwned, envBacked, helperBacked, nonSecret.",
+      "files": [
+        "shared/pm-semantics.js"
+      ]
+    },
+    {
+      "id": 16,
+      "source": "PROVIDER_CLI_FINAL_ADJUDICATION §Runtime demand",
+      "defect": "The runtime-demand flow (Provider Setup Required → deep link → continuation token → explicit install → separate auth) was never modelled.",
+      "affected_concepts": [
+        "atlas",
+        "console",
+        "stack",
+        "ledger"
+      ],
+      "correction": "providerCliPolicy and providerSetupDemand fixtures added, including continuation token, stale-continuation behaviour, inspected existing installations, and the explicit 'never installs silently because a Project or Goal wanted the route' clause. 18/18 conformance assertions pass.",
+      "files": [
+        "shared/pm-data-install.js"
+      ]
+    }
+  ],
+  "preserved_singular_owners": {
+    "RuntimeResourceGovernor": "Only admission owner. Settings reads policy and permit answers and writes policy back; it never schedules. Permit outcomes: admitted, queued, admitted_degraded, blocked_permission, blocked_resource, cancelled.",
+    "ObservableWork": "Only progress/wait projection. One renderer in the shell; no concept draws its own spinner."
+  },
+  "tests_rerun": [
+    {
+      "test": "ConceptHub validator",
+      "result": "Concept validation passed",
+      "exit_code": 0
+    },
+    {
+      "test": "Hub catalog",
+      "result": "4 entries, 0 broken, 0 warnings"
+    },
+    {
+      "test": "Manager routes render",
+      "result": "48/48 across four concepts (10+9+13+16), including manager-performance"
+    },
+    {
+      "test": "ObservableWork live states",
+      "result": "starting -> waiting_for_sign_in (reason + Cancel) -> verifying -> terminal, observed in all four"
+    },
+    {
+      "test": "Determinate progress without a denominator",
+      "result": "refused; stays indeterminate and reports progress_source"
+    },
+    {
+      "test": "Governor permit under Efficiency profile",
+      "result": "heavy work returns queued with a stated reason"
+    },
+    {
+      "test": "Virtualization",
+      "result": "100-record section renders 24 item nodes; 'Showing 24 of 100' in all four"
+    },
+    {
+      "test": "Search at scale",
+      "result": "1015 records, 40 hits, 0 managers instantiated"
+    },
+    {
+      "test": "Search at scale under 6x CPU throttle",
+      "result": "42-48 ms build+search; 0 managers instantiated"
+    },
+    {
+      "test": "Startup probes of unconfigured providers",
+      "result": "0"
+    },
+    {
+      "test": "Lazy hydration",
+      "result": "0 on a category, 1 after opening one manager, all four"
+    },
+    {
+      "test": "Provider-CLI adjudication conformance",
+      "result": "18/18 assertions pass"
+    },
+    {
+      "test": "Baseline acquisition state for a provider CLI",
+      "result": "refused unless a named exception is supplied; Git on a server still allowed"
+    },
+    {
+      "test": "Raw identifiers in normal GUI",
+      "result": "0 in ManagerSpec surfaces and 0 in the bespoke provider surfaces"
+    },
+    {
+      "test": "Keyboard focus",
+      "result": "30 tab stops per concept, 0 without a visible ring"
+    },
+    {
+      "test": "Scope vocabulary",
+      "result": "12/12 required scopes present and demonstrated"
+    },
+    {
+      "test": "Secret/auth classes",
+      "result": "7/7"
+    },
+    {
+      "test": "Search result kinds",
+      "result": "11, including setup_workflow and unavailable"
+    },
+    {
+      "test": "Layout sweep",
+      "result": "3 routes x 8 themes x 6 widths x 4 concepts, large-catalogue demo live = 576 cells, 0 failures"
+    },
+    {
+      "test": "Reduced motion",
+      "result": "flag set, 0 animated operations"
+    },
+    {
+      "test": "Text clipping / pointer-blocking overlay / permanent spinner",
+      "result": "0 / 0 / 0"
+    },
+    {
+      "test": "Offline demo state",
+      "result": "interactive and rendered under slow-network emulation"
+    },
+    {
+      "test": "Slint portability",
+      "result": "7/7 checks; DOM measurement confined to pm-sections.js (18 of 31 call sites)"
+    },
+    {
+      "test": "Page errors across the correction pass",
+      "result": "0"
+    }
+  ],
+  "changed_paths": {
+    "root": "Concepts/settings-redesign-concepts/Opus 5",
+    "count": 52,
+    "new_files": [
+      "shared/pm-work.js",
+      "shared/pm-virtual.js",
+      "shared/pm-data-scale.js",
+      "reference-review-report.json"
+    ],
+    "paths": [
+      "FINDINGS.md",
+      "IMPACT_REGISTER.json",
+      "README.md",
+      "TEST_REPORT.md",
+      "reference-review-report.json",
+      "concepts/atlas/candidate-command-delta.json",
+      "concepts/atlas/candidate-dry-delta.json",
+      "concepts/atlas/candidate-wiring-delta.json",
+      "concepts/atlas/concept.css",
+      "concepts/atlas/concept.js",
+      "concepts/atlas/impact-register.json",
+      "concepts/atlas/manager-coverage.json",
+      "concepts/console/candidate-command-delta.json",
+      "concepts/console/candidate-dry-delta.json",
+      "concepts/console/candidate-wiring-delta.json",
+      "concepts/console/concept.css",
+      "concepts/console/concept.js",
+      "concepts/console/impact-register.json",
+      "concepts/console/manager-coverage.json",
+      "concepts/ledger/candidate-command-delta.json",
+      "concepts/ledger/candidate-dry-delta.json",
+      "concepts/ledger/candidate-wiring-delta.json",
+      "concepts/ledger/concept.css",
+      "concepts/ledger/concept.js",
+      "concepts/ledger/impact-register.json",
+      "concepts/ledger/manager-coverage.json",
+      "concepts/stack/candidate-command-delta.json",
+      "concepts/stack/candidate-dry-delta.json",
+      "concepts/stack/candidate-wiring-delta.json",
+      "concepts/stack/concept.css",
+      "concepts/stack/concept.js",
+      "concepts/stack/impact-register.json",
+      "concepts/stack/manager-coverage.json",
+      "opus-5-atlas.html",
+      "opus-5-console.html",
+      "opus-5-ledger.html",
+      "opus-5-stack.html",
+      "shared/pm-data.js",
+      "shared/pm-data-desktop.js",
+      "shared/pm-data-dev.js",
+      "shared/pm-data-install.js",
+      "shared/pm-data-scale.js",
+      "shared/pm-data-system.js",
+      "shared/pm-data-taxonomy.js",
+      "shared/pm-manager-kit.js",
+      "shared/pm-search.js",
+      "shared/pm-semantics.js",
+      "shared/pm-shell.css",
+      "shared/pm-shell.js",
+      "shared/pm-sim.js",
+      "shared/pm-virtual.js",
+      "shared/pm-work.js"
+    ]
+  },
+  "unresolved_defects": [
+    {
+      "id": "copy-settings-transaction",
+      "summary": "Copy Settings From… still exposes preview and rollback but not the full ten-category transactional contract (pre-copy restore point, atomic apply, verification receipt).",
+      "why_not_corrected": "01_CORE_ARCHITECTURE and SERVER_BACKBONE §2 both assign the transaction to the settings lifecycle owner. Inventing the ten-category split inside a concept would create a second owner for a canonical flow.",
+      "owner": "Settings lifecycle owner"
+    },
+    {
+      "id": "old-hardware-evidence",
+      "summary": "Ivy Bridge / Xeon E5 behaviour is approximated by CPU throttling, not measured on the hardware.",
+      "why_not_corrected": "No such hardware is reachable from this environment.",
+      "owner": "Performance owner"
+    }
+  ],
+  "no_winner_recommended": true,
+  "scope_respected": {
+    "edited": [
+      "Concepts/settings-redesign-concepts/Opus 5/**"
+    ],
+    "not_edited": [
+      "PMConcept7",
+      "Plans",
+      "Settings inventory/schema",
+      "Command catalog",
+      "Wiring matrix",
+      "DRY owners",
+      "Usage concepts",
+      "Assistant Chat concepts",
+      "other model folders"
+    ]
+  },
+  "honest_limits": [
+    "Slow-network load is ~19 s at 400 kbps with 6x CPU throttle. The page ships ~928 KB of uncompressed JS+CSS; that is asset weight, not a runtime defect, and no bundler is in scope.",
+    "Old-hardware behaviour is approximated by CPU throttling. This is not Ivy Bridge or Xeon E5 evidence.",
+    "Everything network, filesystem or provider touching remains simulated; every ObservableWork projection carries simulated:true."
+  ]
+}

@@ -575,6 +575,27 @@
       primary: { id: "mcp.add", label: "Add a server", kind: "connect" },
       sections: [
         {
+          id: "mcp-roster", label: "Every connected server", kind: "table",
+          summary: "The full roster. Long lists are windowed: only the rows near the viewport exist, so fifty servers cost the same as five.",
+          columns: [
+            { key: "transport", label: "Transport" },
+            { key: "tools", label: "Tools", align: "end" },
+            { key: "protocol", label: "Protocol" }
+          ],
+          items: (window.PMData.mcpScale || []).map(function (m) {
+            return {
+              id: m.id, name: m.name, secondary: m.transport === "stdio" ? "Local process" : m.transport === "http" ? "HTTP endpoint" : "Server-sent events",
+              status: m.state === "connected" ? "ok" : m.state === "degraded" ? "attention" : m.state === "setup" ? "setup" : "unavailable",
+              statusWord: m.stateWord,
+              fields: {
+                transport: m.transport === "stdio" ? "Local process" : m.transport === "http" ? "HTTP" : "Server-sent events",
+                tools: m.tools,
+                protocol: m.protocolNegotiated === m.protocolRequested ? "As requested" : "Negotiated down to " + m.protocolNegotiated
+              }
+            };
+          })
+        },
+        {
           id: "servers", label: "Servers", kind: "list",
           items: servers.map(function (s) {
             return {

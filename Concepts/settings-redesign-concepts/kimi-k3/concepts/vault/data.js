@@ -207,12 +207,17 @@
       { id: "clients", name: "Clients", owner: "Server host owner", line: "3 paired — last check-in 12 minutes ago", state: "Deferred" },
       { id: "hosting", name: "Project Hosting & Files", owner: "Storage owner", line: "Hosted On Home TrueNAS · Files /mnt/projects/Puppet-Master · Run Work Automatic", state: "Deferred" },
       { id: "remote", name: "Remote Access", owner: "Server host owner", line: "Tailscale mesh — 2 routes up", state: "Deferred" },
-      { id: "updates", name: "Updates", owner: "Release/updates owner", line: "Server and client update policy lands here", state: "Deferred" }
+      { id: "updates", name: "Updates", owner: "Release/updates owner", line: "Server and client update policy lands here", state: "Deferred" },
+      { id: "defaults", name: "Project Defaults & Templates", owner: "Project Sync owner", line: "Template library and default Project configuration", state: "Deferred" },
+      { id: "integrations", name: "Integrations & Tools", owner: "Tools owner", line: "Third-party integrations beyond provider and forge connections", state: "Deferred" },
+      { id: "onboarding", name: "Product Onboarding", owner: "Onboarding owner", line: "First-run guidance resumes here with return context — separate from Installation/Deployment", state: "Deferred" },
+      { id: "doctor", name: "Doctor", owner: "Doctor owner", line: "Compact health aggregation and remediation routing after owner handoffs are final", state: "Deferred" }
     ],
     serverShellNote: "These are reserved insertion points with named canonical owners. Each accepts a manager module, deep links, status cards, and command wiring. No backend state machine is invented here. WSL is optional — native Windows is complete without it; Linux through WSL appears only when a selected capability requires it.",
 
     demoScenarios: [
       { id: "calm", label: "Calm state (all notices dismissed)" },
+      { id: "slow-hydration", label: "Slow manager hydration (lazy load)" },
       { id: "reset", label: "Reset demo data" },
       { id: "import-preview", label: "Import: preview → cancel" },
       { id: "import-apply", label: "Import: preview → apply → rollback" },

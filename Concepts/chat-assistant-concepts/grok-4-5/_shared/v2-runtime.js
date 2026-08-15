@@ -157,6 +157,10 @@
     return m !== 'closed';
   }
 
+  function isHistoryPeek(store) {
+    return historyMode(store) === 'peek';
+  }
+
   function resolveHistoryModeForWidth(store, windowId, chatWidthPx) {
     var mode = historyMode(store);
     if (mode !== 'pinned_full') return mode;
@@ -217,6 +221,42 @@
     return s.artifactWorkspace;
   }
 
+  function artifactScrollEl(root) {
+    if (!root) return null;
+    if (root.matches && root.matches('[data-artifact-scroll], .pm-art-scroll, .pm-artifact-body')) {
+      return root;
+    }
+    return (
+      root.querySelector('[data-artifact-scroll]') ||
+      root.querySelector('.pm-art-scroll') ||
+      root.querySelector('.pm-artifact-body')
+    );
+  }
+
+  function captureArtifactScroll(store, root) {
+    var aw = getArtifactWorkspace(store);
+    var el = artifactScrollEl(root);
+    if (!el) {
+      el = document.querySelector(
+        '[data-artifact-workspace] [data-artifact-scroll], [data-artifact-workspace] .pm-art-scroll, [data-artifact-workspace] .pm-artifact-body'
+      );
+    }
+    if (el) aw.scrollTop = el.scrollTop || 0;
+    return aw.scrollTop || 0;
+  }
+
+  function restoreArtifactScroll(store, root) {
+    var aw = getArtifactWorkspace(store);
+    var el = artifactScrollEl(root);
+    if (!el || aw.scrollTop == null) return;
+    var top = aw.scrollTop || 0;
+    el.scrollTop = top;
+    /* Re-apply after layout/replace settles */
+    window.requestAnimationFrame(function () {
+      if (el.isConnected) el.scrollTop = top;
+    });
+  }
+
   function findArtifact(store, threadId, artifactId) {
     var thread = store && store.threads && store.threads[threadId];
     var list = (thread && thread.artifacts) || [];
@@ -236,6 +276,7 @@
     opts = opts || {};
     if (!store) return;
     var aw = getArtifactWorkspace(store);
+    captureArtifactScroll(store);
     var art = findArtifact(store, threadId, artifactId);
     if (!art && artifactId) {
       art = {
@@ -318,6 +359,7 @@
   }
 
   function switchArtifact(store, threadId, artifactId) {
+    captureArtifactScroll(store);
     openArtifactWorkspace(store, threadId, artifactId, { status: 'update' });
     var aw = getArtifactWorkspace(store);
     window.setTimeout(function () {
@@ -451,22 +493,34 @@
 
   function bindArtifactWorkspace(root, store, threadId, onChange) {
     if (!root || !store) return function () {};
+    var scrollEl = artifactScrollEl(root);
+    function onScroll() {
+      var aw = getArtifactWorkspace(store);
+      if (scrollEl) aw.scrollTop = scrollEl.scrollTop || 0;
+    }
+    if (scrollEl) {
+      scrollEl.addEventListener('scroll', onScroll, { passive: true });
+      restoreArtifactScroll(store, root);
+    }
     function handler(ev) {
       var t = ev.target && ev.target.closest && ev.target.closest('[data-artifact-close], [data-artifact-switch], [data-artifact-retry]');
       if (!t || !root.contains(t)) return;
       if (t.hasAttribute('data-artifact-close')) {
+        captureArtifactScroll(store, root);
         closeArtifactWorkspace(store);
         if (onChange) onChange();
         return;
       }
       var sw = t.getAttribute('data-artifact-switch');
       if (sw) {
+        captureArtifactScroll(store, root);
         switchArtifact(store, threadId, sw);
         if (onChange) onChange();
         return;
       }
       var retry = t.getAttribute('data-artifact-retry');
       if (retry) {
+        captureArtifactScroll(store, root);
         openArtifactWorkspace(store, threadId, retry, { status: 'loading' });
         if (onChange) onChange();
       }
@@ -474,6 +528,7 @@
     root.addEventListener('click', handler);
     return function () {
       root.removeEventListener('click', handler);
+      if (scrollEl) scrollEl.removeEventListener('scroll', onScroll);
     };
   }
 
@@ -543,74 +598,363 @@
       (thread && thread.activity && thread.activity.length);
     if (!has) return '';
     paradigm = paradigm || 'default';
-    var chips = [];
+
+    /* Shared kind inventory — each paradigm forks presentation structure. */
+    var kinds = [];
     if (thread.goal) {
-      chips.push(
-        '<button type="button" class="pm-cw-chip" data-cw-expand="goal" title="Goal">' +
-          'G · ' +
-          escapeHtml(String(s.goalPhase || s.goalStatus || 'Goal')) +
-          '</button>'
-      );
+      kinds.push({
+        kind: 'goal',
+        label: 'Goal',
+        short: 'G',
+        meta: String(s.goalPhase || s.goalStatus || 'Goal')
+      });
     }
     if (s.todoTotal) {
-      chips.push(
-        '<button type="button" class="pm-cw-chip" data-cw-expand="todo" title="Todos">' +
-          'T · ' +
-          s.todoDone +
-          '/' +
-          s.todoTotal +
-          '</button>'
-      );
+      kinds.push({
+        kind: 'todo',
+        label: 'Todo',
+        short: 'T',
+        meta: s.todoDone + '/' + s.todoTotal
+      });
     }
     if (s.agentsActive || s.agentsQueued || s.agentsBlocked) {
-      chips.push(
-        '<button type="button" class="pm-cw-chip" data-cw-expand="subagent" title="Subagents">' +
-          'A · ' +
+      kinds.push({
+        kind: 'subagent',
+        label: 'Agents',
+        short: 'A',
+        meta:
           s.agentsActive +
           ' run · ' +
           s.agentsQueued +
           ' q' +
-          (s.agentsBlocked ? ' · ' + s.agentsBlocked + ' blk' : '') +
-          '</button>'
-      );
+          (s.agentsBlocked ? ' · ' + s.agentsBlocked + ' blk' : '')
+      });
     }
     if (s.diffFiles) {
-      chips.push(
-        '<button type="button" class="pm-cw-chip" data-cw-expand="diff" title="Diff">' +
-          '± · ' +
-          s.diffFiles +
-          ' · +' +
-          s.diffAdd +
-          ' −' +
-          s.diffDel +
-          '</button>'
-      );
+      kinds.push({
+        kind: 'diff',
+        label: 'Diff',
+        short: '±',
+        meta: s.diffFiles + ' · +' + s.diffAdd + ' −' + s.diffDel
+      });
     }
     if (thread.activity && thread.activity.length) {
-      chips.push(
-        '<button type="button" class="pm-cw-chip" data-cw-expand="activity" title="Activity">' +
-          'Act · ' +
-          escapeHtml(String(s.activityPhase || thread.activity.length + ' tools')) +
-          '</button>'
+      kinds.push({
+        kind: 'activity',
+        label: 'Activity',
+        short: 'Act',
+        meta: String(s.activityPhase || thread.activity.length + ' tools')
+      });
+    }
+    if (!kinds.length) return '';
+
+    function wrap(inner, extraClass) {
+      return (
+        '<div class="pm-compact-work pm-cw-' +
+        escapeHtml(paradigm) +
+        (extraClass ? ' ' + extraClass : '') +
+        '" data-compact-work data-cw-paradigm="' +
+        escapeHtml(paradigm) +
+        '" data-cw-single="' +
+        (singleDetailParadigm(paradigm) ? '1' : '0') +
+        '">' +
+        inner +
+        '<div class="pm-cw-detail" data-cw-detail hidden></div>' +
+        '</div>'
       );
     }
-    return (
-      '<div class="pm-compact-work pm-cw-' +
-      escapeHtml(paradigm) +
-      '" data-compact-work data-cw-paradigm="' +
-      escapeHtml(paradigm) +
-      '" data-cw-single="' +
-      (singleDetailParadigm(paradigm) ? '1' : '0') +
-      '">' +
-      '<div class="pm-cw-band" data-cw-band>' +
-      chips.join('') +
-      '</div>' +
-      '<div class="pm-cw-detail" data-cw-detail hidden></div>' +
-      '</div>'
-    );
+
+    /* folio — roman leaf tabs (not pill chips) */
+    if (paradigm === 'folio') {
+      var leaves = kinds
+        .map(function (k, i) {
+          return (
+            '<button type="button" class="pm-cw-leaf" data-cw-expand="' +
+            escapeHtml(k.kind) +
+            '" aria-pressed="false" title="' +
+            escapeHtml(k.label) +
+            '">' +
+            '<span class="pm-cw-leaf-roman" aria-hidden="true">' +
+            String(i + 1) +
+            '</span>' +
+            '<span class="pm-cw-leaf-title">' +
+            escapeHtml(k.label) +
+            '</span>' +
+            '<span class="pm-cw-leaf-meta">' +
+            escapeHtml(k.meta) +
+            '</span>' +
+            '</button>'
+          );
+        })
+        .join('');
+      return wrap(
+        '<div class="pm-cw-folio-spine" data-cw-band aria-label="Folio index">' +
+          '<span class="pm-cw-folio-kicker">Leaves</span>' +
+          leaves +
+          '</div>'
+      );
+    }
+
+    /* beats — beat-attached numbered index chips along a mini spine */
+    if (paradigm === 'beats') {
+      var beatChips = kinds
+        .map(function (k, i) {
+          return (
+            '<li class="pm-cw-beat-item">' +
+            '<span class="pm-cw-beat-tick" aria-hidden="true">' +
+            String(i + 1) +
+            '</span>' +
+            '<button type="button" class="pm-cw-beat-chip" data-cw-expand="' +
+            escapeHtml(k.kind) +
+            '" aria-pressed="false" title="' +
+            escapeHtml(k.label + ' · ' + k.meta) +
+            '">' +
+            '<span class="pm-cw-beat-label">' +
+            escapeHtml(k.label) +
+            '</span>' +
+            '<span class="pm-cw-beat-meta">' +
+            escapeHtml(k.meta) +
+            '</span>' +
+            '</button>' +
+            '</li>'
+          );
+        })
+        .join('');
+      return wrap(
+        '<div class="pm-cw-beat-rail" data-cw-band aria-label="Beat-attached work">' +
+          '<div class="pm-cw-beat-rail-label">On beat</div>' +
+          '<ol class="pm-cw-beat-index">' +
+          beatChips +
+          '</ol>' +
+          '</div>',
+        'pm-cw-struct-beats'
+      );
+    }
+
+    /* shelves — stub lips with reopen affordance */
+    if (paradigm === 'shelves') {
+      var stubs = kinds
+        .map(function (k) {
+          return (
+            '<div class="pm-cw-shelf-stub" data-cw-stub="' +
+            escapeHtml(k.kind) +
+            '">' +
+            '<span class="pm-cw-shelf-lip">' +
+            '<span class="pm-cw-shelf-role">' +
+            escapeHtml(k.label) +
+            '</span>' +
+            '<span class="pm-cw-shelf-meta">' +
+            escapeHtml(k.meta) +
+            '</span>' +
+            '</span>' +
+            '<button type="button" class="pm-cw-shelf-reopen" data-cw-expand="' +
+            escapeHtml(k.kind) +
+            '" aria-pressed="false">Reopen</button>' +
+            '</div>'
+          );
+        })
+        .join('');
+      return wrap(
+        '<div class="pm-cw-shelf-row" data-cw-band aria-label="Work shelf stubs">' +
+          stubs +
+          '</div>',
+        'pm-cw-struct-shelves'
+      );
+    }
+
+    /* yield — stacked yield tabs (restore-style) */
+    if (paradigm === 'yield') {
+      var ychips = kinds
+        .map(function (k) {
+          return (
+            '<button type="button" class="pm-cw-yield-tab" data-cw-expand="' +
+            escapeHtml(k.kind) +
+            '" aria-pressed="false">' +
+            '<span class="pm-cw-yield-title">' +
+            escapeHtml(k.label) +
+            '</span>' +
+            '<span class="pm-cw-yield-meta">' +
+            escapeHtml(k.meta) +
+            '</span>' +
+            '</button>'
+          );
+        })
+        .join('');
+      return wrap(
+        '<div class="pm-cw-yield-rail" data-cw-band aria-label="Yielded work">' +
+          ychips +
+          '</div>',
+        'pm-cw-struct-yield'
+      );
+    }
+
+    /* condenser — vertical phase nodes (evolve-in-place index) */
+    if (paradigm === 'condenser') {
+      var nodes = kinds
+        .map(function (k, i) {
+          return (
+            '<button type="button" class="pm-cw-condense-node" data-cw-expand="' +
+            escapeHtml(k.kind) +
+            '" data-cw-node-i="' +
+            i +
+            '" aria-pressed="false">' +
+            '<span class="pm-cw-condense-dot" aria-hidden="true"></span>' +
+            '<span class="pm-cw-condense-label">' +
+            escapeHtml(k.label) +
+            '</span>' +
+            '<span class="pm-cw-condense-meta">' +
+            escapeHtml(k.meta) +
+            '</span>' +
+            '</button>'
+          );
+        })
+        .join('');
+      return wrap(
+        '<div class="pm-cw-condense-spine" data-cw-band aria-label="Condensed work index">' +
+          '<div class="pm-cw-condense-track" aria-hidden="true"></div>' +
+          nodes +
+          '</div>',
+        'pm-cw-struct-condenser'
+      );
+    }
+
+    /* margin — lettered sidecar ticks */
+    if (paradigm === 'margin') {
+      var LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      var ticks = kinds
+        .map(function (k, i) {
+          var letter = LETTERS.charAt(i % 26);
+          return (
+            '<button type="button" class="pm-cw-margin-tick" data-cw-expand="' +
+            escapeHtml(k.kind) +
+            '" aria-pressed="false" title="' +
+            escapeHtml(k.label + ' · ' + k.meta) +
+            '">' +
+            '<span class="pm-cw-margin-letter">' +
+            letter +
+            '</span>' +
+            '<span class="pm-cw-margin-kind">' +
+            escapeHtml(k.short) +
+            '</span>' +
+            '<span class="pm-cw-margin-snip">' +
+            escapeHtml(k.meta) +
+            '</span>' +
+            '</button>'
+          );
+        })
+        .join('');
+      return wrap(
+        '<nav class="pm-cw-margin-sidecar" data-cw-band aria-label="Work margin index">' +
+          '<div class="pm-cw-margin-head"><span>Mark</span><span>Work</span></div>' +
+          ticks +
+          '</nav>',
+        'pm-cw-struct-margin'
+      );
+    }
+
+    /* focus — filmstrip thumbs */
+    if (paradigm === 'focus') {
+      var thumbs = kinds
+        .map(function (k, i) {
+          return (
+            '<button type="button" class="pm-cw-focus-thumb" data-cw-expand="' +
+            escapeHtml(k.kind) +
+            '" aria-pressed="false">' +
+            '<span class="pm-cw-focus-n">' +
+            String(i + 1) +
+            '</span>' +
+            '<span class="pm-cw-focus-title">' +
+            escapeHtml(k.label) +
+            '</span>' +
+            '<span class="pm-cw-focus-meta">' +
+            escapeHtml(k.meta) +
+            '</span>' +
+            '</button>'
+          );
+        })
+        .join('');
+      return wrap(
+        '<div class="pm-cw-focus-film" data-cw-band aria-label="Work filmstrip">' +
+          '<div class="pm-cw-focus-film-label">Work focus</div>' +
+          '<div class="pm-cw-focus-row">' +
+          thumbs +
+          '</div>' +
+          '</div>',
+        'pm-cw-struct-focus'
+      );
+    }
+
+    /* breath — inhale (plan) / exhale (output) paired lanes */
+    if (paradigm === 'breath') {
+      var inhaleKinds = kinds.filter(function (k) {
+        return k.kind === 'goal' || k.kind === 'todo';
+      });
+      var exhaleKinds = kinds.filter(function (k) {
+        return k.kind !== 'goal' && k.kind !== 'todo';
+      });
+      function breathBtns(list, side) {
+        if (!list.length) {
+          return (
+            '<div class="pm-cw-breath-empty">No ' +
+            (side === 'inhale' ? 'plan' : 'output') +
+            ' work</div>'
+          );
+        }
+        return list
+          .map(function (k) {
+            return (
+              '<button type="button" class="pm-cw-breath-chip pm-cw-breath-' +
+              side +
+              '-chip" data-cw-expand="' +
+              escapeHtml(k.kind) +
+              '" aria-pressed="false">' +
+              '<span class="pm-cw-breath-label">' +
+              escapeHtml(k.label) +
+              '</span>' +
+              '<span class="pm-cw-breath-meta">' +
+              escapeHtml(k.meta) +
+              '</span>' +
+              '</button>'
+            );
+          })
+          .join('');
+      }
+      return wrap(
+        '<div class="pm-cw-breath-pair" data-cw-band aria-label="Paired work lanes">' +
+          '<div class="pm-cw-breath-inhale" data-side="inhale">' +
+          '<div class="pm-cw-breath-tag">Inhale · Plan</div>' +
+          breathBtns(inhaleKinds, 'inhale') +
+          '</div>' +
+          '<div class="pm-cw-breath-gutter" aria-hidden="true"></div>' +
+          '<div class="pm-cw-breath-exhale" data-side="exhale">' +
+          '<div class="pm-cw-breath-tag">Exhale · Output</div>' +
+          breathBtns(exhaleKinds, 'exhale') +
+          '</div>' +
+          '</div>',
+        'pm-cw-struct-breath'
+      );
+    }
+
+    /* default — generic chip band (fallback only) */
+    var chips = kinds
+      .map(function (k) {
+        return (
+          '<button type="button" class="pm-cw-chip" data-cw-expand="' +
+          escapeHtml(k.kind) +
+          '" title="' +
+          escapeHtml(k.label) +
+          '">' +
+          escapeHtml(k.short) +
+          ' · ' +
+          escapeHtml(k.meta) +
+          '</button>'
+        );
+      })
+      .join('');
+    return wrap('<div class="pm-cw-band" data-cw-band>' + chips + '</div>');
   }
 
-  function singleDetailParadigm(paradigm) {
+function singleDetailParadigm(paradigm) {
     return /^(folio|yield|condenser|breath)$/.test(String(paradigm || ''));
   }
 
@@ -644,7 +988,7 @@
     var stack = root.querySelector('[data-work-detail-stack]');
     var single = band.getAttribute('data-cw-single') === '1';
     var wasActive = chip.classList.contains('is-active');
-    Array.prototype.forEach.call(band.querySelectorAll('.pm-cw-chip'), function (c) {
+    Array.prototype.forEach.call(band.querySelectorAll('[data-cw-expand]'), function (c) {
       c.classList.remove('is-active');
       c.setAttribute('aria-pressed', 'false');
     });
@@ -899,10 +1243,13 @@
     historyMode: historyMode,
     isHistoryPinned: isHistoryPinned,
     isHistoryOpen: isHistoryOpen,
+    isHistoryPeek: isHistoryPeek,
     resolveHistoryModeForWidth: resolveHistoryModeForWidth,
     setHistoryMode: setHistoryMode,
     cyclePin: cyclePin,
     getArtifactWorkspace: getArtifactWorkspace,
+    captureArtifactScroll: captureArtifactScroll,
+    restoreArtifactScroll: restoreArtifactScroll,
     openArtifactWorkspace: openArtifactWorkspace,
     closeArtifactWorkspace: closeArtifactWorkspace,
     switchArtifact: switchArtifact,

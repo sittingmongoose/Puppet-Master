@@ -228,3 +228,8 @@
 .ft3-composer-region { border-top: 1px solid var(--edge-faint); }
 
 [data-reduced-motion="1"] .ft3-entry, [data-motion="reduced"] .ft3-entry { animation: none; }
+
+.ft3-posting-liveitem .ft3-posting-label { color: var(--text-secondary); }
+
+.ft3-posting[data-agent="failed"] .ft3-posting-label { color: var(--danger); }
+.ft3-posting[data-agent="retrying"] .ft3-posting-label { color: var(--warn); }

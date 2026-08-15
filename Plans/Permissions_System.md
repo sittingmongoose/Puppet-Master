@@ -436,7 +436,7 @@ Session-approval rules:
 - `webfetch` format requests for `screenshot` or `pdf` require `session_granted` tier approval because they invoke browser-runtime capture beyond the default text fetch path.
 - Browser-session permission tiers use canonical storage values `always_allowed`, `session_granted`, and `explicit_confirmation`; UI/source aliases `always-allowed`, `session-granted`, and `explicit-confirmation` are lineage labels only and do not revive the retired preview/browser `trust-tier` matrix or replace requested/effective capability disclosure.
 - Browser implementation-readiness permissions stay anchored to SSOT ownership: `/design-decision` and `/UI` readiness checklists must cover permission posture, session model, agent contract, watchability, DevTools, artifact capture, persistence, lifecycle, packaging, platform guarantees, command routing, and acceptance criteria without making Permissions_System the owner for non-permission browser details.
-- `auth_session` follows the normal browser capture/share/clipboard model: it does not add special `/share` restrictions beyond visible chips and permission disclosure, and select/copy/paste (`/copy/paste` lineage) must work unless effective browser runtime or site policy blocks it.
+- Legacy `auth_session` capture/share/clipboard permission text is retired. Protected `AuthBrowserSession` is structurally ineligible for screenshot, PDF, recording, DOM/PageRepresentation, console, network, storage/profile import or export, generic share, agent/tool access, and programmatic clipboard paths. Only the foreground human may interact with the allowed domain-scoped page; exterior consumers receive redacted lifecycle or denial metadata only.
 - Query/task-granular and host-bound allow rules may become advanced-editor refinements later, but they must not block the base approval flow.
 - `Once` shows "Approve only this invocation" and approves only the current web invocation.
 - `For Session` for `websearch` and `webresearch` shows "Approve this tool for the rest of the current session" with suggested pattern `*`; this wildcard-only, tool-wide session behavior is tool-scoped and does not permit unrelated file/shell/network mutation tools.
@@ -2957,7 +2957,7 @@ plan_unit_id: PS-032
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "Browser capture requests for screenshot or pdf require session_granted approval, browser permission storage values remain canonical while UI/source aliases are lineage only, and auth_session follows normal capture/share/clipboard permission disclosure."
+canonical_text: "Ordinary BrowserSession capture requests for screenshot or PDF require session_granted approval and canonical permission storage values; protected AuthBrowserSession rejects capture, share, recording, inspection, persistence, agent/tool access, and programmatic clipboard regardless of ordinary-session approval, while permitting only foreground human interaction under its domain policy."
 gui_related: true
 gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings help, GUI references, or compact surface behavior."
 split_recommended: false
@@ -2999,11 +2999,13 @@ preserved_exact_tokens:
 negative_constraints:
 - "Do not revive the retired preview/browser trust-tier matrix."
 - "Browser implementation-readiness details stay with browser owner docs, not Permissions implementation ownership."
+- "The preserved auth_session, copy/paste, and share tokens are source-lineage only and grant no protected AuthBrowserSession capability."
 preserved_contractrefs: []
 compatibility_only_notes:
 - "UI/source aliases always-allowed, session-granted, and explicit-confirmation are lineage labels only."
 stale_retired_dispositions:
 - "Retired preview/browser trust-tier matrix is not revived by browser-session permission tiers."
+- "Legacy auth_session normal capture/share/clipboard behavior is retired by the protected AuthBrowserSession boundary."
 owner_hints:
 - "Plans/Permissions_System.md"
 - "Plans/FinalGUISpec.md"
@@ -9156,4 +9158,66 @@ negative_constraints:
   - Do not let a replay-only denial change current authority.
 owner_hints:
   - Plans/Permissions_System.md
+```
+
+## Shared runtime dispatch-admission boundary (2026-08-13)
+
+Provider dispatch admission consumes one immutable
+`permission_snapshot_record.v1:{project_id}:{snapshot_id}` by reference. It does
+not reinterpret, refresh, or replace permission authority. The snapshot must be
+materialized, identity-matched to the current operation/attempt, non-corrupt, and
+current for the exact route, effective account, topology generation, and mutation
+intent before `ProviderDispatchAdmissionService` may issue its ephemeral
+`ProviderRequestPermit` / durable `ProviderDispatchAdmissionReceipt` evidence.
+The receipt also binds the existing Packet Admission decision, structured
+attachment-manifest hash/ref, host-local RuntimeResourceGovernor admission, and
+required-present project/thread/Goal/run/node/agent lineage; these refs do not
+replace permission authority.
+
+Permission `allow` is necessary but never sufficient. Mutation-capable work must
+also supply the independent FileSafe receipt refs for the exact finalized mutation
+evidence. Missing, stale, corrupt, mismatched, or unmaterialized permission
+evidence rejects dispatch before network transmission. A retry after any policy,
+account, target, route, topology, FileSafe, or request-byte change creates a fresh
+permission snapshot where required and always creates a fresh dispatch receipt.
+Neither receipt may contain raw secrets, credential material, auth values, raw
+request bytes, or credential-store paths.
+
+### PS-134 - Shared Runtime Permission Snapshot Admission Join
+
+```yaml
+plan_unit_id: PS-134
+unit_type: security_contract
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: >-
+  Provider dispatch admission consumes the immutable materialized permission
+  snapshot by exact attempt identity and cannot issue or consume a permit when the
+  snapshot is missing, corrupt, stale, mismatched, or superseded; permission allow
+  remains independently co-bound with FileSafe for mutation-capable work.
+gui_related: false
+depends_on: [PS-132, PS-133, CV-325, SIR-009]
+unblocks: []
+acceptance_criteria:
+  - Dispatch admission references one exact permission_snapshot_record and never reconstructs it from current Settings or UI state.
+  - Every bound policy, account, route, target, topology, or request-byte change invalidates prior admission and triggers fresh evidence as applicable.
+  - Permission allow cannot bypass FileSafe, auth, provider readiness, budget, storage mode, or host-local resource admission.
+  - Permission and dispatch records contain refs, decisions, and hashes only and reject raw credentials, tokens, auth values, request bytes, and credential paths.
+  - Attachment-manifest, Packet Admission, host-local resource admission, and run/node lineage refs are identity-matched before dispatch and cannot authorize permission reuse.
+validation_surfaces:
+  - future permission-snapshot and provider-dispatch join fixtures
+  - future stale/missing/corrupt snapshot negative fixtures
+risk_class: stale_permission_dispatch_bypass
+reasoning_tier: high
+context_scope: shared_runtime_permission_admission
+implementation_surfaces: [Plans/Permissions_System.md, Plans/storage_value_registry.json, Plans/shared_runtime_contracts.schema.json]
+node_compile_hint: {mode: shared_runtime_permission_join, create_worknodes: false, create_nodeseeds: false}
+negative_constraints:
+  - Do not treat a provider permit as permission authority.
+  - Do not reuse a permission snapshot after its bound authority changes.
+owner_hints: [Plans/Permissions_System.md]
+source_lineage:
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/03_PROVIDER_CONTEXT_TOOLS_RECOVERY_AND_COMPACTION.md
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/07_SERVER_WSL_CONTAINER_RESOURCE_AND_SECURITY.md
+  - 'Plans/runtime_integration_disposition.json#items[PRM-012]'
 ```

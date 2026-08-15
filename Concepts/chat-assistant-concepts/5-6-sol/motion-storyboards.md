@@ -10,6 +10,8 @@ Motion is behavioral evidence: it explains origin, ownership, continuity, waitin
 - Easing: fast departure and controlled settle (`cubic-bezier(.22, 1, .36, 1)`), with no elastic overshoot.
 - Stable identity: selected message, thread, artifact, draft, question, Goal, operation, and scroll-anchor ids survive every transition.
 - Reduced motion: duration collapses to effectively zero, smooth scroll becomes immediate, progress travel becomes a static semantic line, and border/text/status changes remain.
+- State contract: message articles expose `data-motion-state="commit|redirect|queued"`; the thread root exposes `data-question-motion="prepare|open|page|select|submit|receipt"` and `data-work-motion="progress|condense|reopen"`. The matching `.question-preparing`, open surface, selected option, submitting surface, receipt, current work row, or expanded history supplies the visual target. The transient cue is cleared after the authored sequence, so a transcript rerender is not itself a motion event.
+- Fixed geometry: question navigation, the composer, active-work ownership, and popup anchor do not move under the pointer. Transforms paint within the final box and never determine layout or meaning.
 
 ## Window concepts
 
@@ -138,20 +140,22 @@ Send uses one short settle, live activity replaces one runline, and completion r
 
 ## Implemented thread-motion receipt
 
-The implementation contains 24 distinct thread-layer animation families—message, questionnaire, and work for every concept—rather than one shared settle with different names. Together with eight window families, the anchored popup family, and truthful artifact progress, the reduced-motion audit covers 34 authored families.
+The CSS keys each thread grammar to semantic state rather than animating the entire transcript. A message moves only while its article exposes `data-motion-state="commit|redirect|queued"` beneath the matching `data-thread-concept="thread-01"` through `thread-08`; ordinary rerenders do not replay settled messages. Commit and queued placement share the concept's composer-to-transcript origin, while redirect uses a separate return or branch-handoff path. Questionnaire prepare, open, selection, submit, and historical receipt are separately named transitions. The current work row changes at one stable locus, and reopening completed activity reuses that concept's work grammar.
 
-| Thread | Message mechanism | Questionnaire mechanism | Work mechanism |
+| Thread | Direct send | Question lifecycle and history | Active work, condense, and reopen |
 | --- | --- | --- | --- |
-| T1 Edition | `edition-impose`: page matter imposes from the binding edge | `edition-question-turn`: a shallow facing-page turn | `edition-work-compose`: work notes compose upward into the page |
-| T2 Dialogue Score | `score-cue`: a speaker cue rises on the shared beat | `score-question-count-in`: the measure counts in from the top stave | `score-work-raise`: independent work staves rise into register |
-| T3 Timefield | `timefield-descend`: entries descend to their temporal coordinate | `timefield-question-mark`: a waypoint drops onto the time axis | `timefield-work-band`: elapsed-work bands extend into place |
-| T4 Branchbook | `branchbook-unfold`: prose unfolds from its source joint | `branchbook-question-sprout`: an answer fork sprouts from the branch spine | `branchbook-work-reveal`: revision layers reveal from ancestry |
-| T5 Workshop | `workshop-place`: correspondence is placed with paper weight | `workshop-question-pin`: the brief lands and settles under its pin | `workshop-work-place`: instruments are placed on the bench |
-| T6 Braided | `braided-weave`: opposing roles weave from opposite sides | `braided-question-knot`: the question strands tighten toward one knot | `braided-work-converge`: child work converges into synthesis |
-| T7 Relay | `relay-handoff`: messages travel in role-owned handoff directions | `relay-question-checkpoint`: the parent checkpoint advances laterally | `relay-work-stage`: work stages enter along the relay course |
-| T8 Quiet Current | `quiet-current-settle`: prose settles only a few pixels into flow | `quiet-question-focus`: the focus sheet resolves by emphasis | `quiet-work-register`: the active runline registers in place |
+| T1 Edition | `edition-send`; `edition-redirect` returns through the binding | `edition-question-prepare/open/submit/receipt`; `edition-select` records the answer index | `edition-phase`; expanded history composes from the page origin, then the shared compact summary remains reopenable |
+| T2 Dialogue Score | `score-send`; `score-redirect` re-counts on the shared beat | `score-question-prepare/open/submit/receipt`; `score-select` marks the fixed beat | `score-phase`; reopened measures use the same top-stave origin |
+| T3 Timefield | `time-send`; `time-redirect` opens a revised interval | `time-question-prepare/open/submit/receipt`; `time-select` marks a fixed waypoint | `time-phase` targets `.activity-band.is-current`; reopened intervals descend from the time origin |
+| T4 Branchbook | `branch-send`; `branch-handoff` returns to the source joint | `branch-question-prepare/open/submit/receipt`; `branch-select` resolves the local fork | `branch-phase`; reopened ancestry returns from the branch joint while retained attempts stay visible |
+| T5 Workshop | `workshop-send`; `workshop-redirect` replaces correspondence on the bench | `workshop-question-prepare/open/submit/receipt`; `workshop-select` pins the choice | `workshop-phase`; reopened tool evidence returns to the bench without displacing outputs |
+| T6 Braided | `braided-send`; `braid-redirect` reverses the active strand | `braided-question-prepare/open/submit/receipt`; `braid-select` tightens the selected knot | `braid-phase`; reopened child evidence converges toward synthesis but failed strands remain named |
+| T7 Relay | `relay-send`; `relay-handoff` returns along the opposite role-owned direction | `relay-question-prepare/open/submit/receipt`; `relay-select` advances the parent-owned checkpoint | `relay-phase`; reopened evidence enters from the return side of the course |
+| T8 Quiet Current | `quiet-send`; `quiet-redirect` is the smallest return settle | `quiet-question-prepare/open/submit/receipt`; `quiet-select` changes the small local mark | `quiet-phase`; history reappears with the smallest displacement and condenses to the runline |
 
-All 24 sequences use bounded transform and opacity, retain fixed interaction targets, and collapse to immediate semantic placement under reduced motion.
+The eight window selectors animate only `.artifact-region` and `.history-region`; transcript content is not replayed when a sibling region opens. The popup uses one anchored bounded placement. These are paint-only transforms with final layout present from the first frame, so the same model is feasible in Slint without DOM-dependent geometry.
+
+The reduced-motion branch is an explicit fixed-geometry equivalent, not just a duration override: animated state surfaces are forced to final opacity and transform; preparing uses a dashed boundary, submitting a double boundary, historical receipts a terminal bottom rule, active work a full inset outline, and active progress a static line. The OS preference and the in-app `data-reduced-motion="1"` flag implement the same semantic result.
 
 ## Cross-system storyboards
 
@@ -194,6 +198,19 @@ All 24 sequences use bounded transform and opacity, retain fixed interaction tar
 3. Replay delivers each unseen operation once and records the result.
 4. Replaying again is a visible zero-op.
 5. Snapshot catch-up advances the domain cursor without declaring server work lost.
+
+## Motion evidence and acceptance
+
+Settled screenshots remain necessary spatial evidence, but they do not prove a transition. Record timestamped before, causal-state, and after frames for every thread concept in both normal and reduced motion. Tests should prove:
+
+1. **Send and redirect:** the composer rectangle and scroll anchor stay stable; only the newly committed direct message moves; a redirect preserves the interrupted operation and makes the branch or handoff destination explicit.
+2. **Question lifecycle:** Prepare, Open, Select, Back/Next, required validation, Submit, and historical receipt are each observable states. Previous answers survive page travel, and the navigation target rectangles do not move between states.
+3. **Active work:** one current phase changes in place while counts and elapsed time update. Completion condenses to one durable summary; reopening restores the same phase evidence without replaying unrelated messages.
+4. **Window regions:** opening and switching history or artifacts leaves the transcript anchor, draft, selected message, and sibling-region ownership unchanged at 520, 750, and 1200 px.
+5. **Reduced motion:** both OS preference and the in-app flag produce final geometry immediately, stop traveling progress, and retain the dashed preparing boundary, double submitting boundary, receipt rule, selected-answer mark, current-work outline, and readable state text.
+6. **Production legibility:** metadata, action labels, dense rows, history controls, and questionnaire controls meet their token floors without clipping, overlap, horizontal loss, or inaccessible contrast in every theme, with explicit focus-visible evidence.
+
+For each of T1–T8, capture at least one mid-transition frame for send, question open/submit, and active-work replacement, plus the matching fixed-geometry reduced-motion frame. For W1–W8, capture region closed, opening, ready/error, and reopen states. A selector count or a final still is not accepted as causal motion evidence.
 
 ## Slint 1.17.1 translation notes
 

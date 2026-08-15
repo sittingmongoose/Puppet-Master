@@ -2,9 +2,9 @@
   "schema_id": "pm.chat_candidate_wiring_delta.v1",
   "concept_id": "grok-4-5",
   "model": "Grok 4.5",
-  "updated_at": "2026-08-11",
+  "updated_at": "2026-08-14T04:40:00Z",
   "status": "complete",
-  "note": "Concept-level wiring traces only; Plans/Wiring_Matrix not edited.",
+  "note": "Concept-level wiring traces only; Plans/Wiring_Matrix not edited. Correction adds provider install/update + peek traces (provisional).",
   "traces": [
     {
       "id": "wire-pin-history",
@@ -28,7 +28,7 @@
       "receipt_event": "concept-local bsd visual/advice",
       "projection": "BSD chip glow (auto-active only) / manual-On treatment",
       "usage_diagnostics": "helper-call attribution when advising",
-      "retry_recovery": "unavailable/timeout \u2192 primary turn continues"
+      "retry_recovery": "unavailable/timeout → primary turn continues"
     },
     {
       "id": "wire-offline-outbox",
@@ -37,7 +37,7 @@
       "owner": "Outbox + Server/Project Sync",
       "validation": "offline enqueue; reconnect replay once",
       "durable_state": "session.outbox[] + session.sync.state",
-      "receipt_event": "outbox status queued\u2192sending\u2192acked",
+      "receipt_event": "outbox status queued→sending→acked",
       "projection": "offline/reconnect chip; queued badge on composer",
       "usage_diagnostics": "no duplicate send after second reconnect",
       "retry_recovery": "replayOutbox idempotent by outbox id"
@@ -83,7 +83,7 @@
       "ui": "Access selector + limit line",
       "command": "cmd.chat.access.set (provisional)",
       "owner": "Assistant Chat + Review/Permissions",
-      "validation": "Full Access \u00b7 Limited by Review mode when constrained",
+      "validation": "Full Access · Limited by Review mode when constrained",
       "durable_state": "session.accessLimitedBy + thread-local access",
       "receipt_event": "concept-local access change",
       "projection": "access chip concise limit line",
@@ -122,7 +122,7 @@
       "validation": "answer/skip/cancel/submit; draft preserved",
       "durable_state": "questionnaire + durable receipt message",
       "receipt_event": "answer receipt",
-      "projection": "distinct t1\u2013t8 Q layouts",
+      "projection": "distinct t1–t8 Q layouts",
       "usage_diagnostics": "none",
       "retry_recovery": "cancel ends flow; retrigger clean"
     },
@@ -131,12 +131,59 @@
       "ui": "Active-turn redirect",
       "command": "cmd.chat.redirect (provisional)",
       "owner": "Assistant Chat",
-      "validation": "partial preserved; Interrupted\u2192Redirected\u2192Resumed badge",
+      "validation": "partial preserved; Interrupted→Redirected→Resumed badge",
       "durable_state": "demo.runningByThread + optional outbox",
       "receipt_event": "redirect attempt",
       "projection": "composer redirect-active + badge",
       "usage_diagnostics": "attempt lineage",
       "retry_recovery": "resume after redirect"
+    },
+    {
+      "id": "wire-provider-install-update",
+      "ui": "Composer provider-setup / Install required / Update available notices",
+      "command": "provisional cmd.chat.provider.setup_required|install_required|update_available (Settings-owned)",
+      "owner": "Settings redesign / Models / Multi-Account — Chat deep-link only",
+      "validation": "official-source copy; not bundled/not baseline; install≠auth; continuation stub",
+      "durable_state": "session.providerSetupRequired / session.providerUpdate",
+      "receipt_event": "concept-local provider setup/update notice",
+      "projection": "composer blocked send + Settings deep-link CTA",
+      "usage_diagnostics": "none in Chat",
+      "retry_recovery": "choose another model or complete Settings Install/Setup"
+    },
+    {
+      "id": "wire-history-peek",
+      "ui": "History peek overlay / mode",
+      "command": "provisional history.peek event; pin reuses cmd.chat.pin",
+      "owner": "Assistant Chat / ThreadShell",
+      "validation": "peek may overlay; pin sibling floors; artifact coexistence",
+      "durable_state": "session.historyMode",
+      "receipt_event": "concept-local historyMode change",
+      "projection": "window peek/pin geometry + registry paint",
+      "usage_diagnostics": "none",
+      "retry_recovery": "n/a"
+    },
+    {
+      "id": "wire-motion-causal-continuity",
+      "ui": "Message settle / Q prepare-page-submit / activity evolve",
+      "command": "n/a (presentation)",
+      "owner": "Assistant Chat motion kit",
+      "validation": "videos 01–04 causal hooks applied; not frame-matched",
+      "durable_state": "transient CSS/JS phase classes",
+      "receipt_event": "n/a",
+      "projection": "motion.js / motion.css",
+      "usage_diagnostics": "reduced-motion fallbacks",
+      "retry_recovery": "n/a"
     }
-  ]
+  ],
+  "correction_2026_08_14": {
+    "status": "complete",
+    "provisional_only": true,
+    "added_trace_ids": [
+      "wire-provider-install-update",
+      "wire-history-peek",
+      "wire-motion-causal-continuity"
+    ],
+    "provider_adjudication": "Chat deep-link only; Settings-owned Install/Setup; official-source/not baseline"
+  },
+  "correction_packet": "PM_Assistant_Chat_Dependency_Media_and_Work_Correction_2026-08-13"
 }

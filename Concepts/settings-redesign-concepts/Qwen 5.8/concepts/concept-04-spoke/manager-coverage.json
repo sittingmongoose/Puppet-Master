@@ -33,6 +33,31 @@
           "name": "Ordinary setting grammar",
           "classification": "demonstrated",
           "note": "Core contract implemented in full on the shared layer (search, home, workspace, provider manager, row grammar)."
+        },
+        {
+          "name": "DRY Method visible state",
+          "classification": "shared_grammar",
+          "note": "Shared manager grammar surfaces requested/effective/inherited/managed states via PMManagers builders; no concept-local duplicate state machines."
+        },
+        {
+          "name": "Accessibility/input/spellcheck",
+          "classification": "shared_grammar",
+          "note": "UI scale/fonts/reduced motion/focus/spellcheck rows in appearance + general; spellcheck widget shared; keyboard reachability probed."
+        },
+        {
+          "name": "Product Onboarding insertion",
+          "classification": "deferred_named_owner",
+          "note": "Owner: Product Onboarding plan owner. Insertion contract: same provider/account/connection/installation records and command paths as Settings; no duplicate secret store; no SQLite."
+        },
+        {
+          "name": "Doctor insertion",
+          "classification": "deferred_named_owner",
+          "note": "Owner: Doctor plan owner (after owner handoffs final). Insertion contract: diagnostics surface consuming ObservableWork receipts and governor permit outcomes."
+        },
+        {
+          "name": "App/content update insertion",
+          "classification": "deferred_named_owner",
+          "note": "Owner: Project Syncing and Updates. Insertion contract: host-scoped signed updates separate from provider/source-control/LSP/container tool updates."
         }
       ]
     },

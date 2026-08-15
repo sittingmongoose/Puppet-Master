@@ -1,0 +1,53 @@
+{
+  "schema_id": "pm.runtime_integration.canon_closure_custody.v1",
+  "stage": "canonical_specification_closure_pre_worknodes",
+  "snapshot_at_utc": "2026-08-14T03:55:35Z",
+  "git": {
+    "head": "483822ba0c4333450d776938ad746c04e0ed1064",
+    "branch": "main",
+    "porcelain_v1_uall_sha256": "2661ae54f94d3caac961a26cc37ca7453447919d287e9c8672dacdcfcfa80eea",
+    "tracked_modified_path_count": 707,
+    "untracked_path_count": 371,
+    "total_status_entry_count": 1078,
+    "concurrent_worktree": true
+  },
+  "source_packet": {
+    "archive_basename": "PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13.zip",
+    "custody_location": "external_attachment_not_committed",
+    "sha256": "8ec8184b055c0f3ddfc03c2848dde6f6e27c1abb067c2f08cdb5f4bde081053b"
+  },
+  "strict_no_touch": {
+    "reason": "PNC-019 and Event Authority are owned by another concurrent thread; generated governance remains frozen until that lane settles.",
+    "paths": [
+      "Plans/event_family_registry.json",
+      "Plans/Spec_Lock.json",
+      "Plans/_shards/**",
+      "Plans/.evidence/**",
+      "Plans/.implementation_readiness/**",
+      "scripts/pm-implementation-readiness.py",
+      "scripts/pm_pnc019_currentness.py",
+      "scripts/pm-event-authority-currentness.py",
+      "tests/test_pm_pnc019_currentness.py"
+    ],
+    "baseline_sha256": {
+      "Plans/event_family_registry.json": "85264dc68c929189e8758b95e0d23efdaf8fd0b3969f3583893c6c60773ed6ad",
+      "Plans/Spec_Lock.json": "e7a328263745deb4385ac812d6e686b0e5520b8e2bb8d2fff07cc792215cf18b",
+      "scripts/pm-implementation-readiness.py": "8b5eff704c74b426c9ad5e2e6669513c027a9a9d4af982df050959dd91386b89",
+      "scripts/pm_pnc019_currentness.py": "3ec270220e09f61e7e122a294ddf7ddad007905f28f95416c13860700dc3b15c",
+      "scripts/pm-event-authority-currentness.py": "7bab0f9a21bba879a2ea1d8f21e3d80f41ab83d44f62fb0282f2cd9a5d971414",
+      "tests/test_pm_pnc019_currentness.py": "279cf485644927b6361d41bae2434790be17a99207153a0c24534ca4176d7a0b"
+    }
+  },
+  "forbidden_outputs": [
+    "WorkNode",
+    "NodeSeed",
+    "WorkGraph",
+    "executable queue",
+    "implementation manifest",
+    "Rust or Slint runtime code",
+    "deployment code",
+    "runtime certification claim"
+  ],
+  "implementation_state": "not_started",
+  "runtime_evidence_in_scope": false
+}

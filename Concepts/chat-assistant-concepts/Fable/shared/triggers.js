@@ -4,7 +4,7 @@
 
 import { store } from "./store.js";
 import { TRIGGER_LABELS } from "./strings.js";
-import { ATTACHMENTS } from "./data.js";
+import { ATTACHMENTS, SCENARIO_V2_WARNINGS, SCENARIO_V2_COLLISION, SCENARIO_V2_DIFF } from "./data.js";
 
 function ensureGoal() {
   if (!store.thread.activeGoal) {
@@ -279,6 +279,253 @@ function firstArtifact() {
   return (t.artifacts && t.artifacts[0]) || null;
 }
 
+// ---------------------------------------------------------------------------
+// v2 trigger contract (pm.chat_assistant_demo_trigger_contract.v2, restored by
+// the correction packet). Every family/event below is a first-class
+// deterministic trigger; the earlier dotted ids above remain as aliases.
+// Renderers vary by concept while consuming the same semantic events.
+// ---------------------------------------------------------------------------
+const ACTIVITY_PHASES = {
+  thinking_summary: { label: "Thinking for 3s", items: [{ text: "Considering the routing split before touching the picker." }] },
+  search: { label: "Searching 6 related project threads", items: [{ text: "Provider multi-account routing" }, { text: "Free models catalog refresh" }, { text: "Settings redesign bakeoff" }] },
+  read: { label: "Reading 7 plan and concept files", items: [{ text: "Plans/assistant-chat-design.md" }, { text: "Plans/FinalGUISpec.md" }, { text: "shared/components.js" }] },
+  fetch: { label: "Comparing 4 provider implementations", items: [{ text: "Requested-versus-effective display patterns" }, { text: "Cache-loss warning language" }] },
+  browser: { label: "Checking pinning at 4 widths", items: [{ text: "520, 750, 975, 1200 — floor held" }] },
+  test: { label: "Running focused interaction probes", items: [{ text: "34 passed, 0 failed" }] },
+  edit: { label: "Making 1 create and 3 edits", items: [{ text: "threads/provider-selector.js", side: "+92 −18" }, { text: "threads/access-controls.css", side: "+61 −39" }, { text: "verification/interaction-probes.mjs", side: "+31 −10" }] },
+  generate: { label: "Writing the implementation handoff", items: [{ text: "docs/handoff/provider-redesign-impact.md" }] },
+};
+
+function latestOpenDecision(kind) {
+  const tid = store.state.currentThreadId;
+  const pool = kind === "approval"
+    ? store.state.approvals.filter((a) => a.threadId === tid && a.state === "open")
+    : store.state.warnings.filter((w) => w.threadId === tid && w.state === "open");
+  return pool[pool.length - 1] || null;
+}
+
+// Snapshot of the original trigger implementations so same-named v2 entries
+// delegate to the real behavior instead of recursing into themselves.
+const V1 = { ...TRIGGERS };
+
+const V2_TRIGGERS = {
+  // ---- history ----
+  "history.peek": () => store.setHistory("peek"),
+  "history.pin_compact": () => store.setHistory("pinned-compact"),
+  "history.pin_full": () => store.setHistory("pinned-full"),
+  "history.unpin": () => store.setHistory("closed"),
+  "history.switch_thread": () => {
+    const list = store.threadList();
+    const idx = list.findIndex((t) => t.id === store.state.currentThreadId);
+    const next = list[(idx + 1) % list.length];
+    if (next) store.selectThread(next.id);
+  },
+
+  // ---- question ----
+  "question.prepare": () => V1["question.preparing"](),
+  "question.open": () => {
+    store.promoteQueuedQuestionnaire();
+    if (!store.activeQuestionnaire()) V1["question.open"]();
+  },
+  "question.select": () => V1["question.answer"](),
+  "question.next": () => {
+    const q = store.activeQuestionnaire();
+    if (q) store.navigateQuestion(q.id, q.currentQuestionIndex + 1);
+  },
+  "question.validation_error": () => {
+    const q = store.activeQuestionnaire();
+    if (!q) return;
+    // Deterministic: clear a required question's answer, then attempt submit so
+    // every composition shows its required-gate error truthfully.
+    const req = q.questions.find((x) => x.required);
+    if (req) { req.selected = []; delete q.skipped[req.id]; }
+    store.submitQuestionnaire(q.id);
+  },
+  "question.skip": () => V1["question.skip"](),
+  "question.cancel": () => V1["question.cancel"](),
+  "question.submit": () => V1["question.submit"](),
+
+  // ---- goal ----
+  "goal.start": () => V1["goal.start"](),
+  "goal.progress": () => { ensureGoal(); store.advanceGoalPhase(); },
+  "goal.pause": () => V1["goal.pause"](),
+  "goal.resume": () => V1["goal.resume"](),
+  "goal.update": () => { ensureGoal(); store.editGoal(store.thread.activeGoal.objective + " Cover CLI account isolation."); },
+  "goal.replan": () => { ensureGoal(); if (!store.thread.activeGoal.pendingEdit) store.editGoal(store.thread.activeGoal.objective + " Cover CLI account isolation."); store.confirmGoalEdit(); },
+  "goal.blocked": () => V1["goal.block"](),
+  "goal.complete": () => V1["goal.complete"](),
+
+  // ---- todo ----
+  "todo.add": () => {
+    ensureTodo();
+    const t = store.thread.todo;
+    t.items.push({ id: store.nextSeq("td"), label: "Fold review feedback into the handoff", state: "pending" });
+    store.emit("work");
+  },
+  "todo.complete": () => {
+    ensureTodo();
+    const item = store.thread.todo.items.find((i) => i.state !== "complete");
+    if (item) store.setTodoState(item.id, "complete");
+  },
+  "todo.reopen": () => {
+    ensureTodo();
+    const done = [...store.thread.todo.items].reverse().find((i) => i.state === "complete");
+    if (done) store.setTodoState(done.id, "pending");
+  },
+  "todo.block": () => {
+    ensureTodo();
+    const item = store.thread.todo.items.find((i) => i.state === "pending");
+    if (item) store.setTodoState(item.id, "blocked");
+  },
+
+  // ---- subagent ----
+  "subagent.spawn": () => {
+    const t = store.thread;
+    if (!t.subagentGroups.length) V1["subagent.all_states"]();
+    else {
+      const g = t.subagentGroups[0];
+      g.agents.push({ name: "Handoff writer", task: "Draft the impact handoff", currentActivity: "Queued", status: "waiting", workedSeconds: 0, route: "Fable 5 · Platyr — API key" });
+      store.recountSubagents(g);
+      store.emit("work");
+    }
+  },
+  "subagent.queue": () => {
+    const g = (store.thread.subagentGroups || [])[0];
+    if (!g) return;
+    const a = g.agents.find((x) => x.status === "working");
+    if (a) store.setSubagentStatus(g.id, a.name, "waiting", "Queued — capacity window");
+  },
+  "subagent.progress": () => {
+    const g = (store.thread.subagentGroups || [])[0];
+    if (!g) return;
+    const a = g.agents.find((x) => x.status === "working") || g.agents.find((x) => x.status === "waiting");
+    if (a) store.setSubagentStatus(g.id, a.name, "working", "Comparing adapter capability evidence");
+  },
+  "subagent.complete": () => {
+    const g = (store.thread.subagentGroups || [])[0];
+    if (!g) return;
+    const a = g.agents.find((x) => x.status === "working");
+    if (a) store.setSubagentStatus(g.id, a.name, "complete", "Done — results attached to the run");
+  },
+  "subagent.fail": () => {
+    const g = (store.thread.subagentGroups || [])[0];
+    if (!g) return;
+    const a = g.agents.find((x) => x.status === "working") || g.agents.find((x) => x.status === "waiting") || g.agents[g.agents.length - 1];
+    if (a) store.failSubagent(g.id, a.name, "Failed — reduced-motion probe crashed the review pass");
+  },
+  "subagent.retry": () => {
+    const g = (store.thread.subagentGroups || [])[0];
+    if (!g) return;
+    const a = g.agents.find((x) => x.status === "failed");
+    if (a) store.retrySubagent(g.id, a.name);
+  },
+
+  // ---- activity (eight v2 kinds) ----
+  ...Object.fromEntries(Object.entries(ACTIVITY_PHASES).map(([kind, ph]) => [
+    `activity.${kind}`,
+    () => store.injectTurnPhase(store.state.currentThreadId, kind, ph.label, ph.items),
+  ])),
+
+  // ---- diff ----
+  "diff.create": () => {
+    const t = store.thread;
+    if (t.id === "thread-19") {
+      if (!t.diffGroups.some((d) => d.id === SCENARIO_V2_DIFF.id)) t.diffGroups.push(JSON.parse(JSON.stringify(SCENARIO_V2_DIFF)));
+      store.emit("work");
+    } else V1["diff.create"]();
+  },
+  "diff.update": () => V1["diff.update"](),
+  "diff.open": () => {
+    const t = store.thread;
+    const target = (t.artifacts || []).find((a) => a.kind === "multi-file diff");
+    if (target) store.openArtifact(target.id);
+    else store.openArtifact("art-diff");
+  },
+
+  // ---- artifact ----
+  "artifact.loading": () => V1["artifact.loading"](),
+  "artifact.ready": () => V1["artifact.ready"](),
+  "artifact.switch": () => {
+    const t = store.thread;
+    const list = t.artifacts || [];
+    if (!list.length) return;
+    const idx = list.findIndex((a) => a.id === store.state.artifact.openId);
+    store.openArtifact(list[(idx + 1) % list.length].id);
+  },
+  "artifact.error": () => V1["artifact.error"](),
+  "artifact.close": () => store.closeArtifact(),
+
+  // ---- decision ----
+  "decision.approval_open": () => V1["approval.request"](),
+  "decision.details": () => {
+    const a = latestOpenDecision("approval");
+    const d = a || latestOpenDecision("warning");
+    if (d) { d.detailsOpen = !d.detailsOpen; store.emit(a ? "approval" : "warning"); }
+  },
+  "decision.approve": () => {
+    const a = latestOpenDecision("approval");
+    if (a) store.resolveApproval(a.id, "Approve");
+  },
+  "decision.deny": () => {
+    const a = latestOpenDecision("approval");
+    if (a) store.resolveApproval(a.id, "Deny");
+  },
+  "decision.branch": () => {
+    const w = latestOpenDecision("warning");
+    if (w && w.kind === "route") store.resolveWarning(w.id, "Branch with new model");
+  },
+
+  // ---- thread ----
+  "thread.send_request": () => V1["thread.request"](),
+  "thread.receive_response": () => store.addReceipt({
+    kind: "thread-result",
+    title: "Response received",
+    detail: "Open conversation, Add passage to context, Branch from this point, and Copy link are available on the result.",
+  }),
+  "thread.spawn_related": () => V1["thread.spawn"](),
+  "thread.branch": () => V1["thread.branch"](),
+
+  // ---- system ----
+  "system.port_collision": () => store.raiseWarning({
+    threadId: store.state.currentThreadId,
+    kind: "resource",
+    title: `Port ${SCENARIO_V2_COLLISION.requested} is held by the ${SCENARIO_V2_COLLISION.occupiedBy}`,
+    body: `The verification lane wants ${SCENARIO_V2_COLLISION.requested}. PM will not stop a process this Goal does not own. Safe alternative: ${SCENARIO_V2_COLLISION.safeAlternative}.`,
+    actions: [`Use ${SCENARIO_V2_COLLISION.safeAlternative}`, "Wait", "Details"],
+    detail: "Typed lease conflict: the requested port is leased to another owner with a live heartbeat. Using the safe alternative updates this lane's lease only.",
+  }),
+  "system.worktree_collision": () => V1["resource.worktree_collision"](),
+  "system.reset": () => V1["scenario.reset"](),
+};
+
+// Scenario v2 verbatim warning surfacing (route cache, video vision, capacity).
+V2_TRIGGERS["warning.cache_replay"] = () => store.raiseWarning({
+  threadId: store.state.currentThreadId,
+  kind: "route",
+  title: "Provider cache will not follow this switch",
+  body: SCENARIO_V2_WARNINGS[0],
+  actions: ["Continue here", "Branch with new model", "Start new chat", "Cancel", "Details"],
+  detail: "Replaying without the provider cache re-sends the full effective context on the first turn of the new route.",
+});
+V2_TRIGGERS["warning.video_route"] = () => store.raiseWarning({
+  threadId: store.state.currentThreadId,
+  kind: "route",
+  title: "This model cannot inspect video natively",
+  body: SCENARIO_V2_WARNINGS[1],
+  actions: ["Continue here", "Branch with new model", "Cancel", "Details"],
+  detail: "Frame extraction is a bounded PM transformation with retained lineage; the configured vision route crosses a provider boundary and needs consent.",
+});
+V2_TRIGGERS["warning.capacity"] = () => store.raiseWarning({
+  threadId: store.state.currentThreadId,
+  kind: "resource",
+  title: "Included usage will not finish eight specialists",
+  body: SCENARIO_V2_WARNINGS[2],
+  actions: ["Run two at a time", "Wait for reset", "Details"],
+  detail: "Sustainable pace: two concurrent specialists in waves with an explicit synthesis reserve. Required roles never silently disappear.",
+});
+
+Object.assign(TRIGGERS, V2_TRIGGERS);
+
 export function fireTrigger(id) {
   const fn = TRIGGERS[id];
   if (fn) { fn(); return true; }
@@ -292,30 +539,30 @@ export function fireTrigger(id) {
 // two scripted sends (offline queue and redirect) driven through the store.
 // ---------------------------------------------------------------------------
 export const SHOWCASE_STORY = [
-  { beat: "long_user_request", label: "A long user request opens the work", run: () => { store.selectThread("thread-17"); } },
-  { beat: "goal_start", label: "The Goal starts", run: () => TRIGGERS["goal.start"]() },
+  { beat: "long_user_request", label: "The provider-redesign request opens the work", run: () => { store.selectThread("thread-19"); } },
+  { beat: "goal_start", label: "The Goal starts — Audit phase", run: () => { store.setGoalStatus("Running"); } },
   { beat: "bsd_auto_evaluation", label: "BSD Auto evaluates a risky phase", run: () => TRIGGERS["bsd.auto_active"]() },
-  { beat: "history_retrieval", label: "Prior history is retrieved from another thread", run: () => TRIGGERS["thread.request"]() },
-  { beat: "question_prepare_open", label: "Questions prepare and open", run: () => TRIGGERS["question.preparing"](), wait: 1900 },
-  { beat: "question_answer_skip_revisit_submit", label: "Answer, skip, revisit, submit", run: () => { TRIGGERS["question.answer"](); setTimeout(() => TRIGGERS["question.skip"](), 350); setTimeout(() => TRIGGERS["question.submit"](), 900); }, wait: 2600 },
-  { beat: "eight_todos", label: "Eight tasks in every state", run: () => TRIGGERS["todo.all_states"]() },
-  { beat: "plans_code_web_browser_activity", label: "Plan, code, web, and browser activity", run: () => TRIGGERS["activity.advance"](), wait: 3200 },
-  { beat: "port_or_worktree_collision", label: "A port collision is caught safely", run: () => TRIGGERS["resource.port_collision"]() },
-  { beat: "three_child_agents_different_routes", label: "Three children on three routes", run: () => TRIGGERS["subagent.all_states"]() },
-  { beat: "capacity_two_concurrent_one_queued", label: "Capacity: two concurrent, one queued", run: () => TRIGGERS["crew.waves"]() },
-  { beat: "child_complete_block_retry", label: "A child completes, one blocks", run: () => { store.setSubagentStatus("sub-demo", "Settlement", "working", "Retrying on port 8081"); } },
-  { beat: "multi_phase_activity", label: "The active phase advances", run: () => TRIGGERS["activity.advance"](), wait: 2600 },
-  { beat: "material_route_warning", label: "A material route change asks first", run: () => TRIGGERS["route.warning"]() },
-  { beat: "attachment_resolution", label: "An attachment resolves as PM transformed", run: () => TRIGGERS["attachment.transformed"]() },
-  { beat: "three_file_diff", label: "A three-file diff lands", run: () => TRIGGERS["diff.create"]() },
-  { beat: "four_artifacts", label: "Four artifacts are on the thread", run: () => TRIGGERS["artifact.ready"](), wait: 1400 },
-  { beat: "artifact_open_left", label: "The artifact opens left of Chat", run: () => TRIGGERS["artifact.updated"](), wait: 1400 },
-  { beat: "history_pinned_with_artifact", label: "History pins beside the artifact", run: () => TRIGGERS["history.pinned_full"]() },
+  { beat: "history_retrieval", label: "Prior history is retrieved from another thread", run: () => TRIGGERS["thread.send_request"]() },
+  { beat: "question_prepare_open", label: "The redesign questions open", run: () => { store.promoteQueuedQuestionnaire(); }, wait: 1600 },
+  { beat: "question_answer_skip_revisit_submit", label: "Answer, skip the cache question, submit", run: () => { TRIGGERS["question.select"](); setTimeout(() => { TRIGGERS["question.next"](); TRIGGERS["question.skip"](); }, 400); setTimeout(() => TRIGGERS["question.submit"](), 1000); }, wait: 2800 },
+  { beat: "eight_todos", label: "Eight named tasks on the board", run: () => { /* thread-19 ships its eight scenario todos */ store.emit("work"); } },
+  { beat: "plans_code_web_browser_activity", label: "Search, read, fetch, browser, edit, test phases", run: () => { store.setDraft("Run the audit lane now"); store.sendMessage(); }, wait: 16000 },
+  { beat: "port_or_worktree_collision", label: "Port 4173 collision caught safely", run: () => TRIGGERS["system.port_collision"]() },
+  { beat: "three_child_agents_different_routes", label: "Three specialists on Fable, Kimi K3, Qwen 3.8", run: () => { const g = store.thread.subagentGroups[0]; if (g) { store.setSubagentStatus(g.id, "Interface systems auditor", "working", "Auditing the picker"); } } },
+  { beat: "capacity_two_concurrent_one_queued", label: "Capacity: two at a time with synthesis reserve", run: () => TRIGGERS["warning.capacity"]() },
+  { beat: "child_complete_block_retry", label: "A child fails and retries", run: () => { TRIGGERS["subagent.fail"](); setTimeout(() => TRIGGERS["subagent.retry"](), 900); }, wait: 3200 },
+  { beat: "multi_phase_activity", label: "The live locus advances phase by phase", run: () => TRIGGERS["activity.generate"](), wait: 2200 },
+  { beat: "material_route_warning", label: "Cache-replay route warning asks first", run: () => TRIGGERS["warning.cache_replay"]() },
+  { beat: "attachment_resolution", label: "A video attachment needs the vision route", run: () => { store.addAttachment({ id: "att-video-t19", name: "picker-walkthrough.mp4", size: "96 MB", cls: "Alternate model", detail: SCENARIO_V2_WARNINGS[1] }); TRIGGERS["warning.video_route"](); } },
+  { beat: "three_file_diff", label: "The manifest's three-file change set lands", run: () => TRIGGERS["diff.create"]() },
+  { beat: "four_artifacts", label: "Four artifacts: diff, preview, test report, handoff", run: () => TRIGGERS["artifact.ready"](), wait: 1400 },
+  { beat: "artifact_open_left", label: "The change set opens left of Chat", run: () => TRIGGERS["diff.open"](), wait: 1400 },
+  { beat: "history_pinned_with_artifact", label: "History pins beside the artifact", run: () => TRIGGERS["history.pin_full"]() },
   { beat: "offline_queued_send_replay_once", label: "Offline: queued send replays exactly once", run: () => { TRIGGERS["network.offline"](); setTimeout(() => { store.setDraft("Queued while offline — deliver exactly once"); store.sendMessage(); }, 500); setTimeout(() => TRIGGERS["network.reconnect"](), 1200); }, wait: 4200 },
   { beat: "active_turn_redirect", label: "A correction redirects the active turn", run: () => TRIGGERS["turn.redirect"](), wait: 2600 },
-  { beat: "thread_request_and_response", label: "Another thread answers a request", run: () => TRIGGERS["thread.await"](), wait: 2200 },
-  { beat: "goal_pause_resume_replan_block_recover_complete", label: "Goal: pause, resume, block, recover, complete", run: () => { TRIGGERS["goal.pause"](); setTimeout(() => TRIGGERS["goal.resume"](), 500); setTimeout(() => TRIGGERS["goal.block"](), 1000); setTimeout(() => TRIGGERS["goal.recover"](), 1700); setTimeout(() => TRIGGERS["goal.complete"](), 2400); }, wait: 3400 },
-  { beat: "final_receipt", label: "The completion receipt lands", run: () => TRIGGERS["notification.inline_outcome"]() },
+  { beat: "thread_request_and_response", label: "Another thread answers the request", run: () => TRIGGERS["thread.receive_response"]() },
+  { beat: "goal_pause_resume_replan_block_recover_complete", label: "Goal: pause, resume, update, replan, block, recover, complete", run: () => { TRIGGERS["goal.pause"](); setTimeout(() => TRIGGERS["goal.resume"](), 400); setTimeout(() => TRIGGERS["goal.update"](), 800); setTimeout(() => TRIGGERS["goal.replan"](), 1300); setTimeout(() => TRIGGERS["goal.blocked"](), 1900); setTimeout(() => TRIGGERS["goal.recover"](), 2500); setTimeout(() => TRIGGERS["goal.complete"](), 3100); }, wait: 4000 },
+  { beat: "final_receipt", label: "Completion — verified, worked for 1m 34s", run: () => { store.setDraft("Close it out with the verification lane"); store.sendMessage(); }, wait: 6000 },
   { beat: "branch_or_reanswer", label: "A branch preserves the source thread", run: () => TRIGGERS["thread.branch"]() },
 ];
 

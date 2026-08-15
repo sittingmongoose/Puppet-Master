@@ -49,5 +49,14 @@
       "plan_owner_delta": "concepts/archive/plan-owner-delta.md",
       "design_contract_summary": "retrieval / finding aid IA; featured: Storage & Retention, Backup & Restore, Settings Lifecycle, History & Sessions, Runtime Artifacts, Source Control/Worktrees, GitHub Actions, Containers & Registries, Web/Search/Fetch, Project Search Index, Workspace Cleanup, Future Server Module Shell"
     }
-  ]
+  ],
+  "correction_2026_08_13": {
+    "packet": "PM_Settings_Dependency_and_Work_Correction_2026-08-13",
+    "reference_review_report": "reference-review-report.json",
+    "sole_owners": {
+      "resource_admission": "RuntimeResourceGovernor",
+      "progress_wait_projection": "ObservableWork"
+    },
+    "note": "Candidate artifacts updated under each concept folder; no Plans/catalog edits."
+  }
 }

@@ -1,987 +1,1100 @@
-import assert from "node:assert/strict";
+#!/usr/bin/env node
+
+/*
+ * Deterministic browser-prototype verification for the 5.6 Sol Settings bakeoff.
+ *
+ * This file intentionally uses only Node built-ins plus the W3C WebDriver HTTP
+ * protocol. It creates no product dependency and writes only below one mkdtemp
+ * root, which is removed in the finalizer.
+ */
+
 import { spawn } from "node:child_process";
-import { createRequire } from "node:module";
-import { mkdir, mkdtemp, rm } from "node:fs/promises";
+import { access, mkdtemp, mkdir, rm } from "node:fs/promises";
+import { createServer } from "node:net";
 import { dirname, join, resolve } from "node:path";
-import { homedir, tmpdir } from "node:os";
+import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
 
-const require = createRequire(import.meta.url);
 const here = dirname(fileURLToPath(import.meta.url));
 const modelDir = resolve(here, "..");
 const repoRoot = resolve(modelDir, "../../..");
-const serverPath = join(repoRoot, "Concepts", "ConceptHub", "server.py");
-const temporaryRoot = await mkdtemp(join(tmpdir(), "pm-settings-5-6-sol-"));
-const profileDir = join(temporaryRoot, "browser-profile");
-const outputDir = join(temporaryRoot, "output");
-await mkdir(profileDir, { recursive: true });
-await mkdir(outputDir, { recursive: true });
+const hubServer = join(repoRoot, "Concepts", "ConceptHub", "server.py");
+const driverBinary = process.env.PM_SETTINGS_GECKODRIVER_BINARY || "/snap/firefox/current/usr/lib/firefox/geckodriver";
+const browserBinary = process.env.PM_SETTINGS_FIREFOX_BINARY || "/snap/firefox/current/usr/lib/firefox/firefox";
+const focused = process.argv.includes("--focused");
+const startedAt = new Date().toISOString();
+const temporaryRoot = await mkdtemp(join(tmpdir(), "pm-settings-firefox-"));
+const profileRoot = join(temporaryRoot, "profiles");
+const outputRoot = join(temporaryRoot, "output");
+await mkdir(profileRoot, { recursive: true });
+await mkdir(outputRoot, { recursive: true });
 
-function loadPlaywright() {
-  const candidates = [
-    process.env.PM_PLAYWRIGHT_MODULE,
-    ...String(process.env.NODE_PATH || "").split(":").filter(Boolean).map((directory) => join(directory, "playwright")),
-    resolve(dirname(process.execPath), "..", "node_modules", "playwright"),
-    join(homedir(), ".cache", "codex-runtimes", "codex-primary-runtime", "dependencies", "node", "node_modules", "playwright")
-  ].filter(Boolean);
-  for (const candidate of candidates) {
-    try { return require(candidate); } catch { /* Try the next bundled runtime. */ }
-  }
-  throw new Error("Playwright is unavailable. Set PM_PLAYWRIGHT_MODULE to its package directory.");
+const concepts = [
+  { id: "index-house", file: "concept-01-index-house.html", assigned: "context" },
+  { id: "switchboard", file: "concept-02-switchboard.html", assigned: "notifications-sounds" },
+  { id: "wayfinder", file: "concept-03-wayfinder.html", assigned: "file-manager" },
+  { id: "ledger", file: "concept-04-ledger.html", assigned: "storage-retention" }
+];
+const themes = ["friendly-dark", "friendly-light", "glass-dark", "glass-light", "retro-dark", "retro-light", "basic-dark", "basic-light"];
+const widths = [520, 760, 900, 1280, 1700, 2200, 2500];
+const representativeWidths = [520, 1280, 2500];
+const managerStates = ["loading", "empty", "error", "offline", "unavailable", "managed_inherited", "requested_effective", "degraded"];
+const semanticMotionKinds = ["navigate", "category", "search", "jump", "scrollspy", "disclosure", "refresh", "save", "reorder", "drawer", "transaction", "preview"];
+const performanceProfiles = ["low-memory", "offline", "slow-network", "metered", "thermal", "legacy"];
+const forbiddenLayoutAnimationProperties = new Set(["width", "height", "top", "right", "bottom", "left", "margin", "padding", "grid-template-rows", "grid-template-columns"]);
+
+const sections = Object.fromEntries([
+  "harness", "startup", "renderMatrix", "managerRoutes", "managerStates", "providerPolicy", "runtimePerformance", "motion", "accessibility"
+].map((name) => [name, { attempted: 0, passed: 0, failed: 0 }]));
+const failures = [];
+let omittedFailureDetails = 0;
+let hubProcess = null;
+let driverProcess = null;
+let driver = null;
+let hubPort = null;
+let driverPort = null;
+let hubBindingMethod = "server-requested-os-assigned-port";
+let driverBindingMethod = null;
+let driverOutput = null;
+let environment = {
+  node: process.version,
+  platform: process.platform,
+  architecture: process.arch,
+  browser: null,
+  browserBinary,
+  driverBinary,
+  binarySelection: "Environment-overridable direct Firefox snap payloads; exact resolved paths are reported above.",
+  headless: true
+};
+
+function safeError(error) {
+  return String(error?.stack || error?.message || error).replaceAll(temporaryRoot, "<temporary-root>").slice(0, 5000);
 }
 
-function startHub() {
-  return new Promise((resolvePromise, reject) => {
-    const child = spawn("python3", [serverPath, "--host", "127.0.0.1", "--port", "0", "--no-browser", "--no-runtime-state"], {
-      cwd: repoRoot,
-      env: { ...process.env, PYTHONUNBUFFERED: "1", PYTHONDONTWRITEBYTECODE: "1" },
-      stdio: ["ignore", "pipe", "pipe"]
-    });
-    let combined = "";
-    let settled = false;
+function rememberFailure(detail) {
+  if (failures.length < 500) failures.push(detail);
+  else omittedFailureDetails += 1;
+}
+
+async function runCase(section, label, task) {
+  const counts = sections[section];
+  counts.attempted += 1;
+  try {
+    const result = await task();
+    const issues = result === true || result === undefined ? [] : Array.isArray(result) ? result.filter(Boolean) : [String(result)];
+    if (issues.length) {
+      counts.failed += 1;
+      rememberFailure({ section, label, issues });
+      return false;
+    }
+    counts.passed += 1;
+    return true;
+  } catch (error) {
+    counts.failed += 1;
+    rememberFailure({ section, label, issues: [safeError(error)] });
+    return false;
+  }
+}
+
+function stopProcess(child) {
+  if (!child) return Promise.resolve();
+  const signal = (name) => {
+    try {
+      if (child._pmOwnProcessGroup && child.pid && process.platform !== "win32") process.kill(-child.pid, name);
+      else child.kill(name);
+    } catch { /* already stopped */ }
+  };
+  if (child.exitCode !== null) {
+    signal("SIGTERM");
+    return new Promise((done) => setTimeout(() => { signal("SIGKILL"); done(); }, 250));
+  }
+  return new Promise((done) => {
+    let finished = false;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      done();
+    };
     const timer = setTimeout(() => {
-      if (settled) return;
-      settled = true;
-      child.kill("SIGTERM");
-      reject(new Error(`ConceptHub did not report an OS-assigned port.\n${combined}`));
-    }, 12000);
+      signal("SIGKILL");
+      finish();
+    }, 1800);
+    child.once("exit", () => {
+      clearTimeout(timer);
+      finish();
+    });
+    signal("SIGTERM");
+  });
+}
+
+function waitForListen(child, pattern, label, timeoutMs = 20000) {
+  return new Promise((resolvePromise, rejectPromise) => {
+    let output = "";
+    let settled = false;
     const inspect = (chunk) => {
-      combined += chunk.toString();
-      const match = combined.match(/http:\/\/127\.0\.0\.1:(\d+)\//);
+      output = (output + chunk.toString()).slice(-24000);
+      const match = output.match(pattern);
       if (!settled && match) {
         settled = true;
         clearTimeout(timer);
-        resolvePromise({ child, port: Number(match[1]), output: () => combined });
+        resolvePromise({ port: Number(match[1]), output: () => output });
       }
     };
-    child.stdout.on("data", inspect);
-    child.stderr.on("data", inspect);
+    const timer = setTimeout(() => {
+      if (settled) return;
+      settled = true;
+      rejectPromise(new Error(`${label} did not report a listening port within ${timeoutMs}ms.\n${output}`));
+    }, timeoutMs);
+    child.stdout?.on("data", inspect);
+    child.stderr?.on("data", inspect);
     child.once("error", (error) => {
       if (settled) return;
       settled = true;
       clearTimeout(timer);
-      reject(error);
+      rejectPromise(error);
     });
-    child.once("exit", (code) => {
+    child.once("exit", (code, signal) => {
       if (settled) return;
       settled = true;
       clearTimeout(timer);
-      reject(new Error(`ConceptHub exited early with ${code}.\n${combined}`));
+      rejectPromise(new Error(`${label} exited before listening (code=${code}, signal=${signal}).\n${output}`));
     });
   });
 }
 
-const concepts = [
-  { id: "index-house", file: "concept-01-index-house.html", title: "5.6 Sol — Index House", home: ".ih-home", destination: ".ih-destination", signature: "address" },
-  { id: "switchboard", file: "concept-02-switchboard.html", title: "5.6 Sol — Switchboard", home: ".sb-home", destination: ".sb-bay", signature: "signal" },
-  { id: "wayfinder", file: "concept-03-wayfinder.html", title: "5.6 Sol — Wayfinder", home: ".wf-home", destination: ".wf-route", signature: "route-line" },
-  { id: "ledger", file: "concept-04-ledger.html", title: "5.6 Sol — Ledger", home: ".lg-home", destination: ".lg-table-row", signature: "folio" }
-];
-const expectedMotionRoles = {
-  "index-house": {
-    navigate: ["address", "directory", "document", "inspector"], category: ["address", "document", "inspector"], search: ["search-result"], jump: ["address-marker", "section"], scrollspy: ["address-marker", "inspector-field"], disclosure: ["disclosure"], refresh: ["source", "catalogue", "evidence"], save: ["setting"], reorder: ["reorder-item"], drawer: ["drawer-backdrop", "drawer"]
-  },
-  switchboard: {
-    navigate: ["signal", "station", "board"], category: ["signal", "station", "board"], search: ["search-result"], jump: ["signal-marker", "station"], scrollspy: ["signal-marker", "instrument"], disclosure: ["signal", "disclosure"], refresh: ["connection", "catalogue", "readiness"], save: ["instrument"], reorder: ["reorder-item"], drawer: ["drawer-backdrop", "drawer"]
-  },
-  wayfinder: {
-    navigate: ["route-line", "waypoint", "checkpoint"], category: ["route-line", "waypoint", "checkpoint"], search: ["search-result"], jump: ["route-line", "waypoint-current", "checkpoint"], scrollspy: ["route-marker", "waypoint-current"], disclosure: ["route-branch", "disclosure"], refresh: ["checkpoint", "verify", "ready"], save: ["checkpoint"], reorder: ["waypoint"], drawer: ["route-map", "drawer"]
-  },
-  ledger: {
-    navigate: ["folio", "rule", "ledger-row"], category: ["folio", "rule", "ledger-row"], search: ["search-result"], jump: ["rule", "ledger-row"], scrollspy: ["rule", "margin-note"], disclosure: ["ledger-detail"], refresh: ["source", "ledger-row", "effective"], save: ["ledger-row"], reorder: ["ledger-row"], drawer: ["drawer-backdrop", "outline"]
-  }
-};
-const themes = ["friendly-dark", "friendly-light", "glass-dark", "glass-light", "retro-dark", "retro-light", "basic-dark", "basic-light"];
-const widths = [760, 900, 1280, 1700, 2200, 2500];
-const shellStates = [
-  { railOpen: false, chatOpen: false },
-  { railOpen: true, chatOpen: false },
-  { railOpen: false, chatOpen: true },
-  { railOpen: true, chatOpen: true }
-];
-const shellExtremes = [
-  { railOpen: false, chatOpen: false },
-  { railOpen: true, chatOpen: true }
-];
-const scenarioIds = [
-  "normal",
-  "attention",
-  "calm",
-  "setup",
-  "loading",
-  "refreshing",
-  "degraded",
-  "managed",
-  "unavailable",
-  "error",
-  "usage-exhausted",
-  "effective-difference"
-];
-const scenarioLabels = {
-  normal: "Normal home",
-  attention: "Needs attention",
-  calm: "Calm state",
-  setup: "Setup in progress",
-  loading: "Loading state",
-  refreshing: "Refreshing catalogues",
-  degraded: "Degraded with last-known-good data",
-  managed: "Managed workspace",
-  unavailable: "Unavailable dependency",
-  error: "Error state",
-  "usage-exhausted": "Included usage exhausted",
-  "effective-difference": "Requested and effective values differ"
-};
-const coreSurfaces = [
-  { id: "home", qa: "home", open: ["openHome"] },
-  { id: "workspace", qa: "workspace", open: ["openCategory", "experience"] },
-  { id: "provider-models", qa: "manager", manager: "providers", open: ["openManager", "providers", "models"] },
-  { id: "memory", qa: "manager", manager: "memory", open: ["openManager", "memory"] },
-  { id: "terminal", qa: "manager", manager: "terminal", open: ["openManager", "terminal"] }
-];
-const failures = [];
-let failureCount = 0;
-const consoleErrors = [];
-const coverage = {
-  concepts: 0,
-  themeStates: 0,
-  responsiveStates: 0,
-  coreRenderedStates: 0,
-  scenarioStates: 0,
-  specializedStates: 0,
-  functionalFlows: 0,
-  motionFlows: 0,
-  motionMoments: 0,
-  comparisonFrames: 0,
-  coarsePointerStates: 0
-};
-let hubProcess;
-let context;
-let touchContext;
-
-function check(condition, message) {
-  if (!condition) {
-    failureCount += 1;
-    if (failures.length < 300) failures.push(message);
-  }
-}
-
-function watchPage(page) {
-  page.on("console", (message) => {
-    if (message.type() === "error") consoleErrors.push(`${page.url()}: ${message.text()}`);
+async function reserveLoopbackPort() {
+  const server = createServer();
+  await new Promise((resolvePromise, rejectPromise) => {
+    server.once("error", rejectPromise);
+    server.listen(0, "127.0.0.1", resolvePromise);
   });
-  page.on("pageerror", (error) => consoleErrors.push(`${page.url()}: ${error.message}`));
+  const address = server.address();
+  const port = typeof address === "object" && address ? address.port : null;
+  await new Promise((resolvePromise) => server.close(resolvePromise));
+  if (!port) throw new Error("The kernel did not return a loopback port reservation.");
+  return port;
 }
 
-async function waitForDemo(page) {
-  await page.waitForFunction(() => Boolean(window.PMSettingsDemo?.whenIdle), null, { timeout: 15000 });
-  await page.evaluate(() => window.PMSettingsDemo.whenIdle());
+async function startHub() {
+  const child = spawn("python3", [hubServer, "--host", "127.0.0.1", "--port", "0", "--no-browser", "--no-runtime-state"], {
+    cwd: repoRoot,
+    env: { ...process.env, PYTHONUNBUFFERED: "1", PYTHONDONTWRITEBYTECODE: "1" },
+    detached: process.platform !== "win32",
+    stdio: ["ignore", "pipe", "pipe"]
+  });
+  child._pmOwnProcessGroup = process.platform !== "win32";
+  const listening = await waitForListen(child, /http:\/\/127\.0\.0\.1:(\d+)\//, "ConceptHub", 15000);
+  return { child, port: listening.port };
 }
 
-async function applyReview(page, values) {
-  await page.evaluate(async (state) => {
-    await window.PMSettingsDemo.applyReviewState(state);
-    await window.PMSettingsDemo.whenIdle();
-  }, values);
-}
+async function startDriver() {
+  const spawnDriver = (port) => {
+    const child = spawn(driverBinary, [
+      "--host", "127.0.0.1",
+      "--port", String(port),
+      "--binary", browserBinary,
+      "--profile-root", profileRoot,
+      "--log", "info"
+    ], { cwd: temporaryRoot, env: { ...process.env }, detached: process.platform !== "win32", stdio: ["ignore", "pipe", "pipe"] });
+    child._pmOwnProcessGroup = process.platform !== "win32";
+    return child;
+  };
 
-async function applyMatrixReview(page, values) {
-  await page.evaluate(async (state) => {
-    window.PMSettingsDemo.applyReviewState(state);
-    await window.PMSettingsDemo.settleForReview();
-  }, values);
-}
-
-async function openMatrixSurface(page, surface) {
-  await page.evaluate(async ({ method, values }) => {
-    window.PMSettingsDemo[method](...values);
-    await window.PMSettingsDemo.settleForReview();
-  }, { method: surface.open[0], values: surface.open.slice(1) });
-}
-
-async function demo(page, method, ...args) {
-  return page.evaluate(async ({ methodName, values }) => {
-    const result = await window.PMSettingsDemo[methodName](...values);
-    await window.PMSettingsDemo.whenIdle();
-    return { result, snapshot: window.PMSettingsDemo.snapshot() };
-  }, { methodName: method, values: args });
-}
-
-async function idle(page) {
-  await page.evaluate(() => window.PMSettingsDemo.whenIdle());
-}
-
-async function clearMotionWitness(page) {
-  await page.evaluate(() => { window.__pmMotionWitness = []; });
-}
-
-async function motionEvidence(page) {
-  return page.evaluate(() => ({
-    snapshot: window.PMSettingsDemo.motionSnapshot(),
-    calls: (window.__pmMotionWitness || []).map((entry) => ({ ...entry }))
-  }));
-}
-
-function assertMotionEvidence(evidence, concept, kind) {
-  const expected = expectedMotionRoles[concept.id][kind];
-  check(evidence.snapshot?.kind === kind, `${concept.title}: expected ${kind} motion, found ${evidence.snapshot?.kind || "none"}.`);
-  for (const role of expected) {
-    check(Number(evidence.snapshot?.roles?.[role] || 0) > 0, `${concept.title}: ${kind} did not select ${role}.`);
-    check(evidence.calls.some((entry) => entry.roles.includes(role)), `${concept.title}: ${kind} selected ${role} but did not execute WAAPI on it.`);
+  let child = spawnDriver(0);
+  try {
+    const listening = await waitForListen(child, /Listening on 127\.0\.0\.1:(\d+)/, "Firefox driver", 30000);
+    driverBindingMethod = "driver-port-zero-parsed-listen-line";
+    return { child, port: listening.port, output: listening.output };
+  } catch (zeroError) {
+    await stopProcess(child);
+    const reserved = await reserveLoopbackPort();
+    child = spawnDriver(reserved);
+    try {
+      const listening = await waitForListen(child, /Listening on 127\.0\.0\.1:(\d+)/, "Firefox driver fallback", 30000);
+      if (listening.port !== reserved) throw new Error(`Firefox driver listened on ${listening.port}, expected reserved port ${reserved}.`);
+      driverBindingMethod = "kernel-reserve-close-then-explicit-bind";
+      return { child, port: listening.port, output: listening.output };
+    } catch (fallbackError) {
+      await stopProcess(child);
+      throw new Error(`Driver port-zero start failed: ${safeError(zeroError)}\nFallback start failed: ${safeError(fallbackError)}`);
+    }
   }
-  check(evidence.calls.length > 0, `${concept.title}: ${kind} produced no witnessed WAAPI call.`);
-  check(evidence.calls.every((entry) => entry.duration >= 70 && entry.duration <= 500 && entry.iterations === 1 && entry.properties.every((property) => ["opacity", "transform"].includes(property))), `${concept.title}: ${kind} exceeded finite transform/opacity motion bounds.`);
-  coverage.motionMoments += 1;
 }
 
-async function layoutAudit(page) {
-  return page.evaluate(() => {
-    const visible = (element) => {
-      const style = getComputedStyle(element);
-      const rect = element.getBoundingClientRect();
-      if (element.closest("[inert], [aria-hidden='true']")) return false;
-      const closedDetails = element.closest("details:not([open])");
-      if (closedDetails && element !== closedDetails.querySelector(":scope > summary") && !element.closest(":scope > summary")) return false;
-      return style.display !== "none" && style.visibility !== "hidden" && rect.width > 0 && rect.height > 0;
-    };
-    const colorCanvas = document.createElement("canvas");
-    colorCanvas.width = colorCanvas.height = 1;
-    const colorContext = colorCanvas.getContext("2d", { willReadFrequently: true });
-    const colorCache = new Map();
-    const parse = (value) => {
-      const key = String(value || "transparent");
-      if (colorCache.has(key)) return colorCache.get(key);
-      colorContext.clearRect(0, 0, 1, 1);
-      colorContext.fillStyle = "rgba(0, 0, 0, 0)";
-      colorContext.fillStyle = key;
-      colorContext.fillRect(0, 0, 1, 1);
-      const pixel = colorContext.getImageData(0, 0, 1, 1).data;
-      const result = [pixel[0], pixel[1], pixel[2], pixel[3] / 255];
-      colorCache.set(key, result);
-      return result;
-    };
-    const composite = (foreground, background) => {
-      const alpha = foreground[3] + background[3] * (1 - foreground[3]);
-      if (!alpha) return [0, 0, 0, 0];
-      return [
-        (foreground[0] * foreground[3] + background[0] * background[3] * (1 - foreground[3])) / alpha,
-        (foreground[1] * foreground[3] + background[1] * background[3] * (1 - foreground[3])) / alpha,
-        (foreground[2] * foreground[3] + background[2] * background[3] * (1 - foreground[3])) / alpha,
-        alpha
-      ];
-    };
-    const luminance = (rgb) => {
-      const channels = rgb.map((part) => {
-        const value = part / 255;
-        return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
-      });
-      return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
-    };
-    const contrast = (a, b) => {
-      const first = luminance(a);
-      const second = luminance(b);
-      return (Math.max(first, second) + 0.05) / (Math.min(first, second) + 0.05);
-    };
-    const effectiveBackground = (element) => {
-      let current = element;
-      let result = [0, 0, 0, 0];
-      while (current) {
-        result = composite(result, parse(getComputedStyle(current).backgroundColor));
-        if (result[3] > 0.995) return result;
-        current = current.parentElement;
+function requestJson(port, method, path, body = undefined, timeoutMs = 30000) {
+  return new Promise((resolvePromise, rejectPromise) => {
+    const payload = body === undefined ? null : JSON.stringify(body);
+    const request = globalThis.fetch(`http://127.0.0.1:${port}${path}`, {
+      method,
+      headers: payload === null ? {} : { "content-type": "application/json; charset=utf-8" },
+      body: payload,
+      signal: AbortSignal.timeout(timeoutMs)
+    });
+    request.then(async (response) => {
+      const text = await response.text();
+      let parsed;
+      try { parsed = text ? JSON.parse(text) : {}; }
+      catch { throw new Error(`${method} ${path} returned non-JSON (${response.status}): ${text.slice(0, 1200)}`); }
+      if (!response.ok || parsed?.value?.error) {
+        const value = parsed?.value || parsed;
+        throw new Error(`${method} ${path} failed (${response.status}): ${value?.error || "webdriver error"}: ${value?.message || text}`);
       }
-      return composite(result, [255, 255, 255, 1]);
-    };
-    const keyText = [...document.querySelectorAll("h1, h2, h3, p, label, button, input, select, .status-label")]
-      .filter(visible)
-      .slice(0, 180);
-    const lowContrast = keyText.filter((element) => {
-      const style = getComputedStyle(element);
-      const size = parseFloat(style.fontSize);
-      const weight = parseInt(style.fontWeight, 10) || 400;
-      const large = size >= 24 || size >= 18.66 && weight >= 700;
-      const copy = element.cloneNode(true);
-      copy.querySelectorAll?.("svg, .sr-only").forEach((node) => node.remove());
-      const iconOnly = !copy.textContent.trim();
-      const background = effectiveBackground(element);
-      const foreground = composite(parse(style.color), background);
-      return contrast(foreground, background) < (large || iconOnly ? 2.95 : 4.4);
-    }).map((element) => `${element.tagName}:${element.textContent.trim().slice(0, 32)}`);
-    const essential = [...document.querySelectorAll(".view p, .view label, .view button, .view input, .view select, .setting-title, .setting-description")].filter(visible);
-    const smallText = essential.filter((element) => {
-      const size = parseFloat(getComputedStyle(element).fontSize);
-      if (element.matches(".setting-title, .setting-description")) return size < 13.8;
-      return size < 11.8;
-    }).map((element) => `${element.tagName}:${getComputedStyle(element).fontSize}:${element.textContent.trim().slice(0, 28)}`);
-    const invalidGeometry = [...document.querySelectorAll("h1, h2, button, input, select, [role='tab'], [role='option']")].filter(visible).filter((element) => {
-      const rect = element.getBoundingClientRect();
-      return ![rect.x, rect.y, rect.width, rect.height].every(Number.isFinite) || rect.width < 1 || rect.height < 1;
-    }).length;
-    const splitWords = essential.filter((element) => ["break-all", "break-word"].includes(getComputedStyle(element).wordBreak)).map((element) => element.textContent.trim().slice(0, 28));
-    const shell = document.querySelector(".pm-shell");
-    const scroller = document.querySelector(".concept-scroll");
-    const rail = document.querySelector(".project-rail");
-    const chat = document.querySelector(".assistant-panel");
-    const snapshot = window.PMSettingsDemo.snapshot();
-    const unwired = [...document.querySelectorAll(".concept-scroll button:not(:disabled)")].filter((button) => {
-      const dataset = button.dataset;
-      return !Object.keys(dataset).some((key) => [
-        "home", "category", "manager", "destination", "subcategory", "navToggle", "navDismiss", "inspectorToggle", "inspectorDismiss", "settingToggle", "settingReset", "settingInherit", "settingAction", "resetCategory", "searchResult", "managerTab", "provider", "accountSelect", "accountUse", "providerRefresh", "providerAction", "providerUsageHandoff", "modelFavorite", "modelMove", "memory", "memorySave", "memoryVerify", "memoryPin", "memoryDiscard", "memoryRestore", "memoryUndo", "memoryRebuild", "terminal", "terminalApply", "terminalReset", "terminalDiagnostics", "terminalKeep", "terminalDiscardSwitch", "spell", "receiptDismiss", "genericAction", "genericInspect", "managerItemAction", "managerResource", "drillBack"
-      ].includes(key));
-    }).map((button) => button.textContent.trim().slice(0, 44));
-    return {
-      rootOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 2,
-      bodyOverflow: document.body.scrollWidth > document.body.clientWidth + 2,
-      bodyCompetingScroll: document.body.scrollHeight > document.body.clientHeight + 3,
-      canvasOverflow: scroller.scrollWidth > scroller.clientWidth + 2,
-      shellOverflowX: getComputedStyle(shell).overflowX,
-      shellHeight: shell.getBoundingClientRect().height,
-      viewportHeight: innerHeight,
-      bodyFontSize: parseFloat(getComputedStyle(document.body).fontSize),
-      mainWidth: document.querySelector(".concept-main").getBoundingClientRect().width,
-      invalidGeometry,
-      lowContrast,
-      smallText,
-      splitWords,
-      unwired,
-      railInert: rail.inert,
-      chatInert: chat.inert,
-      railOpen: snapshot.state.railOpen,
-      chatOpen: snapshot.state.chatOpen,
-      runningAnimations: document.getAnimations().filter((animation) => animation.playState === "running").length,
-      rawInternalLabel: [...document.querySelectorAll("h1,h2,h3,button,label")].filter(visible).some((element) => /\b[a-z]+_[a-z_]+\b/.test(element.textContent)),
-      emoji: /\p{Extended_Pictographic}/u.test(document.body.innerText)
-    };
+      resolvePromise(parsed?.value);
+    }).catch((error) => rejectPromise(new Error(`${method} ${path} transport failed: ${error?.message || error}`, { cause: error })));
   });
 }
 
-function assertLayout(audit, label) {
-  check(!audit.rootOverflow, `${label}: root horizontal overflow`);
-  check(!audit.bodyOverflow, `${label}: body horizontal overflow`);
-  check(!audit.bodyCompetingScroll, `${label}: body competes with the bounded Settings scroller`);
-  check(!audit.canvasOverflow, `${label}: Settings canvas horizontal overflow`);
-  check(["hidden", "clip"].includes(audit.shellOverflowX), `${label}: shell does not contain overlay geometry (${audit.shellOverflowX})`);
-  check(Math.abs(audit.shellHeight - audit.viewportHeight) <= 2, `${label}: shell is not 100dvh (${audit.shellHeight}/${audit.viewportHeight})`);
-  check(audit.bodyFontSize >= 15.8, `${label}: body type floor is ${audit.bodyFontSize}px`);
-  check(audit.mainWidth > 220, `${label}: main workspace collapsed (${audit.mainWidth}px)`);
-  check(audit.invalidGeometry === 0, `${label}: ${audit.invalidGeometry} essential controls have invalid geometry`);
-  check(audit.lowContrast.length === 0, `${label}: key text contrast failures: ${audit.lowContrast.slice(0, 5).join(", ")}`);
-  check(audit.smallText.length === 0, `${label}: essential text below floor: ${audit.smallText.slice(0, 5).join(", ")}`);
-  check(audit.splitWords.length === 0, `${label}: split-word styling on ${audit.splitWords.slice(0, 5).join(", ")}`);
-  check(audit.unwired.length === 0, `${label}: enabled buttons without an observable handler: ${audit.unwired.slice(0, 8).join(", ")}`);
-  check(audit.railInert === !audit.railOpen, `${label}: project rail inert state diverged`);
-  check(audit.chatInert === !audit.chatOpen, `${label}: Assistant panel inert state diverged`);
-  check(!audit.rawInternalLabel, `${label}: raw underscored internal label is visible`);
-  check(!audit.emoji, `${label}: emoji is visible instead of SVG/iconography`);
-}
+class W3CDriver {
+  constructor(port) {
+    this.port = port;
+    this.sessionId = null;
+  }
 
-async function stopProcess(child) {
-  if (!child || child.exitCode !== null) return;
-  child.kill("SIGTERM");
-  await new Promise((resolvePromise) => {
-    const timer = setTimeout(() => {
-      if (child.exitCode === null) child.kill("SIGKILL");
-      resolvePromise();
-    }, 1600);
-    child.once("exit", () => {
-      clearTimeout(timer);
-      resolvePromise();
+  async create() {
+    const value = await requestJson(this.port, "POST", "/session", {
+      capabilities: {
+        alwaysMatch: {
+          browserName: "firefox",
+          acceptInsecureCerts: false,
+          pageLoadStrategy: "normal",
+          "moz:firefoxOptions": {
+            binary: browserBinary,
+            args: ["-headless"],
+            prefs: {
+              "browser.shell.checkDefaultBrowser": false,
+              "browser.tabs.warnOnClose": false,
+              "datareporting.policy.dataSubmissionEnabled": false,
+              "toolkit.telemetry.reportingpolicy.firstRun": false
+            },
+            log: { level: "error" }
+          }
+        }
+      }
+    }, 60000);
+    this.sessionId = value.sessionId;
+    environment.browser = value.capabilities?.browserVersion || null;
+    environment.browserName = value.capabilities?.browserName || "firefox";
+    environment.browserPlatform = value.capabilities?.platformName || null;
+    return value;
+  }
+
+  endpoint(path = "") {
+    if (!this.sessionId) throw new Error("No active browser session.");
+    return `/session/${this.sessionId}${path}`;
+  }
+
+  navigate(url) { return requestJson(this.port, "POST", this.endpoint("/url"), { url }, 45000); }
+  rect(width, height = 900) { return requestJson(this.port, "POST", this.endpoint("/window/rect"), { x: 0, y: 0, width, height }); }
+
+  execute(fn, args = []) {
+    return requestJson(this.port, "POST", this.endpoint("/execute/sync"), {
+      script: `return (${fn.toString()}).apply(null, arguments);`,
+      args
     });
+  }
+
+  async executeAsync(fn, args = [], timeoutMs = 30000) {
+    await requestJson(this.port, "POST", this.endpoint("/timeouts"), { script: timeoutMs });
+    const wrapped = await requestJson(this.port, "POST", this.endpoint("/execute/async"), {
+      script: `const done = arguments[arguments.length - 1]; const values = Array.prototype.slice.call(arguments, 0, -1); Promise.resolve((${fn.toString()}).apply(null, values)).then((value) => done({ok:true,value}), (error) => done({ok:false,error:String(error && (error.stack || error.message) || error)}));`,
+      args
+    }, timeoutMs + 5000);
+    if (!wrapped?.ok) throw new Error(wrapped?.error || "Asynchronous page script failed.");
+    return wrapped.value;
+  }
+
+  async find(css) {
+    const value = await requestJson(this.port, "POST", this.endpoint("/element"), { using: "css selector", value: css });
+    return value["element-6066-11e4-a52e-4f735466cecf"];
+  }
+
+  async keys(keys) {
+    const actions = keys.map((value) => ({ type: "keyDown", value })).concat([...keys].reverse().map((value) => ({ type: "keyUp", value })));
+    return requestJson(this.port, "POST", this.endpoint("/actions"), { actions: [{ type: "key", id: "keyboard", actions }] });
+  }
+
+  screenshot() { return requestJson(this.port, "GET", this.endpoint("/screenshot")); }
+
+  async close() {
+    if (!this.sessionId) return;
+    const id = this.sessionId;
+    this.sessionId = null;
+    await requestJson(this.port, "DELETE", `/session/${id}`).catch(() => {});
+  }
+}
+
+async function ready() {
+  return driver.executeAsync(async () => {
+    const started = performance.now();
+    while (!window.PMSettingsDemo?.whenIdle) {
+      if (performance.now() - started > 15000) throw new Error("PMSettingsDemo did not become available.");
+      await new Promise((resolvePromise) => setTimeout(resolvePromise, 25));
+    }
+    await window.PMSettingsDemo.whenIdle();
+    return { model: window.PMSettingsDemo.model, concept: window.PMSettingsDemo.concept, title: document.title };
+  }, [], 20000);
+}
+
+async function review(values) {
+  return driver.executeAsync(async (state) => {
+    await window.PMSettingsDemo.applyReviewState(state);
+    await window.PMSettingsDemo.settleForReview();
+    return window.PMSettingsDemo.snapshot().state;
+  }, [values], 20000);
+}
+
+async function openSurface(surface, assignedManager) {
+  return driver.executeAsync(async (surfaceName, managerId) => {
+    if (surfaceName === "home") await window.PMSettingsDemo.openHome();
+    else if (surfaceName === "workspace") await window.PMSettingsDemo.openCategory("experience");
+    else if (surfaceName === "providers") await window.PMSettingsDemo.openManager("providers", "installations", { resourceId: "openai" });
+    else await window.PMSettingsDemo.openManager(managerId, "overview");
+    await window.PMSettingsDemo.whenIdle();
+    await window.PMSettingsDemo.settleForReview();
+    return window.PMSettingsDemo.snapshot().state;
+  }, [surface, assignedManager], 25000);
+}
+
+function pageAuditFunction(expected = {}) {
+  const visible = (element) => {
+    const style = getComputedStyle(element);
+    const rect = element.getBoundingClientRect();
+    return style.display !== "none" && style.visibility !== "hidden" && rect.width > 0 && rect.height > 0 && !element.closest("[hidden],[inert],[aria-hidden='true']");
+  };
+  const contentRoot = document.querySelector(".concept-scroll");
+  const walker = contentRoot ? document.createTreeWalker(contentRoot, NodeFilter.SHOW_TEXT) : null;
+  const visibleFragments = [];
+  while (walker?.nextNode()) {
+    const parent = walker.currentNode.parentElement;
+    if (parent && !parent.closest(".technical-identity") && visible(parent)) visibleFragments.push(walker.currentNode.nodeValue || "");
+  }
+  const visibleText = visibleFragments.join(" ").replace(/\s+/g, " ").trim();
+  const rawPatterns = [
+    /\b(?:provider|installation|host|environment|operation|account|project|plan|manager)_id\b/i,
+    /\b[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}\b/i,
+    /(?:^|\s)(?:\/[A-Za-z0-9._-]+){3,}(?:\s|$)/,
+    /[A-Za-z]:\\(?:[^\s\\]+\\){2,}/,
+    /\b(?:sha256|hash)\s*[:=]\s*[0-9a-f]{16,}\b/i,
+    /\b(?:npm|pnpm|brew|winget|apt|dnf|snap)\s+(?:install|add)\b/i,
+    /settings:\/\/[a-z0-9/_-]+/i
+  ];
+  const root = document.documentElement;
+  const body = document.body;
+  const scroller = document.querySelector(".concept-scroll");
+  const view = scroller?.querySelector(":scope > .view");
+  const heading = view?.querySelector("h1");
+  const activeNav = document.querySelector("[data-shell-nav][aria-current='page']");
+  const snapshot = window.PMSettingsDemo.snapshot();
+  const animations = document.getAnimations().filter((animation) => animation.playState === "running");
+  const managerInventory = expected.managerId ? snapshot.genericManagers?.[expected.managerId] : null;
+  const candidateInternalIds = [
+    snapshot.state.selectedInstallationId,
+    snapshot.state.selectedAccountId,
+    snapshot.state.selectedMemoryId,
+    snapshot.state.selectedTerminalId,
+    snapshot.state.selectedManagerResource?.[expected.managerId],
+    ...(managerInventory?.items || []).map((item) => item.id)
+  ].filter((value) => typeof value === "string" && value.length >= 5 && /[-_.]/.test(value));
+  const listWindows = [...document.querySelectorAll(".concept-scroll [data-list-total]")].map((element) => ({
+    label: element.getAttribute("aria-label") || element.className || element.tagName,
+    total: Number(element.dataset.listTotal),
+    mounted: Number(element.dataset.listMounted),
+    start: Number(element.dataset.listStart)
+  }));
+  return {
+    state: snapshot.state,
+    surface: view?.dataset.qaSurface || null,
+    manager: view?.dataset.qaManager || null,
+    heading: heading?.innerText.trim() || null,
+    headingCount: view ? [...view.querySelectorAll("h1")].filter(visible).length : 0,
+    rootOverflow: root.scrollWidth > root.clientWidth + 2,
+    bodyOverflow: body.scrollWidth > body.clientWidth + 2,
+    canvasOverflow: scroller ? scroller.scrollWidth > scroller.clientWidth + 2 : true,
+    shellHeightDelta: Math.abs((document.querySelector(".pm-shell")?.getBoundingClientRect().height || 0) - innerHeight),
+    activeNav: activeNav?.dataset.shellNav || null,
+    runningAnimations: animations.length,
+    rawIdentityMatches: rawPatterns.map((pattern) => visibleText.match(pattern)?.[0] || null).filter(Boolean),
+    rawInternalIds: [...new Set(candidateInternalIds.filter((id) => visibleText.includes(id)))],
+    fatalText: /uncaught|fatal error|cannot read properties|module failed/i.test(visibleText),
+    listWindows,
+    managerHydration: expected.managerId ? snapshot.state.managerHydration?.[expected.managerId] || null : null,
+    visibleText: visibleText.slice(0, 4000)
+  };
+}
+
+function auditIssues(audit, expected) {
+  const issues = [];
+  if (audit.surface !== expected.surface) issues.push(`surface=${audit.surface}, expected ${expected.surface}`);
+  if (expected.manager && audit.manager !== expected.manager) issues.push(`manager=${audit.manager}, expected ${expected.manager}`);
+  if (audit.headingCount !== 1 || !audit.heading) issues.push(`visible h1 count=${audit.headingCount}`);
+  if (audit.rootOverflow || audit.bodyOverflow || audit.canvasOverflow) issues.push(`fatal horizontal overflow root=${audit.rootOverflow} body=${audit.bodyOverflow} canvas=${audit.canvasOverflow}`);
+  if (audit.shellHeightDelta > 2) issues.push(`shell height differs from viewport by ${audit.shellHeightDelta}px`);
+  if (audit.runningAnimations) issues.push(`${audit.runningAnimations} animation(s) still running after settlement`);
+  if (audit.fatalText) issues.push("visible fatal-error text detected");
+  if (audit.rawIdentityMatches.length) issues.push(`normally visible raw identity: ${audit.rawIdentityMatches.join(", ")}`);
+  if (audit.rawInternalIds?.length) issues.push(`normally visible internal IDs: ${audit.rawInternalIds.join(", ")}`);
+  for (const list of audit.listWindows || []) {
+    if (![list.total, list.mounted, list.start].every(Number.isFinite) || list.total < 0 || list.mounted < 0 || list.start < 0 || list.mounted > list.total || list.start + list.mounted > list.total || list.mounted > 40) issues.push(`invalid bounded list ${list.label}: total=${list.total} mounted=${list.mounted} start=${list.start}`);
+  }
+  if (expected.nav && audit.activeNav !== expected.nav) issues.push(`active nav=${audit.activeNav}, expected ${expected.nav}`);
+  return issues;
+}
+
+async function runStartup(concept) {
+  await runCase("startup", `${concept.id}: compact Home and search`, async () => {
+    const telemetry = await driver.executeAsync(async () => {
+      const demo = window.PMSettingsDemo;
+      const store = demo.store;
+      if (typeof store.performanceTelemetry !== "function" || typeof store.installLargeCatalogSearchFixture !== "function" || typeof store.searchLatest !== "function" || typeof store.persistenceStats !== "function") return { missing: "startup search/performance APIs" };
+      const before = store.performanceTelemetry();
+      const writesBefore = store.persistenceStats().writes;
+      const installed = store.installLargeCatalogSearchFixture(825);
+      let lastSearch = null;
+      for (let index = 0; index < 25; index += 1) lastSearch = await store.searchLatest(`scale ${index + 1}`, { limit: 12, surface: "home" });
+      await demo.whenIdle();
+      const after = store.performanceTelemetry();
+      return { before, after, installed, resultCount: lastSearch?.results?.length, committed: lastSearch?.committed, writes: store.persistenceStats().writes - writesBefore, screen: demo.snapshot().state.screen };
+    }, [], 30000);
+    const issues = [];
+    if (telemetry.missing) return [telemetry.missing];
+    if (telemetry.screen !== "home") issues.push(`startup screen=${telemetry.screen}`);
+    for (const [phase, stats] of [["initial Home", telemetry.before], ["25-key search", telemetry.after]]) {
+      if (stats?.startup?.detailModuleLoaded !== false || stats?.startup?.detailModuleLoads !== 0) issues.push(`${phase} imported the detail module (${stats?.startup?.detailModuleLoads})`);
+      if (stats?.startup?.moduleLoadFixtureBytesMeasured !== true) issues.push(`${phase} lacks measured module-load fixture telemetry`);
+      if (stats?.startup?.liveProjectionLoadedManagerCount !== 0) issues.push(`${phase} loaded ${stats?.startup?.liveProjectionLoadedManagerCount} manager projection(s)`);
+      if (stats?.startup?.liveProjectionLoadedBytes !== 0) issues.push(`${phase} loaded ${stats?.startup?.liveProjectionLoadedBytes} manager-projection bytes`);
+      if (stats?.startup?.providerProbes !== 0) issues.push(`${phase} ran ${stats?.startup?.providerProbes} provider probes`);
+      if (stats?.startup?.speculativePrewarm !== false) issues.push(`${phase} speculative prewarm was not false`);
+    }
+    if (telemetry.installed?.rows < 825 || telemetry.installed?.attachedManagerRecords !== 0 || telemetry.installed?.attachedProviderRecords !== 0 || telemetry.installed?.rawPaths !== 0) issues.push(`compact metadata fixture invalid: ${JSON.stringify(telemetry.installed)}`);
+    if (telemetry.resultCount > 12 || !telemetry.committed) issues.push(`search result count=${telemetry.resultCount}, committed=${telemetry.committed}`);
+    if (telemetry.writes !== 0) issues.push(`25 search keys caused ${telemetry.writes} persistence writes`);
+    return issues;
+  });
+
+  await runCase("startup", `${concept.id}: first selected manager is the only detail import`, async () => {
+    const telemetry = await driver.executeAsync(async (managerId) => {
+      const demo = window.PMSettingsDemo;
+      await demo.openManager(managerId, "overview");
+      await demo.whenIdle();
+      return demo.store.performanceTelemetry();
+    }, [concept.assigned], 30000);
+    const issues = [];
+    if (telemetry?.startup?.detailModuleLoaded !== true || telemetry?.startup?.detailModuleLoads !== 1) issues.push(`first manager detail imports=${telemetry?.startup?.detailModuleLoads}, loaded=${telemetry?.startup?.detailModuleLoaded}`);
+    if (telemetry?.startup?.liveProjectionLoadedManagerCount !== 1) issues.push(`first selection loaded ${telemetry?.startup?.liveProjectionLoadedManagerCount} manager projections`);
+    if (telemetry?.subscriptions?.heavy_key_count !== 1) issues.push(`first selection retained ${telemetry?.subscriptions?.heavy_key_count} heavy subscriptions`);
+    return issues;
   });
 }
 
-try {
-  const { chromium } = loadPlaywright();
-  const hub = await startHub();
-  hubProcess = hub.child;
-  const origin = `http://127.0.0.1:${hub.port}`;
-  context = await chromium.launchPersistentContext(profileDir, {
-    headless: true,
-    viewport: { width: 1280, height: 900 },
-    reducedMotion: "no-preference",
-    locale: "en-US"
+async function runRenderMatrix(concept) {
+  const matrixThemes = focused ? ["friendly-dark"] : themes;
+  const matrixWidths = focused ? [520, 1280] : widths;
+  const motionValues = focused ? [true] : [false, true];
+  const surfaces = ["home", "workspace", "providers", "assigned"];
+  for (const surface of surfaces) {
+    for (const theme of matrixThemes) {
+      for (const width of matrixWidths) {
+        for (const reducedMotion of motionValues) {
+          const label = `${concept.id}:${surface}:${theme}:${width}:reduced=${reducedMotion}`;
+          await runCase("renderMatrix", label, async () => {
+            await driver.rect(width, 900);
+            await review({ theme, scenario: "normal", railOpen: false, chatOpen: false, reducedMotion, direction: "ltr", textScale: 1, resetScenario: false });
+            const state = await openSurface(surface, concept.assigned);
+            const audit = await driver.execute(pageAuditFunction, [{ managerId: surface === "assigned" ? concept.assigned : surface === "providers" ? "providers" : null }]);
+            const expectedSurface = surface === "assigned" || surface === "providers" ? "manager" : surface;
+            const expectedManager = surface === "assigned" ? concept.assigned : surface === "providers" ? "providers" : null;
+            const expectedNav = surface === "home" ? "home" : surface === "providers" ? "providers" : "settings";
+            const issues = auditIssues(audit, { surface: expectedSurface, manager: expectedManager, nav: expectedNav });
+            if (state.theme !== theme) issues.push(`effective theme=${state.theme}`);
+            if (state.reducedMotion !== reducedMotion) issues.push(`effective reducedMotion=${state.reducedMotion}`);
+            return issues;
+          });
+        }
+      }
+    }
+  }
+}
+
+async function runManagerRoutes(concept) {
+  const assignments = await driver.execute(() => window.PMSettingsDemo.store.assignedManagers(window.PMSettingsDemo.concept));
+  const routeWidths = focused ? [520, 1280] : representativeWidths;
+  const routeThemes = focused ? ["friendly-light"] : ["friendly-light", "friendly-dark"];
+  for (const managerId of assignments) {
+    for (const width of routeWidths) {
+      for (const theme of routeThemes) {
+        await runCase("managerRoutes", `${concept.id}:${managerId}:${theme}:${width}`, async () => {
+          await driver.rect(width, 900);
+          await review({ theme, reducedMotion: true, railOpen: false, chatOpen: false, resetScenario: false });
+          await openSurface("assigned", managerId);
+          const audit = await driver.execute(pageAuditFunction, [{ managerId }]);
+          const expectedNav = ["providers", "memory", "terminal"].includes(managerId) ? managerId : "settings";
+          const issues = auditIssues(audit, { surface: "manager", manager: managerId, nav: expectedNav });
+          if (!locationHashMatches(audit.state, managerId)) issues.push(`route state does not name ${managerId}`);
+          const hydration = audit.managerHydration?.state;
+          if (hydration && !/hydrated|ready/.test(hydration)) issues.push(`manager hydration did not settle (${hydration})`);
+          if (audit.state?.performance?.startup?.detailModuleLoads !== 1) issues.push(`detail module loaded ${audit.state?.performance?.startup?.detailModuleLoads} times`);
+          return issues;
+        });
+      }
+    }
+  }
+}
+
+function locationHashMatches(state, managerId) {
+  return state?.screen === "manager" && state?.managerId === managerId;
+}
+
+async function runManagerStateCases(concept) {
+  for (const stateId of managerStates) {
+    const fixtureId = `manager-state.${concept.assigned}.${stateId}`;
+    await runCase("managerStates", `${concept.id}:${fixtureId}`, async () => {
+      await driver.rect(1280, 900);
+      await review({ theme: "friendly-dark", reducedMotion: true, resetScenario: false });
+      const evidence = await driver.executeAsync(async (managerId, fixtureState) => {
+        const demo = window.PMSettingsDemo;
+        if (typeof demo.store.applyManagerStateFixture !== "function" || typeof demo.store.managerStateFixtures !== "function") return { missing: true };
+        await demo.openManager(managerId, "overview");
+        await demo.whenIdle();
+        const fixtures = demo.store.managerStateFixtures(managerId);
+        const applied = await demo.store.applyManagerStateFixture(fixtureState);
+        await demo.whenIdle();
+        await demo.settleForReview();
+        const text = document.querySelector(".concept-scroll")?.innerText || "";
+        const snap = demo.snapshot();
+        return {
+          fixtures,
+          applied,
+          activeFixture: snap.state.activeFixture,
+          hydration: snap.state.managerHydration?.[managerId],
+          state: snap.state.managerStates?.[managerId],
+          itemCount: snap.genericManagers?.[managerId]?.items?.length ?? null,
+          text,
+          overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 2 || document.querySelector(".concept-scroll").scrollWidth > document.querySelector(".concept-scroll").clientWidth + 2
+        };
+      }, [concept.assigned, fixtureId], 25000);
+      const issues = [];
+      if (evidence.missing) return ["missing deterministic manager-state APIs"];
+      if (!evidence.fixtures.some((entry) => entry.id === fixtureId)) issues.push("fixture ID is not registered");
+      if (!evidence.applied || evidence.applied.id !== fixtureId || evidence.activeFixture !== fixtureId) issues.push("fixture was not applied by exact ID");
+      const expectations = {
+        loading: /loading|queued|not loaded/i,
+        empty: /no (?:matching )?resources|no .* configured|empty/i,
+        error: /error|failed/i,
+        offline: /offline.*cached|cached.*offline|cached values remain/i,
+        unavailable: /unavailable|required capability/i,
+        managed_inherited: /managed|inherited/i,
+        requested_effective: /requested.*effective|effective.*requested/i,
+        degraded: /degraded|cached values remain|named deterministic limitation/i
+      };
+      if (!expectations[stateId].test(evidence.text)) issues.push(`visible UI does not project ${stateId}`);
+      if (stateId === "empty" && evidence.itemCount !== 0) issues.push(`empty fixture retained ${evidence.itemCount} items`);
+      if (["offline", "degraded"].includes(stateId) && evidence.itemCount === 0) issues.push(`${stateId} fixture lost cached values`);
+      if (evidence.overflow) issues.push("manager state caused horizontal overflow");
+      return issues;
+    });
+  }
+}
+
+async function runProviderPolicy(concept) {
+  await runCase("providerPolicy", `${concept.id}: policy and explicit setup`, async () => {
+    await openSurface("providers", concept.assigned);
+    const result = await driver.executeAsync(async () => {
+      const demo = window.PMSettingsDemo;
+      const store = demo.store;
+      const policyModule = await import("./_shared/manager-data.mjs");
+      const policy = policyModule.PROVIDER_CLI_ACQUISITION_POLICY;
+      const continuation = policyModule.PROVIDER_SETUP_CONTINUATION_FIXTURE;
+      const initiators = ["Project", "Goal", "Plan", "model", "provider", "agent", "Auto", "On"];
+      const demand = initiators.map((initiator, index) => {
+        const projection = store.providerSetupFromDemand("openai", {
+          hostRef: "host-fixture",
+          hostLabel: "Build workstation",
+          environmentRef: "environment-native",
+          environmentLabel: "Native environment",
+          officialSource: "Official OpenAI source",
+          continuationToken: `continuation-${index}`,
+          continuationRevision: 1,
+          initiator
+        });
+        return { initiator, projection };
+      });
+      const setup = store.requireProviderSetup("openai", {
+        hostRef: "host-fixture",
+        hostLabel: "Build workstation",
+        environmentRef: "environment-native",
+        environmentLabel: "Native environment",
+        officialSource: "Official OpenAI source",
+        continuationToken: continuation.continuation.token,
+        continuationRevision: continuation.continuation.revision
+      });
+      const beforeConsentInstall = store.advanceProviderSetup("install");
+      const consent = store.advanceProviderSetup("consent");
+      const installing = store.advanceProviderSetup("install");
+      const installed = store.advanceProviderSetup("install-complete", { ok: true, result_refs: ["verified-installation"], receipt_refs: ["install-receipt"] });
+      const authenticating = store.advanceProviderSetup("authenticate");
+      const readyState = store.advanceProviderSetup("authentication-complete", { ok: true });
+      const stale = store.advanceProviderSetup("resume", { continuationToken: continuation.staleRejectionFixture.presentedToken, continuationRevision: continuation.staleRejectionFixture.presentedRevision });
+      const resumed = store.advanceProviderSetup("resume", { continuationToken: continuation.continuation.token, continuationRevision: continuation.continuation.revision });
+      await demo.whenIdle();
+      const normal = document.querySelector(".installation-board")?.cloneNode(true);
+      normal?.querySelectorAll("details:not([open]) > :not(summary), .technical-identity").forEach((node) => node.remove());
+      const normalText = normal?.innerText || normal?.textContent || "";
+      const advanced = document.querySelector(".installation-board details.technical-identity, .installation-board details[data-advanced-details]");
+      const setupAdvanced = document.querySelector(".provider-setup-required details.technical-identity");
+      return { policy, continuation, demand, setup, beforeConsentInstall, consent, installing, installed, authenticating, readyState, stale, resumed, normalText, advancedSummary: advanced?.querySelector("summary")?.innerText || null, advancedOpen: advanced?.open ?? null, advancedText: advanced?.innerText || advanced?.textContent || "", setupAdvancedSummary: setupAdvanced?.querySelector("summary")?.innerText || null, setupAdvancedOpen: setupAdvanced?.open ?? null, setupAdvancedText: setupAdvanced?.innerText || setupAdvanced?.textContent || "" };
+    }, [], 30000);
+    const issues = [];
+    const policyText = JSON.stringify(result.policy || {});
+    for (const phrase of ["no Puppet Master core bundle", "no preseed", "explicit initial Setup/Install only", "exact selected Host/Environment", "official source", "install and auth separate", "maintenance_of_previously_approved_installation_only"]) {
+      if (!policyText.includes(phrase)) issues.push(`policy fixture missing “${phrase}”`);
+    }
+    for (const entry of result.demand || []) {
+      if (entry.projection?.demand_result !== "Setup Required" || entry.projection?.acquisition_started !== false || entry.projection?.initial_consent_recorded) issues.push(`${entry.initiator} demand did not stop at Setup Required`);
+    }
+    if (!/Build workstation.*Native environment/.test(result.setup?.target || "")) issues.push("setup does not show human Host/Environment");
+    if (result.setup?.official_source !== "Official OpenAI source") issues.push("setup does not retain the official source");
+    if (result.setup?.setup_deep_link !== "settings://providers/openai/installations/host-fixture/environment-native") issues.push(`Setup Required deep link=${result.setup?.setup_deep_link || "missing"}`);
+    if (!result.normalText.includes("Providers → OpenAI → Installations")) issues.push("human Setup Required destination is not visible");
+    if (result.normalText.includes("settings://providers/openai/installations/host-fixture/environment-native")) issues.push("normal Setup Required card exposes its internal route");
+    if (!/Advanced Details/i.test(result.setupAdvancedSummary || "") || result.setupAdvancedOpen !== false || !result.setupAdvancedText.includes("settings://providers/openai/installations/host-fixture/environment-native")) issues.push("internal Setup Required route is not gated by closed Advanced Details");
+    if (result.beforeConsentInstall !== false) issues.push("installation started without explicit consent");
+    if (!result.consent?.initial_consent_recorded || result.installing?.installation !== "installing") issues.push("explicit consent gate did not unlock installation");
+    if (result.installed?.installation !== "ready" || result.installed?.authentication !== "not_started") issues.push("installation completion incorrectly implied authentication");
+    if (!result.installed?.post_consent_maintenance_allowed) issues.push("post-consent maintenance was not enabled for a verified install");
+    if (result.authenticating?.authentication !== "in_progress" || result.readyState?.authentication !== "ready") issues.push("separate authentication flow did not settle");
+    if (result.stale !== false) issues.push("stale continuation was accepted");
+    if (!result.resumed?.resumed || !result.resumed?.current) issues.push("current continuation did not resume");
+    if (!/No provider CLI is bundled.*default execution baseline.*pre-seeded/is.test(result.normalText)) issues.push("normal provider UI omits the no-bundle/no-baseline/no-preseed rule");
+    if (!/Project, Goal, Plan, WorkNode, model, provider, agent, or Auto\/On policy cannot silently acquire/i.test(result.normalText)) issues.push("normal provider UI omits the negative silent-acquisition initiators");
+    if (!/Auto\/On may only maintain an installation that was already approved/i.test(result.normalText)) issues.push("normal provider UI omits the post-consent maintenance boundary");
+    if (/\/(?:Users|home|tmp|mnt|usr|var)\/|[A-Za-z]:\\|\b(?:npm|pnpm|brew|winget|apt|dnf|snap)\s+(?:install|add)\b|\b(?:sha256|hash)\s*[:=]/i.test(result.normalText)) issues.push("normal provider UI exposes raw path, command, package, or hash evidence");
+    if (!/Advanced Details/i.test(result.advancedSummary || "")) issues.push("technical provider identity is not gated by Advanced Details");
+    if (result.advancedOpen !== false) issues.push("Advanced Details was not closed by default");
+    if (!/Configured path or alias|Resolved launcher|Actual executable|Package alias|Hash evidence|Installation identity/i.test(result.advancedText)) issues.push("Advanced Details lacks technical identity evidence");
+    return issues;
   });
-  await context.addInitScript(() => {
-    window.__pmMotionWitness = [];
+
+  await runCase("providerPolicy", `${concept.id}: 100-installation bounded mount`, async () => {
+    const result = await driver.executeAsync(async () => {
+      const demo = window.PMSettingsDemo;
+      await demo.openManager("providers", "installations", { resourceId: "openai" });
+      await demo.whenIdle();
+      const fixtures = await import("./_shared/manager-data.mjs");
+      const scale = fixtures.buildProviderInstallationScaleFixture(100);
+      const provider = demo.store.provider("openai");
+      provider.installations = scale.summaryRows;
+      demo.store.state.selectedInstallationId = scale.summaryRows[0].id;
+      demo.store.emit({ action: "provider-select", scopes: ["provider", "manager", "view"], motionKey: "none" });
+      await demo.whenIdle();
+      const list = document.querySelector(".installation-list[data-list-total]");
+      return { fixtureId: scale.fixtureId, total: Number(list?.dataset.listTotal), mounted: Number(list?.dataset.listMounted), domRows: list?.querySelectorAll(".installation-row").length || 0 };
+    }, [], 25000);
+    const issues = [];
+    if (result.fixtureId !== "provider-installation-scale-100") issues.push(`wrong deterministic fixture ID ${result.fixtureId}`);
+    if (result.total !== 100) issues.push(`list total=${result.total}`);
+    if (result.mounted > 40 || result.domRows > 40) issues.push(`mounted=${result.mounted}, DOM rows=${result.domRows}`);
+    return issues;
+  });
+}
+
+async function runRuntimePerformance(concept) {
+  await runCase("runtimePerformance", `${concept.id}: durable persistence debounce`, async () => {
+    const result = await driver.executeAsync(async () => {
+      const demo = window.PMSettingsDemo;
+      const store = demo.store;
+      if (typeof store.persistenceStats !== "function") return { missing: true };
+      const editable = [...store.settings.values()].find((entry) => entry.id === "experience.startup.recovery") || [...store.settings.values()].find((entry) => entry.type === "toggle" && entry.available !== false && !entry.managedReason);
+      if (!editable) return { missingEditable: true };
+      const writesBeforeEdits = store.persistenceStats().writes;
+      for (let index = 0; index < 25; index += 1) {
+        const value = editable.type === "toggle" ? Boolean(index % 2) : index % 2 ? "Ask first" : "Automatic";
+        store.updateSetting(editable.id, value);
+      }
+      await new Promise((resolvePromise) => setTimeout(resolvePromise, 1200));
+      const writesAfterEdits = store.persistenceStats().writes;
+      return { writesEdits: writesAfterEdits - writesBeforeEdits };
+    }, [], 30000);
+    const issues = [];
+    if (result.missing) return ["missing persistence performance API"];
+    if (result.missingEditable) return ["no durable editable setting is available"];
+    if (result.writesEdits > 2) issues.push(`25 durable edits caused ${result.writesEdits} writes`);
+    return issues;
+  });
+
+  await runCase("runtimePerformance", `${concept.id}: lazy manager, generations and release`, async () => {
+    const result = await driver.executeAsync(async (first, second) => {
+      const demo = window.PMSettingsDemo;
+      const store = demo.store;
+      await demo.openHome();
+      await demo.whenIdle();
+      const homeBefore = store.performanceTelemetry();
+      if (typeof store.applyManagerStateFixture !== "function") return { missing: true };
+      await store.applyManagerStateFixture(`manager-state.${first}.loading`);
+      await store.applyManagerStateFixture(`manager-state.${second}.loading`);
+      void demo.openManager(first, "overview");
+      void demo.openManager(second, "overview");
+      await demo.whenIdle();
+      const afterSwitch = store.performanceTelemetry();
+      const stateAfterSwitch = demo.snapshot().state;
+      const loadWork = store.observableWork.list((entry) => entry.owner_domain === "settings-manager-projection");
+      await demo.openHome();
+      await demo.whenIdle();
+      const afterHome = store.performanceTelemetry();
+      return { homeBefore, afterSwitch, stateAfterSwitch, afterHome, loadWork };
+    }, [concept.assigned, "providers"], 30000);
+    const issues = [];
+    if (result.missing) return ["missing deterministic manager-state API for cold switching"];
+    if (result.homeBefore?.subscriptions?.heavy_key_count !== 0) issues.push("Home began with a heavy subscription");
+    if (result.afterSwitch?.subscriptions?.heavy_key_count > 1) issues.push("more than one selected-manager heavy subscription remained");
+    if (result.stateAfterSwitch?.managerId !== "providers") issues.push(`rapid switch settled on ${result.stateAfterSwitch?.managerId}`);
+    if (!/hydrated|ready/.test(result.stateAfterSwitch?.managerHydration?.providers?.state || "")) issues.push(`latest manager generation settled as ${result.stateAfterSwitch?.managerHydration?.providers?.state || "missing"}`);
+    const firstLoads = (result.loadWork || []).filter((entry) => entry.object_refs?.includes(`manager:${concept.assigned}`));
+    const secondLoads = (result.loadWork || []).filter((entry) => entry.object_refs?.includes("manager:providers"));
+    if (!firstLoads.some((entry) => entry.state === "cancelled")) issues.push("superseded manager generation was not recorded as cancelled");
+    if (!secondLoads.some((entry) => entry.state === "completed")) issues.push("latest manager generation was not recorded as completed");
+    if (result.afterSwitch?.startup?.detailModuleLoads !== 1) issues.push(`rapid switching re-imported detail module (${result.afterSwitch?.startup?.detailModuleLoads})`);
+    if (result.afterHome?.subscriptions?.heavy_key_count !== 0) issues.push("leaving manager for Home did not release heavy subscription");
+    return issues;
+  });
+
+  for (const profile of performanceProfiles) {
+    await runCase("runtimePerformance", `${concept.id}: projection ${profile}`, async () => {
+      const result = await driver.executeAsync(async (profileId, managerId) => {
+        const demo = window.PMSettingsDemo;
+        const store = demo.store;
+        await store.applyManagerStateFixture(`manager-state.${managerId}.managed_inherited`);
+        await demo.openManager(managerId, "overview");
+        await demo.whenIdle();
+        const retainedTitle = store.managerInventory(managerId)?.items?.[0]?.title || null;
+        const controlsBefore = [...document.querySelectorAll(".concept-scroll button, .concept-scroll input, .concept-scroll select")].filter((entry) => !entry.disabled).length;
+        const settingsBefore = store.settings.size;
+        const projection = store.applyPerformanceProfile(profileId);
+        await demo.whenIdle();
+        const controlsAfter = [...document.querySelectorAll(".concept-scroll button, .concept-scroll input, .concept-scroll select")].filter((entry) => !entry.disabled).length;
+        const visibleText = document.querySelector(".concept-scroll")?.innerText || "";
+        return { projection, settingsBefore, settingsAfter: store.settings.size, controlsBefore, controlsAfter, retainedTitle, retainedVisible: retainedTitle ? visibleText.includes(retainedTitle) : false };
+      }, [profile, concept.assigned], 20000);
+      const issues = [];
+      if (result.projection?.profile !== profile || result.projection?.hardwareCertified !== false || result.projection?.simulated !== true) issues.push("profile is not an honest deterministic projection");
+      if (!result.projection?.policy || result.projection.policy.speculativePrewarm !== false) issues.push("profile lacks bounded policy projection");
+      if (["low-memory", "offline", "slow-network", "metered", "thermal", "legacy"].includes(profile) && result.projection.policy.retainCachedContent === false) issues.push("profile discarded cached content");
+      if (result.settingsAfter !== result.settingsBefore || result.controlsAfter === 0) issues.push("profile removed settings or controls");
+      if (!result.retainedTitle || !result.retainedVisible) issues.push("profile failed to preserve the selected manager's cached value projection");
+      return issues;
+    });
+  }
+
+  await runCase("runtimePerformance", `${concept.id}: ObservableWork truth`, async () => {
+    const result = await driver.execute(() => {
+      const store = window.PMSettingsDemo.store;
+      const named = ["queued", "waiting_network", "waiting_resource", "degraded", "stalled", "cancelled"].map((id) => store.observableWorkFixture(id));
+      const completed = store.observableWork.create({ operation_id: `fixture-completed-${store.conceptId}`, title: "Completed fixture", human_phase: "Completed", state: "completed", progress_kind: "none", progress_source: "unknown", can_cancel: false, generation: 1 });
+      const records = [...named, completed];
+      return records.map((entry) => ({ state: entry?.state, percentageLeak: (entry?.progress_kind !== "determinate" || !Number.isFinite(entry?.total) || entry.total <= 0) && (Object.hasOwn(entry || {}, "percentage") || Object.hasOwn(entry || {}, "percent")), completed: entry?.completed, total: entry?.total }));
+    });
+    const states = new Set(result.map((entry) => entry.state));
+    const issues = [];
+    for (const state of ["queued", "waiting_network", "waiting_resource", "degraded", "stalled", "cancelled", "completed"]) if (!states.has(state)) issues.push(`missing ${state}`);
+    if (result.some((entry) => entry.percentageLeak)) issues.push("percentage exposed without a trustworthy denominator");
+    return issues;
+  });
+
+  await runCase("runtimePerformance", `${concept.id}: narrow render instrumentation`, async () => {
+    await driver.rect(520, 900);
+    const result = await driver.executeAsync(async () => {
+      const demo = window.PMSettingsDemo;
+      if (typeof demo.renderStats !== "function" || typeof demo.resetRenderStats !== "function") return { missing: true };
+      demo.resetRenderStats();
+      await demo.openHome();
+      await demo.openCategory("experience");
+      await demo.whenIdle();
+      return demo.renderStats();
+    }, [], 20000);
+    const issues = [];
+    if (result.missing) return ["PMSettingsDemo renderStats/resetRenderStats API is absent"];
+    if (result.kind !== "concept-only-render-instrumentation") issues.push(`render stats kind=${result.kind}`);
+    if (result.full_scene_commits > 2) issues.push(`narrow navigation caused ${result.full_scene_commits} full-scene commits`);
+    if (!String(result.disclaimer || "").includes("not native Slint")) issues.push("render stats boundary is missing");
+    return issues;
+  });
+}
+
+async function installMotionWitness() {
+  return driver.execute(() => {
+    window.__pmFirefoxMotionWitness = [];
+    window.__pmFirefoxMotionCancelled = 0;
+    if (Element.prototype.__pmFirefoxMotionWrapped) return true;
     const nativeAnimate = Element.prototype.animate;
-    if (!nativeAnimate || Element.prototype.__pmMotionWrapped) return;
-    Object.defineProperty(Element.prototype, "__pmMotionWrapped", { value: true });
-    Element.prototype.animate = function patchedAnimate(keyframes, options = {}) {
-      const frames = Array.isArray(keyframes) ? keyframes : Object.entries(keyframes || {}).map(([property, value]) => ({ [property]: value }));
+    if (!nativeAnimate) return false;
+    Object.defineProperty(Element.prototype, "__pmFirefoxMotionWrapped", { value: true });
+    Element.prototype.animate = function wrappedAnimation(keyframes, options = {}) {
+      const frames = Array.isArray(keyframes) ? keyframes : [keyframes || {}];
       const properties = [...new Set(frames.flatMap((frame) => Object.keys(frame).filter((key) => !["offset", "easing", "composite"].includes(key))))];
       const normalized = typeof options === "number" ? { duration: options } : options || {};
-      window.__pmMotionWitness.push({
-        roles: String(this.dataset?.motionRole || "").split(/\s+/).filter(Boolean),
-        stage: document.querySelector("#app")?.dataset.qaMotionStage || "",
-        duration: Number(normalized.duration || 0),
-        iterations: Number(normalized.iterations || 1),
-        properties
-      });
-      return nativeAnimate.call(this, keyframes, options);
+      const record = { roles: String(this.dataset?.motionRole || "").split(/\s+/).filter(Boolean), properties, duration: Number(normalized.duration || 0), iterations: Number(normalized.iterations || 1), cancelled: false };
+      window.__pmFirefoxMotionWitness.push(record);
+      const animation = nativeAnimate.call(this, keyframes, options);
+      animation.addEventListener("cancel", () => {
+        record.cancelled = true;
+        window.__pmFirefoxMotionCancelled += 1;
+      }, { once: true });
+      return animation;
     };
+    return true;
   });
-  const page = context.pages()[0] || await context.newPage();
-  watchPage(page);
+}
 
-  await page.goto(`${origin}/`, { waitUntil: "domcontentloaded" });
-  check((await page.title()).length > 0, "ConceptHub root did not render a document title.");
-
-  await page.goto(`${origin}/concepts/settings-redesign-concepts/5.6%20Sol/index.html`, { waitUntil: "domcontentloaded" });
-  await page.waitForFunction(() => Boolean(window.PMSettingsBakeoff?.whenIdle) && [...document.querySelectorAll("iframe")].every((frame) => frame.contentWindow?.PMSettingsDemo), null, { timeout: 20000 });
-  await page.locator('input[name="width"]').fill("2500");
-  await page.locator('select[name="theme"]').selectOption("basic-light");
-  await page.locator('select[name="scenario"]').selectOption("effective-difference");
-  await page.locator('input[name="rail"]').uncheck();
-  await page.locator('input[name="chat"]').check();
-  await page.locator('input[name="reduced"]').check();
-  const comparison = await page.evaluate(async () => {
-    await window.PMSettingsBakeoff.whenIdle();
-    return [...document.querySelectorAll("iframe")].map((frame) => ({
-      width: frame.style.width,
-      model: frame.contentWindow.PMSettingsDemo.model,
-      concept: frame.contentWindow.PMSettingsDemo.concept,
-      state: frame.contentWindow.PMSettingsDemo.snapshot().state
-    }));
+async function runMotion(concept) {
+  await runCase("motion", `${concept.id}: semantic motion kinds`, async () => {
+    const wrapped = await installMotionWitness();
+    if (!wrapped) return ["Element.animate is unavailable"];
+    const result = await driver.executeAsync(async (kinds) => {
+      const demo = window.PMSettingsDemo;
+      const store = demo.store;
+      await demo.applyReviewState({ theme: "friendly-dark", reducedMotion: false, resetScenario: false });
+      await demo.openHome();
+      await demo.whenIdle();
+      const out = [];
+      for (const kind of kinds) {
+        window.__pmFirefoxMotionWitness = [];
+        if (kind === "navigate") await demo.openCategory("experience");
+        if (kind === "category") { await demo.openCategory("experience"); await demo.openCategory("intelligence"); }
+        if (kind === "search") store.setSearch("theme", true, store.state.search.surface);
+        if (kind === "jump" || kind === "scrollspy") {
+          await demo.openCategory("experience");
+          const ids = [...document.querySelectorAll("[data-subcategory]")].map((entry) => entry.dataset.subcategory);
+          store.setSubcategory(ids[1] || ids[0], kind);
+        }
+        if (kind === "disclosure") { await demo.openCategory("experience"); store.setAdvancedSection("experience:appearance-input", true); }
+        if (kind === "refresh") { await demo.openManager("providers", "models", { resourceId: "openai" }); await demo.whenIdle(); await store.refreshProvider("openai"); }
+        if (kind === "save") store.updateSetting("experience.startup.recovery", "Ask first");
+        if (kind === "reorder") {
+          await demo.openManager("providers", "models", { resourceId: "openai" }); await demo.whenIdle();
+          const model = store.providers.flatMap((provider) => provider.models || []).find((entry) => store.canMoveModel(entry.id, 1) || store.canMoveModel(entry.id, -1));
+          if (model) store.moveModel(model.id, store.canMoveModel(model.id, 1) ? 1 : -1);
+        }
+        if (kind === "drawer") { await demo.openCategory("experience"); store.setNavigationOpen(true); }
+        if (kind === "transaction") store.startFlow("generic", { managerId: store.state.managerId || "providers" });
+        if (kind === "preview") { store.previewTheme("basic-light"); store.revertThemePreview(); }
+        await demo.whenIdle();
+        await demo.settleForReview();
+        const calls = [...window.__pmFirefoxMotionWitness];
+        out.push({ kind, snapshot: demo.motionSnapshot(), calls, running: document.getAnimations().filter((entry) => entry.playState === "running").length });
+      }
+      return out;
+    }, [semanticMotionKinds], 60000);
+    const issues = [];
+    for (const item of result) {
+      if (item.snapshot?.kind !== item.kind) issues.push(`${item.kind} reported ${item.snapshot?.kind || "no kind"}`);
+      if (!item.calls.length) issues.push(`${item.kind} produced no witnessed animation`);
+      if (item.running) issues.push(`${item.kind} left ${item.running} running animation(s)`);
+      for (const call of item.calls) {
+        if (!Number.isFinite(call.duration) || call.duration <= 0 || call.duration > 1000 || call.iterations !== 1) issues.push(`${item.kind} has non-finite/unbounded timing`);
+        if (call.properties.some((property) => forbiddenLayoutAnimationProperties.has(property))) issues.push(`${item.kind} animates a layout property: ${call.properties.join(",")}`);
+      }
+    }
+    return issues;
   });
-  coverage.comparisonFrames = comparison.length;
-  check(comparison.length === 4, "Comparison surface does not contain four live previews.");
-  check(new Set(comparison.map((entry) => entry.concept)).size === 4, "Comparison previews are not four distinct concept runtimes.");
-  check(comparison.every((entry) => entry.width === "2500px" && entry.model === "5.6 Sol" && entry.state.theme === "basic-light" && entry.state.scenario === "effective-difference" && entry.state.reducedMotion && !entry.state.railOpen && entry.state.chatOpen), "Comparison controls did not broadcast the same width/theme/scenario/shell/motion state to all previews.");
+
+  await runCase("motion", `${concept.id}: reversal and reduced parity`, async () => {
+    await installMotionWitness();
+    const result = await driver.executeAsync(async () => {
+      const demo = window.PMSettingsDemo;
+      await demo.applyReviewState({ reducedMotion: false, resetScenario: false });
+      window.__pmFirefoxMotionWitness = [];
+      window.__pmFirefoxMotionCancelled = 0;
+      void demo.openCategory("experience");
+      await new Promise((resolvePromise) => requestAnimationFrame(() => requestAnimationFrame(resolvePromise)));
+      void demo.openCategory("intelligence");
+      await new Promise((resolvePromise) => requestAnimationFrame(resolvePromise));
+      void demo.openCategory("safety");
+      await demo.whenIdle();
+      await demo.settleForReview();
+      const full = demo.snapshot().state;
+      const fullRunning = document.getAnimations().filter((entry) => entry.playState === "running").length;
+      const cancelled = window.__pmFirefoxMotionCancelled;
+      await demo.applyReviewState({ reducedMotion: true, resetScenario: false });
+      await demo.openCategory("safety");
+      await demo.whenIdle();
+      await demo.settleForReview();
+      const reduced = demo.snapshot().state;
+      return { full, reduced, cancelled, fullRunning, reducedRunning: document.getAnimations().filter((entry) => entry.playState === "running").length };
+    }, [], 30000);
+    const issues = [];
+    if (result.full.categoryId !== "safety") issues.push(`rapid switch settled on ${result.full.categoryId}`);
+    if (result.cancelled < 1) issues.push("rapid reversal did not cancel a superseded animation");
+    if (result.fullRunning || result.reducedRunning) issues.push(`residual animations full=${result.fullRunning} reduced=${result.reducedRunning}`);
+    if (result.full.categoryId !== result.reduced.categoryId || result.reduced.reducedMotion !== true) issues.push("reduced motion changed semantic final state");
+    return issues;
+  });
+
+  if (concept.id === "switchboard") {
+    await runCase("motion", `${concept.id}: sound-wave clocks stop`, async () => {
+      const result = await driver.executeAsync(async () => {
+        const demo = window.PMSettingsDemo;
+        await demo.openManager("notifications-sounds", "overview");
+        await demo.whenIdle();
+        const inventory = demo.store.managerInventory("notifications-sounds");
+        const sound = inventory?.items?.find((entry) => (entry.actions || []).some((action) => /preview locally/i.test(action)));
+        if (sound) demo.store.previewSound(sound.id);
+        await demo.whenIdle();
+        demo.store.stopSoundPreview();
+        await demo.openHome();
+        await demo.whenIdle();
+        await demo.settleForReview();
+        const waves = [...document.querySelectorAll(".sound-wave")];
+        return { found: Boolean(sound), state: demo.snapshot().state.soundPreview?.state || null, running: waves.flatMap((node) => node.getAnimations({ subtree: true })).filter((entry) => entry.playState === "running").length };
+      }, [], 25000);
+      const issues = [];
+      if (!result.found) issues.push("no deterministic sound-preview resource found");
+      if (result.state === "playing" || result.running) issues.push(`hidden/stopped sound wave still running (${result.running})`);
+      return issues;
+    });
+  }
+}
+
+async function runAccessibility(concept) {
+  await runCase("accessibility", `${concept.id}: semantics, labels and focus`, async () => {
+    await driver.rect(760, 900);
+    await review({ theme: "basic-light", reducedMotion: true, direction: "ltr", textScale: 1, resetScenario: false });
+    await openSurface("home", concept.assigned);
+    const before = await driver.execute(() => {
+      const visible = (element) => { const rect = element.getBoundingClientRect(); const style = getComputedStyle(element); return rect.width > 0 && rect.height > 0 && style.display !== "none" && style.visibility !== "hidden" && !element.closest("[hidden],[inert]"); };
+      const controls = [...document.querySelectorAll("button,input,select,summary,a[href]")].filter(visible);
+      const unlabeled = controls.filter((element) => {
+        const text = (element.getAttribute("aria-label") || element.labels?.[0]?.innerText || element.innerText || element.getAttribute("title") || "").trim();
+        return !text;
+      }).map((element) => element.outerHTML.slice(0, 180));
+      return { unlabeled, duplicateIds: [...document.querySelectorAll("[id]")].map((entry) => entry.id).filter((id, index, all) => all.indexOf(id) !== index), landmarks: { main: document.querySelectorAll("main").length, nav: document.querySelectorAll("nav").length }, focus: document.activeElement?.tagName };
+    });
+    await driver.keys(["\uE004"]);
+    const afterTab = await driver.execute(() => ({ tag: document.activeElement?.tagName, inside: Boolean(document.activeElement?.closest(".pm-shell")), visible: Boolean(document.activeElement && document.activeElement !== document.body) }));
+    await driver.executeAsync(async () => {
+      await window.PMSettingsDemo.openCategory("experience");
+      await window.PMSettingsDemo.whenIdle();
+      window.PMSettingsDemo.store.setNavigationOpen(true);
+      await window.PMSettingsDemo.whenIdle();
+    });
+    await driver.keys(["\uE00C"]);
+    const afterEscape = await driver.execute(() => window.PMSettingsDemo.snapshot().state.navigationOpen);
+    const issues = [];
+    if (before.unlabeled.length) issues.push(`unlabelled controls: ${before.unlabeled.slice(0, 5).join(" | ")}`);
+    if (before.duplicateIds.length) issues.push(`duplicate IDs: ${before.duplicateIds.slice(0, 8).join(", ")}`);
+    if (before.landmarks.main !== 1 || before.landmarks.nav < 1) issues.push(`landmarks main=${before.landmarks.main} nav=${before.landmarks.nav}`);
+    if (!afterTab.inside || !afterTab.visible) issues.push("native Tab did not move focus into the shell");
+    if (afterEscape) issues.push("native Escape did not close the navigator");
+    return issues;
+  });
+
+  await runCase("accessibility", `${concept.id}: RTL`, async () => {
+    await review({ direction: "rtl", reducedMotion: true, resetScenario: false });
+    const result = await driver.execute(() => ({ dir: document.documentElement.dir, direction: getComputedStyle(document.documentElement).direction, overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 2 || document.querySelector(".concept-scroll").scrollWidth > document.querySelector(".concept-scroll").clientWidth + 2 }));
+    return [result.dir !== "rtl" && "document dir is not rtl", result.direction !== "rtl" && "computed direction is not rtl", result.overflow && "RTL caused overflow"];
+  });
+}
+
+let fatalHarnessError = null;
+sections.harness.attempted = 1;
+try {
+  const hub = await startHub();
+  hubProcess = hub.child;
+  hubPort = hub.port;
+  const browserService = await startDriver();
+  driverProcess = browserService.child;
+  driverPort = browserService.port;
+  driverOutput = browserService.output;
+  driver = new W3CDriver(driverPort);
+  await driver.create();
+  const origin = `http://127.0.0.1:${hubPort}`;
 
   for (const concept of concepts) {
-    const url = `${origin}/concepts/settings-redesign-concepts/5.6%20Sol/${concept.file}`;
-    await page.setViewportSize({ width: 1280, height: 900 });
-    await page.goto(url, { waitUntil: "domcontentloaded" });
-    await waitForDemo(page);
-    coverage.concepts += 1;
-    check(await page.title() === `${concept.title} — Puppet Master Settings`, `${concept.title}: document title is not exact.`);
-    check(await page.locator('[data-concept-model="5.6 Sol"]').count() >= 1, `${concept.title}: exact data-concept-model marker missing.`);
-    check(await page.locator(concept.home).count() === 1, `${concept.title}: its concept-specific Home composition is missing.`);
-    check(await page.locator(concept.destination).count() === 10, `${concept.title}: Home does not expose ten non-pill destinations.`);
-    check(await page.locator("[data-search-input]").isVisible(), `${concept.title}: global search is not visible on Home.`);
-
-    for (const theme of themes) {
-      await applyReview(page, { theme, scenario: "normal", railOpen: true, chatOpen: false, reducedMotion: true });
-      await page.waitForTimeout(140);
-      const audit = await layoutAudit(page);
-      assertLayout(audit, `${concept.title} · ${theme} · 1280`);
-      coverage.themeStates += 1;
+    await driver.navigate(`${origin}/concepts/settings-redesign-concepts/5.6%20Sol/${concept.file}`);
+    const page = await ready();
+    if (page.model !== "5.6 Sol" || page.concept !== concept.id) {
+      rememberFailure({ section: "startup", label: `${concept.id}: identity`, issues: [`loaded model=${page.model}, concept=${page.concept}`] });
+      sections.startup.attempted += 1;
+      sections.startup.failed += 1;
+      continue;
     }
-
-    for (const width of widths) {
-      await page.setViewportSize({ width, height: 900 });
-      for (const shellState of shellStates) {
-        await applyReview(page, { theme: width === 760 ? "friendly-light" : "friendly-dark", scenario: "normal", ...shellState, reducedMotion: true });
-        const audit = await layoutAudit(page);
-        assertLayout(audit, `${concept.title} · ${width} · rail=${shellState.railOpen} · assistant=${shellState.chatOpen}`);
-        coverage.responsiveStates += 1;
-      }
-    }
-
-    await page.setViewportSize({ width: 760, height: 900 });
-    await applyReview(page, { theme: "basic-light", scenario: "attention", railOpen: false, chatOpen: false, reducedMotion: true, direction: "rtl", textScale: 1.35 });
-    check(await page.locator("html").getAttribute("dir") === "rtl", `${concept.title}: RTL review state was not applied.`);
-    check(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue("--review-text-scale").trim()) === "1.35", `${concept.title}: 35% text expansion was not applied.`);
-    assertLayout(await layoutAudit(page), `${concept.title} · RTL · 35% text expansion · 760`);
-    await page.emulateMedia({ forcedColors: "active", reducedMotion: "reduce" });
-    assertLayout(await layoutAudit(page), `${concept.title} · forced colors · 760`);
-    await page.emulateMedia({ forcedColors: "none", reducedMotion: "no-preference" });
-
-    await page.setViewportSize({ width: 380, height: 450 });
-    await applyReview(page, { theme: "glass-dark", scenario: "normal", railOpen: false, chatOpen: false, reducedMotion: true, direction: "ltr", textScale: 1 });
-    assertLayout(await layoutAudit(page), `${concept.title} · 200% zoom-equivalent reflow · nominal 760`);
-    coverage.responsiveStates += 1;
-
-    await page.setViewportSize({ width: 1280, height: 900 });
-    await applyReview(page, { theme: "friendly-dark", scenario: "normal", railOpen: true, chatOpen: false, reducedMotion: false, direction: "ltr", textScale: 1 });
-    const search = page.locator("[data-search-input]");
-    await search.fill("Crash recovery");
-    await idle(page);
-    check(await search.getAttribute("role") === "combobox", `${concept.title}: search is not a combobox.`);
-    check(await search.getAttribute("aria-expanded") === "true", `${concept.title}: search did not expose its listbox.`);
-    const activeDescendant = await search.getAttribute("aria-activedescendant");
-    check(Boolean(activeDescendant) && await page.locator(`#${activeDescendant}`).count() === 1, `${concept.title}: search active descendant is invalid.`);
-    await search.press("End");
-    await idle(page);
-    await search.press("Home");
-    await idle(page);
-    await search.press("Enter");
-    await idle(page);
-    const deepLink = await page.evaluate(() => ({
-      screen: window.PMSettingsDemo.snapshot().state.screen,
-      category: window.PMSettingsDemo.snapshot().state.categoryId,
-      focusRequest: window.PMSettingsDemo.snapshot().state.focusRequest,
-      activeSetting: document.activeElement?.dataset.settingId || document.activeElement?.closest?.("[data-setting-id]")?.dataset.settingId || null
-    }));
-    check(deepLink.screen === "workspace" && deepLink.category === "experience", `${concept.title}: search did not navigate to the exact Settings workspace.`);
-    check(deepLink.focusRequest === null, `${concept.title}: deep-link focus request was not consumed.`);
-    check(deepLink.activeSetting === "experience.startup.recovery", `${concept.title}: deep link did not focus the labelled setting region.`);
-
-    const recoverySelect = page.locator('[data-setting-select="experience.startup.recovery"]');
-    await recoverySelect.focus();
-    await recoverySelect.selectOption({ label: "Ask first" });
-    await idle(page);
-    check(await page.evaluate(() => document.activeElement?.dataset.settingSelect) === "experience.startup.recovery", `${concept.title}: local setting patch destroyed focus.`);
-    check((await page.evaluate(() => window.PMSettingsDemo.snapshot().settings.find((entry) => entry.id === "experience.startup.recovery").value)) === "Ask first", `${concept.title}: setting control did not mutate semantic state.`);
-
-    const subcategories = page.locator("[data-subcategory]");
-    if (await subcategories.count() > 1) {
-      const second = subcategories.nth(1);
-      const wanted = await second.getAttribute("data-subcategory");
-      await second.click();
-      await idle(page);
-      const samples = [];
-      for (let index = 0; index < 4; index += 1) {
-        samples.push(await page.evaluate(() => window.PMSettingsDemo.snapshot().state.subcategoryId));
-        await page.waitForTimeout(55);
-      }
-      check(samples.every((entry) => entry === wanted), `${concept.title}: controlled jump/scrollspy oscillated (${samples.join(", ")}).`);
-    }
-
-    await demo(page, "openSetting", "experience.input.project-dictionary-manage");
-    check(await page.locator("details[data-disclosure-id^='experience:appearance-input:advanced']").getAttribute("open") !== null, `${concept.title}: advanced deep link did not reveal its disclosure.`);
-    const misspelled = page.locator("[data-misspelled]");
-    check(await misspelled.innerText() === "repositry", `${concept.title}: spelling preview was automatically changed.`);
-    await misspelled.press("Shift+F10");
-    await idle(page);
-    check(await page.locator("[data-spell-menu]").getAttribute("hidden") === null, `${concept.title}: keyboard spelling menu did not open.`);
-    check(await page.locator('[data-spell-menu] [role="menuitem"]').count() === 5, `${concept.title}: spelling menu does not expose all five actions.`);
-    await page.locator('[data-spell="replace"]').click();
-    await idle(page);
-    check(await page.getByText("repository", { exact: true }).count() >= 1, `${concept.title}: Replace once did not visibly change the selected occurrence.`);
-
-    const usageSearch = page.locator("[data-search-input]");
-    await usageSearch.fill("measured balance");
-    await idle(page);
-    const usageResult = page.locator(".search-result", { hasText: "Open provider usage detail" });
-    check(await usageResult.count() === 1, `${concept.title}: Usage handoff is missing from global search.`);
-    await usageResult.click();
-    await idle(page);
-    const usageState = await page.evaluate(() => ({
-      screen: window.PMSettingsDemo.snapshot().state.screen,
-      manager: window.PMSettingsDemo.snapshot().state.managerId,
-      tab: window.PMSettingsDemo.snapshot().state.managerTab,
-      activeFocus: document.activeElement?.dataset.focusKey || null
-    }));
-    check(usageState.screen === "manager" && usageState.manager === "providers" && usageState.tab === "usage", `${concept.title}: Usage search fell through instead of opening Provider → Usage.`);
-    check(usageState.activeFocus === "provider-usage-heading", `${concept.title}: Usage handoff did not focus its labelled destination heading.`);
-    await page.locator("[data-provider-usage-handoff]").click();
-    await idle(page);
-    check((await page.locator(".receipt-region").innerText()).includes("Usage handoff simulated"), `${concept.title}: Usage boundary action lacks an honest inline simulation result.`);
-
-    await demo(page, "openManager", "providers", "overview");
-    check(await page.locator('[role="tablist"] [role="tab"]').count() === 7, `${concept.title}: Provider manager does not expose seven areas.`);
-    check(await page.locator('[role="tab"][aria-selected="true"]').count() === 1, `${concept.title}: Provider tablist has invalid selected state.`);
-    await page.locator('[role="tab"][data-manager-tab="models"]').click();
-    await idle(page);
-    check(await page.evaluate(() => document.activeElement?.dataset.managerTab) === "models", `${concept.title}: activating Models did not retain focus on the selected tab.`);
-    await page.locator('[role="tab"][aria-selected="true"]').press("ArrowRight");
-    await idle(page);
-    check(await page.evaluate(() => document.activeElement?.dataset.managerTab) === "usage", `${concept.title}: ArrowRight did not move and activate the next provider tab.`);
-    await page.locator('[role="tab"][aria-selected="true"]').press("End");
-    await idle(page);
-    check(await page.evaluate(() => document.activeElement?.dataset.managerTab) === "support", `${concept.title}: End did not activate the last provider tab.`);
-    await page.locator('[role="tab"][aria-selected="true"]').press("Home");
-    await idle(page);
-    check(await page.evaluate(() => document.activeElement?.dataset.managerTab) === "overview", `${concept.title}: Home did not activate the first provider tab.`);
-    await page.locator('[role="tab"][data-manager-tab="models"]').click();
-    await idle(page);
-    const modelRows = await page.locator(".model-row").count();
-    check(modelRows >= 3, `${concept.title}: Provider model catalogue is shallow.`);
-    check(await page.locator('[data-model-speed="sol-56-mini"] option').count() === 1, `${concept.title}: unsupported Fast mode is exposed.`);
-    check(await page.locator('[data-model-speed="sol-56"] option').count() === 2, `${concept.title}: supported Fast mode is missing.`);
-    await page.evaluate(() => { window.__pmPendingRefresh = window.PMSettingsDemo.dispatch({ type: "provider.refresh", providerId: "openai" }); });
-    await page.waitForSelector('[data-qa-provider-refresh="active"]', { state: "visible", timeout: 2500 });
-    check(await page.locator(".model-board").getAttribute("aria-busy") === "true", `${concept.title}: live Provider refresh did not expose aria-busy.`);
-    check(await page.locator('[data-provider-refresh="openai"]').isDisabled(), `${concept.title}: live Provider refresh left its duplicate action enabled.`);
-    check((await page.locator('[data-qa-provider-refresh="active"]').innerText()).includes("last-known-good"), `${concept.title}: live refresh did not explain mounted last-known-good rows.`);
-    check(await page.locator(".model-row").count() === modelRows, `${concept.title}: refresh unmounted last-known-good model rows at start.`);
-    await page.evaluate(async () => { await window.__pmPendingRefresh; await window.PMSettingsDemo.whenIdle(); });
-    check(await page.locator(".model-row").count() === modelRows, `${concept.title}: refresh changed active catalogue row count.`);
-    check((await page.locator(".receipt-region").innerText()).includes("Catalogue refreshed"), `${concept.title}: refresh did not return a durable outcome.`);
-    await applyReview(page, { scenario: "refreshing", reducedMotion: true });
-    await demo(page, "openManager", "providers", "models", { resourceId: "openai" });
-    check(await page.locator('[data-qa-provider-refresh="active"]').isVisible(), `${concept.title}: persistent Refreshing scenario has no visible progress state.`);
-    check(await page.locator('[data-provider-refresh="openai"]').isDisabled(), `${concept.title}: persistent Refreshing scenario exposes a duplicate refresh action.`);
-    check(await page.locator(".model-row").count() === modelRows, `${concept.title}: persistent Refreshing scenario hid last-known-good rows.`);
-    await applyReview(page, { scenario: "normal", reducedMotion: false });
-    await demo(page, "openManager", "providers", "models");
-
-    await page.locator('[role="tab"][data-manager-tab="accounts"]').click();
-    await idle(page);
-    await page.locator('[data-account-select="openai-work"]').click();
-    await idle(page);
-    const futureButton = page.locator('[data-account-use="openai-work"]');
-    if (await futureButton.isEnabled()) {
-      await futureButton.click();
-      await idle(page);
-    }
-    const accountState = await page.evaluate(() => {
-      const provider = window.PMSettingsDemo.snapshot().providers.find((entry) => entry.id === "openai");
-      return { active: provider.activeAccountId, inFlight: provider.inFlightAccountId };
-    });
-    check(accountState.active === "openai-work" && accountState.inFlight === "openai-personal", `${concept.title}: account preference was not future-only.`);
-
-    await demo(page, "openManager", "memory");
-    const memoryBefore = await page.evaluate(() => window.PMSettingsDemo.snapshot().memories.find((entry) => entry.id === "gist-provider-route").version);
-    await page.locator('[data-memory="gist-provider-route"]').click();
-    await idle(page);
-    const verify = page.locator('[data-memory-verify="gist-provider-route"]');
-    if (await verify.isEnabled()) {
-      await verify.click();
-      await idle(page);
-    }
-    const memoryAfter = await page.evaluate(() => window.PMSettingsDemo.snapshot().memories.find((entry) => entry.id === "gist-provider-route").version);
-    check(memoryAfter === memoryBefore + 1, `${concept.title}: Memory verification did not append an immutable version.`);
-    check((await page.locator(".receipt-region").innerText()).includes("Memory verified"), `${concept.title}: Memory verification did not return a receipt.`);
-
-    await demo(page, "openManager", "terminal");
-    const size = page.locator('[data-terminal-field="fontSize"]');
-    await size.fill("16");
-    await size.press("Tab");
-    await idle(page);
-    check(await page.evaluate(() => window.PMSettingsDemo.snapshot().terminals.find((entry) => entry.id === window.PMSettingsDemo.snapshot().state.selectedTerminalId).dirty), `${concept.title}: Terminal draft did not become dirty.`);
-    await page.locator("[data-terminal-apply]").click();
-    await idle(page);
-    await page.locator("[data-terminal-diagnostics]").click();
-    await idle(page);
-    check((await page.locator(".receipt-region").innerText()).includes("Simulated diagnostics complete"), `${concept.title}: Terminal diagnostics lack an honest simulation receipt.`);
-
-    const managerEvidence = [
-      ["context", "project-instructions", "Requested admission"],
-      ["personas", "explorer-persona", "Delegated child work only"],
-      ["crew", "release-review", "Usage and reserve guard"],
-      ["mcp", "github-server", "HTTPS streaming"],
-      ["lsp", "python-language-support", "No compatible installation detected"],
-      ["extensions", "terminal-command", "Control + grave accent"],
-      ["media", "openai-image-route", "Work API"]
-    ];
-    for (const [managerId, resourceId, expectedText] of managerEvidence) {
-      await demo(page, "openManager", managerId);
-      await page.locator(`[data-manager-resource="${managerId}:${resourceId}"]`).click();
-      await idle(page);
-      check((await page.locator(".manager-detail").innerText()).toLowerCase().includes(expectedText.toLowerCase()), `${concept.title}: ${managerId} hides required domain evidence “${expectedText}”.`);
-    }
-    await demo(page, "openManager", "mcp");
-    const managerFilter = page.locator('[data-manager-filter="mcp"]');
-    await managerFilter.fill("HTTPS streaming");
-    await idle(page);
-    check(await page.locator('[data-manager-resource="mcp:github-server"]').count() === 1, `${concept.title}: manager search ignores domain-specific fields.`);
-    await page.locator('[data-manager-resource="mcp:github-server"]').click();
-    await idle(page);
-    await page.locator("[data-manager-item-action]").first().click();
-    await idle(page);
-    check((await page.locator(".receipt-region").innerText()).includes("opened"), `${concept.title}: supporting-manager item action returned no specific local result.`);
-    coverage.functionalFlows += 1;
-
-    await page.setViewportSize({ width: 760, height: 900 });
-    await applyReview(page, { theme: "friendly-dark", scenario: "normal", railOpen: false, chatOpen: false, reducedMotion: true, direction: "ltr", textScale: 1 });
-    await demo(page, "openManager", "providers");
-    const originRow = page.locator('[data-provider="claude"]');
-    await originRow.click();
-    await idle(page);
-    check(await page.locator(".manager-stage-root").getAttribute("data-drill-mode") === "detail", `${concept.title}: narrow manager did not enter explicit detail drill-in.`);
-    check(await page.locator("[data-drill-back]").isVisible(), `${concept.title}: narrow detail lacks a Back control.`);
-    check((await page.evaluate(() => document.activeElement?.closest(".manager-detail") !== null)), `${concept.title}: narrow detail did not focus its heading/detail.`);
-    await page.locator("[data-drill-back]").click();
-    check(await page.locator(".manager-stage-root").getAttribute("data-drill-mode") === "master", `${concept.title}: Back did not restore the narrow master list.`);
-    check(await page.evaluate(() => document.activeElement?.dataset.provider === "claude"), `${concept.title}: Back did not restore originating-row focus.`);
-
-    if (concept.id === "index-house") {
-      await page.setViewportSize({ width: 900, height: 900 });
-      await applyReview(page, { theme: "friendly-dark", scenario: "normal", railOpen: false, chatOpen: false, reducedMotion: true, direction: "ltr", textScale: 1 });
-      await demo(page, "openCategory", "experience");
-      const evidenceToggle = page.locator("[data-inspector-toggle]");
-      const evidenceInspector = page.locator("#workspaceInspector");
-      check(await evidenceToggle.isVisible(), `${concept.title}: middle-width workspace lacks an evidence-drawer opener.`);
-      check(!(await evidenceInspector.isVisible()), `${concept.title}: closed middle-width inspector remained visibly overlaid.`);
-      await evidenceToggle.click();
-      await idle(page);
-      check(await evidenceInspector.isVisible(), `${concept.title}: evidence drawer did not open at the middle width.`);
-      check(await evidenceInspector.getAttribute("role") === "dialog" && await evidenceInspector.getAttribute("aria-modal") === "true", `${concept.title}: evidence drawer lacks dialog semantics.`);
-      check(await page.locator(".ih-inspector-backdrop").isVisible(), `${concept.title}: open evidence drawer lacks a real backdrop.`);
-      const evidenceText = (await evidenceInspector.innerText()).toLowerCase();
-      check(evidenceText.includes("effects") && evidenceText.includes("requirements"), `${concept.title}: evidence drawer omits effects or requirements.`);
-      check(await page.evaluate(() => document.activeElement?.dataset.focusKey === "inspector-heading"), `${concept.title}: opening evidence did not focus the inspector heading.`);
-      await page.keyboard.press("Escape");
-      await idle(page);
-      check(!(await evidenceInspector.isVisible()), `${concept.title}: Escape did not close the evidence drawer.`);
-      check(await page.evaluate(() => document.activeElement?.hasAttribute("data-inspector-toggle")), `${concept.title}: closing evidence did not restore opener focus.`);
-
-      await page.setViewportSize({ width: 760, height: 900 });
-      await demo(page, "openCategory", "experience");
-      check(!(await evidenceToggle.isVisible()), `${concept.title}: squeezed inline evidence retained a redundant drawer opener.`);
-      check(await evidenceInspector.isVisible(), `${concept.title}: squeezed workspace lost its inline evidence inspector.`);
-      check(await evidenceInspector.getAttribute("inert") === null && await evidenceInspector.getAttribute("role") !== "dialog", `${concept.title}: squeezed inline inspector retained closed-drawer semantics.`);
-    }
-
-    await page.setViewportSize({ width: 1280, height: 900 });
-    await applyReview(page, { theme: "friendly-dark", scenario: "normal", railOpen: false, chatOpen: false, reducedMotion: false, direction: "ltr", textScale: 1 });
-    await demo(page, "openHome");
-
-    await clearMotionWitness(page);
-    await demo(page, "openCategory", "experience");
-    assertMotionEvidence(await motionEvidence(page), concept, "navigate");
-
-    await clearMotionWitness(page);
-    await demo(page, "openCategory", "intelligence");
-    assertMotionEvidence(await motionEvidence(page), concept, "category");
-
-    await clearMotionWitness(page);
-    const motionSearch = page.locator("[data-search-input]");
-    await motionSearch.fill("Theme");
-    await idle(page);
-    assertMotionEvidence(await motionEvidence(page), concept, "search");
-    await motionSearch.press("Escape");
-    await idle(page);
-
-    const jumpTarget = page.locator("[data-subcategory]:not([aria-current='location'])").first();
-    const jumpId = await jumpTarget.getAttribute("data-subcategory");
-    await clearMotionWitness(page);
-    await jumpTarget.click();
-    await idle(page);
-    assertMotionEvidence(await motionEvidence(page), concept, "jump");
-
-    const spyId = await page.evaluate((current) => [...document.querySelectorAll("[data-subcategory]")].map((element) => element.dataset.subcategory).find((id) => id && id !== current), jumpId);
-    await clearMotionWitness(page);
-    await page.evaluate((id) => window.PMSettingsDemo.store.setSubcategory(id, "scrollspy"), spyId);
-    await idle(page);
-    assertMotionEvidence(await motionEvidence(page), concept, "scrollspy");
-
-    await demo(page, "openCategory", "experience");
-    const disclosureSummary = page.locator("details[data-disclosure-id] > summary").first();
-    await clearMotionWitness(page);
-    await disclosureSummary.click();
-    await idle(page);
-    assertMotionEvidence(await motionEvidence(page), concept, "disclosure");
-
-    await demo(page, "openSetting", "experience.startup.recovery");
-    const saveControl = page.locator('[data-setting-select="experience.startup.recovery"]');
-    await clearMotionWitness(page);
-    await saveControl.selectOption({ label: "Off" });
-    await idle(page);
-    assertMotionEvidence(await motionEvidence(page), concept, "save");
-
-    await demo(page, "openManager", "providers", "models", { resourceId: "openai" });
-    await clearMotionWitness(page);
-    await page.evaluate(async () => { await window.PMSettingsDemo.dispatch({ type: "provider.refresh", providerId: "openai" }); await window.PMSettingsDemo.whenIdle(); });
-    assertMotionEvidence(await motionEvidence(page), concept, "refresh");
-
-    const movableModel = page.locator('[data-model-move="sol-56-mini"][data-direction="-1"]');
-    await clearMotionWitness(page);
-    await movableModel.click();
-    await idle(page);
-    assertMotionEvidence(await motionEvidence(page), concept, "reorder");
-
-    await page.setViewportSize({ width: 760, height: 900 });
-    await demo(page, "openCategory", "experience");
-    await clearMotionWitness(page);
-    await page.locator("[data-nav-toggle]").click();
-    await idle(page);
-    assertMotionEvidence(await motionEvidence(page), concept, "drawer");
-    check(await page.locator("#categoryNavigator").getAttribute("inert") === null, `${concept.title}: open navigator remained inert.`);
-    await clearMotionWitness(page);
-    const backdropBox = await page.locator("[data-nav-dismiss]").boundingBox();
-    await page.locator("[data-nav-dismiss]").click({ position: { x: Math.max(1, backdropBox.width - 8), y: Math.min(80, backdropBox.height - 8) } });
-    await idle(page);
-    const closeEvidence = await motionEvidence(page);
-    check(closeEvidence.snapshot?.kind === "drawer" && closeEvidence.calls.length > 0, `${concept.title}: closing the navigator produced no witnessed drawer motion.`);
-    check(await page.locator("#categoryNavigator").getAttribute("inert") !== null, `${concept.title}: closed narrow navigator remains interactive.`);
-
-    await page.setViewportSize({ width: 1280, height: 900 });
-    await demo(page, "openCategory", "experience");
-    await page.evaluate(() => {
-      void window.PMSettingsDemo.openCategory("intelligence");
-      void window.PMSettingsDemo.openCategory("safety");
-    });
-    await idle(page);
-    const rapid = await page.evaluate(() => ({
-      category: window.PMSettingsDemo.snapshot().state.categoryId,
-      stage: document.querySelector("#app").dataset.qaMotionStage,
-      running: document.getAnimations().filter((animation) => animation.playState === "running").length
-    }));
-    check(rapid.category === "safety", `${concept.title}: rapid navigation did not settle on the newest state.`);
-    check(/completed|settled|superseded/.test(rapid.stage), `${concept.title}: rapid navigation motion did not settle (${rapid.stage}).`);
-    check(rapid.running === 0, `${concept.title}: rapid reversal left animations running.`);
-    check(await page.locator(`[data-motion-role~="${concept.signature}"]`).count() >= 1, `${concept.title}: signature motion landmark ${concept.signature} is missing after navigation settled.`);
-
-    await applyReview(page, { reducedMotion: true });
-    await clearMotionWitness(page);
-    await demo(page, "openCategory", "safety");
-    const reduced = await page.evaluate(() => ({
-      category: window.PMSettingsDemo.snapshot().state.categoryId,
-      reduced: document.documentElement.dataset.reducedMotion,
-      stage: document.querySelector("#app").dataset.qaMotionStage,
-      running: document.getAnimations().filter((animation) => animation.playState === "running").length,
-      motion: window.PMSettingsDemo.motionSnapshot(),
-      calls: window.__pmMotionWitness || []
-    }));
-    check(reduced.category === rapid.category, `${concept.title}: reduced motion changed final semantic state.`);
-    check(reduced.reduced === "1" && reduced.running === 0, `${concept.title}: reduced motion did not install final geometry without residual motion.`);
-    check(reduced.motion?.reducedMotion === true && reduced.calls.length === 1, `${concept.title}: reduced motion did not collapse choreography to one cue.`);
-    check(reduced.calls.every((entry) => entry.duration >= 80 && entry.duration <= 120 && entry.properties.length === 1 && entry.properties[0] === "opacity"), `${concept.title}: reduced cue used spatial travel or an out-of-range duration.`);
-    coverage.motionFlows += 1;
+    await runStartup(concept);
+    await runRenderMatrix(concept);
+    await runManagerRoutes(concept);
+    await runManagerStateCases(concept);
+    await runProviderPolicy(concept);
+    await runRuntimePerformance(concept);
+    await runMotion(concept);
+    await runAccessibility(concept);
   }
-  check(coverage.motionMoments === 40, `Witnessed motion moment count is ${coverage.motionMoments}, expected 40.`);
-
-  async function runRenderedMatrix(concept) {
-    const matrixPage = await context.newPage();
-    watchPage(matrixPage);
-    try {
-      const url = `${origin}/concepts/settings-redesign-concepts/5.6%20Sol/${concept.file}`;
-      await matrixPage.setViewportSize({ width: 1280, height: 900 });
-      await matrixPage.goto(url, { waitUntil: "domcontentloaded" });
-      await waitForDemo(matrixPage);
-
-      for (const surface of coreSurfaces) {
-        await applyMatrixReview(matrixPage, {
-          theme: "friendly-dark",
-          scenario: "normal",
-          railOpen: false,
-          chatOpen: false,
-          reducedMotion: true,
-          direction: "ltr",
-          textScale: 1
-        });
-        await openMatrixSurface(matrixPage, surface);
-        for (const width of widths) {
-          await matrixPage.setViewportSize({ width, height: 900 });
-          for (const theme of themes) {
-            for (const shellState of shellStates) {
-              for (const reducedMotion of [false, true]) {
-                await applyMatrixReview(matrixPage, {
-                  theme,
-                  scenario: "normal",
-                  resetScenario: false,
-                  ...shellState,
-                  reducedMotion,
-                  direction: "ltr",
-                  textScale: 1
-                });
-                const state = await matrixPage.evaluate(({ qa, manager }) => {
-                  const snapshot = window.PMSettingsDemo.snapshot();
-                  const view = document.querySelector(".concept-scroll > .view");
-                  return {
-                    theme: snapshot.state.theme,
-                    scenario: snapshot.state.scenario,
-                    railOpen: snapshot.state.railOpen,
-                    chatOpen: snapshot.state.chatOpen,
-                    reducedMotion: snapshot.state.reducedMotion,
-                    qa: view?.dataset.qaSurface || null,
-                    manager: view?.dataset.qaManager || null,
-                    running: document.getAnimations().filter((animation) => animation.playState === "running").length,
-                    expectedQa: qa,
-                    expectedManager: manager || null
-                  };
-                }, surface);
-                const label = `${concept.title} · core ${surface.id} · ${theme} · ${width} · rail=${shellState.railOpen} · assistant=${shellState.chatOpen} · reduced=${reducedMotion}`;
-                check(state.theme === theme && state.scenario === "normal", `${label}: presentation/scenario state diverged.`);
-                check(state.railOpen === shellState.railOpen && state.chatOpen === shellState.chatOpen, `${label}: shell state diverged.`);
-                check(state.reducedMotion === reducedMotion, `${label}: effective reduced-motion state diverged.`);
-                check(state.qa === state.expectedQa, `${label}: expected ${state.expectedQa} surface, found ${state.qa}.`);
-                if (surface.manager) check(state.manager === surface.manager, `${label}: expected ${surface.manager} manager, found ${state.manager}.`);
-                check(state.running === 0, `${label}: matrix settlement left ${state.running} animation(s) running.`);
-                assertLayout(await layoutAudit(matrixPage), label);
-                coverage.coreRenderedStates += 1;
-              }
-            }
-          }
-        }
-      }
-
-      await applyMatrixReview(matrixPage, {
-        theme: "friendly-dark",
-        scenario: "normal",
-        railOpen: false,
-        chatOpen: false,
-        reducedMotion: true,
-        direction: "ltr",
-        textScale: 1
-      });
-      await openMatrixSurface(matrixPage, coreSurfaces[0]);
-      for (const width of [760, 1280, 2500]) {
-        await matrixPage.setViewportSize({ width, height: 900 });
-        for (const shellState of shellExtremes) {
-          for (const theme of themes) {
-            for (const scenario of scenarioIds) {
-              await applyMatrixReview(matrixPage, {
-                theme,
-                scenario,
-                ...shellState,
-                reducedMotion: true,
-                direction: "ltr",
-                textScale: 1
-              });
-              const state = await matrixPage.evaluate(() => {
-                const snapshot = window.PMSettingsDemo.snapshot();
-                return {
-                  scenario: snapshot.state.scenario,
-                  marker: document.querySelector("#app")?.dataset.qaScenario,
-                  text: document.querySelector('[data-qa-surface="home"]')?.innerText || ""
-                };
-              });
-              const label = `${concept.title} · scenario ${scenario} · ${theme} · ${width} · shell=${shellState.railOpen ? "open" : "closed"}`;
-              check(state.scenario === scenario && state.marker === scenario, `${label}: semantic/render scenario markers diverged.`);
-              check(state.text.includes(scenarioLabels[scenario]), `${label}: visible scenario signature is missing.`);
-              assertLayout(await layoutAudit(matrixPage), label);
-              coverage.scenarioStates += 1;
-            }
-          }
-        }
-      }
-    } finally {
-      await matrixPage.close().catch(() => {});
-    }
-  }
-
-  await Promise.all(concepts.map((concept) => runRenderedMatrix(concept)));
-  check(coverage.coreRenderedStates === 7680, `Core rendered matrix count is ${coverage.coreRenderedStates}, expected 7680.`);
-  check(coverage.scenarioStates === 2304, `Scenario matrix count is ${coverage.scenarioStates}, expected 2304.`);
-
-  const touchProfile = join(temporaryRoot, "touch-browser-profile");
-  await mkdir(touchProfile, { recursive: true });
-  touchContext = await chromium.launchPersistentContext(touchProfile, {
-    headless: true,
-    viewport: { width: 760, height: 900 },
-    hasTouch: true,
-    isMobile: true,
-    reducedMotion: "reduce"
-  });
-  const touchPage = touchContext.pages()[0] || await touchContext.newPage();
-  watchPage(touchPage);
-  for (const concept of concepts) {
-    await touchPage.goto(`${origin}/concepts/settings-redesign-concepts/5.6%20Sol/${concept.file}`, { waitUntil: "domcontentloaded" });
-    await waitForDemo(touchPage);
-    const touchAudit = await touchPage.evaluate(() => {
-      const visible = (element) => {
-        const rect = element.getBoundingClientRect();
-        const style = getComputedStyle(element);
-        return rect.width > 0 && rect.height > 0 && style.display !== "none" && style.visibility !== "hidden";
-      };
-      const controls = [...document.querySelectorAll("button, input, select, summary")].filter(visible);
-      const undersized = controls.filter((element) => {
-        const hitTarget = element.matches("input[type='checkbox'], input[type='radio'], input[type='range']") ? element.closest("label") || element : element;
-        const rect = hitTarget.getBoundingClientRect();
-        return rect.width < 43.5 || rect.height < 43.5;
-      }).map((element) => {
-        const hitTarget = element.matches("input[type='checkbox'], input[type='radio'], input[type='range']") ? element.closest("label") || element : element;
-        const rect = hitTarget.getBoundingClientRect();
-        return `${element.tagName}:${rect.width.toFixed(0)}x${rect.height.toFixed(0)}:${hitTarget.textContent.trim().slice(0, 24)}`;
-      });
-      return { coarse: matchMedia("(any-pointer: coarse)").matches || matchMedia("(hover: none)").matches, undersized };
-    });
-    coverage.coarsePointerStates += 1;
-    check(touchAudit.coarse, `${concept.title}: touch fixture did not activate coarse/no-hover media rules.`);
-    check(touchAudit.undersized.length === 0, `${concept.title}: coarse-pointer controls below 44×44: ${touchAudit.undersized.slice(0, 8).join(", ")}`);
-  }
-
-  assert.equal(consoleErrors.length, 0, `Browser console errors (${consoleErrors.length}):\n${consoleErrors.join("\n")}`);
-  assert.equal(failureCount, 0, `Browser smoke failures (${failureCount}; first ${failures.length} shown):\n${failures.join("\n")}`);
-  console.log(`PASS 5.6 Sol served browser smoke on OS-assigned ConceptHub port ${hub.port}.`);
-  console.log(`PASS coverage: ${coverage.concepts} concepts, ${coverage.coreRenderedStates} core rendered states, ${coverage.scenarioStates} scenario states, ${coverage.themeStates} focused theme states, ${coverage.responsiveStates} focused responsive/shell states, ${coverage.functionalFlows} functional flows, ${coverage.motionFlows} motion/reduction flows, ${coverage.motionMoments} witnessed semantic motion moments, ${coverage.comparisonFrames} synchronized comparison frames, ${coverage.coarsePointerStates} coarse-pointer states.`);
-  console.log(`PASS outcomes: search/deep-link/focus, exact Usage handoff, stable jump/scrollspy, setting focus retention, all five spelling actions present, seven provider areas, visible last-known-good refresh, future-only accounts, model gates, immutable Memory verification, Terminal draft/apply/diagnostics, domain-complete supporting managers, narrow drill-in/back focus, witnessed concept-specific motion, rapid reversal, reduced-motion parity, forced colors, 200% zoom-equivalent reflow, RTL, and 35% text expansion.`);
+} catch (error) {
+  const diagnostic = driverOutput?.().trim();
+  fatalHarnessError = safeError(new Error(`${error?.message || error}${diagnostic ? `\nFirefox driver output:\n${diagnostic.slice(-12000)}` : ""}`, { cause: error }));
+  rememberFailure({ section: "harness", label: "browser harness", issues: [fatalHarnessError] });
 } finally {
-  if (touchContext) await touchContext.close().catch(() => {});
-  if (context) await context.close().catch(() => {});
+  await driver?.close().catch(() => {});
+  await stopProcess(driverProcess);
   await stopProcess(hubProcess);
-  await rm(temporaryRoot, { recursive: true, force: true });
+  let cleaned = false;
+  try {
+    await rm(temporaryRoot, { recursive: true, force: true });
+    try { await access(temporaryRoot); }
+    catch (error) { if (error?.code === "ENOENT") cleaned = true; else throw error; }
+  } catch (error) {
+    rememberFailure({ section: "harness", label: "temporary isolation cleanup", issues: [safeError(error)] });
+  }
+  if (fatalHarnessError || !cleaned) sections.harness.failed = 1;
+  else sections.harness.passed = 1;
+
+  const totals = Object.values(sections).reduce((sum, entry) => ({ attempted: sum.attempted + entry.attempted, passed: sum.passed + entry.passed, failed: sum.failed + entry.failed }), { attempted: 0, passed: 0, failed: 0 });
+  const summary = {
+    schema: "pm.settings.browser-verification.v2",
+    generatedAt: new Date().toISOString(),
+    startedAt,
+    status: totals.failed === 0 ? "pass" : "fail",
+    runMode: focused ? "focused-smoke" : "full-authoritative-matrix",
+    environment,
+    portBinding: {
+      conceptHub: { host: "127.0.0.1", port: hubPort, method: hubBindingMethod },
+      webdriver: { host: "127.0.0.1", port: driverPort, method: driverBindingMethod }
+    },
+    isolation: {
+      uniqueTemporaryRoot: true,
+      uniqueProfileRoot: true,
+      outputInsideTemporaryRoot: true,
+      cleaned,
+      fixedPorts: false,
+      externalPackages: false,
+      productDependencyCreated: false
+    },
+    axes: {
+      concepts: concepts.map((entry) => entry.id),
+      themes,
+      widths,
+      reducedMotion: [false, true],
+      requiredSurfaces: ["home", "workspace", "provider-installations", "assigned-manager-detail"],
+      managerRepresentativeWidths: representativeWidths,
+      managerThemes: ["friendly-light", "friendly-dark"],
+      managerStates,
+      semanticMotionKinds,
+      simulatedPerformanceProfiles: performanceProfiles,
+      accurateBrowserAxes: ["headless Firefox", "viewport width", "native keyboard actions", "focus", "RTL DOM direction"],
+      unsupportedBrowserAxes: [
+        { axis: "forced-colors OS mode", reason: "This minimal Firefox WebDriver session has no standards-based command for changing OS forced-colors state; no pass is claimed." },
+        { axis: "coarse pointer hardware", reason: "This minimal Firefox WebDriver session cannot truthfully emulate physical coarse-pointer hardware; no pass is claimed." },
+        { axis: "native Slint", reason: "A served browser prototype cannot certify native Slint rendering, accessibility, performance, or input behavior." }
+      ]
+    },
+    counts: { sections, totals },
+    failureDetails: failures,
+    omittedFailureDetails,
+    boundaries: [
+      "Results are direct evidence for the served Settings browser prototypes only.",
+      "Deterministic resource, network, pressure, thermal, legacy-hardware, and provider fixtures are projections, not physical-hardware or live-provider certification.",
+      "Startup manager counts, bytes, and dynamic-detail import counts describe the deterministic browser fixture only; they do not measure native Slint module loading.",
+      "The harness does not certify native Slint layout, rendering, motion, accessibility, startup, storage, or runtime behavior.",
+      focused ? "Focused smoke mode intentionally does not execute the full declared matrix; run without --focused for authoritative counts." : "The declared full browser matrix was attempted."
+    ]
+  };
+  process.stdout.write(`${JSON.stringify(summary, null, 2)}\n`);
+  if (summary.status !== "pass") process.exitCode = 1;
 }

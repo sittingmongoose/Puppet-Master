@@ -348,3 +348,29 @@ html[data-reduced-motion='1'] .t2-beat-panel { animation: none !important; }
   animation: none !important;
   transform: none !important;
 }
+
+/* Beat-attached work panels + index chips */
+.t2-beat-work-stack { display: grid; gap: 4px; margin-top: 6px; }
+.t2-beat-work { border: 0; border-radius: 0; background: transparent; }
+.t2-beat-work-sum {
+  display: grid;
+  grid-template-columns: 18px 1fr auto;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+  list-style: none;
+  padding: 4px 0;
+}
+.t2-beat-work-sum::-webkit-details-marker { display: none; }
+.t2-beat-work-tick {
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.55;
+  text-align: center;
+}
+.t2-beat-work-title { font-size: 12px; font-weight: 600; }
+.t2-beat-work-body { padding: 4px 0 8px 26px; }
+.pm-t2-beats .pm-cw-beat-rail { margin-bottom: 8px; }
+html[data-reduced-motion='1'] .t2-beat-work,
+html[data-motion='reduced'] .t2-beat-work { transition: none !important; }
+

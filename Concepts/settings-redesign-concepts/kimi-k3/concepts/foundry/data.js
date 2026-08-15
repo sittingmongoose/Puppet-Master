@@ -134,6 +134,7 @@
 
     demoScenarios: [
       { id: "calm", label: "Calm state (all notices dismissed)" },
+      { id: "slow-hydration", label: "Slow manager hydration (lazy load)" },
       { id: "reset", label: "Reset demo data" },
       { id: "formatter-not-found", label: "Formatters: Black not found state" },
       { id: "lsp-degraded", label: "LSP: requested vs effective (Pyright remote degraded)" },

@@ -321,6 +321,14 @@
           (att.validationFor ? 'Verification call for maintenance “' + op.title + '” — the installer time is not usage; this call is.'
                              : 'Replay triggered by “' + op.title + '” — attributed to the reconnect, not new user work.') +
           '</span></div>';
+        if (op.acquisition) {
+          html += '<div class="u11rd-anote">' + ic('lock') + '<span>Installation ' +
+            (op.acquisition.installation ? 'v' + op.acquisition.installation.version + ' · ' + op.acquisition.installation.provenance + ' · ' : '') +
+            R().human(op.acquisition.consent) + ' · ' + op.acquisition.source + ' · bound to ' +
+            (d.hostById[op.hostId] ? d.hostById[op.hostId].label : op.hostId) + ' / ' +
+            (d.envById[op.envId] ? d.envById[op.envId].label : op.envId) +
+            ' · authentication separate · updates/repair post-consent only</span></div>';
+        }
       }
     }
 

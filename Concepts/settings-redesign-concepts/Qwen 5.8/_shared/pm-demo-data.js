@@ -762,7 +762,7 @@
     { id: "p-nightwatch", name: "Night Watch", core: false, description: "Custom overnight monitoring persona.", capsule: "0.5K tokens", provenance: "Imported, scanned 2026-08-02", eligible: "Child roles only", scope: "Child only", childOnly: true }
   ];
 
-  var scenarios = ["default", "attention", "calm", "refreshing", "exhausted", "deep-link", "update-available", "rollback", "import-conflict", "lkg-active"];
+  var scenarios = ["default", "attention", "calm", "refreshing", "exhausted", "deep-link", "update-available", "rollback", "import-conflict", "lkg-active", "low-resource", "poor-network"];
 
   window.PMDemoData = {
     destinations: destinations,

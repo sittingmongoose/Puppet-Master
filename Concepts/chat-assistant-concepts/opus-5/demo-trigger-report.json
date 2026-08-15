@@ -1,49 +1,440 @@
 {
-  "generatedFrom": "live run in stage.html at 1920x1000; system.reset before every trigger so each is measured from one known state",
-  "generatedAt": "2026-08-12T12:53:55.409Z",
+  "generatedBy": "node tools/drive.mjs triggers",
+  "generatedAt": "2026-08-14T22:54:50.041Z",
+  "page": "file:///mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/opus-5/stage.html",
+  "loadedVia": "load-event",
+  "viewport": {
+    "width": 1920,
+    "height": 1000
+  },
+  "method": "One headless Chromium, one page load of stage.html (a SINGLE mounted composition), PMXDemo.fire('system','reset') immediately before every trigger so each is measured from one known state. A structural digest of the store and of the rendered document is taken after the reset, again in the same tick as the trigger (strictly attributable to it), and again after a painted frame (which also catches rendering the concepts defer to requestAnimationFrame).",
+  "vocabulary": {
+    "familyKeys": 18,
+    "familyKeyNames": [
+      "system",
+      "history",
+      "artifact",
+      "question",
+      "goal",
+      "todo",
+      "agent",
+      "subagent",
+      "activity",
+      "diff",
+      "decision",
+      "bsd",
+      "context",
+      "thread",
+      "sync",
+      "crew",
+      "provider",
+      "attachment"
+    ],
+    "aliasFamilies": {
+      "subagent": "agent"
+    },
+    "distinctFamilies": 17,
+    "eventsAcrossFamilyKeys": 133,
+    "eventsAcrossFamilyKeysNote": "RAW count: every family key times its own event list. Inflated, because the subagent alias family is counted a second time and three thread events plus one agent event are second names bound to the same function.",
+    "distinctBehaviours": 120,
+    "distinctBehavioursNote": "PMXDemo.distinctEvents(): alias families dropped and alias event names folded onto the one function they share. This is the number of things the Director can actually do."
+  },
+  "totalsRaw": {
+    "fired": 133,
+    "ok": 133,
+    "failed": 0,
+    "storeChanged": 79,
+    "storeUnchanged": 54,
+    "domChangedSynchronously": 45,
+    "domChangedAfterFrame": 45,
+    "inertNeitherStoreNorDom": 54
+  },
+  "totalsDistinct": {
+    "fired": 120,
+    "ok": 120,
+    "failed": 0,
+    "storeChanged": 77,
+    "storeUnchanged": 43,
+    "domChangedSynchronously": 45,
+    "domChangedAfterFrame": 45,
+    "inertNeitherStoreNorDom": 43
+  },
+  "packetStates": {
+    "required": 14,
+    "covered": 14,
+    "uncovered": [],
+    "staleStateEvents": [],
+    "source": "CORRECTION_GOAL_PROMPT.md — \"deterministic demo triggers cover question, Goal, Todo, child, activity, diff, artifact, approval, thread, collision, offline/replay, BSD, attachment, and recovery states\"",
+    "byState": [
+      {
+        "state": "question",
+        "note": null,
+        "named": 9,
+        "firedOk": 9,
+        "covered": true,
+        "events": [
+          "question.prepare",
+          "question.open",
+          "question.next",
+          "question.skip",
+          "question.cancel",
+          "question.submit",
+          "question.submitting",
+          "question.select",
+          "question.validation_error"
+        ],
+        "notInVocabulary": []
+      },
+      {
+        "state": "Goal",
+        "note": null,
+        "named": 10,
+        "firedOk": 10,
+        "covered": true,
+        "events": [
+          "goal.start",
+          "goal.progress",
+          "goal.pause",
+          "goal.resume",
+          "goal.update",
+          "goal.replan",
+          "goal.blocked",
+          "goal.complete",
+          "goal.stop",
+          "goal.clear"
+        ],
+        "notInVocabulary": []
+      },
+      {
+        "state": "Todo",
+        "note": null,
+        "named": 4,
+        "firedOk": 4,
+        "covered": true,
+        "events": [
+          "todo.add",
+          "todo.complete",
+          "todo.reopen",
+          "todo.block"
+        ],
+        "notInVocabulary": []
+      },
+      {
+        "state": "child",
+        "note": "Child work is `agent` here — a spawned subagent — plus the crew that fans several out and the thread-level spawn that gives one its own conversation.",
+        "named": 15,
+        "firedOk": 15,
+        "covered": true,
+        "events": [
+          "agent.spawn",
+          "agent.advance",
+          "agent.queue",
+          "agent.block",
+          "agent.complete",
+          "agent.fail",
+          "agent.stop",
+          "agent.retry",
+          "agent.progress",
+          "crew.start",
+          "crew.wave",
+          "crew.synthesize",
+          "crew.stop",
+          "thread.spawn",
+          "thread.spawn_related"
+        ],
+        "notInVocabulary": []
+      },
+      {
+        "state": "activity",
+        "note": null,
+        "named": 14,
+        "firedOk": 14,
+        "covered": true,
+        "events": [
+          "activity.advance",
+          "activity.condense",
+          "activity.reopen",
+          "activity.settle",
+          "activity.open_phase",
+          "activity.close_phase",
+          "activity.thinking_summary",
+          "activity.search",
+          "activity.read",
+          "activity.fetch",
+          "activity.browser",
+          "activity.test",
+          "activity.edit",
+          "activity.generate"
+        ],
+        "notInVocabulary": []
+      },
+      {
+        "state": "diff",
+        "note": null,
+        "named": 3,
+        "firedOk": 3,
+        "covered": true,
+        "events": [
+          "diff.create",
+          "diff.update",
+          "diff.open"
+        ],
+        "notInVocabulary": []
+      },
+      {
+        "state": "artifact",
+        "note": null,
+        "named": 7,
+        "firedOk": 7,
+        "covered": true,
+        "events": [
+          "artifact.loading",
+          "artifact.ready",
+          "artifact.switch",
+          "artifact.error",
+          "artifact.retry",
+          "artifact.update",
+          "artifact.close"
+        ],
+        "notInVocabulary": []
+      },
+      {
+        "state": "approval",
+        "note": "Approval is a `decision` here: the packet names the answer, this workspace names the surface that asks for it.",
+        "named": 6,
+        "firedOk": 6,
+        "covered": true,
+        "events": [
+          "decision.approval_open",
+          "decision.details",
+          "decision.approve",
+          "decision.deny",
+          "decision.branch",
+          "decision.clear"
+        ],
+        "notInVocabulary": []
+      },
+      {
+        "state": "thread",
+        "note": null,
+        "named": 9,
+        "firedOk": 9,
+        "covered": true,
+        "events": [
+          "thread.request",
+          "thread.respond",
+          "thread.branch",
+          "thread.rewind",
+          "thread.restore_point",
+          "thread.redirect",
+          "thread.send_request",
+          "thread.receive_response",
+          "history.switch_thread"
+        ],
+        "notInVocabulary": []
+      },
+      {
+        "state": "collision",
+        "note": "The three resource collisions the packet manifest names (port, worktree, test runner), plus the cross-project grant that is the collision of two projects over one permission.",
+        "named": 4,
+        "firedOk": 4,
+        "covered": true,
+        "events": [
+          "system.port_collision",
+          "system.worktree_collision",
+          "system.test_collision",
+          "system.cross_project_grant"
+        ],
+        "notInVocabulary": []
+      },
+      {
+        "state": "offline/replay",
+        "note": "The `sync` family: go offline, queue a send, reconnect, replay the queue idempotently, reconcile a snapshot, and pick up work the server did while away.",
+        "named": 6,
+        "firedOk": 6,
+        "covered": true,
+        "events": [
+          "sync.offline",
+          "sync.queue_send",
+          "sync.reconnect",
+          "sync.replay",
+          "sync.snapshot",
+          "sync.server_work"
+        ],
+        "notInVocabulary": []
+      },
+      {
+        "state": "BSD",
+        "note": null,
+        "named": 9,
+        "firedOk": 9,
+        "covered": true,
+        "events": [
+          "bsd.auto_active",
+          "bsd.advice",
+          "bsd.silent",
+          "bsd.duplicate",
+          "bsd.timeout",
+          "bsd.unavailable",
+          "bsd.quota",
+          "bsd.manual_on",
+          "bsd.off"
+        ],
+        "notInVocabulary": []
+      },
+      {
+        "state": "attachment",
+        "note": null,
+        "named": 8,
+        "firedOk": 8,
+        "covered": true,
+        "events": [
+          "attachment.add",
+          "attachment.add_document",
+          "attachment.incompatible",
+          "attachment.extract",
+          "attachment.cancel",
+          "attachment.reevaluate",
+          "attachment.remove",
+          "decision.attachment_incompatible"
+        ],
+        "notInVocabulary": []
+      },
+      {
+        "state": "recovery",
+        "note": "Recovery is not one family — it is what several families do after a failure, so it is listed as the retry/repair/restore path of each: a failed child retried, a failed artifact retried, a broken provider repaired, a dropped connection replayed, a thread rewound to a restore point, and the Director reset.",
+        "named": 9,
+        "firedOk": 9,
+        "covered": true,
+        "events": [
+          "agent.retry",
+          "artifact.retry",
+          "provider.needs_repair",
+          "provider.update_failed",
+          "sync.reconnect",
+          "sync.replay",
+          "thread.rewind",
+          "thread.restore_point",
+          "system.reset"
+        ],
+        "notInVocabulary": []
+      }
+    ]
+  },
+  "failures": [],
+  "timing": {
+    "totalMs": 18683,
+    "msPerTrigger": 140,
+    "slowest": [
+      {
+        "key": "system.reduced_motion_on",
+        "ms": 474
+      },
+      {
+        "key": "system.reset",
+        "ms": 420
+      },
+      {
+        "key": "question.submit",
+        "ms": 387
+      },
+      {
+        "key": "system.reduced_motion_off",
+        "ms": 385
+      },
+      {
+        "key": "artifact.ready",
+        "ms": 383
+      },
+      {
+        "key": "history.pin_compact",
+        "ms": 381
+      },
+      {
+        "key": "artifact.update",
+        "ms": 381
+      },
+      {
+        "key": "question.cancel",
+        "ms": 380
+      }
+    ]
+  },
+  "domNodes": {
+    "atStart": 1509,
+    "atEnd": 1541
+  },
   "families": {
     "system": [
       {
         "event": "reduced_motion_on",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 474
       },
       {
         "event": "reduced_motion_off",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 385
       },
       {
         "event": "port_collision",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 356
       },
       {
         "event": "worktree_collision",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 356
       },
       {
         "event": "test_collision",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 369
       },
       {
         "event": "cross_project_grant",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 370
       },
       {
         "event": "reset",
         "ok": true,
         "reason": null,
-        "storeEffect": false
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 420
       }
     ],
     "history": [
@@ -51,31 +442,51 @@
         "event": "peek",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 372
       },
       {
         "event": "pin_full",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 374
       },
       {
         "event": "pin_compact",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 381
       },
       {
         "event": "unpin",
         "ok": true,
         "reason": null,
-        "storeEffect": false
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 349
       },
       {
         "event": "switch_thread",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 357
       }
     ],
     "artifact": [
@@ -83,43 +494,71 @@
         "event": "loading",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 375
       },
       {
         "event": "ready",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 383
       },
       {
         "event": "switch",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 377
       },
       {
         "event": "error",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 372
       },
       {
         "event": "retry",
         "ok": true,
         "reason": null,
-        "storeEffect": false
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 360
       },
       {
         "event": "update",
         "ok": true,
         "reason": null,
-        "storeEffect": false
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 381
       },
       {
         "event": "close",
         "ok": true,
         "reason": null,
-        "storeEffect": false
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 347
       }
     ],
     "question": [
@@ -127,37 +566,91 @@
         "event": "prepare",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 334
       },
       {
         "event": "open",
         "ok": true,
         "reason": null,
-        "storeEffect": false
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 354
       },
       {
         "event": "next",
         "ok": true,
         "reason": null,
-        "storeEffect": false
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 354
       },
       {
         "event": "skip",
         "ok": true,
         "reason": null,
-        "storeEffect": false
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 365
       },
       {
         "event": "cancel",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 380
       },
       {
         "event": "submit",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 387
+      },
+      {
+        "event": "submitting",
+        "ok": true,
+        "reason": null,
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 136
+      },
+      {
+        "event": "select",
+        "ok": true,
+        "reason": null,
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 83
+      },
+      {
+        "event": "validation_error",
+        "ok": true,
+        "reason": null,
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 84
       }
     ],
     "goal": [
@@ -165,55 +658,101 @@
         "event": "start",
         "ok": true,
         "reason": null,
-        "storeEffect": false
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 81
+      },
+      {
+        "event": "progress",
+        "ok": true,
+        "reason": null,
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 64
       },
       {
         "event": "pause",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 83
       },
       {
         "event": "resume",
         "ok": true,
         "reason": null,
-        "storeEffect": false
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 66
       },
       {
         "event": "update",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 69
       },
       {
         "event": "replan",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 81
       },
       {
         "event": "blocked",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 84
       },
       {
         "event": "complete",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 83
       },
       {
         "event": "stop",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 84
       },
       {
         "event": "clear",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 83
       }
     ],
     "todo": [
@@ -221,19 +760,41 @@
         "event": "add",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 87
       },
       {
         "event": "complete",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 112
       },
       {
         "event": "reopen",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 83
+      },
+      {
+        "event": "block",
+        "ok": true,
+        "reason": null,
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 83
       }
     ],
     "agent": [
@@ -241,49 +802,193 @@
         "event": "spawn",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 84
       },
       {
         "event": "advance",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 66
       },
       {
         "event": "queue",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 67
       },
       {
         "event": "block",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 87
       },
       {
         "event": "complete",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 115
       },
       {
         "event": "fail",
         "ok": true,
         "reason": null,
-        "storeEffect": false
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 81
       },
       {
         "event": "stop",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 84
       },
       {
         "event": "retry",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 89
+      },
+      {
+        "event": "progress",
+        "ok": true,
+        "reason": null,
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": false,
+        "ms": 81,
+        "aliasEvent": true
+      }
+    ],
+    "subagent": [
+      {
+        "event": "spawn",
+        "ok": true,
+        "reason": null,
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": false,
+        "ms": 80,
+        "aliasOfFamily": "agent"
+      },
+      {
+        "event": "advance",
+        "ok": true,
+        "reason": null,
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": false,
+        "ms": 67,
+        "aliasOfFamily": "agent"
+      },
+      {
+        "event": "queue",
+        "ok": true,
+        "reason": null,
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": false,
+        "ms": 66,
+        "aliasOfFamily": "agent"
+      },
+      {
+        "event": "block",
+        "ok": true,
+        "reason": null,
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": false,
+        "ms": 67,
+        "aliasOfFamily": "agent"
+      },
+      {
+        "event": "complete",
+        "ok": true,
+        "reason": null,
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": false,
+        "ms": 67,
+        "aliasOfFamily": "agent"
+      },
+      {
+        "event": "fail",
+        "ok": true,
+        "reason": null,
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": false,
+        "ms": 66,
+        "aliasOfFamily": "agent"
+      },
+      {
+        "event": "stop",
+        "ok": true,
+        "reason": null,
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": false,
+        "ms": 83,
+        "aliasOfFamily": "agent"
+      },
+      {
+        "event": "retry",
+        "ok": true,
+        "reason": null,
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": false,
+        "ms": 69,
+        "aliasOfFamily": "agent"
+      },
+      {
+        "event": "progress",
+        "ok": true,
+        "reason": null,
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": false,
+        "ms": 115,
+        "aliasOfFamily": "agent"
       }
     ],
     "activity": [
@@ -291,19 +996,141 @@
         "event": "advance",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 83
       },
       {
         "event": "condense",
         "ok": true,
         "reason": null,
-        "storeEffect": false
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 66
       },
       {
         "event": "reopen",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 67
+      },
+      {
+        "event": "settle",
+        "ok": true,
+        "reason": null,
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 67
+      },
+      {
+        "event": "open_phase",
+        "ok": true,
+        "reason": null,
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 67
+      },
+      {
+        "event": "close_phase",
+        "ok": true,
+        "reason": null,
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 67
+      },
+      {
+        "event": "thinking_summary",
+        "ok": true,
+        "reason": null,
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 82
+      },
+      {
+        "event": "search",
+        "ok": true,
+        "reason": null,
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 84
+      },
+      {
+        "event": "read",
+        "ok": true,
+        "reason": null,
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 83
+      },
+      {
+        "event": "fetch",
+        "ok": true,
+        "reason": null,
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 83
+      },
+      {
+        "event": "browser",
+        "ok": true,
+        "reason": null,
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 84
+      },
+      {
+        "event": "test",
+        "ok": true,
+        "reason": null,
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 68
+      },
+      {
+        "event": "edit",
+        "ok": true,
+        "reason": null,
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 82
+      },
+      {
+        "event": "generate",
+        "ok": true,
+        "reason": null,
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 83
       }
     ],
     "diff": [
@@ -311,63 +1138,143 @@
         "event": "create",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 100
       },
       {
         "event": "update",
         "ok": true,
         "reason": null,
-        "storeEffect": false
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 83
       },
       {
         "event": "open",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 102
       }
     ],
     "decision": [
       {
+        "event": "details",
+        "ok": true,
+        "reason": null,
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 82
+      },
+      {
+        "event": "approve",
+        "ok": true,
+        "reason": null,
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 90
+      },
+      {
+        "event": "deny",
+        "ok": true,
+        "reason": null,
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 77
+      },
+      {
+        "event": "branch",
+        "ok": true,
+        "reason": null,
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 143
+      },
+      {
         "event": "approval_open",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 81
       },
       {
         "event": "warning_route",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 78
       },
       {
         "event": "warning_privacy",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 81
       },
       {
         "event": "warning_cache",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 84
       },
       {
         "event": "attachment_incompatible",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 82
       },
       {
         "event": "capacity",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 85
       },
       {
         "event": "clear",
         "ok": true,
         "reason": null,
-        "storeEffect": false
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 83
       }
     ],
     "bsd": [
@@ -375,55 +1282,91 @@
         "event": "auto_active",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 84
       },
       {
         "event": "advice",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 82
       },
       {
         "event": "silent",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 84
       },
       {
         "event": "duplicate",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 83
       },
       {
         "event": "timeout",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 84
       },
       {
         "event": "unavailable",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 83
       },
       {
         "event": "quota",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 83
       },
       {
         "event": "manual_on",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 87
       },
       {
         "event": "off",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 97
       }
     ],
     "context": [
@@ -431,25 +1374,41 @@
         "event": "compact_now",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 99
       },
       {
         "event": "lens_open",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 100
       },
       {
         "event": "source_remove",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 84
       },
       {
         "event": "prior_chat_search",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 82
       }
     ],
     "thread": [
@@ -457,43 +1416,104 @@
         "event": "request",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 84
       },
       {
         "event": "respond",
         "ok": true,
         "reason": null,
-        "storeEffect": false
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 83
       },
       {
         "event": "spawn",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 83
       },
       {
         "event": "branch",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 84
       },
       {
         "event": "rewind",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 85
       },
       {
         "event": "restore_point",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 116
       },
       {
         "event": "redirect",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 116
+      },
+      {
+        "event": "send_request",
+        "ok": true,
+        "reason": null,
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": false,
+        "ms": 86,
+        "aliasEvent": true
+      },
+      {
+        "event": "receive_response",
+        "ok": true,
+        "reason": null,
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": false,
+        "ms": 114,
+        "aliasEvent": true
+      },
+      {
+        "event": "spawn_related",
+        "ok": true,
+        "reason": null,
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": false,
+        "ms": 85,
+        "aliasEvent": true
       }
     ],
     "sync": [
@@ -501,37 +1521,61 @@
         "event": "offline",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 99
       },
       {
         "event": "queue_send",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 87
       },
       {
         "event": "reconnect",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 119
       },
       {
         "event": "replay",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 110
       },
       {
         "event": "snapshot",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 225
       },
       {
         "event": "server_work",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 100
       }
     ],
     "crew": [
@@ -539,25 +1583,41 @@
         "event": "start",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 95
       },
       {
         "event": "wave",
         "ok": true,
         "reason": null,
-        "storeEffect": false
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 80
       },
       {
         "event": "synthesize",
         "ok": true,
         "reason": null,
-        "storeEffect": false
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 70
       },
       {
         "event": "stop",
         "ok": true,
         "reason": null,
-        "storeEffect": false
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 78
       }
     ],
     "provider": [
@@ -565,38 +1625,126 @@
         "event": "install_required",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 100
       },
       {
         "event": "update_available",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 87
       },
       {
         "event": "verifying",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 80
       },
       {
         "event": "update_failed",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 84
       },
       {
         "event": "needs_repair",
         "ok": true,
         "reason": null,
-        "storeEffect": true
+        "storeChanged": true,
+        "domChangedSynchronously": true,
+        "domChangedAfterFrame": true,
+        "distinctBehaviour": true,
+        "ms": 89
+      }
+    ],
+    "attachment": [
+      {
+        "event": "add",
+        "ok": true,
+        "reason": null,
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 85
+      },
+      {
+        "event": "add_document",
+        "ok": true,
+        "reason": null,
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 75
+      },
+      {
+        "event": "incompatible",
+        "ok": true,
+        "reason": null,
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 84
+      },
+      {
+        "event": "extract",
+        "ok": true,
+        "reason": null,
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 83
+      },
+      {
+        "event": "cancel",
+        "ok": true,
+        "reason": null,
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 84
+      },
+      {
+        "event": "reevaluate",
+        "ok": true,
+        "reason": null,
+        "storeChanged": false,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 83
+      },
+      {
+        "event": "remove",
+        "ok": true,
+        "reason": null,
+        "storeChanged": true,
+        "domChangedSynchronously": false,
+        "domChangedAfterFrame": false,
+        "distinctBehaviour": true,
+        "ms": 83
       }
     ]
   },
-  "totals": {
-    "triggers": 93,
-    "ok": 93,
-    "failed": 0,
-    "noStoreEffect": 18
-  }
+  "driverConsoleErrors": [],
+  "driverConsoleWarnings": []
 }

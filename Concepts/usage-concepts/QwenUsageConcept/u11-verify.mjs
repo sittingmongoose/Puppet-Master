@@ -276,6 +276,19 @@ async function runNewBehavior(ctx, port) {
     const ok = /back seat driver/i.test(txt) && /silent check/i.test(txt) && /a silent provider call still counts/i.test(txt) &&
       /cache write/i.test(txt) && /not exposed/i.test(txt);
     record('new BSD section in attempt inspector (ue-600)', ok);
+    /* correction: verification call carries installation/acquisition note —
+       open ue-609 through the operations widget CTA (its own work group) */
+    await page.keyboard.press('Escape');
+    await page.waitForTimeout(250);
+    await page.click('.u11w-opcard [data-att="ue-609"]');
+    await page.waitForSelector('.u11rd.on', { timeout: 4000 });
+    const acqNote = await page.evaluate(() => {
+      const p = document.querySelector('.u11rd');
+      return p ? /post-consent only/.test(p.innerText) && /official OpenAI installer/.test(p.innerText) : false;
+    });
+    record('correction inspector acquisition note on verification call (ue-609)', acqNote);
+    await page.keyboard.press('Escape');
+    await page.waitForTimeout(200);
     await page.screenshot({ path: shot('bsd-inspector') });
     await page.keyboard.press('Escape');
     await page.waitForTimeout(200);
@@ -295,6 +308,38 @@ async function runNewBehavior(ctx, port) {
     await page.screenshot({ path: shot('operations-widget') });
   } catch (e) { record('new operations widget (CLI update · rolled back · 5 phases)', false, String(e).slice(0, 200)); }
 
+  /* correction: explicit acquisition lineage rendered (adjudication) */
+  try {
+    const acqOk = await page.evaluate(() => {
+      const cards = document.querySelectorAll('.u11w-opcard');
+      for (const c of cards) {
+        if (/Codex CLI update/.test(c.innerText)) {
+          return /Explicit user setup/.test(c.innerText) && /official OpenAI installer/.test(c.innerText) &&
+            /post-consent only/.test(c.innerText) && /Studio PC/.test(c.innerText);
+        }
+      }
+      return false;
+    });
+    record('correction acquisition lineage on cli_update (explicit setup · official source · bound host/env)', acqOk);
+  } catch (e) { record('correction acquisition lineage on cli_update (explicit setup · official source · bound host/env)', false, String(e).slice(0, 200)); }
+
+  /* correction: setup_required fixture — deep-link, never silent install */
+  try {
+    await page.waitForFunction(() => /Provider Setup Required/.test(document.body.innerText), { timeout: 5000 });
+    await clearToasts(page);
+    await page.click('.u11w-opcard [data-u11-act="setuplink"]');
+    const dl = await page.evaluate(() => {
+      const e = window.U11.cmdLog.filter((c) => c.cmd === 'semantic.deep_link').pop();
+      return e && e.payload && e.payload.focus_reason === 'setup_required' && e.payload.continuation === 'cont-8841';
+    });
+    const noInstall = await page.evaluate(() => {
+      const o = window.U11.operational.filter((x) => x.id === 'ops-8')[0];
+      return o.providerUsage === 'none' && !o.validationEventId;
+    });
+    record('correction setup_required → provider setup deep-link, no silent install', dl && noInstall);
+    await page.screenshot({ path: shot('setup-required') });
+  } catch (e) { record('correction setup_required → provider setup deep-link, no silent install', false, String(e).slice(0, 200)); }
+
   /* operations carry no token totals */
   try {
     const clean = await page.evaluate(() => {
@@ -311,7 +356,7 @@ async function runNewBehavior(ctx, port) {
   try {
     await goToTab(page, 'overview');
     await page.waitForFunction(() => {
-      return Array.from(document.querySelectorAll('.u11w-capline.dim'))
+      return Array.from(document.querySelectorAll('.u11w-capenv, .u11w-capline.dim'))
         .some((el) => /sustainable/.test(el.textContent));
     }, { timeout: 5000 });
     record('new capacity envelope line (sustainable)', true);

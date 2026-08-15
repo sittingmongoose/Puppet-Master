@@ -558,3 +558,5 @@
 .pmq-inbox-row .pmq-btn-sm { flex: none; border: 1px solid var(--border); background: transparent; color: var(--text-secondary); }
 .pmq-inbox-row .pmq-btn-sm:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
 [data-motion="reduced"] .pmq-syncstrip, [data-motion="reduced"] .pmq-inbox { transition: none; }
+
+.pmq-obx-err { margin: 0 0 8px; padding: 7px 10px; border-radius: var(--radius-sm); background: color-mix(in srgb, var(--accent-error) 12%, transparent); border: 1px solid color-mix(in srgb, var(--accent-error) 35%, transparent); font-size: var(--fs-xs); font-weight: 600; color: var(--text-primary); }

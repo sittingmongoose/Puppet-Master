@@ -9,7 +9,7 @@
   "index.html Demo triggers menu -> k3-demo-trigger postMessage",
   "K3Demo.* direct calls (harness)"
  ],
- "trigger_count": 43,
+ "trigger_count": 49,
  "triggers": [
   {
    "key": "route-picker",
@@ -569,6 +569,90 @@
    "product_ui_reachability": "title-bar stack -> inbox",
    "expected_state": "see states.js DRIVERS.notify-approval",
    "probe_ref": "notificationInbox"
+  },
+  {
+   "key": "todoBlock",
+   "family": "todo",
+   "invocation": [
+    "dev drawer (?demo=1)",
+    "K3Demo.todoBlock(ctx) (harness)"
+   ],
+   "product_ui_reachability": "todo surface, blocked item state",
+   "expected_state": "todo surface, blocked item state",
+   "probe_ref": "triggerCoverage"
+  },
+  {
+   "key": "subagentRetry",
+   "family": "subagent",
+   "invocation": [
+    "dev drawer (?demo=1)",
+    "K3Demo.subagentRetry(ctx) (harness)"
+   ],
+   "product_ui_reachability": "failed/blocked agent enters retrying (is-live)",
+   "expected_state": "failed/blocked agent enters retrying (is-live)",
+   "probe_ref": "triggerCoverage"
+  },
+  {
+   "key": "decisionBranch",
+   "family": "decision",
+   "invocation": [
+    "dev drawer (?demo=1)",
+    "K3Demo.decisionBranch(ctx) (harness)"
+   ],
+   "product_ui_reachability": "open warning resolved via branch (resolved-branch, new thread)",
+   "expected_state": "open warning resolved via branch (resolved-branch, new thread)",
+   "probe_ref": "triggerCoverage"
+  },
+  {
+   "key": "historyPeek",
+   "family": "history",
+   "invocation": [
+    "dev drawer (?demo=1)",
+    "K3Demo.historyPeek(ctx) (harness)"
+   ],
+   "product_ui_reachability": "transient unpinned history view",
+   "expected_state": "transient unpinned history view",
+   "probe_ref": "triggerCoverage"
+  },
+  {
+   "key": "historySwitchThread",
+   "family": "history",
+   "invocation": [
+    "dev drawer (?demo=1)",
+    "K3Demo.historySwitchThread(ctx) (harness)"
+   ],
+   "product_ui_reachability": "active thread switches (16<->17)",
+   "expected_state": "active thread switches (16<->17)",
+   "probe_ref": "triggerCoverage"
+  },
+  {
+   "key": "worktreeCollision",
+   "family": "system",
+   "invocation": [
+    "dev drawer (?demo=1)",
+    "K3Demo.worktreeCollision(ctx) (harness)"
+   ],
+   "product_ui_reachability": "wt-docs flips to conflict-detected in the ops surface",
+   "expected_state": "wt-docs flips to conflict-detected in the ops surface",
+   "probe_ref": "triggerCoverage"
   }
- ]
+ ],
+ "correction_2026_08_13": {
+  "contract": "DEMO_TRIGGER_CONTRACT.json (pm.chat_assistant_demo_trigger_contract.v2)",
+  "family_coverage": {
+   "history": "openHistory/closeHistory/pinHistory/togglePinnedCompact/unpinHistory + NEW historyPeek/historySwitchThread",
+   "question": "triggerQuestionFlow/answerCurrent/skipCurrent/cancelFlow/submitFlow (incomplete-submit validation path) + lifecycle beats asserted by questionLifecycle",
+   "goal": "goalStart/goalUpdate/goalPause/goalResume/goalReplan/goalBlocked/goalComplete/goalStop",
+   "todo": "todoAdd/todoComplete/todoReopen + NEW todoBlock",
+   "subagent": "subagentSpawn/subagentAdvance/subagentComplete/subagentFail + NEW subagentRetry /subagentStop",
+   "activity": "advanceActivity over all 8 canonical kinds (seeded after correction B4)",
+   "diff": "createDiff/updateDiff/diffOpen",
+   "artifact": "artifactOpen/artifactClose/artifactSwitch/artifactLoading/artifactErrorRetry/artifactSetUpdated",
+   "decision": "injectApproval/decideApproval(once|session|deny) + NEW decisionBranch",
+   "thread": "threadRequestTo/threadAwait/threadSpawn/threadBranch/threadRestorePoint/threadRewind/redirectActive",
+   "system": "injectPortConflict + NEW worktreeCollision; resetScenario",
+   "extras_per_goal": "offline/replay (goOffline/queueOffline/reconnectStep/reconnectFull), BSD (setBsd/bsdAutoGlow/bsdPushAdvice/bsdPushResult), attachment (4 state keys), recovery (threadRestorePoint + mount-restored driver)"
+  },
+  "probe": "triggerCoverage 16/16 across 4 pairings x 2 themes x 2 widths"
+ }
 }

@@ -681,3 +681,17 @@
 }
 .k3w-kit-ringpop-progress { min-width: 160px; }
 html[data-motion="reduced"] .k3w-kit-scope { transition: none; }
+
+/* capacity warning row (canonical scenario warning #3) */
+.k3w-kit-capacity-warning {
+  display: flex; align-items: flex-start; gap: 6px;
+  margin-top: 6px; padding: 6px 8px;
+  font-size: 11.5px; line-height: 1.4;
+  color: var(--fg-dim, inherit);
+  background: color-mix(in srgb, var(--accent, #b45309) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent, #b45309) 24%, transparent);
+  border-radius: 6px;
+}
+.k3w-kit-capacity-warning-ic { flex: 0 0 auto; margin-top: 1px; }
+.k3w-kit-capacity-warning-ic svg { width: 13px; height: 13px; display: block; }
+html[data-motion="reduced"] .k3w-kit-capacity-warning { transition: none; }

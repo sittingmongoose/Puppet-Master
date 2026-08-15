@@ -206,3 +206,15 @@
 
 [data-reduced-motion="1"] .ft6-block, [data-reduced-motion="1"] .ft6-weight,
 [data-motion="reduced"] .ft6-block, [data-motion="reduced"] .ft6-weight { animation: none; }
+
+.ft6-weight-item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  min-width: 0;
+}
+.ft6-weight-item span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ft6-agent-line[data-status="failed"] span:first-child { color: var(--danger); }
+.ft6-agent-line[data-status="retrying"] span:first-child { color: var(--warn); }

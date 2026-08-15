@@ -1,5 +1,98 @@
 # BUILD_STATUS — Opus 5 Assistant Chat concept
 
+> ## Update — 2026-08-14, third pass: the audit of the correction itself
+>
+> **Measured: 28 suites, 869 assertions, 869 passed, 0 failed, 0 console errors,
+> 0 warnings.** Matrix 320 runs (256 pairing + 64 theme) / 1280 assertions / 0 failed, in
+> nine chunks. Director 120 distinct behaviours, 0 failed, and **14 of 14** of the packet's
+> named trigger states covered — measured, not asserted. Activity probe 8/8 on every gated
+> dimension. Question paging clean in all eight. Folder scan clean, and it now also fails on any
+> command id a surface prints that the candidate delta does not carry.
+>
+> The three open items were closed in the second pass. Then the workspace was re-read against the
+> packet's own deliverables list rather than against the summary of what had been done, and that found
+> **nine more**, REF-17 through REF-25. Most of them are one shape, and it is the same shape the first
+> two passes found in the CSS: **something declared, nothing checking.**
+>
+> - `shared/motion.js` rule 3 says "not one helper touches focus". `activeElement` appeared zero times
+>   in the whole workspace. Writing the assertion found that **activating an activity chain glyph with
+>   the keyboard dropped focus to `<body>` in all eight concepts** — the reader returned to the top of
+>   the document by their own click. Measured with the fix disabled: 8 of 8 fail.
+> - `shared/opcard.js` says every command id it mints is recorded in the candidate delta. Nine of its
+>   ten were not, and checking them against the catalog found three that must not be minted at all
+>   plus three existing rows claiming "new" on evidence the catalog contradicts — the worst being
+>   `cmd.chat.bsd.set`, recorded as new because "no Back Seat Driver id exists anywhere in the
+>   catalog" when `cmd.bsd.set` is canonical with the concept's own enum and default.
+> - COVERAGE.md said eight themes were swept. `ui.theme` appeared zero times in the suite; the width
+>   sweep ran two of four.
+> - `runtrace.js` cites five video behaviours by frame index. Behaviour 4 — the content below the
+>   capsule is pushed down when a phase is reopened, never replaced — was asserted of the RECORD and
+>   never of the screen.
+>
+> **And closing the first of those made the harness unrunnable.** Widening the matrix to 320 runs took
+> one Chromium to 12.8 GB and pushed a 22 GB host fully into swap, on the machine that had already been
+> restarted once for running out of memory: `runMatrix` chained its runs with plain `.then()`, so the
+> whole sweep was one unbroken block with no paint and no GC and every mounted composition still
+> reachable. It now yields to the event loop between runs and runs in nine chunks, each in its own
+> freshly navigated page. Peak resident afterwards: about 0.6 GB.
+>
+> See `reference-review-report.json` for all 25 defects and `GAP_REPORT.md` for GAP-M15 through M22.
+
+
+> ## Update — 2026-08-14, second pass: the three open items closed
+>
+> **Measured: 27 suites, 797 assertions, 797 passed, 0 failed, 0 console errors, 0 warnings.**
+> Matrix 128 runs / 512 assertions / 0 failed. Director 113 distinct behaviours, 0 failed. Activity
+> probe: 8/8 on every gated dimension, and `handoverClearsBeforeNewGlyph` 8/8. Question paging: all
+> eight page three forward and three back holding one card root, with the answer still shown and no
+> entrance replayed. Folder scan clean.
+>
+> The questionnaire item changed shape on instruction. A stable frame was the wrong reading: the
+> reference's card only looks stable because every one of its pages carries exactly four option rows.
+> Ours differ, so the card RESIZES, using PMConcept7's own model-picker bounce. Six concepts had
+> refused height motion in writing; all six comments were rewritten rather than left contradicting
+> the code.
+>
+> **Closing these three found four more defects of the same family this file keeps describing —
+> motion that reports success and moves nothing.** The worst was a single CSS rule,
+> `[data-motion="full"] * { animation-duration: revert-layer }`, which matched at the same
+> specificity as every animation class and won on order: inside an explicitly-full stage NOTHING
+> class-driven animated, and the rule could not even achieve its stated purpose because the blanket
+> it was undoing is `!important`. Alongside it, every morphed count digit had been coming to rest 4px
+> low at 45% opacity because the animation's start state out-specified its end state.
+>
+> See `reference-review-report.json` for all fourteen defects and the one item still open.
+
+
+> ## Update — 2026-08-14, the reference-media correction
+>
+> Everything below this block was written before the four raw recordings were opened. It is kept
+> because the shape of what it claimed is the best explanation of what this pass found.
+>
+> **Measured now, by `tools/drive.mjs`, not transcribed:** 26 suites, 613 assertions, 613 passed,
+> 0 failed, 0 page console errors, 0 page console warnings, at 1920x1000. Matrix: 128 runs, 512
+> assertions, 0 failed, 16 runs in each of the eight windows. Director: 17 family keys over 16
+> distinct families, 126 raw events versus 113 distinct behaviours, 113 fired, 0 failed. Activity
+> probe: all eight concepts render the chain, hold the header row still through a count tick, and
+> reopen the phase each glyph names; two fail the headline read-back (see `GAP-M13`). Folder scan:
+> 0 NUL bytes, 0 UTF-8 failures, 0 forbidden-phrase hits. Evidence: 72 PNGs in `evidence/`.
+>
+> `TEST_REPORT.md` is now GENERATED from those measurements by `tools/report.mjs`. It previously
+> opened by claiming it was, while being written by hand.
+>
+> **Three of the numbers below were wrong in a way no reader could have caught.** The suite count of
+> 23 was accurate only because the two suites it omitted — `provider` and `opcard` — had been pasted
+> inside another suite's body, where the runner's snapshot of the suite list could never reach them.
+> They had never executed. `provider` is the sole automated defence of
+> `PROVIDER_CLI_FINAL_ADJUDICATION.md`. The fixture's byte-freeze is retired: the manifest's
+> eighteen history rows are thread titles and its `user_request` is a message, which are corpus facts
+> an overlay cannot state honestly. What replaces the freeze, and is verified, is that the generator
+> reproduces all three outputs byte-identically across runs.
+>
+> See `reference-review-report.json` for the media inventory with frame indices, the ten defects
+> found, and the four items still open.
+
+
 Written after the 2026-08-08 cumulative packet update. **Section 2 is the honest gap list.** Anything
 not listed as done is listed as outstanding, with what remains and why.
 
@@ -75,8 +168,7 @@ measured artifact clearance so the capsule never covers the composer.
 
 ### Fixture
 
-`demo/demoData.json` remains byte-frozen at **349,661 bytes** with an unchanged checksum. The
-generator was extended and regenerates **byte-identically** across runs. Measured counts: 18 threads,
+`demo/demoData.json` is now GENERATED, at 350559 bytes (sha256 7fface4030de6e40...). The supplied file was byte-frozen at 349,661 bytes and never edited; that freeze was retired when DEMO_SCENARIO_MANIFEST.json was instantiated, because eighteen of its rows are thread TITLES and one is an opening message — corpus facts an overlay cannot state honestly. What still holds, and is verified by re-running and comparing checksums, is that the generator reproduces all three outputs byte-identically across runs. Measured counts: 18 threads,
 1,053 messages, `todoMax: 8`, `agentRoutes: 6`, activity kinds `browser read search test verify web`,
 question kinds `freeform / multi select / single select`, goal phases
 `start pause resume replan blocked complete`, 1 conflict, 3 decisions, 2 BSD modes, 1 outbox entry,
@@ -355,7 +447,7 @@ while every form and yield assertion still runs on thread-01 with a live questio
 
 **Verification after the audit**: suite **407 total, 407 passed, 0 failed, 0 console errors, 0 console
 warnings** (23 suites, 4,031 ms); the full matrix re-run because `shared/motion.js` changed - **128 runs,
-512 assertions, 0 failed, 0 errors, 0 warnings**; validator passes; fixture still byte-frozen at 349,661.
+512 assertions, 0 failed, 0 errors, 0 warnings**; validator passes; fixture regenerated at 350559 bytes, byte-identical across runs.
 
 
 ### Second audit pass: the assertion thread-06 could not make

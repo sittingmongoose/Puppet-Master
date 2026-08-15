@@ -67,7 +67,23 @@
     var tid = this.tid(), u = U();
     var v = this.ctx.store.view(tid);
     var msgs = this.ctx.data.visibleSlice(tid, v.loadedFrom);
+
+    /* 01_message_arrival_spatial_continuity.mov, frames 47 to 63 (about 280ms at 57.6fps): the new
+     * message enters as a flattened sliver at a seam and expands into its box, while everything
+     * already on screen keeps its identity. Reprinting the whole log cannot say that - every line
+     * slots in again, so the line that was actually just printed is indistinguishable from the two
+     * hundred above it.
+     *
+     * So an append is an append. When the only difference is messages added at the END of the same
+     * thread and the same loaded range, the existing lines are kept and the new ones are inserted
+     * through motion.displace(); anything else is a genuine rebuild. */
+    if (this._canAppendOnly(tid, v, msgs)) { this._appendTurns(msgs); return; }
+
     u.empty(this.list); this.rendered = {}; this.lastTid = tid;
+/* The live status row lives IN the list, so emptying it detaches the node this reference
+     * points at. Dropping the reference makes syncLive() below rebuild an attached one instead of
+     * quietly updating an orphan, which is why the running indicator vanished after a rebuild. */
+    this.liveEl = null;
 
     var t = this.ctx.data.threadById(tid);
     var hidden = t ? Math.max(0, t.messages.length - msgs.length) : 0;
@@ -79,6 +95,66 @@
       var work = this.buildWorkRows(msgs[i]);
       for (var j = 0; j < work.length; j++) this.list.appendChild(work[j]);
     }
+
+    /* What the next render compares against to decide whether anything ARRIVED. */
+    this._renderedIds = msgs.map(function (m) { return m.id; });
+    this._renderedFrom = v.loadedFrom;
+
+    this.renderSurfaces(); this.renderQuestion(); this.syncLive();
+  };
+
+  /* True only when this render differs from the last by messages APPENDED to the end. A changed
+   * thread, a changed loaded range, a removal, or any edit to an existing line all fail this and
+   * fall back to the rebuild, because none of those is an arrival and animating a reflow as though
+   * something had just been said would be a lie about what happened. */
+  T6.prototype._canAppendOnly = function (tid, v, msgs) {
+    if (!this._renderedIds || tid !== this.lastTid) return false;
+    if (v.loadedFrom !== this._renderedFrom) return false;
+    if (msgs.length <= this._renderedIds.length) return false;
+    for (var i = 0; i < this._renderedIds.length; i++) {
+      if (msgs[i].id !== this._renderedIds[i]) return false;
+    }
+    return true;
+  };
+
+  /* The running indicator is the tail of the log, not a line in it, so an arriving turn is printed
+   * above it rather than after it. */
+  T6.prototype._listTail = function () {
+    return (this.liveEl && this.liveEl.parentNode === this.list) ? this.liveEl : null;
+  };
+
+  T6.prototype._appendTurns = function (msgs) {
+    var self = this;
+    var svc = this.ctx.services;
+    var start = this._renderedIds.length;
+    var tail = this._listTail();
+
+    function insert() {
+      var last = null;
+      for (var i = start; i < msgs.length; i++) {
+        last = self.buildTurn(msgs[i]);
+        self.list.insertBefore(last, tail);
+        var work = self.buildWorkRows(msgs[i]);
+        for (var j = 0; j < work.length; j++) self.list.insertBefore(work[j], tail);
+      }
+      /* The TURN is what arrived. Its execution rows keep their own lateral slot-in, which is the
+       * distinction this concept exists to draw: prose and telemetry are different voices and they
+       * do not enter the same way. */
+      return last;
+    }
+
+    /* Measure, mutate, re-pin - in that order. A reader sitting at the bottom is carried with the
+     * new line; a reader who has scrolled up is left where they are, which is the whole reason
+     * stickIfAtBottom measures BEFORE the mutation. */
+    var run = function () {
+      if (svc.motion && svc.motion.displace) svc.motion.displace(self.list, insert);
+      else insert();
+    };
+    if (this.scrollCtl && this.scrollCtl.stickIfAtBottom) this.scrollCtl.stickIfAtBottom(run);
+    else run();
+
+    this._renderedIds = msgs.map(function (m) { return m.id; });
+
     this.renderSurfaces(); this.renderQuestion(); this.syncLive();
   };
 
@@ -218,6 +294,11 @@
      * otherwise expand an operation once per pass that ever ran. */
     this._unbindOpKeys();
 
+    /* The element the run printed into, dropped with the pass that printed it. groupReopen has to be
+     * handed the run that is ON SCREEN; a handler still holding last pass's element would push the
+     * siblings of something no longer in the document. */
+    this._runEl = null;
+
     /* Ask the flow, not the yield flag: this runs BEFORE renderQuestion on every pass. */
     var pendingQuestion = svc.qflow ? svc.qflow.pending(svc, this.tid()) : false;
 
@@ -225,6 +306,16 @@
     var thread = this.ctx.data.threadById(this.tid());
     var v = this.ctx.store.view(this.tid());
     var openIds = (v.surfaces && v.surfaces.openIds) || {};
+
+    /* ---- the run, read BEFORE the log because the log's digits depend on whether there is one.
+     *
+     * Three guards, and all three are real states: PMXRunTrace may not be loaded at all, a thread with
+     * no activity stages reads null, and a run that has not started renders NOTHING rather than an
+     * empty frame reserving space for work that has not happened. The pending-question guard is the
+     * same yield the log below obeys - the work surfaces yield as ONE thing or the yield means
+     * nothing. */
+    var run = (!pendingQuestion && svc.runtrace && svc.runtrace.read) ? svc.runtrace.read(this.tid()) : null;
+    if (run && !run.started) run = null;
 
     function each(val) { return val == null ? [] : (Object.prototype.toString.call(val) === '[object Array]' ? val : [val]); }
 
@@ -288,7 +379,12 @@
     var opById = {};
     for (var oi = 0; oi < ops.length; oi++) opById[ops[oi].id] = ops[oi];
 
-    /* digit -> line key, rebuilt every pass so the printed numbers always name what is on screen. */
+    /* digit -> line key, rebuilt every pass so the printed numbers always name what is on screen.
+     *
+     * A run on screen TAKES the digits. Its chain is already a numbered index and one keystroke may
+     * only ever mean one thing, so the operations print no number for as long as the run holds them;
+     * with no run started - this thread's state until an activity verb fires - they keep 1-9 exactly
+     * as before. The handover is visible rather than silent, because the numbers themselves move. */
     this._opKeys = {};
     var opCount = 0;
 
@@ -309,10 +405,10 @@
       var key = 'op-' + rec.id;
       /* This concept numbers whatever it expects a keyboard to reach, and 1-9 is what one keystroke
        * can name. The number is printed, so the promise is visible rather than folklore. */
-      if (opCount <= 9) self._opKeys[String(opCount)] = key;
+      if (!run && opCount <= 9) self._opKeys[String(opCount)] = key;
       lines.push({
         key: key, kind: rec.kind, op: true, flat: true,
-        num: opCount <= 9 ? opCount : null,
+        num: (!run && opCount <= 9) ? opCount : null,
         /* headline and statusLabel verbatim: the record owns the tense and the count. The status is a
          * token in the row's own duration column - there are no pills anywhere in this concept. */
         label: rec.headline, dur: rec.statusLabel, status: rec.status,
@@ -373,12 +469,23 @@
     var complete = !!(group && group.status === 'complete');
     var logOpen = !!(v.surfaces && v.surfaces.expanded === 'log');
 
+    /* The run prints ABOVE the log, which is both a claim and a mechanism. The claim: the run is what
+     * is happening NOW and the log is what is true of the thread. The mechanism: groupReopen carries
+     * the siblings AFTER the element it is given, so reopening a phase PUSHES the log and the handoff
+     * row down instead of replacing them - behaviour 4 of shared/runtrace.js, f.910. */
+    var opsKeyed = false;
+    if (run) host.appendChild(this._buildRunLog(run));
+
     /* Activity, verification and advice are read straight off the thread rather than through
      * `activeFor`, so without this guard they survive the yield and leave a partial cluster beside the
      * question. The work surfaces yield as ONE thing or the yield means nothing. */
     var logEl = u.el('div', { class: 't6-log', data: { condensed: (complete && !logOpen) ? '1' : '0' } });
 
     if (!pendingQuestion && complete && !logOpen && lines.length) {
+      /* The operation rows are not on screen in this state, so their digits must not be live either: a
+       * key that expands a row nobody can see is the same class of leak as a handler left behind by a
+       * re-render. The run above keeps its own, because its chain IS printed here. */
+      this._opKeys = {};
       var plus = u.el('button', {
         class: 't6-log-row t6-log-more', type: 'button',
         data: { kind: 'summary' }, aria: { expanded: 'false' }
@@ -435,14 +542,22 @@
         }
       });
 
-      /* The digits are live, so they are advertised once - in the same columns as everything else. */
+      /* The digits are live, so they are advertised once - in the same columns as everything else. The
+       * range names whoever actually holds them this pass: while a run is on screen the digits reopen
+       * its steps and are advertised on the run's own keys row, so this row stops claiming them rather
+       * than printing a promise the keyboard would not keep. */
       if (opCount) {
+        opsKeyed = !run;
         logEl.appendChild(u.el('div', { class: 't6-log-row t6-op-hint' }, [
           u.el('span', { class: 't6-log-kind', text: 'keys' }),
-          u.el('span', { class: 't6-log-label', text: '1\u2013' + Math.min(opCount, 9) + ' expands an operation \u00b7 enter toggles the focused row' }),
+          u.el('span', {
+            class: 't6-log-label',
+            text: run
+              ? 'enter toggles the focused row \u00b7 the digits index the run above'
+              : '1\u2013' + Math.min(opCount, 9) + ' expands an operation \u00b7 enter toggles the focused row'
+          }),
           u.el('span', { class: 't6-log-dur', text: '' })
         ]));
-        this._bindOpKeys();
       }
 
       if (complete && logOpen) {
@@ -461,6 +576,11 @@
 
       host.appendChild(logEl);
     }
+
+    /* ONE handler for whatever digits this pass actually printed, and none at all when it printed
+     * none. Binding here rather than inside a branch is what lets the run keep its keyboard in the
+     * state where the log has condensed to `+22 steps` and prints no operation rows at all. */
+    if (opsKeyed || (run && run.chain.length)) this._bindOpKeys();
 
     this._handoffHost = u.el('div', { class: 't6-handoff-host' });
     host.appendChild(this._handoffHost);
@@ -488,6 +608,354 @@
     if (vv.surfaces.openIds[key]) delete vv.surfaces.openIds[key];
     else vv.surfaces.openIds[key] = true;
     this.ctx.store.touchView('surfaces');
+  };
+
+  /* ---------------------------------------------------------------- the run, as a numbered prefix run
+   *
+   * t6's reading of `reference/videos/03_compact_execution_activity.mov`, whose five behaviours and
+   * frame citations are set out in the header of `shared/runtrace.js`.
+   *
+   * The reference draws the run as a capsule: a chain of glyphs inline to the left of a headline, with
+   * the rows of the open phase indented beneath it. This concept cannot draw that and stay itself. It
+   * is an exec log with fixed column stops, so:
+   *
+   *   run    1 2 3 4 5                                       38s
+   *   - read Read 7 files                                     2s
+   *   Edited shared/selectors.js                         +92 -18
+   *   keys   1-5 reopens that step, from the keyboard alone
+   *
+   *   - the chain becomes a NUMBERED PREFIX RUN on its own row: each entered phase is a log POSITION,
+   *     printed as its number, and the number is a real button that reopens THAT phase (f.1170 reopens
+   *     `Made 1 create, 2 edits`, f.1300 reopens `Explored 7 files`);
+   *   - because the positions are numbers, the digit shortcut this concept already binds for its
+   *     operation rows becomes the keyboard route INTO the run: pressing 3 reopens phase 3. That makes
+   *     random access into a finished run work with no pointer at all, which is the one thing the
+   *     reference's own capsule cannot claim;
+   *   - the chain sits on its own row rather than beside the headline, because a variable-width run of
+   *     glyphs in the label column would push the headline off the column stop the rows below it share.
+   *     The reference pushes its label right by one slot per glyph (f.205-209); this register cannot
+   *     afford that, and alignment is the whole argument of the concept;
+   *   - the open phase's rows land FLAT in the same block, each one a `t6-log-row`, exactly as an
+   *     operation's own detail rows already do - an indented sub-block would break the one property
+   *     this form exists to demonstrate.
+   *
+   * Carried over as behaviour, not as look: the count rewritten in place and digits only (f.208 ->
+   * f.286 -> f.338), the present participle while running against the past tense once settled (f.194
+   * against f.1170), condense as the RESTING state rather than a deletion (f.910), and a chain that
+   * scrolls rather than truncating because a number IS the route back to its phase. Not carried over:
+   * the reference's colours, radii, ring treatment and easing.
+   */
+
+  /* How long a printed line stays FRESH, in ms. See _morphRunText: inside this window a rebuild of the
+   * run re-issues the count morph from what the line said last instead of writing the new text flat.
+   * It only has to outlast ONE extra render, because a single activity verb reaches this concept
+   * twice - `view.runtrace` from the trace's own announce and `view.surfaces` from the Director's
+   * touch. countMorph itself runs for 220ms, so a shorter window would let a genuinely later render
+   * restart an animation that is most of the way through. */
+  var RUN_MORPH_FRESH_MS = 180;
+
+  /* What the run line last SAID, per span: the text, what it changed from, and when. None of that is a
+   * fact about the run, so none of it belongs in the store - it is a fact about the last paint of this
+   * element. Keyed by thread, because a sentence from another thread is not a previous state of this
+   * one and morphing between them would animate a change that never happened. */
+  T6.prototype._runMemo = function () {
+    var tid = this.tid();
+    if (!this._runMemoState || this._runMemoState.tid !== tid) {
+      /* `chainIds` is what makes a handover detectable in a concept that rebuilds its whole run block
+       * every render. With no surviving element to compare against, the only way to know that a
+       * position is ARRIVING rather than merely present is to remember what was printed a pass ago. */
+      this._runMemoState = { tid: tid, text: {}, chainIds: null };
+    }
+    return this._runMemoState;
+  };
+
+  /* countMorph, never swapText. `Reading 6 files` becoming `Reading 7 files` has to move the digit and
+   * leave the word `files` in the layout box it already had (f.208 -> f.338); cross-fading the whole
+   * label reads as the line being replaced, which is the difference between a running tally and a
+   * series of different sentences. countMorph falls back to a swap by itself when the WORDS changed
+   * too, which is the honest outcome because at that point the sentence really did change.
+   *
+   * The memo is what makes the morph real here. renderSurfaces empties its host and rebuilds on every
+   * view change, so the span handed to countMorph is always brand new and empty - without a remembered
+   * previous string it would take its entrance path on every tick and no digit would ever move. The
+   * count would still be CORRECT, which is exactly why nothing would look broken while behaviour 2
+   * quietly did not happen. */
+  T6.prototype._morphRunText = function (el, key, next, flat) {
+    var motion = this.ctx.services.motion;
+    var memo = this._runMemo();
+    var slot = memo.text[key] || (memo.text[key] = { text: null, from: null, at: 0 });
+    var now = Date.now();
+    if (slot.text !== next) { slot.from = slot.text; slot.text = next; slot.at = now; }
+    var from = slot.from;
+    /* `flat` writes the new string outright while still keeping the memo current. Beat two of a
+     * handover asks for it: seeding the span with the remembered previous sentence is what makes a
+     * digit move within one phase, but across a handover that sentence belongs to the step that just
+     * finished, so seeding it would REPRINT the outgoing line for a frame at the very moment the new
+     * position arrives - the opposite of the order the two beats exist to state. */
+    if (flat || from == null || from === next || (now - slot.at) > RUN_MORPH_FRESH_MS
+        || !motion || !motion.countMorph) {
+      el.textContent = next;
+      return;
+    }
+    el.textContent = from;
+    motion.countMorph(el, next);
+  };
+
+  /* One phase's disclosure, shared by the numbered button and by the digit that names it, so the
+   * pointer and the keyboard cannot drift into doing two different things - the same rule _toggleLine
+   * states for a log line. */
+  T6.prototype._openRunPhase = function (phaseId) {
+    var self = this;
+    var svc = this.ctx.services;
+    if (!svc.runtrace || !svc.runtrace.open) return;
+    var el = this._runEl;
+    /* groupReopen carries the siblings BELOW the run - the exec log and the handoff row - so a phase
+     * opening pushes them down as one block instead of making them jump (f.910). */
+    if (el && el.isConnected && svc.motion && svc.motion.groupReopen) {
+      svc.motion.groupReopen(el, function () { svc.runtrace.open(self.tid(), phaseId); });
+    } else {
+      svc.runtrace.open(self.tid(), phaseId);
+    }
+  };
+
+  T6.prototype._buildRunLog = function (run) {
+    var self = this, u = U();
+    var svc = this.ctx.services;
+    var memo = this._runMemo();
+    var open = run.open;
+    /* While the run is live the running phase is its own disclosure, which is why the reference shows
+     * rows under a running phase nobody asked to open. Once it condenses, nothing is disclosed until
+     * the reader names a step. */
+    var showRows = !!open || (!run.condensed && !!run.running);
+    var subject = open || run.running || (run.chain.length ? run.chain[run.chain.length - 1] : null);
+    var resting = run.condensed && !open;
+    /* Which step the run is actually SHOWING, which is not always the subject of the headline. A
+     * resting run falls back to its last phase for the headline but discloses nothing, so marking that
+     * step as read would tell the reader they are looking at a phase while the line beside it states
+     * the total. Nothing is marked until something is genuinely open or running. */
+    var focus = open || run.running || null;
+
+    var wrap = u.el('div', {
+      class: 't6-run',
+      data: { condensed: run.condensed ? '1' : '0', running: run.running ? '1' : '0' }
+    });
+    this._runEl = wrap;
+
+    /* ---- row 1: the prefix run. One position per ENTERED phase, in entry order, because a number
+     * here is a claim that the work happened. */
+    this._runKeys = {};
+    var idx = u.el('div', { class: 't6-log-row t6-run-index' });
+    idx.appendChild(u.el('span', { class: 't6-log-kind', text: 'run' }));
+
+    var chain = u.el('span', { class: 't6-run-chain pmx-chain' });
+    var activeStep = null;
+    var runningStep = null;
+
+    /* One position, built the same way whether it is printed with the rest of the run or arrives a
+     * beat later on a handover. Two builders would be two definitions of what a position is, and the
+     * one that runs less often is the one that would drift. */
+    function stepFor(p, i) {
+      var n = i + 1;
+      var isOpen = !!(focus && focus.id === p.id);
+      /* Every position sits in its own slot, which is the box phaseHandover opens from zero width when
+       * one phase hands over to the next (f.205-209). Without the slot there is nothing to animate and
+       * the run would gain a number by jumping a character cell. */
+      var slot = u.el('span', { class: 'pmx-chain-slot' });
+      var btn = u.el('button', {
+        class: 't6-run-step', type: 'button',
+        data: { kind: p.kind, state: p.running ? 'running' : 'done', open: isOpen ? '1' : '0' },
+        aria: { expanded: isOpen ? 'true' : 'false', label: 'Step ' + n + ', ' + p.headline }
+      });
+      btn.title = n + '. ' + p.headline;
+      btn.appendChild(u.el('span', { class: 't6-run-n', text: String(n) }));
+      /* Nine is what one keystroke can name. A tenth phase still prints its number and is still a
+       * button - it just has no shortcut, which is a smaller loss than renumbering the run.
+       *
+       * The digit is registered against the map this pass owns. A beat-two insertion whose chain has
+       * already been replaced by a later render must not write into the new pass's map: the position
+       * it names was never printed there, so the keystroke would open a step the reader cannot see. */
+      if (n <= 9 && (chain.isConnected || !self._runEl || self._runEl === wrap)) self._runKeys[String(n)] = p.id;
+      self._on(btn, 'click', function () { self._openRunPhase(p.id); });
+      if (isOpen) activeStep = btn;
+      if (p.running) runningStep = btn;
+      slot.appendChild(btn);
+      chain.appendChild(slot);
+      return btn;
+    }
+
+    /* THE HANDOVER, and its order (f.194-211).
+     *
+     * The reference lets the outgoing sentence go FIRST - at f.198-200 the label and the reasoning text
+     * fade out while the old glyph stays - and only at f.205-209 does the new glyph arrive and push the
+     * label one slot right. The lateral push is the part this concept cannot copy: the chain has its
+     * own row beside `run` and the elapsed column, so a slot opening here would push the DURATION and
+     * not the label, which `t6-work-interleave.css:474-476` refuses by name and is still right to.
+     * What is copied is the CAUSAL ORDER, which is where the meaning lives: the phase that finished
+     * lets go of the sentence, and only then does the phase that took over appear to claim it. A
+     * single frame that swapped both at once would read as the run being replaced and would lose the
+     * fact that the finished phase survives as a numbered entry.
+     *
+     * A handover is one specific event: the run gained EXACTLY ONE position on the end since the last
+     * print and the headline is now speaking for it. A reader reopening step 2, a finished run
+     * printing all its positions at once, and a reset that starts a new run all fail that test. The
+     * one-position check is what covers the reset: the memo outlives the run it described, so a
+     * shorter run than the one remembered is a different run, not the next step of that one. */
+    var lastPhase = run.chain.length ? run.chain[run.chain.length - 1] : null;
+    var painted = memo.chainIds;
+    var arriving = (lastPhase && painted && painted.length === run.chain.length - 1
+      && painted.indexOf(lastPhase.id) < 0
+      && subject && subject.id === lastPhase.id && !run.condensed) ? lastPhase : null;
+    var arrivingIndex = arriving ? run.chain.length - 1 : -1;
+
+    memo.chainIds = [];
+    run.chain.forEach(function (p) { memo.chainIds.push(p.id); });
+
+    run.chain.forEach(function (p, i) {
+      if (arriving && arriving.id === p.id) return;   /* printed on beat two, below */
+      stepFor(p, i);
+    });
+    idx.appendChild(chain);
+    /* The run's own elapsed, in the column every other row states its elapsed in. It is printed only
+     * once nothing is running, because `workedSeconds` sums the AUTHORED durations of the phases
+     * entered so far and the running one has not finished elapsing. */
+    idx.appendChild(u.el('span', {
+      class: 't6-log-dur',
+      text: (!run.running && run.workedSeconds) ? F().duration(run.workedSeconds) : ''
+    }));
+    wrap.appendChild(idx);
+
+    /* ---- row 2: the headline, rewritten in place, in the label column the rows below it share. */
+    var head = u.el('button', {
+      class: 't6-log-row t6-run-head', type: 'button',
+      data: { kind: subject ? subject.kind : '', open: showRows ? '1' : '0' },
+      aria: { expanded: showRows ? 'true' : 'false' }
+    });
+    /* The kind column keeps carrying the taxonomy word, so a run row and an operation row for the same
+     * stage read as the same kind of thing. `total` is the resting run: it is not a phase. */
+    head.appendChild(u.el('span', {
+      class: 't6-log-kind', text: resting ? 'total' : (subject ? subject.kind : 'run')
+    }));
+
+    var line = u.el('span', { class: 't6-log-label t6-run-line' });
+    var verbEl = u.el('span', { class: 't6-run-verb' });
+    var argEl = u.el('span', { class: 't6-run-arg' });
+    /* Behaviour 4: condensed is the RESTING state, so the resting line is the run stated as its total
+     * (`13 tools used` at f.910) rather than the last thing it happened to do. */
+    var verbText = resting ? run.summaryLabel : (subject ? subject.verb : '');
+    var argText = resting ? '' : (subject ? subject.argument : '');
+
+    /* On a handover both halves stay EMPTY on beat one: that IS the outgoing sentence being let go,
+     * and writing the new one here would collapse the two beats into a single swap. `writeRunLine` is
+     * called on beat two, beside the arriving position, and writes flat there - see `_morphRunText`. */
+    function writeRunLine(flat) {
+      self._morphRunText(verbEl, 'verb', verbText, flat);
+      self._morphRunText(argEl, 'arg', argText, flat);
+    }
+    if (!arriving) writeRunLine(false);
+    line.appendChild(verbEl);
+    line.appendChild(argEl);
+    head.appendChild(line);
+
+    /* A phase states its duration only once it is DONE. `durationMs` is how long the stage took, so
+     * printing it beside a phase still running would report a measurement the run has not made. */
+    head.appendChild(u.el('span', {
+      class: 't6-log-dur',
+      text: (!resting && subject && subject.status === 'done' && subject.durationMs)
+        ? F().duration(Math.round(subject.durationMs / 1000)) : ''
+    }));
+
+    /* One control, three meanings, in the order a reader means them: dismiss what is open, disclose a
+     * condensed run, condense a live one. */
+    this._on(head, 'click', function () {
+      if (!svc.runtrace) return;
+      if (open) { svc.runtrace.close(self.tid()); return; }
+      if (run.condensed) { self._openRunPhase(null); return; }
+      svc.runtrace.condense(self.tid());
+    });
+    wrap.appendChild(head);
+
+    /* ---- the open phase's rows, FLAT in the block so the column stops hold. */
+    if (showRows && subject) {
+      var rows = subject.rows || [];
+      if (rows.length) {
+        /* Zero-padded to the widest number in this PHASE, the same rule the operation rows follow: in
+         * a monospace log the pairs have to line up column for column, not merely end together. */
+        var wAdd = 1, wRem = 1, i;
+        for (i = 0; i < rows.length; i++) {
+          wAdd = Math.max(wAdd, String(rows[i].added || 0).length);
+          wRem = Math.max(wRem, String(rows[i].removed || 0).length);
+        }
+        rows.forEach(function (r) {
+          var delta = (r.added != null || r.removed != null)
+            ? '+' + pad(r.added || 0, wAdd) + ' \u2212' + pad(r.removed || 0, wRem) : '';
+          wrap.appendChild(u.el('div', { class: 't6-log-row t6-run-row' }, [
+            u.el('span', { class: 't6-log-kind', text: r.verb || '' }),
+            u.el('span', { class: 't6-log-label', text: r.target || r.label || '' }),
+            u.el('span', { class: 't6-log-dur', text: delta })
+          ]));
+        });
+      } else if (subject.detail) {
+        wrap.appendChild(u.el('div', { class: 't6-log-row t6-run-row' }, [
+          u.el('span', { class: 't6-log-kind', text: '' }),
+          u.el('span', { class: 't6-log-label', text: subject.detail }),
+          u.el('span', { class: 't6-log-dur', text: '' })
+        ]));
+      }
+    }
+
+    /* ---- the keys row. The shortcut is advertised where the numbers are, because a keyboard route
+     * nobody is told about is folklore rather than an affordance. */
+    if (run.chain.length) {
+      var last = Math.min(run.chain.length, 9);
+      wrap.appendChild(u.el('div', { class: 't6-log-row t6-run-keys' }, [
+        u.el('span', { class: 't6-log-kind', text: 'keys' }),
+        u.el('span', {
+          class: 't6-log-label',
+          text: (last === 1 ? '1' : '1\u2013' + last) + ' reopens that step of the run, pointer or not'
+        }),
+        u.el('span', { class: 't6-log-dur', text: '' })
+      ]));
+    }
+
+    /* The prefix run SCROLLS rather than truncating, and brings the step being read back into view.
+     * The reference rolls its oldest glyph off the left as a seventh phase starts (f.910 shows six)
+     * and scrolls it back when the reader clicks toward it; dropping a position would silently make
+     * that phase unreachable, from the pointer and from the digit alike. */
+    function rollChain(into) {
+      if (!svc.motion || !svc.motion.chainRoll) return;
+      var target = into || activeStep || runningStep;
+      global.requestAnimationFrame(function () {
+        if (chain.isConnected) svc.motion.chainRoll(chain, target ? { into: target } : null);
+      });
+    }
+
+    if (arriving) {
+      /* Beat two. phaseHandover is handed an already-empty label and an empty string: the sentence was
+       * let go above, so there is nothing left to cross-fade, and what the primitive is here for is the
+       * second beat - the slot opening from zero width at the position's own measured size, once the
+       * first beat has been seen. The new sentence rides in with the position, because the line speaks
+       * for whichever step the run is pointing at and writing it earlier would have the line speak for
+       * a step the run has not printed yet.
+       *
+       * The roll waits for the insertion: rolling a run that is one position short would scroll to the
+       * wrong end and correct itself a beat later. */
+      var born = null;
+      var insertStep = function () {
+        born = stepFor(arriving, arrivingIndex);
+        writeRunLine(true);
+        return born;
+      };
+      if (svc.motion && svc.motion.phaseHandover) {
+        svc.motion.phaseHandover(chain, argEl, insertStep, '').then(function () { rollChain(born); });
+      } else {
+        insertStep();
+        rollChain(born);
+      }
+    } else {
+      rollChain(null);
+    }
+
+    return wrap;
   };
 
   /* ---------------------------------------------------------------- one operation, as aligned rows
@@ -567,11 +1035,20 @@
     host.appendChild(foot);
   };
 
-  /* The operation digits. Bound on the document because the log has no focusable container of its own
+  /* The log's digits. Bound on the document because the log has no focusable container of its own
    * - it is rows, not a box - and released on every re-render and on destroy through the same
-   * `PMXUtil.on` disposer the question keys use. */
+   * `PMXUtil.on` disposer the question keys use.
+   *
+   * Two maps, one keystroke. `_runKeys` reaches a numbered step of the run, which is behaviour 1 of
+   * `shared/runtrace.js` reached without a pointer (f.1170, f.1300); `_opKeys` reaches an operation
+   * row. Only ever one of them is filled, because a printed digit that meant two things at once would
+   * be worse than printing no digit at all. */
   T6.prototype._bindOpKeys = function () {
     var self = this;
+    /* One handler per pass. renderSurfaces drops the previous one before it can install this one, so
+     * reaching here with a handler already bound means a second call in the same pass - and stacking
+     * would open a phase once per pass that ever ran. */
+    if (this._opKeyOff) return;
     var handler = function (ev) {
       if (ev.defaultPrevented || ev.ctrlKey || ev.metaKey || ev.altKey) return;
       var tag = (ev.target && ev.target.tagName) || '';
@@ -580,6 +1057,12 @@
       var svc = self.ctx.services;
       /* While a question is open the form owns the digits, and the log is not on screen to take them. */
       if (svc.qflow && svc.qflow.pending(svc, self.tid())) return;
+      var phaseId = self._runKeys ? self._runKeys[ev.key] : null;
+      if (phaseId) {
+        ev.preventDefault();
+        self._openRunPhase(phaseId);
+        return;
+      }
       var key = self._opKeys ? self._opKeys[ev.key] : null;
       if (!key) return;
       ev.preventDefault();
@@ -590,6 +1073,11 @@
 
   T6.prototype._unbindOpKeys = function () {
     if (this._opKeyOff) { try { this._opKeyOff(); } catch (e) {} this._opKeyOff = null; }
+    /* The maps go with the handler, so "no handler" and "no live digits" cannot disagree. A map that
+     * outlived its binding would let the next handler act on rows and phases that were printed by a
+     * pass - or by a thread - the reader has already navigated away from. */
+    this._opKeys = {};
+    this._runKeys = {};
   };
 
   T6.prototype._logGoal = function (host, goal) {
@@ -689,8 +1177,17 @@
    * advances, `Escape` cancels. In a monospace register a numbered list implies a keyboard, and implying
    * an affordance that does not work is worse than not offering it.
    *
-   * Rows append and remove; nothing animates its bounds. That is correct for this register: a log-like
-   * surface that springs its height reads as a different kind of object entirely.
+   * THE FORM GROWS, AND IT SAYS SO. What stood here refused any motion of the form's bounds - "a
+   * log-like surface that springs its height reads as a different kind of object entirely" - and that
+   * refusal was written about a surface whose rows simply appear. This form is not that. Every question
+   * is printed at once and the echo rows ACCUMULATE as answers land, so paging forward grows the block
+   * monotonically: the `Q1/n` row gains its `-> answer` line, then `Q2/n` gains its own, and the block
+   * is taller after every one. Rows arriving one by one under a still frame reads as a list appended by
+   * something else; the same rows arriving while the block itself flexes to its new size reads as this
+   * form growing, which is what actually happened. The bounce is PMConcept7's own measured resize
+   * (`--ease-bounce`, y1 = 1.72, plus a one-shot scale beat), and `pmx-resize-up` anchors the growth to
+   * the form's bottom edge wherever a window puts this region above the composer, so what moves is the
+   * form's own top edge and not the log above it.
    */
   T6.prototype.renderQuestion = function () {
     /* Re-entrancy guard: claiming the surfaces notifies the store, which re-enters update(). */
@@ -700,32 +1197,181 @@
   };
 
   T6.prototype._renderQuestionBody = function () {
-    var self = this, u = U();
+    var self = this;
     var svc = this.ctx.services;
+    var motion = svc.motion;
+    var R = global.PMXReveal;
     var host = this.ctx.capabilities.questionHost ? this.ctx.regions.questionHost : this.inlineQuestion;
     if (!host) return;
-    u.empty(host);
 
     /* Drop any previous key handler before this pass can install another. Without this, one handler is
-     * bound per render and a single keystroke selects an option once per pass that ever ran. */
+     * bound per render and a single keystroke selects an option once per pass that ever ran. This runs
+     * before anything below can return early, so no path leaves a handler bound to a form that is no
+     * longer on screen. */
     this._unbindQuestionKeys();
 
     var flow = svc.qflow ? svc.qflow.read(svc, this.tid()) : null;
-    if (!flow) return;
+    if (!flow) { this._dropForm(host); return; }
 
     if (!flow.record) {
+      /* The receipt is the questionnaire ENDING, not the form resizing, so the persistent root really
+       * is released here and the receipt renders as its own block. */
+      this._dropForm(host);
       this._renderFormReceipt(host, flow.receipt);
       return;
     }
 
     svc.qflow.claim(svc, this.tid());
 
-    var form = u.el('div', { class: 't6-form', data: { phase: flow.status } });
+    var made = this._ensureForm(host);
+    var form = made.el;
+
+    /* The option COUNT picks the beat. `pmx-size-bounce-strong` overshoots further and undershoots
+     * once before settling, which is what a page with a different number of options is - a change of
+     * shape rather than a nudge. An answer echoing back under the same question keeps the ordinary
+     * beat, because the block gained one row and not a new form. */
+    var q = flow.question;
+    var count = (q && q.options) ? q.options.length : 0;
+    var hadCount = this._qOptionCount;
+    this._qOptionCount = count;
+
+    /* A NEW questionnaire in the same form forgets what the old one showed. Question identity is
+     * `qid/questionId/phase`, and the demo fixture prepares every flow under one fixed record id, so
+     * a second questionnaire's question two is indistinguishable from the first one's - and the form
+     * would refuse the entrance for a question the reader has genuinely never seen. `createdAt` is
+     * stamped once at prepare and never rewritten, so it names the RUN rather than the record, and
+     * `forgetVisits` is motion.js's own way to say this element has shown nothing yet. */
+    var stamp = flow.id + '@' + ((flow.record && flow.record.createdAt) || '');
+    if (this._formStamp !== stamp) {
+      this._formStamp = stamp;
+      if (motion && motion.forgetVisits) motion.forgetVisits(form);
+    }
+
+    /* Reference 02 is a REVIEWABLE questionnaire: paging back to an answered question shows the answer
+     * still there and does NOT replay the entrance. `keyFor` is qid/questionId/phase, so it changes
+     * when the reader moves to a different question and not when they type into this one, and
+     * `firstVisit` stamps it on the root that SURVIVES the render - which is the only reason the stamp
+     * outlives the pass that wrote it. Paging back therefore prints nothing new; the block still
+     * bounces, because it really did change size, and that is a different statement from an entrance. */
+    var key = R ? R.keyFor(svc, this.tid()) : '';
+    var fresh = (motion && motion.firstVisit) ? motion.firstVisit(form, key) : true;
+
+    /* NOTHING CHANGED, NOTHING MOVES.
+     *
+     * Advancing the flow renders this surface twice - once from the handler and once from the store
+     * notification `qflow.claim` raises about ten milliseconds later - and typing into the freeform
+     * line writes a draft, which notifies again. Rebuilding on a pass that changes nothing is
+     * invisible by itself, but a BOUNCE on such a pass is not: it would measure the first bounce
+     * mid-flight, pin that, and hand the settle a target taken from a block already on its way
+     * somewhere. Comparing what the fill actually reads is the honest test and costs one string. */
+    var sig = this._formSignature(flow);
+    if (!made.created && sig === this._formSig) { this._bindQuestionKeys(flow); return; }
+    this._formSig = sig;
+
+    if (made.created || !motion || !motion.resizeBounce) {
+      /* A form that did not exist a frame ago has no previous height. Bouncing it would animate a
+       * change from zero, which states that the form shrank into existence. */
+      this._fillForm(form, flow, fresh);
+    } else {
+      /* A bounce still in flight is LANDED first. Two overlapping bounces on one element sabotage
+       * each other - the older one's cleanup timer fires inside the younger one's flight and clears
+       * the pinned height, so the younger animation ends by snapping. With the signature gate above,
+       * this is only reached by a real second change inside the settle window, such as answering and
+       * advancing in quick succession, and there the change the reader just made is the one that
+       * deserves the complete curve. */
+      if (this._formBounce && this._formBounce.state && this._formBounce.state() === 'running'
+          && this._formBounce.finish) {
+        try { this._formBounce.finish(); } catch (e) {}
+      }
+      this._formBounce = motion.resizeBounce(form, function () { self._fillForm(form, flow, fresh); }, {
+        bounceClass: (hadCount != null && hadCount !== count) ? 'pmx-size-bounce-strong' : 'pmx-size-bounce'
+      });
+    }
+
+    /* resizeBounce runs its mutation SYNCHRONOUSLY in both its animated and its reduced-motion path,
+     * so every row the digits name exists by the time the handler is bound. One unbind above and one
+     * bind here, on every path that reaches a form: the pair cannot stack. */
+    this._bindQuestionKeys(flow);
+  };
+
+  /* Everything the fill reads, as one string. This concept prints EVERY question at once and echoes
+   * every answer, so the signature has to cover all of them: an answer landing on question two
+   * changes a row this form is showing even while the reader stands on question three. */
+  T6.prototype._formSignature = function (flow) {
+    var parts = [
+      flow.id, flow.status, flow.index, flow.total,
+      flow.atEnd ? 1 : 0, this._pendingReason || ''
+    ];
+    (flow.questions || []).forEach(function (question) {
+      parts.push(question.id, (question.options || []).length,
+        (question.selected || []).join('\u0001'), question.draft || '',
+        flow.isSkipped(question) ? 1 : 0, global.PMXQFlow.isAnswered(question) ? 1 : 0);
+    });
+    /* Delimited with escaped control characters rather than a comma: a draft is free text, and a
+     * separator it could itself contain would let two different states collapse to one signature. */
+    return parts.join('\u0002');
+  };
+
+  /* The form root, created ONCE and kept. It used to be destroyed and rebuilt on every render, which
+   * is why there was never anything to resize: an element that did not exist a frame ago has no
+   * previous height, and the `firstVisit` stamp written on it would die with it every pass. */
+  T6.prototype._ensureForm = function (host) {
+    var u = U();
+    var tid = this.tid();
+    if (this._formEl && this._formTid === tid && this._formEl.parentNode === host) {
+      return { el: this._formEl, created: false };
+    }
+
+    u.empty(host);
+    var form = u.el('div', { class: 't6-form', data: { phase: 'active' } });
+    /* Bottom-anchored only where the region puts this above the composer. Inline in the log the form
+     * is one more block with rows below it as well as above, so anchoring its bottom edge there would
+     * move what follows it - the thing this class exists to prevent in the region case. */
+    if (this.ctx.capabilities.questionHost) form.classList.add('pmx-resize-up');
+    host.appendChild(form);
+
+    /* Keyed by thread: another thread's questionnaire is a different form, so it must not bounce from
+     * this one's height or inherit its record of what has already been shown. */
+    this._formEl = form;
+    this._formTid = tid;
+    this._qOptionCount = null;
+    this._formBounce = null;
+    this._formSig = null;
+    this._formStamp = null;
+    return { el: form, created: true };
+  };
+
+  T6.prototype._dropForm = function (host) {
+    this._formEl = null;
+    this._formTid = null;
+    this._qOptionCount = null;
+    this._formBounce = null;
+    this._formSig = null;
+    this._formStamp = null;
+    if (host) U().empty(host);
+  };
+
+  /* The form's CONTENTS. This is the mutation resizeBounce measures around, so it must leave the root
+   * itself alone: the root's identity, its classes and its size are what the bounce is about. */
+  T6.prototype._fillForm = function (form, flow, fresh) {
+    var self = this, u = U();
+    var svc = this.ctx.services;
+
+    u.empty(form);
+    form.setAttribute('data-phase', flow.status);
+    /* The refusal line is rebuilt every fill, so the references the command row reaches for have to be
+     * cleared with it. A stale one would write a refusal into a row that is no longer in the tree. */
+    form._reason = null;
+    form._reasonText = null;
+
+    /* The rows that PRINT on a first visit. Only the current question's own block is in this list: the
+     * echo rows and the questions above are already-known facts being re-stated, and printing them
+     * again on every pass would read as the whole log being retyped. */
+    var entering = [];
 
     if (flow.status === 'preparing' || flow.status === 'submitting') {
       this._formRow(form, flow.status === 'preparing' ? 'prep' : 'send',
         flow.status === 'preparing' ? 'preparing questions...' : 'submitting answers...');
-      host.appendChild(form);
       return;
     }
 
@@ -739,6 +1385,7 @@
       var row = self._formRow(form, 'Q' + (i + 1) + '/' + flow.total, question.prompt, {
         current: isCurrent, skipped: skipped, answered: answered
       });
+      if (isCurrent) entering.push(row);
 
       /* Any row is reachable: clicking a past question travels to it. A form where you cannot revisit
        * question two is a wizard, not a conversation. */
@@ -778,12 +1425,14 @@
           list.appendChild(b);
         });
         form.appendChild(list);
+        entering.push(list);
       } else {
         var field = u.el('textarea', { class: 't6-form-field pmx-scroll', aria: { label: question.prompt } });
         field.setAttribute('spellcheck', 'false');
         field.value = question.draft || '';
         self._on(field, 'input', function () { svc.qflow.act(svc, self.tid(), 'answer', field.value); });
         form.appendChild(field);
+        entering.push(field);
       }
 
       /* the refusal, in the same columns, at the field */
@@ -842,9 +1491,18 @@
     cmds.appendChild(u.el('span', { class: 't6-form-hint', text: flow.atEnd ? 'enter submits \u00b7 esc cancels' : '1-9 selects \u00b7 enter advances \u00b7 esc cancels' }));
 
     form.appendChild(cmds);
-    host.appendChild(form);
 
-    this._bindQuestionKeys(flow);
+    /* The entrance, and only on a question this form has not shown before. The rows PRINT - the same
+     * left-to-right reveal every line in this log arrives with - so a new question reads as having
+     * been typed out where it stands, while the block around it flexes to its new size. Paging BACK
+     * takes this path with `fresh` false and prints nothing: the answer is simply there, which is what
+     * reference 02 shows a reviewable questionnaire doing. */
+    if (fresh) {
+      for (var e = 0; e < entering.length; e++) {
+        entering[e].classList.add('t6-form-enter');
+        entering[e].style.setProperty('--pmx-i', String(e));
+      }
+    }
   };
 
   /* Keyboard: the digits the rows advertise. Bound on the document because the form has no focusable
@@ -1010,7 +1668,19 @@
 
   T6.prototype.destroy = function () {
     this._unbindQuestionKeys();
+    /* Drops the keydown handler AND the digit maps behind it, so a keystroke cannot reach a run that
+     * this instance printed into a window region it no longer owns. */
     this._unbindOpKeys();
+    this._runEl = null;
+    this._runMemoState = null;
+    /* The form root survives renders, so it has to be released HERE or the next instance would hold a
+     * reference to an element this destroy is about to detach and would never build a new one. */
+    this._formEl = null;
+    this._formTid = null;
+    this._qOptionCount = null;
+    this._formBounce = null;
+    this._formSig = null;
+    this._formStamp = null;
     if (this._artOff) { try { this._artOff(); } catch (e) {} this._artOff = null; }
     /* A thread renders into regions the WINDOW owns, so tearing down only its own root
      * leaves that content orphaned in the window. An instance replaced while the window
@@ -1030,6 +1700,11 @@
       if (el && el.parentNode) el.parentNode.removeChild(el);
     });
     this.rendered = {};
+    /* The append-only path keys off these. A destroyed instance that left them behind would let the
+     * next render mistake a fresh mount for an append and skip printing the log already on
+     * screen. */
+    this._renderedIds = null;
+    this._renderedFrom = null;
   };
 
   global.PMX.thread.register('t6', {

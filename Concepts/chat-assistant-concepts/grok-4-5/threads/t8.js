@@ -50,6 +50,62 @@
     );
   }
 
+
+  /** Inhale/exhale paired work lanes — plan vs output, not a shared dump. */
+  function breathWorkHtml(thread, ui, K) {
+    if (!thread) return '';
+    function body(key, html) {
+      if (!html) return '';
+      return (
+        '<details class="t8-work-leaf pm-work-surface" data-kind="' +
+        K.escapeHtml(key) +
+        '">' +
+        '<summary class="pm-work-surface-head"><span class="pm-work-chev" aria-hidden="true">›</span><span class="pm-work-surface-title">' +
+        K.escapeHtml(key) +
+        '</span></summary>' +
+        '<div class="pm-work-surface-body">' +
+        html +
+        '</div>' +
+        '</details>'
+      );
+    }
+    var inhale =
+      body(
+        'goal',
+        K.renderGoal(thread.goal, {
+          goalExpanded:
+            ui.goalExpanded != null ? ui.goalExpanded : thread.goal && thread.goal.expanded
+        })
+      ) + body('todo', K.renderTodo(thread.todos));
+    var exhale =
+      body(
+        'subagent',
+        K.renderSubagents(thread.subagentGroups, ui.expandedSubagentIds || {})
+      ) +
+      body('diff', K.renderDiffs(thread.diffGroups)) +
+      body('artifacts', K.renderArtifacts(thread.artifacts));
+    if (!inhale && !exhale) return '';
+    var compact =
+      (K.renderCompactWork && K.renderCompactWork(thread, 'breath')) ||
+      (window.PMChatV2 && window.PMChatV2.renderCompactWorkBand
+        ? window.PMChatV2.renderCompactWorkBand(thread, 'breath')
+        : '');
+    return (
+      (compact || '') +
+      '<section class="t8-work-breath" data-surfaces data-work-detail-stack aria-label="Paired work lanes">' +
+      '<div class="t8-work-inhale" data-side="inhale">' +
+      '<div class="t8-col-tag">Inhale · Plan work</div>' +
+      (inhale || '<div class="t8-work-empty">No plan surfaces</div>') +
+      '</div>' +
+      '<div class="t8-work-gutter" aria-hidden="true"><span class="t8-gutter-dot"></span></div>' +
+      '<div class="t8-work-exhale" data-side="exhale">' +
+      '<div class="t8-col-tag">Exhale · Output work</div>' +
+      (exhale || '<div class="t8-work-empty">No output surfaces</div>') +
+      '</div>' +
+      '</section>'
+    );
+  }
+
   function mount(slotEl, props) {
     if (!window.PMChatThreadKit) throw new Error('PMChatThreadKit required for t8');
     var K = window.PMChatThreadKit;
@@ -147,11 +203,7 @@
             })
             .join('');
 
-          var surfaces = ctx.q
-            ? ''
-            : '<div class="t8-surfaces pm-thread-surfaces" data-surfaces>' +
-              K.renderWorkSurfaces(ctx.thread, ctx.ui) +
-              '</div>';
+          var surfaces = ctx.q ? '' : breathWorkHtml(ctx.thread, ctx.ui, K);
 
           var stacked = ctx.contentWidthPx <= 560;
 

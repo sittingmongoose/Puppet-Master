@@ -249,3 +249,6 @@
 .ft7-composer .pmc-send { border-radius: 0; }
 
 [data-reduced-motion="1"] .ft7-tx, [data-motion="reduced"] .ft7-tx { animation: none; }
+
+.ft7-panel-line[data-astate="failed"] .ft7-roll-text { color: var(--danger); }
+.ft7-panel-line[data-astate="retrying"] .ft7-roll-text { color: var(--warn); }

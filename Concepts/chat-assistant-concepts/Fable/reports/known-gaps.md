@@ -1,5 +1,16 @@
 # Fable — Known Gaps and Limitations
 
+> **Correction pass 2026-08-13:** the dependency/path correction packet closed several
+> session-1 gaps: the v2 trigger contract (59 events) and scenario v2 are implemented,
+> subagents gained failed/retrying, the goal gained phases + updated_replan, the
+> provider-CLI adjudication flow is fully demonstrated (incl. stale-continuation
+> rejection), all eight thread concepts render rich live activity phases, and the
+> full testMatrix visual sweep (1,024 captures) replaced the sampled matrix. The
+> raw videos, all keyframes, and every contact sheet have now been opened with
+> evidence in reports/reference-review-report.json. Divergence kept knowingly:
+> the final-question submit gate uses attempt→error→navigate rather than the
+> video's disabled button (canon-valid; recorded in the review report).
+
 Honest record of what this concept system does not cover, plus items recorded
 for later adjudication. Nothing here is silently missing from the demo — absence
 from the demo is not proof of deferral (PROC-009); these are the deferrals.

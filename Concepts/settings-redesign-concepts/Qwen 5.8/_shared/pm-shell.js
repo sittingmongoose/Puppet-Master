@@ -76,6 +76,8 @@
           '<option value="rollback">Update rolled back</option>' +
           '<option value="import-conflict">Import conflict</option>' +
           '<option value="lkg-active">Catalog last-known-good</option>' +
+          '<option value="low-resource">Low-resource profile</option>' +
+          '<option value="poor-network">Poor network (stale-while-revalidate)</option>' +
         '</select></div>' +
         '<div class="pm-tray-row"><span class="pm-tray-label">Left rail</span><button class="pm-btn pm-btn-sm" data-tray-rail>Open</button></div>' +
         '<div class="pm-tray-row"><span class="pm-tray-label">Assistant panel</span><button class="pm-btn pm-btn-sm" data-tray-assist>Open</button></div>' +

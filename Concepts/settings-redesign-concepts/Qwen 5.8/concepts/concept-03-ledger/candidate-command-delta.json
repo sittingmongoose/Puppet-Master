@@ -269,6 +269,13 @@
       "census": "candidate",
       "note": "Navigation wrapper. No canon match found.",
       "family": "resources"
+    },
+    {
+      "candidate_id": "cmd.provider.setup_required",
+      "census": "candidate",
+      "family": "providers",
+      "note": "Runtime-demand flow from PROVIDER_CLI_FINAL_ADJICATION: requirement detected \u2192 inspect existing installations \u2192 Provider Setup Required \u2192 deep link \u2192 continuation token \u2192 resume when current. No canon match found; not minted."
     }
-  ]
+  ],
+  "observable_work_note": "Every semantic action in these deltas requires an ObservableWork link, wait/queue reason, and cancellation/rollback semantics per decision register \u00a722; RuntimeResourceGovernor remains the single admission owner."
 }

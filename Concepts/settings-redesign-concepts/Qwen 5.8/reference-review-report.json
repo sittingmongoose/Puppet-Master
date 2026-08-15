@@ -1,0 +1,118 @@
+{
+  "schema_id": "pm.settings_reference_review_report.v1",
+  "model": "Qwen 5.8",
+  "topic": "settings-redesign",
+  "generated": "2026-08-13",
+  "packets": {
+    "original": "PM_Settings_Bakeoff_Final_Cumulative_2026-08-08.zip",
+    "correction": "PM_Settings_Dependency_and_Work_Correction_2026-08-13.zip"
+  },
+  "references_opened": {
+    "original_packet_during_build": [
+      "00_START_HERE.md", "01_CORE_ARCHITECTURE.md", "02_MANAGER_GRAMMAR_AND_SETTING_MODEL.md",
+      "03_PROVIDER_AGENT_MODEL_AND_INSTALLATION.md", "04_CONTEXT_MEMORY_PERSONAS_GOAL_CREW_PERMISSIONS.md",
+      "05_DESKTOP_DEVELOPER_AND_SYSTEM_MANAGERS.md", "06_NOTIFICATIONS_SOUNDS_APPEARANCE_AND_INPUT.md",
+      "07_SERVER_HOST_AND_OWNER_BOUNDARIES.md", "08_CONCEPT_COVERAGE_AND_FIXTURES.md",
+      "09_GUI_MOTION_THEME_SLINT_AND_TESTS.md", "10_PLAN_COMMAND_WIRING_DRY_IMPACT.md",
+      "IMPLEMENTATION_PROMPT.md", "AUDIT_PROMPT.md", "SHARED_PROCESS_RULES.md", "REFERENCE_SUPERSESSIONS.md",
+      "DECISION_COVERAGE.json", "MANAGER_COVERAGE_MATRIX.json", "CANDIDATE_COMMAND_ID_REGISTER.json",
+      "IMPACT_REGISTER.template.json", "reference/CONCEPT_RULES.md", "reference/OMP_PROVIDER_CATALOG_REFERENCE.json",
+      "Plans/UI_Command_Catalog.md (census, read-only)"
+    ],
+    "original_packet_NOT_opened_during_build": [
+      "02_FULL_THREAD_CURRENT_DECISION_REGISTER.md (ABSENT from original archive — omission)",
+      "PROVIDER_CLI_FINAL_ADJUDICATION.md (referenced at a wrong internal path in the original — effectively unreviewed; its rules were only partially honored via REFERENCE_SUPERSESSIONS.md)"
+    ],
+    "correction_packet_opened_for_this_pass": [
+      "00_READ_ME_FIRST.md", "02_FULL_THREAD_CURRENT_DECISION_REGISTER.md", "PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "REFERENCE_REVIEW_AND_REPAIR_REQUIREMENTS.md", "CORRECTION_PACKET_MANIFEST.json", "CORRECTION_GOAL_PROMPT.md"
+    ]
+  },
+  "prior_omissions_and_corrections": [
+    {
+      "omission": "Fake determinate progress: rebuildIndex() ticked 0→100% with no real denominator (pm-state.js), violating decision register §11 ObservableWork truth rules.",
+      "affected_concepts": ["all four (shared layer)"],
+      "change": "Rebuild now projects phases Scan→Chunk→Embed→Commit with operation_id, human_phase, progress_kind=unknown, progress_source=derived, last_activity, can_cancel/can_background/can_retry; no percentage. Spoke's determinate bar replaced by an indeterminate phase bar with reduced-motion static state.",
+      "tests_rerun": ["correction-probes.py (4 concepts × 10 checks)", "probes.mjs", "probes2.mjs", "walkthrough.mjs", "harness-probe.py", "validate.py"]
+    },
+    {
+      "omission": "Closed assistant side panel remained display:flex with a fixed 316px inner, i.e. fully measured while inactive (pm-shell.css), violating §7.3/§20.1.",
+      "affected_concepts": ["all four (shared shell)"],
+      "change": "Closed panel inner set to display:none and outer to contain:strict.",
+      "tests_rerun": ["correction-probes.py (closed-panel check on all four)"]
+    },
+    {
+      "omission": "Raw internal identities (Configured command / Resolved launcher / discovery evidence) shown in the normal GUI installation card (pm-managers.js), violating §12.4/§17 humanized-identity rule.",
+      "affected_concepts": ["all four (shared builder)"],
+      "change": "Default card shows method/owner/confidence/Host-Environment only; raw rows moved behind an 'Advanced evidence' disclosure (hidden by default, aria-expanded tracked).",
+      "tests_rerun": ["correction-probes.py (default-hidden + advanced-reveal on all four)"]
+    },
+    {
+      "omission": "Provider runtime-demand flow (requirement detected → Provider Setup Required → deep link → continuation token → resume when current) absent; only the install card existed.",
+      "affected_concepts": ["all four (shared builder)"],
+      "change": "Added 'Simulate a task needing this CLI' on not-installed providers producing a Provider Setup Required receipt with continuation token, deep link, and post-consent resume conditions; candidate command cmd.provider.setup_required added to all four candidate-command-delta.json as census=candidate (not minted).",
+      "tests_rerun": ["correction-probes.py (setup-required receipt on all four)"]
+    },
+    {
+      "omission": "No low-resource / poor-network degradation representation (§3.1, §13): no legacy profile, no stale-while-revalidate state.",
+      "affected_concepts": ["all four (shared layer + demo tray)"],
+      "change": "New scenarios 'low-resource' (data-low-resource profile: no skeleton pulse, slower spinner, near-zero transition cadence) and 'poor-network' (catalogs hold last-known-good with wait_reason waiting_network — stale-while-revalidate); tray options added.",
+      "tests_rerun": ["correction-probes.py (low-resource + poor-network on all four)"]
+    },
+    {
+      "omission": "RuntimeResourceGovernor and ObservableWork never named in registers or UI copy; §2.3/§11/§22 require them as the sole resource/admission owner and truthful progress contract.",
+      "affected_concepts": ["all four registers"],
+      "change": "impact-register.json schema_event_storage_impacts gained RuntimeResourceGovernor (sole owner; permit grammar admitted/queued/admitted_degraded/blocked_resource/cancelled) and ObservableWork entries; candidate-wiring-delta.json gained the provider runtime-demand trace with ObservableWork link; candidate-dry-delta.json lists ObservableOperation + ResourceGovernorProjection consumption.",
+      "tests_rerun": ["JSON validity re-parse of all 24 register files"]
+    },
+    {
+      "omission": "Coverage register lacked §20.3 rows: DRY Method visible state, Accessibility/input/spellcheck, Product Onboarding insertion, Doctor insertion, app/content update insertion.",
+      "affected_concepts": ["all four manager-coverage.json"],
+      "change": "Rows added (shared_grammar for DRY Method + accessibility; deferred_named_owner for Onboarding/Doctor/updates with named owners and insertion contracts). 45 families each, zero 'missing'.",
+      "tests_rerun": ["coverage re-parse: 45 families, 0 missing per concept"]
+    },
+    {
+      "omission": "Startup-storm / subscription audit findings: subscriptions are boot-time singletons and scrollspies are destroyed on re-render in all four concepts (verified by grep + code read) — COMPLIANT, no change needed; search index is metadata-only and built once at boot (§20.2 compliant).",
+      "affected_concepts": [],
+      "change": "None required; recorded as compliance evidence.",
+      "tests_rerun": ["code inspection; existing suites"]
+    }
+  ],
+  "provider_cli_policy_enforcement": {
+    "rule": "No core/default-baseline/pre-seeded provider CLI; no silent Project/model/Goal-triggered acquisition; initial install explicit, official source, exact Host/Environment; post-consent lifecycle management allowed (PROVIDER_CLI_FINAL_ADJUDICATION.md).",
+    "evidence": [
+      "Fixtures: Antigravity explicit Install card with official source + exact Host/Environment + 'not bundled' note; no fixture implies silent acquisition.",
+      "Copy: install receipts state explicit/official/not-bundled; update receipts honor Ask-first policy.",
+      "Registers: migration_supersession_impacts in all four concepts include the silent-bundling supersession with the adjudication's retained-contract list.",
+      "New: runtime-demand flow returns Provider Setup Required instead of auto-acquiring."
+    ]
+  },
+  "tests_rerun_summary": {
+    "correction_probes": "40/40 PASS (10 per concept × 4)",
+    "suite1_probes_mjs": "124/124 PASS",
+    "suite2_probes2_mjs": "113/113 PASS",
+    "hub_walkthrough": "67/67 PASS",
+    "shared_harness": "55/55 PASS",
+    "validator": "Concept validation passed",
+    "total": "399 automated checks PASS, zero page errors"
+  },
+  "changed_paths": [
+    "Concepts/settings-redesign-concepts/Qwen 5.8/_shared/pm-shell.css",
+    "Concepts/settings-redesign-concepts/Qwen 5.8/_shared/pm-state.js",
+    "Concepts/settings-redesign-concepts/Qwen 5.8/_shared/pm-managers.js",
+    "Concepts/settings-redesign-concepts/Qwen 5.8/_shared/pm-shell.js",
+    "Concepts/settings-redesign-concepts/Qwen 5.8/_shared/pm-demo-data.js",
+    "Concepts/settings-redesign-concepts/Qwen 5.8/concept-04-spoke.html",
+    "Concepts/settings-redesign-concepts/Qwen 5.8/concepts/concept-01-atlas/{impact-register.json,manager-coverage.json,candidate-command-delta.json,candidate-wiring-delta.json,candidate-dry-delta.json}",
+    "Concepts/settings-redesign-concepts/Qwen 5.8/concepts/concept-02-deck/{same five}",
+    "Concepts/settings-redesign-concepts/Qwen 5.8/concepts/concept-03-ledger/{same five}",
+    "Concepts/settings-redesign-concepts/Qwen 5.8/concepts/concept-04-spoke/{same five}",
+    "Concepts/settings-redesign-concepts/Qwen 5.8/reference-review-report.json (this file)",
+    "Concepts/settings-redesign-concepts/Qwen 5.8/TEST_REPORT.md (correction section appended)"
+  ],
+  "unresolved_defects": [
+    "None blocking. Open by design: human taste pass; canonical owner adjudication of candidate IDs (audit agent's role)."
+  ],
+  "materiality_verdict": "The dependency omission MATERIALLY affected the work: it produced fake determinate progress, an always-measured closed panel, raw internal identities in the normal GUI, a missing provider runtime-demand flow, and absent low-resource/poor-network and governor/ObservableWork representation. All are now corrected with probe evidence. Acquisition policy itself was already compliant (via REFERENCE_SUPERSESSIONS.md), so no fixture violated the provider-CLI rule before this pass.",
+  "no_winner_recommended": true
+}

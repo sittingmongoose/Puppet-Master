@@ -51,11 +51,18 @@
   /* The closed action sets. `worktree` is closed for a safety reason, not a tidiness one: see
    * invariant 1 in the file header. Every other kind carries `Details`, because `03_...:119`
    * requires the owner/thread/worktree evidence to be one disclosure away. */
-  var ACTIONS_PORT = [
-    { id: 'use-3001', label: 'Use 3001' },
-    { id: 'details', label: 'Details' },
-    { id: 'cancel', label: 'Cancel' }
-  ];
+  /* The primary action NAMES the port it will take, because "Use the alternative" makes the user
+   * accept a number they cannot see. That means the set has to be built per conflict rather than
+   * held as a constant: this was a fixed list containing `use-3001`, which was correct for exactly
+   * one of the contested ports the fixture now models. */
+  function actionsPort(alternative) {
+    return [
+      { id: 'use-' + alternative, label: 'Use ' + alternative },
+      { id: 'details', label: 'Details' },
+      { id: 'cancel', label: 'Cancel' }
+    ];
+  }
+  var DEFAULT_PORT_ALTERNATIVE = 3001;
   var ACTIONS_WORKTREE = [
     { id: 'wait-for-writer', label: 'Wait for writer' },
     { id: 'open-owner-thread', label: 'Open owner thread' },
@@ -162,11 +169,20 @@
     return seedWorktrees().concat(clone(granted));
   }
 
-  /* Ports and services. Only 3000 is contested; the other two exist so the popup shows a normal
+  /* Ports and services. Two are contested; the other two exist so the popup shows a normal
    * environment rather than a wall of problems, which is what "compact task-relevant summary"
-   * means in practice. */
+   * means in practice.
+   *
+   * 4173 is DEMO_SCENARIO_MANIFEST.json's `resource_collision` verbatim — requested 4173, occupied
+   * by the Usage concept visual-test server, 4174 offered. It is added ALONGSIDE the 3000/checkout
+   * conflict rather than replacing it, because that one is verbatim copy from the earlier packet
+   * (`03_...:117`) and deleting it to satisfy a later fixture would drop coverage the earlier
+   * packet asked for. Two contested ports is also the more honest environment: a real machine has
+   * more than one. */
   function ports() {
     var list = [
+      { port: 4173, owner: { threadId: 'thread-11', worktree: 'main' },
+        service: 'Usage concept visual-test server', suggestedAlternative: 4174 },
       { port: 3000, owner: { threadId: 'thread-07', worktree: 'feature/checkout' },
         service: 'Checkout preview server', suggestedAlternative: 3001 },
       { port: 5173, owner: { threadId: 'thread-01', worktree: 'main' },
@@ -268,7 +284,10 @@
    * card stops being truthful. Projected records get the opposite treatment — see `ownerOf`. */
   function derived() {
     return [
-      { id: 'ops-conflict-port-3000', threadId: 'thread-01', kind: 'port',
+      { id: 'ops-conflict-port-4173', threadId: 'thread-01', kind: 'port', alternative: 4174,
+        summary: 'Port 4173 is used by the Usage concept visual-test server. Use 4174 instead?',
+        owner: { threadId: 'thread-11', threadTitle: 'Usage concept visual-test server', worktree: 'main' } },
+      { id: 'ops-conflict-port-3000', threadId: 'thread-01', kind: 'port', alternative: 3001,
         summary: 'Port 3000 is used by the checkout redesign in another worktree. Use 3001 instead?',
         owner: { threadId: 'thread-07', threadTitle: 'Checkout redesign', worktree: 'feature/checkout' } },
       { id: 'ops-conflict-worktree-checkout', threadId: 'thread-01', kind: 'worktree',
@@ -293,8 +312,8 @@
     return (t && t.title) || tid;
   }
 
-  function actionsFor(kind) {
-    if (kind === 'port') return clone(ACTIONS_PORT);
+  function actionsFor(kind, alternative) {
+    if (kind === 'port') return actionsPort(alternative || DEFAULT_PORT_ALTERNATIVE);
     if (kind === 'worktree') return clone(ACTIONS_WORKTREE);
     if (kind === 'test') return clone(ACTIONS_TEST);
     if (kind === 'device') return clone(ACTIONS_DEVICE);
@@ -329,13 +348,13 @@
     };
   }
 
-  function normalizeActions(kind, list) {
+  function normalizeActions(kind, list, alternative) {
     /* A worktree conflict never accepts authored actions. Merging them would let a `Remove` in
      * through a fixture or a Director trigger, and `03_...:146` forbids one agent silently
      * removing another owner's worktree. The three legal moves are wait, look, or ask for your
      * own — releasing someone else's lease is the Worktree Manager's call, not Chat's. */
     if (kind === 'worktree') return clone(ACTIONS_WORKTREE);
-    if (!list || !list.length) return actionsFor(kind);
+    if (!list || !list.length) return actionsFor(kind, alternative);
     var out = [];
     for (var i = 0; i < list.length; i++) {
       var a = list[i];
@@ -379,7 +398,7 @@
         kind: kind,
         summary: rec.summary || rec.question || '',
         owner: ownerOf(rec),
-        actions: normalizeActions(kind, rec.actions)
+        actions: normalizeActions(kind, rec.actions, rec.alternative)
       });
     }
 
@@ -394,7 +413,7 @@
         kind: d.kind,
         summary: d.summary,
         owner: { threadId: d.owner.threadId, threadTitle: d.owner.threadTitle, worktree: d.owner.worktree },
-        actions: actionsFor(d.kind)
+        actions: actionsFor(d.kind, d.alternative)
       });
     }
     return out;
@@ -439,11 +458,13 @@
       store.set('session.activeThreadId', c.owner.threadId);
     }
 
-    if (actionId === 'use-3001' && c.kind === 'port') {
+    if (c.kind === 'port' && /^use-\d+$/.test(String(actionId))) {
       /* Taking the suggested alternative has to become visible in the environment, otherwise the
-       * user resolved a port conflict and the port table still shows only the contested port. */
+       * user resolved a port conflict and the port table still shows only the contested port. The
+       * port is read from the action id rather than hard-coded, so a second contested port resolves
+       * to ITS alternative instead of silently claiming the first one's. */
       claimed.push({
-        port: 3001,
+        port: Number(String(actionId).slice(4)),
         owner: { threadId: threadId, worktree: get('view.' + threadId + '.runtime.worktree', 'main') },
         service: 'Development server',
         suggestedAlternative: null

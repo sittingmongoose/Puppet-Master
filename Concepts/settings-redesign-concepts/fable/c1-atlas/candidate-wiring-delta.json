@@ -10,12 +10,18 @@
       "canonical_owner": "Plans/Permissions_System.md",
       "validation_permission": "Settings write on permissions scope; pattern must be non-empty and parse as a glob",
       "mutation_or_operation": "Append rule {tool, match, decision, origin:'you', scope} at book tail; renumber",
-      "expected_event_types": ["permissions.rule.added", "permissions.book.renumbered", "permissions.trace.evaluated"],
+      "expected_event_types": [
+        "permissions.rule.added",
+        "permissions.book.renumbered",
+        "permissions.trace.evaluated"
+      ],
       "receipt": "Rule added - appended at the end of the book (strongest position under last-match-wins)",
       "ui_projection": "New statute row at the tail; trace panel re-evaluated against the current book",
       "usage_attribution": "none (local mutation)",
       "recovery_deep_link": "#/manager/manager.permissions?focus=sec-app-perm-rules",
-      "demo_binding": { "interaction": "data-act=rule-add after the drafting form validates" },
+      "demo_binding": {
+        "interaction": "data-act=rule-add after the drafting form validates"
+      },
       "concept_local_state": true
     },
     {
@@ -24,12 +30,18 @@
       "canonical_owner": "Plans/Permissions_System.md",
       "validation_permission": "Settings write on permissions scope; locked and managed rules pin their positions",
       "mutation_or_operation": "Splice rule to adjacent index; renumber; re-evaluate the current trace input",
-      "expected_event_types": ["permissions.rule.moved", "permissions.book.renumbered", "permissions.trace.evaluated"],
+      "expected_event_types": [
+        "permissions.rule.moved",
+        "permissions.book.renumbered",
+        "permissions.trace.evaluated"
+      ],
       "receipt": "Rule moved - the book was renumbered and the trace re-evaluated in the new order",
       "ui_projection": "Statute renumbering plus updated matched/winner marks in the trace",
       "usage_attribution": "none",
       "recovery_deep_link": "#/manager/manager.permissions?focus=sec-app-perm-rules",
-      "demo_binding": { "interaction": "data-act=rule-move with data-dir, blocked against locked/managed neighbors" },
+      "demo_binding": {
+        "interaction": "data-act=rule-move with data-dir, blocked against locked/managed neighbors"
+      },
       "concept_local_state": true
     },
     {
@@ -38,12 +50,16 @@
       "canonical_owner": "Plans/Permissions_System.md",
       "validation_permission": "read-only evaluation; no permission required beyond Settings read",
       "mutation_or_operation": "Evaluate input against the ordered book (last match wins); no state change",
-      "expected_event_types": ["permissions.trace.evaluated"],
+      "expected_event_types": [
+        "permissions.trace.evaluated"
+      ],
       "receipt": "Rule test - trace explanation (e.g. rules 1, 4, and 5 match; rule 5 decides)",
       "ui_projection": "Trace panel: input echo, per-rule matched marks, winner with decision word, verdict sentence",
       "usage_attribution": "none",
       "recovery_deep_link": "#/manager/manager.permissions?trigger=permission-test",
-      "demo_binding": { "trigger": "permission-test" },
+      "demo_binding": {
+        "trigger": "permission-test"
+      },
       "concept_local_state": true
     },
     {
@@ -52,12 +68,16 @@
       "canonical_owner": "Plans/Permissions_System.md (access profile canon: Ask for approval / Auto accept edits / Auto / Full Access)",
       "validation_permission": "Settings write; managed workspaces render the radio read-only",
       "mutation_or_operation": "Set permissionsModel.accessProfile",
-      "expected_event_types": ["settings.value.changed"],
+      "expected_event_types": [
+        "settings.value.changed"
+      ],
       "receipt": "Access profile - now <label>; the rulebook and the FileSafe floor still apply underneath",
       "ui_projection": "Segmented radio pressed state; Plan/Review effect-limited note stays visible",
       "usage_attribution": "none",
       "recovery_deep_link": "#/manager/manager.permissions?focus=sec-app-perm-profile",
-      "demo_binding": { "interaction": "data-act=perm-profile" },
+      "demo_binding": {
+        "interaction": "data-act=perm-profile"
+      },
       "concept_local_state": true
     },
     {
@@ -66,12 +86,16 @@
       "canonical_owner": "Plans/assistant-memory-subsystem.md",
       "validation_permission": "Memory write (user-owned library)",
       "mutation_or_operation": "gist.state awaiting-review -> verified",
-      "expected_event_types": ["memory.gist.verified"],
+      "expected_event_types": [
+        "memory.gist.verified"
+      ],
       "receipt": "Toast: gist verified, recalled with full confidence",
       "ui_projection": "Status word flips to Verified; review-note prose field disappears",
       "usage_attribution": "none",
       "recovery_deep_link": "#/manager/manager.memory?focus=g5",
-      "demo_binding": { "interaction": "data-act=gist-verify" },
+      "demo_binding": {
+        "interaction": "data-act=gist-verify"
+      },
       "concept_local_state": true
     },
     {
@@ -80,12 +104,17 @@
       "canonical_owner": "Plans/assistant-memory-subsystem.md",
       "validation_permission": "Memory write; restore requires the version to carry stored text",
       "mutation_or_operation": "Swap gist.text with version.text; append a restore entry carrying the replaced wording",
-      "expected_event_types": ["memory.gist.restored", "memory.version.appended"],
+      "expected_event_types": [
+        "memory.gist.restored",
+        "memory.version.appended"
+      ],
       "receipt": "Version restored - the replaced wording joined the history (or an honest refusal when the demo dataset lacks stored text)",
       "ui_projection": "Gist text updates; version list grows by one",
       "usage_attribution": "none",
       "recovery_deep_link": "#/manager/manager.memory?focus=sec-app-mem-gists",
-      "demo_binding": { "interaction": "data-act=gist-restore" },
+      "demo_binding": {
+        "interaction": "data-act=gist-restore"
+      },
       "concept_local_state": true
     },
     {
@@ -94,12 +123,18 @@
       "canonical_owner": "Plans/Personas.md",
       "validation_permission": "Import requires diff + trust + secret + prompt-injection scans to pass; findings block with no override",
       "mutation_or_operation": "Stage file, run four scans, block on findings (operation, not mutation)",
-      "expected_event_types": ["persona.import.staged", "persona.import.scanned", "persona.import.blocked"],
+      "expected_event_types": [
+        "persona.import.staged",
+        "persona.import.scanned",
+        "persona.import.blocked"
+      ],
       "receipt": "Re-run: both findings remain, import stays blocked / Discard: file discarded without importing",
       "ui_projection": "Scan table with per-check status words and quoted injection finding; no import-anyway control exists",
       "usage_attribution": "scan runs on the fast-local route class (production note; none in demo)",
       "recovery_deep_link": "#/manager/manager.personas?focus=sec-app-per-import",
-      "demo_binding": { "interaction": "data-act=persona-import-open / persona-import-rescan / persona-import-discard" },
+      "demo_binding": {
+        "interaction": "data-act=persona-import-open / persona-import-rescan / persona-import-discard"
+      },
       "concept_local_state": true
     },
     {
@@ -108,12 +143,17 @@
       "canonical_owner": "Plans/orchestrator-subagent-integration.md (BSD section)",
       "validation_permission": "Settings write on planning scope",
       "mutation_or_operation": "Set bsd.mode and mirror the planning.bsd.mode settings row",
-      "expected_event_types": ["settings.value.changed", "bsd.mode.changed"],
+      "expected_event_types": [
+        "settings.value.changed",
+        "bsd.mode.changed"
+      ],
       "receipt": "Back Seat Driver - <mode label and note>",
       "ui_projection": "Mode plate pressed state, per-mode note, appendix TOC status word",
       "usage_attribution": "On mode raises projected reviewer spend within the usage guard",
       "recovery_deep_link": "#/manager/manager.bsd?focus=sec-app-bsd-mode",
-      "demo_binding": { "interaction": "data-act=bsd-mode" },
+      "demo_binding": {
+        "interaction": "data-act=bsd-mode"
+      },
       "concept_local_state": true
     },
     {
@@ -122,12 +162,16 @@
       "canonical_owner": "Plans/Goal_Runtime_System.md",
       "validation_permission": "Settings write on planning scope; ceiling clamped 1..16; sustainable-now stays read-only",
       "mutation_or_operation": "Set goalDefaults.fanOut.ceiling (and .sustainable)",
-      "expected_event_types": ["settings.value.changed"],
+      "expected_event_types": [
+        "settings.value.changed"
+      ],
       "receipt": "Goal default updated - applies to Goals started from now on",
       "ui_projection": "Fan-out row updates; the operational wave warning appears whenever ceiling exceeds sustainable-now",
       "usage_attribution": "Usage page owns capacity reporting; Settings only projects sustainable-now",
       "recovery_deep_link": "#/manager/manager.goal?focus=goal-fanout",
-      "demo_binding": { "interaction": "data-field=goal-fanout-ceiling change" },
+      "demo_binding": {
+        "interaction": "data-field=goal-fanout-ceiling change"
+      },
       "concept_local_state": true
     },
     {
@@ -136,12 +180,16 @@
       "canonical_owner": "Plans/Multi-Account.md",
       "validation_permission": "Provider account management permission",
       "mutation_or_operation": "Mark exactly one account useNext=true within the provider",
-      "expected_event_types": ["provider.account.selected"],
+      "expected_event_types": [
+        "provider.account.selected"
+      ],
       "receipt": "Use <nickname> next - future requests start on this account; running work unaffected",
       "ui_projection": "Next-new-work chip moves between account rows",
       "usage_attribution": "Subsequent requests attribute to the selected account",
       "recovery_deep_link": "#/manager/manager.providers?focus=claude",
-      "demo_binding": { "interaction": "data-act=acct-usenext" },
+      "demo_binding": {
+        "interaction": "data-act=acct-usenext"
+      },
       "concept_local_state": true
     },
     {
@@ -150,12 +198,17 @@
       "canonical_owner": "Plans/CLI_Bridged_Providers.md + BinaryLocator_Spec.md",
       "validation_permission": "Installation management requires proven or strong ownership confidence",
       "mutation_or_operation": "Selected flag moves; shadowing recomputed per host",
-      "expected_event_types": ["op:install-select", "provider.installations.changed"],
+      "expected_event_types": [
+        "op:install-select",
+        "provider.installations.changed"
+      ],
       "receipt": "Installation selected - <label> now resolves first; shadowing recomputed",
       "ui_projection": "Selected/Shadowed chips and shadow notes update across the provider's cards",
       "usage_attribution": "none",
       "recovery_deep_link": "#/manager/manager.providers?focus=inst-inst.claude.brew",
-      "demo_binding": { "trigger": "install-select" },
+      "demo_binding": {
+        "trigger": "install-select"
+      },
       "concept_local_state": true
     },
     {
@@ -164,12 +217,18 @@
       "canonical_owner": "Plans/CLI_Bridged_Providers.md (update lifecycle) + Release owner for policy",
       "validation_permission": "Ask-first policy: the click is the explicit consent; auto-idle requires proven ownership and rollback",
       "mutation_or_operation": "Staged operation: updating -> verifying (seven conditions) -> ready -> activated; history entry appended",
-      "expected_event_types": ["op:install-update phases", "provider.installations.changed"],
+      "expected_event_types": [
+        "op:install-update phases",
+        "provider.installations.changed"
+      ],
       "receipt": "Update installed - <from> to <to>, verified; dependent routes refreshed",
       "ui_projection": "Card status word walks the truthful phases; verifying phase lists the checklist; history grows",
       "usage_attribution": "none",
       "recovery_deep_link": "#/manager/manager.providers?trigger=install-update:openai-codex%2Finst.codex.npm",
-      "demo_binding": { "trigger": "install-update", "ref": "openai-codex/inst.codex.npm" },
+      "demo_binding": {
+        "trigger": "install-update",
+        "ref": "openai-codex/inst.codex.npm"
+      },
       "concept_local_state": true
     },
     {
@@ -178,13 +237,29 @@
       "canonical_owner": "Plans/CLI_Bridged_Providers.md (verification + rollback)",
       "validation_permission": "Rollback-on-failed-verify policy must be on",
       "mutation_or_operation": "Staged operation: updating -> verifying -> verification-failed -> rolled-back; two history entries appended",
-      "expected_event_types": ["op:install-update-fail phases", "provider.installations.changed"],
+      "expected_event_types": [
+        "op:install-update-fail phases",
+        "provider.installations.changed"
+      ],
       "receipt": "Update rolled back - clean install but failed verification; previous generation restored (exit code alone is never success)",
       "ui_projection": "Copilot card walks failure phases and renders the two-entry history",
       "usage_attribution": "none",
       "recovery_deep_link": "#/manager/manager.providers?trigger=install-update-fail:copilot%2Finst.copilot.ghext",
-      "demo_binding": { "trigger": "install-update-fail", "ref": "copilot/inst.copilot.ghext" },
+      "demo_binding": {
+        "trigger": "install-update-fail",
+        "ref": "copilot/inst.copilot.ghext"
+      },
       "concept_local_state": true
     }
-  ]
+  ],
+  "observable_work_alignment": {
+    "added": "2026-08-13 dependency correction",
+    "authority": "02_FULL_THREAD_CURRENT_DECISION_REGISTER.md section 11",
+    "rule": "Every traced operation projects through ObservableWork. Demo op events now carry progressKind (determinate|indeterminate), source (measured|derived|unknown), completed/total only when a real denominator exists, and waitReason from the waiting_* vocabulary. Determinate display without a real denominator is banned (also section 16.6). Production wiring should map trace phases onto the register's generic state grammar (accepted, queued, starting, running, waiting_provider, waiting_resource, waiting_for_idle, retrying, committing, verifying, rolling_back, completed, failed, cancelled, recovery_required among others).",
+    "demo_changes": [
+      "index-rebuild: indeterminate scanning phase, then measured completed/total file counts; c4 renders counts and real-valued progressbar aria, never a bare percentage",
+      "dest-test rate-limited phase carries waitReason waiting_resource",
+      "credits meter aria exposes real units (used of total) instead of a percentage"
+    ]
+  }
 }

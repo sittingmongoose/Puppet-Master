@@ -1,8 +1,8 @@
 {
   "schema_id": "pm.chat_demo_trigger_report.v1",
   "concept_id": "chat-assistant/qwen-3-8",
-  "registry_contract": "DEMO_TRIGGER_CONTRACT v2 — harness controls, never production commands",
-  "trigger_count": 84,
+  "registry_contract": "DEMO_TRIGGER_CONTRACT v2 (pm.chat_assistant_demo_trigger_contract.v2) — all 59 contract ids present; 26 packet extensions beyond contract",
+  "trigger_count": 85,
   "drawer_parity": "host ?harness=1 drawer and gallery Demo popup both expose the FULL registry (host merges dynamically from window.PMChatDemoTriggers.names(); gallery merges from the iframe at menu-open time)",
   "triggers": [
     {
@@ -508,6 +508,12 @@
       "description": "Clear localStorage + reload",
       "target": "localStorage.clear+reload",
       "reachable_in": "both"
+    },
+    {
+      "name": "conn.reconnect_fail",
+      "description": "Force a reconnect failure (failed state, error row + retry in sync popup)",
+      "target": "store.connReconnectFail",
+      "reachable_in": "both"
     }
   ],
   "scenario_coverage": {
@@ -579,5 +585,38 @@
       "by": "seed+trigger",
       "detail": "thread-17 seedRequests; thread.send_request/spawn_related/branch triggers"
     }
+  },
+  "contract_v2_coverage": {
+    "contract_ids": 59,
+    "present": 59,
+    "missing": [],
+    "extensions": [
+      "system.cross_project",
+      "system.compact_now",
+      "system.redirect",
+      "system.crew",
+      "bsd.auto_eval",
+      "bsd.advice",
+      "bsd.timeout",
+      "bsd.unavailable",
+      "bsd.set_on",
+      "bsd.set_off",
+      "conn.offline",
+      "conn.queue_send",
+      "conn.reconnect",
+      "conn.reconnect_fail",
+      "conn.snapshot",
+      "conn.server_work",
+      "notify.push",
+      "notify.open_inbox",
+      "attachment.unsupported",
+      "attachment.alternate_consent",
+      "ops.port_conflict",
+      "ops.worktree_waiting",
+      "ops.session_list",
+      "provider.setup_required",
+      "provider.update_available",
+      "capacity.forecast"
+    ]
   }
 }

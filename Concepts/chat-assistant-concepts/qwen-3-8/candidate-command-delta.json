@@ -3,91 +3,515 @@
   "note": "Candidate IDs; audit existing catalog before canon. Final cutover table for the PM_Assistant_Chat_Concept_Update_Final_Cumulative_2026-08-08 packet as implemented in chat-assistant/qwen-3-8.",
   "candidate_families": {
     "questions": [
-      { "id": "cmd.chat.question.answer", "replaces": null, "payload": { "questionnaire_id": "string", "question_id": "string", "value": "any" }, "emitter": "store.questSetAnswer (shared controller)" },
-      { "id": "cmd.chat.question.skip", "replaces": "cmd.questionnaire.skip", "payload": { "questionnaire_id": "string", "question_id": "string" }, "emitter": "store.questSkip" },
-      { "id": "cmd.chat.question.submit", "replaces": "cmd.questionnaire.submit", "payload": { "questionnaire_id": "string", "answers": "object" }, "emitter": "store.questSubmit" },
-      { "id": "cmd.chat.question.cancel", "replaces": "cmd.questionnaire.cancel", "payload": { "questionnaire_id": "string" }, "emitter": "store.questCancel" }
+      {
+        "id": "cmd.chat.question.answer",
+        "replaces": null,
+        "payload": {
+          "questionnaire_id": "string",
+          "question_id": "string",
+          "value": "any"
+        },
+        "emitter": "store.questSetAnswer (shared controller)"
+      },
+      {
+        "id": "cmd.chat.question.skip",
+        "replaces": "cmd.questionnaire.skip",
+        "payload": {
+          "questionnaire_id": "string",
+          "question_id": "string"
+        },
+        "emitter": "store.questSkip"
+      },
+      {
+        "id": "cmd.chat.question.submit",
+        "replaces": "cmd.questionnaire.submit",
+        "payload": {
+          "questionnaire_id": "string",
+          "answers": "object"
+        },
+        "emitter": "store.questSubmit"
+      },
+      {
+        "id": "cmd.chat.question.cancel",
+        "replaces": "cmd.questionnaire.cancel",
+        "payload": {
+          "questionnaire_id": "string"
+        },
+        "emitter": "store.questCancel"
+      }
     ],
     "goal": [
-      { "id": "cmd.chat.goal.start", "replaces": null, "payload": { "thread_id": "string", "goal_id": "string" }, "emitter": "store.goalAct(key,'start')" },
-      { "id": "cmd.chat.goal.pause", "replaces": "cmd.goal.pause", "payload": { "thread_id": "string", "goal_id": "string" }, "emitter": "store.goalAct" },
-      { "id": "cmd.chat.goal.resume", "replaces": "cmd.goal.resume", "payload": { "thread_id": "string", "goal_id": "string" }, "emitter": "store.goalAct" },
-      { "id": "cmd.chat.goal.stop", "replaces": "cmd.goal.stop", "payload": { "thread_id": "string", "goal_id": "string" }, "emitter": "store.goalAct" },
-      { "id": "cmd.chat.goal.update", "replaces": "cmd.goal.edit", "payload": { "thread_id": "string", "goal_id": "string", "objective": "string" }, "emitter": "store.goalSaveObjective" },
-      { "id": "cmd.chat.goal.replan", "replaces": "part of cmd.goal.edit", "payload": { "thread_id": "string", "goal_id": "string", "replan_count": "number" }, "emitter": "store.goalSaveObjective" },
-      { "id": "cmd.chat.goal.clear", "replaces": null, "payload": null, "emitter": "NOT CATALOGED — clearing is a local presentation mutation; stopping remains cmd.chat.goal.stop" }
+      {
+        "id": "cmd.chat.goal.start",
+        "replaces": null,
+        "payload": {
+          "thread_id": "string",
+          "goal_id": "string"
+        },
+        "emitter": "store.goalAct(key,'start')"
+      },
+      {
+        "id": "cmd.chat.goal.pause",
+        "replaces": "cmd.goal.pause",
+        "payload": {
+          "thread_id": "string",
+          "goal_id": "string"
+        },
+        "emitter": "store.goalAct"
+      },
+      {
+        "id": "cmd.chat.goal.resume",
+        "replaces": "cmd.goal.resume",
+        "payload": {
+          "thread_id": "string",
+          "goal_id": "string"
+        },
+        "emitter": "store.goalAct"
+      },
+      {
+        "id": "cmd.chat.goal.stop",
+        "replaces": "cmd.goal.stop",
+        "payload": {
+          "thread_id": "string",
+          "goal_id": "string"
+        },
+        "emitter": "store.goalAct"
+      },
+      {
+        "id": "cmd.chat.goal.update",
+        "replaces": "cmd.goal.edit",
+        "payload": {
+          "thread_id": "string",
+          "goal_id": "string",
+          "objective": "string"
+        },
+        "emitter": "store.goalSaveObjective"
+      },
+      {
+        "id": "cmd.chat.goal.replan",
+        "replaces": "part of cmd.goal.edit",
+        "payload": {
+          "thread_id": "string",
+          "goal_id": "string",
+          "replan_count": "number"
+        },
+        "emitter": "store.goalSaveObjective"
+      },
+      {
+        "id": "cmd.chat.goal.clear",
+        "replaces": null,
+        "payload": null,
+        "emitter": "NOT CATALOGED — clearing is a local presentation mutation; stopping remains cmd.chat.goal.stop"
+      }
     ],
     "context": [
-      { "id": "cmd.chat.context.compact_now", "replaces": "cmd.context.compact_now", "payload": { "thread_id": "string", "summary": "string" }, "emitter": "store.compactNow" },
-      { "id": "cmd.chat.context.lens_set_mode", "replaces": "cmd.context_lens.set_mode", "payload": { "thread_id": "string", "mode": "off|mute|focus|subcompact" }, "emitter": "store.lensSetMode" },
-      { "id": "cmd.chat.context.lens_toggle", "replaces": "cmd.context_lens.toggle (+ per-message substitute for cmd.context_lens.apply)", "payload": { "thread_id": "string", "mode": "string", "message_id": "string" }, "emitter": "store.lensToggle / lensApplySubcompact (per message)" },
-      { "id": "cmd.chat.context.source.add", "replaces": null, "payload": { "thread_id": "string", "thread_source": "string", "message_id": "string|null" }, "emitter": "store.contextSourceAdd (search 'Add passage')" },
-      { "id": "cmd.chat.context.source.remove", "replaces": null, "payload": { "thread_id": "string", "label": "string" }, "emitter": "store.admissionRemove" }
+      {
+        "id": "cmd.chat.context.compact_now",
+        "replaces": "cmd.context.compact_now",
+        "payload": {
+          "thread_id": "string",
+          "summary": "string"
+        },
+        "emitter": "store.compactNow"
+      },
+      {
+        "id": "cmd.chat.context.lens_set_mode",
+        "replaces": "cmd.context_lens.set_mode",
+        "payload": {
+          "thread_id": "string",
+          "mode": "off|mute|focus|subcompact"
+        },
+        "emitter": "store.lensSetMode"
+      },
+      {
+        "id": "cmd.chat.context.lens_toggle",
+        "replaces": "cmd.context_lens.toggle (+ per-message substitute for cmd.context_lens.apply)",
+        "payload": {
+          "thread_id": "string",
+          "mode": "string",
+          "message_id": "string"
+        },
+        "emitter": "store.lensToggle / lensApplySubcompact (per message)"
+      },
+      {
+        "id": "cmd.chat.context.source.add",
+        "replaces": null,
+        "payload": {
+          "thread_id": "string",
+          "thread_source": "string",
+          "message_id": "string|null"
+        },
+        "emitter": "store.contextSourceAdd (search 'Add passage')"
+      },
+      {
+        "id": "cmd.chat.context.source.remove",
+        "replaces": null,
+        "payload": {
+          "thread_id": "string",
+          "label": "string"
+        },
+        "emitter": "store.admissionRemove"
+      }
     ],
     "route_access": [
-      { "id": "cmd.chat.route.select", "replaces": "model/account apply + cmd.warning.switched", "payload": { "thread_id": "string", "provider": "string", "model": "string", "account_id": "string|null", "effort": "string|null", "speed": "string|null", "kind?": "account" }, "emitter": "store.applyModelChange / store.setAccount" },
-      { "id": "cmd.chat.access.set", "replaces": "direct setThreadSettings(access)", "payload": { "thread_id": "string", "access": "string" }, "emitter": "store.accessSet" },
-      { "id": "cmd.chat.bsd.set", "replaces": null, "payload": { "thread_id": "string", "mode": "off|auto|on|null", "scope": "turn|thread|null" }, "emitter": "store.bsdSet" },
-      { "id": "cmd.chat.redirect", "replaces": "cmd.chat.turn.redirect (text was dropped; now included)", "payload": { "thread_id": "string", "text": "string" }, "emitter": "store.redirectTurn" }
+      {
+        "id": "cmd.chat.route.select",
+        "replaces": "model/account apply + cmd.warning.switched",
+        "payload": {
+          "thread_id": "string",
+          "provider": "string",
+          "model": "string",
+          "account_id": "string|null",
+          "effort": "string|null",
+          "speed": "string|null",
+          "kind?": "account"
+        },
+        "emitter": "store.applyModelChange / store.setAccount"
+      },
+      {
+        "id": "cmd.chat.access.set",
+        "replaces": "direct setThreadSettings(access)",
+        "payload": {
+          "thread_id": "string",
+          "access": "string"
+        },
+        "emitter": "store.accessSet"
+      },
+      {
+        "id": "cmd.chat.bsd.set",
+        "replaces": null,
+        "payload": {
+          "thread_id": "string",
+          "mode": "off|auto|on|null",
+          "scope": "turn|thread|null"
+        },
+        "emitter": "store.bsdSet"
+      },
+      {
+        "id": "cmd.chat.redirect",
+        "replaces": "cmd.chat.turn.redirect (text was dropped; now included)",
+        "payload": {
+          "thread_id": "string",
+          "text": "string"
+        },
+        "emitter": "store.redirectTurn"
+      }
     ],
     "threads": [
-      { "id": "cmd.chat.thread.request", "replaces": "cmd.chat.thread.request_send", "payload": { "thread_id": "string", "target_thread": "string", "request_id": "string", "text": "string" }, "emitter": "store.threadRequestSend" },
-      { "id": "cmd.chat.thread.await", "replaces": "cmd.chat.thread.request_receive", "payload": { "request_id": "string" }, "emitter": "store.threadRequestReceive" },
-      { "id": "cmd.chat.thread.branch", "replaces": "same id (payload extended)", "payload": { "thread_id": "string", "source_thread": "string", "new_thread": "string", "message_id": "string|null", "model": "string|null" }, "emitter": "store.branchFrom" },
-      { "id": "cmd.chat.thread.spawn", "replaces": "cmd.chat.thread.spawn_related", "payload": { "thread_id": "string", "new_thread": "string", "parent": "string" }, "emitter": "store.spawnRelated" },
-      { "id": "cmd.chat.thread.rewind", "replaces": "cmd.chat.rewind", "payload": { "thread_id": "string", "restore_point": "string" }, "emitter": "store.rewindTo" },
-      { "id": "cmd.chat.restore_point.create", "replaces": "cmd.chat.create_restore_point", "payload": { "thread_id": "string", "message_id": "string|null" }, "emitter": "store.restorePointCreate" }
+      {
+        "id": "cmd.chat.thread.request",
+        "replaces": "cmd.chat.thread.request_send",
+        "payload": {
+          "thread_id": "string",
+          "target_thread": "string",
+          "request_id": "string",
+          "text": "string"
+        },
+        "emitter": "store.threadRequestSend"
+      },
+      {
+        "id": "cmd.chat.thread.await",
+        "replaces": "cmd.chat.thread.request_receive",
+        "payload": {
+          "request_id": "string"
+        },
+        "emitter": "store.threadRequestReceive"
+      },
+      {
+        "id": "cmd.chat.thread.branch",
+        "replaces": "same id (payload extended)",
+        "payload": {
+          "thread_id": "string",
+          "source_thread": "string",
+          "new_thread": "string",
+          "message_id": "string|null",
+          "model": "string|null"
+        },
+        "emitter": "store.branchFrom"
+      },
+      {
+        "id": "cmd.chat.thread.spawn",
+        "replaces": "cmd.chat.thread.spawn_related",
+        "payload": {
+          "thread_id": "string",
+          "new_thread": "string",
+          "parent": "string"
+        },
+        "emitter": "store.spawnRelated"
+      },
+      {
+        "id": "cmd.chat.thread.rewind",
+        "replaces": "cmd.chat.rewind",
+        "payload": {
+          "thread_id": "string",
+          "restore_point": "string"
+        },
+        "emitter": "store.rewindTo"
+      },
+      {
+        "id": "cmd.chat.restore_point.create",
+        "replaces": "cmd.chat.create_restore_point",
+        "payload": {
+          "thread_id": "string",
+          "message_id": "string|null"
+        },
+        "emitter": "store.restorePointCreate"
+      }
     ],
     "history_artifacts": [
-      { "id": "cmd.chat.history.pin", "replaces": null, "payload": { "window_id": "string" }, "emitter": "store.setPin/togglePin" },
-      { "id": "cmd.chat.history.unpin", "replaces": null, "payload": { "window_id": "string" }, "emitter": "store.setPin/togglePin" },
-      { "id": "cmd.chat.artifact.open", "replaces": "cmd.artifact.open_workspace", "payload": { "window_id": "string", "artifact_id": "string|null" }, "emitter": "store.artOpen" },
-      { "id": "cmd.chat.artifact.close", "replaces": null, "payload": { "window_id": "string", "artifact_id": "string|null" }, "emitter": "store.artClose" },
-      { "id": "cmd.chat.artifact.switch", "replaces": null, "payload": { "window_id": "string", "artifact_id": "string" }, "emitter": "store.artSwitch" },
-      { "id": "cmd.chat.artifact.retry", "replaces": null, "payload": { "window_id": "string|null", "artifact_id": "string" }, "emitter": "store.artRetry" }
+      {
+        "id": "cmd.chat.history.pin",
+        "replaces": null,
+        "payload": {
+          "window_id": "string"
+        },
+        "emitter": "store.setPin/togglePin"
+      },
+      {
+        "id": "cmd.chat.history.unpin",
+        "replaces": null,
+        "payload": {
+          "window_id": "string"
+        },
+        "emitter": "store.setPin/togglePin"
+      },
+      {
+        "id": "cmd.chat.artifact.open",
+        "replaces": "cmd.artifact.open_workspace",
+        "payload": {
+          "window_id": "string",
+          "artifact_id": "string|null"
+        },
+        "emitter": "store.artOpen"
+      },
+      {
+        "id": "cmd.chat.artifact.close",
+        "replaces": null,
+        "payload": {
+          "window_id": "string",
+          "artifact_id": "string|null"
+        },
+        "emitter": "store.artClose"
+      },
+      {
+        "id": "cmd.chat.artifact.switch",
+        "replaces": null,
+        "payload": {
+          "window_id": "string",
+          "artifact_id": "string"
+        },
+        "emitter": "store.artSwitch"
+      },
+      {
+        "id": "cmd.chat.artifact.retry",
+        "replaces": null,
+        "payload": {
+          "window_id": "string|null",
+          "artifact_id": "string"
+        },
+        "emitter": "store.artRetry"
+      }
     ],
     "decisions": [
-      { "id": "cmd.chat.approval.deny", "replaces": "cmd.approval.deny", "payload": { "thread_id": "string", "approval_id": "string" }, "emitter": "store.approvalResolve" },
-      { "id": "cmd.chat.approval.allow_once", "replaces": "cmd.approval.allow-once", "payload": { "thread_id": "string", "approval_id": "string" }, "emitter": "store.approvalResolve" },
-      { "id": "cmd.chat.approval.allow_session", "replaces": "cmd.approval.allow-session", "payload": { "thread_id": "string", "approval_id": "string" }, "emitter": "store.approvalResolve" },
-      { "id": "cmd.chat.approval.details", "replaces": null, "payload": { "thread_id": "string", "approval_id": "string" }, "emitter": "store.approvalDetails (Details button)" },
-      { "id": "cmd.chat.warning.resolve", "replaces": "generic cmd.warning.* restricted to kinds capacity/collision/privacy/context/cache", "payload": { "thread_id": "string", "warning_id": "string", "kind": "string", "choice": "string" }, "emitter": "store.warningResolve" },
-      { "id": "cmd.chat.cross_project.request", "replaces": "cmd.warning.allow-once/this-thread/settings for cross-project kind", "payload": { "thread_id": "string", "project_read": "string|null", "project_write": "string|null", "scope": "string" }, "emitter": "store.warningResolve (cross-project branch)" }
+      {
+        "id": "cmd.chat.approval.deny",
+        "replaces": "cmd.approval.deny",
+        "payload": {
+          "thread_id": "string",
+          "approval_id": "string"
+        },
+        "emitter": "store.approvalResolve"
+      },
+      {
+        "id": "cmd.chat.approval.allow_once",
+        "replaces": "cmd.approval.allow-once",
+        "payload": {
+          "thread_id": "string",
+          "approval_id": "string"
+        },
+        "emitter": "store.approvalResolve"
+      },
+      {
+        "id": "cmd.chat.approval.allow_session",
+        "replaces": "cmd.approval.allow-session",
+        "payload": {
+          "thread_id": "string",
+          "approval_id": "string"
+        },
+        "emitter": "store.approvalResolve"
+      },
+      {
+        "id": "cmd.chat.approval.details",
+        "replaces": null,
+        "payload": {
+          "thread_id": "string",
+          "approval_id": "string"
+        },
+        "emitter": "store.approvalDetails (Details button)"
+      },
+      {
+        "id": "cmd.chat.warning.resolve",
+        "replaces": "generic cmd.warning.* restricted to kinds capacity/collision/privacy/context/cache",
+        "payload": {
+          "thread_id": "string",
+          "warning_id": "string",
+          "kind": "string",
+          "choice": "string"
+        },
+        "emitter": "store.warningResolve"
+      },
+      {
+        "id": "cmd.chat.cross_project.request",
+        "replaces": "cmd.warning.allow-once/this-thread/settings for cross-project kind",
+        "payload": {
+          "thread_id": "string",
+          "project_read": "string|null",
+          "project_write": "string|null",
+          "scope": "string"
+        },
+        "emitter": "store.warningResolve (cross-project branch)"
+      }
     ],
     "attachments": [
-      { "id": "cmd.chat.attachment.resolve", "replaces": "attachment consent via warnings", "payload": { "attachment_id": "string", "route": "native|pm-transformed|alternate|unsupported" }, "emitter": "store.attachResolve" },
-      { "id": "cmd.chat.attachment.route", "replaces": null, "payload": { "attachment_id": "string", "target": "string" }, "emitter": "store.attachConsentAlternate (after Consent once)" }
+      {
+        "id": "cmd.chat.attachment.resolve",
+        "replaces": "attachment consent via warnings",
+        "payload": {
+          "attachment_id": "string",
+          "route": "native|pm-transformed|alternate|unsupported"
+        },
+        "emitter": "store.attachResolve"
+      },
+      {
+        "id": "cmd.chat.attachment.route",
+        "replaces": null,
+        "payload": {
+          "attachment_id": "string",
+          "target": "string"
+        },
+        "emitter": "store.attachConsentAlternate (after Consent once)"
+      }
     ],
     "crew_cross_project": [
-      { "id": "cmd.chat.crew.start", "replaces": null, "payload": { "thread_id": "string", "crew_id": "string|null" }, "emitter": "store.crewStart" }
+      {
+        "id": "cmd.chat.crew.start",
+        "replaces": null,
+        "payload": {
+          "thread_id": "string",
+          "crew_id": "string|null"
+        },
+        "emitter": "store.crewStart"
+      }
     ],
     "offline": [
-      { "id": "cmd.chat.outbox.queue", "replaces": null, "payload": { "entry_id": "string" }, "emitter": "store.connQueue" },
-      { "id": "cmd.chat.outbox.flush", "replaces": null, "payload": { "count": "number" }, "emitter": "store.connReconnect" }
+      {
+        "id": "cmd.chat.outbox.queue",
+        "replaces": null,
+        "payload": {
+          "entry_id": "string"
+        },
+        "emitter": "store.connQueue"
+      },
+      {
+        "id": "cmd.chat.outbox.flush",
+        "replaces": null,
+        "payload": {
+          "count": "number"
+        },
+        "emitter": "store.connReconnect"
+      }
     ],
     "shell": [
-      { "id": "cmd.browser_program.open", "replaces": "cmd.browser.open (payload kind 'browser capture' -> 'Browser Program capture')", "payload": { "title": "string", "kind": "Browser Program capture", "path": "string" }, "emitter": "shell.openEditorTab" }
+      {
+        "id": "cmd.browser_program.open",
+        "replaces": "cmd.browser.open (payload kind 'browser capture' -> 'Browser Program capture')",
+        "payload": {
+          "title": "string",
+          "kind": "Browser Program capture",
+          "path": "string"
+        },
+        "emitter": "shell.openEditorTab"
+      }
     ]
   },
   "census": {
     "note": "Existing command families found in the workspace pre-cutover, and their disposition.",
-    "cmd.chat.thread.*": { "status": "reused", "detail": "commit_first_message/discard_empty_draft/suspend/restore/archive/unarchive/delete kept canonical; branch/request/spawn/rewind migrated to extended payloads." },
-    "cmd.chat.open": { "status": "reused", "detail": "unchanged." },
-    "cmd.chat.open_thread": { "status": "reused", "detail": "unchanged." },
-    "cmd.questionnaire.*": { "status": "migrated", "detail": "NEVER cataloged in CATALOGED (corrected in IMPACT_REGISTER.json chat-delta-102); superseded by cmd.chat.question.*." },
-    "cmd.goal.*": { "status": "migrated", "detail": "pause/resume/stop/edit superseded by cmd.chat.goal.*; edit split into update + replan." },
-    "cmd.context_lens.*": { "status": "migrated", "detail": "toggle/set_mode/apply superseded; apply folded into per-message lens_toggle." },
-    "cmd.context.compact_now": { "status": "migrated", "detail": "superseded by cmd.chat.context.compact_now (summary added)." },
-    "cmd.approval.*": { "status": "migrated", "detail": "deny/allow-once/allow-session superseded by cmd.chat.approval.* (action names normalized to snake_case)." },
-    "cmd.warning.*": { "status": "conflict", "detail": "generic family restricted to cmd.chat.warning.resolve for capacity/collision/privacy/context/cache; route switched -> route.select; cross-project -> cross_project.request; attachment consent -> attachment.resolve/.route." },
-    "cmd.artifact.open_workspace": { "status": "migrated", "detail": "superseded by cmd.chat.artifact.open (+close/switch/retry)." },
-    "cmd.chat.turn.redirect": { "status": "migrated", "detail": "superseded by cmd.chat.redirect with text payload." },
-    "cmd.chat.create_restore_point": { "status": "migrated", "detail": "superseded by cmd.chat.restore_point.create." },
-    "cmd.chat.rewind": { "status": "migrated", "detail": "superseded by cmd.chat.thread.rewind." },
-    "cmd.chat.thread.request_send / request_receive / spawn_related": { "status": "migrated", "detail": "superseded by cmd.chat.thread.request / await / spawn." },
-    "cmd.browser.open": { "status": "migrated", "detail": "renamed cmd.browser_program.open with Browser Program capture kind." },
-    "cmd.shell.page / cmd.editor.open": { "status": "reused", "detail": "shell dressing kept, uncataloged by design." },
-    "cmd.composer.draft.restore": { "status": "reused", "detail": "composer draft history; outside the cutover table (GAP-007 lineage)." }
+    "cmd.chat.thread.*": {
+      "status": "reused",
+      "detail": "commit_first_message/discard_empty_draft/suspend/restore/archive/unarchive/delete kept canonical; branch/request/spawn/rewind migrated to extended payloads."
+    },
+    "cmd.chat.open": {
+      "status": "reused",
+      "detail": "unchanged."
+    },
+    "cmd.chat.open_thread": {
+      "status": "reused",
+      "detail": "unchanged."
+    },
+    "cmd.questionnaire.*": {
+      "status": "migrated",
+      "detail": "NEVER cataloged in CATALOGED (corrected in IMPACT_REGISTER.json chat-delta-102); superseded by cmd.chat.question.*."
+    },
+    "cmd.goal.*": {
+      "status": "migrated",
+      "detail": "pause/resume/stop/edit superseded by cmd.chat.goal.*; edit split into update + replan."
+    },
+    "cmd.context_lens.*": {
+      "status": "migrated",
+      "detail": "toggle/set_mode/apply superseded; apply folded into per-message lens_toggle."
+    },
+    "cmd.context.compact_now": {
+      "status": "migrated",
+      "detail": "superseded by cmd.chat.context.compact_now (summary added)."
+    },
+    "cmd.approval.*": {
+      "status": "migrated",
+      "detail": "deny/allow-once/allow-session superseded by cmd.chat.approval.* (action names normalized to snake_case)."
+    },
+    "cmd.warning.*": {
+      "status": "conflict",
+      "detail": "generic family restricted to cmd.chat.warning.resolve for capacity/collision/privacy/context/cache; route switched -> route.select; cross-project -> cross_project.request; attachment consent -> attachment.resolve/.route."
+    },
+    "cmd.artifact.open_workspace": {
+      "status": "migrated",
+      "detail": "superseded by cmd.chat.artifact.open (+close/switch/retry)."
+    },
+    "cmd.chat.turn.redirect": {
+      "status": "migrated",
+      "detail": "superseded by cmd.chat.redirect with text payload."
+    },
+    "cmd.chat.create_restore_point": {
+      "status": "migrated",
+      "detail": "superseded by cmd.chat.restore_point.create."
+    },
+    "cmd.chat.rewind": {
+      "status": "migrated",
+      "detail": "superseded by cmd.chat.thread.rewind."
+    },
+    "cmd.chat.thread.request_send / request_receive / spawn_related": {
+      "status": "migrated",
+      "detail": "superseded by cmd.chat.thread.request / await / spawn."
+    },
+    "cmd.browser.open": {
+      "status": "migrated",
+      "detail": "renamed cmd.browser_program.open with Browser Program capture kind."
+    },
+    "cmd.shell.page / cmd.editor.open": {
+      "status": "reused",
+      "detail": "shell dressing kept, uncataloged by design."
+    },
+    "cmd.composer.draft.restore": {
+      "status": "reused",
+      "detail": "composer draft history; outside the cutover table (GAP-007 lineage)."
+    },
+    "cmd.shell.page payload extension (correction 2026-08-13)": {
+      "status": "candidate",
+      "detail": "Provider setup deep-link now carries {page:'settings:provider', row:<providerId>, resume:<continuationToken>} per PROVIDER_CLI_FINAL_ADJUDICATION (exact-row deep-link + continuation). Payload extension only; no new command family. Adjudication input for catalog owner; canon untouched (PROC-005)."
+    },
+    "cmd.chat.connection.fail (correction 2026-08-13)": {
+      "status": "candidate",
+      "detail": "Emitted by store.connReconnectFail() when a reconnect attempt fails; sync strip shows 'Reconnect failed' with error row + retry. Candidate event id for the connection family; census only."
+    }
   },
   "reuse_required": [
     "canonical Goal commands (cmd.chat.goal.* is a projection of canonical Goal Runtime events, not a clone)",

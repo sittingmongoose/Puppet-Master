@@ -105,11 +105,74 @@ let spellOrigin = null;
 let managerOrigin = null;
 let managerDrillMode = "master";
 let destroyed = false;
-let queuedReview = null;
-let reviewFlushScheduled = false;
 let lastMotionResult = null;
 let applyingHistory = false;
 let lastRouteHash = "";
+let unsubscribeStore = null;
+let responsiveFrame = 0;
+let transientFrame = 0;
+let transientBatchPromise = null;
+let resolveTransientBatch = null;
+let activeSurfaceKey = null;
+const queuedFrames = new Set();
+const pendingTransientEvents = new Map();
+
+const RENDER_SCOPE_NAMES = ["search", "setting", "manager", "manager_status", "detail", "scrollspy", "shell", "receipts"];
+const renderStats = {
+  kind: "concept-only-render-instrumentation",
+  event_count: 0,
+  full_scene_commits: 0,
+  scope_patches: Object.fromEntries(RENDER_SCOPE_NAMES.map((scope) => [scope, 0])),
+  superseded_count: 0,
+  last_scope: "initial",
+  revision: 0
+};
+
+function renderStatsSnapshot() {
+  return {
+    ...renderStats,
+    scope_patches: { ...renderStats.scope_patches },
+    disclaimer: "Direct-browser concept render counters; not native Slint or production runtime metrics."
+  };
+}
+
+function resetRenderStats() {
+  renderStats.event_count = 0;
+  renderStats.full_scene_commits = 0;
+  renderStats.superseded_count = 0;
+  renderStats.last_scope = "reset";
+  renderStats.revision = Number(store.state.revision || 0);
+  for (const scope of RENDER_SCOPE_NAMES) renderStats.scope_patches[scope] = 0;
+  return renderStatsSnapshot();
+}
+
+// Concept harness only: exposing counters on the store makes isolated browser
+// probes possible without implying that SettingsStore owns production telemetry.
+store.renderStats = renderStatsSnapshot;
+store.resetRenderStats = resetRenderStats;
+
+function recordCommit(scope, event = null) {
+  if (scope === "full_scene") renderStats.full_scene_commits += 1;
+  else if (scope in renderStats.scope_patches) renderStats.scope_patches[scope] += 1;
+  renderStats.last_scope = scope;
+  renderStats.revision = Number(event?.revision ?? store.state.revision ?? renderStats.revision);
+  app.dataset.lastRenderScope = scope;
+}
+
+function requestTrackedFrame(callback) {
+  const id = requestAnimationFrame((time) => {
+    queuedFrames.delete(id);
+    callback(time);
+  });
+  queuedFrames.add(id);
+  return id;
+}
+
+function cancelTrackedFrame(id) {
+  if (!id) return;
+  cancelAnimationFrame(id);
+  queuedFrames.delete(id);
+}
 
 function syncReviewPopover() {
   const open = Boolean(reviewPopover?.open);
@@ -120,7 +183,7 @@ syncReviewPopover();
 reviewPopover?.addEventListener("toggle", syncReviewPopover);
 
 function nextFrame() {
-  return new Promise((resolve) => requestAnimationFrame(() => resolve()));
+  return new Promise((resolve) => requestTrackedFrame(resolve));
 }
 
 function cssEscape(value) {
@@ -270,7 +333,7 @@ function replaceFromFresh(selector, focus = true) {
   return true;
 }
 
-function renderScene({ preserveScroll = false, preserveFocus = false } = {}) {
+function renderScene({ preserveScroll = false, preserveFocus = false, event = null } = {}) {
   const scrollTop = scroller.scrollTop;
   const snapshot = preserveFocus ? focusSnapshot() : null;
   scroller.innerHTML = renderer.view();
@@ -285,9 +348,10 @@ function renderScene({ preserveScroll = false, preserveFocus = false } = {}) {
   applyManagerDrill();
   if (store.state.screen === "workspace") patchNavigator();
   if (store.state.screen === "workspace") patchInspectorDrawer();
+  recordCommit("full_scene", event);
 }
 
-function patchSetting(settingId) {
+function patchSetting(settingId, event = null) {
   const entry = store.settings.get(settingId);
   const current = scroller.querySelector(`[data-setting-id="${cssEscape(settingId)}"]`);
   if (!entry || !current) return false;
@@ -297,10 +361,11 @@ function patchSetting(settingId) {
   current.replaceWith(template.content.firstElementChild);
   restoreFocus(snapshot, `[data-setting-id="${cssEscape(settingId)}"]`);
   decorateMotionRoles();
+  recordCommit("setting", event);
   return true;
 }
 
-function patchSearch() {
+function patchSearch(event = null) {
   const surface = store.state.search.surface;
   const current = scroller.querySelector(`[data-search-shell][data-search-surface="${cssEscape(surface)}"]`);
   if (!current) return false;
@@ -312,10 +377,11 @@ function patchSearch() {
   current.replaceWith(fresh);
   restoreFocus(snapshot, `[data-search-input][data-search-surface="${cssEscape(surface)}"]`);
   decorateMotionRoles();
+  recordCommit("search", event);
   return true;
 }
 
-function patchScrollspy() {
+function patchScrollspy(event = null) {
   for (const button of scroller.querySelectorAll("[data-subcategory]")) {
     const active = button.dataset.subcategory === store.state.subcategoryId;
     button.classList.toggle("active", active);
@@ -334,6 +400,7 @@ function patchScrollspy() {
     }
   }
   decorateMotionRoles();
+  recordCommit("scrollspy", event);
 }
 
 function patchNavigator() {
@@ -395,7 +462,28 @@ function patchInspectorDrawer() {
   decorateMotionRoles();
 }
 
-function patchManager() {
+function patchFreshSelectors(selectors, scope, event = null) {
+  const snapshot = focusSnapshot();
+  const fresh = parsedView();
+  let patched = false;
+  for (const selector of selectors) {
+    const currentItems = [...scroller.querySelectorAll(selector)];
+    const replacementItems = [...fresh.querySelectorAll(selector)];
+    const count = Math.min(currentItems.length, replacementItems.length);
+    for (let index = 0; index < count; index += 1) {
+      currentItems[index].replaceWith(replacementItems[index].cloneNode(true));
+      patched = true;
+    }
+  }
+  if (!patched) return false;
+  restoreFocus(snapshot);
+  decorateMotionRoles();
+  applyManagerDrill();
+  recordCommit(scope, event);
+  return true;
+}
+
+function patchManager(event = null) {
   const snapshot = focusSnapshot();
   const fresh = parsedView();
   for (const selector of [".manager-tabs", ".manager-stage-root"]) {
@@ -406,6 +494,30 @@ function patchManager() {
   restoreFocus(snapshot);
   decorateMotionRoles();
   applyManagerDrill();
+  recordCommit("manager", event);
+}
+
+function patchManagerSearch(event = null) {
+  return patchFreshSelectors([".manager-master"], "search", event);
+}
+
+function patchManagerStatus(event = null) {
+  return patchFreshSelectors([
+    ".manager-detail",
+    ".provider-refresh-progress",
+    ".inline-operation[role='status']",
+    ".catalogue-inspector"
+  ], "manager_status", event);
+}
+
+function patchManagerSelection(event = null) {
+  const listPatched = patchFreshSelectors([".manager-master"], "manager", event);
+  const detailPatched = patchFreshSelectors([".manager-detail", ".catalogue-inspector"], "detail", event);
+  return listPatched || detailPatched;
+}
+
+function patchManagerDetail(event = null) {
+  return patchFreshSelectors([".manager-detail", ".catalogue-inspector", ".installation-detail"], "detail", event);
 }
 
 function patchSpellDemo() {
@@ -423,16 +535,17 @@ function patchSpellDemo() {
   return true;
 }
 
-function renderReceipts() {
+function renderReceipts(event = null) {
   const receipts = store.state.receipts.slice(-4);
   receiptRegion.innerHTML = receipts.map((receipt) => `<article class="receipt ${escapeHTML(toneFor(receipt.tone))}" data-receipt-id="${escapeHTML(receipt.id)}">
     <span aria-hidden="true">${icon(receipt.simulation ? "notice" : receipt.tone === "warning" ? "notice" : "check")}</span>
     <div><strong>${escapeHTML(receipt.title)}${receipt.simulation ? " · Simulation" : ""}</strong><p>${escapeHTML(receipt.message)}</p>${receipt.action === "undo-memory-discard" ? `<button type="button" class="text-button" data-memory-undo>Undo discard</button>` : ""}</div>
     <button type="button" class="icon-action" data-receipt-dismiss="${escapeHTML(receipt.id)}" aria-label="Dismiss ${escapeHTML(receipt.title)}">${icon("close")}</button>
   </article>`).join("");
+  recordCommit("receipts", event);
 }
 
-function syncShell() {
+function syncShell(event = null) {
   shell.dataset.railOpen = String(store.state.railOpen);
   shell.dataset.chatOpen = String(store.state.chatOpen);
   const railButton = app.querySelector('[data-shell-toggle="rail"]');
@@ -459,10 +572,12 @@ function syncShell() {
   if (expanded) expanded.checked = Number(store.state.presentation.textScale) > 1;
   document.documentElement.style.colorScheme = /-dark$/.test(store.state.theme) ? "dark" : "light";
   updateActivity();
+  recordCommit("shell", event);
 }
 
 function updateActivity() {
-  const active = store.state.screen === "home" ? "home" : store.state.screen === "workspace" ? "settings" : store.state.managerId;
+  const dedicatedManagerItems = new Set(["providers", "memory", "terminal"]);
+  const active = store.state.screen === "home" ? "home" : store.state.screen === "workspace" ? "settings" : dedicatedManagerItems.has(store.state.managerId) ? store.state.managerId : "settings";
   for (const button of app.querySelectorAll("[data-shell-nav]")) {
     const isActive = button.dataset.shellNav === active;
     button.classList.toggle("active", isActive);
@@ -474,7 +589,7 @@ function updateActivity() {
 function announce(message) {
   if (!message) return;
   announcer.textContent = "";
-  requestAnimationFrame(() => { announcer.textContent = message; });
+  requestTrackedFrame(() => { if (!destroyed) announcer.textContent = message; });
 }
 
 function notifyRendered(event) {
@@ -513,18 +628,28 @@ function motionTargetKey(event, hint) {
 function commitForEvent(event, hint) {
   const scopes = new Set(event?.scopes || []);
   if (event?.action === "focus-consumed") return () => {};
+  if (event?.action === "list-window") return () => patchManager(event);
   if (scopes.has("route") || event?.action === "scenario" || event?.action === "review.apply" || scopes.has("view") && scopes.has("data")) {
-    return () => renderScene();
+    return () => renderScene({ event });
   }
-  if (event?.action === "scrollspy" || event?.action === "jump") return patchScrollspy;
+  if (event?.action === "scrollspy" || event?.action === "jump") return () => patchScrollspy(event);
   if (event?.action === "navigation" || event?.action === "inspector") return () => { patchNavigator(); patchInspectorDrawer(); };
-  if (scopes.has("search") && !scopes.has("manager")) return () => { if (!patchSearch()) patchManager(); };
-  if (scopes.has("setting") && hint?.settingId) return () => { if (!patchSetting(hint.settingId)) renderScene({ preserveScroll: true, preserveFocus: true }); };
-  if (scopes.has("presentation") && scopes.has("settings")) return () => {
-    for (const id of ["experience.appearance.theme", "experience.appearance.motion", "experience.appearance.density"]) patchSetting(id);
+  if (scopes.has("search")) return () => {
+    if (store.state.screen === "manager") patchManagerSearch(event);
+    else patchSearch(event);
   };
-  if (scopes.has("spelling")) return () => { if (!patchSpellDemo()) patchManager(); };
-  if (scopes.has("manager") || scopes.has("provider") || scopes.has("models") || scopes.has("roles") || scopes.has("memory") || scopes.has("terminal") || scopes.has("detail") || scopes.has("preview")) return patchManager;
+  if (scopes.has("setting") && hint?.settingId) return () => { if (!patchSetting(hint.settingId, event)) renderScene({ preserveScroll: true, preserveFocus: true, event }); };
+  if (scopes.has("presentation") && scopes.has("settings")) return () => {
+    for (const id of ["experience.appearance.theme", "experience.appearance.motion", "experience.appearance.density"]) patchSetting(id, event);
+  };
+  if (scopes.has("spelling")) return () => { if (!patchSpellDemo()) patchManagerDetail(event); };
+  if (scopes.has("refresh") || scopes.has("manager_status") || /observable|work-status/.test(event?.action || "")) return () => patchManagerStatus(event);
+  if (/select/.test(event?.action || "") || scopes.has("detail") && !scopes.has("manager")) return () => patchManagerSelection(event);
+  if (scopes.has("preview") || scopes.has("terminal") || scopes.has("memory")) return () => patchManagerDetail(event);
+  if (scopes.has("models")) return () => {
+    if (!patchFreshSelectors([".model-board"], "manager", event)) patchManagerDetail(event);
+  };
+  if (scopes.has("manager") || scopes.has("provider") || scopes.has("roles")) return () => patchManager(event);
   return () => {};
 }
 
@@ -576,21 +701,7 @@ async function applyFocusRequest(request) {
   store.consumeFocusRequest(request.requestId);
 }
 
-function enqueueEvent(event, hint = pendingHint, flushed = false) {
-  if (event?.action === "focus-consumed" || event?.motionKey === "none") return Promise.resolve();
-  if (event?.action === "review.apply" && !flushed) {
-    queuedReview = { event, hint };
-    if (!reviewFlushScheduled) {
-      reviewFlushScheduled = true;
-      queueMicrotask(() => {
-        reviewFlushScheduled = false;
-        const queued = queuedReview;
-        queuedReview = null;
-        if (queued) enqueueEvent(queued.event, queued.hint, true);
-      });
-    }
-    return renderPromise;
-  }
+function performRenderEvent(event, hint = null) {
   if (event?.action === "navigate" && store.state.screen === "manager") managerDrillMode = event.focusRequest?.kind === "resource" ? "detail" : "master";
   if (event?.action === "navigate") motion.cancel("search");
   const task = (async () => {
@@ -612,8 +723,9 @@ function enqueueEvent(event, hint = pendingHint, flushed = false) {
     app.dataset.qaMotionParticipants = String(motionResult.participants || 0);
     app.dataset.qaMotionRoles = Object.keys(motionResult.roles || {}).join(" ");
     app.dataset.qaMotionStage = `${conceptId}:${kind}:${motionResult.status}`;
-    syncShell();
-    renderReceipts();
+    const scopes = new Set(event?.scopes || []);
+    if (scopes.has("shell") || scopes.has("presentation") || scopes.has("route") || event?.action === "scenario" || event?.action === "review.apply") syncShell(event);
+    if (scopes.has("receipts")) renderReceipts(event);
     setupScrollspy();
     await applyFocusRequest(event?.focusRequest);
     announce(event?.announcement);
@@ -628,8 +740,93 @@ function enqueueEvent(event, hint = pendingHint, flushed = false) {
   return task;
 }
 
-store.subscribe((_state, event) => {
+function transientKey(event, hint) {
+  const scopes = new Set(event?.scopes || []);
+  if (scopes.has("search")) return store.state.screen === "manager" ? "manager-search" : `search:${store.state.search?.surface || "current"}`;
+  if (event?.action === "scrollspy") return "scrollspy";
+  if (scopes.has("refresh") || scopes.has("manager_status") || /observable|work-status/.test(event?.action || "")) return "manager-status";
+  if (/select/.test(event?.action || "") || scopes.has("detail")) return "manager-selection";
+  if (scopes.has("setting") && hint?.settingId) return `setting:${hint.settingId}`;
+  if (scopes.has("preview")) return "preview";
+  return null;
+}
+
+function flushTransientEvents() {
+  transientFrame = 0;
+  const records = [...pendingTransientEvents.values()];
+  pendingTransientEvents.clear();
+  const batchResolve = resolveTransientBatch;
+  resolveTransientBatch = null;
+  transientBatchPromise = null;
+  const batchTask = records.reduce((chain, record) => chain.then(() => performRenderEvent(record.event, record.hint)), Promise.resolve());
+  batchTask.finally(() => batchResolve?.());
+}
+
+function enqueueEvent(event, hint = pendingHint) {
+  renderStats.event_count += 1;
+  renderStats.revision = Number(event?.revision ?? store.state.revision ?? renderStats.revision);
+  if (event?.action === "focus-consumed") return Promise.resolve();
+  const key = transientKey(event, hint);
+  if (!key) {
+    if (pendingTransientEvents.size) {
+      renderStats.superseded_count += pendingTransientEvents.size;
+      pendingTransientEvents.clear();
+      cancelTrackedFrame(transientFrame);
+      transientFrame = 0;
+      resolveTransientBatch?.();
+      resolveTransientBatch = null;
+      transientBatchPromise = null;
+    }
+    return performRenderEvent(event, hint);
+  }
+  if (pendingTransientEvents.has(key)) renderStats.superseded_count += 1;
+  pendingTransientEvents.set(key, { event, hint });
+  if (!transientBatchPromise) transientBatchPromise = new Promise((resolve) => { resolveTransientBatch = resolve; });
+  if (!transientFrame) transientFrame = requestTrackedFrame(flushTransientEvents);
+  renderPromise = transientBatchPromise;
+  return transientBatchPromise;
+}
+
+function selectedSurfaceKey() {
+  if (document.hidden || store.state.screen !== "manager") return null;
+  const managerId = store.state.managerId || "providers";
+  const resourceId = managerId === "providers" ? store.state.selectedProviderId : managerId === "memory" ? store.state.selectedMemoryId : managerId === "terminal" ? store.state.selectedTerminalId : store.state.selectedManagerResource?.[managerId];
+  return `${managerId}:${resourceId || "summary"}`;
+}
+
+function callStoreMethod(names, ...args) {
+  for (const name of names) {
+    if (typeof store[name] === "function") return store[name](...args);
+  }
+  return undefined;
+}
+
+function releaseSelectedSurfaces(reason = "inactive") {
+  if (activeSurfaceKey) {
+    callStoreMethod(["releaseSelectedDetailSubscription", "releaseDetailSubscription"], { key: activeSurfaceKey, reason });
+    const released = callStoreMethod(["releaseSelectedManagerSubscription", "releaseManagerSubscription"], { key: activeSurfaceKey, reason });
+    if (released === undefined) callStoreMethod(["_setActiveManagerSubscription"], null);
+    activeSurfaceKey = null;
+  }
+  callStoreMethod(["stopDecorativeWork", "pauseDecorativeWork"], { reason });
+  if (store.state.soundPreview?.state === "playing") callStoreMethod(["stopSoundPreview"], reason);
+}
+
+function reconcileSelectedSurfaces(reason = "state") {
+  const nextKey = selectedSurfaceKey();
+  if (nextKey === activeSurfaceKey) return;
+  releaseSelectedSurfaces(reason);
+  if (!nextKey) return;
+  activeSurfaceKey = nextKey;
+  const acquired = callStoreMethod(["acquireSelectedManagerSubscription", "acquireManagerSubscription"], { key: nextKey, shared: true, reason });
+  if (acquired === undefined) callStoreMethod(["_setActiveManagerSubscription"], nextKey.split(":", 1)[0]);
+  callStoreMethod(["acquireSelectedDetailSubscription", "acquireDetailSubscription"], { key: nextKey, shared: true, reason });
+  callStoreMethod(["resumeDecorativeWork", "startDecorativeWork"], { reason });
+}
+
+unsubscribeStore = store.subscribe((_state, event) => {
   syncRouteHistory(event);
+  reconcileSelectedSurfaces(event?.action || "state");
   enqueueEvent(event, pendingHint);
 });
 
@@ -802,6 +999,46 @@ app.addEventListener("click", (event) => {
     dispatch({ type: "provider.account.use", accountId: target.dataset.accountUse });
   } else if (target.dataset.providerRefresh) {
     dispatch({ type: "provider.refresh", providerId: target.dataset.providerRefresh });
+  } else if (target.dataset.providerReviewSource !== undefined) {
+    const providerId = target.dataset.providerReviewSource || target.dataset.providerId || store.state.selectedProviderId;
+    const result = callStoreMethod(["reviewProviderSource", "reviewProviderInstallSource"], providerId);
+    if (result === undefined) callStoreMethod(["requireProviderSetup"], providerId);
+  } else if (target.dataset.providerSelectExisting !== undefined) {
+    const installationId = target.dataset.providerSelectExisting || target.dataset.installationId;
+    const providerId = target.dataset.providerId || store.state.selectedProviderId;
+    const result = callStoreMethod(["selectExistingProviderInstallation", "chooseExistingProviderInstallation"], installationId, providerId);
+    if (result === undefined) callStoreMethod(["selectProviderInstallation"], providerId, installationId);
+  } else if (target.dataset.providerConfirmInstall !== undefined) {
+    const providerId = target.dataset.providerConfirmInstall || target.dataset.providerId || store.state.selectedProviderId;
+    const result = callStoreMethod(["confirmFirstProviderInstall", "confirmProviderInstallation"], providerId, target.dataset.installationId || null);
+    if (result === undefined) {
+      callStoreMethod(["advanceProviderSetup"], "consent");
+      callStoreMethod(["advanceProviderSetup"], "install");
+    }
+  } else if (target.dataset.providerAuthenticate !== undefined) {
+    const result = callStoreMethod(["authenticateProvider", "startProviderAuthentication"], target.dataset.providerAuthenticate || target.dataset.providerId || store.state.selectedProviderId);
+    if (result === undefined) callStoreMethod(["advanceProviderSetup"], "authenticate");
+  } else if (target.dataset.providerSetupAction) {
+    callStoreMethod(["advanceProviderSetup"], target.dataset.providerSetupAction, { expectedRevision: Number(target.dataset.expectedRevision) || undefined });
+  } else if (target.dataset.observableWorkCancel !== undefined) {
+    callStoreMethod(["cancelObservableWork", "cancelWork"], target.dataset.observableWorkCancel);
+  } else if (target.dataset.observableWorkRetry !== undefined) {
+    callStoreMethod(["retryObservableWork", "retryWork"], target.dataset.observableWorkRetry);
+  } else if (target.dataset.observableWorkBackground !== undefined) {
+    callStoreMethod(["backgroundObservableWork", "backgroundWork"], target.dataset.observableWorkBackground);
+  } else if (target.dataset.workAction) {
+    const method = target.dataset.workAction === "cancel" ? ["cancelObservableWork", "cancelWork"] : target.dataset.workAction === "retry" ? ["retryObservableWork", "retryWork"] : ["backgroundObservableWork", "backgroundWork"];
+    callStoreMethod(method, target.dataset.workId);
+  } else if (target.dataset.listPrevious !== undefined) {
+    callStoreMethod(["shiftListWindow"], target.dataset.listPrevious, -1);
+  } else if (target.dataset.listNext !== undefined) {
+    callStoreMethod(["shiftListWindow"], target.dataset.listNext, 1);
+  } else if (target.dataset.listWindow) {
+    callStoreMethod(["shiftListWindow"], target.dataset.listWindow, target.dataset.listDirection || "next");
+  } else if (target.dataset.managerLoad) {
+    callStoreMethod(["loadManager", "hydrateManager", "retryManagerLoad"], target.dataset.managerLoad, { retry: target.dataset.managerRetry === "true" });
+  } else if (target.dataset.performanceFixture) {
+    callStoreMethod(["applyPerformanceFixture", "setPerformanceProfile"], target.dataset.performanceFixture);
   } else if (target.dataset.providerAction) {
     dispatch({ type: "provider.action", providerAction: target.dataset.providerAction });
   } else if (target.hasAttribute("data-provider-usage-handoff")) {
@@ -1060,21 +1297,23 @@ app.addEventListener("keydown", (event) => {
   }
 });
 
-document.addEventListener("pointerdown", (event) => {
+function onDocumentPointerDown(event) {
   if (!event.target.closest("[data-search-shell]") && store.state.search.open) dispatch({ type: "search.close" });
   if (!event.target.closest(".spell-demo") && store.state.spellMenuOpen) closeSpellMenu({ restore: false });
-});
+}
+document.addEventListener("pointerdown", onDocumentPointerDown);
 
+const onScrollerInterrupt = () => {
+  if (!controlledScroll) return;
+  controlledScroll.cancelled = true;
+  controlledScroll = null;
+  scroller.scrollTo({ top: scroller.scrollTop, behavior: "auto" });
+};
 for (const type of ["wheel", "touchstart", "pointerdown"]) {
-  scroller.addEventListener(type, () => {
-    if (!controlledScroll) return;
-    controlledScroll.cancelled = true;
-    controlledScroll = null;
-    scroller.scrollTo({ top: scroller.scrollTop, behavior: "auto" });
-  }, { passive: true });
+  scroller.addEventListener(type, onScrollerInterrupt, { passive: true });
 }
 
-window.addEventListener("pm-settings-review-state", (event) => {
+function onReviewState(event) {
   const state = event.detail || {};
   dispatch({ type: "review.apply", state: {
     scenario: state.scenario,
@@ -1086,12 +1325,12 @@ window.addEventListener("pm-settings-review-state", (event) => {
     direction: state.direction,
     textScale: state.textScale
   }});
-});
+}
+window.addEventListener("pm-settings-review-state", onReviewState);
 
-let responsiveFrame = 0;
 function syncResponsiveState() {
-  cancelAnimationFrame(responsiveFrame);
-  responsiveFrame = requestAnimationFrame(() => {
+  cancelTrackedFrame(responsiveFrame);
+  responsiveFrame = requestTrackedFrame(() => {
     responsiveFrame = 0;
     if (store.state.screen === "workspace") {
       patchNavigator();
@@ -1102,14 +1341,48 @@ function syncResponsiveState() {
 }
 window.addEventListener("resize", syncResponsiveState);
 
-window.addEventListener("beforeunload", () => {
+function onVisibilityChange() {
+  const hidden = document.hidden;
+  document.documentElement.dataset.pmDecorativeState = hidden ? "paused" : "active";
+  document.body.dataset.pmDecorativeState = hidden ? "paused" : "active";
+  if (hidden) releaseSelectedSurfaces("document-hidden");
+  else reconcileSelectedSurfaces("document-visible");
+}
+document.addEventListener("visibilitychange", onVisibilityChange);
+
+function onPopState() {
+  applyDeepLink(window.location.hash);
+}
+
+function destroyApp() {
+  if (destroyed) return;
   destroyed = true;
+  releaseSelectedSurfaces("destroy");
+  unsubscribeStore?.();
+  unsubscribeStore = null;
+  document.removeEventListener("pointerdown", onDocumentPointerDown);
+  document.removeEventListener("visibilitychange", onVisibilityChange);
+  window.removeEventListener("pm-settings-review-state", onReviewState);
+  window.removeEventListener("popstate", onPopState);
   window.removeEventListener("resize", syncResponsiveState);
-  cancelAnimationFrame(responsiveFrame);
+  window.removeEventListener("beforeunload", destroyApp);
+  reviewPopover?.removeEventListener("toggle", syncReviewPopover);
+  for (const type of ["wheel", "touchstart", "pointerdown"]) scroller.removeEventListener(type, onScrollerInterrupt);
+  cancelTrackedFrame(responsiveFrame);
+  cancelTrackedFrame(transientFrame);
+  responsiveFrame = 0;
+  transientFrame = 0;
+  pendingTransientEvents.clear();
+  resolveTransientBatch?.();
+  resolveTransientBatch = null;
+  transientBatchPromise = null;
+  for (const frame of [...queuedFrames]) cancelTrackedFrame(frame);
   observer?.disconnect();
+  observer = null;
   motion.destroy();
   store.destroy();
-});
+}
+window.addEventListener("beforeunload", destroyApp);
 
 renderScene();
 syncShell();
@@ -1119,10 +1392,12 @@ notifyRendered({ action: "initial", scopes: ["view"] });
 lastRouteHash = routeHash();
 if (window.location.hash && window.location.hash !== "#home") applyDeepLink(window.location.hash);
 else window.history.replaceState({ conceptId, route: lastRouteHash }, "", lastRouteHash);
-window.addEventListener("popstate", () => applyDeepLink(window.location.hash));
+window.addEventListener("popstate", onPopState);
+onVisibilityChange();
 
 async function whenIdle() {
   await store.whenIdle();
+  if (transientBatchPromise) await transientBatchPromise;
   while (renderTasks.size) await Promise.allSettled([...renderTasks]);
   await motion.whenIdle();
   await nextFrame();
@@ -1134,6 +1409,7 @@ async function settleForReview() {
   await Promise.resolve();
   await Promise.resolve();
   await motion.settle();
+  if (transientBatchPromise) await transientBatchPromise;
   while (renderTasks.size) await Promise.allSettled([...renderTasks]);
   const animations = document.getAnimations();
   for (const animation of animations) {
@@ -1159,6 +1435,9 @@ window.PMSettingsDemo = {
   openManager: (managerId, tab, options = {}) => dispatch({ type: "navigate.manager", managerId, tab, ...options }),
   openSetting: (settingId) => dispatch({ type: "navigate.setting", settingId }),
   deepLink: () => routeHash(),
+  renderStats: renderStatsSnapshot,
+  resetRenderStats,
+  destroy: destroyApp,
   applyDeepLink,
   fixtures: () => store.fixtureTriggers.map((entry) => ({ ...entry })),
   triggerFixture: (fixtureId) => dispatch({ type: "fixture.trigger", fixtureId }),

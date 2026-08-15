@@ -1,46 +1,82 @@
 {
-  "schema_id": "pm.chat.5_6_sol.demo_trigger_report.v1",
+  "schema_id": "pm.chat.5_6_sol.demo_trigger_report.v2",
   "model": "5.6 Sol",
-  "status": "implemented_and_automated",
-  "fixture": "data/extended_demo_scenario.json plus data/sol-extensions.json",
+  "generated_at": "2026-08-14T05:47:37Z",
+  "status": "revision_2_exact_59_trigger_contract_plus_34_supplemental_fixture_triggers_implemented_and_browser_validated",
+  "fixture": "data/demo-trigger-contract.json plus data/demo-scenario-manifest.json, extended_demo_scenario.json, original_demoData.json, original_testMatrix.json, and sol-extensions.json",
   "controller": "Prototype-only deterministic controller; outside proposed production Chat",
   "receipt_evidence": [
-    "evidence/browser-acceptance-firefox.json#matrices.deterministic_triggers",
-    "evidence/browser-acceptance-chromium.json#matrices.deterministic_triggers"
+    "evidence/browser-acceptance-firefox.json#matrices.corrected_triggers",
+    "evidence/browser-acceptance-firefox.json#matrices.supplemental_triggers",
+    "evidence/browser-acceptance-chromium.json#matrices.corrected_triggers",
+    "evidence/browser-acceptance-chromium.json#matrices.supplemental_triggers"
   ],
+  "browser_validation": {
+    "source_fingerprint_sha256": "4392f156cad4eb5f8761cdf1b40e9cbc370209c0e63b47684a6c063cc477f7bb",
+    "firefox_http": {"passed": 33, "failed": 0, "corrected_trigger_rows": 59, "supplemental_trigger_rows": 34},
+    "chromium_file": {"passed": 33, "failed": 0, "corrected_trigger_rows": 59, "supplemental_trigger_rows": 34},
+    "chromium_http_diagnostic": {"passed": 0, "failed": 1, "scope": "entry-page boot only; not trigger acceptance"}
+  },
   "clock": "2026-08-10T14:30:00.000Z deterministic start",
-  "trigger_count_including_reset": 65,
-  "implemented_outcome_count_excluding_reset": 64,
+  "deterministic_trigger_count": 93,
+  "revision_2_contract_trigger_count_including_system_reset": 59,
+  "supplemental_trigger_count_including_scenario_reset": 34,
+  "reset_trigger_count": 2,
+  "implemented_outcome_count_excluding_resets": 91,
+  "revision_2_trigger_contract": {
+    "authority": "Correction packet DEMO_TRIGGER_CONTRACT.json (pm.chat_assistant_demo_trigger_contract.v2)",
+    "contract_trigger_count_including_reset": 59,
+    "mapping_status": "all_59_contract_family_event_ids_are_implemented_verbatim_with_exact_receipts_and_semantic_before_after_assertions",
+    "boundary": "These are deterministic fixture events for automated tests and visual capture, not permanent production Chat toolbar commands, UICommand IDs, runtime events, or evidence that live provider/network/install/auth actions occurred.",
+    "families": [
+      {"family":"history","contract_triggers":["peek","pin_compact","pin_full","unpin","switch_thread"],"prototype_mapping":["history.peek","history.pin_compact","history.pin_full","history.unpin","history.switch_thread"]},
+      {"family":"question","contract_triggers":["prepare","open","select","next","validation_error","skip","cancel","submit"],"prototype_mapping":["question.prepare","question.open","question.select","question.next","question.validation_error","question.skip","question.cancel","question.submit"]},
+      {"family":"goal","contract_triggers":["start","progress","pause","resume","update","replan","blocked","complete"],"prototype_mapping":["goal.start","goal.progress","goal.pause","goal.resume","goal.update","goal.replan","goal.blocked","goal.complete"]},
+      {"family":"todo","contract_triggers":["add","complete","reopen","block"],"prototype_mapping":["todo.add","todo.complete","todo.reopen","todo.block"]},
+      {"family":"subagent","contract_triggers":["spawn","queue","progress","complete","fail","retry"],"prototype_mapping":["subagent.spawn","subagent.queue","subagent.progress","subagent.complete","subagent.fail","subagent.retry"]},
+      {"family":"activity","contract_triggers":["thinking_summary","search","read","fetch","browser","test","edit","generate"],"prototype_mapping":["activity.thinking_summary","activity.search","activity.read","activity.fetch","activity.browser","activity.test","activity.edit","activity.generate"]},
+      {"family":"diff","contract_triggers":["create","update","open"],"prototype_mapping":["diff.create","diff.update","diff.open"]},
+      {"family":"artifact","contract_triggers":["loading","ready","switch","error","close"],"prototype_mapping":["artifact.loading","artifact.ready","artifact.switch","artifact.error","artifact.close"]},
+      {"family":"decision","contract_triggers":["approval_open","details","approve","deny","branch"],"prototype_mapping":["decision.approval_open","decision.details","decision.approve","decision.deny","decision.branch"]},
+      {"family":"thread","contract_triggers":["send_request","receive_response","spawn_related","branch"],"prototype_mapping":["thread.send_request","thread.receive_response","thread.spawn_related","thread.branch"]},
+      {"family":"system","contract_triggers":["port_collision","worktree_collision","reset"],"prototype_mapping":["system.port_collision","system.worktree_collision","system.reset"]}
+    ],
+    "provider_policy_fixture_extension": {
+      "status": "implemented_as_non_production_semantic_fixture_states_with_visible_projection_and_browser_assertions",
+      "non_production_triggers_implemented": ["provider.setup_required", "provider.existing_found", "provider.install_intent", "provider.install_approved", "provider.use_existing", "provider.install_verified", "provider.install_failed", "provider.auth_required", "provider.authenticated", "provider.readiness_verified", "provider.continuation_resumed", "provider.continuation_stale_rejected", "provider.continuation_expired_rejected", "provider.continuation_topology_mismatch_rejected"],
+      "negative_assertions": ["No fixture trigger performs network, install, authentication, or provider mutation.", "Auto and On never count as consent for initial provider-CLI acquisition.", "Pre-acquisition source/target planning is not represented as completed ProviderCliSupplyChainProof; exact proof appears only after explicitly approved acquisition or validated existing-installation adoption.", "Authentication cannot begin before verified installation or validated existing-installation adoption.", "No provider CLI is represented as bundled, default-baseline, or pre-seeded.", "Any bundling path requires a later named user-approved exception.", "Protected AuthBrowserSession content remains unavailable to the fixture and Chat."]
+    }
+  },
   "categories": [
     {
       "category": "history",
-      "triggers": ["history.closed", "history.peek", "history.pinned_full", "history.pinned_compact"],
-      "outcome": "Changes real host geometry and leaves a stable receipt."
+      "triggers": ["history.peek", "history.pin_compact", "history.pin_full", "history.unpin", "history.switch_thread"],
+      "outcome": "Changes real host geometry, switches a real thread-local view, and leaves an exact receipt."
     },
     {
       "category": "artifact",
-      "triggers": ["artifact.loading", "artifact.ready", "artifact.updated", "artifact.error", "artifact.retry"],
-      "outcome": "Changes the left artifact workspace while preserving selection and recovery."
+      "triggers": ["artifact.loading", "artifact.ready", "artifact.switch", "artifact.error", "artifact.close"],
+      "outcome": "Changes, switches, errors, closes, and can visibly reopen the left artifact workspace while preserving selection identity."
     },
     {
       "category": "question",
-      "triggers": ["question.preparing", "question.open", "question.answer", "question.skip", "question.cancel", "question.submit"],
-      "outcome": "Advances one durable questionnaire lifecycle; cancel restores the ordinary composer and retains answers."
+      "triggers": ["question.prepare", "question.open", "question.select", "question.next", "question.validation_error", "question.skip", "question.cancel", "question.submit"],
+      "outcome": "Advances one durable questionnaire lifecycle with explicit validation, navigation, selection, skip, cancel, submit, and thread-local restoration."
     },
     {
       "category": "goal",
-      "triggers": ["goal.start", "goal.pause", "goal.resume", "goal.replan", "goal.block", "goal.recover", "goal.stop", "goal.complete"],
+      "triggers": ["goal.start", "goal.progress", "goal.pause", "goal.resume", "goal.update", "goal.replan", "goal.blocked", "goal.complete"],
       "outcome": "Mutates visible Goal state and blocked/recovery evidence across every thread work grammar."
     },
     {
-      "category": "work",
-      "triggers": ["todo.all_states", "subagent.all_states", "crew.waves", "activity.advance", "diff.create", "diff.update"],
-      "outcome": "Exercises dense Todo, child, Crew, activity and diff states with human labels."
+      "category": "todo_subagent_activity_diff",
+      "triggers": ["todo.add", "todo.complete", "todo.reopen", "todo.block", "subagent.spawn", "subagent.queue", "subagent.progress", "subagent.complete", "subagent.fail", "subagent.retry", "activity.thinking_summary", "activity.search", "activity.read", "activity.fetch", "activity.browser", "activity.test", "activity.edit", "activity.generate", "diff.create", "diff.update", "diff.open"],
+      "outcome": "Creates and progresses real Todo and child rows, replaces one causal active-work locus, opens the current diff, and keeps Crew progression as a visible non-trigger interaction in every thread grammar."
     },
     {
       "category": "decisions",
-      "triggers": ["approval.request", "route.warning"],
-      "outcome": "Shows compact approval and material privacy/cache/route warning cards with actionable outcomes."
+      "triggers": ["decision.approval_open", "decision.details", "decision.approve", "decision.deny", "decision.branch"],
+      "outcome": "Shows compact approval evidence and distinct approve, deny, details, and branch consequences."
     },
     {
       "category": "attachments",
@@ -54,33 +90,28 @@
     },
     {
       "category": "thread_and_branch",
-      "triggers": ["thread.request", "thread.await", "thread.spawn", "thread.branch", "thread.rewind", "thread.restore", "turn.redirect"],
-      "outcome": "Preserves parent/source/target intent and differentiates redirect, conversation rewind and sibling restore."
-    },
-    {
-      "category": "security_scope",
-      "triggers": ["cross_project.grant"],
-      "outcome": "Creates one bounded read-only grant with explicit Once scope."
+      "triggers": ["thread.send_request", "thread.receive_response", "thread.spawn_related", "thread.branch"],
+      "outcome": "Preserves source/target intent, creates a related thread with its own local projection, and differentiates request, response, spawn, and branch."
     },
     {
       "category": "resources",
-      "triggers": ["resource.port_collision", "resource.worktree_collision", "resource.test_debug_state"],
-      "outcome": "Projects OS-assigned-port recovery, isolated worktree recovery, tests, debug and retained logs."
+      "triggers": ["system.port_collision", "system.worktree_collision"],
+      "outcome": "Projects safe port and isolated-worktree collision recovery without claiming a live resource mutation."
     },
     {
       "category": "bsd",
-      "triggers": ["bsd.off", "bsd.auto_idle", "bsd.auto_active", "bsd.on", "bsd.silent", "bsd.advice", "bsd.timeout", "bsd.unavailable"],
-      "outcome": "Exercises exact modes and idle/evaluating/silent/advice/timeout/unavailable states without granting authority."
+      "triggers": ["bsd.off", "bsd.auto_idle", "bsd.auto_active", "bsd.on", "bsd.advice", "bsd.timeout", "bsd.unavailable"],
+      "outcome": "Exercises exact modes and idle/evaluating/advice/timeout/unavailable states without granting authority or first-acquisition consent."
     },
     {
       "category": "provider_management",
-      "triggers": ["provider.setup", "provider.update", "provider.rollback"],
-      "outcome": "Shows shared-manager setup, user-action update and verified rollback notices; Chat does not install providers."
+      "triggers": ["provider.setup_required", "provider.existing_found", "provider.use_existing", "provider.install_intent", "provider.install_approved", "provider.install_verified", "provider.install_failed", "provider.auth_required", "provider.authenticated", "provider.readiness_verified", "provider.continuation_resumed", "provider.continuation_stale_rejected", "provider.continuation_expired_rejected", "provider.continuation_topology_mismatch_rejected"],
+      "outcome": "Separates missing CLI, pre-acquisition source/target planning, explicit exact-host/environment acquisition consent, post-acquisition or validated-adoption ProviderCliSupplyChainProof, existing-install selection, install verification, post-verification protected authentication, readiness, current continuation resume, and stale, expired, or topology-mismatched rejection. Every action is a deterministic local fixture; Chat does not install or authenticate a provider."
     },
     {
       "category": "network",
-      "triggers": ["network.offline", "network.reconnect", "network.replay", "network.snapshot"],
-      "outcome": "Separates transport/domain state, retains server work and exercises exactly-once replay and snapshot catch-up."
+      "triggers": ["network.offline", "network.domain_failure", "network.reconnect", "network.replay", "network.snapshot"],
+      "outcome": "Separates transport from domain failure, retains server work, and exercises exactly-once replay and snapshot catch-up."
     },
     {
       "category": "notification",
@@ -89,14 +120,17 @@
     },
     {
       "category": "reset",
-      "triggers": ["scenario.reset"],
-      "outcome": "Restores the deterministic seed, clears receipts and leaves no claimed production side effect."
+      "triggers": ["system.reset", "scenario.reset"],
+      "outcome": "system.reset restores canonical state with its exact receipt; scenario.reset clears receipts and proves the same canonical fingerprint twice. Neither has a production side effect."
     }
   ],
   "test_assertions": [
-    "Every non-reset trigger creates its own newest receipt.",
-    "No showcased trigger returns a truthfully-unavailable placeholder.",
-    "scenario.reset clears all trigger receipts.",
-    "Trigger outcomes are deterministic and require no network or live provider."
+    "Every one of the 59 Revision-2 family.event identifiers produces an exact newest receipt and a non-receipt semantic state mutation; applicable idempotent triggers also preserve their semantic fingerprint on replay.",
+    "No showcased trigger returns a truthfully-unavailable placeholder, and the prototype-only controller is not rendered inside production-shaped Chat controls.",
+    "system.reset retains an exact system.reset receipt; scenario.reset clears all receipts and returns the same canonical fingerprint twice.",
+    "Trigger outcomes are deterministic and require no network, provider install, authentication, or live service.",
+    "All 59 Revision-2 triggers are implemented verbatim rather than mapped to legacy aliases; fixture names are never treated as production commands.",
+    "The 34 supplemental triggers produce 33 exact receipts plus the asserted receipt-clearing scenario.reset outcome, with a semantic outcome asserted for every row; the deterministic fixture total is 93.",
+    "Provider extension triggers remain non-production, perform no acquisition or auth side effect, prove installedByDefault=false and requiresUserAction=true, prove Auto/On are not initial-acquisition consent, keep source/target planning distinct from exact post-acquisition or validated-adoption ProviderCliSupplyChainProof, block authentication before installation verification, keep AuthBrowserSession opaque, assert canonical proof, signature/attestation, trust-root, rollback-proof, and observation-time vocabulary, and derive continuation currentness so stale, expired, topology-mismatched, or consumed continuations cannot resume."
   ]
 }

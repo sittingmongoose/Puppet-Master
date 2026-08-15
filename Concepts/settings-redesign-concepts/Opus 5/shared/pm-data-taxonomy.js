@@ -51,6 +51,124 @@
     if (sub) rows.forEach(function (r) { sub.settings.push(r); });
   }
 
+  /* ================================== SETUP WORKFLOWS AND UNAVAILABLE ITEMS */
+
+  /* 01_CORE_ARCHITECTURE requires setup workflows and unavailable capabilities
+   * to be visibly distinct search result types. Added by the 2026-08-13
+   * correction; before it, a half-finished provider setup was indistinguishable
+   * from an ordinary toggle in the result list. */
+  D.setupWorkflows = (D.setupWorkflows || []).concat([
+    { id: "setup-provider-cli", label: "Set up a provider CLI",
+      explanation: "Install a provider's command-line tool for one exact host, then sign in separately. Nothing is installed until you choose it.",
+      categoryId: "agents", subcategoryId: "agents-providers", managerId: "manager-providers",
+      keywords: ["install", "cli", "provider", "setup", "claude", "codex", "gemini"] },
+    { id: "setup-connect-account", label: "Connect a provider account",
+      explanation: "Sign in on the provider's official page and return with a code. Installation and authentication stay separate.",
+      categoryId: "agents", subcategoryId: "agents-providers", managerId: "manager-providers",
+      keywords: ["connect", "sign in", "account", "oauth", "device code"] },
+    { id: "setup-notification-destination", label: "Set up a notification destination",
+      explanation: "Add Slack, Discord, a webhook or a device, then send one test before relying on it.",
+      categoryId: "general", subcategoryId: "general-notifications", managerId: "manager-notifications",
+      keywords: ["slack", "webhook", "destination", "setup", "test"] },
+    { id: "setup-linux-environment", label: "Set up a Linux environment on Windows",
+      explanation: "Optional. Windows tools work without it, and turning it off is a healthy state rather than a problem.",
+      categoryId: "collab", subcategoryId: "collab-git", managerId: "manager-sourcecontrol",
+      keywords: ["wsl", "linux", "ubuntu", "environment", "optional"] },
+    { id: "setup-search-index", label: "Build the project search index",
+      explanation: "Choose scope and exclusions, then build. Progress reports real file counts, and it can be paused.",
+      categoryId: "system", subcategoryId: "sys-index", managerId: "manager-index",
+      keywords: ["index", "rebuild", "search", "scope", "exclusions"] }
+  ]);
+
+  /* An unavailable capability must be findable so a user learns WHY, without
+   * being offered a control that cannot work. */
+  D.unavailableCapabilities = (D.unavailableCapabilities || []).concat([
+    { id: "unavail-video-generation", label: "Video generation",
+      reason: "No connected provider on this account reports video capability. Connecting one that does will enable it.",
+      categoryId: "media", subcategoryId: "media-providers", managerId: "manager-media",
+      keywords: ["video", "generation", "media", "unavailable"] },
+    { id: "unavail-gpu-capture", label: "Hardware-accelerated capture",
+      reason: "The active renderer on this machine does not expose accelerated capture. Software capture is used instead.",
+      categoryId: "system", subcategoryId: "sys-diagnostics", managerId: null,
+      keywords: ["gpu", "capture", "renderer", "unavailable"] },
+    { id: "unavail-org-managed-telemetry", label: "Usage telemetry export",
+      reason: "Your organization manages this value. It is read-only here and cannot be exported from this device.",
+      categoryId: "system", subcategoryId: "sys-diagnostics", managerId: "manager-usage",
+      keywords: ["usage", "telemetry", "export", "managed", "organization"] },
+    { id: "unavail-remote-source", label: "Source files on this environment",
+      reason: "The project's files live on Home TrueNAS and are not mounted on this device. Work runs on the owning host instead.",
+      categoryId: "collab", subcategoryId: "collab-git", managerId: "manager-sourcecontrol",
+      keywords: ["source", "files", "environment", "remote", "unavailable"] }
+  ]);
+
+  /* ============================================ SYSTEM / RESOURCE POLICY */
+
+  /* Added by the 2026-08-13 dependency correction. Without a taxonomy home the
+   * resource manager would be unreachable: no search hit, no "#/c/..." address,
+   * and no notice able to point at it. */
+  addSub("system", {
+    id: "sys-performance", title: "Resource use & performance",
+    summary: "How much of this machine Puppet Master may use, and what it does when the machine is busy.",
+    keywords: ["performance", "resource", "cpu", "memory", "cache", "battery", "metered", "legacy", "governor", "idle"],
+    settings: [
+      { id: "perf-manager", label: "Resource policy", explanation: "Behaviour profile, background work, cache budgets, and what the resource governor decided.", kind: "manager", managerId: "manager-performance",
+        state: st({ value: "Auto profile", source: "recommended", isDefault: true }) },
+      { id: "perf-profile", label: "Behaviour profile", explanation: "One choice that moves every automatic limit together. It changes what Puppet Master does, never what it can do.", kind: "select",
+        options: ["Auto", "Performance", "Efficiency", "Legacy"],
+        state: st({ value: "Auto", defaultValue: "Auto", source: "recommended",
+          effect: { kind: "performance", text: "Auto reads the machine and adapts; Legacy holds back on older hardware without removing features." } }) },
+      { id: "perf-background-policy", label: "Run background work", explanation: "Indexing, validation, cleanup and update checks. Foreground work and the interactive reserve are never affected.", kind: "select",
+        options: ["When the machine is idle", "Always", "Never"],
+        state: st({ value: "When the machine is idle", defaultValue: "When the machine is idle" }) },
+      { id: "perf-idle-maintenance", label: "Maintain indexes while idle", explanation: "Incremental index and compaction work yields immediately when you start typing.", kind: "toggle",
+        state: st({ value: true, defaultValue: true }) },
+      { id: "perf-prewarm", label: "Warm the browser helper in advance", explanation: "Starts a browser process before it is needed so the first test feels instant.", kind: "toggle", exposure: "advanced",
+        state: st({ value: false, defaultValue: false, source: "recommended",
+          effect: { kind: "performance", text: "Off on Legacy: speculative prewarm is the first thing a low-resource profile drops." } }) },
+      { id: "perf-memory-ceiling", label: "Memory Puppet Master may use", explanation: "A human ceiling for caches and decoded media, not a hard process limit.", kind: "select",
+        options: ["Automatic", "Modest", "Generous"],
+        state: st({ value: "Automatic", defaultValue: "Automatic" }) },
+      { id: "perf-metered", label: "On a metered network", explanation: "What large downloads do when the connection is metered.", kind: "select",
+        options: ["Defer large downloads", "Ask first", "Proceed"],
+        state: st({ value: "Defer large downloads", defaultValue: "Defer large downloads" }) },
+      { id: "perf-battery", label: "On battery or Low Power", explanation: "Reduce background fan-out, recording quality and decorative motion while preserving controls, streams and durable writes.", kind: "toggle",
+        state: st({ value: true, defaultValue: true }) },
+      { id: "perf-thermal", label: "When the machine is thermally limited", explanation: "The same reduction as Low Power, triggered by sustained thermal pressure.", kind: "toggle", exposure: "advanced",
+        state: st({ value: true, defaultValue: true }) },
+      { id: "perf-auto-capability", label: "Provision project capabilities automatically", explanation: "Language servers, formatters, test adapters and debuggers may install when a project needs them. Provider CLIs are never included and always need an explicit install.", kind: "select",
+        options: ["Auto", "On", "Off"],
+        state: st({ value: "Auto", defaultValue: "Auto", source: "recommended",
+          effect: { kind: "safety", text: "Auto proceeds silently only when a trusted recipe and a prior grant already cover source, licence, elevation, credentials, host and rollback." } }) },
+      { id: "perf-host-ceiling", label: "Helper ceiling on this host", explanation: "How many external helpers this specific machine may run. Other hosts keep their own ceiling.", kind: "number", exposure: "advanced",
+        state: st({ value: 6, defaultValue: 6, scope: "host" }) },
+      { id: "perf-env-lane", label: "Blocking lane width in this environment", explanation: "Package managers and platform APIs in this environment share this many slots.", kind: "number", exposure: "expert",
+        state: st({ value: 2, defaultValue: 2, scope: "environment" }) },
+      { id: "perf-device-lowpower", label: "Low Power behaviour on this device", explanation: "This device's own answer, independent of the project or the account.", kind: "select",
+        options: ["Follow the system", "Always reduce", "Never reduce"],
+        state: st({ value: "Follow the system", defaultValue: "Follow the system", scope: "device" }) },
+      { id: "perf-turn-budget", label: "Spend guard for this turn", explanation: "A ceiling that applies to the current turn only and resets with the next one.", kind: "select", exposure: "advanced",
+        options: ["Inherit", "Strict", "Off"],
+        state: st({ value: "Inherit", defaultValue: "Inherit", scope: "turn" }) },
+      { id: "perf-goal-reserve", label: "Capacity reserve for this Goal", explanation: "Held back so an active Goal cannot consume every permit.", kind: "select", exposure: "advanced",
+        options: ["Automatic", "Quarter", "Half"],
+        state: st({ value: "Automatic", defaultValue: "Automatic", scope: "goal" }) },
+      { id: "perf-crew-fanout", label: "Sustainable fan-out for this Crew", explanation: "How wide this Crew may run before waves are used instead.", kind: "number", exposure: "advanced",
+        state: st({ value: 3, defaultValue: 3, scope: "crew" }) },
+      { id: "perf-planning-route", label: "Planning run route quality", explanation: "Applies to the current planning run; architecture and synthesis are never downgraded to save usage.", kind: "select", exposure: "advanced",
+        options: ["High quality", "Match the main assistant"],
+        state: st({ value: "High quality", defaultValue: "High quality", scope: "planningRun" }) },
+      { id: "perf-install-policy", label: "Update policy for this installation", explanation: "Applies to one detected installation, not to the product family.", kind: "select", exposure: "advanced",
+        options: ["Automatic when idle", "Ask first", "Never"],
+        state: st({ value: "Ask first", defaultValue: "Ask first", scope: "installation" }) },
+      { id: "perf-worktree-cap", label: "Parallel work in this worktree", explanation: "One worktree writer lease is always enforced; this caps everything else.", kind: "number", exposure: "expert",
+        state: st({ value: 2, defaultValue: 2, scope: "worktree" }) },
+      { id: "perf-effective", label: "Effective policy right now", explanation: "What the governor is actually applying, and why it differs from the requested profile when it does.", kind: "status", exposure: "diagnostic",
+        state: st({ value: "Auto · interactive reserve held", source: "auto" }) },
+      { id: "perf-permit-log", label: "Open the recent permit decisions", explanation: "The last admission answers: admitted, queued, degraded, or refused with a reason.", kind: "diagnostic", exposure: "diagnostic",
+        state: st({ value: "Read-only", source: "auto" }) }
+    ]
+  });
+
   /* ============================================ GENERAL / NOTIFICATIONS */
 
   addSub("general", {

@@ -1,0 +1,66 @@
+{
+  "schema_id": "pm.usage_reference_review_report.v1",
+  "concept": "QwenUsageConcept/u11-prism",
+  "date": "2026-08-13",
+  "sources_opened": [
+    { "path": "PM_Usage_Dependency_and_Work_Correction_2026-08-13/00_READ_ME_FIRST.md", "sha256": "ad632cb61060b9dbdc30f016be5ce1287c9ea15f2d1ddcc5d38e8f15ccb8d48b", "role": "dependency-omission statement" },
+    { "path": "PM_Usage_Dependency_and_Work_Correction_2026-08-13/PROVIDER_CLI_FINAL_ADJUDICATION.md", "sha256": "9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1", "role": "highest-precedence provider-CLI policy (omitted from original archive)" },
+    { "path": "PM_Usage_Dependency_and_Work_Correction_2026-08-13/REFERENCE_REVIEW_AND_REPAIR_REQUIREMENTS.md", "sha256": "b981ceff7898c690ed1abec05d064c0049eef3a0000a0e3000c4e90d05c5ed41", "role": "review focus" },
+    { "path": "PM_Usage_Dependency_and_Work_Correction_2026-08-13/CORRECTION_PACKET_MANIFEST.json", "sha256": "verified against listed hashes", "role": "manifest" },
+    { "path": "PM_Usage_Concept_Update_Final_Cumulative_2026-08-08/SOURCE_AND_PRECEDENCE_MAP.md", "role": "confirms adjudication was named highest-precedence but absent from the archive" },
+    { "path": "Concepts/usage-concepts/QwenUsageConcept/u11-data.js", "role": "built dataset audit" },
+    { "path": "Concepts/usage-concepts/QwenUsageConcept/u11-widgets.js", "role": "built UI audit (post 08-12 parallel-session rewrite)" },
+    { "path": "Concepts/usage-concepts/QwenUsageConcept/u11-widgets.css", "role": "style coverage audit" },
+    { "path": "Concepts/usage-concepts/QwenUsageConcept/u11-rundetail.js", "role": "inspector audit" },
+    { "path": "Concepts/usage-concepts/QwenUsageConcept/u11-rundetail.css", "role": "coverage audit" },
+    { "path": "Concepts/usage-concepts/QwenUsageConcept/u11-context.js", "role": "context ring audit" },
+    { "path": "Concepts/usage-concepts/QwenUsageConcept/u11-context.css", "role": "coverage audit" },
+    { "path": "Concepts/usage-concepts/QwenUsageConcept/u11-prism.html", "role": "boards/guard/cache-bust audit" },
+    { "path": "Concepts/usage-concepts/QwenUsageConcept/u11-verify.mjs", "role": "harness" },
+    { "path": "Concepts/usage-concepts/QwenUsageConcept/reports/*", "role": "register audit" }
+  ],
+  "pre_correction_state": {
+    "harness_baseline_2026_08_13": "68/77 pass on the regressed state (9 failures all mapping to UI lost in the 08-12 parallel-session overwrite of u11-widgets.js/css and u11-prism.html); preserved as reports/visual-interaction-test-report.pre-correction-77.json (last green 08-11 run) and the failing baseline run",
+    "regression_evidence": "u11-widgets.js (mtime 08-12 13:16) lacked renderOperations/TYPES.operations, account meta row, capacity envelope, refresh forecast, free cooldown, plans estimate row, usenext/openmgmt/reqforecast handlers; u11-widgets.css lacked .u11w-opcard*/.u11w-acctmeta*/.u11w-planmeter.estimate/.u11w-freedetail.warn/.u11w-siglist/sprout z-bump; u11-prism.html lacked the operations board entry, the sprout lifecycle guard, and had mixed cache-bust strings"
+  },
+  "policy_audit": [
+    { "bullet": "implies provider CLIs bundled/pre-seeded/silently acquired", "finding": "no such implication in data; but the concept lacked any representation of the adjudication at all", "action": "added operational.acquisition lineage + ops-8 setup_required fixture + operations-widget acquisition line + inspector note", "status": "corrected" },
+    { "bullet": "confuses explicit first acquisition with later automatic update/repair", "finding": "ops-1 (post-consent update with rollback) existed without its consent history", "action": "acquisition{consent: explicit_user_setup, source, acquiredAt, installation} distinguishes first acquisition from the post-consent update/repair/rollback lifecycle", "status": "corrected" },
+    { "bullet": "attributes local install/update/download/rollback time or bytes as model tokens", "finding": "already correct: ops-1 phases carry ms only; providerUsage validation_only; harness guard asserts no tok/tokens in operations cards", "evidence": "guard maintenance entries carry no token totals — pass (all runs)", "status": "no-correction-needed" },
+    { "bullet": "hides a model-backed validation probe inside local maintenance", "finding": "already correct: ue-609 is a separate validation attempt joined via validationEventId; operations widget exposes 'View the verification call'", "evidence": "fixture 13 + new inspector acquisition-note check — pass", "status": "no-correction-needed" },
+    { "bullet": "loses exact Host/Environment/Installation/Profile/Connection identity", "finding": "host/env present; installation identity (version/targetVersion/provenance/arch) was missing", "action": "acquisition.installation added; ops-8 demonstrates per-host/env binding (Studio PC install not assumed on TrueNAS/docker)", "status": "corrected" },
+    { "bullet": "labels Claude or Antigravity CLI-owned OAuth as PM-direct OAuth", "finding": "already correct: authMethod cli_owned_profile + 'CLI profile' badge + authOwnedBy 'Claude CLI'/'Antigravity CLI'; inspector note 'Authenticated alone does not prove which plan…'", "evidence": "grep + screenshots; unchanged", "status": "no-correction-needed" },
+    { "bullet": "turns unknown/stale/partial/unavailable telemetry into zero", "finding": "already correct: kimi-pool/zai-legacy unknown; oc-go-monthly unavailable+estimate; banner lists them; harness guard asserts", "evidence": "guard unknown≠zero — pass (all runs)", "status": "no-correction-needed" },
+    { "bullet": "confuses reference API price with actual plan settlement", "finding": "already correct: billingRoute vs settlement orthogonal; inspector renders both; costs widget labels the split 'a projection, not a second model'", "evidence": "Settlement kv + costs footnote; unchanged", "status": "no-correction-needed" }
+  ],
+  "affected_views_fixtures_contracts": {
+    "views": ["Maintenance & operations widget (restored + acquisition line + setup CTA)", "Accounts widget meta row (restored)", "Capacity widget envelope + Refresh forecast (restored)", "Plans widget estimate secondary row (restored)", "Free lens cooldown row (restored)", "Attempt inspector acquisition note (new)", "Run inspector envelope (survived)"],
+    "fixtures": ["13 CLI update idle/verify/rollback (now with acquisition lineage)", "19 setup_required runtime demand (new)", "20 explicit-first vs post-consent with installation identity (new)"],
+    "contracts": ["event-schema-delta.json: operational[] extended (setup_required, acquisition, setupLink)", "impact-register.json: correction_2026_08_13 (CLI_Bridged_Providers demonstrated; semantic.deep_link reused)", "candidate-command-delta.json: 'provider setup (first acquisition)' = no-command, deep-link only", "candidate-dry-delta.json: MaintenanceActivity note", "demo-fixture-report.json: fixtures 19-20"]
+  },
+  "changed_paths": [
+    "Concepts/usage-concepts/QwenUsageConcept/u11-widgets.js",
+    "Concepts/usage-concepts/QwenUsageConcept/u11-widgets.css",
+    "Concepts/usage-concepts/QwenUsageConcept/u11-prism.html",
+    "Concepts/usage-concepts/QwenUsageConcept/u11-data.js",
+    "Concepts/usage-concepts/QwenUsageConcept/u11-rundetail.js",
+    "Concepts/usage-concepts/QwenUsageConcept/u11-verify.mjs",
+    "Concepts/usage-concepts/QwenUsageConcept/reports/event-schema-delta.json",
+    "Concepts/usage-concepts/QwenUsageConcept/reports/impact-register.json",
+    "Concepts/usage-concepts/QwenUsageConcept/reports/candidate-command-delta.json",
+    "Concepts/usage-concepts/QwenUsageConcept/reports/candidate-dry-delta.json",
+    "Concepts/usage-concepts/QwenUsageConcept/reports/demo-fixture-report.json",
+    "Concepts/usage-concepts/QwenUsageConcept/reports/visual-interaction-test-report.json",
+    "Concepts/usage-concepts/QwenUsageConcept/verify-shots/setup-required.png"
+  ],
+  "tests": {
+    "harness": "node u11-verify.mjs → 80/80 pass, exit 0 (40 theme×width matrix loads with zero console errors/underscores; 6 interaction flows; 15 new-behavior/correction checks; 20 fixture/guard checks)",
+    "parse_checks": "u11-data.js / u11-widgets.js / u11-rundetail.js parse under node; all 7 report JSONs valid"
+  },
+  "unresolved_data_source_limitations": [
+    "The adjudication's superseded clauses reference PM_Provider_CLI_Final_Policy_Return_Handoffs_2026-08-08 documents that are not in either archive; only the adjudication's summary of them was reviewable",
+    "ops-1 acquisition dates/versions are demo values consistent with the dataset clock, not real telemetry",
+    "billingRoute values extra_balance / no_charge_observed remain legal-but-unfixtured (unchanged from 08-11)"
+  ],
+  "readiness": "Concept is ready: all eight correction bullets audited with exact evidence; three corrected, five verified already-correct; lost 08-11 UI restored into the current widget vocabulary; harness green 80/80; registers updated; scope confined to Concepts/usage-concepts/QwenUsageConcept/**."
+}

@@ -1,333 +1,415 @@
 {
-  "schema_id": "pm.settings_bakeoff_impact_register.v1",
+  "schema_id": "pm.settings_bakeoff_impact_register.v2",
   "model": "5.6 Sol",
   "topic": "settings-redesign",
-  "status": "concept_complete",
+  "status": "corrected_with_named_residuals",
+  "material_impact": true,
+  "winner_selected": false,
   "winner_recommendation": null,
-  "write_surface": {
-    "allowed": [
-      "Concepts/settings-redesign-concepts/5.6 Sol/**"
-    ],
-    "modified_outside_allowed_surface": false,
+  "authority_boundary": {
+    "concept_only": true,
     "canonical_authorities_modified": false,
-    "notes": [
-      "All command, wiring, DRY, schema, inventory, and Plan-owner deltas remain provisional concept artifacts."
-    ]
+    "candidate_ids_status": "NOT_MINTED",
+    "production_wiring_claimed": false,
+    "native_slint_claimed": false,
+    "physical_hardware_claimed": false
   },
-  "summary": {
-    "concepts": 4,
-    "manager_placements": 38,
-    "distinct_assigned_manager_families": 35,
-    "registered_manager_routes": 37,
-    "inventory_backed_manager_systems": 34,
-    "provider_families": 7,
-    "provider_installation_observations": 7,
-    "deterministic_triggers": 24,
-    "transaction_templates": 11,
-    "motion_kinds": 12,
-    "themes": 8,
-    "impact_artifacts": 24,
-    "command_catalog_unique_tokens_censused": 699,
-    "state_tests_passed": 23,
-    "state_tests_failed": 0
-  },
-  "shared_architecture_impacts": [
+  "correction_refs_opened": [
     {
-      "area": "settings_navigation",
-      "impact": "Stable Home, category/subcategory, setting, manager/tab/resource routes with search, scrollspy, browser history, and focus restoration.",
-      "canon_status": "provisional concept evidence"
+      "order": 1,
+      "path": "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/00_READ_ME_FIRST.md",
+      "sha256": "ce842cd19acb419c7b6096e1c4b43725a3006d27f0ec4167b3adc0a2d118e073",
+      "disposition": "opened_and_applied"
     },
     {
-      "area": "provider_graph",
-      "impact": "Separates provider, account/profile, connection/auth owner, entitlement, model/capability, installation, host, discovery evidence, ownership confidence, update, and rollback state.",
-      "canon_status": "provisional concept evidence"
+      "order": 2,
+      "path": "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md",
+      "sha256": "3df7ad729c5ea1be0df192d19845e42326b5047de03e9f59fbe4918943e0150d",
+      "disposition": "opened_and_materially_applied"
     },
     {
-      "area": "requested_effective_state",
-      "impact": "Makes requested value, effective value, provenance, scope, reason, material effects, restart/reconnect, and recovery destination reusable setting grammar.",
-      "canon_status": "provisional concept evidence"
+      "order": 3,
+      "path": "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "sha256": "9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1",
+      "disposition": "opened_and_applied"
     },
     {
-      "area": "transaction_lifecycle",
-      "impact": "Introduces deterministic staged flows with hard choices, validation, failure, rollback, receipts, and persistent review state.",
-      "canon_status": "provisional concept evidence"
-    },
-    {
-      "area": "motion",
-      "impact": "Adds semantic transaction and preview motion to the ten prior intents, with four distinct concept mappings and reduced-motion parity.",
-      "canon_status": "provisional concept evidence"
-    },
-    {
-      "area": "responsive_accessibility",
-      "impact": "Defines wide, standard, narrow drill-in, very narrow destination-first, and squeezed-height modes with keyboard, focus, RTL, text expansion, coarse pointer, forced colors, and reduced motion.",
-      "canon_status": "provisional concept evidence"
+      "order": 4,
+      "path": "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/REFERENCE_REVIEW_AND_REPAIR_REQUIREMENTS.md",
+      "sha256": "b559fc38f910d18d454aa7ad149fa6f7d6f7384998b3ac0afe7f2e03bccc64f8",
+      "disposition": "opened_and_applied"
     }
   ],
-  "provider_policy_impacts": [
-    "No bundled or silent provider CLI installation.",
-    "Explicit user action and official-source acquisition are required.",
-    "Existing installation and credential detection precedes setup.",
-    "Unknown ownership is manual-only.",
-    "Selected and shadowed installations remain visible.",
-    "CLI-owned OAuth and Puppet Master direct OAuth remain distinct.",
-    "Free Models is a catalogue/wrapper over underlying providers.",
-    "Catalogue refresh preserves last-known-good data on failure.",
-    "Update verification failure supports rollback.",
-    "Requested and effective routes remain separate."
-  ],
-  "deferred_boundaries": [
+  "original_refs_reopened": [
     {
-      "area": "Server module",
-      "status": "insertion shell only",
-      "destinations": [
-        "Servers",
-        "Execution Hosts",
-        "Clients",
-        "Project Hosting & Files",
-        "Remote Access",
-        "Updates"
-      ],
-      "not_claimed": [
-        "backend state machine",
-        "networking behavior",
-        "host selection logic",
-        "synchronization implementation",
-        "remote-access implementation",
-        "update implementation"
-      ]
+      "order": 1,
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/00_START_HERE.md",
+      "sha256": "6029b97f89429847d0edd1ebd1049faf3a92e8b9ccaa7bc89bf140a3f80be08e"
     },
     {
-      "area": "external operations",
-      "status": "deterministic concept simulation",
-      "not_claimed": [
-        "real authentication",
-        "software installation",
-        "provider update",
-        "filesystem mutation",
-        "notification delivery",
-        "backup restore",
-        "container operation",
-        "source-control mutation",
-        "test-tool execution",
-        "cleanup execution"
-      ]
+      "order": 2,
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/08_CONCEPT_COVERAGE_AND_FIXTURES.md",
+      "sha256": "4806b255783e111a3fea61efd113c5aadd67152b79824ea90907a62d12b4bf72"
+    },
+    {
+      "order": 3,
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/09_GUI_MOTION_THEME_SLINT_AND_TESTS.md",
+      "sha256": "a81bd5fc778f1831bb7c248b92ac6b03be7217690cd54b8d9fa0ae335e2100fd"
+    },
+    {
+      "order": 4,
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/10_PLAN_COMMAND_WIRING_DRY_IMPACT.md",
+      "sha256": "5dc4a0999341f50924b0517b1c5d91c0df24680ba10d072a04519743d1b2d6cc"
+    },
+    {
+      "order": 5,
+      "path": "reference-review-report.json",
+      "disposition": "current_custody_and_repair_report_opened"
     }
   ],
-  "command_census": {
-    "authority": "Plans/UI_Command_Catalog.md",
-    "unique_cmd_tokens_scanned": 699,
-    "method": "Exact cmd.* token census with trailing prose punctuation removed.",
-    "interpretation": "A token match proves ID presence only; semantic compatibility still requires owner adjudication.",
-    "required_adjudication": [
-      {
-        "id": "cmd.settings.bloom.open",
-        "classification": "supersession",
-        "decision": "Retire old bloom/chip behavior; retain a compatibility alias only if historical deep links require it."
-      },
-      {
-        "family": "provider installation lifecycle",
-        "classification": "candidate/conflict review",
-        "decision": "Do not reuse generic install commands unless ownership, official source, verification, rollback, and provider-auth boundaries are typed."
-      },
-      {
-        "family": "persistent mutation versus one-shot action",
-        "classification": "boundary review",
-        "decision": "Navigation, persistent mutation, preview, test-send, and ObservableWork operations remain distinct."
-      }
-    ]
+  "materiality": {
+    "omission_materially_affected_all_four_concepts": true,
+    "basis": "The omitted Performance authority and mispathed provider authority required shared startup, data, state, provider, cache, subscription, list-window, persistence, render, motion, coverage, candidate-artifact and verification changes consumed by all four concepts.",
+    "no_difference_claim": false
   },
-  "concepts": [
+  "affected_concepts": [
     {
       "concept_id": "concept-01-index-house",
       "title": "5.6 Sol — Index House",
-      "entry_path": "concept-01-index-house.html",
-      "artifact_path": "concept-01-index-house",
-      "thesis": "Stable-address archive of settings, provenance, memory, and delegated behavior.",
-      "assigned_manager_ids": [
-        "providers",
-        "context",
-        "memory",
-        "personas",
-        "goal-automation",
-        "crew",
-        "permissions-filesafe",
-        "back-seat-driver"
-      ],
-      "assigned_manager_count": 8,
-      "manager_coverage_missing": [],
-      "command_catalog_tokens_censused": 699,
-      "command_delta_entries": 20,
-      "required_artifacts": [
-        "impact-register.json",
-        "manager-coverage.json",
-        "candidate-command-delta.json",
-        "candidate-wiring-delta.json",
-        "candidate-dry-delta.json",
-        "plan-owner-delta.md"
-      ],
-      "production_claim": false
+      "thesis": "Stable-address archive of settings, provenance, memory, policy, and delegated behavior.",
+      "materially_affected": true,
+      "distinct_thesis_preserved": true,
+      "causal_effect": "Its archival records now consume compact/lazy manager data, sole-owner work/governor projections, corrected provider identity and bounded lifecycle behavior."
     },
     {
       "concept_id": "concept-02-switchboard",
       "title": "5.6 Sol — Switchboard",
-      "entry_path": "concept-02-switchboard.html",
-      "artifact_path": "concept-02-switchboard",
-      "thesis": "Operational readiness surface for notifications, appearance, input, and desktop behavior.",
-      "assigned_manager_ids": [
-        "providers",
-        "notifications-sounds",
-        "appearance",
-        "spellcheck",
-        "desktop",
-        "teacher-help"
-      ],
-      "assigned_manager_count": 6,
-      "manager_coverage_missing": [],
-      "command_catalog_tokens_censused": 699,
-      "command_delta_entries": 22,
-      "required_artifacts": [
-        "impact-register.json",
-        "manager-coverage.json",
-        "candidate-command-delta.json",
-        "candidate-wiring-delta.json",
-        "candidate-dry-delta.json",
-        "plan-owner-delta.md"
-      ],
-      "production_claim": false
+      "thesis": "Quiet operational readiness surface for notifications, appearance, input, desktop, and help behavior.",
+      "materially_affected": true,
+      "distinct_thesis_preserved": true,
+      "causal_effect": "Its signals now use truthful waits, finite hidden/preview motion, corrected provider policy, bounded detail and pressure projections."
     },
     {
       "concept_id": "concept-03-wayfinder",
       "title": "5.6 Sol — Wayfinder",
-      "entry_path": "concept-03-wayfinder.html",
-      "artifact_path": "concept-03-wayfinder",
-      "thesis": "Guided toolchain routes with explicit setup, verification, and recovery checkpoints.",
-      "assigned_manager_ids": [
-        "providers",
-        "file-manager",
-        "terminal",
-        "lsp",
-        "formatters",
-        "commands-shortcuts",
-        "mcp",
-        "skills",
-        "plugins",
-        "tools",
-        "testing-debug"
-      ],
-      "assigned_manager_count": 11,
-      "manager_coverage_missing": [],
-      "command_catalog_tokens_censused": 699,
-      "command_delta_entries": 24,
-      "required_artifacts": [
-        "impact-register.json",
-        "manager-coverage.json",
-        "candidate-command-delta.json",
-        "candidate-wiring-delta.json",
-        "candidate-dry-delta.json",
-        "plan-owner-delta.md"
-      ],
-      "production_claim": false
+      "thesis": "Guided toolchain routes with explicit setup, verification, dependency, and recovery checkpoints.",
+      "materially_affected": true,
+      "distinct_thesis_preserved": true,
+      "causal_effect": "Its setup checkpoints now enforce explicit official-source exact-Host/Environment provider consent, separate auth, current continuation and bounded work semantics."
     },
     {
       "concept_id": "concept-04-ledger",
       "title": "5.6 Sol — Ledger",
-      "entry_path": "concept-04-ledger.html",
-      "artifact_path": "concept-04-ledger",
       "thesis": "Dense requested/effective and provenance folio for lifecycle, storage, source, and runtime systems.",
-      "assigned_manager_ids": [
-        "providers",
-        "storage-retention",
-        "backup-restore",
-        "settings-lifecycle",
-        "history-sessions",
-        "runtime-artifacts",
-        "source-control-worktrees",
-        "github-actions",
-        "containers-registries",
-        "web-search-fetch",
-        "project-search-index",
-        "workspace-cleanup",
-        "future-server-shell"
-      ],
-      "assigned_manager_count": 13,
-      "manager_coverage_missing": [],
-      "command_catalog_tokens_censused": 699,
-      "command_delta_entries": 28,
-      "required_artifacts": [
-        "impact-register.json",
-        "manager-coverage.json",
-        "candidate-command-delta.json",
-        "candidate-wiring-delta.json",
-        "candidate-dry-delta.json",
-        "plan-owner-delta.md"
-      ],
-      "production_claim": false
+      "materially_affected": true,
+      "distinct_thesis_preserved": true,
+      "causal_effect": "Its folio now records truthful owner, generation, cache, persistence, pressure, provider and unresolved Server evidence without minting canon."
     }
   ],
+  "causal_change_categories": [
+    {
+      "category": "runtime_owner_projection",
+      "change": "RuntimeResourceGovernor is the sole resource/admission owner; ObservableWork is the sole progress/wait owner; Settings cards are projections only."
+    },
+    {
+      "category": "compact_startup_and_lazy_detail",
+      "change": "Home/search use compact metadata and selected manager detail is dynamically imported; startup/search do not hydrate or probe every provider, tool, Server or resource."
+    },
+    {
+      "category": "bounded_cache_subscription_and_lists",
+      "change": "Manager caches are byte-bounded with inactive eviction, heavy subscriptions are reference-counted/released, and list windows mount at most 40 rows."
+    },
+    {
+      "category": "compact_persistence_and_render_deltas",
+      "change": "Persistence is compact, debounced, byte-limited and transient-aware; rendering uses frame-coalesced latest-wins narrow patches with concept counters."
+    },
+    {
+      "category": "provider_acquisition_auth_and_identity",
+      "change": "First acquisition requires explicit official-source exact-Host/Environment consent; authentication is separate; requests coalesce; stale continuations fail closed; normal GUI is humanized and raw identities move to Advanced Details."
+    },
+    {
+      "category": "truthful_state_pressure_and_motion",
+      "change": "Deterministic work/pressure profiles preserve cached content and essential controls without false hardware claims; hidden/inactive clocks stop and reduced motion keeps semantic parity."
+    },
+    {
+      "category": "coverage_candidates_and_tests",
+      "change": "All four concepts gained 47-row matrices, corrected candidate artifacts, a 22-test causal state contract, a 12-test string/CSS render contract, and a Firefox-focused W3C harness."
+    }
+  ],
+  "changed_path_categories": [
+    {
+      "category": "compact_data_split",
+      "paths": [
+        "_shared/data.mjs",
+        "_shared/data-core-values.mjs",
+        "_shared/data-details.mjs",
+        "verify/generate-core-data.mjs"
+      ]
+    },
+    {
+      "category": "runtime_state_provider_and_boundedness",
+      "paths": [
+        "_shared/runtime-contracts.mjs",
+        "_shared/manager-data.mjs",
+        "_shared/state.mjs"
+      ]
+    },
+    {
+      "category": "view_render_motion_and_css",
+      "paths": [
+        "_shared/view.mjs",
+        "_shared/app.mjs",
+        "_shared/manager-systems.css"
+      ]
+    },
+    {
+      "category": "verification",
+      "paths": [
+        "verify/state.test.mjs",
+        "verify/render-contract.test.mjs",
+        "verify/browser-smoke.mjs",
+        "TEST_REPORT.md"
+      ]
+    },
+    {
+      "category": "aggregate_reports",
+      "paths": [
+        "README.md",
+        "FINDINGS.md",
+        "TEST_REPORT.md",
+        "IMPACT_REGISTER.json",
+        "reference-review-report.json"
+      ]
+    }
+  ],
+  "candidate_registers_changed": [
+    {
+      "concept_id": "concept-01-index-house",
+      "paths": [
+        "concept-01-index-house/impact-register.json",
+        "concept-01-index-house/manager-coverage.json",
+        "concept-01-index-house/candidate-command-delta.json",
+        "concept-01-index-house/candidate-wiring-delta.json",
+        "concept-01-index-house/candidate-dry-delta.json",
+        "concept-01-index-house/plan-owner-delta.md"
+      ]
+    },
+    {
+      "concept_id": "concept-02-switchboard",
+      "paths": [
+        "concept-02-switchboard/impact-register.json",
+        "concept-02-switchboard/manager-coverage.json",
+        "concept-02-switchboard/candidate-command-delta.json",
+        "concept-02-switchboard/candidate-wiring-delta.json",
+        "concept-02-switchboard/candidate-dry-delta.json",
+        "concept-02-switchboard/plan-owner-delta.md"
+      ]
+    },
+    {
+      "concept_id": "concept-03-wayfinder",
+      "paths": [
+        "concept-03-wayfinder/impact-register.json",
+        "concept-03-wayfinder/manager-coverage.json",
+        "concept-03-wayfinder/candidate-command-delta.json",
+        "concept-03-wayfinder/candidate-wiring-delta.json",
+        "concept-03-wayfinder/candidate-dry-delta.json",
+        "concept-03-wayfinder/plan-owner-delta.md"
+      ]
+    },
+    {
+      "concept_id": "concept-04-ledger",
+      "paths": [
+        "concept-04-ledger/impact-register.json",
+        "concept-04-ledger/manager-coverage.json",
+        "concept-04-ledger/candidate-command-delta.json",
+        "concept-04-ledger/candidate-wiring-delta.json",
+        "concept-04-ledger/candidate-dry-delta.json",
+        "concept-04-ledger/plan-owner-delta.md"
+      ]
+    }
+  ],
+  "manager_matrix": {
+    "families_per_concept": 47,
+    "concepts": 4,
+    "total_cells": 188,
+    "classification_vocabulary": [
+      "demonstrated",
+      "shared_grammar",
+      "deferred_named_owner",
+      "missing"
+    ],
+    "counts": [
+      {
+        "concept_id": "concept-01-index-house",
+        "demonstrated": 13,
+        "shared_grammar": 29,
+        "deferred_named_owner": 3,
+        "missing": 2,
+        "total": 47
+      },
+      {
+        "concept_id": "concept-02-switchboard",
+        "demonstrated": 12,
+        "shared_grammar": 30,
+        "deferred_named_owner": 3,
+        "missing": 2,
+        "total": 47
+      },
+      {
+        "concept_id": "concept-03-wayfinder",
+        "demonstrated": 16,
+        "shared_grammar": 26,
+        "deferred_named_owner": 3,
+        "missing": 2,
+        "total": 47
+      },
+      {
+        "concept_id": "concept-04-ledger",
+        "demonstrated": 16,
+        "shared_grammar": 26,
+        "deferred_named_owner": 3,
+        "missing": 2,
+        "total": 47
+      }
+    ],
+    "aggregate_counts": {
+      "demonstrated": 57,
+      "shared_grammar": 111,
+      "deferred_named_owner": 12,
+      "missing": 8,
+      "total": 188
+    },
+    "deferred_named_owners": [
+      "Project Syncing and Updates",
+      "Product Onboarding",
+      "Doctor"
+    ],
+    "server": {
+      "exact_owner_status": "unresolved",
+      "source_rows_per_concept": 2,
+      "source_family_ids": [
+        "future-server-module-shell",
+        "corrected-server-insertion"
+      ],
+      "classification_in_each_concept": "missing",
+      "mutation_enabled": false,
+      "surface": "inspect_only",
+      "fail_closed": true,
+      "duplicate_engine_created": false
+    }
+  },
   "verification": {
-    "node_state_tests": {
+    "state_contract": {
+      "status": "passed",
+      "tests": 22,
+      "passed": 22,
+      "failed": 0,
+      "evidence_scope": "deterministic Node data and state contracts"
+    },
+    "javascript_syntax": {
+      "status": "passed",
+      "files": 14,
+      "passed": 14,
+      "failed": 0
+    },
+    "json_parse": {
+      "status": "passed",
+      "files": 23,
       "passed": 23,
       "failed": 0
     },
-    "concepthub_validator": "pass",
-    "browser_matrix": {
-      "status": "pass",
-      "concepts": 4,
-      "concept_theme_combinations": 32,
-      "responsive_combinations": 28,
-      "assigned_manager_routes": 38,
-      "additional_layout_audits": 36,
-      "reduced_motion_combinations": 32,
-      "widths_px": [
-        520,
-        760,
-        900,
-        1280,
-        1700,
-        2200,
-        2500
-      ],
-      "failures": 0,
-      "console_errors": 0
+    "concept_hub_structure": {
+      "status": "passed"
     },
-    "browser_functional": {
-      "status": "pass",
-      "deep_link_sequences": 1,
-      "history_sequences": 1,
-      "search_sequences": 1,
-      "functional_flow_groups": 6,
-      "failures": 0,
-      "console_errors": 0
+    "compact_data_generator_consistency": {
+      "status": "passed"
     },
-    "browser_fixtures_persistence": {
-      "status": "pass",
-      "fixture_registry_concept_checks": 4,
-      "fixtures_triggered": 24,
-      "final_fixture_dom_checks": 4,
-      "persistence_reload_cycles": 1,
-      "persistence_reset_cycles": 1,
-      "failures": 0,
-      "console_errors": 0
+    "git_diff_check": {
+      "status": "passed"
     },
-    "browser_motion": {
-      "status": "pass",
-      "navigation_sequences": 4,
-      "transaction_sequences": 4,
-      "preview_sequences": 1,
-      "distinct_transaction_role_sets": 4,
-      "console_errors": 0
+    "render_contract": {
+      "status": "passed",
+      "tests": 12,
+      "passed": 12,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "evidence_scope": "Pure state-to-string and CSS source contracts only; no viewport, accessibility-tree, browser, native Slint, performance/network or physical-hardware inference"
+    },
+    "firefox_w3c_harness": {
+      "status": "blocked_environment",
+      "product_dependency_playwright": false,
+      "concept_hub_port": 45343,
+      "geckodriver_port": 41003,
+      "failure_stage": "POST /session",
+      "host_diagnostic": "Sandbox: CanCreateUserNamespace() unshare(CLONE_NEWPID): EPERM",
+      "harness_attempted": 1,
+      "harness_passed": 0,
+      "harness_failed": 1,
+      "browser_product_assertions": 0,
+      "cleanup_completed": true,
+      "old_browser_pass_counts_retained": false
+    },
+    "native_slint": {
+      "status": "not_run_not_proven"
+    },
+    "physical_hardware_and_network": {
+      "status": "not_run_not_proven"
     }
   },
-  "known_limitations": [
-    "The HTML implementation is a design and interaction concept, not the final Slint 1.17.1 port.",
-    "External operations are deterministic simulations and do not establish production integration.",
-    "Candidate command IDs, wiring routes, DRY components, settings IDs, schema fields, and Plan owners require canonical owner adjudication.",
-    "Browser verification does not substitute for native platform accessibility, rendering, provider CLI, filesystem, or backend tests."
+  "evidence_boundaries": [
+    "Node state evidence supports deterministic module contracts only.",
+    "Node render-contract and CSS/static evidence support only their asserted HTML/DOM surfaces.",
+    "The blocked Firefox attempt supports no browser product assertion.",
+    "Browser prototype evidence cannot certify native Slint.",
+    "Deterministic pressure profiles cannot certify physical CPU, RAM, disk, network, thermal, power or process-tree behavior."
   ],
+  "residual_risks": [
+    {
+      "risk": "server_owner_unresolved",
+      "status": "fail_closed",
+      "effect": "Server destinations remain inspect-only; no command, runtime owner, backend or mutation is minted."
+    },
+    {
+      "risk": "firefox_session_blocked",
+      "status": "blocked_environment",
+      "effect": "No browser product assertion ran; the full Firefox matrix remains unexecuted."
+    },
+    {
+      "risk": "native_slint_unverified",
+      "status": "not_run_not_proven",
+      "effect": "Native layout, rendering, focus, accessibility, motion, startup, memory and input behavior remain unverified."
+    },
+    {
+      "risk": "physical_runtime_unverified",
+      "status": "not_run_not_proven",
+      "effect": "Legacy/modern hardware, process-tree memory, idle wakeups, thermal/Low Power, slow disk and poor network remain unverified."
+    },
+    {
+      "risk": "candidate_canon_unadjudicated",
+      "status": "NOT_MINTED",
+      "effect": "Candidate commands, wiring, DRY roles, schemas and Plan owners remain provisional."
+    }
+  ],
+  "write_surface": {
+    "allowed": [
+      "Concepts/settings-redesign-concepts/5.6 Sol/**"
+    ],
+    "aggregate_files_owned_by_this_update": [
+      "README.md",
+      "FINDINGS.md",
+      "TEST_REPORT.md",
+      "IMPACT_REGISTER.json"
+    ],
+    "modified_outside_allowed_surface": false,
+    "canonical_authorities_modified": false
+  },
   "references": {
     "readme": "README.md",
     "findings": "FINDINGS.md",
     "test_report": "TEST_REPORT.md",
+    "reference_review": "reference-review-report.json",
     "concept_hub_manifest": "concept-hub.json"
   }
 }

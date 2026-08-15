@@ -687,3 +687,11 @@ textarea.k3t-edit-area { width: 100%; }
 .k3t-shortcut-wrap { display: inline-flex; align-items: stretch; gap: 2px; }
 .k3t-shortcut-more { align-self: center; }
 html[data-motion="reduced"] .k3t-packet-row { transition: none; }
+
+/* accumulating tool-kind cluster (video C canon) */
+.k3t-kindcluster { display: inline-flex; align-items: center; gap: 3px; margin-left: 2px; color: var(--text-muted); }
+.k3t-kindcluster-ic { display: inline-flex; }
+.k3t-kindcluster-ic svg { width: 12px; height: 12px; display: block; }
+
+/* working artifact shortcut (video C live card) */
+.k3t-shortcut.is-working .k3t-shortcut-meta { color: var(--text-muted); font-style: italic; }

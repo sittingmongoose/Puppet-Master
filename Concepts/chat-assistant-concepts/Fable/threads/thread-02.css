@@ -125,6 +125,17 @@
   opacity: 0.7;
 }
 .ft2-locus-text { font-size: 12px; color: var(--text-primary); }
+.ft2-locus-rows {
+  border: 1px solid var(--edge-faint);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  padding: 6px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.ft2-seam-strip { display: inline-flex; gap: 2px; color: var(--text-faint); flex: none; }
+.ft2-qskip-yielded { visibility: hidden; }
 .ft2-locus-time { font-size: 10.5px; color: var(--text-faint); font-variant-numeric: tabular-nums; }
 
 /* manifest */
@@ -305,3 +316,6 @@
 .ft2-qtrail-seg[data-current="true"] { outline: 2px solid var(--accent); outline-offset: 1px; }
 
 .ft2-composer-region { border-top: 1px solid var(--edge-faint); }
+
+.ft2-mani-agent[data-status="failed"] .ft2-agent-dotmark { background: var(--danger); }
+.ft2-mani-agent[data-status="retrying"] .ft2-agent-dotmark { background: var(--warn); }

@@ -96,6 +96,33 @@ Packet re-diff (`08_CONCEPT_COVERAGE_AND_FIXTURES.md` +
   Web provider priority reorder (persistent, receipts) plus per-provider
   test fetch (disabled under credit-guard cooldown).
 
+## Dependency-correction round (2026-08-13)
+
+Driven by `PM_Settings_Dependency_and_Work_Correction_2026-08-13.zip` +
+the missing Performance decision register. Full detail:
+`reference-review-report.json`.
+
+- **ObservableWork grammar**: shared `operationHtml` (phase, wait reason,
+  determinate bar only with real denominator, progress-source label,
+  Cancel when valid). Probed: provider update (Updating → Verifying →
+  Ready with source line), Vault index rebuild ("3,051 of 12,204 files ·
+  25%", Cancel → cancelled receipt).
+- **Lazy hydration**: slow-hydration scenario probed on all four concepts
+  ("Hydrating Storage and Retention / Memory / Sound library / Language
+  servers"), content follows ~900ms.
+- **Offline + collapse banners**: probed on providers manager in Vault and
+  Foundry; reset clears.
+- **Domain-local refresh**: unrelated-key probe markers survive on Vault
+  storage / Concord personas / Foundry formatters; owned keys repaint
+  (backups, memory, sounds, formatters). Zero console errors.
+- **SCM install flow**: Jujutsu install → ready, button retires,
+  exact-host copy. **Deferred shell**: 10 cards (added Project Defaults &
+  Templates, Integrations & Tools, Product Onboarding, Doctor).
+- **Performance rows**: General → Performance and resources renders;
+  Legacy profile option present.
+- **Matrix spot check**: 900/1280/2500 × 3 themes on banner + operation
+  card — 0 overflow. Validator re-run: exit 0.
+
 ## Environment notes
 
 - Hub on Windows: `server.py` runs fine under plain `python`; runtime

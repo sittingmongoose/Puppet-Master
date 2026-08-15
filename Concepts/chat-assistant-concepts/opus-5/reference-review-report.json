@@ -1,0 +1,929 @@
+{
+  "schema_id": "pm.chat_assistant_reference_review.v1",
+  "concept": "Opus 5",
+  "concept_root": "Concepts/chat-assistant-concepts/opus-5",
+  "packet": "PM_Assistant_Chat_Dependency_Media_and_Work_Correction_2026-08-13",
+  "written": "2026-08-14",
+  "status": "complete",
+  "method": {
+    "summary": "Every .mov was decoded to individual frames and read as images. Contact sheets and keyframes were opened as well, but they were not the primary source: the packet's own keyframe sets sample video C at 4-second intervals, which is coarser than several of the transitions this concept had to reproduce.",
+    "decoder": "ffmpeg 7.0.2-static (H.264/avc1). No ffmpeg or ffprobe is installed on this machine; the bundled Playwright ffmpeg has no H.264 decoder at all, so a static build already present on disk was used.",
+    "frames_extracted": 3322,
+    "per_video": {
+      "01_message_arrival_spatial_continuity.mov": {
+        "frames": 227,
+        "fps": 57.61,
+        "duration_s": 3.94
+      },
+      "02_stable_paged_questionnaire.mov": {
+        "frames": 1190,
+        "fps": 60,
+        "duration_s": 19.85
+      },
+      "03_compact_execution_activity.mov": {
+        "frames": 1417,
+        "fps": 38.89,
+        "duration_s": 36.44
+      },
+      "04_questionnaire_morph_prepare_submit.mov": {
+        "frames": 488,
+        "fps": 59.99,
+        "duration_s": 8.14
+      }
+    },
+    "review_passes": [
+      "Full-rate decode to individual frames.",
+      "Indexed contact sheets at a known stride, so any cell maps back to an exact frame number.",
+      "Native-rate micro-sheets across each transition, cropped to the region that moves.",
+      "Upscaled single frames where the source resolution made the copy unreadable."
+    ],
+    "limitations": "No audio was reviewed; none of the four recordings carries information in its audio track. Frame indices below are 1-based and refer to the full-rate decode."
+  },
+  "media_opened": [
+    {
+      "path": "reference/videos/03_compact_execution_activity.mov",
+      "opened": true,
+      "how": "1,417 frames decoded and read; six indexed contact sheets at stride 13; native-rate micro-sheets across frames 194-211, 886-905, 1150-1170 and 1290-1310.",
+      "verdict": "changed the concept more than any other single reference",
+      "what_it_established": [
+        "The activity stream is ONE evolving capsule, not a growing list of tool rows.",
+        "Each finished phase leaves exactly one glyph behind: two by f.208, three by f.390, four by f.780, six by f.910.",
+        "The glyph chain is a RANDOM-ACCESS INDEX. After the run condenses, clicking the pencil at f.1170 reopens 'Made 1 create, 2 edits' and clicking the magnifier at f.1300 reopens 'Explored 7 files'.",
+        "The count is rewritten IN PLACE: 'Exploring 5 files' to '6 files' to '7 files' across f.208, f.286 and f.338, on the same row at the same y, with no relayout.",
+        "The verb changes tense on settle: Thinking/Exploring/Making while running, Thought/Explored/Made once finished.",
+        "A phase hands over in TWO BEATS, f.194 to f.211 (about 0.44s): the label cross-fades first, and only then does the new glyph open its slot and push the label right by exactly one slot.",
+        "Condense is the RESTING STATE, not a deletion. At f.910 the run becomes '13 tools used'; the prose answer, the verification row and the artifact card sit below it and are pushed down when a phase is reopened.",
+        "The chain rolls rather than truncating once it exceeds roughly six glyphs, and scrolls a selected glyph back into view.",
+        "Sub-row grammar is bold verb plus muted argument, hung off a left hairline rule, with the diff stat right-aligned as +n green / -n crimson.",
+        "The artifact card resolves in place from 'Compiling...' to 'Version 1.2', and a footer meta line reads 'Worked for 1m 34s'."
+      ],
+      "changed": [
+        "shared/runtrace.js (new): the run as a record - entry order, running phase, partial counts, disclosed phase.",
+        "shared/motion.js: phaseHandover() and chainRoll() added; both cite the frame ranges above.",
+        "shared/motion.css: .pmx-chain, .pmx-chain-slot and the overflow mask.",
+        "shared/surfaces.js: activity_open_phase; activity_condense stopped writing the question-yield flag; one render per verb instead of two.",
+        "shared/demo.js: activity.open_phase and activity.close_phase triggers, so per-phase random access is deterministically reachable.",
+        "shared/opcard.js: running state and partial counts now read from the run trace instead of a second copy on view.surfaces.",
+        "threads/t1..t8: eight distinct renderings of the same capsule."
+      ]
+    },
+    {
+      "path": "reference/videos/01_message_arrival_spatial_continuity.mov",
+      "opened": true,
+      "how": "227 frames decoded and read; five indexed contact sheets at stride 3; native-rate micro-sheets across frames 44-79.",
+      "verdict": "changed the concept",
+      "what_it_established": [
+        "An arriving message does not fade in at its final position. At f.47 it appears as a flattened sliver at the header seam, expands vertically into the bubble, and settles with a small overshoot - about 16 frames, roughly 280ms.",
+        "The text is clipped by the growing box rather than scaled.",
+        "Neighbouring messages displace in the SAME beat to make room; the arrival is legible because the conversation moved, not because the new element animated.",
+        "The scroll position moves as part of the same motion rather than jumping."
+      ],
+      "changed": [
+        "Confirmed motion.displace() as the correct primitive and that it had zero callers.",
+        "shared/scroll.js: preserveAcross now distinguishes a single message from the list container. Every 'load earlier messages' handler passed the list, whose bottom edge is never above the container top, so the correction never ran and loading history jumped the reader's position.",
+        "shared/scroll.js: the messageSelector option is honoured instead of silently discarded."
+      ]
+    },
+    {
+      "path": "reference/videos/02_stable_paged_questionnaire.mov",
+      "opened": true,
+      "how": "1,190 frames decoded and read; five indexed contact sheets at stride 12; individual frames upscaled 2.6x at f.120, f.430, f.470, f.500, f.700, f.980 and f.1120 because the source is 308px wide and the copy is unreadable at native size. Re-opened a second time when the questionnaire work began, and the second reading corrected the first.",
+      "verdict": "changed the concept; the first reading of it was itself corrected by a second pass",
+      "what_it_established": [
+        "The card LOOKS stable across pages — but the second reading found why, and it matters: every one of its four pages carries exactly FOUR option rows. The stability is a property of the content, not a reserved frame. A concept whose pages genuinely differ (single select, multi select, freeform textarea) cannot copy it; it would have to engineer a reservation the reference never demonstrates.",
+        "Paging backwards is a first-class action and the load-bearing half: at 11.00s and 19.80s it returns to '1 of 4' with the typed answer still present, and both chevrons stay live throughout.",
+        "The header pager reads '1 of 4' with prev/next chevrons and a close control; hovering the forward chevron shows a 'Next' tooltip.",
+        "Options are numbered chips plus muted text; the LAST row is a freeform capsule whose inline pill button reads 'Skip' when empty and 'Next' once text is typed.",
+        "The composer stays live below the card, placeholdered 'Or reply directly...' - the question never locks it.",
+        "On the final page 'Skip' is replaced by a 'Submit' pill rendered disabled until an option is chosen."
+      ],
+      "changed": [
+        "motion.firstVisit() is now wired in all eight concepts, keyed on PMXReveal.keyFor - paging backward no longer replays the card's entrance. It had zero callers before this pass.",
+        "The card RESIZES rather than holding a frame. That was a deliberate reversal on the owner's instruction once the four-rows-per-page finding was understood: rather than engineer a stability the reference does not itself demonstrate, the card uses this product's own tuned resize (see the PMConcept7 model picker entry).",
+        "Every concept's question card root now survives a page change, which both the resize and firstVisit require.",
+        "Backward paging is measured: tools/drive.mjs paging records, per concept, root identity, whether the entrance replayed, and whether the answer is still shown."
+      ]
+    },
+    {
+      "path": "reference/videos/04_questionnaire_morph_prepare_submit.mov",
+      "opened": true,
+      "how": "488 frames decoded and read; six indexed contact sheets at stride 6.",
+      "verdict": "changed the concept",
+      "what_it_established": [
+        "The flow is one causal lifecycle with GEOMETRIC SYMMETRY: a 'Preparing questions...' pill sits above the composer, grows upward into the card, and after submit shrinks back into the same pill - now 'Submitting answers...' - before dissolving.",
+        "Selection lands a radial ripple from the click point and bands the chosen row.",
+        "The footer reads 'Question 1 of 3' with 'Skip' at the right; on the last page 'Skip' is replaced by a 'Submit' pill that is disabled until an option is chosen.",
+        "Options scroll inside a fixed card height rather than growing the card."
+      ],
+      "changed": [
+        "shared/qflow.js: submit() no longer collapses into finishSubmit() in the same call. The record now rests in 'submitting' for SUBMIT_MS and settles on a timer that also releases the work surfaces, so the middle of the pill-card-pill symmetry is observable instead of existing only in the state machine.",
+        "An opts.settleNow path is kept so a test can assert the receipt without waiting on a timer."
+      ]
+    },
+    {
+      "path": "reference/screenshots/pm7_popout.png",
+      "opened": true,
+      "verdict": "already acted on by the prior session; re-read and confirmed",
+      "what_it_established": [
+        "The operation-record format: COMMAND, PROVIDER, CACHE, PERMISSION, COST, OPERATION_INPUT, a /sources chip, a Runtime Artifact chip and a COMPLETED marker.",
+        "The compact strip '1 active subagent, 3 file changes +26 -5'."
+      ],
+      "changed": [
+        "shared/opcard.js already encoded this format. This pass repointed its status and count reads at the run trace so an operation card and the capsule beside it cannot disagree about whether the same phase is running."
+      ]
+    },
+    {
+      "path": "reference/screenshots/pm7_chat_open.png",
+      "opened": true,
+      "verdict": "no change warranted",
+      "what_it_established": [
+        "The host chrome this concept is designed to sit inside: right-hand Chat dock, thread list, per-message version and persona badges, composer chip row and the model/access selector row."
+      ],
+      "changed": []
+    },
+    {
+      "path": "reference/screenshots/T3_MODEL_PICKER_REFERENCE.png",
+      "opened": true,
+      "verdict": "changed the concept, indirectly and substantially",
+      "what_it_established": [
+        "A provider rail plus search, per-model provider sublabels, command-digit shortcuts, favourites, and a footer reading model / effort-speed / access.",
+        "It pointed at the LIVE picker in PMConcept7 as the thing to study. Searching that picker resizes its popout with an overshoot as rows filter in and out, and that motion is this product's own tuned answer to 'a box changed size' - already matched against a reference recording by whoever built it."
+      ],
+      "changed": [
+        "shared/motion.js resizeBounce() and shared/motion.css: a faithful reproduction of PMConcept7's portalAnimateHeight (PMConcept7.html:48053-48091) and its two-layer bounce - height on cubic-bezier(.22,1.72,.36,1) plus a restarted scale beat, measure/pin/mutate/remeasure with height:auto so max-height is respected, and a sub-pixel bail.",
+        "All eight question cards resize through it. This is what replaced the stable frame that 02_stable_paged_questionnaire.mov appeared to ask for.",
+        "The selector's own three axes (model / effort-speed / access) were already carried by this concept's submenu stack, so nothing changed there."
+      ]
+    },
+    {
+      "path": "reference/compact_activity_motion_contact_sheet.jpg",
+      "opened": true,
+      "verdict": "corroborating",
+      "what_it_established": [
+        "A one-frame-per-second grid of video 03 that fixes the phase timings: thinking at 1s, exploring at 5s, Figma import at 10s, edits at 13-16s, asset generation at 17s, a second thinking beat at 19s, condense to '13 tools used' at 23s, artifact resolve at 28s, and the two per-phase reopens at 29s and 34s.",
+        "Confirms each phase runs roughly 2 to 4 seconds, which is the cadence the demo triggers reproduce."
+      ],
+      "changed": []
+    },
+    {
+      "path": "reference/questionnaire_motion_contact_sheet.jpg",
+      "opened": true,
+      "verdict": "corroborating",
+      "what_it_established": [
+        "A 0.5s grid of video 04 that shows the prepare pill, the card, the ripple on selection, the disabled-then-enabled Submit, and the return to the pill."
+      ],
+      "changed": []
+    },
+    {
+      "path": "reference/videos/contact_sheets/",
+      "opened": true,
+      "files": [
+        "01_message_arrival_spatial_continuity_contact.jpg",
+        "02_stable_paged_questionnaire_contact.jpg",
+        "03_compact_execution_activity_contact.jpg",
+        "04_questionnaire_morph_prepare_submit_contact.jpg"
+      ],
+      "verdict": "corroborating; superseded by the full-rate decode",
+      "changed": []
+    },
+    {
+      "path": "reference/videos/keyframes/",
+      "opened": true,
+      "sets": {
+        "video_a": 11,
+        "video_b": 7,
+        "video_c": 10,
+        "video_d": 9
+      },
+      "verdict": "corroborating; too coarse to be primary",
+      "note": "The video_c set samples the activity recording at 4-second intervals. The phase handover this concept had to reproduce lasts about 0.44s, so it falls entirely between two keyframes and is not visible in this set at all. This is the specific reason the raw recordings were decoded rather than reviewed through the supplied keyframes.",
+      "changed": []
+    },
+    {
+      "path": "reference/videos/VIDEO_SOURCE_MAP.json",
+      "opened": true,
+      "verdict": "used",
+      "what_it_established": [
+        "Packet name to original upload name, plus the declared duration and frame size of each recording, which the decode was checked against and matched."
+      ],
+      "changed": []
+    }
+  ],
+  "fixtures_opened": [
+    {
+      "path": "DEMO_TRIGGER_CONTRACT.json",
+      "opened": true,
+      "verdict": "used as the contract for the Director",
+      "changed": [
+        "shared/demo.js: PMXDemo.aliases() and PMXDemo.distinctEvents() added. FAMILIES holds both `agent` and `subagent` pointing at one object so either contract name resolves, which made families() report seventeen family names over sixteen distinct families - a report counting its keys inflated every total by a whole family."
+      ]
+    },
+    {
+      "path": "DEMO_SCENARIO_MANIFEST.json",
+      "opened": true,
+      "verdict": "was almost entirely uninstantiated; being instantiated this pass",
+      "measured_before": {
+        "goal_phases": "6/6",
+        "history_rows": "0/18",
+        "todos": "0/8",
+        "subagent_names": "0/3",
+        "warnings_verbatim": "0/3",
+        "goal_title": "absent",
+        "completion_block": "absent",
+        "user_request": "absent",
+        "resource_collision": "contradicted: the concept used port 3000 to 3001 and an unrelated checkout worktree where the manifest specifies 4173 to 4174 occupied by the Usage concept visual-test server"
+      },
+      "changed": [
+        "shared/demo.js and shared/opsawareness.js: the collision now matches the manifest exactly. The port action id is derived from the conflict's own alternative rather than hard-coded, so a second contested port resolves to ITS alternative instead of silently claiming the first one's.",
+        "demo/build-demo-bundles.mjs: the remaining manifest elements are being instantiated and the corpus regenerated."
+      ]
+    },
+    {
+      "path": "PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "opened": true,
+      "verdict": "obeyed; enforcement widened",
+      "changed": [
+        "tests/suites.js: the forbidden-phrase scan read only PMXRoute's own strings, so a bundling claim could reappear in a renderer or the fixture and pass. It now also scans the rendered workspace, and tools/drive.mjs scans the whole folder as source - what the adjudication forbids is the claim reaching the reader, not a particular module holding it."
+      ]
+    },
+    {
+      "path": "00_READ_ME_FIRST.md",
+      "opened": true,
+      "verdict": "used",
+      "changed": []
+    },
+    {
+      "path": "CORRECTION_GOAL_PROMPT.md",
+      "opened": true,
+      "verdict": "used",
+      "changed": []
+    },
+    {
+      "path": "REFERENCE_MEDIA_INDEX.md",
+      "opened": true,
+      "verdict": "used",
+      "changed": []
+    },
+    {
+      "path": "CORRECTION_PACKET_MANIFEST.json",
+      "opened": true,
+      "verdict": "used to enumerate what had to be opened",
+      "changed": []
+    }
+  ],
+  "defects_found_while_reviewing": [
+    {
+      "id": "REF-01",
+      "severity": "high",
+      "summary": "Ten of the thirteen motion families added a pmx-m-* class that no stylesheet defined.",
+      "evidence": "grep -rn 'pmx-m-' returned hits in shared/motion.js only.",
+      "consequence": "beat() added a class, no animation started, no animationend fired, and afterTransition waited out its full 480ms fallback before cleaning up. Nine families were visually inert while reporting success.",
+      "fixed": "shared/motion.css now defines all nineteen classes."
+    },
+    {
+      "id": "REF-02",
+      "severity": "high",
+      "summary": "The count morph could never play in any concept that rebuilds its capsule.",
+      "evidence": "motion.countMorph only animates digits when the element already shows the previous text; a rebuilt element shows the empty string, so the digit comparison cannot match.",
+      "consequence": "The number still landed correctly, so nothing looked broken - but the single behaviour the activity video is built on would silently not have happened in seven of eight concepts.",
+      "fixed": "PMXRunTrace.signature() plus a per-concept patch path; and shared/surfaces.js now emits one render per activity verb instead of two, which was discarding the morphing element mid-animation."
+    },
+    {
+      "id": "REF-03",
+      "severity": "high",
+      "summary": "activity_condense wrote the question-yield flag.",
+      "consequence": "Firing it blanked Goal, Todo, subagents and diffs outright instead of condensing the activity, and left the activity rows on screen. Two different facts about two different surfaces shared one boolean.",
+      "fixed": "shared/surfaces.js"
+    },
+    {
+      "id": "REF-04",
+      "severity": "medium",
+      "summary": "The artifact catalog declared artifact-test twice.",
+      "consequence": "BY_ID is last-wins so the first record was dead; list() exposed the duplicate; and PMXDemo.artifact.switch walks list() by index, so the cycle was trapped between two neighbours and artifact-context and artifact-crew were UNREACHABLE. The suite asserted list().length >= 7, which the duplicate is what satisfied.",
+      "fixed": "shared/artifacts.js merges the records and now throws on a repeated id; tests/suites.js asserts id uniqueness and walks the full switch cycle."
+    },
+    {
+      "id": "REF-05",
+      "severity": "medium",
+      "summary": "shared/questionnaire.js contained two literal NUL bytes.",
+      "consequence": "git treated the file as binary, so it had no readable diff, and grep skipped it entirely. Written by the prior session while documenting a NUL-delimited key.",
+      "fixed": "Both replaced with \\u0000 escapes. Behaviour is unchanged; the file is reviewable text again. tools/drive.mjs scan asserts no source file contains a NUL or fails UTF-8 decode."
+    },
+    {
+      "id": "REF-06",
+      "severity": "medium",
+      "summary": "preserveAcross never corrected the reading position on 'load earlier messages'.",
+      "consequence": "All eight handlers pass the list container, whose bottom edge is never above the container top, so the isAbove guard was always false and the correction never ran. With overflow-anchor disabled there was nothing else to catch it, so loading a hundred earlier messages jumped the reader's position.",
+      "fixed": "shared/scroll.js"
+    },
+    {
+      "id": "REF-07",
+      "severity": "low",
+      "summary": "ScrollCtl accepted a messageSelector option and silently discarded it.",
+      "fixed": "shared/scroll.js"
+    },
+    {
+      "id": "REF-08",
+      "severity": "high",
+      "summary": "The provider and opcard suites were declared INSIDE the forms suite body, so neither ever executed.",
+      "evidence": "A brace-depth scan put A.suite('provider') and A.suite('opcard') one level deeper than the other 24 suites; runAll() snapshots A.list() once before running, so a suite registered during the run is appended to the array but is not in the snapshot.",
+      "consequence": "The provider suite is the sole automated defence of PROVIDER_CLI_FINAL_ADJUDICATION.md - the forbidden-phrase scan, the official-source requirement, the install/authenticate separation - and it had never run. The opcard tense assertions had never run either. TEST_REPORT.md naming 23 suites was consistent with this, because the two that could not run were the two it did not list.",
+      "fixed": "Both lifted to top level. They had been pasted into the middle of the forms body, splitting that suite in half; forms is intact and 26 suites now register at top level. A closure check first confirmed neither block captured anything from forms - the apparent references were property accesses (a.id, acq.host, acc.d)."
+    },
+    {
+      "id": "REF-09",
+      "severity": "medium",
+      "summary": "The Director's question.cancel went around PMXQFlow.",
+      "evidence": "shared/demo.js called PMXQuestionnaire.cancel directly, but release() - the only writer that clears surfacesYielded - lives in the qflow verb layer.",
+      "consequence": "Cancelling from the Director resolved the flow and left the yield flag up, after which PMXSurfaces.activeFor reported Goal, Todo, subagents and diffs as absent on a thread that still had all four. The same fault qflow.release exists to prevent, reached by the one path that bypassed it.",
+      "fixed": "shared/demo.js: cancel and submit now go through PMXQFlow, and a question.submitting trigger was added so the middle beat of reference 04 is deterministically reachable."
+    },
+    {
+      "id": "REF-10",
+      "severity": "medium",
+      "summary": "Operation rows printed a line delta for operations that have none.",
+      "evidence": "Two renderers concatenated +r.added and -r.removed unguarded; two more defaulted them with || 0.",
+      "consequence": "Once the corpus gained sub-rows for reads, searches, fetches, browser opens and checks - none of which touch lines - the unguarded pair rendered the literal '+undefined -undefined', and the defaulted pair rendered '+0 -0', which asserts a zero-line edit that did not happen either.",
+      "fixed": "All four now omit the delta when absent. Two of the concepts already carried the correct guard a few hundred lines away in the same file, which is what a shared record and eight independent renderings costs when the record grows a new shape."
+    },
+    {
+      "id": "REF-11",
+      "severity": "high",
+      "summary": "`[data-motion=\"full\"] *` reverted animation-duration to 0s, killing every class-driven animation inside an explicitly-full stage.",
+      "evidence": "The rule matched at (0,1,0) — the same specificity as every animation class in motion.css — and came later in the file, so `revert-layer` rolled the duration back to the user-agent default. Measured: inside the stage `animation-name: pmx-size-bounce-strong` with `animation-duration: 0s`; the identical element outside the stage reported 0.42s.",
+      "consequence": "Not one class-driven animation ran inside a full stage: not .pmx-enter, not .pmx-cascade, not any of the thirteen families, not the new resize bounce. The rule could not even achieve its stated purpose, because the reduced-motion blanket it was trying to undo is `!important` and `revert-layer` is not. The third instance of this exact failure signature in one file.",
+      "fixed": "The OS-preference blanket now excludes an explicitly-full stage at the source, and the revert-layer rule is gone. A rule that never applies needs no counter-rule. Verified: full stage 0.42s / 0.26s, reduced stage 0s / 1e-05s."
+    },
+    {
+      "id": "REF-12",
+      "severity": "medium",
+      "summary": "Every morphed count digit came to rest 4px low at 45% opacity.",
+      "evidence": "`.pmx-count-morph[data-dir=\"up\"]` carries the animation’s START state at (0,2,0); `.pmx-count-morph-run` set the end state at (0,1,0) and therefore never won. countMorph’s endNow then removed the run class anyway.",
+      "consequence": "The digit never visibly settled in any concept that morphs a count — measured in t1, t2 and t5. Behaviour 2 of the activity reference reached the screen parked on its own first frame.",
+      "fixed": "The run state now out-specifies the start state, and endNow clears the direction attribute so the resting state is neutral whatever the cascade does. Verified resolved: opacity 1, transform none, in both directions."
+    },
+    {
+      "id": "REF-13",
+      "severity": "medium",
+      "summary": "t2 deleted a live question card belonging to a different thread.",
+      "evidence": "Switching to a thread with no questionnaire scheduled a 180ms compress-and-remove; switching straight back built a new capsule, and the stale callback then ran U().empty(host) on it.",
+      "consequence": "The card vanished after an ordinary switch-away-and-back — which is exactly what the paging suite does to make the entrance observable, and what a reader does routinely.",
+      "fixed": "The teardown now only completes if the thread it was scheduled for is still on screen and no capsule has been built since."
+    },
+    {
+      "id": "REF-14",
+      "severity": "low",
+      "summary": "t1 re-cascaded its option rows when paging backward.",
+      "evidence": "clearStagger runs on a 900ms timer but the row container outlives the rows inside it, so a backward step within that window rebuilt fresh rows into a list still carrying pmx-cascade.",
+      "consequence": "firstVisit correctly suppressed the card entrance, and the rows animated anyway — which is the half a reader actually notices. Paging back read as moving forward.",
+      "fixed": "The ladder is cleared by the render rather than by a timer racing it."
+    },
+    {
+      "id": "REF-15",
+      "severity": "medium",
+      "summary": "The Director had no attachment family, so one of the packet’s named states was unreachable.",
+      "evidence": "CORRECTION_GOAL_PROMPT.md requires deterministic triggers covering \"question, Goal, Todo, child, activity, diff, artifact, approval, thread, collision, offline/replay, BSD, attachment, and recovery\". Checking the trigger report family-by-family against that list, `attachment` was the only one with no family at all.",
+      "consequence": "PMXAttach models resolution, class, lineage and the incompatible-route decision, the attach suite exercises it, and eight concepts render its cards — but no attachment state could be reproduced by a reviewer or captured as evidence, which is exactly what the trigger contract exists to guarantee.",
+      "fixed": "shared/demo.js gains an `attachment` family of seven verbs driving the real service against its own fixtures: add, add_document, incompatible (the video the route cannot read natively), extract, cancel, reevaluate, remove. All seven fire, 0 failed. `cancel` deliberately changes nothing — declining the offer must leave the card standing."
+    },
+    {
+      "id": "REF-16",
+      "severity": "medium",
+      "summary": "A magnifier emoji sat in a shared module’s docblock for the whole build.",
+      "evidence": "CONTRACT section 8.1 forbids emoji and pictographic characters anywhere — code, strings and comments alike — but the only automated guard was inside the browser suite, scanning icons.js and the concept registration prose. shared/opcard.js transcribes a screenshot in its header and carried the glyphs verbatim.",
+      "consequence": "A project-wide rule enforced over one file is enforced nowhere. Nothing would have caught the next one either.",
+      "fixed": "The transcription now writes its glyphs as words, and `tools/drive.mjs scan` checks every file in the folder and exits non-zero on a hit. Arrows, box drawing and block elements are excluded by name: this workspace draws a state machine and a column order with them in comments, and a check that flagged those is one a team switches off."
+    },
+    {
+      "id": "REF-17",
+      "severity": "high",
+      "summary": "The automated matrix swept no themes at all, ran two of the four canon widths, and never asserted focus — against a packet line that names all three.",
+      "where": "tests/suites.js runMatrix; tools/drive.mjs matrix",
+      "found_by": "Reading CORRECTION_GOAL_PROMPT.md's last required-proof line against the harness rather than against the documentation.",
+      "detail": "CORRECTION_GOAL_PROMPT.md requires that “all themes, widths, reduced motion, keyboard/focus, long content, errors, reconnect idempotency, and non-showcase pairings pass”. Measured against the suite: `theme` and `ui.theme` appeared ZERO times in tests/suites.js, so eight themes were offered, selectable and documented as covered while nothing asserted that any of them rendered. The width sweep ran 520 and 750, so the two widths at which the artifact workspace and pinned history actually coexist — exactly where a layout runs out of room — were never swept. And `activeElement` appeared zero times, while shared/motion.js states as its rule 3 that “not one helper touches focus”: a docblock, not a check. This is the report-versus-measurement failure this workspace keeps producing, committed against the packet's own acceptance line.",
+      "fix": "The matrix now sweeps all four canon widths and adds a theme axis — 8 themes x 4 widths on the two structural extremes, as its own axis rather than multiplied through 64 pairings, which would be 2,048 runs to re-prove the same tokens sixty-four times. A new `focus` suite asserts that a full activity run and a question opening leave focus on the composer in all eight thread concepts. COVERAGE.md's stale claims are corrected at the top of the file rather than edited into the tables."
+    },
+    {
+      "id": "REF-18",
+      "severity": "medium",
+      "summary": "This report carried two verification blocks that disagreed with each other.",
+      "where": "reference-review-report.json",
+      "found_by": "Reading the report end to end instead of the section just written.",
+      "detail": "`verification` held the first pass's numbers — 26 suites, 613 assertions, and t2 and t8 listed as failing a check that had since been resolved — while `test_evidence` held the second pass's. Two owners of one fact, in the document that catalogues two-owners-of-one-fact defects.",
+      "fix": "`verification` is now a pointer to `test_evidence`, keeping the first-pass numbers under a label that says what they are."
+    },
+    {
+      "id": "REF-19",
+      "severity": "medium",
+      "summary": "Five of the fourteen demo-trigger states the packet names had no family with that name, and nothing said where they lived.",
+      "where": "demo-trigger-report.json; shared/demo.js",
+      "found_by": "Checking the packet's fourteen named states one by one against the Director's family list.",
+      "detail": "The packet requires triggers covering “question, Goal, Todo, child, activity, diff, artifact, approval, thread, collision, offline/replay, BSD, attachment, and recovery states”. Nine of those are family names here; `child`, `approval`, `collision`, `offline/replay` and `recovery` are not. They were all genuinely covered — by `agent`/`crew`, by `decision`, by the three `system.*_collision` triggers, by `sync`, and by the retry/repair/restore paths of five families — but a reviewer holding the packet against the report would have found five of fourteen apparently missing, and the only thing saying otherwise was a reader's willingness to guess.",
+      "fix": "tools/drive.mjs now declares the mapping and MEASURES it: a packet state counts as covered only when one of its named events actually fired ok in the sweep, an event named in the map that the Director no longer has is reported as drift, and an uncovered state is a sweep failure. TEST_REPORT.md prints the table."
+    },
+    {
+      "id": "REF-20",
+      "severity": "high",
+      "summary": "Nine of the ten command ids an operation card prints were absent from candidate-command-delta.json, and three delta rows claimed “new” on evidence the catalog contradicts.",
+      "where": "shared/opcard.js; candidate-command-delta.json; candidate-wiring-delta.json",
+      "found_by": "Extracting every cmd.* id from source and from the wiring delta and diffing both against the command delta, then re-checking each remaining “new” against the 540 canonical table rows in Plans/UI_Command_Catalog.md.",
+      "detail": "shared/opcard.js states in its own docblock that “every id minted here is also recorded in candidate-command-delta.json for the owner to accept, rename or reject”. Nine of its ten were not, so a card printed a COMMAND row the catalog owner had never been shown. Checking them against the catalog then found three that must not be minted at all: `cmd.chat.web.search` is already canonical, `cmd.browser.navigate` already owns driving a page, and `cmd.testing.run` already owns running a suite. A second sweep over the existing rows found three more dispositioned “new” on false evidence — the worst being `cmd.chat.bsd.set`, recorded as new because “no cmd.bsd.* or Back Seat Driver id exists anywhere in the catalog” when `cmd.bsd.set` is canonical at :11109 with the concept's own Off/Auto/On enum and Auto default — and three ids that lived only in candidate-wiring-delta.json and had therefore never been put in front of the file whose job is to check them.",
+      "fix": "opcard.js now emits the canonical ids. The delta carries all 48 rows with corrected dispositions, and `node tools/drive.mjs scan` fails on any cmd.* id in surface source or in the wiring delta that the command delta does not record — 44 ids checked, 0 unrecorded. An unknown stage kind no longer builds `cmd.chat.activity.<kind>` on the spot, which was a mint no source grep could ever see."
+    },
+    {
+      "id": "REF-21",
+      "severity": "high",
+      "summary": "The widened matrix took one Chromium to 12.8 GB and the host fully into swap.",
+      "where": "tests/suites.js runMatrix; tools/drive.mjs matrix",
+      "found_by": "Watching host memory while the widened sweep ran, after the user had already had to restart this machine once for running out of RAM.",
+      "detail": "runMatrix chained its runs with plain `.then()`. A promise chain of synchronous mounts is one unbroken block of work — microtasks drain before the event loop gets a turn — so the browser never painted, never ran a full GC, and never let the driver read progress, while every mounted composition stayed reachable from the accumulating result until the whole sweep resolved. Heap therefore grew with the TOTAL number of runs rather than with the widest one. At 128 runs that was survivable; widening to 320 was not. This was introduced by the REF-17 fix, which is the point worth keeping: closing a coverage gap made the harness unrunnable, and only watching the host caught it.",
+      "fix": "The sweep yields to the macrotask queue between runs so GC and paint can happen at all, and the driver runs it in chunks — one per window plus one for the theme axis — each in a freshly navigated page, which discards each chunk's heap outright and bounds the sweep at one window's worth however wide the matrix later becomes."
+    },
+    {
+      "id": "REF-22",
+      "severity": "medium",
+      "summary": "plan-owner-delta.md was never updated, although the packet names it as a report that must be.",
+      "where": "plan-owner-delta.md",
+      "found_by": "Re-reading the packet's deliverables list against the files actually touched.",
+      "detail": "CORRECTION_GOAL_PROMPT.md requires “Update interaction, visual, demo-trigger, Plan-owner, candidate Command/Wiring/DRY, and known-gap reports.” Six of the seven were updated during the correction; the Plan-owner delta was not touched at all, so the run-trace contract, the resize primitive and the attachment family had no Plan-impact statement.",
+      "fix": "An `Assistant activity run` owner section and a Testing/Browser/Artifacts addendum were added."
+    },
+    {
+      "id": "REF-23",
+      "severity": "high",
+      "summary": "Activating an activity chain glyph with the keyboard dropped focus to <body> in all eight thread concepts.",
+      "where": "shared/compose.js _onState; shared/util.js; all eight threads/t*.js",
+      "found_by": "Writing the focus assertion the packet's acceptance line implies, then running it with the fix disabled to check it could fail.",
+      "detail": "Seven of the eight concepts rebuild their activity capsule when the phase kind changes, so the glyph a reader has focused is destroyed and replaced by an equal-looking new element mid-interaction. Focus then falls back to <body>, which for a keyboard reader means being returned to the top of the document by their own click. `activeElement` appeared nowhere in shared/, threads/ or windows/, so nothing anywhere was preserving it. Measured with the fix disabled: 8 of 8 fail. A weaker assertion — that a focusable control still EXISTS after the render — passes in all eight while focus is on <body>, which is why the check is written as a position match instead.",
+      "fix": "PMXUtil.keepFocusAcross(root, mutateFn) records the focused element's position path within root, runs the mutation, and re-focuses whatever now stands at that path — with preventScroll, so it cannot undo ScrollCtl.preserveAcross — and ONLY when focus was actually dropped, so a concept that deliberately moves focus is not fought. It is wired at Composition._onState, the single point every store-driven re-render passes through, rather than in eight concepts: a concept can only protect the renders it knows it caused, and focus is lost by whichever render happens to land. It is deliberately NOT in shared/motion.js, whose third rule is that no motion helper touches focus."
+    },
+    {
+      "id": "REF-24",
+      "severity": "medium",
+      "summary": "Behaviour 4 of 03_compact_execution_activity.mov was asserted at the record level only, never geometrically.",
+      "where": "tests/suites.js runtrace suite",
+      "found_by": "Walking the five behaviours shared/runtrace.js cites by frame index and asking, for each, which assertion holds it.",
+      "detail": "f.910: the run condenses to one summary row, and the prose answer, the verification row and the artifact card live BELOW it and are pushed down when a phase is reopened, never replaced. What existed was `every work surface is still live after a condense` — true of the record, silent about the screen. A capsule that overlays what is beneath it, and one that swaps its region's contents, both leave that assertion passing and the reading ruined.",
+      "fix": "The suite now measures the y of the content below the capsule across a reopen, in all eight concepts. Written first as an element-identity check it failed in seven — and that was the CHECK being wrong: seven rebuild the region, and a viewer cannot see element identity. Rewritten to compare content and position, which is what the recording can actually show, it passes in eight. Checked for teeth by running it with a strict must-move instead of must-not-move-up: six of the eight still pass, so the displacement is real and the looser form is a guard rather than a vacuum."
+    },
+    {
+      "id": "REF-25",
+      "severity": "medium",
+      "summary": "TEST_REPORT.md reported two documented design differences as failures, and printed three measured columns as “n/a”.",
+      "where": "tools/report.mjs; tools/drive.mjs activity",
+      "found_by": "Reading the generated report rather than the JSON it was generated from.",
+      "detail": "The activity probe deliberately keeps three dimensions OUT of its exit gate, with the reasoning written at the gate. The report generator did not know that, so it collected every false in every verdict and printed “Concepts with a failing verdict: t2, t8” directly beneath a table it had just filled from a run that exited 0. A file whose premise is that it never states anything the measurement did not say was contradicting the measurement's own exit code. Separately, its cell formatter rendered anything that was not a boolean or a number as “n/a”, so `sentence row via` and `handover beats` — both measured, both useful — printed as three columns of the word “n/a”.",
+      "fix": "drive.mjs now emits `gatedVerdictKeys` and `recordedVerdictKeys` (the latter carrying the reason each dimension is recorded rather than failed), and report.mjs reads them instead of deciding for itself — so the summary cannot drift from the exit code. Gated columns are bold in the table, and arrays and strings now print as themselves."
+    }
+  ],
+  "recommendation": "none - this report does not name a winner",
+  "verification": {
+    "superseded": true,
+    "superseded_by": "test_evidence",
+    "why": "This block held the FIRST pass's numbers and was left behind when the second pass remeasured, so one report carried two verification sections disagreeing about how many suites there are and still listing t2 and t8 as failing a check that had been resolved. That is the same defect this report catalogues elsewhere — two owners of one fact — committed in the document that catalogues it. `test_evidence` is now the only place a measurement is stated, and `tools/report.mjs` regenerates TEST_REPORT.md from the same JSON so no figure is typed by hand.",
+    "first_pass_numbers_kept_for_the_record": {
+      "method": "tools/drive.mjs — one dependency-free CDP driver over file://. Every number here was measured, not transcribed; tools/report.mjs regenerates TEST_REPORT.md from the same JSON so a claim cannot drift from its measurement.",
+      "suite": {
+        "suites": 26,
+        "assertions": 613,
+        "passed": 613,
+        "failed": 0,
+        "pageConsoleErrors": 0,
+        "pageConsoleWarnings": 0,
+        "viewport": {
+          "width": 1920,
+          "height": 1000
+        }
+      },
+      "matrix": {
+        "runs": 128,
+        "assertions": 512,
+        "failed": 0,
+        "windows": 8
+      },
+      "director": {
+        "familyKeys": 17,
+        "distinctFamilies": 16,
+        "rawEvents": 126,
+        "distinctBehaviours": 113,
+        "fired": 113,
+        "failed": 0
+      },
+      "activity": {
+        "concepts": 8,
+        "evidencePngs": 72,
+        "allRenderChain": true,
+        "allHoldHeaderStill": true,
+        "allGlyphsReopenTheirPhase": true,
+        "failingHeadlineReadback": [
+          "t2",
+          "t8"
+        ]
+      },
+      "scan": "0 NUL bytes, 0 UTF-8 decode failures, 0 forbidden-phrase hits across 121 files."
+    }
+  },
+  "still_open": [
+    {
+      "id": "OPEN-2-RESOLVED",
+      "severity": "closed",
+      "summary": "The question card now resizes with this product’s own tuned bounce, in all eight concepts.",
+      "detail": "The stable-frame reading was withdrawn on instruction. The reference’s card only LOOKS stable because every one of its pages carries exactly four option rows; our pages genuinely differ (single select, multi select, freeform), so stability would have had to be engineered rather than observed. Instead the card bounces, reproducing PMConcept7’s model-picker resize: height on cubic-bezier(.22,1.72,.36,1) so it overshoots and settles, plus a restarted scale beat, measured start, height:auto remeasure so max-height is respected, and a sub-pixel bail. Six concepts carried written refusals of height motion; all six were rewritten rather than left contradicting the code, and `pmx-resize-up` answers most of what they were protecting by moving the card’s own top edge instead of the content below it."
+    },
+    {
+      "id": "OPEN-3-RESOLVED",
+      "severity": "closed",
+      "summary": "The two-beat handover now plays in all eight concepts; the lateral push plays where the geometry supports it.",
+      "detail": "Measured `handoverClearsBeforeNewGlyph` true for 8/8. t2, t4, t5, t6 and t7 drive it through motion.phaseHandover; t1, t3 and t8 express the same two beats in their own geometry, because their chains sit where a lateral slot-opening would either reach nothing or push the wrong element. t4 was converted to identity-preserving chain reconciliation on the t2 pattern, which is what its own comment had been asking for."
+    },
+    {
+      "id": "OPEN-1-RESOLVED",
+      "severity": "closed",
+      "summary": "The headline read-back failure was two unrelated causes; both are settled.",
+      "detail": "t2 was a fault in the probe: it derived \"the header\" as the parent of the first run-verb, and t2 has no header row at all — its sentence lives on the subject phase’s own chip while the others are deliberately blanked. The verdict now reads the whole capsule, matching the suite. t8 is a genuine, documented divergence: its line describes the run and its footnote describes the opened phase. That is reported as `sentenceRowFollowsOpenPhase` and deliberately kept OUT of the exit gate, so it stays visible without being failed."
+    },
+    {
+      "id": "OPEN-4",
+      "severity": "low",
+      "summary": "The append-only arrival path still never engages on the windowed thread.",
+      "detail": "data.visibleSlice recomputes its start from the message count, so on thread-09 (700 messages, window 50) an append also drops the oldest rendered message. That is a removal, and the append gate correctly refuses it. Unchanged this pass; fixing it means changing visibleSlice/loadedFrom semantics in shared/data.js."
+    }
+  ],
+  "changed_paths": {
+    "baseline": "checkpoint commit 46086b2d0 — the prior session's uncommitted work, landed unchanged so this correction reads as a separate diff",
+    "measured_by": "git diff --numstat --ignore-cr-at-eol 46086b2d0 -- Concepts/chat-assistant-concepts/opus-5 (the --ignore-cr-at-eol matters: this repo is on an NFS share with 1508 files already CRLF in HEAD, and without it the diff reads as thousands of phantom line changes)",
+    "new_files": [
+      "Concepts/chat-assistant-concepts/opus-5/reference-review-report.json",
+      "Concepts/chat-assistant-concepts/opus-5/shared/runtrace.js",
+      "Concepts/chat-assistant-concepts/opus-5/tools/drive.mjs",
+      "Concepts/chat-assistant-concepts/opus-5/tools/report.mjs"
+    ],
+    "modified": [
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/interaction-test-report.json",
+        "added": 9902,
+        "removed": 33
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/demo-trigger-report.json",
+        "added": 1249,
+        "removed": 101
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/tests/suites.js",
+        "added": 1091,
+        "removed": 23
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/threads/t3-timeline-spine.js",
+        "added": 995,
+        "removed": 78
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/threads/t7-cards-with-air.js",
+        "added": 970,
+        "removed": 46
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/threads/t4-digest.js",
+        "added": 889,
+        "removed": 57
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/threads/t8-reading-mode.js",
+        "added": 811,
+        "removed": 40
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/threads/t2-two-tone-slabs.js",
+        "added": 761,
+        "removed": 35
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/threads/t6-work-interleave.js",
+        "added": 693,
+        "removed": 18
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/threads/t5-paired-columns.js",
+        "added": 685,
+        "removed": 36
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/threads/t1-speaker-turns.js",
+        "added": 571,
+        "removed": 39
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/demo/build-demo-bundles.mjs",
+        "added": 523,
+        "removed": 95
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/threads/t7-cards-with-air.css",
+        "added": 321,
+        "removed": 2
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/threads/t3-timeline-spine.css",
+        "added": 318,
+        "removed": 0
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/threads/t5-paired-columns.css",
+        "added": 305,
+        "removed": 9
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/shared/motion.css",
+        "added": 289,
+        "removed": 11
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/threads/t4-digest.css",
+        "added": 275,
+        "removed": 0
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/threads/t8-reading-mode.css",
+        "added": 267,
+        "removed": 6
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/shared/motion.js",
+        "added": 235,
+        "removed": 8
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/threads/t1-speaker-turns.css",
+        "added": 224,
+        "removed": 2
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/GAP_REPORT.md",
+        "added": 209,
+        "removed": 0
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/threads/t2-two-tone-slabs.css",
+        "added": 185,
+        "removed": 2
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/threads/t6-work-interleave.css",
+        "added": 170,
+        "removed": 0
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/shared/demo.js",
+        "added": 168,
+        "removed": 10
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/TEST_REPORT.md",
+        "added": 153,
+        "removed": 121
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/candidate-command-delta.json",
+        "added": 139,
+        "removed": 18
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/BUILD_STATUS.md",
+        "added": 95,
+        "removed": 3
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/shared/util.js",
+        "added": 70,
+        "removed": 0
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/shared/surfaces.js",
+        "added": 58,
+        "removed": 36
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/shared/opcard.js",
+        "added": 53,
+        "removed": 16
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/demo/demoData.json",
+        "added": 44,
+        "removed": 17
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/COVERAGE.md",
+        "added": 40,
+        "removed": 5
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/shared/opsawareness.js",
+        "added": 38,
+        "removed": 17
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/plan-owner-delta.md",
+        "added": 37,
+        "removed": 0
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/shared/scroll.js",
+        "added": 34,
+        "removed": 1
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/shared/artifacts.js",
+        "added": 33,
+        "removed": 20
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/shared/qflow.js",
+        "added": 33,
+        "removed": 6
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/VISUAL_AUDIT.md",
+        "added": 26,
+        "removed": 0
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/shared/compose.js",
+        "added": 23,
+        "removed": 7
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/candidate-wiring-delta.json",
+        "added": 18,
+        "removed": 6
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/impact-register.json",
+        "added": 16,
+        "removed": 0
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/SERVICES.md",
+        "added": 12,
+        "removed": 0
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/candidate-dry-delta.json",
+        "added": 10,
+        "removed": 3
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/shared/workspace.js",
+        "added": 6,
+        "removed": 2
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/shared/route.js",
+        "added": 2,
+        "removed": 2
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/README.md",
+        "added": 1,
+        "removed": 1
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/contact.html",
+        "added": 1,
+        "removed": 0
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/demo/demoData.bundle.js",
+        "added": 1,
+        "removed": 1
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/demo/demoDataExtension.js",
+        "added": 1,
+        "removed": 1
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/index.html",
+        "added": 1,
+        "removed": 0
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/stage.html",
+        "added": 1,
+        "removed": 0
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/tests/runner.html",
+        "added": 1,
+        "removed": 0
+      },
+      {
+        "path": "Concepts/chat-assistant-concepts/opus-5/shared/questionnaire.js",
+        "added": "-",
+        "removed": "-"
+      }
+    ],
+    "evidence_captures": {
+      "modified_pngs": 0,
+      "new_pngs": 72
+    },
+    "totals": {
+      "files_modified": 53,
+      "files_new": 4,
+      "lines_added": 23053,
+      "lines_removed": 934
+    }
+  },
+  "test_evidence": {
+    "measured_by": "tools/drive.mjs — one dependency-free CDP driver over file://. tools/report.mjs regenerates TEST_REPORT.md from the same JSON, so no figure in the prose is typed by hand.",
+    "suite": {
+      "suites": 28,
+      "assertions": 869,
+      "passed": 869,
+      "failed": 0,
+      "pageConsoleErrors": 0,
+      "pageConsoleWarnings": 0,
+      "viewport": "1920x1000"
+    },
+    "matrix": {
+      "pairingRuns": 256,
+      "themeRuns": 64,
+      "totalRuns": 320,
+      "assertions": 1280,
+      "failed": 0,
+      "chunks": [
+        "w1",
+        "w2",
+        "w3",
+        "w4",
+        "w5",
+        "w6",
+        "w7",
+        "w8",
+        "themes"
+      ],
+      "themes": [
+        "friendly-dark",
+        "friendly-light",
+        "retro-dark",
+        "retro-light",
+        "basic-light",
+        "basic-dark",
+        "glass-dark",
+        "glass-light"
+      ],
+      "widths": [
+        520,
+        750,
+        975,
+        1200
+      ],
+      "themePairings": [
+        "w1+t1",
+        "w8+t4"
+      ],
+      "durationMinutes": 11.1,
+      "note": "Nine chunks, each in its own freshly navigated page. Run as one sweep this reached 12.8 GB resident; chunked, peak Chromium was about 0.6 GB."
+    },
+    "director": {
+      "distinctBehaviours": 120,
+      "fired": 120,
+      "failed": 0,
+      "packetStatesCovered": 14,
+      "packetStatesRequired": 14,
+      "uncoveredPacketStates": []
+    },
+    "activity": {
+      "concepts": 8,
+      "gatedDimensions": [
+        "chainRendered",
+        "glyphCountMatchedStateEveryBeat",
+        "headerHeldStillOnEveryCountTick",
+        "everyGlyphReopensItsPhase",
+        "everyGlyphOpensToItsOwnHeadline"
+      ],
+      "allGatedDimensionsPass": true,
+      "handoverOrderTrueForAll": true,
+      "recordedDivergences": {
+        "sentenceRowFollowsOpenPhase": [
+          "t2",
+          "t8"
+        ],
+        "handoverClearsBeforeNewGlyph": [],
+        "handoverOrderVisibleAcrossFrames": [
+          "t2"
+        ]
+      }
+    },
+    "questionPaging": {
+      "concepts": 8,
+      "allHoldOneRoot": true,
+      "noneReplayEntranceGoingBack": true,
+      "allShowTheAnswerAfterPagingBack": true
+    },
+    "folder_scan": "node tools/drive.mjs scan — 0 NUL bytes, 0 UTF-8 decode failures, 0 forbidden acquisition phrases, 0 emoji or pictographs across 122 files, and 49 cmd.* ids checked against candidate-command-delta.json with 0 unrecorded",
+    "concept_hub": "python3 Concepts/ConceptHub/validate.py Concepts/chat-assistant-concepts/opus-5 — passed"
+  }
+}

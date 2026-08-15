@@ -34,6 +34,7 @@ REQUIRED_PNC019_SOURCE_HASH_PATHS = (
     "Plans/Progression_Gates.md",
     "scripts/pm-pnc019-certification-harness.py",
     "scripts/pm_pnc019_currentness.py",
+    "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json",
 )
 
 EVENT_FAMILY_REGISTRY_REL_PATH = "Plans/event_family_registry.json"
@@ -41,33 +42,26 @@ EVENT_FAMILY_REGISTRY_SCHEMA_ID = "pm.event_family_registry.v1"
 EVENT_FAMILY_REGISTRY_SCHEMA_VERSION = "2.0.0"
 EVENT_FAMILY_REGISTRY_REVISION = "2026-08-04.1"
 EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT = 39
-EVENT_FAMILY_EVIDENCE_REGISTERED_ROWS = 37
-EVENT_FAMILY_PROVEN_PERSISTED_FLOOR = 285
-EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR = 248
-EVENT_FAMILY_UNRESOLVED_FLOOR = 40
-EVENT_FAMILY_EXCLUDED_COUNT = 68
+EVENT_FAMILY_QUARANTINED_ROW_COUNT = 252
 EVENT_FAMILY_DENOMINATOR_STATUS = "UNKNOWN_OPEN"
 EVENT_FAMILY_BULK_REGISTRATION_ALLOWED = False
-EVENT_FAMILY_EVIDENCE_CURRENTNESS = "source_dated_lower_bound_pending_fresh_reconciliation"
+EVENT_FAMILY_EVIDENCE_CURRENTNESS = "live_rehashed_fail_closed_currentness_audit"
+EVENT_AUTHORITY_AUDIT_ROOT = "Plans/.audits/event-authority-2026-08-13-currentness"
+EVENT_AUTHORITY_STATUS_REL_PATH = f"{EVENT_AUTHORITY_AUDIT_ROOT}/EVENT_FAMILY_DENOMINATOR_STATUS.json"
+EVENT_AUTHORITY_RECEIPT_REL_PATH = f"{EVENT_AUTHORITY_AUDIT_ROOT}/VALIDATOR_RECEIPT.json"
+EVENT_AUTHORITY_GROUP_MANIFEST_REL_PATH = f"{EVENT_AUTHORITY_AUDIT_ROOT}/adjudication/GROUP_ARTIFACT_MANIFEST.json"
+EVENT_AUTHORITY_QUARANTINE_LEDGER_REL_PATH = f"{EVENT_AUTHORITY_AUDIT_ROOT}/adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl"
+EVENT_AUTHORITY_SOURCE_INVENTORY_REL_PATH = f"{EVENT_AUTHORITY_AUDIT_ROOT}/CURRENT_EVENT_SOURCE_INVENTORY.json"
 EVENT_FAMILY_EVIDENCE_REFS = [
     {
-        "artifact_id": "EA-27_PRODUCER_UNION_AND_DENOMINATOR.json",
-        "custody_root": "PuppetMaster-AssuranceLab",
-        "custody_path": (
-            "orchestration-2026-07-17/phase3/event-authority/"
-            "EA-27_PRODUCER_UNION_AND_DENOMINATOR.json"
-        ),
-        "sha256": "644c6d0bc913eaed62f41e231fdb7e04f55d270549fcdede73a0869994111e47",
-        "union_rows_sha256": "aa9c365904788eba74df73bb1b5eecaae903a6aa167e0514b7937198aa0dbf4d",
+        "artifact_id": "EVENT_FAMILY_DENOMINATOR_STATUS.json",
+        "custody_path": EVENT_AUTHORITY_STATUS_REL_PATH,
+        "claim": "UNKNOWN_OPEN current status",
     },
     {
-        "artifact_id": "EA-29_TERMINAL_FINDINGS_RESIDUALS_CONTRACT_DEPTH_REPAIR_AND_WAVE1_CHECKPOINT.md",
-        "custody_root": "PuppetMaster-AssuranceLab",
-        "custody_path": (
-            "orchestration-2026-07-17/phase3/event-authority/"
-            "EA-29_TERMINAL_FINDINGS_RESIDUALS_CONTRACT_DEPTH_REPAIR_AND_WAVE1_CHECKPOINT.md"
-        ),
-        "sha256": "17820aef1b498acf2e5165bee106171ff1ef35a1b23fa67d0cc23e291a8ed7bf",
+        "artifact_id": "GROUP_ARTIFACT_MANIFEST.json",
+        "custody_path": EVENT_AUTHORITY_GROUP_MANIFEST_REL_PATH,
+        "claim": "252 unique row-local findings quarantined without registry or checkpoint advance",
     },
 ]
 
@@ -98,6 +92,108 @@ def sha256_file(path: Path) -> str:
         for chunk in iter(lambda: source.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def event_authority_audit_failures(root: Path) -> list[dict[str, Any]]:
+    """Rehash and validate the current in-repo fail-closed audit binding."""
+    failures: list[dict[str, Any]] = []
+    try:
+        receipt = json.loads((root / EVENT_AUTHORITY_RECEIPT_REL_PATH).read_text(encoding="utf-8"))
+        status = json.loads((root / EVENT_AUTHORITY_STATUS_REL_PATH).read_text(encoding="utf-8"))
+        manifest = json.loads((root / EVENT_AUTHORITY_GROUP_MANIFEST_REL_PATH).read_text(encoding="utf-8"))
+        inventory = json.loads((root / EVENT_AUTHORITY_SOURCE_INVENTORY_REL_PATH).read_text(encoding="utf-8"))
+    except Exception as exc:  # noqa: BLE001 - currentness must fail closed.
+        return [{"error": "event_authority_currentness_audit_unavailable", "detail": str(exc)}]
+
+    artifact_hashes = receipt.get("artifact_hashes")
+    if not isinstance(artifact_hashes, dict):
+        failures.append({"error": "event_authority_currentness_artifact_hashes_invalid"})
+        artifact_hashes = {}
+    for artifact_path, expected_sha in artifact_hashes.items():
+        target = root / artifact_path
+        if not target.is_file():
+            failures.append({"error": "event_authority_currentness_artifact_missing", "artifact_path": artifact_path})
+        elif not isinstance(expected_sha, str) or sha256_file(target) != expected_sha:
+            failures.append({"error": "event_authority_currentness_artifact_drift", "artifact_path": artifact_path})
+
+    inventory_sources = inventory.get("sources")
+    if not isinstance(inventory_sources, list):
+        failures.append({"error": "event_authority_currentness_source_inventory_invalid"})
+        inventory_sources = []
+    inventoried_paths: set[str] = set()
+    for row in inventory_sources:
+        if not isinstance(row, dict) or not isinstance(row.get("path"), str):
+            failures.append({"error": "event_authority_currentness_source_inventory_row_invalid"})
+            continue
+        source_path = row["path"]
+        inventoried_paths.add(source_path)
+        target = root / source_path
+        if not target.is_file():
+            failures.append({"error": "event_authority_currentness_source_missing", "source_path": source_path})
+        elif target.stat().st_size != row.get("bytes") or sha256_file(target) != row.get("sha256"):
+            failures.append({"error": "event_authority_currentness_source_drift", "source_path": source_path})
+    live_direct_plans = {
+        path.relative_to(root).as_posix()
+        for path in (root / "Plans").glob("*.md")
+        if path.is_file()
+    }
+    inventoried_direct_plans = {
+        row["path"]
+        for row in inventory_sources
+        if isinstance(row, dict) and row.get("authority_class") == "direct_canonical_plan_prose"
+    }
+    if live_direct_plans != inventoried_direct_plans:
+        failures.append({"error": "event_authority_currentness_direct_plans_source_set_drift"})
+
+    validator_path = receipt.get("validator_path")
+    validator_sha = receipt.get("validator_sha256")
+    if not isinstance(validator_path, str) or not (root / validator_path).is_file():
+        failures.append({"error": "event_authority_currentness_validator_missing"})
+    elif sha256_file(root / validator_path) != validator_sha:
+        failures.append({"error": "event_authority_currentness_validator_drift", "validator_path": validator_path})
+
+    if receipt.get("evidence_valid") is not True or receipt.get("event_authority_closed") is not False:
+        failures.append({"error": "event_authority_currentness_receipt_not_fail_closed"})
+    if not (
+        status.get("status") == "UNKNOWN_OPEN"
+        and status.get("closed") is False
+        and status.get("complete_denominator_known") is False
+        and status.get("contract_depth_complete") is False
+        and status.get("build_or_pnc019_authority") is False
+    ):
+        failures.append({"error": "event_authority_currentness_status_not_unknown_open"})
+    live_registry = root / EVENT_FAMILY_REGISTRY_REL_PATH
+    registry_status = status.get("registry", {})
+    if not live_registry.is_file() or not (
+        registry_status.get("live_family_count") == EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT
+        and registry_status.get("revision") == EVENT_FAMILY_REGISTRY_REVISION
+        and registry_status.get("sha256") == sha256_file(live_registry)
+    ):
+        failures.append({"error": "event_authority_currentness_live_registry_drift"})
+    quarantine = status.get("row_local_quarantine", {})
+    union = manifest.get("union", {})
+    if not (
+        quarantine.get("row_count") == EVENT_FAMILY_QUARANTINED_ROW_COUNT
+        and quarantine.get("unique_event_type_count") == EVENT_FAMILY_QUARANTINED_ROW_COUNT
+        and quarantine.get("bulk_registration") is False
+        and union.get("row_count") == EVENT_FAMILY_QUARANTINED_ROW_COUNT
+        and union.get("unique_event_type_count") == EVENT_FAMILY_QUARANTINED_ROW_COUNT
+        and union.get("quarantined_row_count") == EVENT_FAMILY_QUARANTINED_ROW_COUNT
+        and union.get("exact_set_equality") is True
+        and all(
+            json.loads(line).get("audit_disposition")
+            == "KEEP_QUARANTINED_NO_REGISTRY_OR_CHECKPOINT_ADVANCE"
+            for line in (root / EVENT_AUTHORITY_QUARANTINE_LEDGER_REL_PATH)
+            .read_text(encoding="utf-8")
+            .splitlines()
+            if line.strip()
+        )
+        and manifest.get("bulk_registration") is False
+        and manifest.get("complete_denominator_known") is False
+        and manifest.get("contract_depth_complete") is False
+    ):
+        failures.append({"error": "event_authority_quarantined_252_manifest_invalid"})
+    return failures
 
 
 def _with_path(failure: dict[str, Any], path_label: str | None) -> dict[str, Any]:
@@ -201,11 +297,7 @@ def pnc019_event_authority_failures_for_registry(
                 {
                     "error": "event_denominator_unresolved",
                     "registered_kernel_rows": actual_registered_rows,
-                    "evidence_registered_rows": EVENT_FAMILY_EVIDENCE_REGISTERED_ROWS,
-                    "proven_persisted_floor": EVENT_FAMILY_PROVEN_PERSISTED_FLOOR,
-                    "proven_unregistered_floor": EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR,
-                    "unresolved_floor": EVENT_FAMILY_UNRESOLVED_FLOOR,
-                    "excluded_count": EVENT_FAMILY_EXCLUDED_COUNT,
+                    "quarantined_row_count": EVENT_FAMILY_QUARANTINED_ROW_COUNT,
                     "denominator_status": EVENT_FAMILY_DENOMINATOR_STATUS,
                     "bulk_registration_allowed": EVENT_FAMILY_BULK_REGISTRATION_ALLOWED,
                     "evidence_currentness": EVENT_FAMILY_EVIDENCE_CURRENTNESS,
@@ -224,9 +316,7 @@ def pnc019_event_authority_failures_for_registry(
                 {
                     "error": "event_family_contract_depth_unresolved",
                     "registered_kernel_rows": actual_registered_rows,
-                    "evidence_registered_rows": EVENT_FAMILY_EVIDENCE_REGISTERED_ROWS,
-                    "proven_unregistered_floor": EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR,
-                    "unresolved_floor": EVENT_FAMILY_UNRESOLVED_FLOOR,
+                    "quarantined_row_count": EVENT_FAMILY_QUARANTINED_ROW_COUNT,
                     "bulk_registration_allowed": EVENT_FAMILY_BULK_REGISTRATION_ALLOWED,
                     "evidence_refs": EVENT_FAMILY_EVIDENCE_REFS,
                     "contract_depth_complete": False,
@@ -253,7 +343,9 @@ def pnc019_event_authority_clearance_failures(
                 path_label,
             )
         ]
-    return pnc019_event_authority_failures_for_registry(
+    audit_failures = event_authority_audit_failures(root)
+    registry_failures = pnc019_event_authority_failures_for_registry(
         registry,
         path_label=path_label,
     )
+    return audit_failures + registry_failures

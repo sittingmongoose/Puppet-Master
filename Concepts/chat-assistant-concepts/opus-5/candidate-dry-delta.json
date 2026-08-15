@@ -16,7 +16,8 @@
     "Usage",
     "Artifact service",
     "Worktree Manager",
-    "Notifications"
+    "Notifications",
+    "Run trace"
   ],
   "rows": [
     {
@@ -153,15 +154,21 @@
     },
     {
       "role": "Motion vocabulary",
-      "module": "shared/motion.js thirteen helpers",
+      "module": "shared/motion.js — 13 transition families plus 7 causal primitives",
       "runtime_owner": "ObservableWork",
-      "why": "Reduced motion handled in one place; the eight concepts compose named helpers instead of hand-rolled timings."
+      "why": "Reduced motion handled in one place; the eight concepts compose named helpers instead of hand-rolled timings. The seven causal primitives (displace, firstVisit, countMorph, groupReopen, phaseHandover, chainRoll, resizeBounce) are the second half of that and were added from the reference recordings: they name a CAUSE — this moved because that arrived — where the thirteen families name a transition. Keeping them in one module is what let a single CSS defect be found and fixed once for all eight concepts rather than eight times, and it is why `resizeBounce` could be given PMConcept7's measured curve in one place."
     },
     {
       "role": "Artifact state machine and frames",
       "module": "shared/artifacts.js",
       "runtime_owner": "Artifact service",
       "why": "One state machine and one frame descriptor per window; the body renderer knows data kinds, not placement."
+    },
+    {
+      "role": "Run trace",
+      "module": "shared/runtrace.js",
+      "runtime_owner": "Run trace",
+      "justification": "One record of the activity run - entry order, running phase, partial counts, disclosed phase - consumed by eight concepts that each render it in their own idiom. Written because the run state was previously duplicated between view.surfaces and PMXOpCard with no mechanism keeping the two equal, so an operation card and the capsule beside it could disagree about whether the same phase was still running."
     }
   ]
 }

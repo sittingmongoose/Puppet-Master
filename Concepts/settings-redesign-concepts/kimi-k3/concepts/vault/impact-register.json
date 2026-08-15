@@ -3,53 +3,146 @@
   "concept_id": "vault",
   "model": "kimi-k3",
   "plan_owner_impacts": [
-    { "owner": "FinalGUISpec", "impact": "Vault demonstrates the ledger-and-timeline composition: capacity meters, scrubbable SVG retention bars, hash-chipped receipts, and the stepped lifecycle wizard." },
-    { "owner": "settings inventory and schema", "impact": "Settings Lifecycle treats export/import/copy/reset as stepped flows over the shared inventory; managed rows are skipped, never overwritten." },
-    { "owner": "Storage", "impact": "Five storage areas are visually separated and independently described; retention anchors/minima and legal holds render as timeline bars." },
-    { "owner": "Runtime Artifacts/Outputs", "impact": "Artifacts carry PM-owned vs provider-native identity, redaction policy, retention, and hash receipts." },
-    { "owner": "Worktrees/Git/GitHub", "impact": "Worktree ledger + SVG branch graph + policy rows; GitHub Actions sits behind an explicit forge connection with a reachable setup state." },
-    { "owner": "Containers/Registries", "impact": "Docker/Podman/Kubernetes as human top-level cards with typed unavailable states and shared tool lifecycle language." },
-    { "owner": "Release/updates owner", "impact": "Provider update lifecycle in the shared manager; the future Updates module is reserved with this owner named." },
-    { "owner": "Binary Locator and installation lifecycle", "impact": "SCM and container tools render exact installation health with the same confidence vocabulary as providers." },
-    { "owner": "UI Command Catalog", "impact": "Lifecycle candidate IDs (export/import.*/reset.*/copy_from_project.*) annotated new in candidate-command-delta.json." }
+    {
+      "owner": "FinalGUISpec",
+      "impact": "Vault demonstrates the ledger-and-timeline composition: capacity meters, scrubbable SVG retention bars, hash-chipped receipts, and the stepped lifecycle wizard."
+    },
+    {
+      "owner": "settings inventory and schema",
+      "impact": "Settings Lifecycle treats export/import/copy/reset as stepped flows over the shared inventory; managed rows are skipped, never overwritten."
+    },
+    {
+      "owner": "Storage",
+      "impact": "Five storage areas are visually separated and independently described; retention anchors/minima and legal holds render as timeline bars."
+    },
+    {
+      "owner": "Runtime Artifacts/Outputs",
+      "impact": "Artifacts carry PM-owned vs provider-native identity, redaction policy, retention, and hash receipts."
+    },
+    {
+      "owner": "Worktrees/Git/GitHub",
+      "impact": "Worktree ledger + SVG branch graph + policy rows; GitHub Actions sits behind an explicit forge connection with a reachable setup state."
+    },
+    {
+      "owner": "Containers/Registries",
+      "impact": "Docker/Podman/Kubernetes as human top-level cards with typed unavailable states and shared tool lifecycle language."
+    },
+    {
+      "owner": "Release/updates owner",
+      "impact": "Provider update lifecycle in the shared manager; the future Updates module is reserved with this owner named."
+    },
+    {
+      "owner": "Binary Locator and installation lifecycle",
+      "impact": "SCM and container tools render exact installation health with the same confidence vocabulary as providers."
+    },
+    {
+      "owner": "UI Command Catalog",
+      "impact": "Lifecycle candidate IDs (export/import.*/reset.*/copy_from_project.*) annotated new in candidate-command-delta.json."
+    }
   ],
   "settings_inventory_impacts": [
-    { "area": "system", "impact": "Storage mode, retention anchor, pressure threshold, snapshots, test-restore action, log level, diagnostics export." },
-    { "area": "lifecycle", "impact": "Import preview/apply/rollback and copy-from-project are manager flows with receipts, not bare rows." }
+    {
+      "area": "system",
+      "impact": "Storage mode, retention anchor, pressure threshold, snapshots, test-restore action, log level, diagnostics export."
+    },
+    {
+      "area": "lifecycle",
+      "impact": "Import preview/apply/rollback and copy-from-project are manager flows with receipts, not bare rows."
+    },
+    "Candidate inventory additions (correction pass): General \u2192 Performance and resources \u2014 general.behavior-profile (Auto/Performance/Efficiency/Legacy), general.background-work, general.metered-connection, general.cache-ceiling"
   ],
   "settings_schema_impacts": [
-    { "field": "lifecycle receipt", "impact": "Atomic apply produces a receipt with source disclosure and a pre-import snapshot reference." },
-    { "field": "artifact identity", "impact": "PM-owned vs provider-native is a required artifact field." }
+    {
+      "field": "lifecycle receipt",
+      "impact": "Atomic apply produces a receipt with source disclosure and a pre-import snapshot reference."
+    },
+    {
+      "field": "artifact identity",
+      "impact": "PM-owned vs provider-native is a required artifact field."
+    }
   ],
   "command_id_impacts": "See candidate-command-delta.json.",
   "wiring_impacts": "See candidate-wiring-delta.json.",
-  "dry_component_impacts": "See candidate-dry-delta.json — adds StorageHealth, ArtifactRow, and stepped-flow instances.",
+  "dry_component_impacts": "See candidate-dry-delta.json \u2014 adds StorageHealth, ArtifactRow, and stepped-flow instances.",
   "schema_event_storage_impacts": [
-    { "area": "demo persistence", "impact": "sessionStorage only under pm.settings-demo.vault; lifecycle step state persists per session; no production storage schema claimed." }
+    {
+      "area": "demo persistence",
+      "impact": "sessionStorage only under pm.settings-demo.vault; lifecycle step state persists per session; no production storage schema claimed."
+    }
   ],
   "migration_supersession_impacts": [
-    { "superseded": "raw format dropdown for settings transfer", "by": "the stepped lifecycle flow with preview, validation, migration, atomic apply, verification, and receipt" },
-    { "superseded": "universal settings inheritance", "by": "Copy Settings From… is a one-time transactional copy; destination independence is stated in copy" }
+    {
+      "superseded": "raw format dropdown for settings transfer",
+      "by": "the stepped lifecycle flow with preview, validation, migration, atomic apply, verification, and receipt"
+    },
+    {
+      "superseded": "universal settings inheritance",
+      "by": "Copy Settings From\u2026 is a one-time transactional copy; destination independence is stated in copy"
+    }
   ],
   "slint_port_impacts": [
-    { "surface": "retention timeline scrub", "note": "Pointer position over an SVG rect; a port maps the same gesture to a slider-like control." },
-    { "surface": "stepped wizard", "note": "Step state is plain data in the store; slides are the only motion." },
-    { "surface": "branch graph", "note": "Static SVG from node/edge data; a port draws the same model." }
+    {
+      "surface": "retention timeline scrub",
+      "note": "Pointer position over an SVG rect; a port maps the same gesture to a slider-like control."
+    },
+    {
+      "surface": "stepped wizard",
+      "note": "Step state is plain data in the store; slides are the only motion."
+    },
+    {
+      "surface": "branch graph",
+      "note": "Static SVG from node/edge data; a port draws the same model."
+    }
   ],
   "test_fixtures": [
-    "Calm state", "Reset demo data", "Import preview → cancel", "Import preview → apply → rollback",
-    "Copy Settings From… transactional copy", "Connect the GitHub forge",
-    "Search index rebuild with truthful phases", "Cleanup dry-run plan", "Back up now (receipted)",
-    "Test restore", "Changed elsewhere bar", "Validation error",
-    "Provider scenarios (all seven shared)"
+    "Calm state",
+    "Reset demo data",
+    "Import preview \u2192 cancel",
+    "Import preview \u2192 apply \u2192 rollback",
+    "Copy Settings From\u2026 transactional copy",
+    "Connect the GitHub forge",
+    "Search index rebuild with truthful phases",
+    "Cleanup dry-run plan",
+    "Back up now (receipted)",
+    "Test restore",
+    "Changed elsewhere bar",
+    "Validation error",
+    "Provider scenarios (all seven shared)",
+    "Slow manager hydration (lazy load)",
+    "Network goes offline (last-known-good)",
+    "100 detected installations collapse"
   ],
   "deferred_named_owners": [
-    { "module": "Servers", "owner": "Server host owner", "contract": "accepts manager module, deep links, status cards, command wiring" },
-    { "module": "Execution Hosts", "owner": "Server host owner", "contract": "same insertion contract" },
-    { "module": "Clients", "owner": "Server host owner", "contract": "same insertion contract" },
-    { "module": "Project Hosting & Files", "owner": "Storage owner", "contract": "same insertion contract" },
-    { "module": "Remote Access", "owner": "Server host owner", "contract": "same insertion contract" },
-    { "module": "Updates (PM app)", "owner": "Release/updates owner", "contract": "same insertion contract" }
+    {
+      "module": "Servers",
+      "owner": "Server host owner",
+      "contract": "accepts manager module, deep links, status cards, command wiring"
+    },
+    {
+      "module": "Execution Hosts",
+      "owner": "Server host owner",
+      "contract": "same insertion contract"
+    },
+    {
+      "module": "Clients",
+      "owner": "Server host owner",
+      "contract": "same insertion contract"
+    },
+    {
+      "module": "Project Hosting & Files",
+      "owner": "Storage owner",
+      "contract": "same insertion contract"
+    },
+    {
+      "module": "Remote Access",
+      "owner": "Server host owner",
+      "contract": "same insertion contract"
+    },
+    {
+      "module": "Updates (PM app)",
+      "owner": "Release/updates owner",
+      "contract": "same insertion contract"
+    }
   ],
   "unresolved_questions": [
     "Does the Full Server backup card link out to the server module, or embed a read-only status when the module lands?",

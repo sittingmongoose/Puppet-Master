@@ -51,6 +51,7 @@ global directly, per CONTRACT.md section 4. None of them touch the DOM outside t
 | `shared/surfaces.js` | `PMXCrew` | `crew` | 5 |
 | `shared/surfaces.js` | `PMXGoals` | `goals` | 5 |
 | `shared/surfaces.js` | `PMXSurfaces` | `activity` | 13 |
+| `shared/runtrace.js` | `PMXRunTrace` | `runtrace` | 16 |
 | `shared/sync.js` | `PMXSync` | `sync` | 17 |
 | `shared/threadhistory.js` | `PMXThreadHistory` | `threadHistory` | 23 |
 | `shared/threadops.js` | `PMXThreadOps` | `threadOps` | 18 |
@@ -306,6 +307,17 @@ Goal, Todo, subagents, diffs, and activity are SEPARATE underlying records even 
 Goal, Todo, subagents, diffs, and activity are SEPARATE underlying records even when a
 
 `forThread`, `can`, `act`, `phaseOf`, `completionReceipt`
+
+### `PMXRunTrace` — `shared/runtrace.js`
+
+The RUN as a record: which phases have been entered and in what order, which one is running, how far
+each count has got, and which one the reader has disclosed. Emits no DOM — the eight thread concepts
+each draw it in their own idiom, which is the DRY line the packet asks for: one contract, eight
+presentations, no shared markup to make them converge. State lives in `store.view(tid).runTrace` so a
+reader's disclosure survives a remount. Stage facts stay on `thread.activityStages` and operation
+fields stay with `PMXOpCard`; this holds only what is true of the run rather than of a stage.
+
+`bind`, `attach`, `read`, `enter`, `tick`, `step`, `settle`, `condense`, `open`, `close`, `reset`, `seedComplete`, `glyphFor`, `signature`, `withCount`, `splitHeadline`, `GLYPH_BY_KIND`
 
 ### `PMXSurfaces` — `shared/surfaces.js`
 

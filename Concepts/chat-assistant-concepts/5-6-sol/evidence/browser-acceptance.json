@@ -1,44 +1,67 @@
 {
-  "schema_id": "pm.chat.5_6_sol.browser_acceptance_summary.v2",
+  "schema_id": "pm.chat.5_6_sol.browser_acceptance_summary.v3",
   "model_label": "5.6 Sol",
-  "generated_at": "2026-08-12T07:44:22Z",
-  "status": "pass_with_recorded_residuals",
-  "prototype_gate": "pass",
+  "generated_at": "2026-08-14T05:47:37Z",
+  "status": "pass_for_two_complete_browser_prototype_lanes_with_failed_http_diagnostic_declared",
+  "prototype_gate": "pass_with_declared_transport_and_native_residuals",
   "production_readiness_claimed": false,
   "winner_recommendation": null,
-  "engines": [
+  "source_fingerprint_sha256": "4392f156cad4eb5f8761cdf1b40e9cbc370209c0e63b47684a6c063cc477f7bb",
+  "aggregation_boundary": "This summary combines only the two complete 33-check lanes. The Chromium HTTP probe is a separate diagnostic and is never flattened into the passing aggregate.",
+  "complete_lanes": [
     {
-      "browser": "Firefox 153.0.3",
+      "browser": "Firefox 153.0.4",
       "engine": "Gecko",
       "automation": "geckodriver 0.37.0",
       "transport": "loopback HTTP",
+      "base_url": "http://127.0.0.1:4191/Concepts/chat-assistant-concepts/5-6-sol/index.html",
       "receipt": "evidence/browser-acceptance-firefox.json",
       "screenshot_root": "evidence/frames",
-      "checks_passed": 23,
+      "checks_passed": 33,
       "checks_failed": 0,
       "console_errors": 0,
-      "runtime_exceptions": 0
+      "runtime_exceptions": 0,
+      "screenshots": 115
     },
     {
       "browser": "Chromium 151.0.7922.34",
       "engine": "Blink",
       "automation": "Chrome DevTools Protocol 1.3",
-      "transport": "file URL with the same four checked-in JSON fixtures loaded through the file-only local XHR branch",
+      "transport": "file URL with the same six checked-in JSON fixtures loaded through the file-only local XHR branch",
+      "base_url": "file:///mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5-6-sol/index.html",
       "receipt": "evidence/browser-acceptance-chromium.json",
       "screenshot_root": "evidence/chromium-frames",
-      "checks_passed": 23,
+      "checks_passed": 33,
       "checks_failed": 0,
       "console_errors": 0,
-      "runtime_exceptions": 0
+      "runtime_exceptions": 0,
+      "screenshots": 115
     }
   ],
-  "aggregate": {
-    "checks_passed": 46,
+  "complete_lane_aggregate": {
+    "checks_passed": 66,
     "checks_failed": 0,
     "console_errors": 0,
-    "runtime_exceptions": 0
+    "runtime_exceptions": 0,
+    "status": "pass_for_browser_prototype_only"
   },
-  "shared_coverage_per_engine": {
+  "diagnostics": [
+    {
+      "browser": "Chromium 151.0.7922.34",
+      "engine": "Blink",
+      "transport": "loopback HTTP",
+      "base_url": "http://127.0.0.1:4191/Concepts/chat-assistant-concepts/5-6-sol/index.html",
+      "scope": "single exact entry-page boot probe",
+      "receipt": "evidence/browser-acceptance-chromium-http.json",
+      "checks_passed": 0,
+      "checks_failed": 1,
+      "failure": "Timed out before document readiness, the fixture store, and the first window concept were all present.",
+      "console_errors": 0,
+      "runtime_exceptions": 0,
+      "status": "fail_not_claimed_as_acceptance"
+    }
+  ],
+  "shared_coverage_per_complete_engine": {
     "entry_pages": 17,
     "same_model_pairings": 64,
     "questionnaire_grammars": 8,
@@ -46,44 +69,55 @@
     "theme_width_cells": 32,
     "baseline_configuration_cells": 512,
     "feature_state_cells": 896,
-    "continuous_resize_samples": 53,
+    "continuous_resize_cells": 432,
+    "continuous_resize_representative_pairings": 8,
+    "continuous_resize_width_samples_per_pairing": 54,
     "history_artifact_cells": 160,
-    "authored_motion_families": 34,
-    "deterministic_triggers": 64,
+    "authored_motion_families": 42,
+    "reduced_motion_counterparts": 42,
+    "corrected_revision_2_triggers": 59,
+    "supplemental_fixture_triggers": 34,
+    "total_deterministic_fixture_triggers": 93,
+    "reset_determinism_runs": 2,
     "focused_frames": 23,
-    "total_frames": 55
+    "total_frames": 115
   },
   "legibility_gate": {
     "status": "pass",
     "body_copy_floor_px": 16,
-    "metadata_and_action_floor_px": 11,
-    "dense_work_row_floor_px": 12,
+    "action_context_and_work_metadata_floor_px": 12,
+    "dense_work_row_floor_px": 13,
     "minimum_metadata_contrast": "6:1 on base and raised surfaces",
-    "dense_header_collisions": 0
+    "dense_header_collisions": 0,
+    "clipped_dense_headers": 0
   },
   "motion_gate": {
     "status": "pass",
-    "window_families": 8,
-    "thread_message_families": 8,
+    "window_entrance_families": 8,
+    "thread_send_families": 8,
+    "thread_redirect_families": 8,
     "thread_question_families": 8,
     "thread_work_families": 8,
     "popup_families": 1,
     "continuous_progress_families": 1,
-    "total": 34,
-    "reduced_motion_counterparts": 34
+    "total": 42,
+    "reduced_motion_counterparts": 42,
+    "causal_replay_on_unrelated_render": false
   },
   "visual_evidence": {
-    "canonical_engine": "Firefox/Gecko",
+    "canonical_engine": "Firefox 153.0.4 / Gecko",
     "canonical_frame_root": "evidence/frames",
     "chromium_frame_root": "evidence/chromium-frames",
-    "frames_per_engine": 55,
-    "directly_inspected_canonical_frames": 55,
+    "frames_per_complete_engine": 115,
+    "directly_inspected_canonical_firefox_frames": 115,
+    "directly_inspected_chromium_frames_claimed": 0,
     "inspection_receipt": "evidence/direct-visual-inspection.json",
-    "large_matrix_boundary": "The 512 baseline and 896 feature-state cells are automated geometry/state checks, not individually human-reviewed images."
+    "large_matrix_boundary": "The 512 baseline, 896 feature-state, 432 continuous-resize, and other large matrix cells are automated geometry/state evidence, not individual human image reviews."
   },
-  "transport_note": "Chromium loopback HTTP is not claimed. On this host its renderer fails before requesting even a trivial loopback page. The full Blink lane therefore uses a file URL and a narrowly scoped local XHR loader for the same checked-in fixtures, while Firefox retains the normal HTTP lane.",
+  "transport_note": "Firefox is validated over loopback HTTP. The full Chromium lane is validated from the checked-in file entry. A separate Chromium loopback-HTTP probe failed before fixture readiness, so Chromium-over-HTTP is not claimed.",
   "residuals": [
-    "No native Slint 1.17.1 component was created or compiled because runtime edits were out of scope.",
-    "Detached-window DPI, platform font metrics, IME, assistive technology, and live-service latency remain production validation work."
+    "The implementation is HTML/CSS/JavaScript with Slint-portable architecture and translation guidance; no native or compiled Slint 1.17.1 component was produced.",
+    "Detached-window DPI, platform font metrics, IME, assistive technology, live-service latency, and real provider acquisition/authentication remain production validation work.",
+    "The repository was already dirty and no correction-start status receipt exists, so current Git state cannot independently attribute unrelated out-of-scope changes."
   ]
 }

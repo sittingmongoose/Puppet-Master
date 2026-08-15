@@ -864,6 +864,49 @@
    * manager itself is a column of sections, choosing a section pushes its items,
    * and choosing an item pushes its detail. Nothing here knows anything about a
    * specific domain — every assigned manager goes through this one path. */
+
+  /* ------------------------------------------------- windowed long lists */
+
+  /* Added by the 2026-08-13 dependency correction. Register §7.3 and §20.2
+   * require long lists to be virtualized. Rendering one node per record turns a
+   * hundred-installation host into a hundred-row DOM; this keeps the node count
+   * bounded and discloses the rest progressively, which is what the packet's
+   * "50 MCP entries progressively disclosed" test asks for. */
+
+  /* A windowed table still tells the truth about how many rows exist. */
+  function tbodyNote(section, shown) {
+    pendingTableNote = { id: section.id, shown: shown, total: section.items.length };
+  }
+  var pendingTableNote = null;
+
+  function windowedItems(section, host, renderOne) {
+    var items = section.items || [];
+    var V = window.PMVirtual;
+    if (!V || !V.shouldVirtualize(items.length)) {
+      items.forEach(function (it) { host.appendChild(renderOne(it)); });
+      return;
+    }
+    var shown = windowSizes[section.id] || 24;
+    var slice = items.slice(0, shown);
+    slice.forEach(function (it) { host.appendChild(renderOne(it)); });
+
+    var more = el("div", "st-window");
+    more.appendChild(el("span", "st-window-count",
+      E("Showing " + slice.length + " of " + items.length + " · the rest are not rendered until you ask")));
+    if (shown < items.length) {
+      var btn = el("button", "st-btn", "<span>Show " + Math.min(24, items.length - shown) + " more</span>");
+      btn.type = "button";
+      btn.addEventListener("click", function () {
+        windowSizes[section.id] = shown + 24;
+        applyRoute(currentRoute());
+      });
+      more.appendChild(btn);
+    }
+    host.appendChild(more);
+  }
+
+  var windowSizes = {};
+
   function renderManager(spec, ctx) {
     hydrated();
     var s = store.get();
@@ -977,7 +1020,7 @@
     }
     if (!section.items.length) { body.appendChild(emptyCard(section)); return col; }
     if (section.kind === "table" || section.kind === "matrix") { body.appendChild(specTable(section)); return col; }
-    section.items.forEach(function (it) { body.appendChild(itemRow(it)); });
+    windowedItems(section, body, function (it) { return itemRow(it); });
     return col;
   }
 
@@ -1001,7 +1044,11 @@
     thead.appendChild(hr);
     table.appendChild(thead);
     var tb = el("tbody");
-    section.items.forEach(function (it) {
+    var tableItems = (window.PMVirtual && window.PMVirtual.shouldVirtualize(section.items.length))
+      ? section.items.slice(0, windowSizes[section.id] || 24)
+      : section.items;
+    if (tableItems.length < section.items.length) tbodyNote(section, tableItems.length);
+    tableItems.forEach(function (it) {
       var tr = el("tr");
       tr.setAttribute("data-item", it.id);
       var nameCell = el("td");
@@ -1019,6 +1066,26 @@
       tb.appendChild(tr);
     });
     table.appendChild(tb);
+    if (pendingTableNote && pendingTableNote.id === section.id) {
+      var note = pendingTableNote; pendingTableNote = null;
+      var shownNow = note.shown;
+      var wrapN = el("div", "st-window");
+      wrapN.appendChild(el("span", "st-window-count",
+        E("Showing " + shownNow + " of " + note.total + " \u00b7 the rest are not rendered until you ask")));
+      if (shownNow < note.total) {
+        var moreBtn = el("button", "st-btn", "<span>Show " + Math.min(24, note.total - shownNow) + " more</span>");
+        moreBtn.type = "button";
+        moreBtn.addEventListener("click", function () {
+          windowSizes[note.id] = shownNow + 24;
+          applyRoute(currentRoute());
+        });
+        wrapN.appendChild(moreBtn);
+      }
+      var holder = el("div");
+      holder.appendChild(table);
+      holder.appendChild(wrapN);
+      return holder;
+    }
     return table;
   }
 
@@ -1319,8 +1386,8 @@
             ? " → " + E(inst.targetVersion) : "") + "</span>" +
         '<span class="st-inst-badges">' +
           '<span class="st-badge" data-kind="availability">' + E(inst.duplicateState) + "</span>" +
-          '<span class="st-badge" data-kind="evidence">' + E(inst.confidence) + "</span>" +
-          '<span class="st-badge" data-kind="source">' + E(inst.installationOwnerKind) + "</span>" +
+          '<span class="st-badge" data-kind="evidence">' + E(S.confidenceWord(inst.confidence)) + "</span>" +
+          '<span class="st-badge" data-kind="source">' + E(S.ownerKindWord(inst.installationOwnerKind)) + "</span>" +
         "</span>";
       head.addEventListener("click", function () {
         var o = Object.assign({}, store.get().openInstallations);
@@ -1362,7 +1429,8 @@
     inst.detectionEvidence.forEach(function (e2) {
       ev.appendChild(kv(e2.order + ". " + e2.source, e2.statement));
     });
-    ev.appendChild(kv("Confidence", inst.confidence));
+    ev.appendChild(kv("Confidence", S.confidenceWord(inst.confidence)));
+    ev.appendChild(kv("Internal owner kind", inst.installationOwnerKind));
     ev.appendChild(kv("Owner", inst.ownerIdentity));
     d.appendChild(ev);
 

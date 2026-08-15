@@ -2,7 +2,7 @@
   "schema_id": "pm.settings_candidate_wiring_delta.v1",
   "concept_id": "concept-04-archive",
   "model": "CursorAuto",
-  "trace_rule": "UI source \u2192 command \u2192 canonical owner \u2192 validation/permission \u2192 state mutation or operation \u2192 event/receipt/ObservableWork \u2192 UI projection \u2192 Usage/diagnostic attribution \u2192 recovery/deep link",
+  "trace_rule": "GUI/NL/palette \u2192 candidate command \u2192 handler \u2192 RuntimeResourceGovernor permit outcome (admitted|queued|admitted_degraded|blocked_permission|blocked_resource|cancelled) \u2192 ObservableWork projection (phase/state/wait/progress_kind/source) \u2192 receipt",
   "note": "Every trace ends with demo_note; concept-local state is simulated and labeled.",
   "traces": [
     {
@@ -56,6 +56,27 @@
       "usage_diagnostic_attribution": "n/a",
       "recovery_deep_link": "manager settingsLifecycle",
       "demo_note": "Truthful phased demo receipts; no real file IO."
+    },
+    {
+      "id": "provider-explicit-install-ow",
+      "surface": "Provider Installation",
+      "action": "Explicit Install from official source for Host/Environment",
+      "command_candidate": "cmd.provider.installation.install",
+      "governor": "RuntimeResourceGovernor (demo projects permit language only; Settings does not admit)",
+      "observable_work": "CAObservableWork phases: accepted \u2192 waiting_network \u2192 verifying \u2192 completed",
+      "event_receipt": "PMStore.receipt + OW host projection",
+      "notes": "No silent Project/Auto acquisition; auth remains a separate action"
+    },
+    {
+      "id": "manager-lazy-hydrate-dispose",
+      "surface": "Settings Home \u2192 manager",
+      "action": "Open featured manager",
+      "command_candidate": "cmd.settings.manager.open",
+      "governor": "RuntimeResourceGovernor",
+      "observable_work": "Optional reconcile projection; no fake percent",
+      "event_receipt": "hydrateManager keys + disposeActiveScope on leave",
+      "notes": "Home keeps compact summaries; inactive manager scopes dispose timers/OW"
     }
-  ]
+  ],
+  "correction_2026_08_13": "2026-08-13 dependency correction: RuntimeResourceGovernor remains sole admission owner; ObservableWork is sole progress/wait projection; Settings projects only. Provider CLIs are not core/baseline/pre-seeded and are never silently Project-acquired; explicit official-source Install for exact Host/Environment; auth separate. Shell-first seed + lazy manager hydrate; virtualized large lists; dispose inactive scopes; no fake percent progress."
 }

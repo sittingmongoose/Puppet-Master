@@ -293,6 +293,89 @@ This pass ran all of them.
 
 ---
 
+## V9 — Dependency correction (2026-08-13)
+
+Applied `PM_Settings_Dependency_and_Work_Correction_2026-08-13` against the original packet. Full detail
+in `reference-review-report.json`.
+
+### Reference review
+
+| | Count |
+|---|---|
+| References opened during the original build | 14 |
+| References **never opened**, now opened | 13 (incl. `PERFORMANCE_SETTINGS_RETURN.md`, `PROVIDER_CLI_FINAL_ADJUDICATION.md`) |
+| Correction-packet files opened | 6 |
+| Defects found | **16** |
+| Corrected | 15 · disproven 1 · deferred to a named owner 1 |
+
+**The omission materially affected the work.** Seven defects came from the two authorities the packet
+named; nine more came from references nobody flagged.
+
+### Corrections verified live
+
+| Check | Result |
+|---|---|
+| Manager routes render (38 families, incl. new `manager-performance`) | **48/48** across four concepts |
+| ObservableWork states | 24 states, 4 terminal, 6 permit outcomes |
+| Truthful waits | `starting → waiting_for_sign_in (reason + Cancel) → verifying → terminal` observed in all four |
+| Determinate progress without a denominator | **refused** — stays indeterminate, states its source |
+| Virtualization | 100-record section renders **24 item nodes**, "Showing 24 of 100" |
+| Search at scale | 1015 records, 40 hits, **0 managers instantiated** |
+| Search at scale under 6× CPU throttle | **42–48 ms** build+search |
+| Startup probes of unconfigured providers | **0** |
+| Lazy hydration | 0 on a category, 1 after opening one manager |
+| Provider-CLI adjudication | **18/18** assertions pass |
+| Baseline acquisition state for a provider CLI | **refused** unless a named exception is supplied |
+| Raw identifiers in normal GUI | **0** (incl. the bespoke provider surfaces) |
+| Keyboard focus | 30 tab stops, **0 without a visible ring** |
+| Scope vocabulary | **12/12** |
+| Secret/auth classes | **7/7** |
+| Search result kinds | **11** (adds `setup_workflow`, `unavailable`) |
+| Layout sweep (3 routes × 8 themes × 6 widths × 4 concepts, large-catalogue demo live) | **576 cells, 0 failures** |
+| Reduced motion | flag set, **0 animated operations** |
+| Text clipping / pointer-blocking overlays / permanent spinners | **0 / 0 / 0** |
+| Page errors across the whole pass | **0** |
+| Validator | `Concept validation passed`, exit 0 |
+| Hub catalog | 4 entries, 0 broken, 0 warnings |
+
+### Defects this pass found and fixed
+
+1. **No resource/performance manager existed.** Added `manager-performance` in every concept.
+2. **Fake progress.** `pm-sim.js` advanced phases on a private timer. Replaced by `pm-work.js`.
+3. **Generic spinner hid the wait reason.** `onPhase` was plumbed and consumed by nobody.
+4. **No virtualization.** Added `pm-virtual.js`; all four window sections above 40 items.
+5. **Fixtures below the packet's own matrix.** 855 settings, 100 installations, 50 MCP entries.
+6. **Count-bounded caches.** Byte contracts added (64 KB operations, 48 KB receipts).
+7. **No low-resource profile.** Legacy profile plus metered/battery/thermal rows.
+8. **Search lacked `setup_workflow` and `unavailable`.** Both added with fixtures.
+9. **Raw enum strings in normal GUI.** Found twice: first in ManagerSpec fields, then again in the
+   bespoke provider surfaces (`homebrew_formula`, `strongly_identified`) which the first scan missed.
+10. **Scope vocabulary 3/12 → 12/12.**
+11. **Secret classes 4/7 → 7/7.**
+12. **Ledger manager toolbar overflowed** at 760px in Retro once the new manager added buttons.
+13. **Stack text inputs had no visible focus ring** — caught by the keyboard-focus probe.
+
+### Slint portability recheck
+
+| Check | Result |
+|---|---|
+| Model-backed lists (`buildIndex` walks `data.*`, not the DOM) | PASS |
+| Virtualization returns an index window and holds no DOM | PASS |
+| Semantic state outside the DOM | PASS |
+| Measurement confined to the layout owner (`pm-sections.js`, 18 of 31 call sites) | PASS |
+| ObservableWork projection is DOM-free | PASS |
+| No browser-only physics · no clipped text as layout | PASS · PASS |
+
+### Honest limits of this pass
+
+- **Slow-network load is 19 s** at 400 kbps / 6× CPU. The concept ships ~928 KB of uncompressed JS+CSS
+  per page; that is asset weight, not a runtime defect, and no bundler is in scope here.
+- **Old hardware is approximated** by CPU throttling. This is not Ivy Bridge or Xeon E5 evidence.
+- **Copy Settings From…** still lacks the ten-category transactional contract; it belongs to the settings
+  lifecycle owner and inventing it inside a concept would create a second owner.
+
+---
+
 ## Known limitations
 
 - **Everything a production build would send is simulated.** `shared/pm-sim.js` returns seeded receipts;

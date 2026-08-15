@@ -1,0 +1,201 @@
+{
+  "schema_id": "pm.runtime_packet_source_index.v1",
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-08-14T00:00:00Z",
+  "packet_name": "PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13",
+  "revision": "corrected-2026-08-13",
+  "archive_basename": "PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13.zip",
+  "archive_sha256": "8ec8184b055c0f3ddfc03c2848dde6f6e27c1abb067c2f08cdb5f4bde081053b",
+  "manifest_member": {
+    "path": "PACKET_MANIFEST.json",
+    "bytes": 6454,
+    "sha256": "449230aee06c923d85d4f88a166547bd54f59e2a7fd3863027afc7885b3f95ce",
+    "manifest_self_hash": false
+  },
+  "manifest_declared_member_count": 33,
+  "archive_file_member_count": 34,
+  "members": [
+    {
+      "path": "00_START_HERE.md",
+      "bytes": 2032,
+      "sha256": "8c29ada4fc6e60ebb68b8a46fc6ddfe1a72c37aca671676203128057354ffbf8"
+    },
+    {
+      "path": "01_OWNER_AND_ARCHITECTURE_BOUNDARIES.md",
+      "bytes": 2473,
+      "sha256": "0ebc2a01cfe9dd765207cfabab03d6e5180f5679db169e9d98be4281df3c5ded"
+    },
+    {
+      "path": "02_T3_DURABLE_THREADS_NETWORK_AND_OUTBOX.md",
+      "bytes": 2548,
+      "sha256": "9a60d94216844fc95e7f8b08a4fa68f98283203a183e51b3dda6aad5fb3e3ef0"
+    },
+    {
+      "path": "03_PROVIDER_CONTEXT_TOOLS_RECOVERY_AND_COMPACTION.md",
+      "bytes": 2402,
+      "sha256": "a2eb09fb1bc4269dd9853ecabe1fb6c68d7221e89e2194c1eef232e966a07c79"
+    },
+    {
+      "path": "04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md",
+      "bytes": 2627,
+      "sha256": "7889a86e85b92988abd0347a1fcd86e69cb228c3caea96ae0be20f39a3ec8e64"
+    },
+    {
+      "path": "05_BSD_TIME_TRAVEL_GOAL_AND_OPERATIONAL_AWARENESS.md",
+      "bytes": 2238,
+      "sha256": "529ae35a4e5791b03a83db60d3dfefdea5f470670ccbfa5e04f88ff2daffe4d6"
+    },
+    {
+      "path": "06_INSTALLATION_AUTH_UPDATE_AND_CAPABILITY_PROVISIONING.md",
+      "bytes": 2886,
+      "sha256": "303edda086ed84268a569d3de90c2038a8928fc407c5053725633a8cb2da188c"
+    },
+    {
+      "path": "07_SERVER_WSL_CONTAINER_RESOURCE_AND_SECURITY.md",
+      "bytes": 2152,
+      "sha256": "d843d4096b61e5be161782f184fe48879f20d743be9f14f67b3ffd29f589fbc0"
+    },
+    {
+      "path": "08_GUI_PLAN_COMMAND_WIRING_DRY_SCHEMA_EVENTS.md",
+      "bytes": 3056,
+      "sha256": "79098c4c9746e8cf1a6fe7723768f6526f1998986ac47376614eeac12cc55925"
+    },
+    {
+      "path": "09_TEST_MIGRATION_AND_ACCEPTANCE_MATRIX.md",
+      "bytes": 3161,
+      "sha256": "8ba9893016a43421d75ec27519e9792354ad27a990f560105923655cef189c91"
+    },
+    {
+      "path": "10_DEPENDENCY_CLOSURE_AND_SOURCE_AUDIT.md",
+      "bytes": 1456,
+      "sha256": "921c126e61d35450aa036fa0cbc4db6e3437eba999e5ccb45f716f5ed101592d"
+    },
+    {
+      "path": "ACCOUNTABILITY_MATRIX.json",
+      "bytes": 101816,
+      "sha256": "a9f520e310752309372c52bc0e84215d6876c0b49e046bf770d6f6a2797c7d6e"
+    },
+    {
+      "path": "AUDIT_PROMPT.md",
+      "bytes": 2407,
+      "sha256": "edeec2bda746d8c435b3e09fa912ded7cfceb3a11ffeddb8748b05ce99c67c32"
+    },
+    {
+      "path": "CANDIDATE_COMMAND_ID_REGISTER.json",
+      "bytes": 1510,
+      "sha256": "56863fca3beda6b06c2452e9af8e901453294cfcfd98adabcb683ee882191fba"
+    },
+    {
+      "path": "DECISION_COVERAGE.json",
+      "bytes": 67849,
+      "sha256": "525f08b480e872eaaba557517284e6f2d14863b95c199cf1f7719ffaef1f4c94"
+    },
+    {
+      "path": "IMPLEMENTATION_PROMPT.md",
+      "bytes": 2738,
+      "sha256": "39b3a3049678344965b529b193526a6b161faaafc79dd22d86b4b8a8d4bef41c"
+    },
+    {
+      "path": "IMPLEMENTATION_REGISTER.template.json",
+      "bytes": 468,
+      "sha256": "4c88831df2a519c2fb3e6ce7cea6e2eb1805c2d25ab28c89ce088bccdbbc827f"
+    },
+    {
+      "path": "PROMPT_USAGE.md",
+      "bytes": 431,
+      "sha256": "cd9ca7e82d03ef364a7de01bbf2d7b83aae1b52e66a6a66bb2b4ea6169eaff8c"
+    },
+    {
+      "path": "PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "bytes": 4857,
+      "sha256": "9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1"
+    },
+    {
+      "path": "REFERENCE_SUPERSESSIONS.md",
+      "bytes": 1266,
+      "sha256": "593d65d3bb4bfc1cb679901988c557c7646526fa7b866d810f2f0f3b5bc4fdcd"
+    },
+    {
+      "path": "SHARED_PROCESS_RULES.md",
+      "bytes": 2216,
+      "sha256": "0ce29d11481ec4f6c9d15e3b69479d64359c017e6ba27226bc657579a8e82d0c"
+    },
+    {
+      "path": "SOURCE_AND_PRECEDENCE_MAP.md",
+      "bytes": 3250,
+      "sha256": "4f17a25b88886bc92910cbbea0cb926b03320be9358412dcc04cbd06325d1071"
+    },
+    {
+      "path": "reference/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md",
+      "bytes": 47350,
+      "sha256": "3df7ad729c5ea1be0df192d19845e42326b5047de03e9f59fbe4918943e0150d"
+    },
+    {
+      "path": "reference/ASSISTANT_CHAT_SHARED_CONTRACTS.md",
+      "bytes": 7204,
+      "sha256": "647a775fd95204913923691e1cbc66d56e8cd8d66ed24def6b7b24f8695facaa"
+    },
+    {
+      "path": "reference/BROWSER_TERMINOLOGY_FINAL_CORRECTION.md",
+      "bytes": 3743,
+      "sha256": "e0175fe27194220337ba8ebb61c9f6107f0aa97ad7b443b6b11115006a0adf39"
+    },
+    {
+      "path": "reference/EGOLITE_INTEGRATION_RUNTIME_RETURN.md",
+      "bytes": 6929,
+      "sha256": "b0e519339a19be3667f74bfaf9a5c99835c90bca36306b9535d7110e74f9d95e"
+    },
+    {
+      "path": "reference/HERMES_V020_SOURCE_REVIEW.md",
+      "bytes": 32560,
+      "sha256": "7343c3d7081cf0d8d396647dce4dad0c34485b0a7a24079bb8c56057fc5c5b1e"
+    },
+    {
+      "path": "reference/OMP_PROVIDER_CATALOG_REFERENCE.json",
+      "bytes": 15660,
+      "sha256": "7204e5fc96c040c6bc206fb98f0913c1546f328ee97766064ba01767cb038051"
+    },
+    {
+      "path": "reference/PERFORMANCE_CURRENT_DECISION_REGISTER.md",
+      "bytes": 47350,
+      "sha256": "3df7ad729c5ea1be0df192d19845e42326b5047de03e9f59fbe4918943e0150d"
+    },
+    {
+      "path": "reference/PROVIDER_IDENTIFICATION_INSTALLATION_AUTH_UPDATE_HANDOFF.md",
+      "bytes": 32219,
+      "sha256": "ab29a3fbe7846ae9996ba22d8dbfa97d000cdc78b64a9db927834d4d649758ac"
+    },
+    {
+      "path": "reference/SERVER_BACKBONE_INTEGRATION_RUNTIME_RETURN.md",
+      "bytes": 4650,
+      "sha256": "096a777b71302f1987f7ad0327996c9176247dca5205b812638886c0587f0c9e"
+    },
+    {
+      "path": "reference/T3_OMP_COMPLETE_SOURCE_REVIEW.md",
+      "bytes": 75755,
+      "sha256": "907324a3b89a4426c55abc603cfe67cae6f742d4a98a8bc7118dab5e2a2accc7"
+    },
+    {
+      "path": "reference/T3_PROVIDER_UPDATE_SOURCE_REVIEW.md",
+      "bytes": 15590,
+      "sha256": "8a0d24f770e44ca73aa0ffc549ff0f5b2a8b19810f66ab414b58f2bf1f950338"
+    }
+  ],
+  "content_identity_aliases": [
+    {
+      "paths": [
+        "reference/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md",
+        "reference/PERFORMANCE_CURRENT_DECISION_REGISTER.md"
+      ],
+      "sha256": "3df7ad729c5ea1be0df192d19845e42326b5047de03e9f59fbe4918943e0150d",
+      "disposition": "intentional_original_filename_alias"
+    }
+  ],
+  "authority_note": "Source-custody index only. It proves archive/member identity and live reference resolvability; it does not make the packet canonical over Plans, prove implementation, or seal governance.",
+  "live_reference_validation": {
+    "scanned_root_plan_files": 1798,
+    "reference_occurrences": 218,
+    "unique_referenced_members": 23,
+    "all_references_resolve": true
+  }
+}

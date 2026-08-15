@@ -231,6 +231,11 @@
     return false;
   }
 
+  /* Activity verbs are the run's verbs, and PMXRunTrace owns the run. This function is the
+   * Director's door into it: it validates against the thread's authored stages and then delegates,
+   * so there is exactly one place that knows what a phase is. It used to keep its own parallel copy
+   * of the running id and the partial counts on `v.surfaces`, which is the shape PMXOpCard was
+   * reading — two owners for one fact, and no mechanism keeping them equal. */
   function activityAct(threadId, action, payload) {
     var t = threadOf(threadId);
     if (!t) return false;
@@ -239,20 +244,34 @@
     var v = store ? store.view(threadId) : null;
     if (!v) return false;
     v.surfaces = v.surfaces || { expanded: null, openIds: {}, phaseIndex: null };
+    var rt = global.PMXRunTrace;
+
+    /* ONE announcement per verb. PMXRunTrace announces `view.runtrace` from inside every mutator it
+     * owns, and every concept re-renders on any `view*` change, so adding a `touchView('surfaces')`
+     * beside it delivered each activity verb to the renderers TWICE.
+     *
+     * That is not merely wasteful. The second render arrives a fraction of a millisecond after the
+     * first and finds the text unchanged, so the element carrying a running count morph is discarded
+     * mid-animation and the morph never plays — the behaviour reference 03 is built on, defeated by a
+     * redundant notification. One concept had already grown a freshness window to survive it; the
+     * honest fix is not to emit the second render at all.
+     *
+     * Verbs that mutate `v.surfaces` and NOTHING else still announce here, because nothing else will. */
 
     if (action === 'activity_advance') {
+      /* Advance is "whatever is next", which is what a demo stepping through a run wants. It is the
+       * only activity verb that does not name its phase, so it resolves one and enters it. */
       var next = (v.surfaces.phaseIndex == null ? 0 : v.surfaces.phaseIndex + 1);
       if (next >= stages.length) next = stages.length - 1;
       v.surfaces.phaseIndex = next;
+      if (rt) { rt.enter(threadId, stages[next].kind); return true; }
       if (store) store.touchView('surfaces');
       return true;
     }
     if (action === 'activity_kind') {
       /* Reference 03_compact_execution_activity.mov: each phase announces itself with its own verb
        * and a count that is REWRITTEN IN PLACE as rows accrue (Exploring 5 files -> 7 files), and the
-       * group that is running reads as a present participle until it finishes. None of that was
-       * reachable before, because the only activity verbs were advance/condense/reopen — which move
-       * a pointer through the stage list but never say which KIND is running, and never grow a count.
+       * group that is running reads as a present participle until it finishes.
        *
        * Firing the same kind twice grows its count toward the authored total rather than restarting
        * it, which is what makes the count morph observable without inventing data. */
@@ -263,54 +282,57 @@
         if (stages[si].kind === wantKind) { at = si; break; }
       }
       if (at < 0) return false;
-      var stage = stages[at];
       v.surfaces.phaseIndex = at;
-      v.surfaces.runningId = stage.id;
-      v.surfaces.counts = v.surfaces.counts || {};
-      var target = typeof stage.count === 'number' ? stage.count : 1;
-      var seen = v.surfaces.counts[stage.id];
-      /* First fire shows the stage part-way through when it has room to grow, so the next fire has
-       * somewhere to go. A single-unit stage lands on its total immediately — there is nothing to
-       * animate and pretending otherwise would be a fake progression. */
-      if (seen == null) seen = target > 2 ? Math.max(1, target - 2) : target;
-      else seen = Math.min(target, seen + 1);
-      v.surfaces.counts[stage.id] = seen;
-      v.surfacesYielded = false;
-      if (store) store.touchView('surfaces');
-      return true;
+      if (!rt) return false;
+      /* step() enters the phase the first time and grows its count after that, which is what lets a
+       * demo fire `activity.read` three times and watch 5 become 6 become 7. */
+      return rt.step(threadId, wantKind);
     }
 
     if (action === 'activity_settle') {
       /* The other half of the tense rule: the running group finishes, so its label switches to the
        * past form and its count lands on the authored total. */
-      if (!v.surfaces.runningId) return false;
-      for (var qi = 0; qi < stages.length; qi++) {
-        if (stages[qi].id === v.surfaces.runningId) {
-          v.surfaces.counts = v.surfaces.counts || {};
-          v.surfaces.counts[stages[qi].id] = typeof stages[qi].count === 'number' ? stages[qi].count : 1;
-          break;
-        }
-      }
-      v.surfaces.runningId = null;
-      if (store) store.touchView('surfaces');
-      return true;
+      if (!rt) return false;
+      return rt.settle(threadId);
     }
 
     if (action === 'activity_condense') {
-      /* Condensing is what turns a finished run into a durable index. The phase pointer is cleared
-       * because a condensed group has no current phase — reopening chooses one again. */
+      /* Condensing turns a finished run into a durable index — `13 tools used` with its chain of
+       * per-phase glyphs still reachable.
+       *
+       * It used to set `v.surfacesYielded = true`, which is the QUESTION-yield flag. activeFor()
+       * returns all-nulls while that flag is up, so firing this verb did not condense the activity:
+       * it blanked Goal, Todo, subagents and diffs outright, and left the activity rows on screen
+       * because every concept reads thread.activityStages directly. Two different facts about two
+       * different surfaces were sharing one boolean. */
       v.surfaces.phaseIndex = null;
-      v.surfacesYielded = true;
+      if (rt) return rt.condense(threadId);
       if (store) store.touchView('surfaces');
       return true;
     }
-    if (action === 'activity_reopen') {
-      v.surfacesYielded = false;
-      v.surfaces.phaseIndex = 0;
-      if (store) store.touchView('surfaces');
-      return true;
+    if (action === 'activity_reopen' || action === 'activity_open_phase') {
+      /* RANDOM ACCESS. The reference's glyph chain is a row of buttons over a finished run, so
+       * reopening names WHICH phase (03_...mov f.1170 opens the edit phase, f.1300 the read
+       * phase). Hard-coding phase 0 — which is what this did — makes the other five glyphs
+       * decorative and the run only re-readable from its beginning. */
+      var phaseId = payload ? payload.phaseId : undefined;
+      if (!rt) return false;
+      /* An explicit null means CLOSE. Falling through to open()'s "no id means the newest phase"
+       * default would turn a dismissal into a disclosure of something else. */
+      if (payload && 'phaseId' in payload && phaseId == null) {
+        v.surfaces.phaseIndex = null;
+        return rt.close(threadId);
+      }
+      var idx = phaseId ? indexOfStage(stages, phaseId) : 0;
+      v.surfaces.phaseIndex = idx < 0 ? 0 : idx;
+      return rt.open(threadId, phaseId);
     }
     return false;
+  }
+
+  function indexOfStage(stages, id) {
+    for (var i = 0; i < stages.length; i++) if (stages[i].id === id) return i;
+    return -1;
   }
 
   function act(threadId, action, payload) {

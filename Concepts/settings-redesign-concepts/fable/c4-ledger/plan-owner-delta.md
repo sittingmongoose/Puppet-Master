@@ -43,3 +43,14 @@ Concept 4 of the fable Settings bakeoff. Records + inspector idiom; zero motion 
 ## Open question routed to owners
 
 - `system.health.diagnostics-verbosity` (the deep-link probe row) is defined in the shared dataset but grafted into no taxonomy subcategory; c4's deep link falls back to the home all-records table + inspector. The settings inventory owner should assign its canonical sub.
+
+## 2026-08-13 dependency correction
+
+The full-thread performance decision register (omitted from the original packet, supplied by `PM_Settings_Dependency_and_Work_Correction_2026-08-13`) was reviewed in full against this concept. Boundary confirmations added:
+
+- **RuntimeResourceGovernor** remains the only resource/admission owner; nothing in this concept models a second governor — demo staged transitions are UI projections, and the wiring delta's ObservableWork alignment block records how they map onto the register's operation-state grammar.
+- **ObservableWork** is the sole progress/wait projection: determinate progress only with a real denominator (index rebuild now shows measured file counts; the scanning phase is honestly indeterminate), progress source declared, wait reasons from the waiting_* vocabulary.
+- **Provider-CLI adjudication** (byte-identical to the original packet's copy, sha256 9425dce7…) re-verified: no bundling/pre-seeding/silent-acquisition implication anywhere in this concept's copy or fixtures; explicit official-source install offers with exact Host/Environment stand.
+- **Lazy Settings opening model** (register section 20.2) verified with DOM evidence in the correction test pass; startup-scan copy corrected in the shared dataset (skills discovery).
+- **Calibration gates** (register section 23) are recorded as implementation benchmarks, not demo claims.
+

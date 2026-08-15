@@ -343,6 +343,7 @@
     root.innerHTML = '<div class="res-mgr"><div class="res-mgr-inner">' +
       '<header class="res-mgr-head"><span class="res-eyebrow">Providers</span><h1>Accounts, connections, models, and installations</h1>' +
       '<p class="res-sub">A provider supplies models, authentication, limits, and capabilities. An installation is a host resource.</p></header>' +
+      V.providerEnvBannerHtml() +
       '<div class="res-prov"><div style="display:grid;gap:8px">' + listHtml + "</div>" +
       '<div style="display:grid;gap:12px;align-content:start"><nav class="res-mgr-nav" role="tablist">' + tabs + "</nav>" + body + "</div></div>" +
       "</div></div>";
@@ -765,6 +766,14 @@
   function render(route, fromNav) {
     if (spy) { spy.detach(); spy = null; }
     currentRoute = route;
+    if (route.view === "manager" && PMStore.get("slowHydration", false)) {
+      PMStore.set("slowHydration", false);
+      var hydMeta = ((RD.managerMeta || DEMO.managerMeta || {})[route.manager]) || { title: "Manager" };
+      renderManager({ id: route.manager, title: hydMeta.title, lede: "", tabs: [], tab: "",
+        body: V.operationHtml({ id: "hydrate", title: "Hydrating " + hydMeta.title, phase: "Loading domain state", state: "starting", progressKind: "none", source: "simulated", waitReason: "Compact summaries stayed usable — the full manager hydrates on demand, never at Settings open" }) });
+      window.setTimeout(function () { render(route, false); }, 900);
+      return;
+    }
     if (route.view === "manager") {
       if (route.manager === "providers") return renderProviders(route);
       if (route.manager === "notifications") return renderNotifications(route);
@@ -801,6 +810,7 @@
 
   function runScenario(id) {
     if (id === "calm") { PMStore.set("calmDemo", true); PMStore.receipt("Calm state — every notice dismissed; reset to bring them back", "ok"); return; }
+    if (id === "slow-hydration") { PMStore.set("slowHydration", true); PMStore.receipt("Scenario applied — the next manager you open hydrates on demand with a truthful loading projection", "info"); return; }
     if (id === "reset") { PMStore.resetDemo(); PMStore.receipt("Demo data reset to its seeded state", "ok"); return; }
     if (id === "test-send") {
       navigate({ manager: "notifications", tab: "destinations" });
@@ -873,7 +883,24 @@
     });
     wireSqueezeFallback();
     renderInbox();
-    PMStore.on("change", function () { renderInbox(); render(currentRoute, false); });
+    /* Domain-local refresh (Performance register §7.3 narrow deltas, §20.2):
+       repaint only the surface that owns the changed key; every other
+       surface renders fresh on entry. */
+    var KEY_DOMAIN = Object.assign({}, V.SHARED_KEY_DOMAINS, {
+      "dismissedNotices": "notices", "calmDemo": "notices",
+      "destinations": "manager:notifications", "events": "manager:notifications",
+      "lastTestSend": "manager:notifications", "sounds": "manager:sounds", "packResult": "manager:sounds"
+    });
+    PMStore.on("change", function (info) {
+      renderInbox();
+      var path = info && info.path;
+      if (path == null) { render(currentRoute, false); return; }
+      var owner = KEY_DOMAIN[path] || KEY_DOMAIN[path.split(".")[0]] || null;
+      var current = currentRoute.view === "manager" ? "manager:" + currentRoute.manager
+        : currentRoute.view === "category" ? "workspace" : "home";
+      if (owner === "notices") { if (current === "home") render(currentRoute, false); return; }
+      if (owner != null && owner === current) render(currentRoute, false);
+    });
     PMStore.on("reset", function () { render(PMRouter.current(), false); });
     PMRouter.init({ onRoute: function (route) { render(route, true); } });
   });

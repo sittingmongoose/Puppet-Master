@@ -1,282 +1,71 @@
-# 5.6 Sol — Puppet Master Settings Bakeoff
+# 5.6 Sol — Puppet Master Settings correction
 
-This folder contains four final, self-contained Settings concepts for the 5.6 Sol bakeoff. The work is concept-only. It does not edit or claim canonical authority over PMConcept7, Plans, the Settings inventory or schema, the UI command catalog, the wiring matrix, DRY owners, Usage, Assistant Chat, ConceptHub, or another model folder.
+This folder contains four unranked, concept-only Settings directions for the `5.6 Sol` bakeoff. No winner is selected. Nothing here edits or claims authority over PMConcept7, canonical `Plans/**`, the Settings inventory/schema, the command catalog, production wiring, DRY owners, Usage, Assistant Chat, ConceptHub, or another model folder.
 
-The four concepts share a normalized product architecture so they can be compared fairly, but they do not share one visual composition. Each concept has its own information hierarchy, manager grammar, spatial behavior, motion choreography, responsive transformation, and focus treatment.
+The 2026-08-13 correction is material. The original packet omitted the full Performance decision register and mispathed the provider-CLI adjudication. The correction authorities were opened in their required order, the original entry/coverage/GUI/impact authorities were reopened, and the current implementation and tests were inspected. The omission affected all four concepts because they share the Settings data, state, runtime-projection, provider, rendering, motion, and verification layers. It also required corrections to every concept's manager and candidate-impact artifacts.
 
-No winner is selected in this folder.
+## Concepts — distinct and unranked
 
-## Concept map
-
-| Concept | Design thesis | Assigned manager families | Motion character |
+| Concept | Preserved design thesis | Manager emphasis | Motion character |
 |---|---|---|---|
-| **Index House** | A stable-address archive for settings, provenance, memory, policy, and delegated behavior. | Providers; Context & Instructions; Memory; Personas; Goal & Automation; Crew; Permissions & FileSafe; Back Seat Driver. | Editorial address transfer, staged directory-to-record arrival, localized evidence crossfades, and restrained archival depth. |
-| **Switchboard** | A quiet operational surface for readiness, notification, appearance, input, desktop, and help behavior. | Providers; Notifications & Sounds; Appearance; Spellcheck; Desktop; Teacher & Help. | Signal routing, latching state, local preview choreography, and transactional confirmation without permanent ambient motion. |
-| **Wayfinder** | A guided toolchain route with explicit setup, verification, dependency, and recovery checkpoints. | Providers; File Manager; Terminal; LSP; Formatters; Commands & Shortcuts; MCP; Skills; Plugins; Tools; Testing & Debugging. | Route resolution, checkpoint progression, branch disclosure, and clear recovery movement. |
-| **Ledger** | A dense requested/effective and provenance folio for lifecycle, storage, source, and runtime systems. | Providers; Storage & Retention; Backup & Restore; Settings Lifecycle; History & Sessions; Runtime Artifacts; Source Control & Worktrees; GitHub Actions; Containers & Registries; Web/Search/Fetch; Project Search Index; Workspace Cleanup; deferred Server insertion shell. | Folio arrival, compact FLIP reflow, rule draws, comparison emphasis, and receipt-oriented state transitions. |
+| **Index House** | Stable-address archive for settings, provenance, memory, policy, and delegated behavior. | Providers; Context & Instructions; Memory; Personas; Goal & Automation; Crew; Permissions & FileSafe; Back Seat Driver. | Editorial address transfer, staged directory-to-record arrival, localized evidence crossfades, and restrained archival depth. |
+| **Switchboard** | Quiet operational surface for readiness, notification, appearance, input, desktop, and help behavior. | Providers; Notifications & Sounds; Appearance; Spellcheck; Desktop; Teacher & Help. | Signal routing, latching state, local preview choreography, and transactional confirmation without permanent ambient motion. |
+| **Wayfinder** | Guided toolchain route with explicit setup, verification, dependency, and recovery checkpoints. | Providers; File Manager; Terminal; LSP; Formatters; Commands & Shortcuts; MCP; Skills; Plugins; Tools; Testing & Debugging. | Route resolution, checkpoint progression, branch disclosure, and clear recovery movement. |
+| **Ledger** | Dense requested/effective and provenance folio for lifecycle, storage, source, and runtime systems. | Providers; Storage & Retention; Backup & Restore; Settings Lifecycle; History & Sessions; Runtime Artifacts; Source Control & Worktrees; GitHub Actions; Containers & Registries; Web/Search/Fetch; Project Search Index; Workspace Cleanup; missing-owner, inspect-only Server insertion. | Folio arrival, compact reflow, rule draws, comparison emphasis, and receipt-oriented transitions. |
 
-The assignment totals 38 concept placements across 35 distinct manager families. Providers are intentionally repeated in all four concepts so the same product graph can be evaluated through four different visual and interaction systems.
+Shared product semantics support fair comparison; they do not collapse the concepts into one visual composition.
 
-## Shared product architecture
+## What the correction changed
 
-The implementation keeps product semantics independent from the DOM and from any one concept composition.
+1. **Sole runtime owners.** `RuntimeResourceGovernor` is the only resource-policy/admission owner represented by the concepts. Host enforcement consumes that contract and is not a second governor. `ObservableWork` is the only truthful progress/wait owner; cards and rows only project its state. The exact permit outcomes are `admitted`, `queued`, `admitted_degraded`, `blocked_permission`, `blocked_resource`, and `cancelled`.
+2. **Compact startup and lazy detail.** Home and search consume compact metadata from `_shared/data-core-values.mjs`. Selected manager data is loaded through the dynamic `_shared/data-details.mjs` module. Startup does not probe every provider, tool, Server, or resource, and compact search does not hydrate manager payloads.
+3. **Bounded UI work.** Manager detail caches are byte-bounded and evict inactive entries; heavy subscriptions are reference-counted and released when inactive; virtual list windows mount at most 40 rows; stale hydration generations fail closed; persistence is compact, debounced, byte-limited, and skips transient search/focus/scroll/loading state; render work uses frame-coalesced narrow patches and exposes concept-only counters.
+4. **Truthful state.** Work projections distinguish accepted, queued, active, wait, degraded, stalled, terminal, cancellation, and recovery states. Determinate progress is shown only with a trustworthy denominator and a non-unknown source. Cached content remains visible where the fixture says it is safe to do so.
+5. **Provider first-acquisition policy.** Provider CLIs are not bundled, baseline-preseeded, silently installed, or first-acquired through Project/model/provider/Goal/Plan/WorkNode/agent/`Auto`/`On` demand. The user must explicitly review the official source and exact Host/Environment, consent to setup, and authenticate separately. Existing-install selection, request coalescing, setup continuation currentness, generation identity, rollback, and post-consent maintenance are represented independently.
+6. **Human identity before implementation identity.** Normal provider rows show provider, human Host/Environment, readiness, version, selection, and the next safe action. Raw paths, shims, package roots, hashes, and procedure identities are reserved for **Advanced Details**.
+7. **Pressure and motion.** Deterministic legacy CPU, low-memory, slow-disk, poor/offline/metered-network, thermal/Low Power, and large-catalog profiles project requested/effective degradation without claiming physical-hardware results. Decorative clocks stop when hidden or inactive; the sound meter runs only during an active preview; reduced motion preserves semantic state.
+8. **Coverage and impact artifacts.** All four concepts now carry a complete 47-row classification matrix and corrected candidate command, wiring, DRY, Plan-owner, and impact artifacts. The exact canonical Server owner remains unresolved, so that row is missing/fail-closed and its mutation surface is disabled.
 
-`_shared/data.mjs` and `_shared/manager-data.mjs` provide deterministic, review-safe fixtures:
+## Current shared architecture
 
-- 10 Settings categories and 72 representative setting rows;
-- 8 value states and 6 exposure levels;
-- 37 registered manager routes and 34 inventory-backed manager systems;
-- 35 distinct final-packet manager families assigned across the four concepts;
-- 7 provider families, 10 accounts, 10 connections, 11 role assignments, and 7 installation observations;
-- 9 evidence-backed Memory Gists with 22 immutable versions;
-- 4 Terminal profiles;
-- all 8 supplied themes;
-- 12 baseline review scenarios;
-- 24 named deterministic state triggers;
-- 11 reusable transaction templates;
-- 3 resumable setup sessions, 8 recent changes, and receipt history.
+The implementation is deterministic concept evidence, not production runtime evidence.
 
-All provider, account, usage, installation, system, and error data is explicitly concept fixture data. The concepts do not present it as live machine evidence.
+- `_shared/data.mjs` re-exports the compact core and dynamically obtainable detail contracts.
+- `_shared/data-core-values.mjs` contains the compact startup/search projection: 148 baseline rows plus a deterministic 825-row scale fixture.
+- `_shared/data-details.mjs` owns detailed manager payloads loaded only for the selected surface.
+- `_shared/runtime-contracts.mjs` contains concept-only `ObservableWork`, `RuntimeResourceGovernor`, subscription, pressure, and progress projections.
+- `_shared/state.mjs` owns generation-aware hydration, cache/subscription/list-window bounds, compact persistence, provider setup/continuation, deterministic pressure profiles, and state transitions.
+- `_shared/view.mjs` renders human summaries, Advanced Details, truthful work/wait state, retained cached values, and bounded lists.
+- `_shared/app.mjs` coalesces events into narrow render scopes and releases inactive/hidden work.
 
-## Navigation and workspace model
+Provider, resource, host, pressure, and external-operation records are deterministic fixtures. They are not live-machine discovery, real provider state, or execution authority, and raw runtime/resource state is excluded from the compact model-prompt projection.
 
-Every concept includes:
+## Manager completeness
 
-- the quiet Puppet Master application shell;
-- Settings Home with destination navigation and compact actionable notices;
-- one global Settings search combobox;
-- category and subcategory workspace navigation;
-- a continuous Settings document with scrollspy;
-- exact destination routing to settings, managers, tabs, and resources;
-- browser-history-compatible deep links;
-- project/global scope and requested/effective state;
-- persistent local demo state with a complete authored-state reset;
-- narrow drill-in behavior and squeezed-height handling.
+Each `manager-coverage.json` classifies the same 47 source families using the closed vocabulary `demonstrated`, `shared_grammar`, `deferred_named_owner`, or `missing`.
 
-Canonical concept routes are:
+| Concept | Demonstrated | Shared grammar | Deferred named owner | Missing | Total |
+|---|---:|---:|---:|---:|---:|
+| Index House | 13 | 29 | 3 | 2 | 47 |
+| Switchboard | 12 | 30 | 3 | 2 | 47 |
+| Wayfinder | 16 | 26 | 3 | 2 | 47 |
+| Ledger | 16 | 26 | 3 | 2 | 47 |
+| **All cells** | **57** | **111** | **12** | **8** | **188** |
 
-```text
-#home
-#category/<category>/<subcategory>
-#setting/<setting-id>
-#manager/<manager-id>/<tab>?resource=<resource-id>&child=<child-id>
-```
+The three named deferred rows in each concept are Puppet Master app/content updates, Product Onboarding, and Doctor. They are insertion/navigation contracts only and do not invent those owners' state machines. The two missing rows retain separate traceability for the original Future Server Module Shell family and the correction's Server insertion family. Both map to inspect-only, mutation-blocked, fail-closed surfaces because the exact canonical Server owner remains unresolved; they do not create two Server engines.
 
-Primary destinations are navigation rows, directory entries, stations, route checkpoints, or folio records—not category/filter pills.
+## Evidence status
 
-## Provider, account, model, and installation graph
+- State contract: **22/22 passed**.
+- Render contract: **12/12 passed** for pure state-to-string and CSS source contracts only.
+- Syntax: **14/14 `.mjs` files passed `node --check`**.
+- JSON: **23/23 JSON files parsed with `jq -e`**.
+- ConceptHub structural validation: **passed**.
+- Diff whitespace/error check: **passed**.
+- Compact-data generator consistency: **passed**.
+- Firefox W3C harness: implemented without a Playwright product/runtime dependency, but this host blocks Firefox session creation because `unshare(CLONE_NEWPID)` returns `EPERM`. The final attempt ran **0 browser product assertions** and cleanup completed.
+- Native Slint and physical hardware: **not run and not proven**.
 
-Providers use a common semantic graph:
+Node state/render-contract and CSS/static evidence apply to the deterministic HTML implementation only. They do not become Firefox/browser evidence, native Slint evidence, or physical Ivy Bridge/Xeon/CPU/RAM/disk/network evidence.
 
-```text
-Provider family
-  -> account/profile
-    -> connection/authentication
-      -> entitlement
-        -> models and capabilities
-
-Installation
-  -> host/environment
-  -> discovery evidence
-  -> ownership confidence
-  -> selected/shadowed state
-  -> version/update state
-```
-
-The concepts preserve the required provider boundaries:
-
-- provider setup and CLI installation are separate operations;
-- provider CLIs are not bundled or installed silently;
-- acquisition begins only after explicit user action and uses an official source;
-- existing installations and credentials are detected before setup is proposed;
-- unknown ownership becomes manual-only rather than being overwritten;
-- selected and shadowed installations are both visible;
-- account priority and fallback routing are explicit;
-- requested and effective model routes are shown separately;
-- CLI-owned OAuth is distinguished from Puppet Master direct OAuth;
-- Claude and Google Antigravity retain CLI-owned OAuth boundaries;
-- OpenAI may expose Puppet Master direct OAuth where supported;
-- an external OpenCode server is modeled separately from a bundled provider;
-- Free Models is a catalogue/wrapper over underlying providers rather than a synthetic account;
-- catalogue freshness, failed refresh, quarantine, and last-known-good data are visible;
-- Ask First and idle update policies are distinct;
-- verification failure and rollback are first-class states;
-- provider readiness remains meaningful when usage information is unavailable;
-- Fast/Normal and effort variations are evidence-qualified model routes.
-
-The provider manager exposes Overview, Accounts & Connections, Models, Usage, Routing & Priority, Roles, Support, and Installations. Important actions produce deterministic state changes, receipts, validation, failure, or rollback rather than decorative feedback.
-
-## Manager coverage
-
-### Index House
-
-Index House proves the relationship among admitted context, degrading memory, Persona behavior, Goal defaults, Crew composition, permission boundaries, FileSafe, and Back Seat Driver policy. The information architecture emphasizes stable addresses, source provenance, inherited/effective values, and local evidence rather than a dashboard of disconnected cards.
-
-### Switchboard
-
-Switchboard proves Notifications & Sounds, notification destinations, uploaded audio, PeonPing/OpenPeon-compatible sound-pack states, license and format validation, local preview, explicit test send, Appearance, custom theme/TOML validation, fonts, OS mode, spellcheck without autocorrect, dictionaries, desktop/tray/startup/window behavior, and Teacher/help settings.
-
-The only in-app notification destination represented is Puppet Master’s title-bar notification stack/inbox. Sound audition is local and visibly distinct from a notification test send.
-
-### Wayfinder
-
-Wayfinder proves File Manager/editor integration, Terminal, LSP, Formatters, Commands & Shortcuts, MCP, Skills, Plugins, Tools, and Testing & Debugging. These remain distinct manager families. The concept shows setup, enablement, dependency, conflict, validation, environment scope, restart/reconnect, test, and recovery relationships.
-
-### Ledger
-
-Ledger proves Storage & Retention, Backup & Restore, Settings import/export/merge/replace/reset, Copy Settings From, History & Sessions, Runtime Artifacts, Source Control & Worktrees, GitHub Actions, Containers & Registries, Web/Search/Fetch, Project Search Index, Workspace Cleanup, and the deferred Server-module insertion shell.
-
-The Server shell contains insertion destinations for Servers, Execution Hosts, Clients, Project Hosting & Files, Remote Access, and Updates. It deliberately does not invent those modules’ backend state machines.
-
-## Transaction and lifecycle systems
-
-`_shared/state.mjs` owns persistent product state and deterministic transactions independently of visual geometry. It supports:
-
-- import validation, merge/replace choice, conflict review, sensitive-value handling, apply receipt, failure, and rollback;
-- Copy Settings From with scoped categories;
-- category reset and full-scope reset;
-- changed-elsewhere reconciliation;
-- provider detect, explicit install, verify, authenticate, select, update, fail verification, and roll back;
-- sound-pack inspect, license/format validation, preview, event mapping, apply, and reject;
-- theme preview, custom TOML validation, safe fallback, apply, revert, and restore default;
-- backup restore, cleanup, deterministic capability testing, and generic manager operations;
-- lazy manager hydration;
-- namespaced local persistence with schema checks and safe fallback when storage is unavailable.
-
-A reset removes persisted concept state and restores the complete authored baseline: route, selections, theme, density, motion preference, manager data, fixtures, presentation, and receipts.
-
-## Deterministic review states
-
-Every required review condition can be reached without editing source. The 24 named triggers cover:
-
-- selected and shadowed provider installations;
-- unknown installation ownership;
-- signed-out CLI OAuth;
-- explicit installation availability;
-- stale provider catalogue and failed refresh with last-known-good data;
-- requested/effective route differences;
-- validation, managed, unavailable, restart, reconnect, and rollback states;
-- changed-elsewhere and import-conflict states;
-- invalid sound-pack license;
-- invalid custom-theme token and fallback;
-- unavailable testing capability;
-- protected cleanup scope;
-- deferred Server insertion;
-- no-result and typo search;
-- long-copy stress;
-- lazy manager hydration.
-
-The in-page fixture tray and `PMSettingsDemo` API expose the same states.
-
-## Review API
-
-Each concept exports:
-
-```js
-PMSettingsDemo.dispatch(action)
-PMSettingsDemo.applyReviewState(state)
-PMSettingsDemo.whenIdle()
-PMSettingsDemo.settleForReview()
-PMSettingsDemo.snapshot()
-PMSettingsDemo.motionSnapshot()
-PMSettingsDemo.openHome()
-PMSettingsDemo.openCategory(categoryId, subcategoryId)
-PMSettingsDemo.openManager(managerId, tab, options)
-PMSettingsDemo.openSetting(settingId)
-PMSettingsDemo.deepLink()
-PMSettingsDemo.applyDeepLink()
-PMSettingsDemo.fixtures()
-PMSettingsDemo.triggerFixture(fixtureId)
-PMSettingsDemo.startFlow(kind, options)
-PMSettingsDemo.advanceFlow(options)
-PMSettingsDemo.chooseFlow(choice)
-PMSettingsDemo.rollbackFlow()
-PMSettingsDemo.reset()
-```
-
-`whenIdle()` waits for state work, rendering, motion settlement, and two animation frames. `settleForReview()` is a QA-only deterministic final-state hook.
-
-## Visual and motion systems
-
-`_shared/motion.mjs` coordinates 12 semantic motion kinds:
-
-```text
-navigate
-category
-search
-jump
-scrollspy
-disclosure
-refresh
-save
-reorder
-drawer
-transaction
-preview
-```
-
-Each concept maps those intents to a different participant sequence and spatial grammar. Motion is used to explain destination, causality, verification, comparison, or recovery. It is not used as indefinite ambience.
-
-The implementation avoids large height animation, simultaneous geometry/text shimmer, permanent status pulsing, and effects that delay focus or state. Reduced motion installs equivalent state and geometry immediately and retains only restrained focus/opacity cues where useful.
-
-The motion design is intended for later Slint 1.17.1 translation through semantic keys, temporary proxy layers, property animation, and finite state-driven sequences rather than browser-specific visual assumptions.
-
-## Responsive and accessibility behavior
-
-The concepts support wide desktop, standard desktop, narrow drill-in, very narrow destination-first, and squeezed-height modes. ConceptHub can exercise widths from 520 through 2500 pixels.
-
-The implementation includes:
-
-- semantic landmarks, headings, tablists, comboboxes, menus, disclosures, dialogs, and current-location state;
-- keyboard search traversal and activation;
-- Escape behavior and focus restoration;
-- visible focus in every theme;
-- status announcements for deterministic asynchronous-looking operations;
-- focus-accessible help rather than hover-only explanations;
-- no essential state conveyed only by color or motion;
-- long-label and 135% text-expansion handling;
-- RTL handling and direction-safe technical strings;
-- coarse-pointer targets;
-- forced-color fallbacks;
-- reduced-motion parity;
-- no horizontal page overflow in the tested width matrix.
-
-## Impact and ownership artifacts
-
-Each concept has a companion directory containing exactly:
-
-```text
-impact-register.json
-manager-coverage.json
-candidate-command-delta.json
-candidate-wiring-delta.json
-candidate-dry-delta.json
-plan-owner-delta.md
-```
-
-The artifacts:
-
-- map every assigned manager to its route, fixtures, action, recovery path, and test probe;
-- identify concept-only versus probable canonical owner surfaces;
-- census 699 existing `cmd.*` tokens from `Plans/UI_Command_Catalog.md`;
-- classify operations as reuse, supersession, or provisional candidate work;
-- explicitly adjudicate `cmd.settings.bloom.open` as a supersession/compatibility question;
-- trace UI action through validation, owner, durable or ObservableWork state, event/receipt, updated UI, Usage/diagnostic effects, and recovery route;
-- identify DRY candidates without declaring canon;
-- preserve the deferred Server owner boundary.
-
-Candidate IDs are intentionally provisional. A catalogue token match proves presence, not semantic compatibility.
-
-## Verification
-
-See `TEST_REPORT.md` for the full verification matrix. The final pass includes:
-
-- 23 state and architecture tests;
-- ConceptHub structural validation;
-- JSON/schema-shape and artifact-count checks;
-- browser execution through ConceptHub on an operating-system-assigned port with an isolated persistent profile;
-- all four concepts, all eight themes, all assigned manager routes, widths from 520 to 2500 pixels, reduced motion, RTL, 135% text expansion, coarse pointer, forced colors, deep links, history, search, transactions, fixtures, persistence, reset, and actual motion participant checks.
-
-## Prototype boundary
-
-Authentication, software installation, provider updates, filesystem import/export, backup/restore, notification delivery, sound-pack installation, container/registry operations, source-control mutation, testing tools, cleanup, and future Server behavior are deterministic concept simulations. They prove information architecture, state transitions, validation, receipts, recovery, and candidate wiring implications. They do not perform external operations or claim production integration.
+See `FINDINGS.md`, `TEST_REPORT.md`, `IMPACT_REGISTER.json`, and `reference-review-report.json` for the causal findings, exact verification ledger, aggregate impacts, custody receipts, and named residual risks.

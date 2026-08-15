@@ -9,9 +9,59 @@
     },
     {
       "$ref": "#/$defs/migration_progress_snapshot"
+    },
+    {
+      "$ref": "#/$defs/migration_receipt"
     }
   ],
   "$defs": {
+    "non_secret_ref": {
+      "description": "Stable non-secret identity or artifact reference; never raw content, a credential, or an absolute local path.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
+    },
+    "nullable_non_secret_ref": {
+      "oneOf": [
+        {"$ref": "#/$defs/non_secret_ref"},
+        {"type": "null"}
+      ]
+    },
+    "data_loss_risk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["class", "backup_boundary_ref", "affected_family_ids", "summary_ref"],
+      "properties": {
+        "class": {"enum": ["none", "post_backup_writes_will_be_lost", "unknown_due_corruption"]},
+        "backup_boundary_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "affected_family_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "summary_ref": {"$ref": "#/$defs/nullable_non_secret_ref"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"class": {"const": "none"}}, "required": ["class"]},
+          "then": {
+            "properties": {
+              "backup_boundary_ref": {"type": "null"},
+              "affected_family_ids": {"maxItems": 0},
+              "summary_ref": {"type": "null"}
+            }
+          },
+          "else": {
+            "properties": {
+              "backup_boundary_ref": {"$ref": "#/$defs/non_secret_ref"},
+              "affected_family_ids": {"minItems": 1},
+              "summary_ref": {"$ref": "#/$defs/non_secret_ref"}
+            }
+          }
+        }
+      ]
+    },
     "migration_preflight_result": {
       "title": "MigrationPreflightResult",
       "type": "object",
@@ -42,8 +92,7 @@
         },
         "filesystem_ref": {
           "description": "Non-secret stable filesystem identity; never an absolute path.",
-          "type": "string",
-          "minLength": 1
+          "$ref": "#/$defs/non_secret_ref"
         },
         "free_bytes": {
           "type": "integer",
@@ -149,10 +198,7 @@
           "type": "string",
           "minLength": 1
         },
-        "journal_ref": {
-          "type": "string",
-          "minLength": 1
-        },
+        "journal_ref": {"$ref": "#/$defs/non_secret_ref"},
         "phase": {
           "enum": [
             "preflight",
@@ -195,57 +241,15 @@
         "preflight_result": {
           "$ref": "#/$defs/migration_preflight_result"
         },
-        "backup_ref": {
-          "type": "string",
-          "minLength": 1
-        },
-        "data_loss_risk": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": [
-            "class",
-            "backup_boundary_ref",
-            "affected_family_ids",
-            "summary_ref"
-          ],
-          "properties": {
-            "class": {
-              "enum": [
-                "none",
-                "post_backup_writes_will_be_lost",
-                "unknown_due_corruption"
-              ]
-            },
-            "backup_boundary_ref": {
-              "type": [
-                "string",
-                "null"
-              ]
-            },
-            "affected_family_ids": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "minLength": 1
-              },
-              "uniqueItems": true
-            },
-            "summary_ref": {
-              "type": [
-                "string",
-                "null"
-              ]
-            }
-          }
-        },
+        "backup_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "data_loss_risk": {"$ref": "#/$defs/data_loss_risk"},
         "updated_at_utc": {
           "type": "string",
           "format": "date-time"
         },
         "terminal_receipt_ref": {
           "description": "Reference to the one storage-registry pm.storage_value.migration_receipt.v1 receipt; never a peer progress receipt.",
-          "type": "string",
-          "minLength": 1
+          "$ref": "#/$defs/non_secret_ref"
         }
       },
       "dependentRequired": {
@@ -413,6 +417,163 @@
           "expression": "bytes_done is absent or 0 <= bytes_done <= bytes_total"
         }
       ]
+    },
+    "migration_receipt": {
+      "title": "MigrationReceipt",
+      "description": "The sole terminal durable migration receipt. Progress remains journal-derived and is never substituted for this receipt.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id", "schema_version", "receipt_id", "migration_id", "from_version",
+        "to_version", "schema_ids", "store_transitions", "family_transitions",
+        "preflight_result", "backup_ref", "applied_steps", "verification_result",
+        "rollback_available", "rollback_result", "data_loss_risk", "terminal_status",
+        "started_at_utc", "completed_at_utc", "app_version", "journal_ref",
+        "redaction_profile"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.storage_value.migration_receipt.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "receipt_id": {"type": "string", "minLength": 1},
+        "migration_id": {"type": "string", "minLength": 1},
+        "from_version": {"type": "string", "minLength": 1},
+        "to_version": {"type": "string", "minLength": 1},
+        "schema_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "store_transitions": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/migration_transition"}
+        },
+        "family_transitions": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/migration_transition"}
+        },
+        "preflight_result": {"$ref": "#/$defs/migration_preflight_result"},
+        "backup_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "applied_steps": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/migration_applied_step"}
+        },
+        "verification_result": {"$ref": "#/$defs/migration_verification_result"},
+        "rollback_available": {"type": "boolean"},
+        "rollback_result": {
+          "oneOf": [
+            {"$ref": "#/$defs/migration_rollback_result"},
+            {"type": "null"}
+          ]
+        },
+        "data_loss_risk": {"$ref": "#/$defs/data_loss_risk"},
+        "terminal_status": {"enum": ["committed", "rolled_back", "blocked"]},
+        "started_at_utc": {"type": "string", "format": "date-time"},
+        "completed_at_utc": {"type": "string", "format": "date-time"},
+        "app_version": {"type": "string", "minLength": 1},
+        "journal_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "redaction_profile": {"enum": ["no_secrets", "redacted_refs_only"]}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"rollback_available": {"const": false}}, "required": ["rollback_available"]},
+          "then": {"properties": {"rollback_result": {"type": "null"}}}
+        },
+        {
+          "if": {"properties": {"terminal_status": {"const": "committed"}}, "required": ["terminal_status"]},
+          "then": {
+            "properties": {
+              "preflight_result": {"properties": {"outcome": {"const": "ready"}}, "required": ["outcome"]},
+              "backup_ref": {"$ref": "#/$defs/non_secret_ref"},
+              "store_transitions": {"minItems": 1},
+              "family_transitions": {"minItems": 1},
+              "applied_steps": {"minItems": 1, "contains": {"properties": {"status": {"const": "verified"}}, "required": ["status"]}},
+              "verification_result": {"properties": {"status": {"const": "passed"}}, "required": ["status"]},
+              "rollback_result": {"type": "null"},
+              "data_loss_risk": {"properties": {"class": {"const": "none"}}, "required": ["class"]}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"terminal_status": {"const": "rolled_back"}}, "required": ["terminal_status"]},
+          "then": {
+            "properties": {
+              "preflight_result": {"properties": {"outcome": {"const": "ready"}}, "required": ["outcome"]},
+              "backup_ref": {"$ref": "#/$defs/non_secret_ref"},
+              "store_transitions": {"minItems": 1},
+              "family_transitions": {"minItems": 1},
+              "applied_steps": {"minItems": 1},
+              "verification_result": {"properties": {"status": {"const": "passed"}}, "required": ["status"]},
+              "rollback_available": {"const": true},
+              "rollback_result": {"properties": {"outcome": {"const": "succeeded"}}, "required": ["outcome"]}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"terminal_status": {"const": "blocked"}}, "required": ["terminal_status"]},
+          "then": {
+            "properties": {
+              "preflight_result": {"properties": {"outcome": {"const": "ready"}}, "required": ["outcome"]},
+              "backup_ref": {"type": "null"},
+              "store_transitions": {"maxItems": 0},
+              "family_transitions": {"maxItems": 0},
+              "applied_steps": {"maxItems": 0},
+              "verification_result": {"properties": {"status": {"const": "not_run"}}, "required": ["status"]},
+              "rollback_available": {"const": false},
+              "rollback_result": {"type": "null"}
+            }
+          }
+        }
+      ]
+    },
+    "migration_transition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["store_or_family_id", "from_version", "to_version"],
+      "properties": {
+        "store_or_family_id": {"type": "string", "minLength": 1},
+        "from_version": {"type": "string", "minLength": 1},
+        "to_version": {"type": "string", "minLength": 1}
+      }
+    },
+    "migration_applied_step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["step_id", "status", "evidence_ref"],
+      "properties": {
+        "step_id": {"type": "string", "minLength": 1},
+        "status": {"enum": ["applied", "verified", "skipped_no_change", "rolled_back", "failed"]},
+        "evidence_ref": {"$ref": "#/$defs/non_secret_ref"}
+      }
+    },
+    "migration_verification_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "detail_refs"],
+      "properties": {
+        "status": {"enum": ["passed", "failed", "not_run"]},
+        "detail_refs": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/non_secret_ref"}}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"status": {"enum": ["passed", "failed"]}}, "required": ["status"]},
+          "then": {"properties": {"detail_refs": {"minItems": 1}}}
+        },
+        {
+          "if": {"properties": {"status": {"const": "not_run"}}, "required": ["status"]},
+          "then": {"properties": {"detail_refs": {"maxItems": 0}}}
+        }
+      ]
+    },
+    "migration_rollback_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outcome", "restore_ref", "verification_ref"],
+      "properties": {
+        "outcome": {"enum": ["succeeded", "failed"]},
+        "restore_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "verification_ref": {"$ref": "#/$defs/non_secret_ref"}
+      }
     }
   }
 }

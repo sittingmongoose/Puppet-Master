@@ -129,7 +129,7 @@ interaction-test-report.json   assertion counts, matrix results, console counts
 
 ## Demo data
 
-`demo/demoData.json` is the supplied dataset, **byte-identical at 349,661 bytes**. It was never edited.
+`demo/demoData.json` is now GENERATED, at 350559 bytes (sha256 7fface4030de6e40...). The supplied file was byte-frozen at 349,661 bytes and never edited; that freeze was retired when DEMO_SCENARIO_MANIFEST.json was instantiated, because eighteen of its rows are thread TITLES and one is an opening message — corpus facts an overlay cannot state honestly. What still holds, and is verified by re-running and comparing checksums, is that the generator reproduces all three outputs byte-identically across runs.
 
 Everything added lives in `demo/demoDataExtension.js`, generated deterministically. The extension exists
 because the supplied data could not exercise several required states: its median message is 105

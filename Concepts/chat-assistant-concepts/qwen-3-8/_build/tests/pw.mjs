@@ -90,6 +90,8 @@ let reportAgg = null;
 export function results(suite) {
   reportAgg = { suite, checks: [] };
   return {
+    suite,
+    get checks() { return reportAgg.checks; },
     check(name, pass, detail) {
       reportAgg.checks.push({ name: String(name), pass: !!pass, detail: detail == null ? "" : String(detail) });
       if (!pass) console.error("FAIL " + suite + " :: " + name + (detail ? " — " + detail : ""));

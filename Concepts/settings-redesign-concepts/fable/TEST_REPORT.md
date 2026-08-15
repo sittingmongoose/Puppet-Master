@@ -175,3 +175,38 @@ python3 Concepts/ConceptHub/validate.py Concepts/settings-redesign-concepts/fabl
 
 Then open any probe URL from README's deterministic-fixtures cookbook; pages stamp
 `data-pm-state="ready"` when the link is fully applied.
+
+## 3d. Dependency-correction pass (2026-08-13)
+
+The correction packet `PM_Settings_Dependency_and_Work_Correction_2026-08-13` supplied the
+full-thread performance decision register that the original archive omitted. The work was
+re-inspected against it; four genuine shortcomings were found, corrected, and proven (full detail
+and the honest opened-references ledger live in `reference-review-report.json`):
+
+1. **Fabricated index-rebuild percentages** (register §11/§16.6) — scanning is now honestly
+   indeterminate; indexing emits measured file counts (6,470 of 14,382); c4 renders counts with
+   real-valued progressbar aria and never a bare percentage.
+2. **c3 whole-stack re-rendering** (§7.3) — covered layers now mark stale and re-render once on
+   reveal instead of rebuilding on every provider/catalog event.
+3. **Startup-scan copy** (§13) — the skills-discovery description no longer claims a startup scan.
+4. **ObservableWork field gap** (§11) — op events now carry progressKind, source
+   (measured|derived|unknown), completed/total only with a real denominator, and waitReason
+   (`waiting_resource` on rate-limited test sends); c4's credits meter aria exposes real units.
+
+Evidence from this pass:
+
+| Suite | Result |
+|---|---|
+| Node harness (76 checks, incl. 7 new correction assertions) | all pass |
+| Correction probes: c1–c4 lazy-hydration DOM evidence (deep manager content absent on Home, materializes on open) | all pass |
+| Correction probes: c3 stale-on-reveal (covered-layer DOM marker survives data events; gone after pop) | pass |
+| Correction probes: c4 measured index progress (ends ready/14,382; no bare percent in copy; mid-flight progressbar aria-valuemax 14382 with "measured" valuetext) | pass |
+| Full 187-probe functional regression | 0 failures |
+| ConceptHub validator | passed |
+
+Reviewed with evidence, no change needed: RuntimeResourceGovernor sole ownership; provider-CLI
+policy (adjudication sha-identical to the copy read in the build pass); humanized installation
+identity (all raw-identity render sites are advanced-scoped); subscription discipline (all 28
+store.on calls are boot-scope; pm-spell is element-scoped); animation clocks (only the
+active-refresh shimmer, torn down by the completion re-render); the §18 Basic-Dark factory
+default (PMConcept7-scoped); the SQLite prohibition (zero occurrences).

@@ -35,7 +35,11 @@
 
   var STAGE_ICONS = {
     thought: 'thought', exploration: 'search', import: 'attach',
-    edit: 'edit', asset: 'artifact', completion: 'check'
+    edit: 'edit', asset: 'artifact', completion: 'check',
+    // canonical trigger-contract kinds (correction 2026-08-13)
+    thinking_summary: 'thought', read: 'read', fetch: 'fetch',
+    browser: 'browser', test: 'test', generate: 'generate', search: 'search',
+    web: 'fetch'
   };
   var STATUS_LABELS = {
     queued: 'Queued', running: 'Running', working: 'Working',
@@ -260,6 +264,7 @@
       head.type = 'button';
       head.appendChild(iconSpan(o.icon));
       head.appendChild(el('span', 'k3t-rowhead-title', o.title));
+      if (o.headExtras) o.headExtras.forEach(function (n) { head.appendChild(n); });
       if (o.note) head.appendChild(el('span', 'k3t-note', o.note));
       if (o.meta) head.appendChild(el('span', 'k3t-rowhead-meta', o.meta));
       var chev = el('span', 'k3t-chev');
@@ -280,7 +285,7 @@
       var k = String(s || '').toLowerCase();
       var cls = 'k3t-status';
       if (k === 'blocked' || k === 'failed') cls += ' is-error';
-      else if (k === 'running' || k === 'working') cls += ' is-live';
+      else if (k === 'running' || k === 'working' || k === 'retrying') cls += ' is-live';
       else if (k !== 'complete' && k !== 'completed') cls += ' is-quiet';
       return el('span', cls, humanStatus(s));
     }
@@ -543,12 +548,33 @@
       if (sum) row.appendChild(el('span', 'k3t-stage-summary', sum));
       return row;
     }
+    // Video-C accumulating cluster: one icon per DISTINCT tool kind, in
+    // first-appearance order — the cluster grows as work touches new kinds.
+    function kindCluster(ag) {
+      var seen = [];
+      (ag.stages || []).forEach(function (st) {
+        var k = st.kind || 'stage';
+        if (seen.indexOf(k) < 0) seen.push(k);
+      });
+      if (!seen.length) return null;
+      var c = el('span', 'k3t-kindcluster');
+      c.setAttribute('data-testid', 'k3t-kindcluster');
+      seen.forEach(function (k) {
+        var s = el('span', 'k3t-kindcluster-ic');
+        s.title = titleCase(k.replace(/_/g, ' '));
+        s.appendChild(icon(STAGE_ICONS[k] || 'dot'));
+        c.appendChild(s);
+      });
+      return c;
+    }
     function activityCard(ag) {
       var card = el('div', 'k3t-card k3t-activity');
       card.setAttribute('data-testid', 'k3t-activity');
+      var cluster = kindCluster(ag);
       var a = accordion({
         icon: 'activity',
         title: ag.compactLabel || 'Work summary',
+        headExtras: cluster ? [cluster] : null,
         meta: 'Worked for ' + fmtDur(ag.workedSeconds || 0),
         open: false
       });
@@ -1325,13 +1351,25 @@
       var btn = el('button', 'k3t-shortcut');
       btn.type = 'button';
       btn.setAttribute('data-testid', kind === 'browser' ? 'k3t-browser' : 'k3t-artifact');
-      btn.appendChild(iconSpan(kind === 'browser' ? 'browser' : 'artifact', 'k3t-shortcut-ic'));
+      var working = kind === 'artifact' && item.status === 'working';
+      if (working) {
+        // Video-C canon: an artifact can be mid-build — orbit + provenance meta
+        var spin = el('span', 'k3t-shortcut-ic k3-orbit');
+        spin.setAttribute('aria-hidden', 'true');
+        for (var oi = 0; oi < 4; oi++) spin.appendChild(el('i'));
+        btn.appendChild(spin);
+        btn.classList.add('is-working');
+      } else {
+        btn.appendChild(iconSpan(kind === 'browser' ? 'browser' : 'artifact', 'k3t-shortcut-ic'));
+      }
       var txt = el('span', 'k3t-shortcut-txt');
       txt.appendChild(el('span', 'k3t-shortcut-title', item.title || item.id));
       // PM-native browser terminology: Browser Program, never session-model copy.
-      var meta = kind === 'browser'
-        ? 'Browser Program' + (item.currentPage ? ' · ' + item.currentPage : '')
-        : (item.kind || 'artifact') + (item.projectPath ? ' · ' + item.projectPath : '');
+      var meta = working
+        ? 'Building' + (item.provenance ? ' · ' + item.provenance : '')
+        : kind === 'browser'
+          ? 'Browser Program' + (item.currentPage ? ' · ' + item.currentPage : '')
+          : (item.kind || 'artifact') + (item.projectPath ? ' · ' + item.projectPath : '');
       txt.appendChild(el('span', 'k3t-shortcut-meta', meta));
       btn.appendChild(txt);
       wrap.appendChild(btn);
@@ -1809,6 +1847,10 @@
       var empty = list.querySelector('.k3t-empty');
       if (empty) empty.remove();
       var article = buildArticle(m, idx, currentSelection());
+      // Video-A causal continuity: a live arrival rises from the composer edge
+      // (the content above stays anchored; the gate makes this instant under
+      // reduced motion). Initial renders/rebuilds never get the class.
+      article.classList.add('k3t-enter');
       placeArticle(article, m, idx, ms);
       updateTopRegion();
       if (stream) startStream(m, article.querySelector('.k3t-msg-body'));

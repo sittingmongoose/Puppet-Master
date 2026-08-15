@@ -68,3 +68,26 @@ python Concepts/settings-redesign-concepts/CursorAuto/scripts/ca-interactive-qa.
   - Hub isolation: port **57300** pid **60112**; QA pid **42388**; profile `C:\Users\sitti\AppData\Local\Temp\ca-qa-42388`
   - Artifact: `scripts/qa-last-run.json`
 - Packet probes evidence: installations hasInstallUI on all four; Score sound preview clicked; Archive import preview/rollback + server deferred ack.
+
+
+## 2026-08-13 dependency correction verification
+
+Exact evidence from this correction run:
+
+1. **ConceptHub validate** — `python Concepts/ConceptHub/validate.py Concepts/settings-redesign-concepts/CursorAuto` → `Concept validation passed`.
+2. **Interactive QA** — `python Concepts/settings-redesign-concepts/CursorAuto/scripts/ca-interactive-qa.py --json-out Concepts/settings-redesign-concepts/CursorAuto/scripts/qa-last-run.json` → `failures: []`; Harbor/Score/Switchboard/Archive `ok: true`.
+3. Correction probes observed true for all four concepts:
+   - `installations` (CLI policy copy, Advanced-only paths, OW host)
+   - `correction_hydration_ow` (CAObservableWork + RuntimeResourceGovernor admission owner stamp + shell-first hydration + fixture framing)
+   - `correction_lazy_manager` (peer manager hydrate without startup eager all-keys)
+   - `correction_loading_offline_states` (loading/offline demo states)
+4. Themes / reduced-motion / width probes exercised by harness; width remains usable at 760 with chrome root present.
+5. No winner selected.
+
+See also `reference-review-report.json`.
+
+### Post-approval retest (user approved plan)
+
+- ConceptHub validate: **pass**
+- Interactive QA: **ok: true**, **failures: []** (Harbor/Score/Switchboard/Archive)
+- Artifact: `scripts/qa-last-run.json`

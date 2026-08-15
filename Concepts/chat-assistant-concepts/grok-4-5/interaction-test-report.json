@@ -1,182 +1,174 @@
 {
-  "schema_id": "pm.chat_interaction_test_report.v1",
+  "schema_id": "pm.chat_assistant_interaction_test_report.v1",
   "concept_id": "grok-4-5",
   "model": "Grok 4.5",
-  "updated_at": "2026-08-11",
+  "updated_at": "2026-08-14T04:40:00Z",
   "status": "complete",
-  "cache_bust": "v=40",
-  "probes_dir": "%TEMP%\\pm-grok45-probes",
+  "cache_bust": "v=42",
+  "probes_dir": "%TEMP%\\pm-grok45-probes\\correction-2026-08-14",
   "no_verification_dir": true,
+  "correction_packet": "PM_Assistant_Chat_Dependency_Media_and_Work_Correction_2026-08-13",
   "cases": [
     {
-      "id": "residual-fixes",
-      "status": "passed",
-      "runner": "residual-fixes-probe.mjs",
-      "result": "%TEMP%\\pm-grok45-probes\\residual-fixes-result.json",
-      "passed": 13,
-      "failed": 0,
-      "note": "branch fromMessageId; empty admit; video+pdf CTAs; no product fan-out toast; bulk persona; cache v39; lens no elev shadow"
-    },
-    {
-      "id": "store-bsd-restore-sync",
-      "status": "passed",
-      "runner": "store-api-probe.mjs",
-      "passed": 12,
-      "failed": 0
-    },
-    {
-      "id": "offline-idempotency",
-      "status": "passed",
-      "runner": "offline-idempotency-probe.mjs"
-    },
-    {
-      "id": "terminology-no-playwright-ui",
-      "status": "passed",
-      "runner": "terminology-grep-probe.mjs",
-      "hits": []
-    },
-    {
-      "id": "matrix-smoke-w6-t1",
-      "status": "passed",
-      "runner": "matrix-smoke-probe.mjs",
-      "result": "%TEMP%\\pm-grok45-probes\\matrix-smoke-result.json",
-      "passed": 64,
-      "failed": 0,
-      "note": "8 themes \u00d7 4 widths (520/750/975/1200) \u00d7 2 rm on w6\u00d7t1"
-    },
-    {
-      "id": "bsd-placement-w1-w8",
-      "status": "passed",
-      "runner": "matrix-smoke-probe.mjs",
-      "passed": 8,
-      "failed": 0,
-      "note": "mono/kicker/lamp/chip/trailing/trailing/latch/rail"
-    },
-    {
-      "id": "q-structure-t1-t8",
-      "status": "passed",
-      "runner": "matrix-smoke-probe.mjs",
-      "passed": 8,
-      "failed": 0,
-      "note": "data-q-renderer ids match RENDERER_IDS"
-    },
-    {
-      "id": "live-spotcheck",
-      "status": "passed",
-      "runner": "live-spotcheck-probe.mjs",
-      "result": "%TEMP%\\pm-grok45-probes\\live-spotcheck-result.json",
-      "passed": 12,
-      "failed": 0,
-      "note": "pin+artifact, BSD\u00d73, offline idempotency, redirect, attachment CTAs, title-bar notifications"
-    },
-    {
-      "id": "polish-visual",
-      "status": "passed",
-      "runner": "polish-visual-probe.mjs",
-      "result": "%TEMP%\\pm-grok45-probes\\polish-visual-result.json",
-      "passed": 8,
-      "failed": 0,
-      "note": "quieter paradigm/lens; theme first-click retro-dark; bulk persona PlanningRun section"
-    },
-    {
-      "id": "pinned-artifact-coexist",
-      "status": "passed",
-      "runner": "live-spotcheck-probe.mjs",
-      "note": "history.pin_full + artifact.ready; assertPinInvariants ok; unpin restores closed"
-    },
-    {
-      "id": "bsd-glow-rules",
-      "status": "passed",
-      "runner": "live-spotcheck-probe.mjs",
-      "note": "auto-active has .is-auto-active; bsd.on clears indefinite glow"
-    },
-    {
-      "id": "notification-titlebar",
-      "status": "passed",
-      "runner": "live-spotcheck-probe.mjs",
-      "note": "system.notification.push increments [data-shell-inbox-count]; no chat side notification panel"
-    },
-    {
-      "id": "step8-system-triggers-present",
-      "status": "passed",
-      "note": "demo-harness cases+buttons include bsd/sync/restore/rewind/notification/browser_program/provider_setup/access_limited"
-    },
-    {
-      "id": "demo-manifest-18-history",
-      "status": "passed",
-      "history_rows": 18
-    },
-    {
-      "id": "reports-seven-exist",
-      "status": "passed"
-    },
-    {
       "id": "concepthub-validate",
-      "status": "passed",
-      "result": "Concept validation passed: Concepts\\chat-assistant-concepts\\grok-4-5"
+      "result": "pass",
+      "detail": "python Concepts/ConceptHub/validate.py Concepts/chat-assistant-concepts/grok-4-5 → Concept validation passed",
+      "evidence": "%TEMP%\\pm-grok45-probes\\correction-2026-08-14\\concepthub-validate.txt"
     },
     {
-      "id": "deep-polish-chrome",
-      "status": "passed",
-      "note": "paradigm watermark + lens bar quieting; PDF Use Gemini for documents; bulk persona short label"
-    }
-  ],
-  "summary": {
-    "passed": 17,
-    "failed": 0,
-    "pending": 0,
-    "represented": 0,
-    "cache_bust": "v=40"
-  },
-  "concepthub": {
-    "command": "python Concepts\\ConceptHub\\validate.py Concepts\\chat-assistant-concepts\\grok-4-5",
-    "result": "Concept validation passed: Concepts\\chat-assistant-concepts\\grok-4-5",
-    "exit_code": 0,
-    "no_verification_dir": true
-  },
-  "probes": {
-    "goal_lifecycle": {
-      "ok": true,
-      "passed": 8,
-      "failed": 0
+      "id": "syntax-check-js",
+      "result": "pass",
+      "detail": "36/36 JS files node --check",
+      "evidence": "%TEMP%\\pm-grok45-probes\\correction-2026-08-14\\syntax-check.json"
     },
-    "route_chrome": {
-      "ok": true,
-      "passed": 10,
-      "failed": 0
+    {
+      "id": "correction-live-probe",
+      "result": "pass",
+      "detail": "20/20 live correction checks (peek, pin+artifact floor, provider official/not-bundled, prepare, sync, reduced-motion across w6xt1/w2xt5/w8xt3)",
+      "evidence": "%TEMP%\\pm-grok45-probes\\correction-2026-08-14\\correction-live-result.json",
+      "passed": 20,
+      "failed": 0,
+      "total": 20
     },
-    "residual_fixes": {
-      "ok": true,
-      "passed": 13
-    },
-    "matrix_smoke": {
-      "ok": true,
+    {
+      "id": "matrix-smoke-theme-width-rm",
+      "result": "pass",
+      "detail": "64/64 theme×width×rm on w6×t1; BSD placement 8/8; Q structure 8/8",
+      "evidence": "%TEMP%\\pm-grok45-probes\\matrix-smoke-result.json",
       "matrix": "64/64",
       "bsd": "8/8",
       "q": "8/8"
     },
-    "live_spotcheck": {
-      "ok": true,
-      "passed": 12
+    {
+      "id": "goal-lifecycle-probe",
+      "result": "pass",
+      "detail": "8/8 pause/resume/replan/edit/stop/clear/complete + GAP-020 note",
+      "evidence": "%TEMP%\\pm-grok45-probes\\goal-lifecycle-result.json",
+      "passed": 8,
+      "failed": 0
     },
-    "polish_visual": {
-      "ok": true,
-      "passed": 8
+    {
+      "id": "provider-adjudication-copy",
+      "result": "pass",
+      "detail": "official source + not bundled + Install surfaced on live pairs; Settings-owned deep-link stub",
+      "evidence": "%TEMP%\\pm-grok45-probes\\correction-2026-08-14\\correction-live-result.json + static-evidence.json"
     },
-    "store_api": {
-      "ok": true,
-      "passed": 12
+    {
+      "id": "history-peek-all-windows",
+      "result": "pass",
+      "detail": "history.peek mode + peek class on w6/w2/w8 live probes",
+      "evidence": "%TEMP%\\pm-grok45-probes\\correction-2026-08-14\\correction-live-result.json"
     },
-    "offline_idempotency": {
-      "ok": true
+    {
+      "id": "pin-artifact-coexistence",
+      "result": "pass",
+      "detail": "pinned_compact + artifact workspace open with chat floor retained",
+      "evidence": "%TEMP%\\pm-grok45-probes\\correction-2026-08-14\\correction-live-result.json"
     },
-    "terminology": {
-      "ok": true
+    {
+      "id": "question-prepare-open",
+      "result": "pass",
+      "detail": "question.prepare surfaced with phase=prepare; prepare≠open",
+      "evidence": "%TEMP%\\pm-grok45-probes\\correction-2026-08-14\\correction-live-result.json + static-evidence.json"
+    },
+    {
+      "id": "sync-offline-reconnect-replay",
+      "result": "pass",
+      "detail": "offline/reconnect/replay surfaced (hasReplay)",
+      "evidence": "%TEMP%\\pm-grok45-probes\\correction-2026-08-14\\correction-live-result.json"
+    },
+    {
+      "id": "reduced-motion",
+      "result": "pass",
+      "detail": "reduced motion honored in live correction probe",
+      "evidence": "%TEMP%\\pm-grok45-probes\\correction-2026-08-14\\correction-live-result.json"
+    },
+    {
+      "id": "q-renderers-distinct",
+      "result": "pass",
+      "detail": "matrix Q structure 8/8 distinct renderer IDs",
+      "evidence": "%TEMP%\\pm-grok45-probes\\matrix-smoke-result.json"
+    },
+    {
+      "id": "bsd-compositions",
+      "result": "pass",
+      "detail": "BSD placement 8/8 across w1–w8",
+      "evidence": "%TEMP%\\pm-grok45-probes\\matrix-smoke-result.json"
+    },
+    {
+      "id": "omp-corruption-fixed",
+      "result": "pass",
+      "detail": "__omp_shell corruption removed from threads/_thread-kit.js; host boots at ?v=42",
+      "evidence": "threads/_thread-kit.js + host.html ?v=42"
     }
+  ],
+  "summary": {
+    "cases_passed": 14,
+    "cases_failed": 0,
+    "correction_live": "20/20",
+    "matrix_smoke": "64/64",
+    "bsd": "8/8",
+    "q_structure": "8/8",
+    "goal_lifecycle": "8/8",
+    "syntax_js": "36/36",
+    "concepthub": "pass",
+    "cache_bust": "v=42",
+    "probes_dir": "%TEMP%\\pm-grok45-probes\\correction-2026-08-14"
+  },
+  "concepthub": {
+    "command": "python Concepts/ConceptHub/validate.py Concepts/chat-assistant-concepts/grok-4-5",
+    "result": "pass",
+    "detail": "Concept validation passed: Concepts\\chat-assistant-concepts\\grok-4-5",
+    "exit_code": 0,
+    "evidence": "%TEMP%\\pm-grok45-probes\\correction-2026-08-14\\concepthub-validate.txt",
+    "no_verification_dir": true
   },
   "honesty_pass": {
-    "goal": "demo-complete handlers; GAP-020 catalog IDs remain",
-    "provider_crew": "route chrome enriched; managers Settings-owned; stubs honest",
-    "wxt_winner": "none declared"
+    "media_reviewed": "correction packet media opened; see reference-review-report.json",
+    "motion": "causal continuity from 4 videos without frame-matching clone",
+    "provider": "official-source / not bundled / not baseline; Settings-owned deep-link stub",
+    "goal": "demo-complete handlers; GAP-020 catalog IDs remain provisional",
+    "wxt_winner": "none declared",
+    "omp_boot": "threads/_thread-kit.js omp corruption fixed"
+  },
+  "winner": null,
+  "probes": {
+    "correction_live": {
+      "path": "%TEMP%\\pm-grok45-probes\\correction-2026-08-14\\correction-live-result.json",
+      "passed": 20,
+      "failed": 0,
+      "total": 20
+    },
+    "matrix_smoke": {
+      "path": "%TEMP%\\pm-grok45-probes\\matrix-smoke-result.json",
+      "passed": 64,
+      "failed": 0,
+      "bsd": "8/8",
+      "q": "8/8"
+    },
+    "goal_lifecycle": {
+      "path": "%TEMP%\\pm-grok45-probes\\goal-lifecycle-result.json",
+      "passed": 8,
+      "failed": 0
+    },
+    "syntax_check": {
+      "path": "%TEMP%\\pm-grok45-probes\\correction-2026-08-14\\syntax-check.json",
+      "total": 36,
+      "failed": []
+    },
+    "static_evidence": {
+      "path": "%TEMP%\\pm-grok45-probes\\correction-2026-08-14\\static-evidence.json",
+      "flags": [
+        "provider_official_source",
+        "provider_not_bundled",
+        "peek_helper",
+        "artifact_scroll_bind",
+        "reset_rehydrate",
+        "prepare_ne_open",
+        "motion_video_map",
+        "q_renderer_ids",
+        "reference_review_exists"
+      ]
+    }
   }
 }

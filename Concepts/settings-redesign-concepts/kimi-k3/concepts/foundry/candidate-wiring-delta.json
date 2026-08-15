@@ -6,43 +6,87 @@
   "families": [
     {
       "family": "navigation and values",
-      "controls": ["manager cards", "workspace nav", "search results", "all setting rows"],
-      "trace": "Shared spine: UI source → cmd.settings.navigate / cmd.settings.value.set → Settings owner → registry/schema validation → route or value mutation → event + receipt → projection → diagnostics attribution → recovery via Back/forward or cmd.settings.default.restore"
+      "controls": [
+        "manager cards",
+        "workspace nav",
+        "search results",
+        "all setting rows"
+      ],
+      "trace": "Shared spine: UI source \u2192 cmd.settings.navigate / cmd.settings.value.set \u2192 Settings owner \u2192 registry/schema validation \u2192 route or value mutation \u2192 event + receipt \u2192 projection \u2192 diagnostics attribution \u2192 recovery via Back/forward or cmd.settings.default.restore"
     },
     {
       "family": "terminal profiles and palette",
-      "controls": ["profile list", "profile editor fields", "16 ANSI wells"],
-      "trace": "UI source → cmd.settings.value.set (profile fields) → Terminal owner → readability-floor validation (opacity ≥ 70%) → profile/palette mutation → event → live preview re-projection from real palette values → diagnostics attribution → recovery: inherit-from-Default rows; palette reset"
+      "controls": [
+        "profile list",
+        "profile editor fields",
+        "16 ANSI wells"
+      ],
+      "trace": "UI source \u2192 cmd.settings.value.set (profile fields) \u2192 Terminal owner \u2192 readability-floor validation (opacity \u2265 70%) \u2192 profile/palette mutation \u2192 event \u2192 live preview re-projection from real palette values \u2192 diagnostics attribution \u2192 recovery: inherit-from-Default rows; palette reset"
     },
     {
       "family": "lsp registry",
-      "controls": ["registry rows", "add custom server", "restart", "logs"],
-      "trace": "UI source → cmd.lsp.server.add / cmd.lsp.server.restart (new candidates) → LSP owner → binary-resolution + init validation → registry/attachment mutation → ObservableWork handshake phases + receipt → registry re-projection with requested/effective → diagnostics logs → recovery: restart returns to the last verified attachment; deep link to the row"
+      "controls": [
+        "registry rows",
+        "add custom server",
+        "restart",
+        "logs"
+      ],
+      "trace": "UI source \u2192 cmd.lsp.server.add / cmd.lsp.server.restart (new candidates) \u2192 LSP owner \u2192 binary-resolution + init validation \u2192 registry/attachment mutation \u2192 ObservableWork handshake phases + receipt \u2192 registry re-projection with requested/effective \u2192 diagnostics logs \u2192 recovery: restart returns to the last verified attachment; deep link to the row"
     },
     {
       "family": "formatter registry",
-      "controls": ["add/remove/reset", "test action"],
-      "trace": "UI source → cmd.formatter.add / cmd.formatter.test → Formatters owner → command resolution + extension validation → registry mutation or scratch-buffer test → receipt with timing → registry re-projection with state badge → diagnostics attribution → recovery: reset to built-ins"
+      "controls": [
+        "add/remove/reset",
+        "test action"
+      ],
+      "trace": "UI source \u2192 cmd.formatter.add / cmd.formatter.test \u2192 Formatters owner \u2192 command resolution + extension validation \u2192 registry mutation or scratch-buffer test \u2192 receipt with timing \u2192 registry re-projection with state badge \u2192 diagnostics attribution \u2192 recovery: reset to built-ins"
     },
     {
       "family": "custom commands",
-      "controls": ["CRUD", "safety fix", "dry-run preview"],
-      "trace": "UI source → cmd.commands.custom.* → Commands owner → shell-safety validation (unquoted variables, wrong-shell syntax refuse with a specific message) → command record mutation → event + receipt → table re-projection → diagnostics record dry-run output → recovery: delete + reset; dry run demonstrably never sends work to an agent"
+      "controls": [
+        "CRUD",
+        "safety fix",
+        "dry-run preview"
+      ],
+      "trace": "UI source \u2192 cmd.commands.custom.* \u2192 Commands owner \u2192 shell-safety validation (unquoted variables, wrong-shell syntax refuse with a specific message) \u2192 command record mutation \u2192 event + receipt \u2192 table re-projection \u2192 diagnostics record dry-run output \u2192 recovery: delete + reset; dry run demonstrably never sends work to an agent"
     },
     {
       "family": "shortcuts",
-      "controls": ["remap recorder", "reset", "import/export", "cheat sheet"],
-      "trace": "UI source → cmd.shortcuts.bind → Commands owner → conflict detection against the live keymap (recorder captures real keydown chords) → binding mutation → event + receipt (conflict warns) → table re-projection with conflict highlight → diagnostics attribution → recovery: reset all restores defaults and clears conflicts"
+      "controls": [
+        "remap recorder",
+        "reset",
+        "import/export",
+        "cheat sheet"
+      ],
+      "trace": "UI source \u2192 cmd.shortcuts.bind \u2192 Commands owner \u2192 conflict detection against the live keymap (recorder captures real keydown chords) \u2192 binding mutation \u2192 event + receipt (conflict warns) \u2192 table re-projection with conflict highlight \u2192 diagnostics attribution \u2192 recovery: reset all restores defaults and clears conflicts"
     },
     {
       "family": "catalog resources",
-      "controls": ["MCP restart", "project enablement toggles", "skill/plugin updates", "unload"],
-      "trace": "UI source → cmd.mcp.server.restart / domain enable verbs → MCP/Skills/Plugins/Tools owners → trust + compatibility validation (untrusted skills update manually; beta plugins warn) → resource state mutation → event + receipt → catalog re-projection with five-state inventory → Usage attribution when a server reports it → recovery: disable returns to the not-available projection"
+      "controls": [
+        "MCP restart",
+        "project enablement toggles",
+        "skill/plugin updates",
+        "unload"
+      ],
+      "trace": "UI source \u2192 cmd.mcp.server.restart / domain enable verbs \u2192 MCP/Skills/Plugins/Tools owners \u2192 trust + compatibility validation (untrusted skills update manually; beta plugins warn) \u2192 resource state mutation \u2192 event + receipt \u2192 catalog re-projection with five-state inventory \u2192 Usage attribution when a server reports it \u2192 recovery: disable returns to the not-available projection"
     },
     {
       "family": "testing matrix",
-      "controls": ["Auto/On/Off cells"],
-      "trace": "UI source → cmd.settings.value.set (matrix cell) → Testing owner → managed-policy permission (managed cells refuse) → matrix mutation → event → matrix re-projection → diagnostics attribution → recovery: set Auto"
+      "controls": [
+        "Auto/On/Off cells"
+      ],
+      "trace": "UI source \u2192 cmd.settings.value.set (matrix cell) \u2192 Testing owner \u2192 managed-policy permission (managed cells refuse) \u2192 matrix mutation \u2192 event \u2192 matrix re-projection \u2192 diagnostics attribution \u2192 recovery: set Auto"
+    },
+    {
+      "family": "settings shell performance (correction pass)",
+      "controls": [
+        "domain-local refresh",
+        "lazy manager hydration",
+        "offline last-known-good banner",
+        "100-installation collapse",
+        "behavior profile rows"
+      ],
+      "trace": "store change \u2192 key-domain classification \u2192 repaint only the owning surface (ops bench workbenches render fresh on entry) \u2192 no per-row repaint storms; slow-hydration scenario \u2192 truthful Loading projection \u2192 content; offline scenario \u2192 cached catalog/connection state stays visible, zero probes; production owner: RuntimeResourceGovernor owns admission, ObservableWork owns the operation projection \u2014 Settings owns policy and presentation only"
     }
   ]
 }

@@ -204,12 +204,39 @@
           if (found >= 0) Q.goTo(qid, found);
           return { ok: false, reason: res.reason, offenderIndex: found >= 0 ? found : idx };
         }
-        /* Two-step by design: submit() parks the record in `submitting` for SUBMIT_MS so a concept can
-         * compress its card. Settling it here means the receipt exists at the end of THIS interaction,
-         * which is also what makes the behaviour assertable without waiting on a timer. */
-        Q.finishSubmit(qid);
-        release(svc, threadId);
-        return { ok: true, resolved: true };
+        /* Two-step by design: submit() parks the record in `submitting` for SUBMIT_MS so a concept
+         * can compress its card, and finishSubmit() settles it.
+         *
+         * Settling in the same call is what made that beat unobservable: `submitting` existed in the
+         * state machine and never reached a screen, so the symmetry
+         * 04_questionnaire_morph_prepare_submit.mov is built on — a pill grows into the card, the
+         * card shrinks back into the same pill, the pill dissolves — had no middle.
+         *
+         * The synchronous settle stays the DEFAULT, because every caller in this workspace treats
+         * `resolved` as its cue to condense the flow into its receipt, and making them all wait on a
+         * timer would be a behaviour change dressed as a fix. `arg.beat` opts into the observable
+         * middle: the record rests in `submitting` and a timer owned HERE settles it, because the
+         * settle must also release the work surfaces and nothing else knows they were claimed. */
+        if (!arg || !arg.beat) {
+          Q.finishSubmit(qid);
+          release(svc, threadId);
+          return { ok: true, resolved: true };
+        }
+        (function (qidAtSubmit, tidAtSubmit) {
+          global.setTimeout(function () {
+            /* Re-check before settling: the flow may have been cancelled, reset by the Director, or
+             * replaced while the beat was playing, and finishing a record that is no longer the live
+             * one would resolve somebody else's questionnaire. */
+            var live = Q.activeFor(tidAtSubmit);
+            if (!live || live.id !== qidAtSubmit || live.status !== 'submitting') {
+              release(svc, tidAtSubmit);
+              return;
+            }
+            Q.finishSubmit(qidAtSubmit);
+            release(svc, tidAtSubmit);
+          }, Q.SUBMIT_MS || 700);
+        })(qid, threadId);
+        return { ok: true, submitting: true };
 
       case 'cancel':
         Q.cancel(qid);

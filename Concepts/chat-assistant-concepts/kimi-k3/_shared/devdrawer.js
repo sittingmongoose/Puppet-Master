@@ -101,7 +101,9 @@
         ['Close', demo('History close', 'closeHistory')],
         ['Pin', demo('History pin', 'pinHistory')],
         ['Unpin', demo('History unpin', 'unpinHistory')],
-        ['Full ↔ Compact', demo('History full↔compact', 'togglePinnedCompact')]
+        ['Full ↔ Compact', demo('History full↔compact', 'togglePinnedCompact')],
+        ['Peek', demo('History peek', 'historyPeek')],
+        ['Switch thread', demo('Switch thread', 'historySwitchThread')]
       ]],
       ['Questions', [
         ['Trigger flow', demo('Trigger question flow', 'triggerQuestionFlow')],
@@ -124,13 +126,15 @@
       ['Todos', [
         ['Add', demo('Todo add', 'todoAdd')],
         ['Complete next', demo('Todo complete', 'todoComplete')],
-        ['Reopen last', demo('Todo reopen', 'todoReopen')]
+        ['Reopen last', demo('Todo reopen', 'todoReopen')],
+        ['Block', demo('Todo block', 'todoBlock')]
       ]],
       ['Subagents', [
         ['Spawn', demo('Subagent spawn', 'subagentSpawn')],
         ['Advance', demo('Subagent advance', 'subagentAdvance')],
         ['Complete', demo('Subagent complete', 'subagentComplete')],
         ['Fail', demo('Subagent fail', 'subagentFail')],
+        ['Retry', demo('Subagent retry', 'subagentRetry')],
         ['Stop', demo('Subagent stop', 'subagentStop')]
       ]],
       ['Activity', [
@@ -181,7 +185,8 @@
         ['Inject', demo('Inject approval', 'injectApproval')],
         ['Allow once', demo('Allow once', 'decideApproval', ['once'])],
         ['Allow for session', demo('Allow for session', 'decideApproval', ['session'])],
-        ['Deny', demo('Deny', 'decideApproval', ['deny'])]
+        ['Deny', demo('Deny', 'decideApproval', ['deny'])],
+        ['Branch decision', demo('Decision branch', 'decisionBranch')]
       ]],
       ['Context', [
         ['Compact now', demo('Compact now', 'compactNow')],
@@ -209,6 +214,10 @@
         ['Transformed', state('attachment-transformed')],
         ['Alternate', state('attachment-alternate')],
         ['Unsupported', state('attachment-unsupported')]
+      ]],
+      ['System', [
+        ['Port collision', demo('Port collision', 'injectPortConflict')],
+        ['Worktree collision', demo('Worktree collision', 'worktreeCollision')]
       ]],
       ['Notifications', [
         ['Approval needed', demo('Notify approval', 'injectApprovalNeeded')],

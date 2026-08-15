@@ -8,11 +8,31 @@
     "approx_ids": 732,
     "families": 56,
     "flags": [
-      { "id": "cmd.settings.bloom.open", "disposition": "retire", "note": "chip/bloom superseded; compatibility alias to cmd.settings.open only if needed" },
-      { "id": "cmd.settings.open_notifications", "disposition": "supersede-into-family", "note": "alias of cmd.settings.navigate {dest:general/notifications}; c2's canonical location is General > Notifications & Sounds" },
-      { "id": "cmd.settings.open_storage_retention", "disposition": "supersede-into-family", "note": "alias of cmd.settings.navigate {dest}" },
-      { "id": "cmd.settings.category.reset", "disposition": "merge-flag", "note": "overlaps candidate cmd.settings.reset.apply{scope:category}; prefer canon id" },
-      { "id": "cmd.theme.*", "disposition": "reuse-flag", "note": "ESPECIALLY load-bearing for this concept (appearance owner): census existing cmd.theme.* against the appearance candidates cmd.theme.create / cmd.theme.import / cmd.theme.export / cmd.theme.preview / cmd.theme.apply before minting anything new. Hover preview and apply must be two distinct commands with different persistence semantics (preview is ephemeral per-window; apply persists)." }
+      {
+        "id": "cmd.settings.bloom.open",
+        "disposition": "retire",
+        "note": "chip/bloom superseded; compatibility alias to cmd.settings.open only if needed"
+      },
+      {
+        "id": "cmd.settings.open_notifications",
+        "disposition": "supersede-into-family",
+        "note": "alias of cmd.settings.navigate {dest:general/notifications}; c2's canonical location is General > Notifications & Sounds"
+      },
+      {
+        "id": "cmd.settings.open_storage_retention",
+        "disposition": "supersede-into-family",
+        "note": "alias of cmd.settings.navigate {dest}"
+      },
+      {
+        "id": "cmd.settings.category.reset",
+        "disposition": "merge-flag",
+        "note": "overlaps candidate cmd.settings.reset.apply{scope:category}; prefer canon id"
+      },
+      {
+        "id": "cmd.theme.*",
+        "disposition": "reuse-flag",
+        "note": "ESPECIALLY load-bearing for this concept (appearance owner): census existing cmd.theme.* against the appearance candidates cmd.theme.create / cmd.theme.import / cmd.theme.export / cmd.theme.preview / cmd.theme.apply before minting anything new. Hover preview and apply must be two distinct commands with different persistence semantics (preview is ephemeral per-window; apply persists)."
+      }
     ],
     "preserve": [
       "cmd.settings.suggestion.dismiss",
@@ -33,18 +53,151 @@
   ],
   "families_exercised_note": "navigation (cmd.settings.open/navigate/search.*/manager.open via the deep-link router, palette, stations, and minimap-replace routes), values (cmd.settings.value.set / default.restore via inline rows; matrix cells and master-strip controls are candidate value mutations pending the matrix type), providers (installation scan/select/update/retry-after-rollback/verify, catalog.refresh, model favorite/alias/priority/visibility, free-route setup), notifications (destination add/update/delete/test, routing set, sound upload/preview, pack import), appearance (theme preview/apply/reload/import/export/create, ui-scale set, font set).",
   "new_candidates": [
-    { "id": "cmd.notifications.destination.add", "distinguishes": "mutation", "provisional": true, "payload": "{ kind, config (secrets as vault references only) }", "note": "Add flow saves needs-setup when a required vault reference is missing; never accepts a raw token." },
-    { "id": "cmd.notifications.destination.update", "distinguishes": "mutation", "provisional": true, "payload": "{ destId, patch }", "note": "Field-level validation: an invalid successPredicate pins its error to the field and blocks readiness, not the whole form." },
-    { "id": "cmd.notifications.destination.delete", "distinguishes": "mutation", "provisional": true, "payload": "{ destId }", "note": "Clears the destination's routing cells; vault references are NOT deleted (vault owns secret lifecycle)." },
-    { "id": "cmd.notifications.destination.test", "distinguishes": "one-shot action", "provisional": true, "payload": "{ destId }", "note": "Masked payload, rate-limited 1/30s per destination, receipted, lastTest persisted; the delivered test joins the title-bar stack. Distinct from any persistent mutation." },
-    { "id": "cmd.notifications.routing.set", "distinguishes": "mutation", "provisional": true, "payload": "{ eventId, destId, mode: always|when-unfocused|failures-only|never } | { eventId, soundId|null }", "note": "One matrix-cell mutation; the per-event sound mapping rides the same family." },
-    { "id": "cmd.sounds.upload", "distinguishes": "one-shot action producing a resource", "provisional": true, "payload": "{ file }", "note": "Format/duration/hash checks stage before the library mutation; receipted." },
-    { "id": "cmd.sounds.preview", "distinguishes": "one-shot LOCAL action", "provisional": true, "payload": "{ soundId }", "note": "Deliberately produces NO receipt and no usage attribution - local-only is a command-level contract." },
-    { "id": "cmd.sounds.pack.import", "distinguishes": "one-shot action with gates", "provisional": true, "payload": "{ packRef }", "note": "Format gate then license gate; blocked/rejected results are receipted terminal states, not errors." },
-    { "id": "cmd.desktop.tray.set", "distinguishes": "mutation", "provisional": true, "payload": "{ key: minimize-to-tray|close-to-tray, value }", "note": "Same mutation whether driven from the console strip or the workspace row." },
-    { "id": "cmd.desktop.activitybar.reorder", "distinguishes": "mutation", "provisional": true, "payload": "{ order[], hidden[] }", "note": "One atomic order+visibility mutation; overflow policy is a plain value.set." },
-    { "id": "cmd.teacher.explain", "distinguishes": "one-shot action (opens overlay)", "provisional": true, "payload": "{ topicId, surface? }", "note": "Guided topics may END by dispatching a real command (e.g. opening cmd.notifications.destination.add's form) - the handoff is an explicit user activation inside the overlay, never automatic." },
-    { "id": "cmd.dictionary.word.add", "distinguishes": "mutation", "provisional": true, "payload": "{ scope: personal|project, word }", "note": "Must be the SAME command the composer context menu and the console board dispatch (PMSpell already persists to the shared keys)." },
-    { "id": "cmd.dictionary.word.remove", "distinguishes": "mutation", "provisional": true, "payload": "{ scope, word }", "note": "Open question recorded in the impact register: removal of shipped base words may be masking rather than deletion." }
-  ]
+    {
+      "id": "cmd.notifications.destination.add",
+      "distinguishes": "mutation",
+      "provisional": true,
+      "payload": "{ kind, config (secrets as vault references only) }",
+      "note": "Add flow saves needs-setup when a required vault reference is missing; never accepts a raw token."
+    },
+    {
+      "id": "cmd.notifications.destination.update",
+      "distinguishes": "mutation",
+      "provisional": true,
+      "payload": "{ destId, patch }",
+      "note": "Field-level validation: an invalid successPredicate pins its error to the field and blocks readiness, not the whole form."
+    },
+    {
+      "id": "cmd.notifications.destination.delete",
+      "distinguishes": "mutation",
+      "provisional": true,
+      "payload": "{ destId }",
+      "note": "Clears the destination's routing cells; vault references are NOT deleted (vault owns secret lifecycle)."
+    },
+    {
+      "id": "cmd.notifications.destination.test",
+      "distinguishes": "one-shot action",
+      "provisional": true,
+      "payload": "{ destId }",
+      "note": "Masked payload, rate-limited 1/30s per destination, receipted, lastTest persisted; the delivered test joins the title-bar stack. Distinct from any persistent mutation."
+    },
+    {
+      "id": "cmd.notifications.routing.set",
+      "distinguishes": "mutation",
+      "provisional": true,
+      "payload": "{ eventId, destId, mode: always|when-unfocused|failures-only|never } | { eventId, soundId|null }",
+      "note": "One matrix-cell mutation; the per-event sound mapping rides the same family."
+    },
+    {
+      "id": "cmd.sounds.upload",
+      "distinguishes": "one-shot action producing a resource",
+      "provisional": true,
+      "payload": "{ file }",
+      "note": "Format/duration/hash checks stage before the library mutation; receipted."
+    },
+    {
+      "id": "cmd.sounds.preview",
+      "distinguishes": "one-shot LOCAL action",
+      "provisional": true,
+      "payload": "{ soundId }",
+      "note": "Deliberately produces NO receipt and no usage attribution - local-only is a command-level contract."
+    },
+    {
+      "id": "cmd.sounds.pack.import",
+      "distinguishes": "one-shot action with gates",
+      "provisional": true,
+      "payload": "{ packRef }",
+      "note": "Format gate then license gate; blocked/rejected results are receipted terminal states, not errors."
+    },
+    {
+      "id": "cmd.desktop.tray.set",
+      "distinguishes": "mutation",
+      "provisional": true,
+      "payload": "{ key: minimize-to-tray|close-to-tray, value }",
+      "note": "Same mutation whether driven from the console strip or the workspace row."
+    },
+    {
+      "id": "cmd.desktop.activitybar.reorder",
+      "distinguishes": "mutation",
+      "provisional": true,
+      "payload": "{ order[], hidden[] }",
+      "note": "One atomic order+visibility mutation; overflow policy is a plain value.set."
+    },
+    {
+      "id": "cmd.teacher.explain",
+      "distinguishes": "one-shot action (opens overlay)",
+      "provisional": true,
+      "payload": "{ topicId, surface? }",
+      "note": "Guided topics may END by dispatching a real command (e.g. opening cmd.notifications.destination.add's form) - the handoff is an explicit user activation inside the overlay, never automatic."
+    },
+    {
+      "id": "cmd.dictionary.word.add",
+      "distinguishes": "mutation",
+      "provisional": true,
+      "payload": "{ scope: personal|project, word }",
+      "note": "Must be the SAME command the composer context menu and the console board dispatch (PMSpell already persists to the shared keys)."
+    },
+    {
+      "id": "cmd.dictionary.word.remove",
+      "distinguishes": "mutation",
+      "provisional": true,
+      "payload": "{ scope, word }",
+      "note": "Open question recorded in the impact register: removal of shipped base words may be masking rather than deletion."
+    }
+  ],
+  "drift_census_2026_08_13": {
+    "authority": "02_FULL_THREAD_CURRENT_DECISION_REGISTER.md section 22",
+    "note": "Known command-name drift recorded before any minting; all concept candidates remain provisional and defer to the canonical census.",
+    "entries": [
+      {
+        "ids": [
+          "cmd.source_control.setup.install_tool",
+          "cmd.installation.*",
+          "cmd.tool.*",
+          "cmd.integration_tool.*"
+        ],
+        "disposition": "census-before-mint",
+        "note": "Known drift family for the shared installation lifecycle; concept installation candidates must reconcile into ONE namespace chosen by the lifecycle owner."
+      },
+      {
+        "ids": [
+          "cmd.github.actions.*",
+          "cmd.github_actions.*"
+        ],
+        "disposition": "census-before-mint",
+        "note": "Dotted vs underscored family drift; the concepts' Actions candidates must not add a third spelling."
+      },
+      {
+        "ids": [
+          "cmd.prd_builder.source.import",
+          "cmd.prd_builder.import_sources"
+        ],
+        "disposition": "recorded-drift",
+        "note": "Outside Settings scope; recorded so the audit sees the census was read."
+      },
+      {
+        "ids": [
+          "cmd.planning_wizard.topic.add",
+          "cmd.planning_wizard.add_topic"
+        ],
+        "disposition": "recorded-drift",
+        "note": "Outside Settings scope; recorded for census completeness."
+      },
+      {
+        "ids": [
+          "cmd.plan_compile.retry",
+          "cmd.plan_compile.retry_stage"
+        ],
+        "disposition": "recorded-drift",
+        "note": "Outside Settings scope; recorded for census completeness."
+      },
+      {
+        "ids": [
+          "cmd.browser.open_workspace_preview"
+        ],
+        "disposition": "preserve-pane-independent",
+        "note": "Remains pane-independent per register section 18; the web manager's browser-session copy must not imply pane-specific commands."
+      }
+    ]
+  }
 }

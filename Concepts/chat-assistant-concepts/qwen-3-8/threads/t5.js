@@ -59,40 +59,20 @@
   /* ---- quest: condensed capsule that expands in place ----
      Collapsed = one capsule row [Q i/n chip · prompt 42ch]; it auto-expands
      via a grid-rows plate into option ledger rows. Progress lives in the
-     counter chip (crossfade). One question visible; Skip skips one question;
-     Cancel ends the flow; last question carries Submit, disabled until valid. */
+     counter chip (crossfade). One question visible; Skip skips one question
+     and stays visible on every question page; Cancel ends the flow; the last
+     question carries Review answers (disabled until valid), which keeps the
+     capsule expanded into a ledger of every answer with Back + Submit. */
   function questRenderer(zoneEl, api) {
     const q = api.q;
 
-    const root = document.createElement("div");
-    root.className = "pmq-t5q pmq-open";
-
-    const cap = document.createElement("button");
-    cap.type = "button";
-    cap.className = "pmq-t5q-cap";
-    cap.setAttribute("aria-expanded", "true");
-    const count = document.createElement("span");
-    count.className = "pmq-t5q-count";
-    const snip = document.createElement("span");
-    snip.className = "pmq-t5q-snip";
-    cap.appendChild(count);
-    cap.appendChild(snip);
-
-    const gw = document.createElement("div");
-    gw.className = "pmq-gw pmq-t5q-plate pmq-open";
-    const gwi = document.createElement("div");
-    gwi.className = "pmq-gwi";
-    const body = document.createElement("div");
-    body.className = "pmq-t5q-body";
-    gwi.appendChild(body);
-    gw.appendChild(gwi);
-
-    root.appendChild(cap);
-    root.appendChild(gw);
-    zoneEl.appendChild(root);
-
+    let root = null, cap = null, count = null, snip = null, gw = null, body = null;
     let lastIdx = api.index();
     let lastCount = "";
+    let reviewing = false;
+    let built = false;
+    let dead = false;
+    let timer = 0;
 
     function slideHtml(question) {
       const ans = api.answer(question);
@@ -110,20 +90,34 @@
         (question.required ? "" : '<span class="pmq-t5q-optional">Optional</span>') + "</div>" + main;
     }
 
-    function paintBody(idx) {
-      const question = q.questions[idx];
+    function footHtml(idx) {
       const last = idx >= q.questions.length - 1;
-      body.innerHTML = slideHtml(question) +
-        '<div class="pmq-t5q-foot">' +
-        '<button class="pmq-btn pmq-t5q-btn" type="button" data-qprev' + (idx === 0 ? " disabled" : "") + ">Prev</button>" +
-        (last ? "" : '<button class="pmq-btn pmq-t5q-btn" type="button" data-qskip>Skip</button>') +
+      return '<button class="pmq-btn pmq-t5q-btn" type="button" data-qprev' + (idx === 0 ? " disabled" : "") + ">Prev</button>" +
+        '<button class="pmq-btn pmq-t5q-btn" type="button" data-qskip>Skip</button>' +
         '<span class="pmq-t5q-spacer"></span>' +
         '<button class="pmq-btn pmq-t5q-btn" type="button" data-qcancel>Cancel</button>' +
         (last
-          ? '<button class="pmq-btn pmq-btn-primary pmq-t5q-btn" type="button" data-qsubmit' + (api.valid() ? "" : " disabled") + ">Submit</button>"
-          : '<button class="pmq-btn pmq-btn-primary pmq-t5q-btn" type="button" data-qnext>Next</button>') +
-        "</div>";
+          ? '<button class="pmq-btn pmq-btn-primary pmq-t5q-btn" type="button" data-qreview' + (api.valid() ? "" : " disabled") + ">Review answers</button>"
+          : '<button class="pmq-btn pmq-btn-primary pmq-t5q-btn" type="button" data-qnext>Next</button>');
+    }
+
+    function paintBody(idx) {
+      body.innerHTML = slideHtml(q.questions[idx]) +
+        '<div class="pmq-t5q-foot">' + footHtml(idx) + "</div>";
       window.PMIcons.hydrate(body);
+    }
+
+    /* Review page (video 02): the capsule stays expanded and its ledger lists
+       every answer as a row with a per-question back link. */
+    function paintReview() {
+      body.innerHTML = api.reviewHtml() +
+        '<div class="pmq-t5q-foot">' +
+          '<button class="pmq-btn pmq-t5q-btn" type="button" data-qback>Back</button>' +
+          '<span class="pmq-t5q-spacer"></span>' +
+          '<button class="pmq-btn pmq-t5q-btn" type="button" data-qcancel>Cancel</button>' +
+          '<button class="pmq-btn pmq-btn-primary pmq-t5q-btn" type="button" data-qsubmit' + (api.valid() ? "" : " disabled") + ">Submit</button>" +
+        "</div>";
+      snip.textContent = "Review your answers";
     }
 
     function paintCap(idx, animate) {
@@ -133,7 +127,7 @@
         if (animate) api.A.crossfadeNum(count, text);
         else count.textContent = text;
       }
-      snip.textContent = trunc(q.questions[idx].prompt, QCAP_CHARS);
+      if (!reviewing) snip.textContent = trunc(q.questions[idx].prompt, QCAP_CHARS);
     }
 
     function setOpen(willOpen) {
@@ -144,30 +138,89 @@
       gridAnim(gw, willOpen ? "0fr" : "1fr", willOpen ? "1fr" : "0fr", 150, api.reduced());
     }
 
-    cap.addEventListener("click", () => setOpen(!root.classList.contains("pmq-open")));
+    function enterReview() {
+      reviewing = true;
+      paintReview();
+      setOpen(true);
+    }
 
-    root.addEventListener("click", e => {
-      const opt = e.target.closest("[data-opt]");
-      if (opt) { api.select(q.questions[lastIdx], opt.dataset.opt); return; }
-      if (e.target.closest("[data-qprev]")) { api.prev(); return; }
-      if (e.target.closest("[data-qskip]")) { api.skip(); return; }
-      if (e.target.closest("[data-qnext]")) { api.next(); return; }
-      if (e.target.closest("[data-qcancel]")) { api.cancel(); return; }
-      if (e.target.closest("[data-qsubmit]")) { api.submit(); return; }
-    });
+    function exitReview() {
+      reviewing = false;
+      paintCap(lastIdx, false);
+      paintBody(lastIdx);
+    }
 
-    root.addEventListener("input", e => {
-      if (e.target.matches("[data-free]")) api.setFree(q.questions[lastIdx], e.target.value);
-    });
+    function build(pillEl) {
+      if (dead) return;
+      if (pillEl && pillEl.parentNode) pillEl.parentNode.removeChild(pillEl);
 
-    paintCap(lastIdx, false);
-    paintBody(lastIdx);
-    /* Auto-expand: the capsule row grows open in place to the ledger rows. */
-    gridAnim(gw, "0fr", "1fr", 160, api.reduced());
+      root = document.createElement("div");
+      root.className = "pmq-t5q pmq-open";
+
+      cap = document.createElement("button");
+      cap.type = "button";
+      cap.className = "pmq-t5q-cap";
+      cap.setAttribute("aria-expanded", "true");
+      count = document.createElement("span");
+      count.className = "pmq-t5q-count";
+      snip = document.createElement("span");
+      snip.className = "pmq-t5q-snip";
+      cap.appendChild(count);
+      cap.appendChild(snip);
+
+      gw = document.createElement("div");
+      gw.className = "pmq-gw pmq-t5q-plate pmq-open";
+      const gwi = document.createElement("div");
+      gwi.className = "pmq-gwi";
+      body = document.createElement("div");
+      body.className = "pmq-t5q-body";
+      gwi.appendChild(body);
+      gw.appendChild(gwi);
+
+      root.appendChild(cap);
+      root.appendChild(gw);
+      zoneEl.appendChild(root);
+
+      cap.addEventListener("click", () => setOpen(!root.classList.contains("pmq-open")));
+
+      root.addEventListener("click", e => {
+        const rev = e.target.closest("[data-revto]");
+        if (rev) { const to = +rev.dataset.revto; if (to === lastIdx) exitReview(); else api.gotoQuestion(to); return; }
+        if (e.target.closest("[data-qback]")) { exitReview(); return; }
+        const opt = e.target.closest("[data-opt]");
+        if (opt) { api.select(q.questions[lastIdx], opt.dataset.opt); return; }
+        if (e.target.closest("[data-qprev]")) { api.prev(); return; }
+        if (e.target.closest("[data-qskip]")) { api.skip(); return; }
+        if (e.target.closest("[data-qnext]")) { api.next(); return; }
+        if (e.target.closest("[data-qcancel]")) { api.cancel(); return; }
+        if (e.target.closest("[data-qreview]")) { enterReview(); return; }
+        if (e.target.closest("[data-qsubmit]")) { if (api.valid()) api.submit(); return; }
+      });
+
+      root.addEventListener("input", e => {
+        if (e.target.matches("[data-free]")) api.setFree(q.questions[lastIdx], e.target.value);
+      });
+
+      paintCap(lastIdx, false);
+      paintBody(lastIdx);
+      built = true;
+      /* Auto-expand: the capsule row grows open in place to the ledger rows. */
+      gridAnim(gw, "0fr", "1fr", 160, api.reduced());
+    }
+
+    /* Lifecycle (video 04): the shared "Preparing questions…" pill holds the
+       zone first; the capsule expands in place after a short beat (the pill
+       never paints under reduced motion — build resolves immediately). */
+    const pill = api.preparePill();
+    if (api.reduced()) build(pill);
+    else timer = setTimeout(() => build(pill), 350);
 
     return {
       update(nextQ, idx) {
+        if (!built) { lastIdx = idx; return; }
         if (idx !== lastIdx) {
+          /* Any jump back onto a question (review back-links) exits review. */
+          reviewing = false;
           lastIdx = idx;
           paintCap(idx, true);
           paintBody(idx);
@@ -177,6 +230,7 @@
           setOpen(true);
           return;
         }
+        if (reviewing) return;
         /* Same question: refresh state in place so the textarea keeps focus. */
         const question = nextQ.questions[idx];
         if (question.kind !== "freeform") {
@@ -191,11 +245,14 @@
           const ans = api.answer(question);
           if (ta && document.activeElement !== ta && ta.value !== (ans.draft || "")) ta.value = ans.draft || "";
         }
-        const submit = root.querySelector("[data-qsubmit]");
-        if (submit) submit.disabled = !api.valid();
+        const reviewBtn = root.querySelector("[data-qreview]");
+        if (reviewBtn) reviewBtn.disabled = !api.valid();
       },
       unmount() {
-        if (root.parentNode) root.parentNode.removeChild(root);
+        dead = true;
+        clearTimeout(timer);
+        if (pill && pill.parentNode) pill.parentNode.removeChild(pill);
+        if (root && root.parentNode) root.parentNode.removeChild(root);
       }
     };
   }

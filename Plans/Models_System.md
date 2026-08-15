@@ -9516,3 +9516,32 @@ Status: `STATICALLY_MATERIALIZED`; provider/model resolution is `NOT_EXECUTABLE_
 The v2 event and its immutable `pm.requested_effective_runtime@1.0.0` record require non-empty `requested_platform`, `effective_platform`, `requested_model`, and `effective_model`. Models owns the concrete runtime-platform pair and canonical model IDs in `provider_id/model_id` form. The model vendor namespace need not equal the concrete runtime platform; the immutable `models_resolution_ref` must prove the mapping.
 
 Unequal platform/model pairs are valid only with historically resolvable Models fallback/substitution/capability/policy evidence and deterministic precedence. Display labels, string-prefix inference, unknown IDs, unsupported effective models, retired `platform_specs`, or current-catalog replay reconstruction are forbidden. `provider_policy_snapshot` may supply typed platform-capability evidence but its provider/model enum remains distinct from the platform-capability evaluation enum.
+
+## Remaining Runtime Canon Closure Addendum (2026-08-14)
+
+### MS-137 - Requested Effective Route And Capability Evidence Layers
+
+```yaml
+plan_unit_id: MS-137
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: Every provider dispatch preserves independently the requested provider/model/route/account binding, the effective binding, resolver evidence, and a typed reason for every difference including null-to-selected default resolution; capability support is layered evidence from catalog declaration, exact adapter/runtime observation, policy, installation/readiness, and request-time admission, and no one layer alone proves dispatchability.
+gui_related: false
+depends_on: [MS-121, MA-070, SIR-003, SIR-009]
+unblocks: []
+acceptance_criteria:
+  - PROV-017 required bindings reject silent substitution; preferred and none use Multi-Account-owned fallback semantics with resolver evidence.
+  - PROV-022 distinguishes declared, installed, authenticated, runtime-observed, policy-available, and request-admitted capability evidence.
+  - Unknown, stale, conflicting, or partial evidence never becomes supported or ready by inference.
+validation_surfaces: [requested-effective route fixtures, capability evidence-layer negative fixtures]
+risk_class: provider_route_or_capability_false_readiness
+reasoning_tier: high
+context_scope: provider_route_and_capability_evidence
+implementation_surfaces: [Plans/Models_System.md, Plans/Multi-Account.md, Plans/Shared_Integration_Runtime.md]
+node_compile_hint: {mode: provider_route_capability_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#PROV-017
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#PROV-022
+negative_constraints: [Do not silently substitute a required route or account., Do not infer readiness from one evidence layer.]
+```

@@ -56,7 +56,7 @@
       ],
       "catalog_absent": false,
       "reason": "Exact catalog row exists.",
-      "provisional": false,
+      "provisional": true,
       "payload_requirements": [
         "scope/target identity",
         "requested revision or idempotency key",
@@ -75,7 +75,7 @@
       ],
       "catalog_absent": false,
       "reason": "Exact catalog row exists; future-only routing remains explicit.",
-      "provisional": false,
+      "provisional": true,
       "payload_requirements": [
         "scope/target identity",
         "requested revision or idempotency key",
@@ -94,7 +94,7 @@
       ],
       "catalog_absent": false,
       "reason": "Exact catalog row exists.",
-      "provisional": false,
+      "provisional": true,
       "payload_requirements": [
         "scope/target identity",
         "requested revision or idempotency key",
@@ -221,7 +221,7 @@
       ],
       "catalog_absent": false,
       "reason": "Keep only a compatibility alias if migration requires it; do not preserve its old interaction contract.",
-      "provisional": false,
+      "provisional": true,
       "payload_requirements": [
         "scope/target identity",
         "requested revision or idempotency key",
@@ -240,7 +240,7 @@
       ],
       "catalog_absent": false,
       "reason": "Exact catalog row.",
-      "provisional": false,
+      "provisional": true,
       "payload_requirements": [
         "scope/target identity",
         "requested revision or idempotency key",
@@ -259,7 +259,7 @@
       ],
       "catalog_absent": false,
       "reason": "Existing LSP-owned formatting action; formatter-manager ownership remains to adjudicate.",
-      "provisional": false,
+      "provisional": true,
       "payload_requirements": [
         "scope/target identity",
         "requested revision or idempotency key",
@@ -363,7 +363,7 @@
       ],
       "catalog_absent": false,
       "reason": "Generic catalog lifecycle is reusable when owner/type payload is explicit.",
-      "provisional": false,
+      "provisional": true,
       "payload_requirements": [
         "scope/target identity",
         "requested revision or idempotency key",
@@ -382,7 +382,7 @@
       ],
       "catalog_absent": false,
       "reason": "Existing typed test operation.",
-      "provisional": false,
+      "provisional": true,
       "payload_requirements": [
         "scope/target identity",
         "requested revision or idempotency key",
@@ -401,7 +401,7 @@
       ],
       "catalog_absent": false,
       "reason": "Existing visible evidence action.",
-      "provisional": false,
+      "provisional": true,
       "payload_requirements": [
         "scope/target identity",
         "requested revision or idempotency key",
@@ -420,7 +420,7 @@
       ],
       "catalog_absent": false,
       "reason": "Existing debugger action.",
-      "provisional": false,
+      "provisional": true,
       "payload_requirements": [
         "scope/target identity",
         "requested revision or idempotency key",
@@ -439,7 +439,7 @@
       ],
       "catalog_absent": false,
       "reason": "Existing action remains distinct from show/reveal.",
-      "provisional": false,
+      "provisional": true,
       "payload_requirements": [
         "scope/target identity",
         "requested revision or idempotency key",
@@ -467,5 +467,35 @@
       "decision": "Manager navigation, persistent mutation, preview, test-send, and ObservableWork operations remain distinct."
     }
   ],
-  "canon_status": "provisional_only_no_ids_minted"
+  "provider_lifecycle_correction": {
+    "authority_status": "candidate_only_NOT_MINTED_no_canonical_availability_asserted",
+    "candidate_actions": [
+      {"semantic_action": "first_acquisition", "candidate_id": "cmd.provider.installation.acquire_first", "status": "provisional_NOT_MINTED"},
+      {"semantic_action": "select_existing", "candidate_id": "cmd.provider.installation.select", "status": "provisional_NOT_MINTED"},
+      {"semantic_action": "authenticate", "candidate_id": "cmd.provider.connection.authenticate", "status": "provisional_NOT_MINTED_separate_from_installation"},
+      {"semantic_action": "verify", "candidate_id": "cmd.provider.installation.verify", "status": "provisional_NOT_MINTED"},
+      {"semantic_action": "update", "candidate_id": "cmd.provider.installation.update", "status": "provisional_NOT_MINTED_post_consent_only"},
+      {"semantic_action": "repair", "candidate_id": "cmd.provider.installation.repair", "status": "provisional_NOT_MINTED_post_consent_only"},
+      {"semantic_action": "rollback", "candidate_id": "cmd.provider.installation.rollback", "status": "provisional_NOT_MINTED_post_consent_only"}
+    ],
+    "typed_request_fields": ["request_id", "idempotency_key", "initiator_kind", "provider_family_id", "installation_id", "candidate_installation_id", "host_id", "environment_id", "environment_kind", "official_source_id", "official_source_uri", "official_source_revision", "official_procedure_id", "requested_version", "requested_channel", "expected_binding_revision", "origin_operation_id", "continuation_token", "continuation_generation", "human_consent.actor_id", "human_consent.scope", "human_consent.official_source_reviewed", "human_consent.recorded_at", "maintenance_policy_source", "observable_work_id"],
+    "typed_result_fields": {
+      "outcomes": ["setup_required", "candidate_selection_required", "consent_required", "accepted", "queued", "ready", "failed", "rolled_back", "recovery_required", "stale_continuation"],
+      "identity_and_state": ["effective_installation_id", "effective_binding_revision", "acquisition_state", "authentication_state", "readiness_state", "host_id", "environment_id", "environment_kind", "coalesced_operation_id", "active_generation", "last_good_generation", "verification_results", "rollback_state", "receipt_ref", "setup_deep_link", "continuation_currentness", "resume_disposition", "disabled_reason", "typed_error", "recovery_deep_link"]
+    },
+    "negative_policy": [
+      "No Puppet Master core/default baseline bundling or pre-seeding.",
+      "No silent initial acquisition by Project, model, provider, Goal, Plan, WorkNode, agent, Auto, or On.",
+      "Initial acquisition requires explicit human consent for an official source and exact Host/Environment.",
+      "Authentication is a separate explicit operation.",
+      "Post-consent maintenance may run only under the recorded maintenance policy."
+    ],
+    "runtime_owners": {
+      "work": "ObservableWork is the sole truthful work/progress/wait owner; local cards are projections/adapters only.",
+      "admission": "RuntimeResourceGovernor is the sole resource/admission owner; Settings requests and projects policy and never schedules or adjudicates; host enforcement uses the same contract and is not a second governor.",
+      "permit_outcomes": ["admitted", "queued", "admitted_degraded", "blocked_permission", "blocked_resource", "cancelled"]
+    },
+    "browser_boundary": "No Playwright product/runtime/facade/compatibility/package/port/command/MCP/capture dependency or candidate ID; browser verification is test evidence only and does not certify native Slint."
+  },
+  "canon_status": "candidate_only_NOT_MINTED_no_ids_or_availability_minted"
 }

@@ -24,7 +24,7 @@
       "ResourceList/Card/Detail",
       "HealthSummary",
       "SetupFlowLauncher",
-      "ObservableOperation",
+      "ObservableWorkProjectionAdapter",
       "ReceiptLink"
     ],
     "provider_grammar": [
@@ -105,8 +105,11 @@
       {
         "manager_id": "future-server-shell",
         "candidate_roles": [
-          "ManagerResourceAdapter"
-        ]
+          "MissingOwnerInsertionProjection"
+        ],
+        "owner_status": "unresolved",
+        "mutation_enabled": false,
+        "note": "Candidate projection only; it must not become a Server owner, adapter engine, or mutation path."
       }
     ]
   },
@@ -116,9 +119,35 @@
     "SettingsValueState",
     "ManagerResourceState",
     "ProviderGraphState",
-    "TransactionalOperationState",
+    "ObservableWork",
     "ConceptReviewFixtureState"
   ],
+  "corrected_shared_contracts": {
+    "status": "candidate_only_NOT_MINTED",
+    "ObservableWork": {
+      "sole_owner": true,
+      "local_surface_role": "projection_or_adapter_only",
+      "fields": ["operation_id", "owner_domain", "scope_refs", "object_refs", "title", "human_phase", "state", "progress_kind", "progress_source", "completed_when_trustworthy", "total_when_trustworthy", "queue_reason", "wait_reason", "last_activity_at", "heartbeat_at", "can_cancel", "can_background", "can_retry", "blocking_scope", "generation", "result_refs", "receipt_refs"]
+    },
+    "RuntimeResourceGovernor": {
+      "sole_owner": true,
+      "settings_role": "request_policy_and_project_effective_state_only_never_schedule_or_adjudicate",
+      "host_enforcement": "same_contract_not_a_second_governor",
+      "outcomes": ["admitted", "queued", "admitted_degraded", "blocked_permission", "blocked_resource", "cancelled"]
+    },
+    "hydration_and_render": {
+      "home": "compact manager and search metadata first",
+      "manager_load": "selected manager only with generation currentness",
+      "cache": "byte-bounded projections and caches",
+      "virtualization": "no more than 40 mounted rows",
+      "fixtures": ["825_plus_settings_search", "100_detected_installations"],
+      "subscriptions": "inactive surfaces unsubscribe or release shared refcounts",
+      "persistence": "transient search/filter/drag/hover/input is not persisted",
+      "deltas": "narrow frame-coalesced model deltas; no full-model replacement"
+    },
+    "provider_policy": "Initial acquisition is explicit-consent, official-source, exact Host/Environment, and separate from authentication; post-consent maintenance only.",
+    "browser_boundary": "Browser verification is test evidence only; no Playwright product/runtime/facade/compatibility/package/port/command/MCP/capture dependency and no native Slint certification."
+  },
   "concept_adapter": {
     "name": "LedgerSettingsAdapter",
     "owns": [
@@ -143,5 +172,5 @@
     "Reduced motion changes choreography, not reachable state.",
     "No colored side-border component contract."
   ],
-  "canon_status": "candidate_design_roles_only"
+  "canon_status": "candidate_only_NOT_MINTED_no_owner_or_component_availability_asserted"
 }

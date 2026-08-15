@@ -1,0 +1,227 @@
+{
+  "schema_id": "pm.evidence.schema.v1",
+  "evidence_id": "pm7-tweak-wave-6-2026-08-14",
+  "created_at_utc": "2026-08-14T00:00:00Z",
+  "node": {
+    "node_id": "pm.build-governance.spec-lock-support-refresh",
+    "graph_id": "pm.clean_repo_build_governance_seal.2026-06-10",
+    "graph_scope": "puppet-master-repo-build"
+  },
+  "summary": "Wave 6: single-path silhouette and reference morph-gap canon. The tab silhouette is one JS-composed clip-path path() per frame (superellipse-approximating crown cubics, handle factor 0.5523 + 0.35 x progress; ogee descents, 10:8 neck:flare ratio), rendering identically in Safari and Chromium - the engine-split corner-shape path was the recorded motivation. Per-side gap measures to the nearest contact with linear clamp(gap/20) progress; the first/last-laid-tab track is retired. Glass edge becomes a 1 px --glass-edge crown strip clipped by the path; glass-dark rail deepened (about 1 sRGB level before, 16 after). Three retro tab-motion prototypes ship pane-gated as EXPERIMENTAL pending user selection - explicitly not canonized. Final artifact sha256 22fb085d77558701 (3,610,186 bytes) on repinned base f638a30b; receipt b3bfe533 (base_pin_ok, 20/20 transforms, gates_all_pass); T20 source unchanged (4fa0a286). Sealed under continuing parallel-wave interference (26 Spec_Lock-pinned files foreign-stale including verifier scripts); this bundle pins exactly this wave's facts. Same-day follow-up (user feedback, no new seal row): the ogee construction is height-clamped with the inflection at the natural corner meet and 0.55-of-own-radius handles (defect-fix refinement - the first cut inverted the wall segment into a visible hump and token-scaled handles doubled back on short chords); under retro the silhouette snaps between tabs (spring travel suppressed); bake-off timings are about 2.3x slower for legibility. Superseding artifact sha256 4a6554a5 (3,611,309 bytes) on repinned base a0af04a1; receipt e50fff7d (gates_all_pass). Second follow-up (user feedback): ogee handle asymmetry is canon - 0.9 x radius at the fixed ends, 0.18 x radius at the inflection, tucking the curve into the wall and spilling down onto the canvas (symmetric 0.55 handles bowed outward-up and are retired); bake-off retune - phosphor dither 240 ms / afterglow 650 ms, CRT outgoing collapse-to-line removed, DOS block caret removed, still experimental. Superseding artifact sha256 89e287e8 (3,611,620 bytes) on repinned base 23ca64d3; receipt f5abaf0b (gates_all_pass). Third follow-up (resolves two open items): the silhouette canon is corrected - the tab side is a single concave quarter-arc (vertical tangent at the wall, horizontal tangent on the canvas line, standard-kappa 0.5523 cubic, radius = shoulder token x per-side contact progress) with the convex canvas radius exclusive to the strip-end corner caps per the reference two-corner model; both ogee constructions are retired as a misreading. The retro bake-off is RESOLVED by user decision: all three concepts are canon as a rotating shuffle-bag trio (no immediate repeats) on selection and reorder, pane gates removed, effects on all editor strips plus the dashboard strip, steady state the standard retro active ring (phosphor 650 ms solid-hold fade, CRT 500 ms scanline-hold fade), phosphor/dos glides quantized to 8 px cells, reduced motion suppressing all of it, integrated via PM6_RETRO_MOTION.beginDrag(). Superseding artifact sha256 bc39c5ff (3,608,004 bytes) on repinned base 6d508b57; receipt 61726e9c (gates_all_pass). Fourth follow-up (user feedback: the panel is supposed to curve as well and join with the tab): the canvas surface's own top corners round via real animated border-radius on the editor area (calc of --ed-lp/--ed-rp x --ed-canvas-rx-max), driven by the same per-side edge progress, so the panel corner and tab cutout join when flush and bloom back as the tab moves away - the reference's second corner made literal. The editor-pane masked wedge caps are retired (rail-coloured overlays, invisible at panel scale); dashboard header caps unchanged this round; radii retuned (shoulder 14/16/8, canvas 16/18/10). Superseding artifact sha256 8c38d9d3 (3,606,988 bytes) on repinned base b00382808440ec (recomputed on disk); receipt bc1d584e (gates_all_pass). Fifth follow-up (user feedback): corner-notch contrast canon - the shape-on editor pane's background is the --ed-cap-bg rail-over-canvas composite so the rounded-away canvas corner reveals a visibly darker backdrop (the 18 px radius was applying but invisible over a same-tone ground); strip heights re-tuned editor 40 to 35 px and dashboard 36 to 31 px (--ed-strip-h/--pm6-editor-tabs-h/--pm6-dash-head-h, T20 resizer-col top 44 to 39) with minimap/code alignment verified intact; dashboard tabs verified live in the retro rotation with no code change. Superseding artifact sha256 6310699c (3,607,387 bytes) on repinned base 0d2b3b5d (recomputed on disk); receipt 565d0c4d (gates_all_pass). Sixth follow-up (watched inspection): the fourth follow-up's border-radius canvas corner is retired with cause (the canvas slides under the translucent rail, so the true box corner is invisible) and the masked wedge caps are restored as the frost-preserving construction for the visible emergence line, now filled with var(--ed-rail-solid) - the old --ed-cap-bg composite fill was the invisibility cause, not the wedge architecture - at 18/20 px by 16 px (--ed-corner-ry 16). Dashboard retro is unblocked: the pill neutralization's !important beat CSS animations, so effect-classed tabs escape via :not([class*=pm-retro]) with a normal-weight twin; verified by watched bursts (DOS inverts solid lime, phosphor block paints). Superseding artifact sha256 cea1f664 (3,608,918 bytes) on repinned base 3d1c8b81 (recomputed on disk); receipt db40c1d0 (gates_all_pass). Seventh follow-up: the sixth follow-up's important-exemption left the dashboard CRT fill dead through a specificity tie - both the effect rules and the normal-weight neutralization twin weighed (0,5,0) and the twin, later in the assembled cascade, won plain background declarations (phosphor survived only via its keyframes). All fourteen retro effect selectors now include .ed-shape-on (0,6,0) and outrank the twin; watched verification shows phosphor block, DOS full inversion, and the CRT scanline wipe all painting on dashboard tabs. Superseding artifact sha256 074b4460 (3,609,086 bytes) on repinned base 56ce4721 (recomputed on disk); receipt 28ba8acb (gates_all_pass).",
+  "commands_run": [
+    {
+      "cmd": "python3 Concepts/pm7-tools/build_pm7.py --outdir <scratch>/pm7 --out Concepts/PMConcept7.html --report",
+      "exit_code": 0,
+      "stdout_excerpt": "T01-T20 ok; base_pin_ok against f638a30b23b802; gates_all_pass; output sha256 22fb085d77558701d7bde5cf3a904cd7f604aa992c03363b4ca635ce3ca86f2c, 3610186 bytes (receipt sha256 b3bfe533, generated 2026-08-14 16:11:51)"
+    },
+    {
+      "cmd": "node Concepts/pm7-tools/verify/home_workspace_matrix.mjs (near-final build, one-line stamp fix from final)",
+      "exit_code": 0,
+      "stdout_excerpt": "32/32 checks, 72/72 captures, 0 runtime errors as reported by the verification wave; the rerun against the final sha is in flight and is the verification wave's evidence, not this bundle's claim"
+    },
+    {
+      "cmd": "python3 Concepts/pm7-tools/build_pm7.py --outdir <scratch>/pm7 --out Concepts/PMConcept7.html --report (wave-6 follow-up, final)",
+      "exit_code": 0,
+      "stdout_excerpt": "T01-T20 ok; base_pin_ok against a0af04a1856faf; gates_all_pass; output sha256 4a6554a572dcc536d14cfe70538e4b9e8217c5be0f6d372002a6d8386299b3f0, 3611309 bytes (receipt sha256 e50fff7d, generated 2026-08-14 16:53:31)"
+    },
+    {
+      "cmd": "python3 Concepts/pm7-tools/build_pm7.py --outdir <scratch>/pm7 --out Concepts/PMConcept7.html --report (wave-6 second follow-up, final)",
+      "exit_code": 0,
+      "stdout_excerpt": "T01-T20 ok; base_pin_ok against 23ca64d374dfa8; gates_all_pass; output sha256 89e287e86693fb8f624f8aa104f491c442f390407a965d8479e8cb0d2d362a3d, 3611620 bytes (receipt sha256 f5abaf0b, generated 2026-08-14 17:02:17)"
+    },
+    {
+      "cmd": "python3 Concepts/pm7-tools/build_pm7.py --outdir <scratch>/pm7 --out Concepts/PMConcept7.html --report (wave-6 third follow-up, final)",
+      "exit_code": 0,
+      "stdout_excerpt": "T01-T20 ok; base_pin_ok against 6d508b573d4c92; gates_all_pass; output sha256 bc39c5ff793ed403ab72aba7bde1b3bf0c6750b45ce2d25139d1ff0423773b28, 3608004 bytes (receipt sha256 61726e9c, generated 2026-08-14 17:13:07)"
+    },
+    {
+      "cmd": "python3 Concepts/pm7-tools/build_pm7.py --outdir <scratch>/pm7 --out Concepts/PMConcept7.html --report (wave-6 fourth follow-up, final)",
+      "exit_code": 0,
+      "stdout_excerpt": "T01-T20 ok; base_pin_ok against b00382808440ec (full disk hash b00382808440ecfee46a8ccddabc171cf0d74145784a64d185b55c062701ea77); gates_all_pass; output sha256 8c38d9d36e5a86fc68c84e62ec7c10bf0040b29f2e2ab0df85ac2c18549de6a8, 3606988 bytes (receipt sha256 bc1d584e, generated 2026-08-14 17:24:45)"
+    },
+    {
+      "cmd": "python3 Concepts/pm7-tools/build_pm7.py --outdir <scratch>/pm7 --out Concepts/PMConcept7.html --report (wave-6 fifth follow-up, final)",
+      "exit_code": 0,
+      "stdout_excerpt": "T01-T20 ok; base_pin_ok against 0d2b3b5d62ad5e (full disk hash 0d2b3b5d62ad5e68635ff041244665eb5b6aaf3efc4c0d50d11744892d12294d); gates_all_pass; output sha256 6310699c962ccd9a221634a21e8c393de5175ab284d3764f3b7d312d0c6a77ad, 3607387 bytes (receipt sha256 565d0c4d, generated 2026-08-14 18:01:40)"
+    },
+    {
+      "cmd": "python3 Concepts/pm7-tools/build_pm7.py --outdir <scratch>/pm7 --out Concepts/PMConcept7.html --report (wave-6 sixth follow-up, final)",
+      "exit_code": 0,
+      "stdout_excerpt": "T01-T20 ok; base_pin_ok against 3d1c8b814a7b9d (full disk hash 3d1c8b814a7b9dd9704930786ef83868076aaec7d97360c4124ae3e5ff043cd4); gates_all_pass; output sha256 cea1f664bedf554f73c6bccaf98fa1320fa294570c6e0543e61a8ca1bdc3aaa2, 3608918 bytes (receipt sha256 db40c1d0, generated 2026-08-14 18:19:27)"
+    },
+    {
+      "cmd": "python3 Concepts/pm7-tools/build_pm7.py --outdir <scratch>/pm7 --out Concepts/PMConcept7.html --report (wave-6 seventh follow-up, final)",
+      "exit_code": 0,
+      "stdout_excerpt": "T01-T20 ok; base_pin_ok against 56ce4721bc745b (full disk hash 56ce4721bc745bc996ccd696875e2501c2a90bcd7244e4310991b13d46698159); gates_all_pass; output sha256 074b4460be4c41327bca04760dee94a85665c8512fc2487bcdfc6bbefb356024, 3609086 bytes (receipt sha256 28ba8acb, generated 2026-08-14 22:09:59)"
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool_id": "plans-amendment-editor",
+      "count": 4,
+      "denied_count": 0,
+      "error_count": 0,
+      "note": "Dated wave-6 dispositions in F3-505 (construction canon, morph gap canon, glass deepening, experimental retro bake-off); all shipped anchors verified in the parts sources before writing."
+    },
+    {
+      "tool_id": "governance-seal-pipeline",
+      "count": 2,
+      "denied_count": 0,
+      "error_count": 0,
+      "note": "One auto_decisions row and this bundle. Spec_Lock deliberately NOT refreshed for FinalGUISpec/00-plans-index: both docs carry un-sealed edits from a parallel wave, and refreshing their pins would absorb foreign content into this seal."
+    }
+  ],
+  "events": {
+    "event_refs": [
+      {
+        "source": "jsonl",
+        "ref": "dec-2026-08-14-pm7-tweak-wave-6",
+        "note": "Plans/auto_decisions.jsonl"
+      },
+      {
+        "source": "other",
+        "ref": "user-directive:PMConcept7-Tweak-Wave-6:2026-08-14",
+        "note": "Jared directed the single-path silhouette rebuild, the reference morph-gap canon, the glass fixes, and the three-way retro tab-motion bake-off (winner to be selected later)."
+      }
+    ]
+  },
+  "files_changed": [
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave (F3-505 wave-6 amendments); the file also carries un-sealed edits from a parallel wave (separate appended addendum, no collision with F3-505)."
+    },
+    {
+      "path": "Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json",
+      "change_type": "modified",
+      "note": "Authored change in this wave (artifact/source re-pin)."
+    },
+    {
+      "path": "Plans/00-plans-index.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave (wave-6 registration); also carries un-sealed parallel-wave edits."
+    },
+    {
+      "path": "Concepts/pm6-build/parts/29x-pm6-js-dashboard.part.html",
+      "change_type": "modified",
+      "note": "Single-path silhouette composer (ogee, nearest-contact gaps)."
+    },
+    {
+      "path": "Concepts/pm6-build/parts/10x-pm6-css-global.part.html",
+      "change_type": "modified",
+      "note": "clip-path skin tokens, --glass-edge crown strip, retro bake-off gates."
+    },
+    {
+      "path": "Concepts/pm7-tools/build_pm7.py",
+      "change_type": "modified",
+      "note": "BASE_SHA repinned to f638a30b."
+    },
+    {
+      "path": "Concepts/PMConcept7.html",
+      "change_type": "modified",
+      "note": "Generated only by T01-T20."
+    },
+    {
+      "path": "Plans/auto_decisions.jsonl",
+      "change_type": "modified",
+      "note": "One appended row: dec-2026-08-14-pm7-tweak-wave-6."
+    }
+  ],
+  "contract_refs_satisfied": [
+    "PlanUnit:F3-505",
+    "ContractName:Plans/FinalGUISpec.md"
+  ],
+  "reproducibility": {
+    "snapshot_ref": "git:b80aff05f",
+    "note": "Rebuild from Concepts/pm6-build/parts via assemble.py g3, re-pin base/PM7-base.html and BASE_SHA (f638a30b), then run build_pm7.py --report."
+  },
+  "artifacts": [
+    {
+      "note": "Generated concept artifact (never hand-edited); sha 22fb085d, 3,610,186 bytes.",
+      "path": "Concepts/PMConcept7.html",
+      "sha256": "074b4460be4c41327bca04760dee94a85665c8512fc2487bcdfc6bbefb356024"
+    },
+    {
+      "note": "Transform/gate receipt (base_pin_ok against f638a30b, 20/20 transforms, gates_all_pass).",
+      "path": "Concepts/pm7-tools/build_report.json",
+      "sha256": "28ba8acb300b1f9a45cb4e347f651ee98ec7730bdb0652fab5a59946256ddec2"
+    },
+    {
+      "note": "Unchanged this wave (4fa0a286), verified on disk.",
+      "path": "Concepts/pm7-tools/home_workspace_source.py",
+      "sha256": "2124ca5be71855088c3e6d42176e4a635c6b6f8e71cff73021c47b34cb85ae2d"
+    },
+    {
+      "note": "Reconciliation re-pinned to the wave-6 artifact and current source hashes.",
+      "path": "Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json",
+      "sha256": "ae0ed402c890bd712ca64737a6fd6358fde532e3cecbc7d196a95e467ed72a49"
+    }
+  ],
+  "checks": [
+    {
+      "name": "pm7-transforms-and-static-gates",
+      "result": "PASS",
+      "details": "Receipt b3bfe5332b3633e33fa99b64cb8a0233a780925e3673c885598f300d9c0531d4 records base_pin_ok against f638a30b, 20/20 transforms ok, gates_all_pass for output 22fb085d (3,610,186 bytes, verified on disk)."
+    },
+    {
+      "name": "shipped-facts-verified-in-source",
+      "result": "PASS",
+      "details": "Verified before amendment: the single-path composer and 0.5523 handle factor, ogee descent and NEAREST CONTACT comments in the 29x part; --glass-edge and data-retro-motion tokens in the 10x part; T20 source hash unchanged at 4fa0a286."
+    },
+    {
+      "name": "dated-dispositions-for-reversed-canon",
+      "result": "PASS",
+      "details": "Wave-6 reversals carry dated dispositions in F3-505: border-radius crown, engine-split corner-shape @supports blocks, masked shoulder pseudos, and the glass three-edge bevel retired for the single clip-path path; the uniform 12 px radii re-tuned to the reference 10:8 neck:flare ratio; the first/last-laid-tab gap track retired for nearest-contact measurement."
+    },
+    {
+      "name": "experimental-not-canonized",
+      "result": "PASS",
+      "details": "The three retro tab-motion prototypes are recorded as EXPERIMENTAL and pending user selection; no prototype is canonized, and the disposition states the winner will be canonized in a follow-up wave with the pane gates removed."
+    },
+    {
+      "name": "plans-gates-baseline",
+      "result": "FAIL",
+      "details": "Honest FAIL: the run-gates baseline cannot be confirmed while the parallel un-sealed wave holds 26 Spec_Lock-pinned files stale, including scripts/pm-plans-verify.py itself and Plans/sharding_config.json. Spec_Lock was deliberately not refreshed for FinalGUISpec.md and 00-plans-index.md because both files now interleave this wave's sealed edits with the parallel wave's un-sealed edits; refreshing those pins would absorb foreign content. Recorded deliberately instead of forcing a green tally; the parallel wave's own seal restores the baseline."
+    },
+    {
+      "name": "no-node-artifacts-created",
+      "result": "PASS",
+      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime artifacts or production build tasks were created by this wave."
+    },
+    {
+      "name": "wave-6-follow-up-fixes",
+      "result": "PASS",
+      "details": "Three user-feedback deltas folded into the wave with dated disposition extensions in F3-505: (1) height-clamped ogee (flare and neck scale to fit below the crown; the unclamped cut inverted the wall segment), inflection at the natural corner meet (wall minus flare, canvas minus neck), handles 0.55 x their own radius (anchors verified in the 29x part); (2) retro snap - spring travel suppressed under retro so the bake-off flourishes are the motion; (3) bake-off timings ~2.3x slower for legibility (phosphor 160/450 ms, CRT 300 ms 6-step/220 ms, DOS 600 ms/1.8 s), still EXPERIMENTAL pending the user's pick. Receipt: base_pin_ok against a0af04a1, 20/20 transforms, gates_all_pass, output 4a6554a5. The matrix rerun against this sha is the verification wave's in-flight evidence; the prior sha's reported tally was 32/32 checks and 72/72 captures."
+    },
+    {
+      "name": "wave-6-second-follow-up-fixes",
+      "result": "PASS",
+      "details": "Two user-feedback deltas folded into the wave with dated disposition extensions in F3-505: (1) ogee bow-direction canon - handle asymmetry with long 0.9 x radius handles at the fixed ends and short 0.18 x radius handles at the inflection so the curve tucks into the wall and spills down onto the canvas; the symmetric 0.55 handles (which bowed outward and up near the wall, user-reported) are retired (anchors verified in the 29x part); (2) bake-off retune - phosphor dither 240 ms / afterglow 650 ms, the CRT outgoing collapse-to-line removed (read as the old tab blacking out), the DOS block caret removed; still EXPERIMENTAL pending the user's pick. Receipt: base_pin_ok against 23ca64d3, 20/20 transforms, gates_all_pass, output 89e287e8. The matrix rerun against this sha is the verification wave's in-flight evidence."
+    },
+    {
+      "name": "wave-6-third-follow-up-resolutions",
+      "result": "PASS",
+      "details": "Two open items resolved with dated dispositions in F3-505: (1) silhouette canon corrected - single concave quarter-arc per tab side (standard kappa 0.5523, radius = shoulder token x per-side progress, vertical wall tangent, horizontal canvas tangent), convex canvas radius exclusive to the strip-end caps (reference two-corner model); both ogee constructions (0.55 symmetric and 0.9/0.18 asymmetric) retired as a misreading of the reference (kappa/quarter-arc anchors verified in the 29x part). (2) Retro bake-off resolved by user decision - all three concepts canonized as a rotating shuffle-bag trio; pane gates verified removed (zero data-retro-motion tokens in the 10x part); PM6_RETRO_MOTION.beginDrag() integration verified in part 25; steady-state hand-back fades, 8 px reorder quantization for phosphor/dos, unchanged drop cues, and reduced-motion suppression recorded. The EXPERIMENTAL status and single-winner plan are retired. Receipt: base_pin_ok against 6d508b57, 20/20 transforms, gates_all_pass, output bc39c5ff. The matrix rerun against this sha is the verification wave's in-flight evidence."
+    },
+    {
+      "name": "wave-6-fourth-follow-up-canvas-join",
+      "result": "PASS",
+      "details": "User-feedback delta folded into the wave with a dated disposition in F3-505: the canvas surface's top corners animate via real border-radius on the editor area (verified at the calc(--ed-lp/--ed-rp x --ed-canvas-rx-max) rules in the 10x part), driven by the same per-side contact progress as the tab, joining panel corner and tab cutout when flush and blooming back on departure. The editor-pane masked wedge caps are retired (the replacement comment is in the 10x part beside the new rules); dashboard header caps unchanged this round. Radii retune verified in the theme blocks (shoulder-rx-max 14/16/8, canvas-rx-max 16/18/10). Receipt: base_pin_ok, 20/20 transforms, gates_all_pass, output 8c38d9d3. Note: the coordinator-stated base-hash tail past its confirmed 12-char prefix did not match disk; the recomputed on-disk value b00382808440ecfee4... is recorded, matching the receipt's base_sha_pinned. The matrix run against this sha follows the in-flight one and remains the verification wave's evidence."
+    },
+    {
+      "name": "wave-6-fifth-follow-up-contrast-and-heights",
+      "result": "PASS",
+      "details": "Two user-feedback deltas plus one live verification folded into the wave with dated dispositions in F3-505: (1) corner-notch contrast canon - the shape-on editor pane's background is --ed-cap-bg (rail-over-canvas composite; definition and application verified in the 10x part with its contrast comment), so the animated canvas corner reveals a darker backdrop instead of an invisible same-tone notch; (2) strip-height re-tune editor 40->35 px and dashboard 36->31 px, verified at --ed-strip-h: 35px, .editor-pane --pm6-editor-tabs-h: 35px, .dashboard-view --pm6-dash-head-h: 31px, and the T20 resizer-col top: 39px; minimap/code alignment reported intact under the new tokens (minimap top equals the code band start with the designed 4 px inner padding delta); (3) dashboard tabs verified live in the retro rotation (crt-in plus crt-hold on a Metrics click) with no code change needed. Receipt: base_pin_ok against 0d2b3b5d, 20/20 transforms, gates_all_pass, output 6310699c. The matrix run against this sha is the verification wave's in-flight evidence."
+    },
+    {
+      "name": "wave-6-sixth-follow-up-wedge-restore-and-dashboard-retro",
+      "result": "PASS",
+      "details": "Two watched-inspection corrections folded into the wave with dated dispositions in F3-505: (1) canvas corner construction - the fourth follow-up's animated border-radius is retired with cause (the canvas slides under the translucent scroll-frost rail, so the area's true box corner is invisible); the masked wedge caps are restored for the visible emergence line, filled with var(--ed-rail-solid) (verified: the mask-image radial wedge construction and the pane ground background: var(--ed-rail-solid) in the 10x part; --ed-corner-ry 16px, --ed-canvas-rx-max 18/20) - the old --ed-cap-bg composite fill was the invisibility cause, not the wedge architecture; (2) dashboard retro unblocked - the pill neutralization's !important beat CSS animations (the DOS blink rendered as an empty box: non-important color applied while its background lost); effect-classed tabs escape via :not([class*=pm-retro]) with a normal-weight twin (verified at the dashboard CSS part), and the fix was confirmed by watched bursts: DOS inverts solid lime and the phosphor block paints. Receipt: base_pin_ok against 3d1c8b81, 20/20 transforms, gates_all_pass, output cea1f664. The matrix run against this sha is the verification wave's in-flight evidence."
+    },
+    {
+      "name": "wave-6-seventh-follow-up-specificity-tie",
+      "result": "PASS",
+      "details": "One user-feedback correction folded into the wave with a dated disposition in F3-505: the sixth follow-up's :not() important-exemption left the dashboard CRT fill dead via a specificity tie - the effect rules and the normal-weight neutralization twin both weighed (0,5,0), and the twin sat later in the assembled cascade, winning plain background declarations (phosphor survived only through its keyframes, which sit above the normal cascade). All fourteen retro effect selectors now include .ed-shape-on for (0,6,0) - verified by count on disk: exactly 14 ed-shape-on/pm-retro selector pairings (11 in the 10x global part, 3 in the 10x dashboard part). Watched verification reported: phosphor block, DOS full inversion, and the CRT scanline wipe all paint on dashboard tabs. Receipt: base_pin_ok against 56ce4721, 20/20 transforms, gates_all_pass, output 074b4460. The matrix run against this sha is the verification wave's in-flight evidence."
+    }
+  ]
+}

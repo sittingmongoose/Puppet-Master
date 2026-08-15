@@ -28,41 +28,13 @@
     const A = api.A;
     const esc = api.esc;
     let cur = api.index();
+    let reviewing = false;
+    let built = false;
+    let dead = false;
+    let timer = 0;
 
-    const dock = document.createElement("div");
-    dock.className = "pmq-t7-quest";
-    dock.innerHTML =
-      '<div class="pmq-t7-qrow">' +
-        q.questions.map((x, i) =>
-          '<button class="pmq-t7-qchip" type="button" data-qchip="' + i + '" aria-label="Go to question ' + (i + 1) + '">' + (i + 1) + "</button>"
-        ).join("") +
-        api.gridWrap(true,
-          '<div class="pmq-t7-qcard">' +
-            '<div class="pmq-t7-qcard-head">' +
-              '<i data-ico="question"></i>' +
-              '<span class="pmq-t7-qcard-title">Question <span class="pmq-t7-qnum" data-qnum></span></span>' +
-              '<button class="pmq-btn pmq-btn-icon pmq-t7-qcancel" type="button" data-qcancel aria-label="Cancel questionnaire"><i data-ico="close"></i></button>' +
-            "</div>" +
-            '<div class="pmq-t7-qbody" data-qbody></div>' +
-            '<div class="pmq-t7-qfoot">' +
-              '<button class="pmq-btn" type="button" data-qprev><i data-ico="chevRight" style="transform:scaleX(-1)"></i>Previous</button>' +
-              '<button class="pmq-btn" type="button" data-qskip>Skip this question</button>' +
-              '<button class="pmq-btn pmq-btn-primary" type="button" data-qnext>Next<i data-ico="chevRight"></i></button>' +
-              '<button class="pmq-btn pmq-btn-primary" type="button" data-qsubmit>Submit questionnaire</button>' +
-            "</div>" +
-          "</div>", "pmq-t7-qgrow", "t7quest") +
-      "</div>";
-    zoneEl.appendChild(dock);
-    window.PMIcons.hydrate(dock);
-
-    const grow = dock.querySelector(".pmq-t7-qgrow");
-    const chips = Array.prototype.slice.call(dock.querySelectorAll(".pmq-t7-qchip"));
-    const numEl = dock.querySelector("[data-qnum]");
-    const bodyEl = dock.querySelector("[data-qbody]");
-    const prevBtn = dock.querySelector("[data-qprev]");
-    const skipBtn = dock.querySelector("[data-qskip]");
-    const nextBtn = dock.querySelector("[data-qnext]");
-    const submitBtn = dock.querySelector("[data-qsubmit]");
+    let dock = null, grow = null, chips = [], numEl = null, bodyEl = null,
+        prevBtn = null, skipBtn = null, nextBtn = null, reviewBtn = null, submitBtn = null;
 
     function slideHtml(x) {
       const ans = api.answer(x);
@@ -85,6 +57,29 @@
       window.PMIcons.hydrate(bodyEl);
     }
 
+    /* Review page (video 02): the dock lists every answer as rows with
+       per-question back links; Back + Submit sit in the dock footer. */
+    function paintReview() {
+      bodyEl.innerHTML = api.reviewHtml();
+      prevBtn.hidden = false;
+      skipBtn.hidden = true;
+      nextBtn.hidden = true;
+      reviewBtn.hidden = true;
+      submitBtn.hidden = false;
+      submitBtn.disabled = !api.valid();
+    }
+
+    function enterReview() {
+      reviewing = true;
+      paintReview();
+    }
+
+    function exitReview() {
+      reviewing = false;
+      paintBody();
+      chrome(false);
+    }
+
     function chrome(crossfade) {
       const last = cur >= q.questions.length - 1;
       chips.forEach((c, i) => {
@@ -99,10 +94,12 @@
         else numEl.textContent = numText;
       }
       prevBtn.disabled = cur === 0;
-      skipBtn.hidden = last;
+      /* Skip stays visible on every question page (video 02). */
+      skipBtn.hidden = false;
       nextBtn.hidden = last;
-      submitBtn.hidden = !last;
-      submitBtn.disabled = !api.valid();
+      reviewBtn.hidden = !last;
+      reviewBtn.disabled = !api.valid();
+      submitBtn.hidden = true;
     }
 
     /* Question change: swap content, interpolate the body bounds over 240ms. */
@@ -122,41 +119,107 @@
       } catch (e) { bodyEl.style.overflow = ""; }
     }
 
-    dock.addEventListener("click", e => {
-      const chip = e.target.closest("[data-qchip]");
-      if (chip) { api.store.questGoTo(q, +chip.dataset.qchip); return; }
-      if (e.target.closest("[data-qcancel]")) { api.cancel(); return; }
-      if (e.target.closest("[data-qprev]")) { api.prev(); return; }
-      if (e.target.closest("[data-qnext]")) { api.next(); return; }
-      if (e.target.closest("[data-qskip]")) { api.skip(); return; }
-      if (e.target.closest("[data-qsubmit]")) { if (api.valid()) api.submit(); return; }
-      const opt = e.target.closest("[data-opt]");
-      if (opt) api.select(q.questions[cur], opt.dataset.opt);
-    });
-    dock.addEventListener("input", e => {
-      if (e.target.matches("[data-free]")) api.setFree(q.questions[cur], e.target.value);
-    });
+    function build(pillEl) {
+      if (dead) return;
+      if (pillEl && pillEl.parentNode) pillEl.parentNode.removeChild(pillEl);
 
-    paintBody();
-    chrome(false);
+      dock = document.createElement("div");
+      dock.className = "pmq-t7-quest";
+      dock.innerHTML =
+        '<div class="pmq-t7-qrow">' +
+          q.questions.map((x, i) =>
+            '<button class="pmq-t7-qchip" type="button" data-qchip="' + i + '" aria-label="Go to question ' + (i + 1) + '">' + (i + 1) + "</button>"
+          ).join("") +
+          api.gridWrap(true,
+            '<div class="pmq-t7-qcard">' +
+              '<div class="pmq-t7-qcard-head">' +
+                '<i data-ico="question"></i>' +
+                '<span class="pmq-t7-qcard-title">Question <span class="pmq-t7-qnum" data-qnum></span></span>' +
+                '<button class="pmq-btn pmq-btn-icon pmq-t7-qcancel" type="button" data-qcancel aria-label="Cancel questionnaire"><i data-ico="close"></i></button>' +
+              "</div>" +
+              '<div class="pmq-t7-qbody" data-qbody></div>' +
+              '<div class="pmq-t7-qfoot">' +
+                '<button class="pmq-btn" type="button" data-qprev><i data-ico="chevRight" style="transform:scaleX(-1)"></i>Previous</button>' +
+                '<button class="pmq-btn" type="button" data-qskip>Skip this question</button>' +
+                '<button class="pmq-btn pmq-btn-primary" type="button" data-qnext>Next<i data-ico="chevRight"></i></button>' +
+                '<button class="pmq-btn pmq-btn-primary" type="button" data-qreview>Review answers</button>' +
+                '<button class="pmq-btn pmq-btn-primary" type="button" data-qsubmit>Submit</button>' +
+              "</div>" +
+            "</div>", "pmq-t7-qgrow", "t7quest") +
+        "</div>";
+      zoneEl.appendChild(dock);
+      window.PMIcons.hydrate(dock);
 
-    /* Entrance: the chip row assembles first, then the active chip grows its
-       card (grid-rows bounds interpolation, 240ms). */
-    if (!api.reduced()) {
-      A.staggerIn(chips, { rise: 6, duration: 260, step: 22, cap: 180 });
-      const delay = Math.min(chips.length * 22, 180) + 120;
-      grow.style.transition = "none";
-      try {
-        grow.animate(
-          [{ gridTemplateRows: "0fr" }, { gridTemplateRows: "1fr" }],
-          { duration: 240, delay: delay, easing: GRID_EASE, fill: "backwards" }
-        ).finished.then(() => { grow.style.transition = ""; }).catch(() => { grow.style.transition = ""; });
-      } catch (e) { grow.style.transition = ""; }
+      grow = dock.querySelector(".pmq-t7-qgrow");
+      chips = Array.prototype.slice.call(dock.querySelectorAll(".pmq-t7-qchip"));
+      numEl = dock.querySelector("[data-qnum]");
+      bodyEl = dock.querySelector("[data-qbody]");
+      prevBtn = dock.querySelector("[data-qprev]");
+      skipBtn = dock.querySelector("[data-qskip]");
+      nextBtn = dock.querySelector("[data-qnext]");
+      reviewBtn = dock.querySelector("[data-qreview]");
+      submitBtn = dock.querySelector("[data-qsubmit]");
+
+      dock.addEventListener("click", e => {
+        const rev = e.target.closest("[data-revto]");
+        if (rev) { const to = +rev.dataset.revto; if (to === cur) exitReview(); else api.gotoQuestion(to); return; }
+        const chip = e.target.closest("[data-qchip]");
+        if (chip) { const to = +chip.dataset.qchip; if (to === cur) { if (reviewing) exitReview(); } else api.gotoQuestion(to); return; }
+        if (e.target.closest("[data-qcancel]")) { api.cancel(); return; }
+        if (e.target.closest("[data-qprev]")) {
+          /* Back from the review page returns to the last question and
+             exits review. */
+          if (reviewing) { exitReview(); api.gotoQuestion(q.questions.length - 1); return; }
+          api.prev(); return;
+        }
+        if (e.target.closest("[data-qnext]")) { api.next(); return; }
+        if (e.target.closest("[data-qskip]")) { api.skip(); return; }
+        if (e.target.closest("[data-qreview]")) { enterReview(); return; }
+        if (e.target.closest("[data-qsubmit]")) { if (api.valid()) api.submit(); return; }
+        const opt = e.target.closest("[data-opt]");
+        if (opt) api.select(q.questions[cur], opt.dataset.opt);
+      });
+      dock.addEventListener("input", e => {
+        if (e.target.matches("[data-free]")) api.setFree(q.questions[cur], e.target.value);
+      });
+
+      paintBody();
+      chrome(false);
+      built = true;
+
+      /* Entrance: the chip row assembles first, then the active chip grows its
+         card (grid-rows bounds interpolation, 240ms). */
+      if (!api.reduced()) {
+        A.staggerIn(chips, { rise: 6, duration: 260, step: 22, cap: 180 });
+        const delay = Math.min(chips.length * 22, 180) + 120;
+        grow.style.transition = "none";
+        try {
+          grow.animate(
+            [{ gridTemplateRows: "0fr" }, { gridTemplateRows: "1fr" }],
+            { duration: 240, delay: delay, easing: GRID_EASE, fill: "backwards" }
+          ).finished.then(() => { grow.style.transition = ""; }).catch(() => { grow.style.transition = ""; });
+        } catch (e) { grow.style.transition = ""; }
+      }
     }
+
+    /* Lifecycle (video 04): the shared "Preparing questions…" pill holds the
+       zone first; the dock reveals after a short beat (the pill never paints
+       under reduced motion — build resolves immediately). */
+    const pill = api.preparePill();
+    if (api.reduced()) build(pill);
+    else timer = setTimeout(() => build(pill), 350);
 
     return {
       update(nq, idx) {
-        if (idx !== cur) { cur = idx; swapBody(); return; }
+        if (!built) { cur = idx; return; }
+        if (idx !== cur) {
+          /* Any jump back onto a question (review back-links) exits review. */
+          reviewing = false;
+          cur = idx;
+          swapBody();
+          return;
+        }
+        if (reviewing) return;
         const x = q.questions[cur];
         if (x.kind !== "freeform") {
           const ans = api.answer(x);
@@ -168,7 +231,12 @@
         }
         chrome(true);
       },
-      unmount() { if (dock.parentNode) dock.parentNode.removeChild(dock); }
+      unmount() {
+        dead = true;
+        clearTimeout(timer);
+        if (pill && pill.parentNode) pill.parentNode.removeChild(pill);
+        if (dock && dock.parentNode) dock.parentNode.removeChild(dock);
+      }
     };
   }
 

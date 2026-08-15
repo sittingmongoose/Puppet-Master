@@ -3,58 +3,170 @@
   "concept_id": "foundry",
   "model": "kimi-k3",
   "plan_owner_impacts": [
-    { "owner": "FinalGUISpec", "impact": "Foundry demonstrates the engineering-bench composition: resource tables with health columns, right detail drawer, manager toolbar with filter + add + health strip." },
-    { "owner": "settings inventory and schema", "impact": "Consumes the shared 12-category slice; Developer Tools and Terminal & Editor categories carry the bench-adjacent rows." },
-    { "owner": "LSP", "impact": "Registry shows catalog/provenance, command/env/init/config, requested/effective attachment, host/environment, limits, logs, remote degradation, and verification." },
-    { "owner": "Formatters", "impact": "Registry with detected / not found / disabled states, Global/Project scope, and a receipted test action." },
-    { "owner": "Commands", "impact": "Custom command CRUD with shell-safety validation and a dry-run preview that demonstrably never sends work to an agent." },
-    { "owner": "UI Command Catalog", "impact": "commands/shortcuts/resources candidate families annotated in candidate-command-delta.json; cmd.lsp.server.* marked new — canon cmd.lsp.* covers editor actions only." },
-    { "owner": "MCP", "impact": "Catalog manager keeps MCP distinct with transport/protocol/auth/catalog/resources/logs and the five-state inventory (installed/enabled/available/selected/invoked)." },
-    { "owner": "Skills", "impact": "Trust states drive update policy language; untrusted skills update manually." },
-    { "owner": "Plugins", "impact": "Channel and compatibility are first-class; beta failures surface with reasons." },
-    { "owner": "Tools", "impact": "Owner attribution (pm vs mcp:server) and approval policy render per tool." },
-    { "owner": "File Manager", "impact": "Behavior table covers tree, drag/drop, hidden/ignored, thresholds, tabs, splits, changed-on-disk, recovery, and transient/unavailable reasons." },
-    { "owner": "Testing", "impact": "Global/Project × Auto/On/Off capability matrix with a managed cell showing the managing policy." },
-    { "owner": "Release/updates owner", "impact": "Shared provider installation/update grammar renders in bench language." },
-    { "owner": "Binary Locator and installation lifecycle", "impact": "Tool installation health uses the same confidence vocabulary as providers." }
+    {
+      "owner": "FinalGUISpec",
+      "impact": "Foundry demonstrates the engineering-bench composition: resource tables with health columns, right detail drawer, manager toolbar with filter + add + health strip."
+    },
+    {
+      "owner": "settings inventory and schema",
+      "impact": "Consumes the shared 12-category slice; Developer Tools and Terminal & Editor categories carry the bench-adjacent rows."
+    },
+    {
+      "owner": "LSP",
+      "impact": "Registry shows catalog/provenance, command/env/init/config, requested/effective attachment, host/environment, limits, logs, remote degradation, and verification."
+    },
+    {
+      "owner": "Formatters",
+      "impact": "Registry with detected / not found / disabled states, Global/Project scope, and a receipted test action."
+    },
+    {
+      "owner": "Commands",
+      "impact": "Custom command CRUD with shell-safety validation and a dry-run preview that demonstrably never sends work to an agent."
+    },
+    {
+      "owner": "UI Command Catalog",
+      "impact": "commands/shortcuts/resources candidate families annotated in candidate-command-delta.json; cmd.lsp.server.* marked new \u2014 canon cmd.lsp.* covers editor actions only."
+    },
+    {
+      "owner": "MCP",
+      "impact": "Catalog manager keeps MCP distinct with transport/protocol/auth/catalog/resources/logs and the five-state inventory (installed/enabled/available/selected/invoked)."
+    },
+    {
+      "owner": "Skills",
+      "impact": "Trust states drive update policy language; untrusted skills update manually."
+    },
+    {
+      "owner": "Plugins",
+      "impact": "Channel and compatibility are first-class; beta failures surface with reasons."
+    },
+    {
+      "owner": "Tools",
+      "impact": "Owner attribution (pm vs mcp:server) and approval policy render per tool."
+    },
+    {
+      "owner": "File Manager",
+      "impact": "Behavior table covers tree, drag/drop, hidden/ignored, thresholds, tabs, splits, changed-on-disk, recovery, and transient/unavailable reasons."
+    },
+    {
+      "owner": "Testing",
+      "impact": "Global/Project \u00d7 Auto/On/Off capability matrix with a managed cell showing the managing policy."
+    },
+    {
+      "owner": "Release/updates owner",
+      "impact": "Shared provider installation/update grammar renders in bench language."
+    },
+    {
+      "owner": "Binary Locator and installation lifecycle",
+      "impact": "Tool installation health uses the same confidence vocabulary as providers."
+    }
   ],
   "settings_inventory_impacts": [
-    { "area": "developer tools", "impact": "LSP autostart restart marker, MCP approval reconnect marker, formatter timeout diagnostic exposure." },
-    { "area": "terminal", "impact": "Scrollback effective-differs row, shell-path validation fixture, env-policy inherited row." }
+    {
+      "area": "developer tools",
+      "impact": "LSP autostart restart marker, MCP approval reconnect marker, formatter timeout diagnostic exposure."
+    },
+    {
+      "area": "terminal",
+      "impact": "Scrollback effective-differs row, shell-path validation fixture, env-policy inherited row."
+    },
+    "Candidate inventory additions (correction pass): General \u2192 Performance and resources \u2014 general.behavior-profile (Auto/Performance/Efficiency/Legacy), general.background-work, general.metered-connection, general.cache-ceiling"
   ],
   "settings_schema_impacts": [
-    { "field": "resource states", "impact": "detected / not found / disabled / unavailable as typed row states with reasons." },
-    { "field": "command safety", "impact": "shell-safety validation result attaches to the command record (pass or specific failure)." }
+    {
+      "field": "resource states",
+      "impact": "detected / not found / disabled / unavailable as typed row states with reasons."
+    },
+    {
+      "field": "command safety",
+      "impact": "shell-safety validation result attaches to the command record (pass or specific failure)."
+    }
   ],
   "command_id_impacts": "See candidate-command-delta.json.",
   "wiring_impacts": "See candidate-wiring-delta.json.",
-  "dry_component_impacts": "See candidate-dry-delta.json — adds CommandEditor, ShortcutRecorder, Lsp/Formatter/ToolResource instances.",
+  "dry_component_impacts": "See candidate-dry-delta.json \u2014 adds CommandEditor, ShortcutRecorder, Lsp/Formatter/ToolResource instances.",
   "schema_event_storage_impacts": [
-    { "area": "demo persistence", "impact": "sessionStorage only under pm.settings-demo.foundry; no production storage schema claimed." }
+    {
+      "area": "demo persistence",
+      "impact": "sessionStorage only under pm.settings-demo.foundry; no production storage schema claimed."
+    }
   ],
   "migration_supersession_impacts": [
-    { "superseded": "Playwright-as-agent-runtime vocabulary", "by": "the Playwright MCP row states browser automation stays on the PM-native Browser Program" },
-    { "superseded": "chip/bloom Settings contract", "by": "Settings as a full destination" }
+    {
+      "superseded": "Playwright-as-agent-runtime vocabulary",
+      "by": "the Playwright MCP row states browser automation stays on the PM-native Browser Program"
+    },
+    {
+      "superseded": "chip/bloom Settings contract",
+      "by": "Settings as a full destination"
+    }
   ],
   "slint_port_impacts": [
-    { "surface": "resource tables", "note": "Model-backed rows with a filter string; virtualization-friendly." },
-    { "surface": "ANSI palette wells", "note": "Native color input per well; a port needs a color picker dialog." },
-    { "surface": "shortcut recorder", "note": "Captures keydown at document level in capture phase; a port needs global key capture." },
-    { "surface": "detail drawer", "note": "Absolutely positioned inside the concept root; no clipped-height animation." }
+    {
+      "surface": "resource tables",
+      "note": "Model-backed rows with a filter string; virtualization-friendly."
+    },
+    {
+      "surface": "ANSI palette wells",
+      "note": "Native color input per well; a port needs a color picker dialog."
+    },
+    {
+      "surface": "shortcut recorder",
+      "note": "Captures keydown at document level in capture phase; a port needs global key capture."
+    },
+    {
+      "surface": "detail drawer",
+      "note": "Absolutely positioned inside the concept root; no clipped-height animation."
+    }
   ],
   "test_fixtures": [
-    "Calm state", "Reset demo data", "Formatter not found", "LSP requested vs effective (remote degraded)",
-    "Shortcut conflict", "Command dry-run", "MCP server restart", "Testing matrix managed cell",
-    "ANSI palette edit with live preview", "Shortcut recorder keydown capture",
-    "Changed elsewhere bar", "Validation error", "Provider scenarios (all seven shared)"
+    "Calm state",
+    "Reset demo data",
+    "Formatter not found",
+    "LSP requested vs effective (remote degraded)",
+    "Shortcut conflict",
+    "Command dry-run",
+    "MCP server restart",
+    "Testing matrix managed cell",
+    "ANSI palette edit with live preview",
+    "Shortcut recorder keydown capture",
+    "Changed elsewhere bar",
+    "Validation error",
+    "Provider scenarios (all seven shared)",
+    "Slow manager hydration (lazy load)",
+    "Network goes offline (last-known-good)",
+    "100 detected installations collapse"
   ],
   "deferred_named_owners": [
-    { "module": "Servers", "owner": "Server host owner", "contract": "accepts manager module, deep links, status cards, command wiring" },
-    { "module": "Execution Hosts", "owner": "Server host owner", "contract": "same insertion contract" },
-    { "module": "Clients", "owner": "Server host owner", "contract": "same insertion contract" },
-    { "module": "Project Hosting & Files", "owner": "Storage owner", "contract": "same insertion contract" },
-    { "module": "Remote Access", "owner": "Server host owner", "contract": "same insertion contract" },
-    { "module": "Updates (PM app)", "owner": "Release/updates owner", "contract": "same insertion contract" }
+    {
+      "module": "Servers",
+      "owner": "Server host owner",
+      "contract": "accepts manager module, deep links, status cards, command wiring"
+    },
+    {
+      "module": "Execution Hosts",
+      "owner": "Server host owner",
+      "contract": "same insertion contract"
+    },
+    {
+      "module": "Clients",
+      "owner": "Server host owner",
+      "contract": "same insertion contract"
+    },
+    {
+      "module": "Project Hosting & Files",
+      "owner": "Storage owner",
+      "contract": "same insertion contract"
+    },
+    {
+      "module": "Remote Access",
+      "owner": "Server host owner",
+      "contract": "same insertion contract"
+    },
+    {
+      "module": "Updates (PM app)",
+      "owner": "Release/updates owner",
+      "contract": "same insertion contract"
+    }
   ],
   "unresolved_questions": [
     "Should the custom-command safety validator run against the project's active shell only, or every supported shell?",

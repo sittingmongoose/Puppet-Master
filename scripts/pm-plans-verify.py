@@ -3840,8 +3840,14 @@ def cmd_validate_web_capability_contracts(args: argparse.Namespace) -> dict[str,
         failures.append({"path": rel(agent_policy_fixture_path), "field": "capability_affordance.provider_catalog_mode", "error": "web_capability_affordance_not_lazy_registry_summary"})
     if affordance.get("native_browser_runtime") != "pm_managed_native_browser":
         failures.append({"path": rel(agent_policy_fixture_path), "field": "capability_affordance.native_browser_runtime", "error": "web_capability_affordance_not_pm_native_browser"})
-    if affordance.get("playwright_cdp_status") != "fallback_reference_only":
-        failures.append({"path": rel(agent_policy_fixture_path), "field": "capability_affordance.playwright_cdp_status", "error": "playwright_cdp_not_marked_fallback_reference_only"})
+    if "playwright_cdp_status" in affordance:
+        failures.append(
+            {
+                "path": rel(agent_policy_fixture_path),
+                "field": "capability_affordance.playwright_cdp_status",
+                "error": "forbidden_pm_playwright_compatibility_surface",
+            }
+        )
     forbidden_affordance_data = set(affordance.get("must_not_include", [])) if isinstance(affordance.get("must_not_include"), list) else set()
     for forbidden in ["raw_secrets", "full_provider_config", "provider_private_prompt_files"]:
         if forbidden not in forbidden_affordance_data:
@@ -5563,11 +5569,13 @@ def cmd_validate_web_capability_contracts(args: argparse.Namespace) -> dict[str,
                         "error": "active_web_input_alias_in_canonical_web_surface",
                     }
                 )
-        # PM canon: the PM-managed built-in native browser / Site Reader is the primary
-        # GUI/browser runtime; Playwright/CDP is fallback/reference/project-native only.
-        # Reject active wording that re-asserts Playwright as the primary/default/standard/
-        # only web GUI/test path. Targeted multi-token phrases (not bare "Playwright") so
-        # legitimate fallback/reference/project-native mentions keep passing.
+        # PM canon: the PM-managed built-in Browser Program / Site Reader is native.
+        # A user Project may independently run an
+        # external suite, but Puppet Master exposes no Playwright/CDP runtime, fallback,
+        # facade, compatibility surface, package, port, MCP route, command, or capture
+        # engine. Reject wording that re-asserts it as a primary/default/standard/only
+        # PM web GUI/test path. Targeted multi-token phrases (not the bare name) keep
+        # explicit prohibitions and third-party provenance searchable.
         lowered = text.lower()
         for primary_phrase in (
             "playwright is the standard",

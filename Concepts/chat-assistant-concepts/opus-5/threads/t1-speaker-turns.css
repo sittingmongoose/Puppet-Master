@@ -518,6 +518,153 @@
 
 [data-pmx-thread="t1"] .t1-wstrip-note { margin: 0; font-size: var(--fs-2xs); color: var(--text-muted); }
 
+/* ---- the run capsule ---------------------------------------------------------------------------
+   t1's reading of 03_compact_execution_activity.mov. The reference lays its glyph chain inline to the
+   left of the headline; this concept already answers "who or what is speaking" in a hanging margin,
+   so the chain is indexed THERE and the reading measure is never narrowed by it. Same behaviour, this
+   concept's geometry — which is the whole distinction the packet asks for between eight concepts
+   sharing one contract and eight concepts sharing one widget. */
+[data-pmx-thread="t1"] .t1-run {
+  display: grid;
+  /* The margin is sized to hold six 20px glyphs, which is where reference 03 caps its own chain
+     before it starts rolling. Past that the chain scrolls rather than widening, so this column is a
+     constant and the reading measure beside it never moves. */
+  grid-template-columns: 126px minmax(0, 1fr);
+  column-gap: var(--sm);
+  row-gap: 2px;
+  padding: var(--sm) 0;
+  align-items: start;
+}
+
+/* The chain lives in the margin and scrolls there. It is capped by the margin's own width rather
+   than by a glyph count: the column is the constraint, so the chain never pushes the prose. */
+[data-pmx-thread="t1"] .t1-run-chain {
+  grid-column: 1;
+  grid-row: 1;
+  justify-content: flex-end;
+  gap: 1px;
+  min-height: 20px;
+}
+
+[data-pmx-thread="t1"] .t1-run-glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color var(--motion-fast) var(--ease-default),
+              border-color var(--motion-fast) var(--ease-default),
+              background var(--motion-fast) var(--ease-default);
+}
+
+[data-pmx-thread="t1"] .t1-run-glyph:hover { color: var(--text-primary); border-color: var(--border); }
+
+/* The RUNNING phase is ringed; a finished one is a plain mark. That is the reference's own
+   distinction and it is the only thing in the chain that says which glyph is live. */
+[data-pmx-thread="t1"] .t1-run-glyph[data-state="running"] {
+  color: var(--accent-primary);
+  border-color: color-mix(in srgb, var(--accent-primary) 45%, transparent);
+}
+
+/* An OPEN phase is filled, so after the run settles the chain still says which one you are reading. */
+[data-pmx-thread="t1"] .t1-run-glyph[data-open="1"] {
+  color: var(--text-primary);
+  border-color: var(--border);
+  background: var(--surface-2);
+}
+
+[data-pmx-thread="t1"] .t1-run-line {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+}
+
+[data-pmx-thread="t1"] .t1-run-head {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--xs);
+  max-width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  font-size: var(--fs-xs);
+  /* Tabular figures so a count rewriting 6 into 7 does not change the width of the number and shift
+     the word beside it — the layout half of what makes countMorph read as one running tally. */
+  font-variant-numeric: tabular-nums;
+}
+
+/* Verb at full contrast, argument muted: a reader scanning a settled run reads a column of verbs. */
+[data-pmx-thread="t1"] .t1-run-verb { color: var(--text-primary); font-weight: 600; white-space: nowrap; }
+[data-pmx-thread="t1"] .t1-run-arg {
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+[data-pmx-thread="t1"] .t1-run-chevron { color: var(--text-muted); display: inline-flex; align-self: center; }
+
+[data-pmx-thread="t1"] .t1-run-rows {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  /* The hairline is the reference's own indent rule: sub-rows hang off a rule rather than an
+     indent, so a long path wraps against a visible edge instead of into open space. */
+  border-left: 1px solid var(--border-subtle, var(--border));
+  padding-left: var(--sm);
+  margin-top: 2px;
+}
+
+[data-pmx-thread="t1"] .t1-run-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--xs);
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+}
+
+[data-pmx-thread="t1"] .t1-run-row-verb { color: var(--text-secondary); font-weight: 600; white-space: nowrap; }
+[data-pmx-thread="t1"] .t1-run-row-arg { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+[data-pmx-thread="t1"] .t1-run-stat {
+  margin-left: auto;
+  display: inline-flex;
+  gap: var(--xs);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+[data-pmx-thread="t1"] .t1-run-add { color: var(--status-ok, var(--accent-primary)); }
+[data-pmx-thread="t1"] .t1-run-rem { color: var(--status-danger, var(--text-secondary)); }
+
+[data-pmx-thread="t1"] .t1-run-foot {
+  grid-column: 2;
+  grid-row: 3;
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* At the narrow widths the margin collapses everywhere else in this concept, so the chain stops
+   being a margin and becomes a first line. It never wraps into a second row of glyphs. */
+@container pmx-thread (max-width: 620px) {
+  [data-pmx-thread="t1"] .t1-run { grid-template-columns: minmax(0, 1fr); }
+  [data-pmx-thread="t1"] .t1-run-chain { grid-column: 1; grid-row: 1; justify-content: flex-start; }
+  [data-pmx-thread="t1"] .t1-run-line { grid-column: 1; grid-row: 2; }
+  [data-pmx-thread="t1"] .t1-run-rows { grid-column: 1; grid-row: 3; }
+  [data-pmx-thread="t1"] .t1-run-foot { grid-column: 1; grid-row: 4; }
+}
+
+[data-motion="reduced"] [data-pmx-thread="t1"] .t1-run-glyph { transition: none !important; }
+
 /* ---- activity stages -------------------------------------------------------------------------- */
 
 [data-pmx-thread="t1"] .t1-stage { display: flex; align-items: baseline; gap: var(--xs); flex-wrap: wrap; }
@@ -741,8 +888,10 @@
 
 /* ---- this concept's own choreography ----------------------------------------------------------- */
 
-/* A turn ARRIVES. It does not inflate: no height spring anywhere here, because a bounded box springing
-   open is card vocabulary and this concept has no cards. */
+/* A turn ARRIVES. It does not inflate: the entrance is opacity and a small rise, never a box opening
+   out of nothing, because a box that announces ITSELF by unfolding is card vocabulary and this concept
+   has no cards. Only a first visit plays it - see _choreographInterview, which gates this on
+   motion.firstVisit so that paging BACK to an answered question replays nothing. */
 @keyframes t1-qturn-arrive {
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: none; }
@@ -751,6 +900,37 @@
 
 [data-motion="reduced"] [data-pmx-thread="t1"] .t1-qturn-arrive { animation: none !important; }
 [data-motion="reduced"] [data-pmx-thread="t1"] .t1-wstrip-glyph { transition: none !important; }
+
+/* ---- the turn's own size, and a decision reversed ------------------------------------------------
+   This block used to read: "A turn ARRIVES. It does not inflate: no height spring anywhere here,
+   because a bounded box springing open is card vocabulary and this concept has no cards." The first
+   sentence is still the rule and is why the entrance above is a rise. The claim that followed it was
+   too wide, and it is withdrawn deliberately rather than quietly.
+
+   A height change can say two different things. "Look at me, I am opening" is the card gesture, and it
+   is still refused. "I am now a different size, because of the answer you just gave" is not that
+   gesture at all - it is the same turn reporting what it now holds - and refusing it left the turn
+   cutting between sizes with the change unexplained, which is the reader's problem, not a principle.
+
+   So the turn resizes, on the product's OWN tuned curve rather than an invented one: PMConcept7's model
+   picker (--ease-bounce, y1 = 1.72, plus the one-shot scale beat) reached through motion.resizeBounce,
+   which is the single owner of this element's height. Nothing here transitions height, and nothing here
+   should ever start to: two owners of one property is how a bounce becomes a stutter.
+
+   `.pmx-resize-up` is what keeps this honest. The turn is the last thing above the composer, so the
+   scroller above it is the flexible sibling that yields; the turn grows into its OWN space by moving
+   its top edge, and no line of transcript below it shifts. That was the real content of the original
+   refusal, and it is now enforced by geometry instead of by abstention.
+
+   Reduced motion is handled entirely in motion.css, which lands the new size instantly and fully
+   revealed. There is deliberately no parallel path here - a second reduced-motion rule for the same
+   element is how a box ends up parked mid-bounce. */
+
+/* The two-beat handover, in this concept's geometry: `data-handover` marks the frames in which the
+   outgoing phase has released its sentence and the arriving glyph has not yet appeared. The chain is
+   right-aligned in a fixed column, so nothing may be pushed sideways here - the order is carried by
+   time alone, which is what frames 194-211 are actually about. */
+[data-pmx-thread="t1"] .t1-run[data-handover="1"] .t1-run-head { cursor: default; }
 
 /* ================================================================ packet: the operation ledger
  *
@@ -864,3 +1044,45 @@
 /* The transcript raises `.t1-more` on turn hover; an operation is not a turn, so it raises its own. */
 [data-pmx-thread="t1"] .t1-op:hover .t1-more,
 [data-pmx-thread="t1"] .t1-op:focus-within .t1-more { opacity: 1 !important; }
+
+/* ---- arrival, from the seam ---------------------------------------------------------------------
+   01_message_arrival_spatial_continuity.mov, frames 47 to 63 (about 280ms at 57.6fps): the new
+   message does not fade in at its final position. It appears as a flattened sliver at a seam,
+   expands into its own box, and settles with a small overshoot. The text is CLIPPED by the growing
+   box rather than scaled — at f.50 the glyphs are already at full size and simply cut off.
+
+   The reference's seam is the header, because its list inserts at the top. Ours is bottom-anchored,
+   so the honest equivalent is the composer edge the message was just typed into: it comes up out of
+   the seam it came from. Same causal rule, this transcript's geometry.
+
+   Only the ARRIVING turn gets this. motion.displace stamps data-pmx-arrived on the node it inserted,
+   and every other turn keeps its position untouched — which is the half that makes an arrival read
+   as an arrival rather than as the whole conversation repainting. */
+@keyframes pmx-t1-seam {
+  from { clip-path: inset(100% 0 0 0); transform: translateY(6px); }
+  60%  { clip-path: inset(0 0 0 0);    transform: translateY(-1px); }
+  to   { clip-path: inset(0 0 0 0);    transform: none; }
+}
+
+/* Beats motion.css's `[data-pmx-arrived] { animation: none }` on specificity. That blanket rule is
+   right for the reference, where the arrival is genuinely static and only its neighbours move; in a
+   bottom-anchored list the neighbours do not move at all, so a static arrival would mean nothing
+   moved anywhere and the message would simply blink into existence. */
+[data-pmx-thread="t1"] .t1-turn[data-pmx-arrived] {
+  animation: pmx-t1-seam var(--motion-med) var(--ease-spring-real) both;
+}
+
+/* Reduced motion keeps the arrival instant and fully revealed — never parked at the animation's
+   first frame, which would leave the turn clipped to nothing. */
+[data-motion="reduced"] [data-pmx-thread="t1"] .t1-turn[data-pmx-arrived] {
+  animation: none !important;
+  clip-path: none !important;
+  transform: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-pmx-thread="t1"] .t1-turn[data-pmx-arrived] {
+    animation: none !important;
+    clip-path: none !important;
+    transform: none !important;
+  }
+}

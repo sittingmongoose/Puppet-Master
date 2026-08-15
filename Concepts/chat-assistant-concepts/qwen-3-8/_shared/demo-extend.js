@@ -42,6 +42,7 @@ window.PMChatDemoExtend = (() => {
     if (!data.threads.find(t => t.id === "thread-16")) data.threads.push(buildShowcase());
     if (!data.threads.find(t => t.id === "thread-17")) data.threads.push(buildRedesign());
     if (!data.threads.find(t => t.id === "thread-18")) data.threads.push(buildOfflineCatchup());
+    seedPinHistory(data);
     if (!data.catalog) data.catalog = buildCatalog();
     enrichStates(data);
     return data;
@@ -70,10 +71,10 @@ window.PMChatDemoExtend = (() => {
         models: [
           { name: "Kimi K3", accounts: ["ms-dev"], effort: ["Medium", "High"], fast: false, caps: { video: true, vision: true }, context: 128000 }
         ] },
-      { id: "google", provider: "Google", setupState: "install-required", accounts: [ { id: "g-cloud", label: "Cloud key" } ],
+      { id: "google", provider: "Google", setupState: "install-required", sub: "Official Google release artifact · install for this host", accounts: [ { id: "g-cloud", label: "Cloud key" } ],
         models: [
-          { name: "Gemini 3 Pro", accounts: ["g-cloud"], effort: ["Low", "Medium", "High"], fast: true, caps: { video: true, vision: true }, context: 1000000, disabled: true, disabledReason: "Install required — open Provider Settings" },
-          { name: "Gemini 3 Flash", accounts: ["g-cloud"], effort: ["Low", "Medium"], fast: true, caps: { video: true, vision: true }, context: 500000, disabled: true, disabledReason: "Install required — open Provider Settings" }
+          { name: "Gemini 3 Pro", accounts: ["g-cloud"], effort: ["Low", "Medium", "High"], fast: true, caps: { video: true, vision: true }, context: 1000000, disabled: true, disabledReason: "Provider Setup Required — install from the official Google source." },
+          { name: "Gemini 3 Flash", accounts: ["g-cloud"], effort: ["Low", "Medium"], fast: true, caps: { video: true, vision: true }, context: 500000, disabled: true, disabledReason: "Provider Setup Required — install from the official Google source." }
         ] }
     ];
   }
@@ -85,6 +86,37 @@ window.PMChatDemoExtend = (() => {
     set("thread-10", { threadState: "running" });
     set("thread-13", { threadState: "idle" });
     set("thread-05", { threadState: "running" });
+  }
+
+  /* Pinned-history fixture source for thread-17: the 18 manifest history_rows,
+     appended after the existing threads so every window's pin column lists them.
+     Stub rows are real threads (one message each) so search, switch and rename
+     all work against them; nothing existing is dropped or renamed. */
+  function seedPinHistory(data) {
+    const rows = [
+      "Settings redesign bakeoff", "Usage feature review", "Planning Wizard audit",
+      "PRD Builder source intake", "Provider multi-account routing", "Claude CLI profile isolation",
+      "Antigravity CLI headless update", "Free models catalog refresh", "Models.dev capability sync",
+      "Context Lens motion study", "Compact Now and branching", "MCP July specification review",
+      "Memory degradation audit", "Persona context-footprint audit", "Crew capacity planning",
+      "Worktree collision recovery", "Slint 1.17.1 port notes", "Assistant Chat visual testing"
+    ];
+    rows.forEach((title, i) => {
+      const id = "hist-17-" + String(i + 1).padStart(2, "0");
+      if (data.threads.find(t => t.title === title || t.id === id)) return;
+      const sentAt = new Date(new Date("2026-08-04T13:00:00Z").getTime() - i * 5400000).toISOString();
+      data.threads.push({
+        id: id, title: title, project: "Puppet Master", pinned: false, archived: false,
+        threadState: "idle", updatedAt: sentAt, initialVisibleMessageCount: 1,
+        scriptedReplyIds: [], scriptedReplyCursor: 0,
+        messages: [
+          { id: id + "-m0001", role: "assistant", body: "Summary of “" + title + "” — pinned-history row for the redesign showcase.", sentAt: sentAt, eligibleForEdit: false, collapsedByDefault: false }
+        ],
+        activeGoal: null, todo: null, subagentGroups: [], diffGroups: [], questionnaires: [], artifacts: [],
+        browserSessions: [], draftState: null,
+        tags: ["pin-history"]
+      });
+    });
   }
 
   const PROV = ["Alibaba", "Anthropic", "OpenAI", "Moonshot"];
@@ -238,7 +270,7 @@ window.PMChatDemoExtend = (() => {
         { id: "sg-17", label: "Redesign specialists", state: "running", counts: null, agents: [
           { name: "Interface systems auditor", task: "Audit selector and access surfaces", currentActivity: "Findings delivered", status: "completed", route: "Qwen 3.8", workedSeconds: 41 },
           { name: "Provider adapter researcher", task: "Compare external approval models", currentActivity: "Reading adapter docs", status: "running", route: "Kimi K3", workedSeconds: 33 },
-          { name: "Slint and test reviewer", task: "Portability and probe review", currentActivity: "Queued for sustainable capacity", status: "queued", route: "Opus 5 Fast", workedSeconds: 0 },
+          { name: "Slint and test reviewer", task: "Portability and probe review", currentActivity: "Retrying after sandbox timeout", status: "retrying", route: "Qwen 3.8", workedSeconds: 0, failedAttempt: { reason: "sandbox timeout", at: "2026-08-04T14:47:00Z" } },
           { name: "Capacity verifier", task: "Verify wave reserves hold", currentActivity: "Blocked on port 3000", status: "blocked", route: "Qwen 3.8", workedSeconds: 12 },
           { name: "Handoff writer", task: "Draft impact handoff", currentActivity: "Stopped by user", status: "stopped", route: "Opus 5 Fast", workedSeconds: 8 }
         ] }
@@ -347,7 +379,7 @@ window.PMChatDemoExtend = (() => {
         members: [
           { role: "Interface systems auditor", route: "Qwen 3.8 · workspace key", state: "completed" },
           { role: "Provider adapter researcher", route: "Kimi K3 · developer key", state: "running" },
-          { role: "Slint and test reviewer", route: "Opus 5 Fast · Pro plan", state: "queued" },
+          { role: "Slint and test reviewer", route: "Qwen 3.8 · workspace key", state: "retrying" },
           { role: "Capacity verifier", route: "Qwen 3.8 · workspace key", state: "blocked" },
           { role: "Handoff writer", route: "Opus 5 Fast · Pro plan", state: "stopped" }
         ],

@@ -14,7 +14,7 @@ import { escapeHtml } from "../shared/popup.js";
 import {
   transcriptSlice, isLongMessage, isExpanded, previewText, lensMark, copyMessage,
   workCluster, createScrollKeeper, questionnaireState, questionProgress, validateSubmit,
-  activityGroups, bodyHtml,
+  activityGroups, bodyHtml, liveTurn,
 } from "../shared/thread-common.js";
 import { createComposer, createSelectorRow, createDecisionStack, openMoreInfo, openMessageOps } from "../shared/components.js";
 import { fmtDuration, fmtTime, workedLabel, JUMP_TO_LATEST, QUESTIONNAIRE_ACTIONS, TODO_STATE_LABELS } from "../shared/strings.js";
@@ -251,16 +251,31 @@ export function createThread(ctx) {
     scene.className = "ft1-scene";
     scene.setAttribute("aria-label", "Active work");
 
-    if (w.turn) {
+    const lt = liveTurn();
+    if (lt) {
       const dir = document.createElement("div");
       dir.className = "ft1-direction ft1-direction-live";
-      dir.innerHTML = `<span class="ft1-direction-text">[ ${escapeHtml(w.turn.summary)} — ${fmtDuration(w.turn.workedSeconds)} ]</span>`;
+      dir.innerHTML = `<span class="ft1-direction-text">[ ${escapeHtml(lt.summary)} — ${fmtDuration(lt.workedSeconds)} ]</span>`;
       scene.appendChild(dir);
+      // Live phase detail: item lines tick in beneath the direction and are
+      // replaced wholesale when the phase changes (video 3's locus contract).
+      if (lt.items.length) {
+        const sheet = document.createElement("div");
+        sheet.className = "ft1-direction-sheet ft1-live-sheet";
+        for (const item of lt.items) {
+          const line = document.createElement("div");
+          line.className = "ft1-stage-line";
+          line.innerHTML = `<span class="ft1-stage-kind">${escapeHtml(humanKind(lt.phaseKind))}</span><span class="ft1-stage-label">${escapeHtml(item.text)}</span>${item.side ? `<span class="ft1-stage-chg">${escapeHtml(item.side)}</span>` : ""}`;
+          sheet.appendChild(line);
+        }
+        scene.appendChild(sheet);
+      }
     }
 
     if (w.goal) {
       scene.appendChild(sceneBlock("goal", `Goal — ${w.goal.title}`, (body) => {
-        body.innerHTML = `<div class="ft1-goal-status" data-status="${w.goal.status}">${escapeHtml(cap(w.goal.status))}</div><p class="ft1-goal-obj">${escapeHtml(w.goal.objective)}</p>`;
+        const phaseLine = w.goal.phases ? `<p class="ft1-goal-phase">Phase ${(w.goal.phaseIndex || 0) + 1} of ${w.goal.phases.length} — ${escapeHtml(w.goal.phases[w.goal.phaseIndex || 0])}${w.goal.replanApplied ? " · replanned" : ""}</p>` : (w.goal.replanApplied ? `<p class="ft1-goal-phase">Updated — replanned</p>` : "");
+        body.innerHTML = `<div class="ft1-goal-status" data-status="${w.goal.status}">${escapeHtml(cap(w.goal.status))}</div><p class="ft1-goal-obj">${escapeHtml(w.goal.objective)}</p>${phaseLine}`;
         if (w.goal.pendingEdit) {
           const pe = document.createElement("div");
           pe.className = "ft1-goal-replan";
@@ -309,7 +324,7 @@ export function createThread(ctx) {
 
     if (w.subagents) {
       const c = w.subagents.counts;
-      scene.appendChild(sceneBlock("subagents", `${w.subagents.label} — ${c.working} working · ${c.complete} complete${c.blocked ? ` · ${c.blocked} blocked` : ""}${c.waiting ? ` · ${c.waiting} waiting` : ""}`, (body) => {
+      scene.appendChild(sceneBlock("subagents", `${w.subagents.label} — ${c.working} working · ${c.complete} complete${c.blocked ? ` · ${c.blocked} blocked` : ""}${c.failed ? ` · ${c.failed} failed` : ""}${c.retrying ? ` · ${c.retrying} retrying` : ""}${c.waiting ? ` · ${c.waiting} waiting` : ""}`, (body) => {
         for (const a of w.subagents.agents) {
           const line = document.createElement("div");
           line.className = "ft1-agent-line";
@@ -375,6 +390,10 @@ export function createThread(ctx) {
   }
 
   function cap(w) { return w ? w[0].toUpperCase() + w.slice(1) : ""; }
+  function humanKind(k) {
+    const map = { thinking_summary: "thought", search: "search", read: "read", fetch: "web", browser: "browser", test: "test", edit: "edit", generate: "write" };
+    return map[k] || k.replace(/_/g, " ");
+  }
 
   // ---------- questionnaire form scene ----------
   function renderQuestionScene() {
@@ -416,12 +435,31 @@ export function createThread(ctx) {
     stagebox.appendChild(prompt);
 
     if (q.kind === "freeform") {
-      const ta = document.createElement("textarea");
-      ta.className = "ft1-form-freeform pm-scroll";
-      ta.placeholder = "Write your answer";
-      ta.value = active.freeform[q.id] || "";
-      ta.addEventListener("change", () => s.answerQuestion(active.id, q.id, ta.value));
-      stagebox.appendChild(ta);
+      // Video 2's freeform pattern: a "Something else" option row that expands
+      // into an inline input inside the option list.
+      const hasText = !!(active.freeform[q.id]);
+      const open = !!s.view.expandedGroups["ft1:freeform:" + q.id] || hasText;
+      if (!open) {
+        const row = document.createElement("button");
+        row.className = "ft1-form-option ft1-form-something";
+        row.innerHTML = `<span class="ft1-form-letter">${icon("edit", 11)}</span><span>Something else</span>`;
+        row.addEventListener("click", () => { s.view.expandedGroups["ft1:freeform:" + q.id] = true; s.emit("transcript-view"); });
+        stagebox.appendChild(row);
+      } else {
+        const wrap = document.createElement("div");
+        wrap.className = "ft1-form-option ft1-form-something";
+        wrap.dataset.selected = String(hasText);
+        wrap.innerHTML = `<span class="ft1-form-letter">${icon("edit", 11)}</span>`;
+        const input = document.createElement("input");
+        input.type = "text";
+        input.className = "ft1-form-inline-input";
+        input.placeholder = "Something else — write it in";
+        input.value = active.freeform[q.id] || "";
+        input.addEventListener("change", () => s.answerQuestion(active.id, q.id, input.value));
+        wrap.appendChild(input);
+        stagebox.appendChild(wrap);
+        if (!hasText) setTimeout(() => input.focus(), 60);
+      }
     } else {
       const letters = "ABCDEFGH";
       q.options.forEach((opt, i) => {

@@ -1,0 +1,139 @@
+{
+  "schema_id": "pm.runtime_integration.canon_closure_validation.v1",
+  "generated_at_utc": "2026-08-14T05:23:14Z",
+  "stage": "canonical_specification_closure_pre_worknodes",
+  "closure_status": "pass",
+  "implementation_status": "not_started",
+  "runtime_certification_claimed": false,
+  "task_owned_checks": [
+    {
+      "check": "runtime_integration_disposition",
+      "status": "pass",
+      "detail": "163 unique rows; 41 baseline canon repairs; 8 implementation-only deferrals; all 163 implementation statuses not_started; zero unresolved non-PNC canon conflicts"
+    },
+    {
+      "check": "packet_source_custody",
+      "status": "pass",
+      "detail": "33 manifest members and archive hash verified; 218 live Plan references across 1798 scanned root Plan files all resolve"
+    },
+    {
+      "check": "shared_runtime_contract_semantics",
+      "status": "pass",
+      "passed_cases": 41,
+      "failed_cases": 0
+    },
+    {
+      "check": "storage_recovery_contract_semantics",
+      "status": "pass",
+      "passed_cases": 22,
+      "failed_cases": 0,
+      "detail": "Includes no-space preflight versus terminal blocked-receipt discrimination and exact transitive registry-bundle drift rejection"
+    },
+    {
+      "check": "shared_runtime_storage_materializer",
+      "status": "pass",
+      "detail": "current; 84 families = 66 materialized + 17 deferred_not_build_blocking + 1 compatibility_alias"
+    },
+    {
+      "check": "protected_auth_browser_contracts",
+      "status": "pass",
+      "valid_fixtures": 3,
+      "invalid_fixtures": 5,
+      "cross_schema_rejections": 3
+    },
+    {
+      "check": "shared_runtime_command_contracts",
+      "status": "pass",
+      "canonical_bindings": 26,
+      "compatibility_mappings": 7,
+      "rejected_candidates": 1,
+      "compatibility_wrappers": 1
+    },
+    {
+      "check": "goal_runtime_lineage",
+      "status": "pass",
+      "passed_cases": 6,
+      "failed_cases": 0
+    },
+    {
+      "check": "targeted_python_unittests",
+      "status": "pass",
+      "passed_tests": 27,
+      "failed_tests": 0
+    },
+    {
+      "check": "json_syntax",
+      "status": "pass"
+    },
+    {
+      "check": "path_references",
+      "status": "pass"
+    },
+    {
+      "check": "banned_phrases",
+      "status": "pass"
+    },
+    {
+      "check": "runtime_artifact_schemas",
+      "status": "pass"
+    },
+    {
+      "check": "web_capability_contracts",
+      "status": "pass"
+    },
+    {
+      "check": "filesafe_security_policy",
+      "status": "pass"
+    },
+    {
+      "check": "wiring_matrix",
+      "status": "pass"
+    },
+    {
+      "check": "closure_diff_whitespace",
+      "status": "pass"
+    }
+  ],
+  "intentionally_deferred_checks": [
+    {
+      "check": "contract_reference_aggregate",
+      "observed_status": "fail",
+      "reason": "The same missing generated shard Plans/_shards/automated_testing_system/00-index.md is reported twice; shard generation is frozen until the post-PNC governance seal. No live non-generated ContractRef failure remains in this result."
+    },
+    {
+      "check": "plan_index_validate",
+      "observed_status": "fail",
+      "reason": "Six generated index artifacts and their ID/document counts are stale by design. Live PlanUnit parsing is clean and coverage_status is pass; generation is reserved for the post-PNC governance seal."
+    },
+    {
+      "check": "validate_case_l_non_event_materialization",
+      "observed_status": "fail",
+      "failure_count": 9,
+      "reason": "The wrapper invokes the protected PNC/readiness owner and retains old two-definition/detached-ref/partial-inline assumptions. The replacement task-owned recovery validator passes 22/22; the stale protected validator is handed off without modification."
+    },
+    {
+      "check": "runtime_platform_performance_restart_race_network_hardware_fault_migration_execution_matrix",
+      "observed_status": "not_run",
+      "reason": "Explicitly outside this pre-WorkNode canon-closure stage; no product implementation or runtime proof exists."
+    }
+  ],
+  "strict_no_touch_hashes": {
+    "all_match_custody_baseline": true,
+    "values": {
+      "Plans/event_family_registry.json": "85264dc68c929189e8758b95e0d23efdaf8fd0b3969f3583893c6c60773ed6ad",
+      "Plans/Spec_Lock.json": "e7a328263745deb4385ac812d6e686b0e5520b8e2bb8d2fff07cc792215cf18b",
+      "scripts/pm-implementation-readiness.py": "8b5eff704c74b426c9ad5e2e6669513c027a9a9d4af982df050959dd91386b89",
+      "scripts/pm_pnc019_currentness.py": "3ec270220e09f61e7e122a294ddf7ddad007905f28f95416c13860700dc3b15c",
+      "scripts/pm-event-authority-currentness.py": "7bab0f9a21bba879a2ea1d8f21e3d80f41ab83d44f62fb0282f2cd9a5d971414",
+      "tests/test_pm_pnc019_currentness.py": "279cf485644927b6361d41bae2434790be17a99207153a0c24534ca4176d7a0b"
+    }
+  },
+  "forbidden_output_audit": {
+    "worknodes_created": 0,
+    "nodeseeds_created": 0,
+    "workgraphs_created": 0,
+    "executable_queues_created": 0,
+    "rust_or_slint_runtime_artifacts_created": 0,
+    "deployment_artifacts_created": 0
+  }
+}

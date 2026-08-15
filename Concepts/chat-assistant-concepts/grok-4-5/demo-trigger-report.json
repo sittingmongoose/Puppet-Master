@@ -1,20 +1,87 @@
 {
-  "schema_id": "pm.chat_demo_trigger_report.v1",
+  "schema_id": "pm.chat_assistant_demo_trigger_report.v1",
   "concept_id": "grok-4-5",
-  "model": "Grok 4.5",
-  "updated_at": "2026-08-11",
-  "status": "complete",
-  "cache_bust": "v=40",
-  "summary": {
-    "contract_triggers": 94,
-    "covered": 94,
-    "gaps": 0,
-    "harness_buttons": 79,
-    "harness_cases": 98
+  "updated_at": "2026-08-14T04:40:00Z",
+  "button_count": 99,
+  "case_coverage": {
+    "covered": 96,
+    "listed": 96
   },
-  "gaps": [],
-  "extra_buttons_outside_minimal_packet": [],
-  "step8_system_required": [
+  "semantics": {
+    "prepare_ne_open": true,
+    "next_ne_skip": true,
+    "goal_update_ne_replan": true,
+    "reset_rehydrateFromDemo": true,
+    "provider_setup_official_source": true,
+    "provider_install_required": true,
+    "provider_update_available": true
+  },
+  "buttons": [
+    "history.peek",
+    "history.pin_compact",
+    "history.pin_full",
+    "history.unpin",
+    "history.switch_thread",
+    "question.prepare",
+    "question.open",
+    "question.select",
+    "question.next",
+    "question.skip",
+    "question.cancel",
+    "question.submit",
+    "question.validation_error",
+    "goal.start",
+    "goal.progress",
+    "goal.pause",
+    "goal.resume",
+    "goal.update",
+    "goal.replan",
+    "goal.blocked",
+    "goal.stop",
+    "goal.clear",
+    "goal.edit",
+    "goal.complete",
+    "todo.add",
+    "todo.complete",
+    "todo.block",
+    "todo.reopen",
+    "subagent.spawn",
+    "subagent.queue",
+    "subagent.progress",
+    "subagent.complete",
+    "subagent.fail",
+    "subagent.retry",
+    "activity.thinking_summary",
+    "activity.search",
+    "activity.read",
+    "activity.fetch",
+    "activity.browser",
+    "activity.test",
+    "activity.edit",
+    "activity.generate",
+    "diff.create",
+    "diff.update",
+    "diff.open",
+    "artifact.loading",
+    "artifact.ready",
+    "artifact.switch",
+    "artifact.error",
+    "artifact.close",
+    "decision.approval_open",
+    "decision.details",
+    "decision.approve",
+    "decision.deny",
+    "decision.branch",
+    "system.port_collision",
+    "system.worktree_collision",
+    "system.cache_warning",
+    "system.capacity_warning",
+    "system.cross_project",
+    "system.crew",
+    "system.attachment_incompatible",
+    "system.attachment_resolver",
+    "system.compact_now",
+    "system.active_turn_redirect",
     "system.bsd.off",
     "system.bsd.auto_idle",
     "system.bsd.auto_active",
@@ -24,778 +91,537 @@
     "system.bsd.timeout",
     "system.bsd.unavailable",
     "system.bsd.quota",
+    "system.backup_snapshot",
+    "system.debug_session",
+    "system.browser_program_progress",
+    "system.provider_setup_required",
+    "system.provider_install_required",
+    "system.provider_update_available",
+    "system.access_limited_by_review",
+    "system.notification.push",
+    "system.restore_point.create",
+    "system.rewind",
     "system.sync.offline",
     "system.sync.queued",
     "system.sync.reconnect",
     "system.sync.replay",
     "system.sync.snapshot",
     "system.sync.server_work",
-    "system.restore_point.create",
-    "system.rewind",
-    "system.notification.push",
-    "system.browser_program_progress",
-    "system.provider_setup_required",
-    "system.access_limited_by_review"
+    "system.composer.ordinary",
+    "system.composer.spellcheck",
+    "artifact.updated",
+    "thread.send_request",
+    "thread.receive_response",
+    "thread.spawn_related",
+    "thread.branch",
+    "system.reduced_motion",
+    "system.reset"
   ],
-  "step8_system_coverage": {
-    "system.bsd.off": {
-      "case": true,
-      "button": true
-    },
-    "system.bsd.auto_idle": {
-      "case": true,
-      "button": true
-    },
-    "system.bsd.auto_active": {
-      "case": true,
-      "button": true
-    },
-    "system.bsd.on": {
-      "case": true,
-      "button": true
-    },
-    "system.bsd.silent": {
-      "case": true,
-      "button": true
-    },
-    "system.bsd.advice": {
-      "case": true,
-      "button": true
-    },
-    "system.bsd.timeout": {
-      "case": true,
-      "button": true
-    },
-    "system.bsd.unavailable": {
-      "case": true,
-      "button": true
-    },
-    "system.bsd.quota": {
-      "case": true,
-      "button": true
-    },
-    "system.sync.offline": {
-      "case": true,
-      "button": true
-    },
-    "system.sync.queued": {
-      "case": true,
-      "button": true
-    },
-    "system.sync.reconnect": {
-      "case": true,
-      "button": true
-    },
-    "system.sync.replay": {
-      "case": true,
-      "button": true
-    },
-    "system.sync.snapshot": {
-      "case": true,
-      "button": true
-    },
-    "system.sync.server_work": {
-      "case": true,
-      "button": true
-    },
-    "system.restore_point.create": {
-      "case": true,
-      "button": true
-    },
-    "system.rewind": {
-      "case": true,
-      "button": true
-    },
-    "system.notification.push": {
-      "case": true,
-      "button": true
-    },
-    "system.browser_program_progress": {
-      "case": true,
-      "button": true
-    },
-    "system.provider_setup_required": {
-      "case": true,
-      "button": true
-    },
-    "system.access_limited_by_review": {
-      "case": true,
-      "button": true
-    }
-  },
-  "coverage": [
+  "cases": [
     {
       "trigger": "history.peek",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "history.pin_compact",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "history.pin_full",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "history.unpin",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "history.switch_thread",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "question.prepare",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": false,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "question.open",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "question.select",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": false,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "question.next",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": false,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "question.validation_error",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "question.skip",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "question.cancel",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "question.submit",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "goal.start",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "goal.progress",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": false,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "goal.pause",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "goal.resume",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "goal.update",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": false,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "goal.replan",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "goal.blocked",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": false,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "goal.complete",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "todo.add",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "todo.complete",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "todo.reopen",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "todo.block",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "subagent.spawn",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "subagent.queue",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": false,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "subagent.progress",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": false,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "subagent.complete",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": false,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "subagent.fail",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "subagent.retry",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "activity.thinking_summary",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "activity.search",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "activity.read",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": false,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "activity.fetch",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": false,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "activity.browser",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": false,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "activity.test",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": false,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "activity.edit",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "activity.generate",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": false,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "diff.create",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "diff.update",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": false,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "diff.open",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "artifact.loading",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "artifact.ready",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "artifact.updated",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "artifact.switch",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "artifact.error",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "artifact.close",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "decision.approval_open",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "decision.details",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": false,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "decision.approve",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "decision.deny",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": false,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "decision.branch",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": false,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "thread.send_request",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "thread.receive_response",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "thread.spawn_related",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "thread.branch",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.port_collision",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.worktree_collision",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.reset",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.compact_now",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.attachment_incompatible",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.attachment_resolver",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.active_turn_redirect",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.cache_warning",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.capacity_warning",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.cross_project",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.crew",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.reduced_motion",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.backup_snapshot",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.debug_session",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.bsd.off",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.bsd.auto_idle",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.bsd.auto_active",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.bsd.on",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.bsd.silent",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.bsd.advice",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.bsd.timeout",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.bsd.unavailable",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.bsd.quota",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.sync.offline",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.sync.queued",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.sync.reconnect",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.sync.replay",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.sync.snapshot",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.sync.server_work",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.restore_point.create",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.rewind",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.notification.push",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.browser_program_progress",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.provider_setup_required",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
+    },
+    {
+      "trigger": "system.provider_update_available",
+      "has_case": true,
+      "has_button": true
+    },
+    {
+      "trigger": "system.provider_install_required",
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.access_limited_by_review",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.composer.ordinary",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     },
     {
       "trigger": "system.composer.spellcheck",
-      "in_contract": true,
-      "in_harness_case": true,
-      "in_harness_button": true,
-      "status": "covered"
+      "has_case": true,
+      "has_button": true
     }
   ],
-  "idempotency_notes": [
-    "Offline send enqueues stable outbox id; reconnect replay acks once; second reconnect does not duplicate (store probes passed)."
+  "requirements_notes": [
+    "prepare ≠ open (question.prepare sets preparing phase; question.open focuses card)",
+    "next ≠ skip (pagination vs abandon)",
+    "goal.update ≠ goal.replan (mutate title/progress vs replan note/GAP-020)",
+    "system.reset → store.rehydrateFromDemo known baseline",
+    "system.provider_install_required / system.provider_update_available triggers present",
+    "Provider CLI copy: official-source first acquisition; not bundled/not baseline; install≠auth; Chat deep-links Settings",
+    "Triggers remain non-product demo harness controls"
   ],
-  "attachment_resolver_video_cta": "Use Gemini for video",
-  "attachment_resolver_pdf_cta": "Use Gemini for documents",
-  "goal_lifecycle_buttons": [
-    "goal.start",
-    "goal.pause",
-    "goal.resume",
-    "goal.replan",
-    "goal.stop",
-    "goal.clear",
-    "goal.edit",
-    "goal.complete"
-  ]
+  "winner": null,
+  "status": "complete",
+  "cache_bust": "v=42",
+  "expanded_buttons": {
+    "provider_install_required": true,
+    "provider_update_available": true,
+    "question_prepare": true,
+    "history_peek": true,
+    "system_reset": true,
+    "artifact_updated": true
+  },
+  "probe_refs": {
+    "correction_live": "%TEMP%\\pm-grok45-probes\\correction-2026-08-14\\correction-live-result.json",
+    "static_evidence": "%TEMP%\\pm-grok45-probes\\correction-2026-08-14\\static-evidence.json",
+    "cache_bust": "host.html ?v=42"
+  }
 }

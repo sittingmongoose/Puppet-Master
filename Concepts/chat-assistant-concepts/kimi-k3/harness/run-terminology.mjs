@@ -6,7 +6,11 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { startServer, launchDriver, openHost, writeResults, MODEL_ROOT } from './fixtures.mjs';
 
-const BANNED = [/playwright[- ]?(familiar|compatible|shaped|like|facade)/i, /\byolo\b/i];
+const BANNED = [/playwright[- ]?(familiar|compatible|shaped|like|facade)/i, /\byolo\b/i,
+  // Provider-CLI adjudication: no baseline-bundling copy anywhere (the compliant
+  // negation "never bundles provider CLIs" does not match these).
+  /included with (this|the|pm|puppet master|server)/i, /comes with (pm|puppet master|the server)/i,
+  /ships with/i, /pre-?installed/i, /bundled (with|in|into)/i];
 const REQUIRED_UI = ['Browser Program'];
 const PAIRINGS = [['w1', 't1'], ['w2', 't3'], ['w4', 't5'], ['w8', 't8']];
 
@@ -24,8 +28,14 @@ function walk(dir) {
   });
   return out;
 }
+// Governance reports (SPEC_GAPS, TEST_REPORT, *-report.json, deltas) legitimately
+// QUOTE the banned clauses they document (e.g. "retire stale yolo clauses"); the
+// gate's static scan targets product sources + user-facing docs, so those files
+// are excluded here. The rendered-UI scan below still covers everything visible.
+const GOVERNANCE = /(SPEC_GAPS\.md|TEST_REPORT\.md|interaction-test-report\.json|demo-trigger-report\.json|reference-review-report\.json|plan-owner-delta\.md|candidate-.*-delta\.json|impact-register\.json|HANDOFF\.md)$/;
 for (const f of walk(MODEL_ROOT)) {
   if (/harness[\\/]/.test(f)) continue;
+  if (GOVERNANCE.test(f)) continue;
   const text = readFileSync(f, 'utf-8');
   for (const re of BANNED) {
     const m = text.match(re);

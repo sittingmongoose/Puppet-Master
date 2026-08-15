@@ -1,401 +1,270 @@
 {
-  "schema_id": "pm.chat.fable.demo_trigger_report.v1",
+  "schema_id": "pm.chat_assistant_demo_trigger_contract.v2",
   "model": "Fable",
-  "trigger_count": 65,
-  "console": "Demo triggers drawer in the gallery console (raw ids live in data-trigger attributes; the UI shows human labels only)",
-  "fake_send": "Composer appends user text verbatim, plays the scripted workingSummarySequence with stepDurationsMs, appends the prewritten reply, supports Stop (stopResultBody) and steer/redirect; it never interprets arbitrary text.",
-  "reset": "scenario.reset clears the persistence namespace and reloads the fixture baseline.",
-  "triggers": [
-    {
-      "id": "history.closed",
-      "label": "History closed",
-      "family": "history",
-      "effect": "sets the canonical pinned-history state; window concepts render their geometry"
-    },
+  "note": "The correction packet restored the v2 trigger contract; every contract event is a first-class deterministic trigger. Earlier v1 dotted ids remain as aliases for the extended-scenario families. Raw ids live only in data attributes; the drawer shows human labels.",
+  "contract_events": [
     {
       "id": "history.peek",
-      "label": "History peek",
-      "family": "history",
-      "effect": "sets the canonical pinned-history state; window concepts render their geometry"
+      "label": "History peek"
     },
     {
-      "id": "history.pinned_full",
-      "label": "History pinned full",
-      "family": "history",
-      "effect": "sets the canonical pinned-history state; window concepts render their geometry"
+      "id": "history.pin_compact",
+      "label": "History pinned compact"
     },
     {
-      "id": "history.pinned_compact",
-      "label": "History pinned compact",
-      "family": "history",
-      "effect": "sets the canonical pinned-history state; window concepts render their geometry"
+      "id": "history.pin_full",
+      "label": "History pinned full"
     },
     {
-      "id": "artifact.loading",
-      "label": "Artifact loading",
-      "family": "artifact",
-      "effect": "drives the artifact lifecycle in the window left workspace (loading/ready/updated/error/retry)"
+      "id": "history.unpin",
+      "label": "History unpinned"
     },
     {
-      "id": "artifact.ready",
-      "label": "Artifact ready",
-      "family": "artifact",
-      "effect": "drives the artifact lifecycle in the window left workspace (loading/ready/updated/error/retry)"
+      "id": "history.switch_thread",
+      "label": "Switch to next thread"
     },
     {
-      "id": "artifact.updated",
-      "label": "Artifact updated",
-      "family": "artifact",
-      "effect": "drives the artifact lifecycle in the window left workspace (loading/ready/updated/error/retry)"
-    },
-    {
-      "id": "artifact.error",
-      "label": "Artifact error",
-      "family": "artifact",
-      "effect": "drives the artifact lifecycle in the window left workspace (loading/ready/updated/error/retry)"
-    },
-    {
-      "id": "artifact.retry",
-      "label": "Artifact retry",
-      "family": "artifact",
-      "effect": "drives the artifact lifecycle in the window left workspace (loading/ready/updated/error/retry)"
-    },
-    {
-      "id": "question.preparing",
-      "label": "Questions preparing",
-      "family": "question",
-      "effect": "drives the questionnaire lifecycle (prepare/open/answer/skip/cancel/submit) in the per-concept composition"
+      "id": "question.prepare",
+      "label": "Questions preparing"
     },
     {
       "id": "question.open",
-      "label": "Question open",
-      "family": "question",
-      "effect": "drives the questionnaire lifecycle (prepare/open/answer/skip/cancel/submit) in the per-concept composition"
+      "label": "Question open"
     },
     {
-      "id": "question.answer",
-      "label": "Answer question",
-      "family": "question",
-      "effect": "drives the questionnaire lifecycle (prepare/open/answer/skip/cancel/submit) in the per-concept composition"
+      "id": "question.select",
+      "label": "Select an answer"
+    },
+    {
+      "id": "question.next",
+      "label": "Next question"
+    },
+    {
+      "id": "question.validation_error",
+      "label": "Required-answer error"
     },
     {
       "id": "question.skip",
-      "label": "Skip question",
-      "family": "question",
-      "effect": "drives the questionnaire lifecycle (prepare/open/answer/skip/cancel/submit) in the per-concept composition"
+      "label": "Skip question"
     },
     {
       "id": "question.cancel",
-      "label": "Cancel questionnaire",
-      "family": "question",
-      "effect": "drives the questionnaire lifecycle (prepare/open/answer/skip/cancel/submit) in the per-concept composition"
+      "label": "Cancel questionnaire"
     },
     {
       "id": "question.submit",
-      "label": "Submit answers",
-      "family": "question",
-      "effect": "drives the questionnaire lifecycle (prepare/open/answer/skip/cancel/submit) in the per-concept composition"
+      "label": "Submit answers"
     },
     {
       "id": "goal.start",
-      "label": "Goal starts",
-      "family": "goal",
-      "effect": "mutates the shared Goal record with receipts"
+      "label": "Goal starts"
+    },
+    {
+      "id": "goal.progress",
+      "label": "Goal phase advances"
     },
     {
       "id": "goal.pause",
-      "label": "Goal pauses",
-      "family": "goal",
-      "effect": "mutates the shared Goal record with receipts"
+      "label": "Goal pauses"
     },
     {
       "id": "goal.resume",
-      "label": "Goal resumes",
-      "family": "goal",
-      "effect": "mutates the shared Goal record with receipts"
+      "label": "Goal resumes"
+    },
+    {
+      "id": "goal.update",
+      "label": "Goal update proposed"
     },
     {
       "id": "goal.replan",
-      "label": "Goal replans",
-      "family": "goal",
-      "effect": "mutates the shared Goal record with receipts"
+      "label": "Goal replans"
     },
     {
-      "id": "goal.block",
-      "label": "Goal blocks",
-      "family": "goal",
-      "effect": "mutates the shared Goal record with receipts"
-    },
-    {
-      "id": "goal.recover",
-      "label": "Goal recovers",
-      "family": "goal",
-      "effect": "mutates the shared Goal record with receipts"
-    },
-    {
-      "id": "goal.stop",
-      "label": "Goal stops",
-      "family": "goal",
-      "effect": "mutates the shared Goal record with receipts"
+      "id": "goal.blocked",
+      "label": "Goal blocks"
     },
     {
       "id": "goal.complete",
-      "label": "Goal completes",
-      "family": "goal",
-      "effect": "mutates the shared Goal record with receipts"
+      "label": "Goal completes"
     },
     {
-      "id": "todo.all_states",
-      "label": "Todos in every state",
-      "family": "todo",
-      "effect": "installs the ten-state task fixture"
+      "id": "todo.add",
+      "label": "Add a task"
     },
     {
-      "id": "subagent.all_states",
-      "label": "Subagents in every state",
-      "family": "subagent",
-      "effect": "installs the four-status child roster on distinct routes"
+      "id": "todo.complete",
+      "label": "Complete a task"
     },
     {
-      "id": "crew.waves",
-      "label": "Crew waves",
-      "family": "crew",
-      "effect": "advances the wave counter and posts the capacity receipt"
+      "id": "todo.reopen",
+      "label": "Reopen a task"
     },
     {
-      "id": "activity.advance",
-      "label": "Activity advances",
-      "family": "activity",
-      "effect": "advances the live turn phase or starts a scripted turn"
+      "id": "todo.block",
+      "label": "Block a task"
+    },
+    {
+      "id": "subagent.spawn",
+      "label": "Spawn a child"
+    },
+    {
+      "id": "subagent.queue",
+      "label": "Queue a child"
+    },
+    {
+      "id": "subagent.progress",
+      "label": "Child progresses"
+    },
+    {
+      "id": "subagent.complete",
+      "label": "Child completes"
+    },
+    {
+      "id": "subagent.fail",
+      "label": "Child fails"
+    },
+    {
+      "id": "subagent.retry",
+      "label": "Child retries"
+    },
+    {
+      "id": "activity.thinking_summary",
+      "label": "Thinking summary phase"
+    },
+    {
+      "id": "activity.search",
+      "label": "Search phase"
+    },
+    {
+      "id": "activity.read",
+      "label": "Read phase"
+    },
+    {
+      "id": "activity.fetch",
+      "label": "Web fetch phase"
+    },
+    {
+      "id": "activity.browser",
+      "label": "Browser check phase"
+    },
+    {
+      "id": "activity.test",
+      "label": "Test phase"
+    },
+    {
+      "id": "activity.edit",
+      "label": "Edit phase"
+    },
+    {
+      "id": "activity.generate",
+      "label": "Generate phase"
     },
     {
       "id": "diff.create",
-      "label": "Diff created",
-      "family": "diff",
-      "effect": "creates/updates the three-file diff group and marks the artifact updated"
+      "label": "Diff created"
     },
     {
       "id": "diff.update",
-      "label": "Diff updated",
-      "family": "diff",
-      "effect": "creates/updates the three-file diff group and marks the artifact updated"
+      "label": "Diff updated"
     },
     {
-      "id": "approval.request",
-      "label": "Approval requested",
-      "family": "approval",
-      "effect": "raises a compact approval with expandable evidence"
+      "id": "diff.open",
+      "label": "Open the diff"
     },
     {
-      "id": "route.warning",
-      "label": "Route warning",
-      "family": "route",
-      "effect": "raises the material route warning with the five canonical actions"
+      "id": "artifact.loading",
+      "label": "Artifact loading"
     },
     {
-      "id": "attachment.native",
-      "label": "Attachment native",
-      "family": "attachment",
-      "effect": "adds a draft attachment of the named resolution class (alternate also raises consent)"
+      "id": "artifact.ready",
+      "label": "Artifact ready"
     },
     {
-      "id": "attachment.transformed",
-      "label": "Attachment transformed",
-      "family": "attachment",
-      "effect": "adds a draft attachment of the named resolution class (alternate also raises consent)"
+      "id": "artifact.switch",
+      "label": "Switch artifact"
     },
     {
-      "id": "attachment.alternate",
-      "label": "Attachment alternate route",
-      "family": "attachment",
-      "effect": "adds a draft attachment of the named resolution class (alternate also raises consent)"
+      "id": "artifact.error",
+      "label": "Artifact error"
     },
     {
-      "id": "attachment.unsupported",
-      "label": "Attachment unsupported",
-      "family": "attachment",
-      "effect": "adds a draft attachment of the named resolution class (alternate also raises consent)"
+      "id": "artifact.close",
+      "label": "Close artifact"
     },
     {
-      "id": "context.lens",
-      "label": "Context Lens selection",
-      "family": "context",
-      "effect": "marks lens selections / runs Compact Now with receipt"
+      "id": "decision.approval_open",
+      "label": "Approval opens"
     },
     {
-      "id": "context.compact_now",
-      "label": "Compact Now",
-      "family": "context",
-      "effect": "marks lens selections / runs Compact Now with receipt"
+      "id": "decision.details",
+      "label": "Toggle decision details"
     },
     {
-      "id": "thread.request",
-      "label": "Thread request",
-      "family": "thread",
-      "effect": "cross-thread request/await/spawn/branch/rewind/restore-point"
+      "id": "decision.approve",
+      "label": "Approve"
     },
     {
-      "id": "thread.await",
-      "label": "Thread await",
-      "family": "thread",
-      "effect": "cross-thread request/await/spawn/branch/rewind/restore-point"
+      "id": "decision.deny",
+      "label": "Deny"
     },
     {
-      "id": "thread.spawn",
-      "label": "Thread spawn",
-      "family": "thread",
-      "effect": "cross-thread request/await/spawn/branch/rewind/restore-point"
+      "id": "decision.branch",
+      "label": "Branch from warning"
+    },
+    {
+      "id": "thread.send_request",
+      "label": "Send thread request"
+    },
+    {
+      "id": "thread.receive_response",
+      "label": "Receive thread response"
+    },
+    {
+      "id": "thread.spawn_related",
+      "label": "Spawn related thread"
     },
     {
       "id": "thread.branch",
-      "label": "Thread branch",
-      "family": "thread",
-      "effect": "cross-thread request/await/spawn/branch/rewind/restore-point"
+      "label": "Thread branch"
     },
     {
-      "id": "thread.rewind",
-      "label": "Thread rewind",
-      "family": "thread",
-      "effect": "cross-thread request/await/spawn/branch/rewind/restore-point"
+      "id": "system.port_collision",
+      "label": "Port collision (4173)"
     },
     {
-      "id": "thread.restore",
-      "label": "Thread restore point",
-      "family": "thread",
-      "effect": "cross-thread request/await/spawn/branch/rewind/restore-point"
+      "id": "system.worktree_collision",
+      "label": "Worktree collision"
     },
     {
-      "id": "turn.redirect",
-      "label": "Redirect active turn",
-      "family": "turn",
-      "effect": "sends then redirects the active turn, preserving the original attempt"
-    },
-    {
-      "id": "cross_project.grant",
-      "label": "Cross-project grant",
-      "family": "cross_project",
-      "effect": "raises the scoped cross-project grant approval"
-    },
-    {
-      "id": "resource.port_collision",
-      "label": "Port collision",
-      "family": "resource",
-      "effect": "raises port/worktree conflict warnings or the ops snapshot receipt"
-    },
-    {
-      "id": "resource.worktree_collision",
-      "label": "Worktree collision",
-      "family": "resource",
-      "effect": "raises port/worktree conflict warnings or the ops snapshot receipt"
-    },
-    {
-      "id": "resource.test_debug_state",
-      "label": "Test and debug detail",
-      "family": "resource",
-      "effect": "raises port/worktree conflict warnings or the ops snapshot receipt"
-    },
-    {
-      "id": "bsd.off",
-      "label": "BSD off",
-      "family": "bsd",
-      "effect": "sets BSD value/state incl. the truthful evaluating glow"
-    },
-    {
-      "id": "bsd.auto_idle",
-      "label": "BSD auto idle",
-      "family": "bsd",
-      "effect": "sets BSD value/state incl. the truthful evaluating glow"
-    },
-    {
-      "id": "bsd.auto_active",
-      "label": "BSD auto evaluating",
-      "family": "bsd",
-      "effect": "sets BSD value/state incl. the truthful evaluating glow"
-    },
-    {
-      "id": "bsd.on",
-      "label": "BSD on",
-      "family": "bsd",
-      "effect": "sets BSD value/state incl. the truthful evaluating glow"
-    },
-    {
-      "id": "bsd.silent",
-      "label": "BSD silent result",
-      "family": "bsd",
-      "effect": "sets BSD value/state incl. the truthful evaluating glow"
-    },
-    {
-      "id": "bsd.advice",
-      "label": "BSD advice",
-      "family": "bsd",
-      "effect": "sets BSD value/state incl. the truthful evaluating glow"
-    },
-    {
-      "id": "bsd.timeout",
-      "label": "BSD timeout",
-      "family": "bsd",
-      "effect": "sets BSD value/state incl. the truthful evaluating glow"
-    },
-    {
-      "id": "bsd.unavailable",
-      "label": "BSD unavailable",
-      "family": "bsd",
-      "effect": "sets BSD value/state incl. the truthful evaluating glow"
-    },
-    {
-      "id": "provider.setup",
-      "label": "Provider setup",
-      "family": "provider",
-      "effect": "posts provider setup/update/rollback receipts with deep-link language"
-    },
-    {
-      "id": "provider.update",
-      "label": "Provider update",
-      "family": "provider",
-      "effect": "posts provider setup/update/rollback receipts with deep-link language"
-    },
-    {
-      "id": "provider.rollback",
-      "label": "Provider rollback",
-      "family": "provider",
-      "effect": "posts provider setup/update/rollback receipts with deep-link language"
-    },
-    {
-      "id": "network.offline",
-      "label": "Network offline",
-      "family": "network",
-      "effect": "drives transport offline/reconnect/replay/snapshot with exactly-once outbox replay"
-    },
-    {
-      "id": "network.reconnect",
-      "label": "Network reconnect",
-      "family": "network",
-      "effect": "drives transport offline/reconnect/replay/snapshot with exactly-once outbox replay"
-    },
-    {
-      "id": "network.replay",
-      "label": "Network replay",
-      "family": "network",
-      "effect": "drives transport offline/reconnect/replay/snapshot with exactly-once outbox replay"
-    },
-    {
-      "id": "network.snapshot",
-      "label": "Snapshot catch-up",
-      "family": "network",
-      "effect": "drives transport offline/reconnect/replay/snapshot with exactly-once outbox replay"
-    },
-    {
-      "id": "notification.inline_outcome",
-      "label": "Inline outcome",
-      "family": "notification",
-      "effect": "posts an inline outcome (canonical stack untouched)"
-    },
-    {
-      "id": "scenario.reset",
-      "label": "Reset scenario",
-      "family": "scenario",
-      "effect": "clears persistence and reloads to the deterministic baseline"
+      "id": "system.reset",
+      "label": "Reset to initial state"
     }
   ],
-  "showcase_story": "The trigger drawer's top button plays the packet's 25 required story beats in order on thread-17 (runShowcase in shared/triggers.js): long request, goal start, BSD evaluation, history retrieval, full questionnaire lifecycle, eight todos, multi-phase activity, port collision, three children on distinct routes, capacity 2+1, child block/retry, route warning, attachment resolution, three-file diff, four artifacts, artifact open left, pinned history with artifact, offline queued send with exactly-once replay, active-turn redirect, thread request/response, goal pause/resume/block/recover/complete, final receipt, and branch. Verified 25/25 to completion."
+  "v1_alias_map": {
+    "history.closed": "history.unpin",
+    "history.pinned_full": "history.pin_full",
+    "history.pinned_compact": "history.pin_compact",
+    "question.preparing": "question.prepare",
+    "question.answer": "question.select",
+    "goal.block": "goal.blocked",
+    "resource.port_collision": "system.port_collision (v2 uses the manifest 4173/4174 fixture)",
+    "resource.worktree_collision": "system.worktree_collision",
+    "scenario.reset": "system.reset",
+    "thread.request": "thread.send_request",
+    "thread.spawn": "thread.spawn_related",
+    "approval.request": "decision.approval_open"
+  },
+  "scenario_warning_triggers": [
+    "warning.cache_replay",
+    "warning.video_route",
+    "warning.capacity"
+  ],
+  "requirements_honored": [
+    "Deterministic for automated tests and visual capture (probes2.js exercises every event).",
+    "system.reset restores one known initial state (persistence cleared + fixture reload).",
+    "Renderers vary by concept while consuming the same semantic events (eight distinct live-phase renderings verified).",
+    "Not exposed as production toolbar buttons — the drawer is gallery chrome outside the concept shell."
+  ],
+  "fake_send": "Composer appends user text verbatim, plays scripted workingPhases (rich per-phase detail rows) or legacy workingSummarySequence, appends the prewritten reply, supports Stop (stopResultBody) and steer/redirect; it never interprets arbitrary text.",
+  "showcase_story": "The trigger drawer plays the 25 required story beats on scenario v2 (thread-19): goal phases with update/replan, specialist fail/retry on the three named routes, port 4173 collision, the three verbatim warnings, four artifacts, offline exactly-once replay, redirect, and the 1m 34s completion. Verified 25/25."
 }

@@ -29,6 +29,7 @@
       {
         id: "claude-cli-stable",
         label: "Claude CLI (stable)",
+        displayLabel: "Claude CLI (stable) on This PC / Native Windows",
         path: "C:\\\\Users\\\\jared\\\\AppData\\\\Local\\\\Claude\\\\claude.exe",
         version: "1.0.48",
         owner: "Anthropic",
@@ -41,6 +42,7 @@
       {
         id: "claude-cli-beta",
         label: "Claude CLI (beta channel)",
+        displayLabel: "Claude CLI (beta channel) on This PC / Native Windows",
         path: "C:\\\\Tools\\\\claude-beta\\\\claude.exe",
         version: "1.1.0-beta.3",
         owner: "Anthropic",
@@ -60,6 +62,7 @@
       {
         id: "ag-cli",
         label: "Antigravity CLI",
+        displayLabel: "Antigravity CLI on This PC / Native Windows",
         path: "C:\\\\Program Files\\\\Antigravity\\\\ag.exe",
         version: "0.9.2",
         owner: "Google",
@@ -86,8 +89,15 @@
   if (vllm) {
     vllm.installAction = {
       label: "Install from official source",
-      source: "https://example.invalid/vllm-tenant/install",
-      receipt: "Official Install simulated — nothing was downloaded"
+      source: "https://docs.vllm.ai/en/latest/getting_started/installation.html",
+      sourceLabel: "vLLM official installation docs",
+      host: "This PC",
+      environment: "Native Windows",
+      receipt: "Explicit Install started for This PC / Native Windows from the official source (simulated) — nothing was downloaded"
+    };
+    vllm.setupRequired = {
+      reason: "Provider Setup Required — no ready installation on This PC / Native Windows",
+      deepLink: { manager: "providers", tab: "installation", providerId: "vllm-tenant" }
     };
     vllm.installations = [
       {
@@ -135,6 +145,7 @@
         {
           id: "mystery-1",
           label: "Unknown CLI at custom path",
+        displayLabel: "Unknown CLI at custom path on This PC / Native Windows",
           path: "D:\\\\bin\\\\agentish.exe",
           version: "?",
           owner: "Unknown",
@@ -163,13 +174,14 @@
       name: "Codex CLI",
       tagline: "CLI install with verification rollback fixture",
       connectionGroup: "installed-tools",
-      installState: "installed-signed-in",
+      installState: "installed-signed-in", /* post-consent demo fixture — not shipped baseline */
       authModel: "cli-profile-oauth",
       authNote: "CLI-owned OAuth inside an isolated profile.",
       installations: [
         {
           id: "codex-current",
           label: "Codex CLI",
+        displayLabel: "Codex CLI on This PC / Native Windows",
           path: "C:\\\\Users\\\\jared\\\\AppData\\\\Local\\\\Codex\\\\codex.exe",
           version: "0.22.0",
           owner: "OpenAI",
@@ -182,6 +194,7 @@
         {
           id: "codex-failed",
           label: "Codex CLI (failed verify)",
+        displayLabel: "Codex CLI (failed verify) on This PC / Native Windows",
           path: "C:\\\\Users\\\\jared\\\\AppData\\\\Local\\\\Codex\\\\codex-new.exe",
           version: "0.23.0",
           owner: "OpenAI",
@@ -609,7 +622,7 @@
   DEMO.containers = {
     note: "Registries and local runtimes are probed for Settings — no containers are started from here.",
     top: [
-      { name: "ghcr.io/example/pm-dev", title: "ghcr.io/example/pm-dev", state: "ready", status: "ready", detail: "Dev image · amd64", expanded: ["digest sha256:aa11…", "last pull 2026-08-10", "entrypoint /usr/bin/pm"] },
+      { name: "ghcr.io/example/pm-dev", title: "ghcr.io/example/pm-dev", state: "ready", status: "ready", detail: "Dev image · amd64", expanded: ["checksum recorded (see Advanced)…", "last pull 2026-08-10", "entrypoint /usr/bin/pm"] },
       { name: "local/postgres:16", title: "local/postgres:16", state: "ready", status: "ready", detail: "Local runtime", expanded: ["port 5432", "volume pgdata"] },
       { name: "registry.example/missing", title: "registry.example/missing", state: "unavailable", status: "unavailable", detail: "Manifest 404", expanded: ["auth: anonymous", "retry after credentials"] }
     ]
@@ -687,12 +700,15 @@
   };
 
   DEMO.setupFixtures = [
+    { id: "setup-vllm-install", title: "Provider Setup Required: vLLM tenant", terms: "vllm install official host environment provider setup required", target: { manager: "providers", tab: "installation", providerId: "vllm-tenant" } },
+    { id: "setup-openrouter-model", title: "Finish OpenRouter model setup", terms: "openrouter guided setup model", target: { manager: "providers", tab: "models", providerId: "free-community" } },
     { id: "setup-desktop-tray", title: "Finish Desktop tray icon", terms: "tray not configured desktop", target: { manager: "desktop" } },
     { id: "setup-sound-pack", title: "Resolve OpenPeon license", terms: "sound pack blocked license", target: { manager: "soundLibrary" } },
     { id: "setup-formatter-go", title: "Choose a Go formatter", terms: "formatter not configured", target: { manager: "formatters" } }
   ];
 
   DEMO.generalFixtures = {
+    fixtureFraming: "Post-consent scenario fixtures. Provider CLIs are not core/baseline/pre-seeded and are never silently Project-acquired.",
     labels: ["Default","Custom","Inherited","Managed","Unavailable","Validation error","Restart required","Reconnect required","Setting changed elsewhere","Import conflict","Rollback complete","No results","Search typo","Deep-linked setting","Long explanation","Long localized label","Narrow/squeezed layout"],
     seededAt: "2026-08-11"
   };
@@ -812,6 +828,17 @@
       if (c.conflict == null && /bloom/i.test(c.name || c.command || "")) c.conflict = true;
       if (!c.id) c.id = "cmd-" + i;
       return c;
+    });
+  }
+
+
+  if (Array.isArray(DEMO.notices) && !DEMO.notices.some(function (n) { return n.id === "notice-vllm-setup"; })) {
+    DEMO.notices.push({
+      id: "notice-vllm-setup",
+      kind: "setup",
+      title: "Provider Setup Required",
+      body: "A run asked for the vLLM tenant helper. No ready installation exists on This PC / Native Windows. Explicit Install from the official source is required — Auto/On demand is not consent.",
+      target: { manager: "providers", tab: "installation", providerId: "vllm-tenant" }
     });
   }
 

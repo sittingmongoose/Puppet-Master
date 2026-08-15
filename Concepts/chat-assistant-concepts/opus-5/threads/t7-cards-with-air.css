@@ -43,8 +43,20 @@
 }
 
 /* THE GUARD. Nothing inside a card may itself become a card. Buttons keep their own
- * affordance styling below, which is re-applied deliberately after this reset. */
-[data-pmx-thread="t7"] .t7-turn *,
+ * affordance styling below, which is re-applied deliberately after this reset.
+ *
+ * This selector used to end in a comma followed by a blank line, so it JOINED the `.t7-role` rule
+ * below and never had a declaration block of its own. The consequence was the opposite of a guard:
+ * every descendant of every card inherited the role label's `display: block`, 700 weight, uppercase
+ * transform and muted colour. The reset is restricted to the card-shaped properties it was written
+ * for — anything that would make a descendant read as a second card — and stays at the same
+ * specificity as the rules below that re-apply them, so those still win by order. */
+[data-pmx-thread="t7"] .t7-turn * {
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
 
 [data-pmx-thread="t7"] .t7-role {
   display: block; margin-bottom: 4px;
@@ -242,6 +254,60 @@
   }
 }
 
+/* ---------------------------------------------------------------- arrival, lifted off the air
+ * 01_message_arrival_spatial_continuity.mov, frames 47 to 63 (about 280ms at 57.6fps): the
+ * arriving message is first a flattened SLIVER at a seam, then expands into its own box, then
+ * settles with a small overshoot. At f.50 the glyphs are already at full size and simply cut off
+ * by the growing box — clipped, never scaled.
+ *
+ * The reference's seam is a header, because its list inserts at the top. This concept's seam is
+ * the card's own footprint: a card LIFTS, so an arriving card starts lying flat in the air below
+ * the deck — a sliver at its own lower edge — and opens upward as it rises. The rise is
+ * --pmx-lift, which is the per-theme value the hover lift already uses, so retro stays flat
+ * footed and glass floats, exactly as the signature motion above intends.
+ *
+ * pmx-t7-lift's scale(.99) is deliberately NOT carried over: f.50 is explicit that an arriving
+ * message's glyphs are at full size and merely clipped, and a card that scaled its text would be
+ * making the opposite claim.
+ */
+@keyframes pmx-t7-arrive {
+  from {
+    clip-path: inset(calc(100% - 3px) 0 0 0);
+    transform: translateY(calc(var(--pmx-lift, -2px) * -4));
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    transform: none;
+  }
+}
+
+/* Beats motion.css's blanket `[data-pmx-arrived] { animation: none }` on specificity. That rule is
+   right for the reference, where the arrival is genuinely static and only its neighbours move; in a
+   bottom-anchored deck the neighbours do not move at all, so a static arrival would mean nothing
+   moved anywhere and the card would simply blink into existence. The f.63 overshoot is the spring
+   token's, not a hand-written keyframe step. */
+[data-pmx-thread="t7"] .t7-turn[data-pmx-arrived] {
+  animation: pmx-t7-arrive var(--motion-med) var(--ease-spring-real) backwards;
+}
+
+/* Reduced motion lands the arrival instantly and FULLY REVEALED. A clip animation frozen at its
+   first frame would leave a 3px strip of the card's lower edge and hide the message entirely,
+   which is worse than no animation at all. */
+[data-motion="reduced"][data-pmx-thread="t7"] .t7-turn[data-pmx-arrived] {
+  animation: none !important;
+  clip-path: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-pmx-thread="t7"] .t7-turn[data-pmx-arrived] {
+    animation: none !important;
+    clip-path: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
 /* ================================================================ packet: the card deck, the status
  * card with its segmented phase bar, the flat advice link, and the artifact handoff.
  *
@@ -259,6 +325,44 @@
   display: block;
   padding: var(--sm) 0 var(--lg);
 }
+
+/* BOTTOM-ANCHORED GROWTH, which is what makes `motion.resizeBounce` safe to run on this deck.
+   `pmx-resize-up` is the shared opt-in marker and carries `margin-top: auto`, which only bites where
+   the host is a flex column - true of some window shelves, not of all of them. This is the half that
+   is true everywhere: the deck's CONTENT is pinned to its bottom edge, so while the height is being
+   interpolated the box reveals at the TOP and the card's own top edge is what travels. PMConcept7's
+   model picker states the same rule as `top: auto`, commented "height changes shrink the top edge, not
+   the spawn edge".
+
+   `flex: 0 0 auto` on the children is not decoration: in a column flex container a child would
+   otherwise SHRINK to the interpolated height and the card's contents would squash instead of the box
+   clipping them, which is a different animation entirely. The cards behind are absolutely positioned
+   and are not flex items, so the stack is unaffected. At rest, with the height auto, none of this
+   changes the layout by a pixel. */
+[data-pmx-thread="t7"] .t7-deck.pmx-resize-up {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+[data-pmx-thread="t7"] .t7-deck.pmx-resize-up > * { flex: 0 0 auto; }
+
+/* The scale beat is anchored to the same edge, for the same reason. Scaling about the default centre
+   flexes the box 8.5% in BOTH directions, so a card whose whole claim is that its bottom edge does not
+   move would spend 150ms of every resize pushing about six pixels down over the composer. Measured at
+   the 35% keyframe: the deck's bottom sat 6.1px below where it started. */
+[data-pmx-thread="t7"] .t7-deck.pmx-resize-up.pmx-size-bounce,
+[data-pmx-thread="t7"] .t7-deck.pmx-resize-up.pmx-size-bounce-strong { transform-origin: center bottom; }
+
+/* The deck's collapsed state. The summary is built INSIDE the deck so the same box can carry the
+   collapse, and the stack's padding - which exists to leave room for the offset edges behind the top
+   card - would be a band of air under a single line. */
+[data-pmx-thread="t7"] .t7-deck[data-mode="summary"] { padding: 0; }
+
+/* The shared bounce needs no local duration restoration any more. `shared/motion.css` used to
+   carry `[data-motion="full"] * { animation-duration: revert-layer }`, which matched at the same
+   specificity as every animation class and won on order, reverting the duration to the user-agent
+   0s and killing the scale beat outright. That is fixed at the source: the reduced-motion blanket
+   now excludes an explicitly-full stage instead of a later rule trying to undo it. */
 
 [data-pmx-thread="t7"] .t7-qcard {
   box-sizing: border-box;
@@ -365,6 +469,16 @@
   opacity: 0;
 }
 
+/* The card that IS leaving: a still of the answered card, out of flow above the rebuilt deck. Out of
+   flow is what lets the answer be recorded in the same turn the slide starts - the deck is rebuilt
+   underneath it and this contributes nothing to the height the resize is about to measure. Inert,
+   because a card whose question has already been answered must not be clickable on its way out. */
+[data-pmx-thread="t7"] .t7-qcard[data-leaving="1"] {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+}
+
 /* Cancel FANS the deck out before it goes. */
 [data-pmx-thread="t7"] .t7-deck[data-fan="1"] .t7-qcard[data-rank="1"] { transform: translateY(10px) translateX(7%) rotate(1.6deg); }
 [data-pmx-thread="t7"] .t7-deck[data-fan="1"] .t7-qcard[data-rank="2"] { transform: translateY(20px) translateX(14%) rotate(3.2deg); }
@@ -467,6 +581,211 @@
 [data-pmx-thread="t7"] .t7-status-link:hover .t7-status-link-text { text-decoration: underline; }
 /* Severity in the link's own words plus weight - never colour alone. */
 [data-pmx-thread="t7"] .t7-status-link[data-severity="caution"] { color: var(--accent-error); font-weight: 600; }
+
+/* ---- the run capsule: the phase bar IS the chain ------------------------------------------------
+   t7's reading of 03_compact_execution_activity.mov. The reference lays a row of glyphs beside its
+   headline and stacks the reopened phase's rows underneath it. This concept already owns a control of
+   exactly that shape - the segmented phase bar - so the chain is a SECOND BAR in the same idiom, and
+   the rows go to a sheet because a card inside a card is the one move t7 has forbidden itself.
+
+   What is carried over is behaviour: entry order, one segment per entered phase, the count rewritten
+   in place, the verb carrying the tense, and a bar that scrolls rather than dropping a segment. What
+   is not carried over is the reference's colour, radius and easing - those are its look. */
+
+[data-pmx-thread="t7"] .t7-run {
+  display: flex;
+  flex-direction: column;
+  gap: var(--xs);
+  /* Without this the scrolling bar below can force the whole status card wider than its column. */
+  min-width: 0;
+}
+
+/* The sentence above the bar. Flat: no border, no background, no radius - it is a line of the status
+   card, not a thing inside it. */
+[data-pmx-thread="t7"] .t7-run-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--xs);
+  min-width: 0;
+  /* One line box, held. Beat one of the handover empties both halves of the sentence for about 110ms
+     (f.198-200: the outgoing phase lets go before the new glyph appears), and an empty flex row would
+     collapse to the height of the chevron and take the bar under it with it. `1lh` is the element's
+     own line height, so this is exactly the height the row already has and changes nothing at rest -
+     it only refuses to give that height up while the sentence is between phases. */
+  min-height: 1lh;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: var(--fs-xs);
+  /* Tabular figures so rewriting 6 into 7 does not change the number's width and shift the word
+     beside it - the layout half of what makes countMorph read as one running tally. */
+  font-variant-numeric: tabular-nums;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* Verb at full contrast, argument muted: a reader scanning a settled run reads a column of verbs. */
+[data-pmx-thread="t7"] .t7-run-verb { color: var(--text-primary); font-weight: 600; white-space: nowrap; }
+[data-pmx-thread="t7"] .t7-run-arg {
+  color: var(--text-muted);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+[data-pmx-thread="t7"] .t7-run-chevron {
+  display: inline-flex;
+  align-self: center;
+  flex: 0 0 auto;
+  color: var(--text-muted);
+}
+
+/* The bar SCROLLS. .pmx-chain owns the scrolling and the overflow mask; all that is set here is the
+   spacing, and that segments size to their own content instead of sharing the width equally - equal
+   shares are what would turn a long run into a row of crushed labels rather than a bar you can push. */
+[data-pmx-thread="t7"] .t7-run-bar {
+  gap: 2px;
+  min-width: 0;
+  padding-bottom: 1px;
+}
+[data-pmx-thread="t7"] .t7-run-bar .pmx-chain-slot { flex: 0 0 auto; }
+
+[data-pmx-thread="t7"] .t7-run-seg {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 5px var(--sm) 4px var(--xs);
+  border: 0;
+  /* The same top rule the surface bar uses, so the two bars read as one family of control. */
+  border-top: 2px solid var(--border);
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--motion-fast) var(--ease-default),
+              border-top-color var(--motion-fast) var(--ease-default);
+}
+[data-pmx-thread="t7"] .t7-run-seg:hover { background: color-mix(in srgb, var(--surface) 70%, transparent); }
+
+/* The RUNNING phase is the only one wearing the live colour; a finished one greys, which is the same
+   thing the surface bar says when its work completes. */
+[data-pmx-thread="t7"] .t7-run-seg[data-state="running"] { border-top-color: var(--accent-blue); }
+
+/* An OPEN phase is filled, so after the run settles the bar still says which one you are reading. The
+   fill is not the only signal: the segment also carries aria-expanded. */
+[data-pmx-thread="t7"] .t7-run-seg[data-open="1"] {
+  border-top-color: var(--accent-primary);
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+}
+
+[data-pmx-thread="t7"] .t7-run-seg-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--text-primary);
+}
+[data-pmx-thread="t7"] .t7-run-seg-verb {
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+/* The count is the ARGUMENT, so it is muted and it is the thing that morphs. */
+[data-pmx-thread="t7"] .t7-run-seg-value {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ---- the phase sheet: where the reference's stacked rows live in this concept ------------------- */
+
+.pmx-popup[data-pmx-thread="t7"] .t7-run-meta {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sm);
+  padding: 0 var(--md) var(--xs);
+  font-size: var(--fs-2xs);
+}
+.pmx-popup[data-pmx-thread="t7"] .t7-run-status {
+  letter-spacing: .05em;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+/* Running says so in a word before it says so in a colour. */
+.pmx-popup[data-pmx-thread="t7"] .t7-run-status[data-state="running"] { color: var(--accent-blue); }
+.pmx-popup[data-pmx-thread="t7"] .t7-run-dur { color: var(--text-muted); font-variant-numeric: tabular-nums; }
+
+.pmx-popup[data-pmx-thread="t7"] .t7-run-why {
+  margin: 0;
+  padding: 0 var(--md) var(--sm);
+  font-size: var(--fs-2xs);
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+/* The record is one block so groupReopen has a single element whose height it can interpolate while
+   the rows and chips below it are carried down. */
+.pmx-popup[data-pmx-thread="t7"] .t7-run-record { padding: 0 var(--md); }
+.pmx-popup[data-pmx-thread="t7"] .t7-run-disclose {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent-primary);
+  font: inherit;
+  font-size: var(--fs-2xs);
+  cursor: pointer;
+}
+.pmx-popup[data-pmx-thread="t7"] .t7-run-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: var(--xs);
+}
+.pmx-popup[data-pmx-thread="t7"] .t7-run-field { display: flex; gap: var(--sm); font-size: var(--fs-2xs); }
+.pmx-popup[data-pmx-thread="t7"] .t7-run-field-k {
+  flex: 0 0 auto;
+  min-width: 96px;
+  letter-spacing: .04em;
+  color: var(--text-muted);
+}
+/* The values are identifiers, payloads and scopes - monospace because they are read character by
+   character, not as prose. */
+.pmx-popup[data-pmx-thread="t7"] .t7-run-field-v {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--text-primary);
+  font-family: var(--mono-font);
+  overflow-wrap: anywhere;
+}
+
+.pmx-popup[data-pmx-thread="t7"] .t7-run-delta {
+  flex: 0 0 auto;
+  margin-left: auto;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.pmx-popup[data-pmx-thread="t7"] .t7-run-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sm);
+  padding: var(--sm) var(--md);
+  border-top: 1px solid var(--border);
+}
+.pmx-popup[data-pmx-thread="t7"] .t7-run-chip {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  font-family: var(--mono-font);
+}
 
 /* ---- the advice sheet ------------------------------------------------------------------------- */
 

@@ -64,6 +64,19 @@
     "shared/data.js EXTRA_THREADS — thread-16 (archived), thread-17 (crew/capacity primary showcase), thread-18 (offline/outbox)",
     "shared/triggers.js — 65 deterministic triggers incl. scenario.reset"
   ],
+  "correction_2026_08_13": {
+    "packet": "PM_Assistant_Chat_5_6_Sol_Dependency_Path_and_Work_Correction_2026-08-13",
+    "changes": [
+      "Trigger engine implements the restored v2 contract (59 events) with the 65 v1 ids as aliases; demo-trigger-report regenerated against pm.chat_assistant_demo_trigger_contract.v2.",
+      "Scenario v2 (pm.chat_assistant_demo_scenario.v2) is the primary showcase thread (thread-19) with the manifest's questions, goal phases + updated_replan, eight named todos, three specialists on Fable/Kimi K3/Qwen 3.8 with queued→running→failed→retrying→completed, six activity groups, port 4173/4174 collision, three verbatim warnings, exact diff counts, four artifacts, and the 1m 34s completion; the 18 history_rows map onto the existing shells.",
+      "Subagent lifecycle gained failed/retrying states across store counts and all eight work compositions.",
+      "Goal projections gained named phases, goal.progress advancement, and the updated_replan visible state after an applied material update.",
+      "Provider-CLI final adjudication implemented as the model picker's runtime-demand flow with preserved continuation, explicit official-source install, separate authentication, readiness verification, resume-if-current, and stale-continuation rejection.",
+      "All eight thread concepts render rich live activity phases (video 3); Courier gained smooth-yield delivery, the seam icon strip, and the Skip slot swap; Screenplay gained the something-else freeform row; Choreograph gained single-select auto-advance.",
+      "Full testMatrix visual sweep executed: every window × 32 configs × rail states and every thread × 32 configs in two hosts (1,024 captures with automated assertions)."
+    ],
+    "requirement_sources_added": ["DEMO_TRIGGER_CONTRACT.json v2", "DEMO_SCENARIO_MANIFEST.json v2", "PROVIDER_CLI_FINAL_ADJUDICATION.md", "raw videos + keyframes + contact sheets (see reference-review-report.json)"]
+  },
   "provisional_assumptions": [
     "Impact register v2 template (pm.chat.5_6_sol.impact_register.v1) is authoritative over v1; rename map recorded in known-gaps.md.",
     "08's 37-command list supersedes the stale candidate_command_id_register.json (which is missing six ids).",

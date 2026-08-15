@@ -14,7 +14,7 @@ import { ensureCss } from "../shared/contracts.js";
 import { escapeHtml } from "../shared/popup.js";
 import {
   transcriptSlice, isLongMessage, isExpanded, previewText, lensMark, copyMessage,
-  workCluster, createScrollKeeper, questionnaireState, activityGroups, bodyHtml,
+  workCluster, createScrollKeeper, questionnaireState, activityGroups, bodyHtml, liveTurn,
 } from "../shared/thread-common.js";
 import { createComposer, createSelectorRow, createDecisionStack, openMoreInfo, openMessageOps } from "../shared/components.js";
 import { fmtDuration, fmtTime, workedLabel, JUMP_TO_LATEST, QUESTIONNAIRE_ACTIONS, TODO_STATE_LABELS } from "../shared/strings.js";
@@ -214,17 +214,26 @@ export function createThread(ctx) {
     heading.innerHTML = `<span>Open postings</span><span class="ft3-live-rule" aria-hidden="true"></span>`;
     live.appendChild(heading);
 
-    if (w.turn) {
+    const lt = liveTurn();
+    if (lt) {
       const line = document.createElement("div");
       line.className = "ft3-posting ft3-posting-active";
-      line.innerHTML = `<span class="ft3-posting-kind">turn</span><span class="ft3-posting-label">${escapeHtml(w.turn.summary)}<span class="ft3-caret" aria-hidden="true"></span></span><span class="ft3-posting-val ft3-live-time">${fmtDuration(w.turn.workedSeconds)}</span>`;
+      line.innerHTML = `<span class="ft3-posting-kind">turn</span><span class="ft3-posting-label">${escapeHtml(lt.summary)}<span class="ft3-caret" aria-hidden="true"></span></span><span class="ft3-posting-val ft3-live-time">${fmtDuration(lt.workedSeconds)}</span>`;
       live.appendChild(line);
+      // Live items post beneath the turn line and reconcile away on phase change.
+      for (const item of lt.items) {
+        const il = document.createElement("div");
+        il.className = "ft3-posting ft3-posting-liveitem";
+        il.innerHTML = `<span class="ft3-posting-kind">${escapeHtml(lt.phaseKind.replace(/_/g, " "))}</span><span class="ft3-posting-label">${escapeHtml(item.text)}</span><span class="ft3-posting-val">${escapeHtml(item.side || "")}</span>`;
+        live.appendChild(il);
+      }
     }
     if (w.goal) {
       const line = document.createElement("div");
       line.className = "ft3-posting";
       line.dataset.goal = w.goal.status;
-      line.innerHTML = `<span class="ft3-posting-kind">goal</span><span class="ft3-posting-label">${escapeHtml(w.goal.title)} — ${escapeHtml(w.goal.status)}</span><span class="ft3-posting-val"></span>`;
+      const phaseTxt = w.goal.phases ? `, phase ${(w.goal.phaseIndex || 0) + 1} of ${w.goal.phases.length} (${w.goal.phases[w.goal.phaseIndex || 0].toLowerCase()})` : "";
+      line.innerHTML = `<span class="ft3-posting-kind">goal</span><span class="ft3-posting-label">${escapeHtml(w.goal.title)} — ${escapeHtml(w.goal.status)}${escapeHtml(phaseTxt)}${w.goal.replanApplied ? ", replanned" : ""}</span><span class="ft3-posting-val"></span>`;
       const ctrl = document.createElement("span");
       ctrl.className = "ft3-goal-ctrl";
       const btn = (t, ok, fn) => { const b = document.createElement("button"); b.textContent = t; if (!ok) b.disabled = true; else b.addEventListener("click", fn); return b; };

@@ -4,26 +4,103 @@
   "date": "2026-08-11",
   "note": "Packet names are candidate roles. Mapped to the u11 modules that already implement each responsibility; gaps flagged.",
   "roles": [
-    { "role": "UsageEventStore", "u11_owner": "u11-data.js — attempts[] + attemptById/attemptByEventId index", "status": "present" },
-    { "role": "UsageNormalizer", "u11_owner": "u11-data.js — sourceClass + settlement fields on every attempt and meter; R().human/deText keep UI copy clean", "status": "present" },
-    { "role": "SettlementResolver", "u11_owner": "billingRoute (what paid: plan_included | api_billed | free | usage_pack | extra_balance | no_charge_observed | unknown) orthogonal to settlement (source quality: observed | settled | streaming_partial | unknown)", "status": "present" },
-    { "role": "UsageDataQuality", "u11_owner": "meter vs values (provider_reported | measured | estimated | stale | unknown | unavailable | disabled) + conf + note; telemetry-unavailable estimate (meter:oc-go-monthly)", "status": "present" },
-    { "role": "UsageForecast", "u11_owner": "forecasts[] (fc-goal-47, fc-plan-12) + costs.forecastMonthMicro", "status": "present" },
-    { "role": "CapacityProjection", "u11_owner": "runs[].capacity envelope {hardMax, configuredPreferred, providerAdvertised, effectiveNow, predictedSustainable} + admitted/queued/waves", "status": "present" },
-    { "role": "RouteReceipt", "u11_owner": "attempts[].receiptRef + connection/product/model IDs; run detail 'Connection used' section", "status": "present" },
-    { "role": "CacheReceipt", "u11_owner": "tokens.cacheRead/cacheWrite + thread.context.cacheEpoch/stablePrefixId + cacheStats[] (provider-reported vs derived vs not exposed)", "status": "present" },
-    { "role": "TimeBreakdown", "u11_owner": "runs[].timing.rows — provider active vs waits, including the new Outbox/offline wait and Reconnect/sync/replay rows", "status": "present" },
-    { "role": "ProviderFamilyUsage", "u11_owner": "costs.byFamily + families/accounts hierarchy", "status": "present" },
-    { "role": "AccountConnectionUsage", "u11_owner": "accounts[] + connections[] + accountsOfFamily/connectionsOfAccount helpers; priority/lastUsedAt", "status": "present" },
-    { "role": "HelperPurposeGroup", "u11_owner": "buckets{} + full packet purpose taxonomy (17 values) rendered via R().human", "status": "present" },
-    { "role": "Goal/CrewUsage", "u11_owner": "runs[] + members[] joining to attempts by eventId", "status": "present" },
-    { "role": "MaintenanceActivity", "u11_owner": "operational[] (NEW) — 7 kinds, phases, host/env lineage, validationEventId join; operations widget", "status": "present-new" },
-    { "role": "ContextUsageDetail", "u11_owner": "u11-context.js — ring compact module + docked details (admitted sources, cache, compaction separated)", "status": "present" },
-    { "role": "RunOutProjection", "u11_owner": "NONE", "status": "gap", "note": "No canonical RunOutProjection definition exists in Plans/** or the concept set. FINDINGS U1 applies: costs.forecastMonthMicro is a month-end forecast, not a run-out date. Needs an owner before production." },
-    { "role": "SourceFreshness", "u11_owner": "meta.projectionHealth/projectionFreshness/nextAutoRefresh + head freshness chip", "status": "present" },
-    { "role": "UsageWidgetHost", "u11_owner": "shared PMWidgets engine (public register API) + u11-widgets.js TYPES registry + instance contract (layout/presentation/scope/time/content)", "status": "present" }
+    {
+      "role": "UsageEventStore",
+      "u11_owner": "u11-data.js — attempts[] + attemptById/attemptByEventId index",
+      "status": "present"
+    },
+    {
+      "role": "UsageNormalizer",
+      "u11_owner": "u11-data.js — sourceClass + settlement fields on every attempt and meter; R().human/deText keep UI copy clean",
+      "status": "present"
+    },
+    {
+      "role": "SettlementResolver",
+      "u11_owner": "billingRoute (what paid: plan_included | api_billed | free | usage_pack | extra_balance | no_charge_observed | unknown) orthogonal to settlement (source quality: observed | settled | streaming_partial | unknown)",
+      "status": "present"
+    },
+    {
+      "role": "UsageDataQuality",
+      "u11_owner": "meter vs values (provider_reported | measured | estimated | stale | unknown | unavailable | disabled) + conf + note; telemetry-unavailable estimate (meter:oc-go-monthly)",
+      "status": "present"
+    },
+    {
+      "role": "UsageForecast",
+      "u11_owner": "forecasts[] (fc-goal-47, fc-plan-12) + costs.forecastMonthMicro",
+      "status": "present"
+    },
+    {
+      "role": "CapacityProjection",
+      "u11_owner": "runs[].capacity envelope {hardMax, configuredPreferred, providerAdvertised, effectiveNow, predictedSustainable} + admitted/queued/waves",
+      "status": "present"
+    },
+    {
+      "role": "RouteReceipt",
+      "u11_owner": "attempts[].receiptRef + connection/product/model IDs; run detail 'Connection used' section",
+      "status": "present"
+    },
+    {
+      "role": "CacheReceipt",
+      "u11_owner": "tokens.cacheRead/cacheWrite + thread.context.cacheEpoch/stablePrefixId + cacheStats[] (provider-reported vs derived vs not exposed)",
+      "status": "present"
+    },
+    {
+      "role": "TimeBreakdown",
+      "u11_owner": "runs[].timing.rows — provider active vs waits, including the new Outbox/offline wait and Reconnect/sync/replay rows",
+      "status": "present"
+    },
+    {
+      "role": "ProviderFamilyUsage",
+      "u11_owner": "costs.byFamily + families/accounts hierarchy",
+      "status": "present"
+    },
+    {
+      "role": "AccountConnectionUsage",
+      "u11_owner": "accounts[] + connections[] + accountsOfFamily/connectionsOfAccount helpers; priority/lastUsedAt",
+      "status": "present"
+    },
+    {
+      "role": "HelperPurposeGroup",
+      "u11_owner": "buckets{} + full packet purpose taxonomy (17 values) rendered via R().human",
+      "status": "present"
+    },
+    {
+      "role": "Goal/CrewUsage",
+      "u11_owner": "runs[] + members[] joining to attempts by eventId",
+      "status": "present"
+    },
+    {
+      "role": "MaintenanceActivity",
+      "u11_owner": "operational[] (NEW) — 7 kinds, phases, host/env lineage, validationEventId join; operations widget",
+      "status": "present-new",
+      "note": " 2026-08-13: extended with acquisition lineage + setup_required per PROVIDER_CLI_FINAL_ADJUDICATION.md."
+    },
+    {
+      "role": "ContextUsageDetail",
+      "u11_owner": "u11-context.js — ring compact module + docked details (admitted sources, cache, compaction separated)",
+      "status": "present"
+    },
+    {
+      "role": "RunOutProjection",
+      "u11_owner": "NONE",
+      "status": "gap",
+      "note": "No canonical RunOutProjection definition exists in Plans/** or the concept set. FINDINGS U1 applies: costs.forecastMonthMicro is a month-end forecast, not a run-out date. Needs an owner before production."
+    },
+    {
+      "role": "SourceFreshness",
+      "u11_owner": "meta.projectionHealth/projectionFreshness/nextAutoRefresh + head freshness chip",
+      "status": "present"
+    },
+    {
+      "role": "UsageWidgetHost",
+      "u11_owner": "shared PMWidgets engine (public register API) + u11-widgets.js TYPES registry + instance contract (layout/presentation/scope/time/content)",
+      "status": "present"
+    }
   ],
   "gaps": [
-    { "role": "RunOutProjection", "action": "flag for canonical ownership — FINDINGS U1" }
+    {
+      "role": "RunOutProjection",
+      "action": "flag for canonical ownership — FINDINGS U1"
+    }
   ]
 }

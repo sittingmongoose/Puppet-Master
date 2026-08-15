@@ -1686,6 +1686,13 @@
       rows.appendChild(kvRow('Waves', String(fc.waves || 0)));
       rows.appendChild(kvRow('Reason', fc.reason || ''));
       card.appendChild(rows);
+      if (fc.warning) {
+        var w = el('div', 'k3w-kit-capacity-warning');
+        w.setAttribute('data-testid', 'k3w-kit-capacity-warning');
+        w.appendChild(iconSpan('warning', 'k3w-kit-capacity-warning-ic'));
+        w.appendChild(el('span', '', fc.warning));
+        card.appendChild(w);
+      }
       card.appendChild(el('div', 'k3-footnote',
         'A compact forecast, not a guarantee. Required independent roles are preserved.'));
     }

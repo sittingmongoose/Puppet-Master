@@ -31,7 +31,7 @@
     },
     {
       "owner": "Plans/BinaryLocator_Spec.md",
-      "impact": "Installation records expose the full resolution chain (configuredCommand -> resolvedLauncher -> actualExecutable), method, package identity, manager root, host/environment, arch, discovery evidence, and five-level confidence. Unknown/ambiguous confidence is manual-only and the resolver (PMProvider.resolveInstallation) drives the action list — the UI offers no manage actions the resolver does not."
+      "impact": "Installation records expose the full resolution chain (configuredCommand -> resolvedLauncher -> actualExecutable), method, package identity, manager root, host/environment, arch, discovery evidence, and five-level confidence. Unknown/ambiguous confidence is manual-only and the resolver (PMProvider.resolveInstallation) drives the action list \u2014 the UI offers no manage actions the resolver does not."
     },
     {
       "owner": "Plans/Release_Supply_Chain.md",
@@ -43,7 +43,7 @@
     },
     {
       "owner": "Plans/settings_inventory.json + settings schema owner",
-      "impact": "Uses the packet's new rows (system.storage.*, system.backup.project-schedule, system.maintenance.import-export, system.health.diagnostics-verbosity, extensions.web.fetch-size-limit) as ordinary setting records inside managers. Note: system.health.diagnostics-verbosity is defined in the shared dataset but grafted into no taxonomy sub; c4 falls back to the home all-records table for its deep link — the inventory owner should assign it a canonical subcategory."
+      "impact": "Uses the packet's new rows (system.storage.*, system.backup.project-schedule, system.maintenance.import-export, system.health.diagnostics-verbosity, extensions.web.fetch-size-limit) as ordinary setting records inside managers. Note: system.health.diagnostics-verbosity is defined in the shared dataset but grafted into no taxonomy sub; c4 falls back to the home all-records table for its deep link \u2014 the inventory owner should assign it a canonical subcategory."
     },
     {
       "owner": "Plans/Models_System.md / Multi-Account.md / CLI_Bridged_Providers.md / Provider_OpenCode.md",
@@ -56,77 +56,237 @@
     {
       "owner": "Server Backbone return (Post-Return Reconciliation v6)",
       "impact": "The connected-server card, project card (Hosted On / Project Files / Run Work), execution hosts/environments (WSL Off healthy, setup only on capability demand, Windows native complete without WSL), paired clients, and the nine reserved destinations each naming owner + insertion contract. No backend state machines invented."
+    },
+    {
+      "owner": "Performance decision register (02_FULL_THREAD_CURRENT_DECISION_REGISTER.md, correction packet 2026-08-13)",
+      "kind": "extends",
+      "summary": "Coordination authority reviewed after the original packet omitted it. Concepts align to: RuntimeResourceGovernor as the sole resource/admission owner (no concept invents a second governor); ObservableWork as the sole truthful progress projection (op events now carry progressKind, source, completed/total only with a real denominator, and waitReason); the seven-execution-lane model, hot/warm/cold state, low-resource/legacy profile, and lazy Settings opening model (register sections 2, 7, 8, 11, 13, 20) as Slint-port constraints recorded in slint_port_impacts and test fixtures.",
+      "evidence": "reference-review-report.json; TEST_REPORT.md correction section"
     }
   ],
   "settings_inventory_impacts": [
-    { "row": "system.storage.evidence-retention", "status": "new-in-packet", "note": "Rendered as a standard record in the Storage manager and in system/storage; legal-hold interaction explained in the inspector." },
-    { "row": "system.storage.pressure-action", "status": "new-in-packet", "note": "Select record; linked from the pressure record inspector." },
-    { "row": "system.backup.project-schedule", "status": "new-in-packet", "note": "The canonical 'Backup schedule = setting' leg of the packet-02 action/setting/status example." },
-    { "row": "system.maintenance.import-export", "status": "new-in-packet", "note": "Action-typed row; the Lifecycle manager is its full surface." },
-    { "row": "system.health.diagnostics-verbosity", "status": "new-in-packet", "note": "Deep-link probe target. Not in any taxonomy sub in the shared dataset; c4 deep link falls back to home table + inspector. Needs a canonical sub." },
-    { "row": "extensions.web.fetch-size-limit", "status": "new-in-packet", "note": "Rendered in the Web manager limits section; carries the fx validation-error value (999999) with field-level error." },
-    { "row": "census", "status": "note", "note": "Inventory census 817-826 rows in the packet window; the ledger's all-records table renders whatever the inventory supplies without per-row hand wiring, so census growth is layout-neutral." }
+    {
+      "row": "system.storage.evidence-retention",
+      "status": "new-in-packet",
+      "note": "Rendered as a standard record in the Storage manager and in system/storage; legal-hold interaction explained in the inspector."
+    },
+    {
+      "row": "system.storage.pressure-action",
+      "status": "new-in-packet",
+      "note": "Select record; linked from the pressure record inspector."
+    },
+    {
+      "row": "system.backup.project-schedule",
+      "status": "new-in-packet",
+      "note": "The canonical 'Backup schedule = setting' leg of the packet-02 action/setting/status example."
+    },
+    {
+      "row": "system.maintenance.import-export",
+      "status": "new-in-packet",
+      "note": "Action-typed row; the Lifecycle manager is its full surface."
+    },
+    {
+      "row": "system.health.diagnostics-verbosity",
+      "status": "new-in-packet",
+      "note": "Deep-link probe target. Not in any taxonomy sub in the shared dataset; c4 deep link falls back to home table + inspector. Needs a canonical sub."
+    },
+    {
+      "row": "extensions.web.fetch-size-limit",
+      "status": "new-in-packet",
+      "note": "Rendered in the Web manager limits section; carries the fx validation-error value (999999) with field-level error."
+    },
+    {
+      "row": "census",
+      "status": "note",
+      "note": "Inventory census 817-826 rows in the packet window; the ledger's all-records table renders whatever the inventory supplies without per-row hand wiring, so census growth is layout-neutral."
+    }
   ],
   "settings_schema_impacts": [
-    { "area": "transactional import", "impact": "Schema needs an import transaction object: staged preview (counts, conflicts with local/incoming, invalid keys with reasons, legacy migrations from->to), merge|replace mode, staged restore-point reference, atomic apply phases (restore-point/applying/verifying), and a rollback record that references both directions. Secrets are excluded structurally, not by convention." },
-    { "area": "restore-point references", "impact": "Restore points need typed kind (recovery|settings|project|server), origin (pre-import|schedule|manual), verification state (verified|pending|failed), and target dataset. Settings rows that participate in imports reference the staging restore point." },
-    { "area": "receipt links", "impact": "Every one-shot action result carries a receiptId; records render receipts as chips/kv with stable ids (rcpt.*). Rollback receipts record both directions." },
-    { "area": "record kinds", "impact": "The action vs setting vs status vs manager distinction is schema-level: c4 renders each with an explicit kind tag; the schema should type them rather than leaving it to copy." }
+    {
+      "area": "transactional import",
+      "impact": "Schema needs an import transaction object: staged preview (counts, conflicts with local/incoming, invalid keys with reasons, legacy migrations from->to), merge|replace mode, staged restore-point reference, atomic apply phases (restore-point/applying/verifying), and a rollback record that references both directions. Secrets are excluded structurally, not by convention."
+    },
+    {
+      "area": "restore-point references",
+      "impact": "Restore points need typed kind (recovery|settings|project|server), origin (pre-import|schedule|manual), verification state (verified|pending|failed), and target dataset. Settings rows that participate in imports reference the staging restore point."
+    },
+    {
+      "area": "receipt links",
+      "impact": "Every one-shot action result carries a receiptId; records render receipts as chips/kv with stable ids (rcpt.*). Rollback receipts record both directions."
+    },
+    {
+      "area": "record kinds",
+      "impact": "The action vs setting vs status vs manager distinction is schema-level: c4 renders each with an explicit kind tag; the schema should type them rather than leaving it to copy."
+    }
   ],
   "command_id_impacts": [
-    { "pointer": "c4-ledger/candidate-command-delta.json", "note": "Census block, retire/supersede/merge/reuse flags, families exercised, and new provisional candidates. cmd.settings.open_storage_retention supersede-into-family is this concept's own navigation overlap." }
+    {
+      "pointer": "c4-ledger/candidate-command-delta.json",
+      "note": "Census block, retire/supersede/merge/reuse flags, families exercised, and new provisional candidates. cmd.settings.open_storage_retention supersede-into-family is this concept's own navigation overlap."
+    }
   ],
   "wiring_impacts": [
-    { "pointer": "c4-ledger/candidate-wiring-delta.json", "note": "12 traces, every one flagged concept_local_state:true with a real recovery_deep_link route on this page." }
+    {
+      "pointer": "c4-ledger/candidate-wiring-delta.json",
+      "note": "12 traces, every one flagged concept_local_state:true with a real recovery_deep_link route on this page."
+    }
   ],
   "dry_component_impacts": [
-    { "pointer": "c4-ledger/candidate-dry-delta.json", "note": "Concretizes StorageHealth and ArtifactRow; heaviest consumer of ObservableOperation and ReceiptLink. Variance notes document the record+inspector composition and zero-motion identity as anti-clone evidence." }
+    {
+      "pointer": "c4-ledger/candidate-dry-delta.json",
+      "note": "Concretizes StorageHealth and ArtifactRow; heaviest consumer of ObservableOperation and ReceiptLink. Variance notes document the record+inspector composition and zero-motion identity as anti-clone evidence."
+    }
   ],
   "schema_event_storage_impacts": [
-    { "area": "op events", "impact": "PMState 'op' events ({name, ref, phase}) are the truthful ObservableWork projection; c4 renders them as instant phase strips. Production needs the same phase event stream per operation with stable phase vocabularies (declared in OP_PHASES)." },
-    { "area": "store keys", "impact": "Concept-local persisted keys: view (validated at boot; falls back if it names moved managers), fixtures, scenario, hist.deletion, import.choice.<settingId>. Namespaced under pm.settingsConcepts.fable.c4-ledger." }
+    {
+      "area": "op events",
+      "impact": "PMState 'op' events ({name, ref, phase}) are the truthful ObservableWork projection; c4 renders them as instant phase strips. Production needs the same phase event stream per operation with stable phase vocabularies (declared in OP_PHASES)."
+    },
+    {
+      "area": "store keys",
+      "impact": "Concept-local persisted keys: view (validated at boot; falls back if it names moved managers), fixtures, scenario, hist.deletion, import.choice.<settingId>. Namespaced under pm.settingsConcepts.fable.c4-ledger."
+    },
+    {
+      "area": "observable-work-projection",
+      "impact": "Demo op events aligned to the ObservableWork contract: progressKind (determinate|indeterminate), progress source (measured|derived|unknown), completed/total emitted only when a real denominator exists (bare percentages are stripped at the emitter), waitReason from the register's waiting_* vocabulary where applicable (e.g. waiting_resource on rate-limited test sends, waiting_for_idle surfaced through installation update states). Production schema should adopt the full state grammar: accepted..recovery_required.",
+      "source": "2026-08-13 dependency correction"
+    }
   ],
   "migration_supersession_impacts": [
-    { "superseded": "Old Settings chip/bloom architecture", "by": "Destination index + record ledger; cmd.settings.bloom.open retired (see command delta)." },
-    { "superseded": "Stale right-side-panel descriptions", "by": "Left Activity Bar canon; the c4 right pane is the record inspector, a settings-internal surface, not the old right side panel." },
-    { "superseded": "regular/yolo mode coupling", "by": "Access modes Full Access / Auto / Auto accept edits / Ask for approval throughout; no yolo vocabulary anywhere in this concept." },
-    { "superseded": "cmd.settings.open_storage_retention as a standalone command", "by": "Supersede into the cmd.settings.manager.open family with {manager: manager.storage} payload — this concept's own navigation overlap, flagged in the command delta." },
-    { "superseded": "cmd.settings.open_notifications as a standalone command", "by": "Same family supersession with {manager: manager.notifications}; c4 resolves it to a cross-concept receipt (c2 owns the surface)." }
+    {
+      "superseded": "Old Settings chip/bloom architecture",
+      "by": "Destination index + record ledger; cmd.settings.bloom.open retired (see command delta)."
+    },
+    {
+      "superseded": "Stale right-side-panel descriptions",
+      "by": "Left Activity Bar canon; the c4 right pane is the record inspector, a settings-internal surface, not the old right side panel."
+    },
+    {
+      "superseded": "regular/yolo mode coupling",
+      "by": "Access modes Full Access / Auto / Auto accept edits / Ask for approval throughout; no yolo vocabulary anywhere in this concept."
+    },
+    {
+      "superseded": "cmd.settings.open_storage_retention as a standalone command",
+      "by": "Supersede into the cmd.settings.manager.open family with {manager: manager.storage} payload \u2014 this concept's own navigation overlap, flagged in the command delta."
+    },
+    {
+      "superseded": "cmd.settings.open_notifications as a standalone command",
+      "by": "Same family supersession with {manager: manager.notifications}; c4 resolves it to a cross-concept receipt (c2 owns the surface)."
+    },
+    "Fabricated percentages in progress displays (register sections 11 and 16.6): the index-rebuild fixture previously emitted invented pct values; it now emits an honest indeterminate scanning phase followed by measured file counts.",
+    "Startup discovery scans implied by copy (register section 13): the skills-discovery row description no longer claims a startup scan; discovery is bounded and demand-driven."
   ],
   "slint_port_impacts": [
-    { "area": "three-pane layout", "impact": "lg-root maps to a HorizontalLayout of navigator / document / inspector panels; the inspector is a separate pane component fed by a selected-record model, never an overlay. Narrow mode (<1120) swaps to drawer + bottom sheet — in Slint, conditional layout on width." },
-    { "area": "virtualized ledger", "impact": "The home all-records table and every record section must be ListView-style virtualized models; c4's lazy materialization (40 rows, +60 per page) is the web stand-in. Sections are a flat section+row model for one continuous Flickable." },
-    { "area": "inspector diff panel", "impact": "Requested-vs-effective and local-vs-incoming diffs are a reusable two-row+why component; phase strips are a Row of state-styled labels bound to the op-phase model. Zero-motion: no animations required anywhere, which makes the concept trivially portable." },
-    { "area": "static meters", "impact": "Usage stacked bar and progress bars are width-weighted rectangles over models; no transitions." }
+    {
+      "area": "three-pane layout",
+      "impact": "lg-root maps to a HorizontalLayout of navigator / document / inspector panels; the inspector is a separate pane component fed by a selected-record model, never an overlay. Narrow mode (<1120) swaps to drawer + bottom sheet \u2014 in Slint, conditional layout on width."
+    },
+    {
+      "area": "virtualized ledger",
+      "impact": "The home all-records table and every record section must be ListView-style virtualized models; c4's lazy materialization (40 rows, +60 per page) is the web stand-in. Sections are a flat section+row model for one continuous Flickable."
+    },
+    {
+      "area": "inspector diff panel",
+      "impact": "Requested-vs-effective and local-vs-incoming diffs are a reusable two-row+why component; phase strips are a Row of state-styled labels bound to the op-phase model. Zero-motion: no animations required anywhere, which makes the concept trivially portable."
+    },
+    {
+      "area": "static meters",
+      "impact": "Usage stacked bar and progress bars are width-weighted rectangles over models; no transitions."
+    }
   ],
   "test_fixtures": [
-    "trigger:import-preview", "trigger:import-cancel", "trigger:import-apply", "trigger:import-rollback",
-    "trigger:backup-now (bk.settings)", "trigger:test-restore", "trigger:index-rebuild", "trigger:cleanup-dry-run",
-    "trigger:actions-refresh", "trigger:install-update (openai-codex/inst.codex.npm)", "trigger:install-update-fail (copilot/inst.copilot.ghext)",
-    "fx.import-conflict", "fx.rollback-complete", "fx.storage-pressure", "fx.credit-guard", "fx.index-failed",
-    "scenario:first-run (restore points/sessions/artifacts/worktrees empty, index disabled — real empty states)",
-    "scenario:offline (forges unreachable, actions refresh disabled, web providers unavailable)"
+    "trigger:import-preview",
+    "trigger:import-cancel",
+    "trigger:import-apply",
+    "trigger:import-rollback",
+    "trigger:backup-now (bk.settings)",
+    "trigger:test-restore",
+    "trigger:index-rebuild",
+    "trigger:cleanup-dry-run",
+    "trigger:actions-refresh",
+    "trigger:install-update (openai-codex/inst.codex.npm)",
+    "trigger:install-update-fail (copilot/inst.copilot.ghext)",
+    "fx.import-conflict",
+    "fx.rollback-complete",
+    "fx.storage-pressure",
+    "fx.credit-guard",
+    "fx.index-failed",
+    "scenario:first-run (restore points/sessions/artifacts/worktrees empty, index disabled \u2014 real empty states)",
+    "scenario:offline (forges unreachable, actions refresh disabled, web providers unavailable)",
+    {
+      "id": "corr-observable-work",
+      "note": "2026-08-13 dependency correction: op-event progressKind/source/denominator assertions and lazy-hydration DOM evidence probes (see TEST_REPORT correction section)"
+    }
   ],
   "deferred_named_owners": [
-    { "module": "Servers", "owner": "Server Backbone return (Post-Return Reconciliation v6)", "contract": "Manager destination with health summary, claim/bootstrap deep links, and receipts." },
-    { "module": "Execution Hosts", "owner": "Server Backbone return §5", "contract": "Host cards with nested environment rows; WSL stays optional and environment-specific." },
-    { "module": "Clients", "owner": "Server Backbone return §4", "contract": "Paired-client list with pairing and revoke actions." },
-    { "module": "Project Hosting & Files", "owner": "storage-plan.md", "contract": "Project Vault location, hosted-on card, and move/sync deep links (Project Sync owner)." },
-    { "module": "Project Defaults & Templates", "owner": "FinalGUISpec.md (project settings canon)", "contract": "Template list plus Copy Settings From transactional flow." },
-    { "module": "Remote Access", "owner": "Server Backbone return §10", "contract": "Access methods, status-bar projection, and per-client policy." },
-    { "module": "Integrations & Tools", "owner": "BinaryLocator_Spec.md / shared tool lifecycle", "contract": "Shared installation lifecycle cards; domain managers keep capability detail." },
-    { "module": "Backup & Restore (full Server)", "owner": "storage-plan.md", "contract": "Settings and project backups live in this concept; full-Server backup inserts here (record marked 'Partly live here')." },
-    { "module": "Updates", "owner": "Release_Supply_Chain.md", "contract": "PM application and content update state machines deferred; destination and receipts reserved." },
-    { "module": "Product Onboarding / Doctor", "owner": "Onboarding & Doctor owners (shared command paths per EGOLITE §12)", "contract": "Install/repair/sign-in actions must share one canonical command path with Onboarding, Chat, and Doctor." },
-    { "module": "Project Sync / Project Move", "owner": "storage-plan.md (Project Sync owner)", "contract": "Move Project / Change Project Files buttons are receipts pointing at this owner; no state machine invented." },
-    { "module": "PM application updates", "owner": "Release_Supply_Chain.md", "contract": "Automatic Updates On/Off + Check for Updates only; advanced detail deferred." }
+    {
+      "module": "Servers",
+      "owner": "Server Backbone return (Post-Return Reconciliation v6)",
+      "contract": "Manager destination with health summary, claim/bootstrap deep links, and receipts."
+    },
+    {
+      "module": "Execution Hosts",
+      "owner": "Server Backbone return \u00a75",
+      "contract": "Host cards with nested environment rows; WSL stays optional and environment-specific."
+    },
+    {
+      "module": "Clients",
+      "owner": "Server Backbone return \u00a74",
+      "contract": "Paired-client list with pairing and revoke actions."
+    },
+    {
+      "module": "Project Hosting & Files",
+      "owner": "storage-plan.md",
+      "contract": "Project Vault location, hosted-on card, and move/sync deep links (Project Sync owner)."
+    },
+    {
+      "module": "Project Defaults & Templates",
+      "owner": "FinalGUISpec.md (project settings canon)",
+      "contract": "Template list plus Copy Settings From transactional flow."
+    },
+    {
+      "module": "Remote Access",
+      "owner": "Server Backbone return \u00a710",
+      "contract": "Access methods, status-bar projection, and per-client policy."
+    },
+    {
+      "module": "Integrations & Tools",
+      "owner": "BinaryLocator_Spec.md / shared tool lifecycle",
+      "contract": "Shared installation lifecycle cards; domain managers keep capability detail."
+    },
+    {
+      "module": "Backup & Restore (full Server)",
+      "owner": "storage-plan.md",
+      "contract": "Settings and project backups live in this concept; full-Server backup inserts here (record marked 'Partly live here')."
+    },
+    {
+      "module": "Updates",
+      "owner": "Release_Supply_Chain.md",
+      "contract": "PM application and content update state machines deferred; destination and receipts reserved."
+    },
+    {
+      "module": "Product Onboarding / Doctor",
+      "owner": "Onboarding & Doctor owners (shared command paths per EGOLITE \u00a712)",
+      "contract": "Install/repair/sign-in actions must share one canonical command path with Onboarding, Chat, and Doctor."
+    },
+    {
+      "module": "Project Sync / Project Move",
+      "owner": "storage-plan.md (Project Sync owner)",
+      "contract": "Move Project / Change Project Files buttons are receipts pointing at this owner; no state machine invented."
+    },
+    {
+      "module": "PM application updates",
+      "owner": "Release_Supply_Chain.md",
+      "contract": "Automatic Updates On/Off + Check for Updates only; advanced detail deferred."
+    }
   ],
   "unresolved_questions": [
-    "system.health.diagnostics-verbosity has no taxonomy sub in the shared dataset — which subcategory canonically owns it (system/health vs system/maintenance)?",
+    "system.health.diagnostics-verbosity has no taxonomy sub in the shared dataset \u2014 which subcategory canonically owns it (system/health vs system/maintenance)?",
     "Should conflict decisions in the import preview (keep local vs take incoming) persist inside the staged transaction object or as separate audit rows? c4 stores them concept-locally per settingId.",
     "Does 'Back Up Now' default to the settings kind (as here) or prompt for kind when multiple manual-backup kinds are eligible?",
     "Worktree prune of an idle (non-stale) worktree: allowed with confirm (as here) or gated behind a stale threshold?",
     "Registry LAN-only trust: is that a first-class trust scope in the certificate model, or an allowlist entry under Permissions?",
-    "Cleanup apply granularity: whole dry-run report at once (as here) or per-category apply with separate receipts?"
+    "Cleanup apply granularity: whole dry-run report at once (as here) or per-category apply with separate receipts?",
+    "Register section 23 calibration gates recorded, not claimed: 825+-setting search responsiveness, 100 detected installations collapsed to human summaries, Settings Home with all manager summaries plus exactly one lazy-hydrated manager, and old-hardware (Ivy Bridge/Xeon) / poor-network operation are implementation benchmarks; the demo proves the design shapes (humanized collapse, lazy hydration, cached-catalog-first copy) but measures nothing."
   ]
 }

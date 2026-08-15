@@ -43,6 +43,10 @@ pm_harness = load_script(
     "pm_pnc019_certification_harness_currentness_test",
     "scripts/pm-pnc019-certification-harness.py",
 )
+pm_event_authority = load_script(
+    "pm_event_authority_currentness_test",
+    "scripts/pm-event-authority-currentness.py",
+)
 
 
 PRIOR_CONSUMER_GAP_PATHS = (
@@ -96,8 +100,8 @@ class Pnc019CurrentnessTests(unittest.TestCase):
     @unittest.skipIf(pm_plan_index is None, "PyYAML is unavailable to this Python interpreter")
     def test_receipt_writer_and_both_consumers_share_one_bound_contract(self) -> None:
         required = currentness.REQUIRED_PNC019_SOURCE_HASH_PATHS
-        self.assertEqual(len(required), 18)
-        self.assertEqual(len(set(required)), 18)
+        self.assertEqual(len(required), 19)
+        self.assertEqual(len(set(required)), 19)
         self.assertIn(CURRENTNESS_HELPER_PATH, required)
         self.assertIs(pm_plan_index.REQUIRED_PNC019_SOURCE_HASH_PATHS, required)
         self.assertIs(pm_readiness.REQUIRED_PNC019_SOURCE_HASH_PATHS, required)
@@ -231,6 +235,98 @@ class Pnc019CurrentnessTests(unittest.TestCase):
                 checkpoint=cleared,
             ),
             [],
+        )
+
+    def test_current_event_authority_audit_rehashes_cleanly_and_remains_open(self) -> None:
+        self.assertEqual(currentness.event_authority_audit_failures(ROOT), [])
+        failures = currentness.pnc019_event_authority_clearance_failures(ROOT)
+        errors = {failure["error"] for failure in failures}
+        self.assertIn("event_denominator_unresolved", errors)
+        self.assertIn("event_family_contract_depth_unresolved", errors)
+
+    def test_event_authority_inventory_excludes_derived_consumers(self) -> None:
+        for path in (
+            "Plans/.implementation_readiness/buildability_gate_report.json",
+            "Plans/.plan_index/node_readiness_report.json",
+        ):
+            with self.subTest(path=path):
+                self.assertIn(path, pm_event_authority.DERIVED_VALIDATION_OUTPUTS)
+                self.assertNotIn(path, pm_event_authority.machine_paths())
+
+    def test_current_event_authority_group_artifact_drift_fails(self) -> None:
+        receipt = json.loads(
+            (ROOT / currentness.EVENT_AUTHORITY_RECEIPT_REL_PATH).read_text(encoding="utf-8")
+        )
+        inventory = json.loads(
+            (ROOT / currentness.EVENT_AUTHORITY_SOURCE_INVENTORY_REL_PATH).read_text(encoding="utf-8")
+        )
+        with tempfile.TemporaryDirectory() as temp_dir:
+            candidate_root = Path(temp_dir)
+            required_paths = set(receipt["artifact_hashes"])
+            required_paths.update(
+                {
+                    currentness.EVENT_AUTHORITY_RECEIPT_REL_PATH,
+                    currentness.EVENT_AUTHORITY_STATUS_REL_PATH,
+                    currentness.EVENT_AUTHORITY_GROUP_MANIFEST_REL_PATH,
+                    currentness.EVENT_FAMILY_REGISTRY_REL_PATH,
+                    receipt["validator_path"],
+                }
+            )
+            required_paths.update(row["path"] for row in inventory["sources"])
+            drift_path = next(path for path in required_paths if path.endswith("source_groups/group_a.jsonl"))
+            for relative_path in required_paths:
+                target = candidate_root / relative_path
+                target.parent.mkdir(parents=True, exist_ok=True)
+                if relative_path == drift_path:
+                    target.write_bytes((ROOT / relative_path).read_bytes() + b"\n")
+                else:
+                    target.symlink_to(ROOT / relative_path)
+
+            failures = currentness.event_authority_audit_failures(candidate_root)
+        self.assertTrue(
+            any(
+                failure.get("error") == "event_authority_currentness_artifact_drift"
+                and failure.get("artifact_path") == drift_path
+                for failure in failures
+            )
+        )
+
+    def test_current_event_authority_live_source_drift_fails(self) -> None:
+        receipt = json.loads(
+            (ROOT / currentness.EVENT_AUTHORITY_RECEIPT_REL_PATH).read_text(encoding="utf-8")
+        )
+        inventory = json.loads(
+            (ROOT / currentness.EVENT_AUTHORITY_SOURCE_INVENTORY_REL_PATH).read_text(encoding="utf-8")
+        )
+        drift_path = "Plans/Shared_Integration_Runtime.md"
+        required_paths = set(receipt["artifact_hashes"])
+        required_paths.update(row["path"] for row in inventory["sources"])
+        required_paths.update(
+            {
+                currentness.EVENT_AUTHORITY_RECEIPT_REL_PATH,
+                currentness.EVENT_AUTHORITY_STATUS_REL_PATH,
+                currentness.EVENT_AUTHORITY_GROUP_MANIFEST_REL_PATH,
+                currentness.EVENT_AUTHORITY_SOURCE_INVENTORY_REL_PATH,
+                currentness.EVENT_FAMILY_REGISTRY_REL_PATH,
+                receipt["validator_path"],
+            }
+        )
+        with tempfile.TemporaryDirectory() as temp_dir:
+            candidate_root = Path(temp_dir)
+            for relative_path in required_paths:
+                target = candidate_root / relative_path
+                target.parent.mkdir(parents=True, exist_ok=True)
+                if relative_path == drift_path:
+                    target.write_bytes((ROOT / relative_path).read_bytes() + b"\n")
+                else:
+                    target.symlink_to(ROOT / relative_path)
+            failures = currentness.event_authority_audit_failures(candidate_root)
+        self.assertTrue(
+            any(
+                failure.get("error") == "event_authority_currentness_source_drift"
+                and failure.get("source_path") == drift_path
+                for failure in failures
+            )
         )
 
 

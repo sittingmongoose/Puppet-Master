@@ -344,6 +344,7 @@
     root.innerHTML = '<div class="vlt-mgr"><div class="vlt-mgr-inner vlt-step-in">' +
       '<header class="vlt-mgr-head"><span class="vlt-eyebrow">Providers</span><h1>Accounts, connections, models, and installations</h1>' +
       '<p class="vlt-sub">A provider supplies models, authentication, limits, and capabilities. An installation is a host resource.</p></header>' +
+      V.providerEnvBannerHtml() +
       '<div class="vlt-prov"><div style="display:grid;gap:8px">' + listHtml + "</div>" +
       '<div style="display:grid;gap:12px;align-content:start"><nav class="vlt-mgr-nav" role="tablist">' + tabs + "</nav>" + body + "</div></div>" +
       "</div></div>";
@@ -671,13 +672,19 @@
         VD.scmPolicies.map(function (p) { return "<dt>" + esc(p[0]) + "</dt><dd>" + esc(p[1]) + "</dd>"; }).join("") + "</dl></div>" +
         V.rowHtml(DEMO.settings["sc.protect-main"]) + V.rowHtml(DEMO.settings["sc.test-before-merge"]) + V.rowHtml(DEMO.settings["sc.push-policy"]) + V.rowHtml(DEMO.settings["sc.force-push"]);
     } else if (tab === "tools") {
+      var jjInstalled = PMStore.get("jjInstalled", false);
       body = '<div class="vlt-card"><div class="vlt-card-h"><h4>Tool installation health</h4></div>' +
         VD.scmTools.map(function (t) {
-          var h = V.HEALTH[t.health] || { label: t.health, dot: "unknown" };
+          var installed = t.name === "Jujutsu" && jjInstalled;
+          var h = V.HEALTH[installed ? "ready" : t.health] || { label: t.health, dot: "unknown" };
+          var action = (t.health === "not-configured" && !installed)
+            ? '<div class="pm-row-state"><button type="button" class="pm-btn" data-variant="primary" data-scm-install="' + esc(t.name) + '">' +
+              "Install " + esc(t.name) + " on This PC · Windows native</button></div>"
+            : '<div class="pm-row-state">' + V.healthDot(h.dot, installed ? "Installed" : t.state) + "</div>";
           return '<div class="pm-row"><div class="pm-row-main"><div class="pm-row-label">' + esc(t.name) + '</div>' +
-            '<div class="pm-row-desc">' + esc(t.note) + "</div></div>" +
-            '<div class="pm-row-control pm-mono" style="font-size:11.5px">' + esc(t.version) + " · " + esc(t.host) + "</div>" +
-            '<div class="pm-row-state">' + V.healthDot(h.dot, t.state) + "</div></div>";
+            '<div class="pm-row-desc">' + esc(installed ? "Ready — installed from the official jj source (simulated); bookmarks and revisions available" : t.note) + "</div></div>" +
+            '<div class="pm-row-control pm-mono" style="font-size:11.5px">' + esc(installed ? "0.23.0 · This PC · Windows native" : t.version + " · " + t.host) + "</div>" +
+            action + "</div>";
         }).join("") + "</div>" + V.rowHtml(DEMO.settings["sc.lfs"]);
     }
     mgrShell({
@@ -685,6 +692,17 @@
       lede: "Changes, history, graph, worktrees, and exact tool health — Git and Jujutsu share one lifecycle.",
       tabs: [["worktrees", "Worktrees and graph"], ["policy", "Policy"], ["tools", "Tool health"]],
       tab: tab, body: body
+    });
+    root.querySelectorAll("[data-scm-install]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var tool = btn.getAttribute("data-scm-install");
+        if (tool === "Jujutsu") {
+          PMStore.set("jjInstalled", true);
+          PMStore.receipt("Jujutsu install simulated — the real flow uses the official jj source for the exact host, after your explicit consent", "ok");
+        } else {
+          PMStore.receipt(tool + " setup simulated — source-control tools use the shared lifecycle with contextual Install/Repair", "info");
+        }
+      });
     });
   }
 
@@ -805,28 +823,42 @@
       '<button type="button" class="pm-btn" data-variant="primary" data-idx-rebuild>Rebuild index</button>' +
       '<button type="button" class="pm-btn" data-variant="quiet" data-idx-clear>Clear cache</button></div></div>' +
       (rebuild
-        ? '<div class="vlt-card"><div class="vlt-card-h"><h4>Rebuild</h4><span class="pm-badge" data-kind="state" data-icon data-state="auto">' + esc(rebuild.phase) + "</span></div>" +
-          '<div class="vlt-meter"><div class="vlt-meter-label"><span>' + esc(rebuild.detail) + "</span><span>" + rebuild.pct + "%</span></div>" +
-          '<div class="vlt-meter-track"><span class="vlt-meter-fill" style="inline-size:' + rebuild.pct + '%"></span></div></div></div>'
+        ? '<div class="vlt-card"><div class="vlt-card-h"><h4>Rebuild</h4></div>' +
+          V.operationHtml({
+            id: "idx-rebuild", title: "Project search index rebuild",
+            phase: rebuild.phase, state: "running",
+            progressKind: "determinate", completed: rebuild.completed, total: rebuild.total, unit: "files",
+            source: "simulated", canCancel: true
+          }) + "</div>"
         : "");
     mgrShell({
       id: "searchindex", title: "Project Search Index",
       lede: "Enablement, exclusions, size and symlink policy, disk use, remote cache, and truthful rebuild phases.",
       tabs: [["overview", "Overview"]], tab: "overview", body: body
     });
+    var cancelBtn = root.querySelector('[data-op-cancel="idx-rebuild"]');
+    if (cancelBtn) cancelBtn.addEventListener("click", function () {
+      if (window.__vltIdxTimer) { window.clearInterval(window.__vltIdxTimer); window.__vltIdxTimer = null; }
+      PMStore.set("indexRebuild", null);
+      PMStore.receipt("Rebuild cancelled — the previous index stays live; nothing was half-written (simulated)", "warn");
+    });
     root.querySelector("[data-idx-rebuild]").addEventListener("click", function () {
+      /* Determinate progress with a real denominator (files), truthful
+         phases, visible source, cancellable — ObservableWork grammar. */
       var phases = [
-        { phase: "Scanning", detail: "12,204 files discovered", pct: 25 },
-        { phase: "Indexing", detail: "11,981 files indexed · 3 binaries skipped", pct: 70 },
-        { phase: "Verifying", detail: "Checksum pass", pct: 95 },
-        { phase: "Done", detail: "Index current — 212 MB", pct: 100 }
+        { phase: "Scanning", completed: 3051, total: 12204 },
+        { phase: "Indexing", completed: 8543, total: 12204 },
+        { phase: "Verifying", completed: 11594, total: 12204 },
+        { phase: "Done", completed: 12204, total: 12204 }
       ];
       var i = 0;
       PMStore.set("indexRebuild", phases[0]);
-      var timer = window.setInterval(function () {
+      if (window.__vltIdxTimer) window.clearInterval(window.__vltIdxTimer);
+      window.__vltIdxTimer = window.setInterval(function () {
         i++;
         if (i >= phases.length) {
-          window.clearInterval(timer);
+          window.clearInterval(window.__vltIdxTimer);
+          window.__vltIdxTimer = null;
           PMStore.set("indexRebuild", null);
           PMStore.receipt("Rebuild simulated — 3 binary files skipped, logged as before", "ok");
           return;
@@ -888,6 +920,14 @@
   function render(route, fromNav) {
     if (spy) { spy.detach(); spy = null; }
     currentRoute = route;
+    if (route.view === "manager" && PMStore.get("slowHydration", false)) {
+      PMStore.set("slowHydration", false);
+      var hydMeta = ((VD.managerMeta || DEMO.managerMeta || {})[route.manager]) || { title: "Manager" };
+      mgrShell({ id: route.manager, title: hydMeta.title, lede: "", tabs: [], tab: "",
+        body: V.operationHtml({ id: "hydrate", title: "Hydrating " + hydMeta.title, phase: "Loading domain state", state: "starting", progressKind: "none", source: "simulated", waitReason: "Compact summaries stayed usable — the full manager hydrates on demand, never at Settings open" }) });
+      window.setTimeout(function () { render(route, false); }, 900);
+      return;
+    }
     if (route.view === "manager") {
       if (route.manager === "providers") return renderProviders(route);
       if (route.manager === "storage") return renderStorage(route);
@@ -930,6 +970,7 @@
 
   function runScenario(id) {
     if (id === "calm") { PMStore.set("calmDemo", true); PMStore.receipt("Calm state — every notice dismissed; reset to bring them back", "ok"); return; }
+    if (id === "slow-hydration") { PMStore.set("slowHydration", true); PMStore.receipt("Scenario applied — the next manager you open hydrates on demand with a truthful loading projection", "info"); return; }
     if (id === "reset") { PMStore.resetDemo(); PMStore.receipt("Demo data reset to its seeded state", "ok"); return; }
     if (id === "import-preview") {
       PMStore.set("lifecycle", { step: 1, applied: false, rolledBack: false });
@@ -1009,7 +1050,26 @@
     });
     wireSqueezeFallback();
     renderInbox();
-    PMStore.on("change", function () { renderInbox(); render(currentRoute, false); });
+    /* Domain-local refresh (Performance register §7.3 narrow deltas, §20.2):
+       repaint only the surface that owns the changed key; every other
+       surface renders fresh on entry. */
+    var KEY_DOMAIN = Object.assign({}, V.SHARED_KEY_DOMAINS, {
+      "dismissedNotices": "notices", "calmDemo": "notices",
+      "backups": "manager:backup", "cleanupDone": "manager:cleanup",
+      "forgeConnected": "manager:gha", "history": "manager:history", "indexRebuild": "manager:searchindex",
+      "lifecycle": "manager:lifecycle", "podmanInstalled": "manager:containers", "webOrder": "manager:web",
+      "jjInstalled": "manager:scm"
+    });
+    PMStore.on("change", function (info) {
+      renderInbox();
+      var path = info && info.path;
+      if (path == null) { render(currentRoute, false); return; }
+      var owner = KEY_DOMAIN[path] || KEY_DOMAIN[path.split(".")[0]] || null;
+      var current = currentRoute.view === "manager" ? "manager:" + currentRoute.manager
+        : currentRoute.view === "category" ? "workspace" : "home";
+      if (owner === "notices") { if (current === "home") render(currentRoute, false); return; }
+      if (owner != null && owner === current) render(currentRoute, false);
+    });
     PMStore.on("reset", function () { render(PMRouter.current(), false); });
     PMRouter.init({ onRoute: function (route) { render(route, true); } });
   });
