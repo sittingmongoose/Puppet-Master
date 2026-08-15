@@ -349,3 +349,16 @@
 
 [data-reduced-motion="1"] .ft4-card, [data-reduced-motion="1"] .ft4-qfile,
 [data-motion="reduced"] .ft4-card, [data-motion="reduced"] .ft4-qfile { animation: none; }
+
+.ft4-case-livefile {
+  border-bottom: 1px solid var(--edge);
+  background: var(--bg-surface);
+  padding: 6px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ft4-agent[data-status="failed"] .ft4-agent-name { color: var(--danger); }
+.ft4-agent[data-status="retrying"] .ft4-agent-name { color: var(--warn); }
+.ft4-goal-phase { font-size: 11px; color: var(--text-secondary); }

@@ -10,14 +10,35 @@
   "threads": [
     {
       "id": "thread-01",
-      "title": "Tastebook — planning chat",
-      "project": "Tastebook",
+      "title": "Settings redesign bakeoff",
+      "project": "Puppet Master",
       "pinned": true,
       "archived": false,
       "threadState": "awaiting question",
       "updatedAt": "2026-07-29T15:00:00Z",
       "initialVisibleMessageCount": 50,
       "messages": [
+        {
+          "id": "t01-m0000",
+          "role": "user",
+          "body": "Audit the provider settings and Assistant Chat controls, improve multi-account routing and access warnings, preserve Slint portability, test every theme, and produce an implementation handoff without editing PMConcept7.",
+          "sentAt": "2026-07-29T12:58:00Z",
+          "runtime": {
+            "provider": "Anthropic",
+            "model": "Opus 5",
+            "persona": "Product designer",
+            "mode": "Plan",
+            "effort": "High",
+            "workedSeconds": 12,
+            "totalElapsedSeconds": 26,
+            "tokenCount": 1180,
+            "contextUsed": 4020,
+            "contextLimit": 128000,
+            "estimatedCost": 0.01
+          },
+          "eligibleForEdit": false,
+          "collapsedByDefault": false
+        },
         {
           "id": "t01-m0001",
           "role": "user",
@@ -664,7 +685,7 @@
     },
     {
       "id": "thread-02",
-      "title": "Usage page review",
+      "title": "Usage feature review",
       "project": "Puppet Master",
       "pinned": false,
       "archived": false,
@@ -1114,7 +1135,7 @@
     },
     {
       "id": "thread-03",
-      "title": "Planning Wizard handoff",
+      "title": "Planning Wizard audit",
       "project": "Puppet Master",
       "pinned": true,
       "archived": false,
@@ -1604,7 +1625,7 @@
     },
     {
       "id": "thread-04",
-      "title": "Provider routing setup",
+      "title": "PRD Builder source intake",
       "project": "Puppet Master",
       "pinned": false,
       "archived": false,
@@ -2053,7 +2074,7 @@
     },
     {
       "id": "thread-05",
-      "title": "Browser research session",
+      "title": "Provider multi-account routing",
       "project": "Puppet Master",
       "pinned": false,
       "archived": false,
@@ -2573,7 +2594,7 @@
     },
     {
       "id": "thread-06",
-      "title": "Failing import tests",
+      "title": "Claude CLI profile isolation",
       "project": "Puppet Master",
       "pinned": false,
       "archived": false,
@@ -3090,7 +3111,7 @@
     },
     {
       "id": "thread-07",
-      "title": "Theme behavior review",
+      "title": "Antigravity CLI headless update",
       "project": "Puppet Master",
       "pinned": false,
       "archived": false,
@@ -3538,7 +3559,7 @@
     },
     {
       "id": "thread-08",
-      "title": "Draft recovery check",
+      "title": "Free models catalog refresh",
       "project": "Puppet Master",
       "pinned": false,
       "archived": false,
@@ -4007,7 +4028,7 @@
     },
     {
       "id": "thread-09",
-      "title": "Finding an old decision",
+      "title": "Models.dev capability sync",
       "project": "Puppet Master",
       "pinned": false,
       "archived": false,
@@ -6556,7 +6577,7 @@
     },
     {
       "id": "thread-10",
-      "title": "Pull request review",
+      "title": "Context Lens motion study",
       "project": "Puppet Master",
       "pinned": false,
       "archived": false,
@@ -7072,7 +7093,7 @@
     },
     {
       "id": "thread-11",
-      "title": "Goal run — chat redesign",
+      "title": "Compact Now and branching",
       "project": "Puppet Master",
       "pinned": true,
       "archived": false,
@@ -7650,7 +7671,7 @@
     },
     {
       "id": "thread-12",
-      "title": "Questions waiting for answers",
+      "title": "MCP July specification review",
       "project": "Puppet Master",
       "pinned": false,
       "archived": false,
@@ -8186,7 +8207,7 @@
     },
     {
       "id": "thread-13",
-      "title": "Generated project brief",
+      "title": "Memory degradation audit",
       "project": "Puppet Master",
       "pinned": false,
       "archived": false,
@@ -8656,7 +8677,7 @@
     },
     {
       "id": "thread-14",
-      "title": "Security audit follow-up",
+      "title": "Persona context-footprint audit",
       "project": "Puppet Master",
       "pinned": false,
       "archived": false,
@@ -9187,7 +9208,7 @@
     },
     {
       "id": "thread-15",
-      "title": "Weekend project planning",
+      "title": "Crew capacity planning",
       "project": "Personal project",
       "pinned": false,
       "archived": false,
@@ -10230,5 +10251,11 @@
       "activitySummary": "2 demo steps",
       "stopResultBody": "The scripted response was stopped before completion."
     }
-  ]
+  ],
+  "sourceScenario": {
+    "manifest": "PM_Assistant_Chat_Dependency_Media_and_Work_Correction_2026-08-13/DEMO_SCENARIO_MANIFEST.json",
+    "scenario_id": "settings-provider-chat-redesign",
+    "title": "Provider settings and Chat access redesign",
+    "localised": "DEMO_SCENARIO_MANIFEST diff_files names threads/provider-selector.js, threads/access-controls.css and verification/interaction-probes.mjs; none exists in this workspace, so shared/artifacts.js maps them onto shared/selectors.js, shared/access-controls.css and tests/interaction-probes.js, keeping the manifest line counts (92/18, 61/39, 31/10) exactly."
+  }
 }

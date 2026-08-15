@@ -132,6 +132,254 @@
 /* Anything that should settle like the theme rather than merely ease. */
 .pmx-spring { transition-timing-function: var(--ease-spring-real); }
 
+/* ---------------------------------------------------------------- the thirteen families
+ * motion.js declares thirteen transition families and each one adds a `pmx-m-*` class. For most of
+ * this build NONE of those classes existed in any stylesheet: `beat()` added a class, no animation
+ * started, no `animationend` fired, and `afterTransition` sat out its full 480ms fallback before
+ * cleaning up. Ten of the thirteen families were inert — they reported success and moved nothing.
+ *
+ * Every rule below is one declaration on --motion-med / --ease-default (or the sampled spring where
+ * the family is a settle), so a family snaps on retro, glides on glass and overshoots on friendly
+ * without any of them naming a curve. The DIRECTION of each move is the family's meaning and is the
+ * only thing decided here.
+ */
+
+/* 2. questionPhase. The four beats are one causal arc, so they share a vocabulary of vertical
+ * travel: prepare gathers, advance rises from beneath, submit contracts, open discloses. */
+@keyframes pmx-m-q-prepare {
+  0%   { opacity: 0; transform: scaleY(.86) translateY(4px); }
+  70%  { opacity: 1; transform: scaleY(1.012) translateY(0); }
+  100% { opacity: 1; transform: none; }
+}
+/* The incoming page rises from BELOW the footer line, which is where reference 04 shows the next
+ * question ghosting in while the answered one leaves upward. */
+@keyframes pmx-m-q-advance {
+  from { opacity: 0; transform: translateY(7px); }
+  to   { opacity: 1; transform: none; }
+}
+/* Submit is the card starting its journey back to the pill it grew from: it contracts toward its
+ * own centre rather than fading, so the collapse that follows reads as the same gesture continuing. */
+@keyframes pmx-m-q-submit {
+  0%   { transform: none; }
+  40%  { transform: scale(.985); }
+  100% { transform: none; }
+}
+.pmx-m-q-prepare { animation: pmx-m-q-prepare var(--motion-med) var(--ease-spring-real) both; }
+.pmx-m-q-advance { animation: pmx-m-q-advance var(--motion-med) var(--ease-default) both; }
+.pmx-m-q-submit  { animation: pmx-m-q-submit var(--motion-med) var(--ease-out) both; }
+/* `open` rides collapseTo's height transition; the class only carries the content's own fade, so the
+ * rows do not appear at full strength inside a box that is still half its final size. */
+.pmx-m-q-open > * { animation: pmx-m-q-advance var(--motion-med) var(--ease-default) both; }
+
+/* 5. agentState. A state change in a dense row: a nudge, not an event. `settle` is the one that
+ * overshoots, because completion is the only agent transition that is also an outcome. */
+@keyframes pmx-m-state {
+  0%   { transform: translateX(0); opacity: 1; }
+  40%  { transform: translateX(2px); opacity: .62; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+@keyframes pmx-m-settle {
+  0%   { transform: scale(1); }
+  38%  { transform: scale(1.035); }
+  72%  { transform: scale(.992); }
+  100% { transform: scale(1); }
+}
+.pmx-m-state  { animation: pmx-m-state var(--motion-med) var(--ease-default) both; }
+.pmx-m-settle { animation: pmx-m-settle var(--motion-med) var(--ease-spring-real) both; }
+
+/* 6. handoff. A diff or artifact card is handed DOWN from the cluster that produced it, so it
+ * travels from above. Reference 03 lands its artifact card directly beneath the run it came from;
+ * arriving from anywhere else would break that parentage. */
+@keyframes pmx-m-handoff {
+  from { opacity: 0; transform: translateY(-7px) scale(.994); }
+  to   { opacity: 1; transform: none; }
+}
+.pmx-m-handoff { animation: pmx-m-handoff var(--motion-med) var(--ease-spring-real) both; }
+
+/* 7. dockShift. --pmx-dx is the lateral travel and defaults to a left-edge dock; w6's right track
+ * sets it positive in its own CSS. Full <-> compact is a pure cross-fade because that transition
+ * changes a column's WIDTH, and travelling as well would read as two separate moves. */
+@keyframes pmx-m-dock-in {
+  from { opacity: 0; transform: translateX(var(--pmx-dx, -14px)); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes pmx-m-dock-out {
+  from { opacity: 1; transform: none; }
+  to   { opacity: 0; transform: translateX(var(--pmx-dx, -14px)); }
+}
+@keyframes pmx-m-dock-swap {
+  0%   { opacity: 1; }
+  45%  { opacity: .3; }
+  100% { opacity: 1; }
+}
+.pmx-m-dock-in   { animation: pmx-m-dock-in var(--motion-med) var(--ease-default) both; }
+.pmx-m-dock-out  { animation: pmx-m-dock-out var(--motion-med) var(--ease-default) both; }
+.pmx-m-dock-swap { animation: pmx-m-dock-swap var(--motion-med) var(--ease-default) both; }
+
+/* 8. panelSwap. The artifact workspace lives on the LEFT, so it opens from the left edge and closes
+ * back to it. next/prev travel the direction you are moving through the catalog. */
+@keyframes pmx-m-panel-in {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes pmx-m-panel-out {
+  from { opacity: 1; transform: none; }
+  to   { opacity: 0; transform: translateX(-12px); }
+}
+@keyframes pmx-m-panel-next {
+  from { opacity: 0; transform: translateX(14px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes pmx-m-panel-prev {
+  from { opacity: 0; transform: translateX(-14px); }
+  to   { opacity: 1; transform: none; }
+}
+.pmx-m-panel-in   { animation: pmx-m-panel-in var(--motion-med) var(--ease-default) both; }
+.pmx-m-panel-out  { animation: pmx-m-panel-out var(--motion-med) var(--ease-default) both; }
+.pmx-m-panel-next { animation: pmx-m-panel-next var(--motion-med) var(--ease-spring-real) both; }
+.pmx-m-panel-prev { animation: pmx-m-panel-prev var(--motion-med) var(--ease-spring-real) both; }
+
+/* 9. submenu. A peer surface entering the stack beside its parent, which stays open. It grows from
+ * the anchored edge rather than the centre, so the parent row reads as its origin. */
+@keyframes pmx-m-submenu {
+  from { opacity: 0; transform: scale(.97); }
+  to   { opacity: 1; transform: none; }
+}
+.pmx-m-submenu {
+  transform-origin: var(--pmx-origin-x, 0) var(--pmx-origin-y, 50%);
+  animation: pmx-m-submenu var(--motion-fast) var(--ease-out) both;
+}
+
+/* 10. stateFlip. Access profile and Back Seat Driver controls sit in dense header rows where
+ * anything larger reads as an error, so this is a 1px lift and an opacity dip and nothing else. */
+@keyframes pmx-m-flip {
+  0%   { opacity: 1; transform: translateY(0); }
+  45%  { opacity: .55; transform: translateY(-1px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.pmx-m-flip { animation: pmx-m-flip var(--motion-fast) var(--ease-default) both; }
+
+/* 11. consequence. A route warning asking for a decision. Firmer than an ordinary arrival and it
+ * SETTLES rather than stopping, so it does not read as an alarm either. */
+@keyframes pmx-m-consequence {
+  0%   { opacity: 0; transform: translateY(-9px); }
+  62%  { opacity: 1; transform: translateY(1.5px); }
+  100% { opacity: 1; transform: none; }
+}
+.pmx-m-consequence { animation: pmx-m-consequence var(--motion-slow) var(--ease-spring-real) both; }
+
+/* 13. lineage. A branch is a NEW line of descent and arrives from the side; a rewind is a return
+ * along the thread it belongs to and arrives from above. */
+@keyframes pmx-m-lineage-branch {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes pmx-m-lineage-rewind {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: none; }
+}
+.pmx-m-lineage-branch { animation: pmx-m-lineage-branch var(--motion-slow) var(--ease-spring-real) both; }
+.pmx-m-lineage-rewind { animation: pmx-m-lineage-rewind var(--motion-slow) var(--ease-spring-real) both; }
+
+/* ---------------------------------------------------------------- the resize bounce
+ * PMConcept7's model picker is this product's own tuned answer to "a box changed size": type into
+ * the model search and the popout overshoots its new height and settles. The amplitudes below are
+ * that implementation's measured values, kept rather than re-invented, because they were already
+ * matched against a reference recording (PMConcept7.html:15584-15603).
+ *
+ * Two layers. The height transition carries the overshoot — `--ease-bounce` has y1 = 1.72, so it
+ * travels past the target and comes back. The scale beat rides on top so the overshoot reads as the
+ * box flexing rather than only as its top edge sliding. Height alone is legible but flat; scale
+ * alone would clip nothing and move nothing.
+ *
+ * `--ease-bounce` is declared here rather than in tokens.css because it is not a theme's voice: it
+ * is one specific curve this behaviour is defined by, and a theme that softened it would be
+ * softening the reference, not adapting it. Themes still own the DURATION through --motion-med. */
+:root { --ease-bounce: cubic-bezier(.22, 1.72, .36, 1); }
+
+/* The ordinary case: a list gaining or losing rows. A 5.5% vertical stretch at 40% of the beat. */
+@keyframes pmx-size-bounce {
+  0%   { transform: scale3d(1, 1, 1); }
+  40%  { transform: scale3d(1.012, 1.055, 1); }
+  100% { transform: scale3d(1, 1, 1); }
+}
+
+/* The firmer variant, for a change big enough to re-shape the box rather than nudge it — the
+ * reference uses it when an option COUNT changes. It overshoots further and then undershoots to
+ * 0.975 before settling, which is what stops a large jump reading as a snap. */
+@keyframes pmx-size-bounce-strong {
+  0%   { transform: scale3d(1, 1, 1); }
+  35%  { transform: scale3d(1.018, 1.085, 1); }
+  70%  { transform: scale3d(0.995, 0.975, 1); }
+  100% { transform: scale3d(1, 1, 1); }
+}
+
+.pmx-size-bounce        { animation: pmx-size-bounce 380ms cubic-bezier(.22, 1.55, .36, 1); }
+.pmx-size-bounce-strong { animation: pmx-size-bounce-strong 420ms cubic-bezier(.22, 1.65, .36, 1); }
+
+/* Bottom-anchored resize. A card that sits above the composer grows into its OWN space by moving
+ * its top edge, so the transcript below it never shifts — which is precisely what the concepts that
+ * refused height motion were protecting. Opt in per concept with this class; the primitive does not
+ * impose an anchor, because anchoring is layout and layout belongs to the concept. */
+.pmx-resize-up { margin-top: auto; }
+
+/* Reduced motion: the resize lands instantly and FULLY REVEALED. The blanket rules below already
+ * zero the durations, but a box parked mid-bounce at 1.085 vertical scale would be a visible
+ * artefact, so the transform is cleared outright. */
+[data-motion="reduced"] .pmx-size-bounce,
+[data-motion="reduced"] .pmx-size-bounce-strong {
+  animation: none !important;
+  transform: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pmx-size-bounce, .pmx-size-bounce-strong {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* ---------------------------------------------------------------- the glyph chain
+ * 18. phaseHandover / 19. chainRoll — 03_compact_execution_activity.mov.
+ *
+ * The chain is the run's index: one glyph per finished phase, each one a button that reopens THAT
+ * phase. It is a scroller, not a truncation — reference 03 rolls the oldest glyph off the left as a
+ * seventh phase starts, and then scrolls it back into view when the reader clicks toward it. Losing
+ * the glyph would lose the only route back to that phase.
+ *
+ * Concepts style their own glyphs; all this owns is the scrolling behaviour and the edge mask that
+ * tells you there is more chain than you can see.
+ */
+.pmx-chain {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+.pmx-chain::-webkit-scrollbar { display: none; }
+/* The mask is applied only once the chain actually overflows, because a permanent fade would dim
+ * the first glyph of a three-glyph run for no reason. chainRoll() sets the attribute. */
+.pmx-chain[data-pmx-overflow="start"],
+.pmx-chain[data-pmx-overflow="both"] {
+  mask-image: linear-gradient(to right, transparent 0, #000 20px, #000 100%);
+}
+.pmx-chain[data-pmx-overflow="end"] {
+  mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 20px), transparent 100%);
+}
+.pmx-chain[data-pmx-overflow="both"] {
+  mask-image: linear-gradient(to right, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+}
+/* The glyph inserted by phaseHandover animates its own SLOT open, so the label beside it is pushed
+ * rather than jumping. Width is the only thing that may animate here: the glyph's own box is square
+ * and fixed, so nothing inside it reflows. */
+.pmx-chain-slot {
+  display: inline-flex;
+  overflow: hidden;
+  transition: width var(--motion-med) var(--ease-spring-real);
+}
+.pmx-chain-slot[data-pmx-slot="closed"] { width: 0; }
+
 /* A moving highlight for surfaces that are actively working. The sweep is
  * theme-tinted and the duration is the theme's own --sheen-dur. */
 .pmx-live { position: relative; overflow: hidden; }
@@ -171,6 +419,18 @@
   opacity: .45;
 }
 
+/* The run state has to OUT-SPECIFY the start state, and did not.
+ *
+ * `.pmx-count-morph[data-dir="up"]` is (0,2,0); `.pmx-count-morph-run` was (0,1,0). Adding the run
+ * class therefore changed nothing, the digit never transitioned, and `endNow` then removed the run
+ * class anyway — so every morphed number came to rest 4px low at 45% opacity, permanently, in every
+ * concept that morphs a count. The animation reported success and left the element parked on its own
+ * first frame, which is the third time this file has produced that exact failure.
+ *
+ * The attribute is also removed by endNow now, so the resting state is neutral whatever the cascade
+ * does. Belt and braces here is warranted: one of the two is a guess about specificity, the other is
+ * a fact about the DOM. */
+.pmx-count-morph[data-dir].pmx-count-morph-run,
 .pmx-count-morph-run {
   transform: none;
   opacity: 1;
@@ -195,7 +455,22 @@
     opacity: 1 !important;
   }
 
-  *, *::before, *::after {
+  /* An explicitly FULL stage is excluded here rather than being un-done afterwards.
+   *
+   * This blanket is `!important`, so nothing that follows can lift it — which is why the old
+   * `[data-motion="full"] * { animation-duration: revert-layer }` never actually did its job. What
+   * that rule DID do was match every element inside a full stage at specificity (0,1,0), the same as
+   * every animation class in this file, and win on order: `revert-layer` rolled the duration back to
+   * the user-agent default of 0s. The result was that inside an explicitly-full stage NOTHING
+   * class-driven animated — not .pmx-enter, not .pmx-cascade, not one of the thirteen families, not
+   * the resize bounce. It reported success and moved nothing, which is the exact failure this file
+   * already carries a section header about.
+   *
+   * Excluding the full stage from the blanket is the fix, because a rule that never applies needs no
+   * counter-rule. */
+  *:not([data-motion="full"], [data-motion="full"] *),
+  *:not([data-motion="full"], [data-motion="full"] *)::before,
+  *:not([data-motion="full"], [data-motion="full"] *)::after {
     animation-duration: .01ms !important;
     animation-iteration-count: 1 !important;
     animation-delay: 0s !important;
@@ -216,14 +491,10 @@
   scroll-behavior: auto !important;
 }
 
-/* An explicit stage override must win over the OS preference in BOTH directions, so a
- * reviewer can compare normal and reduced motion side by side on one contact sheet. */
-[data-motion="full"] *,
-[data-motion="full"] *::before,
-[data-motion="full"] *::after {
-  animation-duration: revert-layer;
-  transition-duration: revert-layer;
-}
+/* An explicit stage override must win over the OS preference in BOTH directions, so a reviewer can
+ * compare normal and reduced motion side by side on one contact sheet. That is now handled where the
+ * OS preference is applied — the blanket above simply does not match inside a full stage — rather
+ * than by a rule trying to undo an `!important` declaration it cannot reach. */
 
 /* Indefinite pulses carry meaning (something is running). Under reduced motion they must
  * settle at full opacity rather than freezing at whatever frame they were on. */
@@ -249,8 +520,15 @@
 [data-motion="reduced"] .pmx-ripple { display: none !important; }
 
 @media (prefers-reduced-motion: reduce) {
-  .pmx-pulse, .pmx-float, .pmx-bob, .pmx-spin,
-  .pmx-anticipate, .pmx-celebrate, .pmx-changed, .pmx-cascade > * {
+  /* Same exclusion as the blanket: a stage the reviewer has explicitly set to full keeps its motion. */
+  :not([data-motion="full"] *).pmx-pulse,
+  :not([data-motion="full"] *).pmx-float,
+  :not([data-motion="full"] *).pmx-bob,
+  :not([data-motion="full"] *).pmx-spin,
+  :not([data-motion="full"] *).pmx-anticipate,
+  :not([data-motion="full"] *).pmx-celebrate,
+  :not([data-motion="full"] *).pmx-changed,
+  :not([data-motion="full"] *).pmx-cascade > * {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;

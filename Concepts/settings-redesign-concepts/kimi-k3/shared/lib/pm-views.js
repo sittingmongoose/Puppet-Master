@@ -877,6 +877,67 @@
       "</select></span></div></div>";
   }
 
+  /* ---------- ObservableWork operation projection (correction pass) ----------
+     Truthful operation grammar per the Performance register §11:
+     precise phase, visible wait/queue reason, determinate progress ONLY
+     with a real denominator, an explicit progress source, and cancel only
+     when semantically valid. Demo projections declare their source. */
+  var PROGRESS_SOURCE = {
+    "measured": "Measured progress",
+    "provider_reported": "Reported by the provider",
+    "derived": "Derived estimate",
+    "unknown": "Progress unknown",
+    "simulated": "Simulated demo projection"
+  };
+
+  function operationHtml(op) {
+    var out = '<div class="pm-op" data-state="' + esc(op.state || "running") + '">';
+    out += '<div class="pm-op-head"><span class="pm-op-title">' + esc(op.title) + "</span>" +
+      '<span class="pm-badge" data-kind="state" data-icon data-state="auto">' + esc(op.phase) + "</span></div>";
+    if (op.progressKind === "determinate" && typeof op.completed === "number" && typeof op.total === "number" && op.total > 0) {
+      var pct = Math.round((op.completed / op.total) * 100);
+      out += '<div class="pm-op-meter" role="progressbar" aria-valuemin="0" aria-valuemax="' + op.total + '" aria-valuenow="' + op.completed + '" aria-label="' + esc(op.title) + '">' +
+        '<span class="pm-op-fill" style="inline-size:' + pct + '%"></span></div>' +
+        '<div class="pm-op-nums">' + esc(op.completed.toLocaleString("en-US")) + " of " + esc(op.total.toLocaleString("en-US")) + " " + esc(op.unit || "items") + " · " + pct + "%</div>";
+    }
+    if (op.waitReason) out += '<div class="pm-op-wait">' + icon("bolt") + esc(op.waitReason) + "</div>";
+    out += '<div class="pm-op-source">' + esc(PROGRESS_SOURCE[op.source || "unknown"]) + "</div>";
+    if (op.canCancel) out += '<div class="pm-op-actions"><button type="button" class="pm-btn" data-variant="quiet" data-op-cancel="' + esc(op.id || "") + '">Cancel</button></div>';
+    return out + "</div>";
+  }
+
+  /* Environment-level provider states (correction pass): offline/poor-network
+     keeps the cached catalog and marks freshness instead of probing; a large
+     detection result collapses to one human summary instead of 100 cards. */
+  function providerEnvBannerHtml() {
+    var out = "";
+    if (PMStore.get("providersOffline", false)) {
+      out += '<div class="pm-env-banner" data-kind="offline">' + icon("plug") +
+        "<div><b>Offline.</b> Showing the last-known-good catalog and connection state — nothing is probed until the network returns. Refresh resumes on reconnect.</div></div>";
+    }
+    if (PMStore.get("manyInstalls", false)) {
+      out += '<div class="pm-env-banner" data-kind="many">' + icon("layers") +
+        '<div><b>100 detected installations collapse into human summaries.</b> 94 ready · 4 shadowed (detected, not used) · 2 unknown ownership (manual-only). Individual cards appear on the provider that needs them.</div></div>';
+    }
+    return out;
+  }
+
+  /* Store-key → owning surface map. Concepts extend this with their own
+     manager keys so a change repaints only the surface that owns the key
+     (Performance register §7.3 narrow deltas, §20.2 domain-local refresh). */
+  var SHARED_KEY_DOMAINS = {
+    "providers": "manager:providers",
+    "roles": "manager:providers",
+    "providersOffline": "manager:providers",
+    "manyInstalls": "manager:providers",
+    "overrides": "workspace",
+    "errors": "workspace",
+    "changedElsewhere": "workspace",
+    "spell.ignored": "manager:spellcheck",
+    "spell.personal": "manager:spellcheck",
+    "spell.project": "manager:spellcheck"
+  };
+
   /* ---------- installations & update lifecycle (kimi-k3) ---------- */
 
   var CONFIDENCE_LABEL = {
@@ -946,9 +1007,21 @@
 
     var stateLabel = UPDATE_STATE[st.state] || st.state;
     var dot = st.state === "ready" ? "ok" : (st.state === "verification-failed" || st.state === "needs-repair" ? "danger" : (st.state === "update-available" || st.state === "waiting" || st.state === "rolled-back" ? "warn" : "info"));
-    out += '<div class="pm-update-state" data-state="' + esc(st.state) + '">' + healthDot(dot, stateLabel) +
-      (st.availableVersion ? '<span class="pm-badge" data-kind="scope">Version ' + esc(st.availableVersion) + "</span>" : "") +
-      (st.note ? '<span class="pm-update-note">' + esc(st.note) + "</span>" : "") + "</div>";
+    if (st.state === "updating" || st.state === "verifying") {
+      out += operationHtml({
+        id: "update-" + p.id,
+        title: "Update to " + (st.availableVersion || "the new version"),
+        phase: stateLabel,
+        state: st.state === "verifying" ? "verifying" : "running",
+        progressKind: "none",
+        source: "simulated",
+        waitReason: st.state === "verifying" ? null : "Downloads from the official source, then verifies launch, auth, catalog, and adapter handshake — not just the installer exit code"
+      }) + (st.note ? '<div class="pm-update-note">' + esc(st.note) + "</div>" : "");
+    } else {
+      out += '<div class="pm-update-state" data-state="' + esc(st.state) + '">' + healthDot(dot, stateLabel) +
+        (st.availableVersion ? '<span class="pm-badge" data-kind="scope">Version ' + esc(st.availableVersion) + "</span>" : "") +
+        (st.note ? '<span class="pm-update-note">' + esc(st.note) + "</span>" : "") + "</div>";
+    }
     var actions = "";
     if (st.state === "update-available") actions += '<button type="button" class="pm-btn" data-variant="primary" data-pv="update-apply" data-pid="' + esc(p.id) + '">Update now</button>';
     if (st.state === "verification-failed" || st.state === "needs-repair") actions += '<button type="button" class="pm-btn" data-variant="danger" data-pv="update-rollback" data-pid="' + esc(p.id) + '">Roll back</button>';
@@ -966,6 +1039,8 @@
     { id: "verification-failed", label: "Update verification fails → rollback" },
     { id: "usage-exhausted", label: "OpenAI included usage runs out" },
     { id: "catalog-stale", label: "Catalog refresh keeps last-known-good" },
+    { id: "offline", label: "Network goes offline (last-known-good)" },
+    { id: "many-installs", label: "100 detected installations collapse" },
     { id: "reset-providers", label: "Reset providers to seeded state" }
   ];
 
@@ -1048,9 +1123,23 @@
         }, 1500);
         return;
       }
+      case "offline": {
+        PMStore.set("providersOffline", true);
+        PMStore.receipt("Scenario applied — offline: cached catalog and connection state stay visible; nothing probes (simulated)", "warn");
+        done();
+        return;
+      }
+      case "many-installs": {
+        PMStore.set("manyInstalls", true);
+        PMStore.receipt("Scenario applied — 100 detected installations collapse to human summaries (simulated)", "info");
+        done();
+        return;
+      }
       case "reset-providers": {
         var seed = (window.PM_CORE_DATA || window.PM_SETTINGS_DEMO).providers;
         PMStore.set("providers", clone(seed));
+        PMStore.set("providersOffline", false);
+        PMStore.set("manyInstalls", false);
         PMStore.receipt("Providers restored to the seeded fixture set", "ok");
         done();
         return;
@@ -1299,6 +1388,8 @@
     usageHtml: usageHtml, catalogHtml: catalogHtml, diagnosticsHtml: diagnosticsHtml,
     routingHtml: routingHtml,
     installationHtml: installationHtml, updatesHtml: updatesHtml,
+    operationHtml: operationHtml, providerEnvBannerHtml: providerEnvBannerHtml,
+    SHARED_KEY_DOMAINS: SHARED_KEY_DOMAINS,
     PROVIDER_SCENARIOS: PROVIDER_SCENARIOS, applyProviderScenario: applyProviderScenario,
     roleCandidates: roleCandidates, rolesHtml: rolesHtml, bindRoles: bindRoles,
     bindProviders: bindProviders, capabilityChip: capabilityChip

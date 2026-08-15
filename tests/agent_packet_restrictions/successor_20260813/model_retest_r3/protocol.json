@@ -1,0 +1,107 @@
+{
+  "protocol_id": "PW-R3-20260813.1",
+  "status": "frozen_before_counted_launch",
+  "design": "single_run_per_configuration_descriptive_semantic_fixture_simulation",
+  "source": {
+    "path": "Plans/Planning_Wizard.md",
+    "characters_and_bytes": 93549,
+    "lines": 1671,
+    "sha256": "2b9591954871986cc5af23764d026ce102ca67be66634c7d1e49dc6988833d00"
+  },
+  "requested_configurations": [
+    {"id": "gpt-5.4-mini-xhigh", "model": "gpt-5.4-mini", "reasoning_effort": "xhigh"},
+    {"id": "gpt-5.4-mini-medium", "model": "gpt-5.4-mini", "reasoning_effort": "medium"},
+    {"id": "gpt-5.6-luna-medium", "model": "gpt-5.6-luna", "reasoning_effort": "medium"}
+  ],
+  "stage_order": [
+    "l1",
+    "l2",
+    "l3",
+    "l4",
+    "l5",
+    "l6_fidelity",
+    "l6_authority",
+    "l6_safety",
+    "l7",
+    "l8",
+    "l9"
+  ],
+  "dag": {
+    "l1": [],
+    "l2": ["l1"],
+    "l3": ["l2"],
+    "l4": ["l3"],
+    "l5": ["l4"],
+    "l6_fidelity": ["l5"],
+    "l6_authority": ["l5"],
+    "l6_safety": ["l5"],
+    "l7": ["l6_fidelity", "l6_authority", "l6_safety"],
+    "l8": ["l7"],
+    "l9": ["l8"]
+  },
+  "prompt_capsules": {
+    "l1": {"bytes": 2471, "sha256": "8eee6f4af63e39a8b08c41b6ced7243820cfeae02fa715b70c237d30430a0168"},
+    "l2": {"bytes": 1817, "sha256": "11eff9e96432ac90db3f24513f62b9882f41f9f81c17c4e9f6f87d5df8d43ad6"},
+    "l3": {"bytes": 1762, "sha256": "88f364c4d7f1f7686614d1bff90f29e3e537f1710fad0a65add7c638fe69a75d"},
+    "l4": {"bytes": 1759, "sha256": "41301a5e38a42e20e58bf3f661f0cb753be3808521edbec4d35ca9f293be4d5e"},
+    "l5": {"bytes": 1511, "sha256": "a62f69c2ef36a03cd88fd9d74f38e5136e17888e9cce2afcf23ea679d6338518"},
+    "l6_fidelity": {"bytes": 1148, "sha256": "e1d1750b70eab839189d9f45dbd342490ccb7f49d5d5095df3067546f2cbcf4e"},
+    "l6_authority": {"bytes": 964, "sha256": "9208fc57dfbcbb481f90c4071d82d5c9543096c857d4fadcee79fe18c6d6cff7"},
+    "l6_safety": {"bytes": 1237, "sha256": "4f71854c89e4f183823d9b94aa6eab0bddc3c791f9ea2c6ac97996f5341a386b"},
+    "l7": {"bytes": 1102, "sha256": "592e0968f37701e7502c760b524aa100addeb773f44b181e83cc6e17b381bd2d"},
+    "l8": {"bytes": 1784, "sha256": "d0918d30de6b96e143fff281085a70394e4a569fbc7ca13deb7b9fd1b2de7ceb"},
+    "l9": {"bytes": 2096, "sha256": "658d37fbf09042406fa56833f95896cd351104be6334ebbc4f3a7fbd8ef505f6"}
+  },
+  "admission": {
+    "task_shape": "new projectless task per stage",
+    "allowed_user_input": "one exact stage capsule, automatically wrapped once by task creation",
+    "meaning": "session isolation only; not blindness or statistical independence"
+  },
+  "scoring": {
+    "required": [
+      "one completed turn with no task error",
+      "one final agent message",
+      "one delegation envelope",
+      "exact admitted capsule bytes",
+      "valid JSON",
+      "exact top-level key schema and order",
+      "exact oracle values and array order",
+      "zero observed tool items"
+    ],
+    "failure_conditions": [
+      "invalid JSON",
+      "wrong schema, key order, value, or array order",
+      "refusal",
+      "truncation",
+      "timeout",
+      "task error",
+      "observed tool call",
+      "wrapper-depth mismatch",
+      "capsule-byte mismatch"
+    ],
+    "retry_or_select_best": false,
+    "downstream_after_failure": "stop the affected configuration"
+  },
+  "invalidation": {
+    "prompt_schema_scorer_or_allowed_input_change": "create a new protocol version; rerun the changed stage for every configuration and every transitive consumer",
+    "scoring_only_correction": "create a new analysis version and rescore all immutable raw task records",
+    "embedded_expectation_change": "rerun the affected stage for every configuration and every transitive consumer",
+    "preserve_failures": true
+  },
+  "nonclaims": [
+    "blind or statistically independent execution",
+    "repeatability, variance, or general model superiority",
+    "full-plan comprehension",
+    "causal raw-artifact propagation",
+    "runtime gate enforcement",
+    "real canonical write",
+    "external audit",
+    "implementation correctness or buildability",
+    "release readiness or safety certification"
+  ],
+  "environment_limitations": [
+    "immutable serving snapshots, service tier, and sampling state were not exposed",
+    "the complete system and developer instruction stack was not byte-frozen",
+    "zero observed tool items does not prove tools were technically unavailable"
+  ]
+}

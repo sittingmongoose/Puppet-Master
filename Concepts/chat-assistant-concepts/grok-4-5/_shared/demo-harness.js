@@ -101,13 +101,46 @@
         break;
       }
       case 'question.prepare':
+        /* Compact preparing card is owned by thread/q renderers; harness sets phase then opens. */
+        injectQuestionnaire(s, id, { phase: 'preparing', focused: true });
+        break;
       case 'question.open':
-        injectQuestionnaire(s, id);
+        injectQuestionnaire(s, id, { phase: 'open', focused: true });
         break;
-      case 'question.select':
-        if (s.answerQuestion) s.answerQuestion(id, payload && payload.value);
+      case 'question.select': {
+        var qSel = s.getActiveQuestionnaire ? s.getActiveQuestionnaire(id) : null;
+        if (!qSel) injectQuestionnaire(s, id, { phase: 'open', focused: true });
+        qSel = s.getActiveQuestionnaire ? s.getActiveQuestionnaire(id) : qSel;
+        var curQ =
+          qSel && qSel.questions
+            ? qSel.questions[qSel.currentQuestionIndex | 0] || qSel.questions[0]
+            : null;
+        var qid = (payload && (payload.questionId || payload.id)) || (curQ && curQ.id);
+        var val =
+          payload && (payload.value != null ? payload.value : payload.answer != null ? payload.answer : null);
+        if (val == null && curQ && curQ.options && curQ.options.length) {
+          var opt0 = curQ.options[0];
+          val = typeof opt0 === 'string' ? opt0 : opt0.value || opt0.label || opt0;
+        }
+        if (s.answerQuestion && qid != null) s.answerQuestion(id, qid, val);
         break;
+      }
       case 'question.next':
+        if (!s.getActiveQuestionnaire || !s.getActiveQuestionnaire(id)) {
+          injectQuestionnaire(s, id, { phase: 'open', focused: true });
+        }
+        if (typeof s.nextQuestion === 'function') s.nextQuestion(id);
+        else {
+          /* Fallback: advance index without marking skipped (≠ skipQuestion). */
+          var qNext = s.getActiveQuestionnaire ? s.getActiveQuestionnaire(id) : null;
+          if (qNext && qNext.questions) {
+            var nidx = qNext.currentQuestionIndex | 0;
+            if (qNext.questions[nidx]) qNext.questions[nidx].skipped = false;
+            if (nidx < qNext.questions.length - 1) qNext.currentQuestionIndex = nidx + 1;
+            if (s._emit) s._emit();
+          }
+        }
+        break;
       case 'question.skip':
         if (s.skipQuestion) s.skipQuestion(id);
         break;
@@ -124,9 +157,19 @@
       case 'goal.start':
         ensureGoal(s, id, 'running');
         break;
-      case 'goal.progress':
-        ensureGoal(s, id, 'running', 'Research');
+      case 'goal.progress': {
+        ensureGoal(s, id, 'running', (payload && payload.phase) || 'Research');
+        var tProg = s.threads[id];
+        if (tProg && tProg.goal) {
+          var prev = typeof tProg.goal.progress === 'number' ? tProg.goal.progress : 0.35;
+          tProg.goal.progress =
+            payload && payload.progress != null ? Number(payload.progress) : Math.min(0.95, prev + 0.15);
+          tProg.goal.workedSeconds = (tProg.goal.workedSeconds | 0) + 18;
+          if (s.applyGoalCapabilities) s.applyGoalCapabilities(id);
+          if (s._emit) s._emit();
+        }
         break;
+      }
       case 'goal.pause':
         if (s.goalAction) s.goalAction(id, 'pause');
         else ensureGoal(s, id, 'paused');
@@ -135,7 +178,30 @@
         if (s.goalAction) s.goalAction(id, 'resume');
         else ensureGoal(s, id, 'running');
         break;
-      case 'goal.update':
+      case 'goal.update': {
+        /* Mutate title/phase/progress only — never call replan. */
+        ensureGoal(s, id, 'running');
+        var tUp = s.threads[id];
+        if (tUp && tUp.goal) {
+          tUp.goal.title =
+            (payload && payload.title) ||
+            'Updated provider controls and Chat access flow';
+          tUp.goal.phase = (payload && payload.phase) || 'Prototype';
+          tUp.goal.progress =
+            payload && payload.progress != null ? Number(payload.progress) : 0.62;
+          tUp.goal.workedSeconds = (tUp.goal.workedSeconds | 0) + 24;
+          if (tUp.goal.replanNote) delete tUp.goal.replanNote;
+          if (s.applyGoalCapabilities) s.applyGoalCapabilities(id);
+          else if (
+            window.PMChatStore &&
+            typeof window.PMChatStore.normalizeGoalCapabilities === 'function'
+          ) {
+            window.PMChatStore.normalizeGoalCapabilities(tUp.goal);
+          }
+          if (s._emit) s._emit();
+        }
+        break;
+      }
       case 'goal.replan':
         ensureGoal(s, id, 'running');
         if (s.goalAction) s.goalAction(id, 'replan');
@@ -197,8 +263,10 @@
         pushActivity(s, id, event);
         break;
       case 'diff.create':
-      case 'diff.update':
         ensureDiff(s, id);
+        break;
+      case 'diff.update':
+        updateDiff(s, id, payload);
         break;
       case 'diff.open':
         if (window.PMChatV2) {
@@ -243,13 +311,38 @@
         if (s._emit) s._emit();
         break;
       case 'decision.approve':
-      case 'decision.deny':
         s.session.approval = null;
         if (s._emit) s._emit();
         break;
-      case 'decision.branch':
+      case 'decision.deny':
+        if (s.session.approval) {
+          s.session.approval = Object.assign({}, s.session.approval, {
+            decision: 'deny',
+            resolvedAt: new Date().toISOString()
+          });
+        }
+        s.session.approval = null;
+        pushMessage(s, id, 'assistant', 'Approval denied · commands not run.');
+        if (s._emit) s._emit();
+        break;
       case 'decision.details':
-        toast(event === 'details' ? 'Approval details open' : 'Branch with new model');
+        if (!s.session.approval) {
+          s.session.approval = {
+            question: 'Run 2 commands?',
+            reason: 'Workspace only · Needed to run the test suite',
+            details: 'npm test\nnode verification/run-v2-delta-probes.mjs',
+            kind: 'command',
+            detailsOpen: true
+          };
+        } else {
+          s.session.approval.detailsOpen = true;
+        }
+        if (s._emit) s._emit();
+        toast('Approval details open');
+        break;
+      case 'decision.branch':
+        spawnRelatedGuarded(s, id, { label: 'decision_branch' });
+        toast('Branch with new model');
         break;
       case 'thread.send_request': {
         var reqOp = deepThreadOp(s, id, 'send_request', {
@@ -512,17 +605,27 @@
         s.session.providerSetupRequired = {
           code: 'cli-not-found',
           reason: 'CLI not found',
-          message: 'CLI not found · choose another model or repair in Settings (managers Settings-owned).',
-          settingsPath: 'settings://providers/xai'
+          state: 'Install required',
+          message:
+            'Install required · acquire from official provider/package source · not bundled in PM core · not in execution baseline · install ≠ auth · Settings setup row preserves continuation',
+          acquisition:
+            'explicit user-triggered Install/Setup from official provider/package source only',
+          notBundled: true,
+          notBaseline: true,
+          installSeparateFromAuth: true,
+          settingsPath: 'settings://providers/xai',
+          continuationToken: 'demo-cont-provider-setup'
         };
         s.session.composerState = 'provider-setup-required';
         s.session.composerStateReason = s.session.providerSetupRequired.message;
         s.session.sendDisabledReason =
-          s.session.sendDisabledReason || 'Provider setup required · send disabled';
+          s.session.sendDisabledReason ||
+          'Provider setup required · Install required from official source · send disabled';
         if (typeof s.pushNotification === 'function') {
           s.pushNotification({
-            title: 'Provider setup required',
-            body: 'CLI not found · return to Settings · providers/xai',
+            title: 'Provider Setup Required',
+            body:
+              'CLI not found · Install from official source (not bundled / not baseline) · Settings · providers/xai · continuation preserved',
             tone: 'warn'
           });
         }
@@ -630,6 +733,43 @@
           });
         }
         break;
+
+      case 'system.provider_install_required':
+        s.session.providerSetupRequired = {
+          code: 'install-required',
+          reason: 'Install required',
+          state: 'Install required',
+          message:
+            'Install required · official provider/package source · not bundled · not baseline · auth happens after install',
+          notBundled: true,
+          notBaseline: true,
+          installSeparateFromAuth: true,
+          settingsPath: 'settings://providers/xai',
+          continuationToken: 'demo-cont-provider-install'
+        };
+        s.session.composerState = 'provider-setup-required';
+        s.session.composerStateReason = s.session.providerSetupRequired.message;
+        s.session.sendDisabledReason = 'Install required · official source · send disabled';
+        toast('Install required · official source · Settings setup');
+        if (s._emit) s._emit();
+        break;
+      case 'system.provider_update_available':
+        s.session.providerUpdate = {
+          state: 'Update available',
+          message:
+            'Update available · apply from official provider source after explicit Install/Setup · Auto/On may maintain already approved installs only',
+          settingsPath: 'settings://providers/xai'
+        };
+        if (typeof s.pushNotification === 'function') {
+          s.pushNotification({
+            title: 'Update available',
+            body: 'Provider CLI update · official source · Settings-owned · not silent baseline refresh',
+            tone: 'info'
+          });
+        }
+        toast('Update available · official source');
+        if (s._emit) s._emit();
+        break;
       case 'system.reduced_motion':
         document.documentElement.setAttribute('data-reduced-motion', '1');
         if (window.PMChatMotion && window.PMChatMotion.setReduced) window.PMChatMotion.setReduced(true);
@@ -655,13 +795,18 @@
     if (s._emit) s._emit();
   }
 
-  function injectQuestionnaire(s, id) {
+  function injectQuestionnaire(s, id, opts) {
     var t = s.threads[id];
     if (!t) return;
+    opts = opts || {};
+    var phase = opts.phase || 'open';
+    var focused = opts.focused !== false && phase !== 'preparing';
     t.questionnaires = [
       {
         id: 'q-demo-v2',
         status: 'active',
+        phase: phase,
+        focused: focused,
         currentQuestionIndex: 0,
         questions: [
           {
@@ -818,6 +963,8 @@
     t.diffGroups = [
       {
         label: 'Assistant Chat change set',
+        receipt: 'created',
+        updatedAt: new Date().toISOString(),
         files: [
           { path: 'threads/provider-selector.js', added: 92, removed: 18, status: 'modified' },
           { path: 'threads/access-controls.css', added: 61, removed: 39, status: 'modified' },
@@ -834,17 +981,96 @@
     if (s._emit) s._emit();
   }
 
-  function resetScenario(s) {
-    if (s.setHistoryMode) s.setHistoryMode('closed');
-    if (window.PMChatV2) window.PMChatV2.closeArtifactWorkspace(s);
+  function updateDiff(s, id, payload) {
+    var t = s.threads[id];
+    if (!t) return;
+    if (!t.diffGroups || !t.diffGroups.length) {
+      ensureDiff(s, id);
+      t = s.threads[id];
+    }
+    var g = t.diffGroups[0];
+    g.files = g.files || [];
+    var bump = (payload && payload.bump) || { added: 12, removed: 3 };
+    if (g.files[0]) {
+      g.files[0].added = (g.files[0].added | 0) + (bump.added | 0);
+      g.files[0].removed = (g.files[0].removed | 0) + (bump.removed | 0);
+      g.files[0].status = 'modified';
+    } else {
+      g.files.push({
+        path: 'threads/provider-selector.js',
+        added: bump.added | 0,
+        removed: bump.removed | 0,
+        status: 'modified'
+      });
+    }
+    if (g.files.length === 1) {
+      g.files.push({
+        path: 'threads/access-controls.css',
+        added: 8,
+        removed: 2,
+        status: 'modified'
+      });
+    } else if (g.files[1]) {
+      g.files[1].added = (g.files[1].added | 0) + 4;
+      g.files[1].removed = (g.files[1].removed | 0) + 1;
+    }
+    g.receipt = 'updated';
+    g.updatedAt = new Date().toISOString();
+    g.label = g.label || 'Assistant Chat change set';
+    if (s._emit) s._emit();
+  }
+
+  function clearEphemeralSession(s) {
+    if (!s || !s.session) return;
     s.session.approval = null;
     s.session.warning = null;
     s.session.compactNow = { status: 'idle', progress: 0 };
+    s.session.providerSetupRequired = null;
+    s.session.providerUpdate = null;
+    s.session.outbox = [];
+    s.session.composerState = 'ordinary';
+    s.session.composerStateReason = '';
+    s.session.sendDisabledReason = '';
+    s.session.accessLimitedBy = null;
+    s.session.spellcheckSuggestions = false;
+  }
+
+  function partialResetScenario(s) {
+    if (s.setHistoryMode) s.setHistoryMode('closed');
+    if (window.PMChatV2) window.PMChatV2.closeArtifactWorkspace(s);
+    clearEphemeralSession(s);
     var id = tid(s);
     if (id && s.threads[id]) {
-      s.threads[id].questionnaires = [];
+      var t = s.threads[id];
+      t.questionnaires = [];
+      t.goal = null;
+      t.todos = null;
+      t.subagentGroups = [];
+      t.activity = [];
+      t.diffGroups = [];
+      t.messages = [];
     }
     if (s._emit) s._emit();
+  }
+
+  function resetScenario(s) {
+    function afterHydrate() {
+      if (s.setHistoryMode) s.setHistoryMode('closed');
+      if (window.PMChatV2) window.PMChatV2.closeArtifactWorkspace(s);
+      clearEphemeralSession(s);
+      var id = tid(s);
+      if (id && s.threads[id]) s.threads[id].questionnaires = [];
+      if (s._emit) s._emit();
+    }
+
+    /* Prefer store recreate/hydrate from the create-time demo+extend baseline. */
+    if (typeof s.rehydrateFromDemo === 'function') {
+      s.rehydrateFromDemo();
+      afterHydrate();
+      return;
+    }
+
+    partialResetScenario(s);
   }
 
   var BUTTONS = [
@@ -853,15 +1079,21 @@
     ['history', 'pin_full'],
     ['history', 'unpin'],
     ['history', 'switch_thread'],
+    ['question', 'prepare'],
     ['question', 'open'],
+    ['question', 'select'],
+    ['question', 'next'],
     ['question', 'skip'],
     ['question', 'cancel'],
     ['question', 'submit'],
     ['question', 'validation_error'],
     ['goal', 'start'],
+    ['goal', 'progress'],
     ['goal', 'pause'],
     ['goal', 'resume'],
+    ['goal', 'update'],
     ['goal', 'replan'],
+    ['goal', 'blocked'],
     ['goal', 'stop'],
     ['goal', 'clear'],
     ['goal', 'edit'],
@@ -871,12 +1103,21 @@
     ['todo', 'block'],
     ['todo', 'reopen'],
     ['subagent', 'spawn'],
+    ['subagent', 'queue'],
+    ['subagent', 'progress'],
+    ['subagent', 'complete'],
     ['subagent', 'fail'],
     ['subagent', 'retry'],
     ['activity', 'thinking_summary'],
     ['activity', 'search'],
+    ['activity', 'read'],
+    ['activity', 'fetch'],
+    ['activity', 'browser'],
+    ['activity', 'test'],
     ['activity', 'edit'],
+    ['activity', 'generate'],
     ['diff', 'create'],
+    ['diff', 'update'],
     ['diff', 'open'],
     ['artifact', 'loading'],
     ['artifact', 'ready'],
@@ -884,7 +1125,10 @@
     ['artifact', 'error'],
     ['artifact', 'close'],
     ['decision', 'approval_open'],
+    ['decision', 'details'],
     ['decision', 'approve'],
+    ['decision', 'deny'],
+    ['decision', 'branch'],
     ['system', 'port_collision'],
     ['system', 'worktree_collision'],
     ['system', 'cache_warning'],
@@ -908,6 +1152,8 @@
     ['system', 'debug_session'],
     ['system', 'browser_program_progress'],
     ['system', 'provider_setup_required'],
+    ['system', 'provider_install_required'],
+    ['system', 'provider_update_available'],
     ['system', 'access_limited_by_review'],
     ['system', 'notification.push'],
     ['system', 'restore_point.create'],

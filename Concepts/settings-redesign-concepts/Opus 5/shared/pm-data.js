@@ -1725,7 +1725,10 @@
     { id: "attention", label: "Several things need attention", note: "Adds a failed catalogue refresh and an expired grant." },
     { id: "loading", label: "Catalogues refreshing", note: "Last-known-good rows stay in place while the refresh runs." },
     { id: "degraded", label: "Provider degraded", note: "Authenticated but generation failing, with the diagnosis shown." },
-    { id: "exhausted", label: "Included usage exhausted", note: "Provider-specific continuation choices become the primary decision." }
+    { id: "exhausted", label: "Included usage exhausted", note: "Provider-specific continuation choices become the primary decision." },
+    { id: "offline", label: "Offline — the owning host cannot be reached", note: "Every remote route fails honestly. Cached values stay on screen and say when they were last verified." },
+    { id: "lowResource", label: "Low resource — older or loaded machine", note: "The Legacy profile is in force: fewer helpers, smaller caches, no prewarm. Nothing is removed." },
+    { id: "largeCatalog", label: "Large catalogue — 100 installations", note: "Volume fixtures are live so windowed lists and search at scale can be seen rather than described." }
   ];
 
   /* Deliberately not frozen here. Domain modules (pm-data-install.js,

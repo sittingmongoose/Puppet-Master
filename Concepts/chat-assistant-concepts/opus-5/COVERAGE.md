@@ -1,5 +1,38 @@
 # Coverage Report — Opus 5 Assistant Chat concept workspace
 
+> ## Correction — 2026-08-14: what the automated sweep actually covered
+>
+> The blocks below describe earlier harnesses, and two of their claims did not hold for the harness
+> that exists now. This is recorded here rather than quietly edited into the tables, because the
+> pattern matters more than the numbers: a coverage report is the one document that cannot be
+> checked by reading it.
+>
+> - **Themes were not swept at all.** `theme` and `ui.theme` appeared ZERO times in `tests/suites.js`.
+>   Eight themes were offered, selectable, and documented as covered; nothing asserted that any of
+>   them rendered. A theme axis now sweeps all eight, at all four canon widths, on the two structural
+>   extremes (w1+t1 and w8+t4) — as its own axis rather than multiplied through 64 pairings, which
+>   would be 2,048 runs to re-prove the same tokens sixty-four times.
+> - **The width sweep ran 520 and 750 only.** COVERAGE names the widths as 520 / 750 / 975 / 1200,
+>   and the matrix used the first two — so the two widths at which the artifact workspace and pinned
+>   history actually coexist were never swept, which is exactly where a layout runs out of room. All
+>   four are swept now.
+> - **Focus was never asserted.** `activeElement` appeared zero times. `shared/motion.js` states as
+>   its rule 3 that "not one helper touches focus"; that was a docblock, not a check. A `focus` suite
+>   now holds it: a full activity run and a question opening must not move focus off the composer, in
+>   every one of the eight thread concepts.
+>
+> The focus suite found something on its first run, which is the reason to report it here rather than
+> only in the defect list: **activating an activity chain glyph with the keyboard dropped focus to
+> `<body>` in all eight thread concepts.** Seven of the eight rebuild their capsule on a phase-kind
+> change, so the focused glyph is destroyed and replaced, and the reader is returned to the top of
+> the document by their own click. Measured with the fix disabled, 8 of 8 fail; with it, 8 of 8 pass.
+> The weaker assertion — that a focusable control still EXISTS after the render — passes in all eight
+> while focus sits on `<body>`, so it is written as a position match instead.
+>
+> Current, measured by `tools/drive.mjs`: **28 suites, 845 assertions, 0 failed, 0 console errors,
+> 0 warnings.** `TEST_REPORT.md` is generated from the measurement and is the number to trust.
+
+
 > ## Update — 2026-08-01 (spring physics, reveal, pinning)
 >
 > ```
@@ -155,7 +188,7 @@ was not produced.
 
 ## 4. Demo data
 
-`demo/demoData.json` is the supplied file, **byte-identical at 349,661 bytes, never edited**. All
+`demo/demoData.json` is now GENERATED, at 350559 bytes (sha256 7fface4030de6e40...). The supplied file was byte-frozen at 349,661 bytes and never edited; that freeze was retired when DEMO_SCENARIO_MANIFEST.json was instantiated, because eighteen of its rows are thread TITLES and one is an opening message — corpus facts an overlay cannot state honestly. What still holds, and is verified by re-running and comparing checksums, is that the generator reproduces all three outputs byte-identically across runs. All
 additions live in `demo/demoDataExtension.js`, generated deterministically by
 `demo/build-demo-bundles.mjs`.
 
@@ -188,8 +221,11 @@ Stated plainly rather than implied.
 - **Headless matrix now runs, visual matrix does not.** The functional sweep executed in a real
   Chromium: 128 pairing/width runs, 512 assertions, zero failures, recorded in
   `interaction-test-report.json`. What is still not captured is the full VISUAL matrix
-  (history x artifact x rail x mount x reduced motion); `evidence/` holds 14 targeted captures
-  rather than the complete grid.
+  (history x artifact x rail x mount x reduced motion); `evidence/` holds 32 targeted captures
+  rather than the complete grid. (This line read "14" until 2026-08-14, when the directory already
+  held 32 — a hand-maintained count that the thing it counted had outgrown, which is the same class
+  of defect as a hand-transcribed test report. The capture set is now written by
+  `tools/drive.mjs`, so the number and the files move together.)
 - **No 28 × 32 exhaustive image set.** See section 3.
 - **Full manual visual review of all 64 pairings was not done** — the contract does not require it, and
   the 64 pairings received the automated mount smoke test instead.
@@ -228,5 +264,4 @@ the generator source, so a record that fails to land shows up as a number rather
 | `goalPhases` | start, pause, resume, replan, blocked, complete |
 | `verificationMessages` | 1 |
 
-`demo/demoData.json` is byte-frozen at 349,661 bytes and is only ever read. Regeneration is
-byte-identical across runs, verified by checksum before and after a second run.
+`demo/demoData.json` is now GENERATED, at 350559 bytes (sha256 7fface4030de6e40...). The supplied file was byte-frozen at 349,661 bytes and never edited; that freeze was retired when DEMO_SCENARIO_MANIFEST.json was instantiated, because eighteen of its rows are thread TITLES and one is an opening message — corpus facts an overlay cannot state honestly. What still holds, and is verified by re-running and comparing checksums, is that the generator reproduces all three outputs byte-identically across runs.

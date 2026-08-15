@@ -1,0 +1,156 @@
+{
+  "schema_id": "pm.chat_reference_review_report.v1",
+  "concept_id": "kimi-k3",
+  "date": "2026-08-13",
+  "correction_packet": "PM_Assistant_Chat_Dependency_Media_and_Work_Correction_2026-08-13",
+  "method_note": "Raw .mov files were opened and verified with ffmpeg 8.1.2 (ffprobe metadata matches VIDEO_SOURCE_MAP exactly: durations 3.94/19.85/36.44/8.13s, resolutions 460x640/308x640/640x508/500x640, h264); midpoint frames were extracted from each and viewed. GUI playback was not used; contact sheets and the complete keyframe sets supplied the frame-level reading.",
+  "items": [
+    {
+      "item": "reference/videos/01_message_arrival_spatial_continuity.mov",
+      "type": "raw video",
+      "opened": true,
+      "how": "ffprobe metadata verified + midpoint frame extracted and viewed",
+      "changed": "Message arrival now rises from the composer edge: thread-kit appendIncoming marks live appends with .k3t-enter; motion.css adds the k3-msg-arrive keyframes (translateY 12px + fade, transform/opacity only, reduced-motion gate collapses it). Verified by probe motionContinuity (16/16)."
+    },
+    {
+      "item": "reference/videos/02_stable_paged_questionnaire.mov",
+      "type": "raw video",
+      "opened": true,
+      "how": "ffprobe metadata verified + midpoint frame extracted and viewed",
+      "changed": "Card geometry is now locked per flow: questionnaire.js lockCardHeight() measures every page during the prepare beat (same JS turn, nothing paints) and pins the card to the tallest page; the body scrolls internally. Existing canon confirmed, not rebuilt: prev/next pager with review, preserved answers, 'Something else' row, Skip->Next->Submit morph, Submit disabled until required answers. Verified by probe questionPaging (16/16, zero jump; was 147px before)."
+    },
+    {
+      "item": "reference/videos/03_compact_execution_activity.mov",
+      "type": "raw video",
+      "opened": true,
+      "how": "ffprobe metadata verified + midpoint frame extracted and viewed",
+      "changed": "(1) Accumulating tool-kind icon cluster on activity card headers (one icon per distinct stage kind, first-appearance order; data-testid k3t-kindcluster). (2) Canonical activity kind vocabulary seeded: thread-16 groups now span thinking_summary/read/search/fetch/browser/edit/generate/test; STAGE_ICONS maps all eight; four icons (read/fetch/test/generate) added to icons.js. (3) In-progress artifact card: status 'working' shortcuts show orbit + 'Building · provenance'; seeded on thread-19. Verified by probe motionContinuity."
+    },
+    {
+      "item": "reference/videos/04_questionnaire_morph_prepare_submit.mov",
+      "type": "raw video",
+      "opened": true,
+      "how": "ffprobe metadata verified + midpoint frame extracted and viewed",
+      "changed": "Full causal lifecycle in all 4 variant idioms: a slim 'Preparing questions…' pill (orbit) opens the flow; on submit the card condenses to a 'Submitting answers…' pill that dissolves before the data resolves (submit moved after the beat so the composer cannot reclaim the slot mid-beat). Per-variant exit keyframes (morph/rise/stack/inline-strip). Reduced motion skips both beats instantly. Verified by probe questionLifecycle (16/16)."
+    },
+    {
+      "item": "reference/videos/contact_sheets/01_message_arrival_spatial_continuity_contact.jpg",
+      "type": "contact sheet",
+      "opened": true,
+      "how": "viewed in full",
+      "changed": "Corroborated the composer-edge rise + accent progress line; the progress line was not cloned (the live working region already communicates activity; copying the exact look was not required)."
+    },
+    {
+      "item": "reference/videos/contact_sheets/02_stable_paged_questionnaire_contact.jpg",
+      "type": "contact sheet",
+      "opened": true,
+      "how": "viewed in full",
+      "changed": "Corroborated fixed card geometry, reviewable paging with preserved answers, and Skip placement; drove the lockCardHeight implementation."
+    },
+    {
+      "item": "reference/videos/contact_sheets/03_compact_execution_activity_contact.jpg",
+      "type": "contact sheet",
+      "opened": true,
+      "how": "viewed in full",
+      "changed": "Showed the icon cluster accumulates as work touches new tool kinds (not a static set) — implemented as distinct-kind first-appearance ordering."
+    },
+    {
+      "item": "reference/videos/contact_sheets/04_questionnaire_morph_prepare_submit_contact.jpg",
+      "type": "contact sheet",
+      "opened": true,
+      "how": "viewed in full",
+      "changed": "Pinned the exact lifecycle beats (prepare pill -> card -> submitting pill -> composer restored) that questionnaire.js now implements."
+    },
+    {
+      "item": "reference/compact_activity_motion_contact_sheet.jpg",
+      "type": "contact sheet (high density)",
+      "opened": true,
+      "how": "viewed in full",
+      "changed": "Confirmed the '13 tools used' condensed row + expand caret + 'Worked for 1m 34s' footer pattern; the existing condensed card already carried the label/footer, the cluster addition completed the pattern."
+    },
+    {
+      "item": "reference/questionnaire_motion_contact_sheet.jpg",
+      "type": "contact sheet (high density)",
+      "opened": true,
+      "how": "viewed in full",
+      "changed": "Confirmed the internal option scrollbar inside a fixed card — implemented as .k3q-body overflow-y auto under the locked height + max-height cap."
+    },
+    {
+      "item": "reference/videos/keyframes/video_a_00..10 (11 frames)",
+      "type": "keyframe set",
+      "opened": true,
+      "how": "every frame viewed",
+      "changed": "Confirmed bubble rise + settle rhythm and the transient accent progress line; informed k3-msg-arrive's 60% opacity breakpoint."
+    },
+    {
+      "item": "reference/videos/keyframes/video_b_00..06 (7 frames)",
+      "type": "keyframe set",
+      "opened": true,
+      "how": "every frame viewed",
+      "changed": "Confirmed greyed preserved answers when re-paging (already in build), numbered options + pencil row (already in build), and fixed geometry (drove lockCardHeight)."
+    },
+    {
+      "item": "reference/videos/keyframes/video_c_00..09 (10 frames)",
+      "type": "keyframe set",
+      "opened": true,
+      "how": "every frame viewed",
+      "changed": "Confirmed the accumulating cluster, reopenable condensed row, verified-checklist row, and live 'Compiling…' artifact card; drove kindCluster + the working artifact state."
+    },
+    {
+      "item": "reference/videos/keyframes/video_d_00..08 (9 frames)",
+      "type": "keyframe set",
+      "opened": true,
+      "how": "every frame viewed",
+      "changed": "Confirmed composer-width prepare pill and the post-submit dissolve; drove beatPill + per-variant exits."
+    },
+    {
+      "item": "reference/screenshots/pm7_chat_open.png",
+      "type": "screenshot",
+      "opened": true,
+      "how": "viewed in full",
+      "changed": "No change warranted — hover-row actions, decision pills, and composer selectors were already implemented from the Revision-2 canon; the screenshot matched existing behavior."
+    },
+    {
+      "item": "reference/screenshots/pm7_popout.png",
+      "type": "screenshot",
+      "opened": true,
+      "how": "viewed in full",
+      "changed": "Confirmed the pop-out must preserve full chat structure; drove the pin-survival pop-out round-trip probe, which exposed and fixed the w1/w8 boot-restore bug (pin survived in the store but was never re-applied on remount)."
+    },
+    {
+      "item": "reference/screenshots/T3_MODEL_PICKER_REFERENCE.png",
+      "type": "screenshot",
+      "opened": true,
+      "how": "viewed in full",
+      "changed": "Provider rail + favorites + search structure already matched. The per-row keyboard-accelerator badging was deliberately NOT cloned (T3 is the documented negative benchmark, CHAT-018); instead the picker gained a real keyboard model (roving tabindex, Arrows/Home/End, Enter, listbox semantics) — verified by probe keyboardFocus."
+    },
+    {
+      "item": "DEMO_SCENARIO_MANIFEST.json",
+      "type": "JSON contract",
+      "opened": true,
+      "how": "read in full",
+      "changed": "thread-16 questionnaire replaced with the canonical 3-question set (single / skippable single / multi); seeded subagent fail->retry arc (OpenAI researcher, failures:1 + narrative); canonical capacity warning row on the capacity surface; activity kind coverage extended to all 8 canonical kinds. Deliberate adaptations kept: port collision 3000->3001 (canonical 4173->4174), four-child crew composition (richer than canonical three while keeping the canonical failure arc)."
+    },
+    {
+      "item": "DEMO_TRIGGER_CONTRACT.json",
+      "type": "JSON contract",
+      "opened": true,
+      "how": "read in full",
+      "changed": "Five trigger gaps closed: todo.block, subagent.retry, decision.branch, history.peek + history.switch_thread, system.worktree_collision — each with a devdrawer entry; verified by probe triggerCoverage (16/16). The contract's other families were already covered (map in the updated demo-trigger-report.json)."
+    },
+    {
+      "item": "PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "type": "policy doc",
+      "opened": true,
+      "how": "read in full",
+      "changed": "Setup copy rewritten: 'Provider CLI not installed' + 'PM never bundles provider CLIs. Setup installs from the provider's official source — only when you start it.' + continuation line 'Your original action is preserved and resumes after setup completes.' Ollama fixture remodeled (connection carries cli-not-found, not a masked model status). Terminology gate extended with bundling-implying copy bans; probe providerSetupCopy asserts the copy at runtime."
+    },
+    {
+      "item": "REFERENCE_MEDIA_INDEX.md / VIDEO_SOURCE_MAP.json / CORRECTION_PACKET_MANIFEST.json / 00_READ_ME_FIRST.md / CORRECTION_GOAL_PROMPT.md",
+      "type": "packet docs",
+      "opened": true,
+      "how": "read in full",
+      "changed": "Drove the inspection method (raw-first, representative keyframes allowed) and the required-proof list; no direct code change."
+    }
+  ]
+}

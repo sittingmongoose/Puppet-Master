@@ -12,16 +12,46 @@
     "frames_dir": "evidence/frames/ (36 labeled frames)"
   },
   "tested_combinations": [
-    { "axis": "themes", "detail": "All 8 themes on window-01 × thread-c01 at 750 px (frames theme-*). Retro swaps type + zero radius; Glass uses opaque plate sheens; light/dark contrast inspected." },
-    { "axis": "widths + pressure", "detail": "520/750/975/1200 px on window-05 × thread-c04 with pinned history + open artifact (frames width-*). Floor verified numerically at 520 (chat = 520 px, history degraded to compact)." },
-    { "axis": "window sweep", "detail": "All 8 windows with diagonal thread, pinned-full history + open artifact at 975 px, alternating basic-dark/glass-dark (frames window-sweep-*)." },
-    { "axis": "thread sweep narrow", "detail": "All 8 thread concepts at 520 px in window-06 with the two-questionnaire thread (thread-12) plus goal + ten-state todos, friendly-light (frames thread-narrow-*)." },
-    { "axis": "states", "detail": "Long/virtualized thread (retro-dark), goal blocked (basic-light), BSD evaluating + route warning (glass-dark), offline with queued draft + BSD Off (friendly-dark), reduced-motion questionnaire (basic-dark), pop-out (friendly-dark), ordinary wide (retro-light 1200), blocked audit under Review-limited Full Access (glass-light) (frames state-*)." },
-    { "axis": "rail states", "detail": "Side panel open in all frames; toggled closed interactively during pressure checks (width evaluation reruns via ResizeObserver)." },
-    { "axis": "dock/pop-out", "detail": "state-popout frame + probe-verified state preservation both directions." },
-    { "axis": "reduced motion", "detail": "state-reduced-motion-question frame; every continuous motion has a static twin (glow→halo, orbit→ring, cursor/caret→dimmed, breath→solid); global gate collapses transitions to final states." },
-    { "axis": "continuous resize", "detail": "Slider drags at 1-px steps exercised interactively; Periscope's 980 px crystallization is a property switch with no animation scrubbing; no overflow at any sampled width." },
-    { "axis": "persistence/reconnect", "detail": "Draft + questionnaire + route state survive reload; replay idempotency probed twice." }
+    {
+      "axis": "themes",
+      "detail": "All 8 themes on window-01 × thread-c01 at 750 px (frames theme-*). Retro swaps type + zero radius; Glass uses opaque plate sheens; light/dark contrast inspected."
+    },
+    {
+      "axis": "widths + pressure",
+      "detail": "520/750/975/1200 px on window-05 × thread-c04 with pinned history + open artifact (frames width-*). Floor verified numerically at 520 (chat = 520 px, history degraded to compact)."
+    },
+    {
+      "axis": "window sweep",
+      "detail": "All 8 windows with diagonal thread, pinned-full history + open artifact at 975 px, alternating basic-dark/glass-dark (frames window-sweep-*)."
+    },
+    {
+      "axis": "thread sweep narrow",
+      "detail": "All 8 thread concepts at 520 px in window-06 with the two-questionnaire thread (thread-12) plus goal + ten-state todos, friendly-light (frames thread-narrow-*)."
+    },
+    {
+      "axis": "states",
+      "detail": "Long/virtualized thread (retro-dark), goal blocked (basic-light), BSD evaluating + route warning (glass-dark), offline with queued draft + BSD Off (friendly-dark), reduced-motion questionnaire (basic-dark), pop-out (friendly-dark), ordinary wide (retro-light 1200), blocked audit under Review-limited Full Access (glass-light) (frames state-*)."
+    },
+    {
+      "axis": "rail states",
+      "detail": "Side panel open in all frames; toggled closed interactively during pressure checks (width evaluation reruns via ResizeObserver)."
+    },
+    {
+      "axis": "dock/pop-out",
+      "detail": "state-popout frame + probe-verified state preservation both directions."
+    },
+    {
+      "axis": "reduced motion",
+      "detail": "state-reduced-motion-question frame; every continuous motion has a static twin (glow→halo, orbit→ring, cursor/caret→dimmed, breath→solid); global gate collapses transitions to final states."
+    },
+    {
+      "axis": "continuous resize",
+      "detail": "Slider drags at 1-px steps exercised interactively; Periscope's 980 px crystallization is a property switch with no animation scrubbing; no overflow at any sampled width."
+    },
+    {
+      "axis": "persistence/reconnect",
+      "detail": "Draft + questionnaire + route state survive reload; replay idempotency probed twice."
+    }
   ],
   "untested_combinations": [
     "Full 8-theme sweep on every one of the 64 pairings (8×64×4 widths = 2048 cells): sampled representatively instead; token/theme usage is shared, so per-pairing theme risk is limited to layout, which the pairing matrix covers at default theme.",
@@ -47,5 +77,13 @@
     "raw_enums_in_prose": "none — trigger ids live in data attributes; fixture enums render through label maps",
     "native_scrollbar_leakage": "none — .pm-scroll on every scroll container including popup bodies and the Teletype status panel",
     "clipped_text": "none observed in final frames; ellipsis is deliberate on titles only"
+  },
+  "correction_full_sweep_2026_08_13": {
+    "driver": "fullmatrix.js (session scratchpad)",
+    "coverage": "Every window × its diagonal thread × all 32 theme/width configs × rail open+closed (512) plus every thread × all 32 configs in two structurally different hosts, window-06 and window-03 (512) — 1,024 captures against the scenario-v2 pressure state (pinned history + open change-set artifact + live goal).",
+    "automated_assertions": "per capture: no horizontal overflow, zero console errors, composer reachable, PM scrollbar present — 1024/1024 passed (fullmatrix-summary.json)",
+    "review_sheets": "18 composited sheets in evidence/ (fm-sheet-win1..8, fm-sheet-thr1..8, fm-sheet-railclosed, fm-sheet-thr-host2)",
+    "directly_inspected": "fm-sheet-win5, fm-sheet-win8, fm-sheet-thr2, fm-sheet-railclosed this pass, plus all session-1 sheets; remaining sheets are assertion-covered and shipped for the auditor",
+    "finding_and_fix": "Scenario-v2 artifacts initially rendered the Project-placeholder because they had no content bodies; real diff/preview/test-report/handoff bodies were added and verified rendering (v2-artifact-check)."
   }
 }

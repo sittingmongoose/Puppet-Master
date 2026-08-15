@@ -1,0 +1,220 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.protected_auth_browser_contracts.schema.v1",
+  "title": "Puppet Master Protected Auth Browser Boundary",
+  "description": "Closed discrimination between ordinary PM-native browser work and the human-only, ephemeral AuthBrowserSession. Protected auth sessions may expose only the redacted lifecycle projection defined here.",
+  "oneOf": [
+    {"$ref": "#/$defs/ordinary_browser_operation"},
+    {"$ref": "#/$defs/ordinary_browser_artifact"},
+    {"$ref": "#/$defs/protected_auth_browser_lifecycle_projection"}
+  ],
+  "$defs": {
+    "non_secret_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^[A-Za-z][A-Za-z0-9._:/#-]*$"
+    },
+    "ordinary_browser_subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "browser_session_id",
+        "session_class",
+        "session_security_class",
+        "session_epoch"
+      ],
+      "properties": {
+        "browser_session_id": {"type": "string", "minLength": 1},
+        "session_class": {
+          "type": "string",
+          "enum": [
+            "workspace_preview",
+            "detached_preview",
+            "automation_session",
+            "site_reader",
+            "research_session",
+            "testing",
+            "user_visible_browser"
+          ]
+        },
+        "session_security_class": {"const": "ordinary"},
+        "session_epoch": {"type": "integer", "minimum": 0}
+      }
+    },
+    "protected_auth_browser_subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "browser_session_id",
+        "session_class",
+        "session_security_class",
+        "session_epoch",
+        "domain_policy_ref"
+      ],
+      "properties": {
+        "browser_session_id": {"type": "string", "minLength": 1},
+        "session_class": {"const": "auth_browser"},
+        "session_security_class": {"const": "protected_auth"},
+        "session_epoch": {"type": "integer", "minimum": 0},
+        "domain_policy_ref": {"$ref": "#/$defs/non_secret_ref"}
+      }
+    },
+    "browser_subject_ref": {
+      "oneOf": [
+        {"$ref": "#/$defs/ordinary_browser_subject"},
+        {"$ref": "#/$defs/protected_auth_browser_subject"}
+      ]
+    },
+    "ordinary_browser_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "subject", "operation_id", "operation"],
+      "properties": {
+        "schema_id": {"const": "pm.protected_auth_browser_contracts.schema.v1"},
+        "record_kind": {"const": "ordinary_browser_operation"},
+        "subject": {"$ref": "#/$defs/ordinary_browser_subject"},
+        "operation_id": {"type": "string", "minLength": 1},
+        "operation": {
+          "type": "string",
+          "enum": [
+            "navigate",
+            "reload",
+            "inspect_dom",
+            "inspect_console",
+            "inspect_network",
+            "capture_screenshot",
+            "capture_recording",
+            "copy",
+            "share",
+            "export",
+            "promote",
+            "restore"
+          ]
+        },
+        "actor_kind": {
+          "type": "string",
+          "enum": ["human", "agent", "tool", "automation", "bsd", "operational_awareness"]
+        },
+        "permission_snapshot_ref": {"$ref": "#/$defs/non_secret_ref"}
+      }
+    },
+    "ordinary_browser_artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "record_kind", "subject", "artifact_id", "artifact_kind"],
+      "properties": {
+        "schema_id": {"const": "pm.protected_auth_browser_contracts.schema.v1"},
+        "record_kind": {"const": "ordinary_browser_artifact"},
+        "subject": {"$ref": "#/$defs/ordinary_browser_subject"},
+        "artifact_id": {"type": "string", "minLength": 1},
+        "artifact_kind": {
+          "type": "string",
+          "enum": [
+            "screenshot",
+            "recording",
+            "page_representation",
+            "dom_snapshot",
+            "console_log",
+            "network_log",
+            "storage_state",
+            "clipboard_payload",
+            "export_bundle",
+            "restore_point"
+          ]
+        },
+        "artifact_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "redaction_manifest_ref": {"$ref": "#/$defs/non_secret_ref"}
+      }
+    },
+    "protected_auth_browser_lifecycle_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "subject",
+        "state",
+        "human_presence_required",
+        "ephemeral",
+        "content_observation_allowed",
+        "persistence_allowed",
+        "denied_capability_codes",
+        "redaction_profile_ref",
+        "updated_at_utc"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.protected_auth_browser_contracts.schema.v1"},
+        "record_kind": {"const": "protected_auth_browser_lifecycle_projection"},
+        "subject": {"$ref": "#/$defs/protected_auth_browser_subject"},
+        "state": {
+          "type": "string",
+          "enum": [
+            "requested",
+            "awaiting_human",
+            "active_human_only",
+            "completed",
+            "cancelled",
+            "expired",
+            "failed_closed"
+          ]
+        },
+        "human_presence_required": {"const": true},
+        "ephemeral": {"const": true},
+        "content_observation_allowed": {"const": false},
+        "persistence_allowed": {"const": false},
+        "denied_capability_codes": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 15,
+          "contains": {"const": "agent_access"},
+          "allOf": [
+            {"contains": {"const": "tool_access"}},
+            {"contains": {"const": "bsd_access"}},
+            {"contains": {"const": "operational_awareness_detail"}},
+            {"contains": {"const": "navigation_command"}},
+            {"contains": {"const": "dom_inspection"}},
+            {"contains": {"const": "console_inspection"}},
+            {"contains": {"const": "network_inspection"}},
+            {"contains": {"const": "screenshot"}},
+            {"contains": {"const": "recording"}},
+            {"contains": {"const": "storage_state"}},
+            {"contains": {"const": "clipboard"}},
+            {"contains": {"const": "share_export"}},
+            {"contains": {"const": "artifact_creation"}},
+            {"contains": {"const": "restore_or_promotion"}}
+          ],
+          "items": {
+            "type": "string",
+            "enum": [
+              "agent_access",
+              "tool_access",
+              "bsd_access",
+              "operational_awareness_detail",
+              "navigation_command",
+              "dom_inspection",
+              "console_inspection",
+              "network_inspection",
+              "screenshot",
+              "recording",
+              "storage_state",
+              "clipboard",
+              "share_export",
+              "artifact_creation",
+              "restore_or_promotion"
+            ]
+          }
+        },
+        "redaction_profile_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "denied_reason_code": {"type": "string", "minLength": 1},
+        "safe_attention_state": {
+          "type": "string",
+          "enum": ["none", "human_action_required", "completion_available", "failed_closed"]
+        },
+        "created_at_utc": {"type": "string", "format": "date-time"},
+        "updated_at_utc": {"type": "string", "format": "date-time"},
+        "expires_at_utc": {"type": "string", "format": "date-time"}
+      }
+    }
+  }
+}

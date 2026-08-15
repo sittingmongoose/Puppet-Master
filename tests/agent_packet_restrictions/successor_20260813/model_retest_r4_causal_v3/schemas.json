@@ -1,0 +1,165 @@
+{
+  "schema_id": "pw-r4-subject-output-contracts-v4",
+  "protocol_id": "PW-R4-CAUSAL-20260813.3",
+  "serialization": {
+    "encoding": "UTF-8",
+    "json_object_only": true,
+    "canonical_minified_utf8": true,
+    "capture_storage_suffix": "exactly_one_LF_not_part_of_payload",
+    "capture_payload_trailing_lf": false,
+    "extra_keys": false,
+    "key_order": "stage_contract"
+  },
+  "allowed_slots": {
+    "slot-alpha": ["gpt-5.4-mini", "xhigh"],
+    "slot-bravo": ["gpt-5.4-mini", "medium"],
+    "slot-charlie": ["gpt-5.6-luna", "medium"]
+  },
+  "subject_stages": ["S10A", "S10B", "S30A", "S30B", "S40A", "S40B", "S50", "S60P", "S60C", "S60K", "S70", "S90"],
+  "deterministic_stages": ["S20A", "S20B", "S45A", "S45B", "S55", "S80"],
+  "stage_top_level_keys": {
+    "S10A": ["protocol_id", "stage", "topic_id", "source_capsule_sha256", "source_capsule_bytes", "decisions", "supported_edge_ids", "selected_tension_ids", "claim_boundary", "external_audit_status", "forbidden_action_violations"],
+    "S10B": ["protocol_id", "stage", "topic_id", "source_capsule_sha256", "source_capsule_bytes", "decisions", "supported_edge_ids", "selected_tension_ids", "claim_boundary", "external_audit_status", "forbidden_action_violations"],
+    "S20A": ["protocol_id", "stage", "topic_id", "source_capsule_sha256", "source_capsule_bytes", "base_artifact_sha256", "decisions", "supported_edge_ids", "selected_tension_ids", "claim_boundary", "external_audit_status", "forbidden_action_violations"],
+    "S20B": ["protocol_id", "stage", "topic_id", "source_capsule_sha256", "source_capsule_bytes", "base_artifact_sha256", "decisions", "supported_edge_ids", "selected_tension_ids", "claim_boundary", "external_audit_status", "forbidden_action_violations"],
+    "S30A": ["protocol_id", "stage", "candidate_artifact_sha256", "checked_decision_ids", "findings", "clean_control_count", "claim_boundary", "external_audit_status", "forbidden_action_violations"],
+    "S30B": ["protocol_id", "stage", "candidate_artifact_sha256", "checked_decision_ids", "findings", "clean_control_count", "claim_boundary", "external_audit_status", "forbidden_action_violations"],
+    "S40A": ["protocol_id", "stage", "candidate_artifact_sha256", "audit_artifact_sha256", "patch", "addressed_finding_ids", "unchanged_decision_ids", "claim_boundary", "external_audit_status", "forbidden_action_violations"],
+    "S40B": ["protocol_id", "stage", "candidate_artifact_sha256", "audit_artifact_sha256", "patch", "addressed_finding_ids", "unchanged_decision_ids", "claim_boundary", "external_audit_status", "forbidden_action_violations"],
+    "S45A": ["protocol_id", "stage", "candidate_artifact_sha256", "audit_artifact_sha256", "patch_artifact_sha256", "repaired_payload_sha256", "repaired_payload_bytes", "repaired_payload", "closed_finding_ids", "claim_boundary", "external_audit_status"],
+    "S45B": ["protocol_id", "stage", "candidate_artifact_sha256", "audit_artifact_sha256", "patch_artifact_sha256", "repaired_payload_sha256", "repaired_payload_bytes", "repaired_payload", "closed_finding_ids", "claim_boundary", "external_audit_status"],
+    "S50": ["protocol_id", "stage", "topic_artifact_hashes", "authority_matrix", "cross_topic_edges", "unresolved_tension_ids", "closed_topic_finding_ids", "claim_boundary", "external_audit_status", "forbidden_action_violations"],
+    "S55": ["protocol_id", "stage", "topic_artifact_hashes", "authority_matrix", "cross_topic_edges", "unresolved_tension_ids", "closed_topic_finding_ids", "claim_boundary", "external_audit_status", "forbidden_action_violations", "source_integration_sha256"],
+    "S60P": ["protocol_id", "stage", "role", "specialist_packet_sha256", "integration_candidate_sha256", "checked_edge_ids", "findings", "false_positive_edge_ids", "claim_boundary", "external_audit_status", "forbidden_action_violations"],
+    "S60C": ["protocol_id", "stage", "role", "specialist_packet_sha256", "integration_candidate_sha256", "checked_edge_ids", "findings", "false_positive_edge_ids", "claim_boundary", "external_audit_status", "forbidden_action_violations"],
+    "S60K": ["protocol_id", "stage", "role", "specialist_packet_sha256", "integration_candidate_sha256", "checked_edge_ids", "findings", "false_positive_edge_ids", "claim_boundary", "external_audit_status", "forbidden_action_violations"],
+    "S70": ["protocol_id", "stage", "integration_candidate_sha256", "specialist_artifact_hashes", "dispositions", "repair_target_edge_ids", "patch", "claim_boundary", "external_audit_status", "forbidden_action_violations"],
+    "S80": ["protocol_id", "stage", "topic_artifact_hashes", "authority_matrix", "cross_topic_edges", "unresolved_tension_ids", "closed_topic_finding_ids", "claim_boundary", "external_audit_status", "forbidden_action_violations", "source_candidate_sha256", "reducer_artifact_sha256"],
+    "S90": ["protocol_id", "stage", "runtime_lineage_sha256", "final_artifact_sha256", "write_receipt_sha256", "hash_chain_valid", "topic_decision_count", "closed_topic_finding_ids", "closed_specialist_finding_ids", "unsupported_edge_absent", "retained_supported_edge_ids", "write_containment_verified", "terminal", "external_audit_status", "nonclaims", "forbidden_action_violations"]
+  },
+  "call_receipt": {
+    "schema_id": "pw-r4-call-receipt-v3.1",
+    "required_keys": ["schema_id", "protocol_id", "slot", "stage", "model", "thinking", "task_id", "thread_id", "host_id", "attempt_reservation", "attempt_start", "platform_creation_metadata", "platform_metadata", "rendered_packet", "capture", "input_bindings"],
+    "single_use": true,
+    "normalized_paths": true
+  },
+  "platform_task_metadata": {
+    "schema_id": "pw-r4-platform-task-metadata-v1",
+    "required_keys": ["schema_id", "protocol_id", "slot", "stage", "controller_observed_request", "new_task_tool_result", "reopened_thread_observation"],
+    "controller_request_keys": ["requested_model", "requested_thinking", "projectless"],
+    "new_task_result_keys": ["fresh_task", "task_id", "thread_id", "host_id"],
+    "reopened_thread_keys": ["task_id", "thread_id", "host_id", "final_output_sha256", "final_output_bytes", "observed_tool_calls", "observed_delegations", "observed_user_input_requests"]
+  },
+  "platform_creation_metadata": {
+    "schema_id": "pw-r4-platform-creation-metadata-v1",
+    "required_keys": ["schema_id", "protocol_id", "slot", "stage", "controller_observed_request", "platform_creation_observation"],
+    "controller_request_keys": ["requested_model", "requested_thinking", "projectless", "rendered_packet_payload_sha256"],
+    "creation_observation_keys": ["result", "task_id", "thread_id", "host_id", "error_type", "error_message"]
+  },
+  "source_check_receipt": {
+    "schema_id": "pw-r4-source-check-receipt-v3",
+    "required_keys": ["schema_id", "protocol_id", "phase", "source_custody_sha256", "files_checked", "aggregate_bytes", "descriptor_sha256", "normalized_unique_contained", "status"],
+    "expected_files": 15,
+    "expected_aggregate_bytes": 4195641,
+    "expected_descriptor_sha256": "6937534a1ce4523d5920844732c53363e03f79aca990d8a714c477e17a4ce52a"
+  },
+  "s80_pre_observation": {
+    "schema_id": "pw-r4-s80-pre-observation-v3.1",
+    "required_keys": ["schema_id", "protocol_id", "slot", "selected_slot_root", "target_path", "selected_slot_root_prestate", "selected_slot_target_prestate", "selected_slot_tree_prestate", "resolved_containment", "existing_ancestors_nonlinks", "controller_global_guard_evidence_excluded"]
+  },
+  "s80_global_guard": {
+    "schema_id": "pw-r4-s80-global-cross-slot-guard-v2",
+    "required_keys": ["schema_id", "protocol_id", "slot", "dispatch_event_sha256", "s80_pre_observation_sha256", "global_pre_observation_sha256", "apply_patch_trace_sha256", "s80_write_receipt_sha256", "s80_payload_sha256", "outside_selected_manifest", "outside_selected_descriptor_sha256", "outside_selected_unchanged", "status"],
+    "manifest_entry_keys": ["path", "kind", "storage_sha256", "storage_bytes"]
+  },
+  "s80_global_pre_observation": {
+    "schema_id": "pw-r4-s80-global-pre-observation-v2",
+    "required_keys": ["schema_id", "protocol_id", "slot", "dispatch_event_sha256", "s80_pre_observation_sha256", "s80_payload_sha256", "outside_selected_manifest", "outside_selected_descriptor_sha256", "status"],
+    "manifest_entry_keys": ["path", "kind", "storage_sha256", "storage_bytes"]
+  },
+  "controller_apply_patch_trace": {
+    "schema_id": "pw-r4-controller-apply-patch-trace-v2",
+    "required_keys": ["schema_id", "protocol_id", "slot", "method", "operation", "target_path", "dispatch_event_sha256", "pre_observation_sha256", "global_pre_observation_sha256", "payload_sha256", "payload_bytes", "storage_sha256", "storage_bytes", "storage_terminal_lf_bytes", "status"]
+  },
+  "s80_write_receipt": {
+    "schema_id": "pw-r4-s80-write-receipt-v4",
+    "required_keys": ["schema_id", "protocol_id", "slot", "target_path", "dispatch_event_sha256", "pre_observation_sha256", "global_pre_observation_sha256", "apply_patch_trace_sha256", "s50_payload_sha256", "s55_payload_sha256", "s70_payload_sha256", "s80_payload_sha256", "s80_payload_bytes", "target_storage_sha256", "target_storage_bytes", "target_storage_terminal_lf_bytes", "slot_post_entries", "regular_target_diff_count", "unrelated_changes", "resolved_containment_verified", "existing_ancestors_nonlinks_verified", "target_payload_equals_expected_s80", "status"],
+    "slot_post_entry_keys": ["path", "kind", "storage_sha256", "storage_bytes"]
+  },
+  "launch_manifest": {
+    "schema_id": "pw-r4-launch-manifest-v3",
+    "required_keys": ["schema_id", "protocol_id", "launch_status", "immutable_files", "launch_source_receipt", "configs", "subject_visibility", "external_audit_status"],
+    "immutable_file_keys": ["path", "storage_bytes", "storage_sha256"],
+    "launch_source_receipt_keys": ["path", "payload_sha256", "payload_bytes", "storage_sha256", "storage_bytes"],
+    "config_keys": ["slot", "model", "thinking"]
+  },
+  "detached_launch_custody": {
+    "schema_id": "pw-r4-detached-launch-custody-v2",
+    "required_keys": ["schema_id", "protocol_id", "launch_manifest_path", "launch_manifest_payload_sha256", "launch_manifest_payload_bytes", "launch_manifest_storage_sha256", "launch_manifest_storage_bytes", "status", "external_audit_status"]
+  },
+  "controller_invalid_receipt": {
+    "schema_id": "pw-r4-controller-invalid-receipt-v1",
+    "required_keys": ["schema_id", "protocol_id", "wave_id", "slot", "stage", "invalid_class", "evidence_paths", "evidence_payload_sha256s", "status"],
+    "allowed_invalid_classes": ["CONTROLLER", "CUSTODY", "ROUTE", "BINDING", "SOURCE_DRIFT", "SEAL_DRIFT", "FILESYSTEM"]
+  },
+  "controller_gate_observation": {
+    "schema_id": "pw-r4-controller-gate-observation-v2",
+    "required_keys": ["schema_id", "protocol_id", "wave_id", "invalid_class", "gate_code", "observations", "status"],
+    "observation_item_keys": ["path", "expected_state", "expected_payload_sha256", "expected_payload_bytes", "expected_storage_sha256", "expected_storage_bytes", "observed_state", "lstat_mode", "symlink_target_sha256", "symlink_target_bytes", "payload_sha256", "payload_bytes", "storage_sha256", "storage_bytes", "error_type", "defect_kind"],
+    "expected_states": ["ABSENT", "REGULAR_NONLINK", "DIRECTORY_NONLINK", "MATCH_BOUND_PAYLOAD", "MATCH_BOUND_STORAGE"],
+    "observed_states": ["ABSENT", "REGULAR_NONLINK", "DIRECTORY_NONLINK", "SYMLINK", "OTHER", "RESOLUTION_ERROR"],
+    "defect_kinds": ["MISSING", "SYMLINK", "NONREGULAR", "RESOLUTION_ERROR", "UNEXPECTED_PRESENCE", "STORAGE_DRIFT"],
+    "static_inventory_internal_count": 37,
+    "static_inventory_excluded_self_hosting_paths": ["protocol.json", "r4_harness.py", "schemas.json"],
+    "external_self_hosting_abort_status": "ABORTED_EXTERNAL_SELF_HOSTING_DRIFT_NO_EMPIRICAL_CREDIT"
+  },
+  "cohort_wave_dispatch_event": {
+    "schema_id": "pw-r4-cohort-wave-dispatch-event-v1",
+    "required_keys": ["schema_id", "protocol_id", "wave_id", "kind", "prior_completion_event_sha256", "launch_source_receipt_sha256", "dispatch_set", "status"],
+    "dispatch_item_keys": ["slot", "stage", "task_id", "thread_id"]
+  },
+  "cohort_wave_completion_event": {
+    "schema_id": "pw-r4-cohort-wave-completion-event-v1",
+    "required_keys": ["schema_id", "protocol_id", "wave_id", "kind", "dispatch_event_sha256", "completion_set", "status"],
+    "completion_item_keys": ["slot", "stage", "status", "artifact_payload_sha256", "call_receipt_sha256", "task_id", "thread_id", "attempt_start_receipt_sha256", "subject_failure_receipt_sha256", "controller_invalid_receipt_sha256"]
+  },
+  "subject_attempt_reservation": {
+    "schema_id": "pw-r4-subject-attempt-reservation-v1",
+    "required_keys": ["schema_id", "protocol_id", "slot", "wave_id", "stage", "dispatch_event_sha256", "rendered_packet_payload_sha256", "task_id", "thread_id", "host_id", "status"]
+  },
+  "subject_attempt_start": {
+    "schema_id": "pw-r4-subject-attempt-start-v1",
+    "required_keys": ["schema_id", "protocol_id", "slot", "wave_id", "stage", "dispatch_event_sha256", "reservation_payload_sha256", "rendered_packet_payload_sha256", "task_id", "thread_id", "host_id", "platform_creation_metadata_payload_sha256", "status"]
+  },
+  "subject_failure_receipt": {
+    "schema_id": "pw-r4-subject-failure-receipt-v1",
+    "required_keys": ["schema_id", "protocol_id", "slot", "wave_id", "stage", "dispatch_event_sha256", "task_id", "thread_id", "host_id", "attempt_reservation", "attempt_start", "platform_creation_metadata", "platform_metadata", "controller_requested_model", "controller_requested_thinking", "rendered_packet_payload_sha256", "failure_kind", "observed_final_output_sha256", "observed_final_output_bytes", "observed_tool_calls", "observed_delegations", "observed_user_input_requests", "status"],
+    "failure_kinds": ["TASK_CREATION_ERROR", "TOOL_ACTIVITY_NO_FINAL", "DELEGATION_NO_FINAL", "USER_INPUT_REQUEST_NO_FINAL", "TIMEOUT", "TASK_ERROR", "EMPTY_FINAL_OUTPUT", "NO_FINAL_OUTPUT"]
+  },
+  "cohort_wave_ledger": {
+    "schema_id": "pw-r4-cohort-wave-ledger-v1",
+    "required_keys": ["schema_id", "protocol_id", "launch_source_receipt_sha256", "waves"],
+    "wave_item_keys": ["wave_id", "dispatch_event_sha256", "completion_event_sha256", "status"],
+    "runtime_wave_order": ["W10", "W20", "W30", "W40", "W45", "W50", "W55", "W60", "W70", "W80", "W90"]
+  },
+  "result_manifest": {
+    "schema_id": "pw-r4-config-result-manifest-v1",
+    "required_keys": ["schema_id", "protocol_id", "slot", "model", "thinking", "launch_source_receipt_sha256", "cohort_wave_ledger_sha256", "controller_invalid_receipt_sha256", "s80_global_pre_sha256", "s80_global_guard_sha256", "stage_results", "terminal_status"],
+    "stage_result_keys": ["stage", "status", "artifact_payload_sha256", "call_receipt_sha256", "subject_failure_receipt_sha256", "controller_invalid_receipt_sha256"]
+  },
+  "cohort_close": {
+    "schema_id": "pw-r4-cohort-close-v1",
+    "required_slots": ["slot-alpha", "slot-bravo", "slot-charlie"],
+    "required_keys": ["schema_id", "protocol_id", "launch_source_receipt_sha256", "close_source_receipt_sha256", "cohort_wave_ledger_sha256", "controller_invalid_receipt_sha256", "config_results", "terminal_status", "claim_boundary", "external_audit_status"],
+    "config_result_keys": ["slot", "result_manifest_sha256", "terminal_status"]
+  },
+  "controller_invalid_close": {
+    "schema_id": "pw-r4-controller-invalid-close-v1",
+    "required_keys": ["schema_id", "protocol_id", "detected_gate", "controller_invalid_receipt_sha256", "launch_source_receipt_sha256", "close_source_observation_sha256", "cohort_wave_ledger_sha256", "config_results", "terminal_status", "claim_boundary", "external_audit_status"],
+    "config_result_keys": ["slot", "terminal_status"]
+  },
+  "dynamic_expected": {
+    "all_stages": "computed from frozen scorer key, actual validated predecessor payloads, receipts, and source payload bytes",
+    "S90": "computed per allowed slot from the complete validated runtime chain and canonical S80 write receipt"
+  }
+}

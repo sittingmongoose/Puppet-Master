@@ -1,0 +1,36 @@
+{
+  "schema_id": "pm.prompt_complexity_successor.deterministic_preflight_spec.v2",
+  "spec_id": "successor-preflight-20260813-v2-spec-001",
+  "attempt_id": "successor-preflight-20260813-v2",
+  "subject_or_provider_calls_allowed": false,
+  "checker_writes_allowed": false,
+  "gates": ["CONTROLLER","BOUNDARY","CUSTODY","HISTORY","SURFACES","QUESTIONS","NO_SUBJECT","SELFTEST","TERMINAL","REPORT"],
+  "checks": [
+    {"check_id":"V2-CTL-001","gate":"CONTROLLER","assertion":"Fixed identity, isolated/bytecode-disabled invocation, strict artifact set, and mutation/process/network-free checker source."},
+    {"check_id":"V2-CTL-002","gate":"CONTROLLER","assertion":"Strict JSON rejects duplicate keys, nonfinite numbers, invalid UTF-8, and boolean integer impostors."},
+    {"check_id":"V2-ROOT-001","gate":"BOUNDARY","assertion":"The recursive V2 artifact set is exact, regular, nonsymlinked, single-link, and contained."},
+    {"check_id":"V2-CUST-001","gate":"CUSTODY","assertion":"All ten frozen V1 files match hard-bound hashes and preserve the failed predecessor."},
+    {"check_id":"V2-CUST-002","gate":"CUSTODY","assertion":"Exactly 29 unique source bindings match current bytes and authority/path closure."},
+    {"check_id":"V2-CUST-003","gate":"CUSTODY","assertion":"All 26 archive members and all 25 manifest rows match without extraction."},
+    {"check_id":"V2-HIST-001","gate":"HISTORY","assertion":"Exactly 59 inherited files outside the entire successor subtree match the disposition manifest."},
+    {"check_id":"V2-HIST-002","gate":"HISTORY","assertion":"Disposition counts and stopped/zero-call/V4-invalid historical facts recompute exactly."},
+    {"check_id":"V2-HIST-003","gate":"HISTORY","assertion":"V1 remains NOT_READY solely on DP-020 with the exact boundary defect preserved."},
+    {"check_id":"V2-SURF-001","gate":"SURFACES","assertion":"The 54 inherited IDs close exactly and PROVIDER-001/RUN-002 are the two evidenced additions."},
+    {"check_id":"V2-SURF-002","gate":"SURFACES","assertion":"The 56 class counts, Chat boundaries/gaps, evidence requirements, and non-completeness claim close."},
+    {"check_id":"V2-JARED-001","gate":"QUESTIONS","assertion":"Exactly JQ-001 through JQ-015 remain unanswered, unselected, and Jared-owned."},
+    {"check_id":"V2-CALL-001","gate":"NO_SUBJECT","assertion":"Every forbidden activity counter is an integer zero; preparation roles remain distinct; roster/method remain unselected."},
+    {"check_id":"V2-SELF-001","gate":"SELFTEST","assertion":"Capture commitment detects omission, addition, type, and one-field mutations."},
+    {"check_id":"V2-SELF-002","gate":"SELFTEST","assertion":"Typed lineage is order-invariant, duplicate-intolerant, and mutation-sensitive."},
+    {"check_id":"V2-SELF-003","gate":"SELFTEST","assertion":"Synthetic scorer and 11-level terminal precedence are closed, order-invariant, and mutation-sensitive."},
+    {"check_id":"V2-TERM-001","gate":"TERMINAL","assertion":"The acyclic reducer derives READY only for all-pass and NOT_READY for every single-failure mutation, without report input."},
+    {"check_id":"V2-IO-001","gate":"BOUNDARY","assertion":"Pre/post read-universe and V2-root snapshots match; runtime audit saw no write, process, network, or dynamic-load attempt; boundary observation is complete and unchanged."},
+    {"check_id":"V2-REPORT-001","gate":"REPORT","assertion":"Durable JSON/Markdown projections agree one-way with independently derived READY and preserve failures/nonclaims."}
+  ],
+  "terminal_rule": {
+    "all_19_pass": "READY_FOR_JARED_TEST_PLAN",
+    "any_failed_or_blocked": "NOT_READY",
+    "report_is_terminal_input": false
+  },
+  "upstream_observation_policy": "V1 Plan-gate failures remain named residual failures. Re-running side-effecting aggregate validators is neither required nor permitted for V2 readiness.",
+  "claim_boundary": "V2 READY means only that deterministic preparation is ready for Jared's roster and method choices."
+}

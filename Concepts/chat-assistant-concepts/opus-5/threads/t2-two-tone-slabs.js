@@ -119,6 +119,17 @@
     var view = this.ctx.store.view(tid);
     var msgs = data.visibleSlice(tid, view.loadedFrom);
 
+    /* 01_message_arrival_spatial_continuity.mov, frames 47 to 63 (about 280ms at 57.6fps): the new
+     * message enters as a flattened sliver at a seam and expands into its box, while everything
+     * already on screen keeps its identity. Rebuilding the whole list cannot say that - every slab
+     * is new, so every slab replays its tone fade, and the one that actually arrived is
+     * indistinguishable from the twenty that did not.
+     *
+     * So an append is an append. When the only difference is messages added at the END of the same
+     * thread and the same loaded range, the existing slabs are kept and the new ones are inserted
+     * through motion.displace(); anything else is a genuine rebuild. */
+    if (this._canAppendOnly(tid, view, msgs)) { this._appendTurns(msgs); return; }
+
     U().empty(this.list);
     this.rendered = {};
     this.lastThreadId = tid;
@@ -142,6 +153,11 @@
       this.list.appendChild(turn);
       prevRole = msgs[i].role;
     }
+
+    /* What the next render compares against to decide whether anything ARRIVED. */
+    this._renderedIds = msgs.map(function (m) { return m.id; });
+    this._renderedFrom = view.loadedFrom;
+    this._lastRole = prevRole;
 
     this.renderSurfaces();
     this.renderQuestion();
@@ -173,6 +189,92 @@
       self.scrollCtl.preserveAcross(self.list, function () { self.renderThread(); });
     });
     return u.el('div', { class: 't2-older-wrap' }, [btn]);
+  };
+
+  /* True only when this render differs from the last by messages APPENDED to the end. A changed
+   * thread, a changed loaded range, a removal, or any edit to an existing slab all fail this and
+   * fall back to the rebuild, because none of those is an arrival and animating a reflow as though
+   * something had just been said would be a lie about what happened. */
+  T2Thread.prototype._canAppendOnly = function (tid, view, msgs) {
+    if (!this._renderedIds || tid !== this.lastThreadId) return false;
+    if (view.loadedFrom !== this._renderedFrom) return false;
+    if (msgs.length <= this._renderedIds.length) return false;
+    for (var i = 0; i < this._renderedIds.length; i++) {
+      if (msgs[i].id !== this._renderedIds[i]) return false;
+    }
+    return true;
+  };
+
+  /* The running indicator is the FOOT of the list, not a message, so an arriving turn is filed
+   * above it rather than after it. */
+  T2Thread.prototype._listTail = function () {
+    return (this.liveEl && this.liveEl.parentNode === this.list) ? this.liveEl : null;
+  };
+
+  T2Thread.prototype._appendTurns = function (msgs) {
+    var self = this;
+    var svc = this.ctx.services;
+    var start = this._renderedIds.length;
+    var prevRole = this._lastRole;
+    var tail = this._listTail();
+
+    /* When the window offers no work-surface host the chip run hangs off the LATEST assistant turn,
+     * so an arriving assistant turn takes that role over. Recomputing before the turns are built is
+     * what lets buildChipsRow reserve the nested container on the new turn, and detaching the run
+     * that is still parented to the previous one is what stops _surfaceContainer from building a
+     * second run and leaving the first on screen underneath it. */
+    var prevLatest = this.latestAssistantId;
+    for (var a = msgs.length - 1; a >= 0; a--) {
+      if (msgs[a].role === 'assistant') { this.latestAssistantId = msgs[a].id; break; }
+    }
+    if (!this.ctx.capabilities.workSurfaceHost && this.latestAssistantId !== prevLatest) {
+      /* Only in the inline case. When the window DOES offer a host the run lives there, it is not
+       * moving anywhere, and detaching it would throw away the chip identity that the count morph
+       * depends on.
+       *
+       * The whole reserved container goes, not just the run inside it: an emptied one would leave a
+       * flex gap under the previous assistant turn exactly where the chips used to be, and a chips
+       * row that existed only to hold it would be an empty row. */
+      var prevRec = prevLatest ? this.rendered[prevLatest] : null;
+      var slot = prevRec ? prevRec.surfaceChipsEl : null;
+      if (slot && slot.parentNode) {
+        var row = slot.parentNode;
+        row.removeChild(slot);
+        if (!row.children.length && row.parentNode) {
+          row.parentNode.removeChild(row);
+          prevRec.chipsRowEl = null;
+        }
+        prevRec.surfaceChipsEl = null;
+      }
+    }
+
+    function insert() {
+      var last = null;
+      for (var i = start; i < msgs.length; i++) {
+        last = self.buildTurn(msgs[i], prevRole);
+        self.list.insertBefore(last, tail);
+        prevRole = msgs[i].role;
+      }
+      /* displace stamps the node this returns, so it names the turn that actually arrived. */
+      return last;
+    }
+
+    /* Measure, mutate, re-pin - in that order. A reader sitting at the bottom is carried with the
+     * new slab; a reader who has scrolled up is left where they are, which is the whole reason
+     * stickIfAtBottom measures BEFORE the mutation. */
+    var run = function () {
+      if (svc.motion && svc.motion.displace) svc.motion.displace(self.list, insert);
+      else insert();
+    };
+    if (this.scrollCtl && this.scrollCtl.stickIfAtBottom) this.scrollCtl.stickIfAtBottom(run);
+    else run();
+
+    this._renderedIds = msgs.map(function (m) { return m.id; });
+    this._lastRole = prevRole;
+
+    this.renderSurfaces();
+    this.renderQuestion();
+    this.syncLive();
   };
 
   T2Thread.prototype.buildTurn = function (msg, prevRole) {
@@ -532,6 +634,15 @@
       }];
     }
 
+    /* ---- the run capsule, above the chips.
+     *
+     * It renders into its own element inserted before the chip run, so what the run is DOING sits
+     * above what is true of the thread, and so groupReopen has real siblings below it to carry when a
+     * phase is disclosed. Built here rather than after `_diffChipRun` for one reason: the chips are
+     * still on screen from the previous pass, so the displacement the capsule causes on its first
+     * appearance is measured against boxes that actually exist. */
+    this._renderRunCapsule(container, pendingQuestion);
+
     /* A pending question yields the WHOLE run. The bsd and artifacts chips are read from the thread and
      * the advice service rather than through `activeFor`, so without this they survived the yield and left
      * a two-chip stub beside the question - a partial cluster, which is worse than none. Advice hides with
@@ -668,6 +779,485 @@
     }
   };
 
+  /* ---------------------------------------------------------------- the run capsule
+   *
+   * t2's reading of 03_compact_execution_activity.mov. Everything else in this concept demotes to a
+   * chip, and the run is no exception: the capsule IS a chip run - one chip per phase the run
+   * entered, in entry order, with a lead chip carrying the run's own state.
+   *
+   * Why a chip run is the honest reading here rather than a convenient one. `_diffChipRun` above is
+   * the one place in this workspace that keeps a chip's ELEMENT across renders instead of rebuilding
+   * the row, and the two behaviours the reference is most precise about both need an element that was
+   * already on screen. `Exploring 5 files` becoming `6 files` becoming `7 files` (f.208 -> f.286 ->
+   * f.338) is a morph of a chip that has been sitting there since the phase started, not a new chip
+   * wearing a new string; and the glyph that reopens `Explored 7 files` at f.1300 is the same button
+   * the reader watched do the work. Rebuild the row and both claims become theatre.
+   *
+   * Where this parts company with the reference on purpose: the dense record - command, cache,
+   * permission, operation input, per-file rows - stays in a popup sheet. A block growing inline is
+   * the single thing this concept exists to avoid, so the capsule discloses the phase's own sentence
+   * and hands the record to `buildOpDetail`, which is the sheet every other chip here already opens.
+   *
+   * What is NOT used, and why: `motion.condense` empties its element and rebuilds it from a summary
+   * callback. That is right for a concept whose collapsed form replaces its expanded one, and wrong
+   * here twice over - the chain has to SURVIVE condensation (f.910 keeps every glyph, because each
+   * one is still the route back into its phase), and rebuilding it would destroy the element identity
+   * this whole capsule rests on. Condensing is therefore a morph of the lead chip, not a teardown.
+   */
+
+  /* The capsule's host, kept for exactly the reason the chip run is kept: a chip whose element is
+   * rebuilt cannot morph. It sits ABOVE the domain chips because the run is what is happening now and
+   * the chips are what is true of the thread.
+   *
+   * `_surfaceContainer` empties the work-surface host whenever it has to rebuild the run - a remount,
+   * or a window handing over a different region - which detaches this with it. Dropping the chip map
+   * in the same breath is what keeps `_runChipEls` from holding elements that are no longer on
+   * screen, which is the failure mode that would make a later morph animate nothing. */
+  T2Thread.prototype._runHostFor = function (chipRun) {
+    var u = U();
+    var svc = this.ctx.services;
+    var parent = chipRun.parentNode;
+    if (!parent) return null;
+    if (this._runHost && this._runHost.parentNode === parent) return this._runHost;
+
+    var host = u.el('div', { class: 't2-run', data: { condensed: '0', running: '0' } });
+    this._runChain = u.el('div', { class: ['t2-run-chain', 'pmx-chain'] });
+    host.appendChild(this._runChain);
+    this._runHost = host;
+    this._runChipEls = {};
+    this._runLead = null;
+    this._runDetail = null;
+    this._runDetailId = null;
+    this._runSubjectId = null;
+
+    /* displace, not an entrance: an arriving element is simply THERE and its NEIGHBOURS move to make
+     * room. The chips and the artifact handoff below the capsule are those neighbours, and they slide
+     * down rather than jumping the first time a run reports itself. */
+    if (svc.motion && svc.motion.displace) {
+      svc.motion.displace(parent, function () { parent.insertBefore(host, chipRun); return host; });
+    } else {
+      parent.insertBefore(host, chipRun);
+    }
+    return host;
+  };
+
+  T2Thread.prototype._dropRunCapsule = function () {
+    if (this._runHost && this._runHost.parentNode) this._runHost.parentNode.removeChild(this._runHost);
+    this._runHost = null;
+    this._runChain = null;
+    this._runChipEls = {};
+    this._runLead = null;
+    this._runDetail = null;
+    this._runDetailId = null;
+    this._runSubjectId = null;
+  };
+
+  T2Thread.prototype._renderRunCapsule = function (chipRun, yielded) {
+    var svc = this.ctx.services;
+
+    /* Guarded at every step. The service may be absent entirely, `read` returns null for a thread
+     * with no authored stages, and a run nobody has started has nothing true to say yet. All three
+     * render NOTHING: an empty frame saying "no activity" is reserved space for a surface that is not
+     * active, which is the one thing the work-surface contract forbids. A pending question yields the
+     * capsule for the same reason it yields the chips - a partial cluster beside a question is worse
+     * than none. */
+    var run = (!yielded && svc.runtrace && svc.runtrace.read) ? svc.runtrace.read(this.tid()) : null;
+    if (!run || !run.started) { this._dropRunCapsule(); return; }
+
+    var host = this._runHostFor(chipRun);
+    if (!host) return;
+
+    /* The subject is the phase whose sentence the capsule is showing: the one the reader disclosed,
+     * or else the running one while the run is expanded. Condensed with nothing open has no subject
+     * at all, and that is the resting state - `13 tools used` and the chain, nothing more (f.910). */
+    /* The settled phase is still the subject until the run is condensed or the next phase starts.
+     * This read dropped it: after `settle` the run has no `running` phase and is not yet condensed,
+     * so the subject went null and the capsule showed its chain with NO sentence at all — which is
+     * exactly the moment reference 03 shows the past tense arriving (`Reading 7 files` becoming
+     * `Read 7 files`, f.1170). Falling back to the last entered phase is what makes the tense flip
+     * observable rather than a state that exists only between two renders. */
+    var subject = run.open
+      || (run.condensed ? null : (run.running || run.chain[run.chain.length - 1]))
+      || null;
+
+    host.setAttribute('data-condensed', run.condensed ? '1' : '0');
+    host.setAttribute('data-running', run.running ? '1' : '0');
+
+    this._syncRunLead(host, run);
+    var handingOver = this._syncRunChain(run, subject);
+    this._syncRunDetail(host, run, subject);
+    this._runSubjectId = subject ? subject.id : null;
+
+    /* A handover schedules its own roll, because the chip it has to reach does not exist until beat
+     * two. Rolling now as well would scroll to where that chip is about to be and then again. */
+    if (!handingOver) {
+      var rec = subject ? this._runChipEls[subject.id] : null;
+      this._rollChain(rec ? rec.btn : null);
+    }
+  };
+
+  /* The lead chip. ONE element across both states rather than a summary chip and a collapse chip that
+   * replace each other, because the resting form of a run is a morph of the control that produced it:
+   * `Condense` becomes `13 tools used` in place (f.910). The words change, so countMorph honestly
+   * falls back to a label cross-fade - what it must not do, and here cannot do, is swap the element. */
+  T2Thread.prototype._syncRunLead = function (host, run) {
+    var self = this;
+    var u = U();
+    var svc = this.ctx.services;
+    var text = run.condensed ? (run.summaryLabel || 'Run') : 'Condense';
+    var rec = this._runLead;
+
+    if (!rec) {
+      var btn = u.el('button', { class: ['t2-chip', 't2-run-lead'], type: 'button', data: { chip: 'run' } });
+      if (svc.icons) btn.appendChild(svc.icons.get(this._runGlyph('beaker'), 13));
+      var label = u.el('span', { class: ['t2-chip-label', 't2-run-sum'], text: text });
+      btn.appendChild(label);
+      rec = this._runLead = { btn: btn, label: label, text: text };
+
+      /* The run is read fresh inside the handler rather than closed over. This element outlives every
+       * render that touches it, so a captured record would be a snapshot of the run as it looked the
+       * first time the capsule was built - and the control would act on a run that has moved on. */
+      this._on(btn, 'click', function () {
+        var rt = self.ctx.services.runtrace;
+        if (!rt) return;
+        var live = rt.read(self.tid());
+        if (!live) return;
+        var mo = self.ctx.services.motion;
+        if (live.openId) { rt.close(self.tid()); return; }
+        if (live.condensed) {
+          /* Reopening the most recent phase is what a summary chip means. It goes through groupReopen
+           * so the chips and the handoff below are carried down rather than jumping (f.910: the run
+           * condenses and the prose, verification and artifact below it are pushed, never replaced). */
+          if (mo && mo.groupReopen && self._runHost) {
+            mo.groupReopen(self._runHost, function () { rt.open(self.tid()); });
+          } else {
+            rt.open(self.tid());
+          }
+          return;
+        }
+        rt.condense(self.tid());
+      });
+      host.insertBefore(btn, this._runChain);
+    } else if (rec.text !== text) {
+      if (svc.motion && svc.motion.countMorph) svc.motion.countMorph(rec.label, text);
+      else rec.label.textContent = text;
+      rec.text = text;
+    }
+
+    rec.btn.setAttribute('data-condensed', run.condensed ? '1' : '0');
+    rec.btn.setAttribute('aria-expanded', run.condensed ? 'false' : 'true');
+    /* Worked-for belongs to the run rather than to any phase, and the resting state is one chip plus
+     * the chain - so it rides on the control's own title instead of buying a second row. */
+    rec.btn.title = run.workedSeconds
+      ? (run.summaryLabel + ' \u00b7 Worked for ' + F().duration(run.workedSeconds))
+      : run.summaryLabel;
+  };
+
+  /* Every glyph name is checked against the icon set before use, the same guard the domain chips run
+   * on: a missing name would render an empty box where a chip's only mark is. */
+  T2Thread.prototype._runGlyph = function (name) {
+    var svc = this.ctx.services;
+    return (svc.icons && svc.icons.has && svc.icons.has(name)) ? name : 'dot';
+  };
+
+  /* One phase chip. The button IS the random access of behaviour 1: clicking the pencil at f.1170
+   * reopens `Made 1 create, 2 edits`, clicking the magnifier at f.1300 reopens `Explored 7 files`,
+   * and this is that control in this concept's material. */
+  T2Thread.prototype._makeRunChip = function (p) {
+    var self = this;
+    var u = U();
+    var svc = this.ctx.services;
+    var pid = p.id;
+
+    /* One element per phase, enforced HERE rather than trusted.
+     *
+     * A chip can be built for a phase that already has one — the handover inserts its chip on beat
+     * two, asynchronously, so any reconciliation done during the render that scheduled it runs too
+     * early to see the result. Overwriting the record without detaching the element it replaced left
+     * the old chip in the chain: ten chips for a three-phase run, the extras frozen on whatever
+     * sentence they last held (`Reading 5 files` long after the count reached seven) and unreachable,
+     * because the record that owned them had been replaced. */
+    var prior = this._runChipEls && this._runChipEls[pid];
+    if (prior && prior.slot && prior.slot.parentNode) prior.slot.parentNode.removeChild(prior.slot);
+
+    /* The slot is the box phaseHandover opens from zero width, which is why the chip is wrapped
+     * rather than sitting in the chain directly. */
+    var slot = u.el('span', { class: 'pmx-chain-slot' });
+    var btn = u.el('button', {
+      class: ['t2-chip', 't2-run-chip'], type: 'button',
+      data: { chip: 'phase', kind: p.kind, state: p.running ? 'running' : 'done', open: '0' }
+    });
+    if (svc.icons) btn.appendChild(svc.icons.get(this._runGlyph(p.glyph), 13));
+    /* Two elements, not one: the verb flips tense on its own (behaviour 3, `Exploring` -> `Explored`)
+     * while the argument keeps its words and moves only its digits, and countMorph can only do that
+     * to an element whose whole text is the part being rewritten. */
+    var verbEl = u.el('span', { class: 't2-run-verb' });
+    var argEl = u.el('span', { class: ['t2-chip-label', 't2-run-arg'] });
+    btn.appendChild(verbEl);
+    btn.appendChild(argEl);
+    slot.appendChild(btn);
+
+    var rec = { slot: slot, btn: btn, verbEl: verbEl, argEl: argEl, verbText: '', argText: '' };
+    this._runChipEls[pid] = rec;
+
+    this._on(btn, 'click', function () {
+      var rt = self.ctx.services.runtrace;
+      if (!rt) return;
+      var mo = self.ctx.services.motion;
+      /* groupReopen carries the siblings BELOW the capsule, so disclosing a phase pushes the domain
+       * chips and the artifact handoff down as one block instead of making them jump. */
+      if (mo && mo.groupReopen && self._runHost) {
+        mo.groupReopen(self._runHost, function () { rt.open(self.tid(), pid); });
+      } else {
+        rt.open(self.tid(), pid);
+      }
+    });
+    return rec;
+  };
+
+  /* One chip's state and words. `hold` leaves the text alone because phaseHandover owns that beat. */
+  T2Thread.prototype._writeRunChip = function (rec, p, isSubject, hold) {
+    rec.btn.setAttribute('data-state', p.running ? 'running' : 'done');
+    rec.btn.setAttribute('data-open', isSubject ? '1' : '0');
+    rec.btn.setAttribute('aria-expanded', isSubject ? 'true' : 'false');
+    rec.btn.setAttribute('aria-label', p.headline);
+    rec.btn.title = p.headline;
+    if (hold) return;
+    /* Only the subject wears its sentence; every other chip is its glyph alone. That is what keeps
+     * the run one line and the chain an index rather than a list. */
+    this._morphRunText(rec, 'verb', isSubject ? p.verb : '');
+    this._morphRunText(rec, 'arg', isSubject ? p.argument : '');
+  };
+
+  /* Behaviour 2, and the reason it works here: the digits are rewritten inside a chip that was
+   * already on screen (f.208 -> f.286 -> f.338), so `Exploring 5 files` -> `7 files` moves the number
+   * and nothing else - same row, same y, same word `files` in the layout box it already had.
+   *
+   * Morph ONLY on change. t1 rebuilds its capsule every render and can therefore morph
+   * unconditionally; here the element survives, so calling countMorph with an unchanged string would
+   * replay the digit animation on every unrelated view touch - a count that appears to tick when no
+   * work happened, which is a lie told by animation. */
+  T2Thread.prototype._morphRunText = function (rec, part, text) {
+    var svc = this.ctx.services;
+    var el = part === 'verb' ? rec.verbEl : rec.argEl;
+    var key = part === 'verb' ? 'verbText' : 'argText';
+    if (rec[key] === text) return;
+    rec[key] = text;
+    if (svc.motion && svc.motion.countMorph) svc.motion.countMorph(el, text);
+    else { el.textContent = text; return; }
+
+    /* The memo is updated OPTIMISTICALLY, before the write lands. countMorph's non-digit path defers
+     * through swapText's double requestAnimationFrame, so a dropped frame — a backgrounded tab, a
+     * throttled rAF — would leave the memo claiming this text while the element still shows the old
+     * one, and the `rec[key] === text` guard above would then refuse to repaint it FOREVER.
+     *
+     * phaseHandover carries its own endNow() backstop for exactly this reason; the chip morph had
+     * none. This is that backstop: past the animation's own window, assert the text. */
+    if (rec[key + 'Timer']) clearTimeout(rec[key + 'Timer']);
+    rec[key + 'Timer'] = setTimeout(function () {
+      rec[key + 'Timer'] = null;
+      /* Only if the memo still expects this exact string. A later morph owns the element by then. */
+      if (rec[key] === text && el.textContent !== text) el.textContent = text;
+    }, 320);
+  };
+
+  T2Thread.prototype._clearRunChipText = function (rec) {
+    rec.verbEl.textContent = '';
+    rec.argEl.textContent = '';
+    rec.verbText = '';
+    rec.argText = '';
+  };
+
+  /* The chain: one chip per ENTERED phase, in entry order (f.208 two, f.390 three, f.780 four,
+   * f.910 six). Returns true when a handover is in flight, which is the one case where the caller
+   * must not roll the chain itself. */
+  T2Thread.prototype._syncRunChain = function (run, subject) {
+    var self = this;
+    var svc = this.ctx.services;
+    var chain = this._runChain;
+    this._runChipEls = this._runChipEls || {};
+
+    var wanted = {};
+    run.chain.forEach(function (p) { wanted[p.id] = true; });
+    for (var id in this._runChipEls) {
+      if (!Object.prototype.hasOwnProperty.call(this._runChipEls, id)) continue;
+      if (wanted[id]) continue;
+      /* Only a reset ever takes a phase out of the chain. Nothing else removes a chip, because the
+       * chip is the only route back into its phase and dropping one would silently make that part of
+       * the run unreachable. */
+      var gone = this._runChipEls[id];
+      if (gone.slot && gone.slot.parentNode) gone.slot.parentNode.removeChild(gone.slot);
+      delete this._runChipEls[id];
+    }
+
+    /* A phase HANDS OVER only when the sentence moves to a chip that is arriving now, at the end of
+     * the chain. A reader reopening an old phase, or a whole finished run appearing at once, is not a
+     * handover and must not be animated as one - and deferring a chip that is not the newest entry
+     * would also append it out of entry order. */
+    var last = run.chain.length ? run.chain[run.chain.length - 1] : null;
+    var arriving = (subject && last && subject.id === last.id && !this._runChipEls[subject.id]) ? subject : null;
+    var outgoing = (arriving && this._runSubjectId && this._runSubjectId !== arriving.id)
+      ? this._runChipEls[this._runSubjectId] : null;
+
+    run.chain.forEach(function (p) {
+      if (arriving && arriving.id === p.id) return;    /* inserted below, on beat two */
+      var rec = self._runChipEls[p.id] || self._makeRunChip(p);
+      self._writeRunChip(rec, p, !!(subject && subject.id === p.id), rec === outgoing);
+      /* Re-appending a survivor is how DOM order is kept equal to entry order without touching the
+       * element itself: appendChild moves a node it already owns rather than recreating it. */
+      chain.appendChild(rec.slot);
+    });
+
+    /* The chain is whatever `_runChipEls` says it is, and nothing else.
+     *
+     * The record map and the chain element have separate lifetimes here: the surface host is rebuilt
+     * when an arriving turn takes over the inline chip run, and a rebuild that replaced the map while
+     * leaving the old chips in place left them in the DOM, unreachable and still carrying whatever
+     * sentence they last held. The visible result was a chain of six or more chips where the run had
+     * three phases, the stale ones frozen on intermediate text like `Reading 5 files` long after the
+     * count had reached seven.
+     *
+     * Reconciling by identity rather than trusting the map to be complete is what makes that
+     * impossible to reach, whatever caused the map and the element to disagree. */
+    var live = {};
+    for (var liveId in this._runChipEls) {
+      if (Object.prototype.hasOwnProperty.call(this._runChipEls, liveId)) live[liveId] = this._runChipEls[liveId].slot;
+    }
+    var slots = [];
+    for (var si = 0; si < chain.children.length; si++) slots.push(chain.children[si]);
+    slots.forEach(function (slot) {
+      var known = false;
+      for (var k in live) {
+        if (Object.prototype.hasOwnProperty.call(live, k) && live[k] === slot) { known = true; break; }
+      }
+      if (!known && slot.parentNode === chain) chain.removeChild(slot);
+    });
+
+    if (!arriving) return false;
+
+    var born = null;
+    function insert() {
+      born = self._makeRunChip(arriving);
+      self._writeRunChip(born, arriving, true, false);
+      chain.appendChild(born.slot);
+      return born.btn;
+    }
+
+    var mo = svc.motion;
+    if (!mo || !mo.phaseHandover) {
+      if (outgoing) this._clearRunChipText(outgoing);
+      insert();
+      this._rollChain(born.btn);
+      return true;
+    }
+
+    /* Two beats, and the ORDER is the whole point (f.194-211): the phase that is finishing lets go of
+     * its sentence first and settles into a plain glyph, and only then does the arriving phase open
+     * its slot from zero width. A single cross-fade of the whole row reads as the run being replaced,
+     * which loses the fact that the finished phase survives as an index entry.
+     *
+     * The reference can fade the new label in before its glyph arrives because there a label and a
+     * glyph are two objects. In a chip run they are one, so the new sentence rides in with its chip
+     * on beat two. That deviation is forced by the material; the causal order it exists to protect -
+     * settle, then arrive - is intact. */
+    if (outgoing) {
+      /* Both halves of the outgoing sentence fade together. phaseHandover drives the timing from the
+       * count-bearing half, which is the half the reference is explicit about. */
+      if (mo.swapText) mo.swapText(outgoing.verbEl, '');
+      else outgoing.verbEl.textContent = '';
+      outgoing.verbText = '';
+      outgoing.argText = '';
+    }
+    mo.phaseHandover(chain, outgoing ? outgoing.argEl : null, insert, '')
+      .then(function () { self._rollChain(born ? born.btn : null); });
+    return true;
+  };
+
+  /* The disclosed phase, and only ever one line of it. Behaviour 4 is that reopening PUSHES what is
+   * below the capsule down rather than replacing it, so what grows here has to stay small enough that
+   * the push is a nudge: the phase's own sentence, its duration, and a chip that opens the record.
+   * Everything dense stays in the sheet, which is where every record in this concept lives. */
+  T2Thread.prototype._syncRunDetail = function (host, run, subject) {
+    var self = this;
+    var u = U();
+    var svc = this.ctx.services;
+
+    var ops = subject ? this._runOps(run) : [];
+    var op = null;
+    var i;
+    for (i = 0; i < ops.length; i++) { if (ops[i].id === subject.id) { op = ops[i]; break; } }
+
+    /* No subject, or a phase with nothing of its own to say, removes the line entirely rather than
+     * leaving an empty rule below the chain - the resting state is one chip and the chain. */
+    if (!subject || (!subject.detail && subject.durationMs == null && !op)) {
+      if (this._runDetail && this._runDetail.parentNode) this._runDetail.parentNode.removeChild(this._runDetail);
+      this._runDetail = null;
+      this._runDetailId = null;
+      return;
+    }
+    /* Nothing inside a phase changes while it runs except its count, and the count lives on the chip.
+     * So this is rebuilt when the disclosed phase changes and left alone on every other pass. */
+    if (this._runDetailId === subject.id && this._runDetail && this._runDetail.parentNode === host) return;
+    if (this._runDetail && this._runDetail.parentNode) this._runDetail.parentNode.removeChild(this._runDetail);
+
+    var el = u.el('div', { class: 't2-run-detail', data: { kind: subject.kind } });
+    el.appendChild(u.el('span', {
+      class: 't2-run-detail-text',
+      text: subject.detail || subject.headline
+    }));
+    if (subject.durationMs != null) {
+      el.appendChild(u.el('span', {
+        class: 't2-run-detail-dur',
+        text: F().duration(Math.round(subject.durationMs / 1000))
+      }));
+    }
+    if (op) {
+      var rec = u.el('button', { class: ['t2-chip', 't2-run-record'], type: 'button', data: { chip: 'record' } }, [
+        u.el('span', { class: 't2-chip-label', text: 'Record' })
+      ]);
+      /* The same sheet, the same two contents: `buildOpDetail` for this phase, and `buildOpsIndex`
+       * behind it through `_swapSheet` so the reader can step sideways into any other operation the
+       * run performed without ever stacking a second overlay. */
+      this._on(rec, 'click', function (ev) {
+        svc.popup.open({
+          anchorEl: ev.currentTarget, kind: 'panel', width: 360,
+          build: function (h, api) { self.buildOpDetail(h, api, op, ops); }
+        });
+      });
+      el.appendChild(rec);
+    }
+
+    host.appendChild(el);
+    this._runDetail = el;
+    this._runDetailId = subject.id;
+  };
+
+  /* The operations the run actually performed, in authored order. Filtered to the chain rather than
+   * taken whole from the thread: an index over every authored stage would offer the reader work the
+   * run never did, and a glyph - or a row - is a claim that the work happened. */
+  T2Thread.prototype._runOps = function (run) {
+    var svc = this.ctx.services;
+    if (!svc.opcard || !svc.opcard.forThread) return [];
+    var entered = {};
+    run.chain.forEach(function (p) { entered[p.id] = true; });
+    return svc.opcard.forThread(this.ctx, this.tid()).filter(function (op) { return !!entered[op.id]; });
+  };
+
+  /* Behaviour 5: the chain SCROLLS, it never truncates. The reference caps at six glyphs and rolls
+   * the oldest off the left, then scrolls it back when the reader clicks toward it - the glyph is not
+   * deleted, because it is the route back into that phase. The roll runs in a rAF because the chip it
+   * has to bring into view may have been appended in this very pass and has no box until layout. */
+  T2Thread.prototype._rollChain = function (into) {
+    var self = this;
+    var svc = this.ctx.services;
+    var chain = this._runChain;
+    if (!chain || !svc.motion || !svc.motion.chainRoll) return;
+    global.requestAnimationFrame(function () {
+      if (self._runChain !== chain || !chain.isConnected) return;
+      svc.motion.chainRoll(chain, into && into.isConnected ? { into: into } : null);
+    });
+  };
+
   /* ---------------------------------------------------------------- the operation card
    *
    * The card only ever exists inside a popup sheet. That is not a shortcut: this concept demoted
@@ -770,12 +1360,16 @@
     if (rows.length) {
       var rowsEl = u.el('div', { class: 't2-op-rows' });
       rows.forEach(function (r) {
-        rowsEl.appendChild(u.el('div', { class: 't2-op-row' }, [
+        var opRow = u.el('div', { class: 't2-op-row' }, [
           u.el('span', { class: 't2-op-verb', text: r.verb }),
-          u.el('span', { class: 't2-op-target', text: r.target }),
-          u.el('span', { class: 't2-op-add', text: '+' + (r.added || 0) }),
-          u.el('span', { class: 't2-op-rem', text: '\u2212' + (r.removed || 0) })
-        ]));
+          u.el('span', { class: 't2-op-target', text: r.target })
+        ]);
+        /* `|| 0` printed `+0 -0` on every row that has no delta at all — reads, searches, fetches and
+         * checks. That is not a safe default: it asserts a zero-line edit, which is a different claim
+         * from "this operation did not touch lines". Absent means absent. */
+        if (r.added != null) opRow.appendChild(u.el('span', { class: 't2-op-add', text: '+' + r.added }));
+        if (r.removed != null) opRow.appendChild(u.el('span', { class: 't2-op-rem', text: '\u2212' + r.removed }));
+        rowsEl.appendChild(opRow);
       });
       card.appendChild(rowsEl);
     }
@@ -1018,10 +1612,19 @@
    *
    *   - `_capsuleEl` is created once per flow and REUSED across every phase and every question;
    *   - the phases are attributes on that element (`data-phase`), never separate nodes;
-   *   - only its CONTENTS are rebuilt, and each rebuild interpolates from the height it had before
-   *     through `PMXReveal.springHeight`, so the bounds animate instead of jumping;
+   *   - only its CONTENTS are rebuilt, inside the mutation `motion.resizeBounce` wraps, so the bounds
+   *     travel from the size the capsule had to the size it needs instead of jumping;
    *   - `data-pmx-qid` on the element is the identity proof: it is the same node in the same position
    *     before and after the expansion, which is exactly what the probe asserts.
+   *
+   * The resize used to run on `PMXReveal.springHeight`, called by hand around each rebuild. It now runs
+   * on `motion.resizeBounce`, and the swap is not cosmetic. resizeBounce is PMConcept7's model-picker
+   * resize - a height on `--ease-bounce` (y1 = 1.72, so it overshoots and settles) with a one-shot
+   * scale beat riding on top - which is this product's own tuned answer to "a box changed size", and it
+   * measures the end state with `height: auto` so a clamp is respected rather than overrun. Having ONE
+   * owner of this element's height is the other half of it: the CSS beside `.t2-capsule` has warned
+   * since it was written that two owners of one property turn a spring into a stutter, and a hand-rolled
+   * spring plus a primitive would have been exactly that.
    *
    * The composer is owned by the WINDOW, not by this concept, so "above the composer" means the last
    * thing in the question host - the region every window places immediately above its composer.
@@ -1051,8 +1654,21 @@
       var dying = this._capsuleEl;
       this._capsuleEl = null;
       this._capsuleQid = null;
+      this._capsuleOptCount = null;
       if (dying && dying.parentNode) {
+        /* The teardown finishes ~180ms later, and by then this thread may not be the one on screen.
+         * Switching away to a thread with no questionnaire and straight back is an ordinary thing to
+         * do — it is what a reader does, and what the paging suite does to make the entrance
+         * observable — and it left this callback holding a host that the NEW thread had already
+         * built its capsule into. `U().empty(host)` then deleted a live card belonging to a
+         * questionnaire that had nothing to do with the one being torn down.
+         *
+         * The teardown is only allowed to finish if the world it was scheduled for is still the
+         * world on screen: same thread, and no capsule built since. */
+        var forThread = this.tid();
         this._compressAndRemove(dying, function () {
+          if (self.tid() !== forThread) return;
+          if (self._capsuleEl) return;
           U().empty(host);
           self._renderQuestionReceipt(host, flow ? flow.receipt : null);
         });
@@ -1071,35 +1687,117 @@
     var fresh = false;
     if (!this._capsuleEl || !this._capsuleEl.parentNode || this._capsuleQid !== flow.id) {
       U().empty(host);
-      this._capsuleEl = u.el('div', { class: 't2-capsule', data: { pmxQid: flow.id, phase: flow.status } });
+      /* `pmx-resize-up` is the shared opt-in for a bottom-anchored resize, and this is precisely the
+       * case it exists for: the capsule is the last thing in the question host, which every window
+       * places immediately above its composer. The transcript above is the flexible sibling, so the
+       * capsule expanding moves its OWN top edge and no slab below it shifts. */
+      this._capsuleEl = u.el('div', {
+        class: 't2-capsule pmx-resize-up',
+        data: { pmxQid: flow.id, phase: flow.status }
+      });
       this._capsuleQid = flow.id;
+      this._capsuleOptCount = null;
       host.appendChild(this._capsuleEl);
       fresh = true;
     }
 
     var el = this._capsuleEl;
-    /* Measure BEFORE the rebuild: this is the height the bounds interpolate FROM. */
-    var from = global.PMXReveal ? global.PMXReveal.measure(el) : null;
 
-    el.setAttribute('data-phase', flow.status);
-    /* `expanded` drives the material change (slim strip versus card) in CSS. One attribute, two
-     * appearances, one element. */
-    el.setAttribute('data-expanded', (flow.status === 'active') ? '1' : '0');
-    U().empty(el);
+    /* Everything that changes the capsule's size happens inside here, and nowhere else, so the bounce
+     * measures one before and one after rather than chasing a box that is still being written. */
+    function rebuild() {
+      el.setAttribute('data-phase', flow.status);
+      /* `expanded` drives the material change (slim strip versus card) in CSS. One attribute, two
+       * appearances, one element. */
+      el.setAttribute('data-expanded', (flow.status === 'active') ? '1' : '0');
+      U().empty(el);
 
-    if (flow.status === 'preparing') {
-      el.appendChild(u.el('span', { class: 't2-capsule-spinner pmx-spin' }));
-      el.appendChild(u.el('span', { class: 't2-capsule-text', text: 'Preparing questions' }));
-    } else if (flow.status === 'submitting') {
-      el.appendChild(u.el('span', { class: 't2-capsule-spinner pmx-spin' }));
-      el.appendChild(u.el('span', { class: 't2-capsule-text', text: 'Submitting answers' }));
-    } else {
-      this._buildCapsuleCard(el, flow);
+      if (flow.status === 'preparing') {
+        el.appendChild(u.el('span', { class: 't2-capsule-spinner pmx-spin' }));
+        el.appendChild(u.el('span', { class: 't2-capsule-text', text: 'Preparing questions' }));
+      } else if (flow.status === 'submitting') {
+        el.appendChild(u.el('span', { class: 't2-capsule-spinner pmx-spin' }));
+        el.appendChild(u.el('span', { class: 't2-capsule-text', text: 'Submitting answers' }));
+      } else {
+        self._buildCapsuleCard(el, flow);
+      }
     }
 
-    /* Interpolate the bounds. On the very first paint there is nothing to spring from, so the capsule
-     * simply arrives. */
-    if (!fresh && from != null && global.PMXReveal) global.PMXReveal.springHeight(el, from);
+    var count = this._capsuleOptionCount(flow);
+    var countChanged = this._capsuleOptCount != null && this._capsuleOptCount !== count;
+    this._capsuleOptCount = count;
+
+    if (fresh || !svc.motion || !svc.motion.resizeBounce) {
+      /* The very first paint has no size to have come from. The capsule simply arrives, which is what
+       * the slim strip appearing above the composer already is. */
+      rebuild();
+    } else {
+      this._endCapsuleBounce();
+      this._capsuleBounce = svc.motion.resizeBounce(el, rebuild, {
+        bounceClass: countChanged ? 'pmx-size-bounce-strong' : 'pmx-size-bounce'
+      });
+    }
+
+    this._choreographCapsule(el, fresh);
+  };
+
+  /* Land any bounce still in flight before starting anything else on this element.
+   *
+   * One interaction renders the capsule twice - answering notifies the store, which re-enters update()
+   * and renders, and then the click handler renders again on its own account. The second pass would
+   * otherwise measure a height that is mid-flight and pinned inline, and the first pass's own
+   * `transitionend` listener would fire on the SECOND bounce's transition and strip its inline height
+   * halfway through. `finish()` commits the previous change outright, so the new one starts from a
+   * settled box - which is also the honest reading of an interrupted resize: the size it was travelling
+   * to already happened, and only the travel is abandoned. */
+  T2Thread.prototype._endCapsuleBounce = function () {
+    var h = this._capsuleBounce;
+    this._capsuleBounce = null;
+    if (h && h.state && h.state() === 'running' && h.finish) { try { h.finish(); } catch (e) {} }
+  };
+
+  /* How many options the capsule is showing, which picks the bounce's amplitude. The reference draws
+   * the line at the option COUNT: an ordinary change nudges the box, a change of count re-shapes it and
+   * takes `pmx-size-bounce-strong`. Preparing and submitting are their own sentinels because the strip
+   * becoming the card, and the card becoming the strip again, are the two largest changes this one
+   * element ever makes. */
+  T2Thread.prototype._capsuleOptionCount = function (flow) {
+    if (!flow || flow.status !== 'active') return -1;
+    if (flow.atEnd) return -2;
+    var q = flow.question;
+    return q && q.options ? q.options.length : 0;
+  };
+
+  /* The entrance, and the reason it is gated.
+   *
+   * Reference 02 is a REVIEWABLE questionnaire: paging back to question one shows the answer still
+   * there and animates nothing on the way in. Without a gate the option row cascade fires on every
+   * render, so travelling backwards looked exactly like travelling forwards. `motion.firstVisit` is
+   * stamped on the capsule, which is why this only works against an element that survives its renders -
+   * a capsule rebuilt per pass would call every page a first visit.
+   *
+   * The resize is deliberately NOT gated with it. A revisited question can still be a different size
+   * from the one you just left, and the box saying so is a report of fact, not an entrance. */
+  T2Thread.prototype._choreographCapsule = function (el, fresh) {
+    var R = global.PMXReveal;
+    var svc = this.ctx.services;
+    if (!R || !el) return;
+
+    var key = R.keyFor(svc, this.tid());
+    /* Asked once per render and before any early return, because firstVisit records the visit as a
+     * side effect. It also subsumes the per-keystroke case: a freeform answer re-renders on every
+     * character and the key does not move while you are typing into one question. */
+    var first = svc.motion && svc.motion.firstVisit ? svc.motion.firstVisit(el, key) : !!fresh;
+    if (!first || R.reduced(el)) return;
+
+    /* The cascade ladder is `.pmx-cascade > *`, so it belongs on the options' own row container. */
+    var list = el.querySelector('.t2-capsule-opts');
+    if (!list) return;
+    var opts = Array.prototype.slice.call(list.querySelectorAll('.t2-capsule-opt'));
+    if (!opts.length) return;
+
+    R.stagger(list, opts);
+    global.setTimeout(function () { R.clearStagger(list, opts); }, fresh ? 900 : 700);
   };
 
   /* The expanded card - still inside the capsule element. */
@@ -1243,17 +1941,32 @@
   T2Thread.prototype._compressToCapsule = function (el, done, label) {
     var u = U();
     var R = global.PMXReveal;
+    var svc = this.ctx.services;
     if (!el) { done(); return; }
-    var from = R ? R.measure(el) : null;
-    el.setAttribute('data-expanded', '0');
-    el.setAttribute('data-phase', 'submitting');
-    U().empty(el);
-    /* The specified copy for the compressed phase. `qflow.act('submit')` settles the record in the same
-     * interaction, so this is the ONLY frame in which the submitting state is visible - which is exactly
-     * why it must carry the right words rather than a generic transitional label. */
-    el.appendChild(u.el('span', { class: 't2-capsule-spinner pmx-spin' }));
-    el.appendChild(u.el('span', { class: 't2-capsule-text', text: label || 'Submitting answers' }));
-    if (from != null && R) R.springHeight(el, from);
+
+    function shrink() {
+      el.setAttribute('data-expanded', '0');
+      el.setAttribute('data-phase', 'submitting');
+      U().empty(el);
+      /* The specified copy for the compressed phase. `qflow.act('submit')` settles the record in the same
+       * interaction, so this is the ONLY frame in which the submitting state is visible - which is exactly
+       * why it must carry the right words rather than a generic transitional label. */
+      el.appendChild(u.el('span', { class: 't2-capsule-spinner pmx-spin' }));
+      el.appendChild(u.el('span', { class: 't2-capsule-text', text: label || 'Submitting answers' }));
+    }
+
+    /* The compression is a size change like any other and goes through the same single owner, so the
+     * card shrinking back into the strip is the exact inverse of the strip opening into the card. It
+     * takes the firmer beat because it is the largest change this element makes:
+     * 04_questionnaire_morph_prepare_submit.mov is built on that symmetry. */
+    if (svc.motion && svc.motion.resizeBounce) {
+      this._endCapsuleBounce();
+      this._capsuleBounce = svc.motion.resizeBounce(el, shrink, { bounceClass: 'pmx-size-bounce-strong' });
+    } else {
+      shrink();
+    }
+    /* The next expansion is a new shape, not a continuation of this one. */
+    this._capsuleOptCount = null;
     global.setTimeout(done, R && R.reduced(el) ? 0 : 180);
   };
 
@@ -1418,6 +2131,19 @@
     if (this.inlineSurfaces && this.inlineSurfaces.parentNode) this.inlineSurfaces.parentNode.removeChild(this.inlineSurfaces);
     if (this.inlineQuestion && this.inlineQuestion.parentNode) this.inlineQuestion.parentNode.removeChild(this.inlineQuestion);
     this.rendered = {};
+    /* The append-only path keys off these. A destroyed instance that left them behind would let the
+     * next render mistake a fresh mount for an append and skip building the slabs already on
+     * screen. */
+    this._renderedIds = null;
+    this._renderedFrom = null;
+    this._lastRole = null;
+    /* The capsule outlives its renders, so a destroyed instance has to let go of it explicitly -
+     * otherwise the next mount would adopt a capsule belonging to a dead thread, along with the
+     * firstVisit record stamped on it. */
+    this._capsuleEl = null;
+    this._capsuleQid = null;
+    this._capsuleOptCount = null;
+    this._endCapsuleBounce();
   };
 
   global.PMX.thread.register('t2', {

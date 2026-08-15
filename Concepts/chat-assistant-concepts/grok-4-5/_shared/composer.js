@@ -208,7 +208,7 @@
       btn.setAttribute(
         'aria-description',
         st.id === 'provider-setup-required'
-          ? 'Provider setup required · choose another model or repair in Settings'
+          ? 'Install required · official provider source · not bundled / not baseline · choose another model or open Settings setup'
           : st.reason || 'Send disabled'
       );
     } else if (btn) {
@@ -224,8 +224,12 @@
         actionHost.className = 'pm-provider-setup-actions';
         actionHost.setAttribute('data-provider-setup-actions', '1');
         actionHost.innerHTML =
+          '<div class="pm-provider-setup-copy" data-provider-setup-copy>' +
+          '<strong>Install required</strong> · acquire from official provider/package source · ' +
+          'not bundled in PM core · not in execution baseline · installation and authentication stay separate' +
+          '</div>' +
           '<button type="button" class="pm-btn" data-provider-setup-choose>Choose another model</button>' +
-          '<button type="button" class="pm-btn pm-btn-ghost" data-provider-setup-settings>Settings ownership</button>';
+          '<button type="button" class="pm-btn pm-btn-ghost" data-provider-setup-settings>Open Settings setup</button>';
         target.appendChild(actionHost);
         actionHost.addEventListener('click', function (ev) {
           var choose = ev.target.closest('[data-provider-setup-choose]');
@@ -239,7 +243,8 @@
             }
             if (
               sess.sendDisabledReason &&
-              String(sess.sendDisabledReason).indexOf('Provider setup') >= 0
+              (String(sess.sendDisabledReason).indexOf('Provider setup') >= 0 ||
+                String(sess.sendDisabledReason).indexOf('Install required') >= 0)
             ) {
               sess.sendDisabledReason = '';
             }
@@ -255,10 +260,19 @@
             return;
           }
           if (settings) {
+            var path =
+              (sess && sess.providerSetupRequired && sess.providerSetupRequired.settingsPath) ||
+              'settings://providers/xai';
+            var cont =
+              (sess && sess.providerSetupRequired && sess.providerSetupRequired.continuationToken) ||
+              '';
             var msg =
-              'Provider & account managers · owned by Settings · deep-link not wired in this concept';
+              'Deep-link ' +
+              path +
+              (cont ? ' · continuation ' + cont : '') +
+              ' · Settings-owned Install/Setup · Chat is not Provider Manager · stub in this concept';
             if (window.PMChatMotion && typeof window.PMChatMotion.toast === 'function') {
-              window.PMChatMotion.toast(msg, 2400);
+              window.PMChatMotion.toast(msg, 2800);
             } else if (window.PMChatHost && typeof window.PMChatHost.toast === 'function') {
               window.PMChatHost.toast(msg);
             }

@@ -302,6 +302,7 @@
 
   function create(demoData) {
     var data = clone(demoData || {});
+    var baselineDemoData = clone(data);
     var scriptedReplies = Object.create(null);
     (data.scriptedReplies || []).forEach(function (reply) {
       if (reply && reply.id) scriptedReplies[reply.id] = reply;
@@ -868,6 +869,23 @@
       if (idx < questions.length - 1) q.currentQuestionIndex = idx + 1;
       emit();
       return true;
+    }
+
+    /** Advance to next question without marking the current one skipped. */
+    function nextQuestion(threadId) {
+      var q = getActiveQuestionnaire(threadId);
+      if (!q) return false;
+      var idx = q.currentQuestionIndex | 0;
+      var questions = q.questions || [];
+      if (idx < 0 || idx >= questions.length) return false;
+      if (questions[idx]) questions[idx].skipped = false;
+      if (idx < questions.length - 1) {
+        q.currentQuestionIndex = idx + 1;
+        emit();
+        return true;
+      }
+      emit();
+      return false;
     }
 
     /** Answer current question; advance in-place when more remain, else submit. */
@@ -1612,6 +1630,104 @@
       return true;
     }
 
+    function rehydrateFromDemo(demoDataOverride, sessionExtras) {
+      var data = clone(
+        demoDataOverride != null
+          ? demoDataOverride
+          : baselineDemoData != null
+            ? baselineDemoData
+            : {}
+      );
+      var scripted = Object.create(null);
+      (data.scriptedReplies || []).forEach(function (reply) {
+        if (reply && reply.id) scripted[reply.id] = reply;
+      });
+      scriptedReplies = scripted;
+
+      var threadList = Array.isArray(data.threads) ? data.threads : [];
+      var nextThreads = Object.create(null);
+      threadList.forEach(function (src) {
+        if (!src || !src.id) return;
+        nextThreads[src.id] = hydrateThread(src);
+      });
+      Object.keys(threads).forEach(function (key) {
+        delete threads[key];
+      });
+      Object.keys(nextThreads).forEach(function (key) {
+        threads[key] = nextThreads[key];
+      });
+
+      var keys = Object.keys(threads);
+      var firstKey = keys[0] || null;
+      session.activeThreadKey = firstKey;
+      session.historyMode = 'closed';
+      session.historyPinned = false;
+      session.approval = null;
+      session.warning = null;
+      session.compactNow = { status: 'idle', progress: 0 };
+      session.outbox = [];
+      session.notifications = [];
+      session.crew = { requested: null, effective: null, waves: [] };
+      session.crewId = '';
+      session.crewDefaultPrompted = false;
+      session.crewConfirmOpen = false;
+      session.crewPendingConfirm = null;
+      session.artifactWorkspace = {
+        open: false,
+        artifactId: null,
+        status: 'ready',
+        queue: [],
+        scrollTop: 0,
+        errorMessage: null
+      };
+      session.composerState = 'ordinary';
+      session.composerStateReason = '';
+      session.sendDisabledReason = '';
+      session.providerSetupRequired = null;
+      session.providerUpdate = null;
+      session.accessLimitedBy = null;
+      session.spellcheckSuggestions = false;
+      if (session.sync) session.sync.state = 'live';
+
+      keys.forEach(function (key) {
+        var t = threads[key];
+        if (!t) return;
+        if (!srcHasLocal(threadList, key)) {
+          t.localState = sessionDefaultsAsLocal(session);
+        }
+      });
+
+      search.query = '';
+      search.scope = 'current';
+      search.selectedResultId = null;
+      search.focusedTargetMessageId = null;
+      search.highlightUntil = null;
+
+      ui.perThread = Object.create(null);
+      keys.forEach(function (key) {
+        ui.perThread[key] = defaultThreadUi(threads[key].goal);
+      });
+
+      demo.replyCursorByThread = Object.create(null);
+      demo.runningByThread = Object.create(null);
+      keys.forEach(function (key) {
+        demo.replyCursorByThread[key] = threads[key].scriptedReplyCursor | 0;
+        demo.runningByThread[key] = null;
+      });
+
+      var extras = sessionExtras || data.sessionExtras || null;
+      if (extras) {
+        if (extras.capacityForecast) session.capacityForecast = clone(extras.capacityForecast);
+        if (Array.isArray(extras.notifications) && extras.notifications.length) {
+          session.notifications = clone(extras.notifications);
+        }
+      }
+
+      emit();
+      getTestState();
+      return true;
+    }
+
     function getTestState() {
       var state = serializeState();
       window.__pmChatState = state;
@@ -1649,9 +1765,11 @@
       getActiveQuestionnaire: getActiveQuestionnaire,
       answerQuestion: answerQuestion,
       skipQuestion: skipQuestion,
+      nextQuestion: nextQuestion,
       cancelQuestionnaire: cancelQuestionnaire,
       answerAndAdvanceQuestionnaire: answerAndAdvanceQuestionnaire,
       submitQuestionnaire: submitQuestionnaire,
+      rehydrateFromDemo: rehydrateFromDemo,
       toggleMessageExpanded: toggleMessageExpanded,
       setScrollAnchor: setScrollAnchor,
       setSelector: setSelector,

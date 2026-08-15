@@ -1,0 +1,19 @@
+{
+  "schema_id":"pm.prompt_complexity_successor.boundary_observation.v3",
+  "attempt_id":"successor-preflight-20260813-v3",
+  "exclusive_write_root":"/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/",
+  "attempt_write_root":"/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/v3/",
+  "controller_write_method":"apply_patch only",
+  "shell_redirections":0,
+  "temporary_files":0,
+  "subprocess_spawning_validators":0,
+  "subject_or_provider_calls":0,
+  "outside_successor_snapshot_before":{"sha256":"3b79e61c1f3fba3707635dc5716d1c00bec1369daa6d429cf2825acbd99f0710","directories":1527,"regular_files":12206,"symlinks":0,"other":0,"regular_file_bytes":3176119547},
+  "outside_successor_snapshot_after":{"sha256":"3b79e61c1f3fba3707635dc5716d1c00bec1369daa6d429cf2825acbd99f0710","directories":1527,"regular_files":12206,"symlinks":0,"other":0,"regular_file_bytes":3176119547},
+  "unchanged":true,
+  "recursive_v3_symlink_count":0,
+  "v1_v2_lineage_files_unchanged":true,
+  "qualifying_checker":{"observation_kind":"prequalified expectation corroborated by authoritative stdout","isolated_mode":true,"bytecode_disabled":true,"stdout_regular_file":false,"stderr_bytes":0,"filesystem_mutations":0,"subprocesses":0,"network_operations":0,"audit_hook_forbidden_attempts":0,"expected_exit_code":0},
+  "status":"pass",
+  "claim_boundary":"Attempt-window evidence only; not production sandbox certification or attribution of external activity."
+}

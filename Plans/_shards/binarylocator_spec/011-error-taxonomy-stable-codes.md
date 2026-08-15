@@ -4,7 +4,7 @@ Source: `Plans/BinaryLocator_Spec.md`
 
 Source lines: L304-L324
 
-Source SHA256: `4bc8a2144a608d9e0d25c83ba118b210c360d0914918b70605718f68802c9554`
+Source SHA256: `68378275f233e682c37ebbeb405a91ea064046815bf2454781f7589caba3304b`
 
 ---
 
@@ -26,6 +26,6 @@ BinaryLocator MUST return stable error codes suitable for UI rendering, logs, an
 - UI copy, buttons, and view behavior MUST be specified in the canonical UI SSOT (`Plans/FinalGUISpec.md` + typed commands in `crates/ui_commands/`), using these stable error codes and the `trace` output as inputs. (ContractRef: Invariant:INV-003)
 - Setup + Health/Doctor map BinaryLocator results for Cursor/Claude as follows: `Found` → Installed, `NotFound` → Not Installed, `FoundButInvalid` → Failed (show `BinaryErrorCode` + trace details). (ContractRef: Invariant:INV-003)
 - Manual path controls are Cursor/Claude only: a `Use manual path` checkbox gates a native file picker value that is passed as `override_path`; toggling off clears `override_path` and reverts to normal probe layers. (ContractRef: ConfigKey:advanced_config.cli_paths)
-- Playwright installation state is out of scope for BinaryLocator and must be driven by Browser Tools health checks, not Provider CLI lookup. (ContractRef: Primitive:Provider)
+- External user-Project test-tool installation and health are outside BinaryLocator; Project tooling policy owns ordinary external test commands, and no such tool is a PM Browser capability. (ContractRef: Primitive:Provider)
 
 ---

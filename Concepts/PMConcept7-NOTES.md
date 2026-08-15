@@ -4,7 +4,295 @@
 
 `Concepts/PMConcept7.html` is the refactored, cleaned, runtime-lighter derivative of `Concepts/PMConcept6.html`, produced for one purpose: a Slint-porting agent should be able to read it without being confused by dead code, iteration debris, or HTML-only implementation artifacts. It is functionally equivalent and visually identical to PMConcept6 with exactly one approved exception (glass wallpaper pre-bake, below), plus the rev-4 chat/page-switch work that now lives upstream in parts.
 
-## Current Home Workspace implementation — 2026-08-13 (rev 17, Wave 4)
+## Current Home Workspace implementation — 2026-08-15 (rev 21, Wave 8: kebabs above-centre, floating-chat Dock back, snap-while-dragging, real home scroll kill)
+
+The user rejected all four wave-7 items; each re-diagnosis found the wave-7
+fix had missed the real mechanism.
+
+1. **Kebabs above-centre.** The dots' ink centre sits at button-local
+   top+10, so wave-7's editor top:10 left the ink 3px BELOW the tab-label
+   line. Now editor `top: 6px` (ink 1px above the label line) and dashboard
+   `top: 2px` (ink 3px above the title line); the grip's hit-triangle
+   concession is confined to glyph-free padding (comment documents the
+   geometry).
+2. **Floating-chat "Dock back".** The retired T20 kebab's one exclusive row
+   was Dock Back while floating -- and the base chat menu always renders its
+   DOCKED variant (T20 floats #chatPanel itself), so a floated chat showed a
+   useless "Pop out window" and no way back but the grip. The chat branch of
+   attachSurfaceControls now injects an idempotent `Dock back` row
+   (`[data-pm-home-chat-row]`, base pm6-chat-more-item styling) into the
+   base menu, shown only while floating; "Pop out window" hides while
+   floating. Dispatch rides wireActions' capture listener WITHOUT stopping
+   propagation, so the base delegated handler still closes the menu with the
+   portal animation. Round-trip verified; exactly one injected row survives
+   chat innerHTML rebuild churn.
+3. **Snap-while-dragging (the real "behind tab visible" fix).** The plate
+   was already opaque in all 8 themes; the hole was the GRAB-SPRING:
+   grabbing a non-active tab flipped lastActive and EDSHAPE SPRUNG the
+   plate across (~12 frames) while the carried tab painted nothing -- and
+   sub-0.5px moves fed the spring-preservation guard, holding the hole open
+   for slow drags. EDSHAPE sync() now forces animate=false (and bypasses
+   the guard) whenever the strip contains `.tab.dragging` -- per the
+   reference canon, drag is 1:1 with NO independent easing. Verified: 0.00px
+   worst plate-vs-tab lag over 2,615 samples of a deliberately slow drag;
+   selection springs still travel (18 intermediates). Glass themes gain a
+   drag-scoped frost (`opacity: .92` on the plate while dragging): faint
+   unreadable ghost, steady state fully opaque, no backdrop blur (T16 count
+   pin stays 134; a comment mentioning the property name by its literal
+   spelling tripped the pin once during this wave -- the count is a raw
+   substring count, comments included).
+4. **Real home scroll kill.** Wave-7's `overflow-x: clip; overflow-y: auto`
+   COMPUTES to hidden (CSS Overflow 3 s3.1) -- hosts stayed scroll
+   containers. Wave 8 removes the overflow at its three sources instead:
+   (a) empty docks get `padding: 0` (the pm6-bottom-scroll stamp's 4px
+   floored a 0px grid track at 8px); (b) PM_EDGE layoutBands hides all four
+   frost bands for zero-extent scrollports (the empty right dock parked a
+   30px band past the grid edge); (c) home_main joins the row docks in
+   suppressing the LAST visible sibling's divider -- it was pairless
+   (beginResize found no partner; diluted single-basis fallback) and its
+   16x56 grab-glow overhung the host by ~11px. Belt: `overflow: clip` BOTH
+   axes on #pm-home-workspace, .pm-home-host-grid and
+   #panel-dashboard.pm-home-owned (real clip -- both axes -- destroys the
+   scroll containers). Scrollbars: the wave-7 scrollbar-color line (which
+   defeated the opt-in list's transparent idle ink) is gone, and hosts get
+   ID-anchored `scrollbar-width: none` + zero-width webkit bars (beats the
+   10px pm6-bottom-scroll opt-in by specificity on every engine; on Safari
+   16/17 only the webkit rules matter). Deliberate exception, documented in
+   the media block: below 1320px home_main returns to `overflow-x: auto` so
+   the min-width floors trade crush for (invisible-bar) scroll instead of
+   stranding content. Verified: zero scrollable overflow on every home box,
+   programmatic scrollLeft pinned at 0, wheel storms move nothing, dead-dock
+   bands display:none, home_main resizers == visible-1.
+
+Artifact 3,619,880 bytes sha256
+`213a3ee9946d58ea17c0aa9b824a5c8d496db1fe8484a77444ea41c5797d0b63`;
+base `3d82a850dad0e412e3abafe1b3f0717e34071425152efd93d3c49fa6e85408c3`;
+receipt `8da264423e5d95b389c92c184f8ef8d398e93d43997dee9d90e6286978ab5963`.
+
+## Previous Home Workspace implementation — 2026-08-14 (rev 20, Wave 7: kebab seats, single chat menu, opaque drag plate, home scroll lock)
+
+Four watched-and-verified polish items on the rev-19 build:
+
+1. **Per-kind kebab seats.** The surface kebab kept its wave-3 geometry
+   (top 20px) after the strip-height reduction and sat below both header
+   lines. Per-kind offsets in the T20 style: editor surfaces `top: 10px`
+   (centred against the 35px strip), dashboard `top: 5px; right: 13px`
+   against its 31px header -- the extra right shift clears the grip's
+   clip-path hit triangle (the grip steals grip-local x >= y in its 18x18
+   corner box, so a kebab raised into that band must slide left of the
+   diagonal). `.pm6-dash-actions` margin-right 34px keeps Add-widget clear.
+   NOTE: the selector must be `data-pm-home-kind="editor_panel"` -- the
+   first cut used `"editor"` and silently matched nothing.
+2. **Chat has ONE options menu again.** attachSurfaceControls now skips
+   (and removes, on re-render) the T20 kebab for chat surfaces: the base
+   chat header menu is the single "more options" (Duplicate thread /
+   Archive thread / Pop out window / Close chat -- richer than the kebab's
+   row set). Pop Out verified still routing through the T20 guard: chat
+   lands in the float host, `#floatingChat` never displays, exactly one
+   chat in the DOM. The only kebab-exclusive row lost is Dock Back while
+   floating; grip-dragging into a host covers it.
+3. **Dragged tabs cover what they pass.** Under `.ed-shape-on` the tabs
+   paint no background -- the only opaque surface is the travelling
+   silhouette, which sat at z 0 UNDER every label (z 1), so a passed tab's
+   text showed through the carried tab. While a drag is live
+   (`:has(.tab.dragging)`) the shape lifts to z 39 -- above neighbour
+   labels, below the carried label (z 40) -- and `.tab.dragging` goes to
+   opacity 1: the fused plate genuinely occludes crossed tabs (watched at
+   3x: the neighbour's label emerges only past the plate edge).
+4. **Home screen scroll lock.** The silhouette's flare box overhangs pane
+   edges ~12px, which under the hosts' `overflow: auto` made every host a
+   wheel target: sideways wheel shifted the whole workspace and scrollbars
+   could paint. Hosts are now `overflow-x: clip` + `overflow-y: auto` +
+   `overscroll-behavior: none`. CASCADE LESSON: the single-class
+   `.pm-home-host` rule silently LOST -- the scroll-frost enrolment stamps
+   `pm6-bottom-scroll` on every host at runtime and that base
+   `overflow: auto` rule sits later in the assembled cascade; the shipping
+   rule is `.pm-home-host[data-pm-home-host]` (0,2,0). Wheel probe after:
+   zero scrollLeft drift anywhere in the workspace, zero scrollbar
+   gutters, vertical scrolling intact.
+
+Artifact 3,612,010 bytes sha256
+`8ab406695b40014e575e6d55f4048063931689528ab497f750deae11b86a5e7e`;
+base `33d5ed89d02327f37d566639bda39a8f97a5a586c5b3404373d2dfddac9cfb30`;
+receipt `92f0ef8ce57336418cbc33ee73cebff73d3d30cbb1bdae8fdeb964efd4b0b588`.
+
+## Previous Home Workspace implementation — 2026-08-14 (rev 19, Wave 6: bezier silhouette + retro bake-off)
+
+The silhouette is now ONE JS-composed `clip-path: path(...)` per frame
+(EDSHAPE.edShapePath): superellipse-approximating crown cubics whose handle
+length morphs with each side's progress, descending through an ogee --
+concave flare (shoulder token x p) blending into a convex neck foot (canvas
+token x p) landing tangent on the canvas line. Safari and Chromium render
+the SAME soft character; border-radius, corner-shape, and the masked
+shoulder pseudos are gone. Derived from all FIVE reference clips (three
+Grajeda iterations incl. the original explainer/demo pair, plus
+doriancottin's cubic-bezier iteration). Base repinned
+(`BASE_SHA` = `23ca64d374dfa88227e4fe62ec9a37296356a8b220c09d3baf16425151b81fd0`); artifact 3,611,620 bytes, sha256
+`89e287e86693fb8f624f8aa104f491c442f390407a965d8479e8cb0d2d362a3d`; build report `f5abaf0bc48ea90d984ba2e84394c15b9a1b803c070ec2b0c6c6d0367cb035dd`.
+
+**Second same-day follow-up (user feedback):** ogee bow direction corrected
+-- long handles at the fixed ends with short handles at the inflection, so
+the curve tucks INTO the wall and spills DOWN onto the canvas (the
+symmetric handles bowed outward-up near the wall). Retro tune: phosphor
+slowed further (dither 240ms, afterglow 650ms), the CRT outgoing
+collapse-to-line removed (it read as the old tab blacking out), and the
+DOS block caret removed.
+
+**Third same-day follow-up (user feedback + decision):** the tab-side
+silhouette is now the reference-exact SINGLE CONCAVE QUARTER-ARC (vertical
+tangent at the wall, horizontal on the canvas line, kappa cubic, radius =
+shoulder token x progress) -- the two ogee attempts (convex foot under the
+cutout) are retired; the convex canvas radius belongs to the strip-end
+caps alone, exactly the explainer HUD model. And the retro bake-off is
+RESOLVED: all three concepts ship, rotating per selection click and per
+reorder gesture via a shuffle bag (no immediate repeats) -- pane gates
+removed, effects now cover all editor strips AND the dashboard strip in
+retro themes; steady state hands back to the standard retro ring
+(phosphor gained a solid-hold fade, CRT a scanline-hold fade). Artifact
+3608004 bytes sha256 `bc39c5ff793ed403ab72aba7bde1b3bf0c6750b45ce2d25139d1ff0423773b28`;
+base `6d508b573d4c9290b1711daaf48ed95f4791f7b2256e08e172002dc9bacd573d`;
+receipt `61726e9cb7eccf996a5af2ecaffd07080526fecc821a782aebacbe5a0a3d1670`.
+
+**Fourth same-day follow-up (user feedback):** the PANEL curves too --
+the canvas surface's own top corners now round via real animated
+border-radius (calc(--ed-lp/rp x --ed-canvas-rx-max) on .editor-area),
+joining the tab's cutout at the edge (flush = both flat = one continuous
+surface). The old masked wedge caps painted rail-coloured overlays at the
+strip ends and read as nothing at panel scale -- removed. Cutout radii
+enlarged for legibility: shoulder 14 default / 16 friendly / 8 retro,
+canvas 16 / 18 / 10. Artifact 3606988 bytes sha256
+`8c38d9d36e5a86fc68c84e62ec7c10bf0040b29f2e2ab0df85ac2c18549de6a8`;
+base `b00382808440ecfee46a8ccddabc171cf0d74145784a64d185b55c062701ea77`;
+receipt `bc1d584e0b93adbaba3555636560def63e59d07db61521c79778272b0ac43db3`.
+
+**Fifth same-day follow-up (user feedback):** the canvas-corner notch now
+REVEALS a visibly darker backdrop -- the shape-on editor pane's background
+is --ed-cap-bg (the rail-over-canvas composite), because a rounded corner
+that exposes a same-tone backdrop reads as no corner at all. Strips
+shortened: editor 40 -> 35px, dashboard 36 -> 31px (tokens
+--ed-strip-h / --pm6-editor-tabs-h / --pm6-dash-head-h; T20 resizer-col
+top 44 -> 39). Dashboard tabs confirmed in the retro rotation (they were
+already wired; verified live). Artifact 3607387 bytes sha256
+`6310699c962ccd9a221634a21e8c393de5175ab284d3764f3b7d312d0c6a77ad`;
+base `0d2b3b5d62ad5e68635ff041244665eb5b6aaf3efc4c0d50d11744892d12294d`;
+receipt `565d0c4d578bf7c51aa30a7647c907589411c03b909465f785ea67feb22d929b`.
+
+**Sixth same-day follow-up (user feedback, watched properly this time):**
+two real defects found by actually watching. (1) The canvas corner
+border-radius rounded a corner HIDDEN under the translucent rail (the
+canvas slides beneath the strip for scroll-frost, so its true box corner
+is invisible) -- the masked wedge caps are RESTORED as the only
+frost-preserving way to curve the VISIBLE emergence line, now filled with
+the solid rail tone (real contrast) at 18/20px x 16px; the area
+border-radius is removed. (2) Dashboard retro effects were dead because
+the pill neutralization's !important beats CSS animations (the DOS blink
+showed as an empty box: its non-important color applied while its
+background lost) -- effect-classed tabs now escape the important rule via
+:not([class*=pm-retro]) and get a normal-weight twin, so the fills paint.
+Artifact 3608918 bytes sha256
+`cea1f664bedf554f73c6bccaf98fa1320fa294570c6e0543e61a8ca1bdc3aaa2`;
+base `3d1c8b814a7b9dd9704930786ef83868076aaec7d97360c4124ae3e5ff043cd4`;
+receipt `db40c1d05fa6e1813294362ee2e710c6c8b2cc254ddc4f817b6e136802dd21d7`.
+
+**Seventh same-day follow-up (user feedback):** the dashboard CRT fill was
+still dead after the important-exemption -- a SPECIFICITY TIE (0,5,0)
+between the effect rules and the normal-weight neutralization twin, which
+sits later in the assembled cascade and won the tie for plain background
+declarations (phosphor survived only via its keyframes). All fourteen
+retro effect selectors now carry .ed-shape-on (0,6,0) and outrank the
+twin. Watched verification: phosphor block, DOS full inversion, and the
+CRT scanline wipe all paint on dashboard tabs.
+Artifact 3609086 bytes sha256
+`074b4460be4c41327bca04760dee94a85665c8512fc2487bcdfc6bbefb356024`;
+base `56ce4721bc745bc996ccd696875e2501c2a90bcd7244e4310991b13d46698159`;
+receipt `28ba8acb300b1f9a45cb4e347f651ee98ec7730bdb0652fab5a59946256ddec2`.
+
+**Same-day follow-up (user feedback):** the first ogee cut had two real
+geometry defects -- no height clamp (the wall segment inverted when flare +
+neck exceeded the room below the crown: the reported "hump") and handle
+lengths scaled to the theme token instead of the segment (control polygons
+doubled back on short chords). The ogee now clamps to fit, puts the
+inflection at the natural corner meet (L-flare, H-neck), and sizes handles
+at 0.55 x their own radius. Also: retro themes SNAP the silhouette between
+tabs (no spring slide -- the bake-off flourishes are the motion there), and
+all three bake-off concepts run ~2.3x slower so they read at real frame
+rates (phosphor dither 160ms + 450ms afterglow; CRT wipe 300ms/6 steps,
+collapse 220ms; DOS blink 600ms, caret 1.8s).
+
+Fixes in this wave (all live-reproduced first):
+1. **Asymmetric morph**: target() no longer measures against the first/last
+   laid tab's painted rects (dragging the DOM-first tab right froze lp at 0,
+   then popped 0->1 on re-slot; FLIP transforms wobbled the track). The new
+   contact model matches the explainer canon: per-side gap to the NEAREST
+   contact -- static strip content box or the adjacent tab's LAYOUT edge
+   (offsetLeft: transform-free) -- while the caps key off the box edges.
+   MORPH window restored to the canonical 20px; radii ratio to 10:8
+   (canvas:shoulder) per theme.
+2. **Glass/basic morph invisible**: the crown radius never animated (static
+   border-radius) and glass-dark's rail composited to ~1 sRGB level of its
+   plate. The path IS the morph now (visible in every theme), and glass-dark
+   deepens `--ed-rail-solid` (measured 16-level channel delta after).
+3. **Glass bevel desync**: the 3-edge inset box-shadow (padding-box,
+   progress-blind, lines through the shoulder joint) is replaced by a 1px
+   `--glass-edge` crown strip clipped by the same path -- the sheen follows
+   the morph exactly.
+4. **Retro tab-motion bake-off** (user to pick a winner): retro themes only,
+   pane-gated via `data-retro-motion` -- pane 1 "phosphor" (block highlight
+   materializes in 2 dithered steps + decaying afterglow; 8px-quantized
+   drag), pane 2 "crt" (scanline wipe-in, collapse-to-line out, drop roll),
+   pane 3 "dos" (double inversion blink + block caret; dashed drag
+   wireframe; quantized). Panel 3 is T20-generated and lazily stamped on
+   first retro click. Pane 4 + dashboard strip = control.
+   Reduced-motion drops all of it; EDSHAPE untouched by the effects layer.
+
+Verified: morph symmetric in both directions from both end tabs (8-9
+distinct progress values, max jump 0.2), fusion lag 0px in 100% of drag
+samples, glass-dark contrast 16 levels, selection travel 19 intermediates
+zero overshoot, matrix 32/32 + 72/72 (see also the per-theme sweep and
+bake-off film strips in the session evidence).
+
+## Previous Home Workspace implementation — 2026-08-14 (rev 18, Wave 5: reference fusion)
+
+Recalibrated against Kevin Grajeda's actual reference clips (downloaded and
+studied frame-by-frame at 60fps -- both posts, the newest iteration being
+canonical). The defining property of the reference is that tab and canvas
+are ONE fused surface that never separates during ANY gesture. Base repinned
+(`BASE_SHA` = `cfa539dcd039972a9d4dc1f2b6ff8feea7be16dae90c3a0c0684404637022d63`); artifact 3,589,786 bytes, sha256
+`37389e854c7facfcff52d08703172b35426d54ca0d8bf5ec1a95eb1c0acad55a`; build report `57cd04dad1596cd46f6b87828fed72ad541c4cdf16da5e3fbcdb3b8bf2e92d94`.
+
+**Measured physics (per-frame icon tracking of the reference at 60fps):**
+the released tab returns to its slot in ~150ms as a ~65%-per-frame
+exponential decay with ZERO overshoot; the displaced neighbour stays put
+(occluded under the riding tab) until the crossing, then slides ~250ms with
+a fast-start ease-out; tracking is strictly 1:1 with the pointer and the
+dragged tab rides ABOVE its neighbours. Applied: settle -> 160ms
+`cubic-bezier(.17,.84,.29,.99)` (was an overshooting 200ms bounce),
+neighbour FLIP -> 250ms, EDSHAPE DAMP 42 -> 46 (critically damped).
+Verified in-build: settle decays 56 -> 31.6 -> 5.5 -> 0.3 -> 0 with zero
+overshoot and 0px shape lag through the whole settle.
+
+Three deltas closed, each measured before/after with a per-frame
+shape-vs-tab lag probe:
+1. **Activate on grab** (part 25): grabbing ANY tab makes it live at the 4px
+   drag threshold; EDSHAPE's lastActive change turns the next sync into a
+   spring, so the connected surface RUSHES to your hand (~12 frames), then
+   snap-follows the painted box at 0px lag for the whole glide (was: shape
+   parked on the old active tab, median 69px behind). Content render stays
+   deferred to release; a cancelled gesture re-renders so class and content
+   agree.
+2. **The silhouette rides the settle** (part 25): a per-frame snap-sync rAF
+   loop replaces the free-running settle spring, which diverged from the
+   tab's own 200ms bounce by up to 79px mid-flight. Tab and canvas now
+   arrive as one shape (0px lag through grab, ride, and settle).
+3. **Corner character** (10x + 29x): MORPH 20 -> 26 (softer approach), and a
+   Chromium-only progressive layer morphs the crown corners' SHAPE with the
+   same edge-distance progress that drives the radii:
+   `corner-top-left/right-shape: superellipse(calc(1 + 0.6 * var(--ed-lp/rp)))`
+   -- plain arc at contact, full squircle in the open, exactly the newest
+   reference iteration (superellipse 1.0 -> 1.6 by % distance). Static
+   squircle remains the fallback; Safari keeps elliptical arcs.
+
+## Previous Home Workspace implementation — 2026-08-13 (rev 17, Wave 4)
 
 Three user-reported defects, each live-reproduced before the fix and
 re-verified after. Base repinned

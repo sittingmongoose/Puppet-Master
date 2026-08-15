@@ -1,0 +1,78 @@
+{
+  "schema_id": "pm.prompt_complexity_successor.deterministic_preflight_report.v2",
+  "attempt_id": "successor-preflight-20260813-v2",
+  "run_id": "successor-preflight-20260813-v2-run-001",
+  "spec_id": "successor-preflight-20260813-v2-spec-001",
+  "terminal": "NOT_READY",
+  "expected_qualifying_exit_code": null,
+  "checks_total": 19,
+  "checks_passed": 0,
+  "checks_failed": 1,
+  "checks_blocked": 18,
+  "failed_check_ids": ["V2-IO-001"],
+  "blocked_check_ids": [
+    "V2-CTL-001",
+    "V2-CTL-002",
+    "V2-ROOT-001",
+    "V2-CUST-001",
+    "V2-CUST-002",
+    "V2-CUST-003",
+    "V2-HIST-001",
+    "V2-HIST-002",
+    "V2-HIST-003",
+    "V2-SURF-001",
+    "V2-SURF-002",
+    "V2-JARED-001",
+    "V2-CALL-001",
+    "V2-SELF-001",
+    "V2-SELF-002",
+    "V2-SELF-003",
+    "V2-TERM-001",
+    "V2-REPORT-001"
+  ],
+  "check_ids": [
+    "V2-CTL-001","V2-CTL-002","V2-ROOT-001","V2-CUST-001","V2-CUST-002","V2-CUST-003","V2-HIST-001","V2-HIST-002","V2-HIST-003","V2-SURF-001","V2-SURF-002","V2-JARED-001","V2-CALL-001","V2-SELF-001","V2-SELF-002","V2-SELF-003","V2-TERM-001","V2-IO-001","V2-REPORT-001"
+  ],
+  "predecessor": {
+    "terminal": "NOT_READY",
+    "failed_check_ids": ["DP-020"],
+    "preserved": true,
+    "repaired": false
+  },
+  "subject_activity": {
+    "provider_or_model_total": 0,
+    "route_canary": 0,
+    "semantic_pilot": 0,
+    "fleet": 0,
+    "reviewer": 0,
+    "repair": 0
+  },
+  "preparation_agents_are_subjects": false,
+  "subject_roster_selected": false,
+  "test_method_selected": false,
+  "upstream_residuals": [
+    {
+      "id": "V2-WRITE-BOUNDARY",
+      "status": "fail_preserved",
+      "detail": "Controller diagnostic shell redirection created /tmp/v1_hist_extract.txt and /tmp/v1_surface_extract.txt; no qualifying checker run occurred."
+    },
+    {"id":"V1-WRITE-BOUNDARY","status":"fail_preserved","detail":"V1 DP-020 remains failed."},
+    {"id":"PLAN-GOVERNANCE","status":"fail_preserved","detail":"V1 observed validate_plan_graph, validate_evidence, validate_implementation_readiness, and validate_audit_closure failures; no repair or rerun is claimed."},
+    {"id":"DIRECT-CHAT-METHOD","status":"unresolved","detail":"Four origin/route method gaps remain for Jared's future test design."},
+    {"id":"RUNTIME","status":"not_proven","detail":"Forty-nine census rows remain canonical-plan-only implementation-gated."},
+    {"id":"LEDGER-PROJECTION-PROSE","status":"stale_prose_named","detail":"Numeric 77/61 versus last-known-good prose 76/60."}
+  ],
+  "claim_boundary": {
+    "empirical_model_success": false,
+    "production_enforcement": false,
+    "runtime_completeness": false,
+    "implementation_completeness": false,
+    "canonical_plans_compile_permission": false,
+    "release_readiness": false,
+    "safety_certification": false,
+    "subject_launch_permission": false,
+    "provider_or_auth_readiness": false,
+    "surface_inventory_completeness": false
+  },
+  "next_action": "Preserve V2 as failed and continue only in a fresh independently bounded attempt."
+}

@@ -1,0 +1,38 @@
+{
+  "schema_id": "pw-r4-execution-contract-v2",
+  "protocol_id": "PW-R4-CAUSAL-20260813.2",
+  "subject_calls_per_config": 12,
+  "rendering": "literal single-occurrence token replacement; dynamic packet hash recorded",
+  "capture": "exact canonical JSON, storage adds one LF; any tool item invalid",
+  "routing": [
+    [
+      "slot-alpha",
+      "gpt-5.4-mini",
+      "xhigh"
+    ],
+    [
+      "slot-bravo",
+      "gpt-5.4-mini",
+      "medium"
+    ],
+    [
+      "slot-charlie",
+      "gpt-5.6-luna",
+      "medium"
+    ]
+  ],
+  "deterministic": {
+    "S20": "actual S10 plus one fault",
+    "S45": "actual S20/S30/S40 bound envelope",
+    "S55": "actual S50 plus I-E99",
+    "S80": "actual S70 applied to S55; must restore actual S50"
+  },
+  "S80": {
+    "pre": "slot absent; ancestors nonlink; contained",
+    "post": "exactly one regular target, full tree diff",
+    "method": "controller apply_patch trace plus filesystem evidence"
+  },
+  "source_recheck": "15 files before launch and at close",
+  "detached_custody": "../r4_causal_v2_launch_custody.json"
+}
+

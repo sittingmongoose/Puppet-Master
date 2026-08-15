@@ -15,7 +15,7 @@ import { ensureCss } from "../shared/contracts.js";
 import { escapeHtml } from "../shared/popup.js";
 import {
   transcriptSlice, isLongMessage, isExpanded, previewText, lensMark, copyMessage,
-  workCluster, createScrollKeeper, questionnaireState, activityGroups, bodyHtml,
+  workCluster, createScrollKeeper, questionnaireState, activityGroups, bodyHtml, liveTurn,
 } from "../shared/thread-common.js";
 import { createComposer, createSelectorRow, createDecisionStack, openMoreInfo, openMessageOps } from "../shared/components.js";
 import { fmtDuration, fmtTime, workedLabel, JUMP_TO_LATEST, QUESTIONNAIRE_ACTIONS, TODO_STATE_LABELS } from "../shared/strings.js";
@@ -189,11 +189,19 @@ export function createThread(ctx) {
     const sec = document.createElement("section");
     sec.className = "ft5-running";
 
-    if (w.turn) {
+    const lt = liveTurn();
+    if (lt) {
       const line = document.createElement("div");
       line.className = "ft5-rule-line ft5-rule-live";
-      line.innerHTML = `<span class="ft5-rule" aria-hidden="true"></span><span class="ft5-rule-text">${escapeHtml(w.turn.summary.toLowerCase())} — <span class="ft5-live-time">${fmtDuration(w.turn.workedSeconds)}</span></span><span class="ft5-rule" aria-hidden="true"></span>`;
+      line.innerHTML = `<span class="ft5-rule" aria-hidden="true"></span><span class="ft5-rule-text">${escapeHtml(lt.summary.toLowerCase())} — <span class="ft5-live-time">${fmtDuration(lt.workedSeconds)}</span></span><span class="ft5-rule" aria-hidden="true"></span>`;
       sec.appendChild(line);
+      // The manuscript writes the phase detail as an indented aside.
+      if (lt.items.length) {
+        const aside = document.createElement("p");
+        aside.className = "ft5-live-aside";
+        aside.innerHTML = lt.items.map((i) => escapeHtml(i.text) + (i.side ? ` (${escapeHtml(i.side)})` : "")).join("; ") + ".";
+        sec.appendChild(aside);
+      }
     }
 
     if (w.goal || w.todo || w.subagents || w.diffs.length) {
@@ -216,7 +224,9 @@ export function createThread(ctx) {
           const p = document.createElement("p");
           p.className = "ft5-work-par";
           p.dataset.status = w.goal.status;
-          p.innerHTML = `<strong>${escapeHtml(w.goal.title)}</strong> — ${escapeHtml(w.goal.objective)} `;
+          const phase = w.goal.phases ? ` Phase ${(w.goal.phaseIndex || 0) + 1} of ${w.goal.phases.length}, ${w.goal.phases[w.goal.phaseIndex || 0].toLowerCase()}.` : "";
+          const replan = w.goal.replanApplied ? " The plan was just updated and revalidated." : "";
+          p.innerHTML = `<strong>${escapeHtml(w.goal.title)}</strong> — ${escapeHtml(w.goal.objective)}${escapeHtml(phase)}${escapeHtml(replan)} `;
           const ctrl = document.createElement("span");
           ctrl.className = "ft5-work-ctrl";
           const btn = (t, ok, fn) => { const b = document.createElement("button"); b.textContent = t; if (!ok) b.disabled = true; else b.addEventListener("click", fn); return b; };

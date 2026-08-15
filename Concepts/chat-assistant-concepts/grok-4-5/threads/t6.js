@@ -78,6 +78,88 @@
     );
   }
 
+
+  /** Margin sidecar work ticks — lettered marks in the index, not a bottom dump. */
+  function workSidecarHtml(thread, ui, K) {
+    if (!thread) return { ticks: '', detail: '' };
+    var kinds = [];
+    function push(key, title, body) {
+      if (!body) return;
+      kinds.push({ key: key, title: title, body: body });
+    }
+    push(
+      'goal',
+      'Goal',
+      K.renderGoal(thread.goal, {
+        goalExpanded:
+          ui.goalExpanded != null ? ui.goalExpanded : thread.goal && thread.goal.expanded
+      })
+    );
+    push('todo', 'Todo', K.renderTodo(thread.todos));
+    push(
+      'subagent',
+      'Agents',
+      K.renderSubagents(thread.subagentGroups, ui.expandedSubagentIds || {})
+    );
+    push('diff', 'Diffs', K.renderDiffs(thread.diffGroups));
+    push('artifacts', 'Artifacts', K.renderArtifacts(thread.artifacts));
+    if (!kinds.length) return { ticks: '', detail: '' };
+    var LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    var ticks = kinds
+      .map(function (k, i) {
+        return (
+          '<button type="button" class="t6-work-tick" data-cw-expand="' +
+          K.escapeHtml(k.key) +
+          '" aria-pressed="false" title="' +
+          K.escapeHtml(k.title) +
+          '">' +
+          '<span class="t6-tick-row">' +
+          '<span class="t6-tick-letter">W' +
+          LETTERS.charAt(i % 26) +
+          '</span>' +
+          '<span class="t6-tick-time">work</span>' +
+          '</span>' +
+          '<span class="t6-tick-role">' +
+          K.escapeHtml(k.title) +
+          '</span>' +
+          '<span class="t6-tick-snip">' +
+          K.escapeHtml(k.title) +
+          '</span>' +
+          '</button>'
+        );
+      })
+      .join('');
+    var detail = kinds
+      .map(function (k) {
+        return (
+          '<details class="t6-work-leaf pm-work-surface" data-kind="' +
+          K.escapeHtml(k.key) +
+          '">' +
+          '<summary class="pm-work-surface-head"><span class="pm-work-chev" aria-hidden="true">›</span><span class="pm-work-surface-title">' +
+          K.escapeHtml(k.title) +
+          '</span></summary>' +
+          '<div class="pm-work-surface-body">' +
+          k.body +
+          '</div>' +
+          '</details>'
+        );
+      })
+      .join('');
+    var compact =
+      (K.renderCompactWork && K.renderCompactWork(thread, 'margin')) ||
+      (window.PMChatV2 && window.PMChatV2.renderCompactWorkBand
+        ? window.PMChatV2.renderCompactWorkBand(thread, 'margin')
+        : '');
+    return {
+      ticks: '<div class="t6-work-sidecar" data-cw-band aria-label="Work margin">' + ticks + '</div>',
+      detail:
+        (compact || '') +
+        '<div class="t6-surfaces t6-work-detail pm-thread-surfaces" data-surfaces data-work-detail-stack>' +
+        detail +
+        '</div>'
+    };
+  }
+
   function mount(slotEl, props) {
     if (!window.PMChatThreadKit) throw new Error('PMChatThreadKit required for t6');
     var K = window.PMChatThreadKit;
@@ -185,11 +267,8 @@
             })
             .join('');
 
-          var surfaces = ctx.q
-            ? ''
-            : '<div class="t6-surfaces pm-thread-surfaces" data-surfaces>' +
-              K.renderWorkSurfaces(ctx.thread, ctx.ui) +
-              '</div>';
+          var workSide = ctx.q ? { ticks: '', detail: '' } : workSidecarHtml(ctx.thread, ctx.ui, K);
+          var surfaces = workSide.detail || '';
 
           ctx.root.innerHTML =
             '<div class="t6-frame">' +
@@ -207,6 +286,7 @@
             '<span>Letter</span><span>Time</span>' +
             '</div>' +
             index +
+            (workSide.ticks || '') +
             '</nav>' +
             '<div class="t6-main">' +
             '<div class="pm-transcript pm-scroll t6-stream" data-transcript>' +

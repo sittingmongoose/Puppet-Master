@@ -12514,6 +12514,41 @@
    ]
   },
   {
+   "id": "planning.verification.back-seat-driver-mode",
+   "label": "Back-Seat Driver Mode",
+   "desc": "Controls independent read-only run oversight. Off makes no advisory provider call, Auto evaluates only at governed risk or phase triggers, and On requests evaluation for every eligible run within quota.",
+   "type": "radio",
+   "options": [
+    "Off",
+    "Auto",
+    "On"
+   ],
+   "default": "Auto",
+   "scope": [
+    "global",
+    "project",
+    "run"
+   ],
+   "tier": "advanced",
+   "recommended": "Auto",
+   "curated": true,
+   "search": [
+    "back-seat driver",
+    "independent oversight",
+    "run verification",
+    "conditional reviewer",
+    "BSD mode"
+   ],
+   "badges": [
+    "new"
+   ],
+   "related_features": [
+    "goals",
+    "orchestrator",
+    "testing"
+   ]
+  },
+  {
    "id": "branching.worktrees.enable-git",
    "label": "Use Git During Runs",
    "desc": "Lets runs make branches, commits, and pull requests. Turn off to keep runs from touching version history at all.",
@@ -13489,7 +13524,7 @@
   {
    "id": "branching.crew.max-crews-per-platform",
    "label": "Crews Running at Once",
-   "desc": "How many crews can run at the same time. Extra crews wait in line instead of overloading your machine and accounts.",
+   "desc": "Requests a hard ceiling on crews running at once. The RuntimeResourceGovernor for the exact Host may reduce the admitted ceiling or queue or block work to protect that machine and its accounts.",
    "type": "number",
    "default": 4,
    "scope": [
@@ -13510,7 +13545,7 @@
   {
    "id": "branching.crew.max-agents-per-crew",
    "label": "Agents per Crew",
-   "desc": "The most teammates a single crew can have active at once. Extra reviewer or worker spawns wait for a free slot.",
+   "desc": "Requests a hard ceiling on active teammates in one crew. The RuntimeResourceGovernor for the exact Host may reduce the admitted ceiling or queue or block reviewer and worker spawns.",
    "type": "number",
    "default": 8,
    "scope": [
@@ -13576,7 +13611,7 @@
   {
    "id": "branching.subagents.max-parallel",
    "label": "Helpers Working at Once",
-   "desc": "The most helper agents allowed to work simultaneously in one wave. Lower it if your machine or budget feels the strain.",
+   "desc": "Requests a hard ceiling on helper agents working simultaneously in one wave. The RuntimeResourceGovernor for the exact Host may reduce the admitted ceiling or queue or block helpers when capacity is constrained.",
    "type": "number",
    "default": 4,
    "scope": [
@@ -13798,7 +13833,7 @@
   {
    "id": "branching.subagents.provider-concurrency-cap",
    "label": "Simultaneous Requests per AI Provider",
-   "desc": "Caps parallel calls to any one provider so you don't hit rate limits. A run can set its own override at start.",
+   "desc": "Requests a hard ceiling on parallel calls to one provider. The RuntimeResourceGovernor for the exact Host may reduce the admitted ceiling or queue or block calls for current host capacity and provider limits; a run may request a lower override.",
    "type": "number",
    "default": 5,
    "scope": [
@@ -13820,7 +13855,7 @@
   {
    "id": "branching.subagents.max-total-active-agents",
    "label": "Total Agents Active at Once",
-   "desc": "The hard ceiling on all agents running simultaneously across every crew and helper. The last line of defense for your machine.",
+   "desc": "Requests a hard ceiling on all active agents across crews and helpers. The RuntimeResourceGovernor for the exact Host may reduce the admitted ceiling or queue or block work as the final protection for that machine.",
    "type": "number",
    "default": 32,
    "scope": [
@@ -15476,7 +15511,7 @@
   {
    "id": "web.fetch.browser-session-profile",
    "label": "Browser Session Type",
-   "desc": "Persistent keeps logins between runs (a host-scoped grant for that site); isolated starts every run signed out and clean.",
+   "desc": "Ordinary Browser Program sessions may use a persistent project profile or an isolated clean profile. Protected AuthBrowserSession is always ephemeral and is not affected by this setting.",
    "type": "select",
    "options": [
     "persistent",
@@ -15504,7 +15539,7 @@
   {
    "id": "web.fetch.browser-save-session",
    "label": "Remember Website Logins",
-   "desc": "Saves cookies and site data after browser runs so logged-in workflows keep working next time. Off discards them each run.",
+   "desc": "For ordinary Browser Program sessions only, saves policy-approved cookies and site data for later ordinary runs. Protected AuthBrowserSession never saves or restores state regardless of this value.",
    "type": "toggle",
    "default": true,
    "scope": [
@@ -17950,6 +17985,41 @@
     "remediation",
     "troubleshoot",
     "fix"
+   ]
+  },
+  {
+   "id": "system.health.capability-provisioning",
+   "label": "Capability Provisioning",
+   "desc": "Controls setup of non-provider capabilities for the exact Host and Environment. Off forbids provisioning, Auto provisions only after policy checks pass, and On requires availability without waiving those checks; provider CLI first acquisition is excluded and always requires explicit official-source setup.",
+   "type": "radio",
+   "options": [
+    "Off",
+    "Auto",
+    "On"
+   ],
+   "default": "Auto",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "recommended": "Auto",
+   "curated": true,
+   "search": [
+    "capability provisioning",
+    "automatic setup",
+    "exact host environment",
+    "dependency installation",
+    "provider CLI excluded"
+   ],
+   "badges": [
+    "new"
+   ],
+   "related_features": [
+    "docker",
+    "mcp",
+    "skills",
+    "terminal"
    ]
   },
   {

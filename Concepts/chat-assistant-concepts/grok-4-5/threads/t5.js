@@ -190,6 +190,68 @@
     );
   }
 
+
+  function condenseWorkHtml(thread, ui, K) {
+    if (!thread) return '';
+    var nodes = [];
+    function push(key, title, bodyHtml) {
+      if (!bodyHtml) return;
+      nodes.push({ key: key, title: title, body: bodyHtml });
+    }
+    push(
+      'goal',
+      'Goal',
+      K.renderGoal(thread.goal, {
+        goalExpanded:
+          ui.goalExpanded != null ? ui.goalExpanded : thread.goal && thread.goal.expanded
+      })
+    );
+    push('todo', 'Todo', K.renderTodo(thread.todos));
+    push(
+      'subagent',
+      'Agents',
+      K.renderSubagents(thread.subagentGroups, ui.expandedSubagentIds || {})
+    );
+    push('diff', 'Diffs', K.renderDiffs(thread.diffGroups));
+    push('artifacts', 'Artifacts', K.renderArtifacts(thread.artifacts));
+    if (!nodes.length) return '';
+    var compact =
+      (K.renderCompactWork && K.renderCompactWork(thread, 'condenser')) ||
+      (window.PMChatV2 && window.PMChatV2.renderCompactWorkBand
+        ? window.PMChatV2.renderCompactWorkBand(thread, 'condenser')
+        : '');
+    var list = nodes
+      .map(function (n, i) {
+        return (
+          '<details class="t5-work-node pm-work-surface" data-kind="' +
+          K.escapeHtml(n.key) +
+          '" style="--t5-wi:' +
+          i +
+          '">' +
+          '<summary class="t5-work-node-sum">' +
+          '<span class="t5-work-node-dot" aria-hidden="true"></span>' +
+          '<span class="t5-work-node-title">' +
+          K.escapeHtml(n.title) +
+          '</span>' +
+          '</summary>' +
+          '<div class="pm-work-surface-body">' +
+          n.body +
+          '</div>' +
+          '</details>'
+        );
+      })
+      .join('');
+    return (
+      (compact || '') +
+      '<div class="t5-work-condense" data-surfaces data-work-detail-stack>' +
+      '<div class="t5-work-condense-label">Condensed work index</div>' +
+      '<div class="t5-work-condense-track">' +
+      list +
+      '</div>' +
+      '</div>'
+    );
+  }
+
   function mount(slotEl, props) {
     if (!window.PMChatThreadKit) throw new Error('PMChatThreadKit required for t5');
     var K = window.PMChatThreadKit;
@@ -229,11 +291,7 @@
             })
             .join('');
 
-          var surfaces = ctx.q
-            ? ''
-            : '<div class="t5-surfaces pm-thread-surfaces" data-surfaces>' +
-              K.renderWorkSurfaces(ctx.thread, ctx.ui) +
-              '</div>';
+          var surfaces = ctx.q ? '' : condenseWorkHtml(ctx.thread, ctx.ui, K);
 
           ctx.root.innerHTML =
             '<div class="t5-frame">' +

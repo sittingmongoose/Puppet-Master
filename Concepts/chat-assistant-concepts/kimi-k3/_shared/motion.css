@@ -265,3 +265,14 @@ html[data-motion="reduced"] .k3-shimmer { background-image: none; }
    reflow/shake so they never displace content). */
 html[data-motion="reduced"] .k3-spring-reflow,
 html[data-motion="reduced"] .k3-shake-now { transform: none !important; }
+
+/* message arrival continuity (reference video 01): the incoming message rises
+   from the composer edge and settles; the transcript above slides coherently.
+   Transform+opacity only; the global reduced-motion gate collapses it. */
+@keyframes k3-msg-arrive {
+  0% { opacity: 0; transform: translateY(12px); }
+  60% { opacity: 1; }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.k3t-enter { animation: k3-msg-arrive var(--k3-dur-med, 200ms) var(--ease-out, ease-out) 1; will-change: transform, opacity; }
+html[data-motion="reduced"] .k3t-enter { animation: none; }

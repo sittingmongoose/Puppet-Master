@@ -57,6 +57,8 @@
     advanced: 0.9,
     expert: 0.74,     // findable, never as inviting as a standard control
     diagnostic: 0.7,
+    setup_workflow: 1.04,
+    unavailable: 0.66,
     managed: 0.82,
     unavailable: 0.66
   };
@@ -156,6 +158,42 @@
         path: d.path || [d.label],
         exposure: d.exposure || "diagnostic",
         keywords: (d.keywords || []).join(" ")
+      });
+    });
+
+    /* 01_CORE_ARCHITECTURE names seven result types and the completeness audit
+     * §6 names six record kinds. Two were missing until the 2026-08-13
+     * correction: a setup workflow is not a scalar setting, and an unavailable
+     * capability must be findable without being offered as if it were usable. */
+    (data.setupWorkflows || []).forEach(function (w) {
+      records.push({
+        kind: "setup_workflow",
+        id: w.id,
+        title: w.label,
+        subtitle: w.explanation,
+        categoryId: w.categoryId || null,
+        subcategoryId: w.subcategoryId || null,
+        managerId: w.managerId || null,
+        path: w.path || [w.label],
+        exposure: w.exposure || "standard",
+        keywords: (w.keywords || []).join(" ")
+      });
+    });
+
+    (data.unavailableCapabilities || []).forEach(function (u) {
+      records.push({
+        kind: "unavailable",
+        id: u.id,
+        title: u.label,
+        subtitle: u.reason,
+        categoryId: u.categoryId || null,
+        subcategoryId: u.subcategoryId || null,
+        managerId: u.managerId || null,
+        path: u.path || [u.label],
+        /* Carried so a concept can find it without rendering it as an equally
+         * inviting default control. */
+        exposure: "unavailable",
+        keywords: (u.keywords || []).join(" ")
       });
     });
 
@@ -288,7 +326,8 @@
     { token: "unavailable", label: "Level: Unavailable", filters: { exposure: "unavailable" } },
     { token: "managers", label: "Kind: Managers", filters: { kind: "manager" } },
     { token: "status", label: "Kind: Status", filters: { kind: "status" } },
-    { token: "diagnostics", label: "Kind: Diagnostics", filters: { kind: "diagnostic" } }
+    { token: "diagnostics", label: "Kind: Diagnostics", filters: { kind: "diagnostic" } },
+    { token: "setup", label: "Kind: Setup workflows", filters: { kind: "setup_workflow" } }
   ];
 
   /* One label per kind, shared, so "setting" never reads as "Setting" in one

@@ -2,9 +2,9 @@
 
 Source: `Plans/newtools.md`
 
-Source lines: L1312-L8592
+Source lines: L1306-L8593
 
-Source SHA256: `6410e7d0ba6228f0d44885876001c605dcdb9fa88389251198ebc8118321c926`
+Source SHA256: `240930f0cbe095b99bf4cd899255df3eb3fe605feac9907856de55eb020ffdab`
 
 ---
 
@@ -436,7 +436,7 @@ plan_unit_id: N2-011
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: PM built-in browser automation is the primary web-based GUI test path; Playwright is optional, fallback, or project-native, not the native default. Native/framework GUIs such as Iced, Dioxus, Qt, Electron, and Tauri need discoverable existing tools or a custom headless GUI tool with full debug logs.
+canonical_text: Browser Program and policy-gated Expert Browser Program are the only PM-native web browser automation and testing paths. Native/framework GUIs such as Iced, Dioxus, Qt, Electron, and Tauri need discoverable existing tools or a custom headless GUI tool with full debug logs; independent user Project test runners remain generic external Project processes.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
 split_recommended: false
@@ -460,7 +460,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0008
 preserved_exact_tokens:
-- Playwright
+- Browser Program
+- Expert Browser Program
 - web-based GUIs
 - Iced
 - Dioxus
@@ -529,7 +530,7 @@ plan_unit_id: N2-013
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: Success requires detected non-web GUI frameworks to offer catalog/custom options, persisted choices to drive strategy and PRD content, agents to receive evidence paths, Doctor to check custom headless when chosen, MCP to be configurable, and unselected flows to preserve existing Playwright (optional/fallback/project-native web test path) behavior while PM built-in browser automation remains the primary native web test path.
+canonical_text: Success requires detected non-web GUI frameworks to offer catalog/custom options, persisted choices to drive strategy and PRD content, agents to receive evidence paths, Doctor to check custom headless when chosen, MCP to be configurable for non-browser integrations, and unselected flows to preserve Browser Program behavior without creating another PM browser path.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
 split_recommended: false
@@ -556,10 +557,10 @@ preserved_exact_tokens:
 - Success criteria
 - Doctor
 - MCP
-- Existing Playwright-only flow
+- Existing Browser Program flow
 - no regression
 negative_constraints:
-- Existing Playwright-only flow and existing test strategy behavior remain unchanged when no new options are selected.
+- Existing Browser Program and test-strategy behavior remain unchanged when no new options are selected.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
@@ -666,7 +667,7 @@ plan_unit_id: N2-016
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: The current Playwright-as-default interviewer path leaves native/framework GUIs without reliable smoke tests or GUI-level verification, and does not yet treat PM built-in browser automation as the primary native web test path.
+canonical_text: The current interviewer does not consistently expose Browser Program, Expert Browser Program, and framework-specific tools, leaving native/framework GUIs without reliable smoke tests or GUI-level verification.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
 split_recommended: false
@@ -690,7 +691,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0010
 preserved_exact_tokens:
-- Playwright
+- Browser Program
+- Expert Browser Program
 - Native/framework GUIs
 - smoke tests
 - GUI-level verification
@@ -893,7 +895,7 @@ plan_unit_id: N2-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: Interview state/config persists use_playwright (the optional/fallback/project-native web test path, not the primary web path), use_framework_tools, plan_custom_headless_tool, and selected_framework_tools. Completion writes tasks for existing tool setup, custom headless build/adoption, and testing instructions with debug-log paths.
+canonical_text: Interview state/config persists use_browser_program, use_framework_tools, plan_custom_headless_tool, and selected_framework_tools. Completion writes Browser Program instructions plus tasks for existing framework-tool setup, custom headless build/adoption, and debug-log evidence paths.
 gui_related: false
 gui_classification_reason: The unit covers backend, policy, schema, or owner-boundary behavior rather than GUI presentation.
 split_recommended: false
@@ -917,7 +919,7 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0012
 preserved_exact_tokens:
-- use_playwright
+- use_browser_program
 - use_framework_tools
 - plan_custom_headless_tool
 - selected_framework_tools
@@ -1354,7 +1356,7 @@ plan_unit_id: N2-031
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: Testing & Verification looks up detected GUI frameworks in GuiToolCatalog, optionally research-populates sparse catalog entries, and offers the PM built-in browser (primary for web), Playwright (optional/fallback/project-native for web), framework tools, and custom headless options.
+canonical_text: Testing & Verification looks up detected GUI frameworks in GuiToolCatalog, optionally research-populates sparse catalog entries, and offers Browser Program, policy-gated Expert Browser Program, framework tools, and custom headless options. Independent user Project runners are generic external Project commands/processes, not PM browser options.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
 split_recommended: false
@@ -1380,7 +1382,8 @@ source_lineage:
 preserved_exact_tokens:
 - Testing & Verification
 - GuiToolCatalog
-- Playwright
+- Browser Program
+- Expert Browser Program
 - Framework tools
 - Custom headless tool
 negative_constraints: []
@@ -1443,7 +1446,7 @@ plan_unit_id: N2-033
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: The tool-selection UI reuses existing widgets and accessible toggles, checkboxes, or multi-select controls for Playwright (optional/fallback/project-native for web), per-framework existing tools, and the custom-headless option with tooltips and no one-off UI patterns; the PM built-in browser remains the primary web test path.
+canonical_text: The tool-selection UI reuses existing widgets and accessible toggles, checkboxes, or multi-select controls for Browser Program, policy-gated Expert Browser Program, per-framework existing tools, and the custom-headless option with tooltips and no one-off UI patterns.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
 split_recommended: false
@@ -1467,7 +1470,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0020
 preserved_exact_tokens:
-- Playwright
+- Browser Program
+- Expert Browser Program
 - multi-select
 - custom headless GUI tool
 - DRY:WIDGET
@@ -2058,7 +2062,7 @@ plan_unit_id: N2-046
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: PRD or execution plans include obtain/setup tasks for selected tools and custom-headless design/build tasks when selected. Acceptance criteria require the PM built-in browser (primary, if web) and/or Playwright (optional/fallback/project-native, if web), selected framework tools, and custom headless runs plus debug-log checks as applicable.
+canonical_text: PRD or execution plans include obtain/setup tasks for selected tools and custom-headless design/build tasks when selected. Acceptance criteria require Browser Program or policy-gated Expert Browser Program when web testing applies, selected framework tools, and custom-headless runs plus debug-log checks as applicable.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
 split_recommended: false
@@ -3203,7 +3207,7 @@ preserved_contractrefs:
 - 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, ContractName:AGENTS.md, PolicyRule:Decision_Policy.md§2'
 ```
 
-### N2-071 - Playwright And Framework Tool Strategy Wiring
+### N2-071 - Browser Program And Framework Tool Strategy Wiring
 
 ```yaml
 plan_unit_id: N2-071
@@ -3223,13 +3227,13 @@ acceptance_criteria:
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
-risk_class: playwright_framework_tool_strategy_wiring
+risk_class: browser_program_framework_tool_strategy_wiring
 reasoning_tier: standard
 context_scope: newtools_standardization
 implementation_surfaces:
 - Plans/newtools.md
 node_compile_hint:
-  mode: playwright_framework_tool_strategy_wiring
+  mode: browser_program_framework_tool_strategy_wiring
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0041
@@ -3839,14 +3843,14 @@ owner_hints:
 preserved_contractrefs: []
 ```
 
-### N2-085 - Playwright Evidence Attachment Interop
+### N2-085 - Generic Test Capture Attachment Interop
 
 ```yaml
 plan_unit_id: N2-085
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: Playwright-based capture keeps attachment metadata such as contentType and file path aligned with report attachment semantics so evidence remains portable across reporters.
+canonical_text: Generic Test Capture producers keep attachment metadata such as contentType and file path aligned with the PM artifact contract so evidence remains portable across reporters. Artifacts from a generic external Project command/process retain explicit producer and external-Project attribution and confer no PM browser authority.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or live visualization behavior.
 split_recommended: false
@@ -3859,23 +3863,22 @@ acceptance_criteria:
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
-risk_class: playwright_evidence_attachment_interop
+risk_class: generic_test_capture_attachment_interop
 reasoning_tier: standard
 context_scope: newtools_standardization
 implementation_surfaces:
 - Plans/newtools.md
 node_compile_hint:
-  mode: playwright_evidence_attachment_interop
+  mode: generic_test_capture_attachment_interop
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0047
 preserved_exact_tokens:
-- Playwright
+- Test Capture
 - contentType
 - report attachments
 negative_constraints: []
-compatibility_only_notes:
-- Playwright attachment metadata is compatibility/interoperability guidance.
+compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -4068,7 +4071,7 @@ plan_unit_id: N2-090
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: Web live visualization primary product path is PM built-in browser automation_session; external Playwright/CDP attach is backend/compat only, /browser-stack lineage is reference material only, and evidence from any backend maps into the shared artifact contract.
+canonical_text: Web live visualization uses only Browser Program or policy-gated Expert Browser Program over BrowserRuntimeService. BrowserWorkspace, BrowserPage, PageGeneration, BrowserAction, and Test Capture are PM-owned contracts; external Project artifacts may be ingested only with explicit attribution and confer no browser authority.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or live visualization behavior.
 split_recommended: false
@@ -4092,17 +4095,19 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0050
 preserved_exact_tokens:
-- automation_session
-- Playwright/CDP
-- /browser-stack
-- wry
-- WebView2
-- WKWebView
-- WebKitGTK
+- BrowserRuntimeService
+- Browser Program
+- Expert Browser Program
+- BrowserWorkspace
+- BrowserPage
+- PageGeneration
+- BrowserAction
+- Test Capture
 negative_constraints:
-- Playwright remains adapter lineage, not PM visible browser product foundation.
-compatibility_only_notes:
-- External Playwright/CDP attach is backend/compat path only.
+- Do not implement, expose, label, or imply a PM Playwright runtime, facade, compatibility layer, browser backend, attach bridge, package, port, MCP route, command, Doctor or Settings capability, or capture engine.
+- Do not treat a user Project's independently managed Playwright suite, run only as a generic external Project command/process, as a PM browser path or ingest its Test Capture/artifact refs without explicit external-Project attribution.
+- Do not grant a generic external Project command/process BrowserWorkspace, BrowserPage, BrowserControllerLease, AuthBrowserSession, profile, credential, or internal transport authority through artifact ingestion.
+compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -4209,7 +4214,7 @@ plan_unit_id: N2-093
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: PM built-in browser preflight verifies bundled runtime health/version, startup, editor-tab and detached hosts, packaging/update/install metadata, offline packaging distinction, optional wef/cargo-wef CEF integrity, package-size budget around 1 GB, experimental-status risk capture without user-facing experimental toggles, and target page reachability.
+canonical_text: BrowserRuntimeService preflight verifies bundled runtime health/version, startup, editor-tab and detached hosts, packaging/update/install metadata, offline packaging distinction, optional wef/cargo-wef CEF integrity, package-size budget around 1 GB, experimental-status risk capture without user-facing experimental toggles, and target page reachability for Browser Program.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or live visualization behavior.
 split_recommended: false
@@ -4233,7 +4238,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0051
 preserved_exact_tokens:
-- PM built-in browser
+- BrowserRuntimeService
+- Browser Program
 - wef
 - cargo-wef
 - CEF
@@ -4399,7 +4405,7 @@ plan_unit_id: N2-097
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: Browser-capable web runs use the PM built-in browser automation_session as the visible path. Missing PM browser runtime prerequisites surface as runtime_unavailable; forced_visible fails fast rather than silently swapping to a different browser product model; headless fallback remains valid for CI or explicitly headless flows but does not redefine the visible browser UX contract.
+canonical_text: Browser-capable web runs use Browser Program as the PM-native visible path. Missing BrowserRuntimeService prerequisites surface as runtime_unavailable; forced_visible fails fast rather than silently swapping to another browser product model; Browser Program headless operation remains valid for CI or explicitly headless flows but does not redefine the visible browser UX contract.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
 split_recommended: true
@@ -4423,8 +4429,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0052
 preserved_exact_tokens:
-- PM built-in browser
-- automation_session
+- Browser Program
+- BrowserRuntimeService
 - runtime_unavailable
 - forced_visible
 - headless fallback
@@ -4644,7 +4650,7 @@ plan_unit_id: N2-102
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: Live visualization emits live.session.started, live.step.updated, live.artifact.created, live.session.completed, and live.session.degraded events; visible PM built-in browser targets additionally carry browser_session_id? and session_class? when available.
+canonical_text: Live visualization emits live.session.started, live.step.updated, live.artifact.created, live.session.completed, and live.session.degraded events; visible Browser Program targets additionally carry browser_session_id? and session_class? when available.
 gui_related: false
 gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
 split_recommended: false
@@ -6015,7 +6021,7 @@ plan_unit_id: N2-130
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: 'The grounded PM Debug core is H + I + J + E + A: PM points at a target, stays inside the overlay/runtime architecture rather than creating a new runtime mode, sends evidence through runtime-artifact and seglog pipelines, supports assistant/session inspection, and allows MVP temporary instrumentation only under an explicit instrumentation contract. MVP web/debug repro prefers PM built-in browser + automation_session with dev_session_id and output-problems-ports linkage, including /test/dev-server loops; classical DAP remains a separate adapter/surface.'
+canonical_text: 'The grounded PM Debug core is H + I + J + E + A: PM points at a target, stays inside the overlay/runtime architecture rather than creating a new runtime mode, sends evidence through runtime-artifact and seglog pipelines, supports assistant/session inspection, and allows MVP temporary instrumentation only under an explicit instrumentation contract. MVP web/debug repro uses Browser Program with dev_session_id and output-problems-ports linkage, including /test/dev-server loops; classical DAP remains a separate adapter/surface.'
 gui_related: false
 gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
 split_recommended: false
@@ -6045,7 +6051,7 @@ preserved_exact_tokens:
 - runtime-artifact
 - seglog
 - temporary instrumentation
-- PM built-in browser + automation_session
+- Browser Program
 - dev_session_id
 - output-problems-ports
 - /test/dev-server
@@ -6068,7 +6074,7 @@ plan_unit_id: N2-131
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: Research-grade adapters remain advanced options behind target-registry and policy checks; browser/session automation defaults to an ephemeral automation profile/session and moves to attention_required when authentication is required and no valid automation session exists. External Playwright or Browser MCP remains orthogonal to the promoted named-action browser contract unless explicitly bridged, and tool-emitted debug evidence enters chat only through bounded user-visible attach rules.
+canonical_text: Research-grade non-browser adapters remain advanced options behind target-registry and policy checks. Browser Program uses an isolated ephemeral BrowserWorkspace; when authentication requires protected interaction, Debug moves to attention_required and hands control to a human-only protected AuthBrowserSession. Protected content and state never enter agent/tool/recorder/PageRepresentation/screenshot/console/network capture, and tool-emitted debug evidence enters chat only through bounded user-visible attach rules.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
 split_recommended: false
@@ -6094,16 +6100,17 @@ source_lineage:
 preserved_exact_tokens:
 - Research-grade adapters
 - advanced options
-- ephemeral automation profile/session
+- BrowserWorkspace
+- AuthBrowserSession
 - attention_required
-- External Playwright
-- Browser MCP
-- orthogonal
-- promoted named-action browser contract
+- human-only
+- protected session
+- zero capture
 - bounded, user-visible attach model
 negative_constraints:
 - If a target requires authentication and no valid automation session exists, Debug moves to attention_required rather than silently reusing an unrelated user profile.
-- External Playwright or Browser MCP tooling remains orthogonal unless a product surface explicitly bridges it.
+- PM browser automation must not acquire a backend, attach bridge, MCP route, or compatibility surface.
+- Protected AuthBrowserSession content, state, and controls must not be exposed to an agent, tool, recorder, PageRepresentation reader, screenshotter, console reader, or network observer.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []

@@ -85,7 +85,8 @@ export function renderComposer(ui) {
   if (questionOpen) {
     return `<div class="composer-held" data-focus-key="composer-held">
       ${icon("question")}
-      <div><strong>Composer held for questions</strong><span>Your ordinary draft is saved and will return after this questionnaire.</span></div>
+      <div><strong>Composer held for questions</strong><span>Your ordinary draft stays visible and returns as editable after this questionnaire.</span></div>
+      <textarea data-role="composer-input" data-focus-key="composer" rows="2" spellcheck="true" readonly aria-label="Saved ordinary draft while questionnaire is active">${escapeHtml(view.draft)}</textarea>
     </div>`;
   }
   const hasDraft = Boolean(view.draft.trim());
@@ -108,17 +109,22 @@ export function renderComposer(ui) {
 }
 
 export function renderChatHeader(data, ui, conceptTitle) {
+  const activeTitle = ui.threadMeta[ui.activeThreadId]?.title ?? data.threadMap[ui.activeThreadId]?.title ?? "Assistant Chat";
+  const activeProject = data.threadMap[ui.activeThreadId]?.project ?? ui.spawnedThreads?.find((thread) => thread.id === ui.activeThreadId)?.project ?? "Project";
   return `<header class="chat-header">
     <div class="chat-identity">
       <span class="chat-kicker">${escapeHtml(conceptTitle)}</span>
-      <strong>${escapeHtml((data.threadMap[ui.activeThreadId] ?? {}).title ?? "Assistant Chat")}</strong>
-      <span class="thread-location">${escapeHtml((data.threadMap[ui.activeThreadId] ?? {}).project ?? "Project")}</span>
+      <strong>${escapeHtml(activeTitle)}</strong>
+      <span class="thread-location">${escapeHtml(activeProject)}</span>
     </div>
     <div class="chat-header-actions">
+      ${button({ label: "History", action: "history-set", value: "peek", iconName: "history", className: "header-button", pressed: ui.historyMode !== "closed" })}
+      ${button({ label: "Artifact", action: "artifact-state", value: "ready", iconName: "artifact", className: "header-button", pressed: ui.artifact.state !== "closed" })}
       ${button({ label: "Search", action: "open-popup", value: "search", iconName: "search", className: "header-button", pressed: ui.popup === "search", focusKey: "search-trigger" })}
       ${button({ label: `${ui.context.ringPercent}%`, action: "open-popup", value: "context", iconName: "context", className: "header-button context-button", pressed: ui.popup === "context", focusKey: "context-trigger" })}
       ${button({ label: ui.route.model, action: "open-popup", value: "route", iconName: "route", className: "header-button route-button", pressed: ui.popup === "route", focusKey: "route-trigger" })}
       ${button({ label: ui.access.requested, action: "open-popup", value: "access", iconName: "shield", className: "header-button", pressed: ui.popup === "access", focusKey: "access-trigger" })}
+      ${button({ label: ui.conversationMode === "Review" ? "Review on" : "Review", action: "set-mode", value: "Review", className: "header-button", pressed: ui.conversationMode === "Review" })}
       ${button({ label: `BSD ${ui.bsd.mode}`, action: "open-popup", value: "bsd", iconName: "bsd", className: `header-button bsd-${ui.bsd.state}`, pressed: ui.popup === "bsd", focusKey: "bsd-trigger" })}
       ${iconOnlyButton({ label: "More thread actions", action: "open-popup", value: "thread-more", iconName: "more", pressed: ui.popup === "thread-more", focusKey: "thread-more-trigger" })}
     </div>
@@ -127,7 +133,7 @@ export function renderChatHeader(data, ui, conceptTitle) {
 
 export function renderSearchPopup(data, ui) {
   const results = searchResults(data, ui);
-  return `<section class="popup-card search-popup" role="dialog" aria-label="Search conversations">
+  return `<section class="popup-card search-popup" role="dialog" aria-modal="true" aria-label="Search conversations">
     <header class="popup-header"><div><span class="popup-kicker">One search bar</span><strong>Search conversations</strong></div>${iconOnlyButton({ label: "Close search", action: "close-popup", iconName: "close", focusKey: "search-close" })}</header>
     <div class="scope-switch" role="radiogroup" aria-label="Search scope">
       ${SEARCH_SCOPES.map((scope) => button({ label: scope, action: "search-scope", value: scope, pressed: ui.search.scope === scope, className: "scope-option" })).join("")}
@@ -144,27 +150,67 @@ export function renderSearchPopup(data, ui) {
 
 export function renderRoutePopup(data, ui) {
   const selected = routeModel(data, ui);
-  const providers = data.extension.route_catalog;
+  const query = String(ui.routeSearch ?? "").trim().toLocaleLowerCase();
+  const providers = query ? data.extension.route_catalog.filter((provider) => [provider.provider, ...provider.accounts.flatMap((account) => [account.label, account.connection, ...account.models.flatMap((model) => [model.label, model.reason ?? ""])])].some((value) => String(value).toLocaleLowerCase().includes(query))) : data.extension.route_catalog;
   const activeProvider = providers.find((provider) => provider.provider === ui.routeBrowse.provider) ?? providers[0];
+  if (!activeProvider) return `<section class="popup-card route-popup" role="dialog" aria-modal="true" aria-label="Provider account and model route"><header class="popup-header"><div><span class="popup-kicker">Requested route</span><strong>${escapeHtml(ui.route.requested)}</strong></div>${iconOnlyButton({ label: "Close route picker", action: "close-popup", iconName: "close", focusKey: "route-close" })}</header><div class="route-search-row"><input class="search-input" data-role="route-search" data-focus-key="route-search" aria-label="Search models" value="${escapeHtml(ui.routeSearch ?? "")}" placeholder="Search provider, account, or model"></div><div class="empty-state"><strong>No route matches “${escapeHtml(ui.routeSearch)}”</strong><span>Change the search without losing the current requested or effective route.</span></div></section>`;
   const activeAccount = activeProvider.accounts.find((account) => account.id === ui.routeBrowse.accountId) ?? activeProvider.accounts[0];
-  return `<section class="popup-card route-popup" role="dialog" aria-label="Provider account and model route">
+  return `<section class="popup-card route-popup" role="dialog" aria-modal="true" aria-label="Provider account and model route">
     <header class="popup-header"><div><span class="popup-kicker">Requested route</span><strong>${escapeHtml(ui.route.requested)}</strong></div>${iconOnlyButton({ label: "Close route picker", action: "close-popup", iconName: "close", focusKey: "route-close" })}</header>
-    <div class="route-search-row"><input class="search-input" data-focus-key="route-search" aria-label="Search models" placeholder="Search provider, account, or model"><button type="button" class="favorite-button ${ui.route.favorite ? "is-favorite" : ""}" data-action="route-favorite">Favorite</button></div>
+    <div class="route-search-row"><input class="search-input" data-role="route-search" data-focus-key="route-search" aria-label="Search models" value="${escapeHtml(ui.routeSearch ?? "")}" placeholder="Search provider, account, or model"><button type="button" class="favorite-button ${ui.route.favorite ? "is-favorite" : ""}" data-action="route-favorite" aria-pressed="${ui.route.favorite ? "true" : "false"}">Favorite</button></div>
     <div class="route-stack" data-pane="${escapeHtml(ui.popupPane)}">
-      <nav class="provider-rail" aria-label="Providers">${providers.map((provider) => `<button type="button" class="provider-choice ${provider.provider === activeProvider.provider ? "is-selected" : ""}" data-action="route-provider" data-value="${escapeHtml(provider.provider)}" title="${escapeHtml(provider.provider)}"><span>${escapeHtml(provider.provider.slice(0, 2).toUpperCase())}</span></button>`).join("")}</nav>
+      <nav class="provider-rail" aria-label="Providers">${providers.map((provider) => `<button type="button" class="provider-choice ${provider.provider === activeProvider.provider ? "is-selected" : ""}" data-action="route-provider" data-value="${escapeHtml(provider.provider)}" title="${escapeHtml(provider.provider)}"><span>${escapeHtml(provider.provider.slice(0, 2).toUpperCase())}</span>${query ? `<em class="visually-hidden">${escapeHtml(provider.provider)}</em>` : ""}</button>`).join("")}</nav>
       <div class="route-pane account-pane"><span class="pane-title">Accounts and connections</span>${activeProvider.accounts.map((account) => `<button type="button" class="route-row ${account.id === activeAccount.id ? "is-selected" : ""}" data-action="route-account" data-provider="${escapeHtml(activeProvider.provider)}" data-account-id="${escapeHtml(account.id)}"><strong>${escapeHtml(account.label)}</strong><span>${escapeHtml(account.connection)}</span></button>`).join("")}</div>
-      <div class="route-pane model-pane"><span class="pane-title">Models</span>${activeAccount.models.map((model) => `<button type="button" class="route-row ${model.id === ui.route.modelId ? "is-selected" : ""}" data-action="route-model" data-provider="${escapeHtml(activeProvider.provider)}" data-account-id="${escapeHtml(activeAccount.id)}" data-model-id="${escapeHtml(model.id)}" ${model.available ? "" : `aria-disabled="true"`}><strong>${escapeHtml(model.label)}</strong><span>${escapeHtml(model.available ? `${model.efforts.length} effort choices` : model.reason)}</span></button>`).join("")}</div>
+      <div class="route-pane model-pane"><span class="pane-title">Models</span>${activeAccount.models.map((model) => `<button type="button" class="route-row ${model.id === ui.route.modelId ? "is-selected" : ""} ${model.available ? "" : "is-unavailable"}" data-action="route-model" data-provider="${escapeHtml(activeProvider.provider)}" data-account-id="${escapeHtml(activeAccount.id)}" data-model-id="${escapeHtml(model.id)}"><strong>${escapeHtml(model.label)}</strong><span>${escapeHtml(model.available ? `${model.efforts.length} effort choices` : model.reason)}</span></button>`).join("")}</div>
     </div>
+    <div class="route-mode"><span class="pane-title">Conversation mode</span><div class="segmented">${["Chat", "Agent", "Review"].map((mode) => button({ label: mode, action: "set-mode", value: mode, pressed: ui.conversationMode === mode, className: "segment" })).join("")}</div></div>
     <div class="route-tuning">
       <div><span class="pane-title">Effort</span><div class="segmented">${(selected?.model.efforts ?? [ui.route.effort]).map((effort) => button({ label: effort, action: "route-effort", value: effort, pressed: ui.route.effort === effort, className: "segment" })).join("")}</div></div>
       <div><span class="pane-title">Speed</span><div class="segmented">${(selected?.model.speeds ?? [ui.route.speed]).map((speed) => button({ label: speed, action: "route-speed", value: speed, pressed: ui.route.speed === speed, className: "segment" })).join("")}</div></div>
     </div>
-    ${ui.route.warning ? `<div class="inline-warning">${icon("warning")}<span>${escapeHtml(ui.route.warning)}</span>${button({ label: "Open Provider Settings", action: "truthful-disabled", className: "text-button", disabled: true, reason: "Prototype records the deep link but does not own Provider Settings" })}</div>` : ""}
+    ${ui.route.warning ? `<div class="inline-warning">${icon("warning")}<span>${escapeHtml(ui.route.warning)}</span>${button({ label: "Open exact setup row", action: "provider-action", value: "setup_required", className: "text-button" })}</div>` : ""}
+    ${ui.popupPane === "provider-setup" || ui.providerSetup.handoffOpen ? renderProviderSetupProjection(ui) : ""}
+  </section>`;
+}
+
+function renderProviderSetupProjection(ui) {
+  const setup = ui.providerSetup;
+  const plan = setup.supplyChainPlan ?? {};
+  const proof = setup.supplyChainProof;
+  const installationReady = ["verified", "selected existing"].includes(setup.installState);
+  const canUseExisting = Boolean(setup.discoveredInstallationRef);
+  return `<section class="provider-setup-projection" aria-label="Provider Setup Required">
+    <header><div><span>Shared owner handoff · Chat preserves return context</span><strong>Provider Setup Required</strong></div>${stateWord(setup.setupState)}</header>
+    <p>${escapeHtml(setup.message)}</p>
+    <dl>
+      <div><dt>Exact row</dt><dd>${escapeHtml(setup.exactRow)}</dd></div>
+      <div><dt>Host / Environment</dt><dd>${escapeHtml(setup.host)} / ${escapeHtml(setup.environment)}</dd></div>
+      <div><dt>Official source</dt><dd>${escapeHtml(setup.officialSource)} · ${escapeHtml(setup.officialSourceKind)}</dd></div>
+      <div><dt>Source contract</dt><dd>${escapeHtml(setup.officialSourceRef)} · ${escapeHtml(humanize(plan.plan_status ?? "not inspected"))}</dd></div>
+      <div><dt>Supply-chain proof</dt><dd>${proof ? `${escapeHtml(proof.proof_id)} · ${escapeHtml(humanize(proof.proof_status))} · observed ${escapeHtml(proof.observed_at)}` : "Not produced before explicit acquisition or validated existing-installation adoption"}</dd></div>
+      <div><dt>Topology generation</dt><dd>${escapeHtml(setup.topologyGeneration)} · expected ${escapeHtml(setup.expectedTopologyGeneration)}</dd></div>
+      <div><dt>Installation</dt><dd>${escapeHtml(humanize(setup.installState))}</dd></div>
+      <div><dt>Authentication</dt><dd>${escapeHtml(humanize(setup.authState))} · separate protected action</dd></div>
+      <div><dt>Readiness</dt><dd>${escapeHtml(humanize(setup.readinessState))}</dd></div>
+      <div><dt>Origin</dt><dd>${escapeHtml(setup.originatingOperationRef)}</dd></div>
+      <div><dt>Continuation</dt><dd>${escapeHtml(setup.continuationToken)} · ${escapeHtml(setup.currentnessState)}${setup.currentnessReasons?.length ? ` · ${escapeHtml(setup.currentnessReasons.join(", "))}` : ""}</dd></div>
+    </dl>
+    <div class="provider-policy-note">Not bundled or installed by default. Auto and BSD On cannot grant first-acquisition consent. Authentication content and secrets remain outside Chat.</div>
+    <footer>
+      ${setup.installState === "missing" ? button({ label: "Inspect existing installation", action: "provider-action", value: "existing_found", className: "secondary-button" }) : ""}
+      ${setup.installState === "missing" ? button({ label: "Install from official source…", action: "provider-action", value: "install_intent", className: "primary-button" }) : ""}
+      ${setup.installState === "consent required" ? button({ label: `Approve install on ${setup.host} / ${setup.environment}`, action: "provider-action", value: "install_approved", className: "primary-button" }) : ""}
+      ${setup.installState === "installing" ? button({ label: "Verify staged installation", action: "provider-action", value: "install_verified", className: "primary-button" }) : ""}
+      ${canUseExisting && setup.installState === "existing installation found" ? button({ label: "Use this existing installation", action: "provider-action", value: "use_existing", className: "primary-button" }) : ""}
+      ${installationReady && setup.authState !== "authenticated" ? button({ label: "Authenticate in protected browser", action: "truthful-disabled", className: "secondary-button", disabled: true, reason: "This browser prototype does not open or inspect AuthBrowserSession; use the deterministic fixture trigger to inspect the returned state" }) : ""}
+      ${setup.authState === "authenticated" && setup.readinessState !== "model ready" ? button({ label: "Verify provider and model readiness", action: "provider-action", value: "readiness_verified", className: "primary-button" }) : ""}
+      ${setup.readinessState === "model ready" && setup.current ? button({ label: "Resume originating operation", action: "provider-action", value: "continuation_resumed", className: "primary-button" }) : ""}
+    </footer>
   </section>`;
 }
 
 export function renderContextPopup(ui) {
-  return `<section class="popup-card context-popup" role="dialog" aria-label="Context Ring and Lens">
+  return `<section class="popup-card context-popup" role="dialog" aria-modal="true" aria-label="Context Ring and Lens">
     <header class="popup-header"><div><span class="popup-kicker">Context Ring · ${ui.context.selectedMessages.length} message${ui.context.selectedMessages.length === 1 ? "" : "s"} selected</span><strong>${ui.context.ringPercent}% admitted</strong></div>${iconOnlyButton({ label: "Close context", action: "close-popup", iconName: "close", focusKey: "context-close" })}</header>
     <div class="context-meter" style="--context-percent:${ui.context.ringPercent}%"><span></span></div>
     <div class="context-columns"><div><span class="pane-title">Included</span>${ui.context.includedSources.map((source) => `<p>${icon("check")}<span>${escapeHtml(source)}</span></p>`).join("")}</div><div><span class="pane-title">Omitted</span>${ui.context.omittedSources.map((source) => `<p>${icon("close")}<span>${escapeHtml(source)}</span></p>`).join("")}</div></div>
@@ -175,7 +221,7 @@ export function renderContextPopup(ui) {
 }
 
 export function renderAccessPopup(ui) {
-  return `<section class="popup-card compact-popup" role="dialog" aria-label="Access profile">
+  return `<section class="popup-card compact-popup" role="dialog" aria-modal="true" aria-label="Access profile">
     <header class="popup-header"><div><span class="popup-kicker">Access is separate from mode</span><strong>${escapeHtml(ui.access.requested)}</strong></div>${iconOnlyButton({ label: "Close access picker", action: "close-popup", iconName: "close", focusKey: "access-close" })}</header>
     <div class="option-list">${ACCESS_OPTIONS.map((option) => button({ label: option, action: "set-access", value: option, pressed: ui.access.requested === option, className: "option-row" })).join("")}</div>
     ${ui.access.limitation ? `<div class="effective-state"><span>Effective</span><strong>${escapeHtml(ui.access.effective)}</strong><p>${escapeHtml(ui.access.limitation)}</p></div>` : ""}
@@ -183,7 +229,7 @@ export function renderAccessPopup(ui) {
 }
 
 export function renderBsdPopup(ui) {
-  return `<section class="popup-card compact-popup" role="dialog" aria-label="Back Seat Driver">
+  return `<section class="popup-card compact-popup" role="dialog" aria-modal="true" aria-label="Back Seat Driver">
     <header class="popup-header"><div><span class="popup-kicker">Read-only review</span><strong>BSD ${escapeHtml(ui.bsd.mode)}</strong></div>${iconOnlyButton({ label: "Close BSD picker", action: "close-popup", iconName: "close", focusKey: "bsd-close" })}</header>
     <div class="option-list">${BSD_OPTIONS.map((option) => button({ label: option, action: "set-bsd", value: option, pressed: ui.bsd.mode === option, className: "option-row" })).join("")}</div>
     <div class="bsd-state ${ui.bsd.state === "evaluating" ? "is-evaluating" : ""}">${stateWord(ui.bsd.state)}<p>${escapeHtml(ui.bsd.message)}</p><span>${escapeHtml(ui.bsd.scope)}</span></div>
@@ -192,7 +238,7 @@ export function renderBsdPopup(ui) {
 
 export function renderDraftHistoryPopup(ui) {
   const view = ui.threadViews[ui.activeThreadId];
-  return `<section class="popup-card compact-popup" role="dialog" aria-label="Draft revision history">
+  return `<section class="popup-card compact-popup" role="dialog" aria-modal="true" aria-label="Draft revision history">
     <header class="popup-header"><div><span class="popup-kicker">Thread-local draft</span><strong>Revision history</strong></div>${iconOnlyButton({ label: "Close draft history", action: "close-popup", iconName: "close", focusKey: "draft-close" })}</header>
     <div class="draft-list">${view.draftHistory.slice().reverse().map((revision) => `<button type="button" class="draft-revision" data-action="restore-draft" data-value="${escapeHtml(revision.id)}"><span>${escapeHtml(formatLocalTime(revision.savedAt))}</span><p>${escapeHtml(revision.text.slice(0, 120))}</p></button>`).join("") || '<div class="empty-state"><strong>No earlier revision</strong><span>Substantive local edits are stored here.</span></div>'}</div>
     <footer class="popup-footer">${button({ label: "Save current revision", action: "save-draft-revision", className: "secondary-button" })}${button({ label: "Clear current draft", action: "clear-draft", className: "text-button" })}</footer>
@@ -200,7 +246,7 @@ export function renderDraftHistoryPopup(ui) {
 }
 
 export function renderThreadMorePopup(ui) {
-  return `<section class="popup-card compact-popup" role="dialog" aria-label="Thread actions">
+  return `<section class="popup-card compact-popup" role="dialog" aria-modal="true" aria-label="Thread actions">
     <header class="popup-header"><div><span class="popup-kicker">Current conversation</span><strong>Thread actions</strong></div>${iconOnlyButton({ label: "Close thread actions", action: "close-popup", iconName: "close", focusKey: "thread-more-close" })}</header>
     <div class="option-list">
       ${button({ label: "Branch from here", action: "branch-action", value: "branch", iconName: "branch", className: "option-row" })}
@@ -263,6 +309,8 @@ export function renderArtifactContent(data, ui, variant = "plate") {
 
 export function renderSystemNotices(ui) {
   return `<div class="system-notices">
+    ${(ui.warnings ?? []).map((warning, index) => `<section class="inline-system-card fixture-warning" data-warning-index="${index}">${icon("warning")}<div><span>Scenario warning ${index + 1}</span><strong>${escapeHtml(warning)}</strong></div></section>`).join("")}
+    ${ui.providerSetup.handoffOpen ? `<section class="inline-system-card provider-required-card">${icon("route")}<div><span>Provider Setup Required</span><strong>${escapeHtml(ui.providerSetup.provider)} · ${escapeHtml(ui.providerSetup.host)} / ${escapeHtml(ui.providerSetup.environment)}</strong><p>${escapeHtml(ui.providerSetup.message)}</p><footer>${button({ label: "Open exact setup handoff", action: "open-popup", value: "route", className: "secondary-button" })}</footer></div></section>` : ""}
     ${ui.approval ? `<section class="decision-card approval-card ${ui.approval.state !== "pending" ? "is-resolved" : ""}">${icon("shield")}<div><span>Compact decision</span><strong>${escapeHtml(ui.approval.title)}</strong><p>${escapeHtml(ui.approval.summary)}</p>${ui.approval.evidenceOpen ? '<div class="decision-evidence">Owner: FileSafe · scope: one write · route unchanged · reversible through retained patch</div>' : ""}<footer>${button({ label: "Approve once", action: "approval-decision", value: "approved once", className: "primary-button" })}${button({ label: "Decline", action: "approval-decision", value: "declined", className: "secondary-button" })}${button({ label: "Details", action: "approval-details", className: "text-button" })}</footer></div></section>` : ""}
     ${ui.routeWarning ? `<section class="decision-card route-warning-card ${ui.routeWarning.state !== "pending" ? "is-resolved" : ""}">${icon("warning")}<div><span>Material route warning</span><strong>${escapeHtml(ui.routeWarning.title)}</strong><p>${escapeHtml(ui.routeWarning.detail)}</p><footer>${button({ label: "Continue here", action: "route-warning-decision", value: "continue", className: "primary-button" })}${button({ label: "Branch with new model", action: "route-warning-decision", value: "branch", className: "secondary-button" })}${button({ label: "Cancel route change", action: "route-warning-decision", value: "cancel", className: "text-button" })}</footer></div></section>` : ""}
     ${ui.attachmentResolution.state !== "none" ? `<section class="inline-system-card attachment-card">${icon("attach")}<div><span>Attachment route</span><strong>${escapeHtml(ui.attachmentResolution.label)}</strong><p>${escapeHtml(ui.attachmentResolution.detail)}</p></div></section>` : ""}

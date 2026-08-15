@@ -230,9 +230,9 @@ Orchestrator GUI tabs are native-purpose except where a doc explicitly says othe
 
 #### PreviewSession lifecycle and identity contract
 
-`PreviewSession` is a durable runtime contract for rendered subject identity, but browser-capable surfaces layer a distinct browser-session identity on top of preview identity so that browser tabs, detached windows, automation sessions, and auth sessions do not collapse into one broad preview-instance model.
+`PreviewSession` is a durable runtime contract for rendered subject identity, but ordinary browser-capable surfaces layer a distinct browser-session identity on top of preview identity so browser tabs, detached windows, and automation sessions do not collapse into one broad preview-instance model. Protected `AuthBrowserSession` is not a PreviewSession overlay and exposes no durable rendered-subject content/state outside its foreground human-only lifecycle.
 
-Owner split is explicit: `Plans/Section15_MVP_Promoted_Features_Spec.md` owns the promoted `/browser` and `/runtime` session model; `Plans/FileManager.md` owns editor `/file-surface` preview behavior and routes HTML/browser actions to that canonical model; `Plans/storage-plan.md` owns restore identity; `Plans/UI_Command_Catalog.md` owns stable `/command` families; and `Plans/FinalGUISpec.md` owns GUI placement and rendering-surface presentation for each rendered-subject. The taxonomy separates render-capable `/document` previews from browser-capable sessions, and `auth_session` state stays a browser/session overlay rather than a generic preview fact.
+Owner split is explicit: `Plans/Section15_MVP_Promoted_Features_Spec.md` owns the promoted Browser Program and protected AuthBrowserSession model; `Plans/FileManager.md` owns editor preview behavior; `Plans/storage-plan.md` owns ordinary restore identity and deliberately stores no protected AuthBrowserSession family; `Plans/UI_Command_Catalog.md` owns stable ordinary browser command families; and `Plans/FinalGUISpec.md` owns GUI placement. Legacy `auth_session` overlay text is retired.
 
 **Lifecycle states**
 - `created`

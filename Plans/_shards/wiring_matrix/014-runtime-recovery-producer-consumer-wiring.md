@@ -4,7 +4,7 @@ Source: `Plans/Wiring_Matrix.md`
 
 Source lines: L376-L484
 
-Source SHA256: `adffa65bcc7e38865d077b5ad538a6bf94c19117a46bece38d8e73c7a359aae0`
+Source SHA256: `24853014907c12d1eab1df3d6958ff58907a01d12f326eac8598b514530bf944`
 
 ---
 
@@ -87,13 +87,13 @@ Terminal/editor wiring treats `Concepts/PMConcept.html` (`/PMConcept.html`) as G
 ### Browser session, capture, and recovery wiring invariants
 
 - `Plans/Wiring_Matrix.md` is the wiring SSOT for browser command producer/consumer rows; stale `Plans/newfeatures.md §15.18` and `/newfeatures.md` references are cross-reference cleanup lineage only, and the old `trust-tier`/`/trust-tier` matrix must not stand beside the current permission-layer `/capability-degradation` model.
-- Browser runtime wiring assumes the CEF-class, tab-first, in-app `/browser` model: `workspace_preview` is the user-facing editor/browser session, `detached_preview` is the same subject in a detached-window when supported, `automation_session` is a visible `/watchable`, agent-driven, evidence-producing web-app/testing session, and `auth_session` is a separate visible `/device/browser` flow for site-specific auth with an isolated `/cookie` and storage boundary.
-- `auth_session` is not general-purpose browsing state, is not auto-restored, must not auto-close or auto-complete on presumed success, and normal selection, `/copy/paste`, `/share`, and capture interactions remain available unless the normal permission-layer blocks them.
+- Browser runtime wiring assumes the PM-native, tab-first Browser Program model: `workspace_preview` is the user-facing editor/browser session, `detached_preview` is the same subject in a detached window when supported, and `automation_session` is a visible/watchable ordinary agent-driven web-app/testing session. Protected `AuthBrowserSession` is a separate foreground human-only domain-scoped flow, not an ordinary navigation subject.
+- Legacy `auth_session` navigation/copy/share/capture wiring is retired. Protected `AuthBrowserSession` is ephemeral, never restored or auto-completed, and has no generic navigation/reload, selection, programmatic clipboard, share, capture, recording, DOM/PageRepresentation, console, network, storage/profile, artifact, agent, tool, BSD, or awareness-detail wiring.
 - Live `automation_session` direct user input routes through user-takeover wiring: prompt actions are `Take over and pause agent`, `Let agent continue`, and `Stop agent and keep browser`; default highlighted action is `Take over and pause agent`; user-takeover leaves no half-owned session, and `/stop/take-over` or `/stop/take` handling must pause, stop, or take over rather than silently auto-resume work.
 - Browser capture is explicit, chip-based, share-to-chat, and non-auto-send: ordinary clicks do not inject `/context`; `/highlight/share-to-chat`, `/highlight/share`, `/highlighting`, `/highlight`, `/elements`, `/selection`, `/DOM`/DOM, URL, and source anchors create removable pending composer chips, allow multi-capture, and attach to an active `/thread` or open a new thread when needed.
 - Browser capture commands include `Add Selection to Chat`, `Pick Element for Chat`, `Add Selection + Screenshot`, `Add Element + Screenshot`, standalone screenshots, and screenshot-with-selection variants; screenshot-with-selection defaults to clipped context while full viewport remains explicit; `/trace/video`, `/video/screenshot`, and `/download` artifacts route through Runtime Artifacts.
 - DevTools is a concrete browser UX/tool contract: `Open DevTools` and `Toggle DevTools Dock` are user-visible wiring rows; `/tool` and advanced testing permissions allow when user explicitly opens DevTools or policy permits attach/open, and named actions remain first-class `/capability` paths instead of forcing arbitrary browser-code.
-- Recovery wiring preserves URL, tabs, session class, `/originating` session identity, and completed trace/video/screenshot artifacts; `workspace_preview` can restore, eligible `detached_preview` follows its originating restored session, automation/auth never auto-resume active work, auth never auto-complete, attention-required recovery offers `Reopen`, `Retry`, or `Keep Closed`, and cross-platform CEF runtime `/install/update` failures surface `runtime_unavailable`/`/capability-degradation` rather than hidden fallback.
+- Recovery wiring preserves ordinary-session URL, tabs, session class, originating identity, and permitted completed artifacts; `workspace_preview` can restore, eligible `detached_preview` follows its originating restored session, and automation never auto-resumes active work. Protected AuthBrowserSession has no restore/reopen/retry-with-state path; close, crash, expiry, restart, or disconnect destroys transient protected state and exterior recovery records only redacted lifecycle/denial facts.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/UI_Command_Catalog.md
 

@@ -404,11 +404,14 @@
   display: flex; align-items: flex-start; gap: var(--pm-space-4);
   padding: var(--pm-space-4) var(--pm-space-5) var(--pm-space-3);
   border-bottom: 2px solid var(--pm-border-2);
+  /* The tool cluster folds under the title before it can push the record
+   * sideways: a manager never scrolls horizontally. */
+  flex-wrap: wrap;
 }
 .lg-mgr-titles { flex: 1 1 auto; min-width: 0; }
 .lg-mgr-title { font-size: 19px; font-weight: var(--pm-title-weight); }
 .lg-mgr-purpose { font-size: 12.5px; color: var(--pm-text-3); margin-top: 3px; max-width: 78ch; }
-.lg-mgr-tools { display: flex; gap: 7px; flex-wrap: wrap; justify-content: flex-end; flex: none; }
+.lg-mgr-tools { display: flex; gap: 7px; flex-wrap: wrap; justify-content: flex-end; flex: 0 1 auto; min-width: 0; }
 .lg-mgr-body { flex: 1 1 auto; min-height: 0; overflow: auto; padding: var(--pm-space-4) var(--pm-space-5) var(--pm-space-6); }
 
 .lg-sec { margin-bottom: var(--pm-space-5); }
@@ -667,3 +670,6 @@
 }
 .lg-badroute svg { color: var(--pm-attention); flex: none; margin-top: 2px; }
 .lg-badroute code { font-family: var(--pm-font-mono); font-size: 11.5px; color: var(--pm-text-2); }
+
+.lg-window { display: flex; align-items: center; justify-content: space-between; gap: var(--pm-space-3); padding: 8px var(--pm-space-2); border-top: var(--pm-border-w) solid var(--pm-border-1); }
+.lg-window-count { font-size: 11.5px; color: var(--pm-text-3); font-family: var(--pm-font-mono); }

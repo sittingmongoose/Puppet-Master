@@ -3,7 +3,7 @@
   "concept_id": "opus-5",
   "model": "Opus 5",
   "chain": "control -> command -> owning service -> permission/FileSafe/route validation -> durable state -> event/receipt -> projection -> Usage/diagnostics -> retry",
-  "note": "Every offline-capable command names its idempotency key. A command with no key is not offline-capable and says so by omission.",
+  "note": "Every offline-capable command names its idempotency key. A command with no key is not offline-capable and says so by omission. Every command named in this file is cross-checked against candidate-command-delta.json by `node tools/drive.mjs scan`; three ids lived here and nowhere else for the whole build, which is how two of them kept a disposition the catalog contradicts.",
   "rows": [
     {
       "control": "Route selector, model row",
@@ -55,7 +55,7 @@
     },
     {
       "control": "Back Seat Driver selector",
-      "command": "cmd.chat.bsd.set",
+      "command": "cmd.bsd.set (canonical, Plans/UI_Command_Catalog.md:11109)",
       "owning_service": "Thread service",
       "permission_or_filesafe": "Read-only by construction: no write path into runtime.access",
       "durable_state": "view[thread].bsd",
@@ -175,7 +175,7 @@
     },
     {
       "control": "Sync state, Reconnect",
-      "command": "cmd.chat.queue.replay (new, cmd.chat.queue.* family)",
+      "command": "cmd.thread.outbox.retry (canonical; retries the same unacknowledged command under its EXISTING idempotency identity, which is what makes the replay below idempotent)",
       "owning_service": "Outbox",
       "permission_or_filesafe": "None",
       "durable_state": "session.sync.{transport,replayed,snapshot}",
@@ -183,7 +183,7 @@
       "projection": "Sync chip and popup",
       "usage_or_diagnostics": "Usage attributes each replayed send once",
       "retry": "Idempotent by construction",
-      "idempotency_key": "per outbox entry id"
+      "idempotency_key": "the outbox entry id, which is the canonical command’s own identity rather than a second one"
     },
     {
       "control": "Composer attach picker",
@@ -235,7 +235,7 @@
     },
     {
       "control": "Environment popup, Request a new worktree",
-      "command": "cmd.chat.worktree.request (new, cmd.worktree.* owned elsewhere)",
+      "command": "cmd.chat.worktree.create (canonical; this row previously read \"new, cmd.worktree.* owned elsewhere\" and named the wrong family)",
       "owning_service": "Worktree Manager",
       "permission_or_filesafe": "Worktree lease check; never removes another owner lease",
       "durable_state": "Worktree Manager state, projected read-only into Chat",
@@ -247,7 +247,7 @@
     },
     {
       "control": "Conflict card, Use 3001",
-      "command": "cmd.chat.conflict.resolve (new)",
+      "command": "cmd.chat.conflict.resolve (candidate, alias_risk: cmd.git.conflict_apply_resolution is the GIT merge conflict, not a runtime resource collision)",
       "owning_service": "RuntimeResourceGovernor",
       "permission_or_filesafe": "Port ownership check; a conflict resolution never mutates another owner state",
       "durable_state": "session.ops.resolved",
@@ -291,6 +291,18 @@
       "projection": "Title-bar stack and inbox only",
       "usage_or_diagnostics": "Diagnostics record delivery",
       "retry": "Delivery retry is the owner concern, not Chat",
+      "idempotency_key": null
+    },
+    {
+      "control": "Activity capsule, one glyph in the chain",
+      "command": "cmd.chat.activity.open_phase",
+      "owning_service": "Run trace",
+      "permission_or_filesafe": "None: disclosure of work already performed, no capability consumed",
+      "durable_state": "view[thread].runTrace.openId",
+      "event_or_receipt": "No receipt. Disclosing a record is not an operation and emitting one would put reading into the audit trail.",
+      "projection": "The capsule headline switches to that phase in past tense with its sub-rows; siblings below are displaced rather than replaced",
+      "usage_or_diagnostics": "Not attributed: no provider call is made",
+      "retry": "Not retried; re-clicking the open glyph closes it",
       "idempotency_key": null
     }
   ]

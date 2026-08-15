@@ -289,9 +289,17 @@
  * micro-gutter cluster, the advice sheet and the artifact footnote.
  *
  * ONE geometry governs all of it: a narrow gutter column plus the reading measure, which is the same
- * two-column shape the transcript's own turns use. Nothing here is a panel, nothing has a shadow, and
- * nothing animates its height - a reading column that reflows while you are reading it is the single
- * worst thing this concept could do.
+ * two-column shape the transcript's own turns use. Nothing here is a panel and nothing has a shadow.
+ *
+ * ON HEIGHT. This block used to end "and nothing animates its height - a reading column that reflows
+ * while you are reading it is the single worst thing this concept could do". The claim about reflow is
+ * still exactly right and is still what every rule below is shaped by; the blanket ban is not, and
+ * pretending otherwise would leave a comment describing a stylesheet that no longer exists. ONE thing
+ * here interpolates its height: `.t8-qnote`, the question, through `motion.resizeBounce`. It does it
+ * bottom-anchored (`.t8-qnote.pmx-resize-up` below), so it grows by moving its own top edge and no
+ * line of prose is re-set, re-wrapped or moved by it - what it costs is viewport, not layout, and that
+ * accounting is written out in full above `_choreographFootnote`. The run capsule, the run footnote,
+ * the work cluster and the artifact footnote all still refuse height motion outright.
  * ---------------------------------------------------------------------------------------------- */
 
 /* ---- the work cluster: dots plus one quiet line ------------------------------------------------ */
@@ -378,6 +386,27 @@
   align-items: start;
   padding: var(--sm) 0;
 }
+
+/* BOTTOM-ANCHORED GROWTH, which is the whole reason this concept can allow `motion.resizeBounce` to
+   run on this block at all. `pmx-resize-up` is the shared opt-in marker and carries `margin-top: auto`,
+   which only bites where the host is a flex column - true of some window shelves, not of all of them.
+   This is the half that is true everywhere: `align-content: end` pins the block's row track to its
+   BOTTOM edge, so while the height is being interpolated the box reveals at the top and it is the
+   block's own top edge that travels, not the line below it. At rest, with the height auto, there is no
+   free space to distribute and this changes the layout by nothing at all. */
+[data-pmx-thread="t8"] .t8-qnote.pmx-resize-up { align-content: end; }
+
+/* The scale beat is anchored to the same edge, for the same reason. Scaling about the default centre
+   flexes the box in BOTH directions, so a block whose whole claim is that its bottom edge does not
+   move would spend a fraction of every resize pushing down over the composer. */
+[data-pmx-thread="t8"] .t8-qnote.pmx-resize-up.pmx-size-bounce,
+[data-pmx-thread="t8"] .t8-qnote.pmx-resize-up.pmx-size-bounce-strong { transform-origin: center bottom; }
+
+/* The shared bounce needs no local duration restoration any more. `shared/motion.css` used to
+   carry `[data-motion="full"] * { animation-duration: revert-layer }`, which matched at the same
+   specificity as every animation class and won on order, reverting the duration to the user-agent
+   0s and killing the scale beat outright. That is fixed at the source: the reduced-motion blanket
+   now excludes an explicitly-full stage instead of a later rule trying to undo it. */
 
 [data-pmx-thread="t8"] .t8-qnote-gutter { display: flex; justify-content: center; padding-top: 4px; color: var(--accent-primary); }
 [data-pmx-thread="t8"] .t8-qnote-dot { display: inline-flex; }
@@ -534,7 +563,239 @@
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: none; }
 }
-[data-pmx-thread="t8"] .t8-qnote-rise { animation: t8-qnote-rise var(--motion-med) var(--ease-out) both; }
+/* The run's footnote is disclosed by the SAME one-shot, sharing the keyframe rather than declaring a
+   second one: this concept has exactly one entrance, and a run that arrived differently from a
+   question would be a second choreography answering the same question about the same column. */
+[data-pmx-thread="t8"] .t8-qnote-rise,
+[data-pmx-thread="t8"] .t8-run-rise { animation: t8-qnote-rise var(--motion-med) var(--ease-out) both; }
 
-[data-motion="reduced"] [data-pmx-thread="t8"] .t8-qnote-rise { animation: none !important; }
-[data-motion="reduced"] [data-pmx-thread="t8"] .t8-cluster-dot { transition: none !important; }
+[data-motion="reduced"] [data-pmx-thread="t8"] .t8-qnote-rise,
+[data-motion="reduced"] [data-pmx-thread="t8"] .t8-run-rise { animation: none !important; }
+[data-motion="reduced"] [data-pmx-thread="t8"] .t8-cluster-dot,
+[data-motion="reduced"] [data-pmx-thread="t8"] .t8-run-dot { transition: none !important; }
+
+/* ---- the run: dots in the gutter, one sentence at the measure, a footnote when asked -----------
+   t8's reading of 03_compact_execution_activity.mov. The reference sets its glyph chain inline, to
+   the left of a headline, and grows the capsule downward as rows accrue. This concept already owns a
+   micro-gutter of dots and a footnote register, so the run is stated in THOSE and the reading measure
+   is never narrowed by it: the same behaviours, this concept's geometry, which is the whole
+   difference between eight concepts sharing one contract and eight concepts sharing one widget.
+
+   The geometry is the one every other block here uses - an 18px gutter column plus the measure -
+   because the run is not a new kind of object in this concept, it is one more thing said beside the
+   prose. Nothing in the run animates its height, and unlike the question above it that is not a
+   qualified statement: the run is not bottom-anchored, it sits mid-column with prose above and below
+   it, and a capsule that sprang its own height there would move both. The question can afford the
+   motion because of WHERE it sits; this cannot. */
+
+[data-pmx-thread="t8"] .t8-run {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  column-gap: var(--sm);
+  align-items: start;
+  padding: var(--xs) 0 0;
+}
+
+/* The chain, turned ninety degrees: the reference's row of glyphs is this concept's column of dots,
+   in the same 18px gutter the work cluster and the question footnote mark themselves in.
+
+   It SCROLLS rather than truncating. The cap is five dot-pitches, which is the same reasoning as the
+   reference's six-glyph cap read down instead of across - past that the chain would out-measure the
+   sentence beside it - and a dot is never dropped, because the dot IS the route back to its phase. */
+[data-pmx-thread="t8"] .t8-run-gutter {
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding-top: 3px;
+  max-height: 72px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* The slot must not shrink. Measured, not assumed: without this the column's flex items compressed to
+   fit the cap and `overflow: hidden` on the slot clipped every dot to about nine pixels, so an
+   eight-phase run showed eight squashed marks and never scrolled - a chain that truncates, which is
+   the one thing behaviour 5 forbids. Refusing to shrink is what turns the cap into a scroll. */
+[data-pmx-thread="t8"] .t8-run-gutter > .pmx-chain-slot { flex: 0 0 auto; }
+
+/* Deliberately the same 12px mark the work cluster uses. A run phase and a work surface are the same
+   KIND of thing in this concept - something non-prose announcing itself - so a second dot shape would
+   claim a distinction that does not exist. */
+[data-pmx-thread="t8"] .t8-run-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color var(--motion-fast) var(--ease-default);
+}
+[data-pmx-thread="t8"] .t8-run-dot:hover { color: var(--accent-primary); }
+
+/* State is a RING plus the word in the dot's title and aria-label, never colour alone: the running
+   phase is ringed and the disclosed one is filled, which is the reference's own distinction. */
+[data-pmx-thread="t8"] .t8-run-dot[data-state="running"] {
+  color: var(--accent-primary);
+  outline: 1px solid currentColor;
+  outline-offset: 1px;
+}
+[data-pmx-thread="t8"] .t8-run-dot[data-state="open"] {
+  color: var(--text-primary);
+  background: var(--surface);
+  outline: 1px solid var(--border);
+  outline-offset: 1px;
+}
+
+[data-pmx-thread="t8"] .t8-run-line { min-width: 0; }
+
+/* Laid out as a BLOCK of running text rather than as flex slots, so the space between the verb and
+   its argument is a real word boundary. A flex container drops a whitespace-only child, which is why
+   the reference implementations expose their headline as `Reading5 files` to find-in-page and to a
+   screen reader; in a concept whose whole premise is that the text is the product, a sentence that
+   only looks like a sentence is the wrong trade. It wraps rather than ellipsing for the same reason -
+   wrapping is what prose does at a measure. */
+[data-pmx-thread="t8"] .t8-run-sentence {
+  display: block;
+  max-width: 68ch;
+  /* One line box, held. Beat one of the handover empties both halves of the sentence for about 110ms
+     (f.198-200: the outgoing phase lets go before the arriving dot appears), and an empty block would
+     collapse its line box to nothing and take the footnote under it up with it - a reflow, in the
+     concept that refuses reflow. `1lh` is this element's own line height, so it is exactly the height
+     the row already has and changes nothing at rest; it only refuses to give that height up while the
+     sentence is between phases. */
+  min-height: 1lh;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: var(--fs-xs);
+  line-height: 1.6;
+  text-align: left;
+  cursor: pointer;
+  /* Tabular figures so rewriting 6 into 7 does not change the width of the number and shift the word
+     beside it - the layout half of what makes countMorph read as one running tally. */
+  font-variant-numeric: tabular-nums;
+}
+/* The affordance is the one this concept already uses for a quiet control: an underline on hover,
+   the same treatment as the per-turn work line. Not a chevron - nothing else here has one. */
+[data-pmx-thread="t8"] .t8-run-sentence:hover,
+[data-pmx-thread="t8"] .t8-run-sentence:focus-visible {
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--text-muted) 40%, transparent);
+  text-underline-offset: 3px;
+}
+
+/* Verb at full contrast, argument muted: a reader scanning a settled run reads a column of verbs. */
+[data-pmx-thread="t8"] .t8-run-verb { color: var(--text-primary); font-weight: 600; }
+[data-pmx-thread="t8"] .t8-run-arg { color: var(--text-muted); }
+[data-pmx-thread="t8"] .t8-run-sentence:hover .t8-run-arg { color: var(--text-secondary); }
+
+/* ---- the footnote: one disclosed phase, at the measure ---------------------------------------- */
+
+/* A row of the capsule's own grid, spanning both of its columns and then repeating the geometry
+   inside itself - so the footnote's number sits in the same 18px column as the dot it answers to,
+   and its prose starts exactly where the sentence above it starts. */
+[data-pmx-thread="t8"] .t8-run-note {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  column-gap: var(--sm);
+  align-items: start;
+  padding: 2px 0 var(--xs);
+}
+
+/* The number ties the footnote to its dot, exactly as `2 of 3` marks the question: a footnote
+   reference, not a widget. */
+[data-pmx-thread="t8"] .t8-run-note-gutter { display: flex; justify-content: center; padding-top: 2px; }
+[data-pmx-thread="t8"] .t8-run-note-num {
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+[data-pmx-thread="t8"] .t8-run-note-body { min-width: 0; max-width: 68ch; }
+
+[data-pmx-thread="t8"] .t8-run-note-head {
+  margin: 0 0 2px;
+  font-size: var(--fs-xs);
+  line-height: 1.6;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+/* The spans in this block are separated by REAL SPACES in the markup rather than by margins, because
+   the block is prose: a margin is visible but it is not a word boundary, so `Read` and `7 files` were
+   concatenated in the text this footnote actually says - to a screen reader, to find-in-page and to
+   anything that reads the record rather than looks at it. */
+[data-pmx-thread="t8"] .t8-run-note-verb { font-weight: 600; }
+[data-pmx-thread="t8"] .t8-run-note-arg { color: var(--text-muted); }
+[data-pmx-thread="t8"] .t8-run-note-time { color: var(--text-muted); }
+/* The record's own status word, set quietly: this column reads as prose, so it is lowercased here
+   rather than restated in a different word. */
+[data-pmx-thread="t8"] .t8-run-note-status {
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  text-transform: lowercase;
+}
+
+[data-pmx-thread="t8"] .t8-run-note-why,
+[data-pmx-thread="t8"] .t8-run-note-detail {
+  margin: 0 0 var(--xs);
+  font-size: var(--fs-xs);
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* A real ordered list, for the same reason the question's options are one. */
+[data-pmx-thread="t8"] .t8-run-files {
+  margin: 0 0 var(--xs);
+  padding-left: 2.2ch;
+  list-style: decimal;
+}
+[data-pmx-thread="t8"] .t8-run-file { padding: 1px 0; font-size: var(--fs-2xs); color: var(--text-muted); }
+[data-pmx-thread="t8"] .t8-run-file-verb { color: var(--text-secondary); }
+[data-pmx-thread="t8"] .t8-run-file-target { overflow-wrap: anywhere; }
+[data-pmx-thread="t8"] .t8-run-file-delta { font-variant-numeric: tabular-nums; }
+
+/* The operation record as a real definition list. The keys are printed as PMXOpCard states them,
+   because they are the reference screenshot's own field names and renaming them here would make two
+   surfaces disagree about one record. */
+[data-pmx-thread="t8"] .t8-run-fields {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  column-gap: var(--sm);
+  row-gap: 1px;
+  margin: 0 0 var(--xs);
+  font-size: var(--fs-2xs);
+}
+[data-pmx-thread="t8"] .t8-run-field-k { color: var(--text-muted); letter-spacing: .04em; }
+[data-pmx-thread="t8"] .t8-run-field-v {
+  margin: 0;
+  color: var(--text-secondary);
+  font-family: var(--mono-font);
+  overflow-wrap: anywhere;
+}
+
+/* The chip separator is a real text node too, for the same reason: a generated `::before` is not part
+   of the sentence this footnote says out loud. */
+[data-pmx-thread="t8"] .t8-run-note-chips { margin: 0; font-size: var(--fs-2xs); color: var(--text-muted); }
+
+/* At the narrow widths the reading measure is the only thing that matters, so the gutter keeps its
+   width and the chain simply shows fewer dots before it scrolls.
+
+   Measured caveat, stated rather than implied: this only takes effect where the surfaces render INSIDE
+   the thread's own root, which is the container. A window that offers a `workSurfaceHost` region hosts
+   the capsule outside `.t8-root`, so the query has no container to match and the block above stands -
+   the same is true of the other concepts' run capsules, and it is a property of where the regions live
+   rather than of this rule. */
+@container pmx-thread (max-width: 620px) {
+  [data-pmx-thread="t8"] .t8-run-gutter { max-height: 57px; }
+  [data-pmx-thread="t8"] .t8-run-sentence { font-size: var(--fs-2xs); }
+}

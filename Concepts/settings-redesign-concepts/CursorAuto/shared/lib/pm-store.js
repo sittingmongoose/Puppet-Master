@@ -121,6 +121,20 @@
       return PMStore;
     },
 
+    /* Quiet write for lazy manager hydration — avoids Settings re-render storms. */
+    setQuiet: function (path, value) {
+      var segs = parts(path);
+      if (!segs) return PMStore;
+      var node = state;
+      for (var i = 0; i < segs.length - 1; i++) {
+        if (node[segs[i]] == null || typeof node[segs[i]] !== "object") node[segs[i]] = {};
+        node = node[segs[i]];
+      }
+      node[segs[segs.length - 1]] = value;
+      persist();
+      return PMStore;
+    },
+
     patch: function (obj) {
       if (obj && typeof obj === "object") {
         Object.keys(obj).forEach(function (key) {

@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L224-L480
+Source lines: L225-L516
 
-Source SHA256: `d1d659cd51ca674c1e34c953ae8080b399b7d61ffed7f802998596f738d85c78`
+Source SHA256: `5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb`
 
 ---
 
@@ -198,6 +198,39 @@ Debug packetization must keep `Plans/Contracts_V0.md`, `Plans/Prompt_Pipeline.md
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 
+### Shared Integration Runtime ownership map (2026-08-13)
+
+`Plans/Shared_Integration_Runtime.md` is the sole product owner for the shared lifecycle primitives in `PROV-004`, `PROV-005`, `PROV-007`, `PROV-009`, `PROV-010`, `PROV-012`, `PROV-023`, `PROV-024`, `CTX-020`, `AGT-014`, `AGT-016`, `AGT-020`, `PRM-010`, `PRM-011`, `PRM-012`, `PRM-016`, `PRM-017`, `PRM-018`, `PRM-019`, `PRM-020`, and `PRM-022`.
+
+Its scope is limited to shared installation resolution and post-consent lifecycle mechanics; conditional-rule and BSD execution; operational-awareness and lease coordination; shared DebugSession/EvalSession records; provider-request admission; environment supervision; durable command outbox, replay/snapshot/live buffering, and stream coalescing; host-local `RuntimeResourceGovernor`; truthful `ObservableWork`; and compact Server-first execution identity/projection.
+
+Existing domain docs retain their semantics: BinaryLocator owns candidate discovery; CLI Bridged Providers and Release Supply Chain own explicit provider acquisition and provenance policy; Models/Multi-Account own route/account/auth; Prompt Pipeline owns prompt assembly; Assistant Chat owns visible thread/BSD controls; Goal Runtime, Run Modes, and Orchestrator own their policy; LSP/DAP/Eval/Tools/MCP/Browser owners retain protocol and tool behavior; Contracts owns shared envelopes; storage owns persistence/retention/migration; Permissions/FileSafe own authority and mutation gates; GUI/Commands/Wiring own presentation and dispatch; Usage owns accounting.
+
+The deterministic BSD default and recommended value are `Auto`; explicit stored `Off` remains an explicit user choice. BSD is always read-only; mode changes frequency only and cannot grant tools or authority. Initial provider-CLI acquisition remains explicit, official-source, and exact-Host/Environment; non-provider Auto/On/Off provisioning cannot override that exception. Shared runtime binds authoritative topology inputs but does not own Project Vault content, Project Sync, move, or source-control semantics. `Plans/Project_Sync_and_Backbone.md` is the sole owner for Project/Vault/app-content sync, move, source relocation, update, and Sync bundles. `storage-plan.md` retains persistence only for `RuntimeResourceGovernor` and `ObservableWork` records rather than behavior ownership.
+
+ContractRef: ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/runtime_integration_disposition.json, ContractName:Plans/BinaryLocator_Spec.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
+
+### Remaining Runtime supersession register (PROC-008, 2026-08-14)
+
+This table is an ownership router, not a peer product owner. Later accepted owner text below supersedes the conflicting live behavior while older text remains source-lineage only.
+
+| Superseded or ambiguous source | Current sole owner/disposition |
+|---|---|
+| Project/Vault/app-content sync, move, source relocation, update, or Sync-bundle behavior attributed generically to “Project Sync/Backbone” | `Plans/Project_Sync_and_Backbone.md` PSB-001 through PSB-003. |
+| Runtime resource quotas/governor behavior in `storage-plan.md` SP-228/SP-229 | Retired as behavior authority; `Plans/Shared_Integration_Runtime.md` SIR-006 is sole governor owner and Storage persists values only. |
+| Settings inheritance-only or no-import/export clauses | `Plans/FinalGUISpec.md` F3-510/F3-511 own behavior; `Plans/settings_inventory.json` remains the machine inventory. |
+| One broad onboarding flow | Product Onboarding: `Plans/Planning_Wizard.md`/Final GUI; Installation/Deployment: SIR-003 plus Release Supply Chain/domain installer; Server Claim/Bootstrap: SIR-013. Project-content movement remains the separate downstream PSB service; visible routing is SMPFS-146. |
+| Doctor behavior spread across feature owners | `Plans/newtools.md` N2-151 owns the registry/router; domain owners retain probe truth and remediation. |
+| Workspace cleanup attributed to Storage or Worktree | `Plans/MiscPlan.md` M-084 is sole cleanup manager; Storage persists and Worktree supplies lifecycle facts. |
+| Legacy `auth_session` persistence, capture, recording, generic navigation, inspection, or agent/tool clauses | Retired; protected `AuthBrowserSession` is human-only and ephemeral under SMPFS-143/F3-512 and the protected-session schema discriminator. |
+| PM Playwright runtime/facade/compatibility vocabulary | Rejected. PM uses BrowserRuntimeService, Browser Program, and Expert Browser Program; a user Project may run an independent generic external test process only. |
+| BSD default Off compatibility prose | Superseded by SIR-010/RM-050: default and recommended value Auto; explicit stored Off remains Off. |
+| `cmd.environment.reconnect` normalized to `cmd.remote.reconnect` | Reversed and retired. `cmd.environment.reconnect` is canonical; `cmd.remote.reconnect` is an exact-environment wrapper. |
+| T3 as runtime/facade owner | Reference evidence only under CBP-029; BinaryLocator, provider owners, and SIR-003 retain their distinct authority. |
+| SQLite as a Puppet Master persistence option | Rejected; seglog/redb/Tantivy remain canonical. Opaque provider-owned files remain outside PM authority. |
+
+PROC-008 is closed only by the exact owner text and machine contracts cited above. This index does not turn source-lineage or retired PlanUnits into implementation evidence, WorkNodes, runtime artifacts, or governance seal proof.
+
 | Plan | Primary scope | Notes / canonical intent |
 |------|--------------|--------------------------|
 | `rewrite-tie-in-memo.md` | Locked rewrite decisions | Canonical for rewrite constraints + deltas to apply elsewhere |
@@ -223,6 +256,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run
 | `FileSafe.md` | Safe-edit guards + context compilation | Canonical blocked destructive-command behavior and restore-before-rerun integration; maps to central tool policy + patch pipeline. |
 | `Prompt_Pipeline.md` | Prompt assembly pipeline + compaction contract | SSOT for prompt assembly stage ordering and compaction/rotation contracts (pairs with FileSafe Part B for compilation details). |
 | `WorktreeGitImprovement.md` | Worktree/git correctness + GUI wiring | Canonical for stable project identity vs path rebinding and worktree-aware project-switch/restore behavior. |
+| `Project_Sync_and_Backbone.md` | Project/Vault/app-content sync, move, source relocation, update, and Sync bundles | Sole semantic owner for exact-topology Project-content movement and recovery. Consumes Shared Runtime topology; does not own Git, transports, secrets, or storage engines. |
 | `MiscPlan.md` | Cleanup + runner contract + artifact retention | Maps to patch pipeline + event artifacts retention |
 | `newtools.md` | GUI testing/tools discovery + MCP tooling | Canonical for MCP settings/UI flow, cited search, testing-tool discovery, and runtime-health-oriented MCP GUI behavior. |
 | `Tools.md` | Built-in tools, custom tools, permissions (allow/deny/ask) | Canonical for tool semantics, MCP integration, requested-vs-effective tool availability, normalized `question` / TODO tool contracts, expanded web operations, Site Reader structured browser runtime, `task`, widened `lsp`, and permission-adjacent tool behavior. |
@@ -237,6 +271,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run
 | `Orchestrator_Page.md` | Orchestrator single-page seven-tab structure | Canonical for tab layout (`Progress` / `Plan Compile` / `Seams` / `Node Graph` / `Evidence` / `History` / `Ledger`). `Progress` is the only widget-composed Orchestrator tab. `Node Graph` references `Run_Graph_View.md`; `Plan Compile` references design-only plans-to-code projection contracts. Terminal widgets, prose summaries, and data source documentation remain consumers of this shell. |
 | `GUI_Rebuild_Requirements_Checklist.md` | Auditable summary checklist for 2026-02-23 GUI rebuild handoff requirements | `Plans/GUI_Rebuild_Requirements_Checklist.md` is the single verification table confirming coverage for widget system, Usage page, chat context enhancements, Dashboard widget grid migration, Orchestrator seven-tab structure with `Plan Compile`, and Node Graph image-backed spec. |
 | `Executor_Protocol.md` | Deterministic overseer flow and lifecycle semantics | Canonical for Builder/Verifier/Overseer roles, next-ready selection, verifier-driven auto completion to `done`, and the versioned `execution_unit_context` contract in `Plans/execution_unit_context.schema.json`. |
+| `Shared_Integration_Runtime.md` | Shared cross-domain runtime coordination | Sole canonical owner for the 21 approved shared-runtime lifecycle primitives. Consumes existing provider, prompt, chat, mode, protocol/tool, contract, storage, permission, host, GUI, command, and wiring owners without re-owning their domain semantics. |
 | `UI_Wiring_Rules.md` | UI wiring rules + verification | Canonical for Rule 1 (UI dispatches only typed UICommands) and Rule 2 (every UI element maps to one UICommandID). Defines UI Command Dispatcher boundary and Wiring Matrix verification concept. |
 | `Provider_Stream_Mapping_External_Reference_A2A.md` | Upstream external-framework + A2A bridge → V0 stream mapping | Canonical mapping of upstream native events and A2A bridge concepts to V0 normalized stream events. Diagnostic instrumentation categories, deterministic rules, and Overseer audit protocol instrumentation. Cross-refs: CLI_Bridged_Providers.md, Architecture_Invariants.md#INV-001, Glossary.md, Executor_Protocol.md. |
 | `Provider_OpenCode.md` | OpenCode server-bridged provider integration | Optional provider; user installs OpenCode locally; Puppet Master connects via HTTP REST + SSE. See also CLI_Bridged_Providers.md (extended for HTTP transport). |

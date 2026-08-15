@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L16158-L16637
+Source lines: L16169-L16646
 
-Source SHA256: `21bd16a8872bfbd2f641dac39e4b02bb8f311eb5f90d27fbb3c5de62157c5706`
+Source SHA256: `1c1b7e810d66f2f0f8bf0586b50814ff54c1aba3fb57075838b8746096f8f50a`
 
 ---
 
@@ -96,20 +96,20 @@ compile_disposition: create_new_planunit
 
 ```yaml
 plan_unit_id: SP-228
-unit_type: requirement
-status: accepted
+unit_type: compatibility_disposition
+status: retired
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  P1-RESOURCE-QUOTAS-INDEXERS-WATCHERS (P1) is compiled as canonical Puppet Master intent for Resource ceilings for indexers/watchers/background agents: Add RuntimeResourceGovernor PlanUnit with quotas, backoff, suspension, prioritization, and Explain/Resume controls. The preserved PM gap/delta is: Need per-project/global file watcher, indexer, terminal transcript, MCP result, and agent-context budgets with user-visible degradation. The observed external-repo signal remains source-lineage evidence: Warp issue reports exhausting hundreds of thousands of file watchers; Agent Zero history bloat crashes; Cline large MCP/history issues.
+  SP-228 is retired as behavior authority. Its watcher/indexer/background-pressure evidence remains source lineage consumed by SIR-006, the sole RuntimeResourceGovernor owner. Storage owns only persisted requested ceilings, host observations, admissions, ObservableWork projections, retention, replay, and migration; it cannot compute effective host limits, suspend or prioritize work, or expose peer Explain/Resume policy.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
-- PDS-003
-- PNC-001
+- SIR-006
 unblocks: []
 acceptance_criteria:
-- Large repo cannot allocate unbounded watchers.
-- Quota exceeded degrades with warning and exact subsystem, not crash.
+- SIR-006 retains the useful quota, backoff, suspension, prioritization, and Explain/Resume requirements.
+- Storage persists governor inputs and outputs without becoming a second governor.
+- No consumer can cite SP-228 as authority for effective host admission.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
@@ -125,7 +125,7 @@ implementation_surfaces:
 - Plans/Runtime_Artifacts_Panel.md
 - Plans/FinalGUISpec.md
 node_compile_hint:
-  mode: p1_resource_quotas_indexers_watchers
+  mode: retired_runtime_resource_governor_lineage
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
@@ -168,31 +168,29 @@ preserved_exact_tokens:
 negative_constraints: []
 observed_signal: Warp issue reports exhausting hundreds of thousands of file watchers; Agent Zero history bloat crashes; Cline large MCP/history issues.
 pm_current_coverage: PM has dirty-layer watcher design and storage rollups but not a global resource-governor narrative for all background services.
-pm_gap_or_delta: Need per-project/global file watcher, indexer, terminal transcript, MCP result, and agent-context budgets with user-visible degradation.
-proposal_or_recommendation: Add RuntimeResourceGovernor PlanUnit with quotas, backoff, suspension, prioritization, and Explain/Resume controls.
-compile_disposition: create_new_planunit
+pm_gap_or_delta: Closed by SIR-006, which owns per-project/global watcher, indexer, terminal, MCP, and agent-context admission and visible degradation.
+proposal_or_recommendation: Consume the existing SIR-006 RuntimeResourceGovernor; Storage persists its inputs, decisions, observations, and projections only.
+compile_disposition: retired_to_existing_owner
 ```
 
 ### SP-229 - P0-SYSTEM-RESOURCE-GOVERNOR
 
 ```yaml
 plan_unit_id: SP-229
-unit_type: requirement
-status: accepted
+unit_type: compatibility_disposition
+status: retired
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  P0-SYSTEM-RESOURCE-GOVERNOR (P0) is compiled as canonical Puppet Master intent for System memory/process/file-watcher/resource management: Define RuntimeResourceGovernor: memory budgets, queue budgets, process pools, stale helper reaper, file-watcher caps, terminal scrollback/transcript retention, MCP transport cleanup, crash snapshot budget, low-memory degradation mode, and GUI-visible resource alerts. The preserved PM gap/delta is: PM needs a cross-runtime resource governor with explicit limits and cleanup for GUI renderer, PTY terminal, agents, MCP, browser/device sessions, file watchers, logs, memory stores, and helper processes. The observed external-repo signal remains source-lineage evidence: Ghostty reports major memory leaks under long-running Claude Code sessions; Warp reports CPU hangs and large-output TUI crashes; Codex reports stale Computer Use/MCP/app-server helper accumulation; Agent Zero reports large chat.json/memory scalability issues.
+  SP-229 is retired as behavior authority. Its memory, process, watcher, queue, helper-reaping, low-memory, backpressure, and visible-degradation evidence remains source lineage consumed by SIR-006, the sole RuntimeResourceGovernor owner. Storage retains only value-family, retention, replay, compaction, migration, and recovery responsibilities for accepted governor records and projections.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
-- PDS-003
-- PNC-001
+- SIR-006
 unblocks: []
 acceptance_criteria:
-- Closing/crashing PM reaps child helpers or marks them orphaned for cleanup.
-- Huge terminal output applies backpressure without GUI freeze.
-- Memory store and chat/session files have size/compaction policies.
-- Low-memory mode disables optional previews/agents before core runtime fails.
+- SIR-006 retains process/helper reaping, queue and memory budgets, backpressure, low-memory reduction, and user-visible admission evidence.
+- Storage records requested/effective limits, decisions, observations, and retention without owning host admission behavior.
+- No consumer can cite SP-229 as a peer RuntimeResourceGovernor.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
@@ -211,7 +209,7 @@ implementation_surfaces:
 - Plans/MCP_Integration.md
 - Plans/Tools.md
 node_compile_hint:
-  mode: p0_system_resource_governor
+  mode: retired_runtime_resource_governor_lineage
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
@@ -259,9 +257,9 @@ preserved_exact_tokens:
 negative_constraints: []
 observed_signal: Ghostty reports major memory leaks under long-running Claude Code sessions; Warp reports CPU hangs and large-output TUI crashes; Codex reports stale Computer Use/MCP/app-server helper accumulation; Agent Zero reports large chat.json/memory scalability issues.
 pm_current_coverage: FinalGUISpec and storage-plan include terminal projection throttling/ring buffers, memory-bounds risks, file watcher risk, persistence, and crash recovery.
-pm_gap_or_delta: PM needs a cross-runtime resource governor with explicit limits and cleanup for GUI renderer, PTY terminal, agents, MCP, browser/device sessions, file watchers, logs, memory stores, and helper processes.
-proposal_or_recommendation: 'Define RuntimeResourceGovernor: memory budgets, queue budgets, process pools, stale helper reaper, file-watcher caps, terminal scrollback/transcript retention, MCP transport cleanup, crash snapshot budget, low-memory degradation mode, and GUI-visible resource alerts.'
-compile_disposition: create_new_planunit
+pm_gap_or_delta: Closed by SIR-006, the sole cross-runtime governor for GUI, PTY, agents, MCP, Browser/device, watchers, logs, memory stores, helpers, and host pressure.
+proposal_or_recommendation: 'Consume SIR-006 RuntimeResourceGovernor and keep Storage limited to retained policy inputs, decisions, observations, projections, migration, and recovery.'
+compile_disposition: retired_to_existing_owner
 ```
 
 ### SP-230 - EventRecord Persistence Boundary

@@ -163,14 +163,19 @@
 
   // --- Provider family ---------------------------------------------------------------
   function installationCard(p, inst) {
-    var rows = [
-      ["Configured command", inst.command],
-      ["Resolved launcher", inst.resolved],
+    // Humanized identity in the normal GUI (decision register §12.4 / §17):
+    // method + owner + confidence + host/environment by default; raw command,
+    // resolved launcher, and package evidence live in an Advanced disclosure.
+    var humanRows = [
       ["Installation method", inst.method],
       ["Owner", inst.owner],
       ["Confidence", inst.confidence],
-      ["Host / Environment", (inst.host || "") + " · " + (inst.env || "")],
-      ["Evidence", inst.evidence]
+      ["Host / Environment", (inst.host || "") + " · " + (inst.env || "")]
+    ];
+    var rawRows = [
+      ["Configured command", inst.command],
+      ["Resolved launcher", inst.resolved],
+      ["Discovery evidence", inst.evidence]
     ];
     var selBtn = inst.selected
       ? badge("Selected", "ok")
@@ -179,7 +184,9 @@
     var receipts = (inst.receipts || []).map(function (r) { return '<div class="pm-log">' + esc(r) + "</div>"; }).join("");
     return '<div class="' + cls("install") + '" data-installation="' + esc(inst.id) + '">' +
       '<div class="pm-install-head"><b>' + esc(inst.label) + "</b>" + stateNote + selBtn + "</div>" +
-      inspector(rows) +
+      inspector(humanRows) +
+      '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-act="install.evidence" aria-expanded="false">Advanced evidence</button>' +
+      '<div class="pm-install-evidence" hidden>' + inspector(rawRows) + "</div>" +
       (receipts ? '<div class="pm-install-receipts">' + receipts + "</div>" : "") +
     "</div>";
   }
@@ -291,6 +298,7 @@
           ["Acquisition policy", "Explicit user-triggered only; never silent, never pre-seeded"]
         ]) +
         '<button class="pm-btn pm-btn-primary pm-btn-sm" data-act="provider.install" data-provider="' + esc(p.id) + '">' + ico("download", 12) + " Install " + esc(p.name) + "</button>" +
+        '<button class="pm-btn pm-btn-sm" data-act="provider.setup-required" data-provider="' + esc(p.id) + '">Simulate a task needing this CLI</button>' +
       "</div>";
     }
     installHtml += (p.installations || []).map(function (i) { return installationCard(p, i); }).join("");
@@ -598,6 +606,18 @@
       case "provider.probe": ST.providerAction(ctx.provider, "probe"); break;
       case "provider.login": ST.providerAction(ctx.provider, "login"); break;
       case "provider.rescan": ST.providerAction(ctx.provider, "rescan"); break;
+      case "install.evidence": {
+        var wrap = el.closest(".pm-install");
+        var ev = wrap && wrap.querySelector(".pm-install-evidence");
+        if (ev) { ev.hidden = !ev.hidden; el.setAttribute("aria-expanded", ev.hidden ? "false" : "true"); }
+        break;
+      }
+      case "provider.setup-required": {
+        var prov = ST.providerById(ctx.provider);
+        var token = "cont-" + Date.now().toString(36);
+        ST.receipt("Provider Setup Required", (prov ? prov.name : "Provider") + " is not ready for the originating operation. The operation is preserved with continuation token " + token + " and resumes only after an explicit install from the official source for the exact Host/Environment, separate authentication, readiness verification, and a still-current continuation. Deep link: #/w/models/providers?provider=" + ctx.provider + ". Simulated.", "info");
+        break;
+      }
       case "provider.account.prefer": ST.setPreferredAccount(ctx.provider, ctx.account); break;
       case "provider.account.nickname": {
         var acc = ST.accountById(ctx.provider, ctx.account);

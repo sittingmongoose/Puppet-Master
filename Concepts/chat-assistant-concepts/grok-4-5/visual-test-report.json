@@ -1,0 +1,1600 @@
+{
+  "schema_id": "pm.chat_assistant_visual_test_report.v1",
+  "concept_id": "grok-4-5",
+  "model": "Grok 4.5",
+  "updated_at": "2026-08-14T04:40:00Z",
+  "status": "complete",
+  "cache_bust": "v=42",
+  "probes_dir": "%TEMP%\\pm-grok45-probes",
+  "correction_probes_dir": "%TEMP%\\pm-grok45-probes\\correction-2026-08-14",
+  "winner": null,
+  "matrix": {
+    "pair": "w6×t1",
+    "themes": 8,
+    "widths": [
+      520,
+      750,
+      975,
+      1200
+    ],
+    "reduced_motion": [
+      0,
+      1
+    ],
+    "expected": 64,
+    "passed": 64,
+    "failed": 0,
+    "result_path": "%TEMP%\\pm-grok45-probes\\matrix-smoke-result.json",
+    "cells": [
+      {
+        "id": "friendly-dark|w520|rm0",
+        "theme": "friendly-dark",
+        "width": 520,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "friendly-dark",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "520",
+          "tier": "min",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-dark&width=520&rm=0&rail=1"
+      },
+      {
+        "id": "friendly-dark|w520|rm1",
+        "theme": "friendly-dark",
+        "width": 520,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "friendly-dark",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "520",
+          "tier": "min",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-dark&width=520&rm=1&rail=1"
+      },
+      {
+        "id": "friendly-dark|w750|rm0",
+        "theme": "friendly-dark",
+        "width": 750,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "friendly-dark",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "750",
+          "tier": "mid",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+      },
+      {
+        "id": "friendly-dark|w750|rm1",
+        "theme": "friendly-dark",
+        "width": 750,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "friendly-dark",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "750",
+          "tier": "mid",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-dark&width=750&rm=1&rail=1"
+      },
+      {
+        "id": "friendly-dark|w975|rm0",
+        "theme": "friendly-dark",
+        "width": 975,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "friendly-dark",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "975",
+          "tier": "wider",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-dark&width=975&rm=0&rail=1"
+      },
+      {
+        "id": "friendly-dark|w975|rm1",
+        "theme": "friendly-dark",
+        "width": 975,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "friendly-dark",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "975",
+          "tier": "wider",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-dark&width=975&rm=1&rail=1"
+      },
+      {
+        "id": "friendly-dark|w1200|rm0",
+        "theme": "friendly-dark",
+        "width": 1200,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "friendly-dark",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "1200",
+          "tier": "wide",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-dark&width=1200&rm=0&rail=1"
+      },
+      {
+        "id": "friendly-dark|w1200|rm1",
+        "theme": "friendly-dark",
+        "width": 1200,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "friendly-dark",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "1200",
+          "tier": "wide",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-dark&width=1200&rm=1&rail=1"
+      },
+      {
+        "id": "friendly-light|w520|rm0",
+        "theme": "friendly-light",
+        "width": 520,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "friendly-light",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "520",
+          "tier": "min",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-light&width=520&rm=0&rail=1"
+      },
+      {
+        "id": "friendly-light|w520|rm1",
+        "theme": "friendly-light",
+        "width": 520,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "friendly-light",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "520",
+          "tier": "min",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-light&width=520&rm=1&rail=1"
+      },
+      {
+        "id": "friendly-light|w750|rm0",
+        "theme": "friendly-light",
+        "width": 750,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "friendly-light",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "750",
+          "tier": "mid",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-light&width=750&rm=0&rail=1"
+      },
+      {
+        "id": "friendly-light|w750|rm1",
+        "theme": "friendly-light",
+        "width": 750,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "friendly-light",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "750",
+          "tier": "mid",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-light&width=750&rm=1&rail=1"
+      },
+      {
+        "id": "friendly-light|w975|rm0",
+        "theme": "friendly-light",
+        "width": 975,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "friendly-light",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "975",
+          "tier": "wider",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-light&width=975&rm=0&rail=1"
+      },
+      {
+        "id": "friendly-light|w975|rm1",
+        "theme": "friendly-light",
+        "width": 975,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "friendly-light",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "975",
+          "tier": "wider",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-light&width=975&rm=1&rail=1"
+      },
+      {
+        "id": "friendly-light|w1200|rm0",
+        "theme": "friendly-light",
+        "width": 1200,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "friendly-light",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "1200",
+          "tier": "wide",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-light&width=1200&rm=0&rail=1"
+      },
+      {
+        "id": "friendly-light|w1200|rm1",
+        "theme": "friendly-light",
+        "width": 1200,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "friendly-light",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "1200",
+          "tier": "wide",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-light&width=1200&rm=1&rail=1"
+      },
+      {
+        "id": "retro-dark|w520|rm0",
+        "theme": "retro-dark",
+        "width": 520,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "retro-dark",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "520",
+          "tier": "min",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-dark&width=520&rm=0&rail=1"
+      },
+      {
+        "id": "retro-dark|w520|rm1",
+        "theme": "retro-dark",
+        "width": 520,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "retro-dark",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "520",
+          "tier": "min",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-dark&width=520&rm=1&rail=1"
+      },
+      {
+        "id": "retro-dark|w750|rm0",
+        "theme": "retro-dark",
+        "width": 750,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "retro-dark",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "750",
+          "tier": "mid",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-dark&width=750&rm=0&rail=1"
+      },
+      {
+        "id": "retro-dark|w750|rm1",
+        "theme": "retro-dark",
+        "width": 750,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "retro-dark",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "750",
+          "tier": "mid",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-dark&width=750&rm=1&rail=1"
+      },
+      {
+        "id": "retro-dark|w975|rm0",
+        "theme": "retro-dark",
+        "width": 975,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "retro-dark",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "975",
+          "tier": "wider",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-dark&width=975&rm=0&rail=1"
+      },
+      {
+        "id": "retro-dark|w975|rm1",
+        "theme": "retro-dark",
+        "width": 975,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "retro-dark",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "975",
+          "tier": "wider",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-dark&width=975&rm=1&rail=1"
+      },
+      {
+        "id": "retro-dark|w1200|rm0",
+        "theme": "retro-dark",
+        "width": 1200,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "retro-dark",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "1200",
+          "tier": "wide",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-dark&width=1200&rm=0&rail=1"
+      },
+      {
+        "id": "retro-dark|w1200|rm1",
+        "theme": "retro-dark",
+        "width": 1200,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "retro-dark",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "1200",
+          "tier": "wide",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-dark&width=1200&rm=1&rail=1"
+      },
+      {
+        "id": "retro-light|w520|rm0",
+        "theme": "retro-light",
+        "width": 520,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "retro-light",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "520",
+          "tier": "min",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-light&width=520&rm=0&rail=1"
+      },
+      {
+        "id": "retro-light|w520|rm1",
+        "theme": "retro-light",
+        "width": 520,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "retro-light",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "520",
+          "tier": "min",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-light&width=520&rm=1&rail=1"
+      },
+      {
+        "id": "retro-light|w750|rm0",
+        "theme": "retro-light",
+        "width": 750,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "retro-light",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "750",
+          "tier": "mid",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-light&width=750&rm=0&rail=1"
+      },
+      {
+        "id": "retro-light|w750|rm1",
+        "theme": "retro-light",
+        "width": 750,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "retro-light",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "750",
+          "tier": "mid",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-light&width=750&rm=1&rail=1"
+      },
+      {
+        "id": "retro-light|w975|rm0",
+        "theme": "retro-light",
+        "width": 975,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "retro-light",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "975",
+          "tier": "wider",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-light&width=975&rm=0&rail=1"
+      },
+      {
+        "id": "retro-light|w975|rm1",
+        "theme": "retro-light",
+        "width": 975,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "retro-light",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "975",
+          "tier": "wider",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-light&width=975&rm=1&rail=1"
+      },
+      {
+        "id": "retro-light|w1200|rm0",
+        "theme": "retro-light",
+        "width": 1200,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "retro-light",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "1200",
+          "tier": "wide",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-light&width=1200&rm=0&rail=1"
+      },
+      {
+        "id": "retro-light|w1200|rm1",
+        "theme": "retro-light",
+        "width": 1200,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "retro-light",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "1200",
+          "tier": "wide",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-light&width=1200&rm=1&rail=1"
+      },
+      {
+        "id": "basic-light|w520|rm0",
+        "theme": "basic-light",
+        "width": 520,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "basic-light",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "520",
+          "tier": "min",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-light&width=520&rm=0&rail=1"
+      },
+      {
+        "id": "basic-light|w520|rm1",
+        "theme": "basic-light",
+        "width": 520,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "basic-light",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "520",
+          "tier": "min",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-light&width=520&rm=1&rail=1"
+      },
+      {
+        "id": "basic-light|w750|rm0",
+        "theme": "basic-light",
+        "width": 750,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "basic-light",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "750",
+          "tier": "mid",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-light&width=750&rm=0&rail=1"
+      },
+      {
+        "id": "basic-light|w750|rm1",
+        "theme": "basic-light",
+        "width": 750,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "basic-light",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "750",
+          "tier": "mid",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-light&width=750&rm=1&rail=1"
+      },
+      {
+        "id": "basic-light|w975|rm0",
+        "theme": "basic-light",
+        "width": 975,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "basic-light",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "975",
+          "tier": "wider",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-light&width=975&rm=0&rail=1"
+      },
+      {
+        "id": "basic-light|w975|rm1",
+        "theme": "basic-light",
+        "width": 975,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "basic-light",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "975",
+          "tier": "wider",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-light&width=975&rm=1&rail=1"
+      },
+      {
+        "id": "basic-light|w1200|rm0",
+        "theme": "basic-light",
+        "width": 1200,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "basic-light",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "1200",
+          "tier": "wide",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-light&width=1200&rm=0&rail=1"
+      },
+      {
+        "id": "basic-light|w1200|rm1",
+        "theme": "basic-light",
+        "width": 1200,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "basic-light",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "1200",
+          "tier": "wide",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-light&width=1200&rm=1&rail=1"
+      },
+      {
+        "id": "basic-dark|w520|rm0",
+        "theme": "basic-dark",
+        "width": 520,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "basic-dark",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "520",
+          "tier": "min",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-dark&width=520&rm=0&rail=1"
+      },
+      {
+        "id": "basic-dark|w520|rm1",
+        "theme": "basic-dark",
+        "width": 520,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "basic-dark",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "520",
+          "tier": "min",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-dark&width=520&rm=1&rail=1"
+      },
+      {
+        "id": "basic-dark|w750|rm0",
+        "theme": "basic-dark",
+        "width": 750,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "basic-dark",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "750",
+          "tier": "mid",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-dark&width=750&rm=0&rail=1"
+      },
+      {
+        "id": "basic-dark|w750|rm1",
+        "theme": "basic-dark",
+        "width": 750,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "basic-dark",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "750",
+          "tier": "mid",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-dark&width=750&rm=1&rail=1"
+      },
+      {
+        "id": "basic-dark|w975|rm0",
+        "theme": "basic-dark",
+        "width": 975,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "basic-dark",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "975",
+          "tier": "wider",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-dark&width=975&rm=0&rail=1"
+      },
+      {
+        "id": "basic-dark|w975|rm1",
+        "theme": "basic-dark",
+        "width": 975,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "basic-dark",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "975",
+          "tier": "wider",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-dark&width=975&rm=1&rail=1"
+      },
+      {
+        "id": "basic-dark|w1200|rm0",
+        "theme": "basic-dark",
+        "width": 1200,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "basic-dark",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "1200",
+          "tier": "wide",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-dark&width=1200&rm=0&rail=1"
+      },
+      {
+        "id": "basic-dark|w1200|rm1",
+        "theme": "basic-dark",
+        "width": 1200,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "basic-dark",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "1200",
+          "tier": "wide",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-dark&width=1200&rm=1&rail=1"
+      },
+      {
+        "id": "glass-dark|w520|rm0",
+        "theme": "glass-dark",
+        "width": 520,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "glass-dark",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "520",
+          "tier": "min",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-dark&width=520&rm=0&rail=1"
+      },
+      {
+        "id": "glass-dark|w520|rm1",
+        "theme": "glass-dark",
+        "width": 520,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "glass-dark",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "520",
+          "tier": "min",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-dark&width=520&rm=1&rail=1"
+      },
+      {
+        "id": "glass-dark|w750|rm0",
+        "theme": "glass-dark",
+        "width": 750,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "glass-dark",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "750",
+          "tier": "mid",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-dark&width=750&rm=0&rail=1"
+      },
+      {
+        "id": "glass-dark|w750|rm1",
+        "theme": "glass-dark",
+        "width": 750,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "glass-dark",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "750",
+          "tier": "mid",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-dark&width=750&rm=1&rail=1"
+      },
+      {
+        "id": "glass-dark|w975|rm0",
+        "theme": "glass-dark",
+        "width": 975,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "glass-dark",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "975",
+          "tier": "wider",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-dark&width=975&rm=0&rail=1"
+      },
+      {
+        "id": "glass-dark|w975|rm1",
+        "theme": "glass-dark",
+        "width": 975,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "glass-dark",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "975",
+          "tier": "wider",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-dark&width=975&rm=1&rail=1"
+      },
+      {
+        "id": "glass-dark|w1200|rm0",
+        "theme": "glass-dark",
+        "width": 1200,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "glass-dark",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "1200",
+          "tier": "wide",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-dark&width=1200&rm=0&rail=1"
+      },
+      {
+        "id": "glass-dark|w1200|rm1",
+        "theme": "glass-dark",
+        "width": 1200,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "glass-dark",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "1200",
+          "tier": "wide",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-dark&width=1200&rm=1&rail=1"
+      },
+      {
+        "id": "glass-light|w520|rm0",
+        "theme": "glass-light",
+        "width": 520,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "glass-light",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "520",
+          "tier": "min",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-light&width=520&rm=0&rail=1"
+      },
+      {
+        "id": "glass-light|w520|rm1",
+        "theme": "glass-light",
+        "width": 520,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "glass-light",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "520",
+          "tier": "min",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-light&width=520&rm=1&rail=1"
+      },
+      {
+        "id": "glass-light|w750|rm0",
+        "theme": "glass-light",
+        "width": 750,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "glass-light",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "750",
+          "tier": "mid",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-light&width=750&rm=0&rail=1"
+      },
+      {
+        "id": "glass-light|w750|rm1",
+        "theme": "glass-light",
+        "width": 750,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "glass-light",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "750",
+          "tier": "mid",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-light&width=750&rm=1&rail=1"
+      },
+      {
+        "id": "glass-light|w975|rm0",
+        "theme": "glass-light",
+        "width": 975,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "glass-light",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "975",
+          "tier": "wider",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-light&width=975&rm=0&rail=1"
+      },
+      {
+        "id": "glass-light|w975|rm1",
+        "theme": "glass-light",
+        "width": 975,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "glass-light",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "975",
+          "tier": "wider",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-light&width=975&rm=1&rail=1"
+      },
+      {
+        "id": "glass-light|w1200|rm0",
+        "theme": "glass-light",
+        "width": 1200,
+        "rm": "0",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "glass-light",
+          "reduced": "0",
+          "motion": "full",
+          "widthAttr": "1200",
+          "tier": "wide",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-light&width=1200&rm=0&rail=1"
+      },
+      {
+        "id": "glass-light|w1200|rm1",
+        "theme": "glass-light",
+        "width": 1200,
+        "rm": "1",
+        "pass": true,
+        "issues": [],
+        "snap": {
+          "theme": "glass-light",
+          "reduced": "1",
+          "motion": "reduced",
+          "widthAttr": "1200",
+          "tier": "wide",
+          "msgVisible": true,
+          "shell": true
+        },
+        "retry980": null,
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-light&width=1200&rm=1&rail=1"
+      }
+    ]
+  },
+  "bsd_placement": {
+    "passed": 8,
+    "failed": 0,
+    "result_path": "%TEMP%\\pm-grok45-probes\\matrix-smoke-result.json",
+    "cells": [
+      {
+        "id": "bsd-w1",
+        "pass": true,
+        "expected": "mono",
+        "got": "mono",
+        "url": "http://127.0.0.1:8775/host.html?w=w1&t=t1&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+      },
+      {
+        "id": "bsd-w2",
+        "pass": true,
+        "expected": "kicker",
+        "got": "kicker",
+        "url": "http://127.0.0.1:8775/host.html?w=w2&t=t1&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+      },
+      {
+        "id": "bsd-w3",
+        "pass": true,
+        "expected": "lamp",
+        "got": "lamp",
+        "url": "http://127.0.0.1:8775/host.html?w=w3&t=t1&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+      },
+      {
+        "id": "bsd-w4",
+        "pass": true,
+        "expected": "chip",
+        "got": "chip",
+        "url": "http://127.0.0.1:8775/host.html?w=w4&t=t1&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+      },
+      {
+        "id": "bsd-w5",
+        "pass": true,
+        "expected": "trailing",
+        "got": "trailing",
+        "url": "http://127.0.0.1:8775/host.html?w=w5&t=t1&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+      },
+      {
+        "id": "bsd-w6",
+        "pass": true,
+        "expected": "trailing",
+        "got": "trailing",
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+      },
+      {
+        "id": "bsd-w7",
+        "pass": true,
+        "expected": "latch",
+        "got": "latch",
+        "url": "http://127.0.0.1:8775/host.html?w=w7&t=t1&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+      },
+      {
+        "id": "bsd-w8",
+        "pass": true,
+        "expected": "rail",
+        "got": "rail",
+        "url": "http://127.0.0.1:8775/host.html?w=w8&t=t1&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+      }
+    ]
+  },
+  "q_structure": {
+    "passed": 8,
+    "failed": 0,
+    "result_path": "%TEMP%\\pm-grok45-probes\\matrix-smoke-result.json",
+    "cells": [
+      {
+        "id": "q-t1",
+        "pass": true,
+        "expected": "q-folio-leaf-morph",
+        "got": {
+          "renderer": "q-folio-leaf-morph",
+          "concept": "t1"
+        },
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+      },
+      {
+        "id": "q-t2",
+        "pass": true,
+        "expected": "q-beat-attached",
+        "got": {
+          "renderer": "q-beat-attached",
+          "concept": "t2"
+        },
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t2&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+      },
+      {
+        "id": "q-t3",
+        "pass": true,
+        "expected": "q-shelf-stack",
+        "got": {
+          "renderer": "q-shelf-stack",
+          "concept": "t3"
+        },
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t3&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+      },
+      {
+        "id": "q-t4",
+        "pass": true,
+        "expected": "q-yield-sheet",
+        "got": {
+          "renderer": "q-yield-sheet",
+          "concept": "t4"
+        },
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t4&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+      },
+      {
+        "id": "q-t5",
+        "pass": true,
+        "expected": "q-condenser-stage",
+        "got": {
+          "renderer": "q-condenser-stage",
+          "concept": "t5"
+        },
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t5&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+      },
+      {
+        "id": "q-t6",
+        "pass": true,
+        "expected": "q-margin-sidecar",
+        "got": {
+          "renderer": "q-margin-sidecar",
+          "concept": "t6"
+        },
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t6&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+      },
+      {
+        "id": "q-t7",
+        "pass": true,
+        "expected": "q-focus-stepper",
+        "got": {
+          "renderer": "q-focus-stepper",
+          "concept": "t7"
+        },
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t7&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+      },
+      {
+        "id": "q-t8",
+        "pass": true,
+        "expected": "q-paired-breath",
+        "got": {
+          "renderer": "q-paired-breath",
+          "concept": "t8"
+        },
+        "url": "http://127.0.0.1:8775/host.html?w=w6&t=t8&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+      }
+    ]
+  },
+  "live_correction_visual": {
+    "passed": 20,
+    "failed": 0,
+    "total": 20,
+    "result_path": "%TEMP%\\pm-grok45-probes\\correction-2026-08-14\\correction-live-result.json",
+    "evidence": {
+      "peek": "history.peek mode + peekClass on w6xt1/w2xt5/w8xt3",
+      "pin": "pinned_compact with artifact open; chat floor retained (chatW≈739)",
+      "artifact": "pm-artifact-workspace is-open on w6/w2/w8",
+      "provider_copy": "official + notBundled + install true on live pairs",
+      "prepare": "phase=prepare on distinct Q renderers",
+      "reduced_motion": true,
+      "themes_widths_rm": "covered by matrix 64/64"
+    },
+    "checks": [
+      {
+        "name": "w6xt1 mounted",
+        "pass": true,
+        "detail": "t1"
+      },
+      {
+        "name": "w6xt1 history.peek mode",
+        "pass": true,
+        "detail": {
+          "mode": "peek",
+          "peekClass": true,
+          "histVisible": true
+        }
+      },
+      {
+        "name": "w6xt1 pin+artifact chat floor",
+        "pass": true,
+        "detail": {
+          "mode": "pinned_compact",
+          "artOpen": true,
+          "chatW": 739,
+          "artCls": "pm-artifact-workspace is-open w-w6"
+        }
+      },
+      {
+        "name": "w6xt1 artifact open-ish",
+        "pass": true,
+        "detail": {
+          "mode": "pinned_compact",
+          "artOpen": true,
+          "chatW": 739,
+          "artCls": "pm-artifact-workspace is-open w-w6"
+        }
+      },
+      {
+        "name": "w6xt1 provider official/not-bundled copy",
+        "pass": true,
+        "detail": {
+          "official": true,
+          "notBundled": true,
+          "install": true
+        }
+      },
+      {
+        "name": "w6xt1 question.prepare surfaced",
+        "pass": true,
+        "detail": {
+          "phase": "prepare",
+          "hasPreparing": false,
+          "renderer": "q-folio-leaf-morph"
+        }
+      },
+      {
+        "name": "w2xt5 mounted",
+        "pass": true,
+        "detail": "t5"
+      },
+      {
+        "name": "w2xt5 history.peek mode",
+        "pass": true,
+        "detail": {
+          "mode": "peek",
+          "peekClass": true,
+          "histVisible": true
+        }
+      },
+      {
+        "name": "w2xt5 pin+artifact chat floor",
+        "pass": true,
+        "detail": {
+          "mode": "pinned_compact",
+          "artOpen": true,
+          "chatW": 739,
+          "artCls": "pm-artifact-workspace is-open w-w2"
+        }
+      },
+      {
+        "name": "w2xt5 artifact open-ish",
+        "pass": true,
+        "detail": {
+          "mode": "pinned_compact",
+          "artOpen": true,
+          "chatW": 739,
+          "artCls": "pm-artifact-workspace is-open w-w2"
+        }
+      },
+      {
+        "name": "w2xt5 provider official/not-bundled copy",
+        "pass": true,
+        "detail": {
+          "official": true,
+          "notBundled": true,
+          "install": true
+        }
+      },
+      {
+        "name": "w2xt5 question.prepare surfaced",
+        "pass": true,
+        "detail": {
+          "phase": "prepare",
+          "hasPreparing": false,
+          "renderer": "q-condenser-stage"
+        }
+      },
+      {
+        "name": "w8xt3 mounted",
+        "pass": true,
+        "detail": "t3"
+      },
+      {
+        "name": "w8xt3 history.peek mode",
+        "pass": true,
+        "detail": {
+          "mode": "peek",
+          "peekClass": true,
+          "histVisible": false
+        }
+      },
+      {
+        "name": "w8xt3 pin+artifact chat floor",
+        "pass": true,
+        "detail": {
+          "mode": "pinned_compact",
+          "artOpen": true,
+          "chatW": 739,
+          "artCls": "pm-artifact-workspace is-open w-w8"
+        }
+      },
+      {
+        "name": "w8xt3 artifact open-ish",
+        "pass": true,
+        "detail": {
+          "mode": "pinned_compact",
+          "artOpen": true,
+          "chatW": 739,
+          "artCls": "pm-artifact-workspace is-open w-w8"
+        }
+      },
+      {
+        "name": "w8xt3 provider official/not-bundled copy",
+        "pass": true,
+        "detail": {
+          "official": true,
+          "notBundled": true,
+          "install": true
+        }
+      },
+      {
+        "name": "w8xt3 question.prepare surfaced",
+        "pass": true,
+        "detail": {
+          "phase": "prepare",
+          "hasPreparing": false,
+          "renderer": "q-shelf-stack"
+        }
+      },
+      {
+        "name": "sync offline/reconnect/replay surfaced",
+        "pass": true,
+        "detail": {
+          "hasReplay": true
+        }
+      },
+      {
+        "name": "reduced motion honored",
+        "pass": true,
+        "detail": true
+      }
+    ]
+  },
+  "surfaces_covered": [
+    "themes (8)",
+    "widths (520/750/975/1200)",
+    "reduced_motion (on/off)",
+    "history.peek",
+    "history.pin + artifact coexistence",
+    "artifact workspace open",
+    "question.prepare phase",
+    "provider official-source copy",
+    "BSD compositions w1–w8",
+    "Q renderer IDs t1–t8"
+  ],
+  "honesty": {
+    "no_winner": true,
+    "motion_not_frame_matched": true,
+    "screenshots_not_shipped_in_concept": true,
+    "probe_home": "%TEMP%\\pm-grok45-probes"
+  }
+}

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L3977-L4105
+Source lines: L4254-L4382
 
-Source SHA256: `b4ba9c4395d25651bfdd6e0a0258ad6f4f830247dbe4af008acbde9348d09684`
+Source SHA256: `ac1b5d4e14ca7f69b72f955f18e9dd90a8c469aa93212dffc5a524dfaade9523`
 
 ---
 
@@ -22,7 +22,7 @@ The rewrite must treat browser-capable rendering as a shared capability across t
 - **Embedded Document Pane**: preview-capable document review surface using the same rendering and preview identity contract
 - **Editor-tab Browser surface**: the canonical in-shell host for `workspace_preview`
 - **Detached preview/browser windows**: first-class `detached_preview` surfaces linked to the originating browser subject
-- **Automation/Auth browser windows**: visible `automation_session` and `auth_session` surfaces that are not counted as normal in-shell browser tabs
+- **Automation browser windows**: visible ordinary `automation_session` surfaces that are not counted as normal in-shell browser tabs. Protected `AuthBrowserSession` is a distinct foreground human-only surface with no capture, inspection, recording, generic navigation, agent, tool, BSD, or persistence consumer.
 - **Bottom-panel browser-adjacent surfaces**: optional logs, evidence, downloads, console/network summaries, or DevTools-adjacent panes that do not own the canonical browsing session
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
@@ -31,7 +31,7 @@ Browser-derived capture chips in the Chat Panel appear in the composer chip stri
 
 ### GUI behavior rules
 
-- Browser and agent-debugging UX follows the Section15 built-in browser contract rather than `web_search`, `web_fetch`, Site Reader, or raw CDP. The GUI presents the PM-managed CEF runtime, DevTools, visible `automation_session` / `auth_session` surfaces, `/video` evidence, `browser_selection_context`, and `browser_element_context`; capture chips must not auto-send, advanced storage or `/cookie` changes require explicit confirmation, and takeover controls expose pause, `/continue/stop`, and resume as named actions.
+- Browser and agent-debugging UX follows the Section15 PM-native Browser Program contract rather than `web_search`, `web_fetch`, Site Reader, or raw CDP. Ordinary Browser Program and visible `automation_session` surfaces may present DevTools, generic test evidence, `browser_selection_context`, and `browser_element_context`; capture chips must not auto-send, advanced ordinary-session storage changes require explicit confirmation, and takeover controls expose pause, continue/stop, and resume as named actions. None of these controls, capture paths, contexts, or evidence surfaces accepts protected `AuthBrowserSession`.
 - Debug browser-automation defaults favor redacted summary packs, bounded evidence windows, isolated session handoff, `/audit` trails, and least-privilege browser takeover. They do not present broad shared-session control as the default user-facing model.
 - Debug attention banners display `attention_required_reason_code` values such as `auth_handoff_required`, `manual_repro_required`, `manual_verification_required`, and `target_selection_required`. Debugger attach loss or manual debugger steering that PM does not own in MVP degrades to `attention_required`.
 - An arbitrary URL remains a diagnose/verify-only browser investigation until PM binds it to a workspace-backed target; only then may the GUI offer durable-fix actions.

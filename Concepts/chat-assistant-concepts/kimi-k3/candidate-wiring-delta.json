@@ -1,233 +1,432 @@
 {
-  "schema_id": "pm.chat_candidate_wiring_delta.v1",
-  "concept_id": "kimi-k3",
-  "model": "Kimi K3",
-  "note": "PROVISIONAL, NOT APPLIED. Entry shape mirrors Plans/Wiring_Matrix.production.json. ui_command_id values reference candidate-command-delta.json dispositions (canonical where REUSE/ALIAS, proposed where NEW). Dev-drawer/index triggers are harness-only and never production wiring.",
-  "entries": {
-    "chat.route.picker": {
-      "ui_element_id": "chat.route.picker",
-      "ui_location": "chat header selector row (k3w-kit-model peer)",
-      "ui_command_id": "cmd.provider.switch_route (reuse; thread-local projection)",
-      "handler_location": "_shared/route.js K3Route.select/applyRoute",
-      "expected_event_types": ["route-changed", "route-warning"],
-      "acceptance_checks": ["selection persists per thread", "recents/favorites update", "material switches hold behind the warning card", "setup-needed routes deep-link instead of applying"],
-      "evidence_required": ["probe:routePicker", "probe:routeWarningFlow", "state:route-picker"],
-      "state_selector": "threadLocal.<tid>.route over routeDefaults",
-      "disabled_reason_projection": "route.status != ok -> reason line + Open Provider Settings",
-      "effect_contract": "thread-local route/effort/speed write; no silent Goal retarget (guardRouteChange abort)",
-      "accessibility_contract": "button with aria-label; popover panel; Esc closes; focus returns to trigger",
-      "test_evidence": ["run-packet-probes.mjs routePicker/routeWarningFlow"],
-      "event_test_requirements": ["route-changed emitted exactly once per applied selection"]
-    },
-    "chat.access.picker": {
-      "ui_element_id": "chat.access.picker",
-      "ui_location": "chat header selector row (k3w-kit-access peer)",
-      "ui_command_id": "cmd.chat.access.set (NEW candidate)",
-      "handler_location": "_shared/access.js K3Access.button menu",
-      "expected_event_types": ["access-changed"],
-      "acceptance_checks": ["4 profiles with descriptions", "narrowed-policy footer line", "FileSafe line always present"],
-      "evidence_required": ["state:access-limited"],
-      "state_selector": "threadLocal.<tid>.access",
-      "disabled_reason_projection": "mode/policy narrowing shown as footer note, e.g. 'Full Access · Limited by Review mode'",
-      "effect_contract": "thread-local access write; guardRouteChange abort while a Goal runs",
-      "accessibility_contract": "radio-style menu; selected row marked",
-      "test_evidence": ["run-feature-states.mjs access-limited"],
-      "event_test_requirements": ["access-changed emitted with threadId + profile"]
-    },
-    "chat.bsd.control": {
-      "ui_element_id": "chat.bsd.control",
-      "ui_location": "selector row (mono/chip/token/rail per window idiom)",
-      "ui_command_id": "cmd.chat.bsd.set (NEW candidate)",
-      "handler_location": "_shared/bsd.js K3BSD.set",
-      "expected_event_types": ["bsd-changed", "bsd-advice"],
-      "acceptance_checks": ["Off/Auto/On + scope radios", "glow only while evaluating", "manual On treatment distinct", "unavailable/timeout never block send", "turn scope reverts after the turn"],
-      "evidence_required": ["probe:bsdStates", "states:bsd-auto-glow/bsd-manual-on/bsd-advice/bsd-unavailable"],
-      "state_selector": "bsdState.<tid>",
-      "disabled_reason_projection": "result chips carry timeout/unavailable/quota states as display-only",
-      "effect_contract": "advice-only; no tool runs; no authority widening",
-      "accessibility_contract": "button + popover radios; reduced-motion steady outline replaces glow",
-      "test_evidence": ["run-packet-probes.mjs bsdStates"],
-      "event_test_requirements": ["bsd-advice only on advice results"]
-    },
-    "chat.approval.card": {
-      "ui_element_id": "chat.approval.card",
-      "ui_location": "transcript card (both inline and chip work modes)",
-      "ui_command_id": "Permissions owner decision (Plans/Permissions_System.md)",
-      "handler_location": "_shared/access.js K3Access.approvalCard",
-      "expected_event_types": ["approval-requested", "approval-decided"],
-      "acceptance_checks": ["compact decision, expandable evidence", "decision persists", "card collapses to decided state"],
-      "evidence_required": ["probe:approvalFlow", "state:approval-card"],
-      "state_selector": "approvals.<id>",
-      "disabled_reason_projection": "n/a",
-      "effect_contract": "Deny / Allow once / Allow for session; one-time never persists",
-      "accessibility_contract": "real buttons; Details popover Esc-closes",
-      "test_evidence": ["run-packet-probes.mjs approvalFlow"],
-      "event_test_requirements": ["approval-decided carries decision + at"]
-    },
-    "chat.context.compact_now": {
-      "ui_element_id": "chat.context.compact_now",
-      "ui_location": "context ring popover",
-      "ui_command_id": "cmd.chat.compact_context (alias of cmd.chat.context.compact_now)",
-      "handler_location": "windows/_window-kit.js contextRing",
-      "expected_event_types": ["compact-now-done"],
-      "acceptance_checks": ["visible operation state", "durable receipt in transcript", "history and historical Usage untouched"],
-      "evidence_required": ["probe:compactNowReceipt", "state:compact-now"],
-      "state_selector": "n/a (operation record)",
-      "disabled_reason_projection": "n/a",
-      "effect_contract": "receiptCard appended; no history mutation",
-      "accessibility_contract": "button; progress text; reduced-motion instant completion",
-      "test_evidence": ["run-packet-probes.mjs compactNowReceipt"],
-      "event_test_requirements": ["compact-now-done emitted after receipt append"]
-    },
-    "chat.context.lens_receipt": {
-      "ui_element_id": "chat.context.lens_receipt",
-      "ui_location": "Context Lens menu / ring popover 'More details'",
-      "ui_command_id": "cmd.chat.context.source.remove (NEW) for Remove; read view has no command",
-      "handler_location": "_shared/lens.js K3Lens.openReceipt",
-      "expected_event_types": ["lens-changed"],
-      "acceptance_checks": ["Included/Left out sections with size + provenance", "Remove refiles to omitted with reason", "no secrets/system prompts/registries", "open artifacts not auto-admitted"],
-      "evidence_required": ["probe:lensReceipt", "state:lens-receipt"],
-      "state_selector": "lensReceipt.removed / lensReceipt.admitted",
-      "disabled_reason_projection": "n/a",
-      "effect_contract": "admission view only; Remove persists",
-      "accessibility_contract": "popover; button rows; Esc closes",
-      "test_evidence": ["run-packet-probes.mjs lensReceipt"],
-      "event_test_requirements": []
-    },
-    "chat.search.result_actions": {
-      "ui_element_id": "chat.search.result_actions",
-      "ui_location": "search result rows (more menu)",
-      "ui_command_id": "cmd.search.* reuse + cmd.chat.context.source.add (NEW) for Add passage",
-      "handler_location": "_shared/search.js buildResultRow",
-      "expected_event_types": ["lens-changed"],
-      "acceptance_checks": ["Open conversation / Add passage to context / Branch from this point / Copy link", "only selected passages enter context"],
-      "evidence_required": ["probe:searchActions", "state:prior-chat-search"],
-      "state_selector": "lensReceipt.admitted",
-      "disabled_reason_projection": "n/a",
-      "effect_contract": "Add passage records provenance; branch preserves source",
-      "accessibility_contract": "row menu; stopPropagation keeps row click intact",
-      "test_evidence": ["run-packet-probes.mjs searchActions"],
-      "event_test_requirements": []
-    },
-    "chat.thread.request": {
-      "ui_element_id": "chat.thread.request",
-      "ui_location": "transcript threadRequestCard + hover menu thread ops",
-      "ui_command_id": "cmd.chat.thread.request / .await (NEW candidates)",
-      "handler_location": "_shared/threadops.js K3ThreadOps.sendRequest/awaitRequest",
-      "expected_event_types": ["thread-op"],
-      "acceptance_checks": ["typed record fields complete", "cycle + fan-out(3) rejection", "no hidden shared context", "result refs on resolve"],
-      "evidence_required": ["probe:threadOpsFlow", "states:thread-request/thread-spawn"],
-      "state_selector": "thread.threadRequests",
-      "disabled_reason_projection": "cycle/fanout rejection returns reason",
-      "effect_contract": "request durability; bounded task; evidence refs only",
-      "accessibility_contract": "card + Await button",
-      "test_evidence": ["run-packet-probes.mjs threadOpsFlow"],
-      "event_test_requirements": ["thread-op on status change"]
-    },
-    "chat.thread.history_ops": {
-      "ui_element_id": "chat.thread.history_ops",
-      "ui_location": "message hover menu",
-      "ui_command_id": "cmd.chat.branch_from_restore / cmd.chat.rewind / cmd.chat.create_restore_point (aliases)",
-      "handler_location": "_shared/threadops.js branchFrom/createRestorePoint/rewindTo/restoreFrom",
-      "expected_event_types": ["thread-op", "threads-changed"],
-      "acceptance_checks": ["branch preserves source+lineage", "rewind non-destructive with restore link", "restore point immutable"],
-      "evidence_required": ["probe:threadOpsFlow", "states:branch-menu/restore-point/rewind"],
-      "state_selector": "message.rewound / thread.restorePoints",
-      "disabled_reason_projection": "rewind confirm carries the non-destructive note",
-      "effect_contract": "no workspace-file mutation; no raw-message cloning into prompts",
-      "accessibility_contract": "menu items; destructive-looking rewind confirms first",
-      "test_evidence": ["run-packet-probes.mjs threadOpsFlow"],
-      "event_test_requirements": []
-    },
-    "chat.turn.redirect": {
-      "ui_element_id": "chat.turn.redirect",
-      "ui_location": "composer action button while a turn is active",
-      "ui_command_id": "cmd.chat.redirect (NEW candidate)",
-      "handler_location": "_shared/threadops.js K3ThreadOps.redirect via _shared/composer.js",
-      "expected_event_types": ["stopped", "message-added", "idle"],
-      "acceptance_checks": ["partial attempt preserved", "interrupted/redirected/resumed states visible", "not an ordinary message"],
-      "evidence_required": ["probe:redirectFlow", "state:redirect-active"],
-      "state_selector": "message.redirectMarker.state",
-      "disabled_reason_projection": "n/a",
-      "effect_contract": "stop preserves partial; correction appends; new attempt resumes",
-      "accessibility_contract": "button label Redirect; testid keeps k3-composer-send contract",
-      "test_evidence": ["run-packet-probes.mjs redirectFlow"],
-      "event_test_requirements": []
-    },
-    "chat.artifact.workspace": {
-      "ui_element_id": "chat.artifact.workspace",
-      "ui_location": "left of Chat per window idiom (w7 stack band; w8 sheet/dock)",
-      "ui_command_id": "cmd.artifacts.* (reuse)",
-      "handler_location": "_shared/artifact-ws.js + per-window adapters",
-      "expected_event_types": ["artifact-ws-changed"],
-      "acceptance_checks": ["loading/ready/updated/error/retry/switch/close", "never overlaps thread/composer", "chat floor widths honored", "open never injects into context"],
-      "evidence_required": ["probes:artifactLeftOfChat/artifactStates", "states:artifact-left-*"],
-      "state_selector": "artifactWs.<tid>",
-      "disabled_reason_projection": "error state with Retry",
-      "effect_contract": "single shared surface; per-thread open/active/order/docked persisted",
-      "accessibility_contract": "switcher tabs; Esc on transient forms; reduced-motion instant swap",
-      "test_evidence": ["run-packet-probes.mjs artifact probes"],
-      "event_test_requirements": ["artifact-ws-changed on open/switch/close/status"]
-    },
-    "chat.sync.pill": {
-      "ui_element_id": "chat.sync.pill",
-      "ui_location": "chat header state-chip holder (all windows)",
-      "ui_command_id": "Server/Project Sync owner decision",
-      "handler_location": "_shared/sync.js K3Sync",
-      "expected_event_types": ["sync-changed", "outbox-changed"],
-      "acceptance_checks": ["all 9 states reachable", "outbox per-op status", "domain failure separate from transport", "replay exactly-once with fence log"],
-      "evidence_required": ["probes:offlineIdempotency/syncPillStates", "states:offline-queue/offline-reconnect"],
-      "state_selector": "sync.* / outbox.<tid> / appliedOps",
-      "disabled_reason_projection": "Reconnect action always available while offline/queued",
-      "effect_contract": "queued appends once; replay fenced by opId; badges flip to sent",
-      "accessibility_contract": "pill button + popover",
-      "test_evidence": ["run-packet-probes.mjs offlineIdempotency"],
-      "event_test_requirements": ["outbox-changed on queue + on sent flip"]
-    },
-    "chat.spellcheck.menu": {
-      "ui_element_id": "chat.spellcheck.menu",
-      "ui_location": "composer textarea contextmenu",
-      "ui_command_id": "spell service owner decision (OS then PM local)",
-      "handler_location": "_shared/spellcheck.js K3Spell.attach",
-      "expected_event_types": ["spell-changed"],
-      "acceptance_checks": ["suggestions + Replace once", "Ignore once/draft", "personal/project dictionaries", "thread disable", "skip URL/path/shell/hash/identifier/known names", "no toolbar button, no autocorrect"],
-      "evidence_required": ["probe:spellcheckMenu"],
-      "state_selector": "spell.*",
-      "disabled_reason_projection": "thread-disabled silences the menu",
-      "effect_contract": "passive; native underline untouched",
-      "accessibility_contract": "contextmenu + keyboard path; menu Esc-closes",
-      "test_evidence": ["run-packet-probes.mjs spellcheckMenu"],
-      "event_test_requirements": []
-    },
-    "shell.notification.inbox": {
-      "ui_element_id": "shell.notification.inbox",
-      "ui_location": "title-bar notification stack (canonical surface)",
-      "ui_command_id": "Notifications owner (Plans/FinalGUISpec.md title-bar contract)",
-      "handler_location": "_shared/shell.js notification stack",
-      "expected_event_types": ["notification-added"],
-      "acceptance_checks": ["badge increments", "inbox opens", "Open deep-links to the card", "no chat-side panel/bottom-right stack/rail bell"],
-      "evidence_required": ["probe:notificationInbox", "state:notify-approval"],
-      "state_selector": "notifications[]",
-      "disabled_reason_projection": "n/a",
-      "effect_contract": "read/dismiss persist in the slice",
-      "accessibility_contract": "button + popover list",
-      "test_evidence": ["run-packet-probes.mjs notificationInbox"],
-      "event_test_requirements": ["notification-added per injection"]
-    },
-    "chat.demo.triggers": {
-      "ui_element_id": "chat.demo.triggers",
-      "ui_location": "dev drawer (?demo=1) + index.html Demo triggers menu",
-      "ui_command_id": "NONE — harness/review surface, never production commands",
-      "handler_location": "_shared/devdrawer.js + _shared/demo.js + _shared/states.js",
-      "expected_event_types": ["per trigger"],
-      "acceptance_checks": ["deterministic", "repeatable", "clearly not product UI"],
-      "evidence_required": ["demo-trigger-report.json"],
-      "state_selector": "n/a",
-      "disabled_reason_projection": "n/a",
-      "effect_contract": "drives demo state only",
-      "accessibility_contract": "n/a (harness)",
-      "test_evidence": ["run-feature-states.mjs"],
-      "event_test_requirements": []
-    }
+ "schema_id": "pm.chat_candidate_wiring_delta.v1",
+ "concept_id": "kimi-k3",
+ "model": "Kimi K3",
+ "note": "PROVISIONAL, NOT APPLIED. Entry shape mirrors Plans/Wiring_Matrix.production.json. ui_command_id values reference candidate-command-delta.json dispositions (canonical where REUSE/ALIAS, proposed where NEW). Dev-drawer/index triggers are harness-only and never production wiring.",
+ "entries": {
+  "chat.route.picker": {
+   "ui_element_id": "chat.route.picker",
+   "ui_location": "chat header selector row (k3w-kit-model peer)",
+   "ui_command_id": "cmd.provider.switch_route (reuse; thread-local projection)",
+   "handler_location": "_shared/route.js K3Route.select/applyRoute",
+   "expected_event_types": [
+    "route-changed",
+    "route-warning"
+   ],
+   "acceptance_checks": [
+    "selection persists per thread",
+    "recents/favorites update",
+    "material switches hold behind the warning card",
+    "setup-needed routes deep-link instead of applying"
+   ],
+   "evidence_required": [
+    "probe:routePicker",
+    "probe:routeWarningFlow",
+    "state:route-picker"
+   ],
+   "state_selector": "threadLocal.<tid>.route over routeDefaults",
+   "disabled_reason_projection": "route.status != ok -> reason line + Open Provider Settings",
+   "effect_contract": "thread-local route/effort/speed write; no silent Goal retarget (guardRouteChange abort)",
+   "accessibility_contract": "button with aria-label; popover panel; Esc closes; focus returns to trigger",
+   "test_evidence": [
+    "run-packet-probes.mjs routePicker/routeWarningFlow"
+   ],
+   "event_test_requirements": [
+    "route-changed emitted exactly once per applied selection"
+   ]
+  },
+  "chat.access.picker": {
+   "ui_element_id": "chat.access.picker",
+   "ui_location": "chat header selector row (k3w-kit-access peer)",
+   "ui_command_id": "cmd.chat.access.set (NEW candidate)",
+   "handler_location": "_shared/access.js K3Access.button menu",
+   "expected_event_types": [
+    "access-changed"
+   ],
+   "acceptance_checks": [
+    "4 profiles with descriptions",
+    "narrowed-policy footer line",
+    "FileSafe line always present"
+   ],
+   "evidence_required": [
+    "state:access-limited"
+   ],
+   "state_selector": "threadLocal.<tid>.access",
+   "disabled_reason_projection": "mode/policy narrowing shown as footer note, e.g. 'Full Access \u00b7 Limited by Review mode'",
+   "effect_contract": "thread-local access write; guardRouteChange abort while a Goal runs",
+   "accessibility_contract": "radio-style menu; selected row marked",
+   "test_evidence": [
+    "run-feature-states.mjs access-limited"
+   ],
+   "event_test_requirements": [
+    "access-changed emitted with threadId + profile"
+   ]
+  },
+  "chat.bsd.control": {
+   "ui_element_id": "chat.bsd.control",
+   "ui_location": "selector row (mono/chip/token/rail per window idiom)",
+   "ui_command_id": "cmd.chat.bsd.set (NEW candidate)",
+   "handler_location": "_shared/bsd.js K3BSD.set",
+   "expected_event_types": [
+    "bsd-changed",
+    "bsd-advice"
+   ],
+   "acceptance_checks": [
+    "Off/Auto/On + scope radios",
+    "glow only while evaluating",
+    "manual On treatment distinct",
+    "unavailable/timeout never block send",
+    "turn scope reverts after the turn"
+   ],
+   "evidence_required": [
+    "probe:bsdStates",
+    "states:bsd-auto-glow/bsd-manual-on/bsd-advice/bsd-unavailable"
+   ],
+   "state_selector": "bsdState.<tid>",
+   "disabled_reason_projection": "result chips carry timeout/unavailable/quota states as display-only",
+   "effect_contract": "advice-only; no tool runs; no authority widening",
+   "accessibility_contract": "button + popover radios; reduced-motion steady outline replaces glow",
+   "test_evidence": [
+    "run-packet-probes.mjs bsdStates"
+   ],
+   "event_test_requirements": [
+    "bsd-advice only on advice results"
+   ]
+  },
+  "chat.approval.card": {
+   "ui_element_id": "chat.approval.card",
+   "ui_location": "transcript card (both inline and chip work modes)",
+   "ui_command_id": "Permissions owner decision (Plans/Permissions_System.md)",
+   "handler_location": "_shared/access.js K3Access.approvalCard",
+   "expected_event_types": [
+    "approval-requested",
+    "approval-decided"
+   ],
+   "acceptance_checks": [
+    "compact decision, expandable evidence",
+    "decision persists",
+    "card collapses to decided state"
+   ],
+   "evidence_required": [
+    "probe:approvalFlow",
+    "state:approval-card"
+   ],
+   "state_selector": "approvals.<id>",
+   "disabled_reason_projection": "n/a",
+   "effect_contract": "Deny / Allow once / Allow for session; one-time never persists",
+   "accessibility_contract": "real buttons; Details popover Esc-closes",
+   "test_evidence": [
+    "run-packet-probes.mjs approvalFlow"
+   ],
+   "event_test_requirements": [
+    "approval-decided carries decision + at"
+   ]
+  },
+  "chat.context.compact_now": {
+   "ui_element_id": "chat.context.compact_now",
+   "ui_location": "context ring popover",
+   "ui_command_id": "cmd.chat.compact_context (alias of cmd.chat.context.compact_now)",
+   "handler_location": "windows/_window-kit.js contextRing",
+   "expected_event_types": [
+    "compact-now-done"
+   ],
+   "acceptance_checks": [
+    "visible operation state",
+    "durable receipt in transcript",
+    "history and historical Usage untouched"
+   ],
+   "evidence_required": [
+    "probe:compactNowReceipt",
+    "state:compact-now"
+   ],
+   "state_selector": "n/a (operation record)",
+   "disabled_reason_projection": "n/a",
+   "effect_contract": "receiptCard appended; no history mutation",
+   "accessibility_contract": "button; progress text; reduced-motion instant completion",
+   "test_evidence": [
+    "run-packet-probes.mjs compactNowReceipt"
+   ],
+   "event_test_requirements": [
+    "compact-now-done emitted after receipt append"
+   ]
+  },
+  "chat.context.lens_receipt": {
+   "ui_element_id": "chat.context.lens_receipt",
+   "ui_location": "Context Lens menu / ring popover 'More details'",
+   "ui_command_id": "cmd.chat.context.source.remove (NEW) for Remove; read view has no command",
+   "handler_location": "_shared/lens.js K3Lens.openReceipt",
+   "expected_event_types": [
+    "lens-changed"
+   ],
+   "acceptance_checks": [
+    "Included/Left out sections with size + provenance",
+    "Remove refiles to omitted with reason",
+    "no secrets/system prompts/registries",
+    "open artifacts not auto-admitted"
+   ],
+   "evidence_required": [
+    "probe:lensReceipt",
+    "state:lens-receipt"
+   ],
+   "state_selector": "lensReceipt.removed / lensReceipt.admitted",
+   "disabled_reason_projection": "n/a",
+   "effect_contract": "admission view only; Remove persists",
+   "accessibility_contract": "popover; button rows; Esc closes",
+   "test_evidence": [
+    "run-packet-probes.mjs lensReceipt"
+   ],
+   "event_test_requirements": []
+  },
+  "chat.search.result_actions": {
+   "ui_element_id": "chat.search.result_actions",
+   "ui_location": "search result rows (more menu)",
+   "ui_command_id": "cmd.search.* reuse + cmd.chat.context.source.add (NEW) for Add passage",
+   "handler_location": "_shared/search.js buildResultRow",
+   "expected_event_types": [
+    "lens-changed"
+   ],
+   "acceptance_checks": [
+    "Open conversation / Add passage to context / Branch from this point / Copy link",
+    "only selected passages enter context"
+   ],
+   "evidence_required": [
+    "probe:searchActions",
+    "state:prior-chat-search"
+   ],
+   "state_selector": "lensReceipt.admitted",
+   "disabled_reason_projection": "n/a",
+   "effect_contract": "Add passage records provenance; branch preserves source",
+   "accessibility_contract": "row menu; stopPropagation keeps row click intact",
+   "test_evidence": [
+    "run-packet-probes.mjs searchActions"
+   ],
+   "event_test_requirements": []
+  },
+  "chat.thread.request": {
+   "ui_element_id": "chat.thread.request",
+   "ui_location": "transcript threadRequestCard + hover menu thread ops",
+   "ui_command_id": "cmd.chat.thread.request / .await (NEW candidates)",
+   "handler_location": "_shared/threadops.js K3ThreadOps.sendRequest/awaitRequest",
+   "expected_event_types": [
+    "thread-op"
+   ],
+   "acceptance_checks": [
+    "typed record fields complete",
+    "cycle + fan-out(3) rejection",
+    "no hidden shared context",
+    "result refs on resolve"
+   ],
+   "evidence_required": [
+    "probe:threadOpsFlow",
+    "states:thread-request/thread-spawn"
+   ],
+   "state_selector": "thread.threadRequests",
+   "disabled_reason_projection": "cycle/fanout rejection returns reason",
+   "effect_contract": "request durability; bounded task; evidence refs only",
+   "accessibility_contract": "card + Await button",
+   "test_evidence": [
+    "run-packet-probes.mjs threadOpsFlow"
+   ],
+   "event_test_requirements": [
+    "thread-op on status change"
+   ]
+  },
+  "chat.thread.history_ops": {
+   "ui_element_id": "chat.thread.history_ops",
+   "ui_location": "message hover menu",
+   "ui_command_id": "cmd.chat.branch_from_restore / cmd.chat.rewind / cmd.chat.create_restore_point (aliases)",
+   "handler_location": "_shared/threadops.js branchFrom/createRestorePoint/rewindTo/restoreFrom",
+   "expected_event_types": [
+    "thread-op",
+    "threads-changed"
+   ],
+   "acceptance_checks": [
+    "branch preserves source+lineage",
+    "rewind non-destructive with restore link",
+    "restore point immutable"
+   ],
+   "evidence_required": [
+    "probe:threadOpsFlow",
+    "states:branch-menu/restore-point/rewind"
+   ],
+   "state_selector": "message.rewound / thread.restorePoints",
+   "disabled_reason_projection": "rewind confirm carries the non-destructive note",
+   "effect_contract": "no workspace-file mutation; no raw-message cloning into prompts",
+   "accessibility_contract": "menu items; destructive-looking rewind confirms first",
+   "test_evidence": [
+    "run-packet-probes.mjs threadOpsFlow"
+   ],
+   "event_test_requirements": []
+  },
+  "chat.turn.redirect": {
+   "ui_element_id": "chat.turn.redirect",
+   "ui_location": "composer action button while a turn is active",
+   "ui_command_id": "cmd.chat.redirect (NEW candidate)",
+   "handler_location": "_shared/threadops.js K3ThreadOps.redirect via _shared/composer.js",
+   "expected_event_types": [
+    "stopped",
+    "message-added",
+    "idle"
+   ],
+   "acceptance_checks": [
+    "partial attempt preserved",
+    "interrupted/redirected/resumed states visible",
+    "not an ordinary message"
+   ],
+   "evidence_required": [
+    "probe:redirectFlow",
+    "state:redirect-active"
+   ],
+   "state_selector": "message.redirectMarker.state",
+   "disabled_reason_projection": "n/a",
+   "effect_contract": "stop preserves partial; correction appends; new attempt resumes",
+   "accessibility_contract": "button label Redirect; testid keeps k3-composer-send contract",
+   "test_evidence": [
+    "run-packet-probes.mjs redirectFlow"
+   ],
+   "event_test_requirements": []
+  },
+  "chat.artifact.workspace": {
+   "ui_element_id": "chat.artifact.workspace",
+   "ui_location": "left of Chat per window idiom (w7 stack band; w8 sheet/dock)",
+   "ui_command_id": "cmd.artifacts.* (reuse)",
+   "handler_location": "_shared/artifact-ws.js + per-window adapters",
+   "expected_event_types": [
+    "artifact-ws-changed"
+   ],
+   "acceptance_checks": [
+    "loading/ready/updated/error/retry/switch/close",
+    "never overlaps thread/composer",
+    "chat floor widths honored",
+    "open never injects into context"
+   ],
+   "evidence_required": [
+    "probes:artifactLeftOfChat/artifactStates",
+    "states:artifact-left-*"
+   ],
+   "state_selector": "artifactWs.<tid>",
+   "disabled_reason_projection": "error state with Retry",
+   "effect_contract": "single shared surface; per-thread open/active/order/docked persisted",
+   "accessibility_contract": "switcher tabs; Esc on transient forms; reduced-motion instant swap",
+   "test_evidence": [
+    "run-packet-probes.mjs artifact probes"
+   ],
+   "event_test_requirements": [
+    "artifact-ws-changed on open/switch/close/status"
+   ]
+  },
+  "chat.sync.pill": {
+   "ui_element_id": "chat.sync.pill",
+   "ui_location": "chat header state-chip holder (all windows)",
+   "ui_command_id": "Server/Project Sync owner decision",
+   "handler_location": "_shared/sync.js K3Sync",
+   "expected_event_types": [
+    "sync-changed",
+    "outbox-changed"
+   ],
+   "acceptance_checks": [
+    "all 9 states reachable",
+    "outbox per-op status",
+    "domain failure separate from transport",
+    "replay exactly-once with fence log"
+   ],
+   "evidence_required": [
+    "probes:offlineIdempotency/syncPillStates",
+    "states:offline-queue/offline-reconnect"
+   ],
+   "state_selector": "sync.* / outbox.<tid> / appliedOps",
+   "disabled_reason_projection": "Reconnect action always available while offline/queued",
+   "effect_contract": "queued appends once; replay fenced by opId; badges flip to sent",
+   "accessibility_contract": "pill button + popover",
+   "test_evidence": [
+    "run-packet-probes.mjs offlineIdempotency"
+   ],
+   "event_test_requirements": [
+    "outbox-changed on queue + on sent flip"
+   ]
+  },
+  "chat.spellcheck.menu": {
+   "ui_element_id": "chat.spellcheck.menu",
+   "ui_location": "composer textarea contextmenu",
+   "ui_command_id": "spell service owner decision (OS then PM local)",
+   "handler_location": "_shared/spellcheck.js K3Spell.attach",
+   "expected_event_types": [
+    "spell-changed"
+   ],
+   "acceptance_checks": [
+    "suggestions + Replace once",
+    "Ignore once/draft",
+    "personal/project dictionaries",
+    "thread disable",
+    "skip URL/path/shell/hash/identifier/known names",
+    "no toolbar button, no autocorrect"
+   ],
+   "evidence_required": [
+    "probe:spellcheckMenu"
+   ],
+   "state_selector": "spell.*",
+   "disabled_reason_projection": "thread-disabled silences the menu",
+   "effect_contract": "passive; native underline untouched",
+   "accessibility_contract": "contextmenu + keyboard path; menu Esc-closes",
+   "test_evidence": [
+    "run-packet-probes.mjs spellcheckMenu"
+   ],
+   "event_test_requirements": []
+  },
+  "shell.notification.inbox": {
+   "ui_element_id": "shell.notification.inbox",
+   "ui_location": "title-bar notification stack (canonical surface)",
+   "ui_command_id": "Notifications owner (Plans/FinalGUISpec.md title-bar contract)",
+   "handler_location": "_shared/shell.js notification stack",
+   "expected_event_types": [
+    "notification-added"
+   ],
+   "acceptance_checks": [
+    "badge increments",
+    "inbox opens",
+    "Open deep-links to the card",
+    "no chat-side panel/bottom-right stack/rail bell"
+   ],
+   "evidence_required": [
+    "probe:notificationInbox",
+    "state:notify-approval"
+   ],
+   "state_selector": "notifications[]",
+   "disabled_reason_projection": "n/a",
+   "effect_contract": "read/dismiss persist in the slice",
+   "accessibility_contract": "button + popover list",
+   "test_evidence": [
+    "run-packet-probes.mjs notificationInbox"
+   ],
+   "event_test_requirements": [
+    "notification-added per injection"
+   ]
+  },
+  "chat.demo.triggers": {
+   "ui_element_id": "chat.demo.triggers",
+   "ui_location": "dev drawer (?demo=1) + index.html Demo triggers menu",
+   "ui_command_id": "NONE \u2014 harness/review surface, never production commands",
+   "handler_location": "_shared/devdrawer.js + _shared/demo.js + _shared/states.js",
+   "expected_event_types": [
+    "per trigger"
+   ],
+   "acceptance_checks": [
+    "deterministic",
+    "repeatable",
+    "clearly not product UI"
+   ],
+   "evidence_required": [
+    "demo-trigger-report.json"
+   ],
+   "state_selector": "n/a",
+   "disabled_reason_projection": "n/a",
+   "effect_contract": "drives demo state only",
+   "accessibility_contract": "n/a (harness)",
+   "test_evidence": [
+    "run-feature-states.mjs"
+   ],
+   "event_test_requirements": []
   }
+ },
+ "correction_2026_08_13": "No changes: correction pass touched copy/fixtures/motion/triggers/boot-restore only; no command IDs, wiring, or DRY mappings added or altered."
 }

@@ -136,6 +136,7 @@
     /* ---------- Demo scenarios ---------- */
     demoScenarios: [
       { id: "calm", label: "Calm state (all notices dismissed)" },
+      { id: "slow-hydration", label: "Slow manager hydration (lazy load)" },
       { id: "reset", label: "Reset demo data" },
       { id: "test-send", label: "Test-send to Slack (masked, receipted)" },
       { id: "sound-upload", label: "Upload a custom sound (simulated pick)" },

@@ -37,9 +37,15 @@
   }
 
   function questRenderer(zoneEl, api) {
+    /* Causal lifecycle (video 04): the "Preparing questions…" pill comes
+       first; the capsule rises in after a beat (at once under reduced
+       motion). */
+    const pillEl = api.reduced() ? null : api.preparePill();
+
     const el = document.createElement("div");
     el.className = "pmq-t1-quest";
     let lastIdx = api.index();
+    let reviewing = false;
     el.innerHTML =
       '<div class="pmq-t1q-head">' +
         '<span class="pmq-t1q-prog">Question <span data-qnum>' + (lastIdx + 1) + " of " + api.q.questions.length + "</span></span>" +
@@ -51,34 +57,68 @@
         '<span class="pmq-t1q-spacer"></span>' +
         '<button class="pmq-t1q-btn pmq-t1q-skip" type="button" data-qskip>Skip</button>' +
         '<button class="pmq-t1q-btn" type="button" data-qnext>Next</button>' +
+        '<button class="pmq-t1q-btn" type="button" data-qback hidden>Back</button>' +
+        '<button class="pmq-t1q-btn pmq-t1q-submit" type="button" data-qreview hidden>Review answers</button>' +
         '<button class="pmq-t1q-btn pmq-t1q-submit" type="button" data-qsubmit hidden>Submit</button>' +
       "</div>";
-    zoneEl.appendChild(el);
 
-    if (!api.reduced()) {
-      try {
-        el.animate(
-          [{ opacity: 0, transform: "translateY(14px)" }, { opacity: 1, transform: "none" }],
-          { duration: 340, easing: SETTLE_EASE, fill: "backwards" }
-        );
-      } catch (e) {}
+    let prepTimer = null;
+    let dead = false;
+    function mountCard() {
+      prepTimer = null;
+      if (dead) return;
+      if (pillEl && pillEl.parentNode) pillEl.parentNode.removeChild(pillEl);
+      zoneEl.appendChild(el);
+      if (!api.reduced()) {
+        try {
+          el.animate(
+            [{ opacity: 0, transform: "translateY(14px)" }, { opacity: 1, transform: "none" }],
+            { duration: 340, easing: SETTLE_EASE, fill: "backwards" }
+          );
+        } catch (e) {}
+      }
     }
+    if (pillEl) prepTimer = setTimeout(mountCard, 350);
+    else mountCard();
 
     const view = el.querySelector(".pmq-t1q-view");
 
     function chrome(q, idx) {
       const last = idx >= q.questions.length - 1;
+      const progEl = el.querySelector(".pmq-t1q-prog");
+      if (progEl) {
+        if (reviewing && progEl.dataset.pmqState !== "review") {
+          progEl.dataset.pmqState = "review";
+          progEl.innerHTML = '<span data-qnum>Review</span>';
+        } else if (!reviewing && progEl.dataset.pmqState === "review") {
+          progEl.dataset.pmqState = "";
+          progEl.innerHTML = 'Question <span data-qnum>' + (idx + 1) + " of " + q.questions.length + "</span>";
+        }
+      }
       const numCell = el.querySelector("[data-qnum]");
-      const numText = (idx + 1) + " of " + q.questions.length;
+      const numText = reviewing ? "Review" : (idx + 1) + " of " + q.questions.length;
       if (numCell && numCell.textContent !== numText) api.A.crossfadeNum(numCell, numText);
       const prev = el.querySelector("[data-qprev]");
       const next = el.querySelector("[data-qnext]");
       const skip = el.querySelector("[data-qskip]");
+      const back = el.querySelector("[data-qback]");
+      const reviewBtn = el.querySelector("[data-qreview]");
       const submit = el.querySelector("[data-qsubmit]");
+      if (reviewing) {
+        if (prev) prev.hidden = true;
+        if (next) next.hidden = true;
+        if (skip) skip.hidden = true;
+        if (reviewBtn) reviewBtn.hidden = true;
+        if (back) back.hidden = false;
+        if (submit) { submit.hidden = false; submit.disabled = !api.valid(); }
+        return;
+      }
       if (prev) prev.disabled = idx === 0;
       if (next) next.hidden = last;
-      if (skip) skip.hidden = last;
-      if (submit) { submit.hidden = !last; submit.disabled = !api.valid(); }
+      if (skip) skip.hidden = false;
+      if (back) back.hidden = true;
+      if (submit) submit.hidden = true;
+      if (reviewBtn) { reviewBtn.hidden = !last; reviewBtn.disabled = !api.valid(); }
     }
 
     function refreshSlide(q, idx) {
@@ -98,11 +138,11 @@
 
     /* Old question fades up and out; the next rises into place — one calm
        beat, never a slide-show. */
-    function toSlide(q, idx) {
+    function swapSlide(html) {
       const old = view.querySelector(".pmq-t1q-slide");
       const incoming = document.createElement("div");
       incoming.className = "pmq-t1q-slide";
-      incoming.innerHTML = questSlideHtml(api, q.questions[idx]);
+      incoming.innerHTML = html;
       if (api.reduced() || !old || typeof old.animate !== "function") {
         if (old) old.remove();
         view.appendChild(incoming);
@@ -120,8 +160,34 @@
         );
       } catch (e) { if (old.parentNode) old.remove(); }
     }
+    function toSlide(q, idx) { swapSlide(questSlideHtml(api, q.questions[idx])); }
+
+    /* Video 02 review: the answers read as quiet prose inside the capsule
+       body; Back returns to the last question. */
+    function enterReview() {
+      if (reviewing) return;
+      reviewing = true;
+      swapSlide(api.reviewHtml());
+      chrome(api.q, lastIdx);
+    }
+    function exitReview() {
+      if (!reviewing) return;
+      reviewing = false;
+      swapSlide(questSlideHtml(api, api.q.questions[lastIdx]));
+      chrome(api.q, lastIdx);
+    }
 
     el.addEventListener("click", e => {
+      const rev = e.target.closest("[data-revto]");
+      if (rev) {
+        const i = parseInt(rev.dataset.revto, 10);
+        if (!isNaN(i)) {
+          if (i === lastIdx) exitReview();
+          else { reviewing = false; api.gotoQuestion(i); }
+        }
+        return;
+      }
+      if (e.target.closest("[data-qback]")) { exitReview(); return; }
       const question = api.q.questions[api.index()];
       const opt = e.target.closest("[data-opt]");
       if (opt) { api.select(question, opt.dataset.opt); return; }
@@ -129,6 +195,7 @@
       if (e.target.closest("[data-qprev]")) { api.prev(); return; }
       if (e.target.closest("[data-qnext]")) { api.next(); return; }
       if (e.target.closest("[data-qskip]")) { api.skip(); return; }
+      if (e.target.closest("[data-qreview]")) { if (api.valid()) enterReview(); return; }
       if (e.target.closest("[data-qsubmit]")) { if (api.valid()) api.submit(); return; }
     });
 
@@ -140,11 +207,26 @@
 
     return {
       update(q, idx) {
+        if (reviewing) {
+          /* Any navigation back to a question index exits review. */
+          if (idx !== lastIdx) {
+            reviewing = false;
+            swapSlide(questSlideHtml(api, q.questions[idx]));
+            lastIdx = idx;
+          }
+          chrome(q, idx);
+          return;
+        }
         if (idx !== lastIdx) { toSlide(q, idx); lastIdx = idx; }
         else refreshSlide(q, idx);
         chrome(q, idx);
       },
-      unmount() { if (el.parentNode) el.parentNode.removeChild(el); }
+      unmount() {
+        dead = true;
+        if (prepTimer) { clearTimeout(prepTimer); prepTimer = null; }
+        if (pillEl && pillEl.parentNode) pillEl.parentNode.removeChild(pillEl);
+        if (el.parentNode) el.parentNode.removeChild(el);
+      }
     };
   }
 

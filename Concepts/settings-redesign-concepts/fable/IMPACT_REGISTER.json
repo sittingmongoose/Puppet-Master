@@ -3,11 +3,11 @@
   "model": "fable",
   "topic": "settings-redesign",
   "pass": "final-cumulative-2026-08-08",
-  "note": "Roll-up index. Full per-concept registers live in the four subdirectories; this file only summarizes and records cross-concept (shared-layer) impacts. Candidate IDs everywhere are provisional; canon is never minted in concept work.",
+  "note": "Roll-up index. Full per-concept registers live in the four subdirectories; this file only summarizes and records cross-concept (shared-layer) impacts. Candidate IDs everywhere are provisional; canon is never minted in concept work. The 2026-08-13 dependency-correction pass is recorded in reference-review-report.json; every per-concept register carries its correction blocks.",
   "concepts": [
     {
       "concept_id": "c1-atlas",
-      "title": "fable · Atlas",
+      "title": "fable \u00b7 Atlas",
       "design_contract_summary": "Settings as a reference manual: numbered sections, marginalia column, managers as appendices. Native families: Context & Instructions, Memory, Personas, Goal & Automation, Crew, Permissions & FileSafe, Back Seat Driver, plus the core group.",
       "registers": {
         "impact_register": "c1-atlas/impact-register.json",
@@ -20,7 +20,7 @@
     },
     {
       "concept_id": "c2-mission-control",
-      "title": "fable · Mission Control",
+      "title": "fable \u00b7 Mission Control",
       "design_contract_summary": "Settings as an operational console: health strip, triage stack, command palette, minimap. Native families: Notifications & Sounds, Sound Library/uploads/packs, Appearance with custom TOML themes, Spellcheck & Dictionaries, Desktop/Tray/Window, Teacher/Help, plus Media beyond assignment and the core group.",
       "registers": {
         "impact_register": "c2-mission-control/impact-register.json",
@@ -33,7 +33,7 @@
     },
     {
       "concept_id": "c3-focus-stack",
-      "title": "fable · Focus Stack",
+      "title": "fable \u00b7 Focus Stack",
       "design_contract_summary": "Settings as layered attention: one live surface, visible layer spine, disclosure is navigation. Native families: File Manager/Editor, Terminal, LSP, Formatters, Commands & Shortcuts, MCP, Skills, Plugins, Tools, Testing & Debug, plus the core group.",
       "registers": {
         "impact_register": "c3-focus-stack/impact-register.json",
@@ -46,7 +46,7 @@
     },
     {
       "concept_id": "c4-ledger",
-      "title": "fable · Ledger",
+      "title": "fable \u00b7 Ledger",
       "design_contract_summary": "Settings as an object browser: records plus a persistent right inspector, zero motion. Native families: Storage & Retention, Backup & Restore, Settings Lifecycle, History & Sessions, Runtime Artifacts, Source Control/Worktrees, GitHub Actions, Containers & Registries, Web/Search/Fetch, Search Index, Workspace Cleanup, Future Server Module Shell, plus the core group.",
       "registers": {
         "impact_register": "c4-ledger/impact-register.json",
@@ -62,45 +62,82 @@
     {
       "finding": "Shared provider semantics module prevents behavioral drift",
       "detail": "All four concepts resolve installation, update-lifecycle, free-route, auth-boundary, and requested/effective semantics through _shared/pm-provider.js, which exports no HTML or CSS. The ten update states, six free-route states, and the seven-condition verify checklist exist in exactly one place. Candidate DRY families InstallationCard/CapabilityEvidence/RequestedEffectiveInspector should be specified as semantics + per-surface composition, not shared markup.",
-      "areas": ["dry", "commands"],
-      "probable_owner_docs": ["Models_System.md", "Multi-Account.md", "CLI_Bridged_Providers.md", "BinaryLocator_Spec.md"],
+      "areas": [
+        "dry",
+        "commands"
+      ],
+      "probable_owner_docs": [
+        "Models_System.md",
+        "Multi-Account.md",
+        "CLI_Bridged_Providers.md",
+        "BinaryLocator_Spec.md"
+      ],
       "uncertainty": "low"
     },
     {
       "finding": "Deterministic deep-link contract is a production candidate",
       "detail": "The hash route grammar (#/dest|manager|setting|search + scenario/fixture/trigger/focus/instant/pin params) gave every required state a stable, automatable address and real Back/forward history. A production equivalent belongs in the navigation family of the command catalog (cmd.settings.navigate payload shape), and the test matrix should key on it.",
-      "areas": ["commands", "wiring", "tests"],
-      "probable_owner_docs": ["UI_Command_Catalog.md", "FinalGUISpec.md"],
+      "areas": [
+        "commands",
+        "wiring",
+        "tests"
+      ],
+      "probable_owner_docs": [
+        "UI_Command_Catalog.md",
+        "FinalGUISpec.md"
+      ],
       "uncertainty": "low"
     },
     {
       "finding": "Title-bar notification stack lives in the shared shell",
       "detail": "Destination test-sends land in the shared title-bar stack + sprout inbox (F3-460/461 canon), proving notification wiring without any concept growing a second notification surface. No corner stacks, status-bar bells, or notification panels exist anywhere in the folder.",
-      "areas": ["wiring", "supersession"],
-      "probable_owner_docs": ["FinalGUISpec.md"],
+      "areas": [
+        "wiring",
+        "supersession"
+      ],
+      "probable_owner_docs": [
+        "FinalGUISpec.md"
+      ],
       "uncertainty": "low"
     },
     {
       "finding": "Scenario x fixture-overlay x route are orthogonal axes",
       "detail": "Eight whole-dataset scenarios, twelve additive fixture overlays (re-applied after every scenario rebuild), and the route contract compose deterministically. This kept the probe matrix O(states) instead of O(states x surfaces) and is a candidate pattern for the production test fixtures.",
-      "areas": ["tests", "schema_storage_events"],
-      "probable_owner_docs": ["Automated_Testing_System.md"],
+      "areas": [
+        "tests",
+        "schema_storage_events"
+      ],
+      "probable_owner_docs": [
+        "Automated_Testing_System.md"
+      ],
       "uncertainty": "low"
     },
     {
       "finding": "Settings inventory census discrepancy",
       "detail": "Inventory counts disagree across artifacts (817 in the PM7 build assertion, 818/819 in sidecar/embedded payloads, 824 in the PlanUnit text, 826 in Plans/settings_inventory.json). The packet-required rows added here (sounds, desktop, BSD, storage, backup, lifecycle, formatters, web limits, MCP transport) exist in no canon count. Flagged in each per-concept register.",
-      "areas": ["settings_inventory"],
-      "probable_owner_docs": ["FinalGUISpec.md", "Plans/settings_inventory.json"],
+      "areas": [
+        "settings_inventory"
+      ],
+      "probable_owner_docs": [
+        "FinalGUISpec.md",
+        "Plans/settings_inventory.json"
+      ],
       "uncertainty": "medium"
     },
     {
       "finding": "Shared trigger registry needs owner-scoped refs in production",
       "detail": "Demo triggers use loosely-scoped refs (provider id, installation path, destination id). The MCP-vs-provider reconnect ambiguity found during the build was resolved by id-precedence in the shared layer; production commands must carry typed, owner-scoped payloads instead.",
-      "areas": ["commands", "wiring"],
-      "probable_owner_docs": ["UI_Command_Catalog.md", "MCP_Integration.md"],
+      "areas": [
+        "commands",
+        "wiring"
+      ],
+      "probable_owner_docs": [
+        "UI_Command_Catalog.md",
+        "MCP_Integration.md"
+      ],
       "uncertainty": "low"
     }
   ],
-  "files_modified_outside_model_folder": []
+  "files_modified_outside_model_folder": [],
+  "reference_review_report": "reference-review-report.json"
 }

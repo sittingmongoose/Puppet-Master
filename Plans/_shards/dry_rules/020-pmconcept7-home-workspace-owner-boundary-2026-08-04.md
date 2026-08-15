@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L2052-L2070
+Source lines: L2052-L2072
 
-Source SHA256: `bb7f0b4926c02076c8cf9533a63992240935bfd24bd10f290bbb2ff1dfcf410f`
+Source SHA256: `0d92075a16671df62644b7d33250c46612e21b63fd2ca60f83c26ca72054b6be`
 
 ---
 
@@ -27,3 +27,5 @@ transfer widget commands, widget hostability, DOM FLIP/order, or Dashboard widge
 state into the Home workspace. A Home command/contract change must update the owner,
 its consumer references, the production wiring row, and the traceability artifact
 in one change set.
+
+<a id="shared-runtime-service-registry"></a>

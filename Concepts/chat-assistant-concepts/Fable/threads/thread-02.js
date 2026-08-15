@@ -14,7 +14,7 @@ import { escapeHtml } from "../shared/popup.js";
 import {
   transcriptSlice, isLongMessage, isExpanded, previewText, lensMark, copyMessage,
   workCluster, createScrollKeeper, questionnaireState, questionProgress,
-  activityGroups, bodyHtml,
+  activityGroups, bodyHtml, liveTurn, PHASE_KIND_ICONS,
 } from "../shared/thread-common.js";
 import { createComposer, createSelectorRow, createDecisionStack, openMoreInfo, openMessageOps } from "../shared/components.js";
 import { fmtDuration, fmtTime, workedLabel, JUMP_TO_LATEST, QUESTIONNAIRE_ACTIONS, TODO_STATE_LABELS } from "../shared/strings.js";
@@ -167,7 +167,11 @@ export function createThread(ctx) {
     const label = g.kind === "activity" ? `${g.group.compactLabel} · ${fmtDuration(g.group.workedSeconds)}`
       : g.kind === "thoughts" ? `${g.segments[0].label} — summary`
       : (g.record.summary || "Questions answered");
-    head.innerHTML = `${icon(g.kind === "activity" ? "spark" : g.kind === "thoughts" ? "eye" : "question", 12)}<span>${escapeHtml(label)}</span>${icon(open ? "chevronUp" : "chevronDown", 10)}`;
+    // Condensed icon strip (video 3): the phase-kind sequence rides on the seam.
+    const strip = g.kind === "activity"
+      ? `<span class="ft2-seam-strip" aria-hidden="true">${g.group.stages.map((st) => icon(PHASE_KIND_ICONS[st.kind] || "dot", 11)).join("")}</span>`
+      : icon(g.kind === "thoughts" ? "eye" : "question", 12);
+    head.innerHTML = `${strip}<span>${escapeHtml(label)}</span>${icon(open ? "chevronUp" : "chevronDown", 10)}`;
     head.addEventListener("click", () => keeper.preserve(() => s.toggleGroupExpanded(key)));
     seam.appendChild(head);
     if (open) {
@@ -215,15 +219,30 @@ export function createThread(ctx) {
     // Questionnaire morph takes priority in the band (video 4 lifecycle).
     if (active) { dockband.appendChild(renderQuestionMorph(active)); return; }
 
-    if (w.turn) {
+    const lt = liveTurn();
+    if (lt) {
       const pill = document.createElement("div");
       pill.className = "ft2-locus";
-      pill.dataset.redirected = String(!!w.turn.redirected);
+      pill.dataset.redirected = String(lt.redirected);
       pill.innerHTML = `
         <span class="ft2-locus-ring" aria-hidden="true"></span>
-        <span class="ft2-locus-text">${escapeHtml(w.turn.summary)}</span>
-        <span class="ft2-locus-time">${fmtDuration(w.turn.workedSeconds)}</span>`;
+        ${icon(PHASE_KIND_ICONS[lt.phaseKind] || "spark", 12)}
+        <span class="ft2-locus-text">${escapeHtml(lt.summary)}</span>
+        <span class="ft2-locus-time">${fmtDuration(lt.workedSeconds)}</span>`;
       dockband.appendChild(pill);
+      // The delivery in progress: phase detail rows accumulate under the pill
+      // and are replaced when the phase changes.
+      if (lt.items.length) {
+        const rows = document.createElement("div");
+        rows.className = "ft2-locus-rows";
+        for (const item of lt.items) {
+          const r = document.createElement("div");
+          r.className = "ft2-seam-line";
+          r.innerHTML = `<span class="ft2-seam-kind">${escapeHtml((lt.phaseKind || "").replace(/_/g, " "))}</span><span>${escapeHtml(item.text)}</span>${item.side ? `<span class="ft2-seam-dur">${escapeHtml(item.side)}</span>` : ""}`;
+          rows.appendChild(r);
+        }
+        dockband.appendChild(rows);
+      }
     }
 
     if (!w.isEmpty && (w.goal || w.todo || w.subagents || w.diffs.length)) {
@@ -255,7 +274,8 @@ export function createThread(ctx) {
         const g = document.createElement("div");
         g.className = "ft2-mani-goal";
         g.dataset.status = w.goal.status;
-        g.innerHTML = `<span class="ft2-mani-status">${escapeHtml(w.goal.status)}</span><span class="ft2-mani-title">${escapeHtml(w.goal.title)}</span>`;
+        const phaseTxt = w.goal.phases ? ` · ${w.goal.phases[w.goal.phaseIndex || 0]} ${(w.goal.phaseIndex || 0) + 1}/${w.goal.phases.length}` : "";
+        g.innerHTML = `<span class="ft2-mani-status">${escapeHtml(w.goal.status)}${escapeHtml(phaseTxt)}${w.goal.replanApplied ? " · replanned" : ""}</span><span class="ft2-mani-title">${escapeHtml(w.goal.title)}</span>`;
         const ctrl = document.createElement("span");
         ctrl.className = "ft2-mani-ctrl";
         const btn = (label, ok, fn) => { const b = document.createElement("button"); b.textContent = label; if (!ok) b.disabled = true; else b.addEventListener("click", fn); return b; };
@@ -376,7 +396,11 @@ export function createThread(ctx) {
     const nav = document.createElement("div");
     nav.className = "ft2-qnav";
     const back = mkNav(QUESTIONNAIRE_ACTIONS.back, active.currentQuestionIndex > 0, () => s.navigateQuestion(active.id, active.currentQuestionIndex - 1));
-    const skip = mkNav(QUESTIONNAIRE_ACTIONS.skip, !active.skipped[q.id], () => s.skipQuestion(active.id, q.id));
+    // Video 2/4 refinement: once the current question holds an answer, Skip
+    // yields its slot to the primary action.
+    const answered = (q.selected || []).length > 0;
+    const skip = mkNav(QUESTIONNAIRE_ACTIONS.skip, !active.skipped[q.id] && !answered, () => s.skipQuestion(active.id, q.id));
+    if (answered) skip.classList.add("ft2-qskip-yielded");
     const cancel = mkNav(QUESTIONNAIRE_ACTIONS.cancel, true, () => s.cancelQuestionnaire(active.id));
     cancel.classList.add("ft2-qcancel");
     const isLast = active.currentQuestionIndex === active.questions.length - 1;
@@ -451,7 +475,9 @@ export function createThread(ctx) {
   const un = [
     s.on("transcript", (d) => {
       render();
-      if (d && d.appended) { keeper.followIfAtBottom(); animateDelivery(d.appended); }
+      // Smooth follow: the surrounding thread visibly yields while the new
+      // delivery travels (video 1's shared-motion principle).
+      if (d && d.appended) { keeper.followIfAtBottom(true); animateDelivery(d.appended); }
       if (d && d.jumpTo) keeper.scrollToMessage(d.jumpTo);
     }),
     s.on("transcript-view", render),

@@ -42,7 +42,7 @@
    down, so content stays sharp until it crosses the header's lower
    boundary. z stays under the catalog overlay (z 60) and the pane drag
    handle (z 50). */
-.dashboard-view { --pm6-dash-head-h: 36px; }
+.dashboard-view { --pm6-dash-head-h: 31px; }
 .page-dashboard .dashboard-header {
   position: relative;
   z-index: 5;
@@ -481,11 +481,23 @@ html.pm6-dash-dragging .pm6-dash-card:hover { transform: none; }
 /* Neutralize the part-06 glass pills: their [data-theme] + !important
    rules outrank any class selector, so matching force is required for
    the silhouette to own the tab boxes. */
-.page-dashboard .dashboard-tabs.ed-shape-on .tab,
-.page-dashboard .dashboard-tabs.ed-shape-on .tab.active {
+.page-dashboard .dashboard-tabs.ed-shape-on .tab:not([class*="pm-retro"]),
+.page-dashboard .dashboard-tabs.ed-shape-on .tab.active:not([class*="pm-retro"]) {
   background: transparent !important;
   border: 0 !important;
   border-radius: var(--ed-top-radius) var(--ed-top-radius) 0 0 !important;
+  height: 100%;
+}
+/* While a retro motion class is live the tab must ESCAPE the important
+   neutralization: important declarations beat CSS animations, so the
+   phosphor/crt fills and the DOS inversion could never paint (the blink
+   showed as an empty box -- its non-important color applied while its
+   background lost). This normal-weight twin keeps the pill suppressed
+   between animation frames without outranking the keyframes. */
+.page-dashboard .dashboard-tabs.ed-shape-on .tab[class*="pm-retro"] {
+  background: transparent;
+  border: 0;
+  border-radius: var(--ed-top-radius) var(--ed-top-radius) 0 0;
   height: 100%;
 }
 /* Header-level corner caps: same masked-wedge construction as the

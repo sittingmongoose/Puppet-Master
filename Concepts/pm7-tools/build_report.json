@@ -1,16 +1,16 @@
 {
-  "generated": "2026-08-13 22:59:08",
+  "generated": "2026-08-15 01:34:47",
   "base": "/mnt/Cursor/PuppetMaster/Concepts/pm7-tools/base/PM7-base.html",
-  "base_sha256": "77fadeea6bff73649c8f4c58ffe7e28044401afd4a511b3ce78d5d8a450384dd",
-  "base_sha_pinned": "77fadeea6bff73649c8f4c58ffe7e28044401afd4a511b3ce78d5d8a450384dd",
+  "base_sha256": "3d82a850dad0e412e3abafe1b3f0717e34071425152efd93d3c49fa6e85408c3",
+  "base_sha_pinned": "3d82a850dad0e412e3abafe1b3f0717e34071425152efd93d3c49fa6e85408c3",
   "base_pin_ok": true,
-  "base_bytes": 3206015,
+  "base_bytes": 3230711,
   "transforms": [
     {
       "name": "T01_dead_css_selectors",
       "status": "ok",
-      "bytes_before": 3206015,
-      "bytes_after": 3152927,
+      "bytes_before": 3230711,
+      "bytes_after": 3177623,
       "bytes_delta": -53088,
       "notes": {
         "selectors_frozen": 399,
@@ -35,8 +35,8 @@
     {
       "name": "T02_shimmer_guard",
       "status": "ok",
-      "bytes_before": 3152927,
-      "bytes_after": 3152799,
+      "bytes_before": 3177623,
+      "bytes_after": 3177495,
       "bytes_delta": -128,
       "notes": {
         "removed": "guard comment + display:none rule"
@@ -45,8 +45,8 @@
     {
       "name": "T03_pm_sheen_killer",
       "status": "ok",
-      "bytes_before": 3152799,
-      "bytes_after": 3152641,
+      "bytes_before": 3177495,
+      "bytes_after": 3177337,
       "bytes_delta": -158,
       "notes": {
         "removed": "content:none ::before killer; comment rewritten"
@@ -55,8 +55,8 @@
     {
       "name": "T04_breadcrumb_stub",
       "status": "ok",
-      "bytes_before": 3152641,
-      "bytes_after": 3152641,
+      "bytes_before": 3177337,
+      "bytes_after": 3177337,
       "bytes_delta": 0,
       "notes": {
         "decision": "SKIP (already applied upstream in pm6 parts)",
@@ -66,8 +66,8 @@
     {
       "name": "T05_chat_suggestions_field",
       "status": "ok",
-      "bytes_before": 3152641,
-      "bytes_after": 3152641,
+      "bytes_before": 3177337,
+      "bytes_after": 3177337,
       "bytes_delta": 0,
       "notes": {
         "decision": "SKIP (already applied upstream in pm6 parts)",
@@ -77,8 +77,8 @@
     {
       "name": "T06_terminal_dead_interval",
       "status": "ok",
-      "bytes_before": 3152641,
-      "bytes_after": 3152555,
+      "bytes_before": 3177337,
+      "bytes_after": 3177251,
       "bytes_delta": -86,
       "notes": {
         "removed": "clockTick state field + 1s counter interval (never read)"
@@ -87,8 +87,8 @@
     {
       "name": "T07_merge_pointermove",
       "status": "ok",
-      "bytes_before": 3152555,
-      "bytes_after": 3153594,
+      "bytes_before": 3177251,
+      "bytes_after": 3178290,
       "bytes_delta": 1039,
       "notes": {
         "adaptation": "post-assert adapted: 1 UNCONDITIONAL document registration (dispatcher) + 1 guarded fallback occurrence; runtime listener count == 1 verified by Playwright probe"
@@ -97,8 +97,8 @@
     {
       "name": "T08_cooldown_dom_gating",
       "status": "ok",
-      "bytes_before": 3153594,
-      "bytes_after": 3155006,
+      "bytes_before": 3178290,
+      "bytes_after": 3179702,
       "bytes_delta": 1412,
       "notes": {
         "scope": "usage: tickCooldown + setCooldown writes gated (local ticker stands down after engine sync; setCooldown is the live writer); dashboard: 1s interval write gated; both flush via page.changed"
@@ -107,8 +107,8 @@
     {
       "name": "T09_terminal_feed_gating",
       "status": "ok",
-      "bytes_before": 3155006,
-      "bytes_after": 3156128,
+      "bytes_before": 3179702,
+      "bytes_after": 3180824,
       "bytes_delta": 1122,
       "notes": {
         "verified_buffer_model": "p.lines state append (cap 400) + renderTranscript(body, p.lines) rebuild confirmed on base before gating"
@@ -117,8 +117,8 @@
     {
       "name": "T10_snapshot_handler_gating",
       "status": "ok",
-      "bytes_before": 3156128,
-      "bytes_after": 3157423,
+      "bytes_before": 3180824,
+      "bytes_after": 3182119,
       "bytes_delta": 1295,
       "notes": {
         "wrapped": [
@@ -139,8 +139,8 @@
     {
       "name": "T11_settings_data_defer",
       "status": "ok",
-      "bytes_before": 3157423,
-      "bytes_after": 3158398,
+      "bytes_before": 3182119,
+      "bytes_after": 3183094,
       "bytes_delta": 975,
       "notes": {
         "literal_bytes": 342033,
@@ -150,8 +150,8 @@
     {
       "name": "T12_chat_data_defer",
       "status": "ok",
-      "bytes_before": 3158398,
-      "bytes_after": 3158398,
+      "bytes_before": 3183094,
+      "bytes_after": 3183094,
       "bytes_delta": 0,
       "notes": {
         "decision": "SKIP (per design default)",
@@ -161,8 +161,8 @@
     {
       "name": "T13_demo_files_defer",
       "status": "ok",
-      "bytes_before": 3158398,
-      "bytes_after": 3158398,
+      "bytes_before": 3183094,
+      "bytes_after": 3183094,
       "bytes_delta": 0,
       "notes": {
         "decision": "SKIP (per design default)",
@@ -172,8 +172,8 @@
     {
       "name": "T14_page_init_defer",
       "status": "ok",
-      "bytes_before": 3158398,
-      "bytes_after": 3158398,
+      "bytes_before": 3183094,
+      "bytes_after": 3183094,
       "bytes_delta": 0,
       "notes": {
         "decision": "SKIP -- all three candidates fail the eligibility audit",
@@ -188,12 +188,12 @@
     {
       "name": "T15_static_colormix_precompute",
       "status": "ok",
-      "bytes_before": 3158398,
-      "bytes_after": 3158398,
+      "bytes_before": 3183094,
+      "bytes_after": 3183094,
       "bytes_delta": 0,
       "notes": {
         "decision": "SKIP (measured yield below design threshold)",
-        "colormix_total": 726,
+        "colormix_total": 734,
         "colormix_zero_var": 2,
         "zero_var_sites": [
           "color-mix(in srgb, #fff 16%, transparent)",
@@ -205,8 +205,8 @@
     {
       "name": "T16_glass_wallpaper_prebake",
       "status": "ok",
-      "bytes_before": 3158398,
-      "bytes_after": 3331084,
+      "bytes_before": 3183094,
+      "bytes_after": 3355780,
       "bytes_delta": 172686,
       "notes": {
         "assets": {
@@ -248,8 +248,8 @@
     {
       "name": "T17_slint_clarity_layer",
       "status": "ok",
-      "bytes_before": 3331084,
-      "bytes_after": 3341997,
+      "bytes_before": 3355780,
+      "bytes_after": 3366693,
       "bytes_delta": 10913,
       "notes": {
         "readme_bytes": 6274,
@@ -260,8 +260,8 @@
     {
       "name": "T18_pm7_visual_cleanup",
       "status": "ok",
-      "bytes_before": 3341997,
-      "bytes_after": 3340164,
+      "bytes_before": 3366693,
+      "bytes_after": 3364860,
       "bytes_delta": -1833,
       "notes": {
         "search_result_hover": "transparent layout rail retained; colored rail removed",
@@ -274,8 +274,8 @@
     {
       "name": "T19_pm7_preview_fit",
       "status": "ok",
-      "bytes_before": 3340164,
-      "bytes_after": 3340347,
+      "bytes_before": 3364860,
+      "bytes_after": 3365043,
       "bytes_delta": 183,
       "notes": {
         "preview_header_inset": "1px inline inset preserves the document border edge"
@@ -284,14 +284,14 @@
     {
       "name": "T20_home_workspace",
       "status": "ok",
-      "bytes_before": 3340347,
-      "bytes_after": 3586691,
-      "bytes_delta": 246344,
+      "bytes_before": 3365043,
+      "bytes_after": 3619880,
+      "bytes_delta": 254837,
       "notes": {
         "marker": "PM7 T20: Home workspace model-first transform",
         "markup_bytes": 5366,
-        "style_bytes": 28232,
-        "script_bytes": 213031,
+        "style_bytes": 32592,
+        "script_bytes": 217164,
         "legacy_surface_dnd_removed": true,
         "legacy_surface_swap_token_absent": true,
         "topbar_menu_actions": [
@@ -382,7 +382,7 @@
           "balanced": true
         },
         {
-          "block": "style@1520872",
+          "block": "style@1532811",
           "balanced": true
         }
       ]
@@ -402,15 +402,15 @@
           "pass": true
         },
         {
-          "block": "script@1561052",
+          "block": "script@1572991",
           "pass": true
         },
         {
-          "block": "script@1666053",
+          "block": "script@1677992",
           "pass": true
         },
         {
-          "block": "script@1837126",
+          "block": "script@1851808",
           "pass": true
         },
         {
@@ -479,7 +479,7 @@
     {
       "name": "no_emoji",
       "pass": true,
-      "stdout": "check_no_emoji: 566 WARNING glyph(s) >= U+2190 outside allowlist (not banned ranges):\n  ~ '\u2212' U+2212 MINUS SIGN x3 (lines [8974, 45278, 45279])\n  ~ '\u2500' U+2500 BOX DRAWINGS LIGHT HORIZONTAL x435 (lines [221, 221, 221, 221, 1809, 1809, 1809, 1809]\u2026)\n  ~ '\u2502' U+2502 BOX DRAWINGS LIGHT VERTICAL x1 (lines [23073])\n  ~ '\u2550' U+2550 BOX DRAWINGS DOUBLE HORIZONTAL x126 (lines [26084, 26084, 26084, 26084, 26084, 26084, 26084, 26084]\u2026)\n  ~ '\u25b6' U+25B6 BLACK RIGHT-POINTING TRIANGLE x1 (lines [26080])\ncheck_no_emoji: OK (0 banned glyphs; 566 warnings)\n",
+      "stdout": "check_no_emoji: 566 WARNING glyph(s) >= U+2190 outside allowlist (not banned ranges):\n  ~ '\u2212' U+2212 MINUS SIGN x3 (lines [8974, 45836, 45837])\n  ~ '\u2500' U+2500 BOX DRAWINGS LIGHT HORIZONTAL x435 (lines [221, 221, 221, 221, 1809, 1809, 1809, 1809]\u2026)\n  ~ '\u2502' U+2502 BOX DRAWINGS LIGHT VERTICAL x1 (lines [23262])\n  ~ '\u2550' U+2550 BOX DRAWINGS DOUBLE HORIZONTAL x126 (lines [26315, 26315, 26315, 26315, 26315, 26315, 26315, 26315]\u2026)\n  ~ '\u25b6' U+25B6 BLACK RIGHT-POINTING TRIANGLE x1 (lines [26311])\ncheck_no_emoji: OK (0 banned glyphs; 566 warnings)\n",
       "stderr": ""
     }
   ],
@@ -489,8 +489,8 @@
     "script": 18
   },
   "output": "Concepts/PMConcept7.html",
-  "output_bytes": 3586691,
-  "output_sha256": "f8aacc9f6580055855c44e4a03634feaa7310c309c0dbb385015cbd5bec71c6d",
-  "total_bytes_removed": -380676,
+  "output_bytes": 3619880,
+  "output_sha256": "213a3ee9946d58ea17c0aa9b824a5c8d496db1fe8484a77444ea41c5797d0b63",
+  "total_bytes_removed": -389169,
   "gates_all_pass": true
 }

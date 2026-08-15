@@ -66,7 +66,7 @@
     if (!route || route.status === 'ok') return null;
     if (route.unavailableReason) return route.unavailableReason;
     var lines = {
-      'cli-not-found': 'CLI not found — install the provider CLI to use this route',
+      'cli-not-found': 'Provider CLI not installed',
       'sign-in-required': 'Sign-in required — open Provider Settings to continue',
       'api-key-required': 'API key required — open Provider Settings to connect',
       'usage-unavailable': 'Usage information is unavailable for this account',
@@ -212,6 +212,8 @@
     var body = el('div', 'k3r-body');
     var rail = el('div', 'k3r-rail');
     var main = el('div', 'k3r-main k3-scroll');
+    main.setAttribute('role', 'listbox');
+    main.setAttribute('aria-label', 'Provider routes');
     body.appendChild(rail);
     body.appendChild(main);
     var footer = el('div', 'k3r-footer');
@@ -266,6 +268,9 @@
       var row = el('button', 'k3r-row' + (dim ? ' is-dim' : '') + (isActive ? ' is-active' : ''));
       row.type = 'button';
       row.setAttribute('data-testid', 'k3r-row');
+      row.setAttribute('data-route-key', route.key);
+      row.setAttribute('role', 'option');
+      row.setAttribute('aria-selected', isActive ? 'true' : 'false');
       var star = el('span', 'k3r-star' + (isFavorite(store, route.key) ? ' is-fav' : ''));
       star.appendChild(icon(isFavorite(store, route.key) ? 'star-filled' : 'star'));
       star.title = 'Favorite';
@@ -317,8 +322,48 @@
         });
       });
       if (!main.children.length) main.appendChild(el('div', 'k3r-empty', 'No routes match.'));
+      syncRoving(document.activeElement && document.activeElement.getAttribute('data-route-key'));
       if (pop) window.K3UI.springResize(pop.el);
     }
+
+    // Keyboard model: roving tabindex across route rows; Arrows/Home/End move,
+    // Enter opens the detail step (native button activation). Re-renders keep
+    // focus on the same route key. Rows are native buttons: Tab still reaches
+    // the rail/search/actions; the roving list keeps the model list one stop.
+    function listRows() {
+      return Array.from(main.querySelectorAll('.k3r-row'));
+    }
+    function syncRoving(focusKey) {
+      var rows = listRows();
+      var focusIdx = 0;
+      rows.forEach(function (r, i) {
+        if (focusKey && r.getAttribute('data-route-key') === focusKey) focusIdx = i;
+      });
+      rows.forEach(function (r, i) { r.tabIndex = i === focusIdx ? 0 : -1; });
+      if (focusKey && rows[focusIdx]) rows[focusIdx].focus();
+    }
+    main.addEventListener('keydown', function (e) {
+      var rows = listRows();
+      if (!rows.length) return;
+      var cur = rows.indexOf(document.activeElement);
+      var next = -1;
+      if (e.key === 'ArrowDown') next = cur < 0 ? 0 : Math.min(rows.length - 1, cur + 1);
+      else if (e.key === 'ArrowUp') next = cur < 0 ? rows.length - 1 : Math.max(0, cur - 1);
+      else if (e.key === 'Home') next = 0;
+      else if (e.key === 'End') next = rows.length - 1;
+      if (next < 0) return;
+      e.preventDefault();
+      rows.forEach(function (r, i) { r.tabIndex = i === next ? 0 : -1; });
+      rows[next].focus();
+    });
+    input.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowDown') return;
+      var rows = listRows();
+      if (!rows.length) return;
+      e.preventDefault();
+      rows.forEach(function (r, i) { r.tabIndex = i === 0 ? 0 : -1; });
+      rows[0].focus();
+    });
 
     // Persistent step stack inside the same popover: model -> effort -> speed
     // -> Apply. Esc closes via the popup contract; Back returns to the list.
@@ -348,12 +393,18 @@
       if (route.status !== 'ok') {
         var box = el('div', 'k3r-setup');
         box.appendChild(el('div', 'k3r-setup-line', statusLine(route)));
+        if (route.status === 'cli-not-found') {
+          // Provider-CLI adjudication: never bundled, official-source first,
+          // explicit user-triggered setup only. Copy must say all three.
+          box.appendChild(el('div', 'k3r-setup-note', 'PM never bundles provider CLIs. Setup installs from the provider\u2019s official source — only when you start it.'));
+        }
         if (route.connectionKind === 'claude-cli') {
           box.appendChild(el('div', 'k3r-setup-note', 'Sign in with the Claude CLI — PM does not handle this login'));
         }
         if (route.status === 'update-available') {
           box.appendChild(el('div', 'k3r-setup-note', 'Updates install only when idle or after current work — never silently.'));
         }
+        box.appendChild(el('div', 'k3r-setup-note k3r-setup-continuation', 'Your original action is preserved and resumes after setup completes.'));
         var openBtn = el('button', 'k3r-apply', 'Open Provider Settings');
         openBtn.type = 'button';
         openBtn.addEventListener('click', function () {

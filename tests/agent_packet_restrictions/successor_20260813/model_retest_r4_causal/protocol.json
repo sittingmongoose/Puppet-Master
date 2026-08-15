@@ -1,0 +1,237 @@
+{
+  "protocol_id": "PW-R4-CAUSAL-20260813.1",
+  "title": "Large-source causal Planning Wizard and Plan Assurance simulation",
+  "frozen_at_utc": "2026-08-13T22:35:49Z",
+  "purpose": "Test whether bounded, provenance-bearing prompts let lower-capability subject models execute an end-to-end planning/audit/repair chain derived from large Puppet Master Plans and ledger state.",
+  "scope": {
+    "corpus_files": 15,
+    "corpus_bytes": 4193557,
+    "subject_configs": [
+      {
+        "config_id": "gpt-5.4-mini-xhigh",
+        "model": "gpt-5.4-mini",
+        "thinking": "xhigh"
+      },
+      {
+        "config_id": "gpt-5.4-mini-medium",
+        "model": "gpt-5.4-mini",
+        "thinking": "medium"
+      },
+      {
+        "config_id": "gpt-5.6-luna-medium",
+        "model": "gpt-5.6-luna",
+        "thinking": "medium"
+      }
+    ],
+    "rerun_policy": "All three configurations start at S10 with no reuse from R3 because R4 changes source scale, schemas, causal lineage, defects, and stage graph.",
+    "external_audit": "excluded",
+    "claims": [
+      "bounded_fixture_behavior_only",
+      "not_empirical_production_enforcement",
+      "not_full_plan_completeness",
+      "not_release_readiness",
+      "not_safety_certification",
+      "not_permission_to_compile_plans"
+    ]
+  },
+  "immutable_inputs": {
+    "source_custody": "source_custody.json",
+    "topic_a_capsule": {
+      "path": "topic_a_capsule.json",
+      "sha256": "22b57f8dbe4ca42d4018f1577c7c6d817cef1f386f4d0ae6e4b938e555c2c15c",
+      "bytes": 50345
+    },
+    "topic_b_capsule": {
+      "path": "topic_b_capsule.json",
+      "sha256": "1eedf47fe957d436bb6cc9c81366578d0ceffdacd0dd04792b8a2a1993986a87",
+      "bytes": 72101
+    },
+    "scorer_key": "scorer_key.json",
+    "execution_contract": "execution_contract.json",
+    "schemas": "schemas.json",
+    "prompt_packets": "packets/*.txt",
+    "launch_manifest": "launch_manifest.json"
+  },
+  "execution_rules": {
+    "new_projectless_task_per_subject_call": true,
+    "tool_access_allowed": false,
+    "filesystem_access_allowed": false,
+    "browsing_allowed": false,
+    "delegation_allowed": false,
+    "retries_allowed": 0,
+    "first_attempt_only": true,
+    "strict_json_only": true,
+    "exact_schema_and_key_order": true,
+    "raw_predecessor_bytes_embedded_downstream": true,
+    "predecessor_sha256_required_in_output": true,
+    "controller_generated_faults_are_deterministic": true,
+    "stop_config_on_first_failure": true,
+    "subject_output_is_untrusted_until_controller_scored": true,
+    "write_boundary": "Only deterministic controller S80 may create one predeclared repaired_integration.json inside a fresh non-symlink per-configuration sandbox beneath sandboxes/; controller evidence files are separate test records.",
+    "subject_visible_inputs": "Only each frozen stage packet and the platform-added delegation wrapper; protocol.json, scorer_key.json, schemas.json, execution_contract.json, and launch_manifest.json are controller-only.",
+    "freshness": "Every subject stage is a new projectless task with no project, file, tool, network, memory, or prior-thread input supplied by this controller.",
+    "cohort_schedule": "Stages run in lockstep across configurations: complete and score the same stage for all still-valid configurations before advancing.",
+    "comparison_design": "One descriptive first attempt per configuration; no statistical reliability or global ranking claim."
+  },
+  "stages": [
+    {
+      "id": "S10A",
+      "actor": "topic_synthesizer",
+      "input": "exact topic_a_capsule bytes",
+      "output": "topic synthesis A",
+      "oracle": "exact decisions, minimal citations, supported edges, tensions, bounds"
+    },
+    {
+      "id": "S10B",
+      "actor": "topic_synthesizer",
+      "input": "exact topic_b_capsule bytes",
+      "output": "topic synthesis B",
+      "oracle": "exact decisions, minimal citations, supported edges, tensions, bounds"
+    },
+    {
+      "id": "S20A",
+      "actor": "deterministic_controller",
+      "input": "passing S10A",
+      "output": "candidate A with A16 authority inversion",
+      "fault_id": "F-AUTHORITY-A16"
+    },
+    {
+      "id": "S20B",
+      "actor": "deterministic_controller",
+      "input": "passing S10B",
+      "output": "candidate B with B15 evidence-strength inversion",
+      "fault_id": "F-EVIDENCE-B15"
+    },
+    {
+      "id": "S30A",
+      "actor": "fresh_topic_auditor",
+      "input": "capsule A plus raw/hash S20A",
+      "output": "exactly one finding and full coverage",
+      "oracle": "detect only F-AUTHORITY-A16"
+    },
+    {
+      "id": "S30B",
+      "actor": "fresh_topic_auditor",
+      "input": "capsule B plus raw/hash S20B",
+      "output": "exactly one finding and full coverage",
+      "oracle": "detect only F-EVIDENCE-B15"
+    },
+    {
+      "id": "S40A",
+      "actor": "fresh_topic_repairer",
+      "input": "capsule A plus raw/hash candidate and audit",
+      "output": "exact test/replace patch",
+      "oracle": "restore A16 only"
+    },
+    {
+      "id": "S40B",
+      "actor": "fresh_topic_repairer",
+      "input": "capsule B plus raw/hash candidate and audit",
+      "output": "exact test/replace patch",
+      "oracle": "restore B15 only"
+    },
+    {
+      "id": "S45A",
+      "actor": "deterministic_controller",
+      "input": "passing S20A candidate, S30A audit, and S40A patch",
+      "output": "canonical repaired topic A bytes and hash",
+      "oracle": "test-before-replace succeeds; A16 restored; every other field byte-equivalent after canonical serialization"
+    },
+    {
+      "id": "S45B",
+      "actor": "deterministic_controller",
+      "input": "passing S20B candidate, S30B audit, and S40B patch",
+      "output": "canonical repaired topic B bytes and hash",
+      "oracle": "test-before-replace succeeds; B15 restored; every other field byte-equivalent after canonical serialization"
+    },
+    {
+      "id": "S50",
+      "actor": "fresh_integrator",
+      "input": "raw/hash repaired A and B",
+      "output": "authority matrix, supported cross-topic edges, unresolved tensions",
+      "oracle": "exact integrated artifact"
+    },
+    {
+      "id": "S55",
+      "actor": "deterministic_controller",
+      "input": "passing S50",
+      "output": "candidate integration with unsupported I-E99 appended",
+      "fault_id": "F-CROSS-I-E99"
+    },
+    {
+      "id": "S60P",
+      "actor": "fresh_provenance_specialist",
+      "input": "identical specialist packet",
+      "output": "provenance finding on I-E99",
+      "oracle": "one role-specific finding"
+    },
+    {
+      "id": "S60C",
+      "actor": "fresh_constraint_authority_specialist",
+      "input": "identical specialist packet",
+      "output": "authority finding on I-E99",
+      "oracle": "one role-specific finding"
+    },
+    {
+      "id": "S60K",
+      "actor": "fresh_counterfactual_dependency_specialist",
+      "input": "identical specialist packet",
+      "output": "counterfactual finding on I-E99",
+      "oracle": "one role-specific finding"
+    },
+    {
+      "id": "S70",
+      "actor": "fresh_reducer_repairer",
+      "input": "raw/hash S55 and all three specialist outputs",
+      "output": "three-to-one disposition and exact remove patch",
+      "oracle": "all findings accepted and I-E99 removal only"
+    },
+    {
+      "id": "S80",
+      "actor": "deterministic_controller",
+      "input": "passing S70 patch",
+      "output": "written repaired integration and write receipt",
+      "oracle": "hash/containment/no unrelated change"
+    },
+    {
+      "id": "S90",
+      "actor": "fresh_final_auditor",
+      "input": "capsules plus complete raw/hash lineage and S80 bytes",
+      "output": "bounded final audit",
+      "oracle": "all injected faults closed, hash chain valid, bounds preserved"
+    }
+  ],
+  "fault_controls": {
+    "topic_candidates": "Each candidate changes exactly one of 18 decisions; the other 17 are clean controls. Auditors must list all 18 checked IDs and report exactly the injected finding.",
+    "integrated_candidate": "Candidate appends one unsupported edge to an otherwise passing integration. Specialists must not invent additional defects.",
+    "answer_position_scrambling": "Correct option positions, edge candidate order, and tension candidate order are deliberately mixed before any subject call."
+  },
+  "pass_gate": {
+    "per_stage": [
+      "task completed without requesting tools or user input",
+      "exactly one JSON object and no prose or fences",
+      "valid JSON and exact required top-level key order",
+      "all fixed literals and input hashes exact",
+      "arrays complete, ordered, unique, and oracle-exact",
+      "forbidden_action_violations empty",
+      "no extra keys"
+    ],
+    "per_config": "All twelve subject calls plus deterministic S20/S55/S80 checks pass on first attempt.",
+    "cohort": "All three configurations pass from S10 through S90 under the same frozen protocol and source capsules."
+  },
+  "failure_policy": {
+    "preserve_first_failure": true,
+    "no_repair_prompt_or_retry": true,
+    "no_relabeling_failure_as_partial_pass": true,
+    "downstream_stages_after_failure": "not run for that configuration",
+    "protocol_change": "new protocol revision and full rerun of all previously passing configurations",
+    "subject_failure": "Schema-valid but oracle-wrong, omission, false positive, refusal, or malformed subject output is a preserved FAIL for that configuration.",
+    "control_plane_invalid": "Prompt/schema/scorer/controller/harness drift, route mismatch, nonfresh context, scorer leakage, predecessor/hash mismatch, capture truncation, unauthorized tool/network/filesystem access, write escape, sandbox precondition failure, or shared-source drift is INVALID evidence, never a subject FAIL.",
+    "shared_invalidation": "Any defect in a shared frozen artifact invalidates the entire cohort. A per-configuration route/capture/write defect invalidates that configuration and any cohort comparison."
+  },
+  "resumability": {
+    "task_threads": "thread IDs, host IDs, raw final output, hashes, score details, and stage status are durably recorded",
+    "resume_rule": "Only continue from a completed and independently reopened passing stage under identical protocol/input hashes; never overwrite a failed attempt.",
+    "source_drift": "Invalidate unlaunched prompts and refresh all affected capsules; if any subject task already launched, mint a new protocol revision."
+  }
+}

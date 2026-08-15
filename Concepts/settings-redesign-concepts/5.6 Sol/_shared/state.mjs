@@ -1,4 +1,13 @@
 import * as DATA from "./data.mjs";
+import {
+  BoundedSubscriptionRegistry,
+  GOVERNOR_PROJECTION_FIXTURES,
+  OBSERVABLE_WORK_FIXTURES,
+  ObservableWorkRegistry,
+  PERFORMANCE_PROFILES,
+  ProviderSetupProjectionRegistry,
+  RuntimeResourceGovernorProjection
+} from "./runtime-contracts.mjs";
 
 const {
   CATEGORIES = [],
@@ -61,6 +70,7 @@ const EVENT_DEFAULTS = {
   shell: { scopes: ["shell", "presentation"], motionKey: "shell" },
   scenario: { scopes: ["scenario", "view", "data"], motionKey: "scenario-change" },
   navigate: { scopes: ["route", "view", "search", "focus"], motionKey: "route-change" },
+  "workspace-load": { scopes: ["view", "data", "focus"], motionKey: "none" },
   navigation: { scopes: ["navigation"], motionKey: "drawer" },
   inspector: { scopes: ["inspector", "focus"], motionKey: "drawer" },
   scrollspy: { scopes: ["scrollspy", "navigation", "inspector"], motionKey: "scrollspy" },
@@ -100,7 +110,23 @@ const TERMINAL_EDITABLE = new Set([
   "cwd", "environment", "transcript", "historyLimit", "rendering", "renderer", "performance", "startup"
 ]);
 const TECHNICAL_CONTEXTS = new Set(["code", "code-block", "inline-code", "url", "path", "command", "hash", "identifier", "structured-data", "literal", "model", "provider", "persona", "tool"]);
-const PERSISTENCE_SCHEMA = 2;
+const PERSISTENCE_SCHEMA = 3;
+const DEFAULT_MANAGER_CACHE_BYTES = 1024 * 1024;
+const DEFAULT_INACTIVE_MANAGER_LIMIT = 2;
+const PERSISTENCE_DEBOUNCE_MS = 250;
+const PERSISTENCE_MAX_WAIT_MS = 1000;
+const MAX_PERSISTED_BYTES = 64 * 1024;
+const TRANSIENT_PERSISTENCE_ACTIONS = new Set([
+  "search", "scrollspy", "jump", "focus-consumed", "navigation", "inspector",
+  "provider-refresh-start", "provider-refresh-end", "manager-load", "manager-flow-progress",
+  "theme-preview", "memory-search", "terminal-preview", "fixture"
+]);
+const DURABLE_PERSISTENCE_ACTIONS = new Set([
+  "setting", "provider-account", "model", "role", "memory", "terminal", "spelling",
+  "manager-resource", "provider-installation", "external-change",
+  "presentation", "review.apply", "shell"
+]);
+export const MANAGER_STATE_FIXTURE_IDS = DATA.MANAGER_STATE_FIXTURE_IDS || Object.freeze({});
 
 function safeStorage() {
   try {
@@ -361,26 +387,79 @@ function waitFrame() {
 }
 
 export class SettingsStore {
-  constructor(conceptId) {
+  constructor(conceptId, options = {}) {
     this.conceptId = conceptId;
     this.listeners = new Set();
-    this.searchIndex = buildSearchIndex().map((document) => ({ ...document, destination: destinationFor(document) }));
+    this._now = options.now || null;
+    this._detailModule = null;
+    this._detailModulePromise = null;
+    this._detailModuleLoadsAtConstruction = Number(globalThis.__pmSettingsDetailModuleLoads || 0);
+    this.searchIndex = buildSearchIndex().map((document) => this._compactSearchDocument(document));
     this.settings = new Map(allSettings().map((entry) => [entry.id, normalizeSetting(entry)]));
-    this.providers = PROVIDERS.map(normalizeProvider);
-    this.roles = normalizeRoles(ROLE_ASSIGNMENTS);
-    this.memories = MEMORY_GISTS.map(normalizeMemory);
-    this.terminals = TERMINAL_PROFILES.map(normalizeTerminal);
+    this._coldDomainTemplates = {
+      providers: PROVIDERS,
+      roles: ROLE_ASSIGNMENTS,
+      memory: MEMORY_GISTS,
+      terminal: TERMINAL_PROFILES
+    };
+    this.providers = PROVIDERS.map((provider) => ({
+      id: provider.id,
+      name: provider.name,
+      group: provider.group,
+      state: provider.state,
+      stateLabel: provider.stateLabel,
+      summary: provider.summary,
+      activeAccountId: null,
+      inFlightAccountId: null,
+      accounts: [],
+      connections: [],
+      products: [],
+      models: [],
+      installations: [],
+      runtimeAdapters: [],
+      catalogue: { version: provider.catalogue?.version || provider.catalogue?.sourceVersion || "Cached summary", lastKnownGood: [], quarantine: [], removalHistory: [] },
+      compactSummary: true
+    }));
+    this.roles = [];
+    this.memories = [];
+    this.terminals = [];
     this.spelling = normalizeSpelling(SPELLING_FIXTURE);
     this.setupSessions = clone(SETUP_SESSIONS);
     this.recentChanges = clone(RECENT_CHANGES);
-    this.genericManagers = clone(DATA.MANAGER_INVENTORIES || {});
+    // Imported inventories are cold deterministic templates. They are never
+    // cloned into live state until an explicit manager access requests one.
+    this._coldManagerTemplates = DATA.MANAGER_INVENTORIES || {};
+    this.genericManagers = Object.create(null);
+    this.managerSummaries = Object.fromEntries((DATA.MANAGERS || []).map((manager) => {
+      const cold = this._coldManagerTemplates[manager.id] || {};
+      return [manager.id, {
+        id: manager.id,
+        title: cold.title || manager.title,
+        purpose: manager.purpose,
+        state: cold.state || "Not loaded",
+        summary: cold.summary || manager.purpose,
+        itemCount: Array.isArray(cold.items) ? cold.items.length : null
+      }];
+    }));
     this.managerAssignments = clone(CONCEPT_MANAGER_ASSIGNMENTS);
     this.flowTemplates = clone(FLOW_TEMPLATES);
     this.fixtureTriggers = clone(DETERMINISTIC_TRIGGERS);
     this.managerCoverageLabels = clone(MANAGER_COVERAGE_LABELS);
     this.managerOperations = [];
     this.providerOperations = [];
-    this._storage = safeStorage();
+    this.observableWork = new ObservableWorkRegistry({ now: this._now });
+    this.resourceGovernor = new RuntimeResourceGovernorProjection({ now: this._now });
+    this.providerSetup = new ProviderSetupProjectionRegistry({ workRegistry: this.observableWork, now: this._now });
+    this.subscriptions = new BoundedSubscriptionRegistry({ maxHeavySubscriptions: 1 });
+    this._activeManagerSubscription = null;
+    this._managerCacheMeta = new Map();
+    this._managerLoadJobs = new Map();
+    this._managerGeneration = new Map();
+    this._pendingManagerSelection = new Map();
+    this._managerAccessSequence = 0;
+    this._managerCacheBudgetBytes = DEFAULT_MANAGER_CACHE_BYTES;
+    this._inactiveManagerLimit = DEFAULT_INACTIVE_MANAGER_LIMIT;
+    this._storage = Object.prototype.hasOwnProperty.call(options, "storage") ? options.storage : safeStorage();
     this._persistenceKey = `pm.settings.sol.final.${conceptId}`;
     this.receiptHistory = RECEIPT_FIXTURES.map((entry, index) => deepFreeze({
       id: entry.id || `fixture-receipt-${index + 1}`,
@@ -394,10 +473,24 @@ export class SettingsStore {
       simulation: entry.simulation ?? entry.simulated ?? true
     }));
     this._refreshJobs = new Map();
+    this._providerRefreshGeneration = new Map();
     this._pending = new Set();
     this._focusSequence = 0;
     this._receiptSequence = 0;
     this._operationSequence = 0;
+    this._searchGeneration = 0;
+    this._persistenceDirty = false;
+    this._persistenceDebounceTimer = null;
+    this._persistenceMaxTimer = null;
+    this._persistenceStats = {
+      scheduled: 0,
+      writes: 0,
+      skippedTransient: 0,
+      rejectedOversize: 0,
+      flushes: 0,
+      lastPayloadBytes: 0,
+      maxPayloadBytes: 0
+    };
 
     const root = typeof document !== "undefined" ? document.documentElement : null;
     const media = typeof matchMedia === "function" ? matchMedia("(prefers-reduced-motion: reduce)") : null;
@@ -448,8 +541,8 @@ export class SettingsStore {
       refreshingProviderId: null,
       refreshingProviderIds: [],
       selectedProviderId: this.providers[0]?.id || null,
-      selectedAccountId: this.providers[0]?.activeAccountId || this.providers[0]?.accounts?.[0]?.id || null,
-      selectedInstallationId: this.providers[0]?.installations?.find((entry) => entry.selected)?.id || this.providers[0]?.installations?.[0]?.id || null,
+      selectedAccountId: null,
+      selectedInstallationId: null,
       selectedMemoryId: firstMemory,
       memoryQuery: "",
       memoryFilters: { query: "", kind: "all", scope: "all", state: "all", pinned: "all" },
@@ -457,10 +550,24 @@ export class SettingsStore {
       selectedTerminalId: firstTerminal,
       pendingTerminalSwitch: null,
       managerQuery: "",
+      listWindows: {},
       selectedManagerResource: {},
       managerStates: {},
       managerHydration: {},
+      workspaceHydration: { state: "dormant", detailModuleLoaded: false },
       activeFlow: null,
+      observableWork: [],
+      providerSetup: null,
+      governorProjection: null,
+      performance: {
+        profile: "normal",
+        simulated: true,
+        deterministic: true,
+        hardwareCertified: false,
+        startup: { liveProjectionLoadedManagerCount: 0, liveProjectionLoadedBytes: 0, providerProbes: 0, speculativePrewarm: false, detailModuleLoaded: false, detailModuleLoads: 0, moduleLoadFixtureBytesMeasured: true },
+        render: { commits: 0, lastReason: null },
+        cache: { budgetBytes: DEFAULT_MANAGER_CACHE_BYTES, currentBytes: 0, inactiveReadyCount: 0, evictions: 0 }
+      },
       flowHistory: [],
       previewTheme: null,
       themeBeforePreview: null,
@@ -469,7 +576,7 @@ export class SettingsStore {
       soundPreview: null,
       externalChange: null,
       activeFixture: null,
-      persistence: { available: Boolean(this._storage), restored: false, lastSavedAt: null, schema: PERSISTENCE_SCHEMA },
+      persistence: { available: Boolean(this._storage), restored: false, lastSavedAt: null, schema: PERSISTENCE_SCHEMA, stats: clone(this._persistenceStats) },
       spellingMenu: null,
       receipts: [],
       revision: 0,
@@ -483,13 +590,14 @@ export class SettingsStore {
       memories: this.memories,
       terminals: this.terminals,
       spelling: this.spelling,
-      genericManagers: this.genericManagers,
       setupSessions: this.setupSessions,
       recentChanges: this.recentChanges
     }));
     this.state.scenarioOverlay = clone(SCENARIOS[this.state.scenario]?.entityOverlay || SCENARIOS[this.state.scenario]?.overlay || {});
     this._applyScenarioOverlay(this.state.scenarioOverlay);
     this._initialState = deepFreeze(clone(this.state));
+
+    this.applyPerformanceProfile(options.performanceProfile || "normal", { emit: false });
 
     this._motionMedia = media;
     this._onMotionPreference = (event) => {
@@ -510,9 +618,35 @@ export class SettingsStore {
   }
 
   destroy() {
-    this._persistState();
+    this.flushPersistence({ explicit: true });
+    this._activeManagerSubscription?.release?.();
+    this._activeManagerSubscription = null;
+    this.subscriptions.clear();
+    this.observableWork.clear();
     this._motionMedia?.removeEventListener?.("change", this._onMotionPreference);
     this.listeners.clear();
+  }
+
+  _compactSearchDocument(document = {}) {
+    const haystack = String(document.haystack || [document.title, document.subtitle].filter(Boolean).join(" "))
+      .replace(/(?:[a-zA-Z]:\\|\/)[^\s]+/g, " ")
+      .replace(/\s+/g, " ")
+      .trim()
+      .slice(0, 640);
+    return deepFreeze({
+      kind: String(document.kind || "Destination"),
+      id: String(document.id || document.targetId || "search-document"),
+      title: String(document.title || "Settings result").slice(0, 160),
+      subtitle: String(document.subtitle || "").slice(0, 240),
+      targetType: document.targetType || null,
+      targetId: document.targetId || null,
+      categoryId: document.categoryId || null,
+      subcategoryId: document.subcategoryId || null,
+      managerTab: document.managerTab || document.destination?.tab || document.destination?.managerTab || null,
+      resourceId: document.resourceId || document.destination?.resourceId || null,
+      destination: destinationFor(document),
+      haystack
+    });
   }
 
   _event(input = "state", details = {}) {
@@ -535,8 +669,10 @@ export class SettingsStore {
     const event = this._event(reason, details);
     this.state.revision = event.revision;
     this.state.lastEvent = event;
+    this.state.performance.render.commits += 1;
+    this.state.performance.render.lastReason = event.action;
     for (const listener of this.listeners) listener(this.state, event);
-    this._persistState();
+    this._schedulePersistence(event.action);
     return event;
   }
 
@@ -563,34 +699,97 @@ export class SettingsStore {
         selectedMemoryId: this.state.selectedMemoryId,
         selectedTerminalId: this.state.selectedTerminalId,
         selectedManagerResource: this.state.selectedManagerResource,
-        managerStates: this.state.managerStates,
-        managerHydration: this.state.managerHydration,
         theme: this.state.theme,
         density: this.state.density,
         reducedMotionOverride: this.state.reducedMotionOverride,
-        activeFixture: this.state.activeFixture,
         customThemeDraft: this.state.customThemeDraft,
         customThemeStatus: this.state.customThemeStatus,
         externalChange: this.state.externalChange,
-        flowHistory: this.state.flowHistory
+        providerSetup: this.state.providerSetup,
+        flowHistory: this.state.flowHistory.slice(-10)
       },
-      genericManagers: this.genericManagers,
-      providers: this.providers,
-      managerOperations: this.managerOperations
+      settings: [...this.settings.values()].map((entry) => ({ id: entry.id, value: entry.value, status: entry.status })),
+      providerPreferences: this.providers.map((provider) => ({
+        providerId: provider.id,
+        activeAccountId: provider.activeAccountId,
+        models: provider.models.map((model) => ({ id: model.id, favorite: model.favorite, priority: model.priority, alias: model.alias, speed: model.speed, selectedEffort: model.selectedEffort, visible: model.visible }))
+      })),
+      rolePreferences: this.roles.map((role) => ({ id: role.id, route: role.route })),
+      managerChanges: this.managerOperations.slice(-25).map(({ managerId, resourceId, changes }) => ({ managerId, resourceId, changes }))
     };
   }
 
-  _persistState() {
+  _syncPersistenceStats() {
+    if (this.state?.persistence) this.state.persistence.stats = clone(this._persistenceStats);
+  }
+
+  _schedulePersistence(action) {
     if (!this._storage || !this.state?.persistence) return false;
+    const durableFlowTerminal = action === "manager-flow" && ["complete", "rolled-back"].includes(this.state.activeFlow?.status);
+    const durableThemeApply = action === "theme-preview" && !this.state.previewTheme && !this.state.themeBeforePreview;
+    if (!durableFlowTerminal && !durableThemeApply && (TRANSIENT_PERSISTENCE_ACTIONS.has(action) || !DURABLE_PERSISTENCE_ACTIONS.has(action))) {
+      this._persistenceStats.skippedTransient += 1;
+      this._syncPersistenceStats();
+      return false;
+    }
+    this._persistenceDirty = true;
+    this._persistenceStats.scheduled += 1;
+    if (this._persistenceDebounceTimer) clearTimeout(this._persistenceDebounceTimer);
+    this._persistenceDebounceTimer = setTimeout(() => this.flushPersistence(), PERSISTENCE_DEBOUNCE_MS);
+    this._persistenceDebounceTimer?.unref?.();
+    if (!this._persistenceMaxTimer) {
+      this._persistenceMaxTimer = setTimeout(() => this.flushPersistence(), PERSISTENCE_MAX_WAIT_MS);
+      this._persistenceMaxTimer?.unref?.();
+    }
+    this._syncPersistenceStats();
+    return true;
+  }
+
+  _clearPersistenceTimers() {
+    if (this._persistenceDebounceTimer) clearTimeout(this._persistenceDebounceTimer);
+    if (this._persistenceMaxTimer) clearTimeout(this._persistenceMaxTimer);
+    this._persistenceDebounceTimer = null;
+    this._persistenceMaxTimer = null;
+  }
+
+  flushPersistence(options = {}) {
+    this._clearPersistenceTimers();
+    if (options.explicit) this._persistenceStats.flushes += 1;
+    if (!this._storage || !this.state?.persistence || !this._persistenceDirty) {
+      this._syncPersistenceStats();
+      return false;
+    }
     try {
       const payload = this._persistentPayload();
-      this._storage.setItem(this._persistenceKey, JSON.stringify(payload));
+      const serialized = JSON.stringify(payload);
+      const bytes = typeof TextEncoder === "function" ? new TextEncoder().encode(serialized).byteLength : serialized.length;
+      this._persistenceStats.lastPayloadBytes = bytes;
+      this._persistenceStats.maxPayloadBytes = Math.max(this._persistenceStats.maxPayloadBytes, bytes);
+      if (bytes > MAX_PERSISTED_BYTES) {
+        this._persistenceStats.rejectedOversize += 1;
+        this._syncPersistenceStats();
+        return false;
+      }
+      this._storage.setItem(this._persistenceKey, serialized);
+      this._persistenceDirty = false;
+      this._persistenceStats.writes += 1;
       this.state.persistence.lastSavedAt = payload.savedAt;
+      this._syncPersistenceStats();
       return true;
     } catch {
       this.state.persistence.available = false;
+      this._syncPersistenceStats();
       return false;
     }
+  }
+
+  _persistState() {
+    this._persistenceDirty = true;
+    return this.flushPersistence();
+  }
+
+  persistenceStats() {
+    return deepFreeze({ ...clone(this._persistenceStats), dirty: this._persistenceDirty, debounceMs: PERSISTENCE_DEBOUNCE_MS, maxWaitMs: PERSISTENCE_MAX_WAIT_MS, payloadLimitBytes: MAX_PERSISTED_BYTES });
   }
 
   _restorePersistentState() {
@@ -598,11 +797,26 @@ export class SettingsStore {
     try {
       const payload = JSON.parse(this._storage.getItem(this._persistenceKey) || "null");
       if (!payload || payload.schema !== PERSISTENCE_SCHEMA || payload.conceptId !== this.conceptId) return false;
-      if (payload.genericManagers) this.genericManagers = clone(payload.genericManagers);
-      if (Array.isArray(payload.providers) && payload.providers.length) this.providers = clone(payload.providers);
-      if (Array.isArray(payload.managerOperations)) this.managerOperations = clone(payload.managerOperations);
       Object.assign(this.state, clone(payload.state || {}));
-      this.state.persistence = { available: true, restored: true, lastSavedAt: payload.savedAt || null, schema: PERSISTENCE_SCHEMA };
+      for (const saved of payload.settings || []) {
+        const setting = this.settings.get(saved.id);
+        if (setting) Object.assign(setting, { value: clone(saved.value), status: saved.status, valueState: saved.status, stateLabel: STATUS_LABELS[saved.status] || titleCase(saved.status) });
+      }
+      for (const preference of payload.providerPreferences || []) {
+        const provider = this.providers.find((entry) => entry.id === preference.providerId);
+        if (!provider) continue;
+        if (provider.accounts.some((entry) => entry.id === preference.activeAccountId)) provider.activeAccountId = preference.activeAccountId;
+        for (const savedModel of preference.models || []) {
+          const model = provider.models.find((entry) => entry.id === savedModel.id);
+          if (model) Object.assign(model, clone(savedModel));
+        }
+      }
+      for (const preference of payload.rolePreferences || []) {
+        const role = this.roles.find((entry) => entry.id === preference.id);
+        if (role) role.route = preference.route;
+      }
+      this.managerOperations = clone(payload.managerChanges || []);
+      this.state.persistence = { available: true, restored: true, lastSavedAt: payload.savedAt || null, schema: PERSISTENCE_SCHEMA, stats: clone(this._persistenceStats) };
       this._refreshEffectiveMotion();
       this._applyPresentationToDocument();
       return true;
@@ -619,7 +833,9 @@ export class SettingsStore {
     this.state = clone(this._initialState);
     this.state.revision = revision;
     this.state.lastEvent = null;
-    this.state.persistence = { available: Boolean(this._storage), restored: false, lastSavedAt: null, schema: PERSISTENCE_SCHEMA };
+    this._persistenceDirty = false;
+    this._clearPersistenceTimers();
+    this.state.persistence = { available: Boolean(this._storage), restored: false, lastSavedAt: null, schema: PERSISTENCE_SCHEMA, stats: clone(this._persistenceStats) };
     this._applyScenarioOverlay(this.state.scenarioOverlay);
     this._refreshEffectiveMotion();
     this._syncPresentationSettings();
@@ -633,12 +849,388 @@ export class SettingsStore {
     return [...(this.managerAssignments?.[conceptId] || [])];
   }
 
+  windowedItems(key, items, options = {}) {
+    const source = Array.isArray(items) ? items : [];
+    const size = Math.max(1, Math.min(40, Number(options.size) || 24));
+    const existing = this.state.listWindows[key] || { start: 0, size };
+    let start = Math.max(0, Math.min(Number(options.start ?? existing.start) || 0, Math.max(0, source.length - size)));
+    if (options.selectedId) {
+      const selectedIndex = source.findIndex((entry) => entry?.id === options.selectedId);
+      if (selectedIndex >= 0 && (selectedIndex < start || selectedIndex >= start + size)) {
+        start = Math.max(0, Math.min(selectedIndex - Math.floor(size / 2), Math.max(0, source.length - size)));
+      }
+    }
+    const end = Math.min(source.length, start + size);
+    this.state.listWindows = { ...this.state.listWindows, [key]: { start, size, total: source.length } };
+    return deepFreeze({ items: clone(source.slice(start, end)), total: source.length, start, end, mounted: end - start });
+  }
+
+  shiftListWindow(key, direction = 1) {
+    const current = this.state.listWindows[key] || { start: 0, size: 24 };
+    const delta = typeof direction === "string" ? (/prev|back|up/i.test(direction) ? -current.size : current.size) : Number(direction) * current.size;
+    const start = Math.max(0, Math.min(current.start + delta, Math.max(0, Number(current.total || 0) - current.size)));
+    this.state.listWindows = { ...this.state.listWindows, [key]: { ...current, start } };
+    this.emit({ action: "list-window", scopes: ["view"], motionKey: "none" });
+    return clone(this.state.listWindows[key]);
+  }
+
+  providerSetupSnapshot() {
+    return clone(this.state.providerSetup);
+  }
+
   managerInventory(managerId) {
-    return this.genericManagers?.[managerId] || null;
+    let inventory = this.genericManagers?.[managerId] || null;
+    if (!inventory && this._managerCacheMeta.has(managerId)) {
+      if (managerId === "providers") inventory = { id: "providers", title: "Providers, agents & models", state: "Ready", summary: `${this.providers.length} provider summaries`, items: this.providers };
+      if (managerId === "memory") inventory = { id: "memory", title: "Assistant memory", state: "Ready", summary: `${this.memories.length} evidence-backed memories`, items: this.memories };
+      if (managerId === "terminal") inventory = { id: "terminal", title: "Terminal profiles", state: "Ready", summary: `${this.terminals.length} terminal profiles`, items: this.terminals };
+    }
+    if (inventory) this._touchManagerCache(managerId);
+    return inventory;
+  }
+
+  managerSummary(managerId) {
+    return clone(this.managerSummaries[managerId] || null);
+  }
+
+  managerStateFixtures(managerId = null) {
+    const managers = managerId ? [managerId] : Object.keys(MANAGER_STATE_FIXTURE_IDS);
+    return deepFreeze(managers.flatMap((id) => (MANAGER_STATE_FIXTURE_IDS[id] || []).map((fixtureId) => {
+      const state = fixtureId.split(".").at(-1);
+      return { ...clone(DATA.buildManagerStateFixture?.(id, state) || { id: fixtureId, managerId: id, state }), simulated: true, deterministic: true };
+    })));
+  }
+
+  async applyManagerStateFixture(stateOrFixtureId, managerId = this.state.managerId) {
+    let stateId = String(stateOrFixtureId || "");
+    if (stateId.startsWith("manager-state.")) {
+      const parts = stateId.split(".");
+      managerId = parts[1];
+      stateId = parts[2];
+    }
+    const aliases = { "offline-cached": "offline", "managed-inherited": "managed_inherited", "requested-effective": "requested_effective" };
+    stateId = aliases[stateId] || stateId;
+    const fixture = DATA.buildManagerStateFixture?.(managerId, stateId);
+    if (!managerId || !fixture || !(MANAGER_STATE_FIXTURE_IDS[managerId] || []).includes(fixture.id)) return false;
+    if (stateId === "loading") {
+      this.invalidateManagerLoad(managerId);
+      this._evictManagerPayload(managerId);
+      this._managerCacheMeta.delete(managerId);
+      this.state.managerHydration = { ...this.state.managerHydration, [managerId]: { state: "loading", generation: this._managerGeneration.get(managerId) || 1, simulated: true, deterministic: true } };
+      this.observableWorkFixture("waiting_resource");
+    } else {
+      const cleanPayload = await this._coldPayloadForManager(managerId);
+      if (!cleanPayload) return false;
+      this._commitManagerPayload(managerId, cleanPayload);
+      const bytes = this._estimateBytes(cleanPayload);
+      this._managerCacheMeta.set(managerId, { state: "ready", bytes, lastAccess: ++this._managerAccessSequence, generation: this._managerGeneration.get(managerId) || 1 });
+      const inventory = this.managerInventory(managerId);
+      if (inventory) {
+        const items = inventory.items || [];
+        if (stateId === "empty") {
+          if (managerId === "providers") this.providers = [];
+          else if (managerId === "memory") this.memories = [];
+          else if (managerId === "terminal") this.terminals = [];
+          else inventory.items = [];
+        }
+        if (stateId === "error") Object.assign(inventory, { state: "Error", fixtureMessage: "Deterministic manager-load failure" });
+        if (stateId === "offline") Object.assign(inventory, { state: "Offline", fixtureMessage: "Cached values remain visible while the deterministic network fixture is offline", retainedCachedValues: true });
+        if (stateId === "unavailable") Object.assign(inventory, { state: "Unavailable", fixtureMessage: "Required capability is unavailable in this deterministic fixture" });
+        if (stateId === "managed_inherited" && items[0]) Object.assign(items[0], { status: "Managed", state: "managed", requested: "Inherited", effective: "Organization managed" });
+        if (stateId === "requested_effective" && items[0]) Object.assign(items[0], { status: "Effective value differs", state: "effective-difference", requested: "Requested fixture value", effective: "Governor-supplied effective fixture value" });
+        if (stateId === "degraded") Object.assign(inventory, { state: "Degraded", fixtureMessage: "Cached values remain available with a named deterministic limitation", retainedCachedValues: true });
+      }
+      this.state.managerStates = { ...this.state.managerStates, [managerId]: stateId };
+      this.state.managerHydration = { ...this.state.managerHydration, [managerId]: { state: stateId, generation: this._managerGeneration.get(managerId) || 1, retainedCachedValues: ["offline", "error", "degraded"].includes(stateId), simulated: true, deterministic: true } };
+      if (stateId === "offline") this.observableWorkFixture("waiting_network");
+      if (stateId === "error") this.observableWorkFixture("stalled");
+      if (stateId === "unavailable") this.observableWorkFixture("cancelled");
+      if (stateId === "degraded") this.observableWorkFixture("degraded");
+    }
+    this.state.activeFixture = fixture.id;
+    this.emit({ action: "fixture", scopes: ["view", "manager", "data"], motionKey: "none", announcement: `${this.managerSummaries[managerId]?.title || managerId}: ${stateId} deterministic fixture.` });
+    return deepFreeze({ ...clone(fixture), simulated: true, deterministic: true });
+  }
+
+  _estimateBytes(value) {
+    try { return typeof TextEncoder === "function" ? new TextEncoder().encode(JSON.stringify(value)).byteLength : JSON.stringify(value).length; }
+    catch { return Number.MAX_SAFE_INTEGER; }
+  }
+
+  async _ensureDetailModule() {
+    if (this._detailModule) return this._detailModule;
+    if (this._detailModulePromise) return this._detailModulePromise;
+    this.state.workspaceHydration = { state: "loading", detailModuleLoaded: false, requestedAt: nowISO() };
+    const operation = this.observableWork.create({
+      operation_id: "settings-detail-module",
+      owner_domain: "settings-manager-projection",
+      scope_refs: ["settings:detail-fixtures"],
+      object_refs: ["settings:detail-module"],
+      title: "Load selected Settings details",
+      human_phase: "Loading only the selected Settings destination",
+      state: "running",
+      progress_kind: "indeterminate",
+      progress_source: "unknown",
+      can_cancel: false,
+      can_background: false,
+      can_retry: true,
+      blocking_scope: "selected Settings destination",
+      generation: 1
+    });
+    this.state.observableWork = this.observableWork.list();
+    const job = import("./data-details.mjs").then((details) => {
+      DATA.installDetailedData?.(details);
+      this._detailModule = details;
+      this._coldDomainTemplates = {
+        providers: details.PROVIDERS,
+        roles: details.ROLE_ASSIGNMENTS,
+        memory: details.MEMORY_GISTS,
+        terminal: details.TERMINAL_PROFILES
+      };
+      this._coldManagerTemplates = details.MANAGER_INVENTORIES || {};
+      this.managerAssignments = clone(details.CONCEPT_MANAGER_ASSIGNMENTS || this.managerAssignments);
+      this.flowTemplates = clone(details.FLOW_TEMPLATES || {});
+      this.fixtureTriggers = clone(details.DETERMINISTIC_TRIGGERS || []);
+      this.managerCoverageLabels = clone(details.MANAGER_COVERAGE_LABELS || {});
+      this.settings = new Map(details.allSettings().map((entry) => [entry.id, normalizeSetting(entry)]));
+      for (const manager of details.MANAGERS || []) {
+        const cold = this._coldManagerTemplates[manager.id] || {};
+        this.managerSummaries[manager.id] = {
+          id: manager.id,
+          title: cold.title || manager.title,
+          purpose: manager.purpose,
+          state: cold.state || "Not loaded",
+          summary: cold.summary || manager.purpose,
+          itemCount: Array.isArray(cold.items) ? cold.items.length : null
+        };
+      }
+      this._restoreDetailedPersistentPreferences();
+      this._applyScenarioOverlay(this.state.scenarioOverlay);
+      const detailModuleLoads = Number(globalThis.__pmSettingsDetailModuleLoads || 0) - this._detailModuleLoadsAtConstruction;
+      this.state.workspaceHydration = { state: "ready", detailModuleLoaded: true, loadedAt: nowISO() };
+      this.state.performance.startup = { ...this.state.performance.startup, detailModuleLoaded: true, detailModuleLoads };
+      this.observableWork.update(operation.operation_id, { state: "completed", human_phase: "Selected Settings details ready", can_retry: false, result_refs: ["settings:detail-module:generation-1"] }, 1);
+      this.state.observableWork = this.observableWork.list();
+      return details;
+    }).catch((error) => {
+      this._detailModulePromise = null;
+      this.state.workspaceHydration = { state: "failed", detailModuleLoaded: false, reason: String(error?.message || error) };
+      this.observableWork.update(operation.operation_id, { state: "failed", human_phase: "Selected Settings details could not load", can_retry: true, result_refs: [] }, 1);
+      this.state.observableWork = this.observableWork.list();
+      throw error;
+    });
+    this._detailModulePromise = job;
+    this._pending.add(job);
+    void job.then(() => this._pending.delete(job), () => this._pending.delete(job));
+    return job;
+  }
+
+  _restoreDetailedPersistentPreferences() {
+    if (!this._storage) return false;
+    try {
+      const payload = JSON.parse(this._storage.getItem(this._persistenceKey) || "null");
+      if (!payload || payload.schema !== PERSISTENCE_SCHEMA || payload.conceptId !== this.conceptId) return false;
+      for (const saved of payload.settings || []) {
+        const setting = this.settings.get(saved.id);
+        if (setting) Object.assign(setting, { value: clone(saved.value), status: saved.status, valueState: saved.status, stateLabel: STATUS_LABELS[saved.status] || titleCase(saved.status) });
+      }
+      for (const preference of payload.providerPreferences || []) {
+        const provider = this.providers.find((entry) => entry.id === preference.providerId);
+        if (!provider) continue;
+        if (provider.accounts?.some((entry) => entry.id === preference.activeAccountId)) provider.activeAccountId = preference.activeAccountId;
+        for (const savedModel of preference.models || []) {
+          const model = provider.models?.find((entry) => entry.id === savedModel.id);
+          if (model) Object.assign(model, clone(savedModel));
+        }
+      }
+      for (const preference of payload.rolePreferences || []) {
+        const role = this.roles.find((entry) => entry.id === preference.id);
+        if (role) role.route = preference.route;
+      }
+      return true;
+    } catch { return false; }
+  }
+
+  async _coldPayloadForManager(managerId) {
+    await this._ensureDetailModule();
+    if (managerId === "providers") return {
+      providers: this._coldDomainTemplates.providers.map(normalizeProvider),
+      roles: normalizeRoles(this._coldDomainTemplates.roles)
+    };
+    if (managerId === "memory") return { memories: this._coldDomainTemplates.memory.map(normalizeMemory) };
+    if (managerId === "terminal") return { terminals: this._coldDomainTemplates.terminal.map(normalizeTerminal) };
+    return this._coldManagerTemplates[managerId] ? { inventory: clone(this._coldManagerTemplates[managerId]) } : null;
+  }
+
+  _commitManagerPayload(managerId, payload) {
+    if (payload.inventory) this.genericManagers[managerId] = payload.inventory;
+    if (payload.providers) {
+      this.providers = payload.providers;
+      this.roles = payload.roles;
+      this._restoreDetailedPersistentPreferences();
+      const provider = this.providers.find((entry) => entry.id === this.state.selectedProviderId) || this.providers[0] || null;
+      const pending = this._pendingManagerSelection.get("providers") || {};
+      this.state.selectedProviderId = provider?.id || null;
+      this.state.selectedAccountId = provider?.accounts?.find((entry) => entry.id === pending.childResourceId)?.id || provider?.activeAccountId || provider?.accounts?.[0]?.id || null;
+      this.state.selectedInstallationId = provider?.installations?.find((entry) => entry.id === pending.childResourceId)?.id || provider?.installations?.find((entry) => entry.selected)?.id || provider?.installations?.[0]?.id || null;
+    }
+    if (payload.memories) {
+      this.memories = payload.memories;
+      const pendingId = this._pendingManagerSelection.get("memory")?.resourceId;
+      this.state.selectedMemoryId = this.memories.some((entry) => entry.id === pendingId) ? pendingId : this.memories.some((entry) => entry.id === this.state.selectedMemoryId) ? this.state.selectedMemoryId : this.memories[0]?.id || null;
+    }
+    if (payload.terminals) {
+      this.terminals = payload.terminals;
+      const pendingId = this._pendingManagerSelection.get("terminal")?.resourceId;
+      this.state.selectedTerminalId = this.terminals.some((entry) => entry.id === pendingId) ? pendingId : this.terminals.some((entry) => entry.id === this.state.selectedTerminalId) ? this.state.selectedTerminalId : this.terminals[0]?.id || null;
+    }
+  }
+
+  _evictManagerPayload(managerId) {
+    delete this.genericManagers[managerId];
+    if (managerId === "providers") {
+      this.providers = this._coldDomainTemplates.providers.map((provider) => ({ id: provider.id, name: provider.name, group: provider.group, state: provider.state, stateLabel: provider.stateLabel, summary: provider.summary, activeAccountId: null, inFlightAccountId: null, accounts: [], connections: [], products: [], models: [], installations: [], runtimeAdapters: [], catalogue: { version: provider.catalogue?.version || provider.catalogue?.sourceVersion || "Cached summary", lastKnownGood: [], quarantine: [], removalHistory: [] }, compactSummary: true }));
+      this.roles = [];
+      this.state.selectedAccountId = null;
+      this.state.selectedInstallationId = null;
+    }
+    if (managerId === "memory") {
+      this.memories = [];
+      this.state.selectedMemoryId = null;
+    }
+    if (managerId === "terminal") {
+      this.terminals = [];
+      this.state.selectedTerminalId = null;
+    }
+  }
+
+  _touchManagerCache(managerId) {
+    const meta = this._managerCacheMeta.get(managerId);
+    if (!meta) return;
+    meta.lastAccess = ++this._managerAccessSequence;
+  }
+
+  _managerCacheStats() {
+    const active = this.state?.managerId;
+    const entries = [...this._managerCacheMeta.entries()];
+    return {
+      budgetBytes: this._managerCacheBudgetBytes,
+      currentBytes: entries.reduce((sum, [, meta]) => sum + meta.bytes, 0),
+      inactiveReadyCount: entries.filter(([id, meta]) => id !== active && meta.state === "ready").length,
+      evictions: this.state?.performance?.cache?.evictions || 0
+    };
+  }
+
+  _syncManagerTelemetry() {
+    const cache = this._managerCacheStats();
+    this.state.performance.cache = cache;
+    this.state.performance.startup.liveProjectionLoadedManagerCount = this._managerCacheMeta.size;
+    this.state.performance.startup.liveProjectionLoadedBytes = cache.currentBytes;
+  }
+
+  _evictManagerCache() {
+    const active = this.state.managerId;
+    const candidates = () => [...this._managerCacheMeta.entries()]
+      .filter(([id, meta]) => id !== active && meta.state === "ready")
+      .sort((a, b) => a[1].lastAccess - b[1].lastAccess);
+    let cache = this._managerCacheStats();
+    while ((cache.inactiveReadyCount > this._inactiveManagerLimit || cache.currentBytes > this._managerCacheBudgetBytes) && candidates().length) {
+      const [managerId] = candidates()[0];
+      this._evictManagerPayload(managerId);
+      this._managerCacheMeta.delete(managerId);
+      this.state.managerHydration = { ...this.state.managerHydration, [managerId]: { state: "evicted", evictedAt: nowISO() } };
+      this.state.performance.cache.evictions += 1;
+      cache = this._managerCacheStats();
+    }
+    this._syncManagerTelemetry();
+  }
+
+  _setActiveManagerSubscription(managerId) {
+    if (this._activeManagerSubscription?.key === `manager:${managerId}`) return true;
+    this._activeManagerSubscription?.release?.();
+    this._activeManagerSubscription = null;
+    if (!managerId) return true;
+    const acquired = this.subscriptions.acquire(`manager:${managerId}`, { heavy: true, owner: "visible-settings-manager" });
+    if (!acquired) return false;
+    this._activeManagerSubscription = acquired;
+    return true;
+  }
+
+  async loadManagerInventory(managerId, options = {}) {
+    const isDomain = ["providers", "memory", "terminal"].includes(managerId);
+    if (!isDomain && !DATA.MANAGERS?.some((entry) => entry.id === managerId)) return null;
+    if (this._managerCacheMeta.has(managerId)) {
+      this._touchManagerCache(managerId);
+      return clone(this.genericManagers[managerId] || { domain: managerId });
+    }
+    if (this._managerLoadJobs.has(managerId)) return this._managerLoadJobs.get(managerId);
+    const generation = (this._managerGeneration.get(managerId) || 0) + 1;
+    this._managerGeneration.set(managerId, generation);
+    this.state.managerHydration = { ...this.state.managerHydration, [managerId]: { state: "queued", generation, requestedAt: nowISO() } };
+    const operation = this.observableWork.create({
+      owner_domain: "settings-manager-projection",
+      scope_refs: [`settings-manager:${managerId}`],
+      object_refs: [`manager:${managerId}`],
+      title: `Open ${this.managerSummaries[managerId]?.title || managerId}`,
+      human_phase: "Waiting to load the selected manager",
+      state: "queued",
+      progress_kind: "indeterminate",
+      progress_source: "unknown",
+      queue_reason: "Selected manager inventory loads on demand",
+      can_cancel: true,
+      can_background: false,
+      blocking_scope: "selected manager",
+      generation
+    });
+    this.state.observableWork = this.observableWork.list();
+    const job = (async () => {
+      await Promise.resolve();
+      if (options.deferFrame !== false) await waitFrame();
+      if (this._managerGeneration.get(managerId) !== generation || !options.allowInactive && this.state.managerId !== managerId) {
+        this.observableWork.update(operation.operation_id, { state: "cancelled", human_phase: "Superseded by a newer manager route", can_retry: true }, generation);
+        return null;
+      }
+      this.state.managerHydration = { ...this.state.managerHydration, [managerId]: { state: "loading", generation, startedAt: nowISO(), operationId: operation.operation_id } };
+      this.observableWork.update(operation.operation_id, { state: "running", human_phase: "Cloning the selected cold template" }, generation);
+      const payload = await this._coldPayloadForManager(managerId);
+      if (!payload) {
+        this.observableWork.update(operation.operation_id, { state: "failed", human_phase: "No detailed fixture exists for this manager", can_retry: false }, generation);
+        this.state.managerHydration = { ...this.state.managerHydration, [managerId]: { state: "failed", generation, reason: "missing_detail_fixture" } };
+        return null;
+      }
+      const bytes = this._estimateBytes(payload);
+      if (bytes > this._managerCacheBudgetBytes) {
+        this.observableWork.update(operation.operation_id, { state: "failed", human_phase: "Selected manager exceeds the concept cache budget", can_retry: true }, generation);
+        this.state.managerHydration = { ...this.state.managerHydration, [managerId]: { state: "failed", generation, reason: "cache_budget" } };
+        return null;
+      }
+      if (this._managerGeneration.get(managerId) !== generation || !options.allowInactive && this.state.managerId !== managerId) return null;
+      this._commitManagerPayload(managerId, payload);
+      this._applyScenarioOverlay(this.state.scenarioOverlay);
+      this._managerCacheMeta.set(managerId, { state: "ready", bytes, lastAccess: ++this._managerAccessSequence, generation });
+      this.state.managerHydration = { ...this.state.managerHydration, [managerId]: { state: "hydrated", generation, hydratedAt: nowISO(), bytes, operationId: operation.operation_id } };
+      this.observableWork.update(operation.operation_id, { state: "completed", human_phase: "Selected manager ready", can_cancel: false, result_refs: [`manager-cache:${managerId}:${generation}`] }, generation);
+      this.state.observableWork = this.observableWork.list();
+      this._evictManagerCache();
+      this.emit({ action: "manager-load", scopes: ["manager", "data", "view"], motionKey: "none", announcement: `${this.managerSummaries[managerId]?.title || managerId} is ready.` });
+      return clone(payload.inventory || { domain: managerId });
+    })();
+    this._managerLoadJobs.set(managerId, job);
+    this._pending.add(job);
+    try { return await job; }
+    finally {
+      this._pending.delete(job);
+      this._managerLoadJobs.delete(managerId);
+      this.state.observableWork = this.observableWork.list();
+    }
+  }
+
+  invalidateManagerLoad(managerId) {
+    this._managerGeneration.set(managerId, (this._managerGeneration.get(managerId) || 0) + 1);
   }
 
   managerResource(managerId, resourceId) {
-    return this.genericManagers?.[managerId]?.items?.find((entry) => entry.id === resourceId) || null;
+    return this.managerInventory(managerId)?.items?.find((entry) => entry.id === resourceId) || null;
   }
 
   selectManagerResource(managerId, resourceId) {
@@ -677,12 +1269,33 @@ export class SettingsStore {
   startFlow(kind = "generic", options = {}) {
     const template = this.flowTemplates[kind] || this.flowTemplates.generic;
     if (!template) return false;
+    const managerId = options.managerId || this.state.managerId;
+    const resourceId = options.resourceId || null;
+    const operation = this.observableWork.create({
+      operation_id: `flow-${++this._operationSequence}`,
+      owner_domain: kind.startsWith("provider-") ? "provider-lifecycle-projection" : "settings-concept-transaction",
+      scope_refs: [`settings-manager:${managerId || "unknown"}`],
+      object_refs: [resourceId && `resource:${resourceId}`, options.providerId && `provider:${options.providerId}`, options.installationId && `installation:${options.installationId}`].filter(Boolean),
+      title: template.label,
+      human_phase: template.stages?.[Number(options.stageIndex || 0)] || "Accepted",
+      state: options.status === "queued" ? "queued" : "accepted",
+      progress_kind: "indeterminate",
+      progress_source: "unknown",
+      queue_reason: options.queueReason || null,
+      wait_reason: options.waitReason || null,
+      can_cancel: true,
+      can_background: true,
+      can_retry: false,
+      blocking_scope: managerId ? "selected manager" : "operation",
+      generation: 1
+    });
     this.state.activeFlow = {
-      id: `flow-${++this._operationSequence}`,
+      ...operation,
+      id: operation.operation_id,
       kind,
       label: template.label,
-      managerId: options.managerId || this.state.managerId,
-      resourceId: options.resourceId || null,
+      managerId,
+      resourceId,
       providerId: options.providerId || null,
       installationId: options.installationId || null,
       stages: clone(template.stages),
@@ -696,6 +1309,7 @@ export class SettingsStore {
       startedAt: nowISO(),
       simulation: true
     };
+    this.state.observableWork = this.observableWork.list();
     this.emit({ action: "manager-flow", scopes: ["manager", "flow", "focus"], motionKey: `${this.conceptId}:flow-start` });
     return clone(this.state.activeFlow);
   }
@@ -704,6 +1318,9 @@ export class SettingsStore {
     const flow = this.state.activeFlow;
     if (!flow || !flow.choices.includes(choice)) return false;
     flow.choice = choice;
+    this.observableWork.update(flow.operation_id, { state: "accepted", human_phase: flow.stages[flow.stageIndex] || flow.human_phase, wait_reason: null }, flow.generation);
+    Object.assign(flow, this.observableWork.get(flow.operation_id));
+    this.state.observableWork = this.observableWork.list();
     this.emit({ action: "manager-flow", scopes: ["manager", "flow"], motionKey: `${this.conceptId}:flow-choice` });
     return true;
   }
@@ -713,6 +1330,9 @@ export class SettingsStore {
     if (!flow || !["active", "choice-required"].includes(flow.status)) return false;
     if (flow.choiceStage === flow.stageIndex && !flow.choice) {
       flow.status = "choice-required";
+      this.observableWork.update(flow.operation_id, { state: "waiting_user", human_phase: flow.stages[flow.stageIndex] || "Waiting for a choice", wait_reason: "A user choice is required before this deterministic transaction can continue" }, flow.generation);
+      Object.assign(flow, this.observableWork.get(flow.operation_id));
+      this.state.observableWork = this.observableWork.list();
       this.receipt("Choice required", "Choose Merge or Replace before the settings import can continue.", "warning");
       this.emit({ action: "manager-flow", scopes: ["manager", "flow", "receipts"], motionKey: `${this.conceptId}:flow-gate` });
       return false;
@@ -722,17 +1342,27 @@ export class SettingsStore {
       flow.status = "failed";
       flow.failureReason = typeof options === "object" ? options.reason || "Deterministic verification fixture failed." : "Deterministic verification fixture failed.";
       flow.rollbackAvailable = true;
+      this.observableWork.update(flow.operation_id, { state: "failed", human_phase: "Verification failed", can_retry: true, receipt_refs: [`receipt:verification-failed:${flow.operation_id}`] }, flow.generation);
+      Object.assign(flow, this.observableWork.get(flow.operation_id));
+      this.state.observableWork = this.observableWork.list();
       this.receipt("Verification failed", `${flow.label} stopped before activation. Rollback is available.`, "warning", { persistent: true });
       this.emit({ action: "manager-flow", scopes: ["manager", "flow", "receipts"], motionKey: `${this.conceptId}:flow-failed` });
       return clone(flow);
     }
     flow.status = "active";
-    if (flow.stageIndex < flow.stages.length - 1) flow.stageIndex += 1;
+    if (flow.stageIndex < flow.stages.length - 1) {
+      flow.stageIndex += 1;
+      this.observableWork.update(flow.operation_id, { state: flow.stageIndex === flow.stages.length - 1 ? "verifying" : "running", human_phase: flow.stages[flow.stageIndex], wait_reason: null, queue_reason: null }, flow.generation);
+      Object.assign(flow, this.observableWork.get(flow.operation_id));
+    }
     else {
       flow.status = "complete";
+      this.observableWork.update(flow.operation_id, { state: "completed", human_phase: "Verified", can_cancel: false, can_background: false, result_refs: [`concept-result:${flow.operation_id}`], receipt_refs: [`receipt:complete:${flow.operation_id}`] }, flow.generation);
+      Object.assign(flow, this.observableWork.get(flow.operation_id));
       this.state.flowHistory = [...this.state.flowHistory, clone(flow)].slice(-25);
       this.receipt("Operation verified", `${flow.label} completed as a deterministic concept transaction.`, "success", { persistent: true });
     }
+    this.state.observableWork = this.observableWork.list();
     this.emit({ action: "manager-flow", scopes: ["manager", "flow", "receipts"], motionKey: `${this.conceptId}:flow-advance` });
     return clone(flow);
   }
@@ -743,6 +1373,9 @@ export class SettingsStore {
     flow.status = "rolled-back";
     flow.rollbackAvailable = false;
     flow.rolledBackAt = nowISO();
+    this.observableWork.update(flow.operation_id, { state: "completed", human_phase: "Prior deterministic state restored", can_cancel: false, can_background: false, result_refs: [`rollback-result:${flow.operation_id}`], receipt_refs: [`receipt:rollback:${flow.operation_id}`] }, flow.generation);
+    Object.assign(flow, this.observableWork.get(flow.operation_id));
+    this.state.observableWork = this.observableWork.list();
     this.state.flowHistory = [...this.state.flowHistory, clone(flow)].slice(-25);
     this.receipt("Rollback complete", `${flow.label} restored its prior deterministic state.`, "success", { persistent: true });
     this.emit({ action: "manager-flow", scopes: ["manager", "flow", "receipts"], motionKey: `${this.conceptId}:flow-rollback` });
@@ -775,7 +1408,7 @@ export class SettingsStore {
   }
 
   stopSoundPreview() {
-    if (!this.state.soundPreview) return false;
+    if (!this.state.soundPreview || this.state.soundPreview.state !== "playing") return false;
     this.state.soundPreview = { ...this.state.soundPreview, state: "stopped" };
     this.emit({ action: "manager-resource", scopes: ["manager", "preview"], motionKey: `${this.conceptId}:sound-stop` });
     return true;
@@ -847,10 +1480,203 @@ export class SettingsStore {
     return true;
   }
 
+  selectExistingProviderInstallation(installationId, providerId = this.state.selectedProviderId) {
+    const provider = this.providers.find((entry) => entry.id === providerId);
+    const installation = provider?.installations?.find((entry) => entry.id === installationId);
+    if (!provider || !installation || installation.state === "not-installed" || installation.ownership?.confidence === "unknown") return false;
+    provider.installations.forEach((entry) => { entry.selected = entry.id === installation.id; });
+    provider.bindingRevision = Number(provider.bindingRevision || 0) + 1;
+    this.state.selectedProviderId = provider.id;
+    this.state.selectedInstallationId = installation.id;
+    this.receipt("Existing installation selected", `${provider.name} will use ${installation.display?.name || installation.name} on ${installation.host?.displayName || "the selected host"} in ${installation.environment?.displayName || "the selected environment"}. No software was acquired and authentication remains separate.`, "success", { persistent: true });
+    this.emit({ action: "provider-installation", scopes: ["provider", "manager", "receipts"], motionKey: `${this.conceptId}:installation-binding` });
+    return clone({ outcome: "selected_existing", installationId: installation.id, bindingRevision: provider.bindingRevision, authentication: installation.authentication?.status || "separate" });
+  }
+
   runProviderInstallationAction(providerId, installationId, installationAction) {
     if (!this.selectProviderInstallation(providerId, installationId)) return false;
-    const kind = /install/i.test(installationAction) && !/update/i.test(installationAction) ? "provider-install" : "provider-update";
-    return this.startFlow(kind, { managerId: "providers", providerId, installationId });
+    const action = String(installationAction || "Inspect installation");
+    if (/sign.?in|authenticate|login/i.test(action)) return this.authenticateProvider(providerId);
+    if (/select|use this/i.test(action)) return this.selectExistingProviderInstallation(installationId, providerId);
+    if (/review official|source|inspect|evidence|verify selected/i.test(action)) {
+      this.receipt("Installation evidence opened", `${action} is an inspect-only action. It did not install, update, authenticate, or change the selected binding.`, "managed", { simulation: true });
+      this.emit({ action: "provider-installation", scopes: ["provider", "manager", "receipts"], motionKey: "none" });
+      return true;
+    }
+    if (/rollback/i.test(action)) return this.startFlow("provider-update", { managerId: "providers", providerId, installationId, status: "active", rollbackAvailable: true });
+    if (/repair|update/i.test(action)) return this.startFlow("provider-update", { managerId: "providers", providerId, installationId });
+    if (/install/i.test(action)) return this.confirmFirstProviderInstall(providerId, installationId);
+    this.receipt("Installation action inspected", `${action} produced no mutation because it has no typed lifecycle route.`, "managed", { simulation: true });
+    return true;
+  }
+
+  requireProviderSetup(providerId, options = {}) {
+    const provider = this.provider(providerId);
+    if (!provider) return false;
+    const setup = this.providerSetup.setupRequired({
+      provider_ref: provider.id,
+      provider_label: provider.name,
+      host_ref: options.hostRef || "this-host",
+      host_label: options.hostLabel || "This host",
+      environment_ref: options.environmentRef || "native",
+      environment_label: options.environmentLabel || "Native environment",
+      official_source: options.officialSource || `Official ${provider.name} source`,
+      originating_operation_ref: options.originatingOperationRef,
+      originating_operation_label: options.originatingOperationLabel,
+      compatible_existing: provider.installations?.find((entry) => entry.state !== "not-installed" && entry.ownership?.confidence !== "unknown") ? {
+        installation_ref: provider.installations.find((entry) => entry.state !== "not-installed" && entry.ownership?.confidence !== "unknown").id,
+        display_name: provider.installations.find((entry) => entry.state !== "not-installed" && entry.ownership?.confidence !== "unknown").display?.name || "Compatible existing installation"
+      } : null,
+      continuation_token: options.continuationToken,
+      continuation_revision: options.continuationRevision,
+      maintenance_policy: options.maintenancePolicy || "ask_first"
+    });
+    this.state.providerSetup = setup;
+    this.emit({ action: "provider-installation", scopes: ["provider", "manager", "flow"], motionKey: "none", announcement: `${provider.name} Setup Required for ${setup.target}.` });
+    return clone(setup);
+  }
+
+  providerSetupFromDemand(providerId, options = {}) {
+    const provider = this.provider(providerId);
+    if (!provider) return false;
+    const setup = this.providerSetup.fromDemand({
+      provider_ref: provider.id,
+      provider_label: provider.name,
+      host_ref: options.hostRef || "this-host",
+      host_label: options.hostLabel || "This host",
+      environment_ref: options.environmentRef || "native",
+      environment_label: options.environmentLabel || "Native environment",
+      official_source: options.officialSource || `Official ${provider.name} source`,
+      originating_operation_ref: options.originatingOperationRef,
+      originating_operation_label: options.originatingOperationLabel,
+      compatible_existing: provider.installations?.find((entry) => entry.state !== "not-installed" && entry.ownership?.confidence !== "unknown") ? {
+        installation_ref: provider.installations.find((entry) => entry.state !== "not-installed" && entry.ownership?.confidence !== "unknown").id,
+        display_name: provider.installations.find((entry) => entry.state !== "not-installed" && entry.ownership?.confidence !== "unknown").display?.name || "Compatible existing installation"
+      } : null,
+      continuation_token: options.continuationToken,
+      continuation_revision: options.continuationRevision
+    });
+    this.state.providerSetup = setup;
+    this.emit({ action: "provider-installation", scopes: ["provider", "manager", "flow"], motionKey: "none", announcement: `${provider.name} Setup Required. Initial acquisition did not start.` });
+    return clone(setup);
+  }
+
+  advanceProviderSetup(action, options = {}) {
+    const current = this.state.providerSetup;
+    if (!current) return false;
+    let next = false;
+    if (action === "review-source") next = this.providerSetup.reviewOfficialSource(current.session_ref, options.expectedRevision ?? current.revision);
+    if (action === "consent") next = this.providerSetup.consent(current.session_ref, options.expectedRevision ?? current.revision);
+    if (action === "install") next = this.providerSetup.startInstall(current.session_ref, options.expectedRevision ?? current.revision);
+    if (action === "install-complete") next = this.providerSetup.finishInstall(current.session_ref, options.expectedRevision ?? current.revision, options);
+    if (action === "authenticate") next = this.providerSetup.startAuthentication(current.session_ref, options.expectedRevision ?? current.revision);
+    if (action === "authentication-complete") next = this.providerSetup.finishAuthentication(current.session_ref, options.expectedRevision ?? current.revision, options);
+    if (action === "maintenance-policy") next = this.providerSetup.setMaintenancePolicy(current.session_ref, options.expectedRevision ?? current.revision, options.policy);
+    if (action === "resume") next = this.providerSetup.resume(current.session_ref, options.continuationToken || current.continuation_token, options.continuationRevision ?? current.continuation_revision);
+    if (!next) return false;
+    this.state.providerSetup = next.setup || next;
+    this.state.observableWork = this.observableWork.list();
+    this.emit({ action: "provider-installation", scopes: ["provider", "manager", "flow"], motionKey: "none" });
+    return clone(next);
+  }
+
+  reviewProviderSource(providerId = this.state.selectedProviderId) {
+    if (!this.state.providerSetup || ![providerId, this.provider(providerId)?.name].includes(this.state.providerSetup.provider_ref || this.state.providerSetup.provider)) {
+      this.requireProviderSetup(providerId);
+    }
+    const reviewed = this.advanceProviderSetup("review-source");
+    if (reviewed) this.receipt("Official source reviewed", `${this.provider(providerId)?.name || "Provider"} remains uninstalled until a separate explicit first-install confirmation.`, "managed", { persistent: true });
+    return reviewed;
+  }
+
+  confirmFirstProviderInstall(providerId = this.state.selectedProviderId, installationId = null) {
+    if (!this.state.providerSetup || ![providerId, this.provider(providerId)?.name].includes(this.state.providerSetup.provider_ref || this.state.providerSetup.provider)) {
+      this.requireProviderSetup(providerId, { originatingOperationRef: `provider-install:${providerId}:${installationId || "new"}`, originatingOperationLabel: `Install ${this.provider(providerId)?.name || providerId}` });
+    }
+    const setup = this.state.providerSetup;
+    if (!setup.official_source_reviewed) {
+      this.receipt("Review official source first", "Initial provider CLI acquisition is blocked until the official source and exact Host and Environment have been reviewed.", "warning", { persistent: true });
+      return false;
+    }
+    if (!setup.initial_consent_recorded) {
+      const consent = this.advanceProviderSetup("consent", { expectedRevision: setup.revision });
+      if (!consent) return false;
+    }
+    return this.advanceProviderSetup("install", { expectedRevision: this.state.providerSetup.revision });
+  }
+
+  authenticateProvider(providerId = this.state.selectedProviderId) {
+    const setup = this.state.providerSetup;
+    if (!setup || ![providerId, this.provider(providerId)?.name].includes(setup.provider_ref || setup.provider) || setup.installation !== "ready") {
+      this.receipt("Authentication remains separate", "Sign-in cannot start until the exact provider installation has completed verification.", "warning", { persistent: true });
+      return false;
+    }
+    return this.advanceProviderSetup("authenticate", { expectedRevision: setup.revision });
+  }
+
+  cancelObservableWork(operationId) {
+    const current = this.observableWork.get(operationId);
+    if (!current || !current.can_cancel) return false;
+    const managerRef = current.object_refs?.find((ref) => ref.startsWith("manager:"));
+    if (managerRef) {
+      const managerId = managerRef.slice("manager:".length);
+      this.invalidateManagerLoad(managerId);
+      this.state.managerHydration = { ...this.state.managerHydration, [managerId]: { state: "cancelled", generation: this._managerGeneration.get(managerId), operationId } };
+    }
+    const providerRef = current.object_refs?.find((ref) => ref.startsWith("catalogue:"));
+    if (providerRef) {
+      const providerId = providerRef.slice("catalogue:".length);
+      this._providerRefreshGeneration.set(providerId, (this._providerRefreshGeneration.get(providerId) || 0) + 1);
+      this._setProviderRefreshing(providerId, false);
+    }
+    const next = this.observableWork.update(operationId, { state: "cancelled", human_phase: "Cancelled by the user", can_cancel: false, can_background: false, can_retry: true }, current.generation);
+    if (this.state.activeFlow?.operation_id === operationId) {
+      Object.assign(this.state.activeFlow, next, { status: "cancelled", rollbackAvailable: false });
+    }
+    this.state.observableWork = this.observableWork.list();
+    this.emit({ action: "manager-flow-progress", scopes: ["manager", "flow"], motionKey: "none" });
+    return next;
+  }
+
+  retryObservableWork(operationId) {
+    const current = this.observableWork.get(operationId);
+    if (!current || !current.can_retry) return false;
+    const managerRef = current.object_refs?.find((ref) => ref.startsWith("manager:"));
+    const providerRef = current.object_refs?.find((ref) => ref.startsWith("catalogue:"));
+    const hasBackingRetry = Boolean(managerRef || providerRef || this.state.activeFlow?.operation_id === operationId);
+    const next = this.observableWork.supersede(operationId, {
+      state: hasBackingRetry ? "accepted" : "queued",
+      human_phase: hasBackingRetry ? "Retry accepted" : "Retry queued from the supplied fixture",
+      queue_reason: hasBackingRetry ? null : "Waiting for the supplied runtime projection",
+      wait_reason: null,
+      can_cancel: true,
+      can_background: true,
+      can_retry: false
+    });
+    if (this.state.activeFlow?.operation_id === operationId) {
+      Object.assign(this.state.activeFlow, next, { status: "active", generation: next.generation, rollbackAvailable: false, failureReason: null });
+    } else if (managerRef) {
+      const managerId = managerRef.slice("manager:".length);
+      this.invalidateManagerLoad(managerId);
+      this.state.managerHydration = { ...this.state.managerHydration, [managerId]: { state: "queued", generation: this._managerGeneration.get(managerId), retriedFromOperationId: operationId } };
+      void this.loadManagerInventory(managerId, { deferFrame: true, allowInactive: false });
+    } else if (providerRef) {
+      const providerId = providerRef.slice("catalogue:".length);
+      void this.refreshProvider(providerId);
+    }
+    this.state.observableWork = this.observableWork.list();
+    this.emit({ action: "manager-flow-progress", scopes: ["manager", "flow"], motionKey: "none" });
+    return next;
+  }
+
+  backgroundObservableWork(operationId) {
+    const current = this.observableWork.get(operationId);
+    if (!current || !current.can_background) return false;
+    const next = this.observableWork.update(operationId, { state: "backgrounded", human_phase: "Continuing in the background", can_background: false, blocking_scope: "none" }, current.generation);
+    if (this.state.activeFlow?.operation_id === operationId) Object.assign(this.state.activeFlow, next, { status: "backgrounded" });
+    this.state.observableWork = this.observableWork.list();
+    this.emit({ action: "manager-flow-progress", scopes: ["manager", "flow"], motionKey: "none" });
+    return next;
   }
 
   triggerFixture(fixtureId) {
@@ -925,6 +1751,92 @@ export class SettingsStore {
     return SCENARIOS[this.state.scenario] || SCENARIOS.normal || { label: titleCase(this.state.scenario), notices: [] };
   }
 
+  applyPerformanceProfile(profileId = "normal", options = {}) {
+    const profile = PERFORMANCE_PROFILES[profileId] || PERFORMANCE_PROFILES.normal;
+    const request = this.resourceGovernor.request({
+      owner_domain: "settings-concept",
+      resource_family: "settings-projection-cache",
+      scope_refs: [`settings-concept:${this.conceptId}`],
+      requested: { selected_manager_cache: true, inactive_manager_limit: DEFAULT_INACTIVE_MANAGER_LIMIT, byte_budget: DEFAULT_MANAGER_CACHE_BYTES }
+    });
+    const projection = this.resourceGovernor.applyProjection({ request_id: request.request_id, ...clone(profile.governor), generation: 1 });
+    this._managerCacheBudgetBytes = profile.cache_budget_bytes;
+    this._inactiveManagerLimit = profile.inactive_manager_limit;
+    this.state.governorProjection = projection;
+    this.state.performance = {
+      ...this.state.performance,
+      profile: profile.id,
+      simulated: true,
+      deterministic: true,
+      hardwareCertified: false,
+      policy: {
+        smallerCaches: profile.cache_budget_bytes < DEFAULT_MANAGER_CACHE_BYTES,
+        speculativePrewarm: false,
+        helperWaveLimit: profile.helper_wave_limit,
+        decorativeMotion: profile.decorative_motion,
+        retainCachedContent: profile.retain_cached_content,
+        scheduling: profile.scheduling
+      }
+    };
+    this._evictManagerCache();
+    if (options.emit !== false) this.emit({ action: "performance-profile", scopes: ["performance", "data"], motionKey: "none", announcement: `${profile.label} deterministic profile applied. This is not hardware certification.` });
+    return clone(this.state.performance);
+  }
+
+  performanceTelemetry() {
+    this._syncManagerTelemetry();
+    this.state.performance.startup = {
+      ...this.state.performance.startup,
+      detailModuleLoaded: Boolean(this._detailModule),
+      detailModuleLoads: Number(globalThis.__pmSettingsDetailModuleLoads || 0) - this._detailModuleLoadsAtConstruction
+    };
+    return deepFreeze({
+      ...clone(this.state.performance),
+      subscriptions: this.subscriptions.stats(),
+      persistence: this.persistenceStats(),
+      observableWorkCount: this.observableWork.list().length,
+      note: "Simulated deterministic concept telemetry; no native Slint or physical-hardware certification claim."
+    });
+  }
+
+  performanceStats() {
+    return this.performanceTelemetry();
+  }
+
+  runtimeStats() {
+    const telemetry = this.performanceTelemetry();
+    return deepFreeze({
+      startup: telemetry.startup,
+      cache: telemetry.cache,
+      subscriptions: telemetry.subscriptions,
+      persistence: telemetry.persistence,
+      detailModuleLoaded: Boolean(this._detailModule),
+      detailModuleLoads: Number(globalThis.__pmSettingsDetailModuleLoads || 0) - this._detailModuleLoadsAtConstruction,
+      policyOwner: "RuntimeResourceGovernor",
+      progressOwner: "ObservableWork",
+      simulated: true,
+      nativeRuntimeCertified: false
+    });
+  }
+
+  applyPerformanceFixture(profileId = "normal") {
+    return this.applyPerformanceProfile(profileId);
+  }
+
+  setPerformanceProfile(profileId = "normal") {
+    return this.applyPerformanceProfile(profileId);
+  }
+
+  observableWorkFixture(name) {
+    const fixture = OBSERVABLE_WORK_FIXTURES[name];
+    if (!fixture) return false;
+    const current = this.observableWork.get(fixture.operation_id);
+    const work = current ? this.observableWork.supersede(fixture.operation_id, fixture) : this.observableWork.create(fixture);
+    this.state.observableWork = this.observableWork.list();
+    this.emit({ action: "manager-flow-progress", scopes: ["manager", "flow"], motionKey: "none" });
+    return work;
+  }
+
   categoryStatus(categoryId) {
     if (this.state.scenario === "calm") return "Ready";
     const notices = this.scenario().notices || [];
@@ -943,12 +1855,14 @@ export class SettingsStore {
   }
 
   managerItems(managerId) {
-    return clone(this.genericManagers?.[managerId] || []);
+    return clone(this.managerInventory(managerId)?.items || []);
   }
 
   providerOperation(providerId = this.state.selectedProviderId) {
     const operation = [...this.providerOperations].reverse().find((entry) => entry.providerId === providerId);
-    return operation ? { ...clone(operation), status: operation.outcome, message: operation.detail?.message || operation.detail?.reason || null } : null;
+    if (!operation) return null;
+    const work = operation.detail?.operationId ? this.observableWork.get(operation.detail.operationId) : null;
+    return { ...clone(operation), ...(work || {}), status: work?.state || operation.outcome, message: operation.detail?.message || operation.detail?.reason || work?.human_phase || null };
   }
 
   terminalDraft(profileId = this.state.selectedTerminalId) {
@@ -975,26 +1889,35 @@ export class SettingsStore {
   _restoreBaseline() {
     const baseline = clone(this._baseline);
     this.settings = new Map(baseline.settings.map((entry) => [entry.id, normalizeSetting(entry)]));
-    this.providers = baseline.providers.map(normalizeProvider);
-    this.roles = normalizeRoles(baseline.roles);
-    this.memories = baseline.memories.map(normalizeMemory);
-    this.terminals = baseline.terminals.map(normalizeTerminal);
+    this.providers = clone(baseline.providers);
+    this.roles = clone(baseline.roles);
+    this.memories = clone(baseline.memories);
+    this.terminals = clone(baseline.terminals);
     this.spelling = normalizeSpelling(baseline.spelling);
     this.setupSessions = baseline.setupSessions;
     this.recentChanges = baseline.recentChanges;
-    this.genericManagers = baseline.genericManagers || clone(DATA.MANAGER_INVENTORIES || {});
+    this.genericManagers = Object.create(null);
+    this._managerCacheMeta.clear();
+    for (const managerId of this._managerGeneration.keys()) this.invalidateManagerLoad(managerId);
+    this._activeManagerSubscription?.release?.();
+    this._activeManagerSubscription = null;
+    this.subscriptions.clear();
+    this.observableWork.clear();
+    this.state.observableWork = [];
     this.providerOperations = [];
     this._refreshJobs.clear();
     this.state.refreshingProviderId = null;
     this.state.refreshingProviderIds = [];
     this.state.selectedProviderId = this.providers.some((entry) => entry.id === this.state.selectedProviderId) ? this.state.selectedProviderId : this.providers[0]?.id || null;
     const provider = this.provider();
-    this.state.selectedAccountId = provider?.activeAccountId || provider?.accounts?.[0]?.id || null;
+    this.state.selectedAccountId = provider?.activeAccountId || null;
+    this.state.selectedInstallationId = null;
     this.state.selectedMemoryId = this.memories.some((entry) => entry.id === this.state.selectedMemoryId) ? this.state.selectedMemoryId : this.memories[0]?.id || null;
     this.state.selectedTerminalId = this.terminals.some((entry) => entry.id === this.state.selectedTerminalId) ? this.state.selectedTerminalId : this.terminals[0]?.id || null;
     this.state.memoryUndo = null;
     this.state.pendingTerminalSwitch = null;
     this.state.receipts = [];
+    this._syncManagerTelemetry();
     this._syncPresentationSettings();
   }
 
@@ -1199,6 +2122,8 @@ export class SettingsStore {
   }
 
   openHome() {
+    if (this.state.managerId) this.invalidateManagerLoad(this.state.managerId);
+    this._setActiveManagerSubscription(null);
     this._setSearch({ surface: "home", query: "", open: false, activeIndex: 0, optionCount: 0 });
     this.state.screen = "home";
     this.state.managerId = null;
@@ -1209,8 +2134,10 @@ export class SettingsStore {
   }
 
   openCategory(categoryId, subcategoryId = null, focusSettingId = null) {
+    if (this.state.managerId) this.invalidateManagerLoad(this.state.managerId);
+    this._setActiveManagerSubscription(null);
     const replacingCategory = this.state.screen === "workspace";
-    const exact = CATEGORIES.find((entry) => entry.id === categoryId);
+    const exact = DATA.CATEGORIES.find((entry) => entry.id === categoryId);
     const category = exact || categoryById(categoryId);
     if (!category) return false;
     const nextSubcategory = category.subcategories?.some((item) => item.id === subcategoryId)
@@ -1232,12 +2159,34 @@ export class SettingsStore {
       focusRequest,
       motionKey: `${this.conceptId}:${replacingCategory ? "category-replacement" : "destination-workspace"}`
     });
+    if (!this._detailModule) {
+      void this._ensureDetailModule().then(() => {
+        const loadedCategory = DATA.CATEGORIES.find((entry) => entry.id === category.id);
+        if (!loadedCategory || this.state.screen !== "workspace" || this.state.categoryId !== category.id) return;
+        if (!loadedCategory.subcategories.some((entry) => entry.id === this.state.subcategoryId)) {
+          this.state.subcategoryId = loadedCategory.subcategories[0]?.id || null;
+        }
+        const loadedFocus = focusSettingId
+          ? this._newFocus("setting", focusSettingId, { selector: `[id="setting-${focusSettingId}"]`, reveal: [this.state.subcategoryId] })
+          : null;
+        this.emit({ action: "workspace-load", scopes: ["view", "data", "focus"], focusRequest: loadedFocus, motionKey: "none", announcement: `${loadedCategory.title} settings are ready.` });
+      }).catch(() => {
+        if (this.state.screen === "workspace" && this.state.categoryId === category.id) {
+          this.emit({ action: "workspace-load", scopes: ["view", "data"], motionKey: "none", announcement: `${category.title} details could not load.` });
+        }
+      });
+    }
     return true;
   }
 
   openSetting(settingId) {
     const entry = this.settings.get(settingId);
-    if (!entry) return false;
+    if (!entry) {
+      const known = this.searchIndex.some((document) => document.destination?.settingId === settingId);
+      if (!known) return false;
+      void this._ensureDetailModule().then(() => this.openSetting(settingId));
+      return true;
+    }
     const disclosureId = `${entry.categoryId}:${entry.subcategoryId}`;
     if (/Advanced|Expert|Diagnostic/i.test(entry.exposure || "") && !this.state.advancedSections.includes(disclosureId)) {
       this.state.advancedSections = [...this.state.advancedSections, disclosureId];
@@ -1254,7 +2203,8 @@ export class SettingsStore {
     this.state.navigationOpen = false;
     this.state.inspectorOpen = false;
     this.state.managerQuery = "";
-    this.state.managerHydration = { ...this.state.managerHydration, [manager.id]: { state: "hydrated", hydratedAt: nowISO() } };
+    this._pendingManagerSelection.set(manager.id, { resourceId: options.resourceId || null, childResourceId: options.childResourceId || null });
+    this._setActiveManagerSubscription(manager.id);
     this._setSearch({ surface: `manager:${manager.id}`, query: "", open: false, activeIndex: 0, optionCount: 0 });
     if (manager.id === "providers" && options.resourceId) {
       const provider = this.providers.find((entry) => entry.id === options.resourceId);
@@ -1277,6 +2227,7 @@ export class SettingsStore {
       align: "start"
     });
     this.emit({ action: "navigate", scopes: ["route", "view", "manager", "search", "focus"], focusRequest, motionKey: `${this.conceptId}:destination-manager` });
+    void this.loadManagerInventory(manager.id, { deferFrame: options.deferFrame !== false });
     return true;
   }
 
@@ -1284,7 +2235,7 @@ export class SettingsStore {
     if (typeof destination === "string") {
       if (this.settings.has(destination)) return this.openSetting(destination);
       if (DATA.MANAGERS?.some((entry) => entry.id === destination)) return this.openManager(destination);
-      if (CATEGORIES.some((entry) => entry.id === destination)) return this.openCategory(destination);
+      if (DATA.CATEGORIES.some((entry) => entry.id === destination)) return this.openCategory(destination);
       return false;
     }
     if (!destination) return false;
@@ -1343,8 +2294,9 @@ export class SettingsStore {
   }
 
   setSearch(query, open = true, surface = this.state.search.surface) {
+    this._searchGeneration += 1;
     const documents = this.search(query);
-    this._setSearch({ query: String(query || ""), open: Boolean(open && String(query || "").trim()), activeIndex: 0, optionCount: documents.length, surface });
+    this._setSearch({ query: String(query || ""), open: Boolean(open && String(query || "").trim()), activeIndex: 0, optionCount: documents.length, surface, generation: this._searchGeneration });
     this.emit({ action: "search", scopes: ["search"], motionKey: "search", announcement: documents.length ? `${documents.length} Settings results.` : String(query || "").trim() ? "No Settings results." : null });
     return documents;
   }
@@ -1385,8 +2337,33 @@ export class SettingsStore {
       .map((document) => ({ document, score: scoreQuery(document, normalized) }))
       .filter((entry) => entry.score > 0)
       .sort((a, b) => b.score - a.score || String(a.document.title).localeCompare(String(b.document.title)))
-      .slice(0, limit)
+      .slice(0, Math.max(0, Math.min(12, Number(limit) || 12)))
       .map((entry) => ({ ...entry.document, destination: destinationFor(entry.document) }));
+  }
+
+  async searchLatest(query, options = {}) {
+    const generation = ++this._searchGeneration;
+    await Promise.resolve();
+    const results = this.search(query, options.limit);
+    if (generation !== this._searchGeneration) return deepFreeze({ committed: false, generation, results: [] });
+    this._setSearch({ query: String(query || ""), open: Boolean(String(query || "").trim()), activeIndex: 0, optionCount: results.length, surface: options.surface || this.state.search.surface, generation });
+    this.emit({ action: "search", scopes: ["search"], motionKey: "search", announcement: results.length ? `${results.length} Settings results.` : "No Settings results." });
+    return deepFreeze({ committed: true, generation, results: clone(results) });
+  }
+
+  installLargeCatalogSearchFixture(rowCount = 825) {
+    const count = Math.max(825, Number(rowCount) || 825);
+    const docs = Array.from({ length: count }, (_, index) => this._compactSearchDocument({
+      kind: "Setting",
+      id: `scale-setting-${index + 1}`,
+      title: `Scale setting ${index + 1}`,
+      subtitle: `Deterministic compact search row ${index + 1}`,
+      targetType: "category",
+      targetId: CATEGORIES[index % Math.max(1, CATEGORIES.length)]?.id || "experience",
+      haystack: `scale fixture setting ${index + 1} deterministic compact metadata`
+    }));
+    this.searchIndex = docs;
+    return deepFreeze({ rows: docs.length, attachedManagerRecords: 0, attachedProviderRecords: 0, rawPaths: 0, simulated: true, deterministic: true });
   }
 
   activateSearchResult(document = null) {
@@ -1582,23 +2559,52 @@ export class SettingsStore {
 
   async refreshProvider(providerId = this.state.selectedProviderId) {
     if (this._refreshJobs.has(providerId)) return this._refreshJobs.get(providerId);
+    if (!this._managerCacheMeta.has("providers")) await this.loadManagerInventory("providers", { deferFrame: false, allowInactive: true });
     const provider = this.provider(providerId);
-    if (!provider) return false;
+    if (!provider || provider.compactSummary) return false;
+    const generation = (this._providerRefreshGeneration.get(providerId) || 0) + 1;
+    this._providerRefreshGeneration.set(providerId, generation);
     const capturedScenario = this.state.scenario;
     const lastKnownGood = deepFreeze(clone(provider.models));
     const version = provider.catalogue.version;
+    const request = this.resourceGovernor.request({ owner_domain: "provider-catalogue", resource_family: "provider-network-refresh", scope_refs: [`provider:${provider.id}`], requested: { network: true, retained_cache: true } });
+    const profileId = /offline|unavailable/.test(capturedScenario) ? "offline" : /degraded|error/.test(capturedScenario) ? "slow-network" : this.state.performance.profile;
+    const governorProjection = this.resourceGovernor.applyProjection({ request_id: request.request_id, ...(GOVERNOR_PROJECTION_FIXTURES[profileId] || GOVERNOR_PROJECTION_FIXTURES.normal), generation });
+    const permitOutcome = governorProjection?.effective?.outcome || "queued";
+    const initialState = permitOutcome === "queued" ? "waiting_resource" : permitOutcome === "blocked_permission" ? "waiting_permission" : permitOutcome === "blocked_resource" ? "waiting_network" : permitOutcome === "admitted_degraded" ? "degraded" : "running";
+    const work = this.observableWork.create({
+      owner_domain: "provider-catalogue",
+      scope_refs: [`provider:${provider.id}`],
+      object_refs: [`catalogue:${provider.id}`],
+      title: `Refresh ${provider.name} catalogue`,
+      human_phase: initialState === "waiting_network" ? "Waiting for the network" : initialState === "waiting_resource" ? "Waiting for a runtime permit" : "Checking the provider catalogue",
+      state: initialState,
+      progress_kind: "indeterminate",
+      progress_source: "unknown",
+      wait_reason: governorProjection?.effective?.wait_reason,
+      queue_reason: governorProjection?.effective?.queue_reason,
+      can_cancel: true,
+      can_background: true,
+      can_retry: true,
+      blocking_scope: "provider refresh",
+      generation
+    });
+    this.state.observableWork = this.observableWork.list();
     this._setProviderRefreshing(provider.id, true);
     this.emit({ action: "provider-refresh-start", scopes: ["provider", "refresh"], motionKey: `${this.conceptId}:refresh-start`, announcement: `Refreshing ${provider.name}.` });
 
     const job = (async () => {
-      await new Promise((resolve) => setTimeout(resolve, this.state.reducedMotion ? 24 : 180));
-      const failure = /degraded|error/.test(capturedScenario);
+      await Promise.resolve();
+      await waitFrame();
+      if (this._providerRefreshGeneration.get(providerId) !== generation) return false;
+      const failure = /degraded|error|offline|unavailable/.test(capturedScenario) || ["blocked_permission", "blocked_resource", "cancelled"].includes(permitOutcome);
       if (failure) {
         provider.models = clone(lastKnownGood);
         provider.catalogue.lastKnownGood = lastKnownGood;
         const quarantine = deepFreeze({ id: `quarantine-${Date.now()}`, candidateVersion: `${version}-candidate`, reason: "Fixture validation failed", capturedAt: nowISO() });
         provider.catalogue.quarantine = [...provider.catalogue.quarantine, quarantine];
-        this._recordProviderOperation(provider, "refresh", "quarantined", { scenario: capturedScenario, preservedRows: lastKnownGood.length, quarantineId: quarantine.id });
+        this.observableWork.update(work.operation_id, { state: permitOutcome === "blocked_resource" ? "waiting_network" : "degraded", human_phase: "Last-known-good catalogue retained", wait_reason: governorProjection?.effective?.wait_reason || "Deterministic validation fixture failed", can_retry: true, result_refs: [`catalogue-last-known-good:${provider.id}:${version}`] }, generation);
+        this._recordProviderOperation(provider, "refresh", "quarantined", { scenario: capturedScenario, preservedRows: lastKnownGood.length, quarantineId: quarantine.id, operationId: work.operation_id, generation, permitOutcome });
         this.receipt("Update quarantined", `Validation failed. ${lastKnownGood.length} last-known-good model rows remain active.`, "warning", { persistent: true });
         return false;
       }
@@ -1606,10 +2612,11 @@ export class SettingsStore {
         model.evidence = String(model.evidence || "Evidence checked").replace(/today|minutes ago/i, "just checked");
         model.evidenceFreshness = "Just checked";
       });
-      provider.catalogue.version = `${version.split("+")[0]}+${Date.now()}`;
+      provider.catalogue.version = `${version.split("+")[0]}+generation-${generation}`;
       provider.catalogue.refreshedAt = "Just now";
       provider.catalogue.lastKnownGood = deepFreeze(clone(provider.models));
-      this._recordProviderOperation(provider, "refresh", "accepted", { scenario: capturedScenario, preservedRows: provider.models.length });
+      this.observableWork.update(work.operation_id, { state: "completed", human_phase: "Catalogue validated", can_cancel: false, can_background: false, result_refs: [`catalogue:${provider.id}:${provider.catalogue.version}`], receipt_refs: [`receipt:provider-refresh:${provider.id}:${generation}`] }, generation);
+      this._recordProviderOperation(provider, "refresh", "accepted", { scenario: capturedScenario, preservedRows: provider.models.length, operationId: work.operation_id, generation, permitOutcome });
       this.receipt("Catalogue refreshed", `${provider.name} kept ${provider.models.length} active model rows while checking updates.`, "success", { persistent: true });
       return true;
     })();
@@ -1622,6 +2629,7 @@ export class SettingsStore {
       this._pending.delete(job);
       this._refreshJobs.delete(providerId);
       this._setProviderRefreshing(provider.id, false);
+      this.state.observableWork = this.observableWork.list();
       this.emit({ action: "provider-refresh-end", scopes: ["provider", "refresh", "receipts"], motionKey: `${this.conceptId}:refresh-end`, announcement: `${provider.name} refresh finished.` });
     }
   }
@@ -1637,10 +2645,26 @@ export class SettingsStore {
       logs: `Redacted diagnostic history opened for ${provider.name}.`,
       support: `Provider-specific recovery guidance opened for ${provider.name}.`
     };
+    if (["install", "setup"].includes(action)) return this.requireProviderSetup(providerId);
     const message = messages[action] || `The ${action} action returned an honest concept receipt.`;
     this._recordProviderOperation(provider, action, "simulated", { message });
     this.receipt("Simulated provider action", message, "managed", { persistent: true });
     return true;
+  }
+
+  modelPromptProjection() {
+    const selectedProvider = this.provider();
+    const selectedAccount = selectedProvider?.accounts?.find((entry) => entry.id === selectedProvider.activeAccountId);
+    return deepFreeze({
+      settings_summary: [...this.settings.values()]
+        .filter((entry) => ["effective-difference", "managed", "unavailable"].includes(entry.status))
+        .slice(0, 8)
+        .map((entry) => `${entry.label}: ${entry.stateLabel}`),
+      provider_summary: selectedProvider ? `${selectedProvider.name}: ${selectedProvider.stateLabel || titleCase(selectedProvider.state)}${selectedAccount ? `; future route ${selectedAccount.name}` : ""}` : "No provider selected",
+      operations: this.observableWork.list((entry) => !["completed", "cancelled"].includes(entry.state)).slice(0, 4).map((entry) => `${entry.title}: ${entry.human_phase}`),
+      policy_free: true,
+      omitted: ["raw resource state", "provider catalogue", "binary paths", "credentials", "runtime pool policy", "permit tables"]
+    });
   }
 
   model(modelId) {
@@ -1987,7 +3011,7 @@ export class SettingsStore {
   }
 
   restoreTerminalDefaults(profileId = this.state.selectedTerminalId) {
-    const original = TERMINAL_PROFILES.find((entry) => entry.id === profileId);
+    const original = this._coldDomainTemplates.terminal.find((entry) => entry.id === profileId);
     const profile = this.terminal(profileId);
     if (!original || !profile) return false;
     const normalized = normalizeTerminal(original);
@@ -2126,7 +3150,9 @@ export class SettingsStore {
       case "subcategory.set": return this.setSubcategory(input.subcategoryId || input.id, input.reason || "jump");
       case "disclosure.set": return this.setAdvancedSection(input.sectionId || input.id, input.open);
       case "manager.tab": return this.setManagerTab(input.tab || input.id);
+      case "list.window.shift": return this.shiftListWindow(input.key, input.direction);
       case "search.set": return this.setSearch(input.query, input.open ?? true, input.surface);
+      case "search.latest": return this.searchLatest(input.query, input);
       case "search.move": return this.moveSearchSelection(input.direction ?? input.delta);
       case "search.select": return this.setSearchSelection(input.index);
       case "search.activate": return this.activateSearchResult(input.document);
@@ -2167,6 +3193,7 @@ export class SettingsStore {
       case "spelling.action": return this.spellAction(input.name || input.operation || input.spellingAction, input);
       case "manager.resource.select": return this.selectManagerResource(input.managerId, input.resourceId || input.id);
       case "manager.resource.update": return this.updateManagerResource(input.managerId, input.resourceId || input.id, input.changes || {});
+      case "manager.fixture": return this.applyManagerStateFixture(input.state || input.fixture || input.id, input.managerId || this.state.managerId);
       case "manager.action": return this.runManagerAction(input.managerId || this.state.managerId, input.resourceId, input.name || input.managerAction || input.operation);
       case "flow.start": return this.startFlow(input.kind || "generic", input);
       case "flow.choose": return this.chooseFlow(input.choice);
@@ -2175,6 +3202,11 @@ export class SettingsStore {
       case "flow.close": return this.closeFlow();
       case "provider.installation.select": return this.selectProviderInstallation(input.providerId, input.installationId || input.id);
       case "provider.installation.action": return this.runProviderInstallationAction(input.providerId, input.installationId, input.installationAction || input.name || input.operation);
+      case "provider.setup.required": return this.requireProviderSetup(input.providerId || input.id, input);
+      case "provider.setup.demand": return this.providerSetupFromDemand(input.providerId || input.id, input);
+      case "provider.setup.advance": return this.advanceProviderSetup(input.name || input.operation || input.setupAction, input);
+      case "performance.profile": return this.applyPerformanceProfile(input.profile || input.id || input.value);
+      case "observable.fixture": return this.observableWorkFixture(input.fixture || input.id);
       case "sound.preview": return this.previewSound(input.resourceId || input.id);
       case "sound.stop": return this.stopSoundPreview();
       case "theme.preview": return this.previewTheme(input.theme || input.value);
@@ -2185,6 +3217,7 @@ export class SettingsStore {
       case "external.reconcile": return this.reconcileExternalChange(input.choice);
       case "fixture.trigger": return this.triggerFixture(input.fixtureId || input.id);
       case "persistence.reset": return this.resetPersistentDemo();
+      case "persistence.flush": return this.flushPersistence({ explicit: true });
       case "receipt.dismiss": return this.dismissReceipt(input.receiptId || input.id);
       default: return false;
     }

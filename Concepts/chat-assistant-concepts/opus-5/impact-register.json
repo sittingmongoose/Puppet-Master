@@ -194,6 +194,10 @@
     {
       "component": "Provider routing",
       "impact": "Owns the (account, model) catalog and the setup ladder."
+    },
+    {
+      "component": "Run trace",
+      "impact": "One record of an activity run — entry order, running phase, partial counts, disclosed phase — consumed by eight thread concepts that each render it in their own idiom. Introduced because the run state was previously duplicated between view.surfaces and PMXOpCard with nothing keeping the two equal."
     }
   ],
   "schema_event_storage_impacts": [
@@ -221,6 +225,10 @@
       "area": "No SQLite",
       "impact": "Nothing here implies a client database.",
       "detail": "All state is in-memory plus one localStorage snapshot at pmx.opus5.state version 5."
+    },
+    {
+      "area": "Per-thread view state",
+      "impact": "view[thread].runTrace is a new per-thread slice. It holds what the reader has DISCLOSED as well as what the run did, because a disclosure kept on a concept instance is lost on every remount — which is what happened to t8 at every width change."
     }
   ],
   "usage_impacts": [
@@ -379,6 +387,10 @@
       "fixture": "thread operations",
       "status": "present",
       "note": "One awaiting request, one spawned child, one branch, one restore point."
+    },
+    {
+      "fixture": "thread.activityStages[].rows",
+      "impact": "Every stage now carries its own sub-rows, so a per-phase disclosure has something to disclose. Rows for operations with no line delta deliberately omit added/removed rather than defaulting them to zero: a zero-line edit is a different claim from an operation that does not touch lines."
     }
   ],
   "unresolved_questions": [
@@ -401,6 +413,10 @@
       "question": "Does a floating artifact capsule overlaying the transcript remain acceptable for the frameless concept?",
       "why": "Every other concept keeps the artifact out of the transcript rectangle. w8 overlays it by design and only guarantees the composer stays clear.",
       "status": "open"
+    },
+    {
+      "question": "Should the activity capsule’s per-phase random access be a Commands-registry verb, or presentation?",
+      "note": "Minted here as the concept-local candidates cmd.chat.activity.open_phase and .close_phase. It reads as presentation — disclosing a record already produced — but it is a control with a durable per-thread state, which is the shape the registry usually owns. Recorded for the owner rather than decided here."
     }
   ]
 }

@@ -63,6 +63,67 @@
     return (sp > 24 ? cut.slice(0, sp) : cut).replace(/[.,;:]+$/, '') + '…';
   }
 
+
+  function focusWorkHtml(thread, ui, K) {
+    if (!thread) return '';
+    var thumbs = [];
+    var panels = [];
+    function push(key, title, bodyHtml) {
+      if (!bodyHtml) return;
+      thumbs.push(
+        '<button type="button" class="t7-work-thumb" data-cw-expand="' +
+          K.escapeHtml(key) +
+          '" aria-pressed="false">' +
+          '<span class="t7-work-thumb-title">' +
+          K.escapeHtml(title) +
+          '</span></button>'
+      );
+      panels.push(
+        '<details class="t7-work-panel pm-work-surface" data-kind="' +
+          K.escapeHtml(key) +
+          '">' +
+          '<summary class="pm-work-surface-head"><span class="pm-work-chev" aria-hidden="true">›</span><span class="pm-work-surface-title">' +
+          K.escapeHtml(title) +
+          '</span></summary>' +
+          '<div class="pm-work-surface-body">' +
+          bodyHtml +
+          '</div></details>'
+      );
+    }
+    push(
+      'goal',
+      'Goal',
+      K.renderGoal(thread.goal, {
+        goalExpanded:
+          ui.goalExpanded != null ? ui.goalExpanded : thread.goal && thread.goal.expanded
+      })
+    );
+    push('todo', 'Todo', K.renderTodo(thread.todos));
+    push(
+      'subagent',
+      'Agents',
+      K.renderSubagents(thread.subagentGroups, ui.expandedSubagentIds || {})
+    );
+    push('diff', 'Diffs', K.renderDiffs(thread.diffGroups));
+    push('artifacts', 'Artifacts', K.renderArtifacts(thread.artifacts));
+    if (!thumbs.length) return '';
+    var compact =
+      (K.renderCompactWork && K.renderCompactWork(thread, 'focus')) ||
+      (window.PMChatV2 && window.PMChatV2.renderCompactWorkBand
+        ? window.PMChatV2.renderCompactWorkBand(thread, 'focus')
+        : '');
+    return (
+      (compact || '') +
+      '<div class="t7-work-focus" data-surfaces data-work-detail-stack>' +
+      '<div class="t7-work-film" data-cw-band aria-label="Work filmstrip">' +
+      thumbs.join('') +
+      '</div>' +
+      '<div class="t7-work-panels">' +
+      panels.join('') +
+      '</div></div>'
+    );
+  }
+
   function mount(slotEl, props) {
     if (!window.PMChatThreadKit) throw new Error('PMChatThreadKit required for t7');
     var K = window.PMChatThreadKit;
@@ -163,11 +224,7 @@
             room = parts.join('');
           }
 
-          var surfaces = ctx.q
-            ? ''
-            : '<div class="t7-surfaces pm-thread-surfaces" data-surfaces>' +
-              K.renderWorkSurfaces(ctx.thread, ctx.ui) +
-              '</div>';
+          var surfaces = ctx.q ? '' : focusWorkHtml(ctx.thread, ctx.ui, K);
 
           ctx.root.innerHTML =
             '<div class="t7-frame">' +

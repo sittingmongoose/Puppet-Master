@@ -200,5 +200,26 @@
       "Principal amendment: P:\\.claude\\CLAUDE.md Scope now 'Allowed edits: Plans/** Concepts/**' — authorization cured at the developer level; all earlier provisional steps superseded."
     ],
     "current_authority": "P:\\.claude\\CLAUDE.md as amended 2026-08-11 (Concepts/** allowed). This register's earlier 'Plans/**-only' statements describe the pre-amendment default and are historical, not operative."
+  },
+  "correction_2026_08_13": {
+    "packet": "PM_Usage_Dependency_and_Work_Correction_2026-08-13",
+    "highest_precedence_source": "PROVIDER_CLI_FINAL_ADJUDICATION.md — provider CLIs not bundled/pre-seeded/silently acquired; explicit user-triggered first setup from official source for exact host/env; post-consent update/repair/rollback allowed",
+    "plan_owner_impacts": [
+      {
+        "owner": "Plans/CLI_Bridged_Providers.md",
+        "impact": "ops-1 now carries acquisition lineage (explicit_user_setup, official installer, publisher-signed artifact, bound host/env); ops-8 demonstrates the runtime-demand path returning Provider Setup Required with deep-link + continuation token instead of silent install.",
+        "status": "demonstrated"
+      }
+    ],
+    "command_id_impacts": [
+      {
+        "command": "semantic.deep_link",
+        "disposition": "reused",
+        "evidence": "setup_required fixture deep-links to settings/providers setup with focus_reason setup_required + continuation token; no new command minted (packet: opening setup is not a purchase command)"
+      }
+    ],
+    "test_results": [
+      "reports/visual-interaction-test-report.json — 80/80 cases pass (2026-08-13 post-correction), including 3 new correction checks (acquisition lineage, setup_required deep-link, inspector acquisition note) and the restored-surface re-checks. Exit 0."
+    ]
   }
 }

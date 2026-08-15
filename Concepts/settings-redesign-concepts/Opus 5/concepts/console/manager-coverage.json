@@ -7,8 +7,8 @@
   "matrix_source": "PACKET/MANAGER_COVERAGE_MATRIX.json",
   "assignment_group": "concept_2",
   "summary": {
-    "families_required": 11,
-    "demonstrated": 7,
+    "families_required": 12,
+    "demonstrated": 8,
     "shared_grammar": 4,
     "deferred_named_owner": 0,
     "missing": 0
@@ -195,6 +195,20 @@
         "prose"
       ],
       "route": "#/m/manager-usage"
+    },
+    {
+      "manager_id": "manager-performance",
+      "title": "Resource use and performance",
+      "sections": 6,
+      "items": 15,
+      "setting_rows": 6,
+      "section_kinds": [
+        "cards",
+        "rows",
+        "table",
+        "prose"
+      ],
+      "route": "#/m/manager-performance"
     }
   ],
   "deferred_named_owners": [
@@ -223,5 +237,18 @@
       "why_deferred": "Update/repair/rollback policy is highest-precedence canon in PROVIDER_CLI_FINAL_ADJUDICATION.md."
     }
   ],
-  "rule_check": "missing is a failure; this concept reports 0 missing"
+  "rule_check": "missing is a failure; this concept reports 0 missing",
+  "correction_2026_08_13": {
+    "packet": "PM_Settings_Dependency_and_Work_Correction_2026-08-13",
+    "added_family": {
+      "family": "Resource use and performance",
+      "manager_id": "manager-performance",
+      "classification": "demonstrated",
+      "in_packet_matrix": false,
+      "why_added": "PERFORMANCE_SETTINGS_RETURN \u00a79 and decision register \u00a72.3/\u00a720 require a human resource-policy surface and one visible RuntimeResourceGovernor. MANAGER_COVERAGE_MATRIX.json has no such family, so it is recorded here as a delta rather than by editing the packet.",
+      "evidence": "6 sections, 15 items, 6 ordinary rows; route #/m/manager-performance; built in every concept so no concept can invent a second governor."
+    },
+    "assignment_after": 9,
+    "note": "All originally required families remain demonstrated; nothing was reclassified."
+  }
 }

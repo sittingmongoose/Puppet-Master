@@ -46,21 +46,70 @@
     {
       "owner": "Release / updates owner (Release_Supply_Chain.md)",
       "impact": "Built-in sound assets and bundled themes ship with license + version + hash metadata ('PM bundled'); imported packs must never be bundled while license-unverified. The release pipeline owns asset provenance stamping."
+    },
+    {
+      "owner": "Performance decision register (02_FULL_THREAD_CURRENT_DECISION_REGISTER.md, correction packet 2026-08-13)",
+      "kind": "extends",
+      "summary": "Coordination authority reviewed after the original packet omitted it. Concepts align to: RuntimeResourceGovernor as the sole resource/admission owner (no concept invents a second governor); ObservableWork as the sole truthful progress projection (op events now carry progressKind, source, completed/total only with a real denominator, and waitReason); the seven-execution-lane model, hot/warm/cold state, low-resource/legacy profile, and lazy Settings opening model (register sections 2, 7, 8, 11, 13, 20) as Slint-port constraints recorded in slint_port_impacts and test fixtures.",
+      "evidence": "reference-review-report.json; TEST_REPORT.md correction section"
     }
   ],
   "settings_inventory_impacts": [
-    { "id": "general.sounds.master-enabled", "status": "exists (packet extension)", "note": "Master sound switch; console master strip and workspace row share the value." },
-    { "id": "general.sounds.master-volume", "status": "exists (packet extension)", "note": "Slider; console volume cell mirrors it." },
-    { "id": "general.sounds.quiet-hours", "status": "exists (packet extension)", "note": "Console renders start/end time inputs; row keeps the humanized string." },
-    { "id": "general.desktop.minimize-to-tray", "status": "exists (packet extension)", "note": "Rendered as a row inside the Desktop console's tray strip." },
-    { "id": "general.desktop.close-to-tray", "status": "exists (packet extension)", "note": "As above." },
-    { "id": "notifications.destinations.*", "status": "NEW - no inventory ids", "note": "Per-kind destination configs (slack workspace/channel/threadOnFailure/mention/tokenRef; webhook url/method/headers/template/successPredicate; ntfy server/topic/priority/tags/clickTarget; pushover device/priority/userKeyRef; telegram chatId/parseMode/retry/botTokenRef). Census against inventory positions 817-826 before minting."
+    {
+      "id": "general.sounds.master-enabled",
+      "status": "exists (packet extension)",
+      "note": "Master sound switch; console master strip and workspace row share the value."
     },
-    { "id": "notifications.routing.*", "status": "NEW - matrix, not scalar rows", "note": "Six events x destinations with the four-cell enum + per-event soundId." },
-    { "id": "notifications.sounds.library / packs", "status": "NEW - resource registry", "note": "Assets with provenance; packs with licenseCheck/formatCheck state machines." },
-    { "id": "appearance.customThemes.*", "status": "NEW - file-backed resources", "note": "TOML file, baseTheme, schemaVersion, liveReload, errors[], fallback, restart marker." },
-    { "id": "general.visual.glass-transparency / glass-background-mode", "status": "exists", "note": "Theme-specific lock is dynamic in this concept: rows unlock live while a Glass theme is active (including hover preview) and re-lock with the stated reason otherwise." },
-    { "id": "general.spellcheck.* + general.writing.grammar-assist", "status": "exists", "note": "Upgraded from plain rows into the Spellcheck & Dictionaries console; values unchanged." }
+    {
+      "id": "general.sounds.master-volume",
+      "status": "exists (packet extension)",
+      "note": "Slider; console volume cell mirrors it."
+    },
+    {
+      "id": "general.sounds.quiet-hours",
+      "status": "exists (packet extension)",
+      "note": "Console renders start/end time inputs; row keeps the humanized string."
+    },
+    {
+      "id": "general.desktop.minimize-to-tray",
+      "status": "exists (packet extension)",
+      "note": "Rendered as a row inside the Desktop console's tray strip."
+    },
+    {
+      "id": "general.desktop.close-to-tray",
+      "status": "exists (packet extension)",
+      "note": "As above."
+    },
+    {
+      "id": "notifications.destinations.*",
+      "status": "NEW - no inventory ids",
+      "note": "Per-kind destination configs (slack workspace/channel/threadOnFailure/mention/tokenRef; webhook url/method/headers/template/successPredicate; ntfy server/topic/priority/tags/clickTarget; pushover device/priority/userKeyRef; telegram chatId/parseMode/retry/botTokenRef). Census against inventory positions 817-826 before minting."
+    },
+    {
+      "id": "notifications.routing.*",
+      "status": "NEW - matrix, not scalar rows",
+      "note": "Six events x destinations with the four-cell enum + per-event soundId."
+    },
+    {
+      "id": "notifications.sounds.library / packs",
+      "status": "NEW - resource registry",
+      "note": "Assets with provenance; packs with licenseCheck/formatCheck state machines."
+    },
+    {
+      "id": "appearance.customThemes.*",
+      "status": "NEW - file-backed resources",
+      "note": "TOML file, baseTheme, schemaVersion, liveReload, errors[], fallback, restart marker."
+    },
+    {
+      "id": "general.visual.glass-transparency / glass-background-mode",
+      "status": "exists",
+      "note": "Theme-specific lock is dynamic in this concept: rows unlock live while a Glass theme is active (including hover preview) and re-lock with the stated reason otherwise."
+    },
+    {
+      "id": "general.spellcheck.* + general.writing.grammar-assist",
+      "status": "exists",
+      "note": "Upgraded from plain rows into the Spellcheck & Dictionaries console; values unchanged."
+    }
   ],
   "settings_schema_impacts": [
     "Vault-reference secret type: fields matching *Ref render as reference selectors (choose existing / create in vault); reveal/copy never offered; import/export must exclude them.",
@@ -81,13 +130,20 @@
   "schema_event_storage_impacts": [
     "Staged 'op' events ({name, ref, phase}) project truthful ObservableWork phases for dest-test, sound-upload, pack-import, theme-reload, and the installation lifecycle; phases are state changes and are never skipped under reduced motion.",
     "dest-test receipts persist a lastTest {when, ok, receiptId, masked:true} on the destination; the receipt id is the storage anchor.",
-    "Sound preview deliberately emits NO receipt (local-only); this asymmetry is a storage-level contract, not a UI choice."
+    "Sound preview deliberately emits NO receipt (local-only); this asymmetry is a storage-level contract, not a UI choice.",
+    {
+      "area": "observable-work-projection",
+      "impact": "Demo op events aligned to the ObservableWork contract: progressKind (determinate|indeterminate), progress source (measured|derived|unknown), completed/total emitted only when a real denominator exists (bare percentages are stripped at the emitter), waitReason from the register's waiting_* vocabulary where applicable (e.g. waiting_resource on rate-limited test sends, waiting_for_idle surfaced through installation update states). Production schema should adopt the full state grammar: accepted..recovery_required.",
+      "source": "2026-08-13 dependency correction"
+    }
   ],
   "migration_supersession_impacts": [
     "Supersede the old Settings chip/bloom/no-sidebar contract (cmd.settings.bloom.open retires or aliases to cmd.settings.open).",
     "Supersede stale right-side-panel language: the Activity Bar controls one adjacent LEFT side-panel slot; the Desktop console's Activity Bar board uses that canon.",
     "Notification surface consolidation: retire any permanent bottom-right toast stack, status-bar bell, Activity Bar notification shortcut, and dedicated Notifications side panel. The title-bar stack/count/sprout inbox is the sole in-app affordance; c2's console carries the surfaceRule copy and routes dest-test results into that stack only.",
-    "Supersede any legacy 'regular/yolo' access-mode coupling in copy; access modes are Full Access / Auto / Auto accept edits / Ask for approval (the shared demo data still carries one banned-word sentence; c2 sanitizes at render time - recorded as a data defect, fix belongs in the shared data)."
+    "Supersede any legacy 'regular/yolo' access-mode coupling in copy; access modes are Full Access / Auto / Auto accept edits / Ask for approval (the shared demo data still carries one banned-word sentence; c2 sanitizes at render time - recorded as a data defect, fix belongs in the shared data).",
+    "Fabricated percentages in progress displays (register sections 11 and 16.6): the index-rebuild fixture previously emitted invented pct values; it now emits an honest indeterminate scanning phase followed by measured file counts.",
+    "Startup discovery scans implied by copy (register section 13): the skills-discovery row description no longer claims a startup scan; discovery is bounded and demand-driven."
   ],
   "slint_port_impacts": [
     "Minimap: the proportional block track + draggable viewport window maps to a custom slider driven by the scrollspy registry model (offsets from the section model, never widget geometry); keyboard parity is already role=slider.",
@@ -98,33 +154,101 @@
     "Only the shared shell's single allowed backdrop-filter layer is used; the new consoles add none."
   ],
   "test_fixtures": [
-    { "id": "dest-test", "expect": "Explicit per-destination button; masked payload; 1/30s rate limit (rate-limited phase renders); receipted; lastTest updates on the card; delivered test joins the title-bar stack via PMShell.notify." },
-    { "id": "sound-preview-no-receipt", "expect": "Preview button plays locally: op phases playing->done, transient 'Playing locally' strip, and NO receipt is emitted." },
-    { "id": "sound-upload", "expect": "gentle-bell.ogg appears after checking phase with format/duration/hash noted; receipted." },
-    { "id": "pack-import-license-gate", "expect": "pack.openpeon-vol2 import runs format-check then license-check, ends blocked; receipt states unverified packs are never enabled; pack stays out of the library." },
-    { "id": "pack-import-format-gate", "expect": "pack.warcraft-rip rejected at format-check with the manifest detail; license check not run." },
-    { "id": "theme-reload", "expect": "theme.cobalt-mono validates and stays invalid; line-41 diagnosis renders; base theme remains in effect; receipt carries the line and message." },
-    { "id": "fx.validation-error", "expect": "Webhook successPredicate shows a FIELD-level error on card and editor; fetch-size row shows its own error in the workspace; notice deep-links to the webhook card." },
-    { "id": "fx.theme-fallback", "expect": "Notice targets the Appearance console; Cobalt Mono card shows diagnosis + fallback banner." },
-    { "id": "fx.restart-required", "expect": "Appearance console shows the restart banner; UI scale radio shows the takes-effect-after-restart marker; ui-scale row carries the restart flag." },
-    { "id": "scenario.first-run", "expect": "Destinations reduce to built-ins; sound library to built-ins; packs empty with a real empty state; custom themes empty with a real empty state; teacher lastSession Never." },
-    { "id": "scenario.offline", "expect": "Non-built-in ready destinations become unavailable with the queue-and-send reason; Test send disables with that reason; providers show last-known-good catalogs." },
-    { "id": "teacher-guided-slack", "expect": "teach.slack-setup step 1 highlights the real dest.slack card; step 2's action opens the REAL add-destination form with kind slack and the workspace field focused; nothing is pre-submitted." },
-    { "id": "install-update / install-update-fail", "expect": "codex Ask-first update runs updating->verifying->ready->done with truthful phase strip; copilot Retry runs the fail path and rolls back with both history entries." }
+    {
+      "id": "dest-test",
+      "expect": "Explicit per-destination button; masked payload; 1/30s rate limit (rate-limited phase renders); receipted; lastTest updates on the card; delivered test joins the title-bar stack via PMShell.notify."
+    },
+    {
+      "id": "sound-preview-no-receipt",
+      "expect": "Preview button plays locally: op phases playing->done, transient 'Playing locally' strip, and NO receipt is emitted."
+    },
+    {
+      "id": "sound-upload",
+      "expect": "gentle-bell.ogg appears after checking phase with format/duration/hash noted; receipted."
+    },
+    {
+      "id": "pack-import-license-gate",
+      "expect": "pack.openpeon-vol2 import runs format-check then license-check, ends blocked; receipt states unverified packs are never enabled; pack stays out of the library."
+    },
+    {
+      "id": "pack-import-format-gate",
+      "expect": "pack.warcraft-rip rejected at format-check with the manifest detail; license check not run."
+    },
+    {
+      "id": "theme-reload",
+      "expect": "theme.cobalt-mono validates and stays invalid; line-41 diagnosis renders; base theme remains in effect; receipt carries the line and message."
+    },
+    {
+      "id": "fx.validation-error",
+      "expect": "Webhook successPredicate shows a FIELD-level error on card and editor; fetch-size row shows its own error in the workspace; notice deep-links to the webhook card."
+    },
+    {
+      "id": "fx.theme-fallback",
+      "expect": "Notice targets the Appearance console; Cobalt Mono card shows diagnosis + fallback banner."
+    },
+    {
+      "id": "fx.restart-required",
+      "expect": "Appearance console shows the restart banner; UI scale radio shows the takes-effect-after-restart marker; ui-scale row carries the restart flag."
+    },
+    {
+      "id": "scenario.first-run",
+      "expect": "Destinations reduce to built-ins; sound library to built-ins; packs empty with a real empty state; custom themes empty with a real empty state; teacher lastSession Never."
+    },
+    {
+      "id": "scenario.offline",
+      "expect": "Non-built-in ready destinations become unavailable with the queue-and-send reason; Test send disables with that reason; providers show last-known-good catalogs."
+    },
+    {
+      "id": "teacher-guided-slack",
+      "expect": "teach.slack-setup step 1 highlights the real dest.slack card; step 2's action opens the REAL add-destination form with kind slack and the workspace field focused; nothing is pre-submitted."
+    },
+    {
+      "id": "install-update / install-update-fail",
+      "expect": "codex Ask-first update runs updating->verifying->ready->done with truthful phase strip; copilot Retry runs the fail path and rolls back with both history entries."
+    },
+    {
+      "id": "corr-observable-work",
+      "note": "2026-08-13 dependency correction: op-event progressKind/source/denominator assertions and lazy-hydration DOM evidence probes (see TEST_REPORT correction section)"
+    }
   ],
   "deferred_named_owners": [
-    { "item": "Real audio playback for preview/test sounds", "owner": "Media/audio runtime owner (Media_Generation_and_Capabilities.md)", "note": "The demo projects phases; actual device output and per-device routing are runtime work." },
-    { "item": "OS notification bridge (system destination, focus-assist respect)", "owner": "Desktop shell owner (FinalGUISpec.md desktop canon)", "note": "respectFocusAssist is rendered; the OS bridge is native work." },
-    { "item": "Vault reference creation flow", "owner": "Secrets/keychain owner", "note": "The selector offers 'New vault reference...' as a receipt; the real flow is keychain-native." },
-    { "item": "TOML theme parser + schema validator", "owner": "Theme system owner (F3-425/444)", "note": "Line-level diagnosis shape is fixed here; the parser is runtime work." },
-    { "item": "Tray icon + progress ring + real tray menu", "owner": "Desktop shell owner", "note": "The console shows a labeled static preview, never fake controls." },
-    { "item": "Full Server module shell", "owner": "Server Backbone return (Post-Return Reconciliation v6)", "note": "Reserved destinations render in c4-ledger; c2 only cross-links." }
+    {
+      "item": "Real audio playback for preview/test sounds",
+      "owner": "Media/audio runtime owner (Media_Generation_and_Capabilities.md)",
+      "note": "The demo projects phases; actual device output and per-device routing are runtime work."
+    },
+    {
+      "item": "OS notification bridge (system destination, focus-assist respect)",
+      "owner": "Desktop shell owner (FinalGUISpec.md desktop canon)",
+      "note": "respectFocusAssist is rendered; the OS bridge is native work."
+    },
+    {
+      "item": "Vault reference creation flow",
+      "owner": "Secrets/keychain owner",
+      "note": "The selector offers 'New vault reference...' as a receipt; the real flow is keychain-native."
+    },
+    {
+      "item": "TOML theme parser + schema validator",
+      "owner": "Theme system owner (F3-425/444)",
+      "note": "Line-level diagnosis shape is fixed here; the parser is runtime work."
+    },
+    {
+      "item": "Tray icon + progress ring + real tray menu",
+      "owner": "Desktop shell owner",
+      "note": "The console shows a labeled static preview, never fake controls."
+    },
+    {
+      "item": "Full Server module shell",
+      "owner": "Server Backbone return (Post-Return Reconciliation v6)",
+      "note": "Reserved destinations render in c4-ledger; c2 only cross-links."
+    }
   ],
   "unresolved_questions": [
     "Should the routing matrix expose per-destination quiet-hours overrides (e.g. Telegram allowed during quiet hours for approval.needed), or does the master quiet-hours window always win?",
-    "Destination label auto-derivation (Slack · #channel) vs user-editable labels: which is canon when the channel is renamed upstream?",
+    "Destination label auto-derivation (Slack \u00b7 #channel) vs user-editable labels: which is canon when the channel is renamed upstream?",
     "Does theme hover preview apply to a second window of the same profile, or is preview strictly per-window while Apply is per-profile?",
     "Dictionary removal of shipped base words: is masking (this build's session-local 'removed' list) acceptable canon, or must base lists be immutable with only additions?",
-    "Where does the sound-pack license review live - a Settings-side human review flow, or a Release-pipeline-only path with Settings read-only?"
+    "Where does the sound-pack license review live - a Settings-side human review flow, or a Release-pipeline-only path with Settings read-only?",
+    "Register section 23 calibration gates recorded, not claimed: 825+-setting search responsiveness, 100 detected installations collapsed to human summaries, Settings Home with all manager summaries plus exactly one lazy-hydrated manager, and old-hardware (Ivy Bridge/Xeon) / poor-network operation are implementation benchmarks; the demo proves the design shapes (humanized collapse, lazy hydration, cached-catalog-first copy) but measures nothing."
   ]
 }

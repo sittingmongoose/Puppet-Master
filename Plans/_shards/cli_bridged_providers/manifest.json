@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-08-13T17:12:34Z",
+  "generated_at_utc": "2026-08-15T03:16:34Z",
   "index_path": "Plans/_shards/cli_bridged_providers/00-index.md",
-  "index_sha256": "d4fe0c9117662fedb0968754af5ae4f02d382b44a78c4f93c739c5728e312330",
+  "index_sha256": "da3716a98d2f5da4a9f86e1adc494c97144859b6d3e52d1de1b251c5da9d9f47",
   "manifest_path": "Plans/_shards/cli_bridged_providers/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/cli_bridged_providers/001-preamble.md",
-      "sha256": "a3110f25ccabfe05a5d0b0bcaf131ff439447969059480eb41a895a7f08a6261",
+      "sha256": "07b029240bcc9b5342231116c7a58561da1628fcb010e8f5b81a7f5bb2e31081",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/cli_bridged_providers/002-canonical-owner-section-requirements.md",
-      "sha256": "9f6b8b9ac8e48b533b5f021dfa001617e52097a2ce49ac4bf8db9b37f283f46e",
+      "sha256": "edb3b74449d994f08527f13d1384310b1745f9ac24f7006471fdf8a31deb7b3a",
       "shard_id": "002",
       "source_line_end": 12,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "Purpose",
       "path": "Plans/_shards/cli_bridged_providers/003-purpose.md",
-      "sha256": "1798899921fdf722eec53cc8ae1586a34b1991735bd299a184ac8d083fd08dc8",
+      "sha256": "54c95330df00c93e54c00497b3dfdb9827ce5dc41665f04819de119b132d7419",
       "shard_id": "003",
       "source_line_end": 59,
       "source_line_start": 15,
@@ -35,7 +35,7 @@
     {
       "heading": "Canonical data-shape reconciliation",
       "path": "Plans/_shards/cli_bridged_providers/004-canonical-data-shape-reconciliation.md",
-      "sha256": "8b702915249019df39ee3233cb7aac3ed7d8b3e09519b1f9fd90b686c8cc4e32",
+      "sha256": "d207d82deba2f67c98d4f097f2c1d896ea9d811e1f477626aa5fd798fd246943",
       "shard_id": "004",
       "source_line_end": 92,
       "source_line_start": 61,
@@ -44,7 +44,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260630-001-feature-intake",
       "path": "Plans/_shards/cli_bridged_providers/005-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
-      "sha256": "c3ef4b69cdb21fcc9e522915f2f44cf06a3e3587803e1fe80ccf39beed7fb3bf",
+      "sha256": "41dfbca0b48096e06d01b4cfff63645a6e43250ccd971a211ac50a7532aef8dc",
       "shard_id": "005",
       "source_line_end": 231,
       "source_line_start": 94,
@@ -53,7 +53,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/cli_bridged_providers/006-owner-consumer-map.md",
-      "sha256": "d48542be78a30573658e028488483f9fa4e37105d070f1af8e1fde08396eedc2",
+      "sha256": "f588af03c9607b82ec01b5fbb74a81ae069652f23097be57c1af5bb8e6d6c90d",
       "shard_id": "006",
       "source_line_end": 237,
       "source_line_start": 233,
@@ -62,61 +62,79 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/cli_bridged_providers/007-planunits.md",
-      "sha256": "d66a18b6252db92b49b3c3ddef857e49b6cb5137c36d514009179710f6dc354e",
+      "sha256": "8c8119b8bd3b4a4c5f1dac1094e71a118461c78646ef2a1007329f0635ae4d68",
       "shard_id": "007",
-      "source_line_end": 1157,
+      "source_line_end": 290,
       "source_line_start": 239,
       "split_rule": "heading-##"
     },
     {
-      "heading": "Migration Coverage",
-      "path": "Plans/_shards/cli_bridged_providers/008-migration-coverage.md",
-      "sha256": "b2529132fa3dfcb5934308fcc685dfd82531f00d77100792be73812b1de78878",
+      "heading": "Remaining Runtime Canon Closure Addendum (2026-08-14)",
+      "path": "Plans/_shards/cli_bridged_providers/008-remaining-runtime-canon-closure-addendum-2026-08-14.md",
+      "sha256": "863f8d2885cf581b67f08e4fe78ef8992254a273fd7b8129c60d3629045b7a7e",
       "shard_id": "008",
-      "source_line_end": 1169,
-      "source_line_start": 1159,
+      "source_line_end": 1187,
+      "source_line_start": 292,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Migration Coverage",
+      "path": "Plans/_shards/cli_bridged_providers/009-migration-coverage.md",
+      "sha256": "1a0ba31267979c30cb9f56ec4da5c699cdb945d8d63d46800d93e8774c6f88ca",
+      "shard_id": "009",
+      "source_line_end": 1199,
+      "source_line_start": 1189,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260624-001-provider-updates",
-      "path": "Plans/_shards/cli_bridged_providers/009-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
-      "sha256": "cf7ddbc8da4fd12a733694e0f7b29b3dc6d0a0dfc84731fac1c6c9265d8a82db",
-      "shard_id": "009",
-      "source_line_end": 1343,
-      "source_line_start": 1171,
+      "path": "Plans/_shards/cli_bridged_providers/010-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "sha256": "7ecfabb6a9b2b326f69e29aeda505816d5c3142330c0cd0a8019e2a11a15a2a4",
+      "shard_id": "010",
+      "source_line_end": 1373,
+      "source_line_start": 1201,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260703-001-feature-intake",
-      "path": "Plans/_shards/cli_bridged_providers/010-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
-      "sha256": "421aee6d236477e48c52e85f56cdc315937bc766c42d1ded727da78b15a47e6b",
-      "shard_id": "010",
-      "source_line_end": 1427,
-      "source_line_start": 1345,
+      "path": "Plans/_shards/cli_bridged_providers/011-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "sha256": "2fb09c3cf96a7e0411c76aedc7903b46acaffdc82841443ca180b1fee6abf880",
+      "shard_id": "011",
+      "source_line_end": 1457,
+      "source_line_start": 1375,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Remaining Runtime Integration Addendum - Provider CLI Lifecycle Consumer (2026-08-13)",
+      "path": "Plans/_shards/cli_bridged_providers/012-remaining-runtime-integration-addendum-provider-cli-lifecycle-co.md",
+      "sha256": "540ee02765b4ce0b063899f94cd2a1c5de4e6c5c8aaa42c12b89b007afd50525",
+      "shard_id": "012",
+      "source_line_end": 1576,
+      "source_line_start": 1459,
       "split_rule": "heading-##"
     },
     {
       "heading": "Usage And Quota Evidence Addendum - 2026-07-09",
-      "path": "Plans/_shards/cli_bridged_providers/011-usage-and-quota-evidence-addendum-2026-07-09.md",
-      "sha256": "33eca2a9a64a2ac78e7d19aca5d754bb356239211aba7a5a86e006a8c9b4fb1b",
-      "shard_id": "011",
-      "source_line_end": 1514,
-      "source_line_start": 1429,
+      "path": "Plans/_shards/cli_bridged_providers/013-usage-and-quota-evidence-addendum-2026-07-09.md",
+      "sha256": "6ee3389bf71673f44bf4450dfbe3e725ba64e447f6f3c05cbde7f7f3d78994cb",
+      "shard_id": "013",
+      "source_line_end": 1663,
+      "source_line_start": 1578,
       "split_rule": "heading-##"
     },
     {
       "heading": "FABLE Residual CLI Bridge Contract Cleanup Addendum - 2026-07-07",
-      "path": "Plans/_shards/cli_bridged_providers/012-fable-residual-cli-bridge-contract-cleanup-addendum-2026-07-07.md",
-      "sha256": "49da5fb634997156bb6be6a38df08492728b3087f06b843bf6eeb535e4a9d479",
-      "shard_id": "012",
-      "source_line_end": 1630,
-      "source_line_start": 1516,
+      "path": "Plans/_shards/cli_bridged_providers/014-fable-residual-cli-bridge-contract-cleanup-addendum-2026-07-07.md",
+      "sha256": "29be3095ea90636b6109d908bc999acca8f2bb54623cc25625234af7d475dfe1",
+      "shard_id": "014",
+      "source_line_end": 1779,
+      "source_line_start": 1665,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 1630,
+    "line_count": 1779,
     "path": "Plans/CLI_Bridged_Providers.md",
-    "sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9"
+    "sha256": "2e2169e29bbc60c977d161be0f7d05b1458c6c690dbf079f10e3d47fcee61870"
   }
 }

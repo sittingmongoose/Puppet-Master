@@ -1,0 +1,82 @@
+{
+  "schema_id": "pw-r4-bounded-revision-terminal-v1",
+  "protocol_id": "PW-R4-CAUSAL-20260813.3",
+  "attempt": "model_retest_r4_causal_v3_post_convergence_approved_revision_1",
+  "terminal": "PRESEAL_SELF_REFERENCE_REGRESSION_FAILED_NO_COUNTED_LAUNCH",
+  "launch_ready": false,
+  "counted_launch_authorized": false,
+  "candidate": {
+    "protocol.json": {
+      "sha256": "af75e6a2a6443314888c51d657279c0e2fdaed9d7fc2198146505996698c1de7",
+      "bytes": 117013
+    },
+    "r4_harness.py": {
+      "sha256": "5405c4d50ef02372a8873bcc383f6b6b7e85d128a8e033b77a1cd301da5c1050",
+      "bytes": 264187
+    },
+    "schemas.json": {
+      "sha256": "466abf2f0079bf989c9d6cc635e821ef9bdb4b8782fce3e321de4e5f5e042d67",
+      "bytes": 16029
+    },
+    "execution_contract.json": {
+      "sha256": "b5295a43161794be4d0eab08fd0665776b3c1f492aef4eb621a1dcb8d8bee37d",
+      "bytes": 16748
+    },
+    "source_custody.json": {
+      "sha256": "058f37474a04f5ec90fd32f50e5b0f58649bc18bfdddc7b46714efbafd847725",
+      "bytes": 4673
+    }
+  },
+  "passed_prelaunch_checks": {
+    "unsealed_preflight": true,
+    "sources_checked": 15,
+    "source_aggregate_bytes": 4195641,
+    "oracles_recomputed": 17,
+    "seal_inventory_count": 40,
+    "seal_inventory_sorted_unique": true,
+    "excluded_self_hosting_trio_exact": true,
+    "internal_static_inventory_count": 37,
+    "six_external_checkpoint_contracts_aligned": true,
+    "direct_static_selector_rejection_for_trio": true,
+    "other_37_internal_routes_retained": true
+  },
+  "launch_blocking_defects": [
+    {
+      "id": "SELF_HOSTING_TRIO_NOT_REJECTED_FROM_CONTROLLER_INVALID_RECEIPT_BINDINGS",
+      "affected_phases": [
+        "W00",
+        "runtime_frontier",
+        "W99"
+      ],
+      "finding": "The excluded self-hosting trio is rejected as a direct STATIC_INVENTORY_ENTRY selector but remains admissible as extra regular evidence on an otherwise valid controller-invalid receipt.",
+      "affected_files": [
+        "protocol.json",
+        "r4_harness.py",
+        "schemas.json"
+      ],
+      "probe_results": {
+        "W00": "ACCEPTED_FORGED_TRIO_BINDING",
+        "W10": "ACCEPTED_FORGED_TRIO_BINDING",
+        "W99": "ACCEPTED_FORGED_TRIO_BINDING"
+      },
+      "impact": "The external fail-stop boundary is not internally enforced against forged receipt evidence, so the candidate cannot be sealed or launched."
+    }
+  ],
+  "counts": {
+    "subject_calls": 0,
+    "provider_calls": 0,
+    "preparation_agent_tasks_in_this_bounded_revision": 3,
+    "independent_final_audits": 1,
+    "formal_preseal_candidate_audit_cycle": 5
+  },
+  "artifact_state": {
+    "launch_manifest_created": false,
+    "detached_custody_created": false,
+    "source_check_receipts_created": false,
+    "runtime_artifacts_created": false,
+    "sandbox_artifacts_created": false,
+    "subject_tasks_created": false,
+    "bytecode_artifacts_present": false
+  },
+  "claim_boundary": "This is a preserved failed control-plane candidate, not empirical model evidence. No claim is made about any subject model, production enforcement, full-corpus comprehension, release readiness, safety certification, external audit, or permission to compile Plans. Per the approved bounded-revision rule, no repair or second audit follows in this attempt."
+}

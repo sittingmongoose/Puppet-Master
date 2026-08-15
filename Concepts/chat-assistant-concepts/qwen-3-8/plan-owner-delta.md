@@ -34,3 +34,16 @@ Notes:
 - "No direct impact" rows are recorded per the packet's audit requirement, not omitted.
 - Candidate command IDs are provisional (PROC-005); the census in
   `candidate-command-delta.json` is the adjudication input; canon stays untouched.
+
+## Correction packet 2026-08-13 (dependency/media audit)
+
+| Owner | Impact from the correction |
+| --- | --- |
+| assistant-chat-design | Causal questionnaire lifecycle (prepare pill -> card -> review -> submitting pill -> receipt) now reaches all eight concept renderers; arrival glide + header sweep; gradual activity condense with two-chip strip and persistent Verified row. |
+| FinalGUISpec | Sweep/chips/verified/review treatments are theme-token based; reduced-motion end-states asserted by probe-motion-continuity and probe-coverage-expansion. |
+| Models System | Picker: Favorites before Recents (01 doc order), per-row kbd chips, provider text in sub-row; provider copy per PROVIDER_CLI_FINAL_ADJUDICATION (Provider Setup Required verbatim, official source, install vs auth separate, Host/Environment, discover/verify states, Auto/On consent boundary). |
+| Settings inventory | Deep-link now exact-row with continuation token ({page:'settings:provider', row, resume}); Chat still never becomes Provider Manager. |
+| Server/Project Sync integration | Reconnect-failure path added (conn.reconnect_fail, failed state, error row + retry, recover + drain). |
+| Orchestrator/Subagents | Slint reviewer route/state aligned with DEMO_SCENARIO_MANIFEST (Qwen 3.8, failed -> retrying) in subagent group and crew. |
+| Testing/Browser/Artifacts | Two new probes (motion continuity, coverage expansion: widths, reduced-motion end-states, keyboard/focus, long content, errors, reconnect idempotency incl. failure, all-64 pairing sweep, pop-out+pinned+artifact resize). |
+| reference-review-report.json | Mandatory artifact naming every video/keyframe/sheet/screenshot/fixture opened, with change-or-no-change rationale. |

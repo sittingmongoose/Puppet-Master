@@ -670,10 +670,12 @@
           "then": {"required": ["fallback_route_ref"]}
         }
       ],
-      "required": ["browser_session_id", "session_class", "state", "show_when_possible", "open_watch_state", "created_at_utc", "redaction_profile_id"],
+      "required": ["browser_session_id", "session_class", "session_security_class", "session_epoch", "state", "show_when_possible", "open_watch_state", "created_at_utc", "redaction_profile_id"],
       "properties": {
         "browser_session_id": {"type": "string", "minLength": 1},
         "session_class": {"type": "string", "enum": ["site_reader", "research_session", "testing", "user_visible_browser"]},
+        "session_security_class": {"type": "string", "const": "ordinary"},
+        "session_epoch": {"type": "integer", "minimum": 0},
         "state": {"type": "string", "enum": ["active", "collapsed", "detached", "background", "closed", "runtime_unavailable"]},
         "show_when_possible": {"type": "boolean"},
         "open_watch_state": {"type": "string", "enum": ["open_available", "watch_available", "fallback_open_external", "background_only", "unavailable"]},
@@ -709,8 +711,7 @@
         "effective_runtime": {"type": "string", "minLength": 1},
         "capability_snapshot_ref": {"type": "string"},
         "disabled_reason_code": {"type": "string"},
-        "remediation_action_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
-        "playwright_cdp_role": {"type": "string", "enum": ["not_used", "reference_only", "fallback_only"]}
+        "remediation_action_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}}
       }
     },
     "BrowserActionInput": {

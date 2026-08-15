@@ -120,6 +120,34 @@
     return Boolean(store && store.session && store.session.historyPinned);
   }
 
+  function isHistoryPeek(store) {
+    if (window.PMChatV2 && typeof window.PMChatV2.isHistoryPeek === 'function') {
+      return window.PMChatV2.isHistoryPeek(store);
+    }
+    return historyMode(store) === 'peek';
+  }
+
+  function isHistoryOpen(store) {
+    if (window.PMChatV2 && typeof window.PMChatV2.isHistoryOpen === 'function') {
+      return window.PMChatV2.isHistoryOpen(store);
+    }
+    return isHistoryPinned(store) || isHistoryPeek(store);
+  }
+
+  /** Dismiss temporary peek without touching pinned modes. */
+  function dismissHistoryPeek(store) {
+    if (!isHistoryPeek(store)) return false;
+    if (window.PMChatV2 && typeof window.PMChatV2.setHistoryMode === 'function') {
+      window.PMChatV2.setHistoryMode(store, 'closed');
+      return true;
+    }
+    if (store && typeof store.setHistoryMode === 'function') {
+      store.setHistoryMode('closed');
+      return true;
+    }
+    return false;
+  }
+
   function syncArtifactIntoBody(root, store, env) {
     if (!root || !store) return;
     var body =
@@ -130,6 +158,13 @@
     var existing = body.querySelector('[data-artifact-workspace]');
     var tid = store.session && store.session.activeThreadKey;
     var wid = (env && env.windowId) || 'w6';
+    if (
+      existing &&
+      window.PMChatV2 &&
+      typeof window.PMChatV2.captureArtifactScroll === 'function'
+    ) {
+      window.PMChatV2.captureArtifactScroll(store, existing);
+    }
     var html =
       window.PMChatV2 && typeof window.PMChatV2.renderArtifactWorkspaceHtml === 'function'
         ? window.PMChatV2.renderArtifactWorkspaceHtml(store, tid, wid)
@@ -158,6 +193,12 @@
       window.PMChatV2.bindArtifactWorkspace(next, store, tid, function () {
         syncArtifactIntoBody(root, store, env);
       });
+    }
+    if (
+      window.PMChatV2 &&
+      typeof window.PMChatV2.restoreArtifactScroll === 'function'
+    ) {
+      window.PMChatV2.restoreArtifactScroll(store, next);
     }
   }
 
@@ -1595,6 +1636,9 @@
     threadRowMoreHtml: threadRowMoreHtml,
     threadRowMetaHtml: threadRowMetaHtml,
     isHistoryPinned: isHistoryPinned,
+    isHistoryPeek: isHistoryPeek,
+    isHistoryOpen: isHistoryOpen,
+    dismissHistoryPeek: dismissHistoryPeek,
     historyMode: historyMode,
     effectiveHistoryMode: effectiveHistoryMode,
     shouldBlockHistoryClose: shouldBlockHistoryClose,

@@ -261,11 +261,20 @@
   },
   "provider_setup_required": {
     "trigger": "system.provider_setup_required",
-    "composer_state": "provider-setup-required"
+    "composer_state": "provider-setup-required",
+    "state_label": "Install required",
+    "copy": "Install required · acquire from official provider/package source · not bundled in PM core · not in execution baseline · install ≠ auth",
+    "settings_path": "settings://providers/xai",
+    "continuation_token": "demo-cont-provider-setup",
+    "forbidden_claims": [
+      "Included with this Server",
+      "bundled in PM core",
+      "execution baseline CLI"
+    ]
   },
   "access_limited_by_review": {
     "trigger": "system.access_limited_by_review",
-    "label_example": "Full Access \u00b7 Limited by Review mode"
+    "label_example": "Full Access · Limited by Review mode"
   },
   "fixture_completeness": {
     "history_rows": 18,
@@ -274,5 +283,18 @@
     "artifacts": 4,
     "questions": 3,
     "updated_at": "2026-08-11"
+  },
+  "provider_install_update_states": {
+    "install_required": "system.provider_install_required",
+    "update_available": "system.provider_update_available",
+    "vocabulary": [
+      "Install required",
+      "Update available",
+      "Update scheduled when idle",
+      "Waiting for current work",
+      "Verifying",
+      "Update failed; rolled back",
+      "Needs repair"
+    ]
   }
 }

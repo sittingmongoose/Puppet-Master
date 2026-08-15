@@ -365,6 +365,62 @@
   }
 }
 
+/* ---------------------------------------------------------------- arrival, out of the fold
+ * 01_message_arrival_spatial_continuity.mov, frames 47 to 63 (about 280ms at 57.6fps): the
+ * arriving message is first a flattened SLIVER at a seam, then expands into its own box, then
+ * settles with a small overshoot. At f.50 the glyphs are already at full size and simply cut off
+ * by the growing box — clipped, never scaled — which is why this is a clip animation.
+ *
+ * The reference's seam is a header, because its list inserts at the top. This concept's seam is
+ * its own fold. Everything here condenses and unfolds, so an arrival is an UNFOLDING: the entry
+ * lands folded to its role line — the one line a condensed entry always keeps — and opens downward
+ * out of that crease. The fold says WHO immediately and the unfold delivers WHAT, which is the
+ * digest's whole argument played at the speed of a single message.
+ *
+ * The other half of the beat is in JS: an arrival pushes one entry out of the newest-two window,
+ * that entry condenses inside the same mutation, and the rows below it slide up. That is the
+ * reference's neighbour displacement, and this is the only concept here whose layout produces it.
+ */
+@keyframes pmx-t4-unfold {
+  from { clip-path: inset(0 0 calc(100% - var(--xl)) 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+/* Beats motion.css's blanket `[data-pmx-arrived] { animation: none }` on specificity. That rule is
+   right for the reference, where the arrival is genuinely static and only its neighbours move; here
+   the arriving entry is the one thing that must be seen to open. */
+[data-pmx-thread="t4"] .t4-turn[data-pmx-arrived] {
+  animation: pmx-t4-unfold var(--motion-med) var(--ease-spring-real) backwards;
+}
+/* The crease IS the seam, so it cannot also be squashing into place: pmx-t4-condense scales the
+   digest line vertically, and f.50 is explicit that an arriving message's glyphs are at full size
+   and merely clipped. The role line is simply THERE on the first frame. */
+[data-pmx-thread="t4"] .t4-turn[data-pmx-arrived] .t4-digest {
+  animation: none;
+  opacity: 1;
+  transform: none;
+}
+/* The prose keeps pmx-t4-expand, so the settle overshoot at f.63 belongs to the content being
+   unfolded rather than to the box — the concept's existing language, used for the new job. */
+
+/* Reduced motion lands the arrival instantly and FULLY REVEALED. A clip animation frozen at its
+   first frame would leave only the role line and hide the message entirely, which is worse than no
+   animation at all. */
+[data-motion="reduced"][data-pmx-thread="t4"] .t4-turn[data-pmx-arrived] {
+  animation: none !important;
+  clip-path: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-pmx-thread="t4"] .t4-turn[data-pmx-arrived] {
+    animation: none !important;
+    clip-path: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
 /* ---------------------------------------------------------------- jump pill clearance
  * The pill floats over the transcript, and nothing reserved space for it, so when it
  * appeared it sat directly on top of live message text and hid whole words. Readable
@@ -482,6 +538,195 @@
 
 [data-pmx-thread="t4"] .t4-ledger-body { display: flex; flex-direction: column; gap: 1px; }
 
+/* ---- the run digest ---------------------------------------------------------------------------
+ * t4's reading of 03_compact_execution_activity.mov. The reference draws the run as a capsule: a
+ * stacked headline, a reasoning block and a row per tool call. A stack of rows is precisely what this
+ * concept refuses, so the same run is stated as ONE SENTENCE on ONE LINE in the register above, and
+ * the glyph chain — which the reference keeps to the left of its headline, growing a slot between the
+ * last glyph and the label at f.205-209 — becomes small MARKS ON that line, between the kind label and
+ * the sentence.
+ *
+ * The per-phase record then goes where every other disclosure in this concept goes: the bounded
+ * internal-scroll ledger defined directly above. One sentence per phase, and only the phase the reader
+ * opened unfolds. That is the difference from the work digest, whose ledger opens every section at
+ * once: a run has one subject at a time, and the chain is already the index to the rest.
+ *
+ * Nothing here copies the reference's colours, radii, ring treatment or easing. Those are its look. */
+
+[data-pmx-thread="t4"] .t4-run { border-top: 1px solid var(--border); }
+
+/* Same geometry as .t4-work-line, but a DIV rather than a button: this row carries the marks, which
+ * are buttons themselves, and a button cannot contain buttons. The hover is kept because the row still
+ * reads as one object; the pointer cursor is not, because parts of the row are not controls. */
+[data-pmx-thread="t4"] .t4-run-line {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sm);
+  width: 100%;
+  min-width: 0;
+  padding: 6px var(--md) 6px 0;
+}
+[data-pmx-thread="t4"] .t4-run-line:hover { background: color-mix(in srgb, var(--surface) 60%, transparent); }
+
+/* A live run says so in the register's own label rather than in a badge, the way the finished work
+ * line already says `DONE` in the completion accent. */
+[data-pmx-thread="t4"] .t4-run[data-running="1"] .t4-run-kind { color: var(--accent-primary); }
+
+/* The chain is capped by a share of the line, never by a glyph count: past the cap it SCROLLS, so the
+ * sentence beside it keeps its measure and no mark is ever dropped. Dropping one would remove the only
+ * route back into that phase. */
+[data-pmx-thread="t4"] .t4-run-chain {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 40%;
+  gap: 1px;
+  align-self: center;
+}
+
+/* A MARK, not a chip: this concept prints lines of text, so the run's index reads as a row of ticks
+ * under the sentence's own baseline rather than as a strip of buttons. */
+[data-pmx-thread="t4"] .t4-run-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color var(--motion-fast) var(--ease-default),
+              border-color var(--motion-fast) var(--ease-default);
+}
+[data-pmx-thread="t4"] .t4-run-mark:hover { color: var(--text-primary); border-bottom-color: var(--border); }
+
+/* The RUNNING phase is underscored in the accent and the OPEN one in the text colour, so after the run
+ * settles the chain still says which phase you are reading. Two different facts, two different marks,
+ * and neither of them relies on colour alone: the rule is present or it is not. */
+[data-pmx-thread="t4"] .t4-run-mark[data-state="running"] {
+  color: var(--accent-primary);
+  border-bottom-color: var(--accent-primary);
+}
+[data-pmx-thread="t4"] .t4-run-mark[data-open="1"] {
+  color: var(--text-primary);
+  border-bottom-color: currentColor;
+}
+
+[data-pmx-thread="t4"] .t4-run-sentence {
+  display: flex;
+  align-items: baseline;
+  gap: var(--xs);
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: var(--fs-xs);
+  text-align: left;
+  cursor: pointer;
+  /* Tabular figures so rewriting 6 into 7 does not change the width of the number and shift the word
+     beside it. This is the layout half of what makes countMorph read as one running tally. */
+  font-variant-numeric: tabular-nums;
+}
+
+/* Verb at full contrast, argument muted: a reader scanning a settled run reads a column of verbs, and
+ * the tense of that verb is the whole of "the phase has finished". */
+[data-pmx-thread="t4"] .t4-run-verb { flex: 0 0 auto; color: var(--text-primary); font-weight: 600; white-space: nowrap; }
+[data-pmx-thread="t4"] .t4-run-arg {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- the run's ledger: one sentence per phase, one of them unfolded --------------------------- */
+
+/* The section gap the work ledger uses separates LABELLED BLOCKS. These are lines, so they close up
+ * into the same rhythm as the operation digest below. */
+[data-pmx-thread="t4"] .t4-run-ledger { gap: 0; }
+
+[data-pmx-thread="t4"] .t4-run-section {
+  position: relative;
+  min-width: 0;
+  padding-right: 18px;   /* the fold mark's lane, so the ellipsis never runs underneath it */
+}
+
+[data-pmx-thread="t4"] .t4-run-phase {
+  display: block;
+  width: 100%;
+  padding: 2px 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  text-align: left;
+  cursor: pointer;
+  /* One phase, one line — the same guarantee, and for the same reason, as .t4-op-line. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-variant-numeric: tabular-nums;
+}
+[data-pmx-thread="t4"] .t4-run-phase:hover { color: var(--text-primary); }
+
+[data-pmx-thread="t4"] .t4-run-phase-verb { margin-right: .4em; color: var(--text-primary); font-weight: 600; }
+[data-pmx-thread="t4"] .t4-run-phase-arg { color: var(--text-muted); }
+[data-pmx-thread="t4"] .t4-run-phase-time { margin-left: .55em; font-size: var(--fs-2xs); color: var(--text-muted); }
+[data-pmx-thread="t4"] .t4-run-section[data-state="running"] .t4-run-phase-verb { color: var(--accent-primary); }
+
+[data-pmx-thread="t4"] .t4-run-fold-mark {
+  position: absolute;
+  top: 2px;
+  right: 0;
+  width: 14px;
+  text-align: right;
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: var(--text-muted);
+  pointer-events: none;   /* the line underneath stays the single control */
+}
+
+/* The unfold adds LINES ONLY — no box, no border, no card — because the moment the run grows a
+ * container it stops being a digest and becomes the capsule this concept declined to draw. */
+[data-pmx-thread="t4"] .t4-run-unfold {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 4px var(--sm);
+  animation: pmx-t4-expand var(--motion-med) var(--ease-spring-real) both;
+}
+
+[data-pmx-thread="t4"] .t4-run-detail {
+  font-size: var(--fs-xs);
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+/* Narrow: the sentence is the thing worth keeping, so the chain gives up width first. It still
+ * scrolls rather than losing a mark. */
+@container pmx-thread (max-width: 620px) {
+  [data-pmx-thread="t4"] .t4-run-chain { max-width: 32%; }
+  [data-pmx-thread="t4"] .t4-run-line { padding-right: var(--sm); }
+}
+
+[data-motion="reduced"][data-pmx-thread="t4"] .t4-run-mark { transition: none !important; }
+[data-motion="reduced"][data-pmx-thread="t4"] .t4-run-unfold {
+  animation: none !important; opacity: 1 !important; transform: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-pmx-thread="t4"] .t4-run-mark { transition: none !important; }
+  [data-pmx-thread="t4"] .t4-run-unfold {
+    animation: none !important; opacity: 1 !important; transform: none !important;
+  }
+}
+
 /* ---- advice digest ---------------------------------------------------------------------------- */
 
 [data-pmx-thread="t4"] .t4-advice {
@@ -509,11 +754,35 @@
 
 /* ---- the question digest ---------------------------------------------------------------------- */
 
+/* ONE element for the whole flow: preparing, every page, submitting and the receipt. It is created
+ * once and refilled, so `transform-origin` matters — the resize bounce's scale beat rides on this box
+ * and a centre origin would lift the entry off the line above it as it flexes. A top origin keeps the
+ * register's rhythm: the entry grows downward into its own space, which is the direction the reader
+ * is already reading in. */
 [data-pmx-thread="t4"] .t4-qdigest {
   border-top: 1px solid var(--border);
   border-left: 2px solid var(--accent-primary);
   padding-left: var(--sm);
   background: color-mix(in srgb, var(--accent-primary) 5%, transparent);
+  transform-origin: top center;
+}
+
+/* A NEW PAGE inside a card that is standing still. `pmx-t4-expand` is this concept's own unfold — the
+ * same keyframes the digest turns and the run's detail already use — so a question arriving reads as
+ * one more entry opening rather than as a vocabulary invented for questionnaires.
+ *
+ * It rides the BODY, never the card: the card's height and its scale beat both belong to
+ * resizeBounce, and a second transform on the same box would fight it for the same 340ms. */
+[data-pmx-thread="t4"] .t4-qdigest-page {
+  animation: pmx-t4-expand var(--motion-med) var(--ease-spring-real) both;
+}
+[data-motion="reduced"][data-pmx-thread="t4"] .t4-qdigest-page {
+  animation: none !important; opacity: 1 !important; transform: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-pmx-thread="t4"] .t4-qdigest-page {
+    animation: none !important; opacity: 1 !important; transform: none !important;
+  }
 }
 
 [data-pmx-thread="t4"] .t4-qdigest[data-phase="preparing"] { border-left-style: dashed; }
@@ -555,6 +824,12 @@
   gap: var(--sm);
   padding: 0 var(--md) var(--sm) 0;
 }
+
+/* The body is one element for the whole flow rather than one that comes and goes, because the page
+   beat is played on it and a beat played on an element the next render replaces is a beat nobody
+   sees. A folded entry leaves it EMPTY, and an empty one must cost nothing — padding and gap on a
+   body with no content would be space reserved for something that is not there. */
+[data-pmx-thread="t4"] .t4-qdigest-body:empty { display: none; }
 
 [data-pmx-thread="t4"] .t4-qopts { display: flex; flex-wrap: wrap; gap: var(--xs); }
 

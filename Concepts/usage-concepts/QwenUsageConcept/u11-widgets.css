@@ -331,6 +331,45 @@
 .u11w-dense .u11w-acctrow { padding: 4px 0; }
 .u11w-dense .u11w-tiles { gap: 6px; }
 
+/* ---------- operations (maintenance & operations, packet §04) ---------- */
+.u11w-opcard { padding: 8px 0 7px; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.u11w-opcard + .u11w-opcard { border-top: 1px solid var(--border-light); }
+.u11w-opico { flex: none; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 7px; background: rgba(128,128,128,.10); background: color-mix(in srgb, var(--text-primary) 7%, transparent); color: var(--text-muted); }
+.u11w-opico svg { width: 12px; height: 12px; }
+.u11w-kind.ok { color: var(--tone-ok-text); background: rgba(80,200,120,.12); background: color-mix(in srgb, var(--tone-ok) 12%, transparent); }
+.u11w-kind.warn { color: var(--tone-warn-text); background: rgba(255,180,60,.12); background: color-mix(in srgb, var(--tone-warn) 12%, transparent); }
+.u11w-ophases { display: flex; flex-wrap: wrap; gap: 3px 10px; padding: 2px 0; }
+.u11w-ophase { display: inline-flex; align-items: baseline; gap: 4px; font-family: var(--mono-font); font-size: 9px;
+  color: var(--text-muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.u11w-ophase b { font-family: var(--display-font); font-size: 11px; font-weight: 600; color: var(--text-secondary); }
+.u11w-opacq { display: flex; align-items: flex-start; gap: 6px; font-size: 10.5px; line-height: 1.45; color: var(--text-secondary);
+  padding: 5px 9px; border-radius: 8px; border: 1px dashed var(--border-light); }
+.u11w-opacq svg { width: 11px; height: 11px; flex: none; margin-top: 2px; color: var(--tone-info-text); }
+
+/* ---------- account row meta (priority / last used / actions) ---------- */
+.u11w-acctmeta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin-top: 4px;
+  font-size: 10.5px; color: var(--text-muted); }
+.u11w-acctprio { font-family: var(--mono-font); font-size: 9px; font-weight: 700; letter-spacing: .04em;
+  color: var(--text-secondary); white-space: nowrap; }
+.u11w-acctlast { white-space: nowrap; }
+.u11w-acctacts { display: inline-flex; gap: 5px; margin-left: auto; }
+
+/* ---------- capacity envelope + plans estimate + cooldown ---------- */
+.u11w-capenv { font-variant-numeric: tabular-nums; }
+.u11w-sub.estimate { display: flex; align-items: flex-start; gap: 6px; color: var(--tone-info-text); }
+.u11w-sub.estimate svg { width: 11px; height: 11px; flex: none; margin-top: 2px; }
+.u11w-sub.warntxt { color: var(--tone-warn-text); font-weight: 600; }
+
+/* ---------- signals list spacing (lost in 08-12 rewrite) ---------- */
+.u11w-siglist { margin-bottom: 8px; }
+
+/* ---------- popup stacking (packet §05: no dead controls) ----------
+   The Settings/Export sprouts anchor under the head buttons and can overlap
+   the data-quality banner strip; keep them above every page-level surface.
+   U11-local override — shared sprout chrome stays untouched. */
+#u11SheetSprout, #u11ExportSprout { z-index: 540; }
+
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   .u11w-tile, .u11w-note, .u11w-colbar i, .u11w-spark i, .u11w-gradmask,

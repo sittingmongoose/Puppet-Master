@@ -41,6 +41,14 @@
 
   function svc(name) { return global[name] || null; }
 
+  /* The minimal service bag PMXQFlow expects. The Director has no ctx.services of its own — it is
+   * outside the product shell — so verbs that must go through the flow layer rather than around it
+   * build one here. Keeping it to what qflow actually reads means a new service cannot be silently
+   * depended on without this failing loudly. */
+  function services() {
+    return { questionnaire: svc('PMXQuestionnaire'), surfaces: svc('PMXSurfaces') };
+  }
+
   function view() { return store().view(tid()); }
 
   /* Decisions (approvals, warnings, grants, conflicts) all go through PMXApprovals so the
@@ -171,23 +179,53 @@
       var cur = (rec.questions || [])[q.currentIndex(qid)];
       if (cur) q.skip(qid, cur.id);
     },
+    /* Cancel goes through PMXQFlow, not straight at the questionnaire service.
+     *
+     * `release()` — the only writer that clears `surfacesYielded` — lives in the qflow verb layer, so
+     * calling `PMXQuestionnaire.cancel` directly resolved the flow and left the yield flag up. From
+     * then on `PMXSurfaces.activeFor` reported Goal, Todo, subagents and diffs as ABSENT on a thread
+     * that still had all four. That is the same fault qflow.release was written to prevent, reached
+     * by the one path that went around it. */
     cancel: function () {
+      var qf = svc('PMXQFlow');
+      if (qf) { qf.act(services(), tid(), 'cancel'); return; }
       var q = svc('PMXQuestionnaire');
       var qid = activeQid();
       if (q && qid) q.cancel(qid);
     },
+    /* Submit fills anything still required and then SETTLES, so the receipt exists at the end of this
+     * call rather than 700 ms later. A capture script and a probe both need the resolved state to be
+     * reachable in one step. */
     submit: function () {
       var q = svc('PMXQuestionnaire');
       var qid = activeQid();
       if (!q || !qid) return;
       var rec = q.activeFor(tid());
-      /* Fill anything still required, then submit and settle so the receipt exists at the end
-       * of this call rather than 700 ms later. */
       (rec.questions || []).forEach(function (qq) {
         if (qq.required) q.answer(qid, qq.id, (qq.options || [])[0]);
       });
+      var qf = svc('PMXQFlow');
+      if (qf) { qf.act(services(), tid(), 'submit'); return; }
       q.submit(qid);
       q.finishSubmit(qid);
+    },
+    /* The MIDDLE of the lifecycle, as its own trigger.
+     *
+     * 04_questionnaire_morph_prepare_submit.mov resolves in three beats: the card contracts, the pill
+     * returns reading `Submitting answers...`, and only then does it dissolve. `submit` above lands
+     * on the last of those in one call, which is what a probe wants and what a reviewer never gets to
+     * see. This trigger stops on the middle beat and leaves it on screen; the flow settles itself
+     * after SUBMIT_MS the way it does in the recording. */
+    submitting: function () {
+      var q = svc('PMXQuestionnaire');
+      var qf = svc('PMXQFlow');
+      var qid = activeQid();
+      if (!q || !qf || !qid) return;
+      var rec = q.activeFor(tid());
+      (rec.questions || []).forEach(function (qq) {
+        if (qq.required) q.answer(qid, qq.id, (qq.options || [])[0]);
+      });
+      qf.act(services(), tid(), 'submit', { beat: true });
     },
     /* `select` answers the CURRENT question with a named option, defaulting to the first. The
      * harness header used to say it must never answer a question; that was already untrue of
@@ -308,7 +346,24 @@
     reopen: function () { act('activity_reopen'); },
     /* Landing the running group on its total is what flips its label from the present participle to
      * the past tense, so the pair of verbs is what makes the tense rule observable. */
-    settle: function () { act('activity_settle'); }
+    settle: function () { act('activity_settle'); },
+    /* RANDOM ACCESS into a condensed run — the glyph chain's whole reason for existing
+     * (03_compact_execution_activity.mov f.1170 opens the edit phase, f.1300 the read phase).
+     * `reopen` with no argument can only ever show the first phase, so without a trigger that names
+     * one there was no deterministic way to capture or test the other five. */
+    open_phase: function (payload) {
+      var id = payload && payload.phaseId;
+      if (!id) {
+        /* Default to the LAST phase rather than the first: with no id this is the chevron on the
+         * summary row, and the chevron means "show me what just happened". */
+        var d = global.PMXData && global.PMXData.get();
+        var t = d && d.threadById ? d.threadById(tid()) : null;
+        var stages = (t && t.activityStages) || [];
+        id = stages.length ? stages[stages.length - 1].id : null;
+      }
+      act('activity_open_phase', { phaseId: id });
+    },
+    close_phase: function () { act('activity_open_phase', { phaseId: null }); }
   };
 
   Object.keys(ACTIVITY_KIND).forEach(function (event) {
@@ -628,20 +683,25 @@
     reduced_motion_on: function () { store().set('ui.reducedMotion', true); },
     reduced_motion_off: function () { store().set('ui.reducedMotion', false); },
 
+    /* The numbers and the occupant come from DEMO_SCENARIO_MANIFEST.json's `resource_collision`
+     * block: port 4173 requested, occupied by the Usage concept's visual-test server, 4174 offered
+     * as the safe alternative. This trigger previously invented 3000/3001 and an unrelated checkout
+     * worktree, so the one collision the packet specifies exactly was the one the concept did not
+     * demonstrate — and a reviewer comparing the manifest to the demo would have found no match. */
     port_collision: function () {
       raise({
         kind: 'conflict', severity: 'material',
-        question: 'Port 3000 is used by the checkout redesign in another worktree. Use 3001 instead?',
-        scopeLine: 'Checkout redesign · feature/checkout',
+        question: 'Port 4173 is used by the Usage concept visual-test server. Use 4174 instead?',
+        scopeLine: 'Usage concept visual-test server · port 4173',
         actions: [
-          { id: 'use-3001', label: 'Use 3001', primary: true },
+          { id: 'use-4174', label: 'Use 4174', primary: true },
           { id: 'details', label: 'Details' },
           { id: 'cancel', label: 'Cancel' }
         ],
         details: {
-          commands: [], files: [], servers: ['Port 3000'], domains: [],
-          persistence: 'Until the other worktree releases the port',
-          saferAlternative: 'Use 3001 for this run',
+          commands: [], files: [], servers: ['Port 4173'], domains: [],
+          persistence: 'Until the Usage concept visual-test server releases the port',
+          saferAlternative: 'Use 4174 for this run',
           receipts: []
         }
       });
@@ -735,6 +795,10 @@
       var v = s.view('thread-01');
       v.decisions = [];
       v.surfaces = { expanded: null, openIds: {}, phaseIndex: null };
+      /* The run trace is part of the known state. Leaving a chain of six entered phases behind
+       * would make the next run start half-finished, and its glyphs would index work this run
+       * never did. */
+      if (global.PMXRunTrace) global.PMXRunTrace.reset('thread-01');
       v.bsd = { state: 'auto-idle', advice: [], lastAt: null, scope: 'thread' };
       v.context = { removed: [], compact: null };
       v.threadOps = { requests: [], spawned: [], branches: [], restorePoints: [], rewoundTo: null, redirect: null };
@@ -791,6 +855,64 @@
   thread.receive_response = thread.respond;
   thread.spawn_related = thread.spawn;
 
+  /* ---- attachments -------------------------------------------------------------------
+   *
+   * CORRECTION_GOAL_PROMPT.md names the states the Director must cover, and `attachment` is one of
+   * them. It was the only one with no family at all: PMXAttach models resolution, class, lineage and
+   * the incompatible-route decision, the `attach` suite exercises the service, and eight concepts
+   * render its cards — but nothing could reach any of it from the Director, so an attachment state
+   * could not be reproduced for a reviewer or captured for evidence.
+   *
+   * The fixture names are PMXAttach's own, so these fire against real records rather than inventing
+   * a shape the resolver would never produce. */
+  var attachment = {
+    /* An ordinary attachment: resolves to a class and a representation with no decision to make. */
+    add: function () {
+      var A = svc('PMXAttach');
+      if (A) A.resolve(tid(), { name: 'capture-1.png', mime: 'image/png', bytes: 1048576 });
+    },
+    /* A document, to show a second class beside the image. */
+    add_document: function () {
+      var A = svc('PMXAttach');
+      if (A) A.resolve(tid(), { name: 'settings-spec.pdf', mime: 'application/pdf', bytes: 1884160 });
+    },
+    /* THE decision state: a video the selected route cannot read natively, which is the case the
+     * packet's own warning copy is written for. Resolving it offers the choice rather than silently
+     * substituting a derived representation. */
+    incompatible: function () {
+      var A = svc('PMXAttach');
+      if (A) A.resolve(tid(), { name: 'walkthrough.mov', mime: 'video/quicktime', bytes: 48210944 });
+    },
+    /* Taking the offered transform. Applied to the newest record that still has actions, so the
+     * trigger is a pure function of the state it finds. */
+    extract: function () { attachRoute('Extract in PM'); },
+    /* Declining it. The card must SURVIVE a cancel — the user may still take the other action. */
+    cancel: function () { attachRoute('Cancel'); },
+    /* Re-resolving after the route changed. A capability is a property of the route, not of the
+     * file, so the same attachment can become readable or stop being readable without being touched. */
+    reevaluate: function () {
+      var A = svc('PMXAttach');
+      if (A && A.reevaluate) A.reevaluate(tid());
+    },
+    remove: function () {
+      var A = svc('PMXAttach');
+      if (!A) return;
+      var list = A.of(tid()) || [];
+      if (list.length) A.remove(tid(), list[list.length - 1].id);
+    }
+  };
+
+  /* The newest record that still offers actions is the one a reviewer just created, so routing
+   * against it is deterministic without the trigger naming an id it cannot know. */
+  function attachRoute(actionId) {
+    var A = svc('PMXAttach');
+    if (!A) return;
+    var list = A.of(tid()) || [];
+    for (var i = list.length - 1; i >= 0; i--) {
+      if (list[i].actions && list[i].actions.length) { A.route(tid(), list[i].id, actionId); return; }
+    }
+  }
+
   var FAMILIES = {
     system: system,
     history: history,
@@ -809,7 +931,8 @@
     thread: thread,
     sync: sync,
     crew: crew,
-    provider: provider
+    provider: provider,
+    attachment: attachment
   };
 
   function fire(family, event, payload) {
@@ -834,6 +957,39 @@
     return out;
   }
 
+  /* `subagent` is the contract's word for the family this harness calls `agent`, and FAMILIES holds
+   * BOTH names pointing at one object so either resolves. That makes families() report seventeen
+   * names over sixteen distinct families, and a report that counts its keys silently inflates every
+   * total by one family and by that family's whole event list. Naming the aliases here lets a
+   * report state both numbers truthfully instead of picking the flattering one. */
+  var FAMILY_ALIASES = { subagent: 'agent' };
+
+  function aliases() {
+    var out = {};
+    for (var k in FAMILY_ALIASES) if (Object.prototype.hasOwnProperty.call(FAMILY_ALIASES, k)) out[k] = FAMILY_ALIASES[k];
+    return out;
+  }
+
+  /* Distinct dispatchable behaviours, with alias family names and alias events folded out. */
+  function distinctEvents() {
+    var seen = [];
+    for (var fam in FAMILIES) {
+      if (!Object.prototype.hasOwnProperty.call(FAMILIES, fam)) continue;
+      if (FAMILY_ALIASES[fam]) continue;
+      var obj = FAMILIES[fam];
+      var fns = [];
+      for (var ev in obj) {
+        if (!Object.prototype.hasOwnProperty.call(obj, ev)) continue;
+        /* Two event names bound to the SAME function are one behaviour: `subagent.progress` and
+         * `agent.advance` do not do different things. */
+        if (fns.indexOf(obj[ev]) >= 0) continue;
+        fns.push(obj[ev]);
+        seen.push(fam + '.' + ev);
+      }
+    }
+    return seen;
+  }
+
   /* Hash form, so `stage.html#…&demo=artifact.error` reproduces a state for a capture without
    * anyone having to drive the drawer by hand. */
   function fromHash() {
@@ -853,6 +1009,8 @@
     bind: bind,
     fire: fire,
     families: families,
+    aliases: aliases,
+    distinctEvents: distinctEvents,
     fromHash: fromHash,
     log: function () { return _log.slice(); }
   };

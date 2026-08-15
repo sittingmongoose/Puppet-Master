@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L5040-L5526
+Source lines: L5078-L5767
 
-Source SHA256: `d1d659cd51ca674c1e34c953ae8080b399b7d61ffed7f802998596f738d85c78`
+Source SHA256: `5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb`
 
 ---
 
@@ -258,6 +258,209 @@ owner_hints:
 - Plans/storage-plan.md
 - Plans/usage-feature.md
 ```
+
+### 0PI-067 - Shared Integration Runtime Owner Routing
+
+```yaml
+plan_unit_id: 0PI-067
+unit_type: owner_map
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: Shared Integration Runtime is the sole owner for the 21 approved adopt-here shared-service rows; the remaining 142 rows retain their existing owners, domain semantics are not transferred, and the disposition register is routing evidence rather than product canon or implementation proof.
+gui_related: false
+gui_classification_reason: Index owner-routing metadata is not direct GUI behavior.
+depends_on: [PDS-003, PNC-001, SIR-001]
+unblocks: []
+acceptance_criteria:
+  - All 21 adopt-here rows route to Plans/Shared_Integration_Runtime.md as primary owner.
+  - Former primary owners remain supporting domain owners or consumers.
+  - The 142 non-adopted rows retain their approved owners and dispositions.
+  - BSD, provider-first-acquisition, server-topology, and RuntimeResourceGovernor boundaries remain explicit.
+  - This routing creates no WorkNodes, NodeSeeds, queues, runtime/code/build artifacts, or governance seal.
+validation_surfaces: [runtime integration disposition validation, plan owner-routing audit]
+risk_class: owner_map_drift
+reasoning_tier: high
+context_scope: remaining_runtime_integration_owner_map
+implementation_surfaces: [Plans/00-plans-index.md, Plans/Shared_Integration_Runtime.md, Plans/runtime_integration_disposition.json]
+node_compile_hint: {mode: shared_integration_runtime_owner_map, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [Plans/runtime_integration_disposition.json, PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13]
+```
+
+### PMConcept7 tweak wave 8 — 2026-08-15 (kebab ink canon, chat dock back, drag snap, scroll kill)
+
+Four re-diagnosed behaviors sealed with dated wave-8 dispositions; the user
+rejected all four wave-7 items and each re-diagnosis found wave 7 had missed
+the real mechanism, so several wave-7 claims are superseded:
+
+- `Plans/FinalGUISpec.md` — F3-HOME-003: kebab geometry canon — the seat is
+  derived from the glyph's INK, which sits at button-local top + 10 px (about
+  5 px of glyph-free padding above and below the dots), so wave-7's
+  `editor_panel` top 10 px actually seated the ink at surface-y 20, three
+  below the 35 px strip's tab-label line at 17. Superseded to `editor_panel`
+  `top: 6px` (ink 16) and dashboard `top: 2px; right: 13px` (ink 12, three
+  above the 31 px header's title line at 15); `right: 13px` and the 34 px
+  dashboard-actions margin are unchanged, and the grip hit-triangle
+  concession is confined to glyph-free padding (about 50 px² editor, about
+  4 px² dashboard). Also F3-HOME-003: floating Chat regains a `Dock back`
+  row, reversing wave 7's retirement while keeping wave 7's single-menu
+  exception — the T20 kebab stays skipped for chat and the row is injected
+  into the BASE `.pm6-chat-more-menu`
+  (`button.pm6-chat-more-item`, `data-pm-home-chat-row="redock"`, inline
+  currentColor SVG, before `.closeChatBtn`), shown only while the host is
+  `floating` with the base `.popOutBtn` hidden; the capture listener handles
+  it ahead of `[data-pm-home-action]`, calls
+  `moveSurface("chat", last_docked_host || "home_main")` and deliberately
+  does not stop propagation so the base handler still closes the menu. No new
+  command id — the move emits the existing `cmd.panel.redock`. F3-421 and
+  F3-505: the snap-while-dragging EDSHAPE contract — wave 7's drag-cover fix
+  (opacity 1, silhouette at z 39) stands but was incomplete; the residue was
+  the GRAB-SPRING, since grabbing a non-active tab flips the active key and
+  sprang the plate ~12 frames while the carried tab paints nothing, with
+  sub-0.5 px moves parking in the spring-preservation early return. Any sync
+  while the strip holds `.tab.dragging` now snaps in-frame (worst lag 0.00 px
+  over 2,615 slow-drag samples; selection springs still travel 18 monotonic
+  intermediates), plus a glass drag-scoped plate frost at opacity .92 that is
+  deliberately not a backdrop blur (T16 count pin stays 134). F3-503: Home
+  scroll kill, corrected mechanism — wave 7's `overflow-x: clip` claim is
+  false because clip beside `overflow-y: auto` COMPUTES to hidden (CSS
+  Overflow 3 §3.1), so hosts stayed scroll containers (programmatic
+  scrollLeft moved 12 px) and Safari ≤ 15 drops clip outright. The overflow
+  is removed at its three measured sources instead — empty-dock `padding: 0`
+  (8 px), a zero-extent PM_EDGE band guard (22 px) and home_main's pairless
+  last divider (12 px) — with a both-axes clip belt on the workspace, the
+  host grid and `#panel-dashboard.pm-home-owned`, ID-anchored zero-width host
+  scrollbars replacing wave 7's `scrollbar-color` rule, and a documented
+  sub-1320 px `overflow-x: auto` reachability exception. Wave 7's blame on
+  the tab silhouette is retired: its flare box overhangs the START edge,
+  which does not count toward scrollWidth in LTR.
+- `Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json` — kebab rule
+  amended (ink canon, corrected chat clause), scroll rule rewritten with the
+  wave-8 supersession, one new rule added for the floating-chat Dock back row
+  (18 → 19), `[data-pm-home-chat-row]` added to the semantic selector
+  families, and the artifact plus T20 source hashes recomputed.
+
+Artifact sha256 213a3ee9 (3,619,880 bytes) on repinned base 3d82a850
+(== PMConcept6.html); receipt 8da26442 (base_pin_ok, 20/20 transforms,
+gates_all_pass, zero page errors on load). Live matrix 32/32 checks, 72/72
+captures, 0 runtime-error cases, PASS. Governance: seal row
+`dec-2026-08-15-pm7-tweak-wave-8`, evidence bundle
+`Plans/.evidence/pm7-tweak-wave-8-2026-08-15/`. No new command IDs, no wiring
+row changes, no storage shape changes; census unchanged at 56 home rows (the
+Dock back row dispatches the existing `cmd.panel.redock` from an existing
+surface). No WorkNodes, NodeSeeds, executable queues, final node manifests,
+or production build tasks were created.
+
+### PMConcept7 tweak wave 7 — 2026-08-14 (kebab seats, chat menu, drag occlusion, scroll lock)
+
+Four verified behaviors sealed with dated wave-7 dispositions:
+
+- `Plans/FinalGUISpec.md` — F3-HOME-003: per-kind kebab seats (editor_panel top
+  10 px against the 35 px strip; dashboard top 5 px / right 13 px against the
+  31 px header, the right shift clearing the grip's clip-path hit triangle;
+  34 px dashboard-actions margin; kind attribute value `editor_panel`), and
+  Chat becomes the uniform-kebab exception — attachSurfaceControls skips and
+  removes the T20 kebab for chat, the base chat header menu
+  (Duplicate/Archive/Pop out/Close) is Chat's single more-options, the
+  chat-only Dock Back row is retired (grip-drag re-dock covers it), and Pop
+  Out still routes through the T20 float guard (host becomes floating,
+  #floatingChat never displays, exactly one chat). F3-421: the dragged tab
+  covers tabs it passes — opacity re-tuned .92 to 1 and the silhouette lifts
+  to z 39 during a live drag (above neighbour labels z 1, below the carried
+  label z 40), watched at 3x zoom. F3-503: Home screen scroll lock —
+  overflow-x clip / overflow-y auto / overscroll-behavior none on the
+  attribute-doubled .pm-home-host[data-pm-home-host] selector (required
+  because scroll-frost enrolment stamps the base pm6-bottom-scroll overflow
+  rule onto hosts at runtime); zero horizontal scrollLeft, no gutters,
+  vertical intact.
+- `Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json` — kebab rule
+  amended (chat exception, per-kind seats), scroll-lock rule added, artifact
+  and source hashes recomputed.
+
+Artifact sha256 8ab40669 (3,612,010 bytes) on repinned base 33d5ed89
+(== PMConcept6.html); receipt 92f0ef8c (base_pin_ok, 20/20 transforms,
+gates_all_pass, zero page errors on load). Governance: seal row
+`dec-2026-08-14-pm7-tweak-wave-7`, evidence bundle
+`Plans/.evidence/pm7-tweak-wave-7-2026-08-14/`. No new command IDs, no wiring
+row changes, no storage shape changes; census unchanged at 56 home rows.
+
+### PMConcept7 tweak wave 6 — 2026-08-14 (silhouette path canon)
+
+Silhouette reconstruction wave, sealed with dated wave-6 dispositions in
+F3-505:
+
+- Construction canon: ONE JS-composed clip-path path() per frame —
+  superellipse-approximating crown cubics (handle factor 0.5523 + 0.35 x
+  progress) and per-side ogee descents (concave flare shoulder-max x p into
+  convex neck canvas-max x p, tangent on the canvas line). Retires the
+  border-radius crown, the engine-split corner-shape/superellipse @supports
+  blocks (Chromium-only — the recorded motivation), the masked shoulder
+  pseudos, and the glass three-edge inset bevel (now a 1 px --glass-edge crown
+  strip clipped by the same path). Identical Safari/Chromium rendering.
+- Morph gap canon (measured against the reference explainer's debug HUD):
+  linear progress = clamp(gap/20 px, 0, 1); canvas-neck to shoulder-flare
+  ratio 10:8; per-side gap to the NEAREST CONTACT (static strip content-box
+  edge or adjacent tab's transform-free layout edge); strip-end caps key off
+  the strip box only. The first/last-laid-tab gap track is retired (froze the
+  morph on end-tab drags; wobbled under FLIP).
+- Glass-dark --ed-rail-solid deepened via a 55 percent black canvas-bg mix
+  (measured: ~1 sRGB channel level before, 16 levels after).
+- Retro tab-motion bake-off: three EXPERIMENTAL pane-gated prototypes
+  (phosphor/crt/dos via data-retro-motion on panes 1/2/3, pane 3 lazily
+  stamped on first retro activation). RESOLVED same day (third follow-up,
+  user decision): all three are canon as a rotating shuffle-bag trio (fair
+  rotation, no immediate repeats) on every selection click and reorder
+  gesture; pane gates removed everywhere; effects cover all editor strips
+  plus the dashboard strip under retro; steady state is the standard retro
+  active ring (phosphor 650 ms solid-hold fade, CRT 500 ms scanline-hold
+  fade); phosphor/dos reorder glides quantize to 8 px cells, crt glides
+  smooth; reduced motion suppresses all of it. The same follow-up corrected
+  the silhouette canon: the tab side is a single concave quarter-arc
+  (standard kappa, radius = shoulder token x per-side progress) with the
+  convex canvas radius exclusive to the strip-end caps; both ogee
+  constructions are retired as a misreading of the reference.
+
+`Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json` re-pinned to
+artifact 22fb085d (3,610,186 bytes) on repinned base f638a30b; T20 source
+unchanged this wave (4fa0a286). Governance: seal row
+`dec-2026-08-14-pm7-tweak-wave-6`, evidence bundle
+`Plans/.evidence/pm7-tweak-wave-6-2026-08-14/`. No new command IDs, no wiring
+row changes, no storage shape changes; this wave creates no WorkNodes,
+NodeSeeds, executable queues, implementation files, runtime artifacts, or
+production build tasks.
+
+### PMConcept7 tweak wave 4 — 2026-08-13 (fourth same-day wave)
+
+Three user-reported defects fixed, live-reproduced before and re-verified after;
+sealed with dated wave-4 dispositions. Owner-doc changes:
+
+- `Plans/FinalGUISpec.md` — F3-HOME-001: browser-in-panel deactivation is
+  model-first (`deactivateBrowserProjection` clears the persisted
+  browser-active domain ref; root cause recorded: restoreOwnerRefs resurrected
+  the stale flag on every commit, making cmd.terminal.split_pane appear to have
+  editor side-effects; mountActiveBrowser enforces a single active tab and
+  un-hides a chip-collapsed browser tab). F3-503: host targeting is latch-based
+  and purely geometric (buildDockLatch entry/exit bands frozen at pickup, 44 px
+  exit slack; elementsFromPoint retired from drop-target resolution with the
+  measured starvation loop recorded — ~9 Hz dock flapping reduced to one host
+  transition and one track opening per approach; the wave-3 two-frame
+  hysteresis stays for slot flapping). F3-421: HTML5 DnD tab reorder retired
+  (with the wave-3 attached-ghost Safari shim) for a pointer-capture gesture —
+  gesture-scoped window listeners, 4 px threshold, 1:1 translateX glide,
+  220 ms neighbour FLIP, 200 ms low-bounce settle, model re-render at
+  settle-end; Safari root causes and the lostpointercapture-on-reparent trap
+  recorded; .tab.dragging at .92 opacity / z 40; T07 pointermove pin untouched.
+- `Plans/UI_Wiring_Rules.md` — §0.1 concept-input note extended.
+- `Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json` — interaction
+  rules re-amended; artifact and source hashes recomputed (census unchanged at
+  56 home rows).
+- `Plans/GUI_Rebuild_Requirements_Checklist.md` — reorder/targeting/browser
+  rows updated.
+
+Governance: seal row `dec-2026-08-13-pm7-tweak-wave-4`, evidence bundle
+`Plans/.evidence/pm7-tweak-wave-4-2026-08-13/`. No new command IDs, no wiring
+row changes, no storage shape changes; this wave creates no WorkNodes,
+NodeSeeds, executable queues, implementation files, runtime artifacts, or
+production build tasks.
 
 ### PMConcept7 tweak wave 3 — 2026-08-13 (third same-day wave)
 

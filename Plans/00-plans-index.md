@@ -420,9 +420,30 @@ Its scope is limited to shared installation resolution and post-consent lifecycl
 
 Existing domain docs retain their semantics: BinaryLocator owns candidate discovery; CLI Bridged Providers and Release Supply Chain own explicit provider acquisition and provenance policy; Models/Multi-Account own route/account/auth; Prompt Pipeline owns prompt assembly; Assistant Chat owns visible thread/BSD controls; Goal Runtime, Run Modes, and Orchestrator own their policy; LSP/DAP/Eval/Tools/MCP/Browser owners retain protocol and tool behavior; Contracts owns shared envelopes; storage owns persistence/retention/migration; Permissions/FileSafe own authority and mutation gates; GUI/Commands/Wiring own presentation and dispatch; Usage owns accounting.
 
-The deterministic BSD default for this implementation wave is `Off`, while `Auto` and `On` remain supported. BSD is always read-only; mode changes frequency only and cannot grant tools or authority. Initial provider-CLI acquisition remains explicit, official-source, and exact-Host/Environment; non-provider Auto/On/Off provisioning cannot override that exception. Shared runtime binds authoritative topology inputs but does not own Project Vault content, Project Sync, move, or source-control semantics. `storage-plan.md` retains persistence only for `RuntimeResourceGovernor` and `ObservableWork` records rather than behavior ownership.
+The deterministic BSD default and recommended value are `Auto`; explicit stored `Off` remains an explicit user choice. BSD is always read-only; mode changes frequency only and cannot grant tools or authority. Initial provider-CLI acquisition remains explicit, official-source, and exact-Host/Environment; non-provider Auto/On/Off provisioning cannot override that exception. Shared runtime binds authoritative topology inputs but does not own Project Vault content, Project Sync, move, or source-control semantics. `Plans/Project_Sync_and_Backbone.md` is the sole owner for Project/Vault/app-content sync, move, source relocation, update, and Sync bundles. `storage-plan.md` retains persistence only for `RuntimeResourceGovernor` and `ObservableWork` records rather than behavior ownership.
 
 ContractRef: ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/runtime_integration_disposition.json, ContractName:Plans/BinaryLocator_Spec.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
+
+### Remaining Runtime supersession register (PROC-008, 2026-08-14)
+
+This table is an ownership router, not a peer product owner. Later accepted owner text below supersedes the conflicting live behavior while older text remains source-lineage only.
+
+| Superseded or ambiguous source | Current sole owner/disposition |
+|---|---|
+| Project/Vault/app-content sync, move, source relocation, update, or Sync-bundle behavior attributed generically to “Project Sync/Backbone” | `Plans/Project_Sync_and_Backbone.md` PSB-001 through PSB-003. |
+| Runtime resource quotas/governor behavior in `storage-plan.md` SP-228/SP-229 | Retired as behavior authority; `Plans/Shared_Integration_Runtime.md` SIR-006 is sole governor owner and Storage persists values only. |
+| Settings inheritance-only or no-import/export clauses | `Plans/FinalGUISpec.md` F3-510/F3-511 own behavior; `Plans/settings_inventory.json` remains the machine inventory. |
+| One broad onboarding flow | Product Onboarding: `Plans/Planning_Wizard.md`/Final GUI; Installation/Deployment: SIR-003 plus Release Supply Chain/domain installer; Server Claim/Bootstrap: SIR-013. Project-content movement remains the separate downstream PSB service; visible routing is SMPFS-146. |
+| Doctor behavior spread across feature owners | `Plans/newtools.md` N2-151 owns the registry/router; domain owners retain probe truth and remediation. |
+| Workspace cleanup attributed to Storage or Worktree | `Plans/MiscPlan.md` M-084 is sole cleanup manager; Storage persists and Worktree supplies lifecycle facts. |
+| Legacy `auth_session` persistence, capture, recording, generic navigation, inspection, or agent/tool clauses | Retired; protected `AuthBrowserSession` is human-only and ephemeral under SMPFS-143/F3-512 and the protected-session schema discriminator. |
+| PM Playwright runtime/facade/compatibility vocabulary | Rejected. PM uses BrowserRuntimeService, Browser Program, and Expert Browser Program; a user Project may run an independent generic external test process only. |
+| BSD default Off compatibility prose | Superseded by SIR-010/RM-050: default and recommended value Auto; explicit stored Off remains Off. |
+| `cmd.environment.reconnect` normalized to `cmd.remote.reconnect` | Reversed and retired. `cmd.environment.reconnect` is canonical; `cmd.remote.reconnect` is an exact-environment wrapper. |
+| T3 as runtime/facade owner | Reference evidence only under CBP-029; BinaryLocator, provider owners, and SIR-003 retain their distinct authority. |
+| SQLite as a Puppet Master persistence option | Rejected; seglog/redb/Tantivy remain canonical. Opaque provider-owned files remain outside PM authority. |
+
+PROC-008 is closed only by the exact owner text and machine contracts cited above. This index does not turn source-lineage or retired PlanUnits into implementation evidence, WorkNodes, runtime artifacts, or governance seal proof.
 
 | Plan | Primary scope | Notes / canonical intent |
 |------|--------------|--------------------------|
@@ -449,6 +470,7 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plan
 | `FileSafe.md` | Safe-edit guards + context compilation | Canonical blocked destructive-command behavior and restore-before-rerun integration; maps to central tool policy + patch pipeline. |
 | `Prompt_Pipeline.md` | Prompt assembly pipeline + compaction contract | SSOT for prompt assembly stage ordering and compaction/rotation contracts (pairs with FileSafe Part B for compilation details). |
 | `WorktreeGitImprovement.md` | Worktree/git correctness + GUI wiring | Canonical for stable project identity vs path rebinding and worktree-aware project-switch/restore behavior. |
+| `Project_Sync_and_Backbone.md` | Project/Vault/app-content sync, move, source relocation, update, and Sync bundles | Sole semantic owner for exact-topology Project-content movement and recovery. Consumes Shared Runtime topology; does not own Git, transports, secrets, or storage engines. |
 | `MiscPlan.md` | Cleanup + runner contract + artifact retention | Maps to patch pipeline + event artifacts retention |
 | `newtools.md` | GUI testing/tools discovery + MCP tooling | Canonical for MCP settings/UI flow, cited search, testing-tool discovery, and runtime-health-oriented MCP GUI behavior. |
 | `Tools.md` | Built-in tools, custom tools, permissions (allow/deny/ask) | Canonical for tool semantics, MCP integration, requested-vs-effective tool availability, normalized `question` / TODO tool contracts, expanded web operations, Site Reader structured browser runtime, `task`, widened `lsp`, and permission-adjacent tool behavior. |
@@ -615,6 +637,8 @@ Agent-friendly shards for long plan docs. Regenerate with `python3 scripts/pm-sh
 | `web_research_run_fixtures.json` | [`Plans/_shards/web_research_run_fixtures/00-index.md`](Plans/_shards/web_research_run_fixtures/00-index.md) |
 | `Release_Supply_Chain.md` | [`Plans/_shards/release_supply_chain/00-index.md`](Plans/_shards/release_supply_chain/00-index.md) |
 | `storage_recovery_contracts.schema.json` | [`Plans/_shards/storage_recovery_contracts.schema/00-index.md`](Plans/_shards/storage_recovery_contracts.schema/00-index.md) |
+| `Shared_Integration_Runtime.md` | [`Plans/_shards/shared_integration_runtime/00-index.md`](Plans/_shards/shared_integration_runtime/00-index.md) |
+| `runtime_integration_disposition.json` | [`Plans/_shards/runtime_integration_disposition/00-index.md`](Plans/_shards/runtime_integration_disposition/00-index.md) |
 ## 2026-03-07 addendum — containers, registry, and Unraid
 
 - Registered `Plans/Containers_Registry_and_Unraid.md` as the canonical SSOT for first-class DockerHub image publishing, contextual Docker management UI, managed Unraid template repositories, and `ca_profile.xml` behavior.
@@ -5328,6 +5352,148 @@ implementation_surfaces: [Plans/00-plans-index.md, Plans/Shared_Integration_Runt
 node_compile_hint: {mode: shared_integration_runtime_owner_map, create_worknodes: false, create_nodeseeds: false}
 source_lineage: [Plans/runtime_integration_disposition.json, PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13]
 ```
+
+### PMConcept7 tweak wave 8 — 2026-08-15 (kebab ink canon, chat dock back, drag snap, scroll kill)
+
+Four re-diagnosed behaviors sealed with dated wave-8 dispositions; the user
+rejected all four wave-7 items and each re-diagnosis found wave 7 had missed
+the real mechanism, so several wave-7 claims are superseded:
+
+- `Plans/FinalGUISpec.md` — F3-HOME-003: kebab geometry canon — the seat is
+  derived from the glyph's INK, which sits at button-local top + 10 px (about
+  5 px of glyph-free padding above and below the dots), so wave-7's
+  `editor_panel` top 10 px actually seated the ink at surface-y 20, three
+  below the 35 px strip's tab-label line at 17. Superseded to `editor_panel`
+  `top: 6px` (ink 16) and dashboard `top: 2px; right: 13px` (ink 12, three
+  above the 31 px header's title line at 15); `right: 13px` and the 34 px
+  dashboard-actions margin are unchanged, and the grip hit-triangle
+  concession is confined to glyph-free padding (about 50 px² editor, about
+  4 px² dashboard). Also F3-HOME-003: floating Chat regains a `Dock back`
+  row, reversing wave 7's retirement while keeping wave 7's single-menu
+  exception — the T20 kebab stays skipped for chat and the row is injected
+  into the BASE `.pm6-chat-more-menu`
+  (`button.pm6-chat-more-item`, `data-pm-home-chat-row="redock"`, inline
+  currentColor SVG, before `.closeChatBtn`), shown only while the host is
+  `floating` with the base `.popOutBtn` hidden; the capture listener handles
+  it ahead of `[data-pm-home-action]`, calls
+  `moveSurface("chat", last_docked_host || "home_main")` and deliberately
+  does not stop propagation so the base handler still closes the menu. No new
+  command id — the move emits the existing `cmd.panel.redock`. F3-421 and
+  F3-505: the snap-while-dragging EDSHAPE contract — wave 7's drag-cover fix
+  (opacity 1, silhouette at z 39) stands but was incomplete; the residue was
+  the GRAB-SPRING, since grabbing a non-active tab flips the active key and
+  sprang the plate ~12 frames while the carried tab paints nothing, with
+  sub-0.5 px moves parking in the spring-preservation early return. Any sync
+  while the strip holds `.tab.dragging` now snaps in-frame (worst lag 0.00 px
+  over 2,615 slow-drag samples; selection springs still travel 18 monotonic
+  intermediates), plus a glass drag-scoped plate frost at opacity .92 that is
+  deliberately not a backdrop blur (T16 count pin stays 134). F3-503: Home
+  scroll kill, corrected mechanism — wave 7's `overflow-x: clip` claim is
+  false because clip beside `overflow-y: auto` COMPUTES to hidden (CSS
+  Overflow 3 §3.1), so hosts stayed scroll containers (programmatic
+  scrollLeft moved 12 px) and Safari ≤ 15 drops clip outright. The overflow
+  is removed at its three measured sources instead — empty-dock `padding: 0`
+  (8 px), a zero-extent PM_EDGE band guard (22 px) and home_main's pairless
+  last divider (12 px) — with a both-axes clip belt on the workspace, the
+  host grid and `#panel-dashboard.pm-home-owned`, ID-anchored zero-width host
+  scrollbars replacing wave 7's `scrollbar-color` rule, and a documented
+  sub-1320 px `overflow-x: auto` reachability exception. Wave 7's blame on
+  the tab silhouette is retired: its flare box overhangs the START edge,
+  which does not count toward scrollWidth in LTR.
+- `Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json` — kebab rule
+  amended (ink canon, corrected chat clause), scroll rule rewritten with the
+  wave-8 supersession, one new rule added for the floating-chat Dock back row
+  (18 → 19), `[data-pm-home-chat-row]` added to the semantic selector
+  families, and the artifact plus T20 source hashes recomputed.
+
+Artifact sha256 213a3ee9 (3,619,880 bytes) on repinned base 3d82a850
+(== PMConcept6.html); receipt 8da26442 (base_pin_ok, 20/20 transforms,
+gates_all_pass, zero page errors on load). Live matrix 32/32 checks, 72/72
+captures, 0 runtime-error cases, PASS. Governance: seal row
+`dec-2026-08-15-pm7-tweak-wave-8`, evidence bundle
+`Plans/.evidence/pm7-tweak-wave-8-2026-08-15/`. No new command IDs, no wiring
+row changes, no storage shape changes; census unchanged at 56 home rows (the
+Dock back row dispatches the existing `cmd.panel.redock` from an existing
+surface). No WorkNodes, NodeSeeds, executable queues, final node manifests,
+or production build tasks were created.
+
+### PMConcept7 tweak wave 7 — 2026-08-14 (kebab seats, chat menu, drag occlusion, scroll lock)
+
+Four verified behaviors sealed with dated wave-7 dispositions:
+
+- `Plans/FinalGUISpec.md` — F3-HOME-003: per-kind kebab seats (editor_panel top
+  10 px against the 35 px strip; dashboard top 5 px / right 13 px against the
+  31 px header, the right shift clearing the grip's clip-path hit triangle;
+  34 px dashboard-actions margin; kind attribute value `editor_panel`), and
+  Chat becomes the uniform-kebab exception — attachSurfaceControls skips and
+  removes the T20 kebab for chat, the base chat header menu
+  (Duplicate/Archive/Pop out/Close) is Chat's single more-options, the
+  chat-only Dock Back row is retired (grip-drag re-dock covers it), and Pop
+  Out still routes through the T20 float guard (host becomes floating,
+  #floatingChat never displays, exactly one chat). F3-421: the dragged tab
+  covers tabs it passes — opacity re-tuned .92 to 1 and the silhouette lifts
+  to z 39 during a live drag (above neighbour labels z 1, below the carried
+  label z 40), watched at 3x zoom. F3-503: Home screen scroll lock —
+  overflow-x clip / overflow-y auto / overscroll-behavior none on the
+  attribute-doubled .pm-home-host[data-pm-home-host] selector (required
+  because scroll-frost enrolment stamps the base pm6-bottom-scroll overflow
+  rule onto hosts at runtime); zero horizontal scrollLeft, no gutters,
+  vertical intact.
+- `Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json` — kebab rule
+  amended (chat exception, per-kind seats), scroll-lock rule added, artifact
+  and source hashes recomputed.
+
+Artifact sha256 8ab40669 (3,612,010 bytes) on repinned base 33d5ed89
+(== PMConcept6.html); receipt 92f0ef8c (base_pin_ok, 20/20 transforms,
+gates_all_pass, zero page errors on load). Governance: seal row
+`dec-2026-08-14-pm7-tweak-wave-7`, evidence bundle
+`Plans/.evidence/pm7-tweak-wave-7-2026-08-14/`. No new command IDs, no wiring
+row changes, no storage shape changes; census unchanged at 56 home rows.
+
+### PMConcept7 tweak wave 6 — 2026-08-14 (silhouette path canon)
+
+Silhouette reconstruction wave, sealed with dated wave-6 dispositions in
+F3-505:
+
+- Construction canon: ONE JS-composed clip-path path() per frame —
+  superellipse-approximating crown cubics (handle factor 0.5523 + 0.35 x
+  progress) and per-side ogee descents (concave flare shoulder-max x p into
+  convex neck canvas-max x p, tangent on the canvas line). Retires the
+  border-radius crown, the engine-split corner-shape/superellipse @supports
+  blocks (Chromium-only — the recorded motivation), the masked shoulder
+  pseudos, and the glass three-edge inset bevel (now a 1 px --glass-edge crown
+  strip clipped by the same path). Identical Safari/Chromium rendering.
+- Morph gap canon (measured against the reference explainer's debug HUD):
+  linear progress = clamp(gap/20 px, 0, 1); canvas-neck to shoulder-flare
+  ratio 10:8; per-side gap to the NEAREST CONTACT (static strip content-box
+  edge or adjacent tab's transform-free layout edge); strip-end caps key off
+  the strip box only. The first/last-laid-tab gap track is retired (froze the
+  morph on end-tab drags; wobbled under FLIP).
+- Glass-dark --ed-rail-solid deepened via a 55 percent black canvas-bg mix
+  (measured: ~1 sRGB channel level before, 16 levels after).
+- Retro tab-motion bake-off: three EXPERIMENTAL pane-gated prototypes
+  (phosphor/crt/dos via data-retro-motion on panes 1/2/3, pane 3 lazily
+  stamped on first retro activation). RESOLVED same day (third follow-up,
+  user decision): all three are canon as a rotating shuffle-bag trio (fair
+  rotation, no immediate repeats) on every selection click and reorder
+  gesture; pane gates removed everywhere; effects cover all editor strips
+  plus the dashboard strip under retro; steady state is the standard retro
+  active ring (phosphor 650 ms solid-hold fade, CRT 500 ms scanline-hold
+  fade); phosphor/dos reorder glides quantize to 8 px cells, crt glides
+  smooth; reduced motion suppresses all of it. The same follow-up corrected
+  the silhouette canon: the tab side is a single concave quarter-arc
+  (standard kappa, radius = shoulder token x per-side progress) with the
+  convex canvas radius exclusive to the strip-end caps; both ogee
+  constructions are retired as a misreading of the reference.
+
+`Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json` re-pinned to
+artifact 22fb085d (3,610,186 bytes) on repinned base f638a30b; T20 source
+unchanged this wave (4fa0a286). Governance: seal row
+`dec-2026-08-14-pm7-tweak-wave-6`, evidence bundle
+`Plans/.evidence/pm7-tweak-wave-6-2026-08-14/`. No new command IDs, no wiring
+row changes, no storage shape changes; this wave creates no WorkNodes,
+NodeSeeds, executable queues, implementation files, runtime artifacts, or
+production build tasks.
 
 ### PMConcept7 tweak wave 4 — 2026-08-13 (fourth same-day wave)
 

@@ -151,7 +151,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Accoun
 
 ## Browser/debug auth handoff and session shaping
 - Browser session-shaping actions remain `explicit_confirmation` operations when they mutate cookies, `/storage`, storage `/export` or import state, offline `/mock` routing, or promotion into normal browsing.
-- App-debug login handoff normally remains in the same isolated automation session so authenticated state can resume the investigation, while PM-owned provider `/device/login` flows may use a dedicated `auth_session` when that is the canonical provider flow.
+- App-debug login handoff stops automation at `attention_required` and transfers foreground control to a protected human-only `AuthBrowserSession` when interactive authentication is required. PM-owned provider device-login flows may open that protected session only under exact domain policy; protected content/state never returns to automation, artifacts, inspection, persistence, or generic navigation.
 
 ## Owner / Consumer Map
 
@@ -704,7 +704,7 @@ plan_unit_id: GAAAF-012
 unit_type: requirement
 status: accepted
 owner_doc: Plans/GitHub_API_Auth_and_Flows.md
-canonical_text: Browser session-shaping actions remain explicit_confirmation operations when they mutate cookies, storage, storage export/import state, offline mock routing, or promotion into normal browsing; app-debug login handoff normally remains in the same isolated automation session, while PM-owned provider device-login flows may use a dedicated auth_session.
+canonical_text: Ordinary browser session-shaping actions remain explicit_confirmation operations when they mutate cookies, storage, export/import state, offline mock routing, or promotion. Interactive app-debug or provider login enters attention_required and hands foreground control to a protected human-only AuthBrowserSession; protected state never returns to automation, artifacts, inspection, persistence, or generic navigation.
 gui_related: false
 gui_classification_reason: This unit defines browser automation auth handoff and session mutation policy, not GUI presentation.
 split_recommended: false
@@ -741,6 +741,7 @@ preserved_exact_tokens:
 - auth_session
 negative_constraints:
 - Browser session-shaping actions remain explicit_confirmation operations when they mutate cookies, storage, export/import state, mock routing, or promotion into normal browsing.
+- The preserved auth_session token is legacy lineage only and grants no automation, persistence, capture, inspection, or generic-navigation capability.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []

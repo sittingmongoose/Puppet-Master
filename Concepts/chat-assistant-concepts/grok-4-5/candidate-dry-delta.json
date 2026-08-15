@@ -2,9 +2,9 @@
   "schema_id": "pm.chat_candidate_dry_delta.v1",
   "concept_id": "grok-4-5",
   "model": "Grok 4.5",
-  "updated_at": "2026-08-11",
+  "updated_at": "2026-08-14T04:40:00Z",
   "status": "complete",
-  "note": "Candidate DRY roles from packet 08; concept maps local modules \u2014 does not edit DRY owners.",
+  "note": "Candidate DRY roles from packet 08; correction maps provider/peek/motion honesty without editing DRY owners.",
   "runtime_owners": [
     "Thread service",
     "Goal Runtime",
@@ -28,7 +28,7 @@
     },
     {
       "role": "ThreadDetailSubscription",
-      "concept_mapping": "concept-local composition; keep identity per w\u00d7t",
+      "concept_mapping": "concept-local composition; keep identity per w×t",
       "do_not_clone_across_concepts": false,
       "status": "mapped"
     },
@@ -94,25 +94,25 @@
     },
     {
       "role": "TodoGroup",
-      "concept_mapping": "concept-local composition; keep identity per w\u00d7t",
+      "concept_mapping": "concept-local composition; keep identity per w×t",
       "do_not_clone_across_concepts": false,
       "status": "mapped"
     },
     {
       "role": "SubagentGroup",
-      "concept_mapping": "concept-local composition; keep identity per w\u00d7t",
+      "concept_mapping": "concept-local composition; keep identity per w×t",
       "do_not_clone_across_concepts": false,
       "status": "mapped"
     },
     {
       "role": "ActivityGroup",
-      "concept_mapping": "concept-local composition; keep identity per w\u00d7t",
+      "concept_mapping": "concept-local composition; keep identity per w×t",
       "do_not_clone_across_concepts": true,
       "status": "mapped"
     },
     {
       "role": "DiffSummary",
-      "concept_mapping": "concept-local composition; keep identity per w\u00d7t",
+      "concept_mapping": "concept-local composition; keep identity per w×t",
       "do_not_clone_across_concepts": false,
       "status": "mapped"
     },
@@ -130,7 +130,7 @@
     },
     {
       "role": "RouteImpactCard",
-      "concept_mapping": "concept-local composition; keep identity per w\u00d7t",
+      "concept_mapping": "concept-local composition; keep identity per w×t",
       "do_not_clone_across_concepts": false,
       "status": "mapped"
     },
@@ -154,9 +154,31 @@
     },
     {
       "role": "ReceiptLink",
-      "concept_mapping": "concept-local composition; keep identity per w\u00d7t",
+      "concept_mapping": "concept-local composition; keep identity per w×t",
       "do_not_clone_across_concepts": false,
       "status": "mapped"
+    },
+    {
+      "role": "ProviderSetupProjection",
+      "concept_mapping": "_shared/composer.js + demo-harness provider_* triggers",
+      "do_not_clone_across_concepts": true,
+      "status": "mapped",
+      "note": "Settings-owned Install/Setup; Chat projects blocked send + official-source copy only"
+    },
+    {
+      "role": "MotionCausalContinuity",
+      "concept_mapping": "_shared/motion.js + motion.css (videos 01–04 hooks)",
+      "do_not_clone_across_concepts": true,
+      "status": "mapped",
+      "note": "Causal continuity without frame-matching clone"
     }
-  ]
+  ],
+  "correction_2026_08_14": {
+    "status": "complete",
+    "provisional_only": true,
+    "provider": "official-source / not bundled / not baseline; Chat deep-link only",
+    "peek": "historyMode peek mapped through PinnedHistorySurface / windows",
+    "motion": "MotionCausalContinuity role mapped; no DRY owner edits"
+  },
+  "correction_packet": "PM_Assistant_Chat_Dependency_Media_and_Work_Correction_2026-08-13"
 }

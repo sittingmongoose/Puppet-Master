@@ -1,0 +1,9 @@
+{
+  "schema_id":"pm.prompt_complexity_successor.no_subject_activity.v3",
+  "attempt_id":"successor-preflight-20260813-v3",
+  "counters":{"subject_model_calls":0,"provider_api_calls":0,"provider_cli_calls":0,"provider_or_model_total":0,"route_canary_calls":0,"authentication_inspections":0,"configuration_inspections":0,"model_or_route_discovery_calls":0,"semantic_pilot_calls":0,"fleet_calls":0,"reviewer_calls":0,"repair_calls":0,"attempted_forbidden_actions":0},
+  "preparation_calls":{"medium":1,"xhigh":2,"subjects":false},
+  "subject_roster_selected":false,
+  "test_method_selected":false,
+  "claim_boundary":"Preparation-agent calls are controller work, not subject observations."
+}

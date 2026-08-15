@@ -15,7 +15,7 @@ const defaultThread = body.dataset.defaultThread ?? "thread-01";
 function comparisonControls(ui) {
   const windowConcept = WINDOW_CONCEPTS.find((item) => item.id === ui.selectedWindow) ?? WINDOW_CONCEPTS[0];
   const threadConcept = THREAD_CONCEPTS.find((item) => item.id === ui.selectedThreadConcept) ?? THREAD_CONCEPTS[0];
-  return `<header class="comparison-header">
+  return `<header class="comparison-header comparison-controls" ${ui.popup ? "inert aria-hidden=\"true\"" : ""}>
     <div class="comparison-title">
       <span>Assistant Chat creative bakeoff</span>
       <strong>${escapeHtml(windowConcept.title)} × ${escapeHtml(threadConcept.title)}</strong>
@@ -66,11 +66,24 @@ function fakeSidePanel(ui) {
   </aside>`;
 }
 
+function renderNotificationInbox(ui) {
+  if (ui.notification.state !== "open") return "";
+  const items = ui.notification.items ?? [];
+  return `<section id="titlebar-notification-inbox" class="titlebar-notification-inbox" role="region" aria-label="Title-bar notification inbox">
+    <header><div><span>Canonical app-wide boundary</span><strong>Notifications</strong></div><button type="button" data-action="notification-close" aria-label="Close title-bar notification inbox">${icon("close")}</button></header>
+    <p class="notification-boundary-note">Chat renders the task outcome inline; this title-bar projection retains the app-wide copy.</p>
+    <div class="notification-items">${items.map((item) => `<article data-notification-id="${escapeHtml(item.id)}"><strong>${escapeHtml(item.title)}</strong><p>${escapeHtml(item.detail)}</p><time>${escapeHtml(item.at)}</time></article>`).join("") || "<p>No app-wide outcomes are waiting.</p>"}</div>
+  </section>`;
+}
+
 function fakeTopbar(ui) {
+  const unread = Number(ui.notification.unread ?? 0);
+  const inboxOpen = ui.notification.state === "open";
   return `<header class="pm-titlebar">
     <div class="pm-brand-mark">${icon("goal")}<span>PUPPET MASTER</span></div>
     <nav class="pm-page-tabs" aria-label="Open Puppet Master pages"><button type="button" disabled title="Surrounding shell context only">Editor</button><button type="button" class="is-current" data-action="set-status" data-value="Assistant Chat concept workspace is active">Assistant Chat</button></nav>
-    <div class="titlebar-actions"><span class="server-health">${escapeHtml(ui.network.transport)}</span><button type="button" data-action="notification-outcome" aria-label="Open canonical notification inbox">${icon("bell")}<span class="notification-count">2</span></button><span class="titlebar-model" data-concept-model="5.6 Sol">${MODEL_LABEL}</span></div>
+    <div class="titlebar-actions"><span class="server-health">${escapeHtml(ui.network.transport)}</span><button type="button" data-action="notification-toggle" aria-label="${inboxOpen ? "Close" : "Open"} title-bar notification inbox" aria-controls="titlebar-notification-inbox" aria-expanded="${inboxOpen ? "true" : "false"}">${icon("bell")}${unread > 0 ? `<span class="notification-count">${unread}</span>` : ""}</button><span class="titlebar-model" data-concept-model="5.6 Sol">${MODEL_LABEL}</span></div>
+    ${renderNotificationInbox(ui)}
   </header>`;
 }
 
@@ -84,7 +97,6 @@ function shellStage(data, ui) {
   return `<main class="pm-stage" data-mount="${escapeHtml(ui.mount)}">
     <div class="editor-backdrop" aria-hidden="true"><div class="editor-tab">assistant-chat-design.md</div><div class="editor-lines"><i></i><i></i><i></i><i></i><i></i></div></div>
     <div class="concept-frame" style="--chat-width:${ui.chatWidth}px">${window}</div>
-    ${renderPopupLayer(data, ui)}
   </main>`;
 }
 
@@ -147,7 +159,10 @@ function applyDocumentState(ui) {
 function render(data, ui, action = null) {
   const snapshot = snapshotDom(action);
   applyDocumentState(ui);
-  app.innerHTML = `<div class="comparison-workspace" data-entry-kind="${escapeHtml(entryKind)}">${comparisonControls(ui)}<div class="shell-wrap">${renderShell(data, ui)}</div>${renderDemoController(data, ui)}</div>`;
+  app.innerHTML = `<div class="comparison-workspace" data-entry-kind="${escapeHtml(entryKind)}">${comparisonControls(ui)}<div class="shell-wrap" ${ui.popup ? "inert aria-hidden=\"true\"" : ""}>${renderShell(data, ui)}</div>${renderPopupLayer(data, ui)}${renderDemoController(data, ui)}</div>`;
+  // Focus restoration must not depend on animation-frame scheduling. Headless and
+  // backgrounded browser tabs may defer a frame even though the new target exists.
+  restoreDom(snapshot, ui);
   requestAnimationFrame(() => {
     restoreDom(snapshot, ui);
     if (snapshot.anchor) {
@@ -155,6 +170,21 @@ function render(data, ui, action = null) {
       window.setTimeout(() => restoreAnchor(snapshot.anchor), 120);
     }
   });
+}
+
+function renderWidthOnly(ui) {
+  const shell = app.querySelector(".pm-shell");
+  const frame = app.querySelector(".concept-frame");
+  if (!shell || !frame || shell.dataset.history !== ui.historyMode) return false;
+  frame.style.setProperty("--chat-width", `${ui.chatWidth}px`);
+  const range = app.querySelector('[data-role="width-range"]');
+  if (range) range.value = String(ui.chatWidth);
+  const output = app.querySelector(".width-control output");
+  if (output) output.textContent = `${ui.chatWidth} px`;
+  app.querySelectorAll('.width-presets [data-action="set-width"]').forEach((control) => control.setAttribute("aria-pressed", String(Number(control.dataset.value) === Number(ui.chatWidth))));
+  const statusWidth = app.querySelector(".pm-statusbar span:last-child");
+  if (statusWidth) statusWidth.textContent = `${ui.chatWidth} px`;
+  return true;
 }
 
 function closestAction(event) {
@@ -223,6 +253,7 @@ function installEvents(store, data) {
     else if (action === "route-effort") store.dispatch({ type: "route-effort", value });
     else if (action === "route-speed") store.dispatch({ type: "route-speed", value });
     else if (action === "route-favorite") store.dispatch({ type: "route-favorite" });
+    else if (action === "set-mode") store.dispatch({ type: "set-mode", value });
     else if (action === "set-access") store.dispatch({ type: "set-access", value });
     else if (action === "set-bsd") store.dispatch({ type: "set-bsd", value });
     else if (action === "context-mode") store.dispatch({ type: "context-mode", value });
@@ -238,21 +269,28 @@ function installEvents(store, data) {
     else if (action === "question-cancel") store.dispatch({ type: "question-cancel" });
     else if (action === "question-submit") store.dispatch({ type: "question-submit" });
     else if (action === "question-submitted") store.dispatch({ type: "question-submitted" });
+    else if (action === "question-next-queue") store.dispatch({ type: "question-next-queue" });
     else if (action === "goal-action") store.dispatch({ type: "goal-action", value });
     else if (action === "goal-save-edit") store.dispatch({ type: "goal-save-edit" });
+    else if (action === "todo-add") store.dispatch({ type: "todo-add" });
     else if (action === "todo-cycle") store.dispatch({ type: "todo-cycle", value });
+    else if (action === "subagent-spawn") store.dispatch({ type: "subagent-spawn" });
     else if (action === "subagent-cycle") store.dispatch({ type: "subagent-cycle", value });
     else if (action === "crew-advance") store.dispatch({ type: "crew-advance" });
     else if (action === "activity-advance") store.dispatch({ type: "activity-advance" });
     else if (action === "diff-update") store.dispatch({ type: "diff-update" });
+    else if (action === "diff-open") store.dispatch({ type: "diff-open" });
     else if (action === "approval-decision") store.dispatch({ type: "approval-decision", value });
     else if (action === "approval-details") store.dispatch({ type: "approval-details" });
     else if (action === "route-warning-decision") store.dispatch({ type: "route-warning-decision", value });
     else if (action === "communication-action") store.dispatch({ type: "communication-action", value });
     else if (action === "branch-action") store.dispatch({ type: "branch-action", value });
     else if (action === "network-action") store.dispatch({ type: "network-action", value });
+    else if (action === "provider-action") store.dispatch({ type: "provider-action", value });
     else if (action === "resource-select") store.dispatch({ type: "resource-select", value });
     else if (action === "notification-outcome") store.dispatch({ type: "notification-outcome" });
+    else if (action === "notification-toggle") store.dispatch({ type: "notification-toggle" });
+    else if (action === "notification-close") store.dispatch({ type: "notification-close" });
     else if (action === "run-trigger") store.dispatch({ type: "run-trigger", value });
     else if (action === "jump-latest") {
       const transcript = app.querySelector("[data-role='transcript']");
@@ -266,6 +304,7 @@ function installEvents(store, data) {
     if (role === "composer-input") store.dispatch({ type: "set-draft", value: event.target.value }, { notify: false });
     if (role === "search-input") store.dispatch({ type: "search-query", value: event.target.value });
     if (role === "history-filter") store.dispatch({ type: "history-filter", value: event.target.value });
+    if (role === "route-search") store.dispatch({ type: "route-search", value: event.target.value });
     if (role === "question-freeform") store.dispatch({ type: "question-answer", value: event.target.value }, { notify: false });
     if (role === "goal-objective-input") store.dispatch({ type: "goal-objective", value: event.target.value }, { notify: false });
     if (role === "width-range") store.dispatch({ type: "set-width", value: event.target.value });
@@ -283,7 +322,18 @@ function installEvents(store, data) {
   });
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && store.getState().ui.popup) store.dispatch({ type: "close-popup" });
+    const popupOpen = Boolean(store.getState().ui.popup);
+    if (event.key === "Escape" && popupOpen) store.dispatch({ type: "close-popup" });
+    if (event.key === "Tab" && popupOpen) {
+      const dialog = app.querySelector('[role="dialog"][aria-modal="true"]');
+      const focusable = [...(dialog?.querySelectorAll('button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])') ?? [])].filter((element) => !element.hidden && element.getClientRects().length > 0);
+      if (focusable.length) {
+        const first = focusable[0];
+        const last = focusable.at(-1);
+        if (event.shiftKey && (document.activeElement === first || !dialog.contains(document.activeElement))) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && (document.activeElement === last || !dialog.contains(document.activeElement))) { event.preventDefault(); first.focus(); }
+      }
+    }
     if ((event.ctrlKey || event.metaKey) && event.key === "Enter" && event.target.dataset.role === "composer-input") { event.preventDefault(); store.sendDraft(); }
   });
 }
@@ -297,7 +347,10 @@ async function start() {
     window.__SOL_STORE__ = store;
     window.__SOL_DATA__ = data;
     installEvents(store, data);
-    store.subscribe(({ ui, action }) => render(data, ui, action));
+    store.subscribe(({ ui, action }) => {
+      if (action?.type === "set-width" && renderWidthOnly(ui)) return;
+      render(data, ui, action);
+    });
     render(data, store.getState().ui);
   } catch (error) {
     app.innerHTML = `<section class="fatal-state"><span data-concept-model="5.6 Sol">${MODEL_LABEL}</span><h1>The concept fixture could not start</h1><p>${escapeHtml(error.message)}</p><button type="button" onclick="location.reload()">Reload concept</button></section>`;

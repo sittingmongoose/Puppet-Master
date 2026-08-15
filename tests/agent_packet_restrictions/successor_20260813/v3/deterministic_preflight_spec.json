@@ -1,0 +1,12 @@
+{
+  "schema_id":"pm.prompt_complexity_successor.deterministic_preflight_spec.v3",
+  "spec_id":"successor-preflight-20260813-v3-spec-001",
+  "attempt_id":"successor-preflight-20260813-v3",
+  "subject_or_provider_calls_allowed":false,
+  "checker_writes_allowed":false,
+  "checks":[
+    "V3-CTL-001","V3-JSON-001","V3-ROOT-001","V3-PRED-001","V3-CUST-001","V3-ARC-001","V3-HIST-001","V3-HIST-002","V3-CENSUS-001","V3-CHAT-001","V3-JARED-001","V3-CALL-001","V3-SELF-001","V3-SELF-002","V3-SELF-003","V3-TERM-001","V3-IO-001","V3-BOUNDARY-001","V3-REPORT-001"
+  ],
+  "terminal_rule":{"all_19_pass":"READY_FOR_JARED_TEST_PLAN","otherwise":"NOT_READY","report_is_terminal_input":false},
+  "nonclaims":["empirical model success","production enforcement","runtime completeness","implementation completeness","canonical Plans compile permission","release readiness","safety certification","provider or auth readiness","surface completeness","subject launch permission"]
+}

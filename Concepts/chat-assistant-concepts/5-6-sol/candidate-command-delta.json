@@ -2,11 +2,14 @@
   "schema_id": "pm.chat_candidate_command_delta.v1",
   "model": "5.6 Sol",
   "status": "provisional_after_current_catalog_census",
-  "note": "No command is made canonical here. Reuse and alias decisions require the normal Commands, UI Command Catalog, wiring, and event-registry audit.",
+  "note": "No command is made canonical here. Current Plans/Shared_Integration_Runtime.md and Plans/CLI_Bridged_Providers.md own the shared provider lifecycle and provider acquisition/auth/readiness/route-resume semantics, but the candidate UICommand spellings below remain provisional and unminted pending the normal Commands, UI Command Catalog, wiring, reverse-coverage, and event-registry census.",
   "catalog_sources": [
     "Plans/UI_Command_Catalog.md",
     "Plans/Commands_System.md",
     "Plans/assistant-chat-design.md",
+    "Plans/Shared_Integration_Runtime.md",
+    "Plans/CLI_Bridged_Providers.md",
+    "Plans/Release_Supply_Chain.md",
     "Plans/Wiring_Matrix.md",
     "Plans/Wiring_Matrix.production.json"
   ],
@@ -38,6 +41,10 @@
     {"visible_action":"Redirect active turn","disposition":"candidate_gap_or_send_semantic","existing_id":"cmd.chat.send","candidate_id":"cmd.chat.redirect","notes":"Typed send while active can normalize through send with redirect semantics; avoid a duplicate unless runtime needs an explicit command."},
     {"visible_action":"Select account profile","disposition":"reuse","existing_id":"cmd.account.select_profile","candidate_id":null,"notes":"Use current disabled reasons and append-only account switch history."},
     {"visible_action":"Switch provider route","disposition":"reuse","existing_id":"cmd.provider.switch_route","candidate_id":null,"notes":"Carries provider route context and material warning."},
+    {"visible_action":"Open the exact provider setup row from a blocked Chat operation","disposition":"owner_census_required_navigation_wrapper_unminted","existing_id":"cmd.onboarding.provider_setup.open / cmd.health.provider_setup.open are surface-specific and are not assumed reusable","candidate_id":"cmd.provider.setup.open","notes":"Provisional only. Payload must carry exact provider CLI, Host/Environment, originating operation, continuation token/currentness, source surface, exact setup-row target, and return route. Chat owns only the blocked projection and dispatch; Agent-Config/provider setup owns the destination."},
+    {"visible_action":"Explicitly install a missing provider CLI or select a compatible existing installation","disposition":"owner_census_required_domain_actions_unminted","existing_id":null,"candidate_id":"cmd.provider.cli.install / cmd.provider.cli.use_existing","notes":"Provisional only. Initial acquisition requires an explicit user action, official provider/package source, and exact selected Host/Environment. It cannot be inferred from Project, model, provider, Goal, Plan, WorkNode, agent, Auto, or On. Provider setup/integration lifecycle owns these actions, not Chat."},
+    {"visible_action":"Authenticate an installed provider CLI","disposition":"owner_census_required_domain_action_unminted","existing_id":null,"candidate_id":"cmd.provider.authenticate","notes":"Provisional only and separate from install success. Protected AuthBrowserSession remains human-only and opaque; no token, OAuth code, raw helper response, or protected browser content enters Chat."},
+    {"visible_action":"Resume the operation that requested provider setup","disposition":"owner_census_required_runtime_action_unminted","existing_id":null,"candidate_id":"cmd.provider.continuation.resume","notes":"Provisional only. Runtime resumes only after installation, authentication, and provider/model readiness are independently verified and the continuation token is still current; stale continuations are rejected rather than replayed."},
     {"visible_action":"Select model, effort, mode, or platform","disposition":"reuse","existing_id":"cmd.chat.model / cmd.chat.effort / cmd.chat.mode / cmd.chat.platform","candidate_id":null,"notes":"The picker may compose these rows without inventing one route owner."},
     {"visible_action":"Select Normal or Fast speed","disposition":"candidate_gap","existing_id":null,"candidate_id":"cmd.chat.speed","notes":"Audit current model capability and route owners; applies next turn unless canon says otherwise."},
     {"visible_action":"Set access profile","disposition":"candidate_gap","existing_id":null,"candidate_id":"cmd.chat.access.set","notes":"Requested and effective access remain distinct; FileSafe and Permissions enforce outside model prose."},
@@ -66,6 +73,7 @@
     "questions": ["cmd.chat.question.answer", "cmd.chat.question.navigate", "cmd.chat.question.skip", "cmd.chat.question.cancel", "cmd.chat.question.submit"],
     "goal": ["cmd.chat.goal.pause", "cmd.chat.goal.resume", "cmd.chat.goal.replan", "cmd.chat.goal.stop", "cmd.chat.goal.clear", "cmd.chat.goal.recover"],
     "route_access": ["cmd.chat.speed", "cmd.chat.access.set", "cmd.chat.bsd.set"],
+    "provider_setup_acquisition_auth_continuation_unminted": ["cmd.provider.setup.open", "cmd.provider.cli.install", "cmd.provider.cli.use_existing", "cmd.provider.authenticate", "cmd.provider.continuation.resume"],
     "attachments": ["cmd.chat.attachment.resolve", "cmd.chat.attachment.route"],
     "history_artifact_draft": ["cmd.chat.search_all", "cmd.chat.history.set_geometry", "cmd.chat.artifact.open", "cmd.chat.artifact.close", "cmd.chat.artifact.switch", "cmd.chat.draft.restore", "cmd.chat.draft.clear"]
   }

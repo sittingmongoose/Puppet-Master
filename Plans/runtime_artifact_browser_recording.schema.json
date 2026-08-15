@@ -565,6 +565,8 @@
         "browser_session_id",
         "invocation",
         "session_class",
+        "session_security_class",
+        "session_epoch",
         "state",
         "show_when_possible",
         "open_watch_state",
@@ -590,6 +592,14 @@
             "testing",
             "user_visible_browser"
           ]
+        },
+        "session_security_class": {
+          "type": "string",
+          "const": "ordinary"
+        },
+        "session_epoch": {
+          "type": "integer",
+          "minimum": 0
         },
         "state": {
           "type": "string",
@@ -680,14 +690,6 @@
               "items": {
                 "type": "string"
               }
-            },
-            "playwright_cdp_role": {
-              "type": "string",
-              "enum": [
-                "not_used",
-                "reference_only",
-                "fallback_only"
-              ]
             }
           }
         },

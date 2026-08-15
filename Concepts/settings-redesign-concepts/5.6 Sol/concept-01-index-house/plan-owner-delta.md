@@ -49,3 +49,15 @@ No deferred manager family is claimed by this concept.
 - ConceptHub structural validator.
 - State/architecture tests for manager assignment, provider installation boundaries, lifecycle conflict/rollback, all deterministic fixtures, and theme preview/revert.
 - Browser review at 900, 1280, 1700, 2200, and 2500 px; reduced motion; all eight themes; narrow and squeezed height; deep-link/history/focus checks.
+
+## 2026-08-13 correction authority
+
+This delta is candidate-only and NOT_MINTED. It does not assert that any Plan owner, PlanUnit, command, wiring path, component, schema, or runtime is canonically available. Canonical owners and IDs require later census and adjudication.
+
+- ObservableWork is the sole truthful work/progress/wait owner. A concept-local card, row, folio, checkpoint, or route is a projection/adapter only. Its candidate projection must carry operation ID, owner domain, scope/object refs, title, human phase/state, progress kind/source and trustworthy totals only, queue/wait reason, activity/heartbeat, cancel/background/retry, blocking scope, generation, and result/receipt refs.
+- RuntimeResourceGovernor is the sole resource/admission owner. Settings requests policy and projects requested/effective state; it never schedules or adjudicates. Host enforcement uses the same contract rather than inventing another governor. Outcomes remain admitted, queued, admitted degraded, blocked permission, blocked resource, and cancelled.
+- Provider lifecycle work must keep first acquisition, existing-installation selection, authentication, verification, update, repair, and rollback distinct. First acquisition requires explicit official-source consent for the exact Host/Environment. No provider CLI may be bundled, baseline-preseeded, or silently acquired by Project, model, provider, Goal, Plan, WorkNode, agent, Auto, or On. Authentication remains separate; only post-consent maintenance may follow policy.
+- Settings Home/search carries compact metadata; only the selected manager hydrates. Generation currentness, byte-bounded caches, at most 40 mounted rows, 825+ setting and 100-installation fixtures, inactive unsubscribe/refcount release, non-persistence of transient input, and narrow frame-coalesced deltas are candidate requirements, not production claims.
+- Manager completeness must include Media, accessibility/input/spellcheck, visible DRY states, app/content update insertion, Server, Product Onboarding, and Doctor. Deferred owner modules are insertion-only. No engine is invented here. The Server owner remains unresolved residual risk.
+- Deterministic old-hardware/network/resource fixtures are projections only. Native Slint and actual Ivy Bridge, Xeon, CPU, RAM, disk, and network validation remain open gates. Required review may run in bounded waves but may not be omitted.
+- No Playwright product/runtime/facade/compatibility/package/port/command/MCP/capture dependency or candidate ID is introduced. Browser checks are evidence only and do not certify native Slint.

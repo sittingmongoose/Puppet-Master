@@ -21833,24 +21833,27 @@
       "ui_location": "Remote/session status surface",
       "ui_command_id": "cmd.remote.reconnect",
       "handler_location": "handlers::remote::reconnect",
-      "expected_event_types": [
-        "remote.reconnect.requested"
-      ],
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/remote_reconnect_wrapper_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/environment_connection_command_result",
+      "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.remote.reconnect must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.remote.reconnect must expose projected state selector and disabled reason before dispatch",
-        "cmd.remote.reconnect dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.remote.reconnect must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.remote.reconnect must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "Dispatching cmd.remote.reconnect reaches only handlers::remote::reconnect with RemoteReconnectWrapperRequest and returns EnvironmentConnectionCommandResult.",
+        "The wrapper resolves an exact ExecutionEnvironmentId, then dispatches cmd.environment.reconnect through EnvironmentConnectionCommandRequest; it owns no second connection lifecycle.",
+        "The resolved environment state selector is exactly online|degraded|offline|auth_blocked; disabled reasons are exactly target_missing, stale_projection, topology_unavailable, auth_state_mismatch, breaker_open, permission_required, policy_denied.",
+        "Availability reads state.commands.remote_reconnect.availability and disabled copy reads state.commands.remote_reconnect.disabled_reason before dispatch.",
+        "cmd.remote.reconnect is an exact-environment compatibility wrapper: handlers::remote::reconnect resolves ExecutionEnvironmentId and dispatches cmd.environment.reconnect; it returns EnvironmentConnectionCommandResult receipt/projection references, records missing_event_registration, and emits no unregistered EventRecord while Event Authority is UNKNOWN_OPEN.",
+        "Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets."
       ],
-      "evidence_required": "Production wiring contract for cmd.remote.reconnect; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Production wrapper evidence for cmd.remote.reconnect: exact-environment resolution, sole-wrapper handler fixture, RemoteReconnectWrapperRequest -> EnvironmentConnectionCommandResult assertion, selector and closed disabled-reason fixtures, normalization to EnvironmentConnectionCommandRequest/cmd.environment.reconnect, receipt/projection assertion containing missing_event_registration, accessibility regression, and zero unregistered EventRecord effects.",
       "state_selector": "state.commands.remote_reconnect.availability",
       "disabled_reason_projection": "state.commands.remote_reconnect.disabled_reason",
       "effect_contract": {
-        "effect_kind": "event",
-        "description": "cmd.remote.reconnect must emit the declared event types and record dispatch correlation evidence.",
+        "effect_kind": "receipt",
+        "description": "cmd.remote.reconnect is an exact-environment compatibility wrapper: handlers::remote::reconnect resolves ExecutionEnvironmentId and dispatches cmd.environment.reconnect; it returns EnvironmentConnectionCommandResult receipt/projection references, records missing_event_registration, and emits no unregistered EventRecord while Event Authority is UNKNOWN_OPEN.",
         "receipt_or_event_refs": [
-          "remote.reconnect.requested"
+          "EnvironmentConnectionCommandResult.receipt_refs",
+          "EnvironmentConnectionState",
+          "missing_event_registration"
         ]
       },
       "accessibility_contract": {
@@ -21863,31 +21866,26 @@
         {
           "test_id": "wiring.catalog.remote_reconnect.dispatcher",
           "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.remote.reconnect reaches handlers::remote::reconnect with typed args/result contract."
+          "requirement": "Dispatching cmd.remote.reconnect reaches only handlers::remote::reconnect with RemoteReconnectWrapperRequest; the wrapper resolves exact ExecutionEnvironmentId and calls cmd.environment.reconnect through EnvironmentConnectionCommandRequest."
         },
         {
           "test_id": "wiring.catalog.remote_reconnect.state_projection",
           "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.commands.remote_reconnect.availability and disabled copy reads state.commands.remote_reconnect.disabled_reason."
+          "requirement": "Availability reads state.commands.remote_reconnect.availability for resolved state online|degraded|offline|auth_blocked; disabled copy reads state.commands.remote_reconnect.disabled_reason from the exact closed reason set."
         },
         {
           "test_id": "wiring.catalog.remote_reconnect.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.remote.reconnect must emit the declared event types and record dispatch correlation evidence."
+          "requirement": "cmd.remote.reconnect is an exact-environment compatibility wrapper: handlers::remote::reconnect resolves ExecutionEnvironmentId and dispatches cmd.environment.reconnect; it returns EnvironmentConnectionCommandResult receipt/projection references, records missing_event_registration, and emits no unregistered EventRecord while Event Authority is UNKNOWN_OPEN."
         },
         {
           "test_id": "wiring.catalog.remote_reconnect.accessibility",
           "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
-        },
-        {
-          "test_id": "wiring.catalog.remote_reconnect.events",
-          "evidence_kind": "event_test",
-          "requirement": "Assert cmd.remote.reconnect emits expected event type remote.reconnect.requested with command_id, origin, correlation_id, and handler target."
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for the exact-environment wrapper."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.remote.reconnect emits expected event type remote.reconnect.requested with command_id, origin, correlation_id, and handler target."
+        "Assert cmd.remote.reconnect returns EnvironmentConnectionCommandResult receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
       ]
     },
     "catalog.runtime_abort_run": {
@@ -29452,9 +29450,9 @@
       "handler_location": "handlers::browser::navigate",
       "expected_event_types": [],
       "acceptance_checks": [
-        "Navigation operates within the session-class policy (workspace_preview, detached_preview, automation_session, auth_session) and never reclassifies the session",
+        "Navigation requires session_security_class=ordinary and an ordinary session class (workspace_preview, detached_preview, automation_session); protected AuthBrowserSession is rejected before handler dispatch",
         "Navigation preserves recovery identity: URL, tabs, and originating session",
-        "Navigation outside the session policy is unavailable with a projected disabled reason",
+        "Navigation outside the session policy, including protected_auth, is unavailable with protected_session_forbidden and no URL/content disclosure",
         "cmd.browser.navigate must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.browser.navigate must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
       ],
@@ -29509,7 +29507,7 @@
       "acceptance_checks": [
         "Reload refreshes the embedded browser pane while preserving session class and recovery identity",
         "Production reload never dispatches the dev-only cmd.gui_dev_preview.reload",
-        "Reload of automation or auth sessions never auto-resumes agent work",
+        "Reload of automation sessions never auto-resumes agent work; protected AuthBrowserSession is not a generic reload subject",
         "cmd.browser.reload must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.browser.reload must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
       ],
@@ -38553,7 +38551,7 @@
     },
     "home.editor_panel_1.open_browser": {
       "ui_element_id": "home.editor_panel_1.open_browser",
-      "ui_location": "Home > Editor Panel 1 > options > Open Browser",
+      "ui_location": "Home > Editor Panel 1 > options (options = the surface kebab: a vertical three-dot 16x20 control absolutely positioned at the surface's right edge directly below the grip, uniform across surfaces and no longer in the head row; wave 3, 2026-08-13) > Open Browser",
       "ui_command_id": "cmd.browser.open_workspace_preview",
       "handler_location": "handlers::browser::open_workspace_preview",
       "expected_event_types": [
@@ -38620,7 +38618,7 @@
     },
     "home.editor_panel_1.pop_out": {
       "ui_element_id": "home.editor_panel_1.pop_out",
-      "ui_location": "Home > Editor Panel 1 > options > Pop Out (explicit float into the in-canvas Home float layer; amended 2026-08-13: drag-to-window-exit no longer floats, and Pop Out is the only pointer route to the floating host besides the keyboard float key)",
+      "ui_location": "Home > Editor Panel 1 > options (options = the surface kebab: a vertical three-dot 16x20 control absolutely positioned at the surface's right edge directly below the grip, uniform across surfaces and no longer in the head row; wave 3, 2026-08-13) > Pop Out (explicit float into the in-canvas Home float layer; amended 2026-08-13: drag-to-window-exit no longer floats, and Pop Out is the only pointer route to the floating host besides the keyboard float key)",
       "ui_command_id": "cmd.panel.undock",
       "handler_location": "handlers::panel::undock",
       "expected_event_types": [
@@ -38685,7 +38683,7 @@
     },
     "home.editor_panel_1.close": {
       "ui_element_id": "home.editor_panel_1.close",
-      "ui_location": "Home > Editor Panel 1 > options > Close Panel",
+      "ui_location": "Home > Editor Panel 1 > options (options = the surface kebab: a vertical three-dot 16x20 control absolutely positioned at the surface's right edge directly below the grip, uniform across surfaces and no longer in the head row; wave 3, 2026-08-13) > Close Panel",
       "ui_command_id": "cmd.editor.close_panel",
       "handler_location": "handlers::editor::close_panel",
       "expected_event_types": [
@@ -38747,7 +38745,7 @@
     },
     "home.editor_panel_2.open_browser": {
       "ui_element_id": "home.editor_panel_2.open_browser",
-      "ui_location": "Home > Editor Panel 2 > options > Open Browser",
+      "ui_location": "Home > Editor Panel 2 > options (options = the surface kebab: a vertical three-dot 16x20 control absolutely positioned at the surface's right edge directly below the grip, uniform across surfaces and no longer in the head row; wave 3, 2026-08-13) > Open Browser",
       "ui_command_id": "cmd.browser.open_workspace_preview",
       "handler_location": "handlers::browser::open_workspace_preview",
       "expected_event_types": [
@@ -38814,7 +38812,7 @@
     },
     "home.editor_panel_2.pop_out": {
       "ui_element_id": "home.editor_panel_2.pop_out",
-      "ui_location": "Home > Editor Panel 2 > options > Pop Out (explicit float into the in-canvas Home float layer; amended 2026-08-13: drag-to-window-exit no longer floats, and Pop Out is the only pointer route to the floating host besides the keyboard float key)",
+      "ui_location": "Home > Editor Panel 2 > options (options = the surface kebab: a vertical three-dot 16x20 control absolutely positioned at the surface's right edge directly below the grip, uniform across surfaces and no longer in the head row; wave 3, 2026-08-13) > Pop Out (explicit float into the in-canvas Home float layer; amended 2026-08-13: drag-to-window-exit no longer floats, and Pop Out is the only pointer route to the floating host besides the keyboard float key)",
       "ui_command_id": "cmd.panel.undock",
       "handler_location": "handlers::panel::undock",
       "expected_event_types": [
@@ -38879,7 +38877,7 @@
     },
     "home.editor_panel_2.close": {
       "ui_element_id": "home.editor_panel_2.close",
-      "ui_location": "Home > Editor Panel 2 > options > Close Panel",
+      "ui_location": "Home > Editor Panel 2 > options (options = the surface kebab: a vertical three-dot 16x20 control absolutely positioned at the surface's right edge directly below the grip, uniform across surfaces and no longer in the head row; wave 3, 2026-08-13) > Close Panel",
       "ui_command_id": "cmd.editor.close_panel",
       "handler_location": "handlers::editor::close_panel",
       "expected_event_types": [
@@ -38941,7 +38939,7 @@
     },
     "home.editor_panel_3.open_browser": {
       "ui_element_id": "home.editor_panel_3.open_browser",
-      "ui_location": "Home > Editor Panel 3 > options > Open Browser",
+      "ui_location": "Home > Editor Panel 3 > options (options = the surface kebab: a vertical three-dot 16x20 control absolutely positioned at the surface's right edge directly below the grip, uniform across surfaces and no longer in the head row; wave 3, 2026-08-13) > Open Browser",
       "ui_command_id": "cmd.browser.open_workspace_preview",
       "handler_location": "handlers::browser::open_workspace_preview",
       "expected_event_types": [
@@ -39008,7 +39006,7 @@
     },
     "home.editor_panel_3.pop_out": {
       "ui_element_id": "home.editor_panel_3.pop_out",
-      "ui_location": "Home > Editor Panel 3 > options > Pop Out (explicit float into the in-canvas Home float layer; amended 2026-08-13: drag-to-window-exit no longer floats, and Pop Out is the only pointer route to the floating host besides the keyboard float key)",
+      "ui_location": "Home > Editor Panel 3 > options (options = the surface kebab: a vertical three-dot 16x20 control absolutely positioned at the surface's right edge directly below the grip, uniform across surfaces and no longer in the head row; wave 3, 2026-08-13) > Pop Out (explicit float into the in-canvas Home float layer; amended 2026-08-13: drag-to-window-exit no longer floats, and Pop Out is the only pointer route to the floating host besides the keyboard float key)",
       "ui_command_id": "cmd.panel.undock",
       "handler_location": "handlers::panel::undock",
       "expected_event_types": [
@@ -39073,7 +39071,7 @@
     },
     "home.editor_panel_3.close": {
       "ui_element_id": "home.editor_panel_3.close",
-      "ui_location": "Home > Editor Panel 3 > options > Close Panel",
+      "ui_location": "Home > Editor Panel 3 > options (options = the surface kebab: a vertical three-dot 16x20 control absolutely positioned at the surface's right edge directly below the grip, uniform across surfaces and no longer in the head row; wave 3, 2026-08-13) > Close Panel",
       "ui_command_id": "cmd.editor.close_panel",
       "handler_location": "handlers::editor::close_panel",
       "expected_event_types": [
@@ -39135,7 +39133,7 @@
     },
     "home.editor_panel_4.open_browser": {
       "ui_element_id": "home.editor_panel_4.open_browser",
-      "ui_location": "Home > Editor Panel 4 > options > Open Browser",
+      "ui_location": "Home > Editor Panel 4 > options (options = the surface kebab: a vertical three-dot 16x20 control absolutely positioned at the surface's right edge directly below the grip, uniform across surfaces and no longer in the head row; wave 3, 2026-08-13) > Open Browser",
       "ui_command_id": "cmd.browser.open_workspace_preview",
       "handler_location": "handlers::browser::open_workspace_preview",
       "expected_event_types": [
@@ -39202,7 +39200,7 @@
     },
     "home.editor_panel_4.pop_out": {
       "ui_element_id": "home.editor_panel_4.pop_out",
-      "ui_location": "Home > Editor Panel 4 > options > Pop Out (explicit float into the in-canvas Home float layer; amended 2026-08-13: drag-to-window-exit no longer floats, and Pop Out is the only pointer route to the floating host besides the keyboard float key)",
+      "ui_location": "Home > Editor Panel 4 > options (options = the surface kebab: a vertical three-dot 16x20 control absolutely positioned at the surface's right edge directly below the grip, uniform across surfaces and no longer in the head row; wave 3, 2026-08-13) > Pop Out (explicit float into the in-canvas Home float layer; amended 2026-08-13: drag-to-window-exit no longer floats, and Pop Out is the only pointer route to the floating host besides the keyboard float key)",
       "ui_command_id": "cmd.panel.undock",
       "handler_location": "handlers::panel::undock",
       "expected_event_types": [
@@ -39267,7 +39265,7 @@
     },
     "home.editor_panel_4.close": {
       "ui_element_id": "home.editor_panel_4.close",
-      "ui_location": "Home > Editor Panel 4 > options > Close Panel",
+      "ui_location": "Home > Editor Panel 4 > options (options = the surface kebab: a vertical three-dot 16x20 control absolutely positioned at the surface's right edge directly below the grip, uniform across surfaces and no longer in the head row; wave 3, 2026-08-13) > Close Panel",
       "ui_command_id": "cmd.editor.close_panel",
       "handler_location": "handlers::editor::close_panel",
       "expected_event_types": [
@@ -39329,7 +39327,7 @@
     },
     "home.chat.pop_out": {
       "ui_element_id": "home.chat.pop_out",
-      "ui_location": "Home > Chat > options > Pop Out (explicit float into the in-canvas Home float layer; amended 2026-08-13: drag-to-window-exit no longer floats, and Pop Out is the only pointer route to the floating host besides the keyboard float key)",
+      "ui_location": "Home > Chat > options (options = the surface kebab: a vertical three-dot 16x20 control absolutely positioned at the surface's right edge directly below the grip, uniform across surfaces and no longer in the head row; wave 3, 2026-08-13) > Pop Out (explicit float into the in-canvas Home float layer; amended 2026-08-13: drag-to-window-exit no longer floats, and Pop Out is the only pointer route to the floating host besides the keyboard float key)",
       "ui_command_id": "cmd.panel.undock",
       "handler_location": "handlers::panel::undock",
       "expected_event_types": [
@@ -39394,7 +39392,7 @@
     },
     "home.dashboard.pop_out": {
       "ui_element_id": "home.dashboard.pop_out",
-      "ui_location": "Home > Dashboard > options > Pop Out (explicit float into the in-canvas Home float layer; amended 2026-08-13: drag-to-window-exit no longer floats, and Pop Out is the only pointer route to the floating host besides the keyboard float key)",
+      "ui_location": "Home > Dashboard > options (options = the surface kebab: a vertical three-dot 16x20 control absolutely positioned at the surface's right edge directly below the grip, uniform across surfaces and no longer in the head row; wave 3, 2026-08-13) > Pop Out (explicit float into the in-canvas Home float layer; amended 2026-08-13: drag-to-window-exit no longer floats, and Pop Out is the only pointer route to the floating host besides the keyboard float key)",
       "ui_command_id": "cmd.panel.undock",
       "handler_location": "handlers::panel::undock",
       "expected_event_types": [
@@ -40723,6 +40721,1540 @@
       "event_test_requirements": [
         "Assert cmd.workspace_layout.resize_surface preserves command_id, correlation_id, expected revision when applicable, and idempotency semantics.",
         "Assert exact effects for home.resizer.dock_track: workspace.layout_changed; no unexpected event."
+      ]
+    },
+    "catalog.environment_connect": {
+      "ui_element_id": "catalog.environment_connect",
+      "ui_location": "Runtime setup > Execution environments",
+      "ui_command_id": "cmd.environment.connect",
+      "handler_location": "handlers::environment::connect",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/environment_connection_command_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/environment_connection_command_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.environment.connect reaches only handlers::environment::connect with EnvironmentConnectionCommandRequest and returns EnvironmentConnectionCommandResult.",
+        "cmd.environment.connect is available only when the owner selector is offline|closed; disabled reasons are exactly stale_projection, already_in_state, operation_in_progress, topology_unavailable, permission_required, policy_denied.",
+        "cmd.environment.connect reads state.commands.environment_connect.availability and state.commands.environment_connect.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.environment.connect is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns EnvironmentConnectionCommandResult with EnvironmentConnectionState, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Connects the exact execution environment through its sole supervisor generation. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.environment.connect: render/control proof, exact-handler dispatcher fixture, EnvironmentConnectionCommandRequest -> EnvironmentConnectionCommandResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.environment_connect.availability",
+      "disabled_reason_projection": "state.commands.environment_connect.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.environment.connect is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns EnvironmentConnectionCommandResult with EnvironmentConnectionState, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "EnvironmentConnectionCommandResult.receipt_refs",
+          "EnvironmentConnectionState",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.environment_connect exposes a stable role, name, description, current state, and outcome matching cmd.environment.connect.",
+        "keyboard_access": "catalog.environment_connect is reachable and dispatches the same cmd.environment.connect payload by keyboard and pointer.",
+        "focus_management": "catalog.environment_connect retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.environment_connect announces state.commands.environment_connect.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.environment_connect.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.environment.connect reaches only handlers::environment::connect; schema fixtures validate EnvironmentConnectionCommandRequest -> EnvironmentConnectionCommandResult."
+        },
+        {
+          "test_id": "wiring.catalog.environment_connect.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.environment_connect.availability; disabled copy reads state.commands.environment_connect.disabled_reason; allowed states are offline|closed; closed disabled reasons are stale_projection, already_in_state, operation_in_progress, topology_unavailable, permission_required, policy_denied."
+        },
+        {
+          "test_id": "wiring.catalog.environment_connect.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.environment.connect is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns EnvironmentConnectionCommandResult with EnvironmentConnectionState, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.environment_connect.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.environment.connect."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.environment.connect returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.environment_reconnect": {
+      "ui_element_id": "catalog.environment_reconnect",
+      "ui_location": "Runtime setup > Execution environments",
+      "ui_command_id": "cmd.environment.reconnect",
+      "handler_location": "handlers::environment::reconnect",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/environment_connection_command_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/environment_connection_command_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.environment.reconnect reaches only handlers::environment::reconnect with EnvironmentConnectionCommandRequest and returns EnvironmentConnectionCommandResult.",
+        "cmd.environment.reconnect is available only when the owner selector is online|degraded|offline|auth_blocked; disabled reasons are exactly stale_projection, already_in_state, operation_in_progress, topology_unavailable, permission_required, policy_denied, auth_state_mismatch, breaker_open.",
+        "cmd.environment.reconnect reads state.commands.environment_reconnect.availability and state.commands.environment_reconnect.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.environment.reconnect is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns EnvironmentConnectionCommandResult with EnvironmentConnectionState, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Replaces or rejoins transport for the exact environment without conflating domain sync. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.environment.reconnect: render/control proof, exact-handler dispatcher fixture, EnvironmentConnectionCommandRequest -> EnvironmentConnectionCommandResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.environment_reconnect.availability",
+      "disabled_reason_projection": "state.commands.environment_reconnect.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.environment.reconnect is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns EnvironmentConnectionCommandResult with EnvironmentConnectionState, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "EnvironmentConnectionCommandResult.receipt_refs",
+          "EnvironmentConnectionState",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.environment_reconnect exposes a stable role, name, description, current state, and outcome matching cmd.environment.reconnect.",
+        "keyboard_access": "catalog.environment_reconnect is reachable and dispatches the same cmd.environment.reconnect payload by keyboard and pointer.",
+        "focus_management": "catalog.environment_reconnect retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.environment_reconnect announces state.commands.environment_reconnect.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.environment_reconnect.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.environment.reconnect reaches only handlers::environment::reconnect; schema fixtures validate EnvironmentConnectionCommandRequest -> EnvironmentConnectionCommandResult."
+        },
+        {
+          "test_id": "wiring.catalog.environment_reconnect.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.environment_reconnect.availability; disabled copy reads state.commands.environment_reconnect.disabled_reason; allowed states are online|degraded|offline|auth_blocked; closed disabled reasons are stale_projection, already_in_state, operation_in_progress, topology_unavailable, permission_required, policy_denied, auth_state_mismatch, breaker_open."
+        },
+        {
+          "test_id": "wiring.catalog.environment_reconnect.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.environment.reconnect is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns EnvironmentConnectionCommandResult with EnvironmentConnectionState, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.environment_reconnect.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.environment.reconnect."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.environment.reconnect returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.environment_disconnect": {
+      "ui_element_id": "catalog.environment_disconnect",
+      "ui_location": "Runtime setup > Execution environments",
+      "ui_command_id": "cmd.environment.disconnect",
+      "handler_location": "handlers::environment::disconnect",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/environment_connection_command_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/environment_connection_command_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.environment.disconnect reaches only handlers::environment::disconnect with EnvironmentConnectionCommandRequest and returns EnvironmentConnectionCommandResult.",
+        "cmd.environment.disconnect is available only when the owner selector is not closed; disabled reasons are exactly stale_projection, already_in_state, operation_in_progress, permission_required.",
+        "cmd.environment.disconnect reads state.commands.environment_disconnect.availability and state.commands.environment_disconnect.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.environment.disconnect is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns EnvironmentConnectionCommandResult with EnvironmentConnectionState, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Requests bounded drain and disconnect for the exact environment. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.environment.disconnect: render/control proof, exact-handler dispatcher fixture, EnvironmentConnectionCommandRequest -> EnvironmentConnectionCommandResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.environment_disconnect.availability",
+      "disabled_reason_projection": "state.commands.environment_disconnect.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.environment.disconnect is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns EnvironmentConnectionCommandResult with EnvironmentConnectionState, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "EnvironmentConnectionCommandResult.receipt_refs",
+          "EnvironmentConnectionState",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.environment_disconnect exposes a stable role, name, description, current state, and outcome matching cmd.environment.disconnect.",
+        "keyboard_access": "catalog.environment_disconnect is reachable and dispatches the same cmd.environment.disconnect payload by keyboard and pointer.",
+        "focus_management": "catalog.environment_disconnect retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.environment_disconnect announces state.commands.environment_disconnect.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.environment_disconnect.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.environment.disconnect reaches only handlers::environment::disconnect; schema fixtures validate EnvironmentConnectionCommandRequest -> EnvironmentConnectionCommandResult."
+        },
+        {
+          "test_id": "wiring.catalog.environment_disconnect.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.environment_disconnect.availability; disabled copy reads state.commands.environment_disconnect.disabled_reason; allowed states are not closed; closed disabled reasons are stale_projection, already_in_state, operation_in_progress, permission_required."
+        },
+        {
+          "test_id": "wiring.catalog.environment_disconnect.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.environment.disconnect is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns EnvironmentConnectionCommandResult with EnvironmentConnectionState, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.environment_disconnect.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.environment.disconnect."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.environment.disconnect returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.thread_outbox_retry": {
+      "ui_element_id": "catalog.thread_outbox_retry",
+      "ui_location": "Assistant Chat > Thread detail > Outbox",
+      "ui_command_id": "cmd.thread.outbox.retry",
+      "handler_location": "handlers::thread_outbox::retry",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_outbox_retry_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_outbox_command_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.thread.outbox.retry reaches only handlers::thread_outbox::retry with ThreadOutboxRetryRequest and returns ThreadOutboxCommandResult.",
+        "cmd.thread.outbox.retry is available only when the owner selector is retryable unacknowledged entry; disabled reasons are exactly outbox_state_mismatch, stale_projection, deadline_expired, topology_unavailable, permission_required.",
+        "cmd.thread.outbox.retry reads state.commands.thread_outbox_retry.availability and state.commands.thread_outbox_retry.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.thread.outbox.retry is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns ThreadOutboxCommandResult with ThreadCommandOutboxEntry, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Retries the same unacknowledged logical command under its existing idempotency identity. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.thread.outbox.retry: render/control proof, exact-handler dispatcher fixture, ThreadOutboxRetryRequest -> ThreadOutboxCommandResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.thread_outbox_retry.availability",
+      "disabled_reason_projection": "state.commands.thread_outbox_retry.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.thread.outbox.retry is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns ThreadOutboxCommandResult with ThreadCommandOutboxEntry, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "ThreadOutboxCommandResult.receipt_refs",
+          "ThreadCommandOutboxEntry",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.thread_outbox_retry exposes a stable role, name, description, current state, and outcome matching cmd.thread.outbox.retry.",
+        "keyboard_access": "catalog.thread_outbox_retry is reachable and dispatches the same cmd.thread.outbox.retry payload by keyboard and pointer.",
+        "focus_management": "catalog.thread_outbox_retry retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.thread_outbox_retry announces state.commands.thread_outbox_retry.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.thread_outbox_retry.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.thread.outbox.retry reaches only handlers::thread_outbox::retry; schema fixtures validate ThreadOutboxRetryRequest -> ThreadOutboxCommandResult."
+        },
+        {
+          "test_id": "wiring.catalog.thread_outbox_retry.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.thread_outbox_retry.availability; disabled copy reads state.commands.thread_outbox_retry.disabled_reason; allowed states are retryable unacknowledged entry; closed disabled reasons are outbox_state_mismatch, stale_projection, deadline_expired, topology_unavailable, permission_required."
+        },
+        {
+          "test_id": "wiring.catalog.thread_outbox_retry.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.thread.outbox.retry is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns ThreadOutboxCommandResult with ThreadCommandOutboxEntry, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.thread_outbox_retry.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.thread.outbox.retry."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.thread.outbox.retry returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.thread_outbox_cancel": {
+      "ui_element_id": "catalog.thread_outbox_cancel",
+      "ui_location": "Assistant Chat > Thread detail > Outbox",
+      "ui_command_id": "cmd.thread.outbox.cancel",
+      "handler_location": "handlers::thread_outbox::cancel",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_outbox_cancel_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_outbox_command_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.thread.outbox.cancel reaches only handlers::thread_outbox::cancel with ThreadOutboxCancelRequest and returns ThreadOutboxCommandResult.",
+        "cmd.thread.outbox.cancel is available only when the owner selector is cancellable uncommitted entry; disabled reasons are exactly outbox_state_mismatch, stale_projection, already_in_state, permission_required.",
+        "cmd.thread.outbox.cancel reads state.commands.thread_outbox_cancel.availability and state.commands.thread_outbox_cancel.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.thread.outbox.cancel is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns ThreadOutboxCommandResult with ThreadCommandOutboxEntry, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Records cancellation for a cancellable uncommitted outbox entry. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.thread.outbox.cancel: render/control proof, exact-handler dispatcher fixture, ThreadOutboxCancelRequest -> ThreadOutboxCommandResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.thread_outbox_cancel.availability",
+      "disabled_reason_projection": "state.commands.thread_outbox_cancel.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.thread.outbox.cancel is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns ThreadOutboxCommandResult with ThreadCommandOutboxEntry, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "ThreadOutboxCommandResult.receipt_refs",
+          "ThreadCommandOutboxEntry",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.thread_outbox_cancel exposes a stable role, name, description, current state, and outcome matching cmd.thread.outbox.cancel.",
+        "keyboard_access": "catalog.thread_outbox_cancel is reachable and dispatches the same cmd.thread.outbox.cancel payload by keyboard and pointer.",
+        "focus_management": "catalog.thread_outbox_cancel retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.thread_outbox_cancel announces state.commands.thread_outbox_cancel.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.thread_outbox_cancel.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.thread.outbox.cancel reaches only handlers::thread_outbox::cancel; schema fixtures validate ThreadOutboxCancelRequest -> ThreadOutboxCommandResult."
+        },
+        {
+          "test_id": "wiring.catalog.thread_outbox_cancel.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.thread_outbox_cancel.availability; disabled copy reads state.commands.thread_outbox_cancel.disabled_reason; allowed states are cancellable uncommitted entry; closed disabled reasons are outbox_state_mismatch, stale_projection, already_in_state, permission_required."
+        },
+        {
+          "test_id": "wiring.catalog.thread_outbox_cancel.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.thread.outbox.cancel is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns ThreadOutboxCommandResult with ThreadCommandOutboxEntry, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.thread_outbox_cancel.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.thread.outbox.cancel."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.thread.outbox.cancel returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.thread_request": {
+      "ui_element_id": "catalog.thread_request",
+      "ui_location": "Assistant Chat > Thread actions",
+      "ui_command_id": "cmd.thread.request",
+      "handler_location": "handlers::thread::request",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_request_command_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_request_command_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.thread.request reaches only handlers::thread::request with ThreadRequestCommandRequest and returns ThreadRequestCommandResult.",
+        "cmd.thread.request is available only when the owner selector is target current and request admissible; disabled reasons are exactly stale_projection, topology_unavailable, policy_denied, resource_blocked, permission_required.",
+        "cmd.thread.request reads state.commands.thread_request.availability and state.commands.thread_request.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.thread.request is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns ThreadRequestCommandResult with ThreadCommandOutboxEntry, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Durably requests a thread and reconciles its stable identity after acknowledgement. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.thread.request: render/control proof, exact-handler dispatcher fixture, ThreadRequestCommandRequest -> ThreadRequestCommandResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.thread_request.availability",
+      "disabled_reason_projection": "state.commands.thread_request.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.thread.request is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns ThreadRequestCommandResult with ThreadCommandOutboxEntry, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "ThreadRequestCommandResult.receipt_refs",
+          "ThreadCommandOutboxEntry",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.thread_request exposes a stable role, name, description, current state, and outcome matching cmd.thread.request.",
+        "keyboard_access": "catalog.thread_request is reachable and dispatches the same cmd.thread.request payload by keyboard and pointer.",
+        "focus_management": "catalog.thread_request retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.thread_request announces state.commands.thread_request.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.thread_request.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.thread.request reaches only handlers::thread::request; schema fixtures validate ThreadRequestCommandRequest -> ThreadRequestCommandResult."
+        },
+        {
+          "test_id": "wiring.catalog.thread_request.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.thread_request.availability; disabled copy reads state.commands.thread_request.disabled_reason; allowed states are target current and request admissible; closed disabled reasons are stale_projection, topology_unavailable, policy_denied, resource_blocked, permission_required."
+        },
+        {
+          "test_id": "wiring.catalog.thread_request.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.thread.request is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns ThreadRequestCommandResult with ThreadCommandOutboxEntry, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.thread_request.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.thread.request."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.thread.request returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.thread_spawn": {
+      "ui_element_id": "catalog.thread_spawn",
+      "ui_location": "Assistant Chat > Thread actions",
+      "ui_command_id": "cmd.thread.spawn",
+      "handler_location": "handlers::thread::spawn",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_spawn_command_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_spawn_command_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.thread.spawn reaches only handlers::thread::spawn with ThreadSpawnCommandRequest and returns ThreadSpawnCommandResult.",
+        "cmd.thread.spawn is available only when the owner selector is parent current and spawn allowed; disabled reasons are exactly stale_projection, policy_denied, resource_blocked, lease_conflict, permission_required.",
+        "cmd.thread.spawn reads state.commands.thread_spawn.availability and state.commands.thread_spawn.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.thread.spawn is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns ThreadSpawnCommandResult with ThreadCommandOutboxEntry, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Durably requests a bounded child thread under exact parent and role lineage. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.thread.spawn: render/control proof, exact-handler dispatcher fixture, ThreadSpawnCommandRequest -> ThreadSpawnCommandResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.thread_spawn.availability",
+      "disabled_reason_projection": "state.commands.thread_spawn.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.thread.spawn is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns ThreadSpawnCommandResult with ThreadCommandOutboxEntry, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "ThreadSpawnCommandResult.receipt_refs",
+          "ThreadCommandOutboxEntry",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.thread_spawn exposes a stable role, name, description, current state, and outcome matching cmd.thread.spawn.",
+        "keyboard_access": "catalog.thread_spawn is reachable and dispatches the same cmd.thread.spawn payload by keyboard and pointer.",
+        "focus_management": "catalog.thread_spawn retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.thread_spawn announces state.commands.thread_spawn.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.thread_spawn.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.thread.spawn reaches only handlers::thread::spawn; schema fixtures validate ThreadSpawnCommandRequest -> ThreadSpawnCommandResult."
+        },
+        {
+          "test_id": "wiring.catalog.thread_spawn.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.thread_spawn.availability; disabled copy reads state.commands.thread_spawn.disabled_reason; allowed states are parent current and spawn allowed; closed disabled reasons are stale_projection, policy_denied, resource_blocked, lease_conflict, permission_required."
+        },
+        {
+          "test_id": "wiring.catalog.thread_spawn.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.thread.spawn is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns ThreadSpawnCommandResult with ThreadCommandOutboxEntry, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.thread_spawn.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.thread.spawn."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.thread.spawn returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.thread_await": {
+      "ui_element_id": "catalog.thread_await",
+      "ui_location": "Assistant Chat > Thread actions",
+      "ui_command_id": "cmd.thread.await",
+      "handler_location": "handlers::thread::await_condition",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_await_command_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_await_command_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.thread.await reaches only handlers::thread::await_condition with ThreadAwaitCommandRequest and returns ThreadAwaitCommandResult.",
+        "cmd.thread.await is available only when the owner selector is current nonterminal target; disabled reasons are exactly stale_projection, already_in_state, deadline_expired, target_missing, policy_denied.",
+        "cmd.thread.await reads state.commands.thread_await.availability and state.commands.thread_await.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.thread.await is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns ThreadAwaitCommandResult with ObservableWork, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Starts an observable asynchronous await without blocking the UI thread. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.thread.await: render/control proof, exact-handler dispatcher fixture, ThreadAwaitCommandRequest -> ThreadAwaitCommandResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.thread_await.availability",
+      "disabled_reason_projection": "state.commands.thread_await.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.thread.await is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns ThreadAwaitCommandResult with ObservableWork, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "ThreadAwaitCommandResult.receipt_refs",
+          "ObservableWork",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.thread_await exposes a stable role, name, description, current state, and outcome matching cmd.thread.await.",
+        "keyboard_access": "catalog.thread_await is reachable and dispatches the same cmd.thread.await payload by keyboard and pointer.",
+        "focus_management": "catalog.thread_await retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.thread_await announces state.commands.thread_await.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.thread_await.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.thread.await reaches only handlers::thread::await_condition; schema fixtures validate ThreadAwaitCommandRequest -> ThreadAwaitCommandResult."
+        },
+        {
+          "test_id": "wiring.catalog.thread_await.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.thread_await.availability; disabled copy reads state.commands.thread_await.disabled_reason; allowed states are current nonterminal target; closed disabled reasons are stale_projection, already_in_state, deadline_expired, target_missing, policy_denied."
+        },
+        {
+          "test_id": "wiring.catalog.thread_await.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.thread.await is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns ThreadAwaitCommandResult with ObservableWork, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.thread_await.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.thread.await."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.thread.await returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.capability_ensure": {
+      "ui_element_id": "catalog.capability_ensure",
+      "ui_location": "Runtime setup > Capabilities",
+      "ui_command_id": "cmd.capability.ensure",
+      "handler_location": "handlers::capability::ensure",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/capability_ensure_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/capability_ensure_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.capability.ensure reaches only handlers::capability::ensure with CapabilityEnsureRequest and returns CapabilityEnsureResult.",
+        "cmd.capability.ensure is available only when the owner selector is exact target and current policy; disabled reasons are exactly capability_unavailable, setup_required, approval_required, policy_denied, resource_blocked, permission_required.",
+        "cmd.capability.ensure reads state.commands.capability_ensure.availability and state.commands.capability_ensure.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.capability.ensure is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns CapabilityEnsureResult with CapabilityProvisioningOperation, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Resolves or provisions one exact-target capability under Off, Auto, or On policy. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.capability.ensure: render/control proof, exact-handler dispatcher fixture, CapabilityEnsureRequest -> CapabilityEnsureResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.capability_ensure.availability",
+      "disabled_reason_projection": "state.commands.capability_ensure.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.capability.ensure is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns CapabilityEnsureResult with CapabilityProvisioningOperation, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "CapabilityEnsureResult.receipt_refs",
+          "CapabilityProvisioningOperation",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.capability_ensure exposes a stable role, name, description, current state, and outcome matching cmd.capability.ensure.",
+        "keyboard_access": "catalog.capability_ensure is reachable and dispatches the same cmd.capability.ensure payload by keyboard and pointer.",
+        "focus_management": "catalog.capability_ensure retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.capability_ensure announces state.commands.capability_ensure.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.capability_ensure.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.capability.ensure reaches only handlers::capability::ensure; schema fixtures validate CapabilityEnsureRequest -> CapabilityEnsureResult."
+        },
+        {
+          "test_id": "wiring.catalog.capability_ensure.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.capability_ensure.availability; disabled copy reads state.commands.capability_ensure.disabled_reason; allowed states are exact target and current policy; closed disabled reasons are capability_unavailable, setup_required, approval_required, policy_denied, resource_blocked, permission_required."
+        },
+        {
+          "test_id": "wiring.catalog.capability_ensure.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.capability.ensure is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns CapabilityEnsureResult with CapabilityProvisioningOperation, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.capability_ensure.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.capability.ensure."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.capability.ensure returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.tool_discover": {
+      "ui_element_id": "catalog.tool_discover",
+      "ui_location": "Tools > Progressive discovery",
+      "ui_command_id": "cmd.tool.discover",
+      "handler_location": "handlers::tool::discover",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/tool_discover_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/tool_discover_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.tool.discover reaches only handlers::tool::discover with ToolDiscoverRequest and returns ToolDiscoverResult.",
+        "cmd.tool.discover is available only when the owner selector is registry query allowed; disabled reasons are exactly stale_projection, topology_unavailable, policy_denied, resource_blocked.",
+        "cmd.tool.discover reads state.commands.tool_discover.availability and state.commands.tool_discover.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.tool.discover is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns ToolDiscoverResult with ProgressiveCapabilityRegistry, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Advances bounded progressive capability discovery for the current need. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.tool.discover: render/control proof, exact-handler dispatcher fixture, ToolDiscoverRequest -> ToolDiscoverResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.tool_discover.availability",
+      "disabled_reason_projection": "state.commands.tool_discover.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.tool.discover is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns ToolDiscoverResult with ProgressiveCapabilityRegistry, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "ToolDiscoverResult.receipt_refs",
+          "ProgressiveCapabilityRegistry",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.tool_discover exposes a stable role, name, description, current state, and outcome matching cmd.tool.discover.",
+        "keyboard_access": "catalog.tool_discover is reachable and dispatches the same cmd.tool.discover payload by keyboard and pointer.",
+        "focus_management": "catalog.tool_discover retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.tool_discover announces state.commands.tool_discover.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.tool_discover.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.tool.discover reaches only handlers::tool::discover; schema fixtures validate ToolDiscoverRequest -> ToolDiscoverResult."
+        },
+        {
+          "test_id": "wiring.catalog.tool_discover.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.tool_discover.availability; disabled copy reads state.commands.tool_discover.disabled_reason; allowed states are registry query allowed; closed disabled reasons are stale_projection, topology_unavailable, policy_denied, resource_blocked."
+        },
+        {
+          "test_id": "wiring.catalog.tool_discover.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.tool.discover is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns ToolDiscoverResult with ProgressiveCapabilityRegistry, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.tool_discover.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.tool.discover."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.tool.discover returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.tool_select": {
+      "ui_element_id": "catalog.tool_select",
+      "ui_location": "Tools > Progressive discovery",
+      "ui_command_id": "cmd.tool.select",
+      "handler_location": "handlers::tool::select",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/tool_select_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/tool_select_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.tool.select reaches only handlers::tool::select with ToolSelectRequest and returns ToolSelectResult.",
+        "cmd.tool.select is available only when the owner selector is selected refs current and admissible; disabled reasons are exactly stale_projection, capability_unavailable, policy_denied, permission_required.",
+        "cmd.tool.select reads state.commands.tool_select.availability and state.commands.tool_select.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.tool.select is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns ToolSelectResult with ProgressiveCapabilityRegistry, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Commits a stable ordered current-generation tool selection without invoking it. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.tool.select: render/control proof, exact-handler dispatcher fixture, ToolSelectRequest -> ToolSelectResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.tool_select.availability",
+      "disabled_reason_projection": "state.commands.tool_select.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.tool.select is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns ToolSelectResult with ProgressiveCapabilityRegistry, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "ToolSelectResult.receipt_refs",
+          "ProgressiveCapabilityRegistry",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.tool_select exposes a stable role, name, description, current state, and outcome matching cmd.tool.select.",
+        "keyboard_access": "catalog.tool_select is reachable and dispatches the same cmd.tool.select payload by keyboard and pointer.",
+        "focus_management": "catalog.tool_select retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.tool_select announces state.commands.tool_select.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.tool_select.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.tool.select reaches only handlers::tool::select; schema fixtures validate ToolSelectRequest -> ToolSelectResult."
+        },
+        {
+          "test_id": "wiring.catalog.tool_select.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.tool_select.availability; disabled copy reads state.commands.tool_select.disabled_reason; allowed states are selected refs current and admissible; closed disabled reasons are stale_projection, capability_unavailable, policy_denied, permission_required."
+        },
+        {
+          "test_id": "wiring.catalog.tool_select.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.tool.select is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns ToolSelectResult with ProgressiveCapabilityRegistry, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.tool_select.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.tool.select."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.tool.select returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.installation_install": {
+      "ui_element_id": "catalog.installation_install",
+      "ui_location": "Runtime setup > Installations",
+      "ui_command_id": "cmd.installation.install",
+      "handler_location": "handlers::installation::install",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/installation_lifecycle_command_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/installation_lifecycle_command_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.installation.install reaches only handlers::installation::install with InstallationLifecycleCommandRequest and returns InstallationLifecycleCommandResult.",
+        "cmd.installation.install is available only when the owner selector is no ready installation and acquisition allowed; disabled reasons are exactly already_in_state, operation_in_progress, setup_required, approval_required, official_source_unverified, host_environment_mismatch, permission_required, policy_denied.",
+        "cmd.installation.install reads state.commands.installation_install.availability and state.commands.installation_install.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.installation.install is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns InstallationLifecycleCommandResult with InstallationLifecycleRecord, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Starts explicit proof-based installation for the exact host and environment. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.installation.install: render/control proof, exact-handler dispatcher fixture, InstallationLifecycleCommandRequest -> InstallationLifecycleCommandResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.installation_install.availability",
+      "disabled_reason_projection": "state.commands.installation_install.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.installation.install is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns InstallationLifecycleCommandResult with InstallationLifecycleRecord, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "InstallationLifecycleCommandResult.receipt_refs",
+          "InstallationLifecycleRecord",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.installation_install exposes a stable role, name, description, current state, and outcome matching cmd.installation.install.",
+        "keyboard_access": "catalog.installation_install is reachable and dispatches the same cmd.installation.install payload by keyboard and pointer.",
+        "focus_management": "catalog.installation_install retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.installation_install announces state.commands.installation_install.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.installation_install.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.installation.install reaches only handlers::installation::install; schema fixtures validate InstallationLifecycleCommandRequest -> InstallationLifecycleCommandResult."
+        },
+        {
+          "test_id": "wiring.catalog.installation_install.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.installation_install.availability; disabled copy reads state.commands.installation_install.disabled_reason; allowed states are no ready installation and acquisition allowed; closed disabled reasons are already_in_state, operation_in_progress, setup_required, approval_required, official_source_unverified, host_environment_mismatch, permission_required, policy_denied."
+        },
+        {
+          "test_id": "wiring.catalog.installation_install.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.installation.install is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns InstallationLifecycleCommandResult with InstallationLifecycleRecord, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.installation_install.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.installation.install."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.installation.install returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.installation_update": {
+      "ui_element_id": "catalog.installation_update",
+      "ui_location": "Runtime setup > Installations",
+      "ui_command_id": "cmd.installation.update",
+      "handler_location": "handlers::installation::update",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/installation_lifecycle_command_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/installation_lifecycle_command_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.installation.update reaches only handlers::installation::update with InstallationLifecycleCommandRequest and returns InstallationLifecycleCommandResult.",
+        "cmd.installation.update is available only when the owner selector is verified consented installation; disabled reasons are exactly already_in_state, operation_in_progress, setup_required, approval_required, official_source_unverified, host_environment_mismatch, permission_required, policy_denied, target_missing, resource_blocked.",
+        "cmd.installation.update reads state.commands.installation_update.availability and state.commands.installation_update.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.installation.update is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns InstallationLifecycleCommandResult with InstallationLifecycleRecord, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Replaces a consented installation while retaining the last verified activation until commit. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.installation.update: render/control proof, exact-handler dispatcher fixture, InstallationLifecycleCommandRequest -> InstallationLifecycleCommandResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.installation_update.availability",
+      "disabled_reason_projection": "state.commands.installation_update.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.installation.update is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns InstallationLifecycleCommandResult with InstallationLifecycleRecord, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "InstallationLifecycleCommandResult.receipt_refs",
+          "InstallationLifecycleRecord",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.installation_update exposes a stable role, name, description, current state, and outcome matching cmd.installation.update.",
+        "keyboard_access": "catalog.installation_update is reachable and dispatches the same cmd.installation.update payload by keyboard and pointer.",
+        "focus_management": "catalog.installation_update retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.installation_update announces state.commands.installation_update.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.installation_update.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.installation.update reaches only handlers::installation::update; schema fixtures validate InstallationLifecycleCommandRequest -> InstallationLifecycleCommandResult."
+        },
+        {
+          "test_id": "wiring.catalog.installation_update.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.installation_update.availability; disabled copy reads state.commands.installation_update.disabled_reason; allowed states are verified consented installation; closed disabled reasons are already_in_state, operation_in_progress, setup_required, approval_required, official_source_unverified, host_environment_mismatch, permission_required, policy_denied, target_missing, resource_blocked."
+        },
+        {
+          "test_id": "wiring.catalog.installation_update.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.installation.update is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns InstallationLifecycleCommandResult with InstallationLifecycleRecord, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.installation_update.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.installation.update."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.installation.update returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.installation_repair": {
+      "ui_element_id": "catalog.installation_repair",
+      "ui_location": "Runtime setup > Installations",
+      "ui_command_id": "cmd.installation.repair",
+      "handler_location": "handlers::installation::repair",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/installation_lifecycle_command_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/installation_lifecycle_command_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.installation.repair reaches only handlers::installation::repair with InstallationLifecycleCommandRequest and returns InstallationLifecycleCommandResult.",
+        "cmd.installation.repair is available only when the owner selector is known installation with repair evidence; disabled reasons are exactly already_in_state, operation_in_progress, setup_required, approval_required, official_source_unverified, host_environment_mismatch, permission_required, policy_denied, target_missing, resource_blocked.",
+        "cmd.installation.repair reads state.commands.installation_repair.availability and state.commands.installation_repair.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.installation.repair is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns InstallationLifecycleCommandResult with InstallationLifecycleRecord, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Executes a bounded evidence-backed repair plan for a known installation. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.installation.repair: render/control proof, exact-handler dispatcher fixture, InstallationLifecycleCommandRequest -> InstallationLifecycleCommandResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.installation_repair.availability",
+      "disabled_reason_projection": "state.commands.installation_repair.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.installation.repair is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns InstallationLifecycleCommandResult with InstallationLifecycleRecord, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "InstallationLifecycleCommandResult.receipt_refs",
+          "InstallationLifecycleRecord",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.installation_repair exposes a stable role, name, description, current state, and outcome matching cmd.installation.repair.",
+        "keyboard_access": "catalog.installation_repair is reachable and dispatches the same cmd.installation.repair payload by keyboard and pointer.",
+        "focus_management": "catalog.installation_repair retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.installation_repair announces state.commands.installation_repair.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.installation_repair.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.installation.repair reaches only handlers::installation::repair; schema fixtures validate InstallationLifecycleCommandRequest -> InstallationLifecycleCommandResult."
+        },
+        {
+          "test_id": "wiring.catalog.installation_repair.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.installation_repair.availability; disabled copy reads state.commands.installation_repair.disabled_reason; allowed states are known installation with repair evidence; closed disabled reasons are already_in_state, operation_in_progress, setup_required, approval_required, official_source_unverified, host_environment_mismatch, permission_required, policy_denied, target_missing, resource_blocked."
+        },
+        {
+          "test_id": "wiring.catalog.installation_repair.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.installation.repair is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns InstallationLifecycleCommandResult with InstallationLifecycleRecord, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.installation_repair.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.installation.repair."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.installation.repair returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.installation_rollback": {
+      "ui_element_id": "catalog.installation_rollback",
+      "ui_location": "Runtime setup > Installations",
+      "ui_command_id": "cmd.installation.rollback",
+      "handler_location": "handlers::installation::rollback",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/installation_lifecycle_command_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/installation_lifecycle_command_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.installation.rollback reaches only handlers::installation::rollback with InstallationLifecycleCommandRequest and returns InstallationLifecycleCommandResult.",
+        "cmd.installation.rollback is available only when the owner selector is verified rollback target; disabled reasons are exactly target_missing, official_source_unverified, host_environment_mismatch, operation_in_progress, permission_required, policy_denied.",
+        "cmd.installation.rollback reads state.commands.installation_rollback.availability and state.commands.installation_rollback.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.installation.rollback is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns InstallationLifecycleCommandResult with InstallationLifecycleRecord, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Activates a verified rollback target without discarding the current verified copy early. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.installation.rollback: render/control proof, exact-handler dispatcher fixture, InstallationLifecycleCommandRequest -> InstallationLifecycleCommandResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.installation_rollback.availability",
+      "disabled_reason_projection": "state.commands.installation_rollback.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.installation.rollback is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns InstallationLifecycleCommandResult with InstallationLifecycleRecord, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "InstallationLifecycleCommandResult.receipt_refs",
+          "InstallationLifecycleRecord",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.installation_rollback exposes a stable role, name, description, current state, and outcome matching cmd.installation.rollback.",
+        "keyboard_access": "catalog.installation_rollback is reachable and dispatches the same cmd.installation.rollback payload by keyboard and pointer.",
+        "focus_management": "catalog.installation_rollback retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.installation_rollback announces state.commands.installation_rollback.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.installation_rollback.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.installation.rollback reaches only handlers::installation::rollback; schema fixtures validate InstallationLifecycleCommandRequest -> InstallationLifecycleCommandResult."
+        },
+        {
+          "test_id": "wiring.catalog.installation_rollback.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.installation_rollback.availability; disabled copy reads state.commands.installation_rollback.disabled_reason; allowed states are verified rollback target; closed disabled reasons are target_missing, official_source_unverified, host_environment_mismatch, operation_in_progress, permission_required, policy_denied."
+        },
+        {
+          "test_id": "wiring.catalog.installation_rollback.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.installation.rollback is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns InstallationLifecycleCommandResult with InstallationLifecycleRecord, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.installation_rollback.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.installation.rollback."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.installation.rollback returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.installation_verify": {
+      "ui_element_id": "catalog.installation_verify",
+      "ui_location": "Runtime setup > Installations",
+      "ui_command_id": "cmd.installation.verify",
+      "handler_location": "handlers::installation::verify",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/installation_lifecycle_command_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/installation_lifecycle_command_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.installation.verify reaches only handlers::installation::verify with InstallationLifecycleCommandRequest and returns InstallationLifecycleCommandResult.",
+        "cmd.installation.verify is available only when the owner selector is installation resolvable; disabled reasons are exactly target_missing, host_environment_mismatch, operation_in_progress, policy_denied.",
+        "cmd.installation.verify reads state.commands.installation_verify.availability and state.commands.installation_verify.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.installation.verify is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns InstallationLifecycleCommandResult with InstallationLifecycleRecord, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Produces layered proof for installation health and readiness. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.installation.verify: render/control proof, exact-handler dispatcher fixture, InstallationLifecycleCommandRequest -> InstallationLifecycleCommandResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.installation_verify.availability",
+      "disabled_reason_projection": "state.commands.installation_verify.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.installation.verify is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns InstallationLifecycleCommandResult with InstallationLifecycleRecord, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "InstallationLifecycleCommandResult.receipt_refs",
+          "InstallationLifecycleRecord",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.installation_verify exposes a stable role, name, description, current state, and outcome matching cmd.installation.verify.",
+        "keyboard_access": "catalog.installation_verify is reachable and dispatches the same cmd.installation.verify payload by keyboard and pointer.",
+        "focus_management": "catalog.installation_verify retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.installation_verify announces state.commands.installation_verify.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.installation_verify.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.installation.verify reaches only handlers::installation::verify; schema fixtures validate InstallationLifecycleCommandRequest -> InstallationLifecycleCommandResult."
+        },
+        {
+          "test_id": "wiring.catalog.installation_verify.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.installation_verify.availability; disabled copy reads state.commands.installation_verify.disabled_reason; allowed states are installation resolvable; closed disabled reasons are target_missing, host_environment_mismatch, operation_in_progress, policy_denied."
+        },
+        {
+          "test_id": "wiring.catalog.installation_verify.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.installation.verify is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns InstallationLifecycleCommandResult with InstallationLifecycleRecord, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.installation_verify.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.installation.verify."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.installation.verify returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.authentication_start": {
+      "ui_element_id": "catalog.authentication_start",
+      "ui_location": "Runtime setup > Authentication",
+      "ui_command_id": "cmd.authentication.start",
+      "handler_location": "handlers::authentication::start",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/authentication_command_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/authentication_command_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.authentication.start reaches only handlers::authentication::start with AuthenticationCommandRequest and returns AuthenticationCommandResult.",
+        "cmd.authentication.start is available only when the owner selector is auth path supported; disabled reasons are exactly setup_required, auth_state_mismatch, operation_in_progress, topology_unavailable, permission_required, policy_denied.",
+        "cmd.authentication.start reads state.commands.authentication_start.availability and state.commands.authentication_start.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.authentication.start is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns AuthenticationCommandResult with AuthenticationCommandResult.projection_ref, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Starts the selected non-secret auth path after separate installation verification. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.authentication.start: render/control proof, exact-handler dispatcher fixture, AuthenticationCommandRequest -> AuthenticationCommandResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.authentication_start.availability",
+      "disabled_reason_projection": "state.commands.authentication_start.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.authentication.start is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns AuthenticationCommandResult with AuthenticationCommandResult.projection_ref, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "AuthenticationCommandResult.receipt_refs",
+          "AuthenticationCommandResult.projection_ref",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.authentication_start exposes a stable role, name, description, current state, and outcome matching cmd.authentication.start.",
+        "keyboard_access": "catalog.authentication_start is reachable and dispatches the same cmd.authentication.start payload by keyboard and pointer.",
+        "focus_management": "catalog.authentication_start retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.authentication_start announces state.commands.authentication_start.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.authentication_start.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.authentication.start reaches only handlers::authentication::start; schema fixtures validate AuthenticationCommandRequest -> AuthenticationCommandResult."
+        },
+        {
+          "test_id": "wiring.catalog.authentication_start.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.authentication_start.availability; disabled copy reads state.commands.authentication_start.disabled_reason; allowed states are auth path supported; closed disabled reasons are setup_required, auth_state_mismatch, operation_in_progress, topology_unavailable, permission_required, policy_denied."
+        },
+        {
+          "test_id": "wiring.catalog.authentication_start.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.authentication.start is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns AuthenticationCommandResult with AuthenticationCommandResult.projection_ref, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.authentication_start.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.authentication.start."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.authentication.start returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.authentication_cancel": {
+      "ui_element_id": "catalog.authentication_cancel",
+      "ui_location": "Runtime setup > Authentication",
+      "ui_command_id": "cmd.authentication.cancel",
+      "handler_location": "handlers::authentication::cancel",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/authentication_command_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/authentication_command_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.authentication.cancel reaches only handlers::authentication::cancel with AuthenticationCommandRequest and returns AuthenticationCommandResult.",
+        "cmd.authentication.cancel is available only when the owner selector is current cancellable auth operation; disabled reasons are exactly auth_state_mismatch, already_in_state, stale_projection, permission_required.",
+        "cmd.authentication.cancel reads state.commands.authentication_cancel.availability and state.commands.authentication_cancel.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.authentication.cancel is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns AuthenticationCommandResult with AuthenticationCommandResult.projection_ref, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Cancels the current auth operation without silently deleting provider credentials. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.authentication.cancel: render/control proof, exact-handler dispatcher fixture, AuthenticationCommandRequest -> AuthenticationCommandResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.authentication_cancel.availability",
+      "disabled_reason_projection": "state.commands.authentication_cancel.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.authentication.cancel is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns AuthenticationCommandResult with AuthenticationCommandResult.projection_ref, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "AuthenticationCommandResult.receipt_refs",
+          "AuthenticationCommandResult.projection_ref",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.authentication_cancel exposes a stable role, name, description, current state, and outcome matching cmd.authentication.cancel.",
+        "keyboard_access": "catalog.authentication_cancel is reachable and dispatches the same cmd.authentication.cancel payload by keyboard and pointer.",
+        "focus_management": "catalog.authentication_cancel retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.authentication_cancel announces state.commands.authentication_cancel.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.authentication_cancel.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.authentication.cancel reaches only handlers::authentication::cancel; schema fixtures validate AuthenticationCommandRequest -> AuthenticationCommandResult."
+        },
+        {
+          "test_id": "wiring.catalog.authentication_cancel.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.authentication_cancel.availability; disabled copy reads state.commands.authentication_cancel.disabled_reason; allowed states are current cancellable auth operation; closed disabled reasons are auth_state_mismatch, already_in_state, stale_projection, permission_required."
+        },
+        {
+          "test_id": "wiring.catalog.authentication_cancel.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.authentication.cancel is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns AuthenticationCommandResult with AuthenticationCommandResult.projection_ref, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.authentication_cancel.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.authentication.cancel."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.authentication.cancel returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.authentication_resume": {
+      "ui_element_id": "catalog.authentication_resume",
+      "ui_location": "Runtime setup > Authentication",
+      "ui_command_id": "cmd.authentication.resume",
+      "handler_location": "handlers::authentication::resume",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/authentication_command_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/authentication_command_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.authentication.resume reaches only handlers::authentication::resume with AuthenticationCommandRequest and returns AuthenticationCommandResult.",
+        "cmd.authentication.resume is available only when the owner selector is same nonterminal authority binding; disabled reasons are exactly auth_state_mismatch, stale_projection, deadline_expired, topology_unavailable, permission_required, policy_denied.",
+        "cmd.authentication.resume reads state.commands.authentication_resume.availability and state.commands.authentication_resume.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.authentication.resume is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns AuthenticationCommandResult with AuthenticationCommandResult.projection_ref, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Resumes the same operation and exact account, route, host, and environment binding. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.authentication.resume: render/control proof, exact-handler dispatcher fixture, AuthenticationCommandRequest -> AuthenticationCommandResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.authentication_resume.availability",
+      "disabled_reason_projection": "state.commands.authentication_resume.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.authentication.resume is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns AuthenticationCommandResult with AuthenticationCommandResult.projection_ref, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "AuthenticationCommandResult.receipt_refs",
+          "AuthenticationCommandResult.projection_ref",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.authentication_resume exposes a stable role, name, description, current state, and outcome matching cmd.authentication.resume.",
+        "keyboard_access": "catalog.authentication_resume is reachable and dispatches the same cmd.authentication.resume payload by keyboard and pointer.",
+        "focus_management": "catalog.authentication_resume retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.authentication_resume announces state.commands.authentication_resume.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.authentication_resume.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.authentication.resume reaches only handlers::authentication::resume; schema fixtures validate AuthenticationCommandRequest -> AuthenticationCommandResult."
+        },
+        {
+          "test_id": "wiring.catalog.authentication_resume.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.authentication_resume.availability; disabled copy reads state.commands.authentication_resume.disabled_reason; allowed states are same nonterminal authority binding; closed disabled reasons are auth_state_mismatch, stale_projection, deadline_expired, topology_unavailable, permission_required, policy_denied."
+        },
+        {
+          "test_id": "wiring.catalog.authentication_resume.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.authentication.resume is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns AuthenticationCommandResult with AuthenticationCommandResult.projection_ref, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.authentication_resume.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.authentication.resume."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.authentication.resume returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.eval_session_start": {
+      "ui_element_id": "catalog.eval_session_start",
+      "ui_location": "Tools > Eval sessions",
+      "ui_command_id": "cmd.eval.session.start",
+      "handler_location": "handlers::eval_session::start",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/eval_session_command_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/eval_session_command_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.eval.session.start reaches only handlers::eval_session::start with EvalSessionCommandRequest and returns EvalSessionCommandResult.",
+        "cmd.eval.session.start is available only when the owner selector is supported adapter and no conflicting lease; disabled reasons are exactly unsupported, capability_unavailable, resource_blocked, lease_conflict, topology_unavailable, permission_required, policy_denied.",
+        "cmd.eval.session.start reads state.commands.eval_session_start.availability and state.commands.eval_session_start.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.eval.session.start is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns EvalSessionCommandResult with EvalSessionRecord, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Starts a supported sandboxed persistent EvalSession under a resource lease. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.eval.session.start: render/control proof, exact-handler dispatcher fixture, EvalSessionCommandRequest -> EvalSessionCommandResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.eval_session_start.availability",
+      "disabled_reason_projection": "state.commands.eval_session_start.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.eval.session.start is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns EvalSessionCommandResult with EvalSessionRecord, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "EvalSessionCommandResult.receipt_refs",
+          "EvalSessionRecord",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.eval_session_start exposes a stable role, name, description, current state, and outcome matching cmd.eval.session.start.",
+        "keyboard_access": "catalog.eval_session_start is reachable and dispatches the same cmd.eval.session.start payload by keyboard and pointer.",
+        "focus_management": "catalog.eval_session_start retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.eval_session_start announces state.commands.eval_session_start.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.eval_session_start.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.eval.session.start reaches only handlers::eval_session::start; schema fixtures validate EvalSessionCommandRequest -> EvalSessionCommandResult."
+        },
+        {
+          "test_id": "wiring.catalog.eval_session_start.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.eval_session_start.availability; disabled copy reads state.commands.eval_session_start.disabled_reason; allowed states are supported adapter and no conflicting lease; closed disabled reasons are unsupported, capability_unavailable, resource_blocked, lease_conflict, topology_unavailable, permission_required, policy_denied."
+        },
+        {
+          "test_id": "wiring.catalog.eval_session_start.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.eval.session.start is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns EvalSessionCommandResult with EvalSessionRecord, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.eval_session_start.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.eval.session.start."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.eval.session.start returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.eval_session_execute": {
+      "ui_element_id": "catalog.eval_session_execute",
+      "ui_location": "Tools > Eval sessions",
+      "ui_command_id": "cmd.eval.session.execute",
+      "handler_location": "handlers::eval_session::execute",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/eval_session_command_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/eval_session_command_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.eval.session.execute reaches only handlers::eval_session::execute with EvalSessionCommandRequest and returns EvalSessionCommandResult.",
+        "cmd.eval.session.execute is available only when the owner selector is live current session; disabled reasons are exactly session_state_mismatch, stale_projection, deadline_expired, resource_blocked, permission_required, policy_denied.",
+        "cmd.eval.session.execute reads state.commands.eval_session_execute.availability and state.commands.eval_session_execute.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.eval.session.execute is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns EvalSessionCommandResult with EvalExecutionRecord, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Executes artifact-backed code in the current session with bounded output. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.eval.session.execute: render/control proof, exact-handler dispatcher fixture, EvalSessionCommandRequest -> EvalSessionCommandResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.eval_session_execute.availability",
+      "disabled_reason_projection": "state.commands.eval_session_execute.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.eval.session.execute is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns EvalSessionCommandResult with EvalExecutionRecord, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "EvalSessionCommandResult.receipt_refs",
+          "EvalExecutionRecord",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.eval_session_execute exposes a stable role, name, description, current state, and outcome matching cmd.eval.session.execute.",
+        "keyboard_access": "catalog.eval_session_execute is reachable and dispatches the same cmd.eval.session.execute payload by keyboard and pointer.",
+        "focus_management": "catalog.eval_session_execute retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.eval_session_execute announces state.commands.eval_session_execute.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.eval_session_execute.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.eval.session.execute reaches only handlers::eval_session::execute; schema fixtures validate EvalSessionCommandRequest -> EvalSessionCommandResult."
+        },
+        {
+          "test_id": "wiring.catalog.eval_session_execute.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.eval_session_execute.availability; disabled copy reads state.commands.eval_session_execute.disabled_reason; allowed states are live current session; closed disabled reasons are session_state_mismatch, stale_projection, deadline_expired, resource_blocked, permission_required, policy_denied."
+        },
+        {
+          "test_id": "wiring.catalog.eval_session_execute.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.eval.session.execute is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns EvalSessionCommandResult with EvalExecutionRecord, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.eval_session_execute.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.eval.session.execute."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.eval.session.execute returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.eval_session_stop": {
+      "ui_element_id": "catalog.eval_session_stop",
+      "ui_location": "Tools > Eval sessions",
+      "ui_command_id": "cmd.eval.session.stop",
+      "handler_location": "handlers::eval_session::stop",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/eval_session_command_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/eval_session_command_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.eval.session.stop reaches only handlers::eval_session::stop with EvalSessionCommandRequest and returns EvalSessionCommandResult.",
+        "cmd.eval.session.stop is available only when the owner selector is live or recoverable session; disabled reasons are exactly session_state_mismatch, stale_projection, operation_in_progress, permission_required.",
+        "cmd.eval.session.stop reads state.commands.eval_session_stop.availability and state.commands.eval_session_stop.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.eval.session.stop is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns EvalSessionCommandResult with EvalSessionRecord, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Stops and cleans the current session with an explicit variable and artifact disposition. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.eval.session.stop: render/control proof, exact-handler dispatcher fixture, EvalSessionCommandRequest -> EvalSessionCommandResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.eval_session_stop.availability",
+      "disabled_reason_projection": "state.commands.eval_session_stop.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.eval.session.stop is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns EvalSessionCommandResult with EvalSessionRecord, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "EvalSessionCommandResult.receipt_refs",
+          "EvalSessionRecord",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.eval_session_stop exposes a stable role, name, description, current state, and outcome matching cmd.eval.session.stop.",
+        "keyboard_access": "catalog.eval_session_stop is reachable and dispatches the same cmd.eval.session.stop payload by keyboard and pointer.",
+        "focus_management": "catalog.eval_session_stop retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.eval_session_stop announces state.commands.eval_session_stop.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.eval_session_stop.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.eval.session.stop reaches only handlers::eval_session::stop; schema fixtures validate EvalSessionCommandRequest -> EvalSessionCommandResult."
+        },
+        {
+          "test_id": "wiring.catalog.eval_session_stop.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.eval_session_stop.availability; disabled copy reads state.commands.eval_session_stop.disabled_reason; allowed states are live or recoverable session; closed disabled reasons are session_state_mismatch, stale_projection, operation_in_progress, permission_required."
+        },
+        {
+          "test_id": "wiring.catalog.eval_session_stop.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.eval.session.stop is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns EvalSessionCommandResult with EvalSessionRecord, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.eval_session_stop.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.eval.session.stop."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.eval.session.stop returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.mcp_server_connect": {
+      "ui_element_id": "catalog.mcp_server_connect",
+      "ui_location": "Settings > MCP servers",
+      "ui_command_id": "cmd.mcp.server.connect",
+      "handler_location": "handlers::mcp::connect_server",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/mcp_server_lifecycle_command_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/mcp_server_lifecycle_command_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.mcp.server.connect reaches only handlers::mcp::connect_server with McpServerLifecycleCommandRequest and returns McpServerLifecycleCommandResult.",
+        "cmd.mcp.server.connect is available only when the owner selector is enabled valid server; disabled reasons are exactly stale_projection, already_in_state, operation_in_progress, capability_unavailable, resource_blocked, permission_required, policy_denied.",
+        "cmd.mcp.server.connect reads state.commands.mcp_server_connect.availability and state.commands.mcp_server_connect.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.mcp.server.connect is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns McpServerLifecycleCommandResult with McpServerLifecycleCommandResult.projection_ref, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Connects one enabled valid MCP server under its component-state lifecycle. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.mcp.server.connect: render/control proof, exact-handler dispatcher fixture, McpServerLifecycleCommandRequest -> McpServerLifecycleCommandResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.mcp_server_connect.availability",
+      "disabled_reason_projection": "state.commands.mcp_server_connect.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.mcp.server.connect is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns McpServerLifecycleCommandResult with McpServerLifecycleCommandResult.projection_ref, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "McpServerLifecycleCommandResult.receipt_refs",
+          "McpServerLifecycleCommandResult.projection_ref",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.mcp_server_connect exposes a stable role, name, description, current state, and outcome matching cmd.mcp.server.connect.",
+        "keyboard_access": "catalog.mcp_server_connect is reachable and dispatches the same cmd.mcp.server.connect payload by keyboard and pointer.",
+        "focus_management": "catalog.mcp_server_connect retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.mcp_server_connect announces state.commands.mcp_server_connect.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.mcp_server_connect.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.mcp.server.connect reaches only handlers::mcp::connect_server; schema fixtures validate McpServerLifecycleCommandRequest -> McpServerLifecycleCommandResult."
+        },
+        {
+          "test_id": "wiring.catalog.mcp_server_connect.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.mcp_server_connect.availability; disabled copy reads state.commands.mcp_server_connect.disabled_reason; allowed states are enabled valid server; closed disabled reasons are stale_projection, already_in_state, operation_in_progress, capability_unavailable, resource_blocked, permission_required, policy_denied."
+        },
+        {
+          "test_id": "wiring.catalog.mcp_server_connect.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.mcp.server.connect is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns McpServerLifecycleCommandResult with McpServerLifecycleCommandResult.projection_ref, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.mcp_server_connect.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.mcp.server.connect."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.mcp.server.connect returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.mcp_server_reconnect": {
+      "ui_element_id": "catalog.mcp_server_reconnect",
+      "ui_location": "Settings > MCP servers",
+      "ui_command_id": "cmd.mcp.server.reconnect",
+      "handler_location": "handlers::mcp::reconnect_server",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/mcp_server_lifecycle_command_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/mcp_server_lifecycle_command_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.mcp.server.reconnect reaches only handlers::mcp::reconnect_server with McpServerLifecycleCommandRequest and returns McpServerLifecycleCommandResult.",
+        "cmd.mcp.server.reconnect is available only when the owner selector is configured server and breaker admits or joins; disabled reasons are exactly stale_projection, already_in_state, operation_in_progress, capability_unavailable, resource_blocked, permission_required, policy_denied, breaker_open, auth_state_mismatch.",
+        "cmd.mcp.server.reconnect reads state.commands.mcp_server_reconnect.availability and state.commands.mcp_server_reconnect.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.mcp.server.reconnect is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns McpServerLifecycleCommandResult with McpServerLifecycleCommandResult.projection_ref, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Joins or requests the one breaker-governed reconnect for the server generation. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.mcp.server.reconnect: render/control proof, exact-handler dispatcher fixture, McpServerLifecycleCommandRequest -> McpServerLifecycleCommandResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.mcp_server_reconnect.availability",
+      "disabled_reason_projection": "state.commands.mcp_server_reconnect.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.mcp.server.reconnect is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns McpServerLifecycleCommandResult with McpServerLifecycleCommandResult.projection_ref, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "McpServerLifecycleCommandResult.receipt_refs",
+          "McpServerLifecycleCommandResult.projection_ref",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.mcp_server_reconnect exposes a stable role, name, description, current state, and outcome matching cmd.mcp.server.reconnect.",
+        "keyboard_access": "catalog.mcp_server_reconnect is reachable and dispatches the same cmd.mcp.server.reconnect payload by keyboard and pointer.",
+        "focus_management": "catalog.mcp_server_reconnect retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.mcp_server_reconnect announces state.commands.mcp_server_reconnect.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.mcp_server_reconnect.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.mcp.server.reconnect reaches only handlers::mcp::reconnect_server; schema fixtures validate McpServerLifecycleCommandRequest -> McpServerLifecycleCommandResult."
+        },
+        {
+          "test_id": "wiring.catalog.mcp_server_reconnect.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.mcp_server_reconnect.availability; disabled copy reads state.commands.mcp_server_reconnect.disabled_reason; allowed states are configured server and breaker admits or joins; closed disabled reasons are stale_projection, already_in_state, operation_in_progress, capability_unavailable, resource_blocked, permission_required, policy_denied, breaker_open, auth_state_mismatch."
+        },
+        {
+          "test_id": "wiring.catalog.mcp_server_reconnect.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.mcp.server.reconnect is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns McpServerLifecycleCommandResult with McpServerLifecycleCommandResult.projection_ref, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.mcp_server_reconnect.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.mcp.server.reconnect."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.mcp.server.reconnect returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.resource_inspect": {
+      "ui_element_id": "catalog.resource_inspect",
+      "ui_location": "Operational awareness > Runtime resources",
+      "ui_command_id": "cmd.resource.inspect",
+      "handler_location": "handlers::runtime_resource::inspect",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/runtime_resource_inspect_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/runtime_resource_inspect_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.resource.inspect reaches only handlers::runtime_resource::inspect with RuntimeResourceInspectRequest and returns RuntimeResourceInspectResult.",
+        "cmd.resource.inspect is available only when the owner selector is readable exact host and environment; disabled reasons are exactly stale_projection, topology_unavailable, target_missing, permission_required.",
+        "cmd.resource.inspect reads state.commands.resource_inspect.availability and state.commands.resource_inspect.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.resource.inspect is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns RuntimeResourceInspectResult with OperationalAwarenessProjection, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Opens read-only governor, admission, lease, and awareness evidence for an exact resource scope. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.resource.inspect: render/control proof, exact-handler dispatcher fixture, RuntimeResourceInspectRequest -> RuntimeResourceInspectResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.resource_inspect.availability",
+      "disabled_reason_projection": "state.commands.resource_inspect.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.resource.inspect is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns RuntimeResourceInspectResult with OperationalAwarenessProjection, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "RuntimeResourceInspectResult.receipt_refs",
+          "OperationalAwarenessProjection",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.resource_inspect exposes a stable role, name, description, current state, and outcome matching cmd.resource.inspect.",
+        "keyboard_access": "catalog.resource_inspect is reachable and dispatches the same cmd.resource.inspect payload by keyboard and pointer.",
+        "focus_management": "catalog.resource_inspect retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.resource_inspect announces state.commands.resource_inspect.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.resource_inspect.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.resource.inspect reaches only handlers::runtime_resource::inspect; schema fixtures validate RuntimeResourceInspectRequest -> RuntimeResourceInspectResult."
+        },
+        {
+          "test_id": "wiring.catalog.resource_inspect.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.resource_inspect.availability; disabled copy reads state.commands.resource_inspect.disabled_reason; allowed states are readable exact host and environment; closed disabled reasons are stale_projection, topology_unavailable, target_missing, permission_required."
+        },
+        {
+          "test_id": "wiring.catalog.resource_inspect.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.resource.inspect is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns RuntimeResourceInspectResult with OperationalAwarenessProjection, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.resource_inspect.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.resource.inspect."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.resource.inspect returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
+      ]
+    },
+    "catalog.bsd_set": {
+      "ui_element_id": "catalog.bsd_set",
+      "ui_location": "Assistant Chat > Back Seat Driver",
+      "ui_command_id": "cmd.bsd.set",
+      "handler_location": "handlers::back_seat_driver::set_mode",
+      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/back_seat_driver_mode_set_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/back_seat_driver_mode_set_result",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Dispatching cmd.bsd.set reaches only handlers::back_seat_driver::set_mode with BackSeatDriverModeSetRequest and returns BackSeatDriverModeSetResult.",
+        "cmd.bsd.set is available only when the owner selector is scope writable and projection current; disabled reasons are exactly stale_projection, already_in_state, policy_denied, permission_required.",
+        "cmd.bsd.set reads state.commands.bsd_set.availability and state.commands.bsd_set.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact topology identity, expected revision or epoch, and correlation evidence.",
+        "cmd.bsd.set is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns BackSeatDriverModeSetResult with BackSeatDriverModeSetResult.projection_ref, records missing_event_registration, and emits no unregistered EventRecord.",
+        "Sets Off, Auto, or On for the selected canonical scope; effective default and recommended value are Auto while explicit stored Off remains Off. Keyboard and pointer activation are identical; pending, blocked, recovery, and terminal outcomes are announced without exposing secrets or raw output."
+      ],
+      "evidence_required": "Production wiring evidence for cmd.bsd.set: render/control proof, exact-handler dispatcher fixture, BackSeatDriverModeSetRequest -> BackSeatDriverModeSetResult assertion, selector and closed disabled-reason fixtures, receipt/projection assertion containing missing_event_registration, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
+      "state_selector": "state.commands.bsd_set.availability",
+      "disabled_reason_projection": "state.commands.bsd_set.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.bsd.set is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns BackSeatDriverModeSetResult with BackSeatDriverModeSetResult.projection_ref, records missing_event_registration, and emits no unregistered EventRecord.",
+        "receipt_or_event_refs": [
+          "BackSeatDriverModeSetResult.receipt_refs",
+          "BackSeatDriverModeSetResult.projection_ref",
+          "missing_event_registration"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.bsd_set exposes a stable role, name, description, current state, and outcome matching cmd.bsd.set.",
+        "keyboard_access": "catalog.bsd_set is reachable and dispatches the same cmd.bsd.set payload by keyboard and pointer.",
+        "focus_management": "catalog.bsd_set retains invoking focus while accepted work is pending and returns focus deterministically after outcome or error.",
+        "disabled_announcement": "catalog.bsd_set announces state.commands.bsd_set.disabled_reason, busy or wait phase, subject, and terminal outcome without secret or raw-output disclosure."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.bsd_set.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.bsd.set reaches only handlers::back_seat_driver::set_mode; schema fixtures validate BackSeatDriverModeSetRequest -> BackSeatDriverModeSetResult."
+        },
+        {
+          "test_id": "wiring.catalog.bsd_set.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.bsd_set.availability; disabled copy reads state.commands.bsd_set.disabled_reason; allowed states are scope writable and projection current; closed disabled reasons are stale_projection, already_in_state, policy_denied, permission_required."
+        },
+        {
+          "test_id": "wiring.catalog.bsd_set.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.bsd.set is receipt/projection-only while Event Authority is UNKNOWN_OPEN: it returns BackSeatDriverModeSetResult with BackSeatDriverModeSetResult.projection_ref, records missing_event_registration, and emits no unregistered EventRecord."
+        },
+        {
+          "test_id": "wiring.catalog.bsd_set.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard-pointer parity, focus handling, busy state, and disabled/outcome announcement for cmd.bsd.set."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.bsd.set returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
       ]
     }
   }

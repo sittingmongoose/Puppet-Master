@@ -290,6 +290,7 @@
     /* ---------- Demo scenarios (Concord drawer) ---------- */
     demoScenarios: [
       { id: "calm", label: "Calm state (all notices dismissed)" },
+      { id: "slow-hydration", label: "Slow manager hydration (lazy load)" },
       { id: "reset", label: "Reset demo data" },
       { id: "memory-fading", label: "Memory: fading gist crosses below the active set" },
       { id: "memory-restore", label: "Memory: restore an earlier gist version" },

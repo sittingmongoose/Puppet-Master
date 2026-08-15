@@ -1,0 +1,212 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/runtime_integration_disposition/2.0.0/runtime_integration_disposition.schema.json",
+  "title": "Remaining Runtime Integration canon and implementation disposition",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema", "schema_id", "schema_version", "register_id", "stage", "generated_at",
+    "authority_note", "source_packet", "custody_ref", "allowed_dispositions",
+    "allowed_canon_statuses", "allowed_implementation_statuses", "closure_audit",
+    "external_handoffs", "validation_summary", "items"
+  ],
+  "properties": {
+    "$schema": { "const": "Plans/runtime_integration_disposition.schema.json" },
+    "schema_id": { "const": "pm.runtime_integration_disposition.v2" },
+    "schema_version": { "const": "2.0.0" },
+    "register_id": { "const": "runtime-integration-disposition-corrected-2026-08-13" },
+    "stage": { "const": "canonical_specification_closure_pre_worknodes" },
+    "generated_at": { "$ref": "#/$defs/timestamp" },
+    "authority_note": { "$ref": "#/$defs/non_empty_string" },
+    "source_packet": { "$ref": "#/$defs/source_packet" },
+    "custody_ref": { "const": "reports/shared-runtime-integration-2026-08-13/CANON_CLOSURE_CUSTODY.json" },
+    "allowed_dispositions": {
+      "type": "array",
+      "const": [
+        "adopt_here", "adapt_existing_owner", "already_covered_with_evidence",
+        "return_named_owner", "reject_or_defer_with_owner"
+      ]
+    },
+    "allowed_canon_statuses": {
+      "type": "array",
+      "const": [
+        "canon_closed", "already_covered_exact", "returned_to_accepted_owner",
+        "implementation_only_deferral", "rejected_with_reason", "product_decision_required"
+      ]
+    },
+    "allowed_implementation_statuses": { "type": "array", "const": ["not_started"] },
+    "closure_audit": { "$ref": "#/$defs/closure_audit" },
+    "external_handoffs": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/external_handoff" }
+    },
+    "validation_summary": { "type": "object" },
+    "items": {
+      "type": "array",
+      "minItems": 163,
+      "maxItems": 163,
+      "items": { "$ref": "#/$defs/item" }
+    }
+  },
+  "$defs": {
+    "non_empty_string": { "type": "string", "minLength": 1 },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "string_list": { "type": "array", "items": { "$ref": "#/$defs/non_empty_string" } },
+    "source_packet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "packet_name", "revision", "archive_basename", "archive_sha256", "packet_root",
+        "source_index_ref", "source_hashes_sha256"
+      ],
+      "properties": {
+        "packet_name": { "const": "PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13" },
+        "revision": { "const": "corrected-2026-08-13" },
+        "archive_basename": { "const": "PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13.zip" },
+        "archive_sha256": { "$ref": "#/$defs/sha256" },
+        "packet_root": { "const": "PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/" },
+        "source_index_ref": { "const": "reports/shared-runtime-integration-2026-08-13/PACKET_SOURCE_INDEX.json" },
+        "source_hashes_sha256": {
+          "type": "object",
+          "minProperties": 5,
+          "additionalProperties": { "$ref": "#/$defs/sha256" }
+        }
+      }
+    },
+    "closure_audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "accountability_rows", "canon_repair_rows", "implementation_only_rows",
+        "prior_valid_rows", "unresolved_non_pnc_canon_defects", "product_decisions_required",
+        "implementation_started_rows", "native_runtime_proof_rows", "pnc_event_authority_excluded"
+      ],
+      "properties": {
+        "accountability_rows": { "const": 163 },
+        "canon_repair_rows": { "const": 41 },
+        "implementation_only_rows": { "const": 8 },
+        "prior_valid_rows": { "const": 114 },
+        "unresolved_non_pnc_canon_defects": { "const": 0 },
+        "product_decisions_required": { "const": 0 },
+        "implementation_started_rows": { "const": 0 },
+        "native_runtime_proof_rows": { "const": 0 },
+        "pnc_event_authority_excluded": { "const": true }
+      }
+    },
+    "external_handoff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["owner_lane", "status", "reason", "handoff_ref"],
+      "properties": {
+        "owner_lane": { "const": "PNC-019/Event Authority" },
+        "status": { "const": "excluded_not_adjudicated" },
+        "reason": { "$ref": "#/$defs/non_empty_string" },
+        "handoff_ref": { "const": "reports/shared-runtime-integration-2026-08-13/PNC_HANDOFF.md" }
+      }
+    },
+    "owner": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["primary", "supporting"],
+      "properties": {
+        "primary": { "type": "string", "pattern": "^Plans/[^\\s]+$" },
+        "supporting": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^Plans/[^\\s]+$" } }
+      }
+    },
+    "anchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "anchor_or_plan_unit_id", "anchor_kind", "owner_file_sha256"],
+      "properties": {
+        "path": { "type": "string", "pattern": "^Plans/[^\\s#]+$" },
+        "anchor_or_plan_unit_id": { "$ref": "#/$defs/non_empty_string" },
+        "anchor_kind": {
+          "enum": ["plan_unit", "heading", "json_pointer", "accepted_owner_file_custody"]
+        },
+        "owner_file_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_packet", "live_plans", "exact_live_plan_anchors", "implementation_evidence"],
+      "properties": {
+        "source_packet": { "$ref": "#/$defs/string_list" },
+        "live_plans": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^Plans/[^\\s]+$" } },
+        "exact_live_plan_anchors": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/anchor" } },
+        "implementation_evidence": { "type": "array", "maxItems": 0 }
+      }
+    },
+    "canon_closure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status", "closed_at", "reason", "owner_acceptance_status",
+        "canon_repair_required_at_baseline", "implementation_only",
+        "product_decision_required"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "canon_closed", "already_covered_exact", "returned_to_accepted_owner",
+            "implementation_only_deferral", "rejected_with_reason", "product_decision_required"
+          ]
+        },
+        "closed_at": { "$ref": "#/$defs/timestamp" },
+        "reason": { "$ref": "#/$defs/non_empty_string" },
+        "owner_acceptance_status": {
+          "enum": ["accepted_by_plan_unit", "accepted_by_existing_owner_evidence", "accepted_owner_route"]
+        },
+        "canon_repair_required_at_baseline": { "type": "boolean" },
+        "implementation_only": { "type": "boolean" },
+        "product_decision_required": { "const": false }
+      }
+    },
+    "required_impacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["plan", "command", "wiring", "dry", "schema_event_storage", "tests"],
+      "properties": {
+        "plan": { "$ref": "#/$defs/string_list" },
+        "command": { "$ref": "#/$defs/string_list" },
+        "wiring": { "$ref": "#/$defs/string_list" },
+        "dry": { "$ref": "#/$defs/string_list" },
+        "schema_event_storage": { "$ref": "#/$defs/string_list" },
+        "tests": { "$ref": "#/$defs/string_list" }
+      }
+    },
+    "item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "item_id", "title", "requirement", "category", "packet_links",
+        "source_decision_status", "disposition", "canonical_owner", "evidence",
+        "required_impacts", "disposition_reason", "canon_closure",
+        "implementation_status", "unresolved_conflicts", "external_handoffs"
+      ],
+      "properties": {
+        "item_id": { "type": "string", "pattern": "^[A-Z]+-[0-9]{3}$" },
+        "title": { "$ref": "#/$defs/non_empty_string" },
+        "requirement": { "$ref": "#/$defs/non_empty_string" },
+        "category": { "$ref": "#/$defs/non_empty_string" },
+        "packet_links": { "$ref": "#/$defs/string_list" },
+        "source_decision_status": { "const": "fixed" },
+        "disposition": {
+          "enum": [
+            "adopt_here", "adapt_existing_owner", "already_covered_with_evidence",
+            "return_named_owner", "reject_or_defer_with_owner"
+          ]
+        },
+        "canonical_owner": { "$ref": "#/$defs/owner" },
+        "evidence": { "$ref": "#/$defs/evidence" },
+        "required_impacts": { "$ref": "#/$defs/required_impacts" },
+        "disposition_reason": { "$ref": "#/$defs/non_empty_string" },
+        "canon_closure": { "$ref": "#/$defs/canon_closure" },
+        "implementation_status": { "const": "not_started" },
+        "unresolved_conflicts": { "type": "array", "maxItems": 0 },
+        "external_handoffs": { "type": "array", "maxItems": 0 }
+      }
+    }
+  }
+}

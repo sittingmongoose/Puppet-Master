@@ -1,0 +1,140 @@
+{
+  "schema_id": "pm.settings_reference_review_report.v1",
+  "model": "fable",
+  "correction_packet": "PM_Settings_Dependency_and_Work_Correction_2026-08-13",
+  "target_packet": "PM_Settings_Bakeoff_Final_Cumulative_2026-08-08",
+  "generated": "2026-08-13",
+  "correction_references_opened": [
+    {
+      "path": "00_READ_ME_FIRST.md",
+      "opened": "fully, this pass"
+    },
+    {
+      "path": "02_FULL_THREAD_CURRENT_DECISION_REGISTER.md",
+      "opened": "fully, this pass (all 25 sections, 1,112 lines)",
+      "note": "This authority was NOT available during the build pass; the original archive omitted it. It is the substantive new input of this correction."
+    },
+    {
+      "path": "PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "opened": "fully, this pass AND fully during the build pass",
+      "evidence": "sha256 9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1 is byte-identical between the correction packet copy and the original packet's reference/PROVIDER_CLI_FINAL_ADJUDICATION.md, which was read in full before any concept work began. The mispathed internal reference therefore did not deprive the build of the adjudication's content."
+    },
+    {
+      "path": "REFERENCE_REVIEW_AND_REPAIR_REQUIREMENTS.md",
+      "opened": "fully, this pass"
+    },
+    {
+      "path": "CORRECTION_GOAL_PROMPT.md / CORRECTION_PACKET_MANIFEST.json",
+      "opened": "fully, this pass"
+    }
+  ],
+  "build_pass_reference_ledger": {
+    "note": "Honest record of what the build pass (2026-08-11/12) actually opened from the original packet, reconstructed from the build transcript.",
+    "fully_read": [
+      "00_START_HERE.md",
+      "01_CORE_ARCHITECTURE.md .. 10_PLAN_COMMAND_WIRING_DRY_IMPACT.md (all ten numbered files)",
+      "IMPLEMENTATION_PROMPT.md, PROMPT_USAGE.md, SHARED_PROCESS_RULES.md, SOURCE_AND_PRECEDENCE_MAP.md, REFERENCE_SUPERSESSIONS.md, AUDIT_PROMPT.md",
+      "MANAGER_COVERAGE_MATRIX.json, CANDIDATE_COMMAND_ID_REGISTER.json, IMPACT_REGISTER.template.json, PACKET_MANIFEST.json",
+      "reference/CONCEPT_RULES.md",
+      "reference/PROVIDER_CLI_FINAL_ADJUDICATION.md (sha-verified identical to the correction copy)",
+      "reference/SETTINGS_NAVIGATION_VIDEO_DESCRIPTION.md",
+      "reference/T3_MODEL_PICKER_REFERENCE.png and reference/settings_navigation_contact_sheet.jpg (viewed as images)"
+    ],
+    "partially_read": [
+      "DECISION_COVERAGE.json — structure plus all 129 topic ids/titles/categories; requirement bodies not individually read",
+      "reference/EGOLITE_SETTINGS_RETURN.md — first ~60 lines by the orchestrator; read fully by the c4 builder before the source-control manager was built",
+      "reference/SERVER_BACKBONE_SETTINGS_RETURN.md — section headings only by the orchestrator; skimmed by the c4 builder",
+      "reference/PERFORMANCE_SETTINGS_RETURN.md — SECTION HEADINGS ONLY. This is the material omission surface: the related full-thread performance register was absent from the archive, and the summary that WAS present was never fully read",
+      "reference/OMP_PROVIDER_CATALOG_REFERENCE.json — top-level structure only"
+    ],
+    "never_opened": [
+      "reference/PM_CROSS_SYSTEM_COMPLETENESS_AUDIT.md"
+    ]
+  },
+  "prior_omissions_found": [
+    {
+      "id": "OM-1",
+      "register_authority": "sections 11 and 16.6 (truthful progress; never fabricate a percentage)",
+      "omission": "The shared index-rebuild trigger emitted invented percentages (0, 45) with no real relationship to work performed, and c4 rendered them as a determinate progressbar with aria-valuemax 100.",
+      "affected_concepts": ["_shared/pm-state.js", "c4-ledger"],
+      "correction": "Scanning is now an honestly indeterminate phase (no denominator yet, no bar); indexing emits measured completed/total file counts (6,470 of 14,382); c4 renders counts with real-valued progressbar aria ('14382' max, valuetext '… files (measured)') and a phase-text-only treatment while indeterminate. The shared op() emitter now attaches progressKind and source to every event and strips any bare pct field.",
+      "tests": ["harness: scanning-indeterminate, indexing-measured, no-pct-survives, files-updated", "correction probes: c4-index-ends-measured, c4-index-no-bare-percent-copy, c4-index-progressbar-real-denominator"]
+    },
+    {
+      "id": "OM-2",
+      "register_authority": "section 7.3 (narrow deltas; hidden/covered surfaces stop expensive work)",
+      "omission": "c3 rebuilt EVERY stacked layer's DOM (innerHTML wipe + full render + scrollspy refresh) on every provider/catalog store event, including covered, inert layers.",
+      "affected_concepts": ["c3-focus-stack"],
+      "correction": "rerenderAll now re-renders only the live top layer; covered layers mark stale and re-render exactly once, on reveal, through the existing popTo path.",
+      "tests": ["correction probes: c3-stale-covered-layer-kept (DOM marker survives a provider event on the covered layer while the top layer rebuilds), c3-stale-rerendered-on-reveal (marker gone after pop)"]
+    },
+    {
+      "id": "OM-3",
+      "register_authority": "section 13 (no startup probe/scan storms; bounded demand-driven discovery)",
+      "omission": "The skills-discovery setting description claimed 'Scans your project and computer for skill folders on startup'.",
+      "affected_concepts": ["_shared demo dataset (rendered by c3's Skills stack and search in all four)"],
+      "correction": "Row amended via the extension layer: discovery is described as demand-driven and on-request, never a startup scan.",
+      "tests": ["harness: skills-discovery copy check"]
+    },
+    {
+      "id": "OM-4",
+      "register_authority": "section 11 (progress source; wait reasons)",
+      "omission": "op events carried no progressKind/source/waitReason, so concepts could not distinguish measured from derived progress, and the rate-limited test-send wait had no machine-readable reason.",
+      "affected_concepts": ["_shared/pm-state.js", "all four concepts' wiring deltas"],
+      "correction": "op() attaches progressKind (determinate only with a real denominator) and source (measured|derived|unknown); dest-test rate-limiting emits waitReason 'waiting_resource'; c4's credits meter aria exposes real units. Wiring deltas gained an observable_work_alignment block mapping traces onto the register's operation-state grammar.",
+      "tests": ["harness: rate-limited waitReason", "registers: observable_work_alignment present in all four candidate-wiring-delta.json files"]
+    }
+  ],
+  "reviewed_no_change_needed": [
+    {
+      "topic": "RuntimeResourceGovernor sole ownership (sections 2.3, 2.4)",
+      "evidence": "No concept models a second governor or scheduler; demo staged transitions are UI projections over fixture data. Registers now state the boundary explicitly."
+    },
+    {
+      "topic": "Provider-CLI policy (section 12.4 + adjudication)",
+      "evidence": "Re-grepped all copy/fixtures: no bundling/pre-seeding/silent-acquisition implication anywhere; the only 'bundled' strings are sound-asset licenses ('PM bundled') and artifact-type labels, both legitimate. Explicit official-source install offers with exact Host/Environment picker, install-not-sign-in separation, and unknown-owner manual-only stand as built and probed (probe matrix P06/P07/P08/P09-equivalents, install-select gap probe)."
+    },
+    {
+      "topic": "Humanized installation identity",
+      "evidence": "All render sites of configuredCommand/resolvedLauncher/actualExecutable/packageIdentity/managerRoot were enumerated (four sites, one per concept: c1:1525, c2:2811, c3:3162, c4:4479 region) and each consumes only the resolver's .advanced object inside an advanced drawer/sheet/inspector disclosure; normal cards show humanized title/version/confidence/update words."
+    },
+    {
+      "topic": "Unbounded subscriptions (sections 7.3, 8.2)",
+      "evidence": "All 28 store.on registrations across the four concepts are one-time boot-scope wiring (line-verified), not per-render; pm-spell attach is element-scoped with no module registry, so unretained handles in c2/c3 cannot leak; PMSpy controllers are disposed on re-attach."
+    },
+    {
+      "topic": "Animation clocks (sections 7.3, 11)",
+      "evidence": "The folder's only infinite animation is c2's region-scoped refresh shimmer, present exclusively while a refresh operation is active (class applied at render under 'refreshing', removed by the completion event's re-render); reduced-motion kill switches cover it; no idle/decorative loops exist."
+    },
+    {
+      "topic": "Lazy Settings opening model (section 20.2)",
+      "evidence": "Runtime DOM proof per concept: Home renders 252-1,131 stage nodes with deep-manager content absent (needle strings 'git push --force'/'OpenPeon'/'rustfmt'/'sign-artifacts' not in DOM); opening the manager materializes it (probe c1..c4-lazy-hydration)."
+    },
+    {
+      "topic": "Register section 18 Basic-Dark factory default",
+      "evidence": "Scoped to PMConcept7's first-open factory state; the bakeoff concepts follow the hub/F3-425 friendly-dark default and the eight-theme requirement. No change."
+    },
+    {
+      "topic": "SQLite prohibition (section 10)",
+      "evidence": "Zero occurrences of sqlite in the folder; the storage manager's fixture vocabulary is vault/retention/receipts with no store-technology claims."
+    }
+  ],
+  "register_updates": [
+    "All four impact-register.json: performance-register plan-owner impact, ObservableWork schema impact, two supersessions (fabricated percentages; startup-scan copy), correction test fixtures, section-23 calibration gates recorded as implementation benchmarks",
+    "All four candidate-command-delta.json: drift_census_2026_08_13 block (section 22 known drift: cmd.installation./cmd.tool./cmd.integration_tool., cmd.github.actions. vs cmd.github_actions., prd_builder/planning_wizard/plan_compile drift recorded, cmd.browser.open_workspace_preview pane-independence)",
+    "All four candidate-wiring-delta.json: observable_work_alignment block (state grammar, progressKind/source, denominator rule, waitReason vocabulary, demo changes)",
+    "All four plan-owner-delta.md: correction section with boundary confirmations",
+    "FINDINGS.md and TEST_REPORT.md: correction sections; IMPACT_REGISTER.json roll-up references this report"
+  ],
+  "tests_rerun": {
+    "node_harness": "76 checks including 7 new correction assertions — ALL PASS",
+    "correction_probes": "9 browser probes (4 lazy-hydration DOM evidence, 2 c3 stale-on-reveal, 3 c4 measured index progress) — ALL PASS",
+    "full_probe_matrix": "187-probe functional regression rerun after the corrections — result recorded in TEST_REPORT.md correction section",
+    "validator": "python3 Concepts/ConceptHub/validate.py Concepts/settings-redesign-concepts/fable — result recorded in TEST_REPORT.md correction section"
+  },
+  "materiality_verdict": {
+    "materially_affected": true,
+    "scope": "narrow but real",
+    "detail": "The omitted performance register did not change manager coverage, fixtures, themes, widths, provider policy, or the deterministic test surface — those held up under re-inspection with evidence. It did expose four genuine shortcomings the build would not otherwise have caught: fabricated index-rebuild percentages (a direct violation of the register's progress-truth rules), whole-stack re-rendering in c3 on every data event, startup-scan language in one setting description, and the absence of progress-kind/source/wait-reason semantics on operation events. All four are corrected and test-proven. The mispathed provider adjudication was immaterial: its content was byte-identical to the copy the build read in full (sha-proven)."
+  }
+}

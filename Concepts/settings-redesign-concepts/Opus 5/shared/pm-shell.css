@@ -620,3 +620,38 @@ a { color: var(--pm-accent); }
   z-index: 24;
 }
 .pm-scrim.is-open { opacity: 1; pointer-events: auto; }
+
+/* ---------------------------------------------------- ObservableWork surface */
+/* Added by the 2026-08-13 dependency correction. A generic spinner must never
+ * conceal what is being waited on, so every row states it. */
+.pm-work-bar-lead {
+  display: flex; align-items: center; gap: 8px;
+  margin-left: auto; padding: 0 var(--pm-space-3);
+  font-size: 12px; color: var(--pm-text-2); min-width: 0;
+}
+.pm-work-summary { display: inline-flex; align-items: baseline; gap: 6px; min-width: 0; }
+.pm-work-state { color: var(--pm-accent); }
+.pm-work-more { color: var(--pm-text-3); }
+.pm-work-list { display: flex; flex-direction: column; }
+.pm-work-list:empty { display: none; }
+.pm-work-item {
+  padding: 10px var(--pm-space-3);
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+  background: var(--pm-surface-2);
+}
+.pm-work-title { font-size: 12.5px; font-weight: 600; color: var(--pm-text-1); }
+.pm-work-phase { margin-top: 2px; font-size: 12px; color: var(--pm-accent); }
+.pm-work-reason { margin-top: 4px; font-size: 12px; color: var(--pm-text-2); }
+.pm-work-count { margin-top: 4px; font-size: 11px; color: var(--pm-text-3); }
+.pm-work-bar { margin-top: 6px; height: 4px; border-radius: 2px; background: var(--pm-surface-3); overflow: hidden; }
+.pm-work-bar > span { display: block; height: 100%; background: var(--pm-accent); }
+.pm-work-actions { display: flex; gap: 8px; margin-top: 8px; }
+.pm-work-btn {
+  font: inherit; font-size: 11.5px; padding: 4px 9px; cursor: pointer;
+  color: var(--pm-text-1); background: var(--pm-surface-1);
+  border: var(--pm-border-w) solid var(--pm-border-2); border-radius: var(--pm-radius-1);
+}
+.pm-work-btn:hover { background: var(--pm-surface-3); }
+.pm-work-item[data-state="stalled"] .pm-work-phase,
+.pm-work-item[data-state="degraded"] .pm-work-phase { color: var(--pm-attention); }
+[data-reduced-motion="1"] .pm-work-bar > span { transition: none; }

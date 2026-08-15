@@ -1,0 +1,26 @@
+{
+  "schema_id": "pm.prompt_complexity_successor.refreshed_surface_census.v2",
+  "census_source": {
+    "path": "../refreshed_surface_census.json",
+    "sha256": "dc0012817997f6e0272818edf68201432907176640ce388a15a55fefd7847b22"
+  },
+  "baseline": {
+    "path": "tests/agent_packet_restrictions/inventory/surfaces.v2.json",
+    "sha256": "6cc6172285e6df2dccb1c69271f27ca0ca5cbbca227bf207279464e4bf9cd06c",
+    "inherited_rows": 54
+  },
+  "counts": {
+    "total_rows": 56,
+    "fixed_source_policy_only": 1,
+    "proposed_ledger_only": 2,
+    "canonical_plan_only_implementation_gated": 49,
+    "isolated_fixture_only": 2,
+    "runnable_current_deterministic": 2
+  },
+  "additions": ["PROVIDER-001", "RUN-002"],
+  "direct_chat_boundaries": ["CHAT-EX-001", "CHAT-EX-002"],
+  "direct_chat_gap_count": 4,
+  "bounded_currentness_basis": "All 29 source bindings, including every owner used by the census, matched the V1 recapture before V2 qualification.",
+  "closed_world_completeness_claimed": false,
+  "claim_boundary": "The census is a bounded refreshed inventory, not proof of runtime implementation, production enforcement, release completeness, or safety."
+}

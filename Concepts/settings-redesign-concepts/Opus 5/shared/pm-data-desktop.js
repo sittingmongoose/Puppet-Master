@@ -6,7 +6,7 @@
  * The recurring idea here is that a message has a DESTINATION and a destination
  * has a RETURN VALUE. Most notification settings screens model delivery as a
  * checkbox, which is why nobody can tell the difference between "we did not
- * send it" and "we sent it and Slack said channel_not_found". Every destination
+ * send it" and "we sent it and Slack said the channel could not be found". Every destination
  * in this file therefore carries the provider's own last reply, and every
  * routing decision is a cell in one matrix rather than a switch hidden inside
  * eight separate forms.
@@ -85,8 +85,8 @@
       secondary: "Incoming webhook into a workspace channel.",
       status: "attention", statusWord: "Failing",
       transport: "Webhook", endpoint: "https://hooks.slack.com/services/" + "\u2022\u2022\u2022\u2022\u2022" + "/\u2026",
-      lastReply: "channel_not_found", lastReplyKind: "error",
-      lastReplyDetail: "Slack returned channel_not_found for #orchard-builds at 09:12. The webhook itself is still valid; the channel was archived on 6 August.",
+      lastReply: "The channel could not be found", lastReplyKind: "error",
+      lastReplyDetail: "Slack could not find #orchard-builds at 09:12. The webhook itself is still valid; the channel was archived on 6 August.",
       configured: true,
       failing: true,
       editable: [
@@ -101,7 +101,7 @@
           value: "{severity}: {headline} — {project}" },
         { key: "predicate", label: "Success predicate", kind: "select",
           options: ["HTTP 2xx", "HTTP 2xx and body is ok", "Any response"], value: "HTTP 2xx and body is ok",
-          help: "Slack answers 200 with the body 'channel_not_found', so HTTP 2xx alone would report this failure as a success." },
+          help: "Slack answers 200 with the body 'the channel could not be found', so HTTP 2xx alone would report this failure as a success." },
         { key: "retry", label: "Retry", kind: "select",
           options: ["None", "3 attempts, backing off", "5 attempts, backing off"], value: "3 attempts, backing off" }
       ]
@@ -295,7 +295,7 @@
       health: {
         status: failing ? "attention" : "ok",
         statusWord: failing ? failing + " failing" : "Delivering",
-        headline: configured + " of " + dests.length + " destinations are configured. Slack is returning channel_not_found.",
+        headline: configured + " of " + dests.length + " destinations are configured. Slack is returning the channel could not be found.",
         detail: "A destination that answers with an error is a different state from one that was never set up, and both are different from one an administrator has blocked.",
         counts: [
           { label: "Destinations", value: dests.length },
@@ -394,7 +394,7 @@
               id: "test-history", name: "Recent delivery attempts", secondary: "Across every destination",
               status: "attention", statusWord: "1 failing",
               fields: {
-                "09:12 · Slack": "channel_not_found — the webhook is valid, the channel was archived",
+                "09:12 · Slack": "The channel could not be found — the webhook is valid, the channel was archived",
                 "09:12 · Discord": "HTTP 204 — delivered",
                 "09:11 · System": "Accepted by the OS notification centre",
                 "08:40 · Generic webhook": "HTTP 202 — accepted"
@@ -1304,7 +1304,7 @@
         path: ["General", "Notifications & Sounds"], keywords: ["notification", "delivered", "last"] },
       { id: "status-slack-health", label: "Slack destination health",
         explanation: "What Slack returned on the last attempt.",
-        value: "Failing \u2014 channel_not_found",
+        value: "Failing \u2014 the channel could not be found",
         categoryId: "general", subcategoryId: "general-notifications", managerId: "manager-notifications",
         path: ["General", "Notifications & Sounds"], keywords: ["slack", "failing", "channel"] },
       { id: "status-theme-active", label: "Theme in force",

@@ -17,8 +17,10 @@ compared side by side.
 | [Ledger](opus-5-ledger.html) | Settings is a **record** | State-of-record home, ledger rows, edge mini-map | Storage, Backup, Lifecycle, History, Artifacts, Source control, Actions, Containers, Web, Index, Cleanup, Server shell, Media |
 
 Every concept also builds the **provider / account / model / installation** surface in its own idiom —
-that is the one manager the four designs are meant to disagree about — plus the **Usage** boundary card,
-which exists so that no concept quietly reimplements Usage inside Settings.
+that is the one manager the four designs are meant to disagree about — plus two boundary managers that
+exist so no concept can quietly reimplement a singular owner: the **Usage** card, and (added by the
+2026-08-13 dependency correction) **Resource use and performance**, which shows the one
+`RuntimeResourceGovernor` policy and its admission answers without ever scheduling work itself.
 
 [**Open the folder index**](index.html) to see all four side by side with shared theme and width controls.
 
@@ -57,7 +59,11 @@ shared/
   pm-semantics.js              the status vocabulary; one file owns the words
   pm-search.js                 fuzzy index across categories, settings, managers, actions and statuses
   pm-sections.js               scrollspy and deep-link jumps, measured at explicit checkpoints
-  pm-sim.js                    seeded simulation; every operation returns a dated receipt
+  pm-work.js                   ObservableWork: the truthful progress/wait projection, and the
+                               read-only RuntimeResourceGovernor permit projection
+  pm-virtual.js                windowed lists, latest-request-wins generations, release pools
+  pm-data-scale.js             provenance-marked volume for the performance matrix
+  pm-sim.js                    seeded simulation; every operation is an ObservableWork with a receipt
   pm-icons.js                  87 SVG glyphs; there is no emoji in any implementation file
   pm-spellcheck.js             the spellchecker used by text inputs
   concept-hub-bridge.js        Hub protocol bridge (theme, reduced motion, test width)
@@ -70,7 +76,8 @@ shared/
    filter token like `scope:project`. The index carries 416 records across nine kinds.
 3. **Open a manager.** Every assigned manager renders through that concept's single ManagerSpec path,
    so the difference you see is the design, not one screen that got more attention than another.
-4. **Change the demo state** in the review strip (normal / attention / loading / calm). The demo state
+4. **Change the demo state** in the review strip — normal, calm, attention, loading, degraded,
+   exhausted, and (new) **offline**, **low resource**, **large catalogue**. The demo state
    travels in the deep link, so you can hand someone an exact screen.
 5. **Press something.** Operations that cannot really happen in a standalone page return a dated
    *Simulated* receipt naming the call a production build would make, and every receipt lands in the

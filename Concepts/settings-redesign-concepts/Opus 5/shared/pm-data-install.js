@@ -554,6 +554,82 @@
         capabilities: [] }
     );
 
+    /* ======================================= PROVIDER-CLI ACQUISITION POLICY */
+
+    /* Added by the 2026-08-13 dependency correction, from
+     * PROVIDER_CLI_FINAL_ADJUDICATION.md. The original build already avoided
+     * bundling language, but the policy itself was never modelled, so nothing
+     * stopped a later fixture from implying it. */
+    D.providerCliPolicy = {
+      neverBundled: true,
+      neverInDefaultBaseline: true,
+      neverPreSeededToolStore: true,
+      neverSilentlyInstalledBy: ["Project", "model", "provider", "Goal", "Plan", "WorkNode", "agent", "Auto", "On demand"],
+      initialInstall: "explicit user action in Provider Settings or provider setup",
+      source: "the provider's own official installer, release artifact, package feed, or documented package-manager route",
+      target: "the exact Host/Environment the user selected",
+      authenticationSeparate: true,
+      postConsentAllowed: ["discover and reuse a compatible existing installation", "verify publisher, provenance, version, architecture and licence",
+        "maintain isolated provider-owned profiles", "stage, verify, activate, repair and roll back later generations",
+        "apply automatic update policy once the installation is explicitly acquired and bound"],
+      namedExceptionRequired: "Bundling one exact provider CLI needs a later named user-approved exception after redistribution, licence, provenance, security, size, update, removal and support review. No catalog owner, adapter or acquisition class may create it implicitly.",
+      humanCopy: {
+        notInstalled: "Not installed on this computer",
+        availableToInstall: "Available to install",
+        readyAfterInstall: "Ready",
+        neverSay: ["Included with Puppet Master", "Included with this Server", "Pre-installed", "Bundled"]
+      }
+    };
+
+    /* Runtime demand: what happens when an operation needs a provider CLI that
+     * is not there. The continuation token is the load-bearing part — the
+     * originating operation is preserved and only resumed if it is still
+     * current, rather than silently installing and carrying on. */
+    D.providerSetupDemand = {
+      id: "demand-codex-cli",
+      requirement: "A Codex route was requested and its command-line tool is not installed on this computer.",
+      state: "provider_setup_required",
+      stateWord: "Provider setup required",
+      inspectedExisting: [
+        { host: "This Windows computer", found: false, note: "No compatible installation" },
+        { host: "WSL Ubuntu", found: true, note: "Found version 1.2.0, but the request targets Windows" }
+      ],
+      deepLink: "#/m/manager-providers/providers-installations/inst-codex",
+      continuation: {
+        token: "cont-7f31a9",
+        originatingOperation: "Plan step 4 — draft the migration",
+        preserved: true,
+        resumeRule: "Resumes only if this continuation is still current when setup finishes.",
+        staleBehavior: "A superseded continuation is discarded with a receipt rather than resumed."
+      },
+      waitsFor: "explicit Install, or selection of an existing compatible installation",
+      thenSeparately: "authentication",
+      neverDoes: "install silently because a Project, Goal or Auto policy wanted the route"
+    };
+
+    /* Human identity for every installation surface. Raw ids stay keys. */
+    D.installationHosts = [
+      { id: "host-this-computer", name: "This Windows computer", kind: "native" },
+      { id: "host-wsl-ubuntu", name: "WSL Ubuntu", kind: "wsl" },
+      { id: "host-home-truenas", name: "Home TrueNAS", kind: "server" },
+      { id: "host-macbook-air", name: "MacBook Air", kind: "native" },
+      { id: "host-linux-build", name: "Linux build server", kind: "ssh" }
+    ];
+
+    /* Every provider CLI in the fixture carries its acquisition class, and none
+     * of them may be a baseline class. */
+    D.providerCliInstallations = [
+      { id: "pcli-claude", product: "Claude Code", hostId: "host-this-computer", hostName: "This Windows computer",
+        acquisition: "pm_tool_store", readiness: "ready", version: "2.1.4", isProviderCli: true,
+        source: "Anthropic official installer", authSeparate: true, installedBy: "explicit user action on 4 August" },
+      { id: "pcli-codex", product: "Codex CLI", hostId: "host-this-computer", hostName: "This Windows computer",
+        acquisition: "available_to_install", readiness: "not_installed", version: null, isProviderCli: true,
+        source: "OpenAI official release artifact", authSeparate: true, installedBy: null },
+      { id: "pcli-gemini", product: "Antigravity CLI", hostId: "host-wsl-ubuntu", hostName: "WSL Ubuntu",
+        acquisition: "installed_externally", readiness: "external", version: "0.9.7", isProviderCli: true,
+        source: "installed by the user outside Puppet Master", authSeparate: true, installedBy: "not managed here" }
+    ];
+
     free.statusWord = "2 of 7 ready";
   }
 })();

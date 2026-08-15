@@ -1,0 +1,65 @@
+{
+  "schema_id": "pm.event_authority.quarantined_group_manifest.v1",
+  "claim_boundary": "252 preserved row-local findings are quarantined evidence only; no row is admitted, registered, denominator-closing, depth-closing, or checkpoint-advancing",
+  "expected_set": {
+    "path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/EXPECTED_252_EVENT_TYPES.tsv",
+    "row_count": 252,
+    "unique_event_type_count": 252,
+    "sha256": "d59142bc9ceef3f8c2d2257b7a6fbe9307ddae236720a0ac5a8c62afc7c5f541"
+  },
+  "source_groups": [
+    {
+      "group": "a",
+      "path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_a.jsonl",
+      "row_count": 38,
+      "sha256": "d4305411923dee2edfc2c8b822a9fb42eda33b320c64c7f84aaf16ce4cd134a3"
+    },
+    {
+      "group": "b",
+      "path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_b.jsonl",
+      "row_count": 50,
+      "sha256": "f1279ec339fc3b20676e19787ab423ffaeaba3b7a58181828af5e94242cf7160"
+    },
+    {
+      "group": "c",
+      "path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_c.jsonl",
+      "row_count": 56,
+      "sha256": "9528f134447acb50c2c8053855db64bbcfeb9bdbbc56cb1d9e52ce11eb10cc79"
+    },
+    {
+      "group": "d",
+      "path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_d.jsonl",
+      "row_count": 45,
+      "sha256": "5b3af4d546e0aecca799ac38e0ae65ed81e356db18531baa7e7027dfb9cd66b2"
+    },
+    {
+      "group": "e",
+      "path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_e.jsonl",
+      "row_count": 34,
+      "sha256": "52ad46cafed54f333ab144b7297ca2e188353adf38a3ee4488099e76f8acba2a"
+    },
+    {
+      "group": "f",
+      "path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_f.jsonl",
+      "row_count": 25,
+      "sha256": "24585545a7234db0972ca58da2b8557416bab7ef74b75afbf318f6bfdb1c93d1"
+    },
+    {
+      "group": "g",
+      "path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_g.jsonl",
+      "row_count": 4,
+      "sha256": "5e1f709cbf5a4f1bd19cec24d12b033cac79d4e0ce0e194d8babb13bdc0499db"
+    }
+  ],
+  "union": {
+    "row_count": 252,
+    "unique_event_type_count": 252,
+    "exact_set_equality": true,
+    "quarantined_row_count": 252,
+    "quarantined_ledger_path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl",
+    "quarantined_ledger_sha256": "e77c83e1861c4b02739d7609c7c4fe066a6fe4f901a8e61511c698e0bb949294"
+  },
+  "bulk_registration": false,
+  "complete_denominator_known": false,
+  "contract_depth_complete": false
+}

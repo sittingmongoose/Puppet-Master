@@ -573,6 +573,9 @@
       scrim.style.display = 'none';
       Object.keys(sheets).forEach(function (id) { sheets[id].sheet.style.display = 'none'; });
       rebuild();
+      // restore a persisted Chats pin across remounts (pop-out round-trip);
+      // rebuild() set currentTid, and the subscribe path only fires on changes.
+      if (historyPinned()) openSheetId('chats');
       placeArtifact();
 
       function unmount() {

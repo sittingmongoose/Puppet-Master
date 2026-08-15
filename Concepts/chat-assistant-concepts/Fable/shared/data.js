@@ -284,6 +284,79 @@ export const ARTIFACT_BODIES = {
   },
 };
 
+// Scenario v2 artifact bodies — the four demonstrated kinds with real content.
+ARTIFACT_BODIES["art-v2-diff"] = {
+  kind: "diff",
+  title: "Assistant Chat change set",
+  files: [
+    { path: "threads/provider-selector.js", added: 92, removed: 18, hunks: [
+      { header: "@@ -44,9 +44,21 @@", lines: [
+        [" ", "function routeRow(ref) {"],
+        ["-", "  const label = model.name;"],
+        ["+", "  // Requested and effective routes render separately when they differ."],
+        ["+", "  const label = effective ? `${model.name} · effective` : model.name;"],
+        ["+", "  const reason = ref.requested ? ref.requested.reason : null;"],
+        [" ", "  return row(label, account.name, reason);"],
+        [" ", "}"],
+      ]},
+    ]},
+    { path: "threads/access-controls.css", added: 61, removed: 39, hunks: [
+      { header: "@@ -12,7 +12,12 @@", lines: [
+        ["-", ".access-chip { color: var(--text-secondary); }"],
+        ["+", ".access-chip { color: var(--text-primary); }"],
+        ["+", ".access-chip[data-limited]::after { content: \" · Limited by \" attr(data-limited); }"],
+      ]},
+    ]},
+    { path: "verification/interaction-probes.mjs", added: 31, removed: 10, hunks: [
+      { header: "@@ -88,6 +88,14 @@", lines: [
+        ["+", "await probe(\"effective route renders limitation cause\");"],
+        ["+", "await probe(\"cache-loss warning precedes the switch\");"],
+      ]},
+    ]},
+  ],
+};
+ARTIFACT_BODIES["art-v2-preview"] = {
+  kind: "capture",
+  title: "Provider selector preview",
+  note: "Rendered preview of the redesigned provider selector",
+  svg: `<svg viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Drawn preview of the provider selector">
+    <rect x="0" y="0" width="480" height="300" rx="8" fill="var(--bg-inset)"/>
+    <rect x="24" y="20" width="432" height="44" rx="8" fill="var(--bg-raised)" stroke="var(--edge)"/>
+    <rect x="38" y="32" width="130" height="20" rx="10" fill="var(--accent-soft)"/>
+    <rect x="180" y="34" width="90" height="16" rx="8" fill="var(--bg-inset)"/>
+    <rect x="24" y="80" width="200 " height="200" rx="8" fill="var(--bg-surface)" stroke="var(--edge)"/>
+    <rect x="40" y="98" width="150" height="12" rx="6" fill="var(--edge)"/>
+    <rect x="40" y="122" width="168" height="26" rx="6" fill="var(--accent-soft)"/>
+    <rect x="40" y="154" width="168" height="26" rx="6" fill="var(--bg-inset)"/>
+    <rect x="40" y="186" width="168" height="26" rx="6" fill="var(--bg-inset)"/>
+    <rect x="248" y="80" width="208" height="200" rx="8" fill="var(--bg-surface)" stroke="var(--edge)"/>
+    <rect x="264" y="98" width="120" height="12" rx="6" fill="var(--edge)"/>
+    <rect x="264" y="122" width="176" height="18" rx="9" fill="var(--warn-soft)"/>
+    <rect x="264" y="150" width="176" height="40" rx="6" fill="var(--bg-inset)"/>
+    <rect x="264" y="200" width="84" height="24" rx="12" fill="var(--accent-soft)"/>
+  </svg>`,
+};
+ARTIFACT_BODIES["art-v2-test"] = {
+  kind: "report",
+  title: "Interaction verification report",
+  sections: [
+    { heading: "Result", body: "All targeted interaction probes passed at 520, 750, 975, and 1200 px, with reduced motion verified separately for every motion-bearing interaction." },
+    { heading: "Routes", body: "Requested-versus-effective display verified under account fallback; the cache-loss warning always precedes the switch." },
+    { heading: "Pinning", body: "Pinned history held its floor with the artifact workspace open at every width; compact fallback engaged exactly at the declared threshold." },
+    { heading: "Access", body: "The four access profiles render their effective results, including Full Access limited by Review mode." },
+  ],
+};
+ARTIFACT_BODIES["art-v2-handoff"] = {
+  kind: "report",
+  title: "Implementation impact handoff",
+  sections: [
+    { heading: "Summary", body: "Updated the provider selector and access flow, preserved thread-local state, verified responsive pinning, and produced four inspectable artifacts." },
+    { heading: "Plan impact", body: "Selector-row and route-display contracts clarified; no canonical documents edited. Candidate command deltas recorded for route selection and access changes." },
+    { heading: "Verification", body: "All targeted interaction probes passed. Elapsed: 1m 34s." },
+    { heading: "Follow-ups", body: "Adjudicated provider-CLI acquisition flow is demonstrated end to end; settings-side install surfaces remain the Provider Manager's scope." },
+  ],
+};
+
 // ---------------------------------------------------------------------------
 // Authored thread extensions (16–18) — bring shells to 18 and cover the gaps.
 // Message ids continue the fixture convention: tNN-mNNNN.
@@ -427,8 +500,195 @@ export const EXTRA_THREADS = [
   },
 ];
 
+// ---------------------------------------------------------------------------
+// Scenario v2 (correction packet DEMO_SCENARIO_MANIFEST.json,
+// pm.chat_assistant_demo_scenario.v2): "Provider settings and Chat access
+// redesign" — the primary showcase thread. Questions, goal phases, todos,
+// subagent routes and sequences, activity groups, collision, warnings, diffs,
+// and artifacts follow the manifest; wording adapts to this workspace only
+// where the manifest says paths may adapt.
+// ---------------------------------------------------------------------------
+export const SCENARIO_V2_THREAD = {
+  id: "thread-19",
+  title: "Provider settings and Chat access redesign",
+  project: "Puppet Master",
+  pinned: true,
+  archived: false,
+  threadState: "idle",
+  updatedAt: "2026-08-13T21:20:00Z",
+  initialVisibleMessageCount: 30,
+  tags: ["primary showcase", "scenario v2", "provider redesign"],
+  messages: [
+    msg("t19-m0001", "user", "Audit the provider settings and Assistant Chat controls, improve multi-account routing and access warnings, preserve Slint portability, test every theme, and produce an implementation handoff without editing PMConcept7.", "2026-08-13T20:40:00Z", { editable: true }),
+    msg("t19-m0002", "assistant", "That splits into an audit of the current model and account picker, a requested-versus-effective route map, pinned-history geometry, the four access profiles, cache and attachment route warnings, the left artifact workspace, full theme and width testing, and an implementation-impact handoff. I will run it as a Goal with six phases — Audit, Research, Prototype, Implement, Verify, Handoff — and raise questions before anything structural.", "2026-08-13T20:42:00Z", { worked: 38, elapsed: 51 }),
+  ],
+  activeGoal: {
+    id: "goal-provider-redesign", title: "Redesign provider controls and Chat access flow",
+    objective: "Audit provider settings and Chat controls, improve multi-account routing and access warnings, preserve Slint portability, and hand off implementation impact.",
+    status: "running", workedSeconds: 0, totalElapsedSeconds: 0,
+    phases: ["Audit", "Research", "Prototype", "Implement", "Verify", "Handoff"],
+    phaseIndex: 0,
+    canEdit: true, canPause: true, canResume: false, canStop: true, canClear: false, expanded: true,
+  },
+  todo: {
+    id: "todo-t19",
+    items: [
+      { id: "td-19-1", label: "Audit the current model and account picker", state: "running" },
+      { id: "td-19-2", label: "Map requested and effective provider routes", state: "pending" },
+      { id: "td-19-3", label: "Design pinned-history geometry", state: "pending" },
+      { id: "td-19-4", label: "Implement the four access profiles", state: "pending" },
+      { id: "td-19-5", label: "Add cache and attachment route warnings", state: "pending" },
+      { id: "td-19-6", label: "Add the left artifact workspace", state: "pending" },
+      { id: "td-19-7", label: "Run theme, width, keyboard, and reduced-motion tests", state: "pending" },
+      { id: "td-19-8", label: "Write the implementation-impact handoff", state: "pending" },
+    ],
+  },
+  subagentGroups: [
+    {
+      id: "sub-t19", label: "Specialists", state: "running",
+      counts: { working: 0, complete: 0, blocked: 0, waiting: 2, failed: 0, retrying: 0 },
+      agents: [
+        { name: "Interface systems auditor", task: "Audit picker and access surfaces", currentActivity: "Queued", status: "waiting", workedSeconds: 0, route: "Fable" },
+        { name: "Provider adapter researcher", task: "Compare adapter capabilities", currentActivity: "Reading adapter notes", status: "working", workedSeconds: 120, route: "Kimi K3" },
+        { name: "Slint and test reviewer", task: "Portability and test review", currentActivity: "Queued", status: "waiting", workedSeconds: 0, route: "Qwen 3.8" },
+      ],
+    },
+  ],
+  diffGroups: [],
+  questionnaires: [
+    {
+      id: "q-t19", status: "queued", createdAt: "2026-08-13T20:44:00Z", currentQuestionIndex: 0,
+      title: "Provider redesign decisions",
+      questions: [
+        { id: "q19-1", prompt: "Where should provider and account policy be managed?", kind: "single select", required: true, options: ["Settings owns policy; Chat chooses the current route", "Chat owns everything", "Split policy between both surfaces"], selected: [] },
+        { id: "q19-2", prompt: "When a model switch will lose provider cache, what should PM emphasize first?", kind: "single select", required: false, options: ["Continue here", "Branch with the new model", "Start a clean chat", "Ask every time"], selected: [] },
+        { id: "q19-3", prompt: "Which artifact states must the concept demonstrate?", kind: "multi select", required: true, options: ["Multi-file diff", "Rendered preview", "Test report", "Provider-flow document"], selected: [] },
+      ],
+    },
+  ],
+  artifacts: [
+    { id: "art-v2-diff", title: "Assistant Chat change set", kind: "multi-file diff", projectPath: "worktrees/provider-redesign", openTarget: "editor tab" },
+    { id: "art-v2-preview", title: "Provider selector preview", kind: "visual preview", projectPath: "previews/provider-selector.html", openTarget: "editor tab" },
+    { id: "art-v2-test", title: "Interaction verification report", kind: "test report", projectPath: "docs/verification/provider-redesign-interactions.md", openTarget: "editor tab" },
+    { id: "art-v2-handoff", title: "Implementation impact handoff", kind: "report document", projectPath: "docs/handoff/provider-redesign-impact.md", openTarget: "editor tab" },
+  ],
+  browserSessions: [],
+  draftState: { currentText: "", attachments: [], revisionHistory: [] },
+  scriptedReplyCursor: 0,
+  scriptedReplyIds: ["reply-v2-audit", "reply-v2-verify"],
+};
+
+// thread-19 ships with the roster (18 fixture/authored shells + the scenario thread).
+EXTRA_THREADS.push(SCENARIO_V2_THREAD);
+
+// Scenario v2's manifest warning strings (verbatim).
+export const SCENARIO_V2_WARNINGS = [
+  "Switching provider will replay the conversation without the current provider cache.",
+  "The selected model cannot inspect video natively; PM can extract frames or use the configured vision route.",
+  "Remaining included usage is unlikely to finish eight specialists; run two at a time and reserve capacity for synthesis.",
+];
+
+// Port collision fixture from the manifest.
+export const SCENARIO_V2_COLLISION = {
+  kind: "port", requested: 4173,
+  occupiedBy: "Usage concept visual-test server",
+  safeAlternative: 4174,
+};
+
+// Diff files with the manifest's exact counts.
+export const SCENARIO_V2_DIFF = {
+  id: "diff-t19", label: "Provider redesign change set",
+  files: [
+    { path: "threads/provider-selector.js", added: 92, removed: 18, status: "modified" },
+    { path: "threads/access-controls.css", added: 61, removed: 39, status: "modified" },
+    { path: "verification/interaction-probes.mjs", added: 31, removed: 10, status: "modified" },
+  ],
+};
+
+// The manifest's 18 canonical history rows mapped onto this workspace's 18
+// thread shells (adaptation documented in reference-review-report.json).
+export const SCENARIO_V2_HISTORY_ROW_MAP = {
+  "Settings redesign bakeoff": "thread-01",
+  "Usage feature review": "thread-02",
+  "Planning Wizard audit": "thread-03",
+  "PRD Builder source intake": "thread-04",
+  "Provider multi-account routing": "thread-05",
+  "Claude CLI profile isolation": "thread-06",
+  "Antigravity CLI headless update": "thread-07",
+  "Free models catalog refresh": "thread-08",
+  "Models.dev capability sync": "thread-09",
+  "Context Lens motion study": "thread-10",
+  "Compact Now and branching": "thread-11",
+  "MCP July specification review": "thread-12",
+  "Memory degradation audit": "thread-13",
+  "Persona context-footprint audit": "thread-14",
+  "Crew capacity planning": "thread-15",
+  "Worktree collision recovery": "thread-16",
+  "Slint 1.17.1 port notes": "thread-17",
+  "Assistant Chat visual testing": "thread-18",
+};
+
 // Scripted replies for authored threads (same shape as fixture scriptedReplies).
 export const EXTRA_SCRIPTED_REPLIES = [
+  {
+    id: "reply-v2-audit",
+    // Rich live phases (video 3 contract): kind + label + accumulating items.
+    workingPhases: [
+      { kind: "thinking_summary", label: "Thinking for 3s", durationMs: 2200, items: [
+        { text: "The picker already exists, so this is a rewrite of routing truth, not a new surface." },
+      ]},
+      { kind: "search", label: "Searching 6 related project threads", durationMs: 2400, items: [
+        { text: "Provider multi-account routing" }, { text: "Claude CLI profile isolation" },
+        { text: "Free models catalog refresh" }, { text: "Antigravity CLI headless update" },
+        { text: "Models.dev capability sync" }, { text: "Settings redesign bakeoff" },
+      ]},
+      { kind: "read", label: "Reading 7 plan and concept files", durationMs: 2600, items: [
+        { text: "Plans/assistant-chat-design.md" }, { text: "Plans/FinalGUISpec.md" },
+        { text: "Concepts/PMConcept7.html" }, { text: "shared/components.js" },
+        { text: "shared/data.js" }, { text: "windows/window-03.js" },
+        { text: "threads/thread-02.js", countLabel: "Read 7 files" },
+      ]},
+      { kind: "fetch", label: "Comparing 4 provider and approval implementations", durationMs: 2000, items: [
+        { text: "Requested-versus-effective display patterns" },
+        { text: "Cache-loss warning language" },
+      ]},
+      { kind: "browser", label: "Checking pinning and question flow at 4 widths", durationMs: 1800, items: [
+        { text: "520, 750, 975, 1200 — floor held at every width" },
+      ]},
+      { kind: "edit", label: "Making 1 create and 3 edits", durationMs: 2400, items: [
+        { text: "threads/provider-selector.js", side: "+92 −18" },
+        { text: "threads/access-controls.css", side: "+61 −39" },
+        { text: "verification/interaction-probes.mjs", side: "+31 −10" },
+      ]},
+      { kind: "test", label: "Verifying interaction and reduced-motion checks", durationMs: 1600, items: [
+        { text: "All targeted interaction probes passed" },
+      ]},
+    ],
+    stepDurationsMs: [],
+    workingSummarySequence: [],
+    body: "Audit finished and the first change set is in. The selector now separates requested and effective routes, access warnings carry the cache consequence up front, and the probes pass at all four widths. The specialists continue under the capacity plan — two at a time with synthesis reserve.",
+    runtime: { provider: "Anthropic", model: "Fable 5", persona: "default-persona", mode: "Agent", effort: "High", workedSeconds: 16, totalElapsedSeconds: 18, tokenCount: 520, contextUsed: 61200, contextLimit: 200000, estimatedCost: null },
+    activitySummary: "Audited picker, mapped routes, made 1 create and 3 edits",
+    stopResultBody: "Stopped mid-audit. Completed reads and the change set draft are preserved; the specialists keep their assignments.",
+  },
+  {
+    id: "reply-v2-verify",
+    workingPhases: [
+      { kind: "test", label: "Running the verification lane", durationMs: 2200, items: [
+        { text: "Theme sweep — 8 themes" }, { text: "Width sweep — 4 presets and continuous" },
+        { text: "Reduced motion — complete states" },
+      ]},
+      { kind: "generate", label: "Writing the implementation handoff", durationMs: 1800, items: [
+        { text: "docs/handoff/provider-redesign-impact.md" },
+      ]},
+    ],
+    stepDurationsMs: [],
+    workingSummarySequence: [],
+    body: "Updated the provider selector and access flow, preserved thread-local state, verified responsive pinning, and produced four inspectable artifacts. All targeted interaction probes passed. Worked for 1m 34s.",
+    runtime: { provider: "Anthropic", model: "Fable 5", persona: "default-persona", mode: "Agent", effort: "High", workedSeconds: 94, totalElapsedSeconds: 101, tokenCount: 610, contextUsed: 64200, contextLimit: 200000, estimatedCost: null },
+    activitySummary: "Verified and wrote the handoff",
+    stopResultBody: "Stopped during verification. Completed checks are recorded; the handoff draft is preserved.",
+  },
   {
     id: "reply-16",
     workingSummarySequence: ["Reading wave state", "Checking capacity window", "Composing status"],

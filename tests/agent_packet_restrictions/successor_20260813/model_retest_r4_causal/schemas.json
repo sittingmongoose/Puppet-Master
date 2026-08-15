@@ -1,0 +1,63 @@
+{
+  "schema_id": "pw-r4-subject-output-contracts-v1",
+  "protocol_id": "PW-R4-CAUSAL-20260813.1",
+  "serialization": {
+    "json_object_only": true,
+    "minified_one_line": true,
+    "trailing_newline_allowed": false,
+    "extra_keys": false,
+    "key_order": "as listed in prompt",
+    "duplicate_keys": false
+  },
+  "stages": {
+    "S10A": {
+      "expected_sha256": "c5415439edc27b89e1efda1986921a46c9663a705017768e12ee2fdf7ab3e631",
+      "expected_bytes": 2547
+    },
+    "S10B": {
+      "expected_sha256": "bf2c5f7fcd54f511f1cd90a8419004c3057478feeb71754426c5328f3265c073",
+      "expected_bytes": 2799
+    },
+    "S30A": {
+      "expected_sha256": "3f027074ee659b75642f7dd6cb94d6d52f8904604222379827a8ae7574bbe183",
+      "expected_bytes": 644
+    },
+    "S30B": {
+      "expected_sha256": "5a6921a60aec14ca020883b30ec546abb3f45a933021cf26e8c8224e2bd73fb1",
+      "expected_bytes": 659
+    },
+    "S40A": {
+      "expected_sha256": "8b1f3ca709da36c7c14293745423f6d8e1344e2a91ea9ad2d0905ea967cd048c",
+      "expected_bytes": 700
+    },
+    "S40B": {
+      "expected_sha256": "8b001b283bdadf7d9c3fd432a5385b41e5b165c14bc880a20a9d9124f7405e77",
+      "expected_bytes": 707
+    },
+    "S50": {
+      "expected_sha256": "13f7701ae32f64406bedfb643ddcf2ec62d8c38d6f1fa1b94303e9fbc728cfae",
+      "expected_bytes": 2145
+    },
+    "S60P": {
+      "expected_sha256": "b39184d734d72b6739563070f986a61c8e8e0a6c67ed01c274d1837e68c64047",
+      "expected_bytes": 646
+    },
+    "S60C": {
+      "expected_sha256": "b8c79c389359cfc4fe1ba0e2bd0db1b25a45a8d93b6a86b57e6a17843f6f2b38",
+      "expected_bytes": 662
+    },
+    "S60K": {
+      "expected_sha256": "95bc9433403bf891a65b54b175fbbf9b133207521553d497e680df110a4450e3",
+      "expected_bytes": 669
+    },
+    "S70": {
+      "expected_sha256": "cca507a1bc545e1dacd3721c495cbaad6ec9e3990a904ccbc44c657483cd026b",
+      "expected_bytes": 999
+    },
+    "S90": {
+      "expected_sha256": "38ae4c41ba094c79623ad59274331e1082453e6e7e8f0736332d576f1915e18c",
+      "expected_bytes": 933
+    }
+  }
+}
+

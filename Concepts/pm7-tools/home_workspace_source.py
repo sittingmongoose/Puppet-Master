@@ -93,7 +93,11 @@ HOME_STYLE = r'''
 }
 #panel-dashboard.pm-home-owned {
   position: relative;
-  overflow: hidden;
+  /* clip, NOT hidden: hidden leaves this a scroll CONTAINER -- it silently
+     held 26px of scrollable overflow that focus()/scrollIntoView/find could
+     commit as a whole-workspace sideways shift. clip removes the scroll
+     machinery entirely (Chromium + Safari 16+). */
+  overflow: clip;
   min-height: 0;
 }
 /* Home owns its own gutter (#pm-home-workspace pads by --pm-home-pad-y /
@@ -114,6 +118,10 @@ HOME_STYLE = r'''
   color: var(--text-primary);
   font-family: var(--body-font);
 }
+/* belt for the no-home-scroll invariant: neither box needs auto on any axis,
+   so clip legally destroys them as scroll containers (menus and the lifted
+   drag clone are body-parented fixed portals -- unaffected). */
+#pm-home-workspace, .pm-home-host-grid { overflow: clip; }
 .pm-home-host-grid {
   --pm-home-left-w: 0px;
   --pm-home-right-w: 0px;
@@ -145,10 +153,41 @@ HOME_STYLE = r'''
   gap: var(--pm-home-gap);
   min-width: 0;
   min-height: 0;
-  overflow: auto;
-  overscroll-behavior: contain;
-  scrollbar-color: var(--border-light) transparent;
+  /* NO horizontal scrolling on the home screen. NOTE (wave-8 correction):
+     `overflow-x: clip` next to `overflow-y: auto` COMPUTES to hidden (CSS
+     Overflow 3 s3.1 -- clip only survives when the other axis is visible or
+     clip), so hosts remain scroll containers whose scrollLeft is merely
+     wheel-proof, not focus/scrollIntoView-proof. The real fix is upstream:
+     wave 8 removed every source of host-level horizontal overflow (empty
+     dock box, zero-extent frost bands, the pairless last divider's glow), so
+     there is nothing to scroll TO; hidden-coerced clip is the belt.
+     Vertical stays auto for genuine column overflow, with bars zeroed
+     below. */
+  overflow-x: clip;
+  overflow-y: auto;
+  overscroll-behavior: none;
 }
+/* The scroll-frost enrolment stamps `pm6-bottom-scroll` onto every host at
+   runtime, and that base rule (`overflow: auto`, later in the cascade) beat
+   the single-class clip above -- hosts still scrolled sideways. The
+   attribute doubles specificity to (0,2,0) so the clip survives whatever
+   classes runtime systems add. */
+.pm-home-host[data-pm-home-host] {
+  overflow-x: clip;
+  overflow-y: auto;
+  overscroll-behavior: none;
+}
+/* Host scrollbars are ZERO-WIDTH everywhere: the pm6-bottom-scroll stamp
+   also put every host in the 10px webkit scrollbar opt-in list, and the old
+   scrollbar-color line here defeated the opt-in's transparent idle ink
+   (always-visible thumb; on Safari 16/17 scrollbar-width is unsupported so
+   the 10px webkit bars were exactly the space-stealing bars the user saw).
+   ID-anchored (1,1,x) beats the opt-in list on every engine, order-
+   independent. Scoped to the HOST element only -- pane-internal scrollers
+   (.pm6-dash-scroll, .pm-home-terminal-body, chat streams, bottom-panel
+   content) keep their bars. */
+#pm-home-workspace .pm-home-host { scrollbar-width: none; }
+#pm-home-workspace .pm-home-host::-webkit-scrollbar { width: 0; height: 0; }
 .pm-home-host[data-pm-home-host="dock_top"] { grid-area: top; flex-direction: row; }
 .pm-home-host[data-pm-home-host="dock_left"] { grid-area: left; flex-direction: column; }
 /* home_main is a FLEX row, not a grid: .pm-home-surface sizes with
@@ -163,7 +202,14 @@ HOME_STYLE = r'''
 }
 .pm-home-host[data-pm-home-host="dock_right"] { grid-area: right; flex-direction: column; }
 .pm-home-host[data-pm-home-host="dock_bottom"] { grid-area: bottom; flex-direction: row; }
-.pm-home-host.pm-home-host-empty { overflow: hidden; pointer-events: none; }
+/* padding: 0 matters: the runtime scroll-frost stamp (pm6-bottom-scroll)
+   carries padding var(--sm), which floors an EMPTY dock's border-box at 8px
+   even on a 0px grid track -- that box was laid past the grid edge and was
+   8px of the Home screen's phantom horizontal overflow. (0,2,0) beats the
+   stamped (0,1,0) rule regardless of block order. syncHostGeometry removes
+   the class the moment a draft places a surface here, so drop previews and
+   real drops still open the dock. */
+.pm-home-host.pm-home-host-empty { overflow: hidden; pointer-events: none; padding: 0; }
 /* The inter-track gap exists only where a dock actually holds (or is about to
    receive) a surface: each occupied or drop-previewed dock margins toward
    main. Empty docks collapse to a true 0px with no dead strip. */
@@ -487,6 +533,21 @@ body.pm-home-dragging .pm-home-float-layer { pointer-events: auto; }
   border: 1px solid transparent;
   border-radius: var(--radius-sm);
 }
+/* Per-kind lift against the shortened head rows. The dots' INK centre sits
+   at button-local top+10 (5px of glyph-free padding above and below), so:
+   editor top:6 puts the ink at surface-y 16, one pixel ABOVE the 35px
+   strip's tab-label line (17); dashboard top:2 puts it at 12, three above
+   the 31px header's title line (15) -- the user asked for above-centre
+   twice. Grip-steal concession (the grip's 18x18 clip-path triangle, z 140,
+   hit-steals grip-local x >= y): editor at right:2 concedes a ~50px^2
+   top-right triangle that lies entirely in the glyph-free padding; the
+   dashboard's right:13 sidestep leaves only a ~4px^2 sliver above the
+   "safe for top >= 5" bound. The dot column itself stays clickable in
+   both. */
+.pm-home-surface[data-pm-home-kind="editor_panel"] > .pm-home-surface-options { top: 6px; }
+.pm-home-surface[data-pm-home-kind="dashboard"] > .pm-home-surface-options { top: 2px; right: 13px; }
+/* keep the dashboard header's action cluster clear of the sidestepped kebab */
+.pm-home-surface[data-pm-home-kind="dashboard"] .pm6-dash-actions { margin-right: 34px; }
 #chatPanel .chat-panel-header-stacked { position: relative; z-index: 25; }
 .pm-home-surface-options:hover,
 .pm-home-titlebar-more:hover,
@@ -513,7 +574,7 @@ body.pm-home-dragging .pm-home-float-layer { pointer-events: auto; }
 /* starts BELOW the head row: at top:5px the 9px column sat over the pinned
    actions cluster and swallowed clicks on the surface options button; 44px
    also clears the 18px top-right grip with margin to spare */
-.pm-home-resize-handle.resizer-col { top: 44px; bottom: 5px; right: 0; height: auto; }
+.pm-home-resize-handle.resizer-col { top: 39px; bottom: 5px; right: 0; height: auto; }
 .pm-home-surface .pane-tabbar-actions,
 .pm-home-surface .bottom-tabs-right { z-index: 130; }
 .pm-home-resize-handle.resizer-row { left: 5px; right: 5px; bottom: 0; width: auto; }
@@ -712,8 +773,13 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }
   font: 600 10px/1.45 var(--body-font);
 }
 @media (max-width: 1320px) {
-  /* home_main is a flex row with `overflow: auto`; below this width the row
-     stops shrinking surfaces past a readable floor and scrolls instead. */
+  /* below this width the row stops shrinking surfaces past a readable floor
+     and scrolls instead -- a DELIBERATE exception to the no-home-scroll
+     invariant: without it the min-width floors would strand pane content
+     off-edge with no way to reach it. Ties (0,2,0) with the clip rule above
+     but sits later in HOME_STYLE, so auto wins here; the zero-width
+     scrollbar rules keep even this scroll bar invisible. */
+  .pm-home-host[data-pm-home-host="home_main"] { overflow-x: auto; }
   .pm-home-host[data-pm-home-host="home_main"] > .pm-home-surface {
     flex: 0 0 auto;
     min-width: min(76vw, 260px);
@@ -1742,7 +1808,45 @@ HOME_SCRIPT = r'''
       element.insertBefore(grip, element.firstChild);
     }
     var options = element.querySelector('[data-pm-home-surface-options="' + surface.surface_instance_id + '"]');
-    if (!options) {
+    if (surface.surface_kind === "chat") {
+      /* the chat keeps its ORIGINAL header menu (Duplicate/Archive/Pop out/
+         Close -- richer than the T20 kebab's single Pop Out row, and its
+         pop-out already routes through the T20 float guard). Two adjacent
+         "more options" buttons read as a bug. The one T20-exclusive row --
+         Dock Back for a FLOATING chat -- is injected into the base menu
+         below (the base template always renders its docked variant because
+         T20 floats #chatPanel itself, so a floated chat otherwise shows a
+         useless "Pop out window" and no way back but the grip). */
+      if (options && options.parentNode) options.parentNode.removeChild(options);
+      options = null;
+      var chatMenu = element.querySelector(".pm6-chat-more-menu");
+      if (chatMenu) {
+        var dockRow = chatMenu.querySelector("[data-pm-home-chat-row]");
+        if (!dockRow) {
+          dockRow = document.createElement("button");
+          dockRow.type = "button";
+          /* pm6-chat-more-item = base styling PLUS the base delegated
+             close-menu path (its generic row branch closes the menu with the
+             portal animation, same as Duplicate/Archive) -- the redock action
+             itself is dispatched by wireActions' capture listener keyed on
+             data-pm-home-chat-row, which deliberately does NOT stop
+             propagation so that base close still runs. */
+          dockRow.className = "pm6-chat-more-item";
+          dockRow.setAttribute("role", "menuitem");
+          dockRow.setAttribute("data-pm-home-chat-row", "redock");
+          dockRow.title = "Dock back into the workspace";
+          dockRow.innerHTML = '<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M14 6.5 L14 14 L6.5 14"/><path d="M13.5 13.5 L7.8 7.8"/></svg><span>Dock back</span>';
+          chatMenu.insertBefore(dockRow, chatMenu.querySelector(".closeChatBtn"));
+        }
+        /* host-aware visibility, write-if-changed so chromeWatch stays quiet:
+           floating -> show Dock back, hide the base "Pop out window" (it
+           would re-run popOutChat on an already-floating surface). */
+        var floatingNow = surface.host === "floating";
+        if (dockRow.style.display !== (floatingNow ? "" : "none")) dockRow.style.display = floatingNow ? "" : "none";
+        var popRow = chatMenu.querySelector(".popOutBtn");
+        if (popRow && popRow.style.display !== (floatingNow ? "none" : "")) popRow.style.display = floatingNow ? "none" : "";
+      }
+    } else if (!options) {
       options = document.createElement("button");
       options.type = "button";
       options.className = "pm-home-surface-options";
@@ -1777,7 +1881,17 @@ HOME_SCRIPT = r'''
     var rowDock = surface.host === "dock_top" || surface.host === "dock_bottom";
     var captured = gesture && gesture.kind === "resize" && gesture.surfaceId === surface.surface_instance_id;
     var wantsDivider = true;
-    if (rowDock) {
+    /* home_main joins the row docks in suppressing the LAST visible
+       sibling's divider: a pair transfer needs a right-hand partner, and the
+       last home_main divider had none -- beginResize found no nextId, so it
+       fell to the diluted single-basis path (the exact non-local behavior
+       the pair-transfer rebuild retired), and its 16x56 grab-glow pseudo
+       overhung the host's right edge by ~11px, which was the last real
+       source of the Home screen's horizontal overflow. dock_left/dock_right
+       KEEP their last-surface dividers: on the column docks that handle
+       drives the dock track itself via previewResize. */
+    var pairRow = rowDock || surface.host === "home_main";
+    if (pairRow) {
       var rowRef = (gesture && gesture.draft) || committed;
       var rowVisibleIds = (hostRegistries[surface.host] || []).filter(function (id) {
         var sibling = rowRef && surfaceById(rowRef, id);
@@ -4293,6 +4407,18 @@ HOME_SCRIPT = r'''
       }
       var surfaceMenuButton = event.target && event.target.closest ? event.target.closest("[data-pm-home-surface-options]") : null;
       if (surfaceMenuButton) { event.preventDefault(); openSurfaceMenu(surfaceMenuButton, surfaceMenuButton.getAttribute("data-pm-home-surface-options")); return; }
+      var chatRow = event.target && event.target.closest ? event.target.closest("[data-pm-home-chat-row]") : null;
+      if (chatRow) {
+        /* injected "Dock back" row in the BASE chat menu. Do the redock here
+           but do NOT preventDefault/stopImmediatePropagation: the click must
+           still reach the base delegated .pm6-chat-more-item handler, whose
+           generic row branch closes the menu with the portal animation (the
+           same path Duplicate/Archive take). Mirrors handleAction's
+           redock-surface semantics. */
+        var chatSurface = surfaceById(committed, "chat");
+        moveSurface("chat", (chatSurface && chatSurface.last_docked_host) || "home_main");
+        return;
+      }
       var localAction = event.target && event.target.closest ? event.target.closest("#pm-home-workspace [data-pm-home-action]") : null;
       if (localAction) { event.preventDefault(); event.stopImmediatePropagation(); handleAction(localAction); return; }
       var browserTab = event.target && event.target.closest ? event.target.closest("[data-pm-home-browser-tab]") : null;

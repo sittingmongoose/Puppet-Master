@@ -1,0 +1,61 @@
+{
+  "schema_id": "pw-r4-subject-output-contracts-v2",
+  "protocol_id": "PW-R4-CAUSAL-20260813.2",
+  "serialization": {
+    "json_object_only": true,
+    "canonical_minified_utf8": true,
+    "no_subject_trailing_newline": true,
+    "extra_keys": false,
+    "key_order": "prompt"
+  },
+  "static_expected": {
+    "S10A": {
+      "bytes": 2547,
+      "sha256": "1b7d491c714f4005857cf24c090d387d317035af67d9cb94922dc9955eb5db46"
+    },
+    "S10B": {
+      "bytes": 2799,
+      "sha256": "d8a550e0e582adaeea498175c9d695f27d69a6b5efa3717e12916d148f6c3b02"
+    },
+    "S30A": {
+      "bytes": 644,
+      "sha256": "c637e93c9f7756b86b75ebe9ac31ff4671a61159be9e2bc7fefca1782cfe6a92"
+    },
+    "S30B": {
+      "bytes": 659,
+      "sha256": "59edc1193a31e5c8e2f124fbbe353cdde43cb826869120cb00afa73129dd0d93"
+    },
+    "S40A": {
+      "bytes": 700,
+      "sha256": "48c4155b50e33b91a0c8c1247a5c40c739d4eab2453760ae9532abf2e58eff80"
+    },
+    "S40B": {
+      "bytes": 707,
+      "sha256": "d646dbe3e0f4d6af6e66d90bc1655f80667daa6cc430358c81dbc1e6a9050198"
+    },
+    "S50": {
+      "bytes": 2145,
+      "sha256": "5e5646b56621c5f023272a39c36d3708ef6e6c7602e6697b37bb718a54ca7cfb"
+    },
+    "S60P": {
+      "bytes": 646,
+      "sha256": "e058b6129064c5172e7404b7d4cdb9eaa289d14d752deea683a420b923fe66fb"
+    },
+    "S60C": {
+      "bytes": 662,
+      "sha256": "b74aa3e7dc26ab92a2c6d289fa5f2124ea4f48fe6c125f1c02e4af68c2a88a90"
+    },
+    "S60K": {
+      "bytes": 669,
+      "sha256": "078ca7c949bdfdcc06f6bc02320892560452193a01805a80da2e7863c36cbeab"
+    },
+    "S70": {
+      "bytes": 999,
+      "sha256": "e0c25e985a86e52236d8f380b5869fec807df11094d9aad010327fc9082c5db9"
+    }
+  },
+  "dynamic_expected": {
+    "S90": "built per slot from actual runtime lineage and write receipt"
+  }
+}
+

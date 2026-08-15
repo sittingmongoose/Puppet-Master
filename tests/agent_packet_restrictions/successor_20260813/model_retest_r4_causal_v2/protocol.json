@@ -1,0 +1,84 @@
+{
+  "protocol_id": "PW-R4-CAUSAL-20260813.2",
+  "title": "Large-source causal Planning Wizard and Plan Assurance simulation",
+  "frozen_at_utc": "2026-08-13T22:52:00Z",
+  "predecessor": {
+    "id": "PW-R4-CAUSAL-20260813.1",
+    "status": "PRELAUNCH_INVALID_NO_SUBJECT_CALLS"
+  },
+  "purpose": "Test bounded prompt complexity with a causal planning-audit-repair chain.",
+  "scope": {
+    "corpus_files": 15,
+    "corpus_bytes": 4193554,
+    "capsule_bytes": 122446,
+    "configs": [
+      [
+        "gpt-5.4-mini",
+        "xhigh"
+      ],
+      [
+        "gpt-5.4-mini",
+        "medium"
+      ],
+      [
+        "gpt-5.6-luna",
+        "medium"
+      ]
+    ],
+    "attempts": 1,
+    "external_audit": "excluded"
+  },
+  "stages": [
+    "S10A",
+    "S10B",
+    "S20A",
+    "S20B",
+    "S30A",
+    "S30B",
+    "S40A",
+    "S40B",
+    "S45A",
+    "S45B",
+    "S50",
+    "S55",
+    "S60P",
+    "S60C",
+    "S60K",
+    "S70",
+    "S80",
+    "S90"
+  ],
+  "subject_stages": [
+    "S10A",
+    "S10B",
+    "S30A",
+    "S30B",
+    "S40A",
+    "S40B",
+    "S50",
+    "S60P",
+    "S60C",
+    "S60K",
+    "S70",
+    "S90"
+  ],
+  "causality": "Harness renders every dynamic packet from actual captured predecessors; S45 applies actual S40 patch; S90 rendered only after slot write receipt.",
+  "freshness": "new projectless task; no supplied project, tools, memory, prior-task context, answer key, or config label",
+  "schedule": "lockstep stage waves, no retry/best-of",
+  "write": "one absent per-slot sandbox target plus computed receipt",
+  "claims": [
+    "fixture_specific_only",
+    "not_full_corpus",
+    "not_production",
+    "not_buildability",
+    "not_release_or_safety",
+    "not_compile_permission"
+  ],
+  "failure_policy": {
+    "subject": "FAIL preserved",
+    "control_plane": "INVALID",
+    "shared_drift": "INVALID cohort",
+    "change": "new revision full rerun"
+  }
+}
+

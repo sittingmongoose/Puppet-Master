@@ -333,3 +333,10 @@ html[data-motion="reduced"] .k3r-apply,
 html[data-motion="reduced"] .k3r-footer-btn {
   transition: none;
 }
+
+/* keyboard focus rings (correction 2026-08-13) */
+.k3r-row:focus-visible, .k3r-rail-btn:focus-visible, .k3r-option:focus-visible,
+.k3r-apply:focus-visible, .k3r-footer-btn:focus-visible, .k3r-search input:focus-visible {
+  outline: 2px solid var(--accent, #4C8DFF);
+  outline-offset: 1px;
+}

@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-08-13T17:12:34Z",
+  "generated_at_utc": "2026-08-15T03:16:34Z",
   "index_path": "Plans/_shards/web_agent_policy_fixtures/00-index.md",
-  "index_sha256": "775d9fa73b69e4eac07e1eead5954606e93b6320509a3a37a2a67fd6c42dafb2",
+  "index_sha256": "0b2a5d0e2bb7ad81a80ecf625858f0eff92b6d6461f8093771fcc8578546d236",
   "manifest_path": "Plans/_shards/web_agent_policy_fixtures/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Lines 1-200",
       "path": "Plans/_shards/web_agent_policy_fixtures/001-lines-1-200.md",
-      "sha256": "30fc63bbba8a77786a529be78f95a477cf243ef03d85b288a2fca3a568cf6db7",
+      "sha256": "3da89f22c6f6a5c7a23aed8628d9d8f865b62afe705922dbd355a79b40b70834",
       "shard_id": "001",
       "source_line_end": 200,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Lines 201-290",
       "path": "Plans/_shards/web_agent_policy_fixtures/002-lines-201-290.md",
-      "sha256": "853ef4b9802446917e6282a8ad85c53c478fc2c31b4e65f476154d0e0c87b44d",
+      "sha256": "4a724813e647ab9fab3704d3b94359751dbefacb3af73dd4e315b90cf979d1cb",
       "shard_id": "002",
       "source_line_end": 290,
       "source_line_start": 201,
@@ -27,6 +27,6 @@
   "source": {
     "line_count": 290,
     "path": "Plans/web_agent_policy_fixtures.json",
-    "sha256": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39"
+    "sha256": "058df7a41aafe00fdb6cddb17b04b5116288868d996a90b7ec106c2d4114693b"
   }
 }

@@ -2,9 +2,9 @@
 
 Source: `Plans/GUI_Rebuild_Requirements_Checklist.md`
 
-Source lines: L1914-L2002
+Source lines: L1914-L2007
 
-Source SHA256: `d0879049aaf48ef2225e68247f601e362f55da4464a6bb7b5acb1a443eb4f296`
+Source SHA256: `fcc18e1b56d09fb73d8a582cc332eeb8a36c7423ad59f62fa160390b9e5d1f91`
 
 ---
 
@@ -72,8 +72,13 @@ The GUI rebuild is not Home-complete until the evidence set verifies:
   live fitting on tab add/remove (a newly opened overflowing tab stays visible,
   displacing the chip-adjacent non-active tab into the picker); editor tab
   drag-reorder that persists on all four panes, survives a re-render, and
-  animates (no native ghost, transform-only pointer tracking, ~140 ms neighbour
-  FLIP, reduced-motion instant, silhouette glued to the insertion slot); and the
+  animates as a pointer-capture gesture (wave 4: HTML5 DnD retired; 4 px
+  threshold, 1:1 translateX glide, 220 ms neighbour FLIP, 200 ms low-bounce
+  settle, model re-render at settle-end, Safari-identical, first re-slot never
+  ends the gesture, reduced-motion instant, silhouette glued to the insertion
+  slot); latch-based drop targeting (one host transition and one track opening
+  per approach into an occupied dock, no painted-stack resolution); model-first
+  browser-in-panel deactivation (no resurrectable DOM-only flag); and the
   contact-aware active-tab silhouette
   with independent left/right contact corners, masked shoulder cutouts, the
   translucent frosted rail that ghosts scrolled code beneath the strip,

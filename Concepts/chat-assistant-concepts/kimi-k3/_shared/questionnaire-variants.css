@@ -131,3 +131,42 @@
    just make the intent explicit so a paused mid-flight frame can never hide
    content (all keyframes end at opacity:1 / transform:none). */
 html[data-motion="reduced"] .k3q-card { transform: none !important; opacity: 1 !important; }
+
+/* --- prepare/submit beat pills (video D lifecycle; correction 2026-08-13) ---
+   One slim pill opens the flow ("Preparing questions…") and closes it
+   ("Submitting answers…"); each variant exits in its own idiom. */
+.k3q-pill {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 8px 14px;
+  font-size: 12px; color: var(--text-muted, inherit);
+  background: var(--surface, transparent);
+  border: var(--border-width, 1px) solid var(--border, transparent);
+  border-radius: var(--radius-md, 10px);
+}
+.k3q-pill-label { white-space: nowrap; }
+@keyframes k3q-pill-in-kf { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.k3q-pill-in { animation: k3q-pill-in-kf var(--k3-dur-fast, 120ms) var(--ease-out, ease-out) 1; }
+
+@keyframes k3q-exit-morph-kf { to { opacity: 0; transform: translateY(8px) scaleY(.72); } }
+.k3q-exit-morph { transform-origin: bottom center; animation: k3q-exit-morph-kf var(--k3-dur-slow, 480ms) var(--ease-in, ease-in) 1 forwards; }
+
+@keyframes k3q-exit-rise-kf { to { opacity: 0; transform: translateY(10px); } }
+.k3q-exit-rise { animation: k3q-exit-rise-kf var(--k3-dur-slow, 480ms) var(--ease-in, ease-in) 1 forwards; }
+
+@keyframes k3q-exit-stack-kf { to { opacity: 0; transform: scale(.9) translateY(4px); } }
+.k3q-exit-stack { transform-origin: center; animation: k3q-exit-stack-kf var(--k3-dur-slow, 480ms) var(--ease-in, ease-in) 1 forwards; }
+
+@keyframes k3q-exit-inline-strip-kf { to { opacity: 0; transform: scaleY(.5); } }
+.k3q-exit-inline-strip { transform-origin: center; animation: k3q-exit-inline-strip-kf var(--k3-dur-slow, 480ms) var(--ease-in, ease-in) 1 forwards; }
+
+html[data-motion="reduced"] .k3q-pill-in,
+html[data-motion="reduced"] .k3q-exit-morph,
+html[data-motion="reduced"] .k3q-exit-rise,
+html[data-motion="reduced"] .k3q-exit-stack,
+html[data-motion="reduced"] .k3q-exit-inline-strip { animation: none; }
+
+/* locked-geometry paging (video B): the body scrolls internally so the card
+   never changes size between pages */
+.k3q-body { overflow-y: auto; min-height: 0; }
+.k3q-card { max-height: min(430px, 62vh); display: flex; flex-direction: column; }
+.k3q-card > .k3q-body { flex: 1 1 auto; }

@@ -209,3 +209,14 @@ button.ft5-rule-line:hover .ft5-rule-text { color: var(--text-primary); }
 
 .ft5-composer-region { border-top: 1px solid var(--edge-faint); }
 .ft5-composer-region .pmc-composer-frame { border-radius: var(--radius-sm); }
+
+.ft5-live-aside {
+  margin: 0 0 4px;
+  padding-left: 2.2ch;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.ft5-hand[data-status="failed"] { color: var(--danger); }
+.ft5-hand[data-status="retrying"] { color: var(--warn); }

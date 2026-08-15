@@ -55,24 +55,59 @@
     );
   }
 
-  /** Attach thread-level surfaces to a specific beat (last / only). */
+  /** Beat-attached work: numbered index chips + per-kind beat panels (not a flat helper dump). */
   function beatSurfacesHtml(thread, ui, K) {
     if (!thread) return '';
-    var bits = [];
-    var goal = K.renderGoal(thread.goal, {
-      goalExpanded:
-        ui.goalExpanded != null ? ui.goalExpanded : thread.goal && thread.goal.expanded
-    });
-    if (goal) bits.push(goal);
-    var todo = K.renderTodo(thread.todos);
-    if (todo) bits.push(todo);
-    var subs = K.renderSubagents(thread.subagentGroups, ui.expandedSubagentIds || {});
-    if (subs) bits.push(subs);
-    var diffs = K.renderDiffs(thread.diffGroups);
-    if (diffs) bits.push(diffs);
-    var arts = K.renderArtifacts(thread.artifacts);
-    if (arts) bits.push(arts);
-    if (!bits.length) return '';
+    var panels = [];
+    var n = 0;
+    function pushBeatPanel(key, title, bodyHtml) {
+      if (!bodyHtml) return;
+      n += 1;
+      panels.push(
+        '<details class="t2-beat-work pm-work-surface" data-kind="' +
+          K.escapeHtml(key) +
+          '" data-beat-work="' +
+          K.escapeHtml(key) +
+          '">' +
+          '<summary class="t2-beat-work-sum">' +
+          '<span class="t2-beat-work-tick" aria-hidden="true">' +
+          String(n) +
+          '</span>' +
+          '<span class="t2-beat-work-title">' +
+          K.escapeHtml(title) +
+          '</span>' +
+          '<span class="pm-work-chev" aria-hidden="true">›</span>' +
+          '</summary>' +
+          '<div class="t2-beat-work-body pm-work-surface-body">' +
+          bodyHtml +
+          '</div>' +
+          '</details>'
+      );
+    }
+    pushBeatPanel(
+      'goal',
+      'Goal',
+      K.renderGoal(thread.goal, {
+        goalExpanded:
+          ui.goalExpanded != null ? ui.goalExpanded : thread.goal && thread.goal.expanded
+      })
+    );
+    pushBeatPanel('todo', 'Todo', K.renderTodo(thread.todos));
+    pushBeatPanel(
+      'subagent',
+      'Agents',
+      K.renderSubagents(thread.subagentGroups, ui.expandedSubagentIds || {})
+    );
+    pushBeatPanel('diff', 'Diffs', K.renderDiffs(thread.diffGroups));
+    pushBeatPanel('artifacts', 'Artifacts', K.renderArtifacts(thread.artifacts));
+    if (!panels.length) {
+      var compactOnly =
+        (K.renderCompactWork && K.renderCompactWork(thread, 'beats')) ||
+        (window.PMChatV2 && window.PMChatV2.renderCompactWorkBand
+          ? window.PMChatV2.renderCompactWorkBand(thread, 'beats')
+          : '');
+      return compactOnly || '';
+    }
     var compact =
       (K.renderCompactWork && K.renderCompactWork(thread, 'beats')) ||
       (window.PMChatV2 && window.PMChatV2.renderCompactWorkBand
@@ -81,8 +116,10 @@
     return (
       (compact || '') +
       '<div class="t2-beat-surfaces" data-surfaces data-work-detail-stack>' +
-      '<div class="t2-beat-surfaces-label">Attached work</div>' +
-      bits.join('') +
+      '<div class="t2-beat-surfaces-label">Beat-attached index</div>' +
+      '<div class="t2-beat-work-stack">' +
+      panels.join('') +
+      '</div>' +
       '</div>'
     );
   }

@@ -80,6 +80,8 @@
     return h('span', { className: 'pm-status-word', 'data-tone': tone }, ico(TONE_ICONS[tone] || 'info'), word);
   }
 
+  function fmtInt(n) { return (typeof n === 'number' ? n : 0).toLocaleString(); }
+
   function fmtTime(iso) {
     if (!iso) { return 'None recorded'; }
     try {
@@ -2699,15 +2701,29 @@
         : 'Turn it on in the inspector to build the first index',
       search: 'index status rebuild',
       word: word, states: states.join(' '),
-      mono: ix.enabled && ix.progress ? ix.progress.pct + '%' : ''
+      /* Determinate progress only with a real denominator (register §11):
+         counts once the scan has measured them, the phase word before. */
+      mono: ix.enabled && ix.progress && typeof ix.progress.completed === 'number'
+        ? fmtInt(ix.progress.completed) + ' of ' + fmtInt(ix.progress.total) + ' files'
+        : ''
     }));
     var ixPhase = opPhase('index-rebuild', null);
     if (ixPhase && ixPhase !== 'done') {
       sec0.appendChild(phaseStrip('index-rebuild', null));
-      if (ix.progress) {
-        /* Static progress bar: width states, no transition. */
-        sec0.appendChild(h('div', { className: 'lg-progress', role: 'progressbar', 'aria-valuenow': String(ix.progress.pct), 'aria-valuemin': '0', 'aria-valuemax': '100' },
-          h('span', { className: 'lg-progress-fill', style: 'width:' + ix.progress.pct + '%' })));
+      if (ix.progress && typeof ix.progress.completed === 'number' && ix.progress.total > 0) {
+        /* Static determinate bar from measured counts; no transition. */
+        var ixw = Math.round((ix.progress.completed / ix.progress.total) * 100);
+        sec0.appendChild(h('div', {
+          className: 'lg-progress', role: 'progressbar',
+          'aria-valuenow': String(ix.progress.completed),
+          'aria-valuemin': '0', 'aria-valuemax': String(ix.progress.total),
+          'aria-valuetext': fmtInt(ix.progress.completed) + ' of ' + fmtInt(ix.progress.total) + ' files (measured)'
+        }, h('span', { className: 'lg-progress-fill', style: 'width:' + ixw + '%' })));
+        sec0.appendChild(h('div', { className: 'lg-note-line' },
+          fmtInt(ix.progress.completed) + ' of ' + fmtInt(ix.progress.total) + ' files · measured'));
+      } else if (ix.progress) {
+        /* Scanning has no denominator yet: honest phase text, no bar. */
+        sec0.appendChild(h('div', { className: 'lg-note-line' }, str(ix.progress.note) || 'Working'));
       }
     }
     doc.appendChild(sec0);
@@ -5732,8 +5748,13 @@
       var credBlock = block('Credits', kv([
         ['Used', w.credits.used + ' of ' + w.credits.total + ' ' + w.credits.unit + ' (' + pct + '%)']
       ]));
-      credBlock.appendChild(h('div', { className: 'lg-progress', role: 'progressbar', 'aria-valuenow': String(pct), 'aria-valuemin': '0', 'aria-valuemax': '100' },
-        h('span', { className: 'lg-progress-fill' + (pct >= 80 ? ' is-warn' : ''), style: 'width:' + pct + '%' })));
+      /* Real denominator: expose the actual units, not a bare percentage. */
+      credBlock.appendChild(h('div', {
+        className: 'lg-progress', role: 'progressbar',
+        'aria-valuenow': String(w.credits.used), 'aria-valuemin': '0',
+        'aria-valuemax': String(w.credits.total),
+        'aria-valuetext': w.credits.used + ' of ' + w.credits.total + ' ' + w.credits.unit + ' (measured)'
+      }, h('span', { className: 'lg-progress-fill' + (pct >= 80 ? ' is-warn' : ''), style: 'width:' + pct + '%' })));
       insp.appendChild(credBlock);
     }
     if (w.guard) {

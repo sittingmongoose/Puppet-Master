@@ -1,5 +1,27 @@
 # Fable — Motion Storyboards
 
+> **Correction addendum (2026-08-13, after opening the raw videos):**
+> - **Live locus (all eight threads):** the active turn now carries phase-kind +
+>   accumulating detail rows (file reads tick in, per-file diff counts align right)
+>   that are replaced wholesale at each phase change — Screenplay renders them as
+>   stage-item lines, Courier as rows under the locus pill, Ledgerline as live
+>   postings, Dossier as a live file strip under the case spine, Longhand as an
+>   italic aside, Counterweight as lines inside the live weight, Teletype as
+>   panel lines, Choreograph as the satellite's three-line wake. Reduced motion:
+>   rows appear instantly, no ticking choreography.
+> - **Courier:** sent deliveries now ride a smooth scroll-follow so the whole
+>   thread visibly yields during the travel (video 1's shared-motion principle);
+>   the condensed seam carries the phase-icon strip (video 3); Skip yields its
+>   slot once the current question is answered (videos 2/4).
+> - **Screenplay:** freeform questions render as a "Something else" option row
+>   that expands into an inline input (video 2).
+> - **Choreograph:** single-select answers auto-advance the dealt card after a
+>   420 ms tuck (video 4).
+> - **Provider setup:** the runtime-demand popup advances through inspecting →
+>   required → installing → verifying → authenticating → readiness → resumed/stale
+>   as in-place stage replacements inside one plate — no motion beyond content
+>   swap, matching the popup family's reduced-motion contract.
+
 Every storyboard names its owner. Behaviors owned by the shared layer are boarded
 once and inherited by all sixteen concepts; concept-owned boards follow. Reduced
 motion is a complete product state everywhere: identical final states, static

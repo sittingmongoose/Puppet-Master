@@ -1531,3 +1531,50 @@ mark.pmq-srmark { animation: pmq-srmark-in var(--dur-med) var(--ease-out) both; 
 .pmq-sendstop.pmq-is-queue .pmq-ico { color: var(--accent-warning); }
 .pmq-sendstop:disabled { opacity: 0.5; cursor: not-allowed; }
 .pmq-hint-offline { color: var(--accent-warning); font-size: var(--fs-2xs); font-weight: 600; }
+
+/* ---- correction packet 2026-08-13: arrival sweep, activity chips, review ---- */
+.pmq-troot { position: relative; }
+.pmq-sweep {
+  position: absolute; top: 0; left: 0; right: 0; height: 3px; z-index: 6;
+  pointer-events: none; opacity: 0;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent-primary) 70%, transparent), transparent);
+  background-size: 40% 100%; background-repeat: no-repeat;
+}
+.pmq-sweeping .pmq-sweep { animation: pmq-sweep 900ms var(--ease-out) both; }
+@keyframes pmq-sweep {
+  0% { opacity: 0; background-position: -40% 0; }
+  15% { opacity: 1; }
+  100% { opacity: 0; background-position: 140% 0; }
+}
+html[data-motion="reduced"] .pmq-sweeping .pmq-sweep {
+  animation: none; opacity: 1; background: none;
+  border-bottom: 2px solid color-mix(in srgb, var(--accent-primary) 55%, transparent);
+}
+.pmq-ag-chips { display: inline-flex; gap: 6px; margin-left: 8px; align-items: center; }
+.pmq-ag-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 2px 8px; border-radius: var(--radius-pill);
+  background: var(--hover-fill); border: 1px solid var(--border);
+  font-size: var(--fs-2xs); font-weight: 700; color: var(--text-secondary);
+}
+.pmq-ag-chip .pmq-ico { width: 11px; height: 11px; color: var(--text-faint); }
+.pmq-ag-verified {
+  display: flex; align-items: center; gap: 7px; margin-top: 6px;
+  padding: 6px 10px; border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--accent-success) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent-success) 30%, transparent);
+  font-size: var(--fs-xs); font-weight: 600; color: var(--text-secondary);
+}
+.pmq-ag-verified .pmq-ico { width: 12px; height: 12px; color: var(--accent-success); }
+.pmq-quest-review { display: flex; flex-direction: column; gap: 8px; padding: 4px 2px; }
+.pmq-quest-revhead { font-size: var(--fs-sm); font-weight: 700; color: var(--text-primary); }
+.pmq-quest-revrow { display: flex; gap: 8px; align-items: flex-start; }
+.pmq-quest-revback {
+  flex: none; padding: 2px 7px; border-radius: var(--radius-pill);
+  border: 1px solid var(--border); background: var(--surface);
+  font-size: var(--fs-2xs); font-weight: 700; color: var(--text-secondary); cursor: pointer;
+}
+.pmq-quest-revback:hover { border-color: var(--border-strong); color: var(--text-primary); }
+.pmq-quest-revprompt { font-size: var(--fs-xs); color: var(--text-faint); }
+.pmq-quest-revans { font-size: var(--fs-sm); font-weight: 600; color: var(--text-primary); }
+.pmq-quest-revans.pmq-skipped { color: var(--text-faint); font-style: italic; font-weight: 400; }

@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-08-13T17:12:34Z",
+  "generated_at_utc": "2026-08-15T03:16:34Z",
   "index_path": "Plans/_shards/web_operation_contracts.schema/00-index.md",
-  "index_sha256": "591e484876ab462fff4dce7afd029cfea553a93457e237f2864ea6bb18d827c5",
+  "index_sha256": "fbdf536f7a8832bd7a2e6c734f4daaeccac7dd213f3e167f83f84ec13aeed3a2",
   "manifest_path": "Plans/_shards/web_operation_contracts.schema/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Lines 1-200",
       "path": "Plans/_shards/web_operation_contracts.schema/001-lines-1-200.md",
-      "sha256": "f4c466e2e02529dd89f4ba3ba8547096b9e9035cdac78ed74411452c0a10a353",
+      "sha256": "03b9d78d5f92bded598ae0df869ff72a75469bf4b0670186f08f5716867d9707",
       "shard_id": "001",
       "source_line_end": 200,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Lines 201-400",
       "path": "Plans/_shards/web_operation_contracts.schema/002-lines-201-400.md",
-      "sha256": "572eab3064a0fc1a407cc78d40ebe530e8a5f96a798fb6fa45e4aa7e03122a4d",
+      "sha256": "b6c3e35d0d3b2eda41d3b9e91caaa6c17082ea8280dbe656a1e6a9781e17674e",
       "shard_id": "002",
       "source_line_end": 400,
       "source_line_start": 201,
@@ -26,7 +26,7 @@
     {
       "heading": "Lines 401-600",
       "path": "Plans/_shards/web_operation_contracts.schema/003-lines-401-600.md",
-      "sha256": "dba2656780410e6979b309adc2261817147fc80908be4a6367224b56da74a2e7",
+      "sha256": "f219de76c8c50e5aefc4d28ddea9e24e1e5231bee1818c574cd391e73cfdd158",
       "shard_id": "003",
       "source_line_end": 600,
       "source_line_start": 401,
@@ -35,25 +35,25 @@
     {
       "heading": "Lines 601-800",
       "path": "Plans/_shards/web_operation_contracts.schema/004-lines-601-800.md",
-      "sha256": "c0b54f55653d0750681ad037160aadf0f5c77230f8955bd39d0f7f05832cd531",
+      "sha256": "d7ff8f512fe4b5a92498c0ab389f737c5e5e2a8ca9fcfbad2c540c417eb75f6f",
       "shard_id": "004",
       "source_line_end": 800,
       "source_line_start": 601,
       "split_rule": "line-count-200"
     },
     {
-      "heading": "Lines 801-947",
-      "path": "Plans/_shards/web_operation_contracts.schema/005-lines-801-947.md",
-      "sha256": "6d02608f51106e7a8cbe67a55e17e5bdcfdd3cf68ac004024aae94b8c53bc688",
+      "heading": "Lines 801-948",
+      "path": "Plans/_shards/web_operation_contracts.schema/005-lines-801-948.md",
+      "sha256": "29abfad59c2b26037e51d29b794eb1e71d1e1175fab3ed0f3cc9e60b054cc211",
       "shard_id": "005",
-      "source_line_end": 947,
+      "source_line_end": 948,
       "source_line_start": 801,
       "split_rule": "line-count-200"
     }
   ],
   "source": {
-    "line_count": 947,
+    "line_count": 948,
     "path": "Plans/web_operation_contracts.schema.json",
-    "sha256": "2bfb45758f60fc2ca373c935f88648f1b08901f1744a11e3792d6308af81773e"
+    "sha256": "494e7ea76445be07454297548038f6de97200a6d098d5727d3aa5f578229980b"
   }
 }

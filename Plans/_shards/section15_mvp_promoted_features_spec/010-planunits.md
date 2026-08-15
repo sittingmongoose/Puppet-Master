@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L822-L8356
+Source lines: L839-L8397
 
-Source SHA256: `dc0625ec8d68b6f9d9f74f7b9268e96f5e178277dfb8ee427f13efdd0fd512d2`
+Source SHA256: `595d843ab1ce0458bba7dbb3c441a189602733aa6ad229b7ce44a2b59079f8b5`
 
 ---
 
@@ -5005,8 +5005,8 @@ negative_constraints:
 - 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
 - Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
 - Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
-- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
-- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+- PM browser contracts are independently PM-native: no external framework or MCP defines a runtime, facade, compatibility vocabulary, package, port, MCP route, command, capture engine, action taxonomy, or raw protocol/code-execution surface.
+- Expert Browser Program is the only advanced PM browser testing/diagnostic contract; it remains policy- and capability-gated, uses PM-native named actions, and exposes no arbitrary page-code or raw external-protocol escape hatch.
 - Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
 preserved_contractrefs:
 - 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
@@ -5072,8 +5072,8 @@ negative_constraints:
 - 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
 - Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
 - Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
-- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
-- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+- PM browser contracts are independently PM-native: no external framework or MCP defines a runtime, facade, compatibility vocabulary, package, port, MCP route, command, capture engine, action taxonomy, or raw protocol/code-execution surface.
+- Expert Browser Program is the only advanced PM browser testing/diagnostic contract; it remains policy- and capability-gated, uses PM-native named actions, and exposes no arbitrary page-code or raw external-protocol escape hatch.
 - Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
 preserved_contractrefs:
 - 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
@@ -5093,7 +5093,7 @@ plan_unit_id: SMPFS-087
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: PM browser runtime is capability-first and PM-managed CEF by default; wef, cargo-wef, Wry/hybrid, OS webviews, Playwright/CDP sidecars, chromiumoxide, and Chrome-for-Testing helpers remain candidates or comparison inputs until packaging, update, install, verification, and health strategy is explicit.
+canonical_text: PM browser runtime is capability-first and PM-managed CEF through BrowserRuntimeService; Browser Program and Expert Browser Program are independently PM-native, while historical external browser implementations remain source-lineage only and cannot become a runtime, facade, compatibility target, package, port, MCP route, command, or capture engine.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false
@@ -5129,7 +5129,9 @@ preserved_exact_tokens:
 - runtime_unavailable
 - Wry/hybrid
 - OS webviews
-- Playwright/CDP sidecars
+- BrowserRuntimeService
+- Browser Program
+- Expert Browser Program
 - chromiumoxide
 - Chrome-for-Testing
 - packaging/update/install strategy
@@ -5139,14 +5141,15 @@ negative_constraints:
 - 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
 - Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
 - Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
-- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
-- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+- PM browser contracts are independently PM-native: no external framework or MCP defines a runtime, facade, compatibility vocabulary, package, port, MCP route, command, capture engine, action taxonomy, or raw protocol/code-execution surface.
+- Expert Browser Program is the only advanced PM browser testing/diagnostic contract; it remains policy- and capability-gated, uses PM-native named actions, and exposes no arbitrary page-code or raw external-protocol escape hatch.
 - Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
 preserved_contractrefs:
 - 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
 compatibility_only_notes:
 - wef and cargo-wef are implementation candidates only until packaging/update/install strategy is explicit.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- Any prior external-framework browser sidecar, fallback, facade, compatibility, MCP, port, package, command, or capture-engine direction is retired from PM-owned architecture.
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/storage-plan.md
@@ -5203,8 +5206,8 @@ negative_constraints:
 - 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
 - Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
 - Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
-- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
-- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+- PM browser contracts are independently PM-native: no external framework or MCP defines a runtime, facade, compatibility vocabulary, package, port, MCP route, command, capture engine, action taxonomy, or raw protocol/code-execution surface.
+- Expert Browser Program is the only advanced PM browser testing/diagnostic contract; it remains policy- and capability-gated, uses PM-native named actions, and exposes no arbitrary page-code or raw external-protocol escape hatch.
 - Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
 preserved_contractrefs:
 - 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
@@ -5267,8 +5270,8 @@ negative_constraints:
 - 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
 - Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
 - Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
-- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
-- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+- PM browser contracts are independently PM-native: no external framework or MCP defines a runtime, facade, compatibility vocabulary, package, port, MCP route, command, capture engine, action taxonomy, or raw protocol/code-execution surface.
+- Expert Browser Program is the only advanced PM browser testing/diagnostic contract; it remains policy- and capability-gated, uses PM-native named actions, and exposes no arbitrary page-code or raw external-protocol escape hatch.
 - Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
 preserved_contractrefs:
 - 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
@@ -5333,8 +5336,8 @@ negative_constraints:
 - provider-routed fetch must not reuse the reserved native Site Reader identity.
 - 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
 - Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
-- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
-- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+- PM browser contracts are independently PM-native: no external framework or MCP defines a runtime, facade, compatibility vocabulary, package, port, MCP route, command, capture engine, action taxonomy, or raw protocol/code-execution surface.
+- Expert Browser Program is the only advanced PM browser testing/diagnostic contract; it remains policy- and capability-gated, uses PM-native named actions, and exposes no arbitrary page-code or raw external-protocol escape hatch.
 - Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
 preserved_contractrefs:
 - 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
@@ -5408,8 +5411,8 @@ negative_constraints:
 - 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
 - Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
 - Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
-- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
-- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+- PM browser contracts are independently PM-native: no external framework or MCP defines a runtime, facade, compatibility vocabulary, package, port, MCP route, command, capture engine, action taxonomy, or raw protocol/code-execution surface.
+- Expert Browser Program is the only advanced PM browser testing/diagnostic contract; it remains policy- and capability-gated, uses PM-native named actions, and exposes no arbitrary page-code or raw external-protocol escape hatch.
 - Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
 preserved_contractrefs:
 - 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
@@ -5476,8 +5479,8 @@ negative_constraints:
 - 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
 - Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
 - Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
-- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
-- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+- PM browser contracts are independently PM-native: no external framework or MCP defines a runtime, facade, compatibility vocabulary, package, port, MCP route, command, capture engine, action taxonomy, or raw protocol/code-execution surface.
+- Expert Browser Program is the only advanced PM browser testing/diagnostic contract; it remains policy- and capability-gated, uses PM-native named actions, and exposes no arbitrary page-code or raw external-protocol escape hatch.
 - Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
 preserved_contractrefs:
 - 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
@@ -5544,8 +5547,8 @@ negative_constraints:
 - 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
 - Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
 - Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
-- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
-- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+- PM browser contracts are independently PM-native: no external framework or MCP defines a runtime, facade, compatibility vocabulary, package, port, MCP route, command, capture engine, action taxonomy, or raw protocol/code-execution surface.
+- Expert Browser Program is the only advanced PM browser testing/diagnostic contract; it remains policy- and capability-gated, uses PM-native named actions, and exposes no arbitrary page-code or raw external-protocol escape hatch.
 - Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
 preserved_contractrefs:
 - 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
@@ -5565,7 +5568,12 @@ plan_unit_id: SMPFS-094
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Browser session persistence covers history, cookies, storage, auth sessions, profile { name, saveChanges }, project-scoped normal sessions, workspace_preview/detached_preview sharing, isolated automation_session and auth_session profiles, restore eligibility, and crash recovery.
+canonical_text: >-
+  Browser persistence covers history, cookies, storage, profile { name, saveChanges }, project-scoped ordinary
+  BrowserSessions, workspace_preview/detached_preview sharing, isolated automation_session profiles, restore
+  eligibility, and crash recovery. Protected AuthBrowserSession is the explicit exception: it is human-only and
+  ephemeral, uses a domain-restricted transient store, and cannot persist, restore, copy, promote, capture, or
+  export profile/content state.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false
@@ -5601,7 +5609,10 @@ preserved_exact_tokens:
 - workspace_preview
 - detached_preview
 - automation_session
-- auth_session
+- AuthBrowserSession
+- human-only
+- ephemeral
+- domain-restricted transient store
 - project-scoped
 - persistent profile/store
 - restore eligibility
@@ -5611,14 +5622,15 @@ negative_constraints:
 - 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
 - Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
 - Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
-- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
-- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+- PM browser contracts are independently PM-native: no external framework or MCP defines a runtime, facade, compatibility vocabulary, package, port, MCP route, command, capture engine, action taxonomy, or raw protocol/code-execution surface.
+- Expert Browser Program is the only advanced PM browser testing/diagnostic contract; it remains policy- and capability-gated, uses PM-native named actions, and exposes no arbitrary page-code or raw external-protocol escape hatch.
 - Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
 preserved_contractrefs:
 - 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
 compatibility_only_notes:
 - /localStorage slash notation remains lineage for the canonical localStorage storage field.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- The legacy auth_session-as-persistent-isolated-profile reading is retired; protected AuthBrowserSession has no persistent profile/store or restore eligibility.
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/storage-plan.md
@@ -5675,8 +5687,8 @@ negative_constraints:
 - 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
 - Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
 - Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
-- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
-- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+- PM browser contracts are independently PM-native: no external framework or MCP defines a runtime, facade, compatibility vocabulary, package, port, MCP route, command, capture engine, action taxonomy, or raw protocol/code-execution surface.
+- Expert Browser Program is the only advanced PM browser testing/diagnostic contract; it remains policy- and capability-gated, uses PM-native named actions, and exposes no arbitrary page-code or raw external-protocol escape hatch.
 - Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
 preserved_contractrefs:
 - 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
@@ -5748,8 +5760,8 @@ negative_constraints:
 - 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
 - Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
 - Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
-- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
-- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+- PM browser contracts are independently PM-native: no external framework or MCP defines a runtime, facade, compatibility vocabulary, package, port, MCP route, command, capture engine, action taxonomy, or raw protocol/code-execution surface.
+- Expert Browser Program is the only advanced PM browser testing/diagnostic contract; it remains policy- and capability-gated, uses PM-native named actions, and exposes no arbitrary page-code or raw external-protocol escape hatch.
 - Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
 preserved_contractrefs:
 - 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
@@ -5814,8 +5826,8 @@ negative_constraints:
 - 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
 - Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
 - Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
-- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
-- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+- PM browser contracts are independently PM-native: no external framework or MCP defines a runtime, facade, compatibility vocabulary, package, port, MCP route, command, capture engine, action taxonomy, or raw protocol/code-execution surface.
+- Expert Browser Program is the only advanced PM browser testing/diagnostic contract; it remains policy- and capability-gated, uses PM-native named actions, and exposes no arbitrary page-code or raw external-protocol escape hatch.
 - Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
 preserved_contractrefs:
 - 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
@@ -5882,8 +5894,8 @@ negative_constraints:
 - 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
 - Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
 - Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
-- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
-- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+- PM browser contracts are independently PM-native: no external framework or MCP defines a runtime, facade, compatibility vocabulary, package, port, MCP route, command, capture engine, action taxonomy, or raw protocol/code-execution surface.
+- Expert Browser Program is the only advanced PM browser testing/diagnostic contract; it remains policy- and capability-gated, uses PM-native named actions, and exposes no arbitrary page-code or raw external-protocol escape hatch.
 - Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
 preserved_contractrefs:
 - 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
@@ -5903,7 +5915,7 @@ plan_unit_id: SMPFS-099
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Playwright MCP, Chrome DevTools MCP, BrowserMCP, Saik0s/mcp-browser-use, browser-use, chromiumoxide, Wry, WebView2, WKWebView, WebKitGTK, OS webviews, CDP sidecars, and MCP config shapes remain reference, comparison, lineage, or background inputs and do not replace PM-owned browser architecture.
+canonical_text: Historical external browser-control, automation, protocol, and webview projects remain source-lineage evidence only. They neither define nor shape PM-owned BrowserRuntimeService, Browser Program, Expert Browser Program, session options, action taxonomy, packages, ports, MCP routes, commands, or capture engines, and they create no compatibility promise.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false
@@ -5932,11 +5944,9 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0047
 preserved_exact_tokens:
-- Playwright MCP
-- Chrome DevTools MCP
-- BrowserMCP/mcp
-- Saik0s/mcp-browser-use
-- browser-use
+- historical external browser-control projects
+- source-lineage evidence only
+- no compatibility promise
 - chromiumoxide
 - Wry
 - WebView2
@@ -5952,14 +5962,15 @@ negative_constraints:
 - 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
 - Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
 - Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
-- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
-- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+- PM browser contracts are independently PM-native: no external framework or MCP defines a runtime, facade, compatibility vocabulary, package, port, MCP route, command, capture engine, action taxonomy, or raw protocol/code-execution surface.
+- Expert Browser Program is the only advanced PM browser testing/diagnostic contract; it remains policy- and capability-gated, uses PM-native named actions, and exposes no arbitrary page-code or raw external-protocol escape hatch.
 - Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
 preserved_contractrefs:
 - 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
 compatibility_only_notes:
 - Reference/comparison/background labels remain lineage only and do not become PM product commands or core architecture.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- The prior enumerated external-framework/MCP comparison vocabulary is retained only in its source-span lineage and is retired from live PM browser product and architecture prose.
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/Tools.md
@@ -6034,8 +6045,8 @@ negative_constraints:
 - 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
 - Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
 - Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
-- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
-- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+- PM browser contracts are independently PM-native: no external framework or MCP defines a runtime, facade, compatibility vocabulary, package, port, MCP route, command, capture engine, action taxonomy, or raw protocol/code-execution surface.
+- Expert Browser Program is the only advanced PM browser testing/diagnostic contract; it remains policy- and capability-gated, uses PM-native named actions, and exposes no arbitrary page-code or raw external-protocol escape hatch.
 - Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
 preserved_contractrefs:
 - 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
@@ -6365,7 +6376,7 @@ plan_unit_id: SMPFS-106
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Auth sessions and automation sessions do not auto-resume active work after restart, and auth_session must not auto-close on presumed success because completion requires explicit user or provider/flow evidence.
+canonical_text: Protected AuthBrowserSession and automation sessions do not auto-resume active work after restart. AuthBrowserSession is ephemeral and never restores content, profile/storage state, capture, or automation authority; it must not auto-close on presumed success because completion requires explicit human or provider/flow evidence.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false
@@ -6396,21 +6407,25 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0049
 preserved_exact_tokens:
-- auth_session
+- AuthBrowserSession
+- ephemeral
+- human-only
 - automation sessions
 - auto-resume
 - auto-close
 - presumed success
 - explicit user or provider/flow evidence
 negative_constraints:
-- auth_session must not auto-close on presumed success; PM cannot reliably infer completion across arbitrary sites.
+- AuthBrowserSession must not auto-close on presumed success; PM cannot reliably infer completion across arbitrary sites.
+- AuthBrowserSession must not persist or restore content, profile/storage state, capture, or automation authority.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md'
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md'
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- Legacy auth_session tokens normalize to protected AuthBrowserSession only for migration/source lineage; they do not preserve the old persistent-profile behavior.
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/storage-plan.md
@@ -6781,7 +6796,12 @@ plan_unit_id: SMPFS-113
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Browser or terminal session classes must not silently bleed storage into another profile scope, and profile { name, saveChanges } scopes cookies and localStorage by profile name and project while disabled saveChanges keeps the session isolated.
+canonical_text: >-
+  Ordinary BrowserSession or terminal session classes must not silently bleed storage into another profile
+  scope, and profile { name, saveChanges } scopes cookies and localStorage by profile name and project while
+  disabled saveChanges keeps the ordinary session isolated. Protected AuthBrowserSession is outside this
+  persistence facility: its domain-restricted transient store is never written back, copied, promoted,
+  captured, exported, or restored.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false
@@ -6819,15 +6839,19 @@ preserved_exact_tokens:
 - saveChanges
 - isolated
 - storage bleed
+- AuthBrowserSession
+- domain-restricted transient store
 negative_constraints:
 - No browser or terminal session class may silently bleed storage into another profile scope.
+- Do not apply profile saveChanges persistence, copy, promotion, capture, export, or restore to protected AuthBrowserSession.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md'
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md'
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- Any legacy reading that auth_session participates in normal profile saveChanges persistence is retired.
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/storage-plan.md

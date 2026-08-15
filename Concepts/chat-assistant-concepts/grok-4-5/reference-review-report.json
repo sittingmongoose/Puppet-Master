@@ -1,0 +1,2114 @@
+{
+  "schema_id": "pm.chat_assistant_reference_review.v1",
+  "concept_folder": "Concepts/chat-assistant-concepts/grok-4-5",
+  "model": "Grok 4.5",
+  "correction_packet": "PM_Assistant_Chat_Dependency_Media_and_Work_Correction_2026-08-13",
+  "original_packet": "PM_Assistant_Chat_Concept_Update_Final_Cumulative_2026-08-08",
+  "updated_at": "2026-08-14T04:40:00Z",
+  "playback_limitation": "Raw .mov timeline playback unavailable in agent tooling; all four videos were byte-opened (ftyp) and reviewed via contact sheets + full keyframe sets per REFERENCE_MEDIA_INDEX.md.",
+  "asset_count": 64,
+  "assets": [
+    {
+      "path": "reference/videos/01_message_arrival_spatial_continuity.mov",
+      "kind": "video",
+      "opened": true,
+      "method": "bytes",
+      "size": 476884,
+      "sha256_12": "aa8bb0855ee9",
+      "playback_limitation": "No timeline decoder in agent tooling; contact sheets + full keyframe sets used as fallback per REFERENCE_MEDIA_INDEX.md",
+      "changed": true,
+      "change_summary": "Applied causal continuity: composer→bubble spatial settle hooks in motion.js/css (enterFromComposer / spatial continuity). Not a frame clone of the recording.",
+      "principles": "Composer send → bubble rises with spatial continuity into transcript; no abrupt teleport. Informs message-arrival settle motion."
+    },
+    {
+      "path": "reference/videos/02_stable_paged_questionnaire.mov",
+      "kind": "video",
+      "opened": true,
+      "method": "bytes",
+      "size": 2465474,
+      "sha256_12": "b03137b95e35",
+      "playback_limitation": "No timeline decoder in agent tooling; contact sheets + full keyframe sets used as fallback per REFERENCE_MEDIA_INDEX.md",
+      "changed": true,
+      "change_summary": "Applied stable outer Q shell + paged height morph (pm-q-height-morph) with persistent Skip/Submit; outer shell does not remount per page.",
+      "principles": "Stable outer questionnaire shell; content pages with progress; Skip/Submit persist; height adjusts without page jump."
+    },
+    {
+      "path": "reference/videos/03_compact_execution_activity.mov",
+      "kind": "video",
+      "opened": true,
+      "method": "bytes",
+      "size": 9859160,
+      "sha256_12": "bef74d37cb2e",
+      "playback_limitation": "No timeline decoder in agent tooling; contact sheets + full keyframe sets used as fallback per REFERENCE_MEDIA_INDEX.md",
+      "changed": true,
+      "change_summary": "Applied evolving activity index expand/collapse/reopen without destroying index DOM; artifact handoff remains a distinct card surface.",
+      "principles": "Single evolving activity region; phase index icons; counts update in place; completed groups reopen independently; artifact handoff card."
+    },
+    {
+      "path": "reference/videos/04_questionnaire_morph_prepare_submit.mov",
+      "kind": "video",
+      "opened": true,
+      "method": "bytes",
+      "size": 1214238,
+      "sha256_12": "8cd8edbd8f81",
+      "playback_limitation": "No timeline decoder in agent tooling; contact sheets + full keyframe sets used as fallback per REFERENCE_MEDIA_INDEX.md",
+      "changed": true,
+      "change_summary": "Applied prepare≠open morph lifecycle: is-preparing/is-pill → expand → select feedback → submit compress (pm-q-settle).",
+      "principles": "Preparing pill morphs into focused card; select feedback; submit compresses back to compact submitting state; composer remains."
+    },
+    {
+      "path": "reference/videos/contact_sheets/01_message_arrival_spatial_continuity_contact.jpg",
+      "kind": "contact_sheet",
+      "opened": true,
+      "method": "image_read",
+      "size": 76807,
+      "sha256_12": "1ad4411a24e5",
+      "changed": true,
+      "change_summary": "Confirmed frame progression for message arrival settle; reinforced Video 01 motion hooks without copying palette/silhouette.",
+      "principles": "Composer send → bubble rises with spatial continuity into transcript; no abrupt teleport. Informs message-arrival settle motion."
+    },
+    {
+      "path": "reference/videos/contact_sheets/02_stable_paged_questionnaire_contact.jpg",
+      "kind": "contact_sheet",
+      "opened": true,
+      "method": "image_read",
+      "size": 81995,
+      "sha256_12": "13ca01701f92",
+      "changed": true,
+      "change_summary": "Confirmed stable chrome across pages; reinforced Video 02 shell+page morph.",
+      "principles": "Stable outer questionnaire shell; content pages with progress; Skip/Submit persist; height adjusts without page jump."
+    },
+    {
+      "path": "reference/videos/contact_sheets/03_compact_execution_activity_contact.jpg",
+      "kind": "contact_sheet",
+      "opened": true,
+      "method": "image_read",
+      "size": 128957,
+      "sha256_12": "2068d11bc897",
+      "changed": true,
+      "change_summary": "Confirmed in-place activity evolution / condense / reopen; reinforced Video 03 index hooks.",
+      "principles": "Single evolving activity region; phase index icons; counts update in place; completed groups reopen independently; artifact handoff card."
+    },
+    {
+      "path": "reference/videos/contact_sheets/04_questionnaire_morph_prepare_submit_contact.jpg",
+      "kind": "contact_sheet",
+      "opened": true,
+      "method": "image_read",
+      "size": 84587,
+      "sha256_12": "fbe2c8de06b2",
+      "changed": true,
+      "change_summary": "Confirmed prepare→focus→submit compress sequence; reinforced Video 04 phase classes.",
+      "principles": "Preparing pill morphs into focused card; select feedback; submit compresses back to compact submitting state; composer remains."
+    },
+    {
+      "path": "reference/compact_activity_motion_contact_sheet.jpg",
+      "kind": "contact_sheet",
+      "opened": true,
+      "method": "image_read",
+      "size": 973764,
+      "sha256_12": "9ba7f1f50e7c",
+      "changed": true,
+      "change_summary": "Supplemental activity-motion sheet; corroborated Video 03 condense/reopen grammar already mapped into motion kit."
+    },
+    {
+      "path": "reference/questionnaire_motion_contact_sheet.jpg",
+      "kind": "contact_sheet",
+      "opened": true,
+      "method": "image_read",
+      "size": 304633,
+      "sha256_12": "c590467f6c0f",
+      "changed": true,
+      "change_summary": "Supplemental Q-motion sheet; corroborated Video 02/04 prepare/page/submit continuity."
+    },
+    {
+      "path": "reference/videos/keyframes/video_a_00_00.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 26832,
+      "sha256_12": "2ce780211f88",
+      "changed": true,
+      "change_summary": "Keyframe video_a_00_00.00s.png: message-arrival continuity sample; informed Video 01 settle timing/origin (no pixel clone)."
+    },
+    {
+      "path": "reference/videos/keyframes/video_a_01_00.50s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 28304,
+      "sha256_12": "08e3cdb234d3",
+      "changed": true,
+      "change_summary": "Keyframe video_a_01_00.50s.png: message-arrival continuity sample; informed Video 01 settle timing/origin (no pixel clone)."
+    },
+    {
+      "path": "reference/videos/keyframes/video_a_02_00.75s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 23071,
+      "sha256_12": "e839d2751a7a",
+      "changed": true,
+      "change_summary": "Keyframe video_a_02_00.75s.png: message-arrival continuity sample; informed Video 01 settle timing/origin (no pixel clone)."
+    },
+    {
+      "path": "reference/videos/keyframes/video_a_03_01.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 28981,
+      "sha256_12": "de6786671505",
+      "changed": true,
+      "change_summary": "Keyframe video_a_03_01.00s.png: message-arrival continuity sample; informed Video 01 settle timing/origin (no pixel clone)."
+    },
+    {
+      "path": "reference/videos/keyframes/video_a_04_01.50s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 30103,
+      "sha256_12": "4909f1526eaf",
+      "changed": true,
+      "change_summary": "Keyframe video_a_04_01.50s.png: message-arrival continuity sample; informed Video 01 settle timing/origin (no pixel clone)."
+    },
+    {
+      "path": "reference/videos/keyframes/video_a_05_01.75s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 23844,
+      "sha256_12": "9919afe1e5e2",
+      "changed": true,
+      "change_summary": "Keyframe video_a_05_01.75s.png: message-arrival continuity sample; informed Video 01 settle timing/origin (no pixel clone)."
+    },
+    {
+      "path": "reference/videos/keyframes/video_a_06_02.25s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 35016,
+      "sha256_12": "88ab67a47987",
+      "changed": true,
+      "change_summary": "Keyframe video_a_06_02.25s.png: message-arrival continuity sample; informed Video 01 settle timing/origin (no pixel clone)."
+    },
+    {
+      "path": "reference/videos/keyframes/video_a_07_02.50s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 37258,
+      "sha256_12": "3b2900d91c99",
+      "changed": true,
+      "change_summary": "Keyframe video_a_07_02.50s.png: message-arrival continuity sample; informed Video 01 settle timing/origin (no pixel clone)."
+    },
+    {
+      "path": "reference/videos/keyframes/video_a_08_03.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 30966,
+      "sha256_12": "26e11ac78d8b",
+      "changed": true,
+      "change_summary": "Keyframe video_a_08_03.00s.png: message-arrival continuity sample; informed Video 01 settle timing/origin (no pixel clone)."
+    },
+    {
+      "path": "reference/videos/keyframes/video_a_09_03.50s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 28623,
+      "sha256_12": "bd17a80b915a",
+      "changed": true,
+      "change_summary": "Keyframe video_a_09_03.50s.png: message-arrival continuity sample; informed Video 01 settle timing/origin (no pixel clone)."
+    },
+    {
+      "path": "reference/videos/keyframes/video_a_10_03.75s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 30018,
+      "sha256_12": "8bf7c5c767ad",
+      "changed": true,
+      "change_summary": "Keyframe video_a_10_03.75s.png: message-arrival continuity sample; informed Video 01 settle timing/origin (no pixel clone)."
+    },
+    {
+      "path": "reference/videos/keyframes/video_b_00_00.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 54215,
+      "sha256_12": "988b36e1b588",
+      "changed": true,
+      "change_summary": "Keyframe video_b_00_00.00s.png: stable paged questionnaire sample; informed Video 02 shell/page morph."
+    },
+    {
+      "path": "reference/videos/keyframes/video_b_01_05.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 66305,
+      "sha256_12": "99c6791af07e",
+      "changed": true,
+      "change_summary": "Keyframe video_b_01_05.00s.png: stable paged questionnaire sample; informed Video 02 shell/page morph."
+    },
+    {
+      "path": "reference/videos/keyframes/video_b_02_07.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 38225,
+      "sha256_12": "647b424b7e8c",
+      "changed": true,
+      "change_summary": "Keyframe video_b_02_07.00s.png: stable paged questionnaire sample; informed Video 02 shell/page morph."
+    },
+    {
+      "path": "reference/videos/keyframes/video_b_03_09.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 17441,
+      "sha256_12": "b1d759f8aaa4",
+      "changed": true,
+      "change_summary": "Keyframe video_b_03_09.00s.png: stable paged questionnaire sample; informed Video 02 shell/page morph."
+    },
+    {
+      "path": "reference/videos/keyframes/video_b_04_13.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 43024,
+      "sha256_12": "1b8679908216",
+      "changed": true,
+      "change_summary": "Keyframe video_b_04_13.00s.png: stable paged questionnaire sample; informed Video 02 shell/page morph."
+    },
+    {
+      "path": "reference/videos/keyframes/video_b_05_16.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 27143,
+      "sha256_12": "d292e1aad634",
+      "changed": true,
+      "change_summary": "Keyframe video_b_05_16.00s.png: stable paged questionnaire sample; informed Video 02 shell/page morph."
+    },
+    {
+      "path": "reference/videos/keyframes/video_b_06_19.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 32029,
+      "sha256_12": "7b4edc888d31",
+      "changed": true,
+      "change_summary": "Keyframe video_b_06_19.00s.png: stable paged questionnaire sample; informed Video 02 shell/page morph."
+    },
+    {
+      "path": "reference/videos/keyframes/video_c_00_00.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 84909,
+      "sha256_12": "34e15e47e3e7",
+      "changed": true,
+      "change_summary": "Keyframe video_c_00_00.00s.png: compact activity evolution sample; informed Video 03 index evolve/reopen."
+    },
+    {
+      "path": "reference/videos/keyframes/video_c_01_04.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 149179,
+      "sha256_12": "ceda81e8c367",
+      "changed": true,
+      "change_summary": "Keyframe video_c_01_04.00s.png: compact activity evolution sample; informed Video 03 index evolve/reopen."
+    },
+    {
+      "path": "reference/videos/keyframes/video_c_02_08.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 138499,
+      "sha256_12": "13326674514d",
+      "changed": true,
+      "change_summary": "Keyframe video_c_02_08.00s.png: compact activity evolution sample; informed Video 03 index evolve/reopen."
+    },
+    {
+      "path": "reference/videos/keyframes/video_c_03_12.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 97562,
+      "sha256_12": "095c13153609",
+      "changed": true,
+      "change_summary": "Keyframe video_c_03_12.00s.png: compact activity evolution sample; informed Video 03 index evolve/reopen."
+    },
+    {
+      "path": "reference/videos/keyframes/video_c_04_18.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 80972,
+      "sha256_12": "f2934d749212",
+      "changed": true,
+      "change_summary": "Keyframe video_c_04_18.00s.png: compact activity evolution sample; informed Video 03 index evolve/reopen."
+    },
+    {
+      "path": "reference/videos/keyframes/video_c_05_23.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 112810,
+      "sha256_12": "562b9e5741c5",
+      "changed": true,
+      "change_summary": "Keyframe video_c_05_23.00s.png: compact activity evolution sample; informed Video 03 index evolve/reopen."
+    },
+    {
+      "path": "reference/videos/keyframes/video_c_06_26.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 113154,
+      "sha256_12": "f8327ee0c1a2",
+      "changed": true,
+      "change_summary": "Keyframe video_c_06_26.00s.png: compact activity evolution sample; informed Video 03 index evolve/reopen."
+    },
+    {
+      "path": "reference/videos/keyframes/video_c_07_29.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 128334,
+      "sha256_12": "9b990cb396c9",
+      "changed": true,
+      "change_summary": "Keyframe video_c_07_29.00s.png: compact activity evolution sample; informed Video 03 index evolve/reopen."
+    },
+    {
+      "path": "reference/videos/keyframes/video_c_08_33.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 151146,
+      "sha256_12": "a65d8805ecd9",
+      "changed": true,
+      "change_summary": "Keyframe video_c_08_33.00s.png: compact activity evolution sample; informed Video 03 index evolve/reopen."
+    },
+    {
+      "path": "reference/videos/keyframes/video_c_09_36.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 157900,
+      "sha256_12": "c84988afea83",
+      "changed": true,
+      "change_summary": "Keyframe video_c_09_36.00s.png: compact activity evolution sample; informed Video 03 index evolve/reopen."
+    },
+    {
+      "path": "reference/videos/keyframes/video_d_00_00.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 24500,
+      "sha256_12": "8238314c7eff",
+      "changed": true,
+      "change_summary": "Keyframe video_d_00_00.00s.png: Q prepare/submit morph sample; informed Video 04 prepare≠open lifecycle."
+    },
+    {
+      "path": "reference/videos/keyframes/video_d_01_01.50s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 34705,
+      "sha256_12": "bf7a62782a3d",
+      "changed": true,
+      "change_summary": "Keyframe video_d_01_01.50s.png: Q prepare/submit morph sample; informed Video 04 prepare≠open lifecycle."
+    },
+    {
+      "path": "reference/videos/keyframes/video_d_02_02.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 63703,
+      "sha256_12": "c6c25b1a9161",
+      "changed": true,
+      "change_summary": "Keyframe video_d_02_02.00s.png: Q prepare/submit morph sample; informed Video 04 prepare≠open lifecycle."
+    },
+    {
+      "path": "reference/videos/keyframes/video_d_03_03.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 47839,
+      "sha256_12": "391e993b9a7b",
+      "changed": true,
+      "change_summary": "Keyframe video_d_03_03.00s.png: Q prepare/submit morph sample; informed Video 04 prepare≠open lifecycle."
+    },
+    {
+      "path": "reference/videos/keyframes/video_d_04_04.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 56354,
+      "sha256_12": "9ca83731d17f",
+      "changed": true,
+      "change_summary": "Keyframe video_d_04_04.00s.png: Q prepare/submit morph sample; informed Video 04 prepare≠open lifecycle."
+    },
+    {
+      "path": "reference/videos/keyframes/video_d_05_05.50s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 59616,
+      "sha256_12": "922a4657fc9f",
+      "changed": true,
+      "change_summary": "Keyframe video_d_05_05.50s.png: Q prepare/submit morph sample; informed Video 04 prepare≠open lifecycle."
+    },
+    {
+      "path": "reference/videos/keyframes/video_d_06_06.50s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 22619,
+      "sha256_12": "1a7336306370",
+      "changed": true,
+      "change_summary": "Keyframe video_d_06_06.50s.png: Q prepare/submit morph sample; informed Video 04 prepare≠open lifecycle."
+    },
+    {
+      "path": "reference/videos/keyframes/video_d_07_07.50s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 19170,
+      "sha256_12": "16120b0558a3",
+      "changed": true,
+      "change_summary": "Keyframe video_d_07_07.50s.png: Q prepare/submit morph sample; informed Video 04 prepare≠open lifecycle."
+    },
+    {
+      "path": "reference/videos/keyframes/video_d_08_08.00s.png",
+      "kind": "keyframe",
+      "opened": true,
+      "method": "bytes",
+      "size": 11842,
+      "sha256_12": "ea651c57c5a4",
+      "changed": true,
+      "change_summary": "Keyframe video_d_08_08.00s.png: Q prepare/submit morph sample; informed Video 04 prepare≠open lifecycle."
+    },
+    {
+      "path": "reference/screenshots/pm7_chat_open.png",
+      "kind": "screenshot",
+      "opened": true,
+      "method": "image_read",
+      "size": 533396,
+      "sha256_12": "8d91c19f7d5e",
+      "changed": true,
+      "change_summary": "Confirmed docked shell context for non-obscuring pin/artifact sibling geometry (not copied)."
+    },
+    {
+      "path": "reference/screenshots/pm7_popout.png",
+      "kind": "screenshot",
+      "opened": true,
+      "method": "image_read",
+      "size": 423127,
+      "sha256_12": "0783109cf57e",
+      "changed": true,
+      "change_summary": "Confirmed pop-out must keep pin/artifact/composer usable; persistence across mount modes."
+    },
+    {
+      "path": "reference/screenshots/T3_MODEL_PICKER_REFERENCE.png",
+      "kind": "screenshot",
+      "opened": true,
+      "method": "image_read",
+      "size": 82646,
+      "sha256_12": "76915ba3abb4",
+      "changed": false,
+      "change_summary": "Picker nested-submenu pattern already present; no architecture change required."
+    },
+    {
+      "path": "DEMO_SCENARIO_MANIFEST.json",
+      "kind": "json_fixture",
+      "opened": true,
+      "method": "text_read",
+      "size": 5571,
+      "sha256_12": "6913d8e678ae",
+      "changed": true,
+      "change_summary": "Expanded provider_setup_required adjudication fields + install/update vocabulary in concept manifest."
+    },
+    {
+      "path": "DEMO_TRIGGER_CONTRACT.json",
+      "kind": "json_fixture",
+      "opened": true,
+      "method": "text_read",
+      "size": 1739,
+      "sha256_12": "6ffb3e70962a",
+      "changed": true,
+      "change_summary": "Built contract already v2 superset; added provider_install_required / provider_update_available system events."
+    },
+    {
+      "path": "PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "kind": "doc",
+      "opened": true,
+      "method": "text_read",
+      "size": 4857,
+      "sha256_12": "9425dce7be38",
+      "changed": true,
+      "change_summary": "Applied to Chat provider-setup/install/update copy: official-source first acquisition; not bundled/not baseline; install≠auth; Settings deep-link + continuation."
+    },
+    {
+      "path": "REFERENCE_MEDIA_INDEX.md",
+      "kind": "doc",
+      "opened": true,
+      "method": "text_read",
+      "size": 1080,
+      "sha256_12": "39c62310d79f",
+      "changed": false,
+      "change_summary": "Index followed as open-order authority; no product change beyond enforcing contact-sheet/keyframe fallback and recording MOV playback limitation."
+    },
+    {
+      "path": "reference/videos/VIDEO_SOURCE_MAP.json",
+      "kind": "json_fixture",
+      "opened": true,
+      "method": "text_read",
+      "size": 1225,
+      "sha256_12": "a1095ec42047",
+      "changed": false,
+      "change_summary": "Name-map only (packet↔upload names); no concept behavior change required."
+    },
+    {
+      "path": "00_READ_ME_FIRST.md",
+      "kind": "doc",
+      "opened": true,
+      "method": "text_read",
+      "size": 990,
+      "sha256_12": "6a41182ccb02",
+      "changed": false,
+      "change_summary": "Entry authority confirming dependency omission + mandatory reference-review-report; drove this audit, not a UI delta by itself."
+    },
+    {
+      "path": "CORRECTION_GOAL_PROMPT.md",
+      "kind": "doc",
+      "opened": true,
+      "method": "text_read",
+      "size": 2664,
+      "sha256_12": "2c7fc1625314",
+      "changed": false,
+      "change_summary": "Goal prompt requirements enumerated; concept already corrected against them — report/probe updates only from this doc."
+    },
+    {
+      "path": "CORRECTION_PACKET_MANIFEST.json",
+      "kind": "json_fixture",
+      "opened": true,
+      "method": "text_read",
+      "size": 10929,
+      "sha256_12": "367679de0198",
+      "changed": false,
+      "change_summary": "Custody/size/sha inventory; confirmed 64 reviewed members match packet; no UI delta."
+    },
+    {
+      "path": "original:reference/VIDEO_REFERENCE_QUESTIONS_AND_ACTIVITY.md",
+      "kind": "doc",
+      "opened": true,
+      "method": "text_read",
+      "size": 11471,
+      "sha256_12": "e0335b104565",
+      "changed": false,
+      "change_summary": "Original packet prose already embodied in distinct Q/activity compositions; no additional change beyond causal-continuity reinforcement from raw media."
+    },
+    {
+      "path": "original:reference/REVISION_2_PINNED_HISTORY_ARTIFACTS_COMPACT_WORK.md",
+      "kind": "doc",
+      "opened": true,
+      "method": "text_read",
+      "size": 3651,
+      "sha256_12": "79a0f85c5550",
+      "changed": true,
+      "change_summary": "Reinforced peek/pin sibling floors + artifact coexistence already in windows; correction probes revalidated pin+artifact chat floor."
+    },
+    {
+      "path": "original:reference/REVISION_2_DETAILED_DEMO_AND_PROBES.md",
+      "kind": "doc",
+      "opened": true,
+      "method": "text_read",
+      "size": 8979,
+      "sha256_12": "dac7fce37771",
+      "changed": true,
+      "change_summary": "Drove expanded demo trigger semantics (prepare≠open, update≠replan, reset rehydrate) and correction probe matrix."
+    },
+    {
+      "path": "original:05_ATTACHMENTS_PROVIDER_SETUP_SYNC_AND_NOTIFICATIONS.md",
+      "kind": "doc",
+      "opened": true,
+      "method": "text_read",
+      "size": 2817,
+      "sha256_12": "343a4ff6f81e",
+      "changed": true,
+      "change_summary": "Cross-checked against PROVIDER_CLI_FINAL_ADJUDICATION; Chat provider-setup copy corrected to official-source / not bundled / not baseline."
+    },
+    {
+      "path": "original:04_PINNED_HISTORY_ARTIFACTS_QUESTIONS_ACTIVITY.md",
+      "kind": "doc",
+      "opened": true,
+      "method": "text_read",
+      "size": 2538,
+      "sha256_12": "3df17e721433",
+      "changed": false,
+      "change_summary": "Already implemented in grok-4-5 windows/threads; media correction revalidated rather than redesigned."
+    },
+    {
+      "path": "original:07_DEMO_FIXTURES_MOTION_AND_TEST_GATE.md",
+      "kind": "doc",
+      "opened": true,
+      "method": "text_read",
+      "size": 2532,
+      "sha256_12": "5dd7a7165798",
+      "changed": true,
+      "change_summary": "Motion honesty updated: causal continuity from four videos without frame-matching; test gate points at %TEMP% probes + ?v=42."
+    }
+  ],
+  "video_causal_continuity_map": {
+    "01_message_arrival_spatial_continuity": {
+      "hooks": [
+        "PMChatMotion spatial enter",
+        ".pm-motion-enter-spatial",
+        "composer→transcript settle"
+      ],
+      "files": [
+        "_shared/motion.js",
+        "_shared/motion.css"
+      ],
+      "status": "applied",
+      "note": "Causal continuity principles only — not a visual clone of the recording.",
+      "applied_to": "motion.js / motion.css causal hooks (not frame-matched)"
+    },
+    "02_stable_paged_questionnaire": {
+      "hooks": [
+        "stable .pm-q-stage shell",
+        "page morph",
+        "progress/Skip/Submit"
+      ],
+      "files": [
+        "_shared/motion.js",
+        "_shared/motion.css",
+        "threads/q-renderers.js",
+        "threads/_thread-kit.js"
+      ],
+      "status": "applied",
+      "applied_to": "motion.js / motion.css causal hooks (not frame-matched)"
+    },
+    "03_compact_execution_activity": {
+      "hooks": [
+        "activity index expand/collapse reopen",
+        "per-thread compact work forks"
+      ],
+      "files": [
+        "_shared/motion.js",
+        "_shared/motion.css",
+        "threads/t2.js",
+        "threads/t3.js",
+        "threads/t5.js",
+        "threads/t6.js",
+        "threads/t8.js",
+        "threads/_thread-kit.js"
+      ],
+      "status": "applied",
+      "applied_to": "motion.js / motion.css causal hooks (not frame-matched)"
+    },
+    "04_questionnaire_morph_prepare_submit": {
+      "hooks": [
+        "prepare pill",
+        "pm-q-height-morph",
+        "submit compress"
+      ],
+      "files": [
+        "_shared/motion.js",
+        "_shared/motion.css",
+        "threads/q-renderers.js"
+      ],
+      "status": "applied",
+      "applied_to": "motion.js / motion.css causal hooks (not frame-matched)"
+    }
+  },
+  "winner": null,
+  "cache_bust": "v=42",
+  "probe_evidence": {
+    "concepthub": "pass",
+    "correction_live": {
+      "passed": 20,
+      "failed": 0,
+      "total": 20
+    },
+    "matrix_smoke": {
+      "matrix": {
+        "expected": 64,
+        "passed": 64,
+        "failed": 0,
+        "cells": [
+          {
+            "id": "friendly-dark|w520|rm0",
+            "theme": "friendly-dark",
+            "width": 520,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "friendly-dark",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "520",
+              "tier": "min",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-dark&width=520&rm=0&rail=1"
+          },
+          {
+            "id": "friendly-dark|w520|rm1",
+            "theme": "friendly-dark",
+            "width": 520,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "friendly-dark",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "520",
+              "tier": "min",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-dark&width=520&rm=1&rail=1"
+          },
+          {
+            "id": "friendly-dark|w750|rm0",
+            "theme": "friendly-dark",
+            "width": 750,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "friendly-dark",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "750",
+              "tier": "mid",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+          },
+          {
+            "id": "friendly-dark|w750|rm1",
+            "theme": "friendly-dark",
+            "width": 750,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "friendly-dark",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "750",
+              "tier": "mid",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-dark&width=750&rm=1&rail=1"
+          },
+          {
+            "id": "friendly-dark|w975|rm0",
+            "theme": "friendly-dark",
+            "width": 975,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "friendly-dark",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "975",
+              "tier": "wider",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-dark&width=975&rm=0&rail=1"
+          },
+          {
+            "id": "friendly-dark|w975|rm1",
+            "theme": "friendly-dark",
+            "width": 975,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "friendly-dark",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "975",
+              "tier": "wider",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-dark&width=975&rm=1&rail=1"
+          },
+          {
+            "id": "friendly-dark|w1200|rm0",
+            "theme": "friendly-dark",
+            "width": 1200,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "friendly-dark",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "1200",
+              "tier": "wide",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-dark&width=1200&rm=0&rail=1"
+          },
+          {
+            "id": "friendly-dark|w1200|rm1",
+            "theme": "friendly-dark",
+            "width": 1200,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "friendly-dark",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "1200",
+              "tier": "wide",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-dark&width=1200&rm=1&rail=1"
+          },
+          {
+            "id": "friendly-light|w520|rm0",
+            "theme": "friendly-light",
+            "width": 520,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "friendly-light",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "520",
+              "tier": "min",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-light&width=520&rm=0&rail=1"
+          },
+          {
+            "id": "friendly-light|w520|rm1",
+            "theme": "friendly-light",
+            "width": 520,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "friendly-light",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "520",
+              "tier": "min",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-light&width=520&rm=1&rail=1"
+          },
+          {
+            "id": "friendly-light|w750|rm0",
+            "theme": "friendly-light",
+            "width": 750,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "friendly-light",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "750",
+              "tier": "mid",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-light&width=750&rm=0&rail=1"
+          },
+          {
+            "id": "friendly-light|w750|rm1",
+            "theme": "friendly-light",
+            "width": 750,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "friendly-light",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "750",
+              "tier": "mid",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-light&width=750&rm=1&rail=1"
+          },
+          {
+            "id": "friendly-light|w975|rm0",
+            "theme": "friendly-light",
+            "width": 975,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "friendly-light",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "975",
+              "tier": "wider",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-light&width=975&rm=0&rail=1"
+          },
+          {
+            "id": "friendly-light|w975|rm1",
+            "theme": "friendly-light",
+            "width": 975,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "friendly-light",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "975",
+              "tier": "wider",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-light&width=975&rm=1&rail=1"
+          },
+          {
+            "id": "friendly-light|w1200|rm0",
+            "theme": "friendly-light",
+            "width": 1200,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "friendly-light",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "1200",
+              "tier": "wide",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-light&width=1200&rm=0&rail=1"
+          },
+          {
+            "id": "friendly-light|w1200|rm1",
+            "theme": "friendly-light",
+            "width": 1200,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "friendly-light",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "1200",
+              "tier": "wide",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-light&width=1200&rm=1&rail=1"
+          },
+          {
+            "id": "retro-dark|w520|rm0",
+            "theme": "retro-dark",
+            "width": 520,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "retro-dark",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "520",
+              "tier": "min",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-dark&width=520&rm=0&rail=1"
+          },
+          {
+            "id": "retro-dark|w520|rm1",
+            "theme": "retro-dark",
+            "width": 520,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "retro-dark",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "520",
+              "tier": "min",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-dark&width=520&rm=1&rail=1"
+          },
+          {
+            "id": "retro-dark|w750|rm0",
+            "theme": "retro-dark",
+            "width": 750,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "retro-dark",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "750",
+              "tier": "mid",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-dark&width=750&rm=0&rail=1"
+          },
+          {
+            "id": "retro-dark|w750|rm1",
+            "theme": "retro-dark",
+            "width": 750,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "retro-dark",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "750",
+              "tier": "mid",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-dark&width=750&rm=1&rail=1"
+          },
+          {
+            "id": "retro-dark|w975|rm0",
+            "theme": "retro-dark",
+            "width": 975,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "retro-dark",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "975",
+              "tier": "wider",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-dark&width=975&rm=0&rail=1"
+          },
+          {
+            "id": "retro-dark|w975|rm1",
+            "theme": "retro-dark",
+            "width": 975,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "retro-dark",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "975",
+              "tier": "wider",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-dark&width=975&rm=1&rail=1"
+          },
+          {
+            "id": "retro-dark|w1200|rm0",
+            "theme": "retro-dark",
+            "width": 1200,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "retro-dark",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "1200",
+              "tier": "wide",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-dark&width=1200&rm=0&rail=1"
+          },
+          {
+            "id": "retro-dark|w1200|rm1",
+            "theme": "retro-dark",
+            "width": 1200,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "retro-dark",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "1200",
+              "tier": "wide",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-dark&width=1200&rm=1&rail=1"
+          },
+          {
+            "id": "retro-light|w520|rm0",
+            "theme": "retro-light",
+            "width": 520,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "retro-light",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "520",
+              "tier": "min",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-light&width=520&rm=0&rail=1"
+          },
+          {
+            "id": "retro-light|w520|rm1",
+            "theme": "retro-light",
+            "width": 520,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "retro-light",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "520",
+              "tier": "min",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-light&width=520&rm=1&rail=1"
+          },
+          {
+            "id": "retro-light|w750|rm0",
+            "theme": "retro-light",
+            "width": 750,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "retro-light",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "750",
+              "tier": "mid",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-light&width=750&rm=0&rail=1"
+          },
+          {
+            "id": "retro-light|w750|rm1",
+            "theme": "retro-light",
+            "width": 750,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "retro-light",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "750",
+              "tier": "mid",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-light&width=750&rm=1&rail=1"
+          },
+          {
+            "id": "retro-light|w975|rm0",
+            "theme": "retro-light",
+            "width": 975,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "retro-light",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "975",
+              "tier": "wider",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-light&width=975&rm=0&rail=1"
+          },
+          {
+            "id": "retro-light|w975|rm1",
+            "theme": "retro-light",
+            "width": 975,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "retro-light",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "975",
+              "tier": "wider",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-light&width=975&rm=1&rail=1"
+          },
+          {
+            "id": "retro-light|w1200|rm0",
+            "theme": "retro-light",
+            "width": 1200,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "retro-light",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "1200",
+              "tier": "wide",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-light&width=1200&rm=0&rail=1"
+          },
+          {
+            "id": "retro-light|w1200|rm1",
+            "theme": "retro-light",
+            "width": 1200,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "retro-light",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "1200",
+              "tier": "wide",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=retro-light&width=1200&rm=1&rail=1"
+          },
+          {
+            "id": "basic-light|w520|rm0",
+            "theme": "basic-light",
+            "width": 520,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "basic-light",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "520",
+              "tier": "min",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-light&width=520&rm=0&rail=1"
+          },
+          {
+            "id": "basic-light|w520|rm1",
+            "theme": "basic-light",
+            "width": 520,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "basic-light",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "520",
+              "tier": "min",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-light&width=520&rm=1&rail=1"
+          },
+          {
+            "id": "basic-light|w750|rm0",
+            "theme": "basic-light",
+            "width": 750,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "basic-light",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "750",
+              "tier": "mid",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-light&width=750&rm=0&rail=1"
+          },
+          {
+            "id": "basic-light|w750|rm1",
+            "theme": "basic-light",
+            "width": 750,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "basic-light",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "750",
+              "tier": "mid",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-light&width=750&rm=1&rail=1"
+          },
+          {
+            "id": "basic-light|w975|rm0",
+            "theme": "basic-light",
+            "width": 975,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "basic-light",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "975",
+              "tier": "wider",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-light&width=975&rm=0&rail=1"
+          },
+          {
+            "id": "basic-light|w975|rm1",
+            "theme": "basic-light",
+            "width": 975,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "basic-light",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "975",
+              "tier": "wider",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-light&width=975&rm=1&rail=1"
+          },
+          {
+            "id": "basic-light|w1200|rm0",
+            "theme": "basic-light",
+            "width": 1200,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "basic-light",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "1200",
+              "tier": "wide",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-light&width=1200&rm=0&rail=1"
+          },
+          {
+            "id": "basic-light|w1200|rm1",
+            "theme": "basic-light",
+            "width": 1200,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "basic-light",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "1200",
+              "tier": "wide",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-light&width=1200&rm=1&rail=1"
+          },
+          {
+            "id": "basic-dark|w520|rm0",
+            "theme": "basic-dark",
+            "width": 520,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "basic-dark",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "520",
+              "tier": "min",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-dark&width=520&rm=0&rail=1"
+          },
+          {
+            "id": "basic-dark|w520|rm1",
+            "theme": "basic-dark",
+            "width": 520,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "basic-dark",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "520",
+              "tier": "min",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-dark&width=520&rm=1&rail=1"
+          },
+          {
+            "id": "basic-dark|w750|rm0",
+            "theme": "basic-dark",
+            "width": 750,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "basic-dark",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "750",
+              "tier": "mid",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-dark&width=750&rm=0&rail=1"
+          },
+          {
+            "id": "basic-dark|w750|rm1",
+            "theme": "basic-dark",
+            "width": 750,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "basic-dark",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "750",
+              "tier": "mid",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-dark&width=750&rm=1&rail=1"
+          },
+          {
+            "id": "basic-dark|w975|rm0",
+            "theme": "basic-dark",
+            "width": 975,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "basic-dark",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "975",
+              "tier": "wider",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-dark&width=975&rm=0&rail=1"
+          },
+          {
+            "id": "basic-dark|w975|rm1",
+            "theme": "basic-dark",
+            "width": 975,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "basic-dark",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "975",
+              "tier": "wider",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-dark&width=975&rm=1&rail=1"
+          },
+          {
+            "id": "basic-dark|w1200|rm0",
+            "theme": "basic-dark",
+            "width": 1200,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "basic-dark",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "1200",
+              "tier": "wide",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-dark&width=1200&rm=0&rail=1"
+          },
+          {
+            "id": "basic-dark|w1200|rm1",
+            "theme": "basic-dark",
+            "width": 1200,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "basic-dark",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "1200",
+              "tier": "wide",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=basic-dark&width=1200&rm=1&rail=1"
+          },
+          {
+            "id": "glass-dark|w520|rm0",
+            "theme": "glass-dark",
+            "width": 520,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "glass-dark",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "520",
+              "tier": "min",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-dark&width=520&rm=0&rail=1"
+          },
+          {
+            "id": "glass-dark|w520|rm1",
+            "theme": "glass-dark",
+            "width": 520,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "glass-dark",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "520",
+              "tier": "min",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-dark&width=520&rm=1&rail=1"
+          },
+          {
+            "id": "glass-dark|w750|rm0",
+            "theme": "glass-dark",
+            "width": 750,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "glass-dark",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "750",
+              "tier": "mid",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-dark&width=750&rm=0&rail=1"
+          },
+          {
+            "id": "glass-dark|w750|rm1",
+            "theme": "glass-dark",
+            "width": 750,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "glass-dark",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "750",
+              "tier": "mid",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-dark&width=750&rm=1&rail=1"
+          },
+          {
+            "id": "glass-dark|w975|rm0",
+            "theme": "glass-dark",
+            "width": 975,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "glass-dark",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "975",
+              "tier": "wider",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-dark&width=975&rm=0&rail=1"
+          },
+          {
+            "id": "glass-dark|w975|rm1",
+            "theme": "glass-dark",
+            "width": 975,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "glass-dark",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "975",
+              "tier": "wider",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-dark&width=975&rm=1&rail=1"
+          },
+          {
+            "id": "glass-dark|w1200|rm0",
+            "theme": "glass-dark",
+            "width": 1200,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "glass-dark",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "1200",
+              "tier": "wide",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-dark&width=1200&rm=0&rail=1"
+          },
+          {
+            "id": "glass-dark|w1200|rm1",
+            "theme": "glass-dark",
+            "width": 1200,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "glass-dark",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "1200",
+              "tier": "wide",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-dark&width=1200&rm=1&rail=1"
+          },
+          {
+            "id": "glass-light|w520|rm0",
+            "theme": "glass-light",
+            "width": 520,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "glass-light",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "520",
+              "tier": "min",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-light&width=520&rm=0&rail=1"
+          },
+          {
+            "id": "glass-light|w520|rm1",
+            "theme": "glass-light",
+            "width": 520,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "glass-light",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "520",
+              "tier": "min",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-light&width=520&rm=1&rail=1"
+          },
+          {
+            "id": "glass-light|w750|rm0",
+            "theme": "glass-light",
+            "width": 750,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "glass-light",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "750",
+              "tier": "mid",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-light&width=750&rm=0&rail=1"
+          },
+          {
+            "id": "glass-light|w750|rm1",
+            "theme": "glass-light",
+            "width": 750,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "glass-light",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "750",
+              "tier": "mid",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-light&width=750&rm=1&rail=1"
+          },
+          {
+            "id": "glass-light|w975|rm0",
+            "theme": "glass-light",
+            "width": 975,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "glass-light",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "975",
+              "tier": "wider",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-light&width=975&rm=0&rail=1"
+          },
+          {
+            "id": "glass-light|w975|rm1",
+            "theme": "glass-light",
+            "width": 975,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "glass-light",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "975",
+              "tier": "wider",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-light&width=975&rm=1&rail=1"
+          },
+          {
+            "id": "glass-light|w1200|rm0",
+            "theme": "glass-light",
+            "width": 1200,
+            "rm": "0",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "glass-light",
+              "reduced": "0",
+              "motion": "full",
+              "widthAttr": "1200",
+              "tier": "wide",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-light&width=1200&rm=0&rail=1"
+          },
+          {
+            "id": "glass-light|w1200|rm1",
+            "theme": "glass-light",
+            "width": 1200,
+            "rm": "1",
+            "pass": true,
+            "issues": [],
+            "snap": {
+              "theme": "glass-light",
+              "reduced": "1",
+              "motion": "reduced",
+              "widthAttr": "1200",
+              "tier": "wide",
+              "msgVisible": true,
+              "shell": true
+            },
+            "retry980": null,
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=glass-light&width=1200&rm=1&rail=1"
+          }
+        ]
+      },
+      "bsd": {
+        "passed": 8,
+        "failed": 0,
+        "cells": [
+          {
+            "id": "bsd-w1",
+            "pass": true,
+            "expected": "mono",
+            "got": "mono",
+            "url": "http://127.0.0.1:8775/host.html?w=w1&t=t1&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+          },
+          {
+            "id": "bsd-w2",
+            "pass": true,
+            "expected": "kicker",
+            "got": "kicker",
+            "url": "http://127.0.0.1:8775/host.html?w=w2&t=t1&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+          },
+          {
+            "id": "bsd-w3",
+            "pass": true,
+            "expected": "lamp",
+            "got": "lamp",
+            "url": "http://127.0.0.1:8775/host.html?w=w3&t=t1&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+          },
+          {
+            "id": "bsd-w4",
+            "pass": true,
+            "expected": "chip",
+            "got": "chip",
+            "url": "http://127.0.0.1:8775/host.html?w=w4&t=t1&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+          },
+          {
+            "id": "bsd-w5",
+            "pass": true,
+            "expected": "trailing",
+            "got": "trailing",
+            "url": "http://127.0.0.1:8775/host.html?w=w5&t=t1&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+          },
+          {
+            "id": "bsd-w6",
+            "pass": true,
+            "expected": "trailing",
+            "got": "trailing",
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+          },
+          {
+            "id": "bsd-w7",
+            "pass": true,
+            "expected": "latch",
+            "got": "latch",
+            "url": "http://127.0.0.1:8775/host.html?w=w7&t=t1&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+          },
+          {
+            "id": "bsd-w8",
+            "pass": true,
+            "expected": "rail",
+            "got": "rail",
+            "url": "http://127.0.0.1:8775/host.html?w=w8&t=t1&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+          }
+        ]
+      },
+      "q": {
+        "passed": 8,
+        "failed": 0,
+        "cells": [
+          {
+            "id": "q-t1",
+            "pass": true,
+            "expected": "q-folio-leaf-morph",
+            "got": {
+              "renderer": "q-folio-leaf-morph",
+              "concept": "t1"
+            },
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t1&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+          },
+          {
+            "id": "q-t2",
+            "pass": true,
+            "expected": "q-beat-attached",
+            "got": {
+              "renderer": "q-beat-attached",
+              "concept": "t2"
+            },
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t2&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+          },
+          {
+            "id": "q-t3",
+            "pass": true,
+            "expected": "q-shelf-stack",
+            "got": {
+              "renderer": "q-shelf-stack",
+              "concept": "t3"
+            },
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t3&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+          },
+          {
+            "id": "q-t4",
+            "pass": true,
+            "expected": "q-yield-sheet",
+            "got": {
+              "renderer": "q-yield-sheet",
+              "concept": "t4"
+            },
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t4&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+          },
+          {
+            "id": "q-t5",
+            "pass": true,
+            "expected": "q-condenser-stage",
+            "got": {
+              "renderer": "q-condenser-stage",
+              "concept": "t5"
+            },
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t5&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+          },
+          {
+            "id": "q-t6",
+            "pass": true,
+            "expected": "q-margin-sidecar",
+            "got": {
+              "renderer": "q-margin-sidecar",
+              "concept": "t6"
+            },
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t6&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+          },
+          {
+            "id": "q-t7",
+            "pass": true,
+            "expected": "q-focus-stepper",
+            "got": {
+              "renderer": "q-focus-stepper",
+              "concept": "t7"
+            },
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t7&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+          },
+          {
+            "id": "q-t8",
+            "pass": true,
+            "expected": "q-paired-breath",
+            "got": {
+              "renderer": "q-paired-breath",
+              "concept": "t8"
+            },
+            "url": "http://127.0.0.1:8775/host.html?w=w6&t=t8&mount=docked&theme=friendly-dark&width=750&rm=0&rail=1"
+          }
+        ]
+      }
+    },
+    "probes_dir": "%TEMP%\\pm-grok45-probes\\correction-2026-08-14"
+  },
+  "status": "complete",
+  "review_complete": true,
+  "pending_change_summaries": 0
+}

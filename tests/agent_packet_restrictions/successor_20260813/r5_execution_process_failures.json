@@ -1,0 +1,70 @@
+{
+  "schema_id": "pw-r5-execution-process-failure-history-v1",
+  "attempt_id": "PW-R5-SNAPSHOT-MATRIX-20260814.1",
+  "entries": [
+    {
+      "sequence": 1,
+      "terminal": "OUTER_APPLY_PATCH_SERIALIZER_REJECTED_VALID_TRAILING_LF_PAYLOAD",
+      "cell": "slot-alpha/S10A",
+      "phase": "deterministic_packet_render_storage",
+      "effect": "Harness render and post-return guard passed, but the outer controller rejected the valid payload before apply_patch because the payload already ended in LF.",
+      "artifact_written": false,
+      "subject_or_provider_calls": 0,
+      "disposition": "Recoverable outer-controller defect; preserve this failure and rerun only the deterministic render/storage operation with exact payload-plus-one-LF semantics."
+    },
+    {
+      "sequence": 2,
+      "terminal": "HARNESS_REJECTED_TRANSCRIBED_CREATION_PACKET_SHA",
+      "cell": "slot-alpha/S10B",
+      "phase": "post_create_creation_metadata_validation",
+      "effect": "The sole subject task was created, but the controller copied a 62-character packet hash into the creation receipt. The guarded harness rejected it before wait, read, capture, or scoring.",
+      "failed_artifact_storage_sha256": "8e71db70003f6703d55ce933729767c98861c2bd1ad1c45a7ea6c642471af3c6",
+      "failed_artifact_storage_bytes": 548,
+      "preserved_copy": "tests/agent_packet_restrictions/successor_20260813/r5_failed_runtime_artifacts/slot-alpha_S10B.creation.bad.json",
+      "subject_or_provider_calls_at_failure": 2,
+      "disposition": "Recoverable controller transcription defect. Correct only the receipt to the already-rendered packet's computed 64-hex payload hash; retain the same already-created subject task and do not retry it."
+    },
+    {
+      "sequence": 3,
+      "terminal": "OUTER_SCORE_WRAPPER_REJECTED_VALID_RC1_FAIL_BEFORE_POST_GUARD",
+      "cell": "slot-bravo/S10B",
+      "phase": "deterministic_score_acceptance",
+      "effect": "The harness emitted a valid scored FAIL with rc=1, but the outer wrapper treated every nonzero code as an exception before its required post-return verifier checkpoint.",
+      "artifact_written": false,
+      "subject_or_provider_calls_at_failure": 6,
+      "observed_scored_failure": {"actual_payload_sha256": "1266c931fde3d046fbd4df6bbc4ad70a25e07be626ab5880fa1f38de4becfd3c", "actual_payload_bytes": 2807, "expected_payload_sha256": "c1d5ad37f8e9d9f3384d41aed50ddc8f0e639f0b9c4a03322ef91bfd2dbddfdf", "expected_payload_bytes": 2799},
+      "disposition": "Recoverable outer-controller exit-code defect. Re-run only deterministic score acceptance with rc=0 PASS and rc=1 FAIL both treated as valid scored terminals; do not rerun the subject call."
+    },
+    {
+      "sequence": 4,
+      "terminal": "HARNESS_REJECTED_SHARED_PLATFORM_HOST_AS_IDENTITY_REPLAY",
+      "cell": "W20/slot-alpha/S20A",
+      "phase": "prior_wave_identity_validation",
+      "effect": "The sealed harness incorrectly required host_id uniqueness across tasks and rejected six truthful app-returned host_id=local observations, although the protocol requires only global task_id and thread_id uniqueness.",
+      "failed_harness_storage_sha256": "8393ccc690a03d2abd0cc70d994736259071048be5caca74a9ec74555976e5df",
+      "subject_or_provider_calls_at_failure": 6,
+      "preserved_receipt": "tests/agent_packet_restrictions/successor_20260813/r5_w20_host_identity_pre_repair_receipt.json",
+      "disposition": "Recoverable disposable-harness defect. Narrowly remove host uniqueness while retaining nonempty host validation and task/thread uniqueness; reseal without changing prompts, oracles, scorer, routes, or subject evidence."
+    },
+    {
+      "sequence": 5,
+      "terminal": "HARNESS_REJECTED_INCOMPLETE_S30A_ANCESTOR_ARGUMENT_SET",
+      "cell": "slot-alpha/S30A",
+      "phase": "score_validation",
+      "effect": "Call-receipt construction succeeded and its receipt was stored, but the outer controller then supplied S20A while omitting the S10A capture and receipt needed to revalidate S20A's complete ancestor chain during scoring. The guarded scorer returned INVALID and stored no score artifact.",
+      "receipt_already_stored": "tests/agent_packet_restrictions/successor_20260813/model_retest_r5_snapshot_v1/runs/slot-alpha/receipts/S30A.json",
+      "subject_or_provider_calls_at_failure": 8,
+      "disposition": "Recoverable controller CLI assembly defect. Re-run only deterministic scoring with the complete immutable ancestor argument set; retain the same subject call, captured response, and already-stored receipt."
+    },
+    {
+      "sequence": 6,
+      "terminal": "REDUNDANT_S30A_RECEIPT_RECONSTRUCTION_REJECTED",
+      "cell": "slot-alpha/S30A",
+      "phase": "controller_recovery",
+      "effect": "While correcting sequence 5, the controller incorrectly attempted to reconstruct the already-stored immutable receipt. The harness rejected it as already existing; no artifact changed.",
+      "artifact_written": false,
+      "subject_or_provider_calls_at_failure": 8,
+      "disposition": "Preserve the existing receipt and re-run only the deterministic scorer with complete ancestor arguments."
+    }
+  ]
+}

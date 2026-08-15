@@ -34,7 +34,7 @@
 <body>
   <header>
     <div><span>Assistant Chat visual acceptance evidence</span><h1>Concept family contact sheet</h1></div>
-    <strong data-concept-model="5.6 Sol">5.6 Sol</strong>
+    <div><strong data-concept-model="5.6 Sol">5.6 Sol</strong><span> · 115 inspected frames</span></div>
   </header>
   <nav aria-label="Evidence groups">
     <button type="button" data-filter="all" aria-pressed="true">All evidence</button>
@@ -42,6 +42,7 @@
     <button type="button" data-filter="question">Question grammars</button>
     <button type="button" data-filter="work">Work grammars</button>
     <button type="button" data-filter="state">Pressure states</button>
+    <button type="button" data-filter="trigger">Corrected triggers</button>
   </nav>
   <main id="sheet"></main>
   <script>
@@ -56,6 +57,19 @@
       "state-durable-composer-520.png",
       "state-popout-context.png",
       "state-deterministic-controller.png"
+    ];
+    const correctedTriggers = [
+      "activity.browser", "activity.edit", "activity.fetch", "activity.generate", "activity.read", "activity.search", "activity.test", "activity.thinking_summary",
+      "artifact.close", "artifact.error", "artifact.loading", "artifact.ready", "artifact.switch",
+      "decision.approval_open", "decision.approve", "decision.branch", "decision.deny", "decision.details",
+      "diff.create", "diff.open", "diff.update",
+      "goal.blocked", "goal.complete", "goal.pause", "goal.progress", "goal.replan", "goal.resume", "goal.start", "goal.update",
+      "history.peek", "history.pin_compact", "history.pin_full", "history.switch_thread", "history.unpin",
+      "question.cancel", "question.next", "question.open", "question.prepare", "question.select", "question.skip", "question.submit", "question.validation_error",
+      "subagent.complete", "subagent.fail", "subagent.progress", "subagent.queue", "subagent.retry", "subagent.spawn",
+      "system.port_collision", "system.reset", "system.worktree_collision",
+      "thread.branch", "thread.receive_response", "thread.send_request", "thread.spawn_related",
+      "todo.add", "todo.block", "todo.complete", "todo.reopen"
     ];
     const groups = [
       {
@@ -81,6 +95,15 @@
         title: "Pressure and recovery states",
         description: "Approvals, route warnings, offline transport, artifact failure, compact selectors, durable draft, pop-out context, and the prototype-only controller.",
         frames: stateFrames.map((file) => ({ file, label: file.replace(".png", "").replaceAll("-", " ") }))
+      },
+      {
+        id: "trigger",
+        title: "Revision-2 corrected trigger evidence",
+        description: "All 59 exact contract events plus the separate scenario-reset capture. Visible receipts are paired with automated non-receipt semantic assertions in the raw browser receipts.",
+        frames: [
+          ...correctedTriggers.map((trigger) => ({ file: `trigger-${trigger.replace(".", "-")}.png`, label: trigger })),
+          { file: "trigger-scenario-reset.png", label: "scenario.reset" }
+        ]
       }
     ];
     const sheet = document.getElementById("sheet");

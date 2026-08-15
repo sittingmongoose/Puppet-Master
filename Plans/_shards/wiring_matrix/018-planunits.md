@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L642-L2972
+Source lines: L642-L2973
 
-Source SHA256: `adffa65bcc7e38865d077b5ad538a6bf94c19117a46bece38d8e73c7a359aae0`
+Source SHA256: `24853014907c12d1eab1df3d6958ff58907a01d12f326eac8598b514530bf944`
 
 ---
 
@@ -1409,7 +1409,7 @@ plan_unit_id: WM-023
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: 'Browser wiring invariants preserve stale `newfeatures.md §15.18` cleanup, the CEF-class tab-first in-app `/browser` model, `auth_session` limits, explicit chip-based capture, DevTools contract, takeover behavior, and recovery behavior for workspace, detached, automation, and auth sessions.'
+canonical_text: 'Browser wiring invariants preserve stale source cleanup and PM-native ordinary Browser Program capture, DevTools, takeover, and recovery behavior while structurally denying protected AuthBrowserSession generic navigation, capture, recording, inspection, persistence, artifact, agent/tool, and restore wiring.'
 gui_related: true
 gui_classification_reason: 'The unit defines user-visible browser session, capture, takeover, DevTools, and recovery invariants.'
 split_recommended: false
@@ -1422,6 +1422,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - WM-023 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+- Ordinary and protected-auth subjects are discriminated before command selection; protected_auth has no generic browser command row.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:

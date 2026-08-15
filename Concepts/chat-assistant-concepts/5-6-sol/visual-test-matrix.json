@@ -1,18 +1,20 @@
 {
-  "schema_id": "pm.chat.5_6_sol.visual_test_matrix.v2",
+  "schema_id": "pm.chat.5_6_sol.visual_test_matrix.v3",
   "model": "5.6 Sol",
-  "generated_at": "2026-08-12T07:47:30Z",
-  "prototype_visual_gate": "pass",
+  "generated_at": "2026-08-14T05:47:37Z",
+  "prototype_visual_gate": "pass_browser_prototype_with_declared_transport_and_native_residuals",
   "production_readiness_claimed": false,
   "winner_recommendation": null,
+  "source_fingerprint_sha256": "4392f156cad4eb5f8761cdf1b40e9cbc370209c0e63b47684a6c063cc477f7bb",
   "source_receipts": [
     "evidence/browser-acceptance-firefox.json",
-    "evidence/browser-acceptance-chromium.json"
+    "evidence/browser-acceptance-chromium.json",
+    "evidence/browser-acceptance-chromium-http.json"
   ],
   "contact_sheet": "evidence/contact-sheet.html",
   "canonical_frame_root": "evidence/frames",
   "chromium_frame_root": "evidence/chromium-frames",
-  "automated_matrix_per_engine": {
+  "automated_matrix_per_complete_engine": {
     "theme_width": {
       "status": "pass",
       "themes": [
@@ -28,22 +30,32 @@
       "widths": [520, 750, 975, 1200],
       "cells": 32,
       "screenshots": 32,
-      "settle_gate": "Every animated concept root must reach at least 0.99 opacity after a 700 ms authored-motion settle before capture."
+      "settle_gate": "Every animated concept root reached at least 0.99 opacity after the authored-motion settle before capture."
     },
     "legibility": {
       "status": "pass",
       "calculation": "8 themes x 8 thread concepts",
       "cells": 64,
       "body_copy_floor_px": 16,
-      "metadata_and_action_floor_px": 11,
-      "dense_work_row_floor_px": 12,
+      "action_context_and_work_metadata_floor_px": 12,
+      "dense_work_row_floor_px": 13,
       "minimum_metadata_contrast": "6:1 on base and raised surfaces",
       "dense_header_overlap_cells": 0,
       "clipped_dense_headers": 0
     },
+    "same_model_pairings": {
+      "status": "pass",
+      "calculation": "8 window concepts x 8 thread concepts",
+      "cells": 64
+    },
+    "questionnaire_grammars": {
+      "status": "pass",
+      "cells": 8,
+      "claim": "Eight persistent compositions share lifecycle semantics without collapsing into one visual renderer."
+    },
     "baseline": {
       "status": "pass",
-      "calculation": "8 concepts x 8 themes x 4 widths x 2 rail states",
+      "calculation": "8 windows x 8 threads x 4 widths x 2 rail states",
       "cells": 512,
       "assertions": [
         "exact Chat width",
@@ -61,6 +73,13 @@
       "host": "window-05 x thread-02",
       "host_role": "coverage-only; no rank, preference, or winner recommendation"
     },
+    "continuous_resize": {
+      "status": "pass",
+      "range_px": [520, 1200],
+      "representative_pairings": 8,
+      "width_samples_per_pairing": 54,
+      "cells": 432
+    },
     "history_artifact": {
       "status": "pass",
       "calculation": "8 windows x 4 history modes x 5 artifact states",
@@ -68,61 +87,77 @@
       "history_modes": ["closed", "peek", "pinned compact", "pinned full"],
       "artifact_states": ["closed", "loading", "ready", "updated", "error"]
     },
-    "same_model_pairings": {
-      "status": "pass",
-      "calculation": "8 window concepts x 8 thread concepts",
-      "cells": 64
-    },
-    "continuous_resize": {
-      "status": "pass",
-      "range_px": [520, 1200],
-      "sample_count": 53
-    },
     "motion_reduction": {
       "status": "pass",
-      "window_families": 8,
-      "thread_message_families": 8,
+      "window_entrance_families": 8,
+      "thread_send_families": 8,
+      "thread_redirect_families": 8,
       "thread_question_families": 8,
       "thread_work_families": 8,
       "popup_families": 1,
       "continuous_progress_families": 1,
-      "authored_families": 34,
-      "reduced_counterparts": 34
+      "authored_families": 42,
+      "reduced_counterparts": 42,
+      "causal_contract": {
+        "message_markers": ["commit", "redirect", "queued"],
+        "question_markers": ["prepare", "open", "page", "select", "submit", "receipt"],
+        "work_markers": ["progress", "condense", "reopen"],
+        "unrelated_rerender_replay": false
+      },
+      "differentiation": "Each of the eight thread concepts has a distinct named send, redirect, question, and work sequence. The settled state has zero animation, and reduced motion collapses every sequence to immediate semantic placement."
+    },
+    "corrected_triggers": {
+      "status": "pass",
+      "revision_2_cells": 59,
+      "screenshots": 59,
+      "assertion_boundary": "Exact receipts and non-receipt semantic mutations are automated assertions; visual frames do not stand in for reducer evidence."
+    },
+    "supplemental_triggers": {
+      "status": "pass",
+      "cells": 34,
+      "assertion_boundary": "The matrix asserts 33 exact receipts plus the intentional receipt-clearing scenario.reset outcome, semantic outcomes for all 34 rows, provider supply-chain proof and derived continuation currentness, notification routing, and attachment, BSD, network, and context states; no extra screenshot count is claimed."
+    },
+    "reset_determinism": {
+      "status": "pass",
+      "runs": 2,
+      "scenario_reset_screenshots": 1
     }
   },
-  "curated_frames_per_engine": {
-    "total": 55,
+  "captured_frames_per_complete_engine": {
+    "total": 115,
     "theme_width_frames": 32,
-    "focused_frames": 23,
-    "focused_sets": {
-      "question_grammars": 8,
-      "work_grammars": 8,
-      "stress_states": 7
-    }
+    "questionnaire_frames": 8,
+    "work_system_frames": 8,
+    "focused_state_frames": 7,
+    "corrected_trigger_frames": 59,
+    "scenario_reset_frames": 1
   },
   "direct_visual_inspection": {
     "status": "pass",
-    "inspected_frame_count": 55,
-    "expected_frame_count": 55,
+    "engine": "Firefox 153.0.4 / Gecko",
+    "inspected_frame_count": 115,
+    "expected_frame_count": 115,
     "receipt": "evidence/direct-visual-inspection.json",
-    "method": "Direct original-resolution review of every settled canonical PNG; automated matrices remain separate from visual judgment.",
-    "chromium_parity_spot_check": {
-      "frame_count": 12,
-      "coverage": "four narrow dark themes, four wide light themes, one dense questionnaire, one work system, one route popup, and one pop-out context state",
-      "claim_boundary": "Representative parity review only; the full 55-frame direct-inspection claim applies to the canonical Firefox set."
-    },
+    "method": "One-at-a-time original-resolution review of every current canonical Firefox PNG; automated matrices remain separate from visual judgment.",
     "review_findings": [
-      "All eight diagonal window/thread compositions retain distinct spatial and reading grammars rather than palette-only variation.",
+      "All eight diagonal window-thread compositions retain distinct spatial and reading grammars rather than palette-only variation.",
       "The 520 px Chat measure preserves readable prose and visible metadata while artifact and pinned-history regions yield outside the Chat measure.",
-      "All eight question grammars and all eight work grammars were directly inspected; dense questionnaire commit controls remain visible above the held composer.",
-      "Route, decision, warning, artifact-error, offline, durable-composer, pop-out, and demo-controller states remain legible and spatially recoverable.",
+      "All eight question grammars and all eight work grammars were inspected and remain resolved concept compositions rather than unfinished exploratory layouts.",
+      "The corrected Timefield narrow label and retained-focus/compositor capture issues are absent from the frozen final set.",
+      "No remaining clipping, low-contrast text, popup collision, or unintended unsettled motion state was found.",
       "No concept is designated or implied as the winner."
     ]
   },
+  "chromium_visual_boundary": {
+    "captured_frames": 115,
+    "directly_inspected_frames_claimed": 0,
+    "automation_status": "The complete 33-check Blink file lane passed and generated the full frame set.",
+    "claim_boundary": "No current Chromium frame is included in the 115-frame direct human-style inspection claim."
+  },
   "known_residuals": [
-    "The 512 baseline and 896 feature cells are automated state and geometry coverage, not 1,408 individual human image reviews.",
-    "Firefox completed over loopback HTTP; Chromium completed over a file URL because this host's Chromium renderer fails before requesting even a trivial loopback page. Chromium-over-HTTP is not claimed.",
-    "Native Slint rendering, detached-window DPI, platform font metrics, IME, assistive-technology validation, and live services remain production work."
+    "The 512 baseline, 896 feature-state, and 432 continuous-resize cells are automated state and geometry coverage, not individual human image reviews.",
+    "Firefox completed over loopback HTTP; Chromium completed from a file URL. The separate Chromium loopback-HTTP boot probe failed 0/1, so Chromium-over-HTTP is not claimed.",
+    "The implementation is HTML/CSS/JavaScript with Slint-portable translation guidance; native Slint rendering, detached-window DPI, platform font metrics, IME, assistive-technology validation, and live services remain production work."
   ],
   "residual_detail": "known-gaps.md"
 }

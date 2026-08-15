@@ -140,6 +140,7 @@ window.PMChatDemoTriggers = (() => {
     "conn.offline": (c, p) => c.store.connSetStatus("offline"),
     "conn.queue_send": (c, p) => c.store.connQueue({ threadKey: key(c), text: (p && p.text) || "Queued while offline — will send on reconnect.", attachments: [] }),
     "conn.reconnect": (c, p) => c.store.connReconnect(),
+    "conn.reconnect_fail": (c, p) => c.store.connReconnectFail(),
     "conn.snapshot": (c, p) => c.store.connSnapshot("Snapshot catch-up: history synced from Home Server."),
     "conn.server_work": (c, p) => c.store.connServerWork(key(c)),
 

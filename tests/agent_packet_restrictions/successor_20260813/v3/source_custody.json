@@ -1,0 +1,9 @@
+{
+  "schema_id":"pm.prompt_complexity_successor.source_custody.v3",
+  "binding_source":{"path":"../source_custody.json","sha256":"c6f78062dfedd1e7a3cdbd8c0cc91e03481137b09fac4ef7dfd1cf93a4d8abb7","binding_count":29},
+  "currentness":{"matched":29,"drifted":0,"missing":0,"duplicate_paths":0,"performed_by":"bounded gpt-5.6-sol medium preparation agent","subject_test":false},
+  "archive":{"entries":26,"manifest_rows":25,"provider_adjudication_is_separate":true},
+  "ledger_projection":{"last_event_id":"evt-0029","updated_at_utc":"2026-08-13T16:55:00Z","phase":"successor_preflight_active_plans_compile_held","subject_calls_authorized":false,"canonical_compile_allowed":false},
+  "preserved_residual":{"numeric_atoms":77,"stale_prose_atoms":76,"numeric_decisions":61,"stale_prose_decisions":60},
+  "claim_boundary":"As-of byte custody only; no runtime, empirical, release, safety, or Plan-compilation claim."
+}

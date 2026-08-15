@@ -1,0 +1,140 @@
+{
+  "schema_id": "pw-r5-disposable-controller-pre-repair-receipt-v1",
+  "recorded_at_utc": "2026-08-14T17:06:26Z",
+  "candidate_root": "tests/agent_packet_restrictions/successor_20260813/model_retest_r5_snapshot_v1",
+  "status": "PRESERVED_PRE_REPAIR_W20_CONTROLLER_REJECTION",
+  "reason": "The W20 deterministic transform rejected the preserved W10 subject evidence because r4_harness.py incorrectly treated host_id as globally unique. The governing protocol requires global uniqueness only for task_id and thread_id; the application legitimately reports the shared host_id value local.",
+  "repair_scope": "Patch only the disposable controller and matching execution-contract wording so host_id remains required and evidence-bound but is not globally unique; rebind only the affected launch and external-verifier custody controls.",
+  "subject_calls_preserved": 6,
+  "subject_calls_launched_by_repair": 0,
+  "pre_repair_controls": {
+    "execution_contract.json": {
+      "storage_sha256": "6140aa9efddc22aa4004b7b7ada2d8049e86c7126d03963782f93cad8e67f6fd",
+      "storage_bytes": 17357,
+      "old_global_identity_clause": "Started task IDs, thread IDs, and host IDs are each unique across every slot and every subject completion."
+    },
+    "r4_harness.py": {
+      "storage_sha256": "8393ccc690a03d2abd0cc70d994736259071048be5caca74a9ec74555976e5df",
+      "storage_bytes": 279022
+    },
+    "launch_manifest.json": {
+      "payload_sha256": "a566fc5126eb4c0b585a4df1a815a34787639d60b22eacaff90d3c42021649d5",
+      "payload_bytes": 6516,
+      "storage_sha256": "b0a22e70048dd5adaf31bbe5cb4ce9509d84c8d51b2de4fb3da41e05fb96493a",
+      "storage_bytes": 6517
+    },
+    "r5_snapshot_v1_launch_custody.json": {
+      "payload_sha256": "06e823de0f389047dbddc8e79ada6ee03b031a757b7cd9e9678180911984ac4a",
+      "payload_bytes": 502,
+      "storage_sha256": "d33ab7425d0b09863b927ce713bbe09dab12e69a868e5a919fed2bc4e3700304",
+      "storage_bytes": 503
+    },
+    "r5_snapshot_external_verifier_v1/contract.json": {
+      "storage_sha256": "bebfda7265f0b933cab9111c2c579d3a05c0d4e499b12e649192770887da1ad9",
+      "storage_bytes": 4912
+    },
+    "r5_snapshot_external_verifier_v1/external_verifier.py": {
+      "storage_sha256": "a2e9dd0095a32397e53a0873674737b1b48cd45949f786562437a26e26e3b2f1",
+      "storage_bytes": 30809
+    },
+    "r5_snapshot_external_verifier_v1_custody.json": {
+      "storage_sha256": "acf4fca7f384aa4c6c312aae7f2819d0c4ad95c89d7746a97b783dcf2c92dcaa",
+      "storage_bytes": 1130
+    }
+  },
+  "preserved_wave_evidence": {
+    "W10.dispatch.json": {
+      "payload_sha256": "226541f19521e9a8be301e70a8bac04de3925572ac212240535bbb2c847dad54",
+      "payload_bytes": 723,
+      "storage_sha256": "47ec3a2492b59757414dbd440ab7c3dd15f0aa40f5dc2a31989cfed95ac356e4",
+      "storage_bytes": 724
+    },
+    "W10.completion.json": {
+      "payload_sha256": "a66320eb0c1fbead33a05222cc4b6713ed7ff274e88d345d50682b113591e1a0",
+      "payload_bytes": 3336,
+      "storage_sha256": "fd7c37bd6039ac8e1066330e8aed68e336ce0886a196a42d929aaab787899b02",
+      "storage_bytes": 3337
+    },
+    "W20.dispatch.json": {
+      "payload_sha256": "14429b5770e320f5e72a205d31da4efce38efffb68d95800f2e9afca29b493a5",
+      "payload_bytes": 511,
+      "storage_sha256": "709146ccaaa28ca39d39c40a90107160f80c220e01ada1cb5cc810989926608b",
+      "storage_bytes": 512
+    },
+    "runs_tree_descriptor": {
+      "algorithm": "sha256 of sorted path<TAB>sha256<TAB>bytes<LF> rows beneath runs/",
+      "file_count": 45,
+      "aggregate_file_bytes": 432619,
+      "descriptor_payload_bytes": 4888,
+      "descriptor_sha256": "e6f0e3bad0b469e87300bda8acc3fe26c66cfb929a176bb5e03d4c74bfd0ec80"
+    }
+  },
+  "preserved_subject_identities": [
+    {
+      "slot": "slot-alpha",
+      "stage": "S10A",
+      "task_id": "01a00130-8c7e-7c51-894e-f9c9a336d41e",
+      "thread_id": "01a00130-8c7e-7c51-894e-f9c9a336d41e",
+      "host_id": "local",
+      "receipt_storage_sha256": "05120dac65613ddbb4c2310c7f5494c771058db68186a8b636a1cbfc3d56bd9f",
+      "receipt_storage_bytes": 2601
+    },
+    {
+      "slot": "slot-alpha",
+      "stage": "S10B",
+      "task_id": "01a00131-f87c-7590-8d5d-acea93d622d8",
+      "thread_id": "01a00131-f87c-7590-8d5d-acea93d622d8",
+      "host_id": "local",
+      "receipt_storage_sha256": "1f6804b285f103020c0183a0fb7f1e693f7c6bd68b0400192e25c24c55420742",
+      "receipt_storage_bytes": 2601
+    },
+    {
+      "slot": "slot-bravo",
+      "stage": "S10A",
+      "task_id": "01a00133-b0a7-77d1-9ff2-c09932d8e8cf",
+      "thread_id": "01a00133-b0a7-77d1-9ff2-c09932d8e8cf",
+      "host_id": "local",
+      "receipt_storage_sha256": "24b907d8109def4092c881c94c62925dac86b2871b17199f01eac0ca4b89271b",
+      "receipt_storage_bytes": 2602
+    },
+    {
+      "slot": "slot-bravo",
+      "stage": "S10B",
+      "task_id": "01a00133-c0da-7f43-a3ab-67572828b855",
+      "thread_id": "01a00133-c0da-7f43-a3ab-67572828b855",
+      "host_id": "local",
+      "receipt_storage_sha256": "2ccb9ed0493664a30ef20664e903743d413da8778c6e8b385e9cf1c83c5e25c7",
+      "receipt_storage_bytes": 2602
+    },
+    {
+      "slot": "slot-charlie",
+      "stage": "S10A",
+      "task_id": "01a00133-d33e-70a0-a77e-788c9db3015b",
+      "thread_id": "01a00133-d33e-70a0-a77e-788c9db3015b",
+      "host_id": "local",
+      "receipt_storage_sha256": "615904f34935c2a800eb14fcb2812bf80eaa5d01176f22987e035cae422a7f52",
+      "receipt_storage_bytes": 2616
+    },
+    {
+      "slot": "slot-charlie",
+      "stage": "S10B",
+      "task_id": "01a00133-e69e-78f1-baaf-b623b3344cd2",
+      "thread_id": "01a00133-e69e-78f1-baaf-b623b3344cd2",
+      "host_id": "local",
+      "receipt_storage_sha256": "9346746b2277b96579c0ce26b559823fdb9edc6cd2c858082a8e70b07bb770ac",
+      "receipt_storage_bytes": 2616
+    }
+  ],
+  "identity_observation": {
+    "task_id_count": 6,
+    "unique_task_id_count": 6,
+    "thread_id_count": 6,
+    "unique_thread_id_count": 6,
+    "host_id_count": 6,
+    "unique_host_id_count": 1,
+    "unique_host_ids": [
+      "local"
+    ]
+  },
+  "preservation_rule": "Prompts, templates, capsules, scorer, oracle baselines, routes, subject captures, call receipts, attempt receipts, wave events, and all other subject/runtime evidence remain byte-identical. This repair launches no subject and does not replace any result."
+}

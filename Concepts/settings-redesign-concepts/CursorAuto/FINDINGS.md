@@ -80,3 +80,18 @@ Closed critical shared contract mismatches and QA false positives called out by 
 4. Re-verified: ConceptHub validate pass; interactive QA `failures: []` with evidenced packet probes.
 
 Still simulated by design: real audio, installs/sign-in, import IO. No winner among Harbor/Score/Switchboard/Archive.
+
+
+## 2026-08-13 dependency-closure correction
+
+Opened authorities this pass: correction `00_READ_ME_FIRST.md`, `02_FULL_THREAD_CURRENT_DECISION_REGISTER.md` (§§7/11/12.4/20/23), `PROVIDER_CLI_FINAL_ADJUDICATION.md`, `REFERENCE_REVIEW_AND_REPAIR_REQUIREMENTS.md`, plus original packet `03` and manager matrix.
+
+**Material effect: yes.** Prior CursorAuto bakeoff did not cite the performance register, lacked an ObservableWork projection helper, eagerly seeded all manager fixture keys at open, exposed raw installation paths in normal GUI, and framed the baseline demo as shipped.
+
+Corrections (CursorAuto-owned only):
+- `CAObservableWork` projection adapter (`shared/lib/ca-observable-work.js`) — Settings does not admit work; RuntimeResourceGovernor remains sole admission owner.
+- Shell-first `CAManagers.defaultSeed` + `hydrateManager` on mount + `disposeActiveScope`.
+- Provider CLI policy copy, official-source Install bound to Host/Environment, Advanced-only paths, Provider Setup Required deep-link/notice, post-consent fixture framing.
+- Virtualized large resource lists; loading/offline demo states; candidate Plan/Command/Wiring/DRY/impact updates; `reference-review-report.json`.
+
+No winner selected among Harbor / Score / Switchboard / Archive.

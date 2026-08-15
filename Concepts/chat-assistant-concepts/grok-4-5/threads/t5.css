@@ -450,3 +450,35 @@ html[data-reduced-motion='1'] .t5-focus-stage { animation: none !important; tran
 [data-reduced-motion='1'] .t5-node {
   animation: none !important;
 }
+
+/* Condensed work index (distinct from message spine) */
+.t5-work-condense { margin: 8px 0 12px; position: relative; }
+.t5-work-condense-label { font-size: 11px; opacity: 0.6; margin-bottom: 4px; }
+.t5-work-condense-track {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: 12px;
+  border-left: 1px solid color-mix(in srgb, var(--border, #666) 55%, transparent);
+}
+.t5-work-node { border: 0; background: transparent; }
+.t5-work-node-sum {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 10px 1fr;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+  padding: 4px 0;
+}
+.t5-work-node-sum::-webkit-details-marker { display: none; }
+.t5-work-node-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: color-mix(in srgb, var(--text-muted, #888) 80%, transparent);
+  margin-left: -16px;
+}
+.t5-work-node[open] .t5-work-node-dot {
+  background: var(--text-secondary, #ccc);
+}
+.t5-work-node-title { font-size: 12px; font-weight: 600; }
+

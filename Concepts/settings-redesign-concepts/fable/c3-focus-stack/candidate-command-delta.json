@@ -8,11 +8,31 @@
     "approx_ids": 732,
     "families": 56,
     "flags": [
-      { "id": "cmd.settings.bloom.open", "disposition": "retire", "note": "chip/bloom superseded by the persistent workspace; compatibility alias to cmd.settings.open only if telemetry shows callers" },
-      { "id": "cmd.settings.open_notifications", "disposition": "supersede-into-family", "note": "alias of cmd.settings.navigate {dest}" },
-      { "id": "cmd.settings.open_storage_retention", "disposition": "supersede-into-family", "note": "alias of cmd.settings.navigate {dest}" },
-      { "id": "cmd.settings.category.reset", "disposition": "merge-flag", "note": "overlaps candidate cmd.settings.reset.apply{scope:category}; prefer the canon id" },
-      { "id": "cmd.theme.*", "disposition": "reuse-flag", "note": "census against appearance candidates before minting anything theme-shaped" }
+      {
+        "id": "cmd.settings.bloom.open",
+        "disposition": "retire",
+        "note": "chip/bloom superseded by the persistent workspace; compatibility alias to cmd.settings.open only if telemetry shows callers"
+      },
+      {
+        "id": "cmd.settings.open_notifications",
+        "disposition": "supersede-into-family",
+        "note": "alias of cmd.settings.navigate {dest}"
+      },
+      {
+        "id": "cmd.settings.open_storage_retention",
+        "disposition": "supersede-into-family",
+        "note": "alias of cmd.settings.navigate {dest}"
+      },
+      {
+        "id": "cmd.settings.category.reset",
+        "disposition": "merge-flag",
+        "note": "overlaps candidate cmd.settings.reset.apply{scope:category}; prefer the canon id"
+      },
+      {
+        "id": "cmd.theme.*",
+        "disposition": "reuse-flag",
+        "note": "census against appearance candidates before minting anything theme-shaped"
+      }
     ],
     "preserve": [
       "cmd.settings.suggestion.dismiss",
@@ -33,16 +53,143 @@
   ],
   "families_exercised_note": "From the packet's CANDIDATE_COMMAND_ID_REGISTER.json: navigation (cmd.settings.open/navigate/search.*/manager.open/setting.focus, exercised by the router, the spine, and the outline overlay), values (cmd.settings.value.set / default.restore via inline rows and the details sheet), providers (installation scan/select/update/rollback/verify, catalog.refresh, model favorite/visibility, account use-next), commands_shortcuts (command create/update/delete, dry-run preview, shortcut remap/reset/resolve, keymap import/export), resources (per-resource CRUD across lsp servers, formatter entries, mcp servers, terminal profiles, plus skill/plugin/tool enablement).",
   "new_candidates": [
-    { "id": "cmd.testing.capability.set", "distinguishes": "mutation", "provisional": true, "payload": "{ capabilityId, column: global|project, level: auto|on|off|inherit-global }", "note": "One mutation for every matrix cell; expert-exposure cells (persistent eval) route through the confirm gate before the mutation lands." },
-    { "id": "cmd.terminal.profile.update", "distinguishes": "mutation", "provisional": true, "payload": "{ profileId, patch }", "note": "Font, size, line height, cursor, opacity, copy-on-select, default-profile flag; the live preview re-renders from the same patch. No shared trigger exists yet (see impact register unresolved question)." },
-    { "id": "cmd.filemanager.recovery.open", "distinguishes": "navigation", "provisional": true, "payload": "{ bufferPath? }", "note": "Opens the recovered-buffers sheet (route manager/manager.fileManager?focus=recovery); opening a single buffer in the editor is a separate editor-side action." },
-    { "id": "cmd.lsp.server.add", "distinguishes": "mutation", "provisional": true, "reuse_against": "packet candidate cmd.lsp.server.add", "payload": "{ name, command, env, initOptions, scope }", "note": "REUSE the packet candidate rather than minting a sibling; this concept adds the honest-persistence semantics (entry registered stopped, starts on first matching file)." },
-    { "id": "cmd.lsp.server.restart", "distinguishes": "one-shot", "provisional": true, "reuse_against": "packet candidate cmd.lsp.server.restart", "payload": "{ serverId }", "note": "REUSE the packet candidate; wired here to the shared lsp-restart trigger with stopping/starting phases and a reattachment receipt." },
-    { "id": "cmd.formatter.add", "distinguishes": "mutation", "provisional": true, "reuse_against": "packet candidate cmd.formatter.add", "payload": "{ name, command, extensions, scope }", "note": "REUSE the packet candidate; detection must resolve the command before the entry goes live." },
-    { "id": "cmd.formatter.test", "distinguishes": "one-shot", "provisional": true, "reuse_against": "packet candidate cmd.formatter.test", "payload": "{ formatterId }", "note": "REUSE the packet candidate; wired here to the shared formatter-test trigger; the result is a lastTest record with a before/after sample, never a project-file write." },
-    { "id": "cmd.mcp.server.add", "distinguishes": "mutation", "provisional": true, "reuse_against": "packet candidate cmd.mcp.server.add", "payload": "{ name, transport, endpoint, auth, scope }", "note": "REUSE the packet candidate; registration and connection are separate acts — a fresh entry is honestly not-connected-yet." },
-    { "id": "cmd.mcp.server.restart", "distinguishes": "one-shot", "provisional": true, "reuse_against": "packet candidate cmd.mcp.server.restart (reconnect)", "payload": "{ serverId }", "note": "REUSE; reconnect renegotiates protocol, rediscovers tools, and freshens the cache; a refused rediscover while disconnected is a receipt, not a silent no-op." },
-    { "id": "cmd.command.dry_run", "distinguishes": "projection", "provisional": true, "payload": "{ name?, runs, scope }", "note": "Expansion-only projection. MUST NOT dispatch to any agent, queue work, or attribute usage; the demonstrated sheet has no run button and says so in copy." },
-    { "id": "cmd.shortcut.remap", "distinguishes": "mutation", "provisional": true, "payload": "{ command, keys, previousKeys }", "note": "Recorder-driven; conflict check against the full map (including plugin bindings) gates the apply; the original binding is stored for reset." }
-  ]
+    {
+      "id": "cmd.testing.capability.set",
+      "distinguishes": "mutation",
+      "provisional": true,
+      "payload": "{ capabilityId, column: global|project, level: auto|on|off|inherit-global }",
+      "note": "One mutation for every matrix cell; expert-exposure cells (persistent eval) route through the confirm gate before the mutation lands."
+    },
+    {
+      "id": "cmd.terminal.profile.update",
+      "distinguishes": "mutation",
+      "provisional": true,
+      "payload": "{ profileId, patch }",
+      "note": "Font, size, line height, cursor, opacity, copy-on-select, default-profile flag; the live preview re-renders from the same patch. No shared trigger exists yet (see impact register unresolved question)."
+    },
+    {
+      "id": "cmd.filemanager.recovery.open",
+      "distinguishes": "navigation",
+      "provisional": true,
+      "payload": "{ bufferPath? }",
+      "note": "Opens the recovered-buffers sheet (route manager/manager.fileManager?focus=recovery); opening a single buffer in the editor is a separate editor-side action."
+    },
+    {
+      "id": "cmd.lsp.server.add",
+      "distinguishes": "mutation",
+      "provisional": true,
+      "reuse_against": "packet candidate cmd.lsp.server.add",
+      "payload": "{ name, command, env, initOptions, scope }",
+      "note": "REUSE the packet candidate rather than minting a sibling; this concept adds the honest-persistence semantics (entry registered stopped, starts on first matching file)."
+    },
+    {
+      "id": "cmd.lsp.server.restart",
+      "distinguishes": "one-shot",
+      "provisional": true,
+      "reuse_against": "packet candidate cmd.lsp.server.restart",
+      "payload": "{ serverId }",
+      "note": "REUSE the packet candidate; wired here to the shared lsp-restart trigger with stopping/starting phases and a reattachment receipt."
+    },
+    {
+      "id": "cmd.formatter.add",
+      "distinguishes": "mutation",
+      "provisional": true,
+      "reuse_against": "packet candidate cmd.formatter.add",
+      "payload": "{ name, command, extensions, scope }",
+      "note": "REUSE the packet candidate; detection must resolve the command before the entry goes live."
+    },
+    {
+      "id": "cmd.formatter.test",
+      "distinguishes": "one-shot",
+      "provisional": true,
+      "reuse_against": "packet candidate cmd.formatter.test",
+      "payload": "{ formatterId }",
+      "note": "REUSE the packet candidate; wired here to the shared formatter-test trigger; the result is a lastTest record with a before/after sample, never a project-file write."
+    },
+    {
+      "id": "cmd.mcp.server.add",
+      "distinguishes": "mutation",
+      "provisional": true,
+      "reuse_against": "packet candidate cmd.mcp.server.add",
+      "payload": "{ name, transport, endpoint, auth, scope }",
+      "note": "REUSE the packet candidate; registration and connection are separate acts \u2014 a fresh entry is honestly not-connected-yet."
+    },
+    {
+      "id": "cmd.mcp.server.restart",
+      "distinguishes": "one-shot",
+      "provisional": true,
+      "reuse_against": "packet candidate cmd.mcp.server.restart (reconnect)",
+      "payload": "{ serverId }",
+      "note": "REUSE; reconnect renegotiates protocol, rediscovers tools, and freshens the cache; a refused rediscover while disconnected is a receipt, not a silent no-op."
+    },
+    {
+      "id": "cmd.command.dry_run",
+      "distinguishes": "projection",
+      "provisional": true,
+      "payload": "{ name?, runs, scope }",
+      "note": "Expansion-only projection. MUST NOT dispatch to any agent, queue work, or attribute usage; the demonstrated sheet has no run button and says so in copy."
+    },
+    {
+      "id": "cmd.shortcut.remap",
+      "distinguishes": "mutation",
+      "provisional": true,
+      "payload": "{ command, keys, previousKeys }",
+      "note": "Recorder-driven; conflict check against the full map (including plugin bindings) gates the apply; the original binding is stored for reset."
+    }
+  ],
+  "drift_census_2026_08_13": {
+    "authority": "02_FULL_THREAD_CURRENT_DECISION_REGISTER.md section 22",
+    "note": "Known command-name drift recorded before any minting; all concept candidates remain provisional and defer to the canonical census.",
+    "entries": [
+      {
+        "ids": [
+          "cmd.source_control.setup.install_tool",
+          "cmd.installation.*",
+          "cmd.tool.*",
+          "cmd.integration_tool.*"
+        ],
+        "disposition": "census-before-mint",
+        "note": "Known drift family for the shared installation lifecycle; concept installation candidates must reconcile into ONE namespace chosen by the lifecycle owner."
+      },
+      {
+        "ids": [
+          "cmd.github.actions.*",
+          "cmd.github_actions.*"
+        ],
+        "disposition": "census-before-mint",
+        "note": "Dotted vs underscored family drift; the concepts' Actions candidates must not add a third spelling."
+      },
+      {
+        "ids": [
+          "cmd.prd_builder.source.import",
+          "cmd.prd_builder.import_sources"
+        ],
+        "disposition": "recorded-drift",
+        "note": "Outside Settings scope; recorded so the audit sees the census was read."
+      },
+      {
+        "ids": [
+          "cmd.planning_wizard.topic.add",
+          "cmd.planning_wizard.add_topic"
+        ],
+        "disposition": "recorded-drift",
+        "note": "Outside Settings scope; recorded for census completeness."
+      },
+      {
+        "ids": [
+          "cmd.plan_compile.retry",
+          "cmd.plan_compile.retry_stage"
+        ],
+        "disposition": "recorded-drift",
+        "note": "Outside Settings scope; recorded for census completeness."
+      },
+      {
+        "ids": [
+          "cmd.browser.open_workspace_preview"
+        ],
+        "disposition": "preserve-pane-independent",
+        "note": "Remains pane-independent per register section 18; the web manager's browser-session copy must not imply pane-specific commands."
+      }
+    ]
+  }
 }

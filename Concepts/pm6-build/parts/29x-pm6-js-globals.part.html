@@ -1476,6 +1476,16 @@
         var x = el.offsetLeft + (parseFloat(cs.borderLeftWidth) || 0);
         var y = el.offsetTop + (parseFloat(cs.borderTopWidth) || 0);
         var w = el.clientWidth, h = el.clientHeight, s;
+        /* zero-extent scrollports (an EMPTY workspace dock is an 8px-or-less
+           box on a 0px grid track) must not park 30px bands past their
+           parent's edge -- those bands were 22px of phantom horizontal
+           overflow on the Home grid. Hide all four and bail; the per-element
+           ResizeObserver re-runs this the moment the dock gains real size. */
+        var dead = (w <= 0 || h <= 0), sideKey;
+        for (sideKey in st.bands) {
+          if ((s = st.bands[sideKey]) && s.style.display !== (dead ? 'none' : '')) s.style.display = dead ? 'none' : '';
+        }
+        if (dead) return;
         if ((s = st.bands.top))    { s.style.left = x + 'px'; s.style.top = y + 'px'; s.style.width = w + 'px'; s.style.height = BAND + 'px'; }
         if ((s = st.bands.bottom)) { s.style.left = x + 'px'; s.style.top = (y + h - BAND) + 'px'; s.style.width = w + 'px'; s.style.height = BAND + 'px'; }
         if ((s = st.bands.left))   { s.style.left = x + 'px'; s.style.top = y + 'px'; s.style.width = BAND + 'px'; s.style.height = h + 'px'; }

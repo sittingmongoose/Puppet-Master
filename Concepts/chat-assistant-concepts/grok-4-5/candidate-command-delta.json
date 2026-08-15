@@ -4,9 +4,9 @@
   "model": "Grok 4.5",
   "source_register": "CANDIDATE_COMMAND_ID_REGISTER.json (packet 2026-08-08)",
   "census_source": "Plans/UI_Command_Catalog.md (read-only, grepped 2026-08-11)",
-  "updated_at": "2026-08-11",
+  "updated_at": "2026-08-14T04:40:00Z",
   "status": "complete",
-  "note": "Provisional. No canon IDs minted. Alias/conflict table locked by assistant-chat-update-plan Step 8 census.",
+  "note": "Provisional. No canon IDs minted. Alias/conflict table locked by Step 8 census; 2026-08-14 correction adds provisional provider install/update + peek honesty notes only.",
   "alias_conflicts": [
     {
       "packet_candidate": "cmd.chat.history.pin",
@@ -16,7 +16,7 @@
         "cmd.chat.pin": true,
         "cmd.chat.history.pin": false
       },
-      "note": "Reuse catalog cmd.chat.pin; packet history.pin is alias/conflict \u2014 do not mint duplicate."
+      "note": "Reuse catalog cmd.chat.pin; packet history.pin is alias/conflict — do not mint duplicate."
     },
     {
       "packet_candidate": "cmd.chat.restore_point.create",
@@ -72,7 +72,7 @@
       "census": "alias/conflict",
       "reuse": "cmd.chat.pin",
       "family": "threads",
-      "note": "Reuse catalog cmd.chat.pin; packet history.pin is alias/conflict \u2014 do not mint duplicate."
+      "note": "Reuse catalog cmd.chat.pin; packet history.pin is alias/conflict — do not mint duplicate."
     },
     {
       "candidate_id": "cmd.chat.pin",
@@ -304,6 +304,63 @@
       "census": "reuse",
       "family": "catalog",
       "note": "Present in Plans/UI_Command_Catalog.md; reuse required."
+    },
+    {
+      "candidate_id": "cmd.chat.provider.setup_required",
+      "census": "provisional",
+      "family": "provider",
+      "note": "Chat projects Provider Setup Required; Settings-owned Install/Setup. Official-source / not bundled / not baseline. Do not mint canon."
+    },
+    {
+      "candidate_id": "cmd.chat.provider.install_required",
+      "census": "provisional",
+      "family": "provider",
+      "note": "Demo trigger system.provider_install_required. Settings deep-link stub only."
+    },
+    {
+      "candidate_id": "cmd.chat.provider.update_available",
+      "census": "provisional",
+      "family": "provider",
+      "note": "Demo trigger system.provider_update_available. Post-consent maintain ≠ silent first acquisition."
+    },
+    {
+      "candidate_id": "cmd.chat.history.peek",
+      "census": "provisional",
+      "family": "history",
+      "note": "Peek mode is store historyMode=peek; pin still reuses cmd.chat.pin. Provisional event name only."
     }
-  ]
+  ],
+  "correction_2026_08_14": {
+    "status": "complete",
+    "provisional_only": true,
+    "no_canon_minted": true,
+    "additions": [
+      {
+        "candidate_id": "cmd.chat.provider.setup_required",
+        "census": "provisional",
+        "family": "provider",
+        "note": "Chat projects Provider Setup Required; Settings-owned Install/Setup. Official-source / not bundled / not baseline. Do not mint canon."
+      },
+      {
+        "candidate_id": "cmd.chat.provider.install_required",
+        "census": "provisional",
+        "family": "provider",
+        "note": "Demo trigger system.provider_install_required. Settings deep-link stub only."
+      },
+      {
+        "candidate_id": "cmd.chat.provider.update_available",
+        "census": "provisional",
+        "family": "provider",
+        "note": "Demo trigger system.provider_update_available. Post-consent maintain ≠ silent first acquisition."
+      },
+      {
+        "candidate_id": "cmd.chat.history.peek",
+        "census": "provisional",
+        "family": "history",
+        "note": "Peek mode is store historyMode=peek; pin still reuses cmd.chat.pin. Provisional event name only."
+      }
+    ],
+    "motion_honesty": "Causal continuity from four reference videos; not frame-matched clones; no command IDs invented for motion."
+  },
+  "correction_packet": "PM_Assistant_Chat_Dependency_Media_and_Work_Correction_2026-08-13"
 }

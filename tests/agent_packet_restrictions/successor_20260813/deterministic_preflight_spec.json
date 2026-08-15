@@ -1,0 +1,82 @@
+{
+  "schema_id": "pm.prompt_complexity_successor.deterministic_preflight_spec.v1",
+  "spec_id": "successor-preflight-20260813-v1",
+  "captured_at_utc": "2026-08-13T17:07:14Z",
+  "phase": "deterministic_successor_preflight_only",
+  "exclusive_write_root": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/",
+  "subject_model_or_provider_calls_allowed": false,
+  "network_allowed": false,
+  "process_launch_from_checker_allowed": false,
+  "canonical_or_ledger_writes_allowed": false,
+  "checker": {
+    "path": "tests/agent_packet_restrictions/successor_20260813/deterministic_preflight.py",
+    "runtime": "Python 3 standard library only",
+    "writes": "none",
+    "output": "one strict JSON object on stdout; exit 0 only when every successor check passes"
+  },
+  "required_outputs": [
+    "source_custody.json",
+    "historical_artifact_disposition.json",
+    "refreshed_surface_census.json",
+    "process_contract.md",
+    "test_design_questions.json",
+    "deterministic_preflight_spec.json",
+    "deterministic_preflight_report.json",
+    "readiness_report.md"
+  ],
+  "preserved_failure_records": [
+    "control_plane_defect-0001-successor-verifier-temp-write.md"
+  ],
+  "checks": [
+    {"check_id":"DP-001","gate":"CONTROLLER","assertion":"The checker imports only an allowlisted standard-library set and contains no provider, network, shell, or process-launch import."},
+    {"check_id":"DP-002","gate":"CONTROLLER","assertion":"Every required JSON artifact is strict JSON with duplicate keys and NaN/Infinity rejected."},
+    {"check_id":"DP-003","gate":"CUSTODY","assertion":"Every source_custody hash binding exists and matches its exact SHA-256."},
+    {"check_id":"DP-004","gate":"CUSTODY","assertion":"The course-correction ZIP entry set, byte sizes, and member hashes match custody; its 25-row manifest verifies and does not claim to contain itself or the separate provider adjudication."},
+    {"check_id":"DP-005","gate":"HISTORY","assertion":"The inherited root outside successor_20260813 contains exactly the 59 classified files, each with its current recorded hash."},
+    {"check_id":"DP-006","gate":"HISTORY","assertion":"Every inherited file has exactly one allowed disposition and declared disposition counts equal recomputed counts."},
+    {"check_id":"DP-007","gate":"SURFACES","assertion":"The 54 inherited census IDs exactly equal surfaces.v2 IDs; PROVIDER-001 and RUN-002 are the only additions; all declared class counts recompute."},
+    {"check_id":"DP-008","gate":"SURFACES","assertion":"Direct Assistant Chat and Chat-originated delegation have distinct exclusions, fail-closed negative rules, and named unresolved coverage gaps."},
+    {"check_id":"DP-009","gate":"HISTORY","assertion":"The historical terminal remains STOPPED_BEFORE_SUBJECT_LAUNCH with route, pilot, fleet, and total provider/model calls all zero."},
+    {"check_id":"DP-010","gate":"HISTORY","assertion":"The V4 boundary defect remains V4_PREFREEZE_INVALID and names all four preserved outside-root scratch writes."},
+    {"check_id":"DP-011","gate":"CONTROLLER","assertion":"The V4 deterministic design input still declares 67 main fixtures, 83 generated subcases, 72 scorer checks, and 222 total checks."},
+    {"check_id":"DP-012","gate":"CONTROLLER","assertion":"The V4 semantic design input contains 7 cases, 33 requirements, 25 claim slots, and 8 uncertainty slots and remains bound to the exact v2 response schema hash."},
+    {"check_id":"DP-013","gate":"CONTROLLER","assertion":"The current historical controller is detected as V3-bound and therefore incompatible with V4 cases/fixtures."},
+    {"check_id":"DP-014","gate":"CONTROLLER","assertion":"Strict-JSON duplicate-key and nonfinite-number negative self-tests fail closed."},
+    {"check_id":"DP-015","gate":"CONTROLLER","assertion":"Terminal reduction preserves the frozen V4 precedence under reversed and rotated detection orders."},
+    {"check_id":"DP-016","gate":"CONTROLLER","assertion":"An in-memory synthetic capture commitment changes under every one-field mutation and no capture bytes are written."},
+    {"check_id":"DP-017","gate":"LINEAGE","assertion":"Canonical lineage hashing is set-order invariant and changes when one lineage edge changes."},
+    {"check_id":"DP-018","gate":"QUESTIONS","assertion":"Every test-design question is unanswered, requires Jared's decision, and has no selected option."},
+    {"check_id":"DP-019","gate":"CONTROLLER","assertion":"The process contract includes controller/preparation-agent separation, exact boundaries, gates, terminals, resumability, and the no-subject-call stop."},
+    {"check_id":"DP-020","gate":"BOUNDARY","assertion":"The exclusive root contains only the required outputs plus the checker; no symlink or resolved-path escape exists."},
+    {"check_id":"DP-021","gate":"REPORT","assertion":"The report and readiness terminal agree on READY_FOR_JARED_TEST_PLAN, preserve upstream failures, and deny empirical, production, release, safety, and compile claims."}
+  ],
+  "external_read_only_observations": [
+    {
+      "observation_id": "OBS-LEDGER-VALIDATE",
+      "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260801-001-feature-intake",
+      "successor_gate_effect": "record exact result; structural success is noncanonical and nonempirical"
+    },
+    {
+      "observation_id": "OBS-SHARD-CHECK",
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "successor_gate_effect": "record exact result; generated-shard consistency is not runtime proof"
+    },
+    {
+      "observation_id": "OBS-PLAN-GATES",
+      "command": "python3 scripts/pm-plans-verify.py run-gates",
+      "successor_gate_effect": "preserve any failure as an upstream residual; never convert it to a pass"
+    },
+    {
+      "observation_id": "OBS-WRITE-BOUNDARY",
+      "command": "compare SHA-256 of sorted git status --short outside successor_20260813 before and after writes",
+      "successor_gate_effect": "must be unchanged for BOUNDARY to pass"
+    }
+  ],
+  "terminal_rule": {
+    "all_successor_checks_pass": "READY_FOR_JARED_TEST_PLAN",
+    "any_successor_check_fails": "NOT_READY",
+    "ready_action": "stop and ask Jared to provide the models to test and how to test them",
+    "forbidden_inference": "Neither terminal authorizes a subject/provider call or canonical Plans compile."
+  },
+  "claim_boundary": "Deterministic preflight can establish source custody and internal test-process readiness only. It cannot establish empirical model performance, production enforcement, completeness, release readiness, or safety certification."
+}

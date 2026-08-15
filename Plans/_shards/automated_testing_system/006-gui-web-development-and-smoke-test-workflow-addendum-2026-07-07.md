@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L100-L315
+Source lines: L100-L317
 
-Source SHA256: `d24307d69857bf939e2d9e3514d15fa7a4af41e225633e2f19eb40aeba10012c`
+Source SHA256: `975472ff73c949fea277805b1317b1f67f56972bbfe401c73c3f38267edac4b3`
 
 ---
 
@@ -176,8 +176,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
-  WorkNode completion cannot require human eyeballing. Tests, smoke checks, app launch, browser sessions, GUI/device sessions, screenshots, logs, and evidence capture run automatically where required. If Puppet Master cannot automatically verify a WorkNode after the compiler/runtime boundary is explicitly enabled, it must record a test capability blocker or deferred non-executable test-harness WorkNode request candidate rather than silently passing. For web projects, once the native product is built, Puppet Master built-in browser automation is the primary native web test automation path; Playwright can be optional, fallback, or project-native, not the native default.
-  Automated completion means 100% automated verification with no human intervention for required browser/GUI/device sessions; Playwright optional remains fallback/project-native, and manual_only_acceptance_not_allowed blocks manual-only completion claims. TestRunReceipt records include receipt_id, test_strategy_ref, test_case_refs, generated_test_ids, reused_test_ids, verification_command, expected_artifacts, evidence_refs, visual_evidence_refs, flake_policy, and test_gap_policy.
+  WorkNode completion cannot require human eyeballing. Tests, smoke checks, app launch, browser sessions, GUI/device sessions, screenshots, logs, and evidence capture run automatically where required. If Puppet Master cannot automatically verify a WorkNode after the compiler/runtime boundary is explicitly enabled, it must record a test capability blocker or deferred non-executable test-harness WorkNode request candidate rather than silently passing. For web projects, once the native product is built, Browser Program over the PM-native BrowserRuntimeService is the primary native web test automation path. A user Project's independent external browser-test suite may run only as an ordinary Project process and contribute generic Test Capture/artifact references; it never becomes a PM browser runtime, API, command, MCP route, port, facade, compatibility layer, package, or capture engine.
+  Automated completion means 100% automated verification with no human intervention for required ordinary browser/GUI/device sessions, and manual_only_acceptance_not_allowed blocks manual-only completion claims. Protected AuthBrowserSession is intentionally outside automation: policy-boundary tests may prove that automation is denied, but neither a human authentication interaction nor absence of capture can be represented as an automated content oracle. TestRunReceipt records include receipt_id, test_strategy_ref, test_case_refs, generated_test_ids, reused_test_ids, verification_command, expected_artifacts, evidence_refs, visual_evidence_refs, flake_policy, and test_gap_policy.
 gui_related: true
 gui_classification_reason: Automated screenshots, browser sessions, GUI/device sessions, and visual evidence are user-visible verification surfaces.
 depends_on: [ATS-001, ATS-002, ATS-003]
@@ -186,7 +186,7 @@ acceptance_criteria:
   - Human visual inspection is never a required completion criterion.
   - Missing automatic verification records a blocker or, after runtime enablement, a deferred non-executable test-harness WorkNode request candidate.
   - Browser/GUI/device screenshots and logs are captured automatically where required.
-  - Native web testing prefers Puppet Master built-in browser automation once available, while Playwright remains optional, fallback, or project-native.
+  - Native web testing uses Browser Program over BrowserRuntimeService; an independent user-Project browser suite remains an ordinary external process with generic artifacts.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
   - python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
@@ -213,11 +213,13 @@ preserved_exact_tokens:
   - "test-harness WorkNode"
   - "manual_only_acceptance_not_allowed"
   - "Puppet Master built-in browser automation"
-  - "Playwright optional"
+  - "Browser Program"
+  - "BrowserRuntimeService"
+  - "generic external Project process"
 negative_constraints:
   - Do not make manual visual inspection a required completion step.
   - Do not silently allow unverifiable WorkNodes.
-  - Do not default native Puppet Master web testing to Playwright when the built-in browser can do it.
+  - Do not create or accept a PM browser runtime, facade, compatibility vocabulary, package, port, MCP route, command namespace, or capture engine derived from an external Project test framework.
 owner_hints:
   - Plans/Automated_Testing_System.md
   - Plans/Executor_Protocol.md

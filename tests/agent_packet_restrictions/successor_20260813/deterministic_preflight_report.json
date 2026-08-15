@@ -1,0 +1,152 @@
+{
+  "schema_id": "pm.prompt_complexity_successor.deterministic_preflight_report.v1",
+  "run_id": "successor-preflight-20260813-v1",
+  "spec_id": "successor-preflight-20260813-v1",
+  "captured_at_utc": "2026-08-13T17:17:05Z",
+  "terminal": "NOT_READY",
+  "terminal_reason": "DP-020 failed because the aggregate Plan verifier created at least one confirmed temporary report outside the exclusive write root.",
+  "successor_checks": {
+    "total": 21,
+    "passed": 20,
+    "failed": 1,
+    "failed_check_ids": ["DP-020"]
+  },
+  "checks": [
+    {"check_id":"DP-001","gate":"CONTROLLER","status":"pass","evidence":"Checker AST imports are limited to ast, hashlib, json, pathlib, sys, zipfile, and __future__; no provider/network/process module is imported."},
+    {"check_id":"DP-002","gate":"CONTROLLER","status":"pass","evidence":"All six required JSON outputs parse with duplicate-key and nonfinite-number rejection."},
+    {"check_id":"DP-003","gate":"CUSTODY","status":"pass","evidence":"All 29 custody hash bindings matched after bounded recapture of ledger event evt-0029 and the concurrently changed Plans index."},
+    {"check_id":"DP-004","gate":"CUSTODY","status":"pass","evidence":"26 ZIP entries matched byte size and SHA-256; 25 manifest rows verified; manifest self-entry and provider adjudication are absent as recorded."},
+    {"check_id":"DP-005","gate":"HISTORY","status":"pass","evidence":"The inherited lane outside successor_20260813 contained exactly the 59 classified files and all hashes matched."},
+    {"check_id":"DP-006","gate":"HISTORY","status":"pass","evidence":"Disposition closure recomputed to reusable 7, needs-currentness-refresh 10, obsolete/superseded 25, preserved-failure-only 17."},
+    {"check_id":"DP-007","gate":"SURFACES","status":"pass","evidence":"All 54 inherited surface IDs matched surfaces.v2; only PROVIDER-001 and RUN-002 were added; 56 class counts recomputed."},
+    {"check_id":"DP-008","gate":"SURFACES","status":"pass","evidence":"Direct Assistant Chat and Chat-originated delegation are distinct, have fail-closed negative rules, and retain four named coverage gaps."},
+    {"check_id":"DP-009","gate":"HISTORY","status":"pass","evidence":"Historical terminal remains STOPPED_BEFORE_SUBJECT_LAUNCH with route, pilot, fleet, and total model/provider calls all zero."},
+    {"check_id":"DP-010","gate":"HISTORY","status":"pass","evidence":"V4 remains V4_PREFREEZE_INVALID and all four historical /tmp scratch paths remain named failure evidence."},
+    {"check_id":"DP-011","gate":"CONTROLLER","status":"pass","evidence":"Historical V4 design counts remain 67 main fixtures, 83 generated subcases, 72 scorer checks, 222 total deterministic checks."},
+    {"check_id":"DP-012","gate":"CONTROLLER","status":"pass","evidence":"Historical semantic design remains 7 cases, 33 requirements, 25 claim slots, 8 uncertainty slots, bound to response-schema SHA-256 8c3c0bdb9bcc3c4ccb3a59bd2fdc28ec63d6f46dcfda995030cbce2bc074f128."},
+    {"check_id":"DP-013","gate":"CONTROLLER","status":"pass","evidence":"Current historical controller is explicitly V3-bound; no attempt was made to run V4 cases or fixtures through it."},
+    {"check_id":"DP-014","gate":"CONTROLLER","status":"pass","evidence":"Duplicate-key and NaN strict-JSON self-tests both failed closed."},
+    {"check_id":"DP-015","gate":"CONTROLLER","status":"pass","evidence":"The 11-level V4 terminal precedence reduced identically for original, reversed, and rotated inputs."},
+    {"check_id":"DP-016","gate":"CONTROLLER","status":"pass","evidence":"Every one-field mutation changed an in-memory six-field synthetic capture commitment; no synthetic capture was written."},
+    {"check_id":"DP-017","gate":"LINEAGE","status":"pass","evidence":"Canonical lineage digest was set-order invariant and changed under a one-edge mutation."},
+    {"check_id":"DP-018","gate":"QUESTIONS","status":"pass","evidence":"All 15 Jared-owned test-design questions remain null, require_jared_decision, and have no selected option."},
+    {"check_id":"DP-019","gate":"CONTROLLER","status":"pass","evidence":"Process contract contains controller/preparation-role separation, exact boundaries, fixed gates, both terminals, resumability, and no-subject-call stop."},
+    {"check_id":"DP-020","gate":"BOUNDARY","status":"fail","evidence":"Confirmed outside-root write /tmp/pm-subcheck-check_shards-98iyebrk.json by the invoked aggregate verifier; see control_plane_defect-0001-successor-verifier-temp-write.md."},
+    {"check_id":"DP-021","gate":"REPORT","status":"pass","evidence":"Report and readiness agree on NOT_READY, preserve the boundary and upstream failures, and deny empirical/production/release/safety/compile claims."}
+  ],
+  "write_boundary_observation": {
+    "status": "fail",
+    "defect_ref": "tests/agent_packet_restrictions/successor_20260813/control_plane_defect-0001-successor-verifier-temp-write.md",
+    "confirmed_outside_root_path": "/tmp/pm-subcheck-check_shards-98iyebrk.json",
+    "confirmed_child_command": "/usr/bin/python3 scripts/pm-plans-verify.py check-shards --report /tmp/pm-subcheck-check_shards-98iyebrk.json --subcheck-timeout-seconds 180",
+    "automatic_cleanup_observed": true,
+    "successor_cleanup_or_repair_attempted": false,
+    "initial_outside_root_git_status_snapshot": {
+      "sha256": "7869bd3b9135a4049511361d1bc285763f5bd2e31527c2267a4b912a015b75a5",
+      "entries": 35,
+      "disposition": "invalidated_for_unchanged comparison by concurrent owner edits"
+    },
+    "later_outside_root_git_status_snapshot": {
+      "sha256": "f03f1809b2406fee860f9ea59e7239d845f153f01b676f565361acaa2d2b0237",
+      "entries": 419,
+      "disposition": "records concurrent ledger, GUI Plan, shard, evidence, and governance work; it is not attributed to the successor"
+    }
+  },
+  "subject_call_counts": {
+    "provider_or_model_total": 0,
+    "route_canary": 0,
+    "semantic_pilot": 0,
+    "fleet": 0,
+    "reviewer": 0,
+    "repair": 0
+  },
+  "preparation_call_boundary": {
+    "controller_and_bounded_preparation_agents_used": true,
+    "counted_as_subjects": false,
+    "subject_roster_selected": false,
+    "test_method_selected": false
+  },
+  "checker_iteration_history": [
+    {
+      "iteration": 1,
+      "status": "fail",
+      "failure": "Python NameError from a lowercase false literal in DP-013 evidence construction",
+      "disposition": "corrected with False before the final deterministic run; this failed invocation is not represented as a passing run"
+    },
+    {
+      "iteration": 2,
+      "status": "NOT_READY",
+      "process_exit_code": 1,
+      "checks_total": 21,
+      "checks_passed": 20,
+      "checks_failed": 1,
+      "failed_check_ids": ["DP-020"],
+      "disposition": "final deterministic result; nonzero is required because the preserved boundary defect remains failed"
+    }
+  ],
+  "external_observations": [
+    {
+      "observation_id": "OBS-LEDGER-VALIDATE",
+      "observed_status": "pass",
+      "exit_code": 0,
+      "summary": {"atoms":77,"compile_queue_items":0,"corrections":16,"decisions":61,"events":29,"plan_units_checked":0,"questions":46},
+      "claim_limit": "Structural noncanonical ledger validation only."
+    },
+    {
+      "observation_id": "OBS-SHARD-CHECK",
+      "observed_status": "pass_after_concurrent_refresh",
+      "exit_code": 0,
+      "summary": {"docs_checked":95,"shards_checked":1788,"failures":0},
+      "preserved_prior_observation": "An immediately earlier refresh observed stale FinalGUISpec, UI Command, UI Wiring, checklist, and Widget shards while concurrent owner work was in progress. The later pass does not rewrite that transient observation or prove runtime behavior.",
+      "claim_limit": "Current shard body/path consistency only."
+    },
+    {
+      "observation_id": "OBS-PLAN-GATES",
+      "observed_status": "fail",
+      "exit_code": 1,
+      "generated_at_utc": "2026-08-13T17:16:35Z",
+      "failed_checks": ["json_syntax", "validate_plan_graph", "validate_evidence", "validate_implementation_readiness", "validate_audit_closure"],
+      "passed_checks_include": ["verify_spec_lock", "validate_auto_decisions", "lint_contractrefs", "lint_banned_phrases", "lint_path_refs", "check_project_artifact_requirements", "validate_plans_to_code_handoff_schema", "validate_prd_planning_runtime_contracts", "validate_case_l_non_event_materialization", "validate_plan_migration", "validate_runtime_artifact_schemas", "validate_goal_runtime_event_fixtures", "validate_project_output_fixtures", "validate_usage_gui_fixtures", "validate_usage_contract_drift", "validate_gui_asset_policy", "validate_web_capability_contracts", "validate_filesafe_security_policy", "validate_wiring_matrix", "validate_audit_status_index", "check_shards"],
+      "harness_note": "json_syntax failed because the contained TMPDIR placed its own empty in-progress pm-subcheck JSON report under the scanned repository; the other four failure groups are upstream stale-evidence/readiness/audit residuals.",
+      "claim_limit": "Upstream Plan governance remains failed and was not repaired."
+    }
+  ],
+  "upstream_residuals": [
+    {
+      "residual_id": "UPSTREAM-PLAN-GATES",
+      "observed_status": "fail",
+      "failure_groups": ["validate_plan_graph", "validate_evidence", "validate_implementation_readiness", "validate_audit_closure"],
+      "disposition": "preserved; outside successor scope; no governance repair authorized"
+    },
+    {
+      "residual_id": "DIRECT-CHAT-METHOD-GAPS",
+      "observed_status": "unresolved",
+      "disposition": "four named gaps require Jared's future method choices"
+    },
+    {
+      "residual_id": "PRODUCT-RUNTIME",
+      "observed_status": "not_proven",
+      "disposition": "49 canonical surfaces remain implementation-gated; isolated fixtures and prototype checks are not production enforcement"
+    }
+  ],
+  "required_output_presence": {
+    "source_custody.json": true,
+    "historical_artifact_disposition.json": true,
+    "refreshed_surface_census.json": true,
+    "process_contract.md": true,
+    "test_design_questions.json": true,
+    "deterministic_preflight_spec.json": true,
+    "deterministic_preflight_report.json": true,
+    "readiness_report.md": true
+  },
+  "next_action": "Stop. Do not request a subject roster or method as if ready. A new explicitly authorized successor preflight version must preserve this defect and qualify a write-contained verifier process before reaching READY_FOR_JARED_TEST_PLAN.",
+  "claim_boundary": {
+    "empirical_model_success": false,
+    "production_enforcement": false,
+    "runtime_completeness": false,
+    "release_readiness": false,
+    "safety_certification": false,
+    "canonical_plans_compile_permission": false,
+    "subject_launch_permission": false
+  }
+}

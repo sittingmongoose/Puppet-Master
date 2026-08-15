@@ -1,0 +1,38 @@
+{
+  "schema_id": "pm.event_authority.currentness_validator_receipt.v1",
+  "generated_at_utc": "2026-08-13T23:45:52.915832Z",
+  "validator_path": "scripts/pm-event-authority-currentness.py",
+  "validator_sha256": "7bab0f9a21bba879a2ea1d8f21e3d80f41ab83d44f62fb0282f2cd9a5d971414",
+  "artifact_hashes": {
+    "Plans/.audits/event-authority-2026-08-13-currentness/CURRENT_EVENT_SOURCE_INVENTORY.json": "00add53fb2d97e93250eff2d3316611f594665ed0410d5310b758f6f10a84cb0",
+    "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl": "a60329078308fb75720b506bbcefc6fb86df99bba8234a881064aa38b6cb14c2",
+    "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_FAMILY_DENOMINATOR_STATUS.json": "b9b99a55fd971f820454e98151ae2bb3456fda4cc6dedf18828ea7b9abe94cf5",
+    "Plans/.audits/event-authority-2026-08-13-currentness/README.md": "e3879a1f372fac57448f9524a1a6598a6a758e92eed61578cf9947265edb2544",
+    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/EXPECTED_252_EVENT_TYPES.tsv": "d59142bc9ceef3f8c2d2257b7a6fbe9307ddae236720a0ac5a8c62afc7c5f541",
+    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl": "e77c83e1861c4b02739d7609c7c4fe066a6fe4f901a8e61511c698e0bb949294",
+    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/GROUP_ARTIFACT_MANIFEST.json": "fc212fc26784ba0dec1094705b811663fb7a92f38289af0d20503a7f0247af5e",
+    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_a.jsonl": "d4305411923dee2edfc2c8b822a9fb42eda33b320c64c7f84aaf16ce4cd134a3",
+    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_b.jsonl": "f1279ec339fc3b20676e19787ab423ffaeaba3b7a58181828af5e94242cf7160",
+    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_c.jsonl": "9528f134447acb50c2c8053855db64bbcfeb9bdbbc56cb1d9e52ce11eb10cc79",
+    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_d.jsonl": "5b3af4d546e0aecca799ac38e0ae65ed81e356db18531baa7e7027dfb9cd66b2",
+    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_e.jsonl": "52ad46cafed54f333ab144b7297ca2e188353adf38a3ee4488099e76f8acba2a",
+    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_f.jsonl": "24585545a7234db0972ca58da2b8557416bab7ef74b75afbf318f6bfdb1c93d1",
+    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_g.jsonl": "5e1f709cbf5a4f1bd19cec24d12b033cac79d4e0ce0e194d8babb13bdc0499db"
+  },
+  "checks": {
+    "exact_live_source_set": true,
+    "every_direct_plans_markdown_inventoried": true,
+    "all_live_sources_rehashed": true,
+    "source_manifest_digest_matches": true,
+    "occurrence_ledger_hash_matches": true,
+    "live_registry_exactly_matches_status": true,
+    "status_remains_fail_closed": true,
+    "august_pass_marked_stale_void": true,
+    "depth_remains_incomplete": true,
+    "explicit_exclusions_present": true,
+    "quarantined_252_exact_set_and_custody": true
+  },
+  "evidence_valid": true,
+  "event_authority_closed": false,
+  "claim_boundary": "evidence_valid means custody/currentness checks passed; it never means Event Authority closure"
+}

@@ -436,6 +436,7 @@
       '<header class="ccd-mgr-head"><span class="ccd-eyebrow">Providers</span>' +
       '<h1 class="ccd-h1">Accounts, connections, models, and installations</h1>' +
       '<p class="ccd-sub">A provider supplies models, authentication, limits, and capabilities. An installation is a host resource — Puppet Master manages its lifecycle only after you install it explicitly.</p></header>' +
+      V.providerEnvBannerHtml() +
       '<div class="ccd-providers" style="display:grid;grid-template-columns:minmax(220px,300px) minmax(0,1fr);gap:22px;align-items:start">' +
         '<div>' + providerListHtml(pid) + "</div>" +
         '<div id="ccd-pdetail">' + (p ? providerDetailHtml(p, ptab) : "") + "</div>" +
@@ -969,6 +970,14 @@
   function render(route, fromNav) {
     if (spy) { spy.detach(); spy = null; }
     currentRoute = route;
+    if (route.view === "manager" && PMStore.get("slowHydration", false)) {
+      PMStore.set("slowHydration", false);
+      var hydMeta = ((CD.managerMeta || DEMO.managerMeta || {})[route.manager]) || { title: "Manager" };
+      renderManagerShell({ id: route.manager, title: hydMeta.title, lede: "", tabs: [], tab: "",
+        body: V.operationHtml({ id: "hydrate", title: "Hydrating " + hydMeta.title, phase: "Loading domain state", state: "starting", progressKind: "none", source: "simulated", waitReason: "Compact summaries stayed usable — the full manager hydrates on demand, never at Settings open" }) });
+      window.setTimeout(function () { render(route, false); }, 900);
+      return;
+    }
     if (route.view === "manager") {
       if (route.manager === "providers") return renderProviders(route);
       if (route.manager === "context") return renderContext(route);
@@ -1008,6 +1017,7 @@
 
   function runScenario(id) {
     if (id === "calm") {
+    if (id === "slow-hydration") { PMStore.set("slowHydration", true); PMStore.receipt("Scenario applied — the next manager you open hydrates on demand with a truthful loading projection", "info"); return; }
       PMStore.set("calmDemo", true);
       PMStore.receipt("Calm state — every notice dismissed; reset to bring them back", "ok");
       return;
@@ -1085,9 +1095,24 @@
     });
     wireSqueezeFallback();
     renderInbox();
-    PMStore.on("change", function () {
+    /* Domain-local refresh (Performance register §7.3 narrow deltas, §20.2):
+       repaint only the surface that owns the changed key; every other
+       surface renders fresh on entry. */
+    var KEY_DOMAIN = Object.assign({}, V.SHARED_KEY_DOMAINS, {
+      "dismissedNotices": "notices", "calmDemo": "notices",
+      "memory": "manager:memory", "contextSources": "manager:context",
+      "crewRoutePolicies": "manager:crew", "permissions": "manager:permissions",
+      "eli5": "manager:permissions", "bsd": "manager:bsd"
+    });
+    PMStore.on("change", function (info) {
       renderInbox();
-      render(currentRoute, false);
+      var path = info && info.path;
+      if (path == null) { render(currentRoute, false); return; }
+      var owner = KEY_DOMAIN[path] || KEY_DOMAIN[path.split(".")[0]] || null;
+      var current = currentRoute.view === "manager" ? "manager:" + currentRoute.manager
+        : currentRoute.view === "category" ? "workspace" : "home";
+      if (owner === "notices") { if (current === "home") render(currentRoute, false); return; }
+      if (owner != null && owner === current) render(currentRoute, false);
     });
     PMStore.on("reset", function () { render(PMRouter.current(), false); });
     PMRouter.init({ onRoute: function (route) { render(route, true); } });

@@ -1,7 +1,7 @@
 import { escapeHtml } from "./definitions.js";
 
 export function activeThread(data, ui) {
-  return data.threadMap[ui.activeThreadId] ?? data.threads[0];
+  return data.threadMap[ui.activeThreadId] ?? ui.spawnedThreads?.find((thread) => thread.id === ui.activeThreadId) ?? data.threads[0];
 }
 
 export function threadMessages(data, ui, threadId = ui.activeThreadId) {
@@ -102,7 +102,9 @@ export function workModel(data, ui) {
     phase: ui.activityPhase,
     active: ui.agentActive,
     workingSummary: ui.workingSummary,
-    workedSeconds: ui.workedSeconds
+    workedSeconds: ui.workedSeconds,
+    expanded: ui.threadViews[ui.activeThreadId]?.workExpanded ?? {},
+    resourceSelection: ui.resourceSelection
   };
 }
 

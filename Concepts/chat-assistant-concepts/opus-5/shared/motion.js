@@ -464,7 +464,7 @@
     return h;
   }
 
-  /* ------------------------------------------------------------------------ the thirteen families, then the four causal primitives */
+  /* ------------------------------------------------------------- the thirteen families, then the six causal primitives */
 
   /* 1. arrive(el) — message, tool row, or activity stage arriving. */
   function arrive(el) { return beat(el, 'pmx-enter', 420); }
@@ -627,16 +627,19 @@
   };
   function lineage(el, dir) { return beat(el, LINEAGE_CLS[dir] || 'pmx-m-lineage-branch', 480); }
 
-  /* ---------------------------------------------------------------- the four causal primitives
+  /* ---------------------------------------------------------------- the six causal primitives
    *
    * These four come from the RAW RECORDINGS, which the original packet described in prose but did not
    * supply as indexed media. Each one is a causal rule, not a look: the reference's own easing,
    * colour and radius are deliberately not copied.
    *
-   * 14. displace   (01_message_arrival_spatial_continuity.mov)
-   * 15. firstVisit (02_stable_paged_questionnaire.mov)
-   * 16. countMorph (03_compact_execution_activity.mov)
-   * 17. groupReopen(03_compact_execution_activity.mov)
+   * 14. displace      (01_message_arrival_spatial_continuity.mov)
+   * 15. firstVisit    (02_stable_paged_questionnaire.mov)
+   * 16. countMorph    (03_compact_execution_activity.mov)
+   * 17. groupReopen   (03_compact_execution_activity.mov)
+   * 18. phaseHandover (03_compact_execution_activity.mov)
+   * 19. chainRoll     (03_compact_execution_activity.mov)
+   * 20. resizeBounce  (PMConcept7 model picker, this product's own tuned resize)
    */
 
   /* Shared mechanism for 14 and 17: measure a set of elements, let the caller mutate the DOM, then
@@ -802,6 +805,9 @@
     function endNow() {
       clearTimeout(timer);
       if (num.classList) num.classList.remove('pmx-count-morph-run');
+      /* The direction attribute carries the animation's START state, so it must not outlive the
+       * animation: leaving it stamped parked every settled digit 4px low at 45% opacity. */
+      if (num.removeAttribute) num.removeAttribute('data-dir');
       num.style.transition = '';
       num.style.transform = '';
       num.style.opacity = '';
@@ -861,6 +867,224 @@
     return h;
   }
 
+  /* 18. phaseHandover(chainEl, labelEl, insertGlyph, text, opts) — one phase HANDS OVER to the next.
+   *
+   * Reference 03, frames 194-211 (≈0.44s at 38.9fps), is explicit about the order, and the order is
+   * the whole point:
+   *
+   *   194-196  `(i)⃝ Thinking for 4s` with its reasoning text below
+   *   198-200  the reasoning text and the label both fade OUT; the glyph stays, losing its ring
+   *   201-203  the new label `Exploring 5 files` fades IN, still sitting where the old one was
+   *   205-209  the new glyph fades in BETWEEN the old glyph and the label, pushing the label right
+   *            by exactly one slot
+   *
+   * Two beats, not one. A single cross-fade of "glyphs + label" together is what this replaces, and
+   * it reads as the row being replaced wholesale — which loses the fact that the previous phase
+   * SURVIVES as an index entry. Fading the label first and then growing the glyph's slot says the
+   * opposite: the work moved on, and what it did is still here.
+   *
+   * `insertGlyph` must insert and return the new glyph element. It is called between the beats. */
+  function phaseHandover(chainEl, labelEl, insertGlyph, text, opts) {
+    opts = opts || {};
+    var h = makeHandle();
+    var next = text == null ? '' : String(text);
+    var swapMs = opts.swapDuration || 110;
+    var slotMs = opts.slotDuration || 180;
+    var glyph = null;
+
+    function insert() {
+      if (typeof insertGlyph !== 'function') return null;
+      try { return insertGlyph(); } catch (e) { return null; }
+    }
+
+    if (reduced(chainEl || labelEl)) {
+      if (labelEl) swapTextInstant(labelEl, next);
+      insert();
+      return h._done();
+    }
+
+    var t1 = null, t2 = null;
+    function endNow() {
+      clearTimeout(t1); clearTimeout(t2);
+      if (labelEl) {
+        swapTextInstant(labelEl, next);
+        labelEl.style.transition = '';
+        labelEl.style.opacity = '';
+        labelEl.style.transform = '';
+      }
+      if (!glyph) glyph = insert();
+      if (glyph && glyph.parentNode && glyph.parentNode.classList
+          && glyph.parentNode.classList.contains('pmx-chain-slot')) {
+        var slot = glyph.parentNode;
+        slot.style.transition = '';
+        slot.style.width = '';
+        slot.removeAttribute('data-pmx-slot');
+      }
+    }
+
+    /* Beat 1 — the label alone. swapText's own 110ms cross-fade IS this beat, so the timings agree
+     * by construction rather than by two constants that have to be kept in step by hand. */
+    if (labelEl) swapText(labelEl, next);
+
+    t1 = setTimeout(function () {
+      /* Beat 2 — the glyph's slot opens and pushes the label. The slot is measured after insertion
+       * and animated from zero, so the push is the glyph's real width and never a guess. */
+      glyph = insert();
+      if (!glyph || !glyph.parentNode) { t2 = setTimeout(function () { endNow(); h._done(); }, slotMs); return; }
+      var slot = glyph.parentNode;
+      if (slot.classList && slot.classList.contains('pmx-chain-slot')) {
+        var w = glyph.getBoundingClientRect ? glyph.getBoundingClientRect().width : 0;
+        slot.setAttribute('data-pmx-slot', 'closed');
+        slot.style.transition = 'none';
+        slot.style.width = '0px';
+        void slot.offsetWidth;
+        raf(function () {
+          slot.style.transition = 'width ' + slotMs + 'ms var(--ease-spring-real, cubic-bezier(.22,.61,.36,1))';
+          slot.removeAttribute('data-pmx-slot');
+          slot.style.width = w + 'px';
+        });
+      }
+      t2 = setTimeout(function () { endNow(); h._done(); }, slotMs + 40);
+    }, swapMs);
+
+    h._end(endNow);
+    h._abort(endNow);
+    return h;
+  }
+
+  /* 19. chainRoll(chainEl, opts) — keep the chain readable as it outgrows its row.
+   *
+   * Reference 03 hits its cap at six glyphs and the seventh phase rolls the oldest off the left; the
+   * glyph is not deleted, it is scrolled out, and clicking toward it brings it back. So this scrolls
+   * and marks the overflow edges — it never removes a glyph, because the glyph IS the route back to
+   * that phase and dropping it would silently make part of the run unreachable.
+   *
+   * opts.into: an element to bring into view (the selected phase). Default is the chain's end, which
+   * is where a run in progress wants to be. */
+  function chainRoll(chainEl, opts) {
+    opts = opts || {};
+    var h = makeHandle();
+    if (!chainEl || !chainEl.scrollWidth) return h._done();
+    if (chainEl.classList) chainEl.classList.add('pmx-chain');
+
+    function markEdges() {
+      var max = chainEl.scrollWidth - chainEl.clientWidth;
+      /* 1px of slack: sub-pixel layout routinely leaves scrollWidth a hair over clientWidth on a
+       * chain that does not actually overflow, and masking that chain dims a glyph for nothing. */
+      if (max <= 1) { chainEl.removeAttribute('data-pmx-overflow'); return; }
+      var left = chainEl.scrollLeft > 1;
+      var right = chainEl.scrollLeft < max - 1;
+      chainEl.setAttribute('data-pmx-overflow', left && right ? 'both' : (left ? 'start' : 'end'));
+    }
+
+    var target = null;
+    if (opts.into && opts.into.getBoundingClientRect) {
+      var cr = chainEl.getBoundingClientRect();
+      var ir = opts.into.getBoundingClientRect();
+      /* Only scroll when the glyph is actually outside the viewport. Recentring a glyph that is
+       * already visible moves the whole chain under the reader's cursor for no reason. */
+      if (ir.left < cr.left) target = chainEl.scrollLeft + (ir.left - cr.left) - 8;
+      else if (ir.right > cr.right) target = chainEl.scrollLeft + (ir.right - cr.right) + 8;
+    } else {
+      target = chainEl.scrollWidth - chainEl.clientWidth;
+    }
+
+    if (target == null) { markEdges(); return h._done(); }
+    if (target < 0) target = 0;
+
+    if (reduced(chainEl) || typeof chainEl.scrollTo !== 'function') {
+      chainEl.scrollLeft = target;
+      markEdges();
+      return h._done();
+    }
+    chainEl.scrollTo({ left: target, behavior: 'smooth' });
+    var timer = setTimeout(function () { markEdges(); h._done(); }, 320);
+    function endNow() { clearTimeout(timer); chainEl.scrollLeft = target; markEdges(); }
+    h._end(endNow);
+    h._abort(endNow);
+    return h;
+  }
+
+  /* 20. resizeBounce(el, mutateFn, opts) — a box CHANGES SIZE and says so.
+   *
+   * Taken from PMConcept7's model picker, which is this product's own answer to the same problem:
+   * type into the model search and the popout resizes with an overshoot as rows filter in and out.
+   * `portalAnimateHeight` there (PMConcept7.html:48053-48091) is the driver and the shape is copied
+   * faithfully, because it is already tuned against a reference recording.
+   *
+   * Two layers, and both matter:
+   *   - the HEIGHT transition carries an overshooting curve (y1 = 1.72), so the box travels past its
+   *     new height and settles back. That is the bounce.
+   *   - a one-shot SCALE beat rides on top, restarted per change, so the overshoot reads as the box
+   *     flexing rather than only as an edge sliding.
+   *
+   * Three details are load-bearing and easy to lose:
+   *   - measure the END height with `height: auto` so `max-height` is respected — a card that is
+   *     clamped must animate to the clamp, not past it;
+   *   - bail under half a pixel. A box that bounces when nothing changed is motion asserting a change
+   *     that did not happen, which is the same failure as an indefinite spinner with no work behind it;
+   *   - filter `transitionend` by BOTH target and propertyName. A child's opacity transition bubbling
+   *     up would otherwise clear the pinned height mid-flight.
+   *
+   * The element should be bottom-anchored by its own CSS where the layout allows it (PMConcept7 uses
+   * `top: auto`, commented "height changes shrink the top edge, not the spawn edge"). That is what
+   * lets a question card sitting above a composer grow upward into its own space instead of shoving
+   * the transcript. This helper does not impose it — anchoring is the concept's geometry, not the
+   * primitive's business — but the callers that sit above a composer all want it. */
+  function resizeBounce(el, mutateFn, opts) {
+    opts = opts || {};
+    var h = makeHandle();
+    if (!el) { try { mutateFn && mutateFn(); } catch (e) {} return h._done(); }
+
+    /* Reduced motion applies the mutation and nothing else. The end state IS the whole animation. */
+    if (reduced(el)) {
+      try { mutateFn && mutateFn(); } catch (e) {}
+      return h._done();
+    }
+
+    var ms = opts.duration || 340;
+    var cls = opts.bounceClass || 'pmx-size-bounce';
+    var startH = el.getBoundingClientRect().height;
+
+    el.style.height = startH + 'px';
+    el.style.overflow = 'hidden';
+    try { mutateFn && mutateFn(); } catch (e) {}
+
+    el.style.height = 'auto';
+    var endH = el.getBoundingClientRect().height;
+
+    if (Math.abs(endH - startH) < 0.5) {
+      el.style.height = '';
+      el.style.overflow = '';
+      return h._done();
+    }
+
+    el.style.height = startH + 'px';
+    void el.offsetHeight;
+    el.style.transition = 'height ' + ms + 'ms var(--ease-bounce, cubic-bezier(.22,1.72,.36,1))';
+    el.style.height = endH + 'px';
+
+    /* Remove, force a style flush, re-add: without the flush the class is removed and re-added in one
+     * frame and the animation is never restarted, so a second resize inside the settle window plays
+     * no beat at all. */
+    el.classList.remove(cls);
+    void el.offsetWidth;
+    el.classList.add(cls);
+
+    function endNow() {
+      clearTimeout(timer);
+      el.style.transition = '';
+      el.style.height = '';
+      el.style.overflow = '';
+      el.classList.remove(cls);
+    }
+    var force = afterTransition(el, 'height', function () { endNow(); h._done(); }, ms + 120);
+    var timer = setTimeout(function () { endNow(); h._done(); }, ms + 160);
+    h._end(function () { snapToEnd(el); force(); endNow(); });
+    h._abort(function () { endNow(); });
+    return h;
+  }
+
   global.PMXMotion = {
     reduced: reduced,
     onChange: onChange,
@@ -891,11 +1115,14 @@
     catchUp: catchUp,
     lineage: lineage,
 
-    /* the four causal primitives taken from the raw recordings */
+    /* the six causal primitives taken from the raw recordings */
     displace: displace,
     firstVisit: firstVisit,
     forgetVisits: forgetVisits,
     countMorph: countMorph,
-    groupReopen: groupReopen
+    groupReopen: groupReopen,
+    phaseHandover: phaseHandover,
+    chainRoll: chainRoll,
+    resizeBounce: resizeBounce
   };
 })(window);

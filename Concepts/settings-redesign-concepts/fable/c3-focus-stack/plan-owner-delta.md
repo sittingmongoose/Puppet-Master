@@ -40,3 +40,14 @@ Concept register only. Nothing here edits canon; the audit adjudicates.
 - **Provider-CLI explicit acquisition is unaffected by tool-class lifecycle reuse.** Skills, plugins, tools, formatters, and LSP servers share the lifecycle grammar (install/update/unload/verify), but provider CLIs keep their stricter acquisition contract: explicit user-triggered install, official source, exact host/environment, never bundled, never demand-triggered, install separate from sign-in. Reusing the lifecycle grammar for tool classes must not soften that contract — the cursor-cli offer sheet demonstrates the stricter path side by side with the softer tool-class flows.
 - **Settings vs runtimes.** Restarting an LSP server, reconnecting an MCP server, and testing a formatter are supervised one-shots with receipts; Settings never becomes a live console. Logs sheets are read-only excerpts; full logs live with diagnostics outside Settings.
 - **Sibling ownership.** Personas (and the other c1/c2/c4 families) are answered with honest cross-page receipts carrying real deep links; persisted views naming removed surfaces fall back to Home instead of resurrecting them.
+
+## 2026-08-13 dependency correction
+
+The full-thread performance decision register (omitted from the original packet, supplied by `PM_Settings_Dependency_and_Work_Correction_2026-08-13`) was reviewed in full against this concept. Boundary confirmations added:
+
+- **RuntimeResourceGovernor** remains the only resource/admission owner; nothing in this concept models a second governor — demo staged transitions are UI projections, and the wiring delta's ObservableWork alignment block records how they map onto the register's operation-state grammar.
+- **ObservableWork** is the sole progress/wait projection: determinate progress only with a real denominator (index rebuild now shows measured file counts; the scanning phase is honestly indeterminate), progress source declared, wait reasons from the waiting_* vocabulary.
+- **Provider-CLI adjudication** (byte-identical to the original packet's copy, sha256 9425dce7…) re-verified: no bundling/pre-seeding/silent-acquisition implication anywhere in this concept's copy or fixtures; explicit official-source install offers with exact Host/Environment stand.
+- **Lazy Settings opening model** (register section 20.2) verified with DOM evidence in the correction test pass; startup-scan copy corrected in the shared dataset (skills discovery).
+- **Calibration gates** (register section 23) are recorded as implementation benchmarks, not demo claims.
+

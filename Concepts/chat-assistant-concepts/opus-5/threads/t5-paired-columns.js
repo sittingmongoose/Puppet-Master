@@ -59,12 +59,85 @@
     var tid = this.tid(), u = U();
     var v = this.ctx.store.view(tid);
     var msgs = this.ctx.data.visibleSlice(tid, v.loadedFrom);
+
+    /* 01_message_arrival_spatial_continuity.mov, frames 47 to 63 (about 280ms at 57.6fps): the new
+     * message enters as a flattened sliver at a seam and expands into its box, while everything
+     * already on screen keeps its identity. Rebuilding both lanes cannot say that - every turn
+     * settles again, so the one that actually arrived is indistinguishable from the twenty that did
+     * not.
+     *
+     * So an append is an append. When the only difference is messages added at the END of the same
+     * thread and the same loaded range, the existing turns are kept and the new ones are inserted
+     * through motion.displace(); anything else is a genuine rebuild. */
+    if (this._canAppendOnly(tid, v, msgs)) { this._appendTurns(msgs); return; }
+
     u.empty(this.list); this.rendered = {}; this.lastTid = tid;
+/* The live status row lives IN the list, so emptying it detaches the node this reference
+     * points at. Dropping the reference makes syncLive() below rebuild an attached one instead of
+     * quietly updating an orphan, which is why the running indicator vanished after a rebuild. */
+    this.liveEl = null;
 
     var t = this.ctx.data.threadById(tid);
     var hidden = t ? Math.max(0, t.messages.length - msgs.length) : 0;
     if (hidden > 0) this.list.appendChild(this.buildOlder(hidden));
     for (var i = 0; i < msgs.length; i++) this.list.appendChild(this.buildTurn(msgs[i]));
+
+    /* What the next render compares against to decide whether anything ARRIVED. */
+    this._renderedIds = msgs.map(function (m) { return m.id; });
+    this._renderedFrom = v.loadedFrom;
+
+    this.renderSurfaces(); this.renderQuestion(); this.syncLive();
+  };
+
+  /* True only when this render differs from the last by messages APPENDED to the end. A changed
+   * thread, a changed loaded range, a removal, or any edit to an existing turn all fail this and
+   * fall back to the rebuild, because none of those is an arrival and animating a reflow as though
+   * something had just been said would be a lie about what happened. */
+  T5.prototype._canAppendOnly = function (tid, v, msgs) {
+    if (!this._renderedIds || tid !== this.lastTid) return false;
+    if (v.loadedFrom !== this._renderedFrom) return false;
+    if (msgs.length <= this._renderedIds.length) return false;
+    for (var i = 0; i < this._renderedIds.length; i++) {
+      if (msgs[i].id !== this._renderedIds[i]) return false;
+    }
+    return true;
+  };
+
+  /* The running indicator spans both lanes at the foot of the list and is not a turn, so an
+   * arriving turn is filed above it rather than after it. */
+  T5.prototype._listTail = function () {
+    return (this.liveEl && this.liveEl.parentNode === this.list) ? this.liveEl : null;
+  };
+
+  T5.prototype._appendTurns = function (msgs) {
+    var self = this;
+    var svc = this.ctx.services;
+    var start = this._renderedIds.length;
+    var tail = this._listTail();
+
+    function insert() {
+      var last = null;
+      for (var i = start; i < msgs.length; i++) {
+        last = self.buildTurn(msgs[i]);
+        self.list.insertBefore(last, tail);
+      }
+      /* displace stamps the node this returns, so it names the turn that actually arrived - and
+       * because the turn carries data-pmx-role, the seam it arrives from is its own lane's. */
+      return last;
+    }
+
+    /* Measure, mutate, re-pin - in that order. A reader sitting at the bottom is carried with the
+     * new turn; a reader who has scrolled up is left where they are, which is the whole reason
+     * stickIfAtBottom measures BEFORE the mutation. */
+    var run = function () {
+      if (svc.motion && svc.motion.displace) svc.motion.displace(self.list, insert);
+      else insert();
+    };
+    if (this.scrollCtl && this.scrollCtl.stickIfAtBottom) this.scrollCtl.stickIfAtBottom(run);
+    else run();
+
+    this._renderedIds = msgs.map(function (m) { return m.id; });
+
     this.renderSurfaces(); this.renderQuestion(); this.syncLive();
   };
 
@@ -313,6 +386,21 @@
       else node.textContent = text;
     }
 
+    /* ---- the run capsule LEADS the cluster, in a grid row of its own.
+     *
+     * The run is what is happening now; the rail beneath it is what is true of the thread. The order
+     * is mechanical as well as editorial: groupReopen carries the siblings AFTER the capsule, so
+     * disclosing a phase pushes the rail, the advice note and the handoff card down as one block
+     * instead of displacing them, which is the rule f.910 establishes.
+     *
+     * Three guards, because all three absences are real: the service may not be loaded, a thread may
+     * carry no activity stages at all, and a run that has not started renders NOTHING. An empty frame
+     * saying "no activity" would reserve space for work that never happened, which the work-surface
+     * contract forbids. It yields to a pending question with everything else, because the work
+     * surfaces yield as ONE thing or the yield means nothing. */
+    var run = (!pendingQuestion && svc.runtrace && svc.runtrace.read) ? svc.runtrace.read(this.tid()) : null;
+    if (run && run.started) host.appendChild(this._buildRunCapsule(run));
+
     if (allRows.length && !pendingQuestion) {
       var rail = u.el('div', { class: 't5-rail', data: { condensed: complete ? '1' : '0' } });
       allRows.forEach(function (r, idx) {
@@ -416,6 +504,376 @@
     r.build(bodyEl);
     pane.appendChild(bodyEl);
     return pane;
+  };
+
+  /* ---------------------------------------------------------------- the run capsule
+   *
+   * t5's reading of `reference/videos/03_compact_execution_activity.mov`.
+   *
+   * Every other concept draws the run as one stack - chain, headline, rows, all in one column. This
+   * concept has two lanes and a standing rule about what belongs in each, so the run is split along
+   * that rule instead:
+   *
+   *   USER LANE       the INDEX: the summary line and the glyph chain. Both are controls, and the
+   *                   user lane is already the side of the dialogue the reader acts on.
+   *   ASSISTANT LANE  the RECORD: what the disclosed phase actually did. That lane is already what
+   *                   was said and done, and it is the wide one, which is what a line like
+   *                   `Edited shared/selectors.js +92 -18` needs to stay on one line.
+   *
+   * So clicking a glyph in one lane fills the OTHER, on the same grid row. That is the same move
+   * `_laneDetail` makes for the work rail with the lanes swapped, and swapping them is the point: the
+   * rail is a column of sentences, so it takes the wide lane and answers in the narrow one; the chain
+   * is a row of glyphs, so it takes the narrow lane and answers in the wide one. Nothing else in the
+   * set can do this, because nothing else has a lane on the far side of its work to answer in.
+   *
+   * Carried over as BEHAVIOUR, with the frames shared/runtrace.js cites for each:
+   *   - one glyph per entered phase in entry order, each a real button that reopens THAT phase (the
+   *     chain grows f.208 two, f.390 three, f.780 four, f.910 six; f.1170 and f.1300 are the reopens);
+   *   - the count rewritten in place, digits only, at the same y (f.208 -> f.286 -> f.338);
+   *   - the present participle while a phase runs and the past tense once it settles (f.194 against
+   *     f.1300), with the verb at full contrast and its argument muted;
+   *   - condensed is the RESTING state and not a deletion (f.910): the rail, the advice note and the
+   *     handoff card live below the capsule and are pushed down when a phase is reopened;
+   *   - the chain scrolls rather than truncating, because a glyph IS the route back to its phase and
+   *     dropping one would silently make that phase unreachable.
+   *
+   * Deliberately NOT carried over: the reference's colours, radii, ring treatment and easing. State is
+   * marked the way this concept already marks it - a rule under or beside the thing, dashed while
+   * unsettled - never with a pill or a ring.
+   *
+   * WHY THIS IS THE REOPENABLE CLUSTER
+   * ----------------------------------
+   * The rail above swaps itself for a three-row summary as soon as `group.status === 'complete'`, and
+   * nothing can put the rows back: the condensed form is DERIVED, so there is no state for a reader to
+   * toggle and the work is gone for the rest of the session. Every disclosure here is read from
+   * `store.view(tid).runTrace` instead - `condensed` for the whole run, `openId` for one phase - which
+   * is a fact about what the READER has opened rather than about what the run finished. It survives a
+   * remount, it is per phase, and every control that sets it can also unset it.
+   */
+
+  /* How long a line stays FRESH, in ms. See _runMorph: it is the window in which a rebuild re-issues
+   * the count morph instead of writing the new text flat. One activity verb reaches this concept as
+   * TWO renders - `surfaces.js` calls `PMXRunTrace.step()`, which announces `view.runtrace`, and then
+   * touches `view.surfaces` itself, and the store notifies on each - so the window only has to outlast
+   * a single tick. countMorph itself runs 220ms; a shorter window keeps a genuinely later render from
+   * restarting an animation that is already most of the way through. */
+  var RUN_MORPH_FRESH_MS = 180;
+
+  /* Per-thread memo for the capsule. It holds what each line last SAID, which phase the assistant
+   * lane last showed, and which phases the chain last painted. None of that is a fact about the run,
+   * so none of it belongs in the store: it is a fact about the last paint of these elements, and it is
+   * keyed by thread because a sentence from another thread is not a previous state of this one.
+   *
+   * `chainIds` is what makes the handover detectable in a concept that rebuilds its capsule every
+   * render. With no surviving element to compare against, the only way to know that a phase is
+   * ARRIVING rather than merely present is to remember what was on screen a pass ago. */
+  T5.prototype._runMemo = function () {
+    var tid = this.tid();
+    if (!this._runMemoState || this._runMemoState.tid !== tid) {
+      this._runMemoState = { tid: tid, text: {}, subjectId: null, chainIds: null };
+    }
+    return this._runMemoState;
+  };
+
+  /* countMorph, never swapText: `Reading 6 files` becoming `Reading 7 files` has to move the digit and
+   * leave every word around it in the layout box it already had (f.208 -> f.286 -> f.338). Cross-fading
+   * the whole label reads as the line being replaced, which is the difference between a running tally
+   * and a series of different sentences. countMorph falls back to a label swap by itself when the words
+   * changed too - the honest outcome, because at that point the sentence really did change.
+   *
+   * The memo is what makes the morph real. This concept empties and rebuilds its whole surface host on
+   * every view change, so the span handed to countMorph is always brand new and empty; without a
+   * remembered previous string it would take its entrance path every single tick and no digit would
+   * ever move. Seeding the span with what the line said last is half of it, and the freshness window is
+   * the other half - outside the window the text is written flat, because animating 7 into 7 on some
+   * unrelated re-render would claim work that did not happen. */
+  T5.prototype._runMorph = function (el, key, next, flat) {
+    var motion = this.ctx.services.motion;
+    var memo = this._runMemo();
+    var slot = memo.text[key] || (memo.text[key] = { text: null, from: null, at: 0 });
+    var now = Date.now();
+    if (slot.text !== next) { slot.from = slot.text; slot.text = next; slot.at = now; }
+    var from = slot.from;
+    /* `flat` writes the new string outright while still keeping the memo current. Beat two of a
+     * handover asks for it: seeding the span with the remembered previous sentence is what makes a
+     * digit move within one phase, but across a handover that remembered sentence belongs to the
+     * phase that just finished, so seeding it would REPRINT the outgoing line for a frame at the very
+     * moment the new glyph arrives - the opposite of the order the two beats exist to state. */
+    if (flat || from == null || from === next || (now - slot.at) > RUN_MORPH_FRESH_MS
+        || !motion || !motion.countMorph) {
+      el.textContent = next;
+      return;
+    }
+    el.textContent = from;
+    motion.countMorph(el, next);
+  };
+
+  T5.prototype._buildRunCapsule = function (run) {
+    var self = this, u = U(), svc = this.ctx.services;
+    var memo = this._runMemo();
+    var open = run.open;
+    /* While the run is live the running phase is its own disclosure, which is why the reference shows
+     * rows under a running phase nobody asked to see. Once the run condenses, nothing is disclosed
+     * until the reader opens a glyph. */
+    var showReport = !!open || (!run.condensed && !!run.running);
+    var subject = open || run.running || (run.chain.length ? run.chain[run.chain.length - 1] : null);
+
+    /* The assistant lane cross-fades only when it has something DIFFERENT to say. The surface is
+     * rebuilt on every view touch, so an unconditional entrance would flicker the pane on every count
+     * tick; keying it to the disclosed phase makes it fire on a reopen and on a handover, which is
+     * beat one of f.198-203, and stay silent while a count grows. */
+    var subjectKey = (showReport && subject) ? subject.id : null;
+    var laneChanged = memo.subjectId !== subjectKey;
+    memo.subjectId = subjectKey;
+
+    var cap = u.el('div', {
+      class: 't5-run',
+      data: {
+        condensed: run.condensed ? '1' : '0',
+        running: run.running ? '1' : '0',
+        open: showReport ? '1' : '0'
+      }
+    });
+
+    /* ---- the user lane: the index ------------------------------------------------------------- */
+
+    var index = u.el('div', { class: 't5-run-index', data: { lane: 'user' } });
+
+    var chain = u.el('div', { class: 't5-run-chain pmx-chain' });
+    var openGlyph = null, runningGlyph = null;
+
+    /* One glyph, built the same way whether it is painted with the rest of the chain or arrives a beat
+     * later on a handover. Two builders would be two definitions of what a chain entry is, and the one
+     * that runs less often is the one that would drift. */
+    function glyphFor(p) {
+      /* Every glyph sits in its own slot, which is the box phaseHandover opens from zero width when
+       * one phase hands over to the next (f.205-209: the new glyph opens its slot and pushes the label
+       * right by exactly one). Without the slot the chain has nothing to animate. */
+      var slot = u.el('span', { class: 'pmx-chain-slot' });
+      /* Disclosure, not "the phase the headline is about". The two differ once the run condenses, when
+       * the headline speaks for the whole run and no single glyph is being read. */
+      var isOpen = !!(open && open.id === p.id);
+      var btn = u.el('button', {
+        class: 't5-run-glyph', type: 'button',
+        data: { kind: p.kind, state: p.running ? 'running' : 'done', open: isOpen ? '1' : '0' },
+        aria: { expanded: isOpen ? 'true' : 'false', label: p.headline }
+      });
+      btn.title = p.headline;
+      /* The glyph is what makes the chain an INDEX rather than a progress bar: a row of identical
+       * marks could not tell a reader which one is the edit phase, so clicking one could not be the
+       * random access f.1170 demonstrates. */
+      if (svc.icons) btn.appendChild(svc.icons.get(p.glyph, 12));
+      self._on(btn, 'click', function () { self._openRunPhase(cap, p.id); });
+      if (isOpen) openGlyph = btn;
+      if (p.running) runningGlyph = btn;
+      slot.appendChild(btn);
+      chain.appendChild(slot);
+      return btn;
+    }
+
+    /* THE HANDOVER, and its order (f.194-211).
+     *
+     * The reference is explicit that the outgoing sentence lets go FIRST - at f.198-200 the label and
+     * the reasoning text fade out while the old glyph stays - and only at f.205-209 does the new glyph
+     * appear and push the label. The lateral push is the part this concept cannot copy: the chain sits
+     * ABOVE the line rather than beside it, for the reason stated in `t5-paired-columns.css:608-612`,
+     * and that CSS is still correct. What is copied is the CAUSAL ORDER, which is the part that
+     * carries the meaning: the phase that finished lets go of the sentence, and the phase that took
+     * over then arrives to claim it. A single frame that swapped both at once would read as the run
+     * being replaced, and would lose the fact that the finished phase survives as an index entry.
+     *
+     * A handover is one specific event: the chain gained EXACTLY ONE entry on the end since the last
+     * paint and the line is now speaking for it. A reader reopening an old phase, a finished run
+     * painting all its glyphs at once, and a reset that starts a new run all fail that test - and each
+     * of them animated as a handover would claim a transfer of work that did not happen. The
+     * one-entry check is what covers the reset: the memo outlives the run it described, so a shorter
+     * chain than the one remembered means this is a different run and not the next phase of that one. */
+    var lastPhase = run.chain.length ? run.chain[run.chain.length - 1] : null;
+    var painted = memo.chainIds;
+    var arriving = (lastPhase && painted && painted.length === run.chain.length - 1
+      && painted.indexOf(lastPhase.id) < 0
+      && subject && subject.id === lastPhase.id && !run.condensed) ? lastPhase : null;
+
+    memo.chainIds = [];
+    run.chain.forEach(function (p) { memo.chainIds.push(p.id); });
+
+    run.chain.forEach(function (p) {
+      if (arriving && arriving.id === p.id) return;   /* inserted on beat two, below */
+      glyphFor(p);
+    });
+    index.appendChild(chain);
+
+    /* One line, rewritten in place, never appended to. Condensed with nothing open it speaks for the
+     * whole run (`13 tools used` at f.910) and states the elapsed time beside it; otherwise it speaks
+     * for the phase in hand. Verb and argument morph separately so the tense flip lands on the verb
+     * alone and the argument beside it never twitches. */
+    var head = u.el('button', {
+      class: 't5-run-head', type: 'button',
+      aria: { expanded: showReport ? 'true' : 'false' }
+    });
+    var verbEl = u.el('span', { class: 't5-run-verb' });
+    var argEl = u.el('span', { class: 't5-run-arg' });
+    var resting = run.condensed && !open;
+    var verbText = resting ? run.summaryLabel : (subject ? subject.verb : '');
+    var argText = resting
+      ? (run.workedSeconds ? F().duration(run.workedSeconds) : '')
+      : (subject ? subject.argument : '');
+
+    /* On a handover both halves stay EMPTY on beat one: that IS the outgoing sentence letting go, and
+     * writing the new one here would collapse the two beats into a single swap. `writeHeadLine` is
+     * called on beat two, beside the arriving glyph, and writes flat there - see `_runMorph`. */
+    function writeHeadLine(flat) {
+      self._runMorph(verbEl, 'verb', verbText, flat);
+      self._runMorph(argEl, 'arg', argText, flat);
+    }
+    if (!arriving) writeHeadLine(false);
+    head.appendChild(verbEl);
+    head.appendChild(argEl);
+
+    /* One control, three meanings, in the order a reader means them: dismiss what is open, disclose a
+     * condensed run at its most recent phase, condense a live one. */
+    this._on(head, 'click', function () {
+      if (!svc.runtrace) return;
+      if (open) { svc.runtrace.close(self.tid()); return; }
+      if (run.condensed) { self._openRunPhase(cap, null); return; }
+      svc.runtrace.condense(self.tid());
+    });
+    index.appendChild(head);
+    cap.appendChild(index);
+
+    /* ---- the assistant lane: the record ------------------------------------------------------- */
+
+    if (showReport && subject) {
+      var report = u.el('div', { class: 't5-run-report', data: { lane: 'assistant', kind: subject.kind } });
+      if (laneChanged) report.classList.add('t5-run-fade');
+
+      var rhead = u.el('div', { class: 't5-run-report-head' });
+      /* The concept's own register word for "which kind of thing this is", the same one the rail rows
+       * and the handoff card use. A second vocabulary here would be two owners of one idea. */
+      rhead.appendChild(u.el('span', { class: 't5-rail-kind', text: F().label(subject.kind) }));
+      /* Printed only once the phase is DONE. `durationMs` is how long the stage took, so stating it
+       * beside a phase that is still running would report a measurement the run has not finished. */
+      if (subject.status === 'done' && subject.durationMs) {
+        rhead.appendChild(u.el('span', {
+          class: 't5-run-time', text: F().duration(Math.round(subject.durationMs / 1000))
+        }));
+      }
+      /* Close is offered only for a phase the READER opened. While the run is live the running phase
+       * is its own disclosure, so a close control there would be a button that changes nothing. */
+      if (open) {
+        var close = u.el('button', {
+          class: 't5-run-close', type: 'button', text: 'Close',
+          aria: { label: 'Close the run detail' }
+        });
+        this._on(close, 'click', function () { svc.runtrace.close(self.tid()); });
+        rhead.appendChild(close);
+      }
+      report.appendChild(rhead);
+
+      var list = subject.rows && subject.rows.length ? subject.rows : null;
+      if (list) {
+        var rowsEl = u.el('div', { class: 't5-run-rows' });
+        list.forEach(function (r) {
+          var row = u.el('div', { class: 't5-run-row' }, [
+            u.el('span', { class: 't5-run-row-verb', text: r.verb || '' }),
+            u.el('span', { class: 't5-run-row-target', text: r.target || '' })
+          ]);
+          /* Printed only when the record carries them. A generate phase touches files without adding
+           * or removing a line, and `+0 -0` beside it would state a measurement nobody made. */
+          if (r.added != null || r.removed != null) {
+            var delta = u.el('span', { class: 't5-run-delta' });
+            if (r.added != null) delta.appendChild(u.el('span', { class: 't5-run-add', text: '+' + r.added }));
+            if (r.removed != null) delta.appendChild(u.el('span', { class: 't5-run-rem', text: '\u2212' + r.removed }));
+            row.appendChild(delta);
+          }
+          rowsEl.appendChild(row);
+        });
+        report.appendChild(rowsEl);
+      } else if (subject.detail) {
+        report.appendChild(u.el('p', { class: 't5-run-detail', text: subject.detail }));
+      }
+      /* A phase with neither rows nor a detail still gets its head, because the head states two facts
+       * the reader asked for - which phase this is and how long it took. That is a thin record, not an
+       * empty frame. The operation fields are NOT restated here: PMXOpCard owns them and the rail below
+       * already prints them in this same lane pairing, so a second copy would be a second owner. */
+      cap.appendChild(report);
+    }
+
+    /* The chain SCROLLS rather than truncating, and brings the phase being read back into view. The
+     * reference caps its own chain at six glyphs and rolls the oldest off the left as a seventh phase
+     * starts (f.910); the glyph is scrolled out, never dropped. With nothing disclosed the running
+     * glyph is the target, and with neither, chainRoll's own default - the end of the chain - is where
+     * a run in progress wants to be. */
+    function rollChain(into) {
+      if (!svc.motion || !svc.motion.chainRoll) return;
+      var target = into || openGlyph || runningGlyph;
+      global.requestAnimationFrame(function () {
+        if (chain.isConnected) svc.motion.chainRoll(chain, target ? { into: target } : null);
+      });
+    }
+
+    if (arriving) {
+      /* Beat two. phaseHandover is passed an EMPTY label and an empty string, exactly as t2 passes
+       * them: the sentence was already let go above, so there is nothing left to cross-fade, and what
+       * the primitive is here for is the second beat - the slot opening from zero width at the glyph's
+       * own measured size, after the first beat has been seen. The new sentence rides in with the
+       * glyph, because in this concept the line speaks for whichever phase the chain is pointing at
+       * and writing it earlier would have the line speak for a phase with no entry yet.
+       *
+       * The roll waits for the insertion: rolling a chain that is one glyph short would scroll to the
+       * wrong end and then have to correct itself a beat later. */
+      var born = null;
+      var insertGlyph = function () {
+        born = glyphFor(arriving);
+        writeHeadLine(true);
+        return born;
+      };
+      if (svc.motion && svc.motion.phaseHandover) {
+        svc.motion.phaseHandover(chain, argEl, insertGlyph, '').then(function () { rollChain(born); });
+      } else {
+        insertGlyph();
+        rollChain(born);
+      }
+    } else {
+      rollChain(null);
+    }
+
+    return cap;
+  };
+
+  /* Disclosing a phase, routed through groupReopen rather than made as a bare state write.
+   *
+   * Two different height motions live in this concept and they answer two different questions. The
+   * question lanes BOUNCE to their new size, bottom-anchored, because a page with fewer options is a
+   * smaller card and the reader should be told so without the transcript moving. A reader clicking a
+   * glyph is a third case again: they asked for content that was not on screen at all, so the surface
+   * has to make room for it rather than merely restate its own size.
+   *
+   * What groupReopen actually does here, measured at a 1200px chat width rather than assumed: its main
+   * leg carries the siblings AFTER the capsule - the rail, the advice note, the handoff card - which is
+   * the rule f.910 states, that what lives below the run is pushed down and never replaced. Its height
+   * leg is guarded by `endH > startH`, and because the record lands BESIDE the index rather than under
+   * it, the capsule only grows by the amount the record exceeds the index: 47px to 84px for the edit
+   * phase and its three rows, not by the record's whole height. Once the lanes have folded the record
+   * really is under the index and the capsule grows by all of it, which is the one case where springing
+   * the height is the honest description of what happened. In the windows that put the work host
+   * between the transcript and the composer that growth is taken from the transcript above, so the
+   * spring is also what keeps it from being taken in a single frame.
+   *
+   * A null phaseId is the summary line's meaning: PMXRunTrace.open with no id reopens the most recent
+   * phase, which is what "show me what just happened" asks for. Passing the id of the phase already
+   * open closes it, so one control both discloses and dismisses.
+   *
+   * The rail's own open row is deliberately left alone. Reference 03 reopens each group independently -
+   * opening the second does not close the first - and the capsule and the rail are two different
+   * clusters answering two different questions. */
+  T5.prototype._openRunPhase = function (cap, phaseId) {
+    var self = this;
+    var svc = this.ctx.services;
+    if (!svc.runtrace || !svc.runtrace.open) return;
+    function disclose() { svc.runtrace.open(self.tid(), phaseId); }
+    if (svc.motion && svc.motion.groupReopen) svc.motion.groupReopen(cap, disclose);
+    else disclose();
   };
 
   /* ---------------------------------------------------------------- the operation card
@@ -701,75 +1159,255 @@
     /* Re-entrancy guard: claiming the surfaces notifies the store, which re-enters update() and
      * therefore this function mid-render. */
     if (this._inRenderQuestion) return;
-
-    var host = this.ctx.capabilities.questionHost ? this.ctx.regions.questionHost : this.inlineQuestion;
-    var prevKey = this._qkey || '';
-
     this._inRenderQuestion = true;
     try { this._renderQuestionBody(); } finally { this._inRenderQuestion = false; }
-
-    this._choreographLanes(host, prevKey);
   };
 
-  /* This concept's OWN choreography: the lanes CROSS-FADE, per the matrix.
+  /* ---------------------------------------------------------------- the pair changes SIZE, and says so
    *
-   * Not a height spring - the two halves sit side by side at full width, so springing a height would
-   * move the conversation above them. A cross-fade changes what the lanes say without moving anything,
-   * which is the only motion that respects a two-column reading surface. */
-  T5.prototype._choreographLanes = function (host, prevKey) {
-    var R = global.PMXReveal;
-    if (!R || !host) return;
-
-    var svc = this.ctx.services;
-    var key = R.keyFor(svc, this.tid());
-    this._qkey = key;
-
-    /* Same question, one more keystroke: silence. */
-    if (prevKey === key) return;
-
-    var halves = Array.prototype.slice.call(host.querySelectorAll('.t5-qlane'));
-    if (!halves.length || R.reduced(host)) return;
-    halves.forEach(function (el) { R.oneShot(el, 't5-qlane-fade', 320); });
-  };
-
+   * What stood here was a refusal: no height motion, because "springing a height would move the
+   * conversation above them". That reasoning was sound about the mechanism it had - a card pinned by
+   * its TOP edge grows downward and shoves everything under it, or grows upward and shoves everything
+   * over it - and it is answered rather than overruled by `pmx-resize-up`. Both lanes are anchored to
+   * their BOTTOM edge wherever the window provides the question region, which is the case where the
+   * card sits directly above the composer. A page that needs more room moves the pair's OWN top edge
+   * into space the card already occupies; the transcript above it does not move by a pixel.
+   *
+   * Saying nothing was the worse failure. A four-option page and a freeform page are genuinely
+   * different heights, and the pair used to snap between them - which reads as a different card
+   * appearing rather than as the same card on a different page. The bounce is PMConcept7's own
+   * measured resize (`--ease-bounce`, y1 = 1.72, plus a one-shot scale beat), so the two halves flex
+   * to their new size the way this product's model picker already does.
+   *
+   * BOTH LANES, ONE BEAT. The halves are one frame to the reader - one question, asked on the left and
+   * answered on the right - so they are bounced with the same options in the same synchronous beat
+   * rather than wrapped in a shared container. A wrapper would have been the other legitimate answer
+   * and was rejected on layout: at 900px and up the lanes are grid items of the region itself
+   * (`t5-paired-columns.css:793-806` places them in columns 1 and 2 of row 1), so putting a box around
+   * them would take them out of the grid and cost the concept its two columns. Two calls, same
+   * `bounceClass` and same duration, started in the same frame, run on the same curve and settle
+   * together; each one measures and mutates only its own half, which is also what keeps the first
+   * lane's mutation from being measured as the second lane's starting height. */
   T5.prototype._renderQuestionBody = function () {
-    var self = this, u = U();
     var svc = this.ctx.services;
+    var motion = svc.motion;
+    var R = global.PMXReveal;
     var host = this.ctx.capabilities.questionHost ? this.ctx.regions.questionHost : this.inlineQuestion;
     if (!host) return;
-    u.empty(host);
 
     var flow = svc.qflow ? svc.qflow.read(svc, this.tid()) : null;
-    if (!flow) return;
+    if (!flow) { this._dropLanes(host); return; }
 
     if (!flow.record) {
+      /* The receipt is one full-width row, not a pair of lanes, so the pair is genuinely gone here -
+       * this is the questionnaire ending, not the card resizing. */
+      this._dropLanes(host);
       this._renderLaneReceipt(host, flow.receipt);
       return;
     }
 
     svc.qflow.claim(svc, this.tid());
 
-    var q = flow.question;
+    var pair = this._ensureLanes(host);
+    var said = pair.said, mine = pair.mine;
 
-    /* ---- the assistant lane: the prompt, and nothing else. It is a thing that was said. */
-    var said = u.el('div', { class: 't5-qlane', data: { lane: 'assistant', phase: flow.status } });
+    /* The option COUNT is what picks the beat: `pmx-size-bounce-strong` overshoots further and
+     * undershoots once before settling, which is what a page with two fewer options actually is - a
+     * change of shape rather than a nudge. A page whose option count is unchanged and whose prompt
+     * merely runs to a second line gets the ordinary beat. */
+    var q = flow.question;
+    var count = (q && q.options) ? q.options.length : 0;
+    var hadCount = this._qOptionCount;
+    this._qOptionCount = count;
+
+    /* A NEW questionnaire in the same pair forgets what the old one showed. Question identity is
+     * `qid/questionId/phase`, and the demo fixture prepares every flow under one fixed record id, so
+     * a second questionnaire's question two is indistinguishable from the first one's - and the pair
+     * would refuse the entrance for a question the reader has genuinely never seen. `createdAt` is
+     * stamped once at prepare and never rewritten, so it names the RUN rather than the record, and
+     * `forgetVisits` is motion.js's own way to say this element has shown nothing yet. */
+    var stamp = flow.id + '@' + ((flow.record && flow.record.createdAt) || '');
+    if (this._qStamp !== stamp) {
+      this._qStamp = stamp;
+      if (motion && motion.forgetVisits) motion.forgetVisits(said);
+    }
+
+    /* ONE identity for the PAIR. `keyFor` is qid/questionId/phase, so it changes when the reader moves
+     * to a different question and not when they type into this one. It is stamped on the assistant
+     * lane alone even though two elements persist: firstVisit MUTATES the element it is asked about,
+     * so asking both would be two records of one fact, free to disagree after any path that rebuilds
+     * one half and not the other. The prompt is what the reader is being shown, so the lane carrying
+     * the prompt is where the record of having shown it belongs. */
+    var key = R ? R.keyFor(svc, this.tid()) : '';
+    var fresh = (motion && motion.firstVisit) ? motion.firstVisit(said, key) : true;
+
+    /* NOTHING CHANGED, NOTHING MOVES.
+     *
+     * Advancing the flow renders this surface twice - once from the handler and once from the store
+     * notification `qflow.claim` raises about ten milliseconds later - and typing writes a draft,
+     * which notifies again. Rebuilding on a pass that changes nothing is invisible on its own, but a
+     * BOUNCE on such a pass is not: it would measure the first bounce mid-flight, pin that, and hand
+     * the settle a target taken from a card already on its way somewhere. Comparing what the fill
+     * actually reads is the honest test, and it is cheap: one string per pass. */
+    var sig = this._questionSignature(flow);
+    if (!pair.created && sig === this._qSig) return;
+    this._qSig = sig;
+
+    if (pair.created) {
+      /* Nothing to resize FROM. A card that has just been mounted has no previous size, so bouncing it
+       * would animate a change from zero - which states that the card shrank into existence. */
+      this._fillSaidLane(said, flow);
+      this._fillMineLane(mine, flow);
+    } else {
+      this._bounceLanes(said, mine, flow, hadCount != null && hadCount !== count);
+    }
+
+    /* Reference 02 pages BACKWARD as often as forward, and paging back to an answered question shows
+     * the answer still there without replaying the entrance - an entrance on the way back tells the
+     * reader they moved forward when they moved back. The cross-fade is therefore played only for a
+     * question this pair has not shown before; the resize above still plays, because the pair really
+     * did change size and that is a different statement. */
+    if (fresh) this._playLaneEntrance(said, mine);
+  };
+
+  /* The pair, created ONCE and kept. The lanes used to be destroyed and rebuilt on every render, which
+   * is why there was never anything to resize: an element that did not exist a frame ago has no
+   * previous height, and `firstVisit` stamped on it would die with it every pass. */
+  T5.prototype._ensureLanes = function (host) {
+    var u = U();
+    var pair = this._qLanes;
+    var tid = this.tid();
+    if (pair && pair.tid === tid && pair.said.parentNode === host && pair.mine.parentNode === host) {
+      return { said: pair.said, mine: pair.mine, created: false };
+    }
+
+    u.empty(host);
+    var said = u.el('div', { class: 't5-qlane', data: { lane: 'assistant', phase: 'active' } });
+    var mine = u.el('div', { class: 't5-qlane', data: { lane: 'user' } });
+
+    /* Bottom-anchored ONLY where the card sits above the composer. Inline in the transcript the lanes
+     * are a turn like any other and have a conversation below them as well as above, so anchoring
+     * their bottom edge there would move what follows them - the very thing this class exists to
+     * prevent in the region case. */
+    if (this.ctx.capabilities.questionHost) {
+      said.classList.add('pmx-resize-up');
+      mine.classList.add('pmx-resize-up');
+    }
+
+    host.appendChild(said);
+    host.appendChild(mine);
+    /* Keyed by thread: another thread's questionnaire is a different card, so it must not bounce from
+     * this one's height or inherit its record of what has already been shown. */
+    this._qLanes = { tid: tid, said: said, mine: mine };
+    this._qOptionCount = null;
+    this._qBounces = null;
+    this._qSig = null;
+    this._qStamp = null;
+    return { said: said, mine: mine, created: true };
+  };
+
+  T5.prototype._dropLanes = function (host) {
+    this._qLanes = null;
+    this._qOptionCount = null;
+    this._qBounces = null;
+    this._qSig = null;
+    this._qStamp = null;
+    if (host) U().empty(host);
+  };
+
+  T5.prototype._bounceLanes = function (said, mine, flow, strong) {
+    var self = this;
+    var motion = this.ctx.services.motion;
+    var opts = { bounceClass: strong ? 'pmx-size-bounce-strong' : 'pmx-size-bounce' };
+
+    if (!motion || !motion.resizeBounce) {
+      this._fillSaidLane(said, flow);
+      this._fillMineLane(mine, flow);
+      return;
+    }
+
+    /* Two calls, one beat. resizeBounce runs its mutation synchronously in both the animated and the
+     * reduced-motion path, so by the time this function returns both halves hold their new contents
+     * and reduced motion has landed on the end state with no transform anywhere. */
+    this._bounceLane(said, 'said', function () { self._fillSaidLane(said, flow); }, opts);
+    this._bounceLane(mine, 'mine', function () { self._fillMineLane(mine, flow); }, opts);
+  };
+
+  /* One lane's bounce. A bounce still in flight is LANDED before the next one is measured.
+   *
+   * Two bounces overlapping on one element sabotage each other: the older one's cleanup timer fires
+   * inside the younger one's flight and clears the pinned height, so the younger animation ends by
+   * snapping. Landing the old one first costs a jump to a height the lane was already travelling to,
+   * and buys a complete curve for the change the reader just made - which is the one they are
+   * watching. The signature check above means this can only be reached by a real second change
+   * inside the settle window, such as answering and advancing in quick succession. */
+  T5.prototype._bounceLane = function (el, key, mutate, opts) {
+    var live = this._qBounces || (this._qBounces = {});
+    var prior = live[key];
+    if (prior && prior.state && prior.state() === 'running' && prior.finish) {
+      try { prior.finish(); } catch (e) {}
+    }
+    live[key] = this.ctx.services.motion.resizeBounce(el, mutate, opts);
+  };
+
+  /* Everything the two fills read, as one string. A pass whose signature is unchanged would rebuild
+   * the same DOM, so it is skipped outright - which is also what keeps a textarea's caret alive
+   * through a store notification that had nothing to do with this card. */
+  T5.prototype._questionSignature = function (flow) {
+    var q = flow.question;
+    var parts = [
+      flow.id, flow.status, flow.index, flow.position, flow.total,
+      flow.atEnd ? 1 : 0, flow.skippedCount, this._pendingReason || ''
+    ];
+    if (q) {
+      parts.push(q.id, q.required ? 1 : 0, (q.options || []).length,
+        (q.selected || []).join('\u0001'), q.draft || '', flow.isSkipped(q) ? 1 : 0);
+    }
+    /* Delimited with escaped control characters rather than a comma: a draft is free text, and a
+     * separator it could itself contain would let two different states collapse to one signature. */
+    return parts.join('\u0002');
+  };
+
+  T5.prototype._playLaneEntrance = function (said, mine) {
+    var R = global.PMXReveal;
+    if (!R || R.reduced(said)) return;
+    /* Both halves, one class, one duration: the pair reads as a single frame changing what it says. */
+    R.oneShot(said, 't5-qlane-fade', 320);
+    R.oneShot(mine, 't5-qlane-fade', 320);
+  };
+
+  /* ---- the assistant lane: the prompt, and nothing else. It is a thing that was said. */
+  T5.prototype._fillSaidLane = function (said, flow) {
+    var u = U();
+    u.empty(said);
+    said.setAttribute('data-phase', flow.status);
 
     if (flow.status === 'preparing' || flow.status === 'submitting') {
       said.appendChild(global.PMXReveal.capsule(
         flow.status === 'preparing' ? 'Preparing questions' : 'Submitting answers', this.ctx));
-      host.appendChild(said);
       return;
     }
 
+    var q = flow.question;
     said.appendChild(u.el('p', {
       class: 't5-qprompt',
       text: flow.atEnd ? 'That is every question.' : (q ? q.prompt : '')
     }));
     if (q && q.required && !flow.atEnd) said.appendChild(u.el('span', { class: 't5-qreq', text: 'Required' }));
-    host.appendChild(said);
+  };
 
-    /* ---- the user lane: the form. `Question 2 of 3` sits ABOVE it, per the matrix. */
-    var mine = u.el('div', { class: 't5-qlane', data: { lane: 'user' } });
+  /* ---- the user lane: the form. `Question 2 of 3` sits ABOVE it, per the matrix. */
+  T5.prototype._fillMineLane = function (mine, flow) {
+    var self = this, u = U();
+    var svc = this.ctx.services;
+    var q = flow.question;
+
+    u.empty(mine);
+    /* While the questionnaire is preparing or submitting there is nothing for the reader to answer, so
+     * the lane stays empty and the CSS `:empty` rule takes it out of the layout. It is not removed: it
+     * is the same lane, waiting, and destroying it would throw away the pair's size and its record of
+     * what it has shown. */
+    if (flow.status === 'preparing' || flow.status === 'submitting') return;
 
     mine.appendChild(u.el('span', {
       class: 't5-qcount',
@@ -866,7 +1504,6 @@
     }
 
     mine.appendChild(acts);
-    host.appendChild(mine);
   };
 
   /* One receipt row spanning both lanes. */
@@ -981,6 +1618,13 @@
         if (el && el.parentNode) { while (el.firstChild) el.removeChild(el.firstChild); }
       }, this);
     }
+    /* The lane pair survives renders, so it has to be released HERE or the next instance would hold a
+     * reference to two elements this destroy has just detached and would never build a new pair. */
+    this._qLanes = null;
+    this._qOptionCount = null;
+    this._qBounces = null;
+    this._qSig = null;
+    this._qStamp = null;
     for (var i = 0; i < this.offs.length; i++) { try { this.offs[i](); } catch (e) {} }
     this.offs = [];
     if (this._tickOff) { try { this._tickOff(); } catch (e) {} this._tickOff = null; }
@@ -989,6 +1633,11 @@
       if (el && el.parentNode) el.parentNode.removeChild(el);
     });
     this.rendered = {};
+    /* The append-only path keys off these. A destroyed instance that left them behind would let the
+     * next render mistake a fresh mount for an append and skip building the turns already on
+     * screen. */
+    this._renderedIds = null;
+    this._renderedFrom = null;
   };
 
   global.PMX.thread.register('t5', {

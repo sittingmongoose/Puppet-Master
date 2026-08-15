@@ -1,0 +1,29 @@
+{
+  "schema_id": "pm.prompt_complexity_successor.v1_lineage_manifest.v2",
+  "predecessor_root": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/",
+  "excluded_descendant": "v2/",
+  "relationship": "immutable_failed_predecessor",
+  "terminal": "NOT_READY",
+  "failed_check_ids": ["DP-020"],
+  "files": [
+    {"path":"control_plane_defect-0001-successor-verifier-temp-write.md","sha256":"0e6ae97e747ad834a8f9a0b143f748eef861d50ab1ce0defb565c7459e3bcaa2"},
+    {"path":"deterministic_preflight.py","sha256":"c07dcff3191b94ab340ae169e4951c53660b618013bf4ad8790cbf1295d895f9"},
+    {"path":"deterministic_preflight_report.json","sha256":"094c245a96252cdc05a6a8e6bb07b5b2389f896482d15c0ff3c40e2018bbab89"},
+    {"path":"deterministic_preflight_spec.json","sha256":"8a1d0e79c95c20ff4d010f605069d7b70e56d28b34e03678ebd63b4867ae28a8"},
+    {"path":"historical_artifact_disposition.json","sha256":"3e5d1d5285ab13d7dd198fbe464364f41b1cb73744be1ddc3343f9379aa9660c"},
+    {"path":"process_contract.md","sha256":"457a27d9238f6e770160119de75c45c26faf28626399cc1aa1a7cdb589a89edb"},
+    {"path":"readiness_report.md","sha256":"da1ecf41a957f6501c34f640df638796dda4b95888c50f65407e6a43a3744b9a"},
+    {"path":"refreshed_surface_census.json","sha256":"dc0012817997f6e0272818edf68201432907176640ce388a15a55fefd7847b22"},
+    {"path":"source_custody.json","sha256":"c6f78062dfedd1e7a3cdbd8c0cc91e03481137b09fac4ef7dfd1cf93a4d8abb7"},
+    {"path":"test_design_questions.json","sha256":"0e81e263e8942c74ea8bf442ae58910ea9e3991152911bec7071f58421ad8d38"}
+  ],
+  "preserved_facts": {
+    "v1_checks_total": 21,
+    "v1_checks_passed": 20,
+    "v1_checks_failed": 1,
+    "v1_boundary_breach": "/tmp/pm-subcheck-check_shards-98iyebrk.json",
+    "v1_subject_model_or_provider_calls": 0,
+    "v1_was_repaired": false,
+    "v1_passes_transferred_to_v2": false
+  }
+}

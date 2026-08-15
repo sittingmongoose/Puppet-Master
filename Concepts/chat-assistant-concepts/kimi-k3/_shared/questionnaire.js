@@ -28,6 +28,22 @@
   // flip. Cleared when a questionnaire resolves (no longer active).
   var shownQuests = {};
 
+  // Video-D causal lifecycle: the questionnaire is ONE element — a slim
+  // "Preparing questions…" pill grows into the card; on submit the card
+  // condenses back into a "Submitting answers…" pill that dissolves to the
+  // composer. Both beats are presentation-only (the data facade resolves
+  // synchronously — SPEC_GAPS K3-GAP-024) and are skipped under reduced motion.
+  function beatPill(text, testid) {
+    var pill = el('div', 'k3q-pill');
+    pill.setAttribute('data-testid', testid);
+    var o = el('span', 'k3-orbit');
+    o.setAttribute('aria-hidden', 'true');
+    for (var i = 0; i < 4; i++) o.appendChild(el('i'));
+    pill.appendChild(o);
+    pill.appendChild(el('span', 'k3q-pill-label', text));
+    return pill;
+  }
+
   function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
   function arr(v) { return Array.isArray(v) ? v : []; }
 
@@ -137,7 +153,11 @@
     }
 
     // --- render ----------------------------------------------------------------
+    var submitting = false;
+    var preparing = false;
+    function unmountedRef() { return !root.isConnected; }
     function render(dir) {
+      if (submitting || preparing) return; // beats own the slot; they re-render at the end
       q = getActive();
       announce(!!(q && arr(q.questions).length));
       if (!q || arr(q.questions).length === 0) {
@@ -151,19 +171,69 @@
       }
       root.hidden = false;
       idx = clamp(q.currentQuestionIndex || 0, 0, q.questions.length - 1);
+      // one-shot prepare beat + variant entrance on FIRST appearance of this
+      // questionnaire in the session — a remount must NOT replay it. Reduced
+      // motion skips the beat via the global gate.
+      if (!shownQuests[q.id] && !K3.motionReduced()) {
+        shownQuests[q.id] = true;
+        var qid = q.id;
+        // prepare beat: the pill occupies the slot before the card grows from it;
+        // intermediate renders no-op while `preparing` (the slot is the beat's).
+        preparing = true;
+        if (lockedFor !== q.id) { root.style.minHeight = ''; lockedFor = null; } // no stale region behind the pill
+        root.innerHTML = '';
+        root.appendChild(beatPill('Preparing questions\u2026', 'k3-quest-prepare'));
+        root.classList.add('k3q-pill-in');
+        setTimeout(function () {
+          preparing = false;
+          if (unmountedRef()) return;
+          // the flow may have resolved during the beat; render() re-reads state
+          root.classList.remove('k3q-pill-in');
+          q = getActive();
+          if (!q || q.id !== qid) { render(); return; }
+          root.innerHTML = '';
+          lockCardHeight();
+          root.innerHTML = '';
+          buildHead();
+          buildBody();
+          buildFoot();
+          refreshState();
+          root.classList.add('k3q-enter-' + variantId);
+          setTimeout(function () { root.classList.remove('k3q-enter-' + variantId); }, 600);
+        }, 460);
+        return;
+      }
+      // non-beat build (repeat appearance or reduced motion): lock geometry first
+      lockCardHeight();
       root.innerHTML = '';
       buildHead();
       buildBody(dir);
       buildFoot();
       refreshState();
-      // one-shot variant entrance on FIRST appearance of this questionnaire in
-      // the session — a docked<->pop-out remount must NOT replay it. Tracked
-      // by questionnaire id in the module-level shownQuests map. Reduced motion
-      // collapses it to instant via the global gate.
-      if (!shownQuests[q.id] && !K3.motionReduced()) {
-        root.classList.add('k3q-enter-' + variantId);
-        shownQuests[q.id] = true;
-        setTimeout(function () { root.classList.remove('k3q-enter-' + variantId); }, 600);
+    }
+
+    // Video-B stability: the card keeps ONE geometry across pages — measure
+    // every page once (in the same JS turn as the prepare beat, so nothing
+    // paints mid-measure) and lock the card to the tallest. Idempotent per
+    // mount; options scroll internally via the body's overflow rule.
+    var lockedFor = null;
+    function lockCardHeight() {
+      if (lockedFor && lockedFor !== q.id) { root.style.minHeight = ''; lockedFor = null; }
+      if (root.style.minHeight) return;
+      var keep = idx;
+      var maxH = 0;
+      for (var i = 0; i < q.questions.length; i++) {
+        idx = i;
+        root.innerHTML = '';
+        buildHead();
+        buildBody();
+        buildFoot();
+        maxH = Math.max(maxH, root.getBoundingClientRect().height);
+      }
+      idx = keep;
+      if (maxH > 0) {
+        root.style.minHeight = Math.ceil(maxH) + 'px';
+        lockedFor = q.id;
       }
     }
 
@@ -448,7 +518,29 @@
         goTo(missing[0], true);
         return;
       }
-      var res = callData(function () { return data.submitQuestionnaire(threadId, q.id); });
+      var qid = q.id;
+      if (K3.motionReduced()) { doSubmit(qid); return; }
+      // submit beat (video D): the card condenses to a pill that dissolves,
+      // THEN the data resolves — the composer must not reclaim the slot during
+      // the beat, and the resolution event would make it do exactly that.
+      submitting = true;
+      root.style.minHeight = ''; // release the page lock so the region condenses with the pill
+      lockedFor = null;
+      root.innerHTML = '';
+      root.appendChild(beatPill('Submitting answers\u2026', 'k3-quest-submitting'));
+      root.classList.add('k3q-exit-' + variantId);
+      setTimeout(function () {
+        submitting = false;
+        root.classList.remove('k3q-exit-' + variantId);
+        if (unmountedRef()) return;
+        var cur = getActive();
+        if (!cur || cur.id !== qid) { render(); return; } // flow changed mid-beat
+        doSubmit(qid);
+      }, 520);
+    }
+
+    function doSubmit(qid) {
+      var res = callData(function () { return data.submitQuestionnaire(threadId, qid); });
       if (res && res.error === 'incomplete') {
         var ids = arr(res.missing); // data.js returns question ids (older notes said indices)
         var target = -1;
@@ -463,7 +555,7 @@
         return;
       }
       hideNote();
-      render(); // next queued questionnaire, or the card leaves
+      render(); // next queued questionnaire, or the composer returns
     }
 
     function requestCancel() {

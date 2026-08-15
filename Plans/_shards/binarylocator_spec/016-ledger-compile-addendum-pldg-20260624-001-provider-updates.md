@@ -4,7 +4,7 @@ Source: `Plans/BinaryLocator_Spec.md`
 
 Source lines: L433-L1706
 
-Source SHA256: `4bc8a2144a608d9e0d25c83ba118b210c360d0914918b70605718f68802c9554`
+Source SHA256: `68378275f233e682c37ebbeb405a91ea064046815bf2454781f7589caba3304b`
 
 ---
 
@@ -984,7 +984,7 @@ plan_unit_id: BS-019
 unit_type: requirement
 status: accepted
 owner_doc: Plans/BinaryLocator_Spec.md
-canonical_text: BinaryLocator provides stable error codes and trace output as inputs to the canonical UI SSOT and typed commands; Setup and Health/Doctor map Cursor/Claude results to Installed, Not Installed, or Failed, while manual path controls remain Cursor/Claude-only and Playwright health stays out of scope.
+canonical_text: BinaryLocator provides stable error codes and trace output as inputs to the canonical UI SSOT and typed commands; Setup and Health/Doctor map Cursor/Claude results to Installed, Not Installed, or Failed, while manual path controls remain Cursor/Claude-only and external user-Project test tooling is never reported as a PM Browser capability.
 gui_related: true
 gui_classification_reason: This unit defines user-visible setup/health labels, manual path controls, and UI command/SSOT boundaries.
 split_recommended: false
@@ -995,7 +995,7 @@ acceptance_criteria:
   - Setup and Health/Doctor map Found to Installed, NotFound to Not Installed, and FoundButInvalid to Failed with BinaryErrorCode and trace details.
   - Manual path controls are Cursor/Claude-only and use Use manual path checkbox plus native file picker.
   - Toggling manual path off clears override_path and reverts to normal probe layers.
-  - Playwright installation state is driven by Browser Tools health checks, not Provider CLI lookup.
+  - External user-Project test-tool installation or health is not reported by Provider CLI lookup and never becomes a PM Browser capability.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1022,12 +1022,12 @@ preserved_exact_tokens:
   - "trace details"
   - "Use manual path"
   - "native file picker"
-  - "Playwright installation state is out of scope"
+  - "external user-Project test tooling is never a PM Browser capability"
 negative_constraints:
-  - "BinaryLocator must not own UI copy, buttons, view behavior, or Playwright installation health."
+  - "BinaryLocator must not own UI copy, buttons, view behavior, or external user-Project test-tool installation health."
 owner_boundary_notes:
   - "FinalGUISpec plus typed commands own UI behavior."
-  - "Browser Tools health checks own Playwright installation state."
+  - "Project tooling policy owns external user-Project test commands without creating PM Browser capability or health authority."
 owner_hints:
   - Plans/BinaryLocator_Spec.md
 ```

@@ -16,8 +16,10 @@
 (function () {
   "use strict";
 
-  var SEED_KEYS = [
-    "meta", "providers", "memory", "personas", "crews", "contextSources", "contextBudget", "instructionChain", "mcp", "lsp",
+  /* Shell keys hydrate at Settings open. Manager keys hydrate lazily on open. */
+  var SHELL_KEYS = ["meta", "providers"];
+  var MANAGER_KEYS = [
+    "memory", "personas", "crews", "contextSources", "contextBudget", "instructionChain", "mcp", "lsp",
     "skills", "plugins", "tools", "commands", "terminal", "notifications",
     "soundLibrary", "desktop", "teacher", "bsd", "permissionsRules", "goal",
     "fileManager", "formatters", "testing", "storage", "backup",
@@ -25,6 +27,24 @@
     "containers", "web", "searchIndex", "cleanup", "serverShell",
     "appearanceThemes", "mediaProviders", "spell"
   ];
+  var SEED_KEYS = SHELL_KEYS.concat(MANAGER_KEYS);
+  var MANAGER_KEY_MAP = {
+    memory: ["memory"], personas: ["personas"], crew: ["crews"], crews: ["crews"],
+    context: ["contextSources", "contextBudget", "instructionChain"],
+    mcp: ["mcp"], lsp: ["lsp"], skills: ["skills"], plugins: ["plugins"], tools: ["tools"],
+    commands: ["commands"], terminal: ["terminal"], notifications: ["notifications"],
+    soundLibrary: ["soundLibrary"], desktop: ["desktop"], teacher: ["teacher"],
+    bsd: ["bsd"], permissions: ["permissionsRules"], goal: ["goal"],
+    fileManager: ["fileManager"], formatters: ["formatters"], testing: ["testing"],
+    storage: ["storage"], backup: ["backup"], settingsLifecycle: ["settingsLifecycle"],
+    history: ["history"], artifacts: ["artifacts"], worktrees: ["worktrees"],
+    githubActions: ["githubActions"], containers: ["containers"], web: ["web"],
+    searchIndex: ["searchIndex"], cleanup: ["cleanup"], serverShell: ["serverShell"],
+    appearance: ["appearanceThemes"], media: ["mediaProviders"], spellcheck: ["spell"]
+  };
+  var _hydrated = Object.create(null);
+  var _activeScope = null;
+  var _mounting = false;
 
   var TITLES = {
     memory: "Memory",
@@ -120,20 +140,71 @@
     };
   }
 
-  function defaultSeed(demo) {
+  function defaultSeed(demo, opts) {
     demo = demo || window.PM_SETTINGS_DEMO || {};
+    opts = opts || {};
+    var eager = !!opts.eagerAll;
+    var keys = eager ? SEED_KEYS : SHELL_KEYS;
     var out = {};
     var i, k, v;
-    for (i = 0; i < SEED_KEYS.length; i++) {
-      k = SEED_KEYS[i];
+    for (i = 0; i < keys.length; i++) {
+      k = keys[i];
       if (k === "spell") continue;
       if (Object.prototype.hasOwnProperty.call(demo, k) && demo[k] != null) {
         out[k] = clone(demo[k]);
       }
     }
-    v = mapSpell(demo);
-    if (v) out.spell = v;
+    /* Home notices/search need light catalog pointers only — full manager bodies stay cold. */
+    out._hydration = { mode: eager ? "eager-all" : "shell-first", hydrated: [] };
+    if (!eager) {
+      Object.keys(_hydrated).forEach(function (hk) { delete _hydrated[hk]; });
+    }
     return out;
+  }
+
+  function quietSet(path, value) {
+    if (window.PMStore && typeof PMStore.setQuiet === "function") PMStore.setQuiet(path, value);
+    else storeSet(path, value);
+  }
+
+  function hydrateManager(managerId, demo) {
+    demo = demo || window.PM_SETTINGS_DEMO || {};
+    var id = resolveId(managerId);
+    var keys = MANAGER_KEY_MAP[id] || MANAGER_KEY_MAP[managerId] || [];
+    if (!keys.length) return [];
+    var added = [];
+    keys.forEach(function (k) {
+      if (_hydrated[k]) return;
+      if (k === "spell") {
+        var mapped = mapSpell(demo);
+        if (mapped != null) {
+          quietSet("spell", mapped);
+          _hydrated[k] = true;
+          added.push(k);
+        }
+        return;
+      }
+      if (Object.prototype.hasOwnProperty.call(demo, k) && demo[k] != null) {
+        quietSet(k, clone(demo[k]));
+        _hydrated[k] = true;
+        added.push(k);
+      }
+    });
+    var hyd = storeGet("_hydration", { mode: "shell-first", hydrated: [] });
+    hyd = clone(hyd) || { mode: "shell-first", hydrated: [] };
+    hyd.hydrated = (hyd.hydrated || []).concat(added);
+    quietSet("_hydration", hyd);
+    return added;
+  }
+
+  function disposeActiveScope() {
+    if (_activeScope && typeof _activeScope.dispose === "function") {
+      try { _activeScope.dispose(); } catch (err) {}
+    }
+    _activeScope = null;
+    if (window.CAObservableWork && CAObservableWork.disposeAll) {
+      try { CAObservableWork.disposeAll(); } catch (err2) {}
+    }
   }
 
   /* ---------- chrome + shared atoms ---------- */
@@ -435,7 +506,8 @@
       }
       if (act === "ctx-refresh") {
         root.setAttribute("data-ca-work", "refresh");
-        window.setTimeout(function () { root.removeAttribute("data-ca-work"); }, 520);
+        window.setTimeout(function () { root.removeAttribute("data-ca-work");
+          if (typeof __ow !== "undefined" && __ow) __ow.update({ state: "completed", human_phase: "Complete", progress_kind: "none", message: "Refresh finished (simulated)" }); }, 520);
         phase("Budget recomputed from admitted provenance lines (simulated)", "ok");
         rerender(opts); return;
       }
@@ -500,9 +572,22 @@
         }
         receipt(msg, k || "info");
       }
+            if (act === key + "-virt-prev" || act === key + "-virt-next") {
+        var virtKey = "_virt_" + key;
+        var vs = storeGet(virtKey, { offset: 0 });
+        var rawList = storeGet(key, []);
+        var full = Array.isArray(rawList) ? rawList : (rawList && rawList.profiles) ? rawList.profiles : (rawList && rawList.items) ? rawList.items : [];
+        var step = 40;
+        vs.offset = act.indexOf("prev") >= 0 ? Math.max(0, (vs.offset || 0) - step) : Math.min(Math.max(0, full.length - 1), (vs.offset || 0) + step);
+        storeSet(virtKey, vs);
+        rerender(opts);
+        return;
+      }
       if (act === key + "-refresh") {
         root.setAttribute("data-ca-work", "refresh");
-        window.setTimeout(function () { root.removeAttribute("data-ca-work"); }, 520);
+        var __owHost = (window.CAObservableWork && CAObservableWork.ensureHost) ? CAObservableWork.ensureHost(root) : null;
+        var __ow = (__owHost && window.CAObservableWork) ? CAObservableWork.attach({ host: __owHost, receipt: false, snapshot: { title: "Manager work", human_phase: "Starting", state: "starting", progress_kind: "indeterminate", progress_source: "derived" } }) : null;
+        ((opts && opts._caScope && opts._caScope.trackTimeout) ? opts._caScope.trackTimeout : window.setTimeout)(function () { root.removeAttribute("data-ca-work"); }, 520);
         phase("Refresh discovery receipt: rescanned " + kind + " (simulated)", "ok");
         return;
       }
@@ -604,13 +689,43 @@
     });
   }
 
-  function bodySimpleResources(key, kind, note) {
+  
+  function windowedList(list, opts) {
+    opts = opts || {};
+    var threshold = opts.threshold || 24;
+    var windowSize = opts.windowSize || 40;
+    list = Array.isArray(list) ? list : [];
+    if (list.length <= threshold) {
+      return { items: list, offset: 0, total: list.length, windowed: false, htmlNote: "" };
+    }
+    var offset = Math.max(0, Math.min(list.length - 1, opts.offset || 0));
+    var slice = list.slice(offset, offset + windowSize);
+    var note = '<div class="ca-row-desc" data-ca-virt="1">Showing ' + (offset + 1) + "–" +
+      (offset + slice.length) + " of " + list.length +
+      " (virtualized for older hardware / large catalogs). " +
+      '<button type="button" class="ca-btn" data-variant="quiet" data-ca-act="' + esc(opts.prevAct || "virt-prev") + '">Previous</button> ' +
+      '<button type="button" class="ca-btn" data-variant="quiet" data-ca-act="' + esc(opts.nextAct || "virt-next") + '">Next</button></div>';
+    return { items: slice, offset: offset, total: list.length, windowed: true, htmlNote: note };
+  }
+
+  function humanResourceDetail(item) {
+    var parts = [item.version, item.scope, item.origin, item.note, item.detail];
+    if (item.displayLabel) parts.unshift(item.displayLabel);
+    else if (item.host || item.environment) parts.unshift([item.host, item.environment].filter(Boolean).join(" / "));
+    /* Raw path/digest stay out of normal GUI. */
+    return parts.filter(Boolean).join(" · ");
+  }
+
+function bodySimpleResources(key, kind, note) {
     var raw = storeGet(key, []);
     var list = Array.isArray(raw) ? raw : (raw && raw.profiles) ? raw.profiles : (raw && raw.items) ? raw.items : [];
-    var cards = list.map(function (item, idx) {
+    var virtKey = "_virt_" + key;
+    var virtState = storeGet(virtKey, { offset: 0 });
+    var win = windowedList(list, { offset: virtState.offset || 0, prevAct: key + "-virt-prev", nextAct: key + "-virt-next" });
+    var cards = win.items.map(function (item, idx) {
       var name = item.title || item.name || item.label || item.id || (kind + " " + (idx + 1));
       var state = item.state || item.status || item.health || "ready";
-      var detail = [item.version, item.scope, item.path, item.origin, item.command, item.note, item.detail].filter(Boolean).join(" · ");
+      var detail = humanResourceDetail(item);
       var delay = Math.min(idx, 6) * 35;
       return '<div class="ca-mgr-card ca-motion-stagger" style="--ca-stagger:' + delay + 'ms">' +
         '<div class="ca-mgr-card-title">' + esc(name) +
@@ -625,12 +740,13 @@
     }).join("") || emptyState("No " + kind + " yet", note || ("Add or detect " + kind + " for this project."));
     return healthStrip(list.length + " " + kind, list.length ? "ok" : "warn") +
       muted(note || "") +
+      (win.htmlNote || "") +
       '<div class="ca-mgr-filter">' +
       btn(key + "-refresh", null, "Refresh discovery") +
       btn(key + "-add", null, "Add") +
       "</div>" +
       '<div class="ca-mgr-grid" data-ca-motion="resource-grid">' + cards + "</div>" +
-      detailPane('<div data-ca-phase class="ca-mgr-muted">Discovery and lifecycle receipts appear here.</div>');
+      detailPane('<div data-ca-phase class="ca-mgr-muted">Discovery and lifecycle receipts appear here.</div><div class="ca-ow-host" data-ca-ow-host="1" hidden></div>');
   }
 
 
@@ -1675,20 +1791,39 @@
       '<div class="ca-panel"><div class="ca-panel-h">Current run</div><div class="ca-logs">' + (jobs || muted("No run")) + "</div>" +
       '<div class="ca-mgr-card-actions">' + btn("githubActions-open", "current", "Refresh") + "</div></div>";
   }
+    function stringSanitizeDigest(s) {
+    s = String(s == null ? "" : s);
+    return s.replace(/sha256:[a-f0-9]+/ig, "checksum (advanced)")
+            .replace(/digest\s+sha256:[a-f0-9]+/ig, "checksum (advanced)");
+  }
+
+  function stringSanitizeDigestList(arr) {
+    return (Array.isArray(arr) ? arr : []).map(function (x) {
+      if (typeof x === "string") return stringSanitizeDigest(x);
+      if (x && typeof x === "object") {
+        var y = clone(x);
+        if (y.text) y.text = stringSanitizeDigest(y.text);
+        if (y.detail) y.detail = stringSanitizeDigest(y.detail);
+        return y;
+      }
+      return x;
+    });
+  }
+
   function bodyContainers() {
     var c = storeGet("containers", { top: [] });
     if (Array.isArray(c)) {
       c = {
         note: "",
         top: c.map(function (t) {
-          return { name: t.name || t.title || t.id, state: t.state || t.status || "ready", detail: t.detail || "", expanded: t.expanded || [] };
+          return { name: t.name || t.title || t.id, state: t.state || t.status || "ready", detail: t.detail || "", expanded: stringSanitizeDigestList(t.expanded) || [] };
         })
       };
     }
     var tops = (c.top || []).map(function (t) {
       return '<div class="ca-mgr-card"><div class="ca-mgr-card-title">' + esc(t.name || t.title || t.id) + ' <span class="ca-badge" data-kind="scope">' + esc(t.state || t.status || "ready") + "</span></div>" +
         muted(t.detail || "") +
-        detailPane('<ul>' + (t.expanded || []).map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>") +
+        detailPane('<ul>' + (stringSanitizeDigestList(t.expanded) || []).map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>") +
         '<div class="ca-mgr-card-actions">' + btn("containers-open", t.name, "Probe") + btn("containers-reveal", t.name, "Expand") + btn("containers-remove", t.name, "Forget") + "</div></div>";
     }).join("") || emptyState("No container tools", "Seed containers from demo extras.");
     return healthStrip("Container tools", "ok") + muted(c.note || "") + '<div class="ca-mgr-grid">' + tops + "</div>";
@@ -1755,10 +1890,12 @@
       }
       if (act === "search-rebuild" || act === "searchIndex-open") {
         root.setAttribute("data-ca-work", "refresh");
+        var __owHost = (window.CAObservableWork && CAObservableWork.ensureHost) ? CAObservableWork.ensureHost(root) : null;
+        var __ow = (__owHost && window.CAObservableWork) ? CAObservableWork.attach({ host: __owHost, receipt: false, snapshot: { title: "Manager work", human_phase: "Starting", state: "starting", progress_kind: "indeterminate", progress_source: "derived" } }) : null;
         s.rebuild.state = "rebuilding";
         storeSet("searchIndex", s);
         rerender(opts);
-        window.setTimeout(function () {
+        ((opts && opts._caScope && opts._caScope.trackTimeout) ? opts._caScope.trackTimeout : window.setTimeout)(function () {
           var again = clone(storeGet("searchIndex", { rebuild: {} }));
           again.rebuild = again.rebuild || {};
           again.rebuild.state = "idle";
@@ -1830,10 +1967,12 @@
       model.candidates = model.candidates || [];
       if (act === "cleanup-dry") {
         root.setAttribute("data-ca-work", "refresh");
+        var __owHost = (window.CAObservableWork && CAObservableWork.ensureHost) ? CAObservableWork.ensureHost(root) : null;
+        var __ow = (__owHost && window.CAObservableWork) ? CAObservableWork.attach({ host: __owHost, receipt: false, snapshot: { title: "Manager work", human_phase: "Starting", state: "starting", progress_kind: "indeterminate", progress_source: "derived" } }) : null;
         model.lastDryRun = "just now";
         model.mode = "dry-run";
         storeSet("cleanup", model);
-        window.setTimeout(function () { root.removeAttribute("data-ca-work"); }, 600);
+        ((opts && opts._caScope && opts._caScope.trackTimeout) ? opts._caScope.trackTimeout : window.setTimeout)(function () { root.removeAttribute("data-ca-work"); }, 600);
         phase("Dry-run complete — candidates refreshed; nothing deleted", "ok");
         rerender(opts); return;
       }
@@ -1842,7 +1981,7 @@
         model.mode = "applied-simulated";
         storeSet("cleanup", model);
         phase("Apply cleanup receipt: phase 1/2 staged · phase 2/2 simulated — no disk deletes", "warn");
-        window.setTimeout(function () { root.removeAttribute("data-ca-work"); }, 700);
+        ((opts && opts._caScope && opts._caScope.trackTimeout) ? opts._caScope.trackTimeout : window.setTimeout)(function () { root.removeAttribute("data-ca-work"); }, 700);
         rerender(opts); return;
       }
       if (act === "cleanup-rollback") {
@@ -1850,7 +1989,7 @@
         model.mode = "dry-run";
         storeSet("cleanup", model);
         phase("Undo receipt: restored previous dry-run selection (simulated)", "ok");
-        window.setTimeout(function () { root.removeAttribute("data-ca-work"); }, 700);
+        ((opts && opts._caScope && opts._caScope.trackTimeout) ? opts._caScope.trackTimeout : window.setTimeout)(function () { root.removeAttribute("data-ca-work"); }, 700);
         rerender(opts); return;
       }
       var c = findById(model.candidates, id);
@@ -2006,10 +2145,10 @@
       if (act === "artifacts-redact") {
         root.setAttribute("data-ca-work", "import-preview");
         phase("Redact preview: identifying sensitive spans in " + id, "info");
-        window.setTimeout(function () {
+        ((opts && opts._caScope && opts._caScope.trackTimeout) ? opts._caScope.trackTimeout : window.setTimeout)(function () {
           root.setAttribute("data-ca-work", "import-apply");
           phase("Redact apply: placeholders written for " + id + " (simulated)", "ok");
-          window.setTimeout(function () { root.removeAttribute("data-ca-work"); }, 480);
+          ((opts && opts._caScope && opts._caScope.trackTimeout) ? opts._caScope.trackTimeout : window.setTimeout)(function () { root.removeAttribute("data-ca-work"); }, 480);
         }, 420);
       }
     });
@@ -2082,11 +2221,16 @@
 
   function mount(opts) {
     if (!opts || !opts.root) return false;
+    if (_mounting) return false;
     var managerId = resolveId(opts.managerId);
     if (managerId === "providers") {
       /* Concepts keep their custom provider surfaces (CAViews.bindProviders). */
       return false;
     }
+    _mounting = true;
+    try {
+    disposeActiveScope();
+    hydrateManager(managerId, window.PM_SETTINGS_DEMO);
     var entry = BODIES[managerId];
     if (!entry) return false;
 
@@ -2119,10 +2263,32 @@
     }
 
     var bodyRoot = opts.root.querySelector(".ca-mgr-body") || opts.root;
+    var scopeTimers = [];
+    var scope = {
+      timers: scopeTimers,
+      dispose: function () {
+        while (scopeTimers.length) {
+          try { window.clearTimeout(scopeTimers.pop()); } catch (e0) {}
+        }
+        if (window.CAObservableWork && CAObservableWork.disposeAll) {
+          try { CAObservableWork.disposeAll(); } catch (e1) {}
+        }
+      },
+      trackTimeout: function (fn, ms) {
+        var id = window.setTimeout(fn, ms);
+        scopeTimers.push(id);
+        return id;
+      }
+    };
+    _activeScope = scope;
+    opts._caScope = scope;
     try { entry.bind(opts, bodyRoot); }
     catch (err2) { receipt("Binder error in " + managerId + ": " + (err2 && err2.message || err2), "danger"); }
 
     return true;
+    } finally {
+      _mounting = false;
+    }
   }
 
 
@@ -2134,10 +2300,14 @@
 
   window.CAManagers = {
     defaultSeed: defaultSeed,
+    hydrateManager: hydrateManager,
+    disposeActiveScope: disposeActiveScope,
     mount: mount,
     handles: handles,
     /* documented helpers for concepts / tests */
     SEED_KEYS: SEED_KEYS.slice(),
+    SHELL_KEYS: SHELL_KEYS.slice(),
+    MANAGER_KEYS: MANAGER_KEYS.slice(),
     TITLES: TITLES,
     resolveId: resolveId
   };

@@ -95,5 +95,52 @@
       "live region"
     ],
     "width_modes": "squeezed <820, narrow <1100, normal. Evaluated at explicit checkpoints: mount, an observed resize, and every setWidth() call. It never depends on ResizeObserver delivery alone, because RO is tied to the rendering lifecycle and a backgrounded tab can otherwise sit at 900px still classified normal."
+  },
+  "observable_work": {
+    "owner": "shared/pm-work.js \u2014 the single progress/wait projection",
+    "states": 24,
+    "state_families": [
+      "accepted/queued/starting/running/synchronizing",
+      "waiting_provider/host/network/resource/permission/for_sign_in/for_idle/user",
+      "retrying/backgrounded/degraded/stalled",
+      "committing/verifying/rolling_back",
+      "completed/failed/cancelled/recovery_required"
+    ],
+    "progress_rule": "Determinate progress requires a real denominator; a completed count without a total is refused and the operation stays indeterminate.",
+    "progress_source": [
+      "measured",
+      "provider_reported",
+      "derived",
+      "unknown"
+    ],
+    "actions_rule": "cancel/background/retry are offered only when semantically valid for the operation family.",
+    "renderer": "One renderer in the shell. No concept draws its own spinner.",
+    "byte_budget": "64 KB operation history, 48 KB receipts \u2014 byte contracts, not item counts."
+  },
+  "resource_governor": {
+    "owner": "RuntimeResourceGovernor (projected read-only by shared/pm-work.js)",
+    "permit_outcomes": [
+      "admitted",
+      "queued",
+      "admitted_degraded",
+      "blocked_permission",
+      "blocked_resource",
+      "cancelled"
+    ],
+    "settings_role": "Reads policy and permit answers, writes policy back. Never admits, schedules, or queues work.",
+    "policy_surface": "manager-performance",
+    "explicitly_not_exposed": [
+      "P-core/E-core affinity",
+      "SIMD selection",
+      "Tokio/Rayon thread counts",
+      "per-Plan priority or pause"
+    ]
+  },
+  "performance_wiring": {
+    "lazy_hydration": "Managers hydrate on open; a category view instantiates none.",
+    "virtualization": "shared/pm-virtual.js windows any section above 40 items; verified 24 DOM item nodes for a 100-record section.",
+    "generation_cancellation": "PMVirtual.generations() gives latest-request-wins tokens for search, filters and previews.",
+    "startup": "Cached fixtures render first; zero broad probes of unconfigured providers at startup (probedAtStartup=false on every catalogue entry).",
+    "subscription_release": "PMWork.onChange and PMVirtual.releasePool both return releasers; inactive surfaces detach."
   }
 }

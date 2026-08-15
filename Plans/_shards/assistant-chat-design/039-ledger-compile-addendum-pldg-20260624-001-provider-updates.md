@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L2835-L3477
 
-Source SHA256: `78559cba7f65191775f78a5486fe67b910942780eec61eb9aa98641b82b5a959`
+Source SHA256: `8d6dfb862784206b0c4db9ebe7d0e7b149723161aecbbb7282c750a86eddf7b9`
 
 ---
 
@@ -324,7 +324,7 @@ There is no auto-cleanup for `completed` or `failed` threads.
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md
 
-Compare buttons open committed branch-to-branch review only: worktree branch HEAD against base branch HEAD through `cmd.git.open_diff`. Source Control merge buttons route through the same `cmd.chat.worktree.merge` command with `thread_id=null` for non-thread worktrees; the command handler detects null `thread_id` and omits thread-specific behaviors such as unbind, thread status update, or chat notification.
+Compare buttons open committed branch-to-branch review only: worktree branch HEAD against base branch HEAD through `cmd.git.open_diff`. Source Control project-scope merge buttons route through `cmd.git.worktree.merge`; `cmd.chat.worktree.merge` remains the thread-bound Assistant Chat wrapper and is never invoked with `thread_id=null`. The project-scope handler does not perform thread-specific behaviors such as unbind, thread status update, or chat notification.
 
 #### W.8.1 Merge confirmation dialog
 

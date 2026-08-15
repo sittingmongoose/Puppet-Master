@@ -360,3 +360,34 @@ html[data-reduced-motion='1'] .t3-work-shelf { animation: none !important; trans
 [data-reduced-motion='1'] .t3-shelf-work {
   animation: none !important;
 }
+
+/* Work shelf stubs + reopen */
+.t3-work-stub-row { display: flex; flex-direction: column; gap: 4px; margin: 6px 0; }
+.t3-work-stub {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 5px 8px;
+  border-left: 3px solid color-mix(in srgb, var(--border, #888) 65%, transparent);
+  background: color-mix(in srgb, var(--surface-elevated, #222) 50%, transparent);
+  border-radius: 0 6px 6px 0;
+}
+.t3-work-stub-role { font-size: 12px; font-weight: 600; }
+.t3-work-reopen,
+.t3-shelf-reopen {
+  appearance: none;
+  border: 1px solid var(--pm-border, rgba(127,127,127,0.4));
+  background: transparent;
+  color: inherit;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 11px;
+  cursor: pointer;
+}
+.t3-lip-compact { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.t3-deck-work { display: grid; gap: 4px; margin-top: 6px; }
+.t3-work-deck-sum { cursor: pointer; list-style: none; display: flex; gap: 8px; align-items: center; }
+.t3-work-deck-sum::-webkit-details-marker { display: none; }
+.pm-t3-shelves .pm-cw-shelf-row { margin-bottom: 6px; }
+

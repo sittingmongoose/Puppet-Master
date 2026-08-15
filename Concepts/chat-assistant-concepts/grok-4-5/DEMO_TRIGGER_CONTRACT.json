@@ -114,6 +114,8 @@
       "notification.push",
       "browser_program_progress",
       "provider_setup_required",
+      "provider_update_available",
+      "provider_install_required",
       "access_limited_by_review",
       "composer.ordinary",
       "composer.spellcheck"
@@ -126,6 +128,7 @@
     "Do not expose these as permanent production Chat toolbar buttons.",
     "BSD glow is demo-truthful only while auto-active; manual On never uses indefinite glow.",
     "Offline reconnect replay is idempotent by outbox id.",
-    "Product UI copy uses Browser Program \u2014 never Playwright."
+    "Product UI copy uses Browser Program — never Playwright.",
+    "Provider CLI first acquisition is official-source only; not bundled / not baseline; install ≠ auth; Chat deep-links Settings."
   ]
 }

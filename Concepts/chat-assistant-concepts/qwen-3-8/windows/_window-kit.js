@@ -314,12 +314,22 @@ window.PMChatWindowKit = (() => {
     } });
   }
 
+  function ensureModelPopupStyles() {
+    if (document.getElementById("pmq-mp-extra-style")) return;
+    const st = document.createElement("style");
+    st.id = "pmq-mp-extra-style";
+    st.textContent = ".pmq-mp-kbd{flex:none;font-size:9px;font-weight:800;letter-spacing:.06em;color:var(--text-faint);border:1px solid var(--border);border-radius:4px;padding:1px 5px;line-height:1.4;}" +
+      ".pmq-mp-setup-main{display:flex;flex-direction:column;gap:2px;}";
+    document.head.appendChild(st);
+  }
+
   function modelPopup(anchor, env, root) {
     const store = env.store;
     const key = store.activeKey();
     const wrap = document.createElement("div");
     wrap.className = "pmq-modelpop";
-    const entry = env.popups.open(anchor, wrap, { width: 396, cls: "pmq-model-popup" });
+    ensureModelPopupStyles();
+    const entry = env.popups.open(anchor, wrap, { width: 396, cls: "pmq-model-popup", onclose: () => document.removeEventListener("keydown", onKey, true) });
     let panel = null;
     let filter = "";
     let railFilter = "";
@@ -327,25 +337,28 @@ window.PMChatWindowKit = (() => {
     function pending() {
       return (store.state.threads[key].warnings || []).find(w => w.kind === "route" && !w.resolved && w.pending);
     }
-    function setupLabel(state) {
-      if (state === "install-required") return "Install required — open Provider Settings";
+    function setupLabel(state, provider) {
+      if (state === "install-required") return "Provider Setup Required — install from the official " + provider + " source.";
       if (state === "update-available") return "Update available";
       if (state === "sign-in-required") return "Sign-in required";
       if (state === "update-failed") return "Update failed; rolled back";
+      if (state === "discovered") return "Found existing installation — reusing.";
+      if (state === "verified") return "Verified publisher, version, architecture.";
       return "";
     }
-    function modelRow(p, accLabel, m, accId) {
+    function modelRow(p, accLabel, m, accId, kbdN) {
       const c = store.effectiveSettings(key);
       const acct = store.effectiveAccount(key);
       const checked = c.model === m.name && c.provider === p.provider && (acct.accountId || null) === (accId || null);
       const fav = store.state.session.favorites.includes(m.name);
       const disabled = m.disabled || m.disabledReason;
-      return '<div class="pmq-mp-row' + (checked ? " pmq-on" : "") + (disabled ? " pmq-off" : "") + '" data-model="' + esc(m.name) + '" data-prov="' + esc(p.provider) + '" data-acc="' + esc(accId || "") + '" role="button" tabindex="0" aria-disabled="' + (disabled ? "true" : "false") + '">' +
+      return '<div class="pmq-mp-row' + (checked ? " pmq-on" : "") + (disabled ? " pmq-off" : "") + '" data-model="' + esc(m.name) + '" data-prov="' + esc(p.provider) + '" data-acc="' + esc(accId || "") + '"' + (kbdN ? ' data-kbd="' + kbdN + '"' : "") + ' role="button" tabindex="0" aria-disabled="' + (disabled ? "true" : "false") + '">' +
         '<span class="pmq-mp-logo" data-logo="' + esc(p.id) + '"></span>' +
         '<span class="pmq-mp-main"><span class="pmq-mp-name">' + esc(m.name) + "</span>" +
-        '<span class="pmq-mp-sub">' + esc(accLabel) + (disabled ? " · " + esc(m.disabledReason || "Unavailable") : "") + "</span></span>" +
+        '<span class="pmq-mp-sub">' + esc(p.provider) + " · " + esc(accLabel) + (disabled ? " · " + esc(m.disabledReason || "Unavailable") : "") + "</span></span>" +
         (m.fast ? '<span class="pmq-mp-cap">Fast</span>' : "") +
         (m.caps && m.caps.video ? '<span class="pmq-mp-cap">Video</span>' : "") +
+        (kbdN ? '<span class="pmq-mp-kbd">⌘' + kbdN + "</span>" : "") +
         '<button class="pmq-mp-fav' + (fav ? " pmq-on" : "") + '" type="button" data-fav="' + esc(m.name) + '" aria-label="Toggle favorite ' + esc(m.name) + '" aria-pressed="' + fav + '"><i data-ico="star"></i></button>' +
         (checked ? '<i data-ico="check" class="pmq-mp-check"></i>' : "") +
         "</div>";
@@ -382,6 +395,14 @@ window.PMChatWindowKit = (() => {
           '<div class="pmq-mp-search"><i data-ico="search"></i><input type="text" placeholder="Search models and providers" spellcheck="false" aria-label="Search models" value="' + esc(filter) + '"></div>' +
           '<div class="pmq-mp-listwrap">' + railHtml() +
           '<div class="pmq-popup-body pmq-scroll pmq-mp-body">';
+        const favs = store.state.session.favorites;
+        if (!filter && !railFilter) {
+          html += '<div class="pmq-chats-group">Favorites</div>';
+          html += favs.length ? favs.map(fn => {
+            const hit = store.catalogModel(fn);
+            return hit ? modelRow({ provider: hit.provider, id: hit.provider.toLowerCase() }, "Favorite", hit.model, null) : "";
+          }).join("") : '<div class="pmq-mp-empty">Star a model to keep it within reach.</div>';
+        }
         const recents = store.state.session.recentModels;
         if (recents.length && !filter && !railFilter) {
           html += '<div class="pmq-chats-group">Recent</div>';
@@ -391,14 +412,7 @@ window.PMChatWindowKit = (() => {
             if (hit) html += modelRow({ provider: hit.provider, id: hit.provider.toLowerCase() }, "Recent", hit.model, rn.accountId || null);
           });
         }
-        const favs = store.state.session.favorites;
-        if (!filter && !railFilter) {
-          html += '<div class="pmq-chats-group">Favorites</div>';
-          html += favs.length ? favs.map(fn => {
-            const hit = store.catalogModel(fn);
-            return hit ? modelRow({ provider: hit.provider, id: hit.provider.toLowerCase() }, "Favorite", hit.model, null) : "";
-          }).join("") : '<div class="pmq-mp-empty">Star a model to keep it within reach.</div>';
-        }
+        let kbdN = 0;
         cat.forEach(p => {
           if (railFilter && p.id !== railFilter) return;
           p.accounts.forEach(acc => {
@@ -410,10 +424,20 @@ window.PMChatWindowKit = (() => {
             html += '<div class="pmq-mp-account' + (activeAcc ? " pmq-on" : "") + '" data-accsel="' + esc(acc.id) + '" role="button" tabindex="0" aria-label="Select account ' + esc(acc.label) + '">' +
               '<span class="pmq-mp-logo" data-logo="' + esc(p.id) + '"></span><span class="pmq-mp-acct-main"><span>' + esc(p.provider) + '</span><span class="pmq-mp-acct-sub">' + esc(acc.label) + " · " + esc(conn) + "</span></span>" +
               (activeAcc ? '<span class="pmq-mp-acct-active">Active</span><i data-ico="check" class="pmq-mp-check"></i>' : "") + "</div>";
-            shown.forEach(m => { html += modelRow(p, acc.label, m, acc.id); });
+            shown.forEach(m => {
+              kbdN += 1;
+              html += modelRow(p, acc.label, m, acc.id, kbdN <= 5 ? String(kbdN) : null);
+            });
           });
           if (p.setupState) {
-            html += '<div class="pmq-mp-setup" data-setup="' + esc(p.setupState) + '"><i data-ico="warn"></i><span>' + esc(setupLabel(p.setupState)) + '</span><button class="pmq-btn pmq-btn-sm" type="button" data-setupopen="' + esc(p.provider) + '">Open Settings</button></div>';
+            const isInstall = p.setupState === "install-required";
+            html += '<div class="pmq-mp-setup" data-setup="' + esc(p.setupState) + '"><i data-ico="warn"></i>' +
+              '<span class="pmq-mp-setup-main"><span>' + esc(setupLabel(p.setupState, p.provider)) + "</span>" +
+              (isInstall ? "<span>Installation and sign-in are separate steps.</span>" : "") +
+              (p.sub ? "<span>" + esc(p.sub) + "</span>" : "") +
+              (isInstall ? "<span>Host: this machine · Environment: native Windows</span>" : "") +
+              "<span>Auto/On maintains approved installs; first acquisition only via your Install.</span></span>" +
+              '<button class="pmq-btn pmq-btn-sm" type="button" data-setupopen="' + esc(p.setupopen || "") + '" data-setuprow="' + esc(p.id) + '" data-setupname="' + esc(p.provider) + '">' + (isInstall ? "Install" : "Open Settings") + "</button></div>";
           }
         });
         html += "</div></div>" +
@@ -462,8 +486,10 @@ window.PMChatWindowKit = (() => {
       }));
       wrap.querySelectorAll("[data-setupopen]").forEach(b => b.addEventListener("click", e => {
         e.stopPropagation();
-        env.hostApi.toast(b.dataset.setupopen + " provider settings live in the Settings page");
-        if (window.PMChatCommands) window.PMChatCommands.dispatch("cmd.shell.page", { page: "settings:provider" }, { cataloged: false });
+        const row = b.dataset.setuprow;
+        const resume = b.dataset.setupopen || ("setup-" + row);
+        env.hostApi.toast("Installing " + b.dataset.setupname + " continues in Settings — provider row opens there");
+        if (window.PMChatCommands) window.PMChatCommands.dispatch("cmd.shell.page", { page: "settings:provider", row: row, resume: resume }, { cataloged: false });
       }));
       wrap.querySelectorAll("[data-fav]").forEach(b => b.addEventListener("click", e => {
         e.stopPropagation();
@@ -486,6 +512,17 @@ window.PMChatWindowKit = (() => {
       wrap.querySelectorAll("[data-effort]").forEach(b => b.addEventListener("click", () => { store.setThreadSettings(key, { effort: b.dataset.effort }); render(); }));
       wrap.querySelectorAll("[data-speed]").forEach(b => b.addEventListener("click", () => { store.setThreadSettings(key, { speed: b.dataset.speed }); render(); }));
     }
+    function onKey(e) {
+      if (!document.body.contains(wrap)) { document.removeEventListener("keydown", onKey, true); return; }
+      if (panel || !(e.metaKey || e.ctrlKey)) return;
+      if (!/^[1-5]$/.test(e.key)) return;
+      const row = wrap.querySelector('.pmq-mp-row[data-kbd="' + e.key + '"]');
+      if (!row) return;
+      e.preventDefault();
+      e.stopPropagation();
+      row.click();
+    }
+    document.addEventListener("keydown", onKey, true);
     render();
     const un = store.subscribe(() => { if (document.body.contains(wrap)) render(); });
     if (root) bind(root, un);
@@ -527,12 +564,16 @@ window.PMChatWindowKit = (() => {
     const g = store.catalog().find(p => p.provider === eff.provider);
     if (!g || !g.setupState) return "";
     const labels = {
-      "install-required": "Install required · Settings",
       "update-available": "Provider update available · Settings",
       "waiting": "Waiting for current work",
-      "update-failed": "Update failed; rolled back"
+      "update-failed": "Update failed; rolled back",
+      "discovered": "Found existing installation — reusing.",
+      "verified": "Verified publisher, version, architecture."
     };
-    return '<div class="pmq-setupstrip" data-setup="' + esc(g.setupState) + '"><i data-ico="warn"></i><span>' + esc(labels[g.setupState] || g.setupState) + "</span></div>";
+    const label = g.setupState === "install-required"
+      ? "Provider Setup Required — install from the official " + g.provider + " source."
+      : (labels[g.setupState] || g.setupState);
+    return '<div class="pmq-setupstrip" data-setup="' + esc(g.setupState) + '"><i data-ico="warn"></i><span>' + esc(label) + "</span></div>";
   }
   function selectorRow(env, root) {
     const el = document.createElement("div");

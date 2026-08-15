@@ -31,3 +31,7 @@ The 22 owners from packet 08, in packet order.
 
 - `RuntimeResourceGovernor` and `ObservableWork` have NO canonical owner files; capacity/ops surfaces assume them (K3-GAP-030).
 - Canon conflicts never patched in place: command IDs, wiring entries, DRY roles are candidate records only (candidate-*.json).
+
+## Correction-pass addendum (2026-08-13)
+
+Correction packet `PM_Assistant_Chat_Dependency_Media_and_Work_Correction_2026-08-13` applied. **No Plan-owner impact changes**: the pass altered copy, fixtures, motion, triggers, and two window boot paths — no command IDs, wiring routes, or DRY ownership mappings changed. New SPEC_GAPS entries: K3-GAP-033 (pin boot-restore unspecified), K3-GAP-034 (warning cards must carry the held route); K3-GAP-024 revised (lifecycle beats are real UI, presentation-timed). Provider setup copy now states the final CLI adjudication (never bundled / official source / explicit setup / continuation preserved) — if a Plans owner documents provider-CLI acquisition, that wording is the compliant reference. See `reference-review-report.json` for the media audit.

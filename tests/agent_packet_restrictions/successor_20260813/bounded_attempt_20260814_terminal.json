@@ -1,0 +1,57 @@
+{
+  "schema_id": "pw-r4-bounded-causal-attempt-terminal-v1",
+  "attempt_id": "PW-R4-BOUNDED-20260814.1",
+  "goal_terminal": "COMPLETE_WITH_HONEST_FAILED_ATTEMPT",
+  "attempt_terminal": "PRELAUNCH_SOURCE_CUSTODY_DRIFT_NO_COUNTED_LAUNCH",
+  "preseal_audit": {
+    "path": "tests/agent_packet_restrictions/successor_20260813/bounded_attempt_20260814_preseal_audit.json",
+    "terminal": "PRESEAL_COMPOSED_TRUST_BOUNDARY_PASS",
+    "independent_audits": 1
+  },
+  "launch_source_check": {
+    "command": "r4_harness.py source-check --phase launch",
+    "exit_code": 2,
+    "status": "INVALID",
+    "failure_class": "harness_or_custody",
+    "error": "source drift: Plans/00-plans-index.md",
+    "sealed_expectation": {
+      "path": "Plans/00-plans-index.md",
+      "bytes": 364573,
+      "lines": 5601,
+      "sha256": "db49393309255f4564a11e51ef07cd0d0831631da8354872e1e05674d3a4931d",
+      "authority": "canonical_live_plan"
+    },
+    "current_read_only_observation": {
+      "path": "/mnt/Cursor/PuppetMaster/Plans/00-plans-index.md",
+      "bytes": 367909,
+      "lines": 5623,
+      "sha256": "19fcbd110827a949df25cfb2f9f61bdbbc28ffc4f46f01bbe9f3981f94efb311"
+    }
+  },
+  "counts": {
+    "bounded_revisions": 1,
+    "preparation_agent_tasks": 2,
+    "independent_preseal_audits": 1,
+    "root_external_verifier_invocations": 3,
+    "post_audit_harness_invocations": 1,
+    "subject_tasks_created": 0,
+    "subject_provider_calls": 0,
+    "model_results": 0,
+    "retries": 0
+  },
+  "artifact_state": {
+    "launch_source_receipt_created": false,
+    "launch_manifest_created": false,
+    "detached_launch_custody_created": false,
+    "runtime_artifacts_created": false,
+    "sandbox_artifacts_created": false,
+    "bytecode_artifacts_created": false,
+    "canonical_or_ledger_files_modified": false
+  },
+  "durable_inputs": {
+    "preserved_failed_candidate_receipt": "tests/agent_packet_restrictions/successor_20260813/model_retest_r4_causal_v3_bounded_revision_terminal.json",
+    "external_verifier_root": "tests/agent_packet_restrictions/successor_20260813/r4_causal_external_verifier_v1",
+    "external_verifier_custody": "tests/agent_packet_restrictions/successor_20260813/r4_causal_external_verifier_v1_custody.json"
+  },
+  "claim_boundary": "The external trust-boundary revision passed its one independent audit, but the attempt failed before sealing because the read-only live Plans index no longer matched preserved source custody. No model was called. This is not empirical evidence about gpt-5.4-mini or gpt-5.6-luna, not production enforcement, not release readiness, not external audit completion, and not permission to refresh or compile Plans. Per the bounded-attempt authorization, no repair, source refresh, re-audit, retry, or replacement run follows."
+}

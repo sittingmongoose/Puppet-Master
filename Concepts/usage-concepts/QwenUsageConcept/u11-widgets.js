@@ -37,9 +37,9 @@
     typesForDisclosure: {
       essentials: ['plans', 'costs', 'accounts', 'attention', 'context', 'capacity', 'free', 'ledger'],
       standard: ['plans', 'costs', 'accounts', 'attention', 'context', 'capacity', 'free', 'ledger',
-        'runs', 'analytics', 'tools', 'cache', 'signals'],
+        'runs', 'operations', 'analytics', 'tools', 'cache', 'signals'],
       advanced: ['plans', 'costs', 'accounts', 'attention', 'context', 'capacity', 'free', 'ledger',
-        'runs', 'analytics', 'tools', 'cache', 'signals', 'authority']
+        'runs', 'operations', 'analytics', 'tools', 'cache', 'signals', 'authority']
     }
   };
 
@@ -267,6 +267,13 @@
       html += sub(path + (resetTxt ? (path ? ' · ' : '') + resetTxt : '') +
         (m.vs === 'unknown' && m.note ? ' · ' + m.note : '') +
         (m.vs === 'unknown' && pct == null ? ' · observed use ' + numfmt(item, m.used) : ''));
+      row.meters.forEach(function (mm) {
+        if (mm === row.top) return;
+        if (mm.vs === 'unavailable' && mm.estimate) {
+          html += '<div class="u11w-sub estimate">' + ic('trend') + '<span>' + mm.label +
+            ' · Provider data unavailable · PM estimate ' + mm.estimate.usedPct + '% · ' + mm.estimate.conf + ' confidence</span></div>';
+        }
+      });
       if (showNext && !tiny && d.continuation[p.id]) {
         html += '<div class="u11w-next">' + ic('route') + '<span>' + d.continuation[p.id].whatHappensNext + '</span></div>';
       }
@@ -373,6 +380,17 @@
       html += '<span class="u11w-conn' + stCls + '" title="' + (cn.note || cn.label) + '">' + cn.label + cliBadge +
         (cn.state === 'needs_reconnect' ? '<em>needs attention</em>' : '') + '</span>';
     });
+    html += '</div>';
+    html += '<div class="u11w-acctmeta">';
+    if (a.priority != null) html += '<span class="u11w-acctprio" title="Routing priority · 1 = first choice">Priority ' + a.priority + '</span>';
+    if (a.lastUsedAt) {
+      var ago = Date.parse(d.meta.now) - Date.parse(a.lastUsedAt);
+      html += '<span class="u11w-acctlast">last used ' + T().dur(ago) + ' ago</span>';
+    }
+    html += '<span class="u11w-acctacts">' +
+      '<button type="button" class="u11w-minibtn" data-u11-act="usenext" data-acct="' + a.id + '">Use next</button>' +
+      '<button type="button" class="u11w-minibtn" data-u11-act="openmgmt" data-fam="' + a.familyId + '">Open provider console</button>' +
+      '</span>';
     html += '</div></div></div>';
     return html;
   }
@@ -528,9 +546,15 @@
       var subTxt = admitted + ' at a time · ' + waves + ' waves';
       if (run.reservedFor && run.reservedFor.length) subTxt += ' · capacity kept aside for ' + run.reservedFor.join(', ');
       html += sub(subTxt);
+      if (run.capacity) {
+        var cap = run.capacity;
+        html += '<div class="u11w-sub dimtxt u11w-capenv">' + cap.hardMax + ' hard max · ' + cap.configuredPreferred +
+          ' preferred · ' + cap.providerAdvertised + ' advertised · ' + cap.predictedSustainable + ' sustainable</div>';
+      }
       if (fc) {
         html += '<div class="u11w-next ok">' + ic('check') + '<span>' + fc.recommendation + '</span></div>';
         html += sub(fc.confidence + ' · generated ' + T().atClock(fc.generatedAt));
+        html += cta('Refresh forecast', 'data-u11-act="reqforecast" data-run="' + run.id + '"');
       }
       html += cta('Open run detail', 'data-u11-act="openrun" data-run="' + run.id + '"');
       html += '</div>';
@@ -597,9 +621,13 @@
         var conn = d.connectionById[fm.connectionId];
         var model = d.modelById[fm.modelId];
         var meter = fm.meterId ? d.meterById[fm.meterId] : null;
-        html += '<div class="u11w-prow">';
+        var cooling = fm.cooldownUntil && Date.parse(fm.cooldownUntil) > Date.parse(d.meta.now);
+        html += '<div class="u11w-prow' + (cooling ? ' dim' : '') + '">';
         html += '<div class="u11w-atop"><span class="u11w-aname">' + model.label + '</span></div>';
         html += sub(fm.label + ' · via ' + (conn ? conn.label : ''));
+        if (cooling) {
+          html += '<div class="u11w-sub warntxt">Cooldown · back in ' + T().dur(Date.parse(fm.cooldownUntil) - Date.parse(d.meta.now)) + '</div>';
+        }
         if (meter && meter.usedPct != null) {
           var t2 = toneForPct(meter.usedPct);
           html += mrow('Allowance used', valHTML(meter.usedPct, '%'), meter.usedPct, t2 === 'hot' ? 'f-pink' : t2 === 'warn' ? 'f-orange' : 'f-lime');
@@ -775,6 +803,49 @@
     }
     html += footActs(item);
     return denseWrap(item, html);
+  }
+
+  /* ---------- operations: maintenance & operations (packet §04) ---------- */
+  var OPS_KIND_ICON = { cli_update: 'route', offline_outbox: 'alert', server_continuity: 'check',
+    sound_preview: 'check', notification_test: 'check', backup: 'check', project_move: 'check',
+    setup_required: 'alert' };
+  function renderOperations(item, sizeKey) {
+    var d = D();
+    var ops = d.operationsFor();
+    var html = topStrip(item, ops.length + ' activities');
+    ops.forEach(function (op) {
+      var host = d.hostById[op.hostId], env = d.envById[op.envId];
+      html += '<div class="u11w-opcard">';
+      html += '<div class="u11w-atop"><span class="u11w-opico">' + ic(OPS_KIND_ICON[op.kind] || 'check') + '</span>' +
+        '<span class="u11w-aname">' + op.title + '</span><span class="u11w-kind ' +
+        (op.status === 'rolled_back' ? 'warn' : op.status === 'completed' ? 'ok' : '') + '">' + R().human(op.status) + '</span></div>';
+      html += sub(op.copy);
+      if (op.phases && op.phases.length) {
+        html += '<div class="u11w-ophases">';
+        op.phases.forEach(function (ph) {
+          html += '<span class="u11w-ophase"><b>' + ph.label + '</b>' + T().dur(ph.ms) + '</span>';
+        });
+        html += '</div>';
+      }
+      if (host || env) html += sub((host ? host.label : '—') + (env ? ' · ' + env.label : ''));
+      if (op.acquisition) {
+        html += '<div class="u11w-opacq">' + ic('lock') + '<span>Explicit user setup · ' + op.acquisition.source +
+          ' · bound to ' + (host ? host.label : op.hostId) + ' / ' + (env ? env.label : op.envId) +
+          (op.acquisition.installation ? ' · v' + op.acquisition.installation.version : '') +
+          ' · updates/repair post-consent only</span></div>';
+      }
+      html += '<div class="u11w-sub dimtxt">' + op.detail + '</div>';
+      if (op.validationEventId) {
+        html += cta('View the verification call', 'data-u11-act="openattempt" data-att="' + op.validationEventId + '"');
+      }
+      if (op.kind === 'setup_required' && op.setupLink) {
+        html += cta('Open provider setup', 'data-u11-act="setuplink" data-ops="' + op.id + '"');
+      }
+      html += '</div>';
+    });
+    html += note('Maintenance is never model usage. First acquisition is explicit user setup from the official source for the exact host/environment; Auto/On maintain only already-approved installations. When a flow verifies with a model, that call appears separately as a validation event.');
+    html += footActs(item);
+    return html;
   }
 
   /* ---------- tools ---------- */
@@ -957,6 +1028,10 @@
           scopeSelectSpec(item)
         ];
       } },
+    operations: { label: 'Maintenance & operations', icon: 'route', span: [2, 10],
+      desc: 'CLI updates, sync, backups, previews — never model tokens',
+      render: renderOperations,
+      config: function (item) { return [scopeSelectSpec(item)]; } },
     tools: { label: 'Tool usage', icon: 'chip', span: [3, 7],
       desc: 'Latency and error tax by tool, with self-recovery',
       render: renderTools,
@@ -1149,6 +1224,31 @@
         var res = window.U11.deepLink({ surface: 'settings', manager: 'providers',
           account_id: act.getAttribute('data-acct'), section: 'routing', focus_reason: 'reconnect' });
         if (window.toast) window.toast(res.toast);
+        return;
+      }
+      if (a === 'usenext') {
+        var acctId = act.getAttribute('data-acct');
+        window.U11.dispatch('cmd.provider.switch_route', { accountId: acctId });
+        if (window.toast) window.toast('Future work will prefer ' + window.U11.accountLabel(acctId) + '. In-flight requests are never moved.');
+        return;
+      }
+      if (a === 'openmgmt') {
+        var resM = window.U11.dispatch('cmd.provider.usage.open_management', { familyId: act.getAttribute('data-fam') });
+        if (window.toast) window.toast(resM.toast);
+        return;
+      }
+      if (a === 'reqforecast') {
+        var resF = window.U11.dispatch('cmd.usage.forecast.request', { runId: act.getAttribute('data-run') });
+        if (window.toast) window.toast(resF.toast);
+        return;
+      }
+      if (a === 'setuplink') {
+        var op = null;
+        window.U11.operational.forEach(function (o) { if (o.id === act.getAttribute('data-ops')) op = o; });
+        if (op && op.setupLink) {
+          var resS = window.U11.deepLink(op.setupLink);
+          if (window.toast) window.toast(resS.toast);
+        }
         return;
       }
     });

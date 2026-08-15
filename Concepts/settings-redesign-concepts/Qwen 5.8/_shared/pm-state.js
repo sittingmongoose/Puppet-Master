@@ -781,22 +781,49 @@
     receipt("Copy Settings From…", "One-time transactional copy from " + (sourceProject || "ConceptHub") + ": previewed, restore point created, applied atomically, verified, receipted. The destination is independent now. Simulated.", "ok");
     emit("lifecycle", { stage: "copied" });
   }
+  // ObservableWork-shaped operation projection (decision register §11): truthful
+  // phases and wait reasons; determinate progress only with a real denominator.
+  function work(op) {
+    receiptSeq += 1;
+    return Object.assign({
+      operation_id: "op-" + receiptSeq,
+      owner_domain: "settings",
+      state: "accepted",
+      progress_kind: "unknown",
+      progress_source: "derived",
+      can_cancel: false,
+      can_background: true,
+      can_retry: true,
+      last_activity: new Date().toISOString()
+    }, op || {});
+  }
   function rebuildIndex() {
     var cfg = state.collections.searchIndexCfg;
+    var phases = ["Scan", "Chunk", "Embed", "Commit"];
+    var op = work({ owner_domain: "search-index", title: "Rebuild project search index", state: "running", human_phase: "Scan", wait_reason: null });
     cfg.rebuild.state = "running";
-    cfg.rebuild.progress = "0%";
+    cfg.rebuild.progress = "phase 1/4 — Scan";
+    cfg.rebuild.work = op;
     emit("collections", { name: "searchIndexCfg" });
-    receipt("Index rebuild started", "Phases: Scan → Chunk → Embed → Commit. Editing stays responsive. Simulated.", "info");
-    var pct = 0;
+    receipt("Index rebuild started", "ObservableWork " + op.operation_id + ": phases Scan → Chunk → Embed → Commit. No percentage is shown because the denominator is not trustworthy; phase and last activity are truthful. Editing stays responsive. Simulated.", "info");
+    var i = 0;
     var tick = setInterval(function () {
-      pct += 25;
-      cfg.rebuild.progress = Math.min(pct, 100) + "%";
-      if (pct >= 100) {
+      i++;
+      if (i < phases.length) {
+        op.state = "running";
+        op.human_phase = phases[i];
+        op.last_activity = new Date().toISOString();
+        cfg.rebuild.progress = "phase " + (i + 1) + "/4 — " + phases[i];
+      } else {
         clearInterval(tick);
+        op.state = "completed";
+        op.human_phase = "Completed";
         cfg.rebuild.state = "idle";
+        cfg.rebuild.progress = "completed";
         cfg.rebuild.lastFull = "Just now";
-        receipt("Index rebuilt", "Project search index committed. Disk use recalculated. Simulated.", "ok");
+        receipt("Index rebuilt", "ObservableWork " + op.operation_id + " completed: index committed, disk use recalculated. Simulated.", "ok");
       }
+      cfg.rebuild.work = op;
       emit("collections", { name: "searchIndexCfg" });
     }, 500);
   }
@@ -857,6 +884,24 @@
     if (name === "lkg-active") {
       state.catalogs.forEach(function (c) { c.lastKnownGood = true; c.state = "lkg"; });
     }
+    // Low-resource profile (decision register §3.1): smaller caches, fewer helpers,
+    // no speculative prewarm, lower decorative cadence, work in waves.
+    var app = document.querySelector(".pm-app");
+    if (name === "low-resource") {
+      if (app) app.setAttribute("data-low-resource", "1");
+      state.ui.lowResource = true;
+    } else {
+      if (app) app.removeAttribute("data-low-resource");
+      state.ui.lowResource = false;
+    }
+    // Poor network (§13): stale-while-revalidate; last-known-good stays visible.
+    if (name === "poor-network") {
+      state.ui.poorNetwork = true;
+      state.catalogs.forEach(function (c) { c.state = "lkg"; c.wait_reason = "waiting_network — stale-while-revalidate"; });
+    } else {
+      state.ui.poorNetwork = false;
+      state.catalogs.forEach(function (c) { delete c.wait_reason; });
+    }
     emit("scenario", name);
   }
 
@@ -869,6 +914,7 @@
     receipt: receipt,
     resetDemo: resetDemo,
     init: init,
+    work: work,
     getSetting: getSetting,
     setSettingValue: setSettingValue,
     resetSetting: resetSetting,

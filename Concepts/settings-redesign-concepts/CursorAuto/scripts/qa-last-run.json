@@ -1,9 +1,9 @@
 {
-  "pid": 42388,
-  "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca-qa-42388",
-  "started": 1786497030.5301983,
-  "hub_port": 57300,
-  "hub_pid": 60112,
+  "pid": 10960,
+  "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca-qa-10960",
+  "started": 1786672877.7058904,
+  "hub_port": 57291,
+  "hub_pid": 46384,
   "concepts": [
     {
       "id": "harbor",
@@ -73,7 +73,11 @@
               "ok": true,
               "detail": {
                 "hasInstallUI": true,
+                "hasCliPolicy": true,
+                "hasAdvancedDetails": true,
+                "rawPathInNormalDesc": false,
                 "selectCount": 1,
+                "owHost": true,
                 "panelHeads": [
                   "Host / environment installations"
                 ],
@@ -85,6 +89,55 @@
                 "kind": "manager",
                 "settingId": null,
                 "managerId": "providers"
+              }
+            },
+            "correction_hydration_ow": {
+              "ok": true,
+              "detail": {
+                "hasOW": true,
+                "admissionOwner": "RuntimeResourceGovernor",
+                "projectionOwner": "ObservableWork",
+                "hydrationMode": "shell-first",
+                "shellKeyCount": 2,
+                "managerKeyCount": 38,
+                "fixtureFraming": true
+              }
+            },
+            "correction_lazy_manager": {
+              "ok": true,
+              "detail": {
+                "opened": true,
+                "hydrated": [
+                  "memory",
+                  "bsd"
+                ],
+                "peerId": "memory",
+                "hasPeerData": true
+              },
+              "pick": {
+                "ok": true,
+                "title": "ManagerAssistant memoryManagers",
+                "kind": "manager",
+                "settingId": null,
+                "managerId": "memory"
+              }
+            },
+            "correction_loading_offline_states": {
+              "ok": true,
+              "detail": {
+                "hasLoadingBtn": true,
+                "hasOfflineBtn": true,
+                "loadingClicked": true,
+                "offlineClicked": true,
+                "demoNetwork": "offline",
+                "demoLoading": {
+                  "state": "waiting_network",
+                  "human_phase": "Waiting to reconnect",
+                  "wait_reason": "network offline",
+                  "progress_kind": "indeterminate",
+                  "progress_source": "unknown",
+                  "last_known_good": true
+                }
               }
             },
             "sound_preview": {
@@ -115,7 +168,8 @@
         },
         "width": {
           "ok": true,
-          "squeezed": false
+          "squeezed": false,
+          "widthSet": true
         },
         "console": {
           "ok": true,
@@ -193,7 +247,11 @@
               "ok": true,
               "detail": {
                 "hasInstallUI": true,
+                "hasCliPolicy": true,
+                "hasAdvancedDetails": true,
+                "rawPathInNormalDesc": false,
                 "selectCount": 2,
+                "owHost": true,
                 "panelHeads": [
                   "Host / environment installations",
                   "Host / environment installations",
@@ -212,13 +270,62 @@
                 "managerId": "providers"
               }
             },
+            "correction_hydration_ow": {
+              "ok": true,
+              "detail": {
+                "hasOW": true,
+                "admissionOwner": "RuntimeResourceGovernor",
+                "projectionOwner": "ObservableWork",
+                "hydrationMode": "shell-first",
+                "shellKeyCount": 2,
+                "managerKeyCount": 38,
+                "fixtureFraming": true
+              }
+            },
+            "correction_lazy_manager": {
+              "ok": true,
+              "detail": {
+                "opened": true,
+                "hydrated": [
+                  "notifications",
+                  "soundLibrary"
+                ],
+                "peerId": "notifications",
+                "hasPeerData": true
+              },
+              "pick": {
+                "ok": true,
+                "title": "ManagerNotifications and soundsManagers",
+                "kind": "manager",
+                "settingId": null,
+                "managerId": "notifications"
+              }
+            },
+            "correction_loading_offline_states": {
+              "ok": true,
+              "detail": {
+                "hasLoadingBtn": true,
+                "hasOfflineBtn": true,
+                "loadingClicked": true,
+                "offlineClicked": true,
+                "demoNetwork": "offline",
+                "demoLoading": {
+                  "state": "waiting_network",
+                  "human_phase": "Waiting to reconnect",
+                  "wait_reason": "network offline",
+                  "progress_kind": "indeterminate",
+                  "progress_source": "unknown",
+                  "last_known_good": true
+                }
+              }
+            },
             "sound_preview": {
               "ok": true,
               "detail": {
                 "clicked": true,
                 "present": true,
                 "phase": "Preview waveform for ping-soft (simulated)",
-                "toast": "Preview played for ping-soft (simulated audio) | Preview played for ping-soft (simulated audio)"
+                "toast": "Loading/reconcile demo \u2014 cached values stay visible; no fake percent | Offline demo \u2014 shell remains on last-known-good; reconnect when available | Preview played for ping-soft (simulated audio)"
               }
             },
             "import_rollback": {
@@ -245,7 +352,8 @@
         },
         "width": {
           "ok": true,
-          "squeezed": false
+          "squeezed": false,
+          "widthSet": true
         },
         "console": {
           "ok": true,
@@ -323,7 +431,11 @@
               "ok": true,
               "detail": {
                 "hasInstallUI": true,
+                "hasCliPolicy": true,
+                "hasAdvancedDetails": true,
+                "rawPathInNormalDesc": false,
                 "selectCount": 1,
+                "owHost": true,
                 "panelHeads": [
                   "Host / environment installations",
                   "Free Models \u2014 six auth routes"
@@ -336,6 +448,55 @@
                 "kind": "manager",
                 "settingId": null,
                 "managerId": "providers"
+              }
+            },
+            "correction_hydration_ow": {
+              "ok": true,
+              "detail": {
+                "hasOW": true,
+                "admissionOwner": "RuntimeResourceGovernor",
+                "projectionOwner": "ObservableWork",
+                "hydrationMode": "shell-first",
+                "shellKeyCount": 2,
+                "managerKeyCount": 38,
+                "fixtureFraming": true
+              }
+            },
+            "correction_lazy_manager": {
+              "ok": true,
+              "detail": {
+                "opened": true,
+                "hydrated": [
+                  "skills",
+                  "testing"
+                ],
+                "peerId": "skills",
+                "hasPeerData": true
+              },
+              "pick": {
+                "ok": true,
+                "title": "ManagerSkillsManagers",
+                "kind": "manager",
+                "settingId": null,
+                "managerId": "skills"
+              }
+            },
+            "correction_loading_offline_states": {
+              "ok": true,
+              "detail": {
+                "hasLoadingBtn": true,
+                "hasOfflineBtn": true,
+                "loadingClicked": true,
+                "offlineClicked": true,
+                "demoNetwork": "offline",
+                "demoLoading": {
+                  "state": "waiting_network",
+                  "human_phase": "Waiting to reconnect",
+                  "wait_reason": "network offline",
+                  "progress_kind": "indeterminate",
+                  "progress_source": "unknown",
+                  "last_known_good": true
+                }
               }
             },
             "sound_preview": {
@@ -366,7 +527,8 @@
         },
         "width": {
           "ok": true,
-          "squeezed": false
+          "squeezed": false,
+          "widthSet": true
         },
         "console": {
           "ok": true,
@@ -444,7 +606,11 @@
               "ok": true,
               "detail": {
                 "hasInstallUI": true,
+                "hasCliPolicy": true,
+                "hasAdvancedDetails": true,
+                "rawPathInNormalDesc": false,
                 "selectCount": 1,
+                "owHost": true,
                 "panelHeads": [
                   "Host / environment installations",
                   "Free Models \u2014 six auth routes"
@@ -457,6 +623,55 @@
                 "kind": "manager",
                 "settingId": null,
                 "managerId": "providers"
+              }
+            },
+            "correction_hydration_ow": {
+              "ok": true,
+              "detail": {
+                "hasOW": true,
+                "admissionOwner": "RuntimeResourceGovernor",
+                "projectionOwner": "ObservableWork",
+                "hydrationMode": "shell-first",
+                "shellKeyCount": 2,
+                "managerKeyCount": 38,
+                "fixtureFraming": true
+              }
+            },
+            "correction_lazy_manager": {
+              "ok": true,
+              "detail": {
+                "opened": true,
+                "hydrated": [
+                  "settingsLifecycle",
+                  "serverShell"
+                ],
+                "peerId": "settingsLifecycle",
+                "hasPeerData": true
+              },
+              "pick": {
+                "ok": true,
+                "title": "ManagerSettings lifecycleManagers",
+                "kind": "manager",
+                "settingId": null,
+                "managerId": "settingsLifecycle"
+              }
+            },
+            "correction_loading_offline_states": {
+              "ok": true,
+              "detail": {
+                "hasLoadingBtn": true,
+                "hasOfflineBtn": true,
+                "loadingClicked": true,
+                "offlineClicked": true,
+                "demoNetwork": "offline",
+                "demoLoading": {
+                  "state": "waiting_network",
+                  "human_phase": "Waiting to reconnect",
+                  "wait_reason": "network offline",
+                  "progress_kind": "indeterminate",
+                  "progress_source": "unknown",
+                  "last_known_good": true
+                }
               }
             },
             "sound_preview": {
@@ -496,7 +711,8 @@
         },
         "width": {
           "ok": true,
-          "squeezed": false
+          "squeezed": false,
+          "widthSet": true
         },
         "console": {
           "ok": true,
@@ -509,5 +725,5 @@
   ],
   "failures": [],
   "mode": "playwright-sync",
-  "finished": 1786497091.441704
+  "finished": 1786672947.2262225
 }

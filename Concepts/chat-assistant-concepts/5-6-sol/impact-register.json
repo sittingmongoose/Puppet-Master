@@ -55,7 +55,13 @@
       "owner": "Plans/Models_System.md and Plans/Multi-Account.md",
       "contract_or_planunit": "Provider to account/profile to connection to product/entitlement to model/capability hierarchy",
       "change_kind": "clarify",
-      "evidence": "The compact route picker separates provider, account, connection, model, effort, speed, favorite, requested route, effective route, and setup warnings. Provider installation remains a settings/runtime deep link."
+      "evidence": "The compact route picker separates provider, account, connection, model, effort, speed, favorite, requested route, effective route, and setup warnings. Current Plans/Shared_Integration_Runtime.md and Plans/CLI_Bridged_Providers.md keep installation, authentication, readiness, and continuation truth separate. Chat owns only the Provider Setup Required projection, exact-row deep link, and preserved return context."
+    },
+    {
+      "owner": "Plans/Shared_Integration_Runtime.md with Plans/CLI_Bridged_Providers.md, Plans/Release_Supply_Chain.md, Plans/BinaryLocator_Spec.md, Plans/Multi-Account.md, Plans/Models_System.md, Plans/FinalGUISpec.md, and originating domain owners",
+      "contract_or_planunit": "Canonical shared lifecycle plus provider acquisition, provenance, discovery, auth/readiness, Agent-Config projection, and current/stale continuation boundaries",
+      "change_kind": "consume_current_canonical_owner_routing",
+      "evidence": "Provider CLIs are not bundled, baseline-included, Tool Store pre-seeded, or silently acquired. Shared Integration Runtime owns the shared resolver/lifecycle, continuation, coalescing, ObservableWork, and resource-governance mechanisms; BinaryLocator discovers and validates only; CLI Bridged Providers and Release Supply Chain retain explicit official-source provider policy and provenance. Multi-Account/provider owns separate authentication/account state; Models/provider routing owns readiness; Agent-Config is the visible setup destination; originating-operation validity remains with its domain owner. AuthBrowserSession is human-only and opaque."
     },
     {
       "owner": "Plans/Prompt_Pipeline.md and Plans/assistant-memory-subsystem.md",
@@ -76,8 +82,8 @@
       "evidence": "All window concepts place artifacts left of Chat and preserve loading, ready, updated, error, retry, selection, and source-thread continuity. Prototype editor and reveal actions are truthfully disabled."
     },
     {
-      "owner": "Server, project sync, environment connection supervision, and storage owners",
-      "contract_or_planunit": "canonical thread/Goal/outbox state; cursor replay and snapshot catch-up",
+      "owner": "Plans/Shared_Integration_Runtime.md ThreadCommandOutbox and EnvironmentConnectionSupervisor, with Project Home Server, thread/Goal domain projection, and storage owners",
+      "contract_or_planunit": "durable outbox identity, connection supervision, cursor replay, and snapshot catch-up; canonical thread/Goal state remains domain-owned",
       "change_kind": "clarify",
       "evidence": "Offline queue, reconnect, exactly-once replay, snapshot catch-up, transport state, domain state, and continuing server work are represented separately."
     }
@@ -145,6 +151,13 @@
       "candidate_id": "cmd.chat.route.select",
       "reuse_alias_conflict": "a monolithic route command would duplicate current decomposed owners; keep requested/effective projections composed",
       "payload_result_error_cancel_restore": "provider/account/connection/model/effort/mode/platform, expected catalog revision, requested/effective route, warning and cache/context repack receipts"
+    },
+    {
+      "visible_action": "Open exact provider setup, explicitly install or select existing, authenticate separately, and resume current originating operation",
+      "existing_id": "cmd.onboarding.provider_setup.open / cmd.health.provider_setup.open are surface-specific only",
+      "candidate_id": "cmd.provider.setup.open / cmd.provider.cli.install / cmd.provider.cli.use_existing / cmd.provider.authenticate / cmd.provider.continuation.resume",
+      "reuse_alias_conflict": "all candidate IDs are provisional and unminted pending owner census; Chat must not reuse onboarding/Health commands as domain actions or become an installer",
+      "payload_result_error_cancel_restore": "provider CLI, exact Host/Environment, setup-row target, originating operation, continuation/currentness, explicit acquisition choice, official source/provenance, discovered installation, separate auth/readiness receipts, coalescing, stale rejection, rollback"
     }
   ],
   "wiring_impacts": [
@@ -211,7 +224,8 @@
     "Context Lens selection, admission, Subcompact and rehydration receipts",
     "thread request/await/spawn and branch/restore lineage",
     "artifact workspace selection and source-message handoff",
-    "outbox idempotency, cursor replay and snapshot state"
+    "outbox idempotency, cursor replay and snapshot state",
+    "provider CLI explicit-acquisition consent, exact Host/Environment, official-source provenance, install generation, separate authentication/readiness, originating operation, coalescing and stale-continuation result"
   ],
   "usage_impacts": [
     "Consume provider-reported allowance and local forecast with source-quality labels.",
@@ -221,7 +235,14 @@
   "provider_runtime_impacts": [
     "Requested and effective route must remain separate through fallback and Review/access limits.",
     "Route changes must re-evaluate context packing, cache reuse, tool capability, attachments, privacy boundary, and allowance.",
-    "Provider setup, authentication, update, repair, and rollback remain shared manager actions."
+    "Provider setup, installation, update, repair, verification, activation, and rollback remain Shared Integration Runtime lifecycle actions; account/profile authentication remains a separate provider and Multi-Account owner action that begins only after verified installation or validated existing-installation adoption.",
+    "Provider CLIs are not bundled in core, included in default native/server/container/WSL/Kubernetes baselines, or pre-seeded as PM-distributed Tool Store packages.",
+    "Project, model, provider, Goal, Plan, WorkNode, agent, Auto, and On never imply silent initial acquisition; Auto/On may maintain only an already explicitly acquired and bound installation.",
+    "Initial acquisition requires explicit Install or existing-installation selection, the official provider/package source, and the exact selected Host/Environment; installation, authentication, and provider/model readiness remain separate.",
+    "Bundling requires a later named user-approved exception for one exact provider CLI/platform/source; catalog, adapter, or acquisition-class assignment cannot create it implicitly.",
+    "Runtime demand preserves the originating operation and continuation token, coalesces matching provisioning, and resumes only after readiness when the continuation is still current; stale continuations are rejected.",
+    "Protected AuthBrowserSession is human-only and opaque; Chat never receives secrets, OAuth codes, raw helper responses, or protected browser content.",
+    "Current Plans/Shared_Integration_Runtime.md and Plans/CLI_Bridged_Providers.md adopt the provider-CLI policy and shared lifecycle split; this concept consumes that canon but does not prove its runtime implementation or mint UI commands/events."
   ],
   "server_sync_impacts": [
     "Canonical thread, Goal, branch, outbox, and replay state remains server-owned.",
@@ -229,7 +250,7 @@
     "Replay must be idempotent by stable command envelope identity."
   ],
   "slint_port_impacts": [
-    "Map semantic regions to Slint 1.17.1 components; web CSS is evidence, not implementation source.",
+    "Map semantic regions to Slint 1.17.1 components; this is Slint-portable architecture and translation guidance only, while web CSS is browser evidence, not native, drop-in, Slint-ready, or production implementation source.",
     "Use width constraints and explicit state branches for 520-1200 px instead of DOM/container-query dependencies.",
     "Use bounded opacity, translation, scale, and rotation transforms only; all motion has an immediate reduced-motion branch.",
     "Virtualize long thread slices by stable message id and restore anchors after size changes.",
@@ -240,7 +261,7 @@
     "Supplied original_testMatrix.json copied byte-for-byte",
     "Supplied extended_demo_scenario.json copied byte-for-byte",
     "Deterministic 5.6 Sol extensions in data/sol-extensions.json",
-    "Browser acceptance receipt and 55 curated frames under evidence/"
+    "Separate Firefox HTTP, Chromium file, and Chromium HTTP diagnostic receipts plus 115 current frames per complete engine under evidence/"
   ],
   "provisional_assumptions": [
     "Window and thread presentation may be independently composed over one semantic state contract.",

@@ -840,3 +840,6 @@
 }
 .co-badroute svg { color: var(--pm-attention); flex: none; margin-top: 2px; }
 .co-badroute code { font-family: var(--pm-font-mono); font-size: 11.5px; color: var(--pm-text-2); }
+
+.co-window { display: flex; align-items: center; justify-content: space-between; gap: var(--pm-space-3); margin: 8px 0 0 40px; padding: 8px 0; border-top: var(--pm-border-w) solid var(--pm-border-1); }
+.co-window-count { font-size: 12px; color: var(--pm-text-3); }

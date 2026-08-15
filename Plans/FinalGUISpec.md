@@ -497,6 +497,71 @@ padding through the new `--pm-home-pad-y` and `--pm-home-gap-y` tokens with 4 px
 sides; the tweak-wave uniform 4 px value is superseded for the vertical axis
 with this dated disposition.
 
+Amended 2026-08-14 (wave 7) — the kebab seats per surface kind: `editor_panel`
+surfaces at `top: 10px` against the 35 px strip and the dashboard at
+`top: 5px; right: 13px` against its 31 px header, where the dashboard's right
+shift clears the grip's clip-path hit triangle (which claims grip-local
+x >= y inside its 18 by 18 box), with the dashboard actions cluster reserving
+34 px of right margin; the kind attribute value is `editor_panel`, not
+`editor`. Chat is the exception with this dated disposition: the wave-3
+uniform-kebab rule no longer applies to Chat — `attachSurfaceControls` skips
+(and removes on re-render) the T20 kebab for the chat surface, so the base
+chat header menu (Duplicate thread / Archive thread / Pop out window / Close
+chat) is Chat's single "more options"; two stacked options buttons read as a
+bug. The kebab-exclusive `Dock Back` row is retired for Chat — grip-dragging
+the floating chat into a host covers re-docking — and Pop Out still routes
+through the T20 float guard: the chat host becomes `floating`, `#floatingChat`
+never displays, and exactly one chat surface exists.
+
+Amended 2026-08-15 (wave 8) — kebab geometry canon. The seat is derived from
+the glyph's INK, not the button box: the kebab's ink centre sits at
+button-local top + 10 px, because the 14 by 14 SVG carries about 5 px of
+glyph-free padding above and below the three dots. Measured against that rule
+the wave-7 tops seated the ink BELOW the line they were meant to clear —
+`editor_panel` `top: 10px` put the ink at surface-y 20, three pixels below the
+35 px strip's tab-label line at 17 — so the wave-7 values 10 px (editor) and
+5 px (dashboard) are superseded with this dated disposition: `editor_panel`
+seats at `top: 6px` (ink at 16, one pixel ABOVE the tab-label line) and the
+dashboard at `top: 2px; right: 13px` (ink at 12, three above the 31 px
+header's title line at 15). The dashboard's `right: 13px` sidestep and the
+34 px `.pm6-dash-actions` right margin are unchanged from wave 7. The
+concession to the grip's hit-triangle steal (18 by 18, z-index 140, stealing
+grip-local x >= y) is confined to glyph-free padding — about 50 px² on the
+editor seat at `right: 2px`, about 4 px² on the dashboard seat — so the dot
+column itself stays clickable on both kinds and no part of the visible glyph
+is stolen. Future waves derive a seat from the ink centre rather than from the
+button box.
+
+Amended 2026-08-15 (wave 8) — floating Chat regains a `Dock back` row, which
+reverses the wave-7 retirement of `Dock Back` for Chat with this dated
+disposition while leaving the wave-7 single-menu exception itself intact: the
+T20 kebab stays skipped and removed for the chat surface, and the row is
+injected into the BASE chat menu rather than into a second options button. The
+mechanism is required because the base chat menu always renders its DOCKED
+variant — the variant is keyed by mount root id and T20 floats `#chatPanel`
+itself — so a T20-floated chat previously showed a useless `Pop out window`
+and offered no way back except the grip. `attachSurfaceControls` therefore
+idempotently inserts one `button.pm6-chat-more-item` carrying
+`data-pm-home-chat-row="redock"` before `.closeChatBtn` in
+`.pm6-chat-more-menu`, with an inline `currentColor` SVG and no emoji (the
+project's no-emoji rule is absolute); the row displays only while
+`surface.host === "floating"`, and the base `.popOutBtn` row is hidden for the
+duration, both written if-changed so the chrome watcher stays quiet. Exactly
+one injected row survives the chat engine's `innerHTML` rebuilds. Dispatch
+lives in `wireActions`' capture click listener, which handles
+`[data-pm-home-chat-row]` BEFORE its `[data-pm-home-action]` branch, calls
+`moveSurface("chat", last_docked_host || "home_main")`, and deliberately does
+NOT call `preventDefault` or `stopImmediatePropagation` so the click still
+reaches the base delegated `.pm6-chat-more-item` handler that closes the menu
+with its portal animation. No new command id is introduced: `moveSurface` off
+a floating host emits the existing `cmd.panel.redock`, the same command the
+retired kebab's `redock-surface` action dispatched. Verified live — the docked
+menu reads Duplicate thread / Archive thread / Pop out window / Close chat and
+the floating menu reads Duplicate thread / Archive thread / Dock back / Close
+chat; clicking `Dock back` returns the chat to `dock_right` (its
+`last_docked_host`), leaves no `.pm6-chat-more-menu.is-open` residue, and sets
+`aria-expanded="false"`.
+
 The bottom terminal's own collapse control is a toggle: an inline-SVG chevron at the
 right end of the terminal bar that collapses the section and, from the collapsed
 strip, expands it again. The collapsed strip keeps that control visible and
@@ -748,12 +813,85 @@ canonical_text: >-
   movement, the placeholder previews the dragged surface's proportional projected width
   (mirroring the normalizeMainRowBases re-sum), and the PM_EDGE band geometry defers
   during all Home gestures (move and workgroup join resize in the
-  pm-resizing/PM_DRAGEND deferral). Amended 2026-08-13 (wave 4) - host targeting is
+  pm-resizing/PM_DRAGEND deferral). Amended 2026-08-14 (wave 7) - Home screen scroll
+  lock: every host locks horizontal travel via overflow-x clip, overflow-y auto, and
+  overscroll-behavior none on the attribute-doubled selector
+  .pm-home-host[data-pm-home-host]. The doubled specificity is REQUIRED, not
+  decorative: the scroll-frost enrolment stamps pm6-bottom-scroll (a base
+  overflow auto rule later in the cascade) onto every host at runtime, and a
+  single-class rule loses that fight silently. A horizontal wheel over the
+  dashboard, editors, or terminal moves zero scrollLeft anywhere in the workspace,
+  no scrollbar gutters render, and vertical scrolling stays intact. Amended
+  2026-08-13 (wave 4) - host targeting is
   latch-based and purely geometric: buildDockLatch freezes per-dock entry and exit
   bands at pickup (entry = the committed dock rect unioned with the 28 px edge strip;
   exit = the anticipated opened track plus a 44 px slack), and elementsFromPoint is
   fully retired from drop-target resolution; the wave-3 two-frame hysteresis remains
-  for slot flapping within a host.
+  for slot flapping within a host. Amended 2026-08-15 (wave 8) - HOME SCROLL KILL,
+  corrected mechanism. The wave-7 claim that "overflow-x: clip" beside
+  "overflow-y: auto" forbids programmatic scrollLeft is FALSE and is retired with this
+  dated disposition: per CSS Overflow 3 section 3.1, when one axis is clip and the
+  other is neither visible nor clip, the clip value COMPUTES TO HIDDEN, so the hosts
+  remained scroll containers - programmatic scrollLeft still moved 12 px, reachable by
+  focus, scrollIntoView and find - and on Safari 15 and earlier the clip declaration is
+  dropped outright, leaving true overflow-x: auto scrollers. Wave 8 removes the
+  overflow at its three measured sources instead (all measured on the 1920 by 1080
+  default layout). (a) EMPTY DOCK BOX, 8 px: .pm-home-host.pm-home-host-empty now also
+  sets "padding: 0", because the runtime scroll-frost enrolment stamps
+  pm6-bottom-scroll on every host and that base rule carries padding var(--sm), which
+  floored an empty dock's border-box at 8 px on a 0 px grid track and laid it past the
+  grid's content edge; the (0,2,0) selector beats the stamped (0,1,0) rule regardless
+  of block order. Drop previews are unaffected - syncHostGeometry drops the empty class
+  as soon as a draft places a surface there, and the dock latch uses frozen screen
+  bands. (b) FROST BANDS, 22 px: PM_EDGE builds four 30 px .pm-edge-band divs per
+  enrolled scrollport and appends them to the host grid, including for the zero-width
+  empty dock, whose band reached 30 px past the grid edge; layoutBands() now sets
+  display none on all four bands (write-if-changed) and returns whenever the scrollport
+  measures clientWidth <= 0 or clientHeight <= 0, and the existing per-element
+  ResizeObserver revives them the moment the dock gains real size. (c) PAIRLESS LAST
+  DIVIDER, 12 px: home_main emitted a resize divider on its LAST visible surface, which
+  had no right-hand partner - beginResize found no nextId, gesture.pair stayed null and
+  updateResize fell back to the diluted single-basis path that the pair-transfer
+  rebuild retired - and its decorative 16 by 56 grab-glow pseudo overhung the host's
+  right edge by about 11 px. The row-dock last-sibling divider suppression therefore
+  extends to home_main (pairRow = rowDock || surface.host === "home_main"), so a
+  home_main with N visible surfaces renders exactly N-1 dividers; dock_left and
+  dock_right KEEP their last-surface dividers with this dated disposition, because on
+  the column docks that handle drives the dock track itself through previewResize. The
+  wave-7 diagnosis that blamed the tab silhouette for the residue is also retired: the
+  silhouette's flare box overhangs the START edge, which does not count toward
+  scrollWidth in LTR, so it contributes ZERO horizontal overflow. BELT: overflow clip
+  on BOTH axes for #pm-home-workspace, .pm-home-host-grid and
+  #panel-dashboard.pm-home-owned - none of the three needs auto on either axis, so clip
+  legally destroys them as scroll containers in Chromium and Safari 16+;
+  #panel-dashboard was previously overflow hidden and silently held 26 px of scrollable
+  overflow. SCROLLBARS: the wave-7 host declaration "scrollbar-color: var(--border-light)
+  transparent" is REMOVED with this dated disposition - it beat the scrollbar opt-in
+  list's transparent idle ink and produced an always-visible thumb - and hosts get
+  ID-anchored zeroing instead, "#pm-home-workspace .pm-home-host { scrollbar-width:
+  none; }" plus "#pm-home-workspace .pm-home-host::-webkit-scrollbar { width: 0;
+  height: 0; }". Every host had been opted into the 10 px webkit scrollbar list by the
+  same pm6-bottom-scroll stamp, and on Safari 16 and 17 scrollbar-width is unsupported,
+  so those webkit bars were exactly the space-stealing bars the user reported; the
+  (1,1,x) selectors win by specificity on every engine, order-independent, and are
+  scoped to the HOST element only, so pane-internal scrollers (.pm6-dash-scroll,
+  .pm-home-terminal-body, chat streams, bottom-panel content, and .editor-code's
+  minimap-only policy) keep their existing behaviour. The wave-7 observation that the
+  doubled attribute specificity is REQUIRED against the pm6-bottom-scroll stamp
+  SURVIVES and is reused by the empty-dock padding rule. DELIBERATE DOCUMENTED
+  EXCEPTION: inside the max-width 1320 px media block, home_main returns to
+  overflow-x auto - below that width the min-width floors intentionally stop shrinking
+  surfaces past a readable size, and without the auto about 23 px or more of pane
+  content would be clipped unreachable at 880 px and below; the zero-width scrollbar
+  rules keep even that scroll bar invisible. Verified live at 1920 by 1080:
+  #pm-home-workspace, .pm-home-host-grid, #panel-dashboard and all five hosts report
+  scrollWidth == clientWidth and scrollHeight == clientHeight; forcing scrollLeft = 50
+  on each leaves it at 0; a wheel storm of 8 horizontal plus 8 vertical wheels over the
+  dashboard, the editor tab strip and the terminal produced zero scrollLeft anywhere
+  and the workspace's x stayed 279; the empty right dock measures 0 px wide and its
+  four PM_EDGE bands report display none; home_main shows 2 dividers for 3 visible
+  surfaces. At 1180 px home_main computes overflow-x auto with a zero scrollbar gutter,
+  and returns to the clip path at 1920.
 gui_related: true
 gui_classification_reason: This unit owns visible layout gestures, previews, resize feedback, scrolling-edge treatment, and recovery.
 split_recommended: false
@@ -770,6 +908,9 @@ acceptance_criteria:
 - Host targeting reads only latched geometry; per-dock entry/exit bands freeze at pickup and no drop-target resolution reads the painted element stack, so approaching an occupied row dock produces exactly one host transition and one track opening per approach (wave 4, 2026-08-13).
 - A divider drag transfers pixels between the adjacent pair only (+N/-N exactly), non-adjacent surfaces are untouched, and commit produces no settle flash; effective minimums degrade to fair share so every boundary stays reachable, and floating surfaces resize on both axes from the bottom-right corner handle.
 - At render, boot, and window resize the visible home_main bases re-sum to the host width; a degenerate persisted layout self-heals with no host background band wider than the gap token, and a full host refuses an incoming drop with an announced host_full disposition while normalization spills overflow to home_main.
+- "At the default width no Home box is scrollable: the workspace, the host grid, the owning dashboard panel and every host report scrollWidth == clientWidth and scrollHeight == clientHeight, forcing scrollLeft leaves it at 0, and a horizontal or vertical wheel storm over any pane moves nothing (wave 8, 2026-08-15)."
+- "An empty dock measures 0 px on its cross axis and its four PM_EDGE frost bands are display none until it gains real size; home_main renders exactly visible-minus-one resize dividers so every divider has a right-hand pair partner, while the column docks keep their last-surface track handle (wave 8, 2026-08-15)."
+- "Host scrollbars occupy zero space on every engine (scrollbar-width none plus a zero-size ::-webkit-scrollbar, ID-anchored), and below 1320 px home_main deliberately regains overflow-x auto so min-width-floored pane content stays reachable, still with a zero-width gutter (wave 8, 2026-08-15)."
 validation_surfaces:
 - node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
 risk_class: home_gesture_regression
@@ -791,6 +932,7 @@ stale_retired_dispositions:
 - "Amended 2026-08-13 (tweak wave): the same-day pickup-footprint drop preview is retired in favour of target-geometry projection with the pickup-band and preview-capture guards; single-axis row-dock sizing is retired in favour of the cross_basis_px track handle plus within-row pair transfer."
 - "Amended 2026-08-13 (wave 3): instant single-frame target adoption is retired in favour of the two-frame hysteresis; mid-FLIP surfaces are excluded from hit-testing; per-frame auto-scroll re-application is retired (actual movement only); the fair-share placeholder width is refined to the proportional projected width mirroring normalizeMainRowBases; PM_EDGE deferral widens from resize-only to all Home gestures."
 - "Amended 2026-08-13 (wave 4): painted-stack drop-target resolution (elementsFromPoint) is retired — reading painted geometry starved under its own preview (FLIP-marked surfaces and drop-active docks both skipped, falling through to home_main, collapsing and re-adopting the dock at roughly 9 Hz with ~120 px placeholder jumps); latch-based geometric targeting yields exactly one host transition and one track opening per approach into an occupied dock."
+- "Amended 2026-08-15 (wave 8): the wave-7 scroll-lock rationale is retired. Three claims go with it — that overflow-x clip beside overflow-y auto forbids programmatic scrollLeft (it computes to hidden per CSS Overflow 3 §3.1, the hosts stayed scroll containers and scrollLeft still moved 12 px, and Safari ≤ 15 drops the declaration entirely); that the host-level `scrollbar-color: var(--border-light) transparent` declaration suppressed gutters (it defeated the scrollbar opt-in list's transparent idle ink and produced an always-visible thumb, and it never applied at all on the Safari builds where the 10 px webkit bars were actually stealing space); and that the tab silhouette contributed the residual horizontal overflow (its flare box overhangs the START edge, which does not count toward scrollWidth in LTR). The overflow is removed at its three measured sources instead — empty-dock padding, zero-extent frost bands, and the pairless last home_main divider — with a both-axes clip belt and ID-anchored zero-width host scrollbars, and the sub-1320 px home_main overflow-x auto is a documented reachability exception, not a leak."
 owner_hints: [Plans/FinalGUISpec.md, Plans/UI_Wiring_Rules.md]
 ```
 
@@ -900,10 +1042,114 @@ canonical_text: >-
   with this dated disposition). Wave-3 follow-up (2026-08-13): the retro outline lives
   on the ACTIVE TAB as a three-edge inset ring that snaps on arrival, not on the
   travelling connected shape - the outline-on-the-travelling-shape rendering is retired
-  with this dated disposition. The editor minimap is the ONLY code-pane scrollbar -
+  with this dated disposition. Amended 2026-08-14 (wave 6) - silhouette construction
+  canon: the connected shape is ONE JS-composed clip-path path() per frame. The crown
+  corners are superellipse-approximating cubic beziers with a handle factor of
+  0.5523 + 0.35 x progress, and each side descends through an ogee - a concave flare
+  of radius shoulder-max x progress into a convex neck of radius canvas-max x progress
+  landing tangent on the canvas line. This renders identically in Safari and Chromium,
+  which is the explicit motivation: the corner-shape/superellipse enhancement path was
+  engine-split (Chromium-only). The glass bevel becomes a 1 px --glass-edge crown
+  strip clipped by the same path. Morph gap canon (measured against the reference
+  explainer's debug HUD): progress = clamp(gap / 20 px, 0, 1) LINEAR; the
+  canvas(neck) to shoulder(flare) radii ratio is 10:8; each side's gap is the distance
+  to the NEAREST CONTACT - the static strip content-box edge or the adjacent tab's
+  transform-free layout edge - and the strip-end caps key off the strip box edges
+  only. Glass-dark deepens --ed-rail-solid via a 55 percent black canvas-bg mix so
+  the silhouette is visible (measured: about 1 sRGB channel level before, 16 levels
+  after). Wave-6 follow-up (2026-08-14, defect-fix refinement of the path canon): the
+  ogee construction is height-clamped - flare and neck scale together to fit below
+  the crown (the unclamped first cut inverted the wall segment into a visible hump);
+  the inflection sits at the natural corner meet (wall minus flare, canvas minus
+  neck); and bezier handles are 0.55 x their OWN radius (token-scaled handles
+  doubled back on short chords). Under the retro themes the silhouette SNAPS between
+  tabs - spring travel is suppressed for the discrete cursor-jump aesthetic, and the
+  bake-off flourishes are the motion. Second follow-up (2026-08-14, ogee bow
+  direction): handle ASYMMETRY is canon - long handles (0.9 x radius) at the fixed
+  ends and short handles (0.18 x radius) at the inflection, so the curve tucks INTO
+  the wall and spills DOWN onto the canvas; symmetric 0.55 handles bowed outward and
+  up near the wall (user-reported) and are retired with this dated disposition.
+  Third follow-up (2026-08-14, SILHOUETTE CANON CORRECTED): the tab side is a SINGLE
+  CONCAVE QUARTER-ARC - vertical tangent at the wall, horizontal tangent on the
+  canvas line, a standard-kappa (0.5523) cubic, radius = the shoulder token x the
+  per-side contact progress. The convex canvas radius belongs EXCLUSIVELY to the
+  strip-end corner caps, matching the reference explainer's two-corner model (tab
+  cutout r and canvas r are separate corners). Both ogee constructions - the
+  height-clamped 0.55-handle form and the 0.9/0.18 asymmetric-handle retune - are
+  retired with this dated disposition as a misreading of the reference. Fourth
+  follow-up (2026-08-14, the second corner made literal): the CANVAS surface's own
+  top corners round via real animated border-radius on the editor area
+  (calc of --ed-lp/--ed-rp x --ed-canvas-rx-max), driven by the same per-side edge
+  progress as the tab, so the panel corner and the tab cutout JOIN when flush (both
+  flat = one continuous surface) and the corner blooms back as the tab moves away.
+  The masked wedge caps for editor panes are retired with this dated disposition -
+  they painted rail-coloured overlays at the strip ends and were invisible at panel
+  scale; the dashboard header caps are unchanged this round. Radii retuned for
+  legibility: shoulder-rx-max 14 px default / 16 friendly / 8 retro, canvas-rx-max
+  16 px default / 18 friendly / 10 retro. Fifth follow-up (2026-08-14): corner-notch
+  CONTRAST canon - the shape-on editor pane's own background is --ed-cap-bg (the
+  rail-over-canvas composite), so the rounded-away canvas corner reveals a visibly
+  darker backdrop; a corner exposing a same-tone backdrop reads as no corner
+  (user-reported: the radius was applying at 18 px yet invisible). Strip heights
+  re-tune with this dated disposition: editor 40 to 35 px and dashboard 36 to 31 px
+  (--ed-strip-h, --pm6-editor-tabs-h, --pm6-dash-head-h; the T20 resizer column top
+  follows 44 to 39 px), with the minimap/code alignment verified intact under the
+  new tokens. Sixth follow-up (2026-08-14, both found by watched inspection): the
+  fourth follow-up's animated border-radius canvas corner is RETIRED with cause -
+  the canvas slides UNDER the translucent rail (the scroll frost), so the area's
+  true box corner is invisible and a border-radius there rounds nothing a user can
+  see. The masked wedge caps are RESTORED as the canonical frost-preserving
+  construction for the VISIBLE emergence line, now filled with var(--ed-rail-solid)
+  - the old --ed-cap-bg composite fill was the invisibility cause, not the wedge
+  architecture - at 18 px (20 friendly) width by 16 px height (--ed-corner-ry 12 to
+  16; --ed-canvas-rx-max 18 default / 20 friendly), and the shape-on pane background
+  stays --ed-rail-solid. Dashboard retro is UNBLOCKED: the dashboard pill
+  neutralization uses !important, and important declarations beat CSS animations,
+  so all background-based retro effects were dead on dashboard tabs (the DOS blink
+  rendered as an empty box - its non-important color applied while its background
+  lost); effect-classed tabs ([class*="pm-retro"]) now escape the important rule via
+  :not() and receive a normal-weight twin that keeps the pill suppressed without
+  outranking keyframes. Seventh follow-up (2026-08-14): the sixth follow-up's
+  exemption left the dashboard CRT fill dead through a SPECIFICITY TIE - the effect
+  rules and the normal-weight neutralization twin both weighed (0,5,0), and the twin,
+  later in the assembled cascade, won the tie for plain background declarations
+  (phosphor survived only through its keyframes, which sit above the normal cascade).
+  All fourteen retro effect selectors now include .ed-shape-on, weighing (0,6,0) and
+  outranking the twin; the tied (0,5,0) effect selectors are retired with this dated
+  disposition. Watched verification: the phosphor block, the DOS full inversion, and
+  the CRT scanline wipe all paint on dashboard tabs. The editor minimap is the ONLY code-pane scrollbar -
   native scrollbars are suppressed - and the minimap band aligns with the frosted rail
   via margin rather than padding, retiring the wave-2 scrollbar-track-margin exclusion
-  with this dated disposition.
+  with this dated disposition. Amended 2026-08-15 (wave 8), SNAP-WHILE-DRAGGING
+  CONTRACT: this unit's 1:1 canon above ("direct dragging is one-to-one with the
+  pointer and corner values are derived from the tab position in the same frame with
+  no independent easing") and its negative constraint against easing corner values
+  independently of the tab position were being VIOLATED by the shipped build, and are
+  restored rather than retired. The violation was structural, not decorative:
+  grabbing a NON-ACTIVE tab flips the strip's active key, so sync() read the
+  lastActive change as a selection, set animate = true and sprang the plate across
+  over roughly 12 frames while the carried tab painted nothing, and sub-0.5 px
+  pointermoves then parked in the spring-preservation early return and held that state
+  indefinitely. Contract with this dated disposition: ANY EDSHAPE sync taken while the
+  strip contains a .tab.dragging child must SNAP - draggingLive is computed
+  immediately after the lastActive update, it forces animate = false, and the
+  spring-preservation guard is qualified by "&& !draggingLive" so the snap branch
+  cancels the in-flight rAF, jumps x and w to target, zeroes velocities and paints in
+  the activating frame. Click, snap and keyboard SELECTION springs are explicitly
+  unaffected, as is the release settle owned by the reorder gesture. Measured: worst
+  plate-versus-tab lag 0.00 px over 2,615 samples of a deliberately slow non-active
+  drag; 18 distinct monotonic intermediates on a click-to-select, no overshoot. Also
+  with this dated disposition, a per-theme silhouette SKIN is added under the wave-6
+  skin family: glass gains a drag-scoped frost,
+  [data-theme^="glass"] .editor-tabs.ed-shape-on:has(.tab.dragging) .ed-tab-shape
+  { opacity: .92; } - slightly see-through but never legible, honouring the user's
+  "like a blur" request. It is deliberately NOT a backdrop blur: glass panes run one
+  blur per pane by budget, and the build's T16 backdrop-filter count pin stays at 134.
+  The steady-state plate remains fully opaque in all eight themes; measured live at
+  .92 mid-drag in glass-dark and 1 at idle. Build-pin lesson recorded here because it
+  bit this wave: T16 is a RAW SUBSTRING COUNT over the whole assembled document, so a
+  CSS COMMENT that merely spells the property name trips it - the comment was reworded
+  and the count returned to 134.
 gui_related: true
 gui_classification_reason: This unit defines the visible active-editor-tab chrome, its joined-surface geometry, and its motion.
 split_recommended: false
@@ -914,9 +1160,12 @@ acceptance_criteria:
 - "leftProgress and rightProgress are computed independently against a 20 px threshold; a flush side renders canvasRx 0 and cutoutRx 0 while the opposite side keeps its corner."
 - "Only the horizontal extent of a corner animates, driven by the per-side progress custom properties --ed-lp/--ed-rp; as of the 2026-08-13 tweak wave the CSS derives the radii from that progress against the 12 px shoulder/canvas maxima and the theme's --ed-top-radius crown (13 px default; friendly 16, glass 14, retro 6)."
 - "The dashboard tab strip participates in the same connected-surface system with the shared rail recipe at the same alpha, and tabs start flush at the panel's left edge."
-- "Per-theme silhouette skins resolve through --ed-shape-outline, --ed-shape-crown/--ed-shape-crown-h, and --ed-tab-inactive-ring: retro renders its hard outline with square inactive rings, basic renders the 2 px accent-blue crown at a 9 px radius, and glass renders the three-edge bevel at 84 percent rail alpha (wave 3, 2026-08-13)."
+- "Per-theme silhouette skins resolve through --ed-shape-outline, --ed-shape-crown/--ed-shape-crown-h, and --ed-tab-inactive-ring: retro renders its hard outline with square inactive rings, basic renders the 2 px accent-blue crown at a 9 px radius, and glass renders the 1 px --glass-edge crown strip clipped by the silhouette path at 84 percent rail alpha (wave 6 re-tune of the wave-3 three-edge bevel)."
+- "The silhouette is one JS-composed clip-path path() per frame (superellipse-approximating crown cubics, handle factor 0.5523 + 0.35 x progress; ogee descents with a 10:8 canvas-neck to shoulder-flare ratio), progress is linear in gap/20, per-side gap measures to the nearest contact (strip content-box edge or adjacent tab's transform-free layout edge), strip-end caps key off the strip box only, and rendering is identical in Safari and Chromium (wave 6, 2026-08-14)."
 - "The editor minimap is the only code-pane scrollbar; native scrollbars are suppressed and the minimap band aligns with the frosted rail via margin, not padding."
 - "Dragging tracks the pointer one-to-one with corner values derived in the same frame; selection by click, snap or keyboard produces the identical transition."
+- "Any silhouette sync taken while the strip contains a dragging tab snaps in the same frame rather than springing, including the sync caused by grabbing a non-active tab, and sub-pixel pointer moves never preserve an in-flight spring during a drag; selection springs are unaffected (wave 8, 2026-08-15)."
+- "Glass themes render the travelling plate at .92 opacity while a drag is live and fully opaque at rest, achieved without any backdrop-filter so the one-blur-per-pane budget and the T16 count of 134 are preserved (wave 8, 2026-08-15)."
 - "No dark pinhole at a join, no one-frame square or round pop at the start or end of a transition, and no shrinking circular dimple near a collision boundary."
 - "Resizing the window or changing tab widths recomputes stable target bounds; reduced motion snaps without spring travel."
 - "The rail band ghosts scrolled content beneath it in non-glass themes (pixels change when the code canvas scrolls under the strip); glass themes composite by alpha without blur per their documented budget; the active tab and canvas keep the shared opaque fill so the join stays seamless."
@@ -948,6 +1197,8 @@ stale_retired_dispositions:
 - "Amended 2026-08-13 (tweak wave): the 10 px canvas / 8 px cutout radius maxima and the JS-written per-corner radius properties are retired — the JS writes contact progress (--ed-lp/--ed-rp) and the CSS derives 12 px shoulder/canvas radii plus the theme-tunable --ed-top-radius crown; the editor-file-tabs-only scope is widened to include the dashboard tab strip."
 - "Amended 2026-08-13 (wave 3): the glass rail alpha of 88 percent is re-tuned to 84 percent, and the wave-2 scrollbar-track-margin exclusion is retired — the minimap is the only code-pane scrollbar (native bars suppressed), aligned with the frosted rail via margin."
 - "Wave-3 follow-up (2026-08-13): the retro hard outline on the travelling connected shape is retired — the outline renders on the active tab as a three-edge inset ring that snaps on arrival."
+- "Amended 2026-08-14 (wave 6): the border-radius crown, the corner-shape/superellipse @supports enhancement blocks (engine-split, Chromium-only — the explicit motivation for the change), the masked shoulder pseudo-elements, and the glass three-edge inset box-shadow bevel are all retired — the silhouette is one JS-composed clip-path path() per frame and the glass edge is a 1 px --glass-edge crown strip clipped by that path. The uniform 12 px shoulder/canvas radii are re-tuned to the reference 10:8 canvas-neck to shoulder-flare ratio, and the first/last-laid-tab gap track is retired (it froze the morph when dragging the end tabs and wobbled under FLIP transforms) in favour of nearest-contact per-side gap measurement. Follow-up defect-fix refinement: the unclamped ogee (which inverted the wall segment into a visible hump), corner-meet-agnostic inflection placement, and token-scaled bezier handles (which doubled back on short chords) are retired for the height-clamped ogee, natural-corner inflection, and 0.55-of-own-radius handles."
+- "Amended 2026-08-14 (wave 6): three retro tab-motion prototype concepts initially shipped pane-gated and EXPERIMENTAL (phosphor/crt/dos via data-retro-motion on editor panes 1/2/3), with two retunes (timings ~2.3x slower; then phosphor dither 240 ms / afterglow 650 ms, CRT outgoing collapse-to-line removed as it read like the old tab blacking out, DOS block caret removed). RESOLVED 2026-08-14 (third follow-up, user decision): ALL THREE concepts are canon as a ROTATING TRIO — every selection click and every reorder gesture rolls a mode from a shuffle bag (fair rotation, no immediate repeats). The pane gates (data-retro-motion) are removed everywhere; the effects cover all editor strips and the dashboard strip under retro themes; the steady state is the standard retro active ring, with phosphor gaining a 650 ms solid-hold fade and CRT a 500 ms scanline-hold fade so each flourish hands back cleanly. Reorder: phosphor and dos gestures quantize the glide to 8 px cells, crt glides smooth; the drop cues (crt roll / dos blink) are unchanged; reduced motion suppresses all of it. Part-25 integration routes through PM6_RETRO_MOTION.beginDrag(). The single-winner plan and the EXPERIMENTAL status are retired with this dated disposition."
 owner_boundary_notes:
 - "F3-421 owns editor tab close, pane close and the width-aware +N more overflow chip; F3-466 owns the friendly-theme editor tab shape; F3-464 owns the title-bar page-tab sliding ink and is unaffected by this unit. As of the 2026-08-13 tweak wave this unit covers editor file tabs AND the dashboard tab strip (Main/Metrics/Monitoring); title-bar page tabs remain out of scope."
 owner_hints: [Plans/FinalGUISpec.md]
@@ -3583,7 +3834,7 @@ Agent ecosystem seams remain explicit migration references: `Plans/Skills_System
 | `wizard.rs` | `views/wizard.slint` (Run group) | Add agent activity pane, intent selection |
 | `interview.rs` | `views/interview.slint` (Run group) | Also available as Chat mode |
 | `tiers.rs` | `views/nodes.slint` (Run group) | Renamed to match the node/package/lane/seam model; otherwise minimal changes |
-| `config.rs` | **Merged into** `views/settings.slint` (Settings group) | Legacy Config import rows only; live Settings tabs are the §7.4.4 19-tab registry |
+| `config.rs` | **Merged into** `views/settings.slint` (Settings group) | Legacy Config rows route into the F3-432 search-first Settings surface; the former 19-tab table is owner-routing lineage only. |
 | `settings.rs` | **Merged into** `views/settings.slint` (Settings group) | Tab: General |
 | `login.rs` | **Merged into** `views/settings.slint` (Settings group) | Tab: Authentication |
 | `doctor.rs` | **Merged into** `views/settings.slint` (Settings group) | Tab: Health |
@@ -3662,7 +3913,7 @@ cargo check
 | **Font family change requires restart** | Low | Detect font family change in settings. Show restart prompt. Pre-load fonts for all themes on startup so within-family switches (Dark <-> Light) are instant. Auto-mode transitions are equally instant: an OS appearance change resolves the selected family to its other variant with no restart. |
 | **4-split terminal performance** | Medium | Live terminal panes use native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer ingestion and processing per Section 15. Keep bounded ring buffers per pane (max 10k retained rows) and one PTY per pane. `VecModel`/`ListView` holds only bounded transcript/plain-log projection windows (~500 visible rows plus small overscan), not the terminal core. Batch/throttle projection updates (max 30fps). |
 | **Platform-specific window manager issues** | Medium | Test: macOS window snapping with floating panels, Linux compositing with overlay effects, Windows DPI scaling. Handle gracefully with fallback behaviors. |
-| **Large Settings page complexity** | Medium | The old `24 tabs across 5 groups` count is stale migration residue; the current canonical registry is the §7.4.4 19-tab Settings registry. Two-level sidebar navigation (left sidebar for groups, right area for selected tab) is mandatory. Group labels act as collapsible headers. Settings search bar at the top of the sidebar. Test with real data. |
+| **Large Settings page complexity** | Medium | The old tab counts and two-level-sidebar mandate are retired migration lineage. F3-432 owns one search-first Settings surface with category blooms, shelves, command-palette deep links, and real-data testing. |
 | **Migration scope** | High | 18 existing views + 5 new = 23 total. Prioritize: (1) Theme system + shell layout, (2) Dashboard + Settings, (3) Chat + File Manager, (4) remaining views. Each view can be migrated independently. |
 | **invoke_from_event_loop saturation** | High | High-frequency terminal output (1000+ lines/sec) can saturate the event loop if treated as line-widget churn. Mitigation: keep PTY/buffer ingestion and diff computation off the UI thread; push bounded paint/projection deltas to the GUI with a 33ms (30fps) throttle timer. Do not model the live terminal core as raw lines pushed into `VecModel` per frame. |
 | **Chat message memory bounds** | Medium | No cap on messages per thread could cause memory issues with very long sessions. Mitigation: Implement a soft cap (e.g., 5000 messages per thread); on exceeding, archive oldest messages to disk and show "Load earlier messages" button. |
@@ -3679,7 +3930,7 @@ cargo check
 | **Catalog service availability** | Low | Catalog index may be unavailable (network down, server offline). Mitigation: Bundle a fallback index with the app binary. Cache last-fetched index locally. Show "Catalog may be outdated" banner when using cached data. All catalog operations work offline with cached index. |
 | **Sound effects cross-platform audio** | Low | `rodio` audio playback may fail on some Linux configurations (missing PulseAudio/ALSA). Mitigation: Detect audio device availability at startup. If unavailable, disable sound effects silently and hide the toggle in Settings (or show "(audio unavailable)" label). No error toasts for missing audio. |
 | **Custom theme validation** | Low | User-created theme TOML files may have invalid colors, missing tokens, or malformed syntax. Mitigation: Validate all custom themes on load. Skip invalid themes with a warning toast on Settings open. Never crash on invalid theme files. Use base theme values for any missing or invalid tokens. |
-| **Settings page tab count (24 tabs)** | Medium | `Settings page tab count (24 tabs)` and `24 tabs across 5 groups` are stale risk-lineage labels; live Settings uses the §7.4.4 19-tab registry. Mitigation: Two-level sidebar navigation is mandatory (not optional). Group headers are collapsible. Search/filter across all settings via a search bar at the top of the Settings sidebar. Deep-link support: command palette "Open setting: {name}" jumps directly to the relevant tab and scrolls to the field. |
+| **Settings page tab count (24 tabs)** | Medium | Old 24-tab, 19-tab, and two-level-sidebar vocabulary is risk lineage only. F3-432 mitigates the live surface with fuzzy search, category blooms, shelves, and command-palette `Open setting: {name}` deep links. |
 | **Project switch state reload performance** | Medium | Switching projects triggers full state reload (editor tabs, file tree, chat threads, config, LSP servers). Mitigation: Load in priority order: (1) config (instant, from redb), (2) file tree (async scan, show skeleton), (3) editor tabs (lazy, only load active tab content), (4) LSP/Search/Source Control projections (background refresh), (5) chat threads (lazy load). Show skeleton placeholders during reload. Target: <500ms to interactive. |
 | **File watcher resource consumption** | Low | Hot reload and preview watchers monitor project directories for changes. Large projects (>10k files) may consume significant inotify/FSEvents handles. Mitigation: Use `notify` crate with debounced mode. Watch only relevant source directories. Cap watchers and disclose fallback when root-only watching is required. |
 
@@ -4014,7 +4265,7 @@ The rewrite must treat browser-capable rendering as a shared capability across t
 - **Embedded Document Pane**: preview-capable document review surface using the same rendering and preview identity contract
 - **Editor-tab Browser surface**: the canonical in-shell host for `workspace_preview`
 - **Detached preview/browser windows**: first-class `detached_preview` surfaces linked to the originating browser subject
-- **Automation/Auth browser windows**: visible `automation_session` and `auth_session` surfaces that are not counted as normal in-shell browser tabs
+- **Automation browser windows**: visible ordinary `automation_session` surfaces that are not counted as normal in-shell browser tabs. Protected `AuthBrowserSession` is a distinct foreground human-only surface with no capture, inspection, recording, generic navigation, agent, tool, BSD, or persistence consumer.
 - **Bottom-panel browser-adjacent surfaces**: optional logs, evidence, downloads, console/network summaries, or DevTools-adjacent panes that do not own the canonical browsing session
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
@@ -4023,7 +4274,7 @@ Browser-derived capture chips in the Chat Panel appear in the composer chip stri
 
 ### GUI behavior rules
 
-- Browser and agent-debugging UX follows the Section15 built-in browser contract rather than `web_search`, `web_fetch`, Site Reader, or raw CDP. The GUI presents the PM-managed CEF runtime, DevTools, visible `automation_session` / `auth_session` surfaces, `/video` evidence, `browser_selection_context`, and `browser_element_context`; capture chips must not auto-send, advanced storage or `/cookie` changes require explicit confirmation, and takeover controls expose pause, `/continue/stop`, and resume as named actions.
+- Browser and agent-debugging UX follows the Section15 PM-native Browser Program contract rather than `web_search`, `web_fetch`, Site Reader, or raw CDP. Ordinary Browser Program and visible `automation_session` surfaces may present DevTools, generic test evidence, `browser_selection_context`, and `browser_element_context`; capture chips must not auto-send, advanced ordinary-session storage changes require explicit confirmation, and takeover controls expose pause, continue/stop, and resume as named actions. None of these controls, capture paths, contexts, or evidence surfaces accepts protected `AuthBrowserSession`.
 - Debug browser-automation defaults favor redacted summary packs, bounded evidence windows, isolated session handoff, `/audit` trails, and least-privilege browser takeover. They do not present broad shared-session control as the default user-facing model.
 - Debug attention banners display `attention_required_reason_code` values such as `auth_handoff_required`, `manual_repro_required`, `manual_verification_required`, and `target_selection_required`. Debugger attach loss or manual debugger steering that PM does not own in MVP degrades to `attention_required`.
 - An arbitrary URL remains a diagnose/verify-only browser investigation until PM binds it to a workspace-backed target; only then may the GUI offer durable-fix actions.
@@ -4942,6 +5193,91 @@ owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
 
+## Remaining Runtime Canon Closure Addendum (2026-08-14)
+
+This addendum supersedes conflicting Settings and protected-browser presentation clauses without creating implementation or generated-governance artifacts.
+
+### F3-510 - Concrete Project Settings Resolution
+
+```yaml
+plan_unit_id: F3-510
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: Project settings are concrete persisted project values with an explicit source and effective-value projection; Global values may seed a project only through a previewed one-time copy, and copied, explicitly set, reset, imported, invalid, and unavailable are distinguishable without any continuous inheritance state.
+gui_related: true
+gui_classification_reason: Settings source, scope, preview, override, reset, and effective-value disclosure are visible behavior.
+depends_on: [F3-439, F3-442]
+unblocks: []
+acceptance_criteria:
+  - SET-012 is owned here for behavior while Plans/settings_inventory.json remains the machine inventory.
+  - A Project value never changes merely because a Global value changed; there is no inherited Project state.
+  - One-time copy previews the exact keys and supports atomic read-back or rollback.
+validation_surfaces: [settings inventory schema validation, project settings scope fixtures]
+risk_class: settings_scope_or_inheritance_drift
+reasoning_tier: high
+context_scope: concrete_project_settings
+implementation_surfaces: [Plans/FinalGUISpec.md, Plans/settings_inventory.json]
+node_compile_hint: {mode: concrete_project_settings_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#SET-012
+negative_constraints: [Do not treat Settings inventory rows as behavior authority., Do not silently convert copied values into inheritance., Do not store or resolve an inherited Project state.]
+```
+
+### F3-511 - Settings Lifecycle And Recovery
+
+```yaml
+plan_unit_id: F3-511
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: Settings lifecycle supports schema-versioned previewed import, export, backup, restore, reset, and migration with scope disclosure, secret exclusion, owner validation, atomic commit, read-back, rollback, and a durable result; unsupported versions or owner-invalid values fail closed without partial mutation.
+gui_related: true
+gui_classification_reason: Settings import, export, reset, migration, validation, recovery, and result disclosure are user-facing flows.
+depends_on: [F3-510]
+unblocks: []
+acceptance_criteria:
+  - SET-013 is owned here for visible behavior and exact scope disclosure.
+  - Export and backup omit raw secrets and local machine paths; import cannot create unsupported manager destinations.
+  - Reset and migration identify changed keys and restore the previous valid state when commit/read-back fails.
+validation_surfaces: [settings lifecycle positive and negative fixtures]
+risk_class: settings_lifecycle_data_loss
+reasoning_tier: high
+context_scope: settings_lifecycle_recovery
+implementation_surfaces: [Plans/FinalGUISpec.md, Plans/settings_inventory.json, Plans/storage-plan.md]
+node_compile_hint: {mode: settings_lifecycle_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#SET-013
+negative_constraints: [Do not describe Settings as having no import or export lifecycle., Do not persist raw credentials in Settings exports.]
+```
+
+### F3-512 - Protected Auth Browser Surface Discrimination
+
+```yaml
+plan_unit_id: F3-512
+unit_type: security_constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: Every browser-facing GUI contract discriminates ordinary from protected_auth subjects; ordinary Browser Program surfaces may expose policy-approved navigation, observation, DevTools, capture, artifacts, and automation, while protected AuthBrowserSession exposes only its foreground human interaction and redacted lifecycle or denial metadata outside that surface.
+gui_related: true
+gui_classification_reason: Defines the visible protected authentication surface and every prohibited adjacent GUI consumer.
+depends_on: [F3-509, SMPFS-145]
+unblocks: []
+acceptance_criteria:
+  - Generic navigation, capture, recording, screenshot, DOM/PageRepresentation, console, network, storage, profile, clipboard, artifact, Chat, agent, tool, BSD, and awareness-detail paths reject protected_auth.
+  - AuthBrowserSession is ephemeral and cannot be restored, promoted, attached, shared, or represented as an ordinary tab or PreviewSession overlay.
+  - Outside the foreground human-only surface, only redacted lifecycle, domain-policy, and denial metadata may render.
+validation_surfaces: [protected AuthBrowser schema negative fixtures, GUI command subject-discriminator audit]
+risk_class: protected_auth_browser_escape
+reasoning_tier: high
+context_scope: protected_auth_browser_gui_boundary
+implementation_surfaces: [Plans/FinalGUISpec.md, Plans/protected_auth_browser_contracts.schema.json]
+node_compile_hint: {mode: protected_auth_browser_gui_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md
+negative_constraints: [Do not expose protected authentication content outside its human-only surface., Do not preserve legacy auth_session capabilities as live behavior.]
+```
+
 ## Shared Runtime Projection Addendum - 2026-08-13
 
 The GUI consumes shared runtime projections and owner-defined state; it does not
@@ -5022,7 +5358,8 @@ context_scope: shared_runtime_work_readiness_projection
 implementation_surfaces: [Plans/FinalGUISpec.md, Plans/Shared_Integration_Runtime.md, Plans/usage-feature.md]
 node_compile_hint: {mode: gui_work_readiness_projection, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/01_T3_PROVIDER_INSTALLATION_AND_CAPABILITY_LIFECYCLE.md
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/06_INSTALLATION_AUTH_UPDATE_AND_CAPABILITY_PROVISIONING.md
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/PROVIDER_CLI_FINAL_ADJUDICATION.md
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/05_BSD_TIME_TRAVEL_GOAL_AND_OPERATIONAL_AWARENESS.md
 preserved_exact_tokens: [ObservableWork, InstallationResolver, RuntimeResourceGovernor, OperationalAwarenessService]
 negative_constraints: [Do not infer readiness from PATH, version text, process exit, authentication, lease ownership, or awareness., Do not let a stale projection authorize mutation., Do not create GUI-local receipts or remediation state.]
@@ -5037,8 +5374,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  BSD presentation consumes the independent Off, Auto, and On policy with effective default Off for this
-  implementation wave. Silent and duplicate-suppressed outcomes add no transcript item; material advice appears as
+  BSD presentation consumes the independent Off, Auto, and On policy with effective default and recommended value Auto.
+  Silent and duplicate-suppressed outcomes add no transcript item; material advice appears as
   one compact attributable advisory note with freshness and receipt or Usage drill-through. Timeout, refusal,
   quota, fallback loss, malformed output, or provider failure never blocks or changes primary-work outcome.
   Time-Traveling conditional-rule effects appear only as bounded activity or receipt explanations and are not
@@ -5061,7 +5398,7 @@ implementation_surfaces: [Plans/FinalGUISpec.md, Plans/assistant-chat-design.md,
 node_compile_hint: {mode: gui_bsd_advice_projection, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/05_BSD_TIME_TRAVEL_GOAL_AND_OPERATIONAL_AWARENESS.md
-preserved_exact_tokens: [Off, Auto, On, effective default Off, AuthBrowserSession]
+preserved_exact_tokens: [Off, Auto, On, effective default Auto, AuthBrowserSession]
 negative_constraints: [Do not present advice as authority., Do not let advisory failure block primary work., Do not expose protected browser state., Do not imply Time-Traveling is rewind.]
 owner_hints: [Plans/FinalGUISpec.md, Plans/assistant-chat-design.md, Plans/Run_Modes.md, Plans/usage-feature.md]
 ```
@@ -20920,8 +21257,9 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Rendering surface scope covers Markdown, Mermaid, HTML, SVG, and images in the Slint GUI and
   treats browser-capable rendering as shared across Chat Panel, File Editor, Embedded Document
-  Pane, editor-tab Browser, detached preview/browser windows, automation/auth browser windows,
-  and bottom-panel browser-adjacent surfaces.
+  Pane, editor-tab Browser, detached preview/browser windows, ordinary automation browser windows,
+  and bottom-panel browser-adjacent surfaces. Protected AuthBrowserSession is a separate foreground
+  human-only security surface and is excluded from this shared rendering/capture inventory.
 gui_related: true
 gui_classification_reason: >-
   This unit defines the rendering addendum and shared browser-capable surface inventory.
@@ -20968,6 +21306,7 @@ preserved_exact_tokens:
 - "ContractName:Plans/storage-plan.md"
 negative_constraints:
 - "Bottom-panel browser-adjacent surfaces do not own the canonical browsing session."
+- "The auth_session token is legacy source-lineage only; protected AuthBrowserSession cannot be captured, inspected, recorded, persisted, or controlled through shared rendering surfaces."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
@@ -21037,9 +21376,11 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Browser and agent-debugging UX follows the Section15 built-in browser contract instead of
-  `web_search`, `web_fetch`, Site Reader, or raw CDP, and presents the PM-managed CEF runtime,
-  DevTools, automation/auth sessions, video evidence, browser selection/element context,
-  explicit storage/cookie confirmations, and named takeover controls.
+  `web_search`, `web_fetch`, Site Reader, or raw CDP. Ordinary PM-native Browser Program and
+  automation sessions may present DevTools, generic test evidence, browser selection/element context,
+  explicit ordinary-session storage confirmations, and named takeover controls. Protected
+  AuthBrowserSession is human-only and accepts none of those inspection, capture, persistence,
+  navigation, takeover, agent, tool, BSD, or artifact paths.
 gui_related: true
 gui_classification_reason: >-
   This unit constrains browser and agent-debugging UX ownership.
@@ -21085,6 +21426,7 @@ preserved_exact_tokens:
 negative_constraints:
 - "Capture chips must not auto-send."
 - "Advanced storage or `/cookie` changes require explicit confirmation."
+- "The preserved auth_session and video tokens are source-lineage only and do not grant protected AuthBrowserSession capture, recording, or inspection authority."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
@@ -28589,7 +28931,7 @@ PMConcept7 trim (2026-07-23): the former `work` group (Orchestrator, Run Graph, 
 
 Repairs rows `sfk-66fc2872ed5f759cc6aaa0f5`, `sfk-832d3cce203e9e0009e0b90b`, and `sfk-affcf9f0d9b8260854b1bfc4`.
 
-- The canonical Settings registry remains 19 tabs. Catalog, Sync, SSH, and Debug are not new tabs; they are subsections under Settings > Advanced or owner panels when surfaced.
+- The former 19-entry Settings table remains owner-routing and migration lineage only. F3-432 owns the search-first visible surface; Catalog, Sync, SSH, and Debug route to their named subsections or owner panels rather than becoming new tabs.
 - `Settings > Terminal` is owned by the terminal settings subsection; `Agent Config Skills` is owned by Agent Config and Skills owner docs.
 - The duplicate promoted-widget `## 15` heading is superseded by the named promoted-widget addendum anchor. Any "Section 15 terminal-core architecture" reference resolves to the terminal-core screen/buffer section, not the promoted-widget catalog.
 - New citations must use explicit heading names instead of bare `§7.4` or `§15` when more than one migration-era alias exists.
@@ -28885,7 +29227,35 @@ canonical_text: >-
   translateX glide, cached transform-free midpoint re-slotting, a 220 ms
   cubic-bezier(.22,1,.36,1) neighbour FLIP, a 200 ms low-bounce settle, and the model
   re-render deferred to settle-end; the dragged tab renders at .92 opacity and
-  z-index 40.
+  z-index 40. Amended 2026-08-14 (wave 7) - the dragged tab fully covers tabs it
+  passes: its opacity re-tunes .92 to 1 with this dated disposition, and while a drag
+  is live the silhouette lifts to z-index 39 - above the neighbour labels at z 1 and
+  below the carried label at z 40 - so the fused plate occludes crossed labels
+  (verified watched at 3x zoom; see F3-505 for the silhouette layer contract).
+  Amended 2026-08-15 (wave 8) - the wave-7 drag-cover fix stands (opacity 1 and
+  the z 39 / z 40 sandwich are unchanged) but was INCOMPLETE: it addressed the
+  plate's opacity and stacking, not the mechanism that still exposed the tab
+  underneath. That mechanism was the GRAB-SPRING. Grabbing a NON-ACTIVE tab
+  flips the strip's active key, so EDSHAPE.sync() consumed the lastActive change
+  as a selection event, set animate = true and SPRUNG the travelling plate
+  across the strip over roughly 12 frames while the carried tab itself paints
+  nothing (its background is transparent under .ed-shape-on) - the tab beneath
+  showed through for the whole flight. Worse, pointermoves smaller than 0.5 px
+  landed in the spring-preservation early-return guard, which held that hole
+  open indefinitely on slow, careful drags. It was also a live violation of the
+  1:1-no-independent-easing canon this unit shares with F3-505. The fix, with
+  this dated disposition: sync() computes
+  draggingLive = Boolean(strip.querySelector('.tab.dragging')) immediately after
+  the lastActive update and forces animate = false whenever it is true, and the
+  spring-preservation guard gains "&& !draggingLive" so the snap branch runs -
+  cancelling the in-flight rAF, jumping x and w to target, zeroing both
+  velocities and painting - in the same frame the gesture activates. Selection
+  springs are untouched, release settle is untouched (the reorder gesture still
+  owns the 160 ms settle transition plus its per-frame snap ride), and retro
+  themes already forced animate = false. Verified live: worst plate-versus-tab
+  lag 0.00 px across 2,615 samples of a deliberately slow drag (40 moves of
+  0.4 px with pauses) on a non-active tab, while a click-to-select still travels
+  through 18 distinct intermediate positions, monotonic and without overshoot.
 gui_related: true
 gui_classification_reason: This unit defines visible editor tab, pane, and overflow controls.
 split_recommended: false
@@ -28900,6 +29270,7 @@ acceptance_criteria:
 - "The overflow chip and its picker use the shared portal menu family styling with no bespoke accent glow."
 - "The overflow chip sits immediately left of the actions cluster, fitting runs live on tab add/remove, and a newly opened overflowing tab stays visible while the chip-adjacent non-active tab moves into the picker (wave 3, 2026-08-13)."
 - "Tab drag-reorder animates: no native drag ghost, the dragged tab tracks the pointer transform-only with its layout at the insertion slot, reduced motion is instant, and the silhouette stays at the insertion slot throughout; as of wave 4 the gesture is pointer-capture (4 px threshold, 1:1 translateX glide, 220 ms neighbour FLIP, 200 ms low-bounce settle), works identically in Safari, survives its first re-slot, and defers the model re-render to settle-end."
+- "Grabbing a NON-ACTIVE tab never springs the travelling plate: any EDSHAPE sync while the strip contains .tab.dragging snaps in-frame, so the plate never lags the carried tab and never exposes the tab underneath (worst lag 0.00 px over 2,615 slow-drag samples), while click-to-select springs still travel (18 monotonic intermediate positions, no overshoot) (wave 8, 2026-08-15)."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -30531,7 +30902,7 @@ acceptance_criteria:
 - "Renderer selection maps the inventory type field to the renderer set toggle, select, radio, slider, number, text, path, color, action, multiselect, list, and keyvalue; multiselect, list, and keyvalue render as expandable editors."
 - "The slider renderer shows a value bubble, the path renderer includes a Browse control, and the action renderer shows working-then-done verb states on invocation."
 - "Rows render badges only from the vocabulary restart, adjudication, and new, and status pills only from ok, needs-setup, and attention."
-- "Scope tags render from the six scopes global, project, run, persona, account, and provider, and rows scoped both project and global render an inherit-origin line."
+- "Scope tags render from the six scopes global, project, run, persona, account, and provider, and Project rows disclose their concrete source such as copied, explicitly set, reset, or imported without continuous inheritance."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -30576,7 +30947,7 @@ compatibility_only_notes:
 - "Slint portability: control renderers map to native widget composition and expandable editors to conditional in-place composition over opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions: []
 owner_boundary_notes:
-- "Scope semantics, origin badges, and the override-display grammar remain carried by the Settings (Unified) panel specification prose; badge semantics route to their owner contracts (restart rules and adjudication ownership); this unit owns the visible row presentation vocabulary."
+- "Scope semantics and concrete Project-value source disclosure remain carried by F3-510/F3-442; badge semantics route to their owner contracts (restart rules and adjudication ownership); this unit owns the visible row presentation vocabulary."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -30589,9 +30960,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Settings apply instantly on change. The settings experience exposes no global Save control,
-  no undo history, no import/export surface, no per-setting copy-id affordance, and no
-  favorites surface. The per-category two-step Reset is the only bulk action. Exactly two
+  Ordinary settings rows apply instantly on change. The settings experience exposes no global Save control,
+  no undo history, no per-setting copy-id affordance, and no favorites surface. Schema-versioned
+  import/export/backup/restore/reset/migration is a separate previewed transaction surface under F3-511,
+  not an ordinary row-edit mode. Exactly two
   exceptions to instant apply exist: the Permissions surface keeps its existing dirty/save
   review model, and the Project Settings Modal keeps an explicit Save with Cancel (F3-442),
   which is the only Save in the settings experience.
@@ -30601,8 +30973,8 @@ split_recommended: false
 depends_on: [F3-432]
 unblocks: []
 acceptance_criteria:
-- "Setting changes take effect immediately on change with no global Save step, no undo history, no import/export, no copy-id, and no favorites surfaces."
-- "The per-category two-step Reset is the only bulk action available in settings."
+- "Ordinary setting changes take effect immediately with no global Save, undo history, copy-id, or favorites surface; F3-511 lifecycle transactions remain previewed and atomic."
+- "Per-category two-step Reset and the F3-511 lifecycle transactions are the only bulk settings operations."
 - "The only exceptions to instant apply are the Permissions dirty/save review model and the Project Settings Modal explicit Save."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -30623,7 +30995,7 @@ preserved_exact_tokens:
 - "Reset"
 - "dirty/save"
 negative_constraints:
-- "No global Save, undo history, import/export, copy-id, or favorites surfaces are added to settings."
+- "Do not add a global Save, undo history, per-setting copy-id, or favorites surface; do not bypass the previewed F3-511 lifecycle transaction for import/export/backup/restore/reset/migration."
 compatibility_only_notes:
 - "Slint portability: instant apply maps to typed state setters invoked on control change; no arbitrary-content backdrop blur, no SVG filters, and color styling is precomputed rather than runtime-mixed."
 stale_retired_dispositions: []
@@ -30699,7 +31071,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  `Plans/settings_inventory.json` is the canonical inventory registry of all 824 settings
+  `Plans/settings_inventory.json` is the canonical inventory registry of all 828 settings
   across 12 categories. Its shape is owned by `Plans/settings_inventory.schema.json` with
   schema_id `pm.settings_inventory.v1`. Registry rows carry id, label, desc, type, options,
   default, scope, tier, recommended, curated, search, badges, and related_features, where
@@ -30719,7 +31091,7 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
 - "Plans/settings_inventory.json parses as JSON and conforms to Plans/settings_inventory.schema.json (schema_id pm.settings_inventory.v1); schema conformance is enforced by this unit's acceptance criteria, not a machine gate."
-- "The registry contains 824 settings across 12 categories, including the exact seven Case L Storage & Retention rows; rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search, badges, and related_features, and provenance pins the concept sidecar at sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d."
+- "The registry contains 828 settings across 12 categories, including the exact seven Case L Storage & Retention rows; rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search, badges, and related_features, and provenance pins the concept sidecar at sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d."
 - "The demo runtime fields value, status, and src appear in no registry row and are excluded by the schema."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -30742,7 +31114,7 @@ preserved_exact_tokens:
 - "Plans/settings_inventory.json"
 - "Plans/settings_inventory.schema.json"
 - "pm.settings_inventory.v1"
-- "824"
+- "828"
 - "system.advanced.chat-history-retention"
 - "system.advanced.runtime-history-days"
 - "system.advanced.diagnostic-history-days"
@@ -30778,9 +31150,10 @@ canonical_text: >-
   The Project Settings Modal shows project-scope settings derived from the settings inventory
   registry: every registry row whose scope includes project is eligible, and the modal's rows
   are generated from the registry rather than authored separately. Rows group into three
-  tabs: General, Environment, and Agent behavior. Each row offers an inherit-vs-override
-  flip: an inheriting row shows the effective global value with its origin, and an overriding
-  row stores a project-scoped value. The modal provides its own scoped substring search over
+  tabs: General, Environment, and Agent behavior. Each row edits one concrete project value
+  and shows whether that value was copied, explicitly set, reset, imported, invalid, or unavailable.
+  `Copy Settings From...` is a separate one-time previewed transaction and never establishes
+  continuous inheritance. The modal provides its own scoped substring search over
   its rows. Changes commit through an explicit Save with a Cancel that discards pending
   changes; per F3-439 this is the only Save in the settings experience. The concept's 12
   hardcoded modal rows are a demo shim, not the canonical row set.
@@ -30791,7 +31164,8 @@ depends_on: [F3-439, F3-441]
 unblocks: []
 acceptance_criteria:
 - "Project Settings Modal rows are derived from inventory registry rows whose scope includes project; the concept's 12 hardcoded rows are not promoted."
-- "Rows group into the General, Environment, and Agent behavior tabs, each row supports the inherit-vs-override flip with inherited-origin display, and the modal offers scoped substring search."
+- "Rows group into the General, Environment, and Agent behavior tabs, each row stores a concrete project value with source disclosure, and the modal offers scoped substring search."
+- "Copy Settings From... previews and atomically copies selected values once; later Global changes cannot mutate the Project."
 - "The modal commits through an explicit Save with Cancel discarding pending changes, and this remains the only Save in the settings experience."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -30817,6 +31191,7 @@ preserved_exact_tokens:
 - "Cancel"
 negative_constraints:
 - "PSM rows must not be hardcoded independently of the inventory registry."
+- "Do not expose inherit-vs-override or continuously resolve a Project value from later Global changes."
 compatibility_only_notes:
 - "Slint portability: the modal renders as an opaque precomputed surface with typed row models; no arbitrary-content backdrop blur, no SVG filters, and color styling is precomputed rather than runtime-mixed."
 stale_retired_dispositions: []

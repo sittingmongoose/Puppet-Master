@@ -1,0 +1,23 @@
+{
+  "schema_id":"pm.prompt_complexity_successor.deterministic_preflight_projection.v3",
+  "projection_kind":"predeclared_projection_not_run_receipt",
+  "attempt_id":"successor-preflight-20260813-v3",
+  "run_id":"successor-preflight-20260813-v3-run-001",
+  "spec_id":"successor-preflight-20260813-v3-spec-001",
+  "projected_terminal":"READY_FOR_JARED_TEST_PLAN",
+  "projected_checks_total":19,
+  "projected_checks_passed":19,
+  "projected_checks_failed":0,
+  "projected_checks_blocked":0,
+  "projected_failed_check_ids":[],
+  "projected_blocked_check_ids":[],
+  "projected_check_ids":["V3-CTL-001","V3-JSON-001","V3-ROOT-001","V3-PRED-001","V3-CUST-001","V3-ARC-001","V3-HIST-001","V3-HIST-002","V3-CENSUS-001","V3-CHAT-001","V3-JARED-001","V3-CALL-001","V3-SELF-001","V3-SELF-002","V3-SELF-003","V3-TERM-001","V3-IO-001","V3-BOUNDARY-001","V3-REPORT-001"],
+  "predecessors":[{"attempt_id":"successor-preflight-20260813-v1","terminal":"NOT_READY","failure":"DP-020","preserved":true,"repaired":false},{"attempt_id":"successor-preflight-20260813-v2","terminal":"NOT_READY","failure":"V2-IO-001","preserved":true,"repaired":false}],
+  "subject_activity":{"provider_or_model_total":0,"route_canary":0,"semantic_pilot":0,"fleet":0,"reviewer":0,"repair":0},
+  "subject_roster_selected":false,
+  "test_method_selected":false,
+  "preserved_residuals":["V1 write-boundary failure","V2 diagnostic-redirection write-boundary failure","four upstream Plan-governance failures observed by V1","four direct-Chat method gaps","49 implementation-gated surfaces","ledger projection stale prose 76/60 versus numeric 77/61"],
+  "claim_boundary":{"empirical_model_success":false,"production_enforcement":false,"runtime_completeness":false,"implementation_completeness":false,"canonical_plans_compile_permission":false,"release_readiness":false,"safety_certification":false,"subject_launch_permission":false,"provider_or_auth_readiness":false,"surface_inventory_completeness":false},
+  "authoritative_result":"qualifying checker stdout",
+  "next_action_if_projection_is_validated":"Stop and ask Jared to provide the exact models to test and how to test them."
+}

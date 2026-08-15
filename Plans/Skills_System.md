@@ -150,7 +150,29 @@ The MVP runtime surface for skills is canonical and provider-agnostic.
 The skill registry remains the discovery and validation source for available skills. It determines what a run may reference, but it is not itself a provider-specific runtime delivery mechanism.
 
 ### 4.2 Persona `default_skill_refs`
-`default_skill_refs` are resolved against the canonical registry during prompt/context assembly. They do not imply provider-native skill file installation at runtime.
+`default_skill_refs` are resolved against the canonical registry during prompt/context assembly. They nominate eligible candidates; they do not select every candidate for the current request, inject every full `SKILL.md`, or imply provider-native skill file installation at runtime.
+
+### 4.2A Progressive Skill capability stages
+
+Skills consume the canonical `CapabilityStageRecord` and `CapabilityCatalogMaterialization` from `Plans/Tools.md`. For a Skill the stages mean:
+
+1. `installed` — the package/manifest is present in a canonical discovery root with provenance and content hash.
+2. `project_enabled` — the resolved first-wins Skill entry is enabled for the active Project/profile; invalid or shadowed entries cannot advance.
+3. `policy_available` — readiness, required-tool refs, route/runtime compatibility, Permissions, FileSafe, trust, and resource policy permit consideration.
+4. `selected_for_request` — the current request explicitly names the Skill or deterministic task matching selects it from eligible candidates.
+5. `invoked` — `invoke_skill` passes validation and receives a concrete attempt identity.
+
+A later stage cannot be true while an earlier stage is false. Discovery, installation, Persona defaulting, user enablement, policy availability, request selection, and invocation remain independently inspectable. A Skill being present in Agent Config or a Persona's `default_skill_refs` is not evidence that its instructions entered a model request.
+
+Skill catalog materialization is bounded: L0 may include a deterministic slice of `skill_id`, name, and bounded description; L1 adds selected provenance/readiness/dependency metadata; L2 adds the selected `SKILL.md` instructions needed for the request; L3 adds selected resources/examples only on demand. Full instructions and package resources never enter context merely because the Skill is installed, enabled, or policy-available. Essential `skill`/catalog-search discovery remains a bounded bootstrap capability so an omitted Skill can still be found without injecting the full catalog.
+
+Selected Skill entries and instruction bodies are ordered by canonical `skill_id`, then manifest/content hash, using ascending UTF-8 byte order. Filesystem enumeration, root scan completion, locale, GUI sort, and provider projection order cannot change prompt schema/instruction order. The Skill slice contributes its ordered hash to the shared materialization receipt and Prompt Pipeline context/cache epoch.
+
+Each request records materialized Skills and bounded omissions through `CapabilityMaterializationReceipt`. Skill omission reasons use the shared codes plus Skill-specific evidence for `invalid`, `shadowed`, `warning_blocked`, or `missing_required_tool`; overflow retains per-reason counts and a continuation/artifact ref. Omitted or deferred Skills MUST NOT be serialized as successful instructions, and absence from the bounded prompt slice MUST NOT be misreported as absence from the installed catalog.
+
+Skill manifests, catalog projections, receipts, instructions, and resources never contain resolved raw credentials; a Skill can reference a canonical secret requirement but receives any authorized value only at the invoked tool boundary. Skills do not introduce SQLite or a second capability/policy store. Browser-oriented Skill actions remain policy-selected PM-native Browser Program tools and cannot establish a PM-owned external browser-test runtime, compatibility facade, MCP route, or capture engine.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/MCP_Integration.md
 
 ### 4.3 skill tool
 
@@ -164,7 +186,7 @@ Runtime contract addendum:
 - Skill defines its own `input` schema via manifest, and PM validates that schema before invocation.
 - The `skill` result is a structured `skill-content` envelope: `skill_id`, `title`, `content`, `source_type`, `resource_base_dir?`, `resource_entries_sample?`, and `metadata?`; `name` is a compatibility display alias for `title`. Resource guidance is relative-resource guidance only: assistant-visible paths must be relative to `resource_base_dir` and remain within FileSafe-permitted skill resources. `source_type` uses the canonical source vocabulary below; legacy `built-in` or `/built-in` wording normalizes to `bundled` / PM-bundled, `resource-root` normalizes to `resource_base_dir?`, and provider-private skill injection is not a canonical runtime path.
 - Assistant awareness (`assistant-awareness`) does not make every discovered skill assistant-auto-usable. Auto-invoking is limited to skills that are `runtime-ready`, eligible in the active project/session, permission-allowed, and flagged `auto_invokable`; `runtime-ready-with-warnings`, `ready_with_warnings`, imported-with-warnings, invalid, disabled, shadowed, and `warning-blocked` skills require explicit user or agent selection.
-- The `skill` tool-description is dynamic: when PM presents the tool to a model, it exposes the live roster of currently runtime-ready skill names and descriptions from manifests, and it updates after registry changes such as import, enable, disable, or revalidate.
+- The `skill` tool-description is dynamic and bounded: when PM presents the tool to a model, it exposes a deterministic budgeted slice of currently runtime-ready Skill names/descriptions plus total/omitted counts and catalog-search guidance. It never injects the complete roster when that would exceed the catalog budget, and it updates after registry changes such as import, enable, disable, or revalidate.
 - The `skill` tool does not create a hidden `nested-task` and does not own shell or PTY execution. Skill-triggered tool work remains under that tool's permission, Terminal, and audit contracts; chat rendering of skill or tool output is only an audited `/expandable` result surface.
 - Skill-triggered runtime actions normalize legacy `allowed_actions[]` displays to canonical `allowed_action_ids[]`; `allowed_actions` is a compatibility label, while `allowed_action_ids` is the stable ordered action vocabulary used by runtime blocked/recovery contracts.
 - Skill routes that open `/artifact/search/attention` consumers use the shared `route-target` contract, preserving active project, conversation, selection, run/thread/attempt, and skill identity instead of emitting feature-local deep-link payloads.
@@ -2558,3 +2580,68 @@ owner_hints:
 This addendum repairs non-runtime skills rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
 - Repairs `sfk-d75fd32061dc8e608952bd68` and `sfk-83bf8b6fcb84de178c4cc3a6`: Skills_System owns backend skill discovery, validation, permissions, and catalog status. GUI placement is consumed by FinalGUISpec/MiscPlan. Backend fields are `skill_id`, `source`, `manifest_ref`, `permission_class`, `enabled`, `validation_state`, `blocked_reason_code?`, and `schema_version`.
+
+## Remaining Runtime Integration Addendum - 2026-08-13
+
+This addendum compiles the Skill-owned portion of progressive capability accountability row `CTX-015`. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, generated governance artifacts, or governance seal.
+
+### SS-036 - Progressive Skill Selection And Instruction Materialization
+
+```yaml
+plan_unit_id: SS-036
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: >-
+  Skills preserve installed, project_enabled, policy_available, selected_for_request, and invoked as independent stages.
+  Persona defaults nominate eligible candidates instead of eagerly injecting them; bounded L0-L3 materialization admits
+  only request-selected instructions/resources in deterministic Skill-ID/hash order and emits explicit omission receipts.
+gui_related: false
+gui_classification_reason: Backend Skill discovery, selection, prompt admission, and receipt contract; not GUI implementation work.
+depends_on: [SS-007, SS-009, SS-010, SS-013, T-176, PP-009]
+unblocks: []
+acceptance_criteria:
+  - A Skill can be installed and enabled without being policy-available, selected, invoked, or injected, and each distinction remains inspectable.
+  - Persona default_skill_refs nominate candidates; only request-selected L2 instructions enter the request.
+  - The dynamic skill tool description is bounded, reports total/omitted counts, and preserves catalog-search guidance rather than injecting an unbounded roster.
+  - Identical inputs produce the same selected Skill order and hash independent of root-scan completion, GUI sort, locale, or provider projection order.
+  - Invalid, shadowed, warning-blocked, missing-dependency, unselected, and budget-deferred Skills remain omitted with bounded reasons and are not serialized as successful instructions.
+  - Skill catalogs, instructions, resources, and receipts expose no raw secrets, introduce no SQLite, and cannot establish a PM-owned external browser-test runtime or compatibility surface.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - python3 scripts/pm-plan-index.py validate
+risk_class: progressive_skill_materialization_drift
+reasoning_tier: high
+context_scope: skills_capability_materialization
+implementation_surfaces:
+  - Plans/Skills_System.md
+  - Plans/Tools.md
+  - Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: progressive_skill_selection_materialization
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - 03_PROVIDER_CONTEXT_TOOLS_RECOVERY_AND_COMPACTION.md#Progressive-capability-disclosure
+  - ACCOUNTABILITY_MATRIX.json:CTX-012
+  - ACCOUNTABILITY_MATRIX.json:CTX-015
+  - reference/HERMES_V020_SOURCE_REVIEW.md#5.4-Tool-disclosure-and-schema-cost
+source_atom_ids: []
+preserved_exact_tokens:
+  - installed
+  - project_enabled
+  - policy_available
+  - selected_for_request
+  - invoked
+  - default_skill_refs
+  - CapabilityMaterializationReceipt
+negative_constraints:
+  - Do not eagerly inject every default, installed, enabled, or policy-available Skill instruction body.
+  - Do not treat a Skill's presence in Agent Config or a Persona default as evidence that it entered model context.
+  - Do not expose raw secrets, introduce SQLite, or create a PM-owned external browser-test runtime/facade/MCP/command/capture dependency.
+  - Do not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, generated governance artifacts, or governance seal outputs.
+owner_hints:
+  - Plans/Skills_System.md
+  - Plans/Tools.md
+  - Plans/Prompt_Pipeline.md
+```

@@ -1,0 +1,168 @@
+{
+  "schema_id": "pm.hard_causal_snapshot_source_custody.v1",
+  "protocol_id": "PW-R4-CAUSAL-20260813.3",
+  "captured_at_utc": "2026-08-14T16:12:30Z",
+  "snapshot_binding": {
+    "provenance_manifest_path": "tests/agent_packet_restrictions/successor_20260813/frozen_plans_snapshot_20260814_v1/provenance_manifest.json",
+    "provenance_manifest_storage_sha256": "56ddf926b4106bee4e774b91b17ed4fab5ca03a7e25154bc467955bb25274c0c",
+    "provenance_manifest_storage_bytes": 9327,
+    "aggregate_descriptor_sha256": "28730f6ea44a5720cb8e473f8fb736353dfe5c412e21261eacc88d70ffe46392",
+    "aggregate_descriptor_payload_bytes": 1778,
+    "fixture_root": "tests/agent_packet_restrictions/successor_20260813/frozen_plans_snapshot_20260814_v1/fixture",
+    "fixture_label": "unfinished throwaway prompt-complexity test fixture",
+    "fixture_status": "FROZEN_TEST_FIXTURE"
+  },
+  "authority_limits": {
+    "current_plans_authority": false,
+    "product_authority": false,
+    "production_authority": false,
+    "release_authority": false,
+    "result_scope": "Results apply only to the frozen fixture bytes and make no current-Plans, product, production, release, or production-readiness claim."
+  },
+  "corpus_files": [
+    {
+      "path": "Plans/00-plans-index.md",
+      "snapshot_relative_path": "fixture/Plans/00-plans-index.md",
+      "bytes": 367909,
+      "lines": 5623,
+      "sha256": "19fcbd110827a949df25cfb2f9f61bdbbc28ffc4f46f01bbe9f3981f94efb311",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "snapshot_relative_path": "fixture/Plans/Automated_Testing_System.md",
+      "bytes": 267313,
+      "lines": 3211,
+      "sha256": "975472ff73c949fea277805b1317b1f67f56972bbfe401c73c3f38267edac4b3",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "snapshot_relative_path": "fixture/Plans/Goal_Runtime_System.md",
+      "bytes": 272829,
+      "lines": 4558,
+      "sha256": "98f20b0efd0e4aa31dfe1f040025015df74c9bc088f94bf014e9a5615214ae8e",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "path": "Plans/Plan_Document_System.md",
+      "snapshot_relative_path": "fixture/Plans/Plan_Document_System.md",
+      "bytes": 67485,
+      "lines": 1194,
+      "sha256": "f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "path": "Plans/Plan_To_Node_Compilation.md",
+      "snapshot_relative_path": "fixture/Plans/Plan_To_Node_Compilation.md",
+      "bytes": 103867,
+      "lines": 1488,
+      "sha256": "196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "path": "Plans/Planning_Ledger_System.md",
+      "snapshot_relative_path": "fixture/Plans/Planning_Ledger_System.md",
+      "bytes": 70805,
+      "lines": 1227,
+      "sha256": "8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "path": "Plans/Planning_Wizard.md",
+      "snapshot_relative_path": "fixture/Plans/Planning_Wizard.md",
+      "bytes": 93549,
+      "lines": 1671,
+      "sha256": "2b9591954871986cc5af23764d026ce102ca67be66634c7d1e49dc6988833d00",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "path": "Plans/Prompt_Pipeline.md",
+      "snapshot_relative_path": "fixture/Plans/Prompt_Pipeline.md",
+      "bytes": 303738,
+      "lines": 5634,
+      "sha256": "5455de88e0eb4b9f7cc02f3828ce5aa836058f03e12715532ad2c761908fb5d8",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "snapshot_relative_path": "fixture/Plans/assistant-chat-design.md",
+      "bytes": 1150138,
+      "lines": 24521,
+      "sha256": "8d6dfb862784206b0c4db9ebe7d0e7b149723161aecbbb7282c750a86eddf7b9",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "path": "Plans/ledgers/v2/ledger_registry.json",
+      "snapshot_relative_path": "fixture/Plans/ledgers/v2/ledger_registry.json",
+      "bytes": 61169,
+      "lines": 1363,
+      "sha256": "23d36152dd8d14de849d1d22ba0df5ca0a6864f8f0331efb3446e1d4c498e988",
+      "authority": "lineage_only_state"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/current.json",
+      "snapshot_relative_path": "fixture/Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/current.json",
+      "bytes": 8940,
+      "lines": 158,
+      "sha256": "813b219dac1bef99d85971ab2411e0b3bb3f5df2a0bb1df224467f2855df3914",
+      "authority": "lineage_only_state"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/handoff.json",
+      "snapshot_relative_path": "fixture/Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/handoff.json",
+      "bytes": 9160,
+      "lines": 137,
+      "sha256": "82e9800b6905f3d7cb77b78a4b58ea6f4f0a5b056cf4636c46f3bd57e1270f4f",
+      "authority": "lineage_only_state"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/open_items.json",
+      "snapshot_relative_path": "fixture/Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/open_items.json",
+      "bytes": 20100,
+      "lines": 322,
+      "sha256": "36c73492e33546c22d2e0ad1aff2aa7548b8d543f445a9ffc984fe4c5bcf2e47",
+      "authority": "lineage_only_state"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/operating_capsule.json",
+      "snapshot_relative_path": "fixture/Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/operating_capsule.json",
+      "bytes": 6686,
+      "lines": 130,
+      "sha256": "64f24ae78d22728442bebd95859f27a6cebc24135b77e23e506aabe235a89f93",
+      "authority": "lineage_only_state"
+    },
+    {
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "snapshot_relative_path": "fixture/Plans/orchestrator-subagent-integration.md",
+      "bytes": 1404023,
+      "lines": 31588,
+      "sha256": "36eec1750405a528e563326af1b4b751fba863cf823ee12780f0416e633a4498",
+      "authority": "canonical_live_plan"
+    }
+  ],
+  "totals": {
+    "files": 15,
+    "bytes": 4207711,
+    "lines": 82825
+  },
+  "capsules": {
+    "topic_a": {
+      "bytes": 51204,
+      "sha256": "6a37b1ab477e98b87d85b5e9569617b456d4dcc0e8a19762effaeb6218d18b52",
+      "source_records": 16
+    },
+    "topic_b": {
+      "bytes": 72807,
+      "sha256": "75ca7224c90d44d32a29f2e766402d9e9eccf8fda584073ee82ca4bad5a41c96",
+      "source_records": 20
+    }
+  },
+  "precedence": [
+    "frozen canonical owner prose controls fixture-scoped product semantics only",
+    "frozen ledger state is lineage and frozen planning evidence only",
+    "current explicit Jared instructions authorize this bounded test but do not amend Plans or promote the fixture"
+  ],
+  "source_read_boundary": "Every experiment source read resolves beneath tests/agent_packet_restrictions/successor_20260813/frozen_plans_snapshot_20260814_v1/fixture; mutable live Plans are never consulted after snapshot freeze.",
+  "write_boundary": "All writes remain under tests/agent_packet_restrictions/successor_20260813/; candidate runtime artifacts remain under model_retest_r5_snapshot_v1/ except the detached sibling custody file r5_snapshot_v1_launch_custody.json."
+}

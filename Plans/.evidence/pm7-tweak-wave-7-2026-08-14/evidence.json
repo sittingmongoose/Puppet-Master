@@ -1,0 +1,160 @@
+{
+  "schema_id": "pm.evidence.schema.v1",
+  "evidence_id": "pm7-tweak-wave-7-2026-08-14",
+  "created_at_utc": "2026-08-14T00:00:00Z",
+  "node": {
+    "node_id": "pm.build-governance.spec-lock-support-refresh",
+    "graph_id": "pm.clean_repo_build_governance_seal.2026-06-10",
+    "graph_scope": "puppet-master-repo-build"
+  },
+  "summary": "Wave 7, verified live: per-kind kebab seats (editor_panel top 10 px against the 35 px strip; dashboard top 5 px / right 13 px against the 31 px header clearing the grip's hit triangle, 34 px actions margin); Chat restored to exactly one options menu (T20 kebab skipped and removed for chat, base header menu is the single more-options, chat-only Dock Back row retired with grip-drag re-dock covering it, Pop Out verified through the T20 float guard with exactly one chat); dragged tabs fully occlude tabs they pass (opacity 1, silhouette z 39 sandwich, watched at 3x zoom); and the Home screen scroll lock (overflow-x clip / overscroll-behavior none on the attribute-doubled host selector, required against the runtime pm6-bottom-scroll stamp; zero horizontal scrollLeft, vertical intact). Artifact sha256 8ab40669 (3,612,010 bytes) on repinned base 33d5ed89 (identical to PMConcept6.html); receipt 92f0ef8c (base_pin_ok, 20/20 transforms, gates_all_pass, zero page errors on load). Sealed under continuing parallel-wave interference; this bundle pins exactly this wave's facts.",
+  "commands_run": [
+    {
+      "cmd": "python3 Concepts/pm7-tools/build_pm7.py --outdir <scratch>/pm7 --out Concepts/PMConcept7.html --report",
+      "exit_code": 0,
+      "stdout_excerpt": "T01-T20 ok; base_pin_ok against 33d5ed89d02327; gates_all_pass; output sha256 8ab406695b40014e575e6d55f4048063931689528ab497f750deae11b86a5e7e, 3612010 bytes (receipt sha256 92f0ef8c, generated 2026-08-14 22:59:08); zero page errors on load"
+    },
+    {
+      "cmd": "node Concepts/pm7-tools/verify/home_workspace_matrix.mjs --file PMConcept7.html (verification wave, against the sealed artifact sha 8ab406695b40014e575e6d55f4048063931689528ab497f750deae11b86a5e7e)",
+      "exit_code": 0,
+      "stdout_excerpt": "32/32 checks passed, 72/72 matrix captures, 0 runtime-error cases, status PASS (results JSON summary: check_count 32, passed_checks 32, failed_checks [], matrix_count 72, matrix_failures 0, runtime_error_case_count 0; results file home_workspace_matrix.json sha256 bac7b9ff72642360ed48781ed11ed4da7b6b31fe5c88e04657918534431df488, session scratchpad w7-matrix-evidence/)"
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool_id": "plans-amendment-editor",
+      "count": 4,
+      "denied_count": 0,
+      "error_count": 0,
+      "note": "Dated wave-7 dispositions in F3-HOME-003, F3-421, and F3-503; all shipped anchors verified in the T20 source and 10x part before writing (kebab seat rules at source L516-519, chat skip-and-remove in attachSurfaceControls, opacity-1 and z-39 rules at 10x L1496/1503, scroll-lock block at source L153-157 with the doubled selector at L165)."
+    },
+    {
+      "tool_id": "governance-seal-pipeline",
+      "count": 2,
+      "denied_count": 0,
+      "error_count": 0,
+      "note": "One auto_decisions row and this bundle. Spec_Lock deliberately not refreshed for FinalGUISpec/00-plans-index: both still interleave un-sealed parallel-wave edits."
+    }
+  ],
+  "events": {
+    "event_refs": [
+      {
+        "source": "jsonl",
+        "ref": "dec-2026-08-14-pm7-tweak-wave-7",
+        "note": "Plans/auto_decisions.jsonl"
+      },
+      {
+        "source": "other",
+        "ref": "user-directive:PMConcept7-Tweak-Wave-7:2026-08-14",
+        "note": "Jared directed the kebab seat fixes, the chat single-menu restoration, the drag occlusion polish, and the workspace scroll lock; all verified live before sealing."
+      }
+    ]
+  },
+  "files_changed": [
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave (F3-HOME-003/F3-421/F3-503 wave-7 amendments); the file also carries un-sealed parallel-wave edits elsewhere."
+    },
+    {
+      "path": "Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json",
+      "change_type": "modified",
+      "note": "Authored change in this wave (kebab/scroll-lock rules, re-pin)."
+    },
+    {
+      "path": "Plans/00-plans-index.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave (wave-7 registration); also carries un-sealed parallel-wave edits."
+    },
+    {
+      "path": "Concepts/pm7-tools/home_workspace_source.py",
+      "change_type": "modified",
+      "note": "Per-kind kebab seats, chat kebab skip, scroll lock."
+    },
+    {
+      "path": "Concepts/pm6-build/parts/10x-pm6-css-global.part.html",
+      "change_type": "modified",
+      "note": "Drag occlusion (opacity 1, silhouette z 39)."
+    },
+    {
+      "path": "Concepts/pm7-tools/build_pm7.py",
+      "change_type": "modified",
+      "note": "BASE_SHA repinned to 33d5ed89."
+    },
+    {
+      "path": "Concepts/PMConcept7.html",
+      "change_type": "modified",
+      "note": "Generated only by T01-T20."
+    },
+    {
+      "path": "Plans/auto_decisions.jsonl",
+      "change_type": "modified",
+      "note": "One appended row: dec-2026-08-14-pm7-tweak-wave-7."
+    }
+  ],
+  "contract_refs_satisfied": [
+    "PlanUnit:F3-HOME-003",
+    "PlanUnit:F3-421",
+    "PlanUnit:F3-503",
+    "PlanUnit:F3-505",
+    "ContractName:Plans/FinalGUISpec.md"
+  ],
+  "reproducibility": {
+    "snapshot_ref": "git:b80aff05f",
+    "note": "Rebuild from Concepts/pm6-build/parts via assemble.py g3, re-pin base/PM7-base.html and BASE_SHA (33d5ed89), then run build_pm7.py --report."
+  },
+  "artifacts": [
+    {
+      "note": "Generated concept artifact (never hand-edited); sha 8ab40669, 3,612,010 bytes.",
+      "path": "Concepts/PMConcept7.html",
+      "sha256": "8ab406695b40014e575e6d55f4048063931689528ab497f750deae11b86a5e7e"
+    },
+    {
+      "note": "Transform/gate receipt (base_pin_ok against 33d5ed89, 20/20 transforms, gates_all_pass).",
+      "path": "Concepts/pm7-tools/build_report.json",
+      "sha256": "92f0ef8ce57336418cbc33ee73cebff73d3d30cbb1bdae8fdeb964efd4b0b588"
+    },
+    {
+      "note": "Authored T20 source: per-kind kebab seats, chat kebab skip-and-remove, host scroll lock.",
+      "path": "Concepts/pm7-tools/home_workspace_source.py",
+      "sha256": "ddcb85407f09c78773ebb3ee731edcd2228a74720ab8b48b213c22166d670a7c"
+    },
+    {
+      "note": "Reconciliation with the wave-7 rules and refreshed hashes.",
+      "path": "Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json",
+      "sha256": "82f8c236520756aaa7430f5019bfd564552505be7ce3480ab1ce1f16661eda8c"
+    }
+  ],
+  "checks": [
+    {
+      "name": "pm7-transforms-and-static-gates",
+      "result": "PASS",
+      "details": "Receipt 92f0ef8ce57336418cbc33ee73cebff73d3d30cbb1bdae8fdeb964efd4b0b588 records base_pin_ok against 33d5ed89 (base verified identical to Concepts/PMConcept6.html on disk), 20/20 transforms ok, gates_all_pass for output 8ab40669 (3,612,010 bytes, verified on disk), zero page errors on load."
+    },
+    {
+      "name": "shipped-facts-verified-in-source",
+      "result": "PASS",
+      "details": "Verified before amendment: kebab seat rules at T20 source L516-519 exactly as specified (editor_panel top 10px; dashboard top 5px right 13px; 34px dash-actions margin; kind value editor_panel), the chat skip-and-remove branch in attachSurfaceControls with its inline rationale (original header menu richer; the only T20-exclusive row was Dock Back, covered by grip-drag), .editor-tabs .tab.dragging opacity 1 z 40 and the :has(.tab.dragging) .ed-tab-shape z 39 rule at 10x L1496/1503, and the scroll-lock block (overflow-x clip, overscroll-behavior none) on the doubled .pm-home-host[data-pm-home-host] selector."
+    },
+    {
+      "name": "dated-dispositions-for-reversed-canon",
+      "result": "PASS",
+      "details": "Wave-7 reversals carry dated dispositions: the wave-3 uniform-kebab rule gains the Chat exception (T20 kebab skipped; base header menu is the single more-options; chat Dock Back row retired), and the wave-4 .92 drag opacity is re-tuned to 1 with the silhouette z-39 lift."
+    },
+    {
+      "name": "plans-gates-baseline",
+      "result": "FAIL",
+      "details": "Honest FAIL: the parallel un-sealed wave still holds its Spec_Lock-pinned files stale (verifier scripts included), so the run-gates baseline cannot be confirmed by this wave and Spec_Lock pins for the two shared docs were deliberately not refreshed. Recorded instead of forcing a green tally; the parallel wave's own seal restores the baseline."
+    },
+    {
+      "name": "no-node-artifacts-created",
+      "result": "PASS",
+      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime artifacts or production build tasks were created by this wave."
+    },
+    {
+      "name": "home-workspace-live-matrix",
+      "result": "PASS",
+      "details": "The verification wave's home_workspace_matrix run against the sealed artifact (Concepts/PMConcept7.html sha256 8ab40669..., verified unchanged on disk at fold-in time) reports 32/32 checks passed, the exact 72-capture deterministic matrix with 0 failures, and 0 runtime-error cases - status PASS, read directly from the results JSON's summary block (check_count 32, passed_checks 32, failed_checks [], matrix_count 72, matrix_failures 0, runtime_error_case_count 0). Results file: home_workspace_matrix.json, sha256 bac7b9ff72642360ed48781ed11ed4da7b6b31fe5c88e04657918534431df488, delivered in the session scratchpad (w7-matrix-evidence/) alongside recordings, screenshots and traces; the hash is recorded here because scratchpad files are session-local, not repo artifacts."
+    }
+  ]
+}

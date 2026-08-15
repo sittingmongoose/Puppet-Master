@@ -3,14 +3,14 @@
   "ledger_id": "pldg-20260801-001-feature-intake",
   "capsule_id": "cap-feature-intake-current",
   "ledger_profile": "bootstrap_planning",
-  "agent_task": "monitor_successor_preflight_and_preserve_noncanonical_prompt_hardening_design",
-  "phase": "successor_preflight_active_plans_compile_held",
-  "current_phase": "successor_preflight_active_plans_compile_held",
+  "agent_task": "reconcile_r7_then_preserve_iterative_r8_until_two_consecutive_clean_runs",
+  "phase": "r7_closeout_then_iterative_two_clean_run_qualification_authorized_plans_compile_held",
+  "current_phase": "r7_closeout_then_iterative_two_clean_run_qualification_authorized_plans_compile_held",
   "governance_status": "not_started",
-  "last_event_id": "evt-0029",
-  "updated_at_utc": "2026-08-13T16:55:00Z",
-  "next_action": "Await successor-initiated notification or Jared's next direction. Do not poll.",
-  "next_safe_action": "Do not use wait_threads, repeated read_thread calls, filesystem status checks, or routine progress commentary for the successor.",
+  "last_event_id": "evt-0034",
+  "updated_at_utc": "2026-08-15T01:34:12Z",
+  "next_action": "Await successor-initiated terminals without polling: reconcile R7/q-0047 first, then preserve every R8 candidate and close q-0048 only after two consecutive clean unchanged full matrices or a genuine Goal-rule blocker.",
+  "next_safe_action": "Do not auto-compile, poll, retry valid failures within a frozen run, reuse test-taker tasks, count incomplete or invalid runs, tune between qualifying passes, seal governance, or begin implementation.",
   "allowed_reads_default": [
     "state/handoff.json",
     "state/current.json",
@@ -52,16 +52,20 @@
     "ultra_allowed": false,
     "subagent_packet_rule": "one bounded objective, bounded sources, typed output, no whole-source-universe prompt",
     "integration_owner": "max controller",
-    "subject_model_status": "not_selected_and_not_counted_from_preparation_roles"
+    "subject_model_status": "r7_closeout_active_then_r8_iterative_repair_and_two_consecutive_clean_run_qualification_authorized"
   },
   "testing_phase_boundary": {
-    "status": "deterministic_preflight_active",
+    "status": "r7_closeout_then_r8_iterative_two_clean_run_qualification_authorized",
     "exclusive_write_root": "tests/agent_packet_restrictions/successor_20260813/",
     "preparation_agent_calls_allowed": true,
-    "subject_test_calls_allowed": false,
-    "subject_plan_owner": "Jared at READY_FOR_JARED_TEST_PLAN",
+    "subject_test_calls_allowed": true,
+    "subject_plan_owner": "dec-0067 and in-progress q-0047; executed by successor under a new non-budgeted Goal",
     "canonical_compile_allowed": false,
-    "compile_unlock": "authorized testing honest terminal, findings reconciled into ledger, and later explicit Jared compile instruction"
+    "testing_terminal": "VALID_COMPLETED_FROZEN_SNAPSHOT_MATRIX",
+    "testing_accounting": {"subject_calls":104,"pass":83,"fail":15,"invalid_no_empirical_credit":6,"retries":0,"best_of":0,"replacements":0},
+    "active_replication": {"replicate_id":"PW-R7-REPLICATION-20260814.1","status":"exact_continuation_dispatched_after_interruption","frozen_snapshot_descriptor":"28730f6ea44a5720cb8e473f8fb736353dfe5c412e21261eacc88d70ffe46392","deterministic_preflight":"pass","reopen_validation":"pass","launch_wave":"W10A","predeclared_fresh_first_attempt_semantic_calls":156,"valid_scored_cells_preserved":67,"pass_cells_preserved":66,"fail_cells_preserved":1,"controller_invalid_unstarted_cells":3,"xhigh_path_status":"FIRST_ATTEMPT_FAIL_at_S10A_no_rerun","medium_paths_status":"33_PASS_each_through_S30_B02_incomplete","fresh_subject_contexts":true,"prior_subject_result_reuse":false,"valid_result_retries":false,"success_condition":"all_three_complete_paths_pass_unchanged"},
+    "next_qualification": {"goal_id_family":"PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815","goal_status":"queued_after_honest_r7_closeout","goal_budget":"none","required_consecutive_clean_full_matrices":2,"fresh_test_taker_thread_per_invocation":true,"test_taker_thread_reuse_allowed":false,"between_pass_tuning_allowed":false,"streak_reset":"any failure invalid or incomplete run unproven identity or architecture/protocol change"},
+    "compile_unlock": "R7 and R8 terminals must be reconciled, R8 must meet the two-clean-run criterion or name a genuine blocker, and a later explicit Jared compile instruction remains required"
   },
   "notification_policy": {
     "mode": "successor_initiated_only",
@@ -69,7 +73,7 @@
     "repeated_read_thread_allowed": false,
     "filesystem_polling_allowed": false,
     "routine_progress_commentary_allowed": false,
-    "accepted_notifications": ["input_required", "READY_FOR_JARED_TEST_PLAN", "NOT_READY", "terminal_handoff"],
+    "accepted_notifications": ["input_required", "READY_FOR_JARED_TEST_PLAN", "NOT_READY", "subject_launch", "terminal_handoff"],
     "silence_semantics": "normal_no_inference"
   },
   "external_assurance_boundary": {
@@ -98,10 +102,9 @@
     "empirical_claims_supported": false
   },
   "completion_blockers_visible_to_agent": [
-    "q-0022 is deferred until the successor reaches READY_FOR_JARED_TEST_PLAN.",
-    "Jared has not yet supplied or authorized subject models or testing method.",
-    "Canonical Plans compile is explicitly held until authorized testing and later user approval, even though the ledger has zero candidates.",
-    "Deterministic preflight cannot support empirical, production-enforcement, readiness, safety, certification, or compile claims."
+    "There are no open product-design questions, but q-0047 tracks R7 closeout and q-0048 tracks iterative R8 repair plus two consecutive clean runs.",
+    "Canonical Plans compile remains held by R7/R8 empirical closure and later explicit Jared instruction.",
+    "The frozen-snapshot matrix cannot support current-Plans, full-Wizard, production-enforcement, release, safety, certification, or general weak-model claims."
   ],
   "required_end_of_turn_actions": [
     "append one event for each substantive ledger turn",
@@ -113,8 +116,8 @@
   ],
   "validation_state": {
     "bootstrap_ledger_validator": "pass",
-    "last_validated_at_utc": "2026-08-13T17:04:38Z",
-    "latest_projection_updated_at_utc": "2026-08-13T16:41:14Z",
+    "last_validated_at_utc": "2026-08-15T01:41:47Z",
+    "latest_projection_updated_at_utc": "2026-08-15T01:34:12Z",
     "ledger_health": "pass",
     "governance_status": "not_started",
     "node_readiness_status": "not_started",
@@ -122,8 +125,12 @@
     "no_nodeseeds_created": true,
     "no_executable_queues_created": true,
     "no_implementation_files_created": true,
-    "no_subject_model_tests_run": true,
-    "no_subject_test_provider_calls": true,
+    "no_subject_model_tests_run": false,
+    "no_subject_test_provider_calls": false,
+    "subject_testing_completed": false,
+    "repeatability_replication_active": true,
+    "frozen_snapshot_matrix_supported": true,
+    "production_enforcement_claim_supported": false,
     "preparation_agent_calls_distinguished_from_subject_testing": true,
     "historical_invalidated_preflight_preserved": true
   }

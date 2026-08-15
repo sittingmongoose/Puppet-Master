@@ -1,0 +1,128 @@
+{
+  "schema_id": "pm.shared_runtime.command_contract_fixtures.v1",
+  "owner_schema": "Plans/shared_runtime_command_contracts.schema.json",
+  "valid": [
+    {
+      "name": "environment_connect_request",
+      "definition": "environment_connection_command_request",
+      "value": {
+        "schema_id": "pm.shared_runtime.command_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:1",
+        "idempotency": {
+          "schema_id": "pm.shared_runtime.command_idempotency.v1",
+          "idempotency_key": "idempotency:1",
+          "scope_ref": "project:1",
+          "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "replay_policy": "return_original_result",
+          "conflict_behavior": "reject_same_key_different_binding",
+          "original_operation_id": null,
+          "original_result_ref": null
+        },
+        "project_id": "project:1",
+        "project_home_server_id": "server:home:1",
+        "execution_host_id": "host:1",
+        "execution_environment_id": "environment:1",
+        "source_location_id": null,
+        "topology_generation": 1,
+        "actor_ref": "actor:user:1",
+        "permission_snapshot_ref": "permission:snapshot:1",
+        "goal_id": null,
+        "plan_id": null,
+        "run_id": null,
+        "thread_id": null,
+        "agent_id": null,
+        "crew_id": null,
+        "deadline_utc": null,
+        "recovery_of_operation_id": null,
+        "action": "connect",
+        "environment_id": "environment:1",
+        "expected_supervisor_generation": 1,
+        "expected_connection_epoch": 1,
+        "reason": null,
+        "drain_policy": null
+      }
+    },
+    {
+      "name": "accepted_environment_result_is_nonterminal",
+      "definition": "environment_connection_command_result",
+      "value": {
+        "schema_id": "pm.shared_runtime.command_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "EnvironmentConnectionCommandResult",
+        "command_id": "cmd.environment.connect",
+        "operation_id": "operation:1",
+        "command_instance_id": "command-instance:1",
+        "outcome": "accepted",
+        "observable_work_id": "work:1",
+        "current_revision_or_epoch": 1,
+        "projection_ref": "projection:environment:1",
+        "receipt_refs": ["receipt:admission:1"],
+        "artifact_refs": [],
+        "disabled_reason": null,
+        "error": null,
+        "recovery_actions": [],
+        "replayed": false,
+        "original_operation_id": null,
+        "terminal_owner_result_ref": null,
+        "subject_ref": "environment:1"
+      }
+    },
+    {
+      "name": "cancellation_ack_is_not_cleanup",
+      "definition": "command_cancellation",
+      "value": {
+        "schema_id": "pm.shared_runtime.command_cancellation.v1",
+        "command_instance_id": "command-instance:1",
+        "operation_id": "operation:1",
+        "cancellation_request_id": "cancel:1",
+        "state": "acknowledged",
+        "race_winner": "none_yet",
+        "requested_at_utc": "2026-08-14T00:00:00Z",
+        "acknowledged_at_utc": "2026-08-14T00:00:01Z",
+        "cleanup_evidence_ref": null,
+        "terminal_result_ref": null
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "request_missing_exact_execution_environment",
+      "base_valid": "environment_connect_request",
+      "remove": ["execution_environment_id"]
+    },
+    {
+      "name": "command_and_action_mismatch",
+      "base_valid": "environment_connect_request",
+      "patch": {"action": "disconnect"}
+    },
+    {
+      "name": "request_cannot_embed_secret_shaped_actor_ref",
+      "base_valid": "environment_connect_request",
+      "patch": {"actor_ref": "Bearer abcdefgh12345678"}
+    },
+    {
+      "name": "replayed_result_requires_original_operation",
+      "base_valid": "accepted_environment_result_is_nonterminal",
+      "patch": {"replayed": true}
+    },
+    {
+      "name": "cancel_ack_cannot_claim_cleanup",
+      "base_valid": "cancellation_ack_is_not_cleanup",
+      "patch": {"cleanup_evidence_ref": "cleanup:1", "terminal_result_ref": "result:cancelled:1"}
+    }
+  ],
+  "pairwise_invalid": [
+    {
+      "name": "same_idempotency_key_different_binding",
+      "left_valid": "environment_connect_request",
+      "right_patch": {"idempotency.binding_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}
+    },
+    {
+      "name": "replay_cannot_mint_new_operation_identity",
+      "left_valid": "accepted_environment_result_is_nonterminal",
+      "right_patch": {"replayed": true, "original_operation_id": "operation:1", "operation_id": "operation:2"}
+    }
+  ]
+}

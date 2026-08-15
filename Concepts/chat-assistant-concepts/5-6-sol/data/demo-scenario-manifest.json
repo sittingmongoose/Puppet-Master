@@ -1,0 +1,81 @@
+{
+  "schema_id": "pm.chat_assistant_demo_scenario.v2",
+  "scenario_id": "settings-provider-chat-redesign",
+  "title": "Provider settings and Chat access redesign",
+  "purpose": "Portable concept fixture; adapt file paths and wording to the workspace without reducing behavioral coverage.",
+  "user_request": "Audit the provider settings and Assistant Chat controls, improve multi-account routing and access warnings, preserve Slint portability, test every theme, and produce an implementation handoff without editing PMConcept7.",
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Where should provider and account policy be managed?",
+      "type": "single_select",
+      "options": ["Settings owns policy; Chat chooses the current route", "Chat owns everything", "Split policy between both surfaces"]
+    },
+    {
+      "id": "q2",
+      "prompt": "When a model switch will lose provider cache, what should PM emphasize first?",
+      "type": "single_select",
+      "options": ["Continue here", "Branch with the new model", "Start a clean chat", "Ask every time"],
+      "skippable": true
+    },
+    {
+      "id": "q3",
+      "prompt": "Which artifact states must the concept demonstrate?",
+      "type": "multi_select",
+      "options": ["Multi-file diff", "Rendered preview", "Test report", "Provider-flow document"]
+    }
+  ],
+  "goal": {
+    "title": "Redesign provider controls and Chat access flow",
+    "phases": ["Audit", "Research", "Prototype", "Implement", "Verify", "Handoff"],
+    "states_to_demonstrate": ["running", "paused", "updated_replan", "blocked", "resumed", "completed"]
+  },
+  "todos": [
+    "Audit the current model and account picker",
+    "Map requested and effective provider routes",
+    "Design pinned-history geometry",
+    "Implement the four access profiles",
+    "Add cache and attachment route warnings",
+    "Add the left artifact workspace",
+    "Run theme, width, keyboard, and reduced-motion tests",
+    "Write the implementation-impact handoff"
+  ],
+  "subagents": [
+    {"name": "Interface systems auditor", "route": "Fable", "state_sequence": ["queued", "running", "completed"]},
+    {"name": "Provider adapter researcher", "route": "Kimi K3", "state_sequence": ["running", "completed"]},
+    {"name": "Slint and test reviewer", "route": "Qwen 3.8", "state_sequence": ["queued", "running", "failed", "retrying", "completed"]}
+  ],
+  "activity_groups": [
+    {"kind": "thread_search", "summary": "Searched 6 related project threads"},
+    {"kind": "file_read", "summary": "Read 7 plan and concept files"},
+    {"kind": "web_research", "summary": "Compared 4 current provider and approval implementations"},
+    {"kind": "browser_test", "summary": "Checked pinning and question flow at 4 widths"},
+    {"kind": "edit", "summary": "Made 1 create and 3 edits", "diff": "+184 -67"},
+    {"kind": "verification", "summary": "Passed interaction and reduced-motion checks"}
+  ],
+  "resource_collision": {"kind": "port", "requested": 4173, "occupied_by": "Usage concept visual-test server", "safe_alternative": 4174},
+  "warnings": [
+    "Switching provider will replay the conversation without the current provider cache.",
+    "The selected model cannot inspect video natively; PM can extract frames or use the configured vision route.",
+    "Remaining included usage is unlikely to finish eight specialists; run two at a time and reserve capacity for synthesis."
+  ],
+  "diff_files": [
+    {"path": "threads/provider-selector.js", "additions": 92, "deletions": 18},
+    {"path": "threads/access-controls.css", "additions": 61, "deletions": 39},
+    {"path": "verification/interaction-probes.mjs", "additions": 31, "deletions": 10}
+  ],
+  "artifacts": [
+    {"id": "artifact-diff", "title": "Assistant Chat change set", "type": "multi_file_diff"},
+    {"id": "artifact-preview", "title": "Provider selector preview", "type": "visual_preview"},
+    {"id": "artifact-test", "title": "Interaction verification report", "type": "test_report"},
+    {"id": "artifact-handoff", "title": "Implementation impact handoff", "type": "document"}
+  ],
+  "history_rows": [
+    "Settings redesign bakeoff", "Usage feature review", "Planning Wizard audit", "PRD Builder source intake", "Provider multi-account routing", "Claude CLI profile isolation", "Antigravity CLI headless update", "Free models catalog refresh", "Models.dev capability sync", "Context Lens motion study", "Compact Now and branching", "MCP July specification review", "Memory degradation audit", "Persona context-footprint audit", "Crew capacity planning", "Worktree collision recovery", "Slint 1.17.1 port notes", "Assistant Chat visual testing"
+  ],
+  "completion": {
+    "result_summary": "Updated the provider selector and access flow, preserved thread-local state, verified responsive pinning, and produced four inspectable artifacts.",
+    "verification": "All targeted interaction probes passed",
+    "elapsed": "1m 34s"
+  }
+}

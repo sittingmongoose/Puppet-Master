@@ -94,10 +94,10 @@
     {
       id: 'ollama', name: 'Ollama (local)', icon: 'provider-ollama', status: 'ok',
       accounts: [
-        { id: 'local', label: 'Local', connection: { kind: 'local-cli', label: 'Ollama CLI', status: 'cli-not-found', note: 'CLI not found — install Ollama to use local models' } }
+        { id: 'local', label: 'Local', connection: { kind: 'local-cli', label: 'Ollama CLI', status: 'cli-not-found', note: 'Ollama CLI not installed — official-source setup in Provider Settings' } }
       ],
       models: [
-        { id: 'qwen3-32b', label: 'Qwen3 32B', short: 'Qwen3 32B', capabilities: { effort: false, fast: false, vision: false, context: 32768 }, priceTier: 'local', status: 'unavailable', unavailableReason: 'CLI not found — install Ollama to use local models' }
+        { id: 'qwen3-32b', label: 'Qwen3 32B', short: 'Qwen3 32B', capabilities: { effort: false, fast: false, vision: false, context: 32768 }, priceTier: 'local', status: 'ok' }
       ]
     }
   ];
@@ -147,7 +147,7 @@
       counts: { working: 1, complete: 1, blocked: 1, waiting: 1 },
       agents: [
         { name: 'Claude route researcher', task: 'Map Anthropic account routes and connections', route: 'anthropic/work/claude-sonnet-4.5', status: 'working', currentActivity: 'Reading Multi-Account.md', workedSeconds: 204 },
-        { name: 'OpenAI route researcher', task: 'Complete the GPT-5.2 capability matrix', route: 'openai/work/gpt-5.2', status: 'complete', currentActivity: 'Completed capability matrix', workedSeconds: 167 },
+        { name: 'OpenAI route researcher', task: 'Complete the GPT-5.2 capability matrix', route: 'openai/work/gpt-5.2', status: 'complete', currentActivity: 'Completed capability matrix — after 1 rate-limit failure and retry', workedSeconds: 167, failures: 1 },
         { name: 'Gemini route researcher', task: 'Verify Gemini 3 Pro video intake limits', route: 'google/personal/gemini-3-pro', status: 'waiting for capacity', currentActivity: 'Queued — provider allowance reserve', workedSeconds: 12 },
         { name: 'Local model scout', task: 'Assess Qwen3 32B as a local fallback', route: 'ollama/local/qwen3-32b', status: 'blocked', currentActivity: 'Blocked — Ollama CLI not found', workedSeconds: 0 }
       ]
@@ -167,9 +167,10 @@
       createdAt: T + '13:05:00Z',
       currentQuestionIndex: 0,
       questions: [
-        { id: 'q1', prompt: 'Which providers must appear in the first picker rail?', kind: 'multi select', required: true, options: ['Anthropic', 'OpenAI', 'Google', 'xAI', 'Ollama (local)'], selected: [] },
-        { id: 'q2', prompt: 'Where should material route warnings appear?', kind: 'single select', required: true, options: ['Inline card in the thread', 'Modal before switching', 'Both'], selected: [] },
-        { id: 'q3', prompt: 'Anything the migration note must call out?', kind: 'freeform', required: false, draft: '' }
+        // Canonical Revision-2 scenario (DEMO_SCENARIO_MANIFEST): single / skippable single / multi.
+        { id: 'q1', prompt: 'Where should provider and account policy be managed?', kind: 'single select', required: true, options: ['Settings owns policy; Chat chooses the current route', 'Chat owns everything', 'Split policy between both surfaces'], selected: [] },
+        { id: 'q2', prompt: 'When a model switch will lose provider cache, what should PM emphasize first?', kind: 'single select', required: false, options: ['Continue here', 'Branch with the new model', 'Start a clean chat', 'Ask every time'], selected: [] },
+        { id: 'q3', prompt: 'Which artifact states must the concept demonstrate?', kind: 'multi select', required: true, options: ['Multi-file diff', 'Rendered preview', 'Test report', 'Provider-flow document'], selected: [] }
       ]
     }],
     artifacts: [
@@ -185,7 +186,7 @@
     messages: [
       msg('t16-m0001', 'user', 'Redesign the Provider Settings manager. I want one picker that shows provider, account, and model as a single route — with explicit connection state, favorites, recents, and honest setup states when a route is not configured. Research the provider matrix first, then implement and verify it.', '13:00:00Z', rt({ workedSeconds: 0, totalElapsedSeconds: 0, tokenCount: 0 })),
       msg('t16-m0002', 'assistant', 'Plan: (1) map the provider/account/model route model from Multi-Account and Models System, (2) confirm scope with two short question rounds, (3) run a Goal with a research crew across routes, (4) implement the picker and warnings, (5) verify with a Browser Program pass and report.', '13:00:20Z', rt({ workedSeconds: 20, totalElapsedSeconds: 20 })),
-      msg('t16-m0003', 'assistant', 'Two scoping questions are ready below — they decide the picker rail contents and where route warnings live.', '13:01:00Z', rt({ workedSeconds: 8, totalElapsedSeconds: 40 })),
+      msg('t16-m0003', 'assistant', 'Three scoping questions are ready below — they decide policy ownership, cache-loss emphasis, and the artifact states the concept must demonstrate. The middle one is skippable.', '13:01:00Z', rt({ workedSeconds: 8, totalElapsedSeconds: 40 })),
       msg('t16-m0004', 'assistant', 'Questionnaire submitted — Which providers must appear in the first picker rail? (2 of 2 questions answered.)', '13:06:10Z', rt({ workedSeconds: 0, totalElapsedSeconds: 0 }), {
         completedQuestionnaire: {
           id: 'q-16-rail', status: 'submitted', createdAt: T + '13:02:00Z', resolvedAt: T + '13:06:10Z', currentQuestionIndex: 1,
@@ -200,18 +201,19 @@
       msg('t16-m0007', 'assistant', 'Retrieved the relevant sources: Multi-Account.md, Models_System.md, CLI_Bridged_Providers.md, the current Settings manager, and two prior chat threads about route pickers.', '13:09:00Z', rt({ workedSeconds: 44, totalElapsedSeconds: 420 })),
       msg('t16-m0008', 'assistant', 'Grouped research pass complete.', '13:14:00Z', rt({ workedSeconds: 214, totalElapsedSeconds: 700, tokenCount: 18200 }), {
         activityGroup: {
-          id: 'activity-16-research', status: 'complete', workedSeconds: 214, compactLabel: '4 stages completed',
+          id: 'activity-16-research', status: 'complete', workedSeconds: 214, compactLabel: '5 stages completed',
           stages: [
-            { kind: 'exploration', label: 'Read project sources', count: 14, durationSeconds: 96, status: 'complete', summary: 'Read Multi-Account, Models System, CLI provider docs, and the current settings manager.' },
+            { kind: 'thinking_summary', label: 'Summarized route model', count: 1, durationSeconds: 6, status: 'complete', summary: 'Distilled the provider/account/connection hierarchy into one route model.' },
+            { kind: 'read', label: 'Read project sources', count: 14, durationSeconds: 96, status: 'complete', summary: 'Read Multi-Account, Models System, CLI provider docs, and the current settings manager.' },
             { kind: 'search', label: 'Searched repository', count: 6, durationSeconds: 38, status: 'complete', summary: 'Searched for route, account, and connection vocabulary across Plans and Concepts.' },
-            { kind: 'web', label: 'Checked provider docs', count: 3, durationSeconds: 52, status: 'complete', summary: 'Confirmed capability claims against current provider documentation.' },
+            { kind: 'fetch', label: 'Checked provider docs', count: 3, durationSeconds: 52, status: 'complete', summary: 'Confirmed capability claims against current provider documentation.' },
             { kind: 'browser', label: 'Browser Program inspection', count: 1, durationSeconds: 28, status: 'complete', summary: 'Captured the existing Provider Settings page structure and spacing.' }
           ]
         }
       }),
       msg('t16-m0009', 'assistant', 'Port 3000 is used by the checkout redesign in worktree wt-checkout. I will use 3001 for the verification server instead — the conflict and owner are listed in the Ops surface.', '13:15:00Z', rt({ workedSeconds: 6, totalElapsedSeconds: 760 })),
       msg('t16-m0010', 'assistant', 'Spawned four research children on different routes. Two run now; Gemini is queued for sustainable capacity; the local scout is blocked because the Ollama CLI is not installed.', '13:16:00Z', rt({ workedSeconds: 10, totalElapsedSeconds: 820 })),
-      msg('t16-m0011', 'assistant', 'OpenAI route research is complete; the Gemini child is still queued behind the provider allowance reserve. Partial matrix is attached to the Goal evidence.', '13:24:00Z', rt({ workedSeconds: 30, totalElapsedSeconds: 1300 })),
+      msg('t16-m0011', 'assistant', 'OpenAI route research is complete — its first attempt failed on a provider rate limit and the retry finished clean. The Gemini child is still queued behind the provider allowance reserve. Partial matrix is attached to the Goal evidence.', '13:24:00Z', rt({ workedSeconds: 30, totalElapsedSeconds: 1300 })),
       msg('t16-m0012', 'assistant', 'Picker implementation is in. Three files changed: the manager surface, the route model, and a new migration note — +349 / -108 across the diff.', '13:40:00Z', rt({ workedSeconds: 402, totalElapsedSeconds: 2260, tokenCount: 30800 })),
       msg('t16-m0013', 'assistant', 'Ran a Browser Program verification pass over the new picker: rail filter, favorites, and the effort submenu all hold at 520 and 1200 widths. Three captures attached.', '13:55:00Z', rt({ workedSeconds: 96, totalElapsedSeconds: 2400 })),
       msg('t16-m0014', 'assistant', '', '13:56:00Z', rt({ workedSeconds: 2, totalElapsedSeconds: 2460 }), {
@@ -243,6 +245,7 @@
             { kind: 'context', text: 'Context window changes from 200k to 1M tokens.' }
           ],
           choices: ['continue', 'branch', 'new', 'cancel'],
+          pendingRoute: { routeKey: 'google/personal/gemini-3-pro', effort: null, speed: null },
           status: 'open'
         }
       }),
@@ -254,7 +257,9 @@
         activityGroup: {
           id: 'activity-16-final', status: 'complete', workedSeconds: 1874, compactLabel: 'Verification complete',
           stages: [
-            { kind: 'completion', label: 'Verified provider settings redesign', durationSeconds: 96, status: 'complete', summary: '41 assertions passed; captures attached to the report artifact.' }
+            { kind: 'edit', label: 'Applied picker fixes', count: 3, durationSeconds: 61, status: 'complete', summary: 'Rail grouping, setup notes, and warning wording.' },
+            { kind: 'generate', label: 'Generated verification matrix', count: 1, durationSeconds: 24, status: 'complete', summary: 'Route x capability table attached to the report artifact.' },
+            { kind: 'test', label: 'Ran interaction probes', count: 41, durationSeconds: 96, status: 'complete', summary: '41 assertions passed; captures attached to the report artifact.' }
           ]
         }
       }),
@@ -342,6 +347,7 @@
             { kind: 'cache', text: 'Prompt cache restarts on the new provider.' }
           ],
           choices: ['continue', 'branch', 'new', 'cancel'],
+          pendingRoute: { routeKey: 'openai/work/gpt-5.2', effort: null, speed: null },
           status: 'open'
         }
       }),
@@ -490,7 +496,9 @@
     subagentGroups: [],
     diffGroups: [],
     questionnaires: [],
-    artifacts: [],
+    artifacts: [
+      { id: 'art-19-matrix', title: 'Provider capability matrix', kind: 'document', status: 'working', provenance: 'Crew · Implementer wave', openTarget: 'editor tab' }
+    ],
     browserSessions: [],
     threadRequests: [],
     crew: {
@@ -508,7 +516,8 @@
       requested: 6,
       recommended: 2,
       waves: 3,
-      reason: 'provider allowance and verification reserve'
+      reason: 'provider allowance and verification reserve',
+      warning: 'Remaining included usage is unlikely to finish all six specialists — run two at a time and reserve capacity for synthesis.'
     },
     messages: [
       msg('t19-m0001', 'user', 'Run a crew review of the provider matrix. Four roles, and keep two lanes free for the verification reserve.', '14:40:00Z', rt({ workedSeconds: 0, totalElapsedSeconds: 0, tokenCount: 0 })),

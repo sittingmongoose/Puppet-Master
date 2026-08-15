@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.chat.5_6_sol.schema_event_storage_delta.v1",
   "model": "5.6 Sol",
-  "status": "provisional_owner_routing_not_canon",
+  "status": "provisional_schema_event_candidates_consuming_current_canonical_owner_routing",
   "records": [
     {
       "id": "DATA-SOL-001",
@@ -105,7 +105,7 @@
     {
       "id": "DATA-SOL-012",
       "subject": "outbox_replay_snapshot",
-      "owner": "Project Home Server and environment connection supervision",
+      "owner": "Plans/Shared_Integration_Runtime.md ThreadCommandOutbox and EnvironmentConnectionSupervisor with Project Home Server/domain persistence owners",
       "fields": ["operation_id", "command_id", "thread_id", "message_id?", "queued_at", "state", "attempt_count", "last_cursor", "snapshot_cursor", "replay_result_ref?", "server_work_state"],
       "events": ["outbox.queued", "connection.reconnecting", "command replay receipt", "snapshot applied event"],
       "persistence": "durable server/client outbox contract with exactly-once command identity",
@@ -114,7 +114,7 @@
     {
       "id": "DATA-SOL-013",
       "subject": "bsd_projection",
-      "owner": "BSD runtime and Settings",
+      "owner": "Plans/Shared_Integration_Runtime.md BSD engine, assistant-chat visible-control owner, and Settings default owner",
       "fields": ["thread_id", "mode", "scope", "trigger_reason?", "state", "advice_ref?", "suppression_reason?", "timeout_ms?", "route_snapshot_ref?", "receipt_ref?"],
       "events": ["BSD evaluation started/terminal/advice/suppressed/timeout/unavailable owner events"],
       "persistence": "thread-local value; broader default only through Settings",
@@ -137,12 +137,22 @@
       "events": ["owner decision event", "notification projection event"],
       "persistence": "owner receipt and title-bar notification record; Chat inline projection is not a second inbox",
       "privacy": "No secret or protected authentication content in notifications."
+    },
+    {
+      "id": "DATA-SOL-016",
+      "subject": "provider_cli_acquisition_auth_readiness_continuation",
+      "owner": "Plans/Shared_Integration_Runtime.md shared installation/continuation/ObservableWork mechanisms; Plans/CLI_Bridged_Providers.md provider acquisition/auth/readiness/route-resume policy; Plans/Release_Supply_Chain.md provenance; BinaryLocator discovery; Multi-Account/Models account-model truth; originating domain operation validity; Contracts/storage envelope and persistence owners",
+      "fields": ["provider_cli_id", "host_id", "environment_id", "runtime_family", "topology_generation", "install_state", "discovered_installation_ref?", "acquisition_choice?", "acquisition_consent_receipt_ref?", "provider_cli_supply_chain_plan_ref?", "provider_cli_supply_chain_proof_ref?", "proof_id?", "operation_id?", "attempt_id?", "installation_id?", "installation_generation?", "provider_id?", "provider_cli_product?", "host_environment_ref?", "execution_host_id?", "execution_environment_id?", "official_source_kind?", "official_source_ref?", "publisher_identity?", "package_or_artifact_identity?", "manager_or_installer_identity?", "version?", "channel?", "target_os?", "target_architecture?", "artifact_sha256?", "signature_or_attestation_ref?", "trust_root_ref?", "notarization_ref?", "sbom_ref?", "license_ref?", "redistribution_disposition?", "compatibility_manifest_ref?", "known_bad_check_ref?", "download_receipt_ref?", "verification_receipt_ref?", "rollback_artifact_proof_ref?", "supply_chain_observed_at?", "provider_profile_ref?", "auth_state", "account_ref?", "readiness_state", "model_catalog_revision?", "originating_operation_ref", "continuation_token", "expected_operation_revision", "expected_topology_generation", "continuation_expires_at", "continuation_intent_state", "continuation_resume_count", "continuation_currentness", "continuation_currentness_reasons[]", "coalescing_key", "observable_work_ref?", "resource_governor_ref?", "terminal_result?"],
+      "events": ["provider_cli.setup_required", "provider_cli.existing_installation_found", "provider_cli.existing_installation_selected", "provider_cli.install_explicitly_requested", "provider_cli.install_staged", "provider_cli.install_verified", "provider_cli.install_activated", "provider_cli.install_failed", "provider.auth_required", "provider.authenticated", "provider.readiness_verified", "provider.continuation_resumed", "provider.continuation_stale_rejected", "provider.continuation_expired_rejected", "provider.continuation_topology_mismatch_rejected"],
+      "persistence": "owner receipts keep pre-acquisition source/target planning distinct from exact ProviderCliSupplyChainProof; preserve explicit first-acquisition consent, exact Host/Environment/topology generation, canonical signature/attestation and trust-root vocabulary, install generation, separate post-verification authentication/readiness, and originating-operation currentness; no provider CLI is bundled, baseline-included, pre-seeded as a PM-distributed Tool Store package, or silently acquired by Project/model/provider/Goal/Plan/WorkNode/agent/Auto/On; any exact bundling case requires a later named user-approved exception",
+      "privacy": "Never persist raw credentials, tokens, OAuth codes, raw auth helper responses, provider-home secrets, or protected AuthBrowserSession content; AuthBrowserSession is human-only and opaque."
     }
   ],
   "event_registry_gaps": [
     "Questionnaire lifecycle and thread request/await/spawn event names need exact owner registration before production wiring.",
     "Local view-state changes should not be promoted to durable EventRecord traffic without a cross-client persistence requirement.",
     "Do not fabricate generic command_applied events; every command uses an owner event or explicit dispatch receipt.",
-    "All-thread search and exact unloaded-range navigation need an explicit result/currentness contract if cmd.chat.search does not already accept scope."
+    "All-thread search and exact unloaded-range navigation need an explicit result/currentness contract if cmd.chat.search does not already accept scope.",
+    "Provider CLI acquisition/auth/readiness/continuation lifecycle semantics and owner routing are canonical in Plans/Shared_Integration_Runtime.md and Plans/CLI_Bridged_Providers.md. The exact proposed provider_cli.* event-family spellings in DATA-SOL-016 remain provisional unless the EventRecord/event-family registry already contains them; registry census must preserve explicit consent, official source, exact Host/Environment, coalescing, and stale-continuation rejection."
   ]
 }

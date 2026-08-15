@@ -9,7 +9,7 @@ The concept family is complete as a comparison prototype, not as production impl
 - Prototype editor/reveal/export/settings deep links are visibly disabled with reasons. No fake file, provider setup, notification, or export side effect is claimed.
 - Dock/pop-out uses one browser document and shared state. Production must prove cross-window handoff, crash/restart reconciliation, authentication, and stale-layout recovery through the shell/window owner.
 - Cross-client persistence of local disclosure, history geometry, Context selection, and search view state is not decided here. Draft and question records are durable; purely local expansion stays local unless canon promotes it.
-- No canonical Plan, Commands, Wiring, DRY, Settings, Usage, runtime, PMConcept7, or ConceptHub source was modified by this work.
+- The deliverable and Sol-scoped changed-path set are confined to this folder. The repository was already dirty and no correction-start dirty-status receipt exists, so current Git status cannot independently attribute existing changes in Plans, PMConcept7, another concept folder, or other out-of-scope paths to a particular task.
 
 ## Slint portability risk
 
@@ -20,9 +20,13 @@ The concept family is complete as a comparison prototype, not as production impl
 
 ## Test and visual residuals
 
-- Firefox/geckodriver completed the full suite over loopback HTTP. Chromium/Blink completed the same full suite through an isolated Chrome DevTools Protocol session using a `file:` entry and the same four checked-in JSON fixtures. The transport differs because this host's Chromium renderer independently fails before requesting even a trivial loopback page; no Chromium-over-HTTP pass is claimed.
-- Direct visual inspection covered all 55 canonical Firefox evidence frames after authored motion had fully settled: 32 theme/width frames, eight questionnaire frames, eight work-system frames, and seven dense/error/offline/popup/controller frames. A separate 12-frame Chromium parity spot-check covered every theme family plus questionnaire, work, route-popup, and pop-out states; it is not represented as full Chromium-frame inspection. The 512 baseline and 896 core-feature configurations remain automated geometry/state coverage; they are not 1,408 individually human-reviewed images.
-- The browser evidence proves the concept implementation in Gecko and Blink. It does not promote the prototype into production runtime readiness or substitute for native Slint rendering, platform accessibility, IME, detached-window DPI, and real-service latency tests.
+- The frozen final Firefox 153.0.4 / Gecko lane passed 33/33 checks over loopback HTTP, with zero console errors, zero runtime exceptions, and 115 captures.
+- The frozen final Chromium 151.0.7922.34 / Blink lane passed the same 33/33 checks from the checked-in `file:` entry, with zero console errors, zero runtime exceptions, and 115 captures. A separate Chromium loopback-HTTP boot probe failed 0/1 before fixture readiness. The failed diagnostic is retained separately; Chromium-over-HTTP is not claimed.
+- All 115 current canonical Firefox PNGs received one-at-a-time original-resolution inspection. No current Chromium capture is included in that direct-inspection count.
+- The 512 baseline, 896 feature-state, 432 continuous-resize, 160 history/artifact, and other large matrix cells are automated geometry/state evidence. They are never counted as individual human visual reviews.
+- The 59 corrected trigger frames were visually inspected, but many lifecycle triggers intentionally expose their most obvious visible change as the exact bottom receipt. Their required non-receipt semantic mutation is proved by automated before/after assertions rather than inferred from pixels alone.
+- The four supplied films were fully decoded and reviewed through temporary sampled sheets, but those derived temporary sheets were not copied into the deliverable. The custody files preserve packet identities, review method, and hashes rather than independently re-runnable derived film-review imagery.
+- Browser evidence supports the HTML/CSS/JavaScript prototype in Gecko and Blink under the recorded transports. It does not promote the prototype into production runtime readiness or substitute for native Slint rendering, platform accessibility, IME, detached-window DPI, and real-service latency tests.
 - The required audit host for all 28 feature states is `window-05 × thread-02` for coverage only. That host selection is not a rank, preference, or winner recommendation.
 - Automated checks cover all 64 pairings, all eight themes, four exact widths, continuous resize, both rail states, all history/artifact cross-products, dock/pop-out, reduced motion, long messages, question lifecycle, drafts, focus, popup collision, offline replay, and deterministic triggers. Production assistive-technology conformance and real provider/network latency are outside this prototype gate.
 - Clipboard write depends on browser permission. Failure returns truthful status and does not alter content; native clipboard integration needs production-platform tests.

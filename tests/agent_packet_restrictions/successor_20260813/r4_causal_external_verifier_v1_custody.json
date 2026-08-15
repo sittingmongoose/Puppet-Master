@@ -1,0 +1,19 @@
+{
+  "schema_id": "pw-r4-external-verifier-custody-v1",
+  "contract_id": "PW-R4-EXTERNAL-SELF-HOSTING-GUARD-20260814.1",
+  "verifier_root": "tests/agent_packet_restrictions/successor_20260813/r4_causal_external_verifier_v1",
+  "files": [
+    {
+      "path": "contract.json",
+      "storage_sha256": "0f22f9c34424a1e5299d12348c4af437fc203cedf139fef751bf52433eba04b7",
+      "storage_bytes": 2368
+    },
+    {
+      "path": "external_verifier.py",
+      "storage_sha256": "082c0490179d262c9e74618f47ff8c85fc8d29bf802d76bc59ed08f0fb7cecea",
+      "storage_bytes": 21367
+    }
+  ],
+  "outer_controller_rule": "Before every verifier invocation, independently lstat and raw-hash this custody file and both listed verifier files without importing or executing verifier code; require exact identities frozen in controller state. A mismatch aborts the attempt with zero empirical credit.",
+  "status": "FROZEN"
+}

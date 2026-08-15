@@ -5,10 +5,10 @@
   "catalog_source": "Plans/UI_Command_Catalog.md (read-only; 11,026 lines)",
   "rule": "Do not mint a candidate id where a canonical one exists. Every row states its disposition and the catalog line that justifies it.",
   "counts": {
-    "total": 33,
-    "reuse": 15,
-    "new": 12,
-    "alias_risk": 4,
+    "total": 48,
+    "reuse": 23,
+    "new": 16,
+    "alias_risk": 7,
     "must_not_mint": 2
   },
   "rows": [
@@ -158,34 +158,34 @@
     },
     {
       "candidate": "cmd.chat.bsd.set",
-      "disposition": "new",
-      "canonical": null,
-      "evidence": "no cmd.bsd.* or Back Seat Driver id exists anywhere in the catalog",
-      "note": "Genuinely new. Payload {thread_id, mode: off|auto|on, scope: turn|thread}. Read-only advice; it must carry no authority to widen access.",
+      "disposition": "reuse",
+      "canonical": "cmd.bsd.set",
+      "evidence": "Plans/UI_Command_Catalog.md:11109",
+      "note": "CORRECTED. This row previously read \"new\" on the evidence \"no cmd.bsd.* or Back Seat Driver id exists anywhere in the catalog\", and that was simply wrong: cmd.bsd.set is one of the 26 canonical CS-066 rows, titled Set Back Seat Driver Mode, and its own description — \"Sets Off, Auto, or On for the selected canonical scope; effective default and recommended value are Auto\" — is the concept’s enum and the concept’s default. It is handled by BackSeatDriverService with a typed request/result pair. Minting a chat-local twin would have split one setting across two ids.",
       "surfaced_as": "Back Seat Driver selector, mode and scope groups"
     },
     {
       "candidate": "cmd.chat.crew.start",
       "disposition": "new",
       "canonical": null,
-      "evidence": "no cmd.crew.* id exists",
-      "note": "Genuinely new. Payload {thread_id, template_id}. Writes thread-local crew state only.",
+      "evidence": "no cmd.crew.* id exists; the nearest canonical is cmd.thread.spawn (Plans/UI_Command_Catalog.md:11090), which spawns ONE bounded child thread",
+      "note": "New. A crew is a fan-out of several children under one template with a synthesis step, which cmd.thread.spawn does not model — but it is likely to be IMPLEMENTED as repeated cmd.thread.spawn calls, so the owner should decide whether this is a command or a client-side loop. Payload {thread_id, template_id}. Writes thread-local crew state only.",
       "surfaced_as": "Crew selector"
     },
     {
       "candidate": "cmd.chat.thread.request",
-      "disposition": "new",
+      "disposition": "alias_risk",
       "canonical": null,
-      "evidence": "no cross-thread request family exists",
-      "note": "Genuinely new. Refusals are typed: refused_cycle and refused_fanout must be distinguishable from a decline.",
+      "evidence": "Plans/UI_Command_Catalog.md:11089",
+      "note": "CORRECTED from \"new\" on the evidence \"no cross-thread request family exists\". A canonical cmd.thread.request DOES exist, but it means something else: Request Thread, \"durably requests a thread and reconciles its stable identity after acknowledgement\" — requesting that a thread EXIST. This candidate sends a request TO an existing thread. Two different operations one character apart in dotted form, so this is flagged for the owner to rename rather than quietly reused. Refusals stay typed: refused_cycle and refused_fanout must be distinguishable from a decline.",
       "surfaced_as": "More options, Send request to another thread"
     },
     {
       "candidate": "cmd.chat.thread.await",
-      "disposition": "new",
-      "canonical": null,
-      "evidence": "no cross-thread request family exists",
-      "note": "Genuinely new. Returns an ObservableWork id so the wait is visible.",
+      "disposition": "reuse",
+      "canonical": "cmd.thread.await",
+      "evidence": "Plans/UI_Command_Catalog.md:11091",
+      "note": "CORRECTED from \"new\" on the evidence \"no cross-thread request family exists\". cmd.thread.await is canonical — Await Thread Condition, \"starts an observable asynchronous await without blocking the UI thread\" — and it binds ObservableWork, which is exactly what this row asked for when it said the wait must be visible.",
       "surfaced_as": "Awaiting request row in the work cluster"
     },
     {
@@ -275,6 +275,127 @@
       "evidence": "Plans/UI_Command_Catalog.md:456-467",
       "note": "See cmd.chat.artifact.open.",
       "surfaced_as": "Artifact frame close control"
+    },
+    {
+      "candidate": "cmd.chat.activity.open_phase",
+      "disposition": "new",
+      "canonical": null,
+      "evidence": "No catalog entry: the catalog has no verb for re-opening one phase of a finished run.",
+      "note": "Random access into a condensed activity run. 03_compact_execution_activity.mov f.1170 reopens the edit phase and f.1300 the read phase, each from its own glyph. The existing activity verbs move a pointer or reopen from the beginning, so five of the six glyphs in a six-phase run had no command behind them. Concept-local candidate; the Commands registry is owned elsewhere.",
+      "surfaced_as": "Activity capsule glyph chain, in all eight thread concepts"
+    },
+    {
+      "candidate": "cmd.chat.activity.close_phase",
+      "disposition": "new",
+      "canonical": null,
+      "evidence": "No catalog entry.",
+      "note": "The dismissal half of open_phase. Kept distinct from a toggle so a harness can drive a known state rather than depending on what was open before.",
+      "surfaced_as": "Activity capsule chevron and re-click of an open glyph"
+    },
+    {
+      "candidate": "cmd.chat.send",
+      "disposition": "reuse",
+      "canonical": "cmd.chat.send",
+      "evidence": "Plans/UI_Command_Catalog.md:8009",
+      "note": "Already canonical, with the payload this concept needs: thread_id, message_id, content_ref, attachment_refs[] and an idempotency_key — which is what the offline outbox replays against without duplicating a send. The concept adds no new id.",
+      "surfaced_as": "Composer send control, every window"
+    },
+    {
+      "candidate": "cmd.chat.web.search",
+      "disposition": "reuse",
+      "canonical": "cmd.chat.web.search",
+      "evidence": "Plans/UI_Command_Catalog.md:1044, :2078, :5954",
+      "note": "Already canonical and explicitly the ACTIVE dispatch target: the catalog retires legacy grouped cmd.web.search as compatibility-only evidence at :181. The operation card prints this id verbatim, matching the PMConcept7 reference screenshot.",
+      "surfaced_as": "Operation card COMMAND row, web search operations"
+    },
+    {
+      "candidate": "cmd.chat.browser.open_page",
+      "disposition": "reuse",
+      "canonical": "cmd.browser.navigate",
+      "evidence": "Plans/UI_Command_Catalog.md:8319; taxonomy at :989 routes browser evidence through BrowserAction / Site Reader",
+      "note": "Minted here before the catalog was checked, and it should not have been: cmd.browser.navigate already owns driving a page, and :989 states that visual, dynamic-page, iframe, console, network, screenshot and PDF evidence route through BrowserAction under the same dispatcher rather than through a chat-local browser id. Recorded as a reuse so the owner sees the concept-local name is disposable.",
+      "surfaced_as": "Operation card COMMAND row, browser operations"
+    },
+    {
+      "candidate": "cmd.chat.activity.run_suite",
+      "disposition": "reuse",
+      "canonical": "cmd.testing.run",
+      "evidence": "Plans/UI_Command_Catalog.md:8275",
+      "note": "cmd.testing.run already owns running a suite, and the testing family carries the receipt, failure and export rows an operation card links to. A chat-local duplicate would split one operation's provenance across two ids.",
+      "surfaced_as": "Operation card COMMAND row, test operations"
+    },
+    {
+      "candidate": "cmd.chat.activity.search",
+      "disposition": "alias_risk",
+      "canonical": null,
+      "evidence": "Plans/UI_Command_Catalog.md:726",
+      "note": "cmd.chat.search exists and is Search THREAD — searching within the selected transcript and restoring focus to a matching message. This candidate is the agent searching the REPOSITORY, a different operation with a different result shape. Flagged rather than reused so the near-collision is the owner's decision, not this concept's.",
+      "surfaced_as": "Operation card COMMAND row, repository search operations"
+    },
+    {
+      "candidate": "cmd.chat.activity.reasoning_summary",
+      "disposition": "new",
+      "canonical": null,
+      "evidence": "no cmd.*reasoning*, cmd.*thinking* or cmd.*thought* id exists anywhere in the catalog",
+      "note": "Genuinely new, and the one id in this group with no adjacent canonical at all. It records that a reasoning summary was DISCLOSED to the transcript, not that reasoning happened. Payload {thread_id, phase_id}; it must carry no authority, because a summary is a read of work already done.",
+      "surfaced_as": "Operation card COMMAND row, thinking phases"
+    },
+    {
+      "candidate": "cmd.chat.activity.read",
+      "disposition": "new",
+      "canonical": null,
+      "evidence": "cmd.file.open at Plans/UI_Command_Catalog.md:9625 is the USER opening a file in the editor, not an agent tool read",
+      "note": "New. The catalog has no family for a record of an agent tool operation — cmd.tool.discover and cmd.tool.select are about choosing tools, not recording their runs. Payload {thread_id, phase_id, paths[]}. Reusing cmd.file.open would make an agent read indistinguishable from a user opening a tab.",
+      "surfaced_as": "Operation card COMMAND row, file read operations"
+    },
+    {
+      "candidate": "cmd.chat.activity.edit",
+      "disposition": "new",
+      "canonical": null,
+      "evidence": "no agent-operation-record family exists in the catalog",
+      "note": "New, and paired with cmd.chat.activity.generate below. It records an edit operation for the transcript; the DIFF it produces is a separate surface with its own ids. Payload {thread_id, phase_id, paths[], diff_ref?}.",
+      "surfaced_as": "Operation card COMMAND row, edit operations"
+    },
+    {
+      "candidate": "cmd.chat.activity.generate",
+      "disposition": "new",
+      "canonical": null,
+      "evidence": "no agent-operation-record family exists in the catalog",
+      "note": "New. Distinguished from cmd.chat.activity.edit because generating a file and editing an existing one differ in what the permission check has to allow, and collapsing them would let one grant cover both.",
+      "surfaced_as": "Operation card COMMAND row, generate operations"
+    },
+    {
+      "candidate": "cmd.chat.activity.verify",
+      "disposition": "new",
+      "canonical": null,
+      "evidence": "cmd.installation.verify (:11099), cmd.chat.memory.verify (:1092) and cmd.runtime.locate_and_verify_recovery (:138) all verify a DIFFERENT subject",
+      "note": "New. Three verify ids exist and none of them verifies the agent's own work product, which is what this records. Named in the activity family rather than as a fourth top-level verify so the subject stays legible.",
+      "surfaced_as": "Operation card COMMAND row, verify operations"
+    },
+    {
+      "candidate": "cmd.chat.worktree.request",
+      "disposition": "reuse",
+      "canonical": "cmd.chat.worktree.create",
+      "evidence": "Plans/UI_Command_Catalog.md:752",
+      "note": "Named only in candidate-wiring-delta.json, which is how it escaped this file for the whole build. cmd.chat.worktree.create is canonical and is described as creating a worktree for the ACTIVE THREAD and opening the create/bind dialog — the concept’s Request a new worktree control, exactly. The wiring row’s aside that “cmd.worktree.* is owned elsewhere” named the wrong family: the canonical one is cmd.chat.worktree.*.",
+      "surfaced_as": "Environment popup, Request a new worktree"
+    },
+    {
+      "candidate": "cmd.chat.queue.replay",
+      "disposition": "reuse",
+      "canonical": "cmd.thread.outbox.retry",
+      "evidence": "Plans/UI_Command_Catalog.md:11087",
+      "note": "Named only in candidate-wiring-delta.json. cmd.thread.outbox.retry is canonical and is precisely the semantics the concept needs: “retries the same unacknowledged logical command under its existing idempotency identity”, which is the property that makes replay safe. Its sibling cmd.thread.outbox.cancel (:11088) covers withdrawing an entry. The wiring row’s per-outbox-entry idempotency key is the canonical row’s own identity, not a new one.",
+      "surfaced_as": "Sync state, Reconnect"
+    },
+    {
+      "candidate": "cmd.chat.conflict.resolve",
+      "disposition": "alias_risk",
+      "canonical": null,
+      "evidence": "Plans/UI_Command_Catalog.md:558 (cmd.git.conflict_apply_resolution), :11108 (cmd.resource.inspect)",
+      "note": "Named only in candidate-wiring-delta.json. The catalog’s conflict command is about GIT merge conflicts and takes ours|theirs|both; this candidate resolves a RUNTIME RESOURCE collision — a port, a worktree lease, a test runner. The CS-066 runtime-resource family registers only the read-only cmd.resource.inspect, so there is no canonical mutation to reuse, but “conflict.resolve” reads like the git one and is flagged rather than minted quietly.",
+      "surfaced_as": "Conflict card, Use 3001"
     }
-  ]
+  ],
+  "completeness_gate": "node tools/drive.mjs scan fails if any cmd.chat.* id appearing in this workspace’s source is absent from this file. shared/opcard.js stated in its own docblock that \"every id minted here is also recorded in candidate-command-delta.json\", and nine of its ten ids were not — a contract kept only by the intention of whoever wrote it. It is now kept by the scan. A second sweep cross-checked every candidate against the 540 canonical table rows in Plans/UI_Command_Catalog.md and against candidate-wiring-delta.json. It found three rows dispositioned \"new\" on evidence that was false (cmd.chat.bsd.set, cmd.chat.thread.await, cmd.chat.thread.request) and three ids named in the wiring delta that this file did not carry at all. All six are corrected above."
 }

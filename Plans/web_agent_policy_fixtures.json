@@ -9,7 +9,7 @@
     "provider_catalog_mode": "lazy_registry_summary",
     "permission_state_required": true,
     "native_browser_runtime": "pm_managed_native_browser",
-    "playwright_cdp_status": "fallback_reference_only",
+    "external_project_test_tools": "project_attribution_only_not_browser_runtime",
     "must_not_include": ["raw_secrets", "full_provider_config", "provider_private_prompt_files"]
   },
   "persona_policies": [
@@ -275,7 +275,7 @@
     {
       "case_id": "browser_primary_runtime_not_pm_native",
       "surface": "BrowserAction/Site Reader",
-      "forbidden_primary_runtime": "playwright_or_cdp",
+      "forbidden_primary_runtime": "non_pm_native_browser_runtime",
       "expected_runtime": "pm_managed_native_browser",
       "expected_error": "browser_runtime_not_pm_managed_native"
     },

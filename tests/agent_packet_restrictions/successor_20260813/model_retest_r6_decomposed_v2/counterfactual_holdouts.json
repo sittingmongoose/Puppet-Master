@@ -1,0 +1,12 @@
+{
+  "schema_id":"pw-r6-generic-counterfactual-holdouts-v2",
+  "cases":[
+    {"case_id":"CF-ROUTE-01","kind":"candidate_route","facts":{"F-A":true,"F-B":false,"F-R":false},"candidates":[{"id":"RENAMED-9","order":1,"requires":["F-A","F-B"],"resolves":[]},{"id":"RENAMED-3","order":0,"requires":["F-A"],"resolves":["F-R"]}],"expected":{"RENAMED-3":"semantic_subject","RENAMED-9":"unsupported_excluded"}},
+    {"case_id":"CF-ROUTE-02","kind":"candidate_route","facts":{"X":true,"Y":true,"Z":true},"candidates":[{"id":"K-2","order":2,"requires":["X"],"resolves":[]},{"id":"K-8","order":0,"requires":["X","Y"],"resolves":["Z"]},{"id":"K-1","order":1,"requires":["Y"],"resolves":[]}],"expected":{"K-8":"resolved_deterministically","K-1":"semantic_subject","K-2":"semantic_subject"}},
+    {"case_id":"CF-ROUTE-03","kind":"candidate_route","facts":{"P":false,"R":true},"candidates":[{"id":"ONLY","order":0,"requires":["P"],"resolves":["R"]}],"expected":{"ONLY":"unsupported_excluded"}},
+    {"case_id":"CF-EDGE-01","kind":"edge_reduce","candidate_order":["E-4","E-1","E-9"],"verdicts":[{"edge_id":"E-9","verdict":"supported"},{"edge_id":"E-4","verdict":"unsupported"},{"edge_id":"E-1","verdict":"supported"}],"expected":["E-1","E-9"]},
+    {"case_id":"CF-EDGE-02","kind":"edge_reduce","candidate_order":["NEW-2","NEW-7"],"verdicts":[{"edge_id":"NEW-7","verdict":"unsupported"},{"edge_id":"NEW-2","verdict":"supported"}],"expected":["NEW-2"]},
+    {"case_id":"CF-AUTH-01","kind":"authority_projection","decisions":{"D-BOOL":"deny","D-TEXT":"cold"},"spec":[{"id":"Z1","label":"enabled","value_type":"boolean","sources":[{"decision_id":"D-BOOL","choice_map":{"deny":false,"allow":true}}]},{"id":"Z2","label":"mode","value_type":"string","sources":[{"decision_id":"D-TEXT","choice_map":{"cold":"deferred","hot":"active"}}]}],"expected":[{"id":"Z1","label":"enabled","value":false},{"id":"Z2","label":"mode","value":"deferred"}]},
+    {"case_id":"CF-AUTH-02","kind":"authority_projection","decisions":{"D-BOOL":"allow","D-GUARD":"bounded"},"spec":[{"id":"N7","label":"may_run","value_type":"boolean","sources":[{"decision_id":"D-BOOL","choice_map":{"deny":false,"allow":true}},{"decision_id":"D-GUARD","required_choices":["bounded"]}]}],"expected":[{"id":"N7","label":"may_run","value":true}]}
+  ]
+}

@@ -1,0 +1,545 @@
+{
+  "generated_at_utc": "2026-08-15T03:16:34Z",
+  "index_path": "Plans/_shards/runtime_integration_disposition/00-index.md",
+  "index_sha256": "9f9dde5721ca74d2fda0a21cab6200f4271f80d54fa07d14b3d7f1ac1bb2ebc4",
+  "manifest_path": "Plans/_shards/runtime_integration_disposition/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Lines 1-200",
+      "path": "Plans/_shards/runtime_integration_disposition/001-lines-1-200.md",
+      "sha256": "15e8d80d6f9b88b23b8c6fa569e4407aa08467b071c1d46d24a58cd9b3f68b6a",
+      "shard_id": "001",
+      "source_line_end": 200,
+      "source_line_start": 1,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 201-400",
+      "path": "Plans/_shards/runtime_integration_disposition/002-lines-201-400.md",
+      "sha256": "c1322c35028811d0c1d2b2827ff4cc5abbac900747f486995ad6f4358c7b674d",
+      "shard_id": "002",
+      "source_line_end": 400,
+      "source_line_start": 201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 401-600",
+      "path": "Plans/_shards/runtime_integration_disposition/003-lines-401-600.md",
+      "sha256": "cb3fa49cc5edb2cf4727dc928964a3f0409044be1374ba4ae35dd588f615e5bd",
+      "shard_id": "003",
+      "source_line_end": 600,
+      "source_line_start": 401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 601-800",
+      "path": "Plans/_shards/runtime_integration_disposition/004-lines-601-800.md",
+      "sha256": "50e5fad7cd79d0f691441526930a0fe660903d227795f71c790b77b7e496df02",
+      "shard_id": "004",
+      "source_line_end": 800,
+      "source_line_start": 601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 801-1000",
+      "path": "Plans/_shards/runtime_integration_disposition/005-lines-801-1000.md",
+      "sha256": "70bb230504108102825a53f415435d4863a6b361a92c2f352ae8e341cacbc383",
+      "shard_id": "005",
+      "source_line_end": 1000,
+      "source_line_start": 801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 1001-1200",
+      "path": "Plans/_shards/runtime_integration_disposition/006-lines-1001-1200.md",
+      "sha256": "df8b88fd4171028063812d9e12c41decf3424dc54740ddd3d9486245c55d3163",
+      "shard_id": "006",
+      "source_line_end": 1200,
+      "source_line_start": 1001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 1201-1400",
+      "path": "Plans/_shards/runtime_integration_disposition/007-lines-1201-1400.md",
+      "sha256": "2d8975cef75b76e21275ccd628547a02bba2d02e712274e0eefd409ef1e43068",
+      "shard_id": "007",
+      "source_line_end": 1400,
+      "source_line_start": 1201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 1401-1600",
+      "path": "Plans/_shards/runtime_integration_disposition/008-lines-1401-1600.md",
+      "sha256": "5a1f43cae2633b0d28848bcaf6f1a9a01d995b7471c38f10a8b1c33c075f24f6",
+      "shard_id": "008",
+      "source_line_end": 1600,
+      "source_line_start": 1401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 1601-1800",
+      "path": "Plans/_shards/runtime_integration_disposition/009-lines-1601-1800.md",
+      "sha256": "3aeb57a66f2e756e8f9083a5dce9a93dd1204dbea88a8cd05c1bbb7ab9993e4b",
+      "shard_id": "009",
+      "source_line_end": 1800,
+      "source_line_start": 1601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 1801-2000",
+      "path": "Plans/_shards/runtime_integration_disposition/010-lines-1801-2000.md",
+      "sha256": "2bfa76f6354217b17d3dac0dbe67b83836c77a76bc0a999dedd512447b33620f",
+      "shard_id": "010",
+      "source_line_end": 2000,
+      "source_line_start": 1801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 2001-2200",
+      "path": "Plans/_shards/runtime_integration_disposition/011-lines-2001-2200.md",
+      "sha256": "f2f87e2b6850b5bebb577b4b14b523d172f5bfc6e03a74bf55187c06a7e417a5",
+      "shard_id": "011",
+      "source_line_end": 2200,
+      "source_line_start": 2001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 2201-2400",
+      "path": "Plans/_shards/runtime_integration_disposition/012-lines-2201-2400.md",
+      "sha256": "8428be1d153849a6451a18b15384141e1099b7b24f181ee5c57f0a4ba3d91095",
+      "shard_id": "012",
+      "source_line_end": 2400,
+      "source_line_start": 2201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 2401-2600",
+      "path": "Plans/_shards/runtime_integration_disposition/013-lines-2401-2600.md",
+      "sha256": "cea6e6dbb647b6b0f191cda242b13f2a1a169f2228c5e59e4c0359366b72ba43",
+      "shard_id": "013",
+      "source_line_end": 2600,
+      "source_line_start": 2401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 2601-2800",
+      "path": "Plans/_shards/runtime_integration_disposition/014-lines-2601-2800.md",
+      "sha256": "6abb247e02717af98c2291617e9e97e0af8dc6da0961f8b4be5f640c744a4165",
+      "shard_id": "014",
+      "source_line_end": 2800,
+      "source_line_start": 2601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 2801-3000",
+      "path": "Plans/_shards/runtime_integration_disposition/015-lines-2801-3000.md",
+      "sha256": "4e9c70ef4375055cd95ad4c6c938fe7f92e52f548517a9371d2f6913482437ea",
+      "shard_id": "015",
+      "source_line_end": 3000,
+      "source_line_start": 2801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 3001-3200",
+      "path": "Plans/_shards/runtime_integration_disposition/016-lines-3001-3200.md",
+      "sha256": "6b38599de637ea58df2438ec533ed766ae9d8f9c6f316022846d959ee4512fc1",
+      "shard_id": "016",
+      "source_line_end": 3200,
+      "source_line_start": 3001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 3201-3400",
+      "path": "Plans/_shards/runtime_integration_disposition/017-lines-3201-3400.md",
+      "sha256": "929e8c78d4a2c45ea7db7a37f4dc33fd9b857ab955d3f73d440b731045cd458f",
+      "shard_id": "017",
+      "source_line_end": 3400,
+      "source_line_start": 3201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 3401-3600",
+      "path": "Plans/_shards/runtime_integration_disposition/018-lines-3401-3600.md",
+      "sha256": "7d826924db10d9c736f88a080c92bfcf894f0df80983529d69ab3bfac4320fd2",
+      "shard_id": "018",
+      "source_line_end": 3600,
+      "source_line_start": 3401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 3601-3800",
+      "path": "Plans/_shards/runtime_integration_disposition/019-lines-3601-3800.md",
+      "sha256": "286932cb74656f46a7e36778cb0e5703f24ae3ed9dbe0baa82d7961070c7c2b7",
+      "shard_id": "019",
+      "source_line_end": 3800,
+      "source_line_start": 3601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 3801-4000",
+      "path": "Plans/_shards/runtime_integration_disposition/020-lines-3801-4000.md",
+      "sha256": "3285610d79421d72558f789ee73b017fa19a767719e8cb316edd734ab608a413",
+      "shard_id": "020",
+      "source_line_end": 4000,
+      "source_line_start": 3801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 4001-4200",
+      "path": "Plans/_shards/runtime_integration_disposition/021-lines-4001-4200.md",
+      "sha256": "556ccbee163b6cd8f866130858067286cb35ccca7259ab52d63b7a04123cf461",
+      "shard_id": "021",
+      "source_line_end": 4200,
+      "source_line_start": 4001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 4201-4400",
+      "path": "Plans/_shards/runtime_integration_disposition/022-lines-4201-4400.md",
+      "sha256": "a13e543837ea33119c42fa008bebaa74427ebb15aa58d50356d8ec7c667adfb1",
+      "shard_id": "022",
+      "source_line_end": 4400,
+      "source_line_start": 4201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 4401-4600",
+      "path": "Plans/_shards/runtime_integration_disposition/023-lines-4401-4600.md",
+      "sha256": "c24d54c1bdedcd86dc15e97a0132dd94ca921e0c7a56fdde34f1e5ac77af74e1",
+      "shard_id": "023",
+      "source_line_end": 4600,
+      "source_line_start": 4401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 4601-4800",
+      "path": "Plans/_shards/runtime_integration_disposition/024-lines-4601-4800.md",
+      "sha256": "f650760984afeb23864ebccfabfe363d4d5717a4a6924f15a2f94bf8c91bab51",
+      "shard_id": "024",
+      "source_line_end": 4800,
+      "source_line_start": 4601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 4801-5000",
+      "path": "Plans/_shards/runtime_integration_disposition/025-lines-4801-5000.md",
+      "sha256": "468035727328fda8ac792ce9b8b357ceb6e59c87cc22f4c58519099061fac2ff",
+      "shard_id": "025",
+      "source_line_end": 5000,
+      "source_line_start": 4801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 5001-5200",
+      "path": "Plans/_shards/runtime_integration_disposition/026-lines-5001-5200.md",
+      "sha256": "b7e926e11381272459307d12cf195aea1afb6cd6cac5c4eac2f944370d4e372f",
+      "shard_id": "026",
+      "source_line_end": 5200,
+      "source_line_start": 5001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 5201-5400",
+      "path": "Plans/_shards/runtime_integration_disposition/027-lines-5201-5400.md",
+      "sha256": "6ac07059f845dc860e44f77664afb31e9e05e85052265e425d8654eed8e70ff4",
+      "shard_id": "027",
+      "source_line_end": 5400,
+      "source_line_start": 5201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 5401-5600",
+      "path": "Plans/_shards/runtime_integration_disposition/028-lines-5401-5600.md",
+      "sha256": "2139809b842190fd3d9fe0d2c97a4ee146050c085e957e78d472540b1408ce61",
+      "shard_id": "028",
+      "source_line_end": 5600,
+      "source_line_start": 5401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 5601-5800",
+      "path": "Plans/_shards/runtime_integration_disposition/029-lines-5601-5800.md",
+      "sha256": "b5f0c1196c7b656905aa28e76955dab9af1b33d98cdb9316cd121e9e2e8b7ecd",
+      "shard_id": "029",
+      "source_line_end": 5800,
+      "source_line_start": 5601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 5801-6000",
+      "path": "Plans/_shards/runtime_integration_disposition/030-lines-5801-6000.md",
+      "sha256": "a347d57ae189828d6cbb1d58502bdb8f184dfa5911b2270a1c38ccdaf4632cf2",
+      "shard_id": "030",
+      "source_line_end": 6000,
+      "source_line_start": 5801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 6001-6200",
+      "path": "Plans/_shards/runtime_integration_disposition/031-lines-6001-6200.md",
+      "sha256": "aee8efc9aaf2e31a5282659460325b3bddc69a42142592fe53e30040b96dec6c",
+      "shard_id": "031",
+      "source_line_end": 6200,
+      "source_line_start": 6001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 6201-6400",
+      "path": "Plans/_shards/runtime_integration_disposition/032-lines-6201-6400.md",
+      "sha256": "157cda25c91daadb986250550516755ffaab98425ce02de738978f51a912498f",
+      "shard_id": "032",
+      "source_line_end": 6400,
+      "source_line_start": 6201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 6401-6600",
+      "path": "Plans/_shards/runtime_integration_disposition/033-lines-6401-6600.md",
+      "sha256": "5326c6815eace3186bdefaa381a79527200767dced6cca54ffab1e69303152d3",
+      "shard_id": "033",
+      "source_line_end": 6600,
+      "source_line_start": 6401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 6601-6800",
+      "path": "Plans/_shards/runtime_integration_disposition/034-lines-6601-6800.md",
+      "sha256": "212fad80816f3b74254a33cd4827a19515bdf922f225d16f5ca18be78174a1a6",
+      "shard_id": "034",
+      "source_line_end": 6800,
+      "source_line_start": 6601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 6801-7000",
+      "path": "Plans/_shards/runtime_integration_disposition/035-lines-6801-7000.md",
+      "sha256": "6acfdd5b563dc387d48fd8afeaedcbd220781d8612f9ed7b9ba83f258d9014fd",
+      "shard_id": "035",
+      "source_line_end": 7000,
+      "source_line_start": 6801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 7001-7200",
+      "path": "Plans/_shards/runtime_integration_disposition/036-lines-7001-7200.md",
+      "sha256": "09e9549f28d7a70ff16d63de028742e83fbac9d9fa5064d6abde50c4da6df1d4",
+      "shard_id": "036",
+      "source_line_end": 7200,
+      "source_line_start": 7001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 7201-7400",
+      "path": "Plans/_shards/runtime_integration_disposition/037-lines-7201-7400.md",
+      "sha256": "8d7954d80e79f9c3f1d586768b7a4b932b0f3293b0450583e00e0617447f5de8",
+      "shard_id": "037",
+      "source_line_end": 7400,
+      "source_line_start": 7201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 7401-7600",
+      "path": "Plans/_shards/runtime_integration_disposition/038-lines-7401-7600.md",
+      "sha256": "52f85b1705aee6a4a83d474eaff0d799be4291aaaac1a1685d7a85a0127f779b",
+      "shard_id": "038",
+      "source_line_end": 7600,
+      "source_line_start": 7401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 7601-7800",
+      "path": "Plans/_shards/runtime_integration_disposition/039-lines-7601-7800.md",
+      "sha256": "1f879d5d2b25a83c5d2ae3baf13649434fc2c56152f0f9ce561a881eeb9d5f49",
+      "shard_id": "039",
+      "source_line_end": 7800,
+      "source_line_start": 7601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 7801-8000",
+      "path": "Plans/_shards/runtime_integration_disposition/040-lines-7801-8000.md",
+      "sha256": "e431e152ee1a26f194d4872a1f6df6e54deca251592f8a709d12285e9f1d7935",
+      "shard_id": "040",
+      "source_line_end": 8000,
+      "source_line_start": 7801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 8001-8200",
+      "path": "Plans/_shards/runtime_integration_disposition/041-lines-8001-8200.md",
+      "sha256": "5179833b6f686293499bea79bf90cfc0046fa0b8dc291ba15070653362ab022f",
+      "shard_id": "041",
+      "source_line_end": 8200,
+      "source_line_start": 8001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 8201-8400",
+      "path": "Plans/_shards/runtime_integration_disposition/042-lines-8201-8400.md",
+      "sha256": "cbb70147e0b1f8dd80f51f0bf394cb23298fea12a28d8858f1c7b28b224a5efb",
+      "shard_id": "042",
+      "source_line_end": 8400,
+      "source_line_start": 8201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 8401-8600",
+      "path": "Plans/_shards/runtime_integration_disposition/043-lines-8401-8600.md",
+      "sha256": "eb90abf46874193b49c27a3e998e2b092658ded41dc2b0d1aa3ac25e1983a878",
+      "shard_id": "043",
+      "source_line_end": 8600,
+      "source_line_start": 8401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 8601-8800",
+      "path": "Plans/_shards/runtime_integration_disposition/044-lines-8601-8800.md",
+      "sha256": "0b3f6b685803e812d153a4bcaacee428e279ac4b907d5466699bd9b3311c2532",
+      "shard_id": "044",
+      "source_line_end": 8800,
+      "source_line_start": 8601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 8801-9000",
+      "path": "Plans/_shards/runtime_integration_disposition/045-lines-8801-9000.md",
+      "sha256": "d7eef7f1720084619bc8ea8f773d4820e713447c12fd9acdd01c3eddc0c242fb",
+      "shard_id": "045",
+      "source_line_end": 9000,
+      "source_line_start": 8801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 9001-9200",
+      "path": "Plans/_shards/runtime_integration_disposition/046-lines-9001-9200.md",
+      "sha256": "653d5e89b07a5911ac923f35d4a8db66df15ab9e5e76727ef497327763268490",
+      "shard_id": "046",
+      "source_line_end": 9200,
+      "source_line_start": 9001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 9201-9400",
+      "path": "Plans/_shards/runtime_integration_disposition/047-lines-9201-9400.md",
+      "sha256": "0e33b644ede2ae74d72ed232dd0b27cea51e7427ddb03b152eb15d1ba996a135",
+      "shard_id": "047",
+      "source_line_end": 9400,
+      "source_line_start": 9201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 9401-9600",
+      "path": "Plans/_shards/runtime_integration_disposition/048-lines-9401-9600.md",
+      "sha256": "6902a408a3d3d383615a6738f7d86260ac1a49d12ee6f0f0a05980b63b46f74f",
+      "shard_id": "048",
+      "source_line_end": 9600,
+      "source_line_start": 9401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 9601-9800",
+      "path": "Plans/_shards/runtime_integration_disposition/049-lines-9601-9800.md",
+      "sha256": "0b856b7da6a97a03df7f9350e0cecfd8abf24377f592f05155b191b292fbf1a8",
+      "shard_id": "049",
+      "source_line_end": 9800,
+      "source_line_start": 9601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 9801-10000",
+      "path": "Plans/_shards/runtime_integration_disposition/050-lines-9801-10000.md",
+      "sha256": "0c377b08833b8e6086dc0c93455de6604a86972f6dd2350eb1c9d9657b66e3a2",
+      "shard_id": "050",
+      "source_line_end": 10000,
+      "source_line_start": 9801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 10001-10200",
+      "path": "Plans/_shards/runtime_integration_disposition/051-lines-10001-10200.md",
+      "sha256": "f8d953a246e3f7e1697d10e14504762fabbbf03f2967aea788dac4264740e37f",
+      "shard_id": "051",
+      "source_line_end": 10200,
+      "source_line_start": 10001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 10201-10400",
+      "path": "Plans/_shards/runtime_integration_disposition/052-lines-10201-10400.md",
+      "sha256": "e7196ea6ade54ef315cae934da729aabb31061877b7b746761e8ba047f891f36",
+      "shard_id": "052",
+      "source_line_end": 10400,
+      "source_line_start": 10201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 10401-10600",
+      "path": "Plans/_shards/runtime_integration_disposition/053-lines-10401-10600.md",
+      "sha256": "032527bb8624cc62e5ca8ea56a8b8934b4e3d997317df79e67664d2015a26a0e",
+      "shard_id": "053",
+      "source_line_end": 10600,
+      "source_line_start": 10401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 10601-10800",
+      "path": "Plans/_shards/runtime_integration_disposition/054-lines-10601-10800.md",
+      "sha256": "0c3d7f97aa15bcd40bf6df702a39b606b8d1b8ea2d1796005b92afec1a57537b",
+      "shard_id": "054",
+      "source_line_end": 10800,
+      "source_line_start": 10601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 10801-11000",
+      "path": "Plans/_shards/runtime_integration_disposition/055-lines-10801-11000.md",
+      "sha256": "8a9433aab6ab10c7f945df7f3cc13a045fc20473552e0d2ba66a5dc82bcb2bb0",
+      "shard_id": "055",
+      "source_line_end": 11000,
+      "source_line_start": 10801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 11001-11200",
+      "path": "Plans/_shards/runtime_integration_disposition/056-lines-11001-11200.md",
+      "sha256": "7cbf4a34addae7241c8680dac6c7094810dc85596991d2af473f80d8092407a6",
+      "shard_id": "056",
+      "source_line_end": 11200,
+      "source_line_start": 11001,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 11201-11400",
+      "path": "Plans/_shards/runtime_integration_disposition/057-lines-11201-11400.md",
+      "sha256": "ac488fabb4cdde2e9adaf6506cfea7bacc3401c37c82b203b544e9ef9d31470f",
+      "shard_id": "057",
+      "source_line_end": 11400,
+      "source_line_start": 11201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 11401-11600",
+      "path": "Plans/_shards/runtime_integration_disposition/058-lines-11401-11600.md",
+      "sha256": "34586254403af43c01f6640e9e84d8491cc9891ebd550dac35078b9961e62d6f",
+      "shard_id": "058",
+      "source_line_end": 11600,
+      "source_line_start": 11401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 11601-11686",
+      "path": "Plans/_shards/runtime_integration_disposition/059-lines-11601-11686.md",
+      "sha256": "010db7d56810e6a169ec832bdff5236111a0f34c63fdfc558c158299a38f77ef",
+      "shard_id": "059",
+      "source_line_end": 11686,
+      "source_line_start": 11601,
+      "split_rule": "line-count-200"
+    }
+  ],
+  "source": {
+    "line_count": 11686,
+    "path": "Plans/runtime_integration_disposition.json",
+    "sha256": "4e9cefb274144874576107fffb5da07546ed191c5813eb8154f1d12b55876d68"
+  }
+}

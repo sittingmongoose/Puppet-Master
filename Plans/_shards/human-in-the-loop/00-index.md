@@ -1,6 +1,6 @@
 # Shard Index: Plans/human-in-the-loop.md
 
-Generated: 2026-08-13T17:12:34Z
+Generated: 2026-08-15T03:16:34Z
 
 Source SHA256: `67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237`
 

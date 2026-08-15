@@ -147,3 +147,44 @@ This pass implemented the approved delta plan against the Assistant Chat Update 
 - **Bugs fixed this pass**: `goalSaveObjective` undefined `t`; `serializeState` dropping `ui`; w2/w4/w6 no-op pins; overlay pinning; dead `availableWidth()`; thread-05 hardcoded working-row chip; `artEntry` not exported; w1 `store.fmt` typo; w6 region stacking; pop-out extras not inherited; t3/t4 record duplication guard.
 
 - **Green gate (final):** windows 512/512 · threads 1024/1024 · pairs 128/128 · features 1216/1216 · functional 13/13 · motion 48/48 · polish 51/51 · v2 15/15 = **3007/3007**; contact sheet regenerated from 3,256 real captures (`verification/results/contact-sheet.html`). ConceptHub validator: single remaining flag is the deliberate retention of the `verification/` harness (disclosed in `verification/known-limitations.md`).
+
+
+---
+
+## Correction packet 2026-08-13 (dependency/media audit)
+
+The correction packet supplied what the original cumulative packet omitted: the provider CLI
+adjudication, the two canonical Revision-2 demo JSON contracts, the four raw reference recordings
+(with keyframes/contact sheets), the two motion sheets, and the PMConcept7/T3 screenshots. Every
+item was opened (see `reference-review-report.json`); the audit below is what the missing media
+had hidden, and what changed.
+
+**Motion (videos 01-04).** The shared questionnaire lifecycle (prepare pill, submitting pill, review
+step) existed only in the *bypassed default renderer*: all eight concepts mount custom renderers
+that skipped it. Now the kit exposes lifecycle hooks (`preparePill`, `submittingPill`,
+`reviewHtml`, shared `submit` morph) and every renderer expresses the causal chain in its own
+idiom. Message arrival glides when stuck at bottom and sweeps the header band when content arrives
+off-bottom (reduced motion: static bar, instant settle). Activity completion condenses gradually
+into the two-chip strip (`N tools used`, `Made X creates, Y edits` with +/-) plus a persistent
+Verified row, still reopenable.
+
+**Picker + provider copy.** Favorites now precede Recents (01 doc order); per-row kbd chips with
+meta/ctrl-digit activation; sub-row shows `Provider · account`. Copy now states the adjudication
+concepts verbatim: Provider Setup Required, official-source acquisition, install-vs-auth separation,
+Host/Environment, exact-row deep-link with continuation token, Auto/On maintenance-without-consent
+boundary, discover/verify states. No bundling claims existed and none were added.
+
+**Fixture.** Slint reviewer aligned to the manifest (Qwen 3.8, failed -> retrying, failedAttempt
+record) in subagent group and crew; the manifest's 18 history rows seed the pinned-history column.
+
+**Coverage.** Two new probes: `probe-motion-continuity` (full + reduced) and
+`probe-coverage-expansion` (questionnaire @750/1200, pin @520/750/1200 on w1/w3/w5/w7/w8, artifact
+@520/750, reduced-motion end-states, Escape/Tab/focus-return, long content, reconnect failure +
+retry, quota warning, all-64 pairing sweep, pop-out+pinned+artifact resize survival). A
+reconnect-failure path was added to the store/shell/triggers.
+
+**Compliant-by-design judgments (disclosed, not "fixed"):** the question card height animates
+smoothly with content (original doc: "height subtly adjusts without a hard jump" — a fixed frame
+would fight the workspace's own mandate); the last answered question's action becomes Submit
+(original doc line 72 and videos agree; Review is added as the forward step after it); t8 keeps its
+deliberately minimal entrance motion as concept identity.

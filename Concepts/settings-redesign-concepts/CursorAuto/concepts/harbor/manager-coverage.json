@@ -238,5 +238,9 @@
     }
   ],
   "missing_count": 0,
-  "rule": "missing is a failure; deferred requires a named canonical owner and insertion contract"
+  "rule": "missing is a failure; deferred requires a named canonical owner and insertion contract",
+  "correction_2026_08_13": "2026-08-13 dependency correction: RuntimeResourceGovernor remains sole admission owner; ObservableWork is sole progress/wait projection; Settings projects only. Provider CLIs are not core/baseline/pre-seeded and are never silently Project-acquired; explicit official-source Install for exact Host/Environment; auth separate. Shell-first seed + lazy manager hydrate; virtualized large lists; dispose inactive scopes; no fake percent progress.",
+  "notes": [
+    "Shell-first hydration; featured managers remain demonstrated via lazy mount + shared grammar."
+  ]
 }

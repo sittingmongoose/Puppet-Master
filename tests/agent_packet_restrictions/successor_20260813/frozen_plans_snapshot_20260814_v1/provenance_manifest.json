@@ -1,0 +1,242 @@
+{
+  "schema_id": "pm.prompt_complexity_frozen_fixture_provenance.v1",
+  "status": "FROZEN_TEST_FIXTURE",
+  "frozen_at_utc": "2026-08-14T16:12:30Z",
+  "fixture_label": "unfinished throwaway prompt-complexity test fixture",
+  "authority_limits": {
+    "current_plans_authority": false,
+    "product_authority": false,
+    "production_authority": false,
+    "release_authority": false,
+    "canonical_live_plans_remain_read_only": true,
+    "planning_ledger_remains_read_only": true,
+    "result_scope": "Results apply only to these frozen bytes and make no current-Plans, product, production, release, or production-readiness claim."
+  },
+  "source_repo": "/mnt/Cursor/PuppetMaster",
+  "snapshot_root": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/frozen_plans_snapshot_20260814_v1",
+  "fixture_root_relative": "fixture",
+  "previous_custody_source": "tests/agent_packet_restrictions/successor_20260813/model_retest_r4_causal_v3/source_custody.json",
+  "freeze_verification": {
+    "expected_files": 15,
+    "observed_files": 15,
+    "exact_expected_path_set": true,
+    "all_regular_nonlinks": true,
+    "all_file_modes_read_only_0444": true,
+    "live_comparison_policy": "Compared once at freeze for provenance only. After this manifest freeze, the snapshot is authoritative for the experiment and later live-source changes do not invalidate it.",
+    "all_copy_matches_at_freeze": true
+  },
+  "files": [
+    {
+      "original_path": "Plans/00-plans-index.md",
+      "snapshot_relative_path": "fixture/Plans/00-plans-index.md",
+      "sha256": "19fcbd110827a949df25cfb2f9f61bdbbc28ffc4f46f01bbe9f3981f94efb311",
+      "bytes": 367909,
+      "lines": 5623,
+      "authority": "canonical_live_plan",
+      "copy_match_at_freeze": true
+    },
+    {
+      "original_path": "Plans/Automated_Testing_System.md",
+      "snapshot_relative_path": "fixture/Plans/Automated_Testing_System.md",
+      "sha256": "975472ff73c949fea277805b1317b1f67f56972bbfe401c73c3f38267edac4b3",
+      "bytes": 267313,
+      "lines": 3211,
+      "authority": "canonical_live_plan",
+      "copy_match_at_freeze": true
+    },
+    {
+      "original_path": "Plans/Goal_Runtime_System.md",
+      "snapshot_relative_path": "fixture/Plans/Goal_Runtime_System.md",
+      "sha256": "98f20b0efd0e4aa31dfe1f040025015df74c9bc088f94bf014e9a5615214ae8e",
+      "bytes": 272829,
+      "lines": 4558,
+      "authority": "canonical_live_plan",
+      "copy_match_at_freeze": true
+    },
+    {
+      "original_path": "Plans/Plan_Document_System.md",
+      "snapshot_relative_path": "fixture/Plans/Plan_Document_System.md",
+      "sha256": "f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c",
+      "bytes": 67485,
+      "lines": 1194,
+      "authority": "canonical_live_plan",
+      "copy_match_at_freeze": true
+    },
+    {
+      "original_path": "Plans/Plan_To_Node_Compilation.md",
+      "snapshot_relative_path": "fixture/Plans/Plan_To_Node_Compilation.md",
+      "sha256": "196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2",
+      "bytes": 103867,
+      "lines": 1488,
+      "authority": "canonical_live_plan",
+      "copy_match_at_freeze": true
+    },
+    {
+      "original_path": "Plans/Planning_Ledger_System.md",
+      "snapshot_relative_path": "fixture/Plans/Planning_Ledger_System.md",
+      "sha256": "8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07",
+      "bytes": 70805,
+      "lines": 1227,
+      "authority": "canonical_live_plan",
+      "copy_match_at_freeze": true
+    },
+    {
+      "original_path": "Plans/Planning_Wizard.md",
+      "snapshot_relative_path": "fixture/Plans/Planning_Wizard.md",
+      "sha256": "2b9591954871986cc5af23764d026ce102ca67be66634c7d1e49dc6988833d00",
+      "bytes": 93549,
+      "lines": 1671,
+      "authority": "canonical_live_plan",
+      "copy_match_at_freeze": true
+    },
+    {
+      "original_path": "Plans/Prompt_Pipeline.md",
+      "snapshot_relative_path": "fixture/Plans/Prompt_Pipeline.md",
+      "sha256": "5455de88e0eb4b9f7cc02f3828ce5aa836058f03e12715532ad2c761908fb5d8",
+      "bytes": 303738,
+      "lines": 5634,
+      "authority": "canonical_live_plan",
+      "copy_match_at_freeze": true
+    },
+    {
+      "original_path": "Plans/assistant-chat-design.md",
+      "snapshot_relative_path": "fixture/Plans/assistant-chat-design.md",
+      "sha256": "8d6dfb862784206b0c4db9ebe7d0e7b149723161aecbbb7282c750a86eddf7b9",
+      "bytes": 1150138,
+      "lines": 24521,
+      "authority": "canonical_live_plan",
+      "copy_match_at_freeze": true
+    },
+    {
+      "original_path": "Plans/ledgers/v2/ledger_registry.json",
+      "snapshot_relative_path": "fixture/Plans/ledgers/v2/ledger_registry.json",
+      "sha256": "23d36152dd8d14de849d1d22ba0df5ca0a6864f8f0331efb3446e1d4c498e988",
+      "bytes": 61169,
+      "lines": 1363,
+      "authority": "lineage_only_state",
+      "copy_match_at_freeze": true
+    },
+    {
+      "original_path": "Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/current.json",
+      "snapshot_relative_path": "fixture/Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/current.json",
+      "sha256": "813b219dac1bef99d85971ab2411e0b3bb3f5df2a0bb1df224467f2855df3914",
+      "bytes": 8940,
+      "lines": 158,
+      "authority": "lineage_only_state",
+      "copy_match_at_freeze": true
+    },
+    {
+      "original_path": "Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/handoff.json",
+      "snapshot_relative_path": "fixture/Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/handoff.json",
+      "sha256": "82e9800b6905f3d7cb77b78a4b58ea6f4f0a5b056cf4636c46f3bd57e1270f4f",
+      "bytes": 9160,
+      "lines": 137,
+      "authority": "lineage_only_state",
+      "copy_match_at_freeze": true
+    },
+    {
+      "original_path": "Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/open_items.json",
+      "snapshot_relative_path": "fixture/Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/open_items.json",
+      "sha256": "36c73492e33546c22d2e0ad1aff2aa7548b8d543f445a9ffc984fe4c5bcf2e47",
+      "bytes": 20100,
+      "lines": 322,
+      "authority": "lineage_only_state",
+      "copy_match_at_freeze": true
+    },
+    {
+      "original_path": "Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/operating_capsule.json",
+      "snapshot_relative_path": "fixture/Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/operating_capsule.json",
+      "sha256": "64f24ae78d22728442bebd95859f27a6cebc24135b77e23e506aabe235a89f93",
+      "bytes": 6686,
+      "lines": 130,
+      "authority": "lineage_only_state",
+      "copy_match_at_freeze": true
+    },
+    {
+      "original_path": "Plans/orchestrator-subagent-integration.md",
+      "snapshot_relative_path": "fixture/Plans/orchestrator-subagent-integration.md",
+      "sha256": "36eec1750405a528e563326af1b4b751fba863cf823ee12780f0416e633a4498",
+      "bytes": 1404023,
+      "lines": 31588,
+      "authority": "canonical_live_plan",
+      "copy_match_at_freeze": true
+    }
+  ],
+  "totals": {
+    "files": 15,
+    "bytes": 4207711,
+    "lines": 82825
+  },
+  "aggregate_descriptor": {
+    "algorithm": "sha256 over UTF-8 rows sorted by original_path, each encoded as original_path<TAB>sha256<TAB>bytes<TAB>lines<LF>",
+    "descriptor_payload_bytes": 1778,
+    "sha256": "28730f6ea44a5720cb8e473f8fb736353dfe5c412e21261eacc88d70ffe46392"
+  },
+  "previous_custody_differences": [
+    {
+      "path": "Plans/00-plans-index.md",
+      "previous": {
+        "sha256": "db49393309255f4564a11e51ef07cd0d0831631da8354872e1e05674d3a4931d",
+        "bytes": 364573,
+        "lines": 5601
+      },
+      "snapshot": {
+        "sha256": "19fcbd110827a949df25cfb2f9f61bdbbc28ffc4f46f01bbe9f3981f94efb311",
+        "bytes": 367909,
+        "lines": 5623
+      }
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "previous": {
+        "sha256": "34a66a5218a0fda775c650df3d630b2fbb4920b349623f605b41a497bc1f9218",
+        "bytes": 271215,
+        "lines": 4532
+      },
+      "snapshot": {
+        "sha256": "98f20b0efd0e4aa31dfe1f040025015df74c9bc088f94bf014e9a5615214ae8e",
+        "bytes": 272829,
+        "lines": 4558
+      }
+    },
+    {
+      "path": "Plans/Prompt_Pipeline.md",
+      "previous": {
+        "sha256": "f16b05797a55799c4c9d66d370011ceda04af646b0d41593418aa48098740094",
+        "bytes": 301379,
+        "lines": 5604
+      },
+      "snapshot": {
+        "sha256": "5455de88e0eb4b9f7cc02f3828ce5aa836058f03e12715532ad2c761908fb5d8",
+        "bytes": 303738,
+        "lines": 5634
+      }
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "previous": {
+        "sha256": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+        "bytes": 1147392,
+        "lines": 24489
+      },
+      "snapshot": {
+        "sha256": "8d6dfb862784206b0c4db9ebe7d0e7b149723161aecbbb7282c750a86eddf7b9",
+        "bytes": 1150138,
+        "lines": 24521
+      }
+    },
+    {
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "previous": {
+        "sha256": "8078b6464132748058490281b8578ef42f68f91c5700444901114e4d9286a10c",
+        "bytes": 1402008,
+        "lines": 31560
+      },
+      "snapshot": {
+        "sha256": "36eec1750405a528e563326af1b4b751fba863cf823ee12780f0416e633a4498",
+        "bytes": 1404023,
+        "lines": 31588
+      }
+    }
+  ]
+}

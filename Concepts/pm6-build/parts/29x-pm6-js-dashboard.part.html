@@ -1304,8 +1304,15 @@
      shrinking uniformly into a circular dimple.
      ================================================================== */
   var EDSHAPE = (function () {
-    var MORPH = 20;
-    var STIFF = 520, DAMP = 42;            /* firm, low-bounce */
+    var MORPH = 20;                        /* reference canon (explainer HUD):
+                                              progress = clamp(gap/20px, 0, 1),
+                                              LINEAR -- both the convex neck
+                                              and the concave flare share the
+                                              one 20px window */
+    var STIFF = 520, DAMP = 46;            /* critically damped: the reference
+                                              settle decays ~65%/frame with
+                                              ZERO overshoot (measured off the
+                                              clip at 60fps) */
     var shapes = typeof WeakMap === 'function' ? new WeakMap() : null;
 
     function reduced() {
@@ -1339,51 +1346,155 @@
       return el;
     }
 
-    /* Target box for the active tab, in rail-local coordinates, plus the TAB
-       TRACK the contact test is measured against. The track excludes the
-       rail's trailing chrome (the pinned actions cluster and the "+N more"
-       chip): that is rail furniture, not part of the surface the tab can
-       travel across, and measuring past it would make the flush state
-       unreachable. (The Home move grip is no longer strip chrome -- it sits
-       at the surface's top-right corner now, so there is no leading chrome
-       to exclude.) */
+    /* Target box for the active tab in rail-local coordinates, plus the
+       STATIC references the contact morph measures against.
+
+       The old track (first/last laid tab's live rects) had two verified
+       failure modes: dragging the DOM-first tab right made trackLeft its own
+       moving edge (left gap frozen at 0, morph dead, then a one-frame pop on
+       re-slot; mirrored on the right), and mid-FLIP neighbours wobbled the
+       endpoints by up to a tab-width. The reference canon measures the gap
+       to the NEAREST CONTACT per side -- the canvas/strip boundary or the
+       adjacent tab's edge, whichever is closer -- against STATIC geometry:
+       * canvas boundary = the strip's content box (padding-left is 0 by
+         design; the right reserve is the pinned actions/kebab lane)
+       * neighbour edges = offsetLeft/offsetWidth, which are LAYOUT values:
+         immune to the drag glide and the neighbour FLIP transforms alike.
+       The active tab's own box stays PAINTED (transform-inclusive) -- the
+       fusion invariant: the surface rides the tab, and while it overlaps a
+       neighbour the gap clamps to 0 (contact = flat), exactly the
+       reference's ride-over reading. */
     function target(strip) {
       var active = strip.querySelector('.tab.active');
       if (!active || active.style.display === 'none') return null;
       var sr = strip.getBoundingClientRect();
       var ar = active.getBoundingClientRect();
       if (!ar.width) return null;
-      var laid = Array.prototype.filter.call(strip.querySelectorAll('.tab'), function (t) {
-        return t.style.display !== 'none' && t.getBoundingClientRect().width > 0;
-      });
-      if (!laid.length) return null;
-      var trackLeft = laid[0].getBoundingClientRect().left - sr.left;
-      var trackRight = laid[laid.length - 1].getBoundingClientRect().right - sr.left;
-      return { x: ar.left - sr.left, w: ar.width, trackLeft: trackLeft, trackRight: trackRight };
+      /* Two reference frames:
+         * caps (--ed-lp/rp) key off the strip BOX edges -- the canvas's real
+           outer corners. The tab can never cross the trailing actions lane,
+           so the right cap simply never flattens: truthful, it is never
+           touched.
+         * the SHAPE's flare contacts the CONTENT edge (the actions lane is
+           furniture the tab can dock against) and the nearest neighbour. */
+      var boxRight = strip.clientWidth;
+      var contentRight = boxRight - (parseFloat(getComputedStyle(strip).paddingRight) || 0);
+      var prevEdge = 0, nextEdge = contentRight;
+      var tabs = strip.querySelectorAll('.tab');
+      var seenActive = false;
+      for (var i = 0; i < tabs.length; i++) {
+        var t = tabs[i];
+        if (t === active) { seenActive = true; continue; }
+        if (t.style.display === 'none' || !t.offsetWidth) continue;
+        if (!seenActive) prevEdge = Math.max(prevEdge, t.offsetLeft + t.offsetWidth);
+        else { nextEdge = Math.min(nextEdge, t.offsetLeft); break; }
+      }
+      return { x: ar.left - sr.left, w: ar.width,
+               trackLeft: 0, trackRight: boxRight,
+               prevEdge: prevEdge, nextEdge: nextEdge };
+    }
+
+    /* Per-strip geometry cache: theme tokens + the shape element's box.
+       Refreshed by sync() (boot, resize, theme change all route through it);
+       per-frame paint() must not re-read computed styles. */
+    function geo(strip) {
+      var s = state(strip);
+      if (s && s.geo) return s.geo;
+      var cs = getComputedStyle(strip);
+      var el = strip.querySelector(':scope > .ed-tab-shape');
+      var g = {
+        crownR: parseFloat(cs.getPropertyValue('--ed-top-radius')) || 13,
+        shMax: parseFloat(cs.getPropertyValue('--ed-shoulder-rx-max')) || 10,
+        cvMax: parseFloat(cs.getPropertyValue('--ed-canvas-rx-max')) || 12,
+        flare: parseFloat(cs.getPropertyValue('--ed-flare')) || 22,
+        h: el ? el.offsetHeight : (strip.offsetHeight - 1)
+      };
+      if (s) s.geo = g;
+      return g;
+    }
+
+    /* One continuous silhouette as an SVG path (element-local px), replacing
+       border-radius + masked shoulder pseudos. This is the bezier-path
+       construction from the newest reference iteration: crown corners are
+       superellipse-approximating cubics whose handle length morphs with the
+       side's progress (arc at contact, squircle in the open -- the same
+       1.0->1.6 character corner-shape gave Chromium, now identical in
+       Safari), and each side descends through an ogee: a concave flare
+       (cutout r = shoulder token x p) blending into a convex foot (neck r =
+       canvas token x p) that lands tangent on the canvas line. clip-path
+       clips the crown/canvas background stack, so the morph is the SHAPE
+       itself -- visible in every theme regardless of cap contrast. */
+    function edShapePath(g, w, lp, rp) {
+      var T = g.flare;                     /* static side margin in the box */
+      var H = g.h;
+      var crown = Math.min(g.crownR, w / 2);
+      /* Reference model (explainer HUD): the tab's side is ONE CONCAVE
+         QUARTER-ARC -- vertical tangent at the wall, horizontal tangent on
+         the canvas line, radius = shoulder token x progress. The convex
+         "canvas r" corner is the PANEL's own corner (the strip-end caps),
+         not part of this outline. The earlier ogee attempts stacked a convex
+         foot under the cutout and read wrong at every handle tuning. */
+      var K = 0.5523;                      /* quarter-arc kappa */
+      var maxFl = Math.min(g.shMax, T, H - crown - 1);
+      var flL = maxFl * lp, flR = maxFl * rp;
+      var L = T, R = T + w;                /* tab walls */
+      var kL = K + 0.25 * lp, kR = K + 0.25 * rp; /* crown superellipse morph */
+      function n(v) { return (Math.round(v * 100) / 100); }
+      var p = 'M ' + n(L - flL) + ' ' + n(H);
+      if (flL >= 0.1) {
+        /* concave quarter up: canvas -> wall */
+        p += ' C ' + n(L - flL + K * flL) + ' ' + n(H) +
+             ' ' + n(L) + ' ' + n(H - flL + K * flL) +
+             ' ' + n(L) + ' ' + n(H - flL);
+      }
+      p += ' L ' + n(L) + ' ' + n(crown);
+      p += ' C ' + n(L) + ' ' + n(crown - kL * crown) + ' ' + n(L + crown - kL * crown) + ' 0 ' + n(L + crown) + ' 0';
+      p += ' L ' + n(R - crown) + ' 0';
+      p += ' C ' + n(R - crown + kR * crown) + ' 0 ' + n(R) + ' ' + n(crown - kR * crown) + ' ' + n(R) + ' ' + n(crown);
+      p += ' L ' + n(R) + ' ' + n(H - flR);
+      if (flR >= 0.1) {
+        /* concave quarter down: wall -> canvas */
+        p += ' C ' + n(R) + ' ' + n(H - flR + K * flR) +
+             ' ' + n(R + flR - K * flR) + ' ' + n(H) +
+             ' ' + n(R + flR) + ' ' + n(H);
+      }
+      p += ' Z';
+      return p;
     }
 
     /* Write position AND contact progress together. Progress is a pure
        function of the position passed in, so an animated frame and a dragged
-       frame produce exactly the same shape for the same x. Radii themselves
-       are stylesheet-owned: writing per-side px here would be an inline
-       style, which beats the 10x-global calc() and freezes theme retunes.
-       Progress goes on the strip (for the shape/shoulders/caps) AND on its
-       parent -- the dashboard header's own corner caps and anything else at
-       host level read it from there. */
+       frame produce exactly the same shape for the same x.
+       Two progress pairs with different references:
+       * the SHAPE's per-side progress = gap to the NEAREST contact (canvas
+         boundary or neighbour edge) -- consumed by the path builder here;
+       * the CSS --ed-lp/--ed-rp = gap to the canvas boundary ONLY --
+         consumed by the strip-end corner caps and the dashboard header caps,
+         which are edge furniture and must not shrink when the tab merely
+         nears a NEIGHBOUR mid-strip. */
     function paint(strip, x, w, track) {
       if (!(w > 0)) return; /* never persist a degenerate (collapsed) shape */
-      var leftGap = Math.max(0, x - (track ? track.left : 0));
-      var rightGap = Math.max(0, (track ? track.right : x + w) - (x + w));
-      var lp = Math.max(0, Math.min(1, leftGap / MORPH));
-      var rp = Math.max(0, Math.min(1, rightGap / MORPH));
+      var tl = track ? track.left : 0;
+      var tr = track ? track.right : x + w;
+      var edgeLp = Math.max(0, Math.min(1, Math.max(0, x - tl) / MORPH));
+      var edgeRp = Math.max(0, Math.min(1, Math.max(0, tr - (x + w)) / MORPH));
+      var pe = track && track.prevEdge !== undefined ? track.prevEdge : tl;
+      var ne = track && track.nextEdge !== undefined ? track.nextEdge : tr;
+      var shapeLp = Math.max(0, Math.min(1, Math.max(0, x - pe) / MORPH));
+      var shapeRp = Math.max(0, Math.min(1, Math.max(0, ne - (x + w)) / MORPH));
       strip.style.setProperty('--ed-shape-x', x.toFixed(2) + 'px');
       strip.style.setProperty('--ed-shape-w', w.toFixed(2) + 'px');
-      strip.style.setProperty('--ed-lp', lp.toFixed(3));
-      strip.style.setProperty('--ed-rp', rp.toFixed(3));
+      strip.style.setProperty('--ed-lp', edgeLp.toFixed(3));
+      strip.style.setProperty('--ed-rp', edgeRp.toFixed(3));
       var host = strip.parentElement;
       if (host) {
-        host.style.setProperty('--ed-lp', lp.toFixed(3));
-        host.style.setProperty('--ed-rp', rp.toFixed(3));
+        host.style.setProperty('--ed-lp', edgeLp.toFixed(3));
+        host.style.setProperty('--ed-rp', edgeRp.toFixed(3));
+      }
+      var el = strip.querySelector(':scope > .ed-tab-shape');
+      if (el) {
+        var g = geo(strip);
+        el.style.clipPath = 'path("' + edShapePath(g, w, shapeLp, shapeRp) + '")';
       }
     }
 
@@ -1421,11 +1532,27 @@
       if (!t) return;
       ensure(strip);
       var s = state(strip);
+      if (s) s.geo = null; /* sync = boot/resize/theme/selection: re-read tokens
+                              and the shape box here so per-frame paint() never
+                              touches computed styles */
       var activeEl = strip.querySelector('.tab.active');
       var activeKey = activeEl ? (activeEl.getAttribute('data-file') || (activeEl.textContent || '').trim()) : null;
       if (s.lastActive !== undefined && s.lastActive !== activeKey) animate = true;
       s.lastActive = activeKey;
-      var track = { left: t.trackLeft, right: t.trackRight };
+      /* drag is 1:1 by canon -- NO independent easing while a reorder gesture
+         is live. Without this, grabbing a non-active tab flipped lastActive
+         and SPRUNG the plate across (~12 frames); the carried tab paints
+         nothing, so the tab underneath showed through the whole flight, and
+         sub-0.5px moves fed the spring-preservation guard below, holding the
+         hole open for slow drags. Snap instead: the plate must sit under the
+         grabbed tab in the same frame the gesture activates. */
+      var draggingLive = Boolean(strip.querySelector('.tab.dragging'));
+      if (draggingLive) animate = false;
+      /* retro is DISCRETE by design: the surface jumps between tabs like a
+         character-cell cursor (the bake-off flourishes supply the motion);
+         a smooth spring slide reads as the wrong decade there */
+      if (animate && /^retro/.test(document.documentElement.getAttribute('data-theme') || '')) animate = false;
+      var track = { left: t.trackLeft, right: t.trackRight, prevEdge: t.prevEdge, nextEdge: t.nextEdge };
       if (!s) { paint(strip, t.x, t.w, track); return; }
       var springInFlight = Boolean(s.raf);
       var previousTx = s.tx, previousTw = s.tw;
@@ -1437,7 +1564,7 @@
            lastActive was consumed, which used to cancel the spring one frame
            in -- the shape teleported between tabs (the rev-13 lesson,
            regressed via the double-pass; caught by the frame-step harness). */
-        if (springInFlight && !reduced() && s.x !== null &&
+        if (springInFlight && !reduced() && s.x !== null && !draggingLive &&
             Math.abs(previousTx - t.x) < 0.5 && Math.abs(previousTw - t.w) < 0.5) {
           return;
         }
@@ -1466,11 +1593,8 @@
       if (!tab) return;
       sync(tab.closest('.editor-tabs, .dashboard-tabs'), true);
     }, true);
-    /* dragging is one-to-one: snap every frame, no independent easing */
-    document.addEventListener('dragover', function (e) {
-      var strip = e.target && e.target.closest ? e.target.closest('.editor-tabs') : null;
-      if (strip && document.querySelector('.editor-tabs .tab.dragging')) sync(strip, false);
-    }, true);
+    /* (the old dragover snap hook is gone: tab reorder is pointer-capture
+       driven and part 25 calls sync(strip, false) itself on every move) */
     window.addEventListener('resize', function () { syncAll(false); });
     document.addEventListener('pm6:theme-changed', function () { syncAll(false); });
     if (document.fonts && document.fonts.ready) {
@@ -1480,6 +1604,139 @@
     return { sync: sync, syncAll: syncAll };
   })();
   window.PM6_EDTAB_SHAPE = EDSHAPE;
+
+  /* ---------- retro tab motion (RETROMOTION) -----------------------------
+     The three concepts (phosphor cursor / CRT redraw / DOS inversion) all
+     shipped: every selection click and every reorder gesture rolls a
+     different one from a shuffle bag (fair rotation, no immediate
+     repeats), live ONLY when the active theme starts with "retro". All
+     visuals live in pm-retro-* classes (10x-pm6-css-global); this IIFE
+     only adds/removes them. It rides the SAME capture click wiring EDSHAPE
+     uses, never stops propagation, and never touches .ed-tab-shape or the
+     --ed-* variables: the silhouette snaps untouched beneath. Part 25 asks
+     beginDrag() for the gesture's mode; phosphor/dos gestures quantize the
+     glide to 8px character cells there. */
+  var RETROMOTION = (function () {
+    var PHOS_DITHER_MS = 240;  /* step 1 (dither) -> step 2 (solid hold) */
+    var PHOS_HOLD_MS = 700;    /* 650ms solid-block fade + removal slack */
+    var PHOS_GLOW_MS = 720;    /* 650ms afterglow fade + removal slack */
+    var CRT_IN_MS = 340;       /* 300ms 6-step wipe + slack */
+    var CRT_HOLD_MS = 540;     /* 500ms scanline-block fade + slack */
+    var CRT_ROLL_MS = 200;     /* 170ms drop roll + slack */
+    var DOS_BLINK_MS = 620;    /* 600ms double inversion blink + slack */
+    var DOS_DROP_MS = 320;     /* 280ms single drop blink + slack */
+    var MODES = ['phosphor', 'crt', 'dos'];
+
+    function reduced() {       /* same gate EDSHAPE uses */
+      if (document.documentElement.getAttribute('data-motion') === 'reduced') return true;
+      return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    }
+    function retroOn() {
+      return (document.documentElement.getAttribute('data-theme') || '').indexOf('retro') === 0;
+    }
+    /* User decision: all three concepts stay, rotating randomly per click.
+       A shuffle bag guarantees fair rotation; the no-immediate-repeat guard
+       keeps back-to-back clicks from ever feeling stuck. */
+    var bag = [], lastMode = null;
+    function roll() {
+      if (!bag.length) {
+        bag = MODES.slice();
+        for (var i = bag.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var t = bag[i]; bag[i] = bag[j]; bag[j] = t;
+        }
+        if (bag[0] === lastMode && bag.length > 1) { bag.push(bag.shift()); }
+      }
+      lastMode = bag.shift();
+      return lastMode;
+    }
+    function pulse(el, cls, ms) {
+      if (!el) return;
+      el.classList.remove(cls);
+      void el.offsetWidth;     /* restart the animation on rapid re-triggers */
+      el.classList.add(cls);
+      setTimeout(function () { el.classList.remove(cls); }, ms);
+    }
+    function findByKey(strip, key) {
+      if (!key) return null;
+      var tabs = strip.querySelectorAll('.tab');
+      for (var i = 0; i < tabs.length; i++) {
+        if (tabs[i].getAttribute('data-file') === key) return tabs[i];
+      }
+      return null;
+    }
+
+    /* SELECTION CHANGE -- at capture time .active still marks the OUTGOING
+       tab, so both ends are keyed BEFORE the app's own handlers (and any
+       model re-render) run; the timeout then re-resolves live nodes. */
+    document.addEventListener('click', function (e) {
+      var tab = e.target && e.target.closest ? e.target.closest('.editor-tabs .tab, .dashboard-tabs .tab') : null;
+      if (!tab || !retroOn() || reduced()) return;
+      var strip = tab.closest('.editor-tabs, .dashboard-tabs');
+      var out = strip ? strip.querySelector('.tab.active') : null;
+      if (!out || out === tab) return;       /* not a selection change */
+      var outKey = out.getAttribute('data-file');
+      var stripSel = strip;
+      setTimeout(function () {               /* after the app re-rendered */
+        var s = stripSel.isConnected ? stripSel : null;
+        if (!s) return;
+        var act = s.querySelector('.tab.active');
+        var prev = findByKey(s, outKey);
+        if (!act || act === prev) return;    /* selection did not move */
+        var m = roll();
+        if (m === 'phosphor') {
+          pulse(act, 'pm-retro-phos-in', PHOS_DITHER_MS);
+          setTimeout(function () {
+            if (act.isConnected && act.classList.contains('active')) pulse(act, 'pm-retro-phos-hold', PHOS_HOLD_MS);
+          }, PHOS_DITHER_MS);
+          if (prev) pulse(prev, 'pm-retro-phos-glow', PHOS_GLOW_MS);
+        } else if (m === 'crt') {
+          pulse(act, 'pm-retro-crt-in', CRT_IN_MS);
+          setTimeout(function () {
+            if (act.isConnected && act.classList.contains('active')) pulse(act, 'pm-retro-crt-hold', CRT_HOLD_MS);
+          }, CRT_IN_MS);
+        } else {
+          pulse(act, 'pm-retro-dos-blink', DOS_BLINK_MS);
+        }
+      }, 0);
+    }, true);
+
+    /* REORDER -- part 25 asks for a gesture mode at its drag threshold;
+       the mode picks the carried-tab look here and the glide quantization
+       there (phosphor/dos = 8px character cells, crt = smooth). */
+    var gestureMode = null, gestureTab = null;
+    function beginDrag(tab) {
+      if (!retroOn() || reduced()) { gestureMode = null; gestureTab = null; return null; }
+      gestureMode = roll();
+      gestureTab = tab;
+      if (tab) {
+        tab.classList.add(gestureMode === 'phosphor' ? 'pm-retro-drag-phos' :
+                          gestureMode === 'crt' ? 'pm-retro-drag-crt' : 'pm-retro-drag-dos');
+      }
+      return gestureMode;
+    }
+    /* This boot-time window listener registers BEFORE part 25's per-gesture
+       pointerup listener, so at call time .dragging is still on the tab and
+       the settle has not started. Drop cues use composed properties
+       (translate / background) that never fight the inline settle glide. */
+    window.addEventListener('pointerup', function () {
+      if (!gestureTab) return;
+      var drag = gestureTab.classList.contains('dragging') ? gestureTab : null;
+      var m = gestureMode, t = gestureTab;
+      gestureMode = null; gestureTab = null;
+      if (drag && retroOn() && !reduced()) {
+        if (m === 'crt') pulse(drag, 'pm-retro-crt-roll', CRT_ROLL_MS);
+        else if (m === 'dos') pulse(drag, 'pm-retro-dos-drop', DOS_DROP_MS);
+      }
+      /* clear the carried-tab look after the settle finishes */
+      setTimeout(function () {
+        t.classList.remove('pm-retro-drag-phos', 'pm-retro-drag-crt', 'pm-retro-drag-dos');
+      }, 600);
+    }, true);
+
+    return { beginDrag: beginDrag };
+  })();
+  window.PM6_RETRO_MOTION = RETROMOTION;
 
   /* ---------- shared tab-strip metrics -----------------------------------
      `.editor-tabs` reserves room on its right for the absolutely-pinned

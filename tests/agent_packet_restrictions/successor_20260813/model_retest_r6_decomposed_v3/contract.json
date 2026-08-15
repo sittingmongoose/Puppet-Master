@@ -1,0 +1,33 @@
+{
+  "schema_id":"pw-r6-decomposed-experiment-contract-v3",
+  "protocol_id":"PW-R6-DECOMPOSED-20260814.3",
+  "status":"UNFINISHED_THROWAWAY_FROZEN_SNAPSHOT_EXPERIMENT",
+  "base_revision_root":"tests/agent_packet_restrictions/successor_20260813/model_retest_r6_decomposed_v2",
+  "frozen_snapshot_descriptor_sha256":"28730f6ea44a5720cb8e473f8fb736353dfe5c412e21261eacc88d70ffe46392",
+  "preserved_revision_bindings":[
+    {"path":"tests/agent_packet_restrictions/successor_20260813/model_retest_r6_decomposed_v2/contract.json","sha256":"fdafa86048249a3b4325a84ce6e8f14e8cbafa0cc4e40360be3490d17e46bde6","bytes":6618},
+    {"path":"tests/agent_packet_restrictions/successor_20260813/model_retest_r6_decomposed_v2/counterfactual_holdouts.json","sha256":"829c69185e6d2871e586f307b785dcd27314fc931e6c66700b4684ffd4c7a328","bytes":2286},
+    {"path":"tests/agent_packet_restrictions/successor_20260813/model_retest_r6_decomposed_v2/r6v2_harness.py","sha256":"0cfd8e25d06a12c7294a15c182af0da095da33848ae96ca62b93349579a90e34","bytes":28103},
+    {"path":"tests/agent_packet_restrictions/successor_20260813/model_retest_r6_decomposed_v2/execution/R6V2-W10B.completion.json","sha256":"87a6ffb6c48d3fdae731fac68bc2ecc7e442028e44e68a144bca7d36e33c7c5f","bytes":779},
+    {"path":"tests/agent_packet_restrictions/successor_20260813/model_retest_r6_decomposed_v2/execution/revision_terminal.json","sha256":"e4215b86aeaa0d298a46827a479c0aa2ff03a111d8f2429bfe7d713edbc8b5d4","bytes":995}
+  ],
+  "reused_passing_payloads":{
+    "S10B_DECISIONS":{"sha256":"e9c7c2780aac3b549f37ec0ef497513667dfd56248aeda27b62089821b1f106d","bytes":2694,"storage_sha256":"e94e9d8eee035b1fb020652fc3de885e9ec54e6aa69383aa686cf7d1ba72228b","storage_bytes":2695},
+    "S10B_TENSION":{"sha256":"92abd07ad797a8ff28f3b7f715b2850ff0a76dd25e87a6820ef5cd4fd9e931c6","bytes":437,"storage_sha256":"1aafe3ce8a68ac59743f3368c7e3ce07e4051b79e71b18560d91577cab78ce7e","storage_bytes":438}
+  },
+  "routes":[
+    {"slot":"slot-alpha","model":"gpt-5.4-mini","thinking":"xhigh"},
+    {"slot":"slot-bravo","model":"gpt-5.4-mini","thinking":"medium"},
+    {"slot":"slot-charlie","model":"gpt-5.6-luna","thinking":"medium"}
+  ],
+  "edge_micro_unit":{
+    "candidate_source":"frozen topic_b_capsule.edge_candidates in source order",
+    "admitted_context":"one edge candidate, two exact endpoint decision rows, and every frozen source record cited by those endpoints",
+    "semantic_objectives_per_call":1,
+    "model_owned_fields":["verdict","source_decision_ids"],
+    "deterministic_fields":["edge admission","candidate lineage","packet hash","candidate order","join","final projection"],
+    "allowed_verdicts":["supported","unsupported"]
+  },
+  "execution_policy":{"fresh_first_attempt_per_edge_cell":true,"retries":0,"best_of":false,"replacement_results":false,"reuse_only_byte_identical_passing_predecessors":true,"failed_revisions_preserved":true},
+  "nonclaims":["current_plans","production_runtime_enforcement","full_planning_wizard_audit_process","release_readiness","safety_certification","permission_to_compile_plans"]
+}

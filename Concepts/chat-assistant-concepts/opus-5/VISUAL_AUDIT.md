@@ -1,5 +1,31 @@
 # Visual Audit — Opus 5 Assistant Chat concept workspace
 
+> ## Addendum — 2026-08-14, the reference-media correction
+>
+> **Everything below this block predates the four raw recordings.** It was written on 2026-08-11
+> against prose descriptions of media the original packet did not ship, and it passed. That is the
+> finding, not a footnote: an audit can be internally consistent, thorough, and still be auditing the
+> wrong thing, because it can only check what it was told existed.
+>
+> Two claims in this document were false at the time it was written, and neither could have been
+> caught by reading it:
+>
+> - **Motion.** Ten of the thirteen transition families added a `pmx-m-*` class that no stylesheet
+>   defined. `beat()` added the class, no animation started, no `animationend` fired, and cleanup
+>   waited out its 480ms fallback. Nine families were visually inert while reporting success. A
+>   sweep for the classes would have found it in a second; nothing prompted the sweep.
+> - **The count morph.** `motion.countMorph` only animates digits when the element already shows the
+>   previous text, and seven of eight concepts rebuilt their capsule on every render. The number
+>   always landed correctly, so there was nothing to see — which is exactly why it survived an audit.
+>
+> Both are fixed, and both are now asserted by measurement rather than by eye: `tools/drive.mjs
+> activity` samples the rendered text and the header row's y-coordinate at each beat, so a report can
+> no longer claim motion the DOM did not perform. See `reference-review-report.json` for the frame
+> indices behind each behaviour, and `GAP_REPORT.md` section `GAP-M` for what is still open — most
+> notably that no questionnaire card reserves a stable height, which is the whole subject of
+> `02_stable_paged_questionnaire.mov`.
+
+
 > ## Addendum — 2026-08-01, material and motion pass
 >
 > The previous audit passed every automated check while the concepts still read as plain. That was a

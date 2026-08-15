@@ -102,8 +102,13 @@
           : kit.isHistoryPinned(store)
             ? 'pinned_full'
             : 'closed';
+      var peeking =
+        histMode === 'peek' || (kit.isHistoryPeek && kit.isHistoryPeek(store));
       root.classList.toggle('is-history-pinned', kit.isHistoryPinned(store));
+      root.classList.toggle('is-history-peek', peeking);
       root.classList.toggle('is-history-compact', histMode === 'pinned_compact');
+      root.classList.toggle('is-pills-collapsed', histMode === 'closed' && !kit.isHistoryPinned(store));
+      root.classList.toggle('is-pills-expanded', peeking || kit.isHistoryPinned(store));
       root.setAttribute('data-history-mode', histMode);
       var meta = activeMeta(store, kit);
       var mountMode = env.mountMode || 'docked';

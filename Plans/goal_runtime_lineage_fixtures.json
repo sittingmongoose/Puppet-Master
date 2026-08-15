@@ -1,0 +1,68 @@
+{
+  "schema_id": "pm.goal_runtime_lineage_fixtures.v1",
+  "owner_schema": "Plans/goal_runtime_lineage.schema.json",
+  "valid": [
+    {
+      "name": "active_goal_with_thread_and_agent_lineage",
+      "value": {
+        "schema_id": "pm.storage_value.goal_runtime_lineage_record.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project:1",
+        "goal_id": "goal:1",
+        "root_goal_id": "goal:1",
+        "parent_goal_id": null,
+        "plan_id": "plan:1",
+        "plan_version": 2,
+        "lineage_epoch": 3,
+        "owner_id": "owner:agent:1",
+        "owner_epoch": 4,
+        "requested_route_ref": "route:requested:1",
+        "effective_route_ref": "route:effective:1",
+        "route_binding_reason_ref": "route-reason:explicit",
+        "project_home_server_id": "server:home:1",
+        "server_claim_epoch": 2,
+        "server_continuation_state": "continuing",
+        "continuation_checkpoint_ref": "checkpoint:goal:1:10",
+        "primary_thread_id": "thread:1",
+        "threads": [
+          {
+            "thread_id": "thread:1",
+            "parent_thread_id": null,
+            "branch_basis_ref": null,
+            "thread_generation": 1,
+            "state": "active"
+          }
+        ],
+        "agents": [
+          {
+            "agent_id": "agent:1",
+            "parent_agent_id": null,
+            "thread_id": "thread:1",
+            "owner_epoch": 4,
+            "assignment_ref": "assignment:1",
+            "state": "active"
+          }
+        ],
+        "state": "active",
+        "currentness_ref": "currentness:goal:1",
+        "created_at_utc": "2026-08-14T00:00:00Z",
+        "updated_at_utc": "2026-08-14T00:01:00Z",
+        "terminal_at_utc": null
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "continuing_goal_requires_checkpoint",
+      "patch": {"continuation_checkpoint_ref": null}
+    },
+    {
+      "name": "active_goal_cannot_have_terminal_time",
+      "patch": {"terminal_at_utc": "2026-08-14T00:02:00Z"}
+    },
+    {
+      "name": "goal_lineage_cannot_store_secret_shaped_route",
+      "patch": {"effective_route_ref": "sk-abcdefgh12345678"}
+    }
+  ]
+}

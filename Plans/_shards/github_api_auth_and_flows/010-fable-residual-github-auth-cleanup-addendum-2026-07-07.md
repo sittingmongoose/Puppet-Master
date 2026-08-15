@@ -2,9 +2,9 @@
 
 Source: `Plans/GitHub_API_Auth_and_Flows.md`
 
-Source lines: L884-L952
+Source lines: L885-L953
 
-Source SHA256: `bb36d0e03f358c2b87d6c8b91d33f7da5f62c36c45524c34dedaff8146caffd4`
+Source SHA256: `9a1b15ff570170004e106ad168572e399378dfbe596bbd6d66b10f9e5437e899`
 
 ---
 

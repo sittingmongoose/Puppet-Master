@@ -471,10 +471,14 @@
     var port = conflicts.filter(function (c) { return c.kind === 'port'; })[0];
     t.ok(port, 'the port conflict is projected');
     if (port) {
-      t.eq(port.summary, 'Port 3000 is used by the checkout redesign in another worktree. Use 3001 instead?',
-        'the port conflict copy is verbatim');
-      t.eq(port.actions.map(function (a) { return a.label; }).join('|'), 'Use 3001|Details|Cancel',
-        'the port conflict action set is verbatim');
+      /* DEMO_SCENARIO_MANIFEST.json specifies this collision exactly: port 4173 requested, occupied
+       * by the Usage concept visual-test server, 4174 offered. The concept previously invented
+       * 3000/3001 and a checkout worktree, so the one collision the packet pins down was the one it
+       * did not demonstrate. These two assertions used to hold the invented copy in place. */
+      t.eq(port.summary, 'Port 4173 is used by the Usage concept visual-test server. Use 4174 instead?',
+        'the port conflict copy is the manifest\'s, verbatim');
+      t.eq(port.actions.map(function (a) { return a.label; }).join('|'), 'Use 4174|Details|Cancel',
+        'the port conflict action set names the alternative it will take');
     }
 
     var PROSE = ['Isolated and clean', 'Waiting for writer', 'Conflict detected',
@@ -602,6 +606,28 @@
     t.ok(ids.indexOf('artifact-context') >= 0, 'the context admission receipt is a catalog record');
     t.ok(ids.indexOf('artifact-crew') >= 0, 'the crew synthesis is a catalog record');
 
+    /* The catalog carried `artifact-test` twice. A count assertion cannot catch that — the duplicate
+     * is what SATISFIED `length >= 7` — so uniqueness has to be asserted as itself. */
+    var seenIds = {};
+    var dupes = [];
+    ids.forEach(function (id) { if (seenIds[id]) dupes.push(id); seenIds[id] = true; });
+    t.eq(dupes.join(','), '', 'every catalog id appears exactly once');
+
+    /* The consequence the duplicate actually had: `artifact.switch` walks list() by index, so a
+     * repeated id trapped the cycle between two neighbours and made the records after them
+     * unreachable. Walking the full cycle is the only assertion that proves it is a cycle. */
+    fire('artifact', 'close');
+    Ar.open(ids[0]);
+    var visited = {};
+    visited[ids[0]] = true;
+    for (var sw = 0; sw < ids.length + 2; sw++) {
+      fire('artifact', 'switch');
+      var cur = Ar.activeId();
+      if (cur) visited[cur] = true;
+    }
+    var unreached = ids.filter(function (id) { return !visited[id]; });
+    t.eq(unreached.join(','), '', 'switching cycles through every catalog record');
+
     var frames = { w1: 'rows', w2: 'tabs', w3: 'markers', w4: 'segments', w5: 'band', w6: 'sheettabs', w7: 'railpopup', w8: 'capsules' };
     Object.keys(frames).forEach(function (w) {
       t.eq(Ar.frame(w).switcher, frames[w], w + ' uses its own switcher idiom');
@@ -630,6 +656,23 @@
          * covering the composer — that is the one control which must stay reachable. */
         if (w !== 'w8') A.noOverlap(hr, tRect, w + ': the artifact does not overlap the transcript');
         A.noOverlap(hr, cRect, w + ': the artifact does not overlap the composer');
+
+        /* The packet's phrase is "LEFT-SIDE artifacts", and that is an ORDERING claim which
+         * no-overlap cannot make: two regions can be disjoint in the wrong order. `A.leftToRight`
+         * was written for exactly this and had never been called.
+         *
+         * It asserts only what the packet actually requires — the artifact is not to the RIGHT of
+         * the transcript. An earlier draft of this assertion also fixed the position of pinned
+         * history relative to the artifact, and that was inventing a requirement: the eight window
+         * concepts deliberately place these regions differently (w4 makes the artifact a fourth
+         * pane, w6 makes it a sheet), and a test that pins one arrangement would be marking seven
+         * concepts wrong for not being the eighth.
+         *
+         * w8 is excluded because its artifact is a floating capsule by design, so it has no place
+         * in a reading order at all. */
+        if (w !== 'w8') {
+          A.leftToRight([hr, tRect], w + ': the artifact workspace opens left of the transcript');
+        }
       } else {
         t.ok(true, w + ': the artifact host is collapsed at this width, so there is nothing to overlap');
       }
@@ -935,8 +978,567 @@
     var receipt = QF.read(svc, id).receipt;
     t.ok(receipt, 'a resolved flow leaves a receipt every concept can render');
     t.eq(receipt.status, 'submitted', 'the receipt records the outcome');
+/* ---- 5. the handoff card reports the transport it actually has. */
+    FORMS.forEach(function (f) {
+      reset();
+      setPairing('w1', f.id);
+      var card = q(f.handoff);
+      t.ok(card, f.id + ' renders an artifact handoff card');
+      if (!card) return;
+      var stateEl = card.querySelector('[class$="-handoff-state"]');
+      t.ok(stateEl && /compiling|ready/.test(stateEl.textContent),
+        f.id + ' states whether the artifact is compiling or ready');
+    });
+  });
 
-      /* ------------------------------------------------------------------ provider acquisition
+  /* ------------------------------------------------------------------ paging (probe 2b)
+   *
+   * Registered HERE, between `forms` and `provider`, for the reason the file header gives: suite order
+   * is dependency order. Every assertion below selects a concept's question card by the same root
+   * selector `forms` has just proved each concept renders on its own, so if `forms` fails these
+   * measurements describe an absent element rather than a behaviour, and reading them in that order
+   * says so. Nothing registered after this suite depends on it.
+   *
+   * Three behaviours, measured on one walk through the same questionnaire.
+   *
+   * 1. THE CARD ROOT PERSISTS ACROSS A PAGE CHANGE. This is the precondition for the other two and for
+   *    the resize bounce: `motion.resizeBounce` measures a start height on the very element it is
+   *    about to mutate, and `motion.firstVisit` stamps its answer ON the element. A concept that
+   *    empties its host and builds a fresh root per question therefore gets a bounce from nothing to
+   *    nothing and a firstVisit that is true forever - both features present in the source and inert
+   *    on screen. Identity is asserted by node comparison, which no look-alike can satisfy.
+   *
+   * 2. PAGING BACKWARD DOES NOT REPLAY THE ENTRANCE (02_stable_paged_questionnaire.mov). The eight
+   *    concepts are required to animate in eight different ways, so this cannot name a class. It
+   *    measures an ENTRANCE SIGNATURE instead - the animations running and the class tokens ADDED
+   *    during a beat - at the open, at a forward page change and at a backward one. The failure is a
+   *    signature element that belongs to the entrance and not to the advance turning up on the way
+   *    back. Where a concept's entrance and advance are indistinguishable the comparison is vacuous,
+   *    so that case is asserted explicitly rather than allowed to pass quietly.
+   *
+   * 3. REDUCED MOTION LANDS FULLY REVEALED. The artefact this guards is named in motion.css:337 - a
+   *    card parked at the 1.085 vertical scale in the middle of `pmx-size-bounce-strong`, which is
+   *    what a reduced-motion path that skips the ANIMATION but not the CLEANUP leaves behind.
+   */
+
+  /* The controls each concept renders, for a walk that pages rather than resolves. This repeats part
+   * of the DRIVE table inside `forms` deliberately: that table belongs to the resolution walk and has
+   * no backward control, and editing a passing suite's fixture to feed a new suite is how an existing
+   * assertion gets weakened by accident.
+   *
+   * t5 is the one entry that needs a decision. It renders a PAIR of lanes rather than a card, and the
+   * user lane is the half whose height follows the option count, so it is the half a resize bounce and
+   * a firstVisit stamp belong to; the assistant lane carries the prompt. */
+  var PAGING = {
+    t1: { root: '.t1-qturn', opt: '.t1-qrow', free: '.t1-qfree',
+          cmd: '.t1-qact', next: 'Next', back: 'Back' },
+    t2: { root: '.t2-capsule', opt: '.t2-capsule-opt', free: '.t2-capsule-free',
+          cmd: '.t2-capsule-next, .t2-capsule-primary, .t2-capsule-quiet', next: 'Next', back: 'Back' },
+    t3: { root: '.t3-qrun', opt: '.t3-opt', free: '.t3-qfree',
+          cmd: '.t3-qact', next: 'Next', back: 'Back' },
+    t4: { root: '.t4-qdigest', opt: '.t4-qopt', free: '.t4-qfree',
+          cmd: '.t4-act', next: 'Next', back: 'Back' },
+    t5: { root: '.t5-qlane[data-lane="user"]', opt: '.t5-opt', free: '.t5-qfree',
+          cmd: '.t5-act', next: 'Next', back: 'Back' },
+    t6: { root: '.t6-form', opt: '.t6-form-opt', free: '.t6-form-field',
+          cmd: '.t6-form-cmd', next: '[next]', back: '[back]' },
+    t7: { root: '.t7-deck', opt: '.t7-opt', free: '.t7-qfree',
+          cmd: '.t7-act', next: 'Next', back: 'Back' },
+    t8: { root: '.t8-qnote', opt: '.t8-qlist-btn', free: '.t8-qfree',
+          cmd: '.t8-act', next: 'Next', back: 'Back' }
+  };
+
+  var PAGING_IDS = ['t1', 't2', 't3', 't4', 't5', 't6', 't7', 't8'];
+
+  /* n animation frames, as a promise. Two is the standard here for the same reason tools/drive.mjs
+   * uses two: a class added during this task does not start its animation until the next style flush,
+   * so a sample taken in the same task reports silence on a concept that just animated. */
+  function pgFrames(n) {
+    return new Promise(function (resolve) {
+      var left = n;
+      function step() {
+        if (left <= 0) { resolve(true); return; }
+        left--;
+        global.requestAnimationFrame(step);
+      }
+      step();
+    });
+  }
+
+  /* Finish every FINITE animation under `el` so the next sample starts from silence. Without this a
+   * 420ms entrance is still running when the advance is sampled two frames later, every entrance name
+   * appears in the advance set as well, and the comparison below would pass by being empty rather than
+   * by being true. Infinite animations are left running: a spinner is not an entrance, and cancelling
+   * one would change what the `motion` suite measures later in the same run. */
+  function pgQuiet(el) {
+    if (!el || !el.getAnimations) return;
+    var list;
+    try { list = el.getAnimations({ subtree: true }); } catch (e) { return; }
+    for (var i = 0; i < list.length; i++) {
+      var timing = list[i].effect && list[i].effect.getComputedTiming ? list[i].effect.getComputedTiming() : null;
+      if (timing && timing.iterations === Infinity) continue;
+      try { list[i].finish(); } catch (e2) { try { list[i].cancel(); } catch (e3) {} }
+    }
+  }
+
+  /* The animations and transitions actually RUNNING under `el`, by name. Transitions are reported by
+   * property because two of the eight concepts express their question motion as an interpolated height
+   * rather than as keyframes, and a reader that only knew about @keyframes would score them motionless
+   * and then pass them for never replaying an entrance it could not see in the first place. */
+  function pgRunning(el) {
+    var out = [];
+    if (!el || !el.getAnimations) return out;
+    var list;
+    try { list = el.getAnimations({ subtree: true }); } catch (e) { return out; }
+    for (var i = 0; i < list.length; i++) {
+      var a = list[i];
+      if (a.playState !== 'running') continue;
+      var timing = a.effect && a.effect.getComputedTiming ? a.effect.getComputedTiming() : null;
+      if (timing && timing.iterations === Infinity) continue;
+      /* The reduced-motion contract ZEROES durations (.01ms in motion.css) rather than removing
+       * transitions, so a transition can legitimately be 'running' for a fraction of a millisecond
+       * and still be the settled end state. Anything under 2ms is that, not motion.
+       *
+       * Without this the assertion flaked about one run in four, and never on the card's own height:
+       * it caught `transition: scrollbar-color` from the shared .pmx-scroll utility on a textarea.
+       * Failing a concept because a scrollbar tint was mid-zero-length-transition would be the test
+       * reporting its own sampling window as a defect in the product. */
+      if (timing && typeof timing.activeDuration === 'number' && timing.activeDuration < 2) continue;
+      if (a.animationName) out.push('animation:' + a.animationName);
+      else if (a.transitionProperty) out.push('transition:' + a.transitionProperty);
+      else out.push('effect');
+    }
+    return out;
+  }
+
+  /* Every class token ADDED anywhere under `root` since the previous take().
+   *
+   * Added rather than present, because the one-shot beats all eight concepts use remove their class on
+   * a timer: a sample of what is on the element a moment later can miss the beat completely, and a
+   * sample of what is present cannot tell a class that was just applied from one that has been sitting
+   * there since the mount. The observer's callback is a microtask, so by the time take() runs after a
+   * frame wait it has already recorded; takeRecords() drains anything still queued. */
+  function pgWatch(root) {
+    var added = {};
+    var mo = null;
+    function drain(recs) {
+      for (var i = 0; i < recs.length; i++) {
+        var r = recs[i];
+        if (r.type !== 'attributes' || r.attributeName !== 'class') continue;
+        var before = {};
+        String(r.oldValue || '').split(/\s+/).forEach(function (tk) { if (tk) before[tk] = 1; });
+        var now = String((r.target.getAttribute && r.target.getAttribute('class')) || '').split(/\s+/);
+        for (var j = 0; j < now.length; j++) if (now[j] && !before[now[j]]) added['class:' + now[j]] = 1;
+      }
+    }
+    if (root && global.MutationObserver) {
+      mo = new MutationObserver(drain);
+      mo.observe(root, { subtree: true, attributes: true, attributeFilter: ['class'], attributeOldValue: true });
+    }
+    return {
+      take: function () {
+        if (mo) drain(mo.takeRecords());
+        var out = Object.keys(added);
+        added = {};
+        return out;
+      },
+      stop: function () { if (mo) mo.disconnect(); }
+    };
+  }
+
+  function pgOnly(a, b) {
+    var seen = {}, out = [], i;
+    for (i = 0; i < b.length; i++) seen[b[i]] = 1;
+    for (i = 0; i < a.length; i++) if (!seen[a[i]] && out.indexOf(a[i]) < 0) out.push(a[i]);
+    return out;
+  }
+
+  function pgBoth(a, b) {
+    var seen = {}, out = [], i;
+    for (i = 0; i < b.length; i++) seen[b[i]] = 1;
+    for (i = 0; i < a.length; i++) if (seen[a[i]] && out.indexOf(a[i]) < 0) out.push(a[i]);
+    return out;
+  }
+
+  /* The concept's own command button carrying `label`, scoped to the question host so a Next elsewhere
+   * on the page cannot stand in for the one this card renders. */
+  function pgCmd(host, spec, label) {
+    var btns = qa(spec.cmd).filter(function (b) { return host.contains(b); });
+    for (var i = 0; i < btns.length; i++) {
+      if ((btns[i].textContent || '').trim() === label) return btns[i];
+    }
+    return null;
+  }
+
+  /* Answer the question on screen THROUGH THE CONCEPT'S OWN CONTROL. The harness reads the flow to
+   * decide whether an answer is still needed - reading is not resolving - but the click that gives the
+   * answer is the one a reader would make, because a walk driven through the service would prove the
+   * fixture instead of the product. Re-answering matters: the first question is multi-select, so a
+   * second click on the same row would take the answer away again on the way back. */
+  function pgAnswerIfNeeded(host, spec, svc, threadId) {
+    var flow = global.PMXQFlow.read(svc, threadId);
+    var question = flow && flow.question;
+    if (!question) return null;
+    var answered = question.kind === 'freeform'
+      ? !!(question.draft && String(question.draft).trim())
+      : !!(question.selected && question.selected.length);
+    if (answered) return 'already answered';
+    var opt = host.querySelector(spec.opt);
+    if (opt) { opt.click(); return 'option'; }
+    var free = host.querySelector(spec.free);
+    if (free) {
+      free.value = 'an answer typed into the field';
+      free.dispatchEvent(new Event('input', { bubbles: true }));
+      return 'freeform';
+    }
+    return null;
+  }
+
+  /* The vertical scale currently applied to `el`, or 1 when there is none. Reading the matrix rather
+   * than demanding `transform: none` is deliberate: a concept is entitled to a resting translate or a
+   * deck rake, and the artefact being hunted is specifically a residual SCALE. */
+  function pgScaleY(el) {
+    var tr = global.getComputedStyle(el).transform;
+    if (!tr || tr === 'none') return 1;
+    var m = tr.match(/matrix3d\(([^)]+)\)/);
+    if (m) return parseFloat(m[1].split(',')[5]);
+    m = tr.match(/matrix\(([^)]+)\)/);
+    if (m) return parseFloat(m[1].split(',')[3]);
+    return 1;
+  }
+
+  /* One concept's walk: open, page forward, page back, with a sample at each of the three beats. */
+  function pgWalk(t, id) {
+    var spec = PAGING[id];
+    var svc = { questionnaire: global.PMXQuestionnaire, surfaces: global.PMXSurfaces };
+    var R = global.PMXReveal;
+
+    reset();
+    setPairing('w1', id);
+    store().set('ui.reducedMotion', false);
+
+    var host = q('[data-pmx-region="questionHost"]');
+    if (!host) {
+      t.record(false, id + ': w1 exposed no questionHost region, so no paging behaviour could be measured');
+      return Promise.resolve(true);
+    }
+
+    /* MAKING THE ENTRANCE OBSERVABLE.
+     *
+     * The fixture's questionnaire is already `incomplete`, so it is ACTIVE the moment the composition
+     * mounts: the card's entrance has happened before any watcher in this suite can exist, and
+     * `fire('question','open')` at an already-active record only settles a phase that is not pending,
+     * which renders nothing. A first attempt measured exactly that and reported an empty entrance for
+     * six of the eight concepts, which would have made "the entrance did not replay" pass by measuring
+     * nothing at all.
+     *
+     * Opening another thread and coming back is what a reader would do, it costs the record nothing -
+     * no answer given, no phase resolved - and it clears the concept's own memory of which question it
+     * was showing, so the card genuinely arrives again with something watching. thread-06 is the
+     * thread with no questionnaire of its own, which is why `forms` uses it for the same purpose. */
+    var threadId = tid();
+    var watch = null;
+    var s = { dead: false, root: null, key1: '', key2: '', answer1: null, entrance: [], forward: [], back: [] };
+
+    fire('question', 'open');
+    store().set('session.activeThreadId', 'thread-06');
+
+    return pgFrames(2).then(function () {
+      /* Armed here, on the live host, in the gap where no question is on screen. */
+      host = q('[data-pmx-region="questionHost"]') || host;
+      pgQuiet(host);
+      watch = pgWatch(host);
+      store().set('session.activeThreadId', threadId);
+      return pgFrames(2);
+    }).then(function () {
+      s.entrance = watch.take().concat(pgRunning(host));
+      pgQuiet(host);
+
+      s.root = q(spec.root);
+      t.ok(s.root, id + ' renders its question card root (' + spec.root + ')');
+      if (!s.root) { s.dead = true; return true; }
+      t.ok(host.contains(s.root), id + ' renders that root inside the window\u2019s questionHost region');
+      s.key1 = R.keyFor(svc, threadId);
+
+      pgAnswerIfNeeded(host, spec, svc, threadId);
+      var flow = global.PMXQFlow.read(svc, threadId);
+      s.answer1 = flow && flow.question && (flow.question.selected || [])[0];
+      t.ok(s.answer1, id + ': question 1 was answered through the concept\u2019s own option control');
+      return pgFrames(2);
+    }).then(function () {
+      if (s.dead) return true;
+      pgQuiet(host);
+      /* The answer click is not the page change. Whatever it stirred up is dropped here so the forward
+       * sample below contains the page change and nothing else. */
+      watch.take();
+
+      var next = pgCmd(host, spec, spec.next);
+      t.ok(next, id + ' offers its own forward control (' + spec.next + ')');
+      if (!next) { s.dead = true; return true; }
+      next.click();
+      return pgFrames(2);
+    }).then(function () {
+      if (s.dead) return true;
+      s.forward = watch.take().concat(pgRunning(host));
+      pgQuiet(host);
+      s.key2 = R.keyFor(svc, threadId);
+      /* If the concept's own forward control does not move the flow, nothing after this measures what
+       * it claims to: "the same root across a page change" is trivially true when no page changed. So
+       * the failure is recorded once, here, and the walk stops rather than producing four more
+       * assertions that all describe the same fault. */
+      t.neq(s.key2, s.key1, id + ' paging forward through its own control reaches a different question');
+      if (s.key2 === s.key1) { s.dead = true; return true; }
+
+      var root2 = q(spec.root);
+      if (!root2) {
+        /* Named apart from the identity assertion because it is a different fault: the card did not
+         * change identity, it stopped existing. */
+        t.record(false, id + ' has no question card at all after paging forward - ' + spec.root +
+          ' is not in the document');
+      } else {
+        t.eq(root2, s.root, id + ' keeps the SAME card root element across a forward page change');
+      }
+
+      var back = pgCmd(host, spec, spec.back);
+      t.ok(back, id + ' offers its own backward control (' + spec.back + ')');
+      if (!back) { s.dead = true; return true; }
+      back.click();
+      return pgFrames(2);
+    }).then(function () {
+      if (s.dead) { watch.stop(); return true; }
+      s.back = watch.take().concat(pgRunning(host));
+      pgQuiet(host);
+      watch.stop();
+
+      var root3 = q(spec.root);
+      if (!root3) {
+        t.record(false, id + ' has no question card at all after paging back - ' + spec.root +
+          ' is not in the document');
+      } else {
+        t.eq(root3, s.root, id + ' keeps the SAME card root element across a backward page change');
+      }
+      t.eq(R.keyFor(svc, threadId), s.key1, id + ' paging back lands on the question it started from');
+
+      /* 2. the entrance must not replay.
+       *
+       * One assertion per concept, in whichever of three readings the concept's own motion supports.
+       * Three separate assertions would report one fault three times, which is the mistake
+       * A.leftToRight exists to avoid. The signatures travel in the message either way, because the
+       * numbers are what the concept's owner needs and a bare false tells them nothing. */
+      var entranceOnly = pgOnly(s.entrance, s.forward);
+      var sigs = ' (entrance ' + JSON.stringify(s.entrance) + ', advance ' + JSON.stringify(s.forward) +
+        ', backward ' + JSON.stringify(s.back) + ')';
+      if (!s.entrance.length) {
+        /* Nothing at all was played when the card arrived, so there is no entrance to replay and no
+         * entrance to see either. That is a finding about the concept rather than a pass. */
+        t.record(false, id + ' plays nothing measurable when its question card arrives, so whether ' +
+          'paging back replays the entrance cannot be answered on this concept' + sigs);
+      } else if (entranceOnly.length > 0) {
+        var replayed = pgBoth(s.back, entranceOnly);
+        t.eq(replayed.length, 0, id + ' does not replay its entrance when paging backward' +
+          (replayed.length ? ' (replayed: ' + replayed.join(', ') + ')' : '') + sigs);
+      } else {
+        /* The concept plays the same beat arriving as advancing, so "entrance only" is empty and the
+         * precise reading is unavailable. The weaker one still holds and is still the requirement:
+         * the way back must not reproduce EVERYTHING the arrival played, or the reader is being told
+         * they have arrived somewhere new when they have gone back. */
+        var held = pgOnly(s.entrance, s.back);
+        t.ok(held.length > 0, id + ' uses one beat for arriving and for advancing, and the backward ' +
+          'pass reproduces the whole of it - so paging back reads as the card arriving' + sigs);
+      }
+
+      /* The other half of "reviewable": the answer is still on screen, not merely still in the store.
+       * All eight concepts mark a chosen option with aria-pressed, which is the one place their eight
+       * different option controls agree - so this reads the rendering, not the record. */
+      var shows = qa('[aria-pressed="true"]').filter(function (b) {
+        return host.contains(b) && s.answer1 && (b.textContent || '').indexOf(s.answer1) >= 0;
+      });
+      t.ok(shows.length > 0, id + ' still SHOWS the answer given to question 1 after paging back to it');
+
+      /* 3. the mechanism behind it. firstVisit stamps its answer on the element, so the stamp is the
+       * direct evidence that the concept asked, that it asked with the shared key, and that the same
+       * element survived to be asked twice. */
+      var stamp = (s.root && s.root.getAttribute('data-pmx-visited-all') !== null)
+        ? s.root : host.querySelector('[data-pmx-visited-all]');
+      if (!stamp) {
+        t.record(false, id + ' stamps motion.firstVisit on nothing in its question card, so paging back ' +
+          'cannot be told apart from a first arrival');
+      } else {
+        var all = ' ' + (stamp.getAttribute('data-pmx-visited-all') || '') + ' ';
+        t.ok(all.indexOf(' ' + s.key1 + ' ') >= 0, id + ' recorded question 1 as visited (' + s.key1 + ')');
+        t.ok(all.indexOf(' ' + s.key2 + ' ') >= 0,
+          id + ' recorded question 2 as visited on the SAME element, so both keys survived the paging');
+        t.notOk(global.PMXMotion.firstVisit(stamp, s.key1),
+          id + ': motion.firstVisit answers false for the question paged back to');
+      }
+      return true;
+    });
+  }
+
+  /* One concept's reduced-motion landing. Driven as a real page change rather than as a static read,
+   * because the failure is a state a page change leaves behind. */
+  function pgReduced(t, id) {
+    var spec = PAGING[id];
+    var svc = { questionnaire: global.PMXQuestionnaire, surfaces: global.PMXSurfaces };
+
+    reset();
+    setPairing('w1', id);
+    store().set('ui.reducedMotion', true);
+    fire('question', 'open');
+
+    var host = q('[data-pmx-region="questionHost"]');
+    if (!host) {
+      t.record(false, id + ': w1 exposed no questionHost region under reduced motion');
+      store().set('ui.reducedMotion', false);
+      return Promise.resolve(true);
+    }
+    var threadId = tid();
+    var R = global.PMXReveal;
+    var keyBefore = R.keyFor(svc, threadId);
+    pgAnswerIfNeeded(host, spec, svc, threadId);
+    var next = pgCmd(host, spec, spec.next);
+    if (!next) {
+      t.record(false, id + ' offers no forward control under reduced motion, so the landing state could not be driven');
+      store().set('ui.reducedMotion', false);
+      return Promise.resolve(true);
+    }
+    next.click();
+
+    return pgFrames(2).then(function () {
+      var root = q(spec.root);
+      /* Stated separately from the landing assertions below. A card that never changed page can pass
+       * every one of them by never having been asked to move, and that would be a pass describing the
+       * harness rather than the concept. */
+      t.neq(R.keyFor(svc, threadId), keyBefore,
+        id + ' actually changed page under reduced motion, so the state below is a landing and not a rest');
+      t.ok(root, id + ' still renders its question card after a reduced-motion page change');
+      if (root) {
+        var stage = root.closest ? root.closest('[data-motion]') : null;
+        t.eq(stage && stage.getAttribute('data-motion'), 'reduced',
+          id + ': the card sits under a stage marked data-motion="reduced", so the flag reached the DOM');
+
+        /* resizeBounce pins a height and clamps overflow for the length of the beat, and collapseTo
+         * does the same while it interpolates. Under reduced motion neither may leave anything behind:
+         * both take an early return that applies the change and stops. An inline `height: auto` counts
+         * as leftover too - it is still an override of the concept's own CSS, written by an animation
+         * that was supposed not to run. */
+        t.eq(root.style.height, '', id + ' leaves no inline height on the card under reduced motion');
+        t.eq(root.style.overflow, '', id + ' leaves no inline overflow clamp on the card under reduced motion');
+
+        t.near(pgScaleY(root), 1, 0.005,
+          id + ' leaves no residual vertical scale on the card - the 1.085 park is the artefact this guards');
+        /* getBoundingClientRect is the TRANSFORMED box and offsetHeight is the laid-out one, so a card
+         * still carrying a bounce scale disagrees with itself here. offsetHeight is an integer, hence
+         * the whole-pixel tolerance. */
+        t.near(root.getBoundingClientRect().height, root.offsetHeight, 1,
+          id + ' shows the card at its natural height under reduced motion');
+
+        var bounced = qa('.pmx-size-bounce, .pmx-size-bounce-strong').filter(function (el) {
+          return el === root || root.contains(el);
+        });
+        t.eq(bounced.length, 0, id + ' leaves no bounce class on the card under reduced motion');
+
+        var running = pgRunning(root);
+        t.eq(running.length, 0, id + ' runs no animation on the card under reduced motion' +
+          (running.length ? ' (running: ' + running.join(', ') + ')' : ''));
+      }
+      store().set('ui.reducedMotion', false);
+      return true;
+    });
+  }
+
+  /* ---- focus
+   *
+   * CORRECTION_GOAL_PROMPT.md requires keyboard/focus to pass, and nothing in this file asserted
+   * focus at all — `activeElement` appeared zero times. That matters more here than in most
+   * workspaces, because shared/motion.js's rule 3 is "NO FOCUS MOVEMENT: not one helper touches
+   * focus", and a rule stated in a docblock and never checked is a rule until the day it is not.
+   *
+   * These are deliberately about the INVARIANT rather than about any concept's tab order: an
+   * animation must not steal focus, and a control the reader is on must survive the render its own
+   * click causes. */
+  A.suite('focus', function (t) {
+    var doc = global.document;
+
+    FORMS.forEach(function (f) {
+      reset();
+      setPairing('w1', f.id);
+      settleAll();
+
+      /* A composer is present in every pairing and is the one control a reader is most often in. */
+      var field = q('[data-pmx-region="composerHost"] textarea, [data-pmx-region="composerHost"] input');
+      if (!field) { t.record(false, f.id + ': no composer field to hold focus'); return; }
+      field.focus();
+      t.eq(doc.activeElement, field, f.id + ': the composer field can take focus');
+
+      /* Drive real motion underneath it. The activity run is the densest sequence in the workspace,
+       * and if anything moved focus it would be this. */
+      fire('activity', 'thinking_summary');
+      fire('activity', 'read');
+      fire('activity', 'settle');
+      fire('activity', 'condense');
+      settleAll();
+      t.eq(doc.activeElement, field, f.id + ': a full activity run never moves focus off the composer');
+
+      /* A resize bounce runs on the question card. Same question, different primitive. */
+      fire('question', 'prepare');
+      fire('question', 'open');
+      settleAll();
+      t.eq(doc.activeElement, field, f.id + ': opening a question never steals focus from the composer');
+      fire('question', 'cancel');
+      settleAll();
+    });
+
+    /* Activating a chain glyph with the keyboard must not lose the reader's place.
+     *
+     * This is the sharper half of the question, and it is asked in every concept rather than one:
+     * seven of the eight rebuild their capsule when the phase kind changes, so a glyph the reader
+     * has focused can be replaced by an equal-looking new element mid-keystroke. The DOM survives
+     * either way — checking that "a focusable control still exists" would pass while focus had in
+     * fact fallen back to <body>, which for a keyboard reader means being returned to the top of the
+     * document. So what is asserted is that focus is still ON THE CHAIN, by position, which is the
+     * property a rebuild can break and a re-render cannot. */
+    FORMS.forEach(function (f) {
+      reset();
+      setPairing('w1', f.id);
+      fire('question', 'cancel');
+      ['thinking_summary', 'read', 'settle', 'edit', 'settle', 'condense'].forEach(function (e) {
+        fire('activity', e);
+      });
+      settleAll();
+      var glyphs = qa('[data-pmx-thread="' + f.id + '"] .pmx-chain button');
+      if (!glyphs.length) { t.record(false, f.id + ': no focusable chain glyph'); return; }
+      var index = glyphs.length > 1 ? 1 : 0;
+      glyphs[index].focus();
+      t.eq(doc.activeElement, glyphs[index], f.id + ': a chain glyph can take keyboard focus');
+      glyphs[index].click();
+      settleAll();
+      var after = qa('[data-pmx-thread="' + f.id + '"] .pmx-chain button');
+      t.ok(after.length, f.id + ': the chain still offers a focusable control after activation');
+      t.eq(doc.activeElement, after[index] || null,
+        f.id + ': focus stays on the activated glyph across the render it caused');
+    });
+  });
+
+  A.suite('paging', function (t) {
+    var chain = Promise.resolve(true);
+    PAGING_IDS.forEach(function (id) {
+      chain = chain.then(function () { return pgWalk(t, id); });
+    });
+    PAGING_IDS.forEach(function (id) {
+      chain = chain.then(function () { return pgReduced(t, id); });
+    });
+    return chain.then(function () {
+      /* Leave one known state behind. A suite that ends mid-questionnaire with reduced motion still
+       * set would hand every suite after it a page it did not ask for. */
+      store().set('ui.reducedMotion', false);
+      reset();
+      return true;
+    });
+  });
+
+
+  /* ---- provider acquisition
    *
    * PROVIDER_CLI_FINAL_ADJUDICATION.md was missing from the original packet. These assertions are
    * what stop it going missing again: they fail if the never-bundled rule, the official-source rule
@@ -946,14 +1548,17 @@
     var R = global.PMXRoute;
 
     /* -- the forbidden half. The adjudication supersedes an earlier bundle that allowed
-     * "Included with this Server" for provider CLIs, so these phrases must not come back. */
+     * "Included with this Server" for provider CLIs (pmx-scan-allow: quoted to forbid it),
+     * (pmx-scan-allow: the superseded phrasing, named in order to forbid it) */
+    /* pmx-scan-allow: this is the needle list itself, not a claim. The folder scan in
+     * tools/drive.mjs honours the marker on each line below for the same reason. */
     var FORBIDDEN = [
-      'included with this server',
-      'bundled with',
-      'pre-seeded',
-      'ships with puppet master',
-      'included in the baseline',
-      'included execution baseline'
+      'included with this server',  /* pmx-scan-allow: needle */
+      'bundled with',  /* pmx-scan-allow: needle */
+      'pre-seeded',  /* pmx-scan-allow: needle */
+      'ships with puppet master',  /* pmx-scan-allow: needle */
+      'included in the baseline',  /* pmx-scan-allow: needle */
+      'included execution baseline'  /* pmx-scan-allow: needle */
     ];
     var states = R.SETUP_STATES || [];
     var allCopy = states.map(function (s) { return R.setupReason(s); }).join(' \u00b7 ');
@@ -965,6 +1570,21 @@
     var lower = allCopy.toLowerCase();
     var found = FORBIDDEN.filter(function (p) { return lower.indexOf(p) >= 0; });
     t.eq(found.length, 0, 'no provider copy claims a bundled or baseline-included CLI');
+
+    /* The scan above only reads PMXRoute's own strings, so a forbidden phrase could reappear in a
+     * thread renderer, a selector footer or the fixture and pass. What the adjudication forbids is
+     * the CLAIM REACHING THE READER, not a particular module holding it, so the scan follows it to
+     * the screen: every rendered word of the mounted workspace, with the route selector open so the
+     * acquisition footer is actually painted.
+     *
+     * A folder-wide source grep is the other half of this and lives in tools/drive.mjs, because a
+     * browser suite cannot read files the page never loads. */
+    setPairing('w1', 't1');
+    fire('provider', 'install_required');
+    settleAll();
+    var painted = (global.document.body.innerText || '').toLowerCase();
+    var onScreen = FORBIDDEN.filter(function (p) { return painted.indexOf(p) >= 0; });
+    t.eq(onScreen.join(','), '', 'no forbidden acquisition phrase reaches the rendered workspace');
 
     /* -- the required half. A first acquisition must name the official source, deny bundling, and
      * separate installation from authentication. */
@@ -1100,17 +1720,396 @@
     t.eq(Object.keys(uniq).length, ids.length, 'no two operation kinds share a command id');
   });
 
-/* ---- 5. the handoff card reports the transport it actually has. */
-    FORMS.forEach(function (f) {
+
+  /* ------------------------------------------------------------------ runtrace (reference 03)
+   *
+   * The evolving activity capsule from `reference/videos/03_compact_execution_activity.mov`. It is
+   * the largest behaviour this workspace gained and nothing in this file asserted it: `opcard` covers
+   * the tense rule at the level of ONE operation record, but the RUN — the glyph chain, the count
+   * rewritten in place, the condensed resting state, and the random access back into a finished
+   * phase — had no coverage at all, in the model or on screen.
+   *
+   * The frame numbers cited below are the ones shared/runtrace.js's own header cites, so a later
+   * reader can check a claim against the 38.89fps decode rather than take this suite's word for it.
+   *
+   * Two halves, in this order because a model fault would otherwise be reported a second time as
+   * eight rendering faults. The first drives PMXRunTrace and the Director and reads the model back.
+   * The second drives all eight thread concepts through one scripted run and reads back rendered TEXT
+   * and GEOMETRY — "the count is rewritten and nothing relayouts" is the specific claim the video
+   * makes, and a dispatch count cannot make it.
+   */
+
+  A.suite('runtrace', function (t) {
+    var RT = global.PMXRunTrace;
+    if (!RT || !RT.read) {
+      t.record(false, 'PMXRunTrace is not loaded, so there is no run contract to assert');
+      return;
+    }
+
+    /* thread-01 is the only thread the fixture authors activity stages for, and `system.reset` puts
+     * the session back on it. Every literal below is that thread's authored copy — `Thinking for 4s`,
+     * `Reading 7 files`, `Made 1 create, 2 edits` — so a fixture change fails this suite loudly
+     * instead of quietly making it assert nothing. */
+    reset();
+    setPairing('w1', 't1');
+
+    /* A reset thread has its questionnaire queued again, and every concept correctly yields its work
+     * cluster — the run capsule with it — to a pending question. So the queue is dismissed first, for
+     * the same reason the `general` suite dismisses it: a pending question legitimately outranks the
+     * surface under test, so it has to be out of the way before that surface can be observed at all.
+     * Nothing here ANSWERS a question; the concepts' own UI stays the only path to a submitted
+     * answer, which is what the harness rule at the top of this file requires.
+     *
+     * It cancels through PMXQFlow, which is the verb layer every concept's own Cancel button calls,
+     * rather than through PMXQuestionnaire.cancel directly. The release of `surfacesYielded` lives in
+     * that verb layer, so cancelling underneath it leaves the work surfaces yielded — and the
+     * condense assertions below would then be measuring this harness's shortcut rather than the
+     * product. */
+    function clearQuestions(threadId) {
+      var Q = global.PMXQuestionnaire;
+      var flowSvc = { questionnaire: Q, surfaces: global.PMXSurfaces };
+      var guard = 0;
+      while (Q.activeFor(threadId) && guard++ < 12) {
+        var was = Q.activeFor(threadId).id;
+        var res = global.PMXQFlow.act(flowSvc, threadId, 'cancel');
+        if (!res || !res.ok) break;
+        var next = Q.activeFor(threadId);
+        if (next && next.id === was) break;
+      }
+      store().touchView('questionnaire');
+    }
+
+    function phaseOf(threadId, phaseId) {
+      var run = RT.read(threadId);
+      var list = (run && run.phases) || [];
+      for (var i = 0; i < list.length; i++) if (list[i].id === phaseId) return list[i];
+      return null;
+    }
+    function headlineOf(threadId, phaseId) {
+      var p = phaseOf(threadId, phaseId);
+      return p ? p.headline : null;
+    }
+
+    var id = tid();
+    clearQuestions(id);
+
+    t.ok(RT.read(id), 'the fixture authors an activity run for the active thread');
+    t.eq(RT.read(id).chain.length, 0, 'a reset thread starts with an empty chain');
+    t.notOk(RT.read(id).started, 'and reports itself as not started, so nothing indexes work this run has not done');
+
+    /* ---- 1. the tense flip. Behaviour 3, f.194 against f.1170 and f.1300: `Thinking` while the
+     * phase runs, `Thought` once it has settled. Both strings are authored, so what is asserted here
+     * is that the right one is CHOSEN — an English participle is not derivable from a past-tense verb
+     * and guessing would produce "Readed 7 files". */
+    t.ok(RT.enter(id, 'thought'), 'a phase can be entered by kind');
+    t.eq(headlineOf(id, 'st-thought'), 'Thinking for 4s', 'a running phase reads as a present participle (f.194)');
+    t.eq(phaseOf(id, 'st-thought').status, 'running', 'and reports itself running');
+    t.ok(RT.settle(id), 'the running phase settles');
+    t.eq(headlineOf(id, 'st-thought'), 'Thought for 4s', 'a settled phase reads in the past tense (f.1170)');
+
+    /* ---- 2. the digit that is NOT a count. `st-thought` carries count 1 and unit `summary`, and its
+     * headline states no count anywhere — so there is nothing in it to substitute. An earlier draft
+     * rewrote the first digit run it found, which turned `Thinking for 4s` into `Thinking for 1s` and
+     * silently restated a four-second duration as a one-second one. The two assertions above already
+     * read `4s` back; these say it at the level where the substitution actually happens, so the rule
+     * survives even if that fixture stage is ever retired. */
+    t.eq(RT.withCount('Thinking for 4s', 1, 'summary'), 'Thinking for 4s',
+      'a headline that states no count keeps its duration digit');
+    t.eq(RT.withCount('Thought for 4s', 1, 'summary'), 'Thought for 4s',
+      'the past-tense form of the same headline keeps it too');
+
+    /* ---- 3. the count rewritten in place. Behaviour 2, f.208 -> f.286 -> f.338: `5 files` becomes
+     * `6 files` becomes `7 files`. The reference's verb is `Exploring` and this fixture's is
+     * `Reading`; the progression is the thing being carried over, not the vocabulary.
+     *
+     * It is fired through the Director rather than by calling tick() directly, because the per-kind
+     * trigger is the path a reviewer actually drives and a suite that bypassed it would pass while
+     * the demo controls were dead. */
+    t.ok(fire('activity', 'read').ok, 'the Director carries a per-kind activity trigger for read');
+    t.eq(headlineOf(id, 'st-read'), 'Reading 5 files', 'the phase opens part way, with room left to count (f.208)');
+    fire('activity', 'read');
+    t.eq(headlineOf(id, 'st-read'), 'Reading 6 files', 'firing the same kind again grows the count (f.286)');
+    fire('activity', 'read');
+    t.eq(headlineOf(id, 'st-read'), 'Reading 7 files', 'and again, up to the authored total (f.338)');
+    fire('activity', 'read');
+    t.eq(headlineOf(id, 'st-read'), 'Reading 7 files',
+      'the count clamps at the authored total rather than inventing an eighth file');
+    t.eq(phaseOf(id, 'st-read').count, 7,
+      'the clamped count is the authored total of 7, not a number that merely stopped moving');
+
+    /* ---- 4. the unit at exactly one. `1 files` is the tell that a count was substituted into a
+     * fixed string, so the noun goes singular at one and nowhere else. */
+    t.eq(RT.withCount('Read 7 files', 1, 'files'), 'Read 1 file', 'a unit goes singular at exactly one');
+    t.eq(RT.withCount('Read 7 files', 2, 'files'), 'Read 2 files', 'two keeps the plural');
+    t.eq(RT.withCount('Found 31 matches', 1, 'matches'), 'Found 1 match', 'an -es plural loses both letters at one');
+    t.eq(RT.withCount('Found 31 matches', 31, 'matches'), 'Found 31 matches', 'and keeps them at every other count');
+
+    fire('activity', 'settle');
+    t.eq(headlineOf(id, 'st-read'), 'Read 7 files', 'settling flips the tense and lands the count on the total');
+    t.eq(phaseOf(id, 'st-read').status, 'done', 'a settled phase reports itself done');
+
+    /* ---- 5. condense is a resting state, not a yield. It must NOT touch `surfacesYielded`: that
+     * flag is the QUESTION yield, and the verb this replaced set it — so firing "condense the
+     * activity" blanked Goal, Todo, subagents and diffs outright while leaving the activity rows on
+     * screen. The assertion compares the SET of live surfaces before and after rather than naming
+     * them one by one, because naming them would silently pass on a thread the fixture happens not to
+     * author diffs for. */
+    var SF = global.PMXSurfaces;
+    function liveSurfaces() {
+      var a = SF.activeFor(id) || {};
+      var out = [];
+      ['goal', 'todo', 'subagents', 'diffs', 'activity'].forEach(function (k) { if (a[k]) out.push(k); });
+      return out;
+    }
+    clearQuestions(id);
+    t.notOk(store().view(id).surfacesYielded, 'with no question pending the work surfaces are not yielded');
+    var surfacesBefore = liveSurfaces();
+    t.ok(surfacesBefore.length >= 3,
+      'the thread has work surfaces that a stray yield could blank: ' + surfacesBefore.join(', '));
+
+    t.ok(RT.condense(id), 'the run condenses');
+    t.ok(RT.read(id).condensed, 'and reports itself condensed');
+    t.notOk(store().view(id).surfacesYielded, 'condensing never raises the question-yield flag');
+    t.deepEq(liveSurfaces(), surfacesBefore, 'every work surface is still live after a condense');
+
+    /* f.910: the whole run becomes one summary row. It counts TOOLS, and a thought is not a tool —
+     * counting it would make `N tools used` a count of phases wearing a narrower noun. */
+    var condensedRun = RT.read(id);
+    t.eq(condensedRun.chain.length, 2, 'the chain holds one entry per entered phase, in entry order');
+    t.eq(condensedRun.toolCount, 7, 'the thought phase is not counted as a tool');
+    t.eq(condensedRun.summaryLabel, '7 tools used', 'the summary row is derived from what the run actually did (f.910)');
+
+    /* ---- 6. random access. Behaviour 1: clicking the pencil at f.1170 reopens `Made 1 create, 2
+     * edits` and the magnifier at f.1300 reopens `Explored 7 files`, from a control that costs one
+     * glyph of space. Opening a phase the run never entered is refused, because a capsule that
+     * expanded to an empty body would claim work that did not happen. */
+    t.ok(RT.open(id, 'st-read'), 'a phase the run entered can be opened');
+    t.eq(RT.read(id).open && RT.read(id).open.id, 'st-read', 'the run reports WHICH phase is open');
+    t.eq(RT.read(id).open.headline, 'Read 7 files', 'the opened phase carries its settled headline');
+    t.notOk(RT.open(id, 'st-browser'), 'opening a phase the run never entered is refused');
+    t.eq(RT.read(id).open.id, 'st-read', 'the refusal leaves the previously opened phase open');
+    t.ok(RT.open(id, 'st-read'), 'opening the phase that is already open is accepted');
+    t.eq(RT.read(id).openId, null,
+      'and toggles it closed, so one control both discloses and dismisses and no separate close is needed');
+
+    /* ---- 7. reset. Leaving a chain of entered phases behind would make the next run start
+     * half-finished, and its glyphs would index work that run never did. */
+    t.ok(RT.reset(id), 'the run trace resets');
+    var afterReset = RT.read(id);
+    t.eq(afterReset.chain.length, 0, 'reset clears the chain');
+    t.eq(afterReset.running, null, 'reset leaves nothing running');
+    t.eq(afterReset.openId, null, 'reset closes any disclosed phase');
+    t.notOk(afterReset.condensed, 'reset leaves the run uncondensed, so a new run does not start at its resting state');
+
+    /* ---------------------------------------------------------------- the eight renderings
+     *
+     * One scripted run, driven through the Director in every concept, with every assertion reading
+     * back what is ON SCREEN.
+     *
+     * Reduced motion is set first for the reason the `forms` suite sets it: `swapText` deliberately
+     * DEFERS a replacement by a frame so the two values can cross-fade, so a text readback inside a
+     * synchronous suite would be asserting the timing rather than the words. countMorph rebuilds its
+     * digits synchronously either way; the whole-label swap is the one that needs this.
+     */
+    var THREADS = ['t1', 't2', 't3', 't4', 't5', 't6', 't7', 't8'];
+
+    /* The chain is located by the SHARED marker rather than by eight concept class names, on purpose.
+     * `pmx-chain` and `pmx-chain-slot` are motion's contract — phaseHandover opens the slot from zero
+     * width at f.205-209 and chainRoll marks the overflow edges — so a concept that renders its chain
+     * some other way has not adopted the two-beat handover the reference shows at f.194-211, which is
+     * a finding rather than a reason to look elsewhere.
+     *
+     * The CAPSULE is the one thing that needs a per-concept name, and all eight concepts use the same
+     * one: `tN-run`. Reading the sentence back from that root rather than from the chain's parent
+     * matters twice over. Two concepts deliberately put the chain somewhere other than the sentence's
+     * own row — a paired-lane index, a numbered log row — which is a re-idiom of the reference rather
+     * than a fault, and the chain's parent would miss the sentence in both. And t1 renders an
+     * operation ledger BESIDE the capsule whose rows carry the very same headlines, so widening the
+     * read to the whole work-surface region instead would let a dead capsule pass on the ledger's
+     * words. */
+    function chainIn(th) { return q('[data-pmx-thread="' + th + '"] .pmx-chain'); }
+    function capsuleIn(th) { return q('[data-pmx-thread="' + th + '"] .' + th + '-run'); }
+    function glyphsIn(th) {
+      var c = chainIn(th);
+      return c ? Array.prototype.slice.call(c.querySelectorAll('button')) : [];
+    }
+    /* Whitespace is squashed out of both sides before comparing. Every concept builds its headline as
+     * a verb element beside an argument element, so `textContent` reads `Read7 files` with nothing
+     * where the CSS gap is; comparing raw strings would fail on the gap rather than on the words.
+     * Squashing cannot make a tense failure pass — `Reading7files` does not contain `Read7files`. */
+    function squash(s) { return String(s == null ? '' : s).replace(/\s+/g, ''); }
+    function shows(th, text) {
+      var cap = capsuleIn(th);
+      return !!cap && squash(cap.textContent).indexOf(squash(text)) >= 0;
+    }
+
+    store().set('ui.reducedMotion', true);
+
+    THREADS.forEach(function (th) {
       reset();
-      setPairing('w1', f.id);
-      var card = q(f.handoff);
-      t.ok(card, f.id + ' renders an artifact handoff card');
-      if (!card) return;
-      var stateEl = card.querySelector('[class$="-handoff-state"]');
-      t.ok(stateEl && /compiling|ready/.test(stateEl.textContent),
-        f.id + ' states whether the artifact is compiling or ready');
+      setPairing('w1', th);
+      clearQuestions(tid());
+      settleAll();
+      var thId = tid();
+
+      /* Stated as its own assertion so that a capsule which never appears cannot be blamed on the
+       * concept when the real cause was a question still holding the floor. */
+      t.notOk(global.PMXQuestionnaire.activeFor(thId),
+        th + ': no question is pending, so the work cluster is observable at all');
+
+      /* The scripted run: a thought that settles, a read that counts up and settles, an edit that
+       * settles, and the condense that is the run's resting state. */
+      fire('activity', 'thinking_summary');
+      fire('activity', 'settle');
+      fire('activity', 'read');
+
+      if (!chainIn(th)) {
+        /* Named, never skipped. A concept with no capsule is exactly the gap this suite exists to
+         * make visible, and a silent skip would report eight passes for however many concepts had
+         * actually implemented it. */
+        t.record(false, th + ' renders no run capsule: nothing carrying the shared pmx-chain marker is ' +
+          'on screen after the scripted run has entered its second phase');
+        return;
+      }
+      if (!capsuleIn(th)) {
+        t.record(false, th + ' renders a chain but no ' + th + '-run capsule root, so the run has no ' +
+          'sentence that can be read back');
+        return;
+      }
+
+      /* The count rewritten in place, measured rather than dispatched. Two datums are captured: the
+       * viewport y, which is the literal claim the video makes, and the y relative to the region that
+       * holds the capsule, which stays true even if something unrelated scrolls. If only the first
+       * fails, the page scrolled; if both fail, the row genuinely moved. */
+      var datum = q('[data-pmx-thread="' + th + '"] [data-pmx-region="workSurfaceHost"]');
+      if (!datum || !datum.contains(chainIn(th))) datum = q('[data-pmx-thread="' + th + '"]');
+
+      t.ok(shows(th, 'Reading 5 files'), th + ': the running phase states its partial count (f.208)');
+      var topBefore = A.rect(chainIn(th)).top;
+      var offsetBefore = topBefore - A.rect(datum).top;
+      var glyphsBefore = glyphsIn(th).length;
+
+      fire('activity', 'read');
+
+      t.ok(shows(th, 'Reading 6 files'), th + ': the count is rewritten to 6 (f.286)');
+      t.notOk(shows(th, 'Reading 5 files'), th + ': the previous count is gone, not appended as another row');
+      var topAfter = A.rect(chainIn(th)).top;
+      t.near(topAfter, topBefore, 0.5, th + ': the header row stays at the same viewport y while the count is rewritten');
+      t.near(topAfter - A.rect(datum).top, offsetBefore, 0.5,
+        th + ': the header row does not move inside its own region either');
+      t.eq(glyphsIn(th).length, glyphsBefore,
+        th + ': counting up adds no glyph, because a glyph is a phase and not a tick');
+
+      fire('activity', 'read');
+      fire('activity', 'settle');
+      t.ok(shows(th, 'Read 7 files'), th + ': the verb flips to the past tense once the phase settles');
+
+      fire('activity', 'edit');
+      fire('activity', 'settle');
+      fire('activity', 'condense');
+
+      var run = RT.read(thId);
+      t.eq(run.chain.length, 3, th + ': the scripted run entered three phases');
+      var glyphs = glyphsIn(th);
+      t.eq(glyphs.length, run.chain.length, th + ': the chain renders exactly one glyph per entered phase');
+      var notButtons = glyphs.filter(function (g) { return g.tagName !== 'BUTTON'; });
+      t.eq(notButtons.length, 0,
+        th + ': every glyph in the chain is a real button, which is what makes the finished run reachable (f.1170, f.1300)');
+      t.ok(shows(th, run.summaryLabel),
+        th + ': the condensed capsule states the run as "' + run.summaryLabel + '" (f.910)');
+
+      /* Random access, read back from the SCREEN. Asserting that the store changed would pass a
+       * concept whose glyph mutates the trace and never repaints — which is precisely what a reader
+       * would experience as a dead control. The glyph list is re-queried before each click because a
+       * concept is free to rebuild its capsule on every render. */
+      run.chain.forEach(function (want, i) {
+        var live = glyphsIn(th);
+        if (!live[i]) {
+          t.record(false, th + ': glyph ' + i + ' is missing, so phase ' + want.id + ' has no route back');
+          return;
+        }
+        live[i].click();
+        t.ok(shows(th, want.headline),
+          th + ': clicking glyph ' + i + ' reopens ' + want.id + ' and the capsule reads "' + want.headline + '"');
+      });
+
+      /* ---- Behaviour 4, the half that was never measured.
+       *
+       * runtrace.js cites f.910 for "condense is the resting state, not a deletion: the prose answer,
+       * the verification row and the artifact card live BELOW the capsule and are PUSHED DOWN when a
+       * phase is reopened, never replaced." Both halves were asserted at the record level — the work
+       * surfaces are still live after a condense — and neither was asserted geometrically, which is
+       * where the difference actually shows: a capsule that overlays what is beneath it, or one that
+       * swaps the region's contents, both leave the record identical and the reading experience
+       * ruined. So the sibling below the capsule is identified and its y is measured across a reopen.
+       *
+       * "Pushed down" is asserted as `>=`, not `>`. A concept whose capsule is absolutely positioned
+       * in a margin has nothing below it to push, and demanding movement there would be demanding one
+       * concept's layout from all eight — the same mistake the sentence-row read made. What must
+       * never happen is the sibling moving UP or disappearing, and that is what this catches. */
+      RT.close(thId);
+      settleAll();
+
+      /* The first element after the capsule in document order, found by walking up to the thread
+       * root. It is RE-FOUND after the reopen rather than held as a reference, because seven of the
+       * eight concepts rebuild this region and an identity check would be asking them to stop —
+       * which the reference cannot ask, since a viewer cannot see element identity. What a viewer
+       * CAN see is whether the same content is still there and whether it moved up, so that is what
+       * is compared. */
+      function belowCapsule() {
+        var cap = capsuleIn(th);
+        var walk = cap;
+        while (walk) {
+          if (walk.getAttribute && walk.getAttribute('data-pmx-thread')) return null;
+          if (walk.nextElementSibling) return walk.nextElementSibling;
+          walk = walk.parentElement;
+        }
+        return null;
+      }
+
+      var below = belowCapsule();
+      if (!below) {
+        /* Recorded, not skipped: "there is nothing below the capsule" is itself a fact about the
+         * concept worth seeing in the report. */
+        t.record(true, th + ': the capsule has no following sibling, so there is nothing below it to displace');
+      } else {
+        var belowBefore = A.rect(below).top;
+        var belowText = squash(below.textContent).slice(0, 60);
+        var reopen = glyphsIn(th)[0];
+        if (!reopen) {
+          t.record(false, th + ': no glyph to reopen, so behaviour 4 cannot be measured');
+        } else {
+          reopen.click();
+          settleAll();
+          var after = belowCapsule();
+          t.ok(!!after,
+            th + ': reopening a phase still leaves something below the capsule, not an emptied region (f.910)');
+          if (after) {
+            t.eq(squash(after.textContent).slice(0, 60), belowText,
+              th + ': and the same content is below it — a reopen discloses, it does not re-author what follows');
+            var belowAfter = A.rect(after).top;
+            /* `>=`, not `>`. A concept whose capsule sits in a margin has nothing below it to push,
+             * and demanding movement there would be demanding one concept's layout of all eight —
+             * the same mistake the sentence-row read made. What must never happen is the content
+             * below moving UP, which is what a capsule that overlays or swaps its region does.
+             *
+             * The looser form is not a vacuous one, and that was checked rather than assumed: run
+             * with the strict `>` instead, SIX of the eight still pass — t1, t2, t3, t4, t6 and t8
+             * genuinely displace what is beneath them. The two that hold are t5, whose chain sits
+             * above the line in a lane pair, and t7, whose chain is a bar below the sentence.
+             * Neither has anything beneath the capsule that a disclosure could push. */
+            t.ok(belowAfter >= belowBefore - 0.5,
+              th + ': the content below is pushed down or held, never pulled up, when a phase is reopened ' +
+                '(' + Math.round(belowBefore) + ' -> ' + Math.round(belowAfter) + ')');
+          }
+        }
+      }
     });
+
+    store().set('ui.reducedMotion', false);
+    /* Leave one known state behind: a run left mid-flight would put a running phase on screen for the
+     * suites that follow, and `motion` refuses an indefinite animation that no live operation backs. */
+    reset();
   });
 
   A.suite('distinctness', function (t) {
@@ -1332,13 +2331,43 @@
     var pairs = global.PMX.registry.pairs().filter(function (p) {
       return (!opts.windowId || p.windowId === opts.windowId) && (!opts.threadId || p.threadId === opts.threadId);
     });
-    var widths = opts.widths || [520, 750];
+    /* All four canon widths, not two.
+     *
+     * CORRECTION_GOAL_PROMPT.md requires "all themes, widths ... pass", and COVERAGE.md names the
+     * widths as 520 / 750 / 975 / 1200. This swept 520 and 750 only, so the two widths at which the
+     * artifact workspace and pinned history actually coexist were never in the sweep — which is
+     * precisely where a layout runs out of room. */
+    var widths = opts.widths || [520, 750, 975, 1200];
+    /* Themes are a GLOBAL concern, not a per-pairing one: a theme changes tokens, not structure. So
+     * they are swept as their own axis rather than multiplied through 64 pairings, which would be
+     * 2,048 runs to re-prove the same tokens sixty-four times. `opts.themes` names the pairings that
+     * carry the sweep; the default pair is the two structural extremes. */
+    var themes = opts.themes || null;
     var out = { pairings: [], total: 0, failed: 0, errors: 0, warnings: 0 };
     A.resetConsoleCounts();
+
+    /* Yield to the MACROTASK queue between runs, not just to the microtask queue.
+     *
+     * This chain used to be plain `.then()` links, and a promise chain of synchronous mounts is one
+     * unbroken block of work: microtasks drain before the event loop gets a turn, so the browser
+     * never paints, never runs a full GC, and never lets the driver read progress. That was
+     * survivable at 128 runs and stopped being survivable when the sweep widened to 320 — one
+     * Chromium reached 12.8 GB resident and pushed the host into swap, which is the machine the user
+     * had already had to restart once for running out of memory.
+     *
+     * A zero-delay setTimeout between runs is what hands the loop back. Each run's detached DOM then
+     * becomes collectable while the next one is being set up, instead of every run's garbage being
+     * held live until the whole sweep resolves. The cost is one task boundary per run; the benefit is
+     * that the sweep's memory is bounded by the widest single run rather than by the total. */
+    function yieldToLoop() {
+      return new Promise(function (resolve) { setTimeout(resolve, 0); });
+    }
+
     var chain = Promise.resolve();
+    if (opts.themesOnly) pairs = [];
     pairs.forEach(function (p) {
       widths.forEach(function (w) {
-        chain = chain.then(function () {
+        chain = chain.then(yieldToLoop).then(function () {
           A.reset();
           setPairing(p.windowId, p.threadId);
           store().set('ui.chatWidth', w);
@@ -1352,10 +2381,49 @@
         });
       });
     });
+    /* The theme axis. Every theme, at every canon width, on the pairings named by the caller.
+     *
+     * Themes redefine tokens — colour, spacing, the motion duration and the sampled spring — so what
+     * a theme can break is a layout that only fits in one of them, and a mount that throws when a
+     * token it assumed is absent. Running `mount` under each is what turns "eight themes are
+     * offered" into "eight themes render". Nothing here asserted a theme before; the count in
+     * COVERAGE.md described an older harness that no longer exists in that form. */
+    var themePairs = themes || ['w1+t1', 'w8+t4'];
+    var themeList = (global.PMXWorkspace && global.PMXWorkspace.THEMES) || [];
+    out.themes = { swept: [], total: 0, failed: 0 };
+    /* `skipThemes` exists so the driver can run the theme axis as its own chunk in its own page,
+     * rather than appending it to whichever window chunk happens to be last. */
+    if (opts.skipThemes) themePairs = [];
+    themePairs.forEach(function (key) {
+      var parts = String(key).split('+');
+      themeList.forEach(function (th) {
+        widths.forEach(function (w) {
+          chain = chain.then(yieldToLoop).then(function () {
+            A.reset();
+            setPairing(parts[0], parts[1]);
+            store().set('ui.theme', th.id);
+            store().set('ui.chatWidth', w);
+            settleAll();
+            return A.runOne('mount', {}).then(function () {
+              var r = A.results();
+              out.themes.total += r.total;
+              out.themes.failed += r.failed;
+              out.themes.swept.push({ pairing: key, theme: th.id, width: w, total: r.total, failed: r.failed });
+            });
+          });
+        });
+      });
+    });
+
     return chain.then(function () {
+      /* Leave the theme as the suite found it. A matrix that ended on retro-light would hand every
+       * later capture a palette nobody asked for. */
+      store().set('ui.theme', 'friendly-dark');
       var c = A.consoleCounts();
       out.errors = c.errors;
       out.warnings = c.warnings;
+      out.failed += out.themes.failed;
+      out.total += out.themes.total;
       return out;
     });
   }

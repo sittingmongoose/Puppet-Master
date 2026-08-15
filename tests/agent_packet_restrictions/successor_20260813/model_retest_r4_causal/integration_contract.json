@@ -1,0 +1,137 @@
+{
+  "protocol_id": "PW-R4-CAUSAL-20260813.1",
+  "authority_questions": [
+    {
+      "id": "I01",
+      "label": "ledger_authority",
+      "options": [
+        "runtime_authority",
+        "lineage_only",
+        "canonical_product_truth"
+      ]
+    },
+    {
+      "id": "I02",
+      "label": "context_receipt",
+      "options": [
+        "dispatch_authority",
+        "explanatory_only",
+        "file_mutation_authority"
+      ]
+    },
+    {
+      "id": "I03",
+      "label": "worker_completion",
+      "options": [
+        "worker_self_certification",
+        "parent_or_stronger_verification",
+        "automatic_release"
+      ]
+    },
+    {
+      "id": "I04",
+      "label": "planning_write",
+      "options": [
+        "parallel_specialists",
+        "controller_or_assigned_owner",
+        "any_auditor"
+      ]
+    },
+    {
+      "id": "I05",
+      "label": "plancompile_authority",
+      "options": [
+        "approved_pack_plus_frozen_indexes",
+        "mutable_ledger",
+        "green_validator_only"
+      ]
+    },
+    {
+      "id": "I06",
+      "label": "worknodes_from_wizard",
+      "options": [
+        true,
+        false,
+        "after_static_validation"
+      ]
+    },
+    {
+      "id": "I07",
+      "label": "buildability",
+      "options": [
+        "proven",
+        "unproven",
+        "automatically_enabled"
+      ]
+    },
+    {
+      "id": "I08",
+      "label": "external_audit",
+      "options": [
+        "completed",
+        "excluded",
+        "safety_certified"
+      ]
+    }
+  ],
+  "cross_topic_edge_candidates": [
+    {
+      "id": "I-E07",
+      "from": "A17",
+      "to": "B13",
+      "type": "authorizes",
+      "statement": "Cache reuse authorizes executable WorkNode indexing."
+    },
+    {
+      "id": "I-E01",
+      "from": "A01",
+      "to": "B12",
+      "type": "authority_boundary",
+      "statement": "Ledger lineage cannot substitute for approved Plan Pack plus frozen-index compile authority."
+    },
+    {
+      "id": "I-E04",
+      "from": "A11",
+      "to": "B01",
+      "type": "fresh_bounded_role_flow",
+      "statement": "Fresh bounded topic context feeds separate conversion, audit, repair, and re-audit roles."
+    },
+    {
+      "id": "I-E08",
+      "from": "A18",
+      "to": "B08",
+      "type": "proves",
+      "statement": "AssuranceLab non-transfer proves current buildability."
+    },
+    {
+      "id": "I-E02",
+      "from": "A12",
+      "to": "B04",
+      "type": "requires_specialist_verification",
+      "statement": "Bounded worker proposals require stronger bounded specialist verification."
+    },
+    {
+      "id": "I-E06",
+      "from": "A05",
+      "to": "B12",
+      "type": "separate_admission_and_compile_authorities",
+      "statement": "Provider-byte dispatch admission and bootstrap Plan Compile are separate authority domains."
+    },
+    {
+      "id": "I-E03",
+      "from": "A13",
+      "to": "B06",
+      "type": "serializes_writes",
+      "statement": "No overlapping parallel writes requires a controller or assigned owner to serialize planning writes."
+    },
+    {
+      "id": "I-E05",
+      "from": "A03",
+      "to": "B08",
+      "type": "non_authority_receipt_does_not_prove_buildability",
+      "statement": "An explanatory ContextReceipt cannot establish buildability or enable approval."
+    }
+  ],
+  "output_rule": "Select authority values from the choices, supported edges only in candidate order, and concatenate each repaired topic's selected tensions in topic A then topic B order."
+}
+

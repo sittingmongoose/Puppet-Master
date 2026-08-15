@@ -799,11 +799,25 @@
                 g.didDrag = true;
                 g.motionOK = edMotionOK();
                 g.tab.classList.add('dragging');
+                /* the grabbed tab becomes the LIVE tab immediately (reference
+                   behavior: the connected surface rushes to your hand and
+                   rides it). EDSHAPE's lastActive change turns its next sync
+                   into a spring; every move after that snap-follows the
+                   painted box, so tab and canvas stay one fused shape for
+                   the whole gesture. Content render stays deferred. */
+                if (!g.tab.classList.contains('active')) {
+                    g.strip.querySelectorAll('.tab.active').forEach(function (t) { t.classList.remove('active'); });
+                    g.tab.classList.add('active');
+                }
                 var r0 = g.tab.getBoundingClientRect();
                 g.grabX = g.startX - r0.left;
                 g.slotLeft = r0.left;
                 g.slotW = r0.width;
                 g.mids = edReorderSlots(g.strip, g.tab);
+                /* roll the retro gesture mode once per drag (null outside
+                   retro themes / reduced motion) */
+                g.retroMode = (window.PM6_RETRO_MOTION && PM6_RETRO_MOTION.beginDrag) ?
+                    PM6_RETRO_MOTION.beginDrag(g.tab) : null;
                 if (window.getSelection) { try { getSelection().removeAllRanges(); } catch (err) {} }
             }
             e.preventDefault();
@@ -847,7 +861,7 @@
                         if (dx >= 1 || dx <= -1) {
                             sTab.style.transform = 'translateX(' + dx + 'px)';
                             void sTab.offsetWidth; /* commit the offset frame */
-                            sTab.style.transition = 'transform 220ms cubic-bezier(.22,1,.36,1)';
+                            sTab.style.transition = 'transform 250ms cubic-bezier(.22,1,.36,1)';
                             sTab.style.transform = '';
                             sTab.addEventListener('transitionend', function onSlid(te) {
                                 if (te.propertyName !== 'transform') return;
@@ -888,6 +902,14 @@
                 var txMax = sr.right - g.slotW - g.slotLeft;
                 if (tx < txMin) tx = txMin + (tx - txMin) * 0.35;
                 if (tx > txMax) tx = txMax + (tx - txMax) * 0.35;
+                /* retro tab motion: the gesture's rolled mode (asked from
+                   RETROMOTION once at the drag threshold) decides the glide:
+                   phosphor/dos snap to an 8px character grid, crt stays
+                   smooth. Quantize BEFORE lastTx so the drop settle starts
+                   from the painted position, not the raw pointer position. */
+                if (g.retroMode === 'phosphor' || g.retroMode === 'dos') {
+                    tx = Math.round(tx / 8) * 8;
+                }
                 g.lastTx = tx;
                 g.tab.style.transform = 'translateX(' + tx + 'px)';
             }
@@ -929,6 +951,16 @@
             if (typeof window.PM6_FIT_EDITOR_TABS === 'function') {
                 try { window.PM6_FIT_EDITOR_TABS(g.strip); } catch (err) {}
             }
+            /* the grab activated this tab; a cancelled gesture must still
+               leave class and content agreeing */
+            var cfile = g.tab.getAttribute('data-file');
+            var cpane = g.strip.closest('.editor-pane');
+            if (cpane && cfile && typeof FILE_DATA !== 'undefined' && FILE_DATA[cfile]) {
+                var cprefix = cpane.getAttribute('data-pm-home-editor-prefix') ||
+                    (cpane.id === 'editorPane1' ? 'pane1' : (cpane.id === 'editorPane2' ? 'pane2' : null));
+                if (cprefix) renderFileToPane(cfile, cprefix, true);
+            }
+            if (window.PM6_EDTAB_SHAPE) { try { PM6_EDTAB_SHAPE.sync(g.strip, false); } catch (err) {} }
         }
 
         function edReorderSettle(g) {
@@ -946,10 +978,16 @@
             if (typeof window.PM6_PERSIST_TAB_ORDER === 'function') {
                 try { window.PM6_PERSIST_TAB_ORDER(strip); } catch (err) {}
             }
-            /* the silhouette springs to the final slot while the tab glides
-               there -- selection-spring parity for a drag-activated tab */
-            if (window.PM6_EDTAB_SHAPE) { try { PM6_EDTAB_SHAPE.sync(strip, true); } catch (err) {} }
             var finished = false;
+            /* the silhouette RIDES the settle: snap-sync to the tab's painted
+               box every frame of the bounce, so tab and canvas arrive as one
+               fused surface. A free-running spring here diverged from the
+               tab's own settle curve by up to a tab-width mid-flight. */
+            var ride = function () {
+                if (finished) return;
+                if (window.PM6_EDTAB_SHAPE) { try { PM6_EDTAB_SHAPE.sync(strip, false); } catch (err) {} }
+                requestAnimationFrame(ride);
+            };
             var finish = function (te) {
                 if (te && te.propertyName && te.propertyName !== 'transform') return;
                 if (finished) return;
@@ -983,10 +1021,15 @@
                 tab.style.transition = 'none';
                 tab.style.transform = 'translateX(' + delta + 'px)';
                 void tab.offsetWidth;
-                tab.style.transition = 'transform 200ms cubic-bezier(.3,1.25,.45,1)';
+                /* measured off the reference at 60fps: the released tab
+                   returns with a ~65%-per-frame exponential decay over
+                   ~150ms and ZERO overshoot -- a tight ease-out, not a
+                   bounce */
+                tab.style.transition = 'transform 160ms cubic-bezier(.17,.84,.29,.99)';
                 tab.style.transform = 'translateX(0px)';
                 tab.addEventListener('transitionend', finish);
-                setTimeout(finish, 300); /* transitionend can be lost to a re-render */
+                setTimeout(finish, 260); /* transitionend can be lost to a re-render */
+                requestAnimationFrame(ride);
             } else {
                 finish();
             }
@@ -1128,7 +1171,6 @@
                         tabs.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
                         var newTab = document.createElement('span');
                         newTab.className = 'tab active';
-                        newTab.draggable = true;
                         newTab.setAttribute('data-file', filename);
                         newTab.innerHTML = filename + ' <svg class="tab-close" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
                         tabs.appendChild(newTab);

@@ -45,14 +45,10 @@ EVENT_FAMILY_BULK_REGISTRATION_ALLOWED = _pnc019_currentness.EVENT_FAMILY_BULK_R
 EVENT_FAMILY_DENOMINATOR_STATUS = _pnc019_currentness.EVENT_FAMILY_DENOMINATOR_STATUS
 EVENT_FAMILY_EVIDENCE_CURRENTNESS = _pnc019_currentness.EVENT_FAMILY_EVIDENCE_CURRENTNESS
 EVENT_FAMILY_EVIDENCE_REFS = _pnc019_currentness.EVENT_FAMILY_EVIDENCE_REFS
-EVENT_FAMILY_EVIDENCE_REGISTERED_ROWS = _pnc019_currentness.EVENT_FAMILY_EVIDENCE_REGISTERED_ROWS
-EVENT_FAMILY_EXCLUDED_COUNT = _pnc019_currentness.EVENT_FAMILY_EXCLUDED_COUNT
-EVENT_FAMILY_PROVEN_PERSISTED_FLOOR = _pnc019_currentness.EVENT_FAMILY_PROVEN_PERSISTED_FLOOR
-EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR = _pnc019_currentness.EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR
+EVENT_FAMILY_QUARANTINED_ROW_COUNT = _pnc019_currentness.EVENT_FAMILY_QUARANTINED_ROW_COUNT
 EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT = _pnc019_currentness.EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT
 EVENT_FAMILY_REGISTRY_SCHEMA_ID = _pnc019_currentness.EVENT_FAMILY_REGISTRY_SCHEMA_ID
 EVENT_FAMILY_REGISTRY_SCHEMA_VERSION = _pnc019_currentness.EVENT_FAMILY_REGISTRY_SCHEMA_VERSION
-EVENT_FAMILY_UNRESOLVED_FLOOR = _pnc019_currentness.EVENT_FAMILY_UNRESOLVED_FLOOR
 REQUIRED_PNC019_SOURCE_HASH_PATHS = _pnc019_currentness.REQUIRED_PNC019_SOURCE_HASH_PATHS
 pnc019_event_authority_clearance_failures = _pnc019_currentness.pnc019_event_authority_clearance_failures
 pnc019_event_authority_failures_for_registry = _pnc019_currentness.pnc019_event_authority_failures_for_registry
@@ -516,6 +512,7 @@ EVENT_FAMILY_REQUIRED_SCOPE_POLICIES = {
 
 STORAGE_VALUE_REGISTRY_SCHEMA_PATH = PLANS / "storage_value_registry.schema.json"
 STORAGE_VALUE_REGISTRY_PATH = PLANS / "storage_value_registry.json"
+SHARED_RUNTIME_CONTRACTS_SCHEMA_PATH = PLANS / "shared_runtime_contracts.schema.json"
 STORAGE_RECOVERY_CONTRACTS_SCHEMA_PATH = PLANS / "storage_recovery_contracts.schema.json"
 CASE_L_COMMAND_CATALOG_PATH = PLANS / "UI_Command_Catalog.md"
 CASE_L_WIRING_MATRIX_PATH = PLANS / "Wiring_Matrix.production.json"
@@ -709,16 +706,16 @@ STORAGE_VALUE_REGISTRY_SCHEMA_VERSION = "2.0.0"
 STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
     "https://puppetmaster.local/schemas/storage_value_registry/2.0.0/storage_value_registry.schema.json"
 )
-STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 58
+STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 59
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 24
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
-    "materialized": 39,
-    "deferred_not_build_blocking": 18,
+    "materialized": 41,
+    "deferred_not_build_blocking": 17,
     "compatibility_alias": 1,
 }
 STORAGE_VALUE_REGISTRY_EXPECTED_TIER_COUNTS = {
     "tier_0_launch_critical": 16,
-    "later_gui_or_feature_projection": 41,
+    "later_gui_or_feature_projection": 42,
     "migration_only": 1,
 }
 STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES = [
@@ -759,6 +756,8 @@ STORAGE_VALUE_REQUIRED_MVP_FAMILIES = [
     "requested_effective_runtime",
     "recovery_unavailable_resolution_receipt",
     "home_workspace_layout",
+    "permission_snapshot_record",
+    "provider_dispatch_admission_receipt",
 ]
 STORAGE_VALUE_EVENT_IDENTITY_CONTRACT = {
     "event_schema_id": "pm.event.v0",
@@ -792,6 +791,10 @@ STORAGE_VALUE_REQUIRED_KEY_SHAPES = {
     "storage_maintenance_operation": "storage_maintenance_operation.v1:{storage_instance_id}:{operation_id}",
     "storage_quarantine_record": "storage_quarantine_record.v1:{storage_instance_id}:{quarantine_id}",
     "storage_deletion_record": "storage_deletion_record.v1:{scope_partition}:{deletion_id}",
+    "permission_snapshot_record": "permission_snapshot_record.v1:{project_id}:{snapshot_id}",
+    "provider_dispatch_admission_receipt": (
+        "provider_dispatch_admission_receipt.v1:{project_id}:{receipt_id}"
+    ),
 }
 STORAGE_VALUE_REQUIRED_STORAGE_KINDS = {
     "event_record_index": "redb_index",
@@ -806,6 +809,8 @@ STORAGE_VALUE_REQUIRED_STORAGE_KINDS = {
     "storage_maintenance_operation": "redb",
     "storage_quarantine_record": "redb",
     "storage_deletion_record": "redb_and_seglog",
+    "permission_snapshot_record": "redb",
+    "provider_dispatch_admission_receipt": "redb",
 }
 STORAGE_VALUE_REQUIRED_RECOVERY_AUTHORITIES = {
     "event_record_index": "derived_rebuildable",
@@ -820,14 +825,39 @@ STORAGE_VALUE_REQUIRED_RECOVERY_AUTHORITIES = {
     "storage_maintenance_operation": "canonical_non_rebuildable",
     "storage_quarantine_record": "required_recovery_anchor",
     "storage_deletion_record": "canonical_dual_homed",
+    "permission_snapshot_record": "canonical_non_rebuildable",
+    "provider_dispatch_admission_receipt": "canonical_non_rebuildable",
+}
+SHARED_RUNTIME_STORAGE_PRIMITIVE_DEFS = [
+    "non_empty_string",
+    "nullable_non_empty_string",
+    "timestamp",
+    "nullable_timestamp",
+    "sha256",
+    "non_secret_ref",
+    "nullable_non_secret_ref",
+    "ref_list",
+]
+SHARED_RUNTIME_STORAGE_FAMILIES = {
+    "permission_snapshot_record": {
+        "value_schema_ref": "Plans/shared_runtime_contracts.schema.json#/$defs/permission_snapshot_record",
+        "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+    },
+    "provider_dispatch_admission_receipt": {
+        "value_schema_ref": "Plans/shared_runtime_contracts.schema.json#/$defs/provider_dispatch_admission_receipt",
+        "retention_policy_ref": "RP-RUNTIME-365D",
+    },
 }
 STORAGE_VALUE_REGISTRY_SPEC_LOCK_PATHS = [
+    "Plans/shared_runtime_contracts.schema.json",
     "Plans/storage_recovery_contracts.schema.json",
     "Plans/storage_value_registry.schema.json",
     "Plans/storage_value_registry.json",
     "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
     "Plans/.implementation_readiness/non_executable_closure_evidence.json",
     "scripts/pm-implementation-readiness.py",
+    "scripts/pm-shared-runtime-contracts.py",
+    "scripts/pm-shared-runtime-storage-materialize.py",
     "scripts/pm-audit-closure.py",
 ]
 EVENT_RECORD_FORBIDDEN_CONSUMER_PATTERNS = [
@@ -4510,8 +4540,8 @@ def pnc019_case_l_preflight_source_failures() -> list[dict[str, Any]]:
     for marker in (
         "event_denominator_unresolved",
         "event_family_contract_depth_unresolved",
-        "proven_persisted_floor",
-        "proven_unregistered_floor",
+        "event_authority_audit_failures",
+        "quarantined_row_count",
         "denominator_status",
         "bulk_registration_allowed",
         "evidence_currentness",
@@ -4520,9 +4550,9 @@ def pnc019_case_l_preflight_source_failures() -> list[dict[str, Any]]:
         if marker not in helper_text:
             failures.append({"path": rel(PNC019_CURRENTNESS_HELPER_PATH), "error": "pnc019_case_l_preflight_marker_missing", "marker": marker})
     for marker in (
-        "644c6d0bc913eaed62f41e231fdb7e04f55d270549fcdede73a0869994111e47",
-        "aa9c365904788eba74df73bb1b5eecaae903a6aa167e0514b7937198aa0dbf4d",
-        "17820aef1b498acf2e5165bee106171ff1ef35a1b23fa67d0cc23e291a8ed7bf",
+        "Plans/.audits/event-authority-2026-08-13-currentness",
+        "GROUP_ARTIFACT_MANIFEST.json",
+        "KEEP_QUARANTINED_NO_REGISTRY_OR_CHECKPOINT_ADVANCE",
         "scripts/pm_pnc019_currentness.py",
     ):
         if marker not in helper_text:
@@ -5025,15 +5055,11 @@ def case_l_verification_self_test_checks() -> dict[str, bool]:
     checks["event_denominator_residual_remains_fail_closed"] = any(
         failure.get("error") == "event_denominator_unresolved"
         and failure.get("registered_kernel_rows") == 39
-        and failure.get("evidence_registered_rows") == 37
-        and failure.get("proven_persisted_floor") == 285
-        and failure.get("proven_unregistered_floor") == 248
-        and failure.get("unresolved_floor") == 40
-        and failure.get("excluded_count") == 68
+        and failure.get("quarantined_row_count") == 252
         and failure.get("denominator_status") == "UNKNOWN_OPEN"
         and failure.get("bulk_registration_allowed") is False
         and failure.get("evidence_currentness")
-        == "source_dated_lower_bound_pending_fresh_reconciliation"
+        == "live_rehashed_fail_closed_currentness_audit"
         and failure.get("evidence_refs") == EVENT_FAMILY_EVIDENCE_REFS
         and failure.get("corpus_complete") is False
         and failure.get("disposition")
@@ -6016,6 +6042,88 @@ def storage_value_registry_data_failures(
                     "actual": recovery_disposition.get("authority_class"),
                 }
             )
+
+    try:
+        shared_runtime_schema = read_json(SHARED_RUNTIME_CONTRACTS_SCHEMA_PATH)
+        shared_runtime_defs = shared_runtime_schema["$defs"]
+    except Exception as exc:  # noqa: BLE001
+        failures.append(
+            {
+                "path": path_label,
+                "error": "shared_runtime_storage_schema_authority_unavailable",
+                "detail": str(exc),
+            }
+        )
+        shared_runtime_defs = {}
+    for family_id, expected in SHARED_RUNTIME_STORAGE_FAMILIES.items():
+        family = by_family.get(family_id)
+        row_path = f"{path_label}:families/{family_id}"
+        if not family:
+            failures.append(
+                {
+                    "path": row_path,
+                    "error": "shared_runtime_storage_family_missing",
+                }
+            )
+            continue
+        for field_name, expected_value in expected.items():
+            if family.get(field_name) != expected_value:
+                failures.append(
+                    {
+                        "path": row_path,
+                        "error": "shared_runtime_storage_family_owner_contract_mismatch",
+                        "field": field_name,
+                        "expected": expected_value,
+                        "actual": family.get(field_name),
+                    }
+                )
+        value_schema = family.get("value_schema")
+        owner_definition = shared_runtime_defs.get(family_id)
+        if isinstance(value_schema, dict) and isinstance(owner_definition, dict):
+            inline_definition = {
+                key: value
+                for key, value in value_schema.items()
+                if key not in {"$schema", "$id", "$defs"}
+            }
+            if inline_definition != owner_definition:
+                failures.append(
+                    {
+                        "path": row_path,
+                        "error": "shared_runtime_storage_inline_definition_drift",
+                        "family_id": family_id,
+                    }
+                )
+            expected_defs = {
+                name: shared_runtime_defs.get(name)
+                for name in SHARED_RUNTIME_STORAGE_PRIMITIVE_DEFS
+            }
+            if value_schema.get("$defs") != expected_defs:
+                failures.append(
+                    {
+                        "path": row_path,
+                        "error": "shared_runtime_storage_inline_primitive_defs_drift",
+                        "family_id": family_id,
+                    }
+                )
+        else:
+            failures.append(
+                {
+                    "path": row_path,
+                    "error": "shared_runtime_storage_inline_or_owner_definition_missing",
+                    "family_id": family_id,
+                }
+            )
+    normalized_family_ids = {
+        "".join(character for character in family_id.casefold() if character.isalnum())
+        for family_id in by_family
+    }
+    if "providerrequestpermit" in normalized_family_ids:
+        failures.append(
+            {
+                "path": path_label,
+                "error": "provider_request_permit_persisted_as_second_family",
+            }
+        )
 
     safe_point = by_family.get("safe_point_record", {})
     expected_safe_point_aliases = [
@@ -7863,12 +7971,8 @@ def cmd_validate_case_l(args: argparse.Namespace) -> int:
         "failures": failures,
         "fixture_counts": fixture_counts,
         "event_authority_boundary": {
-            "proven_persisted_floor": EVENT_FAMILY_PROVEN_PERSISTED_FLOOR,
             "registered_kernel_rows": EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT,
-            "evidence_registered_rows": EVENT_FAMILY_EVIDENCE_REGISTERED_ROWS,
-            "proven_unregistered_floor": EVENT_FAMILY_PROVEN_UNREGISTERED_FLOOR,
-            "unresolved_floor": EVENT_FAMILY_UNRESOLVED_FLOOR,
-            "excluded_count": EVENT_FAMILY_EXCLUDED_COUNT,
+            "quarantined_row_count": EVENT_FAMILY_QUARANTINED_ROW_COUNT,
             "denominator_status": EVENT_FAMILY_DENOMINATOR_STATUS,
             "bulk_registration_allowed": EVENT_FAMILY_BULK_REGISTRATION_ALLOWED,
             "evidence_currentness": EVENT_FAMILY_EVIDENCE_CURRENTNESS,

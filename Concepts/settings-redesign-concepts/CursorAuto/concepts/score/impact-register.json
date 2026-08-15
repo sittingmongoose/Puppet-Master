@@ -69,6 +69,14 @@
         "ThemeHoverPreview",
         "TeacherCallout"
       ]
+    },
+    {
+      "component": "ObservableWork",
+      "impact": "CursorAuto adds CAObservableWork projection adapter; does not fork a second progress owner"
+    },
+    {
+      "component": "RuntimeResourceGovernor",
+      "impact": "Named as sole admission owner in candidate DRY/wiring; concept demos do not implement admission"
     }
   ],
   "schema_event_storage_impacts": [
@@ -126,5 +134,8 @@
       "contract": "Update channel rows stay; app updater state machine deferred."
     }
   ],
-  "unresolved_questions": []
+  "unresolved_questions": [
+    "Concept demos cannot host a real RuntimeResourceGovernor; permit outcomes are projected language only."
+  ],
+  "correction_2026_08_13": "2026-08-13 dependency correction: RuntimeResourceGovernor remains sole admission owner; ObservableWork is sole progress/wait projection; Settings projects only. Provider CLIs are not core/baseline/pre-seeded and are never silently Project-acquired; explicit official-source Install for exact Host/Environment; auth separate. Shell-first seed + lazy manager hydrate; virtualized large lists; dispose inactive scopes; no fake percent progress."
 }

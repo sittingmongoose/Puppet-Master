@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L503-L603
+Source lines: L539-L641
 
-Source SHA256: `d1d659cd51ca674c1e34c953ae8080b399b7d61ffed7f802998596f738d85c78`
+Source SHA256: `5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb`
 
 ---
 
@@ -109,3 +109,5 @@ Agent-friendly shards for long plan docs. Regenerate with `python3 scripts/pm-sh
 | `web_research_run_fixtures.json` | [`Plans/_shards/web_research_run_fixtures/00-index.md`](Plans/_shards/web_research_run_fixtures/00-index.md) |
 | `Release_Supply_Chain.md` | [`Plans/_shards/release_supply_chain/00-index.md`](Plans/_shards/release_supply_chain/00-index.md) |
 | `storage_recovery_contracts.schema.json` | [`Plans/_shards/storage_recovery_contracts.schema/00-index.md`](Plans/_shards/storage_recovery_contracts.schema/00-index.md) |
+| `Shared_Integration_Runtime.md` | [`Plans/_shards/shared_integration_runtime/00-index.md`](Plans/_shards/shared_integration_runtime/00-index.md) |
+| `runtime_integration_disposition.json` | [`Plans/_shards/runtime_integration_disposition/00-index.md`](Plans/_shards/runtime_integration_disposition/00-index.md) |

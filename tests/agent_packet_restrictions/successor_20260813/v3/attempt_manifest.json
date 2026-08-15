@@ -1,0 +1,28 @@
+{
+  "schema_id": "pm.prompt_complexity_successor.attempt.v3",
+  "protocol_version": 3,
+  "attempt_id": "successor-preflight-20260813-v3",
+  "run_id": "successor-preflight-20260813-v3-run-001",
+  "spec_id": "successor-preflight-20260813-v3-spec-001",
+  "created_at_utc": "2026-08-13T17:50:00Z",
+  "attempt_root": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/v3/",
+  "authorization": "current user goal authorizes continued deterministic preparation within the exclusive successor root",
+  "predecessors": [
+    {"attempt_id":"successor-preflight-20260813-v1","terminal":"NOT_READY","failed_check_ids":["DP-020"]},
+    {"attempt_id":"successor-preflight-20260813-v2","terminal":"NOT_READY","failed_check_ids":["V2-IO-001"]}
+  ],
+  "controller": {"model":"gpt-5.6-sol","reasoning_effort":"max","ultra_used":false},
+  "checker": {
+    "path":"deterministic_preflight_v3.py",
+    "qualifying_invocation":"python3 -I -B /mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/v3/deterministic_preflight_v3.py",
+    "sha256":"183ea2fbfdf8581ad1c76c3e4ad05e7f8e0d90f9b3d59f438633d8045c603bfa",
+    "filesystem_writes":0,
+    "subprocesses":0,
+    "network_operations":0,
+    "temporary_files":0,
+    "stdout":"one strict JSON object to inherited non-regular stdout",
+    "qualification_status":"authoritative_stdout_pending"
+  },
+  "no_redirection_rule":"No shell redirection, output file, tempfile, bytecode, pipe-to-command, or subprocess may be used during V3 qualification.",
+  "terminal_rule":{"all_checks_pass":"READY_FOR_JARED_TEST_PLAN","otherwise":"NOT_READY"}
+}

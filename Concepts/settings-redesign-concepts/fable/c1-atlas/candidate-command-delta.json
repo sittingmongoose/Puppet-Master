@@ -8,11 +8,31 @@
     "approx_ids": 732,
     "families": 56,
     "flags": [
-      { "id": "cmd.settings.bloom.open", "disposition": "retire", "note": "chip/bloom superseded; compatibility alias to cmd.settings.open only if needed" },
-      { "id": "cmd.settings.open_notifications", "disposition": "supersede-into-family", "note": "alias of cmd.settings.navigate {dest}" },
-      { "id": "cmd.settings.open_storage_retention", "disposition": "supersede-into-family", "note": "alias of cmd.settings.navigate {dest}" },
-      { "id": "cmd.settings.category.reset", "disposition": "merge-flag", "note": "overlaps candidate cmd.settings.reset.apply{scope:category}; prefer canon id" },
-      { "id": "cmd.theme.*", "disposition": "reuse-flag", "note": "census against appearance candidates before minting" }
+      {
+        "id": "cmd.settings.bloom.open",
+        "disposition": "retire",
+        "note": "chip/bloom superseded; compatibility alias to cmd.settings.open only if needed"
+      },
+      {
+        "id": "cmd.settings.open_notifications",
+        "disposition": "supersede-into-family",
+        "note": "alias of cmd.settings.navigate {dest}"
+      },
+      {
+        "id": "cmd.settings.open_storage_retention",
+        "disposition": "supersede-into-family",
+        "note": "alias of cmd.settings.navigate {dest}"
+      },
+      {
+        "id": "cmd.settings.category.reset",
+        "disposition": "merge-flag",
+        "note": "overlaps candidate cmd.settings.reset.apply{scope:category}; prefer canon id"
+      },
+      {
+        "id": "cmd.theme.*",
+        "disposition": "reuse-flag",
+        "note": "census against appearance candidates before minting"
+      }
     ],
     "preserve": [
       "cmd.settings.suggestion.dismiss",
@@ -33,11 +53,102 @@
   ],
   "families_exercised_note": "From the packet's CANDIDATE_COMMAND_ID_REGISTER.json: navigation (cmd.settings.open/navigate/search.*/category.select/subcategory.select/setting.focus/manager.open all exercised by the router and workspace), values (cmd.settings.value.set / default.restore / scope.inspect via inline rows and marginalia), providers (installation scan/select/update/rollback/verify, catalog.refresh, model favorite/alias/priority/visibility), memory_persona_crew (memory verify/edit/delete/restore, persona.manage, crew.template create/update), permissions (rule add/update/reorder/delete/test).",
   "new_candidates": [
-    { "id": "cmd.bsd.mode.set", "distinguishes": "mutation", "provisional": true, "payload": "{ mode: off|auto|on, scope }", "note": "Appendix J mode plate and the planning.bsd.mode row must resolve to one canonical mutation." },
-    { "id": "cmd.goal.defaults.set", "distinguishes": "mutation", "provisional": true, "payload": "{ key, value, scope }", "note": "Checkpoint policy, verification strength, fan-out, reserve, route classes, cross-project, worktree policy." },
-    { "id": "cmd.context.source.set", "distinguishes": "mutation", "provisional": true, "payload": "{ sourceId, enabled }", "note": "The everyday context controls in Appendix E.1; diagnostic blocks in E.2-E.5 are projections, not mutations." },
-    { "id": "cmd.permissions.preset.apply", "distinguishes": "one-shot", "provisional": true, "payload": "{ presetId }", "note": "Appends missing preset statutes with origin; idempotent by rule identity; receipt required." },
-    { "id": "cmd.permissions.profile.assign", "distinguishes": "mutation", "provisional": true, "payload": "{ personaId, profileId }", "note": "Per-Persona narrowing profile; validation must reject any widening assignment." },
-    { "id": "cmd.filesafe.allowlist.add", "distinguishes": "one-shot", "provisional": true, "payload": "{ path, mode }", "note": "Review-gated: the command records a proposal and never mutates the allowlist directly; the applied change arrives as a separate reviewed event." }
-  ]
+    {
+      "id": "cmd.bsd.mode.set",
+      "distinguishes": "mutation",
+      "provisional": true,
+      "payload": "{ mode: off|auto|on, scope }",
+      "note": "Appendix J mode plate and the planning.bsd.mode row must resolve to one canonical mutation."
+    },
+    {
+      "id": "cmd.goal.defaults.set",
+      "distinguishes": "mutation",
+      "provisional": true,
+      "payload": "{ key, value, scope }",
+      "note": "Checkpoint policy, verification strength, fan-out, reserve, route classes, cross-project, worktree policy."
+    },
+    {
+      "id": "cmd.context.source.set",
+      "distinguishes": "mutation",
+      "provisional": true,
+      "payload": "{ sourceId, enabled }",
+      "note": "The everyday context controls in Appendix E.1; diagnostic blocks in E.2-E.5 are projections, not mutations."
+    },
+    {
+      "id": "cmd.permissions.preset.apply",
+      "distinguishes": "one-shot",
+      "provisional": true,
+      "payload": "{ presetId }",
+      "note": "Appends missing preset statutes with origin; idempotent by rule identity; receipt required."
+    },
+    {
+      "id": "cmd.permissions.profile.assign",
+      "distinguishes": "mutation",
+      "provisional": true,
+      "payload": "{ personaId, profileId }",
+      "note": "Per-Persona narrowing profile; validation must reject any widening assignment."
+    },
+    {
+      "id": "cmd.filesafe.allowlist.add",
+      "distinguishes": "one-shot",
+      "provisional": true,
+      "payload": "{ path, mode }",
+      "note": "Review-gated: the command records a proposal and never mutates the allowlist directly; the applied change arrives as a separate reviewed event."
+    }
+  ],
+  "drift_census_2026_08_13": {
+    "authority": "02_FULL_THREAD_CURRENT_DECISION_REGISTER.md section 22",
+    "note": "Known command-name drift recorded before any minting; all concept candidates remain provisional and defer to the canonical census.",
+    "entries": [
+      {
+        "ids": [
+          "cmd.source_control.setup.install_tool",
+          "cmd.installation.*",
+          "cmd.tool.*",
+          "cmd.integration_tool.*"
+        ],
+        "disposition": "census-before-mint",
+        "note": "Known drift family for the shared installation lifecycle; concept installation candidates must reconcile into ONE namespace chosen by the lifecycle owner."
+      },
+      {
+        "ids": [
+          "cmd.github.actions.*",
+          "cmd.github_actions.*"
+        ],
+        "disposition": "census-before-mint",
+        "note": "Dotted vs underscored family drift; the concepts' Actions candidates must not add a third spelling."
+      },
+      {
+        "ids": [
+          "cmd.prd_builder.source.import",
+          "cmd.prd_builder.import_sources"
+        ],
+        "disposition": "recorded-drift",
+        "note": "Outside Settings scope; recorded so the audit sees the census was read."
+      },
+      {
+        "ids": [
+          "cmd.planning_wizard.topic.add",
+          "cmd.planning_wizard.add_topic"
+        ],
+        "disposition": "recorded-drift",
+        "note": "Outside Settings scope; recorded for census completeness."
+      },
+      {
+        "ids": [
+          "cmd.plan_compile.retry",
+          "cmd.plan_compile.retry_stage"
+        ],
+        "disposition": "recorded-drift",
+        "note": "Outside Settings scope; recorded for census completeness."
+      },
+      {
+        "ids": [
+          "cmd.browser.open_workspace_preview"
+        ],
+        "disposition": "preserve-pane-independent",
+        "note": "Remains pane-independent per register section 18; the web manager's browser-session copy must not imply pane-specific commands."
+      }
+    ]
+  }
 }

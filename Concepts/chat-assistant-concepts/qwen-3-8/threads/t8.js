@@ -9,7 +9,13 @@
 
   function cap(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : ""; }
 
-  /* ---- questionnaire: an "Interlude" chapter with a fold head ---- */
+  /* ---- questionnaire: an "Interlude" chapter with a fold head ----
+     One question per slide; Skip stays visible on every question page. The
+     last question carries Review answers (disabled until valid), which turns
+     the interlude body into a list of every answer with Back + Submit.
+     Deliberately minimal motion: the shared preparing pill fades in 150ms
+     and the interlude follows after the same beat — reduced motion skips the
+     pill and mounts directly. */
 
   function interludeRenderer(zoneEl, api) {
     const q = api.q;
@@ -25,42 +31,13 @@
       ? (foldKey in s0.expandedByIds ? s0.expandedByIds[foldKey] === true : true)
       : true;
 
-    const sec = document.createElement("section");
-    sec.className = "pmq-t8-interlude" + (open0 ? "" : " pmq-ch-folded");
-    sec.innerHTML =
-      '<header class="pmq-chapter-head" data-ifold aria-expanded="' + open0 + '">' +
-        '<i data-ico="question"></i>' +
-        '<span>Interlude \u00b7 Questions</span>' +
-        '<span class="pmq-chapter-n" data-inum></span>' +
-      "</header>" +
-      api.gridWrap(open0,
-        '<div class="pmq-chapter-body pmq-t8-ibody">' +
-          '<div class="pmq-t8-qcard">' +
-            '<div class="pmq-t8-qtop">' +
-              '<span class="pmq-t8-qkicker">Question <span class="pmq-t8-qnum" data-qnum></span></span>' +
-              '<button class="pmq-btn pmq-btn-icon" type="button" data-qcancel aria-label="Cancel questionnaire"><i data-ico="close"></i></button>' +
-            "</div>" +
-            '<div class="pmq-t8-qslide" data-qslide></div>' +
-            '<div class="pmq-t8-qfoot">' +
-              '<button class="pmq-btn" type="button" data-qprev><i data-ico="chevRight" style="transform:scaleX(-1)"></i>Previous</button>' +
-              '<button class="pmq-btn" type="button" data-qskip>Skip this question</button>' +
-              '<button class="pmq-btn pmq-btn-primary" type="button" data-qnext>Next<i data-ico="chevRight"></i></button>' +
-              '<button class="pmq-btn pmq-btn-primary" type="button" data-qsubmit>Submit questionnaire</button>' +
-            "</div>" +
-          "</div>" +
-        "</div>", "pmq-t8-page pmq-t8-igrow", "t8interlude");
-    zoneEl.appendChild(sec);
-    window.PMIcons.hydrate(sec);
-
-    const head = sec.querySelector("[data-ifold]");
-    const wrap = sec.querySelector(".pmq-gw");
-    const inumEl = sec.querySelector("[data-inum]");
-    const qnumEl = sec.querySelector("[data-qnum]");
-    const slideEl = sec.querySelector("[data-qslide]");
-    const prevBtn = sec.querySelector("[data-qprev]");
-    const skipBtn = sec.querySelector("[data-qskip]");
-    const nextBtn = sec.querySelector("[data-qnext]");
-    const submitBtn = sec.querySelector("[data-qsubmit]");
+    let sec = null, head = null, wrap = null, inumEl = null, qnumEl = null,
+        slideEl = null, prevBtn = null, skipBtn = null, nextBtn = null,
+        reviewBtn = null, submitBtn = null;
+    let reviewing = false;
+    let built = false;
+    let dead = false;
+    let timer = 0;
 
     function slideHtml(x) {
       const ans = api.answer(x);
@@ -83,6 +60,31 @@
       window.PMIcons.hydrate(slideEl);
     }
 
+    /* Review page (video 02): the interlude lists every answer as rows with
+       per-question back links; Back + Submit sit in the footer. */
+    function paintReview() {
+      slideEl.innerHTML = api.reviewHtml();
+      prevBtn.hidden = false;
+      prevBtn.disabled = false;
+      skipBtn.hidden = true;
+      nextBtn.hidden = true;
+      reviewBtn.hidden = true;
+      submitBtn.hidden = false;
+      submitBtn.disabled = !api.valid();
+    }
+
+    function enterReview() {
+      reviewing = true;
+      paintReview();
+      if (inumEl) inumEl.textContent = "Review your answers";
+    }
+
+    function exitReview() {
+      reviewing = false;
+      paintSlide();
+      chrome(false);
+    }
+
     function chrome(crossfade) {
       const last = cur >= q.questions.length - 1;
       const headText = "Question " + (cur + 1) + " of " + q.questions.length;
@@ -96,10 +98,12 @@
         else qnumEl.textContent = kickText;
       }
       prevBtn.disabled = cur === 0;
-      skipBtn.hidden = last;
+      /* Skip stays visible on every question page (video 02). */
+      skipBtn.hidden = false;
       nextBtn.hidden = last;
-      submitBtn.hidden = !last;
-      submitBtn.disabled = !api.valid();
+      reviewBtn.hidden = !last;
+      reviewBtn.disabled = !api.valid();
+      submitBtn.hidden = true;
     }
 
     /* Question change: swap content, interpolate the slide bounds (240ms). */
@@ -119,45 +123,124 @@
       } catch (e) { slideEl.style.overflow = ""; }
     }
 
-    /* Fold head: same grid-rows fold as day chapters, silent state write. */
-    head.addEventListener("click", () => {
-      const s = store.thread(key);
-      const willOpen = sec.classList.contains("pmq-ch-folded");
-      if (s && s.expandedByIds) s.expandedByIds[foldKey] = willOpen;
-      sec.classList.toggle("pmq-ch-folded", !willOpen);
-      if (wrap) wrap.classList.toggle("pmq-open", willOpen);
-      head.setAttribute("aria-expanded", String(willOpen));
-    });
+    function build(pillEl) {
+      if (dead) return;
+      /* Fade the preparing pill out before the interlude takes its place. */
+      if (pillEl) {
+        const remove = () => { if (pillEl.parentNode) pillEl.parentNode.removeChild(pillEl); };
+        if (!api.reduced() && typeof pillEl.animate === "function") {
+          try { pillEl.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 150, easing: "ease-in" }).finished.then(remove).catch(remove); }
+          catch (e) { remove(); }
+        } else remove();
+      }
 
-    sec.addEventListener("click", e => {
-      if (e.target.closest("[data-ifold]")) return;
-      if (e.target.closest("[data-qcancel]")) { api.cancel(); return; }
-      if (e.target.closest("[data-qprev]")) { api.prev(); return; }
-      if (e.target.closest("[data-qnext]")) { api.next(); return; }
-      if (e.target.closest("[data-qskip]")) { api.skip(); return; }
-      if (e.target.closest("[data-qsubmit]")) { if (api.valid()) api.submit(); return; }
-      const opt = e.target.closest("[data-opt]");
-      if (opt) api.select(q.questions[cur], opt.dataset.opt);
-    });
-    sec.addEventListener("input", e => {
-      if (e.target.matches("[data-free]")) api.setFree(q.questions[cur], e.target.value);
-    });
+      sec = document.createElement("section");
+      sec.className = "pmq-t8-interlude" + (open0 ? "" : " pmq-ch-folded");
+      sec.innerHTML =
+        '<header class="pmq-chapter-head" data-ifold aria-expanded="' + open0 + '">' +
+          '<i data-ico="question"></i>' +
+          '<span>Interlude \u00b7 Questions</span>' +
+          '<span class="pmq-chapter-n" data-inum></span>' +
+        "</header>" +
+        api.gridWrap(open0,
+          '<div class="pmq-chapter-body pmq-t8-ibody">' +
+            '<div class="pmq-t8-qcard">' +
+              '<div class="pmq-t8-qtop">' +
+                '<span class="pmq-t8-qkicker">Question <span class="pmq-t8-qnum" data-qnum></span></span>' +
+                '<button class="pmq-btn pmq-btn-icon" type="button" data-qcancel aria-label="Cancel questionnaire"><i data-ico="close"></i></button>' +
+              "</div>" +
+              '<div class="pmq-t8-qslide" data-qslide></div>' +
+              '<div class="pmq-t8-qfoot">' +
+                '<button class="pmq-btn" type="button" data-qprev><i data-ico="chevRight" style="transform:scaleX(-1)"></i>Previous</button>' +
+                '<button class="pmq-btn" type="button" data-qskip>Skip this question</button>' +
+                '<button class="pmq-btn pmq-btn-primary" type="button" data-qnext>Next<i data-ico="chevRight"></i></button>' +
+                '<button class="pmq-btn pmq-btn-primary" type="button" data-qreview>Review answers</button>' +
+                '<button class="pmq-btn pmq-btn-primary" type="button" data-qsubmit>Submit</button>' +
+              "</div>" +
+            "</div>" +
+          "</div>", "pmq-t8-page pmq-t8-igrow", "t8interlude");
+      zoneEl.appendChild(sec);
+      window.PMIcons.hydrate(sec);
 
-    paintSlide();
-    chrome(false);
+      head = sec.querySelector("[data-ifold]");
+      wrap = sec.querySelector(".pmq-gw");
+      inumEl = sec.querySelector("[data-inum]");
+      qnumEl = sec.querySelector("[data-qnum]");
+      slideEl = sec.querySelector("[data-qslide]");
+      prevBtn = sec.querySelector("[data-qprev]");
+      skipBtn = sec.querySelector("[data-qskip]");
+      nextBtn = sec.querySelector("[data-qnext]");
+      reviewBtn = sec.querySelector("[data-qreview]");
+      submitBtn = sec.querySelector("[data-qsubmit]");
 
-    if (!api.reduced()) {
-      try {
-        sec.animate(
-          [{ opacity: 0, transform: "translateY(10px)" }, { opacity: 1, transform: "none" }],
-          { duration: 320, easing: GRID_EASE }
-        );
-      } catch (e) {}
+      /* Fold head: same grid-rows fold as day chapters, silent state write. */
+      head.addEventListener("click", () => {
+        const s = store.thread(key);
+        const willOpen = sec.classList.contains("pmq-ch-folded");
+        if (s && s.expandedByIds) s.expandedByIds[foldKey] = willOpen;
+        sec.classList.toggle("pmq-ch-folded", !willOpen);
+        if (wrap) wrap.classList.toggle("pmq-open", willOpen);
+        head.setAttribute("aria-expanded", String(willOpen));
+      });
+
+      sec.addEventListener("click", e => {
+        if (e.target.closest("[data-ifold]")) return;
+        const rev = e.target.closest("[data-revto]");
+        if (rev) { const to = +rev.dataset.revto; if (to === cur) exitReview(); else api.gotoQuestion(to); return; }
+        if (e.target.closest("[data-qcancel]")) { api.cancel(); return; }
+        if (e.target.closest("[data-qprev]")) {
+          /* Back from the review page returns to the last question and
+             exits review. */
+          if (reviewing) { exitReview(); api.gotoQuestion(q.questions.length - 1); return; }
+          api.prev(); return;
+        }
+        if (e.target.closest("[data-qnext]")) { api.next(); return; }
+        if (e.target.closest("[data-qskip]")) { api.skip(); return; }
+        if (e.target.closest("[data-qreview]")) { enterReview(); return; }
+        if (e.target.closest("[data-qsubmit]")) { if (api.valid()) api.submit(); return; }
+        const opt = e.target.closest("[data-opt]");
+        if (opt) api.select(q.questions[cur], opt.dataset.opt);
+      });
+      sec.addEventListener("input", e => {
+        if (e.target.matches("[data-free]")) api.setFree(q.questions[cur], e.target.value);
+      });
+
+      paintSlide();
+      chrome(false);
+      built = true;
+
+      if (!api.reduced()) {
+        try {
+          sec.animate(
+            [{ opacity: 0, transform: "translateY(10px)" }, { opacity: 1, transform: "none" }],
+            { duration: 320, easing: GRID_EASE }
+          );
+        } catch (e) {}
+      }
     }
+
+    /* Lifecycle (video 04): the shared "Preparing questions…" pill holds the
+       zone first. t8 keeps motion deliberately minimal: the pill fades in
+       150ms and the interlude follows after the same beat; reduced motion
+       skips the pill and builds immediately. */
+    const pill = api.preparePill();
+    if (!api.reduced() && typeof pill.animate === "function") {
+      try { pill.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 150, easing: "ease-out" }); } catch (e) {}
+    }
+    if (api.reduced()) build(pill);
+    else timer = setTimeout(() => build(pill), 350);
 
     return {
       update(nq, idx) {
-        if (idx !== cur) { cur = idx; swapSlide(); return; }
+        if (!built) { cur = idx; return; }
+        if (idx !== cur) {
+          /* Any jump back onto a question (review back-links) exits review. */
+          reviewing = false;
+          cur = idx;
+          swapSlide();
+          return;
+        }
+        if (reviewing) return;
         const x = q.questions[cur];
         if (x.kind !== "freeform") {
           const ans = api.answer(x);
@@ -167,9 +250,16 @@
             o.setAttribute("aria-pressed", String(on));
           });
         }
+        const reviewBtnEl = sec.querySelector("[data-qreview]");
+        if (reviewBtnEl) reviewBtnEl.disabled = !api.valid();
         chrome(true);
       },
-      unmount() { if (sec.parentNode) sec.parentNode.removeChild(sec); }
+      unmount() {
+        dead = true;
+        clearTimeout(timer);
+        if (pill && pill.parentNode) pill.parentNode.removeChild(pill);
+        if (sec && sec.parentNode) sec.parentNode.removeChild(sec);
+      }
     };
   }
 

@@ -396,6 +396,10 @@
       drawer.style.display = 'none';
       scrim.style.display = 'none';
       rebuildStatus();
+      // restore a persisted pin across remounts (docked<->pop-out round-trip):
+      // the subscribe handler only fires on CHANGES, so boot must re-apply.
+      if (!currentTid) currentTid = store.get('activeThreadId', null);
+      if (drawerPinned()) openDrawer();
 
       function unmount() {
         if (unmounted) return;

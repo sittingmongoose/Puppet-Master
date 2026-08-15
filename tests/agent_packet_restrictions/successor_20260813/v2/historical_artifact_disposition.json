@@ -1,0 +1,22 @@
+{
+  "schema_id": "pm.prompt_complexity_successor.historical_artifact_disposition.v2",
+  "classification_source": {
+    "path": "../historical_artifact_disposition.json",
+    "sha256": "3e5d1d5285ab13d7dd198fbe464364f41b1cb73744be1ddc3343f9379aa9660c"
+  },
+  "inherited_root": "tests/agent_packet_restrictions/",
+  "excluded_subtree": "successor_20260813/",
+  "counts": {
+    "total": 59,
+    "reusable": 7,
+    "needs-currentness-refresh": 10,
+    "obsolete/superseded": 25,
+    "preserved-failure-only": 17
+  },
+  "current_hash_closure_required": true,
+  "historical_terminal": "STOPPED_BEFORE_SUBJECT_LAUNCH",
+  "historical_subject_model_or_provider_calls": 0,
+  "v4_status": "V4_PREFREEZE_INVALID",
+  "empirical_result": false,
+  "claim_boundary": "A reusable classification means reusable preparation input only; no historical static result becomes empirical or production evidence."
+}

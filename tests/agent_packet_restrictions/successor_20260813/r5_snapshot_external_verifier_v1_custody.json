@@ -1,0 +1,20 @@
+{
+  "schema_id": "pw-r5-snapshot-external-verifier-custody-v1",
+  "contract_id": "PW-R5-SNAPSHOT-EXTERNAL-GUARD-20260814.1",
+  "verifier_root": "tests/agent_packet_restrictions/successor_20260813/r5_snapshot_external_verifier_v1",
+  "files": [
+    {
+      "path": "contract.json",
+      "storage_sha256": "f88fd49855d539d58d4350d889d6aed0d61c97f9d99c9c46169a6a8cf60b6177",
+      "storage_bytes": 4912
+    },
+    {
+      "path": "external_verifier.py",
+      "storage_sha256": "38ec51f5d14e5a6f717abc0bd52a8402061fa4346ff4286cae6e45b010fd4837",
+      "storage_bytes": 30809
+    }
+  ],
+  "outer_controller_rule": "Before every verifier invocation, independently lstat and raw-hash this custody file and both listed verifier files without importing or executing verifier code; require these exact identities frozen in controller state. A mismatch aborts with zero empirical credit.",
+  "snapshot_scope": "The verifier reads only the frozen fixture, its provenance and binding manifests, candidate controls, seal/runtime custody, and forbidden internal-control evidence. It never consults mutable live Plans.",
+  "status": "FROZEN"
+}

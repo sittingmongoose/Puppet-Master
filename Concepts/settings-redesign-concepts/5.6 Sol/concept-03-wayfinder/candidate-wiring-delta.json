@@ -23,7 +23,7 @@
         "scope and policy",
         "secret redaction or FileSafe where applicable"
       ],
-      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only for deferred Server insertion.",
+      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only and mutation-blocked for the missing-owner Server insertion.",
       "event_receipt": "Typed completion/failure event with deterministic operation/receipt identity and simulation marker in concept.",
       "ui_projection": "Requested/effective state, stage progression, source/ownership evidence, failure, rollback, and last-known-good projection.",
       "usage_diagnostic_attribution": "Attribute external invocation/test/update work to the owning provider/tool/runtime; pure local preview/navigation has no Usage charge.",
@@ -46,7 +46,7 @@
         "scope and policy",
         "secret redaction or FileSafe where applicable"
       ],
-      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only for deferred Server insertion.",
+      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only and mutation-blocked for the missing-owner Server insertion.",
       "event_receipt": "Typed completion/failure event with deterministic operation/receipt identity and simulation marker in concept.",
       "ui_projection": "Requested/effective state, stage progression, source/ownership evidence, failure, rollback, and last-known-good projection.",
       "usage_diagnostic_attribution": "Attribute external invocation/test/update work to the owning provider/tool/runtime; pure local preview/navigation has no Usage charge.",
@@ -58,7 +58,7 @@
       "manager_id": "terminal",
       "ui_source": "Settings manager Terminal resource/detail action",
       "command_ref": "cmd.terminal.open",
-      "command_status": "reuse_or_adjudicate",
+      "command_status": "provisional_NOT_MINTED_reuse_requires_catalog_and_owner_census",
       "canonical_owner_docs": [
         "Plans/FinalGUISpec.md",
         "Plans/Commands_System.md"
@@ -69,7 +69,7 @@
         "scope and policy",
         "secret redaction or FileSafe where applicable"
       ],
-      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only for deferred Server insertion.",
+      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only and mutation-blocked for the missing-owner Server insertion.",
       "event_receipt": "Typed completion/failure event with deterministic operation/receipt identity and simulation marker in concept.",
       "ui_projection": "Requested/effective state, stage progression, source/ownership evidence, failure, rollback, and last-known-good projection.",
       "usage_diagnostic_attribution": "Attribute external invocation/test/update work to the owning provider/tool/runtime; pure local preview/navigation has no Usage charge.",
@@ -81,7 +81,7 @@
       "manager_id": "lsp",
       "ui_source": "Settings manager LSP resource/detail action",
       "command_ref": "cmd.lsp.restart_server",
-      "command_status": "reuse_or_adjudicate",
+      "command_status": "provisional_NOT_MINTED_reuse_requires_catalog_and_owner_census",
       "canonical_owner_docs": [
         "Plans/LSPSupport.md"
       ],
@@ -91,7 +91,7 @@
         "scope and policy",
         "secret redaction or FileSafe where applicable"
       ],
-      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only for deferred Server insertion.",
+      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only and mutation-blocked for the missing-owner Server insertion.",
       "event_receipt": "Typed completion/failure event with deterministic operation/receipt identity and simulation marker in concept.",
       "ui_projection": "Requested/effective state, stage progression, source/ownership evidence, failure, rollback, and last-known-good projection.",
       "usage_diagnostic_attribution": "Attribute external invocation/test/update work to the owning provider/tool/runtime; pure local preview/navigation has no Usage charge.",
@@ -113,7 +113,7 @@
         "scope and policy",
         "secret redaction or FileSafe where applicable"
       ],
-      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only for deferred Server insertion.",
+      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only and mutation-blocked for the missing-owner Server insertion.",
       "event_receipt": "Typed completion/failure event with deterministic operation/receipt identity and simulation marker in concept.",
       "ui_projection": "Requested/effective state, stage progression, source/ownership evidence, failure, rollback, and last-known-good projection.",
       "usage_diagnostic_attribution": "Attribute external invocation/test/update work to the owning provider/tool/runtime; pure local preview/navigation has no Usage charge.",
@@ -136,7 +136,7 @@
         "scope and policy",
         "secret redaction or FileSafe where applicable"
       ],
-      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only for deferred Server insertion.",
+      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only and mutation-blocked for the missing-owner Server insertion.",
       "event_receipt": "Typed completion/failure event with deterministic operation/receipt identity and simulation marker in concept.",
       "ui_projection": "Requested/effective state, stage progression, source/ownership evidence, failure, rollback, and last-known-good projection.",
       "usage_diagnostic_attribution": "Attribute external invocation/test/update work to the owning provider/tool/runtime; pure local preview/navigation has no Usage charge.",
@@ -158,7 +158,7 @@
         "scope and policy",
         "secret redaction or FileSafe where applicable"
       ],
-      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only for deferred Server insertion.",
+      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only and mutation-blocked for the missing-owner Server insertion.",
       "event_receipt": "Typed completion/failure event with deterministic operation/receipt identity and simulation marker in concept.",
       "ui_projection": "Requested/effective state, stage progression, source/ownership evidence, failure, rollback, and last-known-good projection.",
       "usage_diagnostic_attribution": "Attribute external invocation/test/update work to the owning provider/tool/runtime; pure local preview/navigation has no Usage charge.",
@@ -180,7 +180,7 @@
         "scope and policy",
         "secret redaction or FileSafe where applicable"
       ],
-      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only for deferred Server insertion.",
+      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only and mutation-blocked for the missing-owner Server insertion.",
       "event_receipt": "Typed completion/failure event with deterministic operation/receipt identity and simulation marker in concept.",
       "ui_projection": "Requested/effective state, stage progression, source/ownership evidence, failure, rollback, and last-known-good projection.",
       "usage_diagnostic_attribution": "Attribute external invocation/test/update work to the owning provider/tool/runtime; pure local preview/navigation has no Usage charge.",
@@ -192,7 +192,7 @@
       "manager_id": "plugins",
       "ui_source": "Settings manager Plugins resource/detail action",
       "command_ref": "cmd.catalog.update_item",
-      "command_status": "reuse_or_adjudicate",
+      "command_status": "provisional_NOT_MINTED_reuse_requires_catalog_and_owner_census",
       "canonical_owner_docs": [
         "Plans/Plugins_System.md"
       ],
@@ -202,7 +202,7 @@
         "scope and policy",
         "secret redaction or FileSafe where applicable"
       ],
-      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only for deferred Server insertion.",
+      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only and mutation-blocked for the missing-owner Server insertion.",
       "event_receipt": "Typed completion/failure event with deterministic operation/receipt identity and simulation marker in concept.",
       "ui_projection": "Requested/effective state, stage progression, source/ownership evidence, failure, rollback, and last-known-good projection.",
       "usage_diagnostic_attribution": "Attribute external invocation/test/update work to the owning provider/tool/runtime; pure local preview/navigation has no Usage charge.",
@@ -214,7 +214,7 @@
       "manager_id": "tools",
       "ui_source": "Settings manager Tools resource/detail action",
       "command_ref": "cmd.catalog.update_item",
-      "command_status": "reuse_or_adjudicate",
+      "command_status": "provisional_NOT_MINTED_reuse_requires_catalog_and_owner_census",
       "canonical_owner_docs": [
         "Plans/Tools.md"
       ],
@@ -224,7 +224,7 @@
         "scope and policy",
         "secret redaction or FileSafe where applicable"
       ],
-      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only for deferred Server insertion.",
+      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only and mutation-blocked for the missing-owner Server insertion.",
       "event_receipt": "Typed completion/failure event with deterministic operation/receipt identity and simulation marker in concept.",
       "ui_projection": "Requested/effective state, stage progression, source/ownership evidence, failure, rollback, and last-known-good projection.",
       "usage_diagnostic_attribution": "Attribute external invocation/test/update work to the owning provider/tool/runtime; pure local preview/navigation has no Usage charge.",
@@ -236,7 +236,7 @@
       "manager_id": "testing-debug",
       "ui_source": "Settings manager Testing & Debug resource/detail action",
       "command_ref": "cmd.testing.run",
-      "command_status": "reuse_or_adjudicate",
+      "command_status": "provisional_NOT_MINTED_reuse_requires_catalog_and_owner_census",
       "canonical_owner_docs": [
         "Plans/Automated_Testing_System.md",
         "Plans/Runtime_Artifacts_Panel.md"
@@ -247,7 +247,7 @@
         "scope and policy",
         "secret redaction or FileSafe where applicable"
       ],
-      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only for deferred Server insertion.",
+      "state_or_operation": "Persistent setting mutation for requested policy; ObservableWork for external install/update/test/restore/cleanup; navigation-only and mutation-blocked for the missing-owner Server insertion.",
       "event_receipt": "Typed completion/failure event with deterministic operation/receipt identity and simulation marker in concept.",
       "ui_projection": "Requested/effective state, stage progression, source/ownership evidence, failure, rollback, and last-known-good projection.",
       "usage_diagnostic_attribution": "Attribute external invocation/test/update work to the owning provider/tool/runtime; pure local preview/navigation has no Usage charge.",
@@ -282,5 +282,34 @@
       "concept_simulation_boundary": "Deterministic state machine only."
     }
   ],
+  "corrected_candidate_wiring_contract": {
+    "status": "candidate_only_NOT_MINTED_no_production_or_canonical_availability_claim",
+    "provider_action_paths": {
+      "first_acquisition": "UI explicit Install/Setup -> provisional candidate command -> official-source and exact Host/Environment consent validation -> RuntimeResourceGovernor request -> ObservableWork -> verified installation generation -> receipt -> setup/auth deep link",
+      "select_existing": "UI candidate selection -> provisional candidate command -> exact installation identity and expected binding revision -> binding mutation -> receipt -> readiness projection",
+      "authenticate": "UI sign-in -> separate provisional candidate command -> provider-owned or approved PM auth flow -> auth receipt -> authentication projection; never acquisition",
+      "verify": "UI or post-lifecycle verification -> provisional candidate command -> trusted procedure -> ObservableWork -> acquisition/auth/readiness results remain separate -> receipt",
+      "update": "post-consent policy or explicit UI -> provisional candidate command -> RuntimeResourceGovernor admission -> ObservableWork -> stage/verify/activate or rollback -> receipt",
+      "repair": "explicit recovery UI -> provisional candidate command -> same owner/admission/work contracts -> verify -> receipt or recovery link",
+      "rollback": "explicit/verified failure path -> provisional candidate command -> last-good generation restore -> verify -> rolled_back or recovery_required receipt"
+    },
+    "request_and_result_contract": "Use the complete typed request and result fields in candidate-command-delta.json, including consent, continuation currentness, generation, coalescing, disabled reason, typed error, and recovery link.",
+    "owners": {
+      "ObservableWork": "sole work/progress/wait owner; cards and rows only project it",
+      "RuntimeResourceGovernor": "sole resource/admission owner; Settings requests/projects policy and never schedules/adjudicates; host enforcement uses this same contract",
+      "permit_outcomes": ["admitted", "queued", "admitted_degraded", "blocked_permission", "blocked_resource", "cancelled"]
+    },
+    "performance_wiring": [
+      "Compact Home/search metadata first; only the selected manager hydrates.",
+      "Generation currentness fences stale hydration/search/provider continuations.",
+      "Caches and channels are byte bounded; lists mount at most 40 rows.",
+      "825+ setting and 100-installation fixtures remain required.",
+      "Inactive detail surfaces unsubscribe or decrement shared refcounts.",
+      "Transient input is never persisted.",
+      "Projection changes are narrow and frame coalesced."
+    ],
+    "native_validation": "Deterministic old-hardware/network/resource fixtures are projections only; native Slint plus actual Ivy Bridge, Xeon, CPU, RAM, disk, and network validation remain unresolved gates and required review may run in bounded waves but may not be omitted.",
+    "browser_boundary": "No Playwright product/runtime/facade/compatibility/package/port/command/MCP/capture wiring. Browser checks are test evidence only and do not certify native Slint."
+  },
   "production_claim": false
 }

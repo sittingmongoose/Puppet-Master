@@ -2,7 +2,7 @@
   "schema_id": "pm.settings_candidate_wiring_delta.v1",
   "concept_id": "c4-ledger",
   "model": "fable",
-  "note": "Every trace is concept_local_state:true — the demo mutates the PMState working copy and simulates receipts. Nothing here masquerades as production wiring.",
+  "note": "Every trace is concept_local_state:true \u2014 the demo mutates the PMState working copy and simulates receipts. Nothing here masquerades as production wiring.",
   "traces": [
     {
       "id": "trace.import.preview",
@@ -76,7 +76,7 @@
       "canonical_owner": "storage-plan.md (cleanup) + WorktreeGitImprovement.md (lease boundary)",
       "validation_permission": "Read-only enumeration; report-only by contract",
       "state_or_operation": "trigger('cleanup-dry-run') -> dryRun.last {wouldFreeMB 2100, skipped:[wt.goal-142 leased]}",
-      "events_receipts": "op {estimating -> done}; receipt 'Dry run complete… Nothing was deleted.'",
+      "events_receipts": "op {estimating -> done}; receipt 'Dry run complete\u2026 Nothing was deleted.'",
       "ui_projection": "Dry-run record with receipt chip; skipped list names the lease holder; Apply button unlocks behind confirm",
       "usage_attribution": "None",
       "recovery_deep_link": "c4-ledger.html#/manager/manager.cleanup?trigger=cleanup-dry-run&instant=1",
@@ -102,7 +102,7 @@
       "canonical_owner": "GitHub_Integration.md",
       "validation_permission": "Forge connection with workflow read; typed offline error when refreshDisabled",
       "state_or_operation": "trigger('actions-refresh') -> refreshedAt set; offline path returns {ok:false} with honest receipt",
-      "events_receipts": "op {fetching -> done}; receipt 'Workflows refreshed' or 'Refresh unavailable: Offline…'",
+      "events_receipts": "op {fetching -> done}; receipt 'Workflows refreshed' or 'Refresh unavailable: Offline\u2026'",
       "ui_projection": "Refresh button disabled with reason under offline scenario; refreshed timestamp note otherwise",
       "usage_attribution": "None",
       "recovery_deep_link": "c4-ledger.html#/manager/manager.actions?scenario=offline&instant=1",
@@ -123,7 +123,7 @@
     },
     {
       "id": "trace.worktree.prune-lease-gated",
-      "ui_source": "Worktree record inspector 'Prune…'",
+      "ui_source": "Worktree record inspector 'Prune\u2026'",
       "command": "cmd.worktree.prune",
       "canonical_owner": "WorktreeGitImprovement.md",
       "validation_permission": "Lease check is command-level: leased worktrees hard-fail (UI shows the disabled Prune with the lease reason); idle/stale require explicit confirmation",
@@ -141,7 +141,7 @@
       "canonical_owner": "BinaryLocator_Spec.md + Release_Supply_Chain.md",
       "validation_permission": "Proven ownership required (resolver-gated); Ask-first policy satisfied by the explicit click",
       "state_or_operation": "trigger('install-update','openai-codex/inst.codex.npm') -> update.state updating -> verifying -> ready -> up-to-date; version bumped; history entry 'verified'",
-      "events_receipts": "op phases incl. the verify checklist payload; receipt 'Update installed … Dependent routes refreshed.'",
+      "events_receipts": "op phases incl. the verify checklist payload; receipt 'Update installed \u2026 Dependent routes refreshed.'",
       "ui_projection": "Row status word steps through the phases instantly; inspector history gains the verified entry",
       "usage_attribution": "None",
       "recovery_deep_link": "c4-ledger.html#/manager/manager.providers?trigger=install-update:openai-codex%2Finst.codex.npm&instant=1",
@@ -154,11 +154,21 @@
       "canonical_owner": "BinaryLocator_Spec.md + Release_Supply_Chain.md",
       "validation_permission": "Same as happy path; verification failure triggers automatic rollback per policy rollbackOnFailedVerify",
       "state_or_operation": "trigger('install-update-fail','copilot/inst.copilot.ghext') -> updating -> verifying -> verification-failed -> rolled-back; TWO history entries (verification-failed, rolled-back)",
-      "events_receipts": "op phases; receipt 'Update rolled back … installer exit code alone is never success' semantics preserved in history detail",
+      "events_receipts": "op phases; receipt 'Update rolled back \u2026 installer exit code alone is never success' semantics preserved in history detail",
       "ui_projection": "Status word 'Rolled back'; history shows both directions; verify checklist rendered in the inspector",
       "usage_attribution": "None",
       "recovery_deep_link": "c4-ledger.html#/manager/manager.providers?trigger=install-update-fail:copilot%2Finst.copilot.ghext&instant=1",
       "concept_local_state": true
     }
-  ]
+  ],
+  "observable_work_alignment": {
+    "added": "2026-08-13 dependency correction",
+    "authority": "02_FULL_THREAD_CURRENT_DECISION_REGISTER.md section 11",
+    "rule": "Every traced operation projects through ObservableWork. Demo op events now carry progressKind (determinate|indeterminate), source (measured|derived|unknown), completed/total only when a real denominator exists, and waitReason from the waiting_* vocabulary. Determinate display without a real denominator is banned (also section 16.6). Production wiring should map trace phases onto the register's generic state grammar (accepted, queued, starting, running, waiting_provider, waiting_resource, waiting_for_idle, retrying, committing, verifying, rolling_back, completed, failed, cancelled, recovery_required among others).",
+    "demo_changes": [
+      "index-rebuild: indeterminate scanning phase, then measured completed/total file counts; c4 renders counts and real-valued progressbar aria, never a bare percentage",
+      "dest-test rate-limited phase carries waitReason waiting_resource",
+      "credits meter aria exposes real units (used of total) instead of a percentage"
+    ]
+  }
 }

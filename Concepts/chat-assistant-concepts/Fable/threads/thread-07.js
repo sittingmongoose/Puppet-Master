@@ -15,7 +15,7 @@ import { ensureCss } from "../shared/contracts.js";
 import { escapeHtml } from "../shared/popup.js";
 import {
   transcriptSlice, isLongMessage, isExpanded, previewText, lensMark, copyMessage,
-  workCluster, createScrollKeeper, questionnaireState, activityGroups,
+  workCluster, createScrollKeeper, questionnaireState, activityGroups, liveTurn,
 } from "../shared/thread-common.js";
 import { createComposer, createSelectorRow, createDecisionStack, openMoreInfo, openMessageOps } from "../shared/components.js";
 import { fmtDuration, fmtTime, workedLabel, JUMP_TO_LATEST, QUESTIONNAIRE_ACTIONS, TODO_STATE_LABELS } from "../shared/strings.js";
@@ -185,23 +185,31 @@ export function createThread(ctx) {
     const line = document.createElement("button");
     line.className = "ft7-statusline";
     const parts = [];
-    if (w.turn) parts.push(`RCV ${w.turn.summary} ${fmtDuration(w.turn.workedSeconds)}`);
+    const lt = liveTurn();
+    if (lt) parts.push(`RCV ${lt.summary} ${fmtDuration(lt.workedSeconds)}`);
     if (w.goal) parts.push(`GOAL ${w.goal.status.toUpperCase()}`);
     if (w.todo) parts.push(`TASKS ${w.todo.items.filter((i) => i.state === "complete").length}/${w.todo.items.length}`);
-    if (w.subagents) parts.push(`HANDS ${w.subagents.counts.working}W ${w.subagents.counts.complete}C${w.subagents.counts.blocked ? ` ${w.subagents.counts.blocked}B` : ""}`);
+    if (w.subagents) { const c = w.subagents.counts; parts.push(`HANDS ${c.working}W ${c.complete}C${c.blocked ? ` ${c.blocked}B` : ""}${c.failed ? ` ${c.failed}F` : ""}${c.retrying ? ` ${c.retrying}R` : ""}`); }
     if (w.diffs.length) parts.push(`EDITS ${w.diffs.reduce((n, d) => n + d.files.length, 0)}F`);
-    line.innerHTML = `<span class="ft7-status-text">${escapeHtml(parts.join("  ·  "))}</span>${w.turn ? `<span class="ft7-cursor" aria-hidden="true"></span>` : ""}<span class="ft7-status-toggle">${open ? "close" : "open"}</span>`;
+    line.innerHTML = `<span class="ft7-status-text">${escapeHtml(parts.join("  ·  "))}</span>${lt ? `<span class="ft7-cursor" aria-hidden="true"></span>` : ""}<span class="ft7-status-toggle">${open ? "close" : "open"}</span>`;
     line.addEventListener("click", () => { s.view.expandedGroups["ft7:statusopen"] = !open; s.emit("transcript-view"); });
     statusband.appendChild(line);
 
     if (open) {
       const panel = document.createElement("div");
       panel.className = "ft7-statuspanel";
+      if (lt && lt.items.length) {
+        for (const item of lt.items) {
+          panel.innerHTML += `<div class="ft7-panel-line"><span class="ft7-roll-kind">${escapeHtml(lt.phaseKind.replace(/_/g, " "))}</span><span class="ft7-roll-text">${escapeHtml(item.text)}</span><span class="ft7-roll-side">${escapeHtml(item.side || "")}</span></div>`;
+        }
+      }
       if (w.goal) {
         const gl = document.createElement("div");
         gl.className = "ft7-panel-line";
         gl.dataset.status = w.goal.status;
-        gl.innerHTML = `<span class="ft7-roll-kind">goal</span><span class="ft7-roll-text">${escapeHtml(w.goal.title)} — ${escapeHtml(w.goal.objective)}</span>`;
+        const phaseTok = w.goal.phases ? ` [phase ${(w.goal.phaseIndex || 0) + 1}/${w.goal.phases.length} ${w.goal.phases[w.goal.phaseIndex || 0].toLowerCase()}]` : "";
+        const replanTok = w.goal.replanApplied ? " [replanned]" : "";
+        gl.innerHTML = `<span class="ft7-roll-kind">goal</span><span class="ft7-roll-text">${escapeHtml(w.goal.title)} — ${escapeHtml(w.goal.objective)}${escapeHtml(phaseTok)}${escapeHtml(replanTok)}</span>`;
         const ctrl = document.createElement("span");
         ctrl.className = "ft7-panel-ctrl";
         const btn = (t, ok, fn) => { const b = document.createElement("button"); b.textContent = `[${t}]`; if (!ok) b.disabled = true; else b.addEventListener("click", fn); return b; };

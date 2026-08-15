@@ -35,3 +35,14 @@ Concept register only. Nothing here edits canon; the audit adjudicates.
 - **BSD is read-only.** Bounded deltas in, comments out; tool access fixed read-only; it cannot widen authority and primary work never blocks merely because it failed. Chat overrides last one turn or one thread.
 - **FileSafe is the floor.** Non-bypassable under every profile, Persona, and rule; external directories are read-only entries added only through explicit review; the UI offers no bypass and says so.
 - **Provider CLIs are acquired explicitly.** The cursor-cli offer is user-triggered, official-source, exact host/environment, never bundled or demand-triggered; install and sign-in stay separate acts; unknown/ambiguous ownership stays manual-only (local Ollama shows no update/repair action at all).
+
+## 2026-08-13 dependency correction
+
+The full-thread performance decision register (omitted from the original packet, supplied by `PM_Settings_Dependency_and_Work_Correction_2026-08-13`) was reviewed in full against this concept. Boundary confirmations added:
+
+- **RuntimeResourceGovernor** remains the only resource/admission owner; nothing in this concept models a second governor — demo staged transitions are UI projections, and the wiring delta's ObservableWork alignment block records how they map onto the register's operation-state grammar.
+- **ObservableWork** is the sole progress/wait projection: determinate progress only with a real denominator (index rebuild now shows measured file counts; the scanning phase is honestly indeterminate), progress source declared, wait reasons from the waiting_* vocabulary.
+- **Provider-CLI adjudication** (byte-identical to the original packet's copy, sha256 9425dce7…) re-verified: no bundling/pre-seeding/silent-acquisition implication anywhere in this concept's copy or fixtures; explicit official-source install offers with exact Host/Environment stand.
+- **Lazy Settings opening model** (register section 20.2) verified with DOM evidence in the correction test pass; startup-scan copy corrected in the shared dataset (skills discovery).
+- **Calibration gates** (register section 23) are recorded as implementation benchmarks, not demo claims.
+

@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L83-L98
 
-Source SHA256: `d24307d69857bf939e2d9e3514d15fa7a4af41e225633e2f19eb40aeba10012c`
+Source SHA256: `975472ff73c949fea277805b1317b1f67f56972bbfe401c73c3f38267edac4b3`
 
 ---
 
@@ -18,7 +18,7 @@ The required command rows are `cmd.testing.capability_policy.set`, `cmd.testing.
 
 Visible testing projections must include `show_when_possible`, visible active, collapsed, detached, backgrounded, and non-embeddable states. Web evidence must show browser navigation, clicks, form input, assertions, screenshots, console, network, and pass/fail progression where supported. Native evidence must show Swift/live preview, hot reload, simulator, emulator, physical device stream, application window, interaction trace, screenshots, and logs where available and permitted.
 
-Browser and GUI automation manifests must carry `browser_session_id`, PM-native browser runtime state, visibility state, Open/Watch state, `runtime_unavailable` remediation actions, PageRepresentation refs, screenshot/PDF/console/network artifact refs, and redaction manifest refs. Playwright/CDP may appear only as fallback or reference test-driver evidence; PM-managed native browser sessions are the product runtime identity. Negative fixtures cover no-browser/runtime-unavailable, hidden prompt-injection chips, redaction failure, no-network denial, SSRF/private-host denial, robots/fanout/depth denial, cache hit/miss/TTL, and partial crawl/research/source citation outcomes.
+Browser and GUI automation manifests must carry `browser_session_id`, PM-native browser runtime state, visibility state, Open/Watch state, `runtime_unavailable` remediation actions, PageRepresentation refs, screenshot/PDF/console/network artifact refs, and redaction manifest refs. `BrowserRuntimeService`, Browser Program, and Expert Browser Program are the only PM-owned browser automation/runtime identities. Negative fixtures cover no-browser/runtime-unavailable, hidden prompt-injection chips, redaction failure, no-network denial, SSRF/private-host denial, robots/fanout/depth denial, cache hit/miss/TTL, and partial crawl/research/source citation outcomes.
 `python3 scripts/pm-plans-verify.py validate-web-capability-contracts` enforces the web capability contract surface: discriminated web/browser/research schema definitions, evidence branches, runtime/browser artifact payload fields, `/web fetch` parity, invocation provenance, prompt capability injection, plan-mode web visibility, retired `cmd.web.*` production exclusion, browser-unavailable coverage, security/cache/robots/citation tokens, and the Site Reader naming boundary.
 
 Screenshots, videos, logs, console output, network traces, and artifact previews apply secret and sensitive-data redaction before display or persistence. Redaction failures block display/persistence until resolved or explicitly authorized by the owning policy; they do not silently downgrade evidence quality.

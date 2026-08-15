@@ -1,47 +1,68 @@
 {
-  "schema_id": "pm.chat.5_6_sol.interaction_test_report.v2",
+  "schema_id": "pm.chat.5_6_sol.interaction_test_report.v3",
   "model": "5.6 Sol",
-  "generated_at": "2026-08-12T07:44:22Z",
-  "prototype_gate": "pass",
+  "generated_at": "2026-08-14T05:47:37Z",
+  "prototype_gate": "pass_browser_prototype_with_declared_transport_and_native_residuals",
   "production_readiness_claimed": false,
   "winner_recommendation": null,
+  "source_fingerprint_sha256": "4392f156cad4eb5f8761cdf1b40e9cbc370209c0e63b47684a6c063cc477f7bb",
   "source_receipts": [
     "evidence/browser-acceptance-firefox.json",
     "evidence/browser-acceptance-chromium.json",
-    "evidence/browser-acceptance.json"
+    "evidence/browser-acceptance-chromium-http.json",
+    "evidence/browser-acceptance.json",
+    "evidence/direct-visual-inspection.json"
   ],
   "completed_lanes": [
     {
-      "browser": "Firefox 153.0.3",
+      "browser": "Firefox 153.0.4",
       "engine": "Gecko",
       "automation": "geckodriver 0.37.0",
       "viewport": "2400x1200",
       "transport": "loopback HTTP",
+      "base_url": "http://127.0.0.1:4191/Concepts/chat-assistant-concepts/5-6-sol/index.html",
       "isolated_profile": true,
-      "checks_passed": 23,
+      "checks_passed": 33,
       "checks_failed": 0,
       "console_errors": 0,
-      "runtime_exceptions": 0
+      "runtime_exceptions": 0,
+      "screenshots": 115
     },
     {
       "browser": "Chromium 151.0.7922.34",
       "engine": "Blink",
       "automation": "Chrome DevTools Protocol 1.3",
       "viewport": "2400x1200",
-      "transport": "file URL using the same four checked-in JSON fixtures through the file-only local XHR branch",
+      "transport": "file URL with the same six checked-in JSON fixtures through the file-only local XHR branch",
+      "base_url": "file:///mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5-6-sol/index.html",
       "isolated_profile": true,
-      "checks_passed": 23,
+      "checks_passed": 33,
       "checks_failed": 0,
       "console_errors": 0,
-      "runtime_exceptions": 0
+      "runtime_exceptions": 0,
+      "screenshots": 115
     }
   ],
-  "result": {
-    "checks_passed": 46,
-    "checks_failed": 0,
-    "status": "pass_with_recorded_residuals"
+  "separate_transport_diagnostic": {
+    "browser": "Chromium 151.0.7922.34",
+    "engine": "Blink",
+    "transport": "loopback HTTP",
+    "base_url": "http://127.0.0.1:4191/Concepts/chat-assistant-concepts/5-6-sol/index.html",
+    "scope": "isolated boot probe only; excluded from the two complete-lane aggregate",
+    "checks_passed": 0,
+    "checks_failed": 1,
+    "failed_check": "all entry pages boot with exact model label",
+    "failure": "Timed out waiting for document readiness, the fixture store, and the first window concept.",
+    "console_errors": 0,
+    "runtime_exceptions": 0,
+    "receipt": "evidence/browser-acceptance-chromium-http.json"
   },
-  "coverage_per_engine": {
+  "complete_lane_aggregate": {
+    "checks_passed": 66,
+    "checks_failed": 0,
+    "status": "pass_for_browser_prototype_only"
+  },
+  "coverage_per_complete_engine": {
     "entry_pages": 17,
     "same_model_pairings": 64,
     "questionnaire_grammars": 8,
@@ -49,28 +70,34 @@
     "theme_width_cells": 32,
     "baseline_configuration_cells": 512,
     "feature_state_cells": 896,
-    "continuous_resize_samples": 53,
+    "continuous_resize_cells": 432,
+    "continuous_resize_representative_pairings": 8,
+    "continuous_resize_width_samples_per_pairing": 54,
     "history_artifact_cells": 160,
-    "authored_motion_families": 34,
-    "deterministic_triggers": 64,
+    "authored_motion_families": 42,
+    "reduced_motion_counterparts": 42,
+    "corrected_revision_2_triggers": 59,
+    "supplemental_fixture_triggers": 34,
+    "total_deterministic_fixture_triggers": 93,
+    "reset_determinism_runs": 2,
     "focused_visual_frames": 23,
-    "total_visual_frames": 55
+    "total_visual_frames": 115
   },
   "interaction_gates": [
     {
       "gate": "independent concept selection",
       "status": "pass",
-      "evidence": "All eight window concepts and all eight thread concepts mounted as 64 independent pairings without duplicate roots or lost question/work surfaces."
+      "evidence": "All eight window concepts and all eight thread concepts mounted as 64 independent same-model pairings without duplicate roots or lost question/work surfaces."
     },
     {
       "gate": "responsive geometry",
       "status": "pass",
-      "evidence": "520, 750, 975, and 1200 px exact widths passed for all themes; 53 additional samples covered continuous resize from 520 through 1196 px without root overflow or unusable transcript geometry."
+      "evidence": "520, 750, 975, and 1200 px exact widths passed for all eight themes; 432 additional cells covered eight representative pairings at 54 widths each across continuous 520-1200 px pressure."
     },
     {
       "gate": "legibility and dense composition",
       "status": "pass",
-      "evidence": "Across 64 theme/thread cells, body copy measured at least 16 px, metadata and actions at least 11 px, dense work rows at least 12 px, and metadata contrast at least 6:1 on base and raised surfaces. Dialogue Score and Workshop dense headers reported no overlap or clipping."
+      "evidence": "Across 64 theme-thread cells, body copy measured at least 16 px, actions/context/work metadata at least 12 px in the frozen receipt, dense work rows at least 13 px, and metadata contrast at least 6:1 on base and raised surfaces. Dense headers reported no overlap or clipping."
     },
     {
       "gate": "rail, history, artifact, and mount recovery",
@@ -80,47 +107,57 @@
     {
       "gate": "long conversation continuity",
       "status": "pass",
-      "evidence": "A 1413-character canonical message expanded from a 360-character preview with zero measured anchor shift; all-thread search loaded message t09-m0025 from a 120-message thread while rendering a bounded 14-message range and returning focus to the exact result."
+      "evidence": "A 1413-character canonical message expanded from a 360-character preview with zero measured anchor shift; all-thread search loaded message t09-m0025 from a 120-message thread while rendering a bounded range and returning focus to the exact result."
     },
     {
       "gate": "question lifecycle",
       "status": "pass",
-      "evidence": "Eight structurally distinct question grammars shared prepare, answer, validate, skip, back, next, cancel, resume, submit, and durable-answer behavior. Final direct inspection confirmed all choices and commit controls remain visible above the held composer in the compacted dense variants."
+      "evidence": "Eight structurally distinct persistent question grammars share prepare, answer, validate, skip, back, next, cancel, resume, submit, and durable-answer semantics while retaining their own composition and motion."
     },
     {
-      "gate": "draft durability and local spellcheck",
+      "gate": "draft durability and passive spellcheck",
       "status": "pass",
-      "evidence": "Thread-local draft text, revision history, focus, and native passive spellcheck survived thread switching and a document reload."
+      "evidence": "Thread-local draft text, revision history, focus, and passive local spellcheck survived thread switching and document reload."
     },
     {
-      "gate": "focus and popup collision",
+      "gate": "focus, modal isolation, and popup collision",
       "status": "pass",
-      "evidence": "Search, route, context, access, BSD, draft history, and thread-more surfaces stayed inside a 1280x814 browser viewport with the Chat width at 520 px; Escape restored focus to the originating control."
+      "evidence": "Search, route, context, access, BSD, draft-history, and thread-more surfaces stayed inside a 1280x814 viewport with Chat at 520 px; modal backgrounds became inert and aria-hidden, Tab remained trapped, and Escape restored focus to the originating control."
     },
     {
-      "gate": "authored and reduced motion",
+      "gate": "authored causal motion and reduced motion",
       "status": "pass",
-      "evidence": "The audit found 34 authored families: eight window entrances, 24 distinct thread-layer sequences, one anchored popup, and one truthful progress pass. All 34 retained semantic state cues while reduced motion collapsed animation to immediate placement or hid continuous travel."
+      "evidence": "The 42-family matrix covers eight window entrances; eight distinct send, redirect, question, and work sequences (32 thread families); one anchored popup; and one truthful progress pass. Transient commit/redirect/question/work markers prevent replay on unrelated renders. All 42 collapse to immediate semantic placement under reduced motion."
     },
     {
-      "gate": "offline and replay",
+      "gate": "offline, reconnect, replay, and snapshot",
       "status": "pass",
-      "evidence": "One queued client operation replayed once after reconnect; the second reconnect replayed zero operations and retained one delivered operation record."
+      "evidence": "A queued operation survived reload and replayed once after reconnect; the second reconnect replayed zero operations, retained one delivered record, separated a domain failure from transport-offline state, and preserved server continuation/snapshot catch-up."
     },
     {
-      "gate": "control truthfulness",
+      "gate": "provider acquisition boundary",
       "status": "pass",
-      "evidence": "Every enabled showcased control had an action and visible outcome; disabled controls exposed a reason. Provider, account, model, favorite, effort, speed, access, BSD, context, attachment, search, route, and selector controls mutated visible state."
+      "evidence": "The fixture separates missing CLI, discovered installation, pre-acquisition source/target planning, explicit exact-host/environment acquisition consent, post-acquisition or validated-adoption ProviderCliSupplyChainProof, install verification, protected authentication, readiness, and continuation handling. Authentication is negatively tested before installation verification. Exact canonical provider, CLI, operation, attempt, installation, host, environment, topology generation, official-source, artifact, signature/attestation, trust-root, compatibility, known-bad, download, verification, rollback-proof, and observation-time identities are asserted without legacy aliases. Resume currentness is derived from token, operation revision, topology generation, expiry, intent, readiness, and prior consumption; stale, expired, and topology-mismatched continuations are rejected. No trigger performs installation, authentication, or network mutation; Auto/On is never initial-acquisition consent."
     },
     {
-      "gate": "interface standards",
+      "gate": "corrected trigger contract",
       "status": "pass",
-      "evidence": "The source/DOM audit found no emoji, colored left-edge state accents, raw underscored states, dead enabled controls, or unexplained disabled controls; custom scrollbar coverage was present."
+      "evidence": "All 59 Revision-2 family.event identifiers produced exact receipts. The 34 supplemental rows produced 33 exact receipts plus the asserted receipt-clearing scenario.reset outcome, with semantic outcomes asserted for all 34, for 93 deterministic triggers total; system.reset retains its receipt, while scenario.reset clears receipts and produced the same canonical fingerprint twice."
+    },
+    {
+      "gate": "control truthfulness and interface standards",
+      "status": "pass",
+      "evidence": "Every enabled showcased control had an action and visible outcome; disabled controls exposed a reason. The source/DOM audit found no emoji, colored left-edge state accents, raw underscored states, dead enabled controls, or unexplained disabled controls."
     },
     {
       "gate": "cross-engine browser implementation",
+      "status": "pass_with_transport_split",
+      "evidence": "The same complete 33-check suite passed in Gecko over loopback HTTP and Blink from the checked-in file entry with zero console errors and runtime exceptions. The separate Blink loopback-HTTP boot probe failed 0/1 and is not represented as passing evidence."
+    },
+    {
+      "gate": "direct visual review",
       "status": "pass",
-      "evidence": "The same 23-check suite passed in Gecko over loopback HTTP and Blink through isolated CDP over a file URL, with zero console errors and runtime exceptions in both. The transport distinction is retained in each receipt."
+      "evidence": "All 115 current canonical Firefox PNGs received one-at-a-time original-resolution review. Large automated matrices and uninspected Chromium frames are kept outside that human-style inspection count."
     }
   ],
   "feature_matrix": {
@@ -140,9 +177,10 @@
     "states_per_configuration": 28
   },
   "residuals": {
-    "chromium_http": "This host's Chromium renderer fails before requesting even a trivial loopback page. Chromium-over-HTTP is not claimed; the complete Blink lane uses a file URL and the same checked-in fixtures.",
-    "native_runtime": "This concept-only HTML prototype was not compiled as Slint 1.17.1 because runtime edits were out of scope.",
-    "production_validation": "Detached native-window DPI, platform font metrics, IME, assistive technology, and live-service latency remain production work.",
+    "chromium_http": "Chromium timed out before the first HTTP entry reached fixture readiness. Chromium-over-HTTP is not claimed; the complete Blink lane uses a file URL and the same six checked-in fixtures.",
+    "native_runtime": "The implementation is HTML/CSS/JavaScript with Slint-portable architecture and translation guidance. No native or compiled Slint 1.17.1 component was produced because runtime edits were out of scope.",
+    "production_validation": "Detached native-window DPI, platform font metrics, IME, assistive technology, live services, and real provider acquisition/authentication remain production work.",
+    "scope_attribution": "The Sol-scoped changed-path set is inside this folder. The repository was already dirty and no correction-start status receipt exists, so Git state cannot independently attribute unrelated out-of-scope changes.",
     "details": "known-gaps.md"
   }
 }

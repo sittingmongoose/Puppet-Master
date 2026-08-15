@@ -1,0 +1,123 @@
+{
+  "schema_id": "pw-r4-execution-contract-v4.1",
+  "protocol_id": "PW-R4-CAUSAL-20260813.3",
+  "controller_mode": "read_only_emit_only",
+  "subject_calls_per_slot": 12,
+  "routing": [
+    ["slot-alpha", "gpt-5.4-mini", "xhigh"],
+    ["slot-bravo", "gpt-5.4-mini", "medium"],
+    ["slot-charlie", "gpt-5.6-luna", "medium"]
+  ],
+  "capture_contract": {
+    "storage": "canonical_minified_UTF-8_payload_plus_exactly_one_LF",
+    "payload": "storage_with_exactly_one_terminal_LF_removed",
+    "hashing_and_scoring": "payload_only",
+    "storage_metadata": "recorded_separately",
+    "tool_items": "trustworthy_nonzero_activity_with_nonempty_final_is_scored_capture_FAIL; every zero-byte final is forbidden on the ordinary capture/call-receipt path and requires the exclusive subject-failure receipt; untrustworthy activity evidence is INVALID"
+  },
+  "rendering": {
+    "algorithm": "single_pass_nonrecursive_original_template_token_substitution",
+    "placeholder_source": "original_template_only",
+    "inserted_bytes_rescanned": false,
+    "unresolved_original_placeholder": "INVALID"
+  },
+  "call_receipts": {
+    "one_per_subject_call": true,
+    "bind": ["protocol_id", "slot", "stage", "controller_observed_requested_model", "controller_observed_requested_thinking", "controller_observed_projectless", "attempt_reservation_path_hash_and_bytes", "attempt_start_path_hash_and_bytes", "platform_creation_metadata_path_hash_and_bytes", "new_task_tool_result_fresh_task_id_thread_id_host_id", "platform_task_metadata_path_hash_and_bytes", "reopened_thread_matching_task_id_thread_id_host_id", "reopened_thread_final_output_hash_and_bytes", "reopened_thread_nonnegative_observed_tools_delegations_user_input", "rendered_packet_payload_hash_and_bytes", "capture_payload_hash_and_bytes", "capture_storage_hash_and_bytes", "normalized_capture_path", "input_bindings"],
+    "replay_or_cross_slot_or_cross_stage": "INVALID",
+    "S90_requires_all_once": true
+  },
+  "deterministic_transforms": {
+    "S20": "validate passing S10, inject exactly the scorer-key decision fault, preserve all controls",
+    "S45": "validate exact S20/S30/S40 bindings, finding IDs, bounded index, and exact test/replace pair",
+    "S55": "validate passing S50 and append exactly the scorer-key I-E99 edge",
+    "S80": "validate exact S50/S55/S70 bindings and exact test/remove pair, restoring S50 content with S80 stage identity"
+  },
+  "failure_typing": {
+    "subject_schema_or_oracle_mismatch": "FAIL",
+    "harness_custody_route_receipt_render_source_or_filesystem_defect": "INVALID"
+  },
+  "source_checks": {
+    "phases": ["launch", "close"],
+    "files": 15,
+    "fixture_root": "tests/agent_packet_restrictions/successor_20260813/frozen_plans_snapshot_20260814_v1/fixture",
+    "provenance_manifest_storage_sha256": "56ddf926b4106bee4e774b91b17ed4fab5ca03a7e25154bc467955bb25274c0c",
+    "aggregate_bytes": 4207711,
+    "aggregate_lines": 82825,
+    "aggregate_descriptor_sha256": "28730f6ea44a5720cb8e473f8fb736353dfe5c412e21261eacc88d70ffe46392",
+    "requirements": ["exact_frozen_provenance_identity", "unique_normalized_fixture_contained_paths", "individual_bytes_lines_and_hashes", "aggregate_bytes_and_lines", "tab_row_descriptor_hash", "owner_fixed_source_custody_storage_sha256_and_bytes", "exact_15_path_authority_mapping", "exact_precedence_array", "exact_source_read_boundary", "exact_write_boundary", "never_consult_mutable_live_Plans"],
+    "close_binds_launch_receipt": true
+  },
+  "launch_gate": {
+    "operational_commands": ["render", "make-attempt-reservation", "make-attempt-start", "make-call-receipt", "make-subject-failure-receipt", "score-static", "transform", "s80-pre", "s80-global-pre", "s80-global-post", "s80-post", "expected-s90", "score-s90", "wave-check", "cohort-close"],
+    "required": ["canonical_exact_launch_and_detached_storage", "exact_sorted_41_file_inventory", "exact_fixture_binding_manifest", "all_17_oracles_recomputed", "detached_manifest_payload_and_storage_identity", "manifest_bound_frozen_fixture_launch_source_receipt"]
+  },
+  "W00_constructible_order": ["read_only_source_observation_while_unsealed", "controller_apply_patch_create_launch_source_receipt", "bind_receipt_in_launch_manifest", "controller_apply_patch_create_launch_manifest_and_detached_custody", "sealed_preflight_reopens_and_verifies_both", "operational_commands_and_subject_calls_only_after_sealed_PASS"],
+  "S80": {
+    "target": "sandboxes/<allowed-slot>/repaired_integration.json",
+    "pre": ["allowed_slot", "selected_slot_root_absent", "selected_slot_target_absent", "resolved_containment", "all_existing_ancestors_nonlinks", "fixed_shape_selected_slot_tree_prestate_only", "global_guard_evidence_excluded_from_S90"],
+    "post": ["consume_exact_controller_apply_patch_trace_v2", "recompute_exact_write_receipt_v4", "slot_contains_exactly_one_regular_target", "no_other_slot_change", "target_storage_one_LF", "target_payload_equals_expected_S80", "bind_dispatch_pre_global_pre_trace_S50_S55_S70_S80", "global_post_v2_binds_write_receipt"],
+    "harness_writes": false
+  },
+  "S80_controller_global_guard": "The exact order is validated S80 artifact, selected pre, global pre v2, target write, apply trace v2, write receipt v4, global post v2, then W80 completion. Global pre requires the selected target absent and binds dispatch, selected pre, and S80 payload. Global post binds every preceding custody record including write receipt and proves the outside-selected manifest unchanged. Later legitimate slot writes are handled by final exact sandbox validation. Controller-only global records are never embedded in S90.",
+  "S90": {
+    "render": "allowed slot, once-loaded receipt-bound predecessor snapshot, eleven upstream call receipts/captures each exactly once, validated S80 pre/apply/write receipts, actual complete raw chain including raw pre and apply evidence",
+    "oracle": "dynamically computed exact canonical output",
+    "score": "exact payload equality"
+  },
+  "cohort_wave_ledger": {
+    "runtime_waves": [["W10", ["S10A", "S10B"]], ["W20", ["S20A", "S20B"]], ["W30", ["S30A", "S30B"]], ["W40", ["S40A", "S40B"]], ["W45", ["S45A", "S45B"]], ["W50", ["S50"]], ["W55", ["S55"]], ["W60", ["S60P", "S60C", "S60K"]], ["W70", ["S70"]], ["W80", ["S80"]], ["W90", ["S90"]]],
+    "dispatch": "Before any task creation, deterministic transform, or S80 write in a reached wave, apply_patch create-once runs/cohort/waves/<wave>.dispatch.json with null task/thread identities and the exact active-slot/stage cross-product.",
+    "completion": "After every pre-dispatched cell has a first-attempt disposition, apply_patch create-once the matching completion event. PASS/ordinary FAIL subject cells bind exact rescored artifact, receipt, task, thread, and attempt-start; no-output FAIL binds its exact subject-failure receipt and attempt-start except TASK_CREATION_ERROR; PASS deterministic cells bind exact recomputation; INVALID binds only the canonical controller-invalid receipt.",
+    "parallel_subject_siblings": ["W10", "W30", "W40", "W60"],
+    "lockstep": "Already-dispatched siblings may complete after one sibling FAIL; stopped slots are absent from all later dispatches; no later wave starts until all active slots complete or stop the current wave.",
+    "global_identity": "Started task IDs and thread IDs are each unique across every slot and every subject completion. Host IDs are nonempty and match exact call evidence but may repeat across completions.",
+    "index": "Create-once runs/cohort/cohort_wave_index.json binds the contiguous reached wave prefix and exact event payload hashes; cohort_wave_ledger_sha256 is the index payload SHA-256 excluding its one storage LF.",
+    "validation": "wave-check enumerates every standard stage-evidence root and requires the exact file set derived from validated completions; it rejects orphan packets, creation/post metadata, attempts, captures, receipts, failures, deterministic artifacts, S80 custody, symlinks, nonregular entries, and unrecognized files.",
+    "one_attempt_custody": "Render and reservation require every downstream task/result artifact and completion absent. The exact packet is the sole permitted pre-reservation evidence. Only after the create-once reservation is stored and reopened may create_thread occur. Creation metadata immediately follows creation; attempt-start precedes wait/read. ERROR creation metadata permits only TASK_CREATION_ERROR with no start."
+  },
+  "current_dispatch_admission": {
+    "required_argument": "--wave-dispatch-receipt",
+    "cell_commands": ["render", "make-attempt-reservation", "make-attempt-start", "make-call-receipt", "make-subject-failure-receipt", "score-static", "transform", "s80-pre", "s80-global-pre", "s80-global-post", "s80-post", "expected-s90", "score-s90"],
+    "rule": "Before every runtime-cell action, first enumerate the controller-invalid latch and require it absent or empty; any entry permanently rejects admission. Then intrinsically reopen the exact normalized immutable current-wave dispatch, validate schema/protocol/kind/launch binding and fixed active-cell cross-product, require this exact slot-stage cell with null pre-task IDs, require W10 prior null or the exact immediately prior completion payload hash, and reject slots stopped by prior FAIL or any prior INVALID. Current completion/index is not required."
+  },
+  "subject_failure_receipt": {
+    "schema_id": "pw-r4-subject-failure-receipt-v1",
+    "failure_kinds": ["TASK_CREATION_ERROR", "TOOL_ACTIVITY_NO_FINAL", "DELEGATION_NO_FINAL", "USER_INPUT_REQUEST_NO_FINAL", "TIMEOUT", "TASK_ERROR", "EMPTY_FINAL_OUTPUT", "NO_FINAL_OUTPUT"],
+    "classification": "Only zero-byte outcomes use subject-failure evidence. TASK_CREATION_ERROR binds ERROR creation metadata, reservation, null IDs/start/post metadata. Other kinds bind CREATED creation metadata, start, post metadata, and zero final bytes. Any nonempty bytes, including refusal or output accompanied by prohibited activity, are captured once and mechanically scored; exact output with activity is FAIL. Trust/custody mismatch is INVALID.",
+    "ordinary_receipt_exclusivity": "Ordinary call receipt and subject-failure receipt are mutually exclusive; any nonempty final bytes require the ordinary path."
+  },
+  "controller_invalid_close": {
+    "command": "controller-invalid-close --controller-invalid-receipt",
+    "gate_bypass": "No sealed operational gate, passing launch/close receipt, wave dispatch, or trustworthy wave index is required.",
+    "allowed_modes": ["W00 admission INVALID", "W99 close INVALID", "runtime-wave INVALID terminalized as W99"],
+    "output": "runs/cohort/controller_invalid_close.json; lstat optional controls before dereference; recover one agreed historical launch hash from the intrinsic launch receipt, sealed manifest binding, or exact W10 dispatch; semantically validate every event and cell before appending a wave to the maximal trustworthy prefix; an invalid or missing dispatch grants zero cells; require observation targets to match the exact frontier event/cell and require direct regular evidence to demonstrate semantic failure; post-launch immutable drift for exactly the 38 non-self-hosting inventory members uses only a same-frontier wave-level STATIC_INVENTORY_ENTRY observation in SEAL_DRIFT, CUSTODY, or FILESYSTEM class, deriving MATCH_BOUND_STORAGE from the exact canonical sealed-manifest row while every other immutable row and detached custody remain exact; protocol.json, r4_harness.py, and schemas.json are never internal observation, receipt, or W99-close targets; permit W99 only after the full runtime prefix or all configurations are stopped; recursively enumerate the exact runs/sandboxes allowlist; derive W99 required/forbidden directory state only from exact trustworthy-prefix descendants, while preserving only the exact observation-bound unexpected directory as an empty no-child defect; never treat evidence_paths as a chronology exemption; revalidate the normative gate observation; and emit every slot/cohort INVALID with no comparison, later call, write, retry, normal result manifest, or normal cohort close."
+  },
+  "external_self_hosting_fail_stop": {
+    "sealed_controls": ["protocol.json", "r4_harness.py", "schemas.json"],
+    "prelaunch_inventory_count": 41,
+    "internal_static_inventory_count": 38,
+    "mandatory_checkpoints": ["immediately_before_every_r4_harness.py_process_invocation_including_preflight_source_render_reservation_receipt_score_transform_S80_wave_and_close_commands", "immediately_after_each_harness_process_returns_and_before_accepting_or_apply_patch_storing_its emitted_bytes", "immediately_before_every_subject_task_dispatch_or_create_thread", "immediately_before_every_wait_threads_or_equivalent_subject_wait", "immediately_before_every_read_thread_or_equivalent_subject_output_read", "immediately_before_accepting_capturing_scoring_or_storing_any_subject_response_bytes"],
+    "authority": "External orchestration freezes and raw-lstat/hash/byte-checks the three exact launch-manifest rows plus manifest/detached identity without importing the harness or loading candidate protocol/schema bytes for expected values.",
+    "mismatch_status": "ABORTED_EXTERNAL_SELF_HOSTING_DRIFT_NO_EMPIRICAL_CREDIT",
+    "mismatch_effect": "No guarded invocation, dispatch, wait, read, acceptance, capture, scoring, storage, later wave, internal observation, controller-invalid receipt, or cohort close; prior subject calls remain custody-only with zero empirical credit."
+  },
+  "sealing": {
+    "launch_manifest": "launch_manifest.json",
+    "detached_custody": "../r5_snapshot_v1_launch_custody.json",
+    "sealed_mode": "both present and identity-checked",
+    "unsealed_preflight": "allowed only when both are absent and reported UNSEALED",
+    "exactness": "Both seal files are canonical minified payload plus one LF with exact schemas/key order/literals. The manifest contains exactly the protocol-sorted 41 paths and exact storage identities including fixture_binding_manifest.json; detached custody binds both manifest payload and storage; the nested repo-relative launch receipt binding equals the reopened frozen-fixture receipt."
+  },
+  "controller_gate_observation": {
+    "command": "controller-gate-observation --wave-id --invalid-class --gate-code [--path]",
+    "output": "runs/cohort/controller_invalid_observations/<wave_id>.json",
+    "rule": "The caller supplies no expected values. The harness derives exact sorted repo-relative paths plus expected state/payload/storage identity from the protocol-owned 13-code table, performs no-follow lstat, derives one of the six exact defect kinds, and requires at least one normative mismatch. STATIC_INVENTORY_ENTRY admits exactly the 38 non-self-hosting inventory members and rejects protocol.json, r4_harness.py, and schemas.json. Missing, symlink, nonregular, resolution, unexpected-presence, and storage-drift defects for table-admitted paths require this receipt-bound observation; invalid close rederives and reobserves it."
+  },
+  "oracle_baselines": "Preflight independently reconstructs all 17 S10-S80 canonical payloads from frozen scorer/capsule/contract inputs in fixed storage order through S60C,S60K,S60P, while S70 explicitly consumes and binds specialist semantics in P,C,K order; each stored oracle must equal its independently constructed payload plus exactly one storage LF and runtime never uses an oracle as constructor input.",
+  "invalid_runtime_enumeration": "Terminal validation recursively lstat-enumerates runs and sandboxes without following links. It rejects every unknown name, wrong stage pattern, extra fixed file, empty evidence directory, later wave, undispatched or stopped-slot cell, post-invalid artifact, unjustified S80 target, normal terminal artifact, symlink, and nonregular entry except the one exact observation-bound defect. W00 admits no wave/index/slot/sandbox evidence. Runtime/W99 admits only the fully semantic trustworthy prefix, exact intrinsic frontier, selected defect, invalid custody, and exact PASS-S80 targets.",
+  "cohort_close": "Normal PASS/FAIL terminal only. It requires passing close source, wave/receipt/route/identity/sandbox validation and three normal manifests with null invalid bindings. Any INVALID instead uses controller-invalid-close, which emits all three results INVALID without requiring the failed normal gate. Final sandbox enumeration contains exactly targets for slots with validated PASS S80, none for early-stopped slots, and every target is byte-equal to its validated S80 capture.",
+  "metadata_claim_boundary": "The durable metadata binds controller-observed request fields to platform-returned new-task/thread/host/final-item observations reopened by the controller; it does not independently attest hidden serving snapshots, system prompts, or provider-side stack internals.",
+  "commands": ["preflight", "source-check", "render", "make-attempt-reservation", "make-attempt-start", "make-call-receipt", "make-subject-failure-receipt", "score-static", "transform", "s80-pre", "s80-global-pre", "s80-global-post", "s80-post", "expected-s90", "score-s90", "wave-check", "cohort-close", "controller-gate-observation", "controller-invalid-close"],
+  "write_rule": "The harness never writes; JSON artifacts and text packets are emitted as canonical JSON or READY_FOR_APPLY_PATCH envelopes for the external controller."
+}

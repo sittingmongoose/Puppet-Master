@@ -22,6 +22,182 @@
     Q.push([id, build]);
   }
 
+  /* ================================================ RESOURCE & PERFORMANCE */
+
+  /* Added by the 2026-08-13 dependency correction. The Performance decision
+   * register was omitted from the original packet, so no concept carried the
+   * one surface it requires: human resource policy, and a read-only view of the
+   * single RuntimeResourceGovernor.
+   *
+   * Two rules shape this manager:
+   *   1. Settings expresses POLICY. It never admits work, never schedules, and
+   *      never becomes a second governor (register §2.3).
+   *   2. No raw pool tuning. Behaviour profiles and human limits only — no
+   *      P-core/E-core affinity, SIMD selection, or Tokio/Rayon thread counts
+   *      (PERFORMANCE_SETTINGS_RETURN §9). */
+  reg("manager-performance", {
+    title: "Resource use and performance",
+    purpose: "How much of this machine Puppet Master may use, and what it does when the machine is busy.",
+    icon: "gauge"
+  }, function (data, state) {
+    var gov = (window.PMWork && window.PMWork.governor) ? window.PMWork.governor : null;
+    var pol = gov ? gov.policy() : { profile: "auto", backgroundWork: "when_idle", meteredNetwork: "defer_large", batteryOrLowPower: "reduce_background" };
+    var demo = (state && state.demoState) || "normal";
+    var degraded = demo === "lowResource" || pol.profile === "legacy";
+
+    return {
+      title: "Resource use and performance",
+      purpose: "How much of this machine Puppet Master may use, and what it does when the machine is busy.",
+      icon: "gauge",
+      health: {
+        status: degraded ? "managed" : "ok",
+        statusWord: degraded ? "Reduced profile in force" : "Auto profile",
+        headline: degraded
+          ? "Puppet Master is holding back: fewer helpers, smaller caches, no speculative work."
+          : "Puppet Master is choosing its own limits from what this machine is doing.",
+        detail: "One governor decides what runs. Everything on this screen is policy it obeys — Settings never admits work itself.",
+        counts: [
+          { label: "Profile", value: pol.profile === "auto" ? "Auto" : pol.profile === "performance" ? "Performance" : pol.profile === "efficiency" ? "Efficiency" : "Legacy" },
+          { label: "Interactive reserve", value: "Always held" },
+          { label: "Background work", value: pol.backgroundWork === "when_idle" ? "When idle" : pol.backgroundWork === "always" ? "Always" : "Never" }
+        ]
+      },
+      owner: {
+        name: "RuntimeResourceGovernor",
+        why: "It is the only thing in Puppet Master allowed to admit, queue, degrade or refuse work. Four concepts showing four different resource screens would still be one governor underneath.",
+        insertionContract: "Settings reads the governor's policy and its permit answers and writes policy back. It never creates a scheduler, a queue, a thread budget, or a second admission path."
+      },
+      primary: { id: "performance.explain", label: "Explain the effective policy", kind: "report" },
+      diagnostics: [
+        { id: "diag-perf-permits", label: "Open the recent permit decisions", kind: "log" },
+        { id: "diag-perf-budget", label: "Open the cache byte budgets", kind: "report" }
+      ],
+      search: { placeholder: "Search resource policy", fields: ["name"] },
+      sections: [
+        {
+          id: "perf-profile", label: "Behaviour profile", kind: "cards",
+          summary: "One choice that moves every automatic limit together. It changes what Puppet Master does, never what it can do.",
+          items: [
+            { id: "prof-auto", name: "Auto", secondary: "Recommended", status: pol.profile === "auto" ? "ok" : "default",
+              statusWord: pol.profile === "auto" ? "In use" : "Available",
+              value: "Reads the machine and adapts",
+              fields: { "Helpers": "As many as the machine sustains", "Caches": "Sized to available memory", "When busy": "Sheds speculative work first" },
+              actions: [{ id: "performance.profile.set", label: "Use Auto", kind: "primary" }] },
+            { id: "prof-performance", name: "Performance", secondary: "Prefer speed over quiet", status: pol.profile === "performance" ? "ok" : "default",
+              statusWord: pol.profile === "performance" ? "In use" : "Available",
+              value: "More simultaneous work",
+              fields: { "Helpers": "Higher ceiling", "Caches": "Larger", "When busy": "Keeps going; the fans will notice" },
+              actions: [{ id: "performance.profile.set", label: "Use Performance", kind: "primary" }] },
+            { id: "prof-efficiency", name: "Efficiency", secondary: "Prefer quiet and battery", status: pol.profile === "efficiency" ? "ok" : "default",
+              statusWord: pol.profile === "efficiency" ? "In use" : "Available",
+              value: "Heavy work waits for a gap",
+              fields: { "Helpers": "Fewer", "Caches": "Smaller", "When busy": "Queues heavy work behind the interactive reserve" },
+              actions: [{ id: "performance.profile.set", label: "Use Efficiency", kind: "primary" }] },
+            { id: "prof-legacy", name: "Legacy", secondary: "Older or heavily loaded machines", status: pol.profile === "legacy" ? "ok" : "default",
+              statusWord: pol.profile === "legacy" ? "In use" : "Available",
+              value: "Smallest footprint, nothing removed",
+              badges: [{ kind: "capability", text: "Ivy Bridge and Xeon E5 are supported targets" }],
+              fields: { "Helpers": "Minimum viable", "Caches": "Smallest", "Prewarm": "Off", "Motion": "Lower cadence" },
+              detail: [{ label: "What Legacy does not do", rows: [
+                { label: "Remove features", value: "No", hint: "A low-resource profile changes automatic policy, never product capability." },
+                { label: "Drop required review passes", value: "No", hint: "Required agents and tests are scheduled in waves instead of being deleted." }
+              ] }],
+              actions: [{ id: "performance.profile.set", label: "Use Legacy", kind: "primary" }] }
+          ]
+        },
+        {
+          id: "perf-background", label: "Background work", kind: "rows",
+          summary: "What Puppet Master is allowed to do when you are not looking at it.",
+          settings: ["perf-background-policy", "perf-idle-maintenance", "perf-prewarm"]
+        },
+        {
+          id: "perf-limits", label: "Memory and cache limits", kind: "table",
+          summary: "Every cache has a byte budget, not just an item count. A structure that can grow without a ceiling is a leak with a nicer name.",
+          columns: [
+            { key: "budget", label: "Budget", align: "end" },
+            { key: "inUse", label: "In use", align: "end" },
+            { key: "whenFull", label: "When full" }
+          ],
+          items: [
+            { id: "cache-projections", name: "Settings projections", secondary: "Compact manager summaries", status: "ok", statusWord: "Within budget",
+              fields: { budget: degraded ? "8 MB" : "24 MB", inUse: "6.1 MB", whenFull: "Oldest hidden manager released first" } },
+            { id: "cache-search", name: "Search index readers", secondary: "Cross-category settings search", status: "ok", statusWord: "Within budget",
+              fields: { budget: degraded ? "12 MB" : "48 MB", inUse: "11.4 MB", whenFull: "Result windows shrink before the index is dropped" } },
+            { id: "cache-receipts", name: "Receipts and operation history", secondary: "ObservableWork projections", status: "ok", statusWord: "Within budget",
+              fields: { budget: "64 KB", inUse: "18 KB", whenFull: "Oldest terminal operations trimmed by size" } },
+            { id: "cache-media", name: "Decoded media and thumbnails", secondary: "Sound previews, theme swatches", status: degraded ? "managed" : "ok",
+              statusWord: degraded ? "Reduced" : "Within budget",
+              fields: { budget: degraded ? "32 MB" : "128 MB", inUse: "27 MB", whenFull: "Decoded copies dropped; files stay on disk" } }
+          ]
+        },
+        {
+          id: "perf-conditions", label: "Metered network, battery and pressure", kind: "rows",
+          summary: "The machine's own state is an input, not something you have to remember to set.",
+          settings: ["perf-metered", "perf-battery", "perf-thermal"]
+        },
+        {
+          id: "perf-admission", label: "What the governor decided", kind: "table",
+          summary: "A read-only view of the one admission owner. Settings shows these answers; it does not produce them.",
+          columns: [
+            { key: "lane", label: "Lane" },
+            { key: "outcome", label: "Outcome" },
+            { key: "reason", label: "Why" }
+          ],
+          items: [
+            { id: "permit-ui", name: "Interactive control", secondary: "Pause, stop, approvals, selected projection", status: "ok", statusWord: "Admitted",
+              fields: { lane: "Interactive reserve", outcome: "admitted", reason: "The reserve is held back from every other lane by design." } },
+            { id: "permit-index", name: "Project index maintenance", secondary: "Incremental reindex", status: degraded ? "managed" : "ok",
+              statusWord: degraded ? "Queued" : "Admitted",
+              fields: { lane: "CPU pool", outcome: degraded ? "queued" : "admitted", reason: degraded ? "Reduced profile: maintenance yields to foreground work." : "Spare CPU permits are available." } },
+            { id: "permit-install", name: "Provider CLI installation", secondary: "Package-manager transaction", status: "managed", statusWord: "Serialized",
+              fields: { lane: "Blocking pool", outcome: "queued", reason: "One package-manager root mutates at a time; the lease is held elsewhere." } },
+            { id: "permit-browser", name: "Browser helper for testing", secondary: "CEF process capacity", status: "ok", statusWord: "Admitted",
+              fields: { lane: "External process pool", outcome: degraded ? "admitted_degraded" : "admitted", reason: degraded ? "Reduced profile: fewer simultaneous helpers, recording quality lowered." : "Within the process ceiling." } }
+          ],
+          notes: []
+        },
+        {
+          id: "perf-installations", label: "What is installed on this machine", kind: "table",
+          summary: "One hundred detected installations collapsed to human summaries. The list is windowed and the raw records stay in Details.",
+          columns: [
+            { key: "host", label: "Host or environment" },
+            { key: "version", label: "Version" },
+            { key: "acquisition", label: "How it got here" }
+          ],
+          items: (window.PMData.installationsScale || []).map(function (inst) {
+            var sem = window.PMSemantics;
+            return {
+              id: inst.id,
+              name: inst.product,
+              secondary: inst.hostName,
+              status: inst.readiness === "ready" ? "ok"
+                : inst.readiness === "update" ? "attention"
+                : inst.readiness === "repair" ? "risky"
+                : inst.readiness === "managed" ? "managed" : "unavailable",
+              statusWord: inst.readinessWord,
+              fields: {
+                host: inst.hostName,
+                version: inst.version,
+                acquisition: sem ? sem.acquisitionLabel(inst.acquisition, { isProviderCli: inst.isProviderCli }) : inst.acquisition
+              }
+            };
+          })
+        },
+        {
+          id: "perf-not-here", label: "What this screen deliberately does not expose", kind: "prose",
+          items: [
+            { id: "not-affinity", name: "No P-core or E-core pinning, no SIMD selection, and no thread-pool counts. Those are the governor's to choose from topology and measured behaviour, and a wrong value here would be silently slower rather than obviously broken." },
+            { id: "not-plan", name: "No per-Plan priority or pause. That belongs beside the running Plan in the Orchestrator, not in a Settings screen that cannot see the work." },
+            { id: "not-second", name: "No second scheduler. If a future manager needs capacity it asks the same governor for a permit." }
+          ]
+        }
+      ],
+      notes: [
+        "Profiles change automatic policy. None of them removes a capability, and none of them silently drops a required review or test pass."
+      ]
+    };
+  });
+
   /* ==================================================== STORAGE & RETENTION */
 
   reg("manager-storage", {
@@ -615,7 +791,7 @@
             { id: "tool-git", name: "git", secondary: "This computer · macOS 15.4", status: "ok", statusWord: "Ready",
               badges: [{ kind: "evidence", text: "Homebrew formula owns this file" }, { kind: "scope", text: "arm64" }],
               value: "2.47.1", valueSource: "Reported by the executable",
-              fields: { "Configured command": "git", "Resolved path": "/opt/homebrew/bin/git", "Real path": "/opt/homebrew/Cellar/git/2.47.1/bin/git", Owner: "homebrew_formula", Confidence: "proven", "Update policy": "Check automatic · install Ask first" },
+              fields: { "Configured command": "git", "Resolved path": "/opt/homebrew/bin/git", "Real path": "/opt/homebrew/Cellar/git/2.47.1/bin/git", Owner: "Homebrew formula", Confidence: "proven", "Update policy": "Check automatic · install Ask first" },
               actions: [{ id: "installation.check_update", label: "Check for updates", kind: "quiet" }, { id: "installation.rescan", label: "Rescan", kind: "quiet" }],
               detail: [{ id: "tool-git-chain", label: "Resolution chain", rows: [
                 { label: "1", value: "PATH entry /opt/homebrew/bin" },
@@ -628,7 +804,7 @@
               actions: [{ id: "installation.adopt", label: "Show install instructions", kind: "quiet" }] },
             { id: "tool-lfs", name: "git-lfs", secondary: "This computer", status: "ok", statusWord: "Ready",
               value: "3.5.1", valueSource: "Reported by the executable",
-              fields: { Owner: "homebrew_formula", "Tracked patterns": "*.psd, *.mp4" } }
+              fields: { Owner: "Homebrew formula", "Tracked patterns": "*.psd, *.mp4" } }
           ]
         },
         {
@@ -673,10 +849,10 @@
           items: [
             { id: "wf-ci", name: "ci.yml", secondary: "Build and test", status: "ok", statusWord: "Ready on this branch",
               badges: [{ kind: "evidence", text: "Last run passed 40 minutes ago" }],
-              fields: { Triggers: "push, pull_request", "Last run": "#3181 · passed · 4m 12s", Runner: "ubuntu-latest" },
+              fields: { Triggers: "Push, pull request", "Last run": "#3181 · passed · 4m 12s", Runner: "ubuntu-latest" },
               actions: [{ id: "gha.open_run", label: "Open the last run", kind: "quiet" }, { id: "gha.refresh", label: "Refresh", kind: "quiet" }] },
             { id: "wf-lint", name: "lint.yml", secondary: "Format and lint", status: "ok", statusWord: "Ready on this branch",
-              fields: { Triggers: "pull_request", "Last run": "#3180 · passed · 51s", Runner: "ubuntu-latest" },
+              fields: { Triggers: "Pull request", "Last run": "#3180 · passed · 51s", Runner: "ubuntu-latest" },
               actions: [{ id: "gha.open_run", label: "Open the last run", kind: "quiet" }] },
             { id: "wf-release", name: "release.yml", secondary: "Publish a release", status: "attention", statusWord: "Would fail at the first step",
               availability: { available: false, reason: "The repository secret NPM_TOKEN is not set, so the publish step cannot authenticate.", owner: "GitHub repository settings" },
@@ -756,7 +932,7 @@
               fields: { CLI: "5.2.2", Machine: "podman-machine-default (stopped)", Compose: "Provided by podman-compose 1.2.0", Socket: "Not started", Host: "This computer · macOS 15.4" },
               actions: [{ id: "installation.select", label: "Use Podman instead", kind: "primary" }],
               detail: [{ id: "podman-detail", label: "Installation", rows: [
-                { label: "Owner", value: "homebrew_formula" },
+                { label: "Owner", value: "Homebrew formula", hint: "Internal owner kind: homebrew_formula" },
                 { label: "Confidence", value: "proven" },
                 { label: "Why not selected", value: "Docker is the preferred runtime for this project.", hint: "Selection is explicit and stays bound by id." }
               ] }] },

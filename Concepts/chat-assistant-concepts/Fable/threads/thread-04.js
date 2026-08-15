@@ -13,7 +13,7 @@ import { ensureCss } from "../shared/contracts.js";
 import { escapeHtml } from "../shared/popup.js";
 import {
   transcriptSlice, isLongMessage, isExpanded, previewText, lensMark, copyMessage,
-  workCluster, createScrollKeeper, questionnaireState, activityGroups, bodyHtml,
+  workCluster, createScrollKeeper, questionnaireState, activityGroups, bodyHtml, liveTurn,
 } from "../shared/thread-common.js";
 import { createComposer, createSelectorRow, createDecisionStack, openMoreInfo, openMessageOps } from "../shared/components.js";
 import { fmtDuration, fmtTime, workedLabel, JUMP_TO_LATEST, QUESTIONNAIRE_ACTIONS, TODO_STATE_LABELS } from "../shared/strings.js";
@@ -193,12 +193,22 @@ export function createThread(ctx) {
     file.className = "ft4-case";
     file.setAttribute("aria-label", "Case file");
 
+    const lt = liveTurn();
     const spine = document.createElement("div");
     spine.className = "ft4-case-spine";
-    spine.innerHTML = w.turn
-      ? `<span class="ft4-case-live" aria-hidden="true"></span><span class="ft4-case-title">${escapeHtml(w.turn.summary)}</span><span class="ft4-case-time">${fmtDuration(w.turn.workedSeconds)}</span>`
+    spine.innerHTML = lt
+      ? `<span class="ft4-case-live" aria-hidden="true"></span><span class="ft4-case-title">${escapeHtml(lt.summary)}</span><span class="ft4-case-time">${fmtDuration(lt.workedSeconds)}</span>`
       : `<span class="ft4-case-title">Open case</span>`;
     file.appendChild(spine);
+    // Live phase detail files itself under the spine while the phase runs.
+    if (lt && lt.items.length) {
+      const strip = document.createElement("div");
+      strip.className = "ft4-case-livefile";
+      for (const item of lt.items) {
+        strip.innerHTML += `<div class="ft4-filed-line"><span class="ft4-filed-kind">${escapeHtml(lt.phaseKind.replace(/_/g, " "))}</span><span>${escapeHtml(item.text)}</span>${item.side ? `<span class="ft4-filed-side">${escapeHtml(item.side)}</span>` : ""}</div>`;
+      }
+      file.appendChild(strip);
+    }
 
     if (tabs.length) {
       const tabRow = document.createElement("div");
@@ -216,7 +226,8 @@ export function createThread(ctx) {
       const body = document.createElement("div");
       body.className = "ft4-case-body";
       if (activeTab === "Goal" && w.goal) {
-        body.innerHTML = `<div class="ft4-goal-line" data-status="${w.goal.status}"><span class="ft4-goal-status">${escapeHtml(w.goal.status)}</span><span class="ft4-goal-title">${escapeHtml(w.goal.title)}</span></div><p class="ft4-goal-obj">${escapeHtml(w.goal.objective)}</p>`;
+        const phaseLine = w.goal.phases ? `<p class="ft4-goal-phase">Phase ${(w.goal.phaseIndex || 0) + 1} of ${w.goal.phases.length} — ${escapeHtml(w.goal.phases[w.goal.phaseIndex || 0])}${w.goal.replanApplied ? " · replanned" : ""}</p>` : (w.goal.replanApplied ? `<p class="ft4-goal-phase">Updated — replanned</p>` : "");
+        body.innerHTML = `<div class="ft4-goal-line" data-status="${w.goal.status}"><span class="ft4-goal-status">${escapeHtml(w.goal.status)}</span><span class="ft4-goal-title">${escapeHtml(w.goal.title)}</span></div><p class="ft4-goal-obj">${escapeHtml(w.goal.objective)}</p>${phaseLine}`;
         if (w.goal.blocked) {
           body.innerHTML += `<div class="ft4-goal-blocked"><strong>Cause:</strong> ${escapeHtml(w.goal.blocked.cause)}<br><strong>Scope:</strong> ${escapeHtml(w.goal.blocked.scope)}<br><strong>Tried:</strong> ${escapeHtml(w.goal.blocked.attempted)}<br><strong>Why stopped:</strong> ${escapeHtml(w.goal.blocked.whyStopped)}<br><strong>Next safe action:</strong> ${escapeHtml(w.goal.blocked.nextSafeAction)}</div>`;
         }
@@ -249,7 +260,7 @@ export function createThread(ctx) {
         }
       } else if (activeTab === "Agents" && w.subagents) {
         const c = w.subagents.counts;
-        body.innerHTML += `<div class="ft4-agents-counts">${c.working} working · ${c.complete} complete · ${c.blocked} blocked · ${c.waiting} waiting</div>`;
+        body.innerHTML += `<div class="ft4-agents-counts">${c.working} working · ${c.complete} complete · ${c.blocked} blocked${c.failed ? ` · ${c.failed} failed` : ""}${c.retrying ? ` · ${c.retrying} retrying` : ""} · ${c.waiting} waiting</div>`;
         for (const a of w.subagents.agents) {
           body.innerHTML += `<div class="ft4-agent" data-status="${a.status}"><span class="ft4-agent-name">${escapeHtml(a.name)}</span><span class="ft4-agent-task">${escapeHtml(a.task)}</span><span class="ft4-agent-act">${escapeHtml(a.currentActivity)}</span><span class="ft4-agent-side">${escapeHtml(a.route || "")}${a.workedSeconds ? ` · ${fmtDuration(a.workedSeconds)}` : ""}</span></div>`;
         }

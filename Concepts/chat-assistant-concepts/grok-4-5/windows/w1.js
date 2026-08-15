@@ -241,6 +241,11 @@
     var motionBusy = false;
 
     function closeOverlayThenPaint() {
+      if (kit.shouldBlockHistoryClose && kit.shouldBlockHistoryClose(store)) {
+        if (env && env.toast) env.toast('History is pinned');
+        return;
+      }
+      if (kit.dismissHistoryPeek) kit.dismissHistoryPeek(store);
       if (!overlayOpen || motionBusy) {
         overlayOpen = false;
         paint();
@@ -291,7 +296,10 @@
           : kit.isHistoryPinned(store)
             ? 'pinned_full'
             : 'closed';
-      /* Pin maps onto spine density: compact = slim marks; full = expanded ledger */
+      /* Pin maps onto spine density: compact = slim marks; full = expanded ledger.
+         Peek = temporary expanded/overlay; closed = collapsed/slim. */
+      var peeking =
+        histMode === 'peek' || (kit.isHistoryPeek && kit.isHistoryPeek(store));
       if (kit.isHistoryPinned(store)) {
         if (histMode === 'pinned_compact') {
           spineCollapsed = !min;
@@ -300,12 +308,20 @@
           spineCollapsed = false;
           if (min) overlayOpen = true;
         }
+      } else if (peeking) {
+        spineCollapsed = false;
+        if (min) overlayOpen = true;
+      } else {
+        /* closed: collapsed mid/wide; slim marks at min */
+        if (min) overlayOpen = false;
+        else spineCollapsed = true;
       }
 
       root.classList.toggle('is-spine-collapsed', !min && spineCollapsed);
       root.classList.toggle('is-spine-slim', min && !overlayOpen);
       root.classList.toggle('is-spine-overlay', min && overlayOpen && !kit.isHistoryPinned(store));
       root.classList.toggle('is-history-pinned', kit.isHistoryPinned(store));
+      root.classList.toggle('is-history-peek', peeking);
       root.classList.toggle('is-history-compact', histMode === 'pinned_compact');
       root.setAttribute('data-history-mode', histMode);
 

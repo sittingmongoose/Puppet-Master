@@ -14,7 +14,7 @@ import { ensureCss } from "../shared/contracts.js";
 import { escapeHtml } from "../shared/popup.js";
 import {
   transcriptSlice, isLongMessage, isExpanded, previewText, lensMark, copyMessage,
-  workCluster, createScrollKeeper, questionnaireState, activityGroups, bodyHtml,
+  workCluster, createScrollKeeper, questionnaireState, activityGroups, bodyHtml, liveTurn,
 } from "../shared/thread-common.js";
 import { createComposer, createSelectorRow, createDecisionStack, openMoreInfo, openMessageOps } from "../shared/components.js";
 import { fmtDuration, fmtTime, workedLabel, JUMP_TO_LATEST, QUESTIONNAIRE_ACTIONS, TODO_STATE_LABELS } from "../shared/strings.js";
@@ -176,15 +176,25 @@ export function createThread(ctx) {
     const scene = document.createElement("section");
     scene.className = "ft8-active";
 
-    if (w.turn) {
+    const lt = liveTurn();
+    if (lt) {
       const orbit = document.createElement("div");
       orbit.className = "ft8-orbit-frame";
-      orbit.dataset.redirected = String(!!w.turn.redirected);
+      orbit.dataset.redirected = String(lt.redirected);
       orbit.innerHTML = `
         <span class="ft8-orbit-path" aria-hidden="true"><span class="ft8-satellite" aria-hidden="true"></span></span>
-        <span class="ft8-orbit-summary">${escapeHtml(w.turn.summary)}</span>
-        <span class="ft8-orbit-time">${fmtDuration(w.turn.workedSeconds)}</span>`;
+        <span class="ft8-orbit-summary">${escapeHtml(lt.summary)}</span>
+        <span class="ft8-orbit-time">${fmtDuration(lt.workedSeconds)}</span>`;
       scene.appendChild(orbit);
+      // The satellite's wake: the last three phase items trail the orbit frame.
+      if (lt.items.length) {
+        const wake = document.createElement("div");
+        wake.className = "ft8-orbit-wake";
+        for (const item of lt.items.slice(-3)) {
+          wake.innerHTML += `<div class="ft8-wake-line"><span class="ft8-satellite ft8-satellite-docked" aria-hidden="true"></span><span>${escapeHtml(item.text)}</span>${item.side ? `<span class="ft8-dock-side">${escapeHtml(item.side)}</span>` : ""}</div>`;
+        }
+        scene.appendChild(wake);
+      }
     }
 
     if (w.goal || w.todo || w.subagents || w.diffs.length) {
@@ -210,7 +220,8 @@ export function createThread(ctx) {
           const g = document.createElement("div");
           g.className = "ft8-troupe-goal";
           g.dataset.status = w.goal.status;
-          g.innerHTML = `<span class="ft8-goal-badge">${escapeHtml(w.goal.status)}</span><span class="ft8-goal-name">${escapeHtml(w.goal.title)}</span>`;
+          const phaseTxt = w.goal.phases ? `${w.goal.phases[w.goal.phaseIndex || 0]} · ${(w.goal.phaseIndex || 0) + 1} of ${w.goal.phases.length}` : "";
+          g.innerHTML = `<span class="ft8-goal-badge">${escapeHtml(w.goal.status)}</span><span class="ft8-goal-name">${escapeHtml(w.goal.title)}</span>${phaseTxt ? `<span class="ft8-goal-phase">${escapeHtml(phaseTxt)}</span>` : ""}${w.goal.replanApplied ? `<span class="ft8-goal-phase">replanned</span>` : ""}`;
           const ctrl = document.createElement("span");
           ctrl.className = "ft8-goal-ctrl";
           const btn = (t, ok, fn) => { const b = document.createElement("button"); b.textContent = t; if (!ok) b.disabled = true; else b.addEventListener("click", fn); return b; };
@@ -343,7 +354,13 @@ export function createThread(ctx) {
           row.className = "ft8-deal-opt";
           row.dataset.selected = String(sel);
           row.innerHTML = `<span class="ft8-deal-spot" aria-hidden="true"></span><span>${escapeHtml(opt)}</span>`;
-          row.addEventListener("click", () => s.answerQuestion(active.id, q.id, opt, { toggle: q.kind === "multi select" }));
+          row.addEventListener("click", () => {
+            s.answerQuestion(active.id, q.id, opt, { toggle: q.kind === "multi select" });
+            // Video 4: a dealt card tucks itself once a single-select answer lands.
+            if (q.kind === "single select" && active.currentQuestionIndex < active.questions.length - 1) {
+              setTimeout(() => s.navigateQuestion(active.id, active.currentQuestionIndex + 1), 420);
+            }
+          });
           card.appendChild(row);
         }
       }

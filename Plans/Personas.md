@@ -3470,3 +3470,29 @@ These rows are preserved as audit-lineage notes only. They do not prove repair b
 Status: `STATICALLY_MATERIALIZED`; Persona resolution is `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION`.
 
 The v2 event and complete immutable runtime snapshot require non-null `requested_persona` and `effective_persona` using canonical lower-kebab IDs. Equal values mean the request was honored; unequal values require immutable owner-valid policy override/fallback evidence in `persona_resolution_ref`. `requested_persona_id`, `effective_persona_id`, display aliases, unknown aliases, protected-ID shadowing, and replay from current settings are invalid.
+
+### P-056 - Persona Scope And Thread Locality
+
+```yaml
+plan_unit_id: P-056
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: Persona selection is an immutable requested/effective run input with an explicit scope and resolution ref; thread-local selection affects only future turns in that thread unless a separately authorized Goal or child snapshot freezes another value, and focus changes, sibling threads, branches, restores, or replay never silently copy or retarget Persona state.
+gui_related: false
+depends_on: [P-055, GRS-044]
+unblocks: []
+acceptance_criteria:
+  - CTX-013 preserves global default, Project default, thread-local request, and frozen run/Goal effective snapshots as distinct scopes.
+  - A branch or sibling re-answer can choose a different Persona only through a new explicit requested/effective resolution.
+  - Replay uses the historical immutable resolution rather than current settings.
+validation_surfaces: [Persona scope and thread-locality fixtures]
+risk_class: persona_scope_or_replay_drift
+reasoning_tier: high
+context_scope: persona_thread_locality
+implementation_surfaces: [Plans/Personas.md, Plans/assistant-chat-design.md]
+node_compile_hint: {mode: persona_scope_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#CTX-013
+negative_constraints: [Do not derive Persona from focused thread., Do not replay historical turns under current Persona settings., Do not copy a Persona to siblings implicitly.]
+```

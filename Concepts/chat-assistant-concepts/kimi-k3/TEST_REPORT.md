@@ -2,6 +2,32 @@
 
 Headless verification + visual audit results. Harness: `harness/` (zero-dependency CDP driver; `playwright-core` optional) + system Chrome headless. See `harness/commands.md` for run steps and `SPEC_GAPS.md` for gaps. Results/screenshots write to OS temp (`%TMP%/k3h-<pid>/`) — the Hub validator bans them from the model folder.
 
+## Dependency/media/work correction run (2026-08-13)
+
+Correction packet `PM_Assistant_Chat_Dependency_Media_and_Work_Correction_2026-08-13` applied against the final cumulative packet. Reference audit evidence: `reference-review-report.json` (every video/contact-sheet/keyframe-set/screenshot/JSON fixture named).
+
+| Sweep | Result |
+|---|---|
+| Boot smoke | 7/7 |
+| Pair smoke (64 pairings) | 64/64 |
+| Matrix (8 themes x 4 widths x rail x 22) | 1408/1408 |
+| Feature states (71 keys x 64 pairings) | 4544/4544 |
+| Reduced-motion parity | 112/112 |
+| Mounts (remount/switch/restart) | 64/64 |
+| Packet probes (26 x 4 pairings x 2 themes x 2 widths) | 416/416 |
+| Terminology + provider-bundling copy bans | clean |
+| ConceptHub validate.py | exit 0 |
+
+New probes: `providerSetupCopy`, `questionLifecycle`, `questionPaging`, `triggerCoverage`, `motionContinuity`, `pinSurvival`, `keyboardFocus` (details in `interaction-test-report.json`).
+
+Defects found + fixed by the correction audit:
+1. **Pinned history did not survive remount** in w1/w8 — the pin pref persisted but boot never re-applied it (pop-out round-trip dropped the surface). Fixed at both boots; proven by `pinSurvival` (resize/thread/pop-out round-trips, chat width floor).
+2. **Dead warning-card buttons** — injected and seeded route-warning cards lacked `pendingRoute`; the fail-closed resolver made Continue/Branch/New no-ops. All three cards now carry the held route.
+3. **Ollama fixture masked the real blocker** — model-level `unavailable` hid the connection's `cli-not-found`; remodeled so the honest cause + adjudication copy surface.
+4. **Questionnaire geometry jumped up to 147px between pages** — the card now locks to the tallest pre-measured page with internal body scroll; **prepare/submit lifecycle beats** added in all 4 variant idioms (video D).
+5. **Route picker had no arrow-key model** — roving tabindex + Arrows/Home/End/Enter + listbox semantics + focus rings (T3's accelerator badging deliberately not cloned).
+6. Terminology gate rescoped: governance reports (which must quote banned clauses to document them) excluded from the static scan; rendered-UI scan unchanged.
+
 ## Final cumulative packet run (2026-08-12)
 
 | Sweep | Configs | Passed | Result file (OS temp) |

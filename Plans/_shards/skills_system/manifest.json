@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-08-13T17:12:34Z",
+  "generated_at_utc": "2026-08-15T03:16:34Z",
   "index_path": "Plans/_shards/skills_system/00-index.md",
-  "index_sha256": "2acba1e9f1988e01d1ef5897273988c17e8ae5af8b0f26f3878dec48cb3cd27d",
+  "index_sha256": "08a87e7dd1bd87c1124f4c231c251c5d87ebc4f7b7eaf5214650e6d0dc46d14c",
   "manifest_path": "Plans/_shards/skills_system/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/skills_system/001-preamble.md",
-      "sha256": "b875275a380d57808b2b50ff67180eed8e3ce61d77dfbdb951c8d58357994268",
+      "sha256": "ad8988b1ac30dbe83fd763a94b573cfba1b279b40671d1160c7898e4c68c7775",
       "shard_id": "001",
       "source_line_end": 4,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope and SSOT status",
       "path": "Plans/_shards/skills_system/002-0.-scope-and-ssot-status.md",
-      "sha256": "aa723d889ddcf38176928834f8f9f89208f9e11af11678fe8f16d6ada1132954",
+      "sha256": "13ac67e9513c12f76de82076a00a186bc8dbb91bce72a76e23d46bb8d72a01d9",
       "shard_id": "002",
       "source_line_end": 27,
       "source_line_start": 6,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Definitions",
       "path": "Plans/_shards/skills_system/003-1.-definitions.md",
-      "sha256": "51922a42725f60555ef0daa7b4691b6b767e8231e464119fb2914ce752ffc4bd",
+      "sha256": "01e510ab08f2c90b1a4406e59f2f03e88ca4d17ed1ff6f6fd8cf96fbb4fc62f3",
       "shard_id": "003",
       "source_line_end": 48,
       "source_line_start": 29,
@@ -35,7 +35,7 @@
     {
       "heading": "2. On-disk format (SKILL.md)",
       "path": "Plans/_shards/skills_system/004-2.-on-disk-format-skill.md.md",
-      "sha256": "87f4284c6dcd3559da301fbd9398058147736321998036049859bca1ccaf1b4d",
+      "sha256": "c45204add5cbdd6c670de8c57c7beeeb0d072a9c5f817fc7a7afaf98cff8bcb0",
       "shard_id": "004",
       "source_line_end": 88,
       "source_line_start": 50,
@@ -44,7 +44,7 @@
     {
       "heading": "3. Storage layout and discovery",
       "path": "Plans/_shards/skills_system/005-3.-storage-layout-and-discovery.md",
-      "sha256": "b43d9d1ebe6f6e15348976e5488bb7072d88c162211a91fecc6430bb0642ed2c",
+      "sha256": "35eb4c479673296594245cff427850e7de65a2f4afb1cc44cf590cb20d960e8d",
       "shard_id": "005",
       "source_line_end": 144,
       "source_line_start": 90,
@@ -53,97 +53,106 @@
     {
       "heading": "4. Runtime surface",
       "path": "Plans/_shards/skills_system/006-4.-runtime-surface.md",
-      "sha256": "08e51328ca34db1ed483b77eb639707f195698ac0aebe6b1747b489bd6ed59e8",
+      "sha256": "ee5d9c6ceea32ae254ea1ab8cfb6601f8ad50bda380cf4c957ee26d4423fb1ba",
       "shard_id": "006",
-      "source_line_end": 242,
+      "source_line_end": 264,
       "source_line_start": 146,
       "split_rule": "heading-##"
     },
     {
       "heading": "5. Permissions integration",
       "path": "Plans/_shards/skills_system/007-5.-permissions-integration.md",
-      "sha256": "c64df44ca94c87cccea17e5f08fed55faa334291cd6bd6635add950a23c86496",
+      "sha256": "65001c21850e851c4a3b1804a5fd1585cfbcc99981a9daa22f27af6ad87faefd",
       "shard_id": "007",
-      "source_line_end": 278,
-      "source_line_start": 243,
+      "source_line_end": 300,
+      "source_line_start": 265,
       "split_rule": "heading-##"
     },
     {
       "heading": "6. GUI requirements",
       "path": "Plans/_shards/skills_system/008-6.-gui-requirements.md",
-      "sha256": "c0e6b899312acb9e1476dca1b801d47617115772ce072be6b70798bda37b8108",
+      "sha256": "12889f79abe1ace6ba8786876fa0f73aab08b0f1684d695d0cd05c698ab326ec",
       "shard_id": "008",
-      "source_line_end": 377,
-      "source_line_start": 280,
+      "source_line_end": 399,
+      "source_line_start": 302,
       "split_rule": "heading-##"
     },
     {
       "heading": "7. Baseline alignment (OpenCode)",
       "path": "Plans/_shards/skills_system/009-7.-baseline-alignment-opencode.md",
-      "sha256": "fb9fc346939f16265d8abe6006e62795f4596eeba7358ce75e437c716972fccd",
+      "sha256": "d024dc17dd56c9f8185e63e12964ee6d74011287b2c75cf6507256a47dba4996",
       "shard_id": "009",
-      "source_line_end": 392,
-      "source_line_start": 378,
+      "source_line_end": 414,
+      "source_line_start": 400,
       "split_rule": "heading-##"
     },
     {
       "heading": "8. Acceptance criteria",
       "path": "Plans/_shards/skills_system/010-8.-acceptance-criteria.md",
-      "sha256": "a29b3d03163f67241bdf4677352e559500d01d6d301f09a772b69b0fd7f050b4",
+      "sha256": "44687171cb9cdccfe47e1b8f9ded3eff703b407744c5469d41bc8144d642bafb",
       "shard_id": "010",
-      "source_line_end": 411,
-      "source_line_start": 394,
+      "source_line_end": 433,
+      "source_line_start": 416,
       "split_rule": "heading-##"
     },
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/skills_system/011-owner-consumer-map.md",
-      "sha256": "fc1a59747696461920ddc1fa710b43f4896b1379f8f0bdc47f9ff427041358a7",
+      "sha256": "9ffb2b925c113155402bb36c03ac45bb6d85c453e1e4ce7ba5ee1665f5418912",
       "shard_id": "011",
-      "source_line_end": 417,
-      "source_line_start": 413,
+      "source_line_end": 439,
+      "source_line_start": 435,
       "split_rule": "heading-##"
     },
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/skills_system/012-planunits.md",
-      "sha256": "a453dde87f66c23925ee73e494a60fbb5c53af95e8c8dd3e07bad19bfe0e1afd",
+      "sha256": "1adb2b60d4724927d41371358b46b2aee5891f0d2b54aca1a2fe89e4c719e594",
       "shard_id": "012",
-      "source_line_end": 2474,
-      "source_line_start": 419,
+      "source_line_end": 2496,
+      "source_line_start": 441,
       "split_rule": "heading-##"
     },
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/skills_system/013-migration-coverage.md",
-      "sha256": "ca5c98eb06406f50d5e45265611e83634d0094e12492103555d65e0e617ae41a",
+      "sha256": "bc7945835e16b331a8567202833d8f08f86aa027b8f3e0d64a1b44e1e13b4a0b",
       "shard_id": "013",
-      "source_line_end": 2486,
-      "source_line_start": 2476,
+      "source_line_end": 2508,
+      "source_line_start": 2498,
       "split_rule": "heading-##"
     },
     {
       "heading": "FABLE Residual Skills Invocation Cleanup Addendum - 2026-07-07",
       "path": "Plans/_shards/skills_system/014-fable-residual-skills-invocation-cleanup-addendum-2026-07-07.md",
-      "sha256": "0ebee46b56d3ce81fbd4282ab3ce2f1ec63789151f75461d9adbfaaca02a01fd",
+      "sha256": "a2eb273e881ebc995e5ca1877158e02e223207319d0db07078b4ca46db9b7b99",
       "shard_id": "014",
-      "source_line_end": 2554,
-      "source_line_start": 2488,
+      "source_line_end": 2576,
+      "source_line_start": 2510,
       "split_rule": "heading-##"
     },
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/skills_system/015-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "07bf047aed644fd494fac14c6b397741c8a64d79f229ee04ad5d6eee1f7d9e9d",
+      "sha256": "510902ebe500cc54821a0db3d61d1f017423861616d52ecd34837f80568b9063",
       "shard_id": "015",
-      "source_line_end": 2560,
-      "source_line_start": 2556,
+      "source_line_end": 2582,
+      "source_line_start": 2578,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Remaining Runtime Integration Addendum - 2026-08-13",
+      "path": "Plans/_shards/skills_system/016-remaining-runtime-integration-addendum-2026-08-13.md",
+      "sha256": "77720240272269f5b490bb6501469cf0116379cad05be1f43d1c98193ecd34f6",
+      "shard_id": "016",
+      "source_line_end": 2647,
+      "source_line_start": 2584,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 2560,
+    "line_count": 2647,
     "path": "Plans/Skills_System.md",
-    "sha256": "4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53"
+    "sha256": "e9b5a64f585b47d2142222d2e1e031981bc97c2da3629e41f2a36c62bc49d094"
   }
 }

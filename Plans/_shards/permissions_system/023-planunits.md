@@ -2,9 +2,9 @@
 
 Source: `Plans/Permissions_System.md`
 
-Source lines: L1307-L7531
+Source lines: L1307-L7533
 
-Source SHA256: `248ce6522a6c7ce3405184c54b408f4454330ab5c1c078e73e5e09b99320201e`
+Source SHA256: `b12f3a9c23ddf5697455b4575a1ae8192c0b81515ae83f1e8622f82618f1fbb9`
 
 ---
 
@@ -1661,7 +1661,7 @@ plan_unit_id: PS-032
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "Browser capture requests for screenshot or pdf require session_granted approval, browser permission storage values remain canonical while UI/source aliases are lineage only, and auth_session follows normal capture/share/clipboard permission disclosure."
+canonical_text: "Ordinary BrowserSession capture requests for screenshot or PDF require session_granted approval and canonical permission storage values; protected AuthBrowserSession rejects capture, share, recording, inspection, persistence, agent/tool access, and programmatic clipboard regardless of ordinary-session approval, while permitting only foreground human interaction under its domain policy."
 gui_related: true
 gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings help, GUI references, or compact surface behavior."
 split_recommended: false
@@ -1703,11 +1703,13 @@ preserved_exact_tokens:
 negative_constraints:
 - "Do not revive the retired preview/browser trust-tier matrix."
 - "Browser implementation-readiness details stay with browser owner docs, not Permissions implementation ownership."
+- "The preserved auth_session, copy/paste, and share tokens are source-lineage only and grant no protected AuthBrowserSession capability."
 preserved_contractrefs: []
 compatibility_only_notes:
 - "UI/source aliases always-allowed, session-granted, and explicit-confirmation are lineage labels only."
 stale_retired_dispositions:
 - "Retired preview/browser trust-tier matrix is not revived by browser-session permission tiers."
+- "Legacy auth_session normal capture/share/clipboard behavior is retired by the protected AuthBrowserSession boundary."
 owner_hints:
 - "Plans/Permissions_System.md"
 - "Plans/FinalGUISpec.md"

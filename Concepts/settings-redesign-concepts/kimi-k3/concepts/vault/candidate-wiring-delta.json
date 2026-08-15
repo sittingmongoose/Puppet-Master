@@ -6,43 +6,90 @@
   "families": [
     {
       "family": "navigation and values",
-      "controls": ["ledger destinations", "workspace nav", "search results", "all setting rows"],
-      "trace": "Shared spine: UI source → cmd.settings.navigate / cmd.settings.value.set → Settings owner → registry/schema validation → route or value mutation → event + receipt → projection → diagnostics attribution → recovery via Back/forward or cmd.settings.default.restore"
+      "controls": [
+        "ledger destinations",
+        "workspace nav",
+        "search results",
+        "all setting rows"
+      ],
+      "trace": "Shared spine: UI source \u2192 cmd.settings.navigate / cmd.settings.value.set \u2192 Settings owner \u2192 registry/schema validation \u2192 route or value mutation \u2192 event + receipt \u2192 projection \u2192 diagnostics attribution \u2192 recovery via Back/forward or cmd.settings.default.restore"
     },
     {
       "family": "settings lifecycle",
-      "controls": ["export", "import preview/apply/cancel", "rollback", "reset preview", "copy-from-project"],
-      "trace": "UI source → cmd.settings.export / import.preview / import.apply / import.rollback / reset.preview / reset.apply / copy_from_project.* → Storage owner (settings payload store) → schema validation + managed-row permission (managed rows skip) + legacy-key migration → atomic transaction against a pre-import snapshot → ObservableWork step phases + receipt with source disclosure → workspace re-projection with new effective values → diagnostics record each stage → recovery: rollback to the pre-import snapshot; deep link to the lifecycle manager"
+      "controls": [
+        "export",
+        "import preview/apply/cancel",
+        "rollback",
+        "reset preview",
+        "copy-from-project"
+      ],
+      "trace": "UI source \u2192 cmd.settings.export / import.preview / import.apply / import.rollback / reset.preview / reset.apply / copy_from_project.* \u2192 Storage owner (settings payload store) \u2192 schema validation + managed-row permission (managed rows skip) + legacy-key migration \u2192 atomic transaction against a pre-import snapshot \u2192 ObservableWork step phases + receipt with source disclosure \u2192 workspace re-projection with new effective values \u2192 diagnostics record each stage \u2192 recovery: rollback to the pre-import snapshot; deep link to the lifecycle manager"
     },
     {
       "family": "backup and restore",
-      "controls": ["Back up now", "open log", "test restore"],
-      "trace": "UI source → cmd.storage.backup.open (manager) / one-shot backup verb → Storage owner → destination space preflight → snapshot mutation → ObservableWork phases + hash receipt → receipts list re-projection → Usage: none; diagnostics log verification → recovery: test restore validates the snapshot; rollback uses the same receipts"
+      "controls": [
+        "Back up now",
+        "open log",
+        "test restore"
+      ],
+      "trace": "UI source \u2192 cmd.storage.backup.open (manager) / one-shot backup verb \u2192 Storage owner \u2192 destination space preflight \u2192 snapshot mutation \u2192 ObservableWork phases + hash receipt \u2192 receipts list re-projection \u2192 Usage: none; diagnostics log verification \u2192 recovery: test restore validates the snapshot; rollback uses the same receipts"
     },
     {
       "family": "storage and retention",
-      "controls": ["timeline scrub", "retention anchor rows", "pressure threshold"],
-      "trace": "UI source → cmd.settings.value.set → Storage owner → anchor/minimum/legal-hold validation (held rows refuse shortening) → retention mutation → event + receipt → timeline re-projection → diagnostics attribution → recovery: restore the previous anchor; scrub is inspect-only and never mutates"
+      "controls": [
+        "timeline scrub",
+        "retention anchor rows",
+        "pressure threshold"
+      ],
+      "trace": "UI source \u2192 cmd.settings.value.set \u2192 Storage owner \u2192 anchor/minimum/legal-hold validation (held rows refuse shortening) \u2192 retention mutation \u2192 event + receipt \u2192 timeline re-projection \u2192 diagnostics attribution \u2192 recovery: restore the previous anchor; scrub is inspect-only and never mutates"
     },
     {
       "family": "artifacts",
-      "controls": ["open/reveal/export/cleanup", "redaction policy"],
-      "trace": "UI source → cmd.artifact.manager.open → Runtime Artifacts/Outputs owner → ownership + redaction validation (provider-native artifacts refuse PM-side mutation) → operation → receipt → artifact list re-projection → diagnostics attribution → recovery: cleanup keeps evidence; exports apply redaction rules"
+      "controls": [
+        "open/reveal/export/cleanup",
+        "redaction policy"
+      ],
+      "trace": "UI source \u2192 cmd.artifact.manager.open \u2192 Runtime Artifacts/Outputs owner \u2192 ownership + redaction validation (provider-native artifacts refuse PM-side mutation) \u2192 operation \u2192 receipt \u2192 artifact list re-projection \u2192 diagnostics attribution \u2192 recovery: cleanup keeps evidence; exports apply redaction rules"
     },
     {
       "family": "source control and forge",
-      "controls": ["worktree rows", "policy rows", "tool health", "forge connect", "workflow run/log browsing"],
-      "trace": "UI source → cmd.settings.value.set (policy) / forge connect verb → Worktrees/Git/GitHub owner → tool-health validation (unavailable tools refuse with install guidance) → policy or connection mutation → event + receipt → ledger/graph re-projection → diagnostics attribution → recovery: disconnect the forge; unmerged worktrees are never cleaned"
+      "controls": [
+        "worktree rows",
+        "policy rows",
+        "tool health",
+        "forge connect",
+        "workflow run/log browsing"
+      ],
+      "trace": "UI source \u2192 cmd.settings.value.set (policy) / forge connect verb \u2192 Worktrees/Git/GitHub owner \u2192 tool-health validation (unavailable tools refuse with install guidance) \u2192 policy or connection mutation \u2192 event + receipt \u2192 ledger/graph re-projection \u2192 diagnostics attribution \u2192 recovery: disconnect the forge; unmerged worktrees are never cleaned"
     },
     {
       "family": "search index and cleanup",
-      "controls": ["rebuild", "clear cache", "dry-run cleanup", "run cleanup", "cleanup rollback"],
-      "trace": "UI source → index rebuild verb / cleanup verbs → Search Index / Storage owner → exclusion and worktree-safety validation (unmerged work refuses) → operation with truthful phases (scanning → indexing → verifying) → progress events + receipts → manager re-projection with disk-use figures → diagnostics log skipped files → recovery: cleanup rollback replays receipts; index rebuilds lazily after clear"
+      "controls": [
+        "rebuild",
+        "clear cache",
+        "dry-run cleanup",
+        "run cleanup",
+        "cleanup rollback"
+      ],
+      "trace": "UI source \u2192 index rebuild verb / cleanup verbs \u2192 Search Index / Storage owner \u2192 exclusion and worktree-safety validation (unmerged work refuses) \u2192 operation with truthful phases (scanning \u2192 indexing \u2192 verifying) \u2192 progress events + receipts \u2192 manager re-projection with disk-use figures \u2192 diagnostics log skipped files \u2192 recovery: cleanup rollback replays receipts; index rebuilds lazily after clear"
     },
     {
       "family": "future server modules",
-      "controls": ["reserved insertion cards (inert by design)"],
+      "controls": [
+        "reserved insertion cards (inert by design)"
+      ],
       "trace": "No wiring: cards are marked deferred with named canonical owners and an insertion contract (manager module, deep links, status cards, command wiring). No backend state machine is invented."
+    },
+    {
+      "family": "settings shell performance (correction pass)",
+      "controls": [
+        "domain-local refresh",
+        "lazy manager hydration",
+        "offline last-known-good banner",
+        "100-installation collapse",
+        "behavior profile rows"
+      ],
+      "trace": "store change \u2192 key-domain classification \u2192 repaint only the owning surface (ledger and timeline views render fresh on entry) \u2192 no per-row repaint storms; slow-hydration scenario \u2192 truthful Loading projection \u2192 content; offline scenario \u2192 cached catalog/connection state stays visible, zero probes; production owner: RuntimeResourceGovernor owns admission, ObservableWork owns the operation projection \u2014 Settings owns policy and presentation only"
     }
   ]
 }

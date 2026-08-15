@@ -1,0 +1,137 @@
+{
+  "schema_id": "pm.prompt_complexity_successor.test_design_questions.v1",
+  "captured_at_utc": "2026-08-13T17:07:14Z",
+  "status": "AWAITING_JARED_TEST_PLAN",
+  "answering_rule": "Only Jared may select or supply these choices. Null answers are intentional and must not be inferred from historical artifacts, source examples, controller preparation agents, or option order.",
+  "fixed_constraints_not_questions": [
+    "No subject-model or provider call occurs during deterministic successor preflight.",
+    "The exact 8-low/2-high cohort, A-E method, and post-V4 recipe are superseded.",
+    "Direct Assistant Chat and Chat-originated delegation remain distinct from ordinary strict-policy automation.",
+    "BSD is optional and default Off.",
+    "Provider CLI initial acquisition requires explicit user action from the official source for the exact Host/Environment; authentication is separate.",
+    "InstructionLoad, tokens, adapter observations, and outcomes are diagnostics rather than predicted budgets or per-model safety profiles."
+  ],
+  "questions": [
+    {
+      "question_id": "JQ-001",
+      "topic": "subject_roster",
+      "question": "Which exact models are subjects, including provider, model identifier/version, reasoning variant or tier when exposed, and intended role in the comparison?",
+      "decision_options": ["Jared supplies an explicit closed roster", "Jared supplies roster-selection rules for a later bounded discovery step"],
+      "status": "requires_jared_decision",
+      "answer": null
+    },
+    {
+      "question_id": "JQ-002",
+      "topic": "comparison_shape",
+      "question": "What comparison shape should replace the superseded 8-low/2-high cohort: paired models, quality bands, provider-balanced groups, another declared design, or no cohort comparison?",
+      "decision_options": ["Paired comparison", "Declared cohort comparison", "Per-model qualification without cohort ranking", "Another Jared-specified design"],
+      "status": "requires_jared_decision",
+      "answer": null
+    },
+    {
+      "question_id": "JQ-003",
+      "topic": "test_objective",
+      "question": "What exact hypotheses or decisions should the tests support, and which claims must remain explicitly out of scope?",
+      "decision_options": ["Absolute contract conformance", "Comparative robustness", "Diagnostic characterization", "A Jared-specified combination with separate claims"],
+      "status": "requires_jared_decision",
+      "answer": null
+    },
+    {
+      "question_id": "JQ-004",
+      "topic": "case_corpus",
+      "question": "Should the seven historical semantic cases be retained, revised, replaced, or supplemented, and who approves the final visible packets and hidden oracles?",
+      "decision_options": ["Retain after current-method audit", "Revise or supplement", "Replace with a new corpus"],
+      "status": "requires_jared_decision",
+      "answer": null
+    },
+    {
+      "question_id": "JQ-005",
+      "topic": "execution_parameters",
+      "question": "How many independent attempts per model/case, in what order, with which temperature, seed, reasoning, context, retry, timeout, and rate-limit settings?",
+      "decision_options": ["Single deterministic attempt where supported", "Repeated randomized attempts", "Provider-specific declared settings"],
+      "status": "requires_jared_decision",
+      "answer": null
+    },
+    {
+      "question_id": "JQ-006",
+      "topic": "origin_lanes",
+      "question": "Which origins are in the test scope, and how should direct Ask, direct Assistant Chat, Agent/Debug/Goal, Chat-originated delegation, parent turns, child runs, and background helpers be separated?",
+      "decision_options": ["Ordinary strict-policy automation only", "Strict automation plus separately scored Chat/delegation lanes", "Another explicitly partitioned origin design"],
+      "status": "requires_jared_decision",
+      "answer": null
+    },
+    {
+      "question_id": "JQ-007",
+      "topic": "route_and_identity",
+      "question": "What exact registered route, account/environment, and response-effective identity evidence is required for each subject, and how should missing, unregistered, mismatched, or unexposed identity fields terminate?",
+      "decision_options": ["Exact attested identity required", "Declared provider-specific attestation contract", "Another fail-closed identity rule"],
+      "status": "requires_jared_decision",
+      "answer": null
+    },
+    {
+      "question_id": "JQ-008",
+      "topic": "provider_cli_state",
+      "question": "For each selected route, is an approved provider CLI already installed on the exact Host/Environment, or does Jared authorize a separate official-source acquisition step before any authentication or testing?",
+      "decision_options": ["Use an already approved installation", "Authorize a separately reviewed first acquisition", "Use a non-CLI provider route", "Exclude the route"],
+      "status": "requires_jared_decision",
+      "answer": null
+    },
+    {
+      "question_id": "JQ-009",
+      "topic": "scoring",
+      "question": "Which deterministic scoring rules, aggregation rules, pass thresholds, uncertainty treatment, and terminal precedence should govern the final method?",
+      "decision_options": ["Audit and adapt the V4 oracle design", "Define a new deterministic scorer", "Use multiple separately reported deterministic dimensions"],
+      "status": "requires_jared_decision",
+      "answer": null
+    },
+    {
+      "question_id": "JQ-010",
+      "topic": "review_and_repair",
+      "question": "Will any human or model reviewer, adjudicator, or repair pass be used, and if so how are those calls separated, counted, blinded, and prevented from rewriting failures?",
+      "decision_options": ["No reviewer or repair calls", "Human adjudication only", "Separately preregistered model review", "Another explicitly counted process"],
+      "status": "requires_jared_decision",
+      "answer": null
+    },
+    {
+      "question_id": "JQ-011",
+      "topic": "staging",
+      "question": "What staged launch sequence, if any, should follow deterministic qualification: route checks, canary, pilot, fleet, and stop conditions?",
+      "decision_options": ["Jared specifies a staged sequence", "No staged sequence; another bounded launch design", "Preparation only with no launch authorization"],
+      "status": "requires_jared_decision",
+      "answer": null
+    },
+    {
+      "question_id": "JQ-012",
+      "topic": "budgets_and_stops",
+      "question": "What are the exact call, token, cost, elapsed-time, retry, failure-rate, and incident stop limits?",
+      "decision_options": ["Global hard limits", "Per-provider and per-stage limits", "Another explicit stop budget"],
+      "status": "requires_jared_decision",
+      "answer": null
+    },
+    {
+      "question_id": "JQ-013",
+      "topic": "capture_and_privacy",
+      "question": "Which raw requests, final rendered bytes, responses, event streams, adapter diagnostics, environment metadata, and hashes may be retained, redacted, or omitted?",
+      "decision_options": ["Full bounded capture with declared redactions", "Hash-and-metadata capture", "Provider-specific retention rules", "Another Jared-specified custody policy"],
+      "status": "requires_jared_decision",
+      "answer": null
+    },
+    {
+      "question_id": "JQ-014",
+      "topic": "bsd",
+      "question": "Should BSD remain Off for the test, or should an explicitly bounded BSD-on lane be added and scored separately?",
+      "decision_options": ["Remain Off", "Add a separate BSD-on lane"],
+      "status": "requires_jared_decision",
+      "answer": null
+    },
+    {
+      "question_id": "JQ-015",
+      "topic": "freeze_and_authorization",
+      "question": "What exact artifacts must Jared review and approve before the roster/method freeze, and what later statement constitutes authorization to make the first subject call?",
+      "decision_options": ["Explicit artifact-by-artifact approval and separate launch authorization", "Another explicit two-gate approval contract"],
+      "status": "requires_jared_decision",
+      "answer": null
+    }
+  ],
+  "claim_boundary": "The questions record choices; their options are not recommendations, selections, implied defaults, a frozen test method, or permission to call a subject."
+}

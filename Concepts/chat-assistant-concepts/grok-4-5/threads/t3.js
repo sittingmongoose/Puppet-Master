@@ -65,41 +65,85 @@
     );
   }
 
+  /** Work shelf stubs with reopen — structure forks from shared render dumps. */
   function surfacesHtml(thread, ui, K) {
     if (!thread) return '';
-    var bits = [];
-    var goal = K.renderGoal(thread.goal, {
-      goalExpanded:
-        ui.goalExpanded != null ? ui.goalExpanded : thread.goal && thread.goal.expanded
-    });
-    if (goal) bits.push(goal);
-    var todo = K.renderTodo(thread.todos);
-    if (todo) bits.push(todo);
-    var subs = K.renderSubagents(thread.subagentGroups, ui.expandedSubagentIds || {});
-    if (subs) bits.push(subs);
-    var diffs = K.renderDiffs(thread.diffGroups);
-    if (diffs) bits.push(diffs);
-    var arts = K.renderArtifacts(thread.artifacts);
-    if (arts) bits.push(arts);
-    if (!bits.length) return '';
+    var stubs = [];
+    var decks = [];
+
+    function pushShelf(key, title, bodyHtml) {
+      if (!bodyHtml) return;
+      stubs.push(
+        '<div class="t3-work-stub" data-cw-stub="' +
+          K.escapeHtml(key) +
+          '">' +
+          '<div class="t3-work-stub-lip">' +
+          '<span class="t3-work-stub-role">' +
+          K.escapeHtml(title) +
+          '</span>' +
+          '</div>' +
+          '<button type="button" class="t3-work-reopen" data-cw-expand="' +
+          K.escapeHtml(key) +
+          '" aria-pressed="false">Reopen</button>' +
+          '</div>'
+      );
+      decks.push(
+        '<details class="t3-work-deck-leaf pm-work-surface" data-kind="' +
+          K.escapeHtml(key) +
+          '" data-folio-key="' +
+          K.escapeHtml(key) +
+          '">' +
+          '<summary class="t3-work-deck-sum">' +
+          '<span class="t3-lip-role">' +
+          K.escapeHtml(title) +
+          '</span>' +
+          '<span class="pm-work-chev" aria-hidden="true">›</span>' +
+          '</summary>' +
+          '<div class="t3-work-deck-body pm-work-surface-body">' +
+          bodyHtml +
+          '</div>' +
+          '</details>'
+      );
+    }
+
+    pushShelf(
+      'goal',
+      'Goal',
+      K.renderGoal(thread.goal, {
+        goalExpanded:
+          ui.goalExpanded != null ? ui.goalExpanded : thread.goal && thread.goal.expanded
+      })
+    );
+    pushShelf('todo', 'Todo', K.renderTodo(thread.todos));
+    pushShelf(
+      'subagent',
+      'Agents',
+      K.renderSubagents(thread.subagentGroups, ui.expandedSubagentIds || {})
+    );
+    pushShelf('diff', 'Diffs', K.renderDiffs(thread.diffGroups));
+    pushShelf('artifacts', 'Artifacts', K.renderArtifacts(thread.artifacts));
+    if (!stubs.length) return '';
+
     var compact =
       (K.renderCompactWork && K.renderCompactWork(thread, 'shelves')) ||
       (window.PMChatV2 && window.PMChatV2.renderCompactWorkBand
         ? window.PMChatV2.renderCompactWorkBand(thread, 'shelves')
         : '');
+
     return (
       (compact || '') +
       '<section class="t3-shelf t3-shelf-work" data-shelf-role="work" data-surfaces data-work-detail-stack>' +
       '<div class="t3-lip">' +
-      '<span class="t3-lip-role">Work</span>' +
+      '<span class="t3-lip-role">Work stubs</span>' +
       '<span class="t3-lip-count">' +
-      bits.length +
-      ' surface' +
-      (bits.length === 1 ? '' : 's') +
-      '</span>' +
+      stubs.length +
+      ' reopenable</span>' +
       '</div>' +
-      '<div class="t3-deck t3-deck-work">' +
-      bits.join('') +
+      '<div class="t3-work-stub-row">' +
+      stubs.join('') +
+      '</div>' +
+      '<div class="t3-deck t3-deck-work" data-t3-work-deck>' +
+      decks.join('') +
       '</div>' +
       '</section>'
     );
@@ -112,6 +156,9 @@
       { id: ID, label: LABEL },
       {
         rootClass: 'pm-t3-shelves',
+        initLocal: function (local) {
+          local.reopenedShelfIds = local.reopenedShelfIds || Object.create(null);
+        },
         applyWidth: function (root, w) {
           root.setAttribute('data-chat-tier', w <= 560 ? 'min' : w <= 800 ? 'mid' : 'wide');
         },
@@ -143,7 +190,9 @@
           }
 
           shelves.forEach(function (shelf, i) {
-            if (qActive && i < keepFrom) {
+            var reopened =
+              ctx.local.reopenedShelfIds && ctx.local.reopenedShelfIds[shelf.id];
+            if (qActive && i < keepFrom && !reopened) {
               /* Compact stub still present in DOM for scroll restoration / lens ids */
               var lastStub = shelf.messages[shelf.messages.length - 1];
               var stubPreview = lastStub
@@ -178,6 +227,9 @@
                 '<span class="t3-lip-count">' +
                 shelf.messages.length +
                 '</span>' +
+                '<button type="button" class="t3-shelf-reopen" data-shelf-reopen="' +
+                K.escapeHtml(shelf.id) +
+                '">Reopen</button>' +
                 (stubPreview
                   ? '<span class="t3-lip-preview">' + K.escapeHtml(stubPreview) + '</span>'
                   : '') +

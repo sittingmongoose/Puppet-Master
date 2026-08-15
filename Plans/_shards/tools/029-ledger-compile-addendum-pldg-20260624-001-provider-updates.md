@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L2409-L10873
+Source lines: L2494-L10957
 
-Source SHA256: `42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca`
+Source SHA256: `78420b4d2c670dadc9747ffd98d3e2c1b817ace8238e70df542967f62f2e8a45`
 
 ---
 
@@ -3706,7 +3706,7 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
 - GUI rows remain consumer surfaces over the central registry/MCP contract.
-- '`Playwright`, `Context7`, `DRY:DATA:gui_tool_catalog`, and `newtools.md` owner hints are preserved.'
+- '`Context7`, `DRY:DATA:gui_tool_catalog`, and `newtools.md` owner hints are preserved.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -3724,7 +3724,6 @@ preserved_exact_tokens:
 - GUI tool catalog
 - Interview
 - DRY:DATA:gui_tool_catalog
-- Playwright
 - headless runners
 - Settings → Advanced → MCP Configuration
 - Context7

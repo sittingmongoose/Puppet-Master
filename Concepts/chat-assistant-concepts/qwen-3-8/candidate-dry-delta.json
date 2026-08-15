@@ -2,21 +2,114 @@
   "schema_id": "pm.chat_candidate_dry_delta.v1",
   "note": "Packet DRY roles mapped to this workspace's components. shared = one implementation consumed by all 16 pairings; concept-distinct = per-concept presentation over shared state.",
   "roles": [
-    { "role": "ThreadShell", "implementation": "chatsRows() + shell.js mount", "shared": true, "detail": "One shell; eight window and eight thread concepts plug in." },
-    { "role": "PinnedHistorySurface", "implementation": ".pmq-pincol governor in makeSideRegions()", "shared": true, "detail": "Single geometry governor; sibling insertion, never overlay; demotion order dashboard -> history form -> (never) chat width; 520px chat floor." },
-    { "role": "ArtifactWorkspace", "implementation": "makeSideRegions() artws + artifactBodyHtml", "shared": true, "detail": "One state machine (loading/ready/error+retry/switch/close); eight presentations via opts.artVariant." },
-    { "role": "ModelRoutePicker", "implementation": "modelPopup() with provider icon rail + selectable account rows + setup states", "shared": true, "detail": "Requested-vs-effective footer; Account · label · connection line." },
-    { "role": "AccessPicker", "implementation": "accessPopup() -> store.accessSet", "shared": true, "detail": "Four profiles; limiting-mode effective note." },
-    { "role": "BSDPicker", "implementation": "bsdPopup() + selectorRow BSD chip", "shared": true, "detail": "Off/Auto/On modes + turn/thread scope; glow terminates on resolve; read-only advisor." },
-    { "role": "ContextRing/Lens", "implementation": "ringButton() + openLensBreakdown() on admissionOf()", "shared": true, "detail": "Included/Left out receipt with provenance, sizes, removable excerpts; cache state line; Compact Now button." },
-    { "role": "CompactWorkCluster", "implementation": "per-concept workRender (t1 nested disclosure, t2 sidecar, t3 ledger, t4 spine, t5 chips, t6 index plate, t7 band, t8 work log)", "shared": false, "detail": "State (workData/workApi) shared; composition concept-distinct by design." },
-    { "role": "QuestionFlow", "implementation": "shared quest controller in _thread-kit.js + eight renderers", "shared": true, "detail": "STATE is the DRY unit; renderers are concept-scoped (renderer-registry pattern, GAP-027)." },
-    { "role": "ApprovalCard", "implementation": "approvalCards()", "shared": true, "detail": "One compact card; Details disclosure carries exact commands/files/persistence/safer-alternative." },
-    { "role": "RouteImpactCard", "implementation": "warningCards() route kind", "shared": true, "detail": "Tiered modal/confirm; Branch offered; resolves via cmd.chat.route.select." },
-    { "role": "AttachmentResolutionCard", "implementation": "attachmentResolutionCards()", "shared": true, "detail": "Route badge Native/PM transformed/Alternate/Unsupported; lineage; transform job state; consent-before-route." },
-    { "role": "OfflineOutboxState", "implementation": "shell.js sync strip + outbox popup + composer offline states", "shared": true, "detail": "Compact title-bar strip (CHAT-019: no banner duplication); outbox popup lists entries with Send-now disabled while offline." },
-    { "role": "ObservableOperation", "implementation": "activityLiveCard() live timeline", "shared": true, "detail": "read/search/web/browser/test/edit/generate/verify stage kinds mapped." },
-    { "role": "ReceiptLink", "implementation": "receiptCards() + appendReceipts()", "shared": true, "detail": "Typed event/receipt rows (branch, restore point, redirect, replay, grant result, capacity resolution, port resolution) — never fake assistant messages; rendered inside every workRender path via the appendRecords-style dedupe guard." }
+    {
+      "role": "ThreadShell",
+      "implementation": "chatsRows() + shell.js mount",
+      "shared": true,
+      "detail": "One shell; eight window and eight thread concepts plug in."
+    },
+    {
+      "role": "PinnedHistorySurface",
+      "implementation": ".pmq-pincol governor in makeSideRegions()",
+      "shared": true,
+      "detail": "Single geometry governor; sibling insertion, never overlay; demotion order dashboard -> history form -> (never) chat width; 520px chat floor."
+    },
+    {
+      "role": "ArtifactWorkspace",
+      "implementation": "makeSideRegions() artws + artifactBodyHtml",
+      "shared": true,
+      "detail": "One state machine (loading/ready/error+retry/switch/close); eight presentations via opts.artVariant."
+    },
+    {
+      "role": "ModelRoutePicker",
+      "implementation": "modelPopup() with provider icon rail + selectable account rows + setup states",
+      "shared": true,
+      "detail": "Requested-vs-effective footer; Account · label · connection line."
+    },
+    {
+      "role": "AccessPicker",
+      "implementation": "accessPopup() -> store.accessSet",
+      "shared": true,
+      "detail": "Four profiles; limiting-mode effective note."
+    },
+    {
+      "role": "BSDPicker",
+      "implementation": "bsdPopup() + selectorRow BSD chip",
+      "shared": true,
+      "detail": "Off/Auto/On modes + turn/thread scope; glow terminates on resolve; read-only advisor."
+    },
+    {
+      "role": "ContextRing/Lens",
+      "implementation": "ringButton() + openLensBreakdown() on admissionOf()",
+      "shared": true,
+      "detail": "Included/Left out receipt with provenance, sizes, removable excerpts; cache state line; Compact Now button."
+    },
+    {
+      "role": "CompactWorkCluster",
+      "implementation": "per-concept workRender (t1 nested disclosure, t2 sidecar, t3 ledger, t4 spine, t5 chips, t6 index plate, t7 band, t8 work log)",
+      "shared": false,
+      "detail": "State (workData/workApi) shared; composition concept-distinct by design."
+    },
+    {
+      "role": "QuestionFlow",
+      "implementation": "shared quest controller in _thread-kit.js + eight renderers",
+      "shared": true,
+      "detail": "STATE is the DRY unit; renderers are concept-scoped (renderer-registry pattern, GAP-027)."
+    },
+    {
+      "role": "ApprovalCard",
+      "implementation": "approvalCards()",
+      "shared": true,
+      "detail": "One compact card; Details disclosure carries exact commands/files/persistence/safer-alternative."
+    },
+    {
+      "role": "RouteImpactCard",
+      "implementation": "warningCards() route kind",
+      "shared": true,
+      "detail": "Tiered modal/confirm; Branch offered; resolves via cmd.chat.route.select."
+    },
+    {
+      "role": "AttachmentResolutionCard",
+      "implementation": "attachmentResolutionCards()",
+      "shared": true,
+      "detail": "Route badge Native/PM transformed/Alternate/Unsupported; lineage; transform job state; consent-before-route."
+    },
+    {
+      "role": "OfflineOutboxState",
+      "implementation": "shell.js sync strip + outbox popup + composer offline states",
+      "shared": true,
+      "detail": "Compact title-bar strip (CHAT-019: no banner duplication); outbox popup lists entries with Send-now disabled while offline."
+    },
+    {
+      "role": "ObservableOperation",
+      "implementation": "activityLiveCard() live timeline",
+      "shared": true,
+      "detail": "read/search/web/browser/test/edit/generate/verify stage kinds mapped."
+    },
+    {
+      "role": "ReceiptLink",
+      "implementation": "receiptCards() + appendReceipts()",
+      "shared": true,
+      "detail": "Typed event/receipt rows (branch, restore point, redirect, replay, grant result, capacity resolution, port resolution) — never fake assistant messages; rendered inside every workRender path via the appendRecords-style dedupe guard."
+    },
+    {
+      "role": "QuestionLifecycle",
+      "implementation": "_thread-kit.js preparePill/submittingPill/reviewHtml/doSubmit + morph primitive",
+      "shared": true,
+      "detail": "One causal lifecycle; eight renderers express it in their own idiom. Correction 2026-08-13."
+    },
+    {
+      "role": "ArrivalSweep",
+      "implementation": "_thread-kit.js sweepNew + .pmq-sweep CSS",
+      "shared": true,
+      "detail": "Header sweep + glide on arrival; theme-aware; reduced-motion static bar."
+    },
+    {
+      "role": "ActivityCondense",
+      "implementation": "_thread-kit.js activityGroupHtml chips + Verified row + live-card condense beat",
+      "shared": true,
+      "detail": "Two-chip strip and persistent Verified row across all work compositions."
+    }
   ],
   "distinctness_obligation": "Question renderers, compact-work compositions, pinned-history forms, and artifact presentations remain per-concept. BSD picker, sync strip, and inbox are shared chrome (like the access picker) per the plan's assumption note."
 }

@@ -4,7 +4,7 @@ Source: `Plans/Permissions_System.md`
 
 Source lines: L312-L451
 
-Source SHA256: `248ce6522a6c7ce3405184c54b408f4454330ab5c1c078e73e5e09b99320201e`
+Source SHA256: `b12f3a9c23ddf5697455b4575a1ae8192c0b81515ae83f1e8622f82618f1fbb9`
 
 ---
 
@@ -135,7 +135,7 @@ Session-approval rules:
 - `webfetch` format requests for `screenshot` or `pdf` require `session_granted` tier approval because they invoke browser-runtime capture beyond the default text fetch path.
 - Browser-session permission tiers use canonical storage values `always_allowed`, `session_granted`, and `explicit_confirmation`; UI/source aliases `always-allowed`, `session-granted`, and `explicit-confirmation` are lineage labels only and do not revive the retired preview/browser `trust-tier` matrix or replace requested/effective capability disclosure.
 - Browser implementation-readiness permissions stay anchored to SSOT ownership: `/design-decision` and `/UI` readiness checklists must cover permission posture, session model, agent contract, watchability, DevTools, artifact capture, persistence, lifecycle, packaging, platform guarantees, command routing, and acceptance criteria without making Permissions_System the owner for non-permission browser details.
-- `auth_session` follows the normal browser capture/share/clipboard model: it does not add special `/share` restrictions beyond visible chips and permission disclosure, and select/copy/paste (`/copy/paste` lineage) must work unless effective browser runtime or site policy blocks it.
+- Legacy `auth_session` capture/share/clipboard permission text is retired. Protected `AuthBrowserSession` is structurally ineligible for screenshot, PDF, recording, DOM/PageRepresentation, console, network, storage/profile import or export, generic share, agent/tool access, and programmatic clipboard paths. Only the foreground human may interact with the allowed domain-scoped page; exterior consumers receive redacted lifecycle or denial metadata only.
 - Query/task-granular and host-bound allow rules may become advanced-editor refinements later, but they must not block the base approval flow.
 - `Once` shows "Approve only this invocation" and approves only the current web invocation.
 - `For Session` for `websearch` and `webresearch` shows "Approve this tool for the rest of the current session" with suggested pattern `*`; this wildcard-only, tool-wide session behavior is tool-scoped and does not permit unrelated file/shell/network mutation tools.

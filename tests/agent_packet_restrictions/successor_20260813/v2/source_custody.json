@@ -1,0 +1,38 @@
+{
+  "schema_id": "pm.prompt_complexity_successor.source_custody.v2",
+  "captured_at_utc": "2026-08-13T17:34:51Z",
+  "binding_source": {
+    "path": "../source_custody.json",
+    "sha256": "c6f78062dfedd1e7a3cdbd8c0cc91e03481137b09fac4ef7dfd1cf93a4d8abb7",
+    "binding_count": 29
+  },
+  "authority_order_inherited_without_reinterpretation": true,
+  "currentness_observation": {
+    "matched": 29,
+    "drifted": 0,
+    "missing": 0,
+    "performed_by": "bounded gpt-5.6-sol medium preparation agent",
+    "subject_test": false
+  },
+  "ledger_projection_tuple": {
+    "last_event_id": "evt-0029",
+    "updated_at_utc": "2026-08-13T16:55:00Z",
+    "phase": "successor_preflight_active_plans_compile_held",
+    "subject_calls_authorized": false,
+    "canonical_compile_allowed": false
+  },
+  "named_projection_residual": {
+    "status": "preserved_non_custody_blocking_metadata_defect",
+    "numeric_design_atoms_total": 77,
+    "last_known_good_prose_atoms_total": 76,
+    "numeric_accepted_decisions_count": 61,
+    "last_known_good_prose_decisions_count": 60,
+    "effect": "The byte custody, phase, event, zero-call, and compile-held boundary remain coherent; the stale prose is not represented as current numeric truth."
+  },
+  "archive": {
+    "entries": 26,
+    "manifest_rows": 25,
+    "provider_adjudication_is_separate": true
+  },
+  "claim_boundary": "Fresh hash matching establishes only an as-of source snapshot. It is not canonical compilation, runtime proof, empirical performance, release readiness, or safety certification."
+}

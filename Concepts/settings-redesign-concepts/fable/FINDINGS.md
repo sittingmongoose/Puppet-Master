@@ -181,3 +181,18 @@ Target: Slint 1.17.1, cross-platform. Shared risks first, then per-concept.
 Width sampling beyond the build-time checks (full 760-2500 sweep across rail/panel combos, all-theme passes, and the functional smoke matrix) belongs to `TEST_REPORT.md`, which is written by the verification pass from real results.
 
 No ranking or recommendation is offered in this document.
+
+## 7. Dependency-correction pass (2026-08-13)
+
+The omitted performance decision register was reviewed in full against the built work. Verdict:
+the omission was material in a narrow way — it exposed fake-progress semantics (index-rebuild
+percentages), whole-stack re-rendering in c3, one startup-scan description, and missing
+progress-kind/source/wait-reason semantics on operation events, all now corrected and probed —
+but it did not change manager coverage, fixtures, themes, provider policy, or the deterministic
+test surface, each of which was re-verified with exact evidence rather than assumed. The honest
+ledger of which packet references the build pass actually opened (including that
+`PERFORMANCE_SETTINGS_RETURN.md` was only skimmed by headings and
+`PM_CROSS_SYSTEM_COMPLETENESS_AUDIT.md` was never opened) is in `reference-review-report.json`.
+Register §23's calibration gates (825+-row search, 100-installation collapse, old-hardware and
+poor-network operation) are recorded in every impact register as implementation benchmarks the
+demo does not claim to meet.

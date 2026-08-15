@@ -1,0 +1,14 @@
+{
+  "schema_id": "pw-r6-generic-counterfactual-holdouts-v1",
+  "cases": [
+    {"case_id":"CF-ELIG-01","kind":"eligibility","facts":{"Q-1":true,"Q-2":false,"Q-3":true},"candidates":[{"id":"X-9","order":0,"requires":["Q-1"]},{"id":"X-2","order":1,"requires":["Q-1","Q-2"]},{"id":"X-7","order":2,"requires":["Q-3"]}],"expected":["X-9","X-7"]},
+    {"case_id":"CF-ELIG-02","kind":"eligibility","facts":{"A":true,"B":true,"C":false},"candidates":[{"id":"RENAMED-C","order":2,"requires":["C"]},{"id":"RENAMED-A","order":0,"requires":["A","B"]},{"id":"RENAMED-B","order":1,"requires":["B"]}],"expected":["RENAMED-A","RENAMED-B"]},
+    {"case_id":"CF-ELIG-03","kind":"eligibility","facts":{"P":false},"candidates":[{"id":"ONLY","order":0,"requires":["P"]}],"expected":[]},
+    {"case_id":"CF-TENSION-01","kind":"tension_reduce","candidate_order":["K-3","K-1","K-8"],"admitted":["K-3","K-8"],"verdicts":[{"candidate_id":"K-8","verdict":"resolved_difference"},{"candidate_id":"K-3","verdict":"supported_unresolved_tension"}],"expected":["K-3"]},
+    {"case_id":"CF-TENSION-02","kind":"tension_reduce","candidate_order":["R-B","R-A"],"admitted":["R-B","R-A"],"verdicts":[{"candidate_id":"R-A","verdict":"supported_unresolved_tension"},{"candidate_id":"R-B","verdict":"supported_unresolved_tension"}],"expected":["R-B","R-A"]},
+    {"case_id":"CF-AUTH-01","kind":"authority_projection","decisions":{"D-BOOL":"deny","D-TEXT":"cold"},"spec":[{"id":"Z1","label":"enabled","value_type":"boolean","sources":[{"decision_id":"D-BOOL","choice_map":{"deny":false,"allow":true}}]},{"id":"Z2","label":"mode","value_type":"string","sources":[{"decision_id":"D-TEXT","choice_map":{"cold":"deferred","hot":"active"}}]}],"expected":[{"id":"Z1","label":"enabled","value":false},{"id":"Z2","label":"mode","value":"deferred"}]},
+    {"case_id":"CF-AUTH-02","kind":"authority_projection","decisions":{"D-BOOL":"allow","D-GUARD":"bounded"},"spec":[{"id":"N7","label":"may_run","value_type":"boolean","sources":[{"decision_id":"D-BOOL","choice_map":{"deny":false,"allow":true}},{"decision_id":"D-GUARD","required_choices":["bounded"]}]}],"expected":[{"id":"N7","label":"may_run","value":true}]},
+    {"case_id":"CF-EDGE-01","kind":"edge_reduce","candidate_order":["E-4","E-1","E-9"],"verdicts":[{"edge_id":"E-9","verdict":"supported"},{"edge_id":"E-4","verdict":"unsupported"},{"edge_id":"E-1","verdict":"supported"}],"expected":["E-1","E-9"]},
+    {"case_id":"CF-EDGE-02","kind":"edge_reduce","candidate_order":["NEW-2","NEW-7"],"verdicts":[{"edge_id":"NEW-7","verdict":"unsupported"},{"edge_id":"NEW-2","verdict":"supported"}],"expected":["NEW-2"]}
+  ]
+}

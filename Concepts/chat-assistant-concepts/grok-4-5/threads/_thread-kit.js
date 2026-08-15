@@ -557,9 +557,57 @@
       formatStatus(activityGroup.status) ||
       'Activity';
     var stages = Array.isArray(activityGroup.stages) ? activityGroup.stages : [];
-    var body =
+    var condensed = !(activityGroup.condensed || activityGroup.compact);
+    /* Video 03: condense to reopenable index — index stays in DOM; detail expands in place. */
+    var indexHtml = '';
+    if (stages.length) {
+      indexHtml =
+        '<ol class="pm-activity-index" data-activity-index>' +
+        stages
+          .map(function (st, i) {
+            var stLabel = st.label || st.name || formatStatus(st.status) || 'Stage';
+            var dur =
+              st.workedSeconds != null ? ' · ' + escapeHtml(formatDuration(st.workedSeconds)) : '';
+            return (
+              '<li class="pm-activity-index-item' +
+              (st.status === 'running' || st.status === 'active' ? ' is-live' : '') +
+              (st.status === 'done' || st.status === 'completed' ? ' is-done' : '') +
+              '" data-activity-stage="' +
+              escapeHtml(String(st.id || i)) +
+              '">' +
+              '<button type="button" class="pm-activity-index-btn" data-activity-reopen="' +
+              escapeHtml(String(st.id || i)) +
+              '" aria-expanded="false">' +
+              '<span class="pm-activity-index-n" aria-hidden="true">' +
+              String(i + 1) +
+              '</span>' +
+              '<span class="pm-activity-index-label">' +
+              escapeHtml(stLabel) +
+              '</span>' +
+              '<span class="pm-activity-index-meta">' +
+              escapeHtml(formatStatus(st.status) || '') +
+              dur +
+              '</span>' +
+              '</button>' +
+              '<div class="pm-activity-index-detail" data-activity-stage-detail="' +
+              escapeHtml(String(st.id || i)) +
+              '" hidden>' +
+              escapeHtml(st.summary || st.detail || stLabel) +
+              (st.artifactTitle
+                ? ' · <span class="pm-activity-index-art">' +
+                  escapeHtml(st.artifactTitle) +
+                  '</span>'
+                : '') +
+              '</div>' +
+              '</li>'
+            );
+          })
+          .join('') +
+        '</ol>';
+    }
+    var legacyBody =
       stages.length > 0
-        ? '<ul class="pm-activity-stages">' +
+        ? '<ul class="pm-activity-stages" data-activity-stages-legacy>' +
           stages
             .map(function (st) {
               return (
@@ -575,20 +623,31 @@
           '</ul>'
         : '';
     return (
-      '<details class="pm-work-surface" data-kind="activity" data-activity-id="' +
+      '<details class="pm-work-surface pm-activity-evolve' +
+      (condensed ? ' is-condensed' : '') +
+      '" data-kind="activity" data-activity-id="' +
       escapeHtml(activityGroup.id || '') +
-      '">' +
+      '" data-activity-evolve="1"' +
+      (condensed ? ' data-activity-condensed="1"' : '') +
+      '>' +
       '<summary class="pm-work-surface-head"><span class="pm-work-chev" aria-hidden="true">›</span><span class="pm-work-surface-title">' +
       escapeHtml(label) +
-      '</span></summary>' +
-      '<div class="pm-work-surface-body">' +
-      body +
+      '</span>' +
+      (stages.length
+        ? '<span class="pm-activity-count">' + stages.length + '</span>'
+        : '') +
+      '</summary>' +
+      '<div class="pm-work-surface-body" data-activity-body>' +
+      '<div class="pm-activity-condense-bar">' +
+      '<span class="pm-activity-condense-hint">Index stays · expand stages in place</span>' +
+      '</div>' +
+      (indexHtml || legacyBody) +
       '</div>' +
       '</details>'
     );
   }
 
-  function goalActionButtons(goal, opts) {
+function goalActionButtons(goal, opts) {
     opts = opts || {};
     var actions = [];
     if (goal.canEdit !== false) {
@@ -1079,6 +1138,12 @@
           if (!pane.isConnected) return;
           pane.classList.remove('is-enter-prep');
           pane.classList.add('is-entering');
+          if (
+            window.PMChatMotion &&
+            typeof window.PMChatMotion.morphQuestionnairePageHeight === 'function'
+          ) {
+            window.PMChatMotion.morphQuestionnairePageHeight(stage);
+          }
           window.setTimeout(function () {
             if (pane.isConnected) pane.classList.remove('is-entering');
           }, 340);
@@ -2445,6 +2510,31 @@
           openArtifact(env, store, activeId(), artBtn.getAttribute('data-artifact-open'));
           return;
         }
+        var actReopen = t.closest('[data-activity-reopen]');
+        if (actReopen && root.contains(actReopen)) {
+          if (
+            window.PMChatMotion &&
+            typeof window.PMChatMotion.toggleActivityIndexItem === 'function'
+          ) {
+            window.PMChatMotion.toggleActivityIndexItem(actReopen);
+          } else {
+            var item = actReopen.closest('.pm-activity-index-item');
+            var detail = item && item.querySelector('[data-activity-stage-detail]');
+            var open = actReopen.getAttribute('aria-expanded') === 'true';
+            if (detail) {
+              if (open) {
+                detail.setAttribute('hidden', '');
+                actReopen.setAttribute('aria-expanded', 'false');
+                if (item) item.classList.remove('is-open');
+              } else {
+                detail.removeAttribute('hidden');
+                actReopen.setAttribute('aria-expanded', 'true');
+                if (item) item.classList.add('is-open');
+              }
+            }
+          }
+          return;
+        }
         var cwChip = t.closest('[data-cw-expand]');
         if (cwChip && root.contains(cwChip)) {
           if (
@@ -2483,6 +2573,14 @@
           } else {
             finishDismiss();
           }
+          return;
+        }
+        var shelfReopen = t.closest('[data-shelf-reopen]');
+        if (shelfReopen && root.contains(shelfReopen)) {
+          var shelfId = shelfReopen.getAttribute('data-shelf-reopen');
+          if (!local.reopenedShelfIds) local.reopenedShelfIds = Object.create(null);
+          if (shelfId) local.reopenedShelfIds[shelfId] = 1;
+          paint();
           return;
         }
         var sheetRestore = t.closest('[data-sheet-restore]');

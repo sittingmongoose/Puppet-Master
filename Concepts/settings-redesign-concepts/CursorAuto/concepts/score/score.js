@@ -388,7 +388,7 @@
 
   function famHtml(p) {
     var accounts = p.installState === "not-installed"
-      ? '<div class="ca-empty"><div class="ca-empty-title">Not installed</div><div class="ca-empty-guidance">' + esc(p.diagnostics[0]) + '</div><button type="button" class="ca-btn" data-variant="primary" data-pv="install" data-pid="' + esc(p.id) + '">Install</button></div>'
+      ? '<div class="ca-empty"><div class="ca-empty-title">Not installed</div><div class="ca-empty-guidance">' + esc(p.diagnostics[0]) + '</div><button type="button" class="ca-btn" data-variant="primary" data-pv="install" data-pid="' + esc(p.id) + '">' + esc((p.installAction && p.installAction.label) || "Install from official source") + '</button></div>'
       : (p.accounts.length ? p.accounts.map(function (a) { return V.accountRowHtml(p, a); }).join("")
         : '<div class="ca-empty"><div class="ca-empty-title">Signed out</div><div class="ca-empty-guidance">The CLI is installed; its own sign-in flow runs inside an isolated profile.</div><button type="button" class="ca-btn" data-variant="primary" data-pv="signin" data-pid="' + esc(p.id) + '">Sign in through the provider’s own flow</button></div>');
     var models = p.models.map(function (m) {
@@ -489,6 +489,7 @@
     else if (view.name === "manager") {
       if (view.id === "providers") renderProviders();
       else if (window.CAManagers && CAManagers.handles(view.id)) {
+        if (CAManagers.disposeActiveScope) CAManagers.disposeActiveScope();
         CAManagers.mount({
           root: root,
           managerId: view.id,
@@ -527,7 +528,16 @@
       PMStore.receipt("“" + (s ? s.label : sid) + "” simulated — no real action ran", "info");
     }
   });
-  V.bindProviders(root, render);
+  V.bindProviders(root, render, {
+    onDeepLink: function (deep) {
+      if (typeof navigate === "function") navigate(deep);
+      else if (typeof openTarget === "function") openTarget(deep);
+      else if (window.PMSearch && PMSearch.deepLink) {
+        var t = PMSearch.deepLink({ target: deep }) || deep;
+        if (typeof navigate === "function") navigate(t);
+      }
+    }
+  });
 
   if (window.CAStates) CAStates.mount({ host: document.body });
   PMShell.init();

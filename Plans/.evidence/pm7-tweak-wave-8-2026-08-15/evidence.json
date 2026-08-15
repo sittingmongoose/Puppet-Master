@@ -1,0 +1,185 @@
+{
+  "schema_id": "pm.evidence.schema.v1",
+  "evidence_id": "pm7-tweak-wave-8-2026-08-15",
+  "created_at_utc": "2026-08-15T00:00:00Z",
+  "node": {
+    "node_id": "pm.build-governance.spec-lock-support-refresh",
+    "graph_id": "pm.clean_repo_build_governance_seal.2026-06-10",
+    "graph_scope": "puppet-master-repo-build"
+  },
+  "summary": "PMConcept7 tweak wave 8 (2026-08-15): four re-diagnosed behaviors sealed with dated dispositions after the user rejected all four wave-7 items, each re-diagnosis having found that wave 7 missed the real mechanism. (1) Kebab geometry canon - the seat is derived from the glyph's ink, which sits at button-local top+10 because the 14x14 SVG carries about 5 px of glyph-free padding above and below the dots, so wave-7's editor_panel top 10 px seated the ink at surface-y 20, three px BELOW the 35 px strip's tab-label line at 17; superseded to editor_panel top 6 px (ink 16) and dashboard top 2 px / right 13 px (ink 12, three above the 31 px header's title line at 15), with right 13 px and the 34 px dashboard-actions margin unchanged and the grip hit-triangle concession confined to glyph-free padding (about 50 px2 editor, about 4 px2 dashboard) so the dot column stays clickable on both kinds. (2) Floating chat regains a Dock back row, reversing wave 7's retirement of that row while leaving wave 7's single-menu exception intact: the T20 kebab stays skipped and removed for chat and the row is injected into the BASE .pm6-chat-more-menu as one button.pm6-chat-more-item carrying data-pm-home-chat-row=redock with an inline currentColor SVG and no emoji, inserted before .closeChatBtn, shown only while surface.host === floating with the base .popOutBtn hidden for the duration; wireActions' capture listener handles [data-pm-home-chat-row] before [data-pm-home-action], calls moveSurface(chat, last_docked_host || home_main) and deliberately does not preventDefault or stopImmediatePropagation so the base delegated handler still closes the menu with its portal animation. No new command id is introduced - moveSurface off a floating host emits the existing cmd.panel.redock. (3) Snap-while-dragging EDSHAPE contract, amending wave 7's drag-cover fix as correct but incomplete: the plate was already opaque in all eight themes, and the residue was the grab-spring, since grabbing a non-active tab flips the strip's active key, so sync() set animate=true and sprang the plate across roughly 12 frames while the carried tab paints nothing, and sub-0.5 px pointermoves parked in the spring-preservation early return and held the hole open indefinitely on slow drags - a live violation of the 1:1-no-independent-easing canon F3-505 already owned. sync() now forces animate=false whenever the strip contains .tab.dragging and the preservation guard is qualified by that flag, so the snap branch runs in the activating frame; a glass drag-scoped plate frost at opacity .92 satisfies the user's like-a-blur request without any backdrop-filter, and the T16 count pin stays 134. (4) Home scroll kill with a corrected mechanism: wave 7's overflow-x clip claim is false because clip beside overflow-y auto computes to hidden per CSS Overflow 3 s3.1, so the hosts remained scroll containers whose scrollLeft still moved 12 px and Safari 15 and earlier drop the declaration entirely; the overflow is removed at its three measured 1920x1080 sources instead (empty-dock padding 0, 8 px; a zero-extent PM_EDGE frost-band guard, 22 px; home_main's pairless last divider, 12 px), belted by overflow clip on both axes for #pm-home-workspace, .pm-home-host-grid and #panel-dashboard.pm-home-owned, with wave 7's scrollbar-color declaration replaced by ID-anchored zero-width host scrollbars and a documented sub-1320 px overflow-x auto reachability exception. Artifact sha256 213a3ee9 (3,619,880 bytes) on repinned base 3d82a850 (byte-identical to Concepts/PMConcept6.html, confirmed by identical sha this session); receipt 8da26442, 20/20 transforms status ok, gates_all_pass true, zero page errors on load; T20 source bfe7f81a. Live matrix 32/32 checks, 72/72 captures, 0 runtime-error cases, PASS. Sealed under continuing parallel-wave interference; this bundle pins exactly this wave's facts.",
+  "commands_run": [
+    {
+      "cmd": "python3 Concepts/pm7-tools/build_pm7.py --outdir <scratch>/pm7 --out Concepts/PMConcept7.html --report",
+      "exit_code": 0,
+      "stdout_excerpt": "T01-T20 ok; base_pin_ok against 3d82a850dad0e4; gates_all_pass; output sha256 213a3ee9946d58ea17c0aa9b824a5c8d496db1fe8484a77444ea41c5797d0b63, 3619880 bytes (receipt sha256 8da26442, generated 2026-08-15 01:34:47); zero page errors on load"
+    },
+    {
+      "cmd": "node Concepts/pm7-tools/verify/home_workspace_matrix.mjs --file PMConcept7.html (verification wave, against the sealed artifact sha 213a3ee9946d58ea17c0aa9b824a5c8d496db1fe8484a77444ea41c5797d0b63)",
+      "exit_code": 0,
+      "stdout_excerpt": "32/32 checks passed, 72/72 matrix captures, 0 runtime-error cases, status PASS (results JSON summary: check_count 32, passed_checks 32, failed_checks [], matrix_count 72, matrix_failures 0, runtime_error_case_count 0; results file home_workspace_matrix.json sha256 20d199ec077c1d711042044c9e82749452b23588b0a491b15e521b410861f688, session scratchpad w8-matrix-evidence/)"
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool_id": "plans-amendment-editor",
+      "count": 4,
+      "denied_count": 0,
+      "error_count": 0,
+      "note": "Dated wave-8 dispositions in F3-HOME-003, F3-421, F3-503 and F3-505. Every shipped fact was read in source before writing, with line anchors: kebab ink-centre canon comment and per-kind seats at Concepts/pm7-tools/home_workspace_source.py L536-548 (top: 6px L547, top: 2px/right: 13px L548, .pm6-dash-actions margin-right 34px L550); chat kebab skip-and-remove plus the injected Dock back row at L1810-1848 (createElement L1826, data-pm-home-chat-row=redock L1836, inline currentColor SVG L1838, insertBefore .closeChatBtn L1839, floating-only display and .popOutBtn hide L1844-1848) and its capture dispatch at L4410-4421 (moveSurface L4419, no preventDefault); empty-dock padding 0 at L212; home_main last-divider suppression (pairRow) at L1893; overflow clip belt at L100 (#panel-dashboard.pm-home-owned) and L124 (#pm-home-workspace, .pm-home-host-grid); host overflow at L166-167 and the doubled selector at L176-177; ID-anchored scrollbar zeroing at L189-190; the max-width 1320px home_main overflow-x auto exception at L775-782. Base parts: draggingLive computed and animate forced false at Concepts/pm6-build/parts/29x-pm6-js-dashboard.part.html L1549-1550 with the spring-preservation guard qualified at L1567; the zero-extent frost-band guard at Concepts/pm6-build/parts/29x-pm6-js-globals.part.html L1484-1488; the glass drag-scoped plate frost at Concepts/pm6-build/parts/10x-pm6-css-global.part.html L1510, above the unchanged wave-7 opacity 1 (L1496) and z-index 39 (L1503) rules."
+    },
+    {
+      "tool_id": "governance-seal-pipeline",
+      "count": 2,
+      "denied_count": 0,
+      "error_count": 0,
+      "note": "One auto_decisions row (dec-2026-08-15-pm7-tweak-wave-8) and this bundle. Spec_Lock was deliberately NOT refreshed for Plans/FinalGUISpec.md or Plans/00-plans-index.md: both are among the 26 Spec_Lock-pinned files the parallel un-sealed session still holds stale, so both now interleave this wave's sealed edits with that session's un-sealed edits, and refreshing those pins would absorb foreign content. Plans/Spec_Lock.json was not touched at all. inputs_hash on the decision row is sha256 of the UTF-8 concatenation, in order and without separators, of the artifact, base, receipt and T20-source sha256 hex digests recomputed from disk this session."
+    }
+  ],
+  "events": {
+    "event_refs": [
+      {
+        "source": "jsonl",
+        "ref": "dec-2026-08-15-pm7-tweak-wave-8",
+        "note": "Plans/auto_decisions.jsonl"
+      },
+      {
+        "source": "other",
+        "ref": "user-directive:PMConcept7-Tweak-Wave-8:2026-08-15",
+        "note": "Jared rejected all four wave-7 items and directed the re-diagnosis: the kebab seats, a way to re-dock the floating chat, the tab still visible behind a dragged tab, and the Home screen still scrolling sideways with visible scrollbars. All four were verified live before sealing."
+      }
+    ]
+  },
+  "files_changed": [
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave (F3-HOME-003/F3-421/F3-503/F3-505 wave-8 amendments, including restoration of the wave-7 kebab top values that an in-flight editor had stripped, so the wave-8 supersession has a stated predecessor); the file also carries un-sealed parallel-wave edits elsewhere."
+    },
+    {
+      "path": "Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json",
+      "change_type": "modified",
+      "note": "Authored change in this wave (kebab rule amended, scroll rule rewritten with the wave-8 supersession, new floating-chat Dock back rule appended 18 -> 19, [data-pm-home-chat-row] added to the semantic selector families, artifact and T20 source hashes re-pinned; the other three source_hashes entries were verified unchanged on disk and left alone)."
+    },
+    {
+      "path": "Plans/00-plans-index.md",
+      "change_type": "modified",
+      "note": "Authored change in this wave (wave-8 registration); also carries un-sealed parallel-wave edits."
+    },
+    {
+      "path": "Plans/auto_decisions.jsonl",
+      "change_type": "modified",
+      "note": "Appended the wave-8 seal row dec-2026-08-15-pm7-tweak-wave-8."
+    },
+    {
+      "path": "Concepts/pm7-tools/home_workspace_source.py",
+      "change_type": "modified",
+      "note": "Kebab ink-derived seats, chat Dock back row injection plus capture dispatch, empty-dock padding 0, home_main last-divider suppression, both-axes overflow clip belt, ID-anchored host scrollbar zeroing, and the sub-1320 px reachability exception."
+    },
+    {
+      "path": "Concepts/pm6-build/parts/29x-pm6-js-dashboard.part.html",
+      "change_type": "modified",
+      "note": "EDSHAPE sync(): draggingLive forces animate=false and qualifies the spring-preservation guard, so any sync during a drag snaps in-frame."
+    },
+    {
+      "path": "Concepts/pm6-build/parts/29x-pm6-js-globals.part.html",
+      "change_type": "modified",
+      "note": "PM_EDGE layoutBands(): zero-extent scrollports hide all four frost bands (write-if-changed) and bail; the per-element ResizeObserver revives them."
+    },
+    {
+      "path": "Concepts/pm6-build/parts/10x-pm6-css-global.part.html",
+      "change_type": "modified",
+      "note": "Glass drag-scoped travelling-plate frost at opacity .92; no backdrop-filter added, and the comment was reworded so the raw-substring T16 count pin stayed at 134."
+    },
+    {
+      "path": "Concepts/pm7-tools/build_pm7.py",
+      "change_type": "modified",
+      "note": "BASE_SHA repinned to 3d82a850."
+    },
+    {
+      "path": "Concepts/pm7-tools/base/PM7-base.html",
+      "change_type": "modified",
+      "note": "Re-copied from the reassembled Concepts/PMConcept6.html; byte-identical to it."
+    },
+    {
+      "path": "Concepts/PMConcept7.html",
+      "change_type": "modified",
+      "note": "Generated only by T01-T20; never hand-edited."
+    }
+  ],
+  "contract_refs_satisfied": [
+    "PlanUnit:F3-HOME-003",
+    "PlanUnit:F3-421",
+    "PlanUnit:F3-503",
+    "PlanUnit:F3-505",
+    "ContractName:Plans/FinalGUISpec.md"
+  ],
+  "reproducibility": {
+    "snapshot_ref": "git:46086b2d0",
+    "note": "Rebuild from Concepts/pm6-build/parts via assemble.py g3, re-pin base/PM7-base.html and BASE_SHA (3d82a850), then run build_pm7.py --report."
+  },
+  "artifacts": [
+    {
+      "note": "Sealed PM7 artifact, 3,619,880 bytes; generated only by T01-T20.",
+      "path": "Concepts/PMConcept7.html",
+      "sha256": "213a3ee9946d58ea17c0aa9b824a5c8d496db1fe8484a77444ea41c5797d0b63"
+    },
+    {
+      "note": "Build receipt: base_pin_ok, 20/20 transforms status ok, gates_all_pass true.",
+      "path": "Concepts/pm7-tools/build_report.json",
+      "sha256": "8da264423e5d95b389c92c184f8ef8d398e93d43997dee9d90e6286978ab5963"
+    },
+    {
+      "note": "T20 overlay source (kebab seats, chat Dock back, scroll-kill rules).",
+      "path": "Concepts/pm7-tools/home_workspace_source.py",
+      "sha256": "bfe7f81a9c4aca4a2502ebbf63497fd83ed1e9d3ed37d49a1f065f4def1ee03e"
+    },
+    {
+      "note": "Repinned build base; byte-identical to Concepts/PMConcept6.html, confirmed by identical sha256 this session.",
+      "path": "Concepts/pm7-tools/base/PM7-base.html",
+      "sha256": "3d82a850dad0e412e3abafe1b3f0717e34071425152efd93d3c49fa6e85408c3"
+    },
+    {
+      "note": "Reconciliation after the wave-8 rule and hash updates.",
+      "path": "Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json",
+      "sha256": "28d575a6f6db77de167e803dbc338c0b676ae09f5cb60e0f4834cae653c56834"
+    }
+  ],
+  "checks": [
+    {
+      "name": "pm7-transforms-and-static-gates",
+      "result": "PASS",
+      "details": "Build receipt Concepts/pm7-tools/build_report.json (sha256 8da264423e5d95b389c92c184f8ef8d398e93d43997dee9d90e6286978ab5963, generated 2026-08-15 01:34:47) reports base_pin_ok true against base sha 3d82a850, all 20 transforms T01-T20 at status ok, gates_all_pass true with the four static gates (brace_balance, css_vars_defined, js_node_check, no_emoji) each passing, and output sha256 213a3ee9946d58ea17c0aa9b824a5c8d496db1fe8484a77444ea41c5797d0b63 at 3619880 bytes - both verified on disk this session by re-running sha256sum and stat. Zero page errors on load. The T16 backdrop-filter budget pin holds: build_pm7.py asserts doc.count('backdrop-filter') == 134 and the artifact counts exactly 134 occurrences, re-counted from disk."
+    },
+    {
+      "name": "shipped-facts-verified-in-source",
+      "result": "PASS",
+      "details": "Every fact recorded in the wave-8 dispositions was read in its source file before writing. Concepts/pm7-tools/home_workspace_source.py: ink-centre canon comment L536-546 and the seats at L547-548 ('top: 6px' for [data-pm-home-kind=\"editor_panel\"], 'top: 2px; right: 13px' for [data-pm-home-kind=\"dashboard\"]), with the 34 px .pm6-dash-actions margin at L550; chat kebab skip-and-remove L1810-1821; injected Dock back row L1822-1848 (button.pm6-chat-more-item L1834, data-pm-home-chat-row=\"redock\" L1836, inline currentColor SVG with no emoji L1838, insertBefore .closeChatBtn L1839, floating-only display and .popOutBtn hide L1844-1848, all write-if-changed); capture dispatch L4410-4421 ahead of the [data-pm-home-action] branch at L4422, calling moveSurface('chat', last_docked_host || 'home_main') at L4419 with no preventDefault and no stopImmediatePropagation; empty-dock 'padding: 0' L212; home_main last-divider suppression 'pairRow = rowDock || surface.host === \"home_main\"' L1893; overflow clip belt L100 and L124; host overflow L166-167 with the doubled selector L176-177; scrollbar zeroing L189-190; the 1320 px exception L775-782. Concepts/pm6-build/parts/29x-pm6-js-dashboard.part.html: 'var draggingLive = Boolean(strip.querySelector(\\'.tab.dragging\\'));' L1549 and 'if (draggingLive) animate = false;' L1550, immediately after the lastActive update at L1540-1541, with the spring-preservation guard reading '&& !draggingLive' at L1567. Concepts/pm6-build/parts/29x-pm6-js-globals.part.html: layoutBands() zero-extent guard L1484-1488 ('var dead = (w <= 0 || h <= 0)', write-if-changed display none across all four bands, then return). Concepts/pm6-build/parts/10x-pm6-css-global.part.html: '[data-theme^=\"glass\"] .editor-tabs.ed-shape-on:has(.tab.dragging) .ed-tab-shape { opacity: .92; }' L1510, with wave 7's opacity 1 (L1496) and z-index 39 (L1503) rules unchanged above it. No part-25 file was edited, so its byte-frozen anchors are untouched. Two corrections to the handoff wording were made rather than copied: the Dock back row's dispatch emits the existing cmd.panel.redock (moveSurface picks cmd.panel.redock when the source host is floating, source L2454), not cmd.workspace_layout.move_surface, and the underlying command is pre-existing either way, so 'no new command IDs' still holds."
+    },
+    {
+      "name": "dated-dispositions-for-reversed-canon",
+      "result": "PASS",
+      "details": "Every earlier-wave claim this wave contradicts is superseded in writing with a dated disposition rather than silently overwritten. (a) Wave 7's kebab tops (editor_panel top 10 px, dashboard top 5 px) are superseded to 6 px and 2 px in F3-HOME-003 and in reconciliation rule[14], with the ink-centre = button-local top+10 rule recorded as canon so future waves derive a seat instead of guessing; the wave-7 numbers were first RESTORED into the wave-7 paragraph (an in-flight editor had stripped them) so the supersession names a real predecessor. (b) Wave 7's retirement of the chat Dock Back row is reversed in F3-HOME-003 and rule[14], while wave 7's single-menu exception itself survives explicitly. (c) Wave 7's claim that overflow-x clip forbids programmatic scrollLeft is retired in F3-503's canonical_text, its stale_retired_dispositions and reconciliation rule[17], with the CSS Overflow 3 s3.1 coercion stated. (d) Wave 7's host-level scrollbar-color declaration is retired in the same places. (e) Wave 7's diagnosis blaming the tab silhouette for the horizontal overflow is retired in F3-503 (its flare box overhangs the START edge, which does not count toward scrollWidth in LTR). (f) Wave 7's drag-cover fix is explicitly NOT retired: F3-421 and F3-505 record it as correct but incomplete and add the snap-while-dragging contract, and F3-505's pre-existing 1:1-no-independent-easing canon and its negative constraint are restored rather than retired, since the shipped build had been violating them."
+    },
+    {
+      "name": "home-workspace-live-matrix",
+      "result": "PASS",
+      "details": "The verification wave's home_workspace_matrix run against the sealed artifact (Concepts/PMConcept7.html sha256 213a3ee9..., verified unchanged on disk at fold-in time) reports 32/32 checks passed, the exact 72-capture deterministic matrix with 0 failures, and 0 runtime-error cases - status PASS, read directly from the results JSON's summary block (check_count 32, passed_checks 32, failed_checks [], matrix_count 72, matrix_failures 0, runtime_error_case_count 0). Results file: home_workspace_matrix.json, sha256 20d199ec077c1d711042044c9e82749452b23588b0a491b15e521b410861f688, delivered in the session scratchpad (w8-matrix-evidence/); the hash is recorded here because scratchpad files are session-local, not repo artifacts. The harness itself (Concepts/pm7-tools/verify/home_workspace_matrix.mjs, sha256 2fd2ecfe...) is byte-unchanged from its reconciliation pin, so ATS-029's 72-case matrix contract needs no amendment."
+    },
+    {
+      "name": "wave-8-live-measurements",
+      "result": "PASS",
+      "details": "Numbers recorded in the dispositions, each measured live by the implementer against the sealed artifact before this seal. Drag snap: worst travelling-plate versus carried-tab lag 0.00 px across 2,615 samples of a deliberately slow drag (40 moves of 0.4 px with pauses) on a NON-ACTIVE tab; selection springs unaffected, with 18 distinct monotonic intermediate positions on a click-to-select and no overshoot. Glass frost: travelling plate opacity .92 mid-drag in glass-dark, 1 at idle, with no backdrop-filter added (T16 count 134). Chat: docked menu rows Duplicate thread / Archive thread / Pop out window / Close chat; floating menu rows Duplicate thread / Archive thread / Dock back / Close chat; clicking Dock back returns the chat to dock_right (its last_docked_host), leaves no .pm6-chat-more-menu.is-open residue, sets aria-expanded=\"false\", and exactly one injected row survives chat innerHTML rebuilds. Scroll kill at 1920x1080: #pm-home-workspace, .pm-home-host-grid, #panel-dashboard and all five hosts report scrollWidth == clientWidth and scrollHeight == clientHeight; forcing scrollLeft = 50 on each leaves it at 0; a wheel storm of 8 horizontal plus 8 vertical wheels over the dashboard, the editor tab strip and the terminal produced zero scrollLeft anywhere and the workspace's x stayed 279; the empty right dock measures 0 px wide and its four PM_EDGE bands report display none; home_main shows 2 dividers for 3 visible surfaces (visible - 1). At 1180 px home_main computes overflow-x auto with a zero scrollbar gutter and returns to the clip path at 1920. Measured overflow sources removed: empty dock box 8 px, frost bands 22 px, pairless last divider 12 px, plus 26 px of silently scrollable overflow on #panel-dashboard."
+    },
+    {
+      "name": "plans-gates-baseline",
+      "result": "FAIL",
+      "details": "Honest FAIL: the run-gates baseline cannot be confirmed while the parallel un-sealed wave holds 26 Spec_Lock-pinned files stale, including scripts/pm-plans-verify.py itself and Plans/sharding_config.json, so any tally that script produced would be meaningless. Verified this session by comparing all 83 canonical_ssot_hashes.files entries against on-disk sha256: 57 match, 26 differ, 0 missing - and both Plans/FinalGUISpec.md and Plans/00-plans-index.md are among the 26. Spec_Lock was therefore deliberately NOT refreshed for those two shared docs, because both now interleave this wave's sealed edits with the parallel wave's un-sealed edits and refreshing the pins would absorb foreign content; Plans/Spec_Lock.json was not modified at all. Plans/_shards/** was likewise not regenerated (last generated 2026-08-13 21:55:47, carrying no wave-4/6/7/8 text): running --generate would fold the parallel session's un-sealed content into derived artifacts. Recorded deliberately instead of forcing a green tally, matching the wave-6 and wave-7 precedent; the parallel wave's own seal restores the baseline."
+    },
+    {
+      "name": "no-node-artifacts-created",
+      "result": "PASS",
+      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime artifacts or production build tasks were created by this wave."
+    }
+  ]
+}

@@ -196,5 +196,51 @@
       "detail": "manager-usage exists in every concept precisely so no concept quietly reimplements Usage inside Settings.",
       "risk_if_ignored": "Two owners for one balance."
     }
-  ]
+  ],
+  "completeness_audit_families": {
+    "source": "reference/PM_CROSS_SYSTEM_COMPLETENESS_AUDIT.md \u00a77",
+    "note": "Opened during the 2026-08-13 correction. These names are the audit's, mapped to where the role now lives.",
+    "roles": [
+      {
+        "role": "ObservableWorkProgress",
+        "implemented_at": "shared/pm-work.js + the shell work list"
+      },
+      {
+        "role": "UpdateTransactionProgress",
+        "implemented_at": "installation operation family in shared/pm-manager-kit.js"
+      },
+      {
+        "role": "SecretReferenceControl",
+        "implemented_at": "PMSemantics.SECRET_CLASS (7 classes) + editableRow secret path"
+      },
+      {
+        "role": "ProvenanceAndTrustBlock",
+        "implemented_at": "installation fixtures: source, publisher, provenance, acquisition class"
+      },
+      {
+        "role": "LogsAndDiagnosticsDrawer",
+        "implemented_at": "ManagerSpec.diagnostics + detail rows"
+      },
+      {
+        "role": "SettingsHomeDestination",
+        "implemented_at": "per-concept home renderer"
+      },
+      {
+        "role": "InstallationLifecycleCard",
+        "implemented_at": "PMSemantics.ACQUISITION + READINESS with the provider-CLI guard"
+      },
+      {
+        "role": "HealthAndFreshnessBlock",
+        "implemented_at": "ManagerSpec.health"
+      },
+      {
+        "role": "RequestedEffectiveBlock",
+        "implemented_at": "PMManagerKit.routeLine/reasonLine"
+      }
+    ]
+  },
+  "singular_owners_preserved": {
+    "RuntimeResourceGovernor": "one admission owner; Settings shows policy only",
+    "ObservableWork": "one progress/wait projection; one renderer in the shell"
+  }
 }

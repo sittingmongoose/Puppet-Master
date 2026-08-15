@@ -1,0 +1,29 @@
+{
+  "schema_id":"pm.prompt_complexity_successor.predecessor_lineage.v3",
+  "predecessors":[
+    {
+      "attempt_id":"successor-preflight-20260813-v1",
+      "terminal":"NOT_READY",
+      "failed_check_ids":["DP-020"],
+      "files":[
+        {"path":"../control_plane_defect-0001-successor-verifier-temp-write.md","sha256":"0e6ae97e747ad834a8f9a0b143f748eef861d50ab1ce0defb565c7459e3bcaa2"},
+        {"path":"../deterministic_preflight_report.json","sha256":"094c245a96252cdc05a6a8e6bb07b5b2389f896482d15c0ff3c40e2018bbab89"},
+        {"path":"../readiness_report.md","sha256":"da1ecf41a957f6501c34f640df638796dda4b95888c50f65407e6a43a3744b9a"}
+      ],
+      "pass_credit_transferred":false
+    },
+    {
+      "attempt_id":"successor-preflight-20260813-v2",
+      "terminal":"NOT_READY",
+      "failed_check_ids":["V2-IO-001"],
+      "files":[
+        {"path":"../v2/control_plane_defect-0001-diagnostic-shell-redirection.md","sha256":"8cb34d8fe574272b2d935ba63ee48642d4c5a62f8e003ca4850493ef8b51373d"},
+        {"path":"../v2/deterministic_preflight_report.json","sha256":"5c0ece58711781ce6254c1ff4522ddb68e85eaeb2864351d53d38fcef5ec811a"},
+        {"path":"../v2/readiness_report.md","sha256":"9548d223bde73e6a0b5b05e1cd50cafe022cf0f447b9a6c0523780a912c84e5b"}
+      ],
+      "observed_outside_root_mutations":["/tmp/v1_hist_extract.txt","/tmp/v1_surface_extract.txt"],
+      "pass_credit_transferred":false
+    }
+  ],
+  "claim":"Preservation is a current V3 lineage check, not repair, waiver, inherited PASS credit, or empirical evidence."
+}

@@ -1,0 +1,30 @@
+{
+  "schema_id": "pw-r5-prelaunch-repair-history-v1",
+  "candidate": "model_retest_r5_snapshot_v1",
+  "scope": "disposable frozen-fixture retarget before seal or subject execution",
+  "failed_internal_attempts": [
+    {
+      "attempt_id": "R5-DIAG-001",
+      "operation": "read-only capsule record query",
+      "failure": "Initial jq selector assumed source records were keyed by record_id rather than source_record_id.",
+      "effect": "No candidate bytes changed. A transient /tmp/r5proto.out diagnostic file created by the same read-only inspection was immediately unlinked and is not evidence or an input."
+    },
+    {
+      "attempt_id": "R5-PATCH-001",
+      "operation": "single oversized protocol apply_patch",
+      "failure": "Patch context for the recursive-enumeration prose did not match current bytes, so apply_patch rejected the entire patch.",
+      "effect": "Atomic rejection; no candidate bytes changed by that patch. The corrections were then applied as smaller scoped patches."
+    }
+  ],
+  "successful_checks_before_freeze": [
+    "frozen provenance and 15 fixture files recomputed to 4207711 bytes, 82825 lines, descriptor 28730f6ea44a5720cb8e473f8fb736353dfe5c412e21261eacc88d70ffe46392",
+    "all 36 capsule excerpts exact and unique with corrected A-S09, A-S11, and B-S15 spans",
+    "A14 option and scorer answer auto_and_read_only",
+    "17 deterministic oracle payloads regenerated and recomputed exactly",
+    "unsealed preflight PASS",
+    "unsealed launch source-check emitted PASS receipt bytes without storing source_checks/launch.json"
+  ],
+  "subject_calls": 0,
+  "seal_artifacts_created": 0,
+  "runtime_artifacts_created": 0
+}

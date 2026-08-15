@@ -1,0 +1,39 @@
+{
+  "schema_id": "pm.prompt_complexity_successor.boundary_observation.v2",
+  "attempt_id": "successor-preflight-20260813-v2",
+  "exclusive_write_root": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/",
+  "attempt_write_root": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/v2/",
+  "bootstrap_authorization": "The user explicitly authorized continued work to a fresh READY attempt; creating v2/ within the existing exclusive root is authorized bootstrap activity.",
+  "controller_write_method": "apply_patch only",
+  "explicit_write_targets": "v2 artifacts only",
+  "qualifying_checker": {
+    "isolated_mode": true,
+    "bytecode_disabled": true,
+    "subprocesses": 0,
+    "network_operations": 0,
+    "temporary_files": 0,
+    "filesystem_mutations": 0,
+    "audit_hook_forbidden_attempts": 0,
+    "strace_write_or_mutation_syscalls": null,
+    "qualifying_run_performed": false
+  },
+  "outside_successor_workspace_snapshot": {
+    "algorithm": "sorted recursive node-type/path/content digest; successor_20260813 subtree excluded; regular-file content SHA-256; symlink target if present",
+    "before_sha256": "5e699022b5bdf1a63438573834bef5960782831ca9e753c687151fd2c6b698d6",
+    "before_counts": {"directories":1527,"regular_files":12206,"symlinks":0,"other":0},
+    "before_regular_file_bytes": 3176118683,
+    "after_sha256": null,
+    "after_counts": null,
+    "after_regular_file_bytes": null,
+    "unchanged": null
+  },
+  "v1_files_unchanged": null,
+  "recursive_v2_symlink_count": null,
+  "observed_outside_root_mutations": [
+    "/tmp/v1_hist_extract.txt",
+    "/tmp/v1_surface_extract.txt"
+  ],
+  "defect_ref": "control_plane_defect-0001-diagnostic-shell-redirection.md",
+  "status": "fail",
+  "claim_boundary": "The observation covers controller-owned V2 writes and the qualifying checker. It does not attribute unrelated external-system activity or certify production sandboxing."
+}

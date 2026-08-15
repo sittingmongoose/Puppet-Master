@@ -1289,6 +1289,11 @@ window.PMChatStore = (() => {
       cmd("cmd.chat.outbox.queue", { entry_id: entry.id });
       return entry.id;
     }
+    function connReconnectFail() {
+      if (state.connection.status === "live") return;
+      mutate(() => { state.connection.status = "failed"; state.connection.lastError = "Reconnect failed — network unreachable."; });
+      cmd("cmd.chat.connection.fail", { reason: "network unreachable" });
+    }
     function connReconnect() {
       if (state.connection.status === "live") return;
       mutate(() => { state.connection.status = "reconnecting"; });
@@ -1514,7 +1519,7 @@ window.PMChatStore = (() => {
       spellAdd, spellIgnoreDraft, spellSetDisabled,
       bsdEffective, bsdSet, bsdEvalStart, bsdResolve, bsdAdviceDismiss,
       catalogAccount, connectionKindOf, effectiveAccount, setAccount,
-      connSetStatus, connQueue, connReconnect, connServerWork, connSnapshot,
+      connSetStatus, connQueue, connReconnect, connReconnectFail, connServerWork, connSnapshot,
       notifyPush, notifyRead, notifyReadAll,
       admissionOf, admissionSet, admissionRemove, defaultAdmission, contextSourceAdd,
       operationalOf, opsAddPort, portResolve, opsAddWorktree, worktreeSetState, opsAddSession,

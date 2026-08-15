@@ -215,6 +215,60 @@
   }
 }
 
+/* ---------------------------------------------------------------- arrival, printed
+ * 01_message_arrival_spatial_continuity.mov, frames 47 to 63 (about 280ms at 57.6fps): the
+ * arriving message is first a flattened SLIVER at a seam, then expands into its own box, then
+ * settles with a small overshoot. At f.50 the glyphs are already at full size and simply cut off
+ * by the growing box — clipped, never scaled.
+ *
+ * That clipping IS how a log line arrives, so this concept gets the reference's mechanism almost
+ * unaltered and gives it the plainest possible reading: the line is PRINTED. The seam is the left
+ * column stop every row in this log already aligns to, the reveal runs left to right across the
+ * fixed columns, and nothing fades — a console does not fade, it emits. The sliver at f.47 is the
+ * width of one character cell at the first column stop.
+ *
+ * The whole line then lands on its column stop with a single-step snap, which is this concept's
+ * reading of the f.63 overshoot: not a bounce, a carriage arriving at a stop.
+ */
+@keyframes pmx-t6-print {
+  from { clip-path: inset(0 calc(100% - var(--md)) 0 0); transform: translateX(calc(var(--sm) * -1)); }
+  to   { clip-path: inset(0 0 0 0);                      transform: none; }
+}
+
+/* Beats motion.css's blanket `[data-pmx-arrived] { animation: none }` on specificity. That rule is
+   right for the reference, where the arrival is genuinely static and only its neighbours move; in a
+   bottom-anchored log the neighbours do not move at all, so a static arrival would mean nothing
+   moved anywhere and the line would simply blink into existence. */
+[data-pmx-thread="t6"] .t6-turn[data-pmx-arrived] {
+  animation: pmx-t6-print var(--motion-med) var(--ease-spring-real) backwards;
+}
+/* The prose does not also float up: f.50 has the glyphs at full size and stationary, cut off by
+   the print head and nothing else. The execution rows below keep their own lateral slot-in, so the
+   two voices still enter differently. */
+[data-pmx-thread="t6"] .t6-turn[data-pmx-arrived] .t6-prose {
+  animation: none;
+  opacity: 1;
+  transform: none;
+}
+
+/* Reduced motion lands the arrival instantly and FULLY REVEALED. A clip animation frozen at its
+   first frame would leave one character cell and hide the line entirely, which is worse than no
+   animation at all. */
+[data-motion="reduced"][data-pmx-thread="t6"] .t6-turn[data-pmx-arrived] {
+  animation: none !important;
+  clip-path: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-pmx-thread="t6"] .t6-turn[data-pmx-arrived] {
+    animation: none !important;
+    clip-path: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
 /* ================================================================ packet: the exec log, the monospace
  * field form, the BSD exec row and the artifact handoff.
  *
@@ -389,6 +443,49 @@
 
 [data-pmx-thread="t6"] .t6-form-hint { color: var(--text-muted); font-family: var(--mono-font); font-size: var(--fs-2xs); }
 
+/* ---- the form CHANGES SIZE, and says so --------------------------------------------------------
+   The form root SURVIVES every render and only its contents are rebuilt, so the height it interpolates
+   is its OWN: a `Q1/n` row gaining its `-> answer` line is this block growing by one row, not a row
+   appearing beside it. That distinction is the whole reason the resize is animated in a register that
+   otherwise never moves its bounds: every question is printed at once and the echo rows accumulate, so
+   paging forward grows the block monotonically, and rows arriving under a still frame would read as
+   something else appending to a list. motion.css owns the curve (`--ease-bounce`, y1 = 1.72) and the
+   one-shot scale beat; what belongs here is the ANCHOR.
+
+   `pmx-resize-up` is added by the concept only where a window provides the question region, which is
+   where this form sits directly above the composer. The shared class supplies `margin-top: auto`;
+   `justify-content: flex-end` is the half that only matters DURING the resize, when the block is
+   clipped to an interpolating height - bottom-aligned rows mean it grows away from its settled bottom
+   edge rather than revealing rows below a fixed top one, so the log above it never moves. */
+[data-pmx-thread="t6"] .t6-form.pmx-resize-up { justify-content: flex-end; }
+
+/* The current question PRINTS on a first visit, in the same left-to-right reveal every line in this
+   log arrives with (`pmx-t6-print`, f.47-63). It is played only when `motion.firstVisit` says this
+   form has not shown this question before, so paging BACK to an answered one prints nothing and the
+   answer is simply there - which is what reference 02 shows a reviewable questionnaire doing. The
+   delay ladder is written per element rather than taken from `.pmx-cascade`, whose keyframe is a
+   vertical float this register does not use. */
+[data-pmx-thread="t6"] .t6-form-enter {
+  animation: pmx-t6-print var(--motion-med) var(--ease-spring-real) backwards;
+  animation-delay: calc(min(var(--pmx-i, 0) * 45ms, 180ms));
+}
+
+/* Reduced motion lands the print instantly and FULLY REVEALED. A clip animation frozen at its first
+   frame would leave one character cell and hide the question entirely, which is worse than no
+   animation at all. */
+[data-motion="reduced"][data-pmx-thread="t6"] .t6-form-enter {
+  animation: none !important;
+  clip-path: none !important;
+  transform: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-pmx-thread="t6"] .t6-form-enter {
+    animation: none !important;
+    clip-path: none !important;
+    transform: none !important;
+  }
+}
+
 /* ---- artifact handoff, as one more aligned row ------------------------------------------------- */
 
 [data-pmx-thread="t6"] .t6-handoff {
@@ -408,3 +505,76 @@
 [data-pmx-thread="t6"] .t6-handoff[data-state="idle"] .t6-handoff-state::after,
 [data-pmx-thread="t6"] .t6-handoff[data-state="loading"] .t6-handoff-state::after { content: '...'; }
 [data-pmx-thread="t6"] .t6-handoff[data-state="error"] .t6-handoff-state { color: var(--accent-error); }
+
+/* ---- the run, as a numbered prefix run ---------------------------------------------------------
+   t6's reading of `reference/videos/03_compact_execution_activity.mov`, whose frames are cited in the
+   header of `shared/runtrace.js`. The reference sets its glyph chain inline to the LEFT of the
+   headline and pushes that headline right by one slot as each glyph arrives (f.205-209). This concept
+   is an exec log whose entire argument is that the column stops hold, so a variable-width run of marks
+   in the label column is the one thing it may not do: the chain takes its own row, and the headline
+   stays on the stop that the phase rows below it share.
+
+   Every row in the run is a `.t6-log-row`, so the run declares no grid of its own — which is the
+   point. Alignment between the run, the operation log and the question form is one definition, not
+   three that happen to agree today. */
+[data-pmx-thread="t6"] .t6-run { display: flex; flex-direction: column; padding: var(--xs) 0 0; }
+
+/* The chain scrolls INSIDE the label column and never wraps to a second line of numbers. `min-width:
+   0` is what allows a grid item to shrink below its content, and it is the whole of "scrolls, never
+   truncates" as far as layout is concerned — chainRoll does the rest. The gap is one character cell,
+   because in a monospace log a gap that is not a cell is a gap that lines up with nothing. */
+[data-pmx-thread="t6"] .t6-run-chain { min-width: 0; gap: 1ch; align-items: baseline; }
+
+[data-pmx-thread="t6"] .t6-run-step {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--mono-font);
+  font-size: var(--fs-2xs);
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: color var(--motion-fast) var(--ease-default);
+}
+[data-pmx-thread="t6"] .t6-run-step:hover { color: var(--accent-primary); }
+
+/* The RUNNING step wears a character and not only a colour. This register marks state with marks —
+   `+`, `-`, `[dismiss]`, `...` — so a colour-only distinction would be the single state a reader
+   could not name out loud. It grows at the END of the run, which is where the run is growing anyway. */
+[data-pmx-thread="t6"] .t6-run-step[data-state="running"] { color: var(--accent-primary); }
+[data-pmx-thread="t6"] .t6-run-step[data-state="running"] .t6-run-n::after { content: '*'; }
+
+/* The step being READ is underlined rather than boxed or padded, so selecting one costs no width and
+   the positions never shift under the pointer that is choosing between them. */
+[data-pmx-thread="t6"] .t6-run-step[data-open="1"] {
+  color: var(--text-primary);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* Tabular figures, so `6 files` becoming `7 files` cannot change the width of the number and shift the
+   word beside it — the layout half of what makes countMorph read as one running tally (f.208 ->
+   f.338). The register is monospace already; the rule is stated here so it lives with the line it is
+   a rule about rather than with the typeface. */
+[data-pmx-thread="t6"] .t6-run-line {
+  min-width: 0;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+/* Verb at full contrast, argument muted: a reader scanning a settled run reads a column of verbs. */
+[data-pmx-thread="t6"] .t6-run-verb { color: var(--text-primary); font-weight: 700; }
+[data-pmx-thread="t6"] .t6-run-arg { color: var(--text-muted); }
+[data-pmx-thread="t6"] .t6-run-arg:not(:empty)::before { content: ' '; }
+
+/* The phase rows and the keys row are commentary on the line above them, at the register's muted
+   contrast. Neither introduces a box: they are more log lines, in the same three columns. */
+[data-pmx-thread="t6"] .t6-run-row { color: var(--text-secondary); }
+[data-pmx-thread="t6"] .t6-run-keys .t6-log-kind,
+[data-pmx-thread="t6"] .t6-run-keys .t6-log-label { color: var(--text-muted); }
+
+[data-motion="reduced"][data-pmx-thread="t6"] .t6-run-step { transition: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  [data-pmx-thread="t6"] .t6-run-step { transition: none !important; }
+}

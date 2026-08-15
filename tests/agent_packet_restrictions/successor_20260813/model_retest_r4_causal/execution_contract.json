@@ -1,0 +1,139 @@
+{
+  "schema_id": "pw-r4-execution-contract-v1",
+  "protocol_id": "PW-R4-CAUSAL-20260813.1",
+  "revision_status": "prelaunch_frozen",
+  "subject_calls_per_config": 12,
+  "deterministic_stages": [
+    "S20A",
+    "S20B",
+    "S45A",
+    "S45B",
+    "S55",
+    "S80"
+  ],
+  "subject_stages": [
+    "S10A",
+    "S10B",
+    "S30A",
+    "S30B",
+    "S40A",
+    "S40B",
+    "S50",
+    "S60P",
+    "S60C",
+    "S60K",
+    "S70",
+    "S90"
+  ],
+  "subject_environment": {
+    "new_projectless_task": true,
+    "project_context": false,
+    "controller_supplied_memory": false,
+    "tools_forbidden_by_prompt": true,
+    "observed_tool_calls_required": 0,
+    "filesystem_access_forbidden": true,
+    "network_access_forbidden": true,
+    "delegation_forbidden": true
+  },
+  "rendering": {
+    "message_role": "user prompt passed to create_thread; platform adds exactly one codex_delegation wrapper",
+    "template_substitution": "none: every packets/*.txt file is fully rendered and its exact stored bytes, including the single terminal LF, are passed as the create_thread prompt",
+    "packet_equality": "same packet bytes for all configurations at a stage",
+    "capture": "reopen completed task; final text must byte-equal oracle; wrapper must contain packet exactly once",
+    "full_hidden_stack": "not exposed; no claim of independent hidden-stack verification"
+  },
+  "routing": {
+    "configs": [
+      [
+        "gpt-5.4-mini",
+        "xhigh"
+      ],
+      [
+        "gpt-5.4-mini",
+        "medium"
+      ],
+      [
+        "gpt-5.6-luna",
+        "medium"
+      ]
+    ],
+    "sampling_controls": "not exposed by create_thread",
+    "service_tier": "not exposed",
+    "comparison_claim": "descriptive exact-config first-attempt evidence only"
+  },
+  "scoring": {
+    "retry_count": 0,
+    "first_attempt_only": true,
+    "stop_on_first_subject_failure": true,
+    "raw_byte_equality_to_controller_oracle": "final text must equal the corresponding oracle_artifacts file after removal of that file's one storage-only terminal LF; no subject-output whitespace is normalized",
+    "json_parse_required": true,
+    "tool_call_is": "INVALID",
+    "capture_truncation_is": "INVALID",
+    "transport_error_is": "INVALID",
+    "refusal_or_schema_or_oracle_error_is": "FAIL"
+  },
+  "deterministic_algorithms": {
+    "S20A": "Parse passing S10A; add stage=S20A and base hash in declared key position; replace decisions[15].choice with canonical_runtime_enforced; canonical minified serialize.",
+    "S20B": "Parse passing S10B; add stage=S20B and base hash in declared key position; replace decisions[14].choice with executed_fixture_pass; canonical minified serialize.",
+    "S45A": "Validate S40A test op against S20A; apply only replace /decisions/15/choice; canonical minified serialize; reject any other delta.",
+    "S45B": "Validate S40B test op against S20B; apply only replace /decisions/14/choice; canonical minified serialize; reject any other delta.",
+    "S55": "Parse passing S50; append exactly I-E99 to cross_topic_edges; canonical minified serialize.",
+    "S80": "Validate S70 test/remove against S55; apply remove only; require result byte-equals S50; create exactly one absent target with apply_patch."
+  },
+  "S80_containment": {
+    "root": "sandboxes/<opaque-run-slot>/",
+    "target": "repaired_integration.json",
+    "root_must_be_absent_before_stage": true,
+    "target_must_be_absent": true,
+    "symlinks_forbidden": true,
+    "resolved_path_must_remain_under_run_root": true,
+    "write_method": "apply_patch only",
+    "pre_manifest": "whole run sandbox path absent",
+    "post_manifest": "exactly target exists; regular file; expected bytes/hash; no other entry",
+    "cross_config_collision": "unique opaque run slot per configuration",
+    "evidence_receipt_location": "runs/<opaque-run-slot>/write_observation.json outside sandbox"
+  },
+  "fanout_fanin": {
+    "S60_input_packet_sha256": "d1f73482f3c1311f0dcf6aa54a46ca880bdab66ad3a227b2c187cce2d7fbab57",
+    "all_three_required_before_S70": true,
+    "partial_reducer_forbidden": true
+  },
+  "invalidation": [
+    [
+      "shared source/capsule/protocol/schema/scorer/controller/template drift",
+      "INVALID entire cohort"
+    ],
+    [
+      "rendered packet hash mismatch or wrapper duplication",
+      "INVALID affected stage and cohort comparison"
+    ],
+    [
+      "requested model/thinking mismatch or unrecorded route change",
+      "INVALID affected config"
+    ],
+    [
+      "nonfresh/project-bearing task or leaked controller-only artifact",
+      "INVALID affected config"
+    ],
+    [
+      "predecessor raw/hash mismatch, capture truncation, or lineage substitution",
+      "INVALID affected config from producer onward"
+    ],
+    [
+      "any observed subject tool/network/filesystem/delegation action",
+      "INVALID affected config"
+    ],
+    [
+      "sandbox exists, is symlinked, escapes, collides, or diff is not exactly one target create",
+      "INVALID affected config"
+    ],
+    [
+      "subject semantic/schema/precision/recall/serialization error",
+      "preserved FAIL; no retry"
+    ],
+    [
+      "any contract correction after launch",
+      "mint new revision and rerun all configs from S10"
+    ]
+  ]
+}

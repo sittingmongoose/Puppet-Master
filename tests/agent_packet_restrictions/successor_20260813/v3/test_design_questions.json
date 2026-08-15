@@ -1,0 +1,24 @@
+{
+  "schema_id":"pm.prompt_complexity_successor.test_design_questions.v3",
+  "source":{"path":"../test_design_questions.json","sha256":"0e81e263e8942c74ea8bf442ae58910ea9e3991152911bec7071f58421ad8d38"},
+  "status":"AWAITING_JARED_TEST_PLAN",
+  "answering_rule":"Only Jared may answer; history, option order, controller, and preparation agents select nothing.",
+  "questions":[
+    {"question_id":"JQ-001","topic":"subject_roster","status":"requires_jared_decision","answer":null},
+    {"question_id":"JQ-002","topic":"comparison_shape","status":"requires_jared_decision","answer":null},
+    {"question_id":"JQ-003","topic":"test_objective","status":"requires_jared_decision","answer":null},
+    {"question_id":"JQ-004","topic":"case_corpus","status":"requires_jared_decision","answer":null},
+    {"question_id":"JQ-005","topic":"execution_parameters","status":"requires_jared_decision","answer":null},
+    {"question_id":"JQ-006","topic":"origin_lanes","status":"requires_jared_decision","answer":null},
+    {"question_id":"JQ-007","topic":"route_and_identity","status":"requires_jared_decision","answer":null},
+    {"question_id":"JQ-008","topic":"provider_cli_state","status":"requires_jared_decision","answer":null},
+    {"question_id":"JQ-009","topic":"scoring","status":"requires_jared_decision","answer":null},
+    {"question_id":"JQ-010","topic":"review_and_repair","status":"requires_jared_decision","answer":null},
+    {"question_id":"JQ-011","topic":"staging","status":"requires_jared_decision","answer":null},
+    {"question_id":"JQ-012","topic":"budgets_and_stops","status":"requires_jared_decision","answer":null},
+    {"question_id":"JQ-013","topic":"capture_and_privacy","status":"requires_jared_decision","answer":null},
+    {"question_id":"JQ-014","topic":"bsd","status":"requires_jared_decision","answer":null},
+    {"question_id":"JQ-015","topic":"freeze_and_authorization","status":"requires_jared_decision","answer":null}
+  ],
+  "claim_boundary":"Unanswered choices only; not a roster, method, recommendation, freeze, or launch authorization."
+}

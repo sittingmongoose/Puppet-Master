@@ -1,0 +1,731 @@
+{
+  "schema_id": "pm.settings.reference_review_report.v1",
+  "generated_at": "2026-08-14T00:19:32Z",
+  "scope": {
+    "model_folder": "5.6 Sol",
+    "mode": "correction_reference_review_and_final_current_integration_evidence",
+    "winner_selected": false,
+    "winner_selection_statement": "No winner is claimed or selected by this report.",
+    "authorized_output": "/mnt/Cursor/PuppetMaster/Concepts/settings-redesign-concepts/5.6 Sol/reference-review-report.json"
+  },
+  "current_run_read_protocol": {
+    "opened_in_current_correction_meaning": "The member was read from the extracted packet in this correction run; SHA-256 calculation independently streamed the complete member. Text authorities named by the correction were also opened for substantive review. Images were additionally decoded and visually inspected.",
+    "required_correction_authority_read_order": [
+      "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/00_READ_ME_FIRST.md",
+      "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md",
+      "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/REFERENCE_REVIEW_AND_REPAIR_REQUIREMENTS.md"
+    ],
+    "required_original_custody_read_order": [
+      "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/00_START_HERE.md",
+      "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/PACKET_MANIFEST.json",
+      "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/SOURCE_AND_PRECEDENCE_MAP.md",
+      "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/REFERENCE_SUPERSESSIONS.md"
+    ],
+    "read_order_completed": true,
+    "substantive_member_rule": "Regular packet members only; directories and every __MACOSX metadata member are excluded. Each packet manifest is included as a substantive member even though it does not self-list."
+  },
+  "archives": [
+    {
+      "packet": "original",
+      "path": "/home/sittingmongoose/.codex/attachments/1d731c54-d2e8-46fd-a7aa-adc4809d58b5/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08.zip",
+      "bytes": 719732,
+      "sha256": "96dcc44e8e2f3bae533d6e2787b83701a67414750736042f808b4151f9e357c9",
+      "opened_in_current_correction": true,
+      "integrity_test": {
+        "command": "unzip -t /home/sittingmongoose/.codex/attachments/1d731c54-d2e8-46fd-a7aa-adc4809d58b5/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08.zip",
+        "status": "passed",
+        "result": "No errors detected in compressed data."
+      }
+    },
+    {
+      "packet": "correction",
+      "path": "/home/sittingmongoose/.codex/attachments/8742906e-b395-4663-a1a6-b64305abf159/PM_Settings_Dependency_and_Work_Correction_2026-08-13.zip",
+      "bytes": 29103,
+      "sha256": "952c8f443444fede38f21fc5fb0ab1502734fd65d019ebf609137ccc6e885f23",
+      "opened_in_current_correction": true,
+      "integrity_test": {
+        "command": "unzip -t /home/sittingmongoose/.codex/attachments/8742906e-b395-4663-a1a6-b64305abf159/PM_Settings_Dependency_and_Work_Correction_2026-08-13.zip",
+        "status": "passed",
+        "result": "No errors detected in compressed data."
+      }
+    }
+  ],
+  "manifest_verification": {
+    "original": {
+      "manifest_path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/PACKET_MANIFEST.json",
+      "listed_members": 33,
+      "substantive_members_including_manifest": 34,
+      "verified_hash_and_size_members": 33,
+      "mismatches": 0,
+      "status": "passed",
+      "manifest_self_listing": false
+    },
+    "correction": {
+      "manifest_path": "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/CORRECTION_PACKET_MANIFEST.json",
+      "listed_members": 5,
+      "substantive_members_including_manifest": 6,
+      "verified_hash_and_size_members": 5,
+      "mismatches": 0,
+      "status": "passed",
+      "manifest_self_listing": false
+    },
+    "provider_adjudication_identity": {
+      "correction_path": "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "original_path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/reference/PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "bytes_each": 4857,
+      "sha256_each": "9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1",
+      "byte_identical": true,
+      "comparison_status": "passed"
+    }
+  },
+  "correction_authority_review": [
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/00_READ_ME_FIRST.md",
+      "role": "correction packet entry authority",
+      "prior_omission_or_mispath_evidence": "The correction states that the original archive omitted the full Performance decision register and referenced the provider adjudication at the wrong internal path. Baseline concept artifacts inspected in this run contain no durable open/read receipt for this correction entry authority. This does not assert what a prior agent may have seen outside durable evidence.",
+      "current_disposition": "opened_and_applied"
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md",
+      "role": "full-thread current Performance and cross-system decision register",
+      "prior_omission_or_mispath_evidence": "The correction packet identifies this register as omitted from the original archive. Baseline concept artifacts inspected in this run contain no durable proof that this exact path and SHA-256 were opened before correction. No inference is made about unrecorded prior viewing.",
+      "current_disposition": "opened_and_materially_applied"
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "role": "provider CLI acquisition precedence authority",
+      "prior_omission_or_mispath_evidence": "The correction says the authority was referenced at the wrong internal path. The original packet does contain a byte-identical copy under reference/, but the baseline concept artifacts inspected in this run provide no durable proof of opening either the correction-root authority or the original reference member. This preserves the distinction between file presence and proven review.",
+      "current_disposition": "opened_and_applied"
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/REFERENCE_REVIEW_AND_REPAIR_REQUIREMENTS.md",
+      "role": "required implementation and repair review authority",
+      "prior_omission_or_mispath_evidence": "This is a correction-only inspection contract. Baseline concept artifacts inspected in this run contain no durable proof of opening this exact correction authority. No claim is made about prior agent memory or non-durable context.",
+      "current_disposition": "opened_and_applied"
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/CORRECTION_GOAL_PROMPT.md",
+      "role": "correction execution prompt",
+      "prior_omission_or_mispath_evidence": "This correction-only member postdates the baseline packet. Baseline artifacts are not treated as proof of review.",
+      "current_disposition": "opened_and_applied"
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/CORRECTION_PACKET_MANIFEST.json",
+      "role": "correction member custody manifest",
+      "prior_omission_or_mispath_evidence": "This correction-only member postdates the baseline packet. Baseline artifacts are not treated as proof of review.",
+      "current_disposition": "opened_and_verified"
+    }
+  ],
+  "correction_substantive_members": [
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/00_READ_ME_FIRST.md",
+      "sha256": "ce842cd19acb419c7b6096e1c4b43725a3006d27f0ec4167b3adc0a2d118e073",
+      "bytes": 1108,
+      "type": "text/markdown",
+      "line_count": 15,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md",
+      "sha256": "3df7ad729c5ea1be0df192d19845e42326b5047de03e9f59fbe4918943e0150d",
+      "bytes": 47350,
+      "type": "text/markdown",
+      "line_count": 1112,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/CORRECTION_GOAL_PROMPT.md",
+      "sha256": "16c78a7db4bd54a6696d5a3a2b6a9ae662a051d955123ff7f40406804b7640a8",
+      "bytes": 2553,
+      "type": "text/markdown",
+      "line_count": 20,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/CORRECTION_PACKET_MANIFEST.json",
+      "sha256": "cf8588d1714ad389fbf80170d5db06d8ae2b024af7430368fbd96734cc159baa",
+      "bytes": 1220,
+      "type": "application/json",
+      "line_count": 38,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "sha256": "9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1",
+      "bytes": 4857,
+      "type": "text/markdown",
+      "line_count": 86,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/REFERENCE_REVIEW_AND_REPAIR_REQUIREMENTS.md",
+      "sha256": "b559fc38f910d18d454aa7ad149fa6f7d6f7384998b3ac0afe7f2e03bccc64f8",
+      "bytes": 1130,
+      "type": "text/markdown",
+      "line_count": 14,
+      "opened_in_current_correction": true
+    }
+  ],
+  "original_substantive_members": [
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/00_START_HERE.md",
+      "sha256": "6029b97f89429847d0edd1ebd1049faf3a92e8b9ccaa7bc89bf140a3f80be08e",
+      "bytes": 1885,
+      "type": "text/markdown",
+      "line_count": 61,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/01_CORE_ARCHITECTURE.md",
+      "sha256": "a4fe99df171e8fc042f32adf12fa4eb92f5e5fdaef9c37f48d9b64b814abcc3d",
+      "bytes": 3362,
+      "type": "text/markdown",
+      "line_count": 108,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/02_MANAGER_GRAMMAR_AND_SETTING_MODEL.md",
+      "sha256": "d43f60f5d77d2fe20c928d535fb6a5d851da3aa10ab73ca095be2e2425712629",
+      "bytes": 2961,
+      "type": "text/markdown",
+      "line_count": 155,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/03_PROVIDER_AGENT_MODEL_AND_INSTALLATION.md",
+      "sha256": "5d792108c360c5b21220bf52267bc226fe5fb439ba6e9945fd2e30b9c6a63853",
+      "bytes": 5207,
+      "type": "text/markdown",
+      "line_count": 222,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/04_CONTEXT_MEMORY_PERSONAS_GOAL_CREW_PERMISSIONS.md",
+      "sha256": "bcb345c2cada09f956c7db8f4a96f902883a9ad3e0604ff9ca61f584eb658fec",
+      "bytes": 3894,
+      "type": "text/markdown",
+      "line_count": 159,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/05_DESKTOP_DEVELOPER_AND_SYSTEM_MANAGERS.md",
+      "sha256": "2094e01c46a5ab5609aa0908336cce981236dea63b804c480dd61f86cb89783e",
+      "bytes": 4269,
+      "type": "text/markdown",
+      "line_count": 140,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/06_NOTIFICATIONS_SOUNDS_APPEARANCE_AND_INPUT.md",
+      "sha256": "7533b7e79f348fa4f6da9e1c92fb974ae58ab9b0ecd24c58d02f82fe915d8e4a",
+      "bytes": 2899,
+      "type": "text/markdown",
+      "line_count": 136,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/07_SERVER_HOST_AND_OWNER_BOUNDARIES.md",
+      "sha256": "4dd964ed11dcc2fe1700294942efea199d79e818fab94cc0d81d2f13338a9889",
+      "bytes": 2494,
+      "type": "text/markdown",
+      "line_count": 89,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/08_CONCEPT_COVERAGE_AND_FIXTURES.md",
+      "sha256": "4806b255783e111a3fea61efd113c5aadd67152b79824ea90907a62d12b4bf72",
+      "bytes": 2898,
+      "type": "text/markdown",
+      "line_count": 129,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/09_GUI_MOTION_THEME_SLINT_AND_TESTS.md",
+      "sha256": "a81bd5fc778f1831bb7c248b92ac6b03be7217690cd54b8d9fa0ae335e2100fd",
+      "bytes": 2326,
+      "type": "text/markdown",
+      "line_count": 117,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/10_PLAN_COMMAND_WIRING_DRY_IMPACT.md",
+      "sha256": "5dc4a0999341f50924b0517b1c5d91c0df24680ba10d072a04519743d1b2d6cc",
+      "bytes": 2716,
+      "type": "text/markdown",
+      "line_count": 132,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/AUDIT_PROMPT.md",
+      "sha256": "5970e036a4d0e144c96f1ecd72b0c28234cb8da5bf92a019683fe5ec074c46cd",
+      "bytes": 2829,
+      "type": "text/markdown",
+      "line_count": 34,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/CANDIDATE_COMMAND_ID_REGISTER.json",
+      "sha256": "b10393b4c0947faedf96d28243dc1fc134872d3b40083e77cb6253b2a83df25c",
+      "bytes": 3397,
+      "type": "application/json",
+      "line_count": 113,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/DECISION_COVERAGE.json",
+      "sha256": "befbc67733876d9f03ea2aff526c166692348e629240800fcf7c5925a1dad46d",
+      "bytes": 54472,
+      "type": "application/json",
+      "line_count": 1587,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/IMPACT_REGISTER.template.json",
+      "sha256": "fe2dcd5d930acfe3e259b92101e651a11aa819f24fd6bd539bb2defdac6fa266",
+      "bytes": 465,
+      "type": "application/json",
+      "line_count": 17,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/IMPLEMENTATION_PROMPT.md",
+      "sha256": "5a14fbb336241f1a8a7146456b7079af68c67ec8a0aebe9e1ef7ccdfe4d92fa4",
+      "bytes": 2861,
+      "type": "text/markdown",
+      "line_count": 33,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/MANAGER_COVERAGE_MATRIX.json",
+      "sha256": "b04db01fb7ff6ae8ca91deb32488317f4b6345afa7f33f5c924a75da35bfbfa2",
+      "bytes": 1915,
+      "type": "application/json",
+      "line_count": 83,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/PACKET_MANIFEST.json",
+      "sha256": "c0816e0db7d4c66b8e137c412f8bb62f7d4f80bbf5e39892da62b6f2906adb13",
+      "bytes": 6014,
+      "type": "application/json",
+      "line_count": 179,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/PROMPT_USAGE.md",
+      "sha256": "cd9ca7e82d03ef364a7de01bbf2d7b83aae1b52e66a6a66bb2b4ea6169eaff8c",
+      "bytes": 431,
+      "type": "text/markdown",
+      "line_count": 9,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/REFERENCE_SUPERSESSIONS.md",
+      "sha256": "5f3f1c16ed2f41408503cf36ae60be597a5598833fae5d7fcc2fc5bc429ecdb2",
+      "bytes": 1254,
+      "type": "text/markdown",
+      "line_count": 24,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/SHARED_PROCESS_RULES.md",
+      "sha256": "0ce29d11481ec4f6c9d15e3b69479d64359c017e6ba27226bc657579a8e82d0c",
+      "bytes": 2216,
+      "type": "text/markdown",
+      "line_count": 48,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/SOURCE_AND_PRECEDENCE_MAP.md",
+      "sha256": "f8983850875fda4edbbefb38415465f87545ff1ad96e1457a6ff375b18cb98d4",
+      "bytes": 2846,
+      "type": "text/markdown",
+      "line_count": 94,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/reference/CONCEPT_RULES.md",
+      "sha256": "e59011b56f3321462087cfaad8655a078b82621b7a10605256a5171f494721b1",
+      "bytes": 1519,
+      "type": "text/markdown",
+      "line_count": 13,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/reference/EGOLITE_SETTINGS_RETURN.md",
+      "sha256": "aff9e52da7e80f291c1559055c66dd31efb279f1108f869ea1b18aaf4bf3a8b3",
+      "bytes": 6633,
+      "type": "text/markdown",
+      "line_count": 231,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/reference/OMP_PROVIDER_CATALOG_REFERENCE.json",
+      "sha256": "7204e5fc96c040c6bc206fb98f0913c1546f328ee97766064ba01767cb038051",
+      "bytes": 15660,
+      "type": "application/json",
+      "line_count": 466,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/reference/PERFORMANCE_SETTINGS_RETURN.md",
+      "sha256": "259883117d9dbb8d1d65f6568a35a3ce38f9fd1e81806fc0485d4863ca3ab6bb",
+      "bytes": 19800,
+      "type": "text/markdown",
+      "line_count": 497,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/reference/PM_CROSS_SYSTEM_COMPLETENESS_AUDIT.md",
+      "sha256": "f20af36219e1d7d985a831c974d3008920483c3ee01a5696e49b2ac27888e467",
+      "bytes": 33495,
+      "type": "text/markdown",
+      "line_count": 928,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/reference/PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "sha256": "9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1",
+      "bytes": 4857,
+      "type": "text/markdown",
+      "line_count": 86,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/reference/PROVIDER_IDENTIFICATION_INSTALLATION_AUTH_UPDATE_HANDOFF.md",
+      "sha256": "ab29a3fbe7846ae9996ba22d8dbfa97d000cdc78b64a9db927834d4d649758ac",
+      "bytes": 32219,
+      "type": "text/markdown",
+      "line_count": 960,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/reference/SERVER_BACKBONE_SETTINGS_RETURN.md",
+      "sha256": "ebc2d28314ede35a94b7aa8830a85ada57300b31701ab6f96d12097859dec018",
+      "bytes": 6774,
+      "type": "text/markdown",
+      "line_count": 224,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/reference/SETTINGS_NAVIGATION_VIDEO_DESCRIPTION.md",
+      "sha256": "670a057f6b410a128a7844dd745b25e51cc9dbffc17222ac512a382c01164fc6",
+      "bytes": 2706,
+      "type": "text/markdown",
+      "line_count": 54,
+      "opened_in_current_correction": true
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/reference/T3_MODEL_PICKER_REFERENCE.png",
+      "sha256": "76915ba3abb456415fe1acaf0f76dd84750cf2a9b8f1c6e5ff2efa16022c7963",
+      "bytes": 82646,
+      "type": "image/png",
+      "line_count": null,
+      "opened_in_current_correction": true,
+      "visual_inspection": {
+        "status": "visually_inspected",
+        "decoded_in_current_correction": true,
+        "observation": "Dark model-picker overlay with provider rail, search, model rows, favorites and keyboard shortcuts; GPT-5.6-Terra is selected. Used as functional reference evidence, not as a visual template."
+      }
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/reference/current_model_picker_reference.png",
+      "sha256": "76915ba3abb456415fe1acaf0f76dd84750cf2a9b8f1c6e5ff2efa16022c7963",
+      "bytes": 82646,
+      "type": "image/png",
+      "line_count": null,
+      "opened_in_current_correction": true,
+      "visual_inspection": {
+        "status": "visually_inspected",
+        "decoded_in_current_correction": true,
+        "observation": "Visually and byte-identical to T3_MODEL_PICKER_REFERENCE.png; dark provider/model picker with search, selection, shortcuts and favorites."
+      }
+    },
+    {
+      "path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/reference/settings_navigation_contact_sheet.jpg",
+      "sha256": "f22d0c1e6d715b1317d878d3b983367cab5685e1e8d179bf3cac2b1f4e73b717",
+      "bytes": 594207,
+      "type": "image/jpeg",
+      "line_count": null,
+      "opened_in_current_correction": true,
+      "visual_inspection": {
+        "status": "visually_inspected",
+        "decoded_in_current_correction": true,
+        "observation": "Twelve-frame dark Settings navigation contact sheet spanning Account, Data and Privacy, Messaging Permissions, Notifications, Voice and Video, Sounds, Appearance and overlay states. Used as interaction/coverage evidence, not as a visual template."
+      }
+    }
+  ],
+  "affected_concepts": [
+    {
+      "concept_id": "index-house",
+      "entry_path": "concept-01-index-house.html",
+      "affected": true
+    },
+    {
+      "concept_id": "switchboard",
+      "entry_path": "concept-02-switchboard.html",
+      "affected": true
+    },
+    {
+      "concept_id": "wayfinder",
+      "entry_path": "concept-03-wayfinder.html",
+      "affected": true
+    },
+    {
+      "concept_id": "ledger",
+      "entry_path": "concept-04-ledger.html",
+      "affected": true
+    }
+  ],
+  "material_impacts": {
+    "governor_and_progress": {
+      "material": true,
+      "required_correction": "RuntimeResourceGovernor remains the only resource/admission owner; host enforcement consumes the same contract and is not a second governor. ObservableWork remains the only truthful progress/wait owner; concept cards and rows are projections only. Permit and work-state grammar now distinguishes queue, wait, degraded, permission/resource blocks, cancellation, terminal and recovery states without fabricated percentages."
+    },
+    "startup_lazy_hydration_and_search": {
+      "material": true,
+      "required_correction": "Settings Home and search use compact metadata; selected manager/detail data hydrates lazily; startup must not probe every provider/tool/server/resource; search uses latest-generation currentness and must not instantiate all managers."
+    },
+    "virtualization_subscriptions_persistence_and_render": {
+      "material": true,
+      "required_correction": "Large manager/catalog/search fixtures use bounded list windows, inactive detail surfaces unsubscribe or release shared refcounts, caches are byte-bounded, transient search/filter/drag/input is not persisted, persistence is compact and debounced, and frame-coalesced narrow patches replace avoidable full-scene renders."
+    },
+    "provider_policy_identity_and_continuation": {
+      "material": true,
+      "required_correction": "No provider CLI is bundled, baseline-preseeded or silently acquired by Project/model/provider/Goal/Plan/WorkNode/agent/Auto/On. First acquisition requires explicit human action, official source and exact Host/Environment; authentication is separate; post-consent lifecycle is allowed; GUI identity is humanized; continuation token/generation and installation identity reject stale or wrong-target resume."
+    },
+    "manager_coverage_and_states": {
+      "material": true,
+      "required_correction": "All assigned manager families require compact summaries, lazy detail, truthful dormant/loading/ready/stale/offline/error/managed/degraded states, deterministic large-catalog fixtures and no eager startup ownership."
+    },
+    "motion": {
+      "material": true,
+      "required_correction": "Hidden/off-screen surfaces stop decorative clocks; reduced motion retains semantic results; rapid navigation cancels superseded motion; frame activity and sound-wave animations must settle without ongoing hidden work."
+    },
+    "candidate_reports_and_tests": {
+      "material": true,
+      "required_correction": "Each concept's impact, manager coverage, candidate command, candidate wiring, candidate DRY and Plan-owner reports require correction-domain traceability. Browser, state, performance, loading/error/offline/managed, provider-policy, motion and accessibility evidence must be rerun; deterministic browser fixtures are not native Slint or physical-hardware proof."
+    }
+  },
+  "changes_made_or_in_progress": [
+    {
+      "area": "runtime owner projections",
+      "status": "corrected_and_state_verified",
+      "paths": [
+        "_shared/runtime-contracts.mjs",
+        "_shared/state.mjs",
+        "_shared/view.mjs"
+      ],
+      "summary": "Added concept-only ObservableWork and RuntimeResourceGovernor projections, normalized permit/work states and truthful progress source rules."
+    },
+    {
+      "area": "startup and data split",
+      "status": "corrected_and_state_verified",
+      "paths": [
+        "_shared/data-core-values.mjs",
+        "_shared/data-details.mjs",
+        "_shared/data.mjs",
+        "verify/generate-core-data.mjs"
+      ],
+      "summary": "Separates compact startup values from lazy detail payloads; the final-current state suite passes 22 of 22 tests."
+    },
+    {
+      "area": "lazy hydration virtualization subscriptions persistence render",
+      "status": "corrected_and_state_render_verified",
+      "paths": [
+        "_shared/app.mjs",
+        "_shared/manager-data.mjs",
+        "_shared/manager-systems.css",
+        "_shared/state.mjs",
+        "_shared/view.mjs"
+      ],
+      "summary": "Adds selected-surface activation/release, list windows, cache budgets, compact debounced persistence, generation fencing, transient-event coalescing and narrow render instrumentation."
+    },
+    {
+      "area": "provider acquisition and continuation",
+      "status": "corrected_and_state_verified",
+      "paths": [
+        "_shared/manager-data.mjs",
+        "_shared/state.mjs",
+        "_shared/view.mjs"
+      ],
+      "summary": "Adds explicit official-source exact-Host/Environment consent, separate auth/readiness, setup-required and stale-continuation outcomes, humanized installation identity and lifecycle generations."
+    },
+    {
+      "area": "concept reports",
+      "status": "updated_and_json_diff_validated",
+      "paths": [
+        "concept-01-index-house/candidate-command-delta.json",
+        "concept-01-index-house/candidate-dry-delta.json",
+        "concept-01-index-house/candidate-wiring-delta.json",
+        "concept-01-index-house/impact-register.json",
+        "concept-01-index-house/manager-coverage.json",
+        "concept-01-index-house/plan-owner-delta.md",
+        "concept-02-switchboard/candidate-command-delta.json",
+        "concept-02-switchboard/candidate-dry-delta.json",
+        "concept-02-switchboard/candidate-wiring-delta.json",
+        "concept-02-switchboard/impact-register.json",
+        "concept-02-switchboard/manager-coverage.json",
+        "concept-02-switchboard/plan-owner-delta.md",
+        "concept-03-wayfinder/candidate-command-delta.json",
+        "concept-03-wayfinder/candidate-dry-delta.json",
+        "concept-03-wayfinder/candidate-wiring-delta.json",
+        "concept-03-wayfinder/impact-register.json",
+        "concept-03-wayfinder/manager-coverage.json",
+        "concept-03-wayfinder/plan-owner-delta.md",
+        "concept-04-ledger/candidate-command-delta.json",
+        "concept-04-ledger/candidate-dry-delta.json",
+        "concept-04-ledger/candidate-wiring-delta.json",
+        "concept-04-ledger/impact-register.json",
+        "concept-04-ledger/manager-coverage.json",
+        "concept-04-ledger/plan-owner-delta.md"
+      ],
+      "summary": "Adds explicit correction-domain ownership, policy, startup, performance, continuation, state and unresolved native-validation traceability across all four concepts."
+    },
+    {
+      "area": "test harness",
+      "status": "corrected_with_environment_blocked_browser_residual",
+      "paths": [
+        "verify/browser-smoke.mjs",
+        "verify/state.test.mjs",
+        "verify/render-contract.test.mjs",
+        "TEST_REPORT.md"
+      ],
+      "summary": "The state suite passes 22 of 22 and the state-to-string/CSS render contract passes 12 of 12. The focused Firefox harness binds ConceptHub on 45343 and geckodriver on 41003, but POST /session times out after the environment reports Sandbox: CanCreateUserNamespace() unshare(CLONE_NEWPID): EPERM. One harness case was attempted and failed before product assertions; cleanup completed. The full browser matrix was not run."
+    },
+    {
+      "area": "aggregate correction and custody reports",
+      "status": "updated_and_validated",
+      "paths": [
+        "README.md",
+        "FINDINGS.md",
+        "TEST_REPORT.md",
+        "IMPACT_REGISTER.json",
+        "reference-review-report.json"
+      ],
+      "summary": "Records the material impact across all four unranked concepts, exact packet custody and review receipts, current causal tests, candidate-only status, changed-path groups and unresolved Server, Firefox, native Slint and physical-hardware gates."
+    }
+  ],
+  "test_rerun_ledger": [
+    {
+      "test_id": "outer-original-archive-integrity",
+      "status": "passed",
+      "attempt_status": "final_for_archive_bytes",
+      "evidence": "SHA-256 96dcc44e8e2f3bae533d6e2787b83701a67414750736042f808b4151f9e357c9; 719732 bytes; unzip -t reported no errors."
+    },
+    {
+      "test_id": "outer-correction-archive-integrity",
+      "status": "passed",
+      "attempt_status": "final_for_archive_bytes",
+      "evidence": "SHA-256 952c8f443444fede38f21fc5fb0ab1502734fd65d019ebf609137ccc6e885f23; 29103 bytes; unzip -t reported no errors."
+    },
+    {
+      "test_id": "original-manifest-hash-size-verification",
+      "status": "passed",
+      "attempt_status": "final_for_extracted_packet",
+      "evidence": "33 listed members verified; 0 mismatches; 34 substantive members when PACKET_MANIFEST.json is included."
+    },
+    {
+      "test_id": "correction-manifest-hash-size-verification",
+      "status": "passed",
+      "attempt_status": "final_for_extracted_packet",
+      "evidence": "5 listed members verified; 0 mismatches; 6 substantive members when CORRECTION_PACKET_MANIFEST.json is included."
+    },
+    {
+      "test_id": "provider-adjudication-byte-identity",
+      "status": "passed",
+      "attempt_status": "final_for_extracted_packet",
+      "evidence": "cmp returned 0; both members are 4857 bytes with SHA-256 9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1."
+    },
+    {
+      "test_id": "javascript-syntax-current-snapshot",
+      "status": "passed",
+      "attempt_status": "final_current_integration",
+      "evidence": "node --check passed for app, data, data-core-values, data-details, manager-data, runtime-contracts, state, view, browser-smoke, generate-core-data and state.test."
+    },
+    {
+      "test_id": "state-tests-current-snapshot",
+      "status": "passed",
+      "attempt_status": "final_current_integration",
+      "evidence": "Current integrated run: 22 tests, 22 passed, 0 failed. Three added causal regressions verify that manager cancellation fences late commit and retry advances generation; provider-refresh cancellation fences late completion and retry advances generation; and retrying a failed or cancelled active flow produces an actionable active flow."
+    },
+    {
+      "test_id": "current-json-and-diff-validation",
+      "status": "passed",
+      "attempt_status": "final_current_integration",
+      "evidence": "All current JSON artifacts parse and git diff --check passes."
+    },
+    {
+      "test_id": "firefox-focused-browser-smoke-current-snapshot",
+      "status": "blocked_environment",
+      "attempt_status": "final_current_attempt_with_named_residual",
+      "latest_attempt_outcome": "webdriver_session_creation_timeout",
+      "evidence_path": "/tmp/pm-settings-browser-focused.json",
+      "bindings": {
+        "concept_hub_port": 45343,
+        "geckodriver_port": 41003
+      },
+      "cleanup_completed": true,
+      "counts": {
+        "harness_attempted": 1,
+        "harness_passed": 0,
+        "harness_failed": 1,
+        "product_assertions": 0
+      },
+      "evidence": "ConceptHub and geckodriver both bound, but POST /session timed out after Firefox reported Sandbox: CanCreateUserNamespace() unshare(CLONE_NEWPID): EPERM. No product/browser assertion ran, and cleanup completed."
+    },
+    {
+      "test_id": "full-firefox-authoritative-matrix",
+      "status": "blocked_environment",
+      "attempt_status": "not_run",
+      "evidence": "Not run because the focused attempt could not create a Firefox WebDriver session after the environment reported Sandbox: CanCreateUserNamespace() unshare(CLONE_NEWPID): EPERM. No matrix pass is claimed."
+    },
+    {
+      "test_id": "render-contract-validation",
+      "status": "passed",
+      "attempt_status": "final_current_integration",
+      "evidence": "12 render-contract tests passed, 0 failed. Assigned-manager rendering includes the exact missing-owner, mutation-blocked Future Server projection."
+    },
+    {
+      "test_id": "concept-hub-structural-validation",
+      "status": "passed",
+      "attempt_status": "final_current_integration",
+      "evidence": "Current ConceptHub structural validation passed."
+    },
+    {
+      "test_id": "candidate-report-json-and-cross-report-validation",
+      "status": "passed",
+      "attempt_status": "final_current_integration",
+      "evidence": "All candidate JSON artifacts parse; candidate invariants pass; every candidate remains provisional and NOT_MINTED."
+    },
+    {
+      "test_id": "native-slint-and-physical-hardware-validation",
+      "status": "not_run_not_proven",
+      "attempt_status": "unresolved_external_gate",
+      "evidence": "Served browser fixtures cannot prove native Slint or physical Ivy Bridge, Xeon, CPU/RAM pressure, slow disk or poor-network behavior."
+    }
+  ],
+  "unresolved_defects": [
+    {
+      "defect": "Server canonical owner unresolved",
+      "status": "unresolved",
+      "impact": "Server-related destinations remain missing-owner, inspect-only insertion points with mutation blocked; no canonical command, runtime owner or backend is minted by these concepts."
+    },
+    {
+      "defect": "Native Slint and physical hardware not proven",
+      "status": "unresolved",
+      "impact": "Browser prototype and deterministic pressure fixtures do not certify native Slint rendering, accessibility, startup, memory, motion, input or actual older-hardware/network behavior."
+    },
+    {
+      "defect": "Firefox WebDriver session creation blocked by environment sandbox",
+      "status": "blocked_environment",
+      "impact": "ConceptHub and geckodriver bound, but POST /session timed out after Sandbox: CanCreateUserNamespace() unshare(CLONE_NEWPID): EPERM. The attempt reached no concept page, so no browser interaction or layout pass is claimed; the full browser matrix was not run."
+    }
+  ],
+  "materiality_conclusion": {
+    "omission_materially_affected_work": true,
+    "basis": "Current worktree changes span startup data ownership, lazy hydration, virtualization, subscription lifetime, persistence, rendering, governor/progress projections, provider policy/continuation, candidate reports and test harnesses across all four concepts. This is material correction work, not a no-difference claim.",
+    "closure_status": "corrected_with_named_residuals"
+  }
+}

@@ -3,38 +3,232 @@
   "model": "Qwen 3.8",
   "workspace": "Concepts/chat-assistant-concepts/qwen-3-8",
   "concept_solutions": [
-    { "concept_id": "w1", "question_renderer": "n/a (window)", "compact_work_composition": "n/a (window)", "pinned_history_solution": "full side column / two-line index rail / glyph-initial micro rail (governor-demoted, never overlay)", "artifact_workspace_solution": "tabbed document inspector sibling left of Chat", "motion_notes": "slide-from-left entrance", "functional_test_refs": ["v2-pin-no-overlay-all-windows", "polish-pinsweep-w1-*"] },
-    { "concept_id": "w2", "question_renderer": "n/a (window)", "compact_work_composition": "n/a (window)", "pinned_history_solution": "full column / rounded chip stack / glyph dots under the single bar", "artifact_workspace_solution": "stacked cards with peek edges", "motion_notes": "bar-height-preserving slide", "functional_test_refs": ["v2-pin-no-overlay-all-windows"] },
-    { "concept_id": "w3", "question_renderer": "n/a (window)", "compact_work_composition": "n/a (window)", "pinned_history_solution": "full column / shelf-reduced dot+title strip / micro dots (shelf hides while pinned)", "artifact_workspace_solution": "horizontal card lane header + body", "motion_notes": "translateY(-6px) unfold", "functional_test_refs": ["v2-pin-no-overlay-all-windows"] },
-    { "concept_id": "w4", "question_renderer": "n/a (window)", "compact_work_composition": "n/a (window)", "pinned_history_solution": "full column / stacked bordered plates / glyph tiles in reserved TL slot", "artifact_workspace_solution": "reserved plate stack sibling", "motion_notes": "corner-origin fade+scale", "functional_test_refs": ["v2-pin-no-overlay-all-windows"] },
-    { "concept_id": "w5", "question_renderer": "n/a (window)", "compact_work_composition": "n/a (window)", "pinned_history_solution": "full column beside spine / centered glyph tiles / spine glyph micro", "artifact_workspace_solution": "spine-attached drawer", "motion_notes": "slide-from-spine", "functional_test_refs": ["v2-pin-no-overlay-all-windows"] },
-    { "concept_id": "w6", "question_renderer": "n/a (window)", "compact_work_composition": "n/a (window)", "pinned_history_solution": "full column / deck chip stack / pill dots", "artifact_workspace_solution": "chip-tabbed deck panel", "motion_notes": "chip pop scale .96→1", "functional_test_refs": ["v2-pin-no-overlay-all-windows"] },
-    { "concept_id": "w7", "question_renderer": "n/a (window)", "compact_work_composition": "n/a (window)", "pinned_history_solution": "full column replaces rail / letter-tile rows / letter tiles (rail language)", "artifact_workspace_solution": "rail-attached inspector with tile index", "motion_notes": "tile spring scale .9→1", "functional_test_refs": ["v2-pin-no-overlay-all-windows"] },
-    { "concept_id": "w8", "question_renderer": "n/a (window)", "compact_work_composition": "n/a (window)", "pinned_history_solution": "full column / hairline vertical list / glyph hairline micro (strip language)", "artifact_workspace_solution": "hairline strip-headed panel", "motion_notes": "strip unfold translateY(-4px)", "functional_test_refs": ["v2-pin-no-overlay-all-windows"] },
-    { "concept_id": "t1", "question_renderer": "quiet prose card (hairline, inline progress text, rise/settle)", "compact_work_composition": "single capsule strip + nested inline disclosure", "pinned_history_solution": "window-provided", "artifact_workspace_solution": "window-provided", "motion_notes": "18px rise long ease-out", "functional_test_refs": ["v2-question-flow-all-renderers", "v2-compact-work-budget"] },
-    { "concept_id": "t2", "question_renderer": "turn plate ('Puppet Master asks' head band, plate footer actions)", "compact_work_composition": "plate header chips + sidecar popover per domain", "pinned_history_solution": "window-provided", "artifact_workspace_solution": "window-provided", "motion_notes": "plate border fade+4px rise", "functional_test_refs": ["v2-question-flow-all-renderers"] },
-    { "concept_id": "t3", "question_renderer": "right-margin sidecar inspector with tick progress (container-query placed)", "compact_work_composition": "margin ledger rows, in-margin expansion", "pinned_history_solution": "window-provided", "artifact_workspace_solution": "window-provided", "motion_notes": "slide from right", "functional_test_refs": ["v2-question-flow-all-renderers"] },
-    { "concept_id": "t4", "question_renderer": "spine stepper node + dotted-leader lane card + mini dot rail", "compact_work_composition": "constant-neutral spine nodes per domain", "pinned_history_solution": "window-provided", "artifact_workspace_solution": "window-provided", "motion_notes": "node pop then card fade", "functional_test_refs": ["v2-question-flow-all-renderers"] },
-    { "concept_id": "t5", "question_renderer": "condensed capsule auto-expanding to ledger option rows, counter chip", "compact_work_composition": "live-count chip strip, one chip grows (single detail)", "pinned_history_solution": "window-provided", "artifact_workspace_solution": "window-provided", "motion_notes": "120-180ms band", "functional_test_refs": ["v2-question-flow-all-renderers"] },
-    { "concept_id": "t6", "question_renderer": "highlighted dense-row block, one-line option rows, row-fill select", "compact_work_composition": "one-line work index row expanding to plate", "pinned_history_solution": "window-provided", "artifact_workspace_solution": "window-provided", "motion_notes": "150ms fade swap", "functional_test_refs": ["v2-question-flow-all-renderers"] },
-    { "concept_id": "t7", "question_renderer": "dock of numbered chips; active chip grows into card (bounds interpolation)", "compact_work_composition": "band chips with live counts; opened chip grows full-width", "pinned_history_solution": "window-provided", "artifact_workspace_solution": "window-provided", "motion_notes": "240ms grid-rows bounds interpolation", "functional_test_refs": ["v2-question-flow-all-renderers"] },
-    { "concept_id": "t8", "question_renderer": "Interlude chapter section with chapter head + fold motion", "compact_work_composition": "Work log fold heads per domain", "pinned_history_solution": "window-provided", "artifact_workspace_solution": "window-provided", "motion_notes": "chapter fold grid-rows", "functional_test_refs": ["v2-question-flow-all-renderers"] }
+    {
+      "concept_id": "w1",
+      "question_renderer": "n/a (window)",
+      "compact_work_composition": "n/a (window)",
+      "pinned_history_solution": "full side column / two-line index rail / glyph-initial micro rail (governor-demoted, never overlay)",
+      "artifact_workspace_solution": "tabbed document inspector sibling left of Chat",
+      "motion_notes": "slide-from-left entrance",
+      "functional_test_refs": [
+        "v2-pin-no-overlay-all-windows",
+        "polish-pinsweep-w1-*"
+      ]
+    },
+    {
+      "concept_id": "w2",
+      "question_renderer": "n/a (window)",
+      "compact_work_composition": "n/a (window)",
+      "pinned_history_solution": "full column / rounded chip stack / glyph dots under the single bar",
+      "artifact_workspace_solution": "stacked cards with peek edges",
+      "motion_notes": "bar-height-preserving slide",
+      "functional_test_refs": [
+        "v2-pin-no-overlay-all-windows"
+      ]
+    },
+    {
+      "concept_id": "w3",
+      "question_renderer": "n/a (window)",
+      "compact_work_composition": "n/a (window)",
+      "pinned_history_solution": "full column / shelf-reduced dot+title strip / micro dots (shelf hides while pinned)",
+      "artifact_workspace_solution": "horizontal card lane header + body",
+      "motion_notes": "translateY(-6px) unfold",
+      "functional_test_refs": [
+        "v2-pin-no-overlay-all-windows"
+      ]
+    },
+    {
+      "concept_id": "w4",
+      "question_renderer": "n/a (window)",
+      "compact_work_composition": "n/a (window)",
+      "pinned_history_solution": "full column / stacked bordered plates / glyph tiles in reserved TL slot",
+      "artifact_workspace_solution": "reserved plate stack sibling",
+      "motion_notes": "corner-origin fade+scale",
+      "functional_test_refs": [
+        "v2-pin-no-overlay-all-windows"
+      ]
+    },
+    {
+      "concept_id": "w5",
+      "question_renderer": "n/a (window)",
+      "compact_work_composition": "n/a (window)",
+      "pinned_history_solution": "full column beside spine / centered glyph tiles / spine glyph micro",
+      "artifact_workspace_solution": "spine-attached drawer",
+      "motion_notes": "slide-from-spine",
+      "functional_test_refs": [
+        "v2-pin-no-overlay-all-windows"
+      ]
+    },
+    {
+      "concept_id": "w6",
+      "question_renderer": "n/a (window)",
+      "compact_work_composition": "n/a (window)",
+      "pinned_history_solution": "full column / deck chip stack / pill dots",
+      "artifact_workspace_solution": "chip-tabbed deck panel",
+      "motion_notes": "chip pop scale .96→1",
+      "functional_test_refs": [
+        "v2-pin-no-overlay-all-windows"
+      ]
+    },
+    {
+      "concept_id": "w7",
+      "question_renderer": "n/a (window)",
+      "compact_work_composition": "n/a (window)",
+      "pinned_history_solution": "full column replaces rail / letter-tile rows / letter tiles (rail language)",
+      "artifact_workspace_solution": "rail-attached inspector with tile index",
+      "motion_notes": "tile spring scale .9→1",
+      "functional_test_refs": [
+        "v2-pin-no-overlay-all-windows"
+      ]
+    },
+    {
+      "concept_id": "w8",
+      "question_renderer": "n/a (window)",
+      "compact_work_composition": "n/a (window)",
+      "pinned_history_solution": "full column / hairline vertical list / glyph hairline micro (strip language)",
+      "artifact_workspace_solution": "hairline strip-headed panel",
+      "motion_notes": "strip unfold translateY(-4px)",
+      "functional_test_refs": [
+        "v2-pin-no-overlay-all-windows"
+      ]
+    },
+    {
+      "concept_id": "t1",
+      "question_renderer": "quiet prose card (hairline, inline progress text, rise/settle)",
+      "compact_work_composition": "single capsule strip + nested inline disclosure",
+      "pinned_history_solution": "window-provided",
+      "artifact_workspace_solution": "window-provided",
+      "motion_notes": "18px rise long ease-out",
+      "functional_test_refs": [
+        "v2-question-flow-all-renderers",
+        "v2-compact-work-budget"
+      ]
+    },
+    {
+      "concept_id": "t2",
+      "question_renderer": "turn plate ('Puppet Master asks' head band, plate footer actions)",
+      "compact_work_composition": "plate header chips + sidecar popover per domain",
+      "pinned_history_solution": "window-provided",
+      "artifact_workspace_solution": "window-provided",
+      "motion_notes": "plate border fade+4px rise",
+      "functional_test_refs": [
+        "v2-question-flow-all-renderers"
+      ]
+    },
+    {
+      "concept_id": "t3",
+      "question_renderer": "right-margin sidecar inspector with tick progress (container-query placed)",
+      "compact_work_composition": "margin ledger rows, in-margin expansion",
+      "pinned_history_solution": "window-provided",
+      "artifact_workspace_solution": "window-provided",
+      "motion_notes": "slide from right",
+      "functional_test_refs": [
+        "v2-question-flow-all-renderers"
+      ]
+    },
+    {
+      "concept_id": "t4",
+      "question_renderer": "spine stepper node + dotted-leader lane card + mini dot rail",
+      "compact_work_composition": "constant-neutral spine nodes per domain",
+      "pinned_history_solution": "window-provided",
+      "artifact_workspace_solution": "window-provided",
+      "motion_notes": "node pop then card fade",
+      "functional_test_refs": [
+        "v2-question-flow-all-renderers"
+      ]
+    },
+    {
+      "concept_id": "t5",
+      "question_renderer": "condensed capsule auto-expanding to ledger option rows, counter chip",
+      "compact_work_composition": "live-count chip strip, one chip grows (single detail)",
+      "pinned_history_solution": "window-provided",
+      "artifact_workspace_solution": "window-provided",
+      "motion_notes": "120-180ms band",
+      "functional_test_refs": [
+        "v2-question-flow-all-renderers"
+      ]
+    },
+    {
+      "concept_id": "t6",
+      "question_renderer": "highlighted dense-row block, one-line option rows, row-fill select",
+      "compact_work_composition": "one-line work index row expanding to plate",
+      "pinned_history_solution": "window-provided",
+      "artifact_workspace_solution": "window-provided",
+      "motion_notes": "150ms fade swap",
+      "functional_test_refs": [
+        "v2-question-flow-all-renderers"
+      ]
+    },
+    {
+      "concept_id": "t7",
+      "question_renderer": "dock of numbered chips; active chip grows into card (bounds interpolation)",
+      "compact_work_composition": "band chips with live counts; opened chip grows full-width",
+      "pinned_history_solution": "window-provided",
+      "artifact_workspace_solution": "window-provided",
+      "motion_notes": "240ms grid-rows bounds interpolation",
+      "functional_test_refs": [
+        "v2-question-flow-all-renderers"
+      ]
+    },
+    {
+      "concept_id": "t8",
+      "question_renderer": "Interlude chapter section with chapter head + fold motion",
+      "compact_work_composition": "Work log fold heads per domain",
+      "pinned_history_solution": "window-provided",
+      "artifact_workspace_solution": "window-provided",
+      "motion_notes": "chapter fold grid-rows",
+      "functional_test_refs": [
+        "v2-question-flow-all-renderers"
+      ]
+    }
   ],
   "changes": [
     {
       "change_id": "chat-delta-100",
       "requirement": "Real pinned history: closed/transient/pinned compact/pinned full, persistence, no overlay, chat floor",
-      "implemented_in": ["windows/_window-kit.js (makeSideRegions governor)", "windows/w1..w8.js", "_shared/store.js (setPin/setPinMode, ui in serializeState)", "_shared/shell.js (root-level extras)"],
-      "state_or_demo_refs": ["history.peek", "history.pin_compact", "history.pin_full", "history.unpin", "history.switch_thread"],
+      "implemented_in": [
+        "windows/_window-kit.js (makeSideRegions governor)",
+        "windows/w1..w8.js",
+        "_shared/store.js (setPin/setPinMode, ui in serializeState)",
+        "_shared/shell.js (root-level extras)"
+      ],
+      "state_or_demo_refs": [
+        "history.peek",
+        "history.pin_compact",
+        "history.pin_full",
+        "history.unpin",
+        "history.switch_thread"
+      ],
       "video_or_motion_reference": [],
-      "existing_bugs_fixed": ["w2/w4/w6 silently ignored pm-pin", "pinned overlay drawer at narrow widths and pop-out", "serializeState dropped ui (pin lost on restart path)", "duplicated makePinCol x5 with dead availableWidth()"],
-      "functional_test_refs": ["v2-pin-persistence", "v2-pin-no-overlay-all-windows", "polish-pinsweep-*", "v2-popout-pin-art"],
-      "visual_evidence_refs": ["verification/results/run-*/"],
-      "probable_plan_owners": ["assistant-chat-design", "FinalGUISpec"],
-      "command_impacts": ["uncataloged: cmd.chat.history.pin/set_mode (prototype emits none; store-level)"],
+      "existing_bugs_fixed": [
+        "w2/w4/w6 silently ignored pm-pin",
+        "pinned overlay drawer at narrow widths and pop-out",
+        "serializeState dropped ui (pin lost on restart path)",
+        "duplicated makePinCol x5 with dead availableWidth()"
+      ],
+      "functional_test_refs": [
+        "v2-pin-persistence",
+        "v2-pin-no-overlay-all-windows",
+        "polish-pinsweep-*",
+        "v2-popout-pin-art"
+      ],
+      "visual_evidence_refs": [
+        "verification/results/run-*/"
+      ],
+      "probable_plan_owners": [
+        "assistant-chat-design",
+        "FinalGUISpec"
+      ],
+      "command_impacts": [
+        "uncataloged: cmd.chat.history.pin/set_mode (prototype emits none; store-level)"
+      ],
       "wiring_impacts": [],
-      "dry_component_impacts": ["candidate DRY component: pinned-history governor + compact rail family"],
-      "schema_event_storage_impacts": ["ui.pinModeByWin persisted; extraThreads persisted"],
+      "dry_component_impacts": [
+        "candidate DRY component: pinned-history governor + compact rail family"
+      ],
+      "schema_event_storage_impacts": [
+        "ui.pinModeByWin persisted; extraThreads persisted"
+      ],
       "usage_impacts": [],
       "settings_impacts": [],
       "slint_notes": "governor is pure arithmetic + width vars; port-friendly",
@@ -44,17 +238,44 @@
     {
       "change_id": "chat-delta-101",
       "requirement": "Left artifact workspace with loading/ready/update/error/switch/close and coexistence",
-      "implemented_in": ["windows/_window-kit.js (makeSideRegions artws + artifactBodyHtml)", "_shared/store.js (artWs/art* actions)", "threads/_thread-kit.js (artifactCards open-left, diff open-left)"],
-      "state_or_demo_refs": ["artifact.loading", "artifact.ready", "artifact.switch", "artifact.error", "artifact.close"],
+      "implemented_in": [
+        "windows/_window-kit.js (makeSideRegions artws + artifactBodyHtml)",
+        "_shared/store.js (artWs/art* actions)",
+        "threads/_thread-kit.js (artifactCards open-left, diff open-left)"
+      ],
+      "state_or_demo_refs": [
+        "artifact.loading",
+        "artifact.ready",
+        "artifact.switch",
+        "artifact.error",
+        "artifact.close"
+      ],
       "video_or_motion_reference": [],
-      "existing_bugs_fixed": ["artifacts only opened in right-side dashboard editor tabs"],
-      "functional_test_refs": ["v2-artifact-left-scroll-draft", "v2-artifact-error-retry", "v2-history-artifact-coexistence"],
-      "visual_evidence_refs": ["verification/results/run-*/"],
-      "probable_plan_owners": ["FileManager", "assistant-chat-design"],
-      "command_impacts": ["uncataloged cmd.artifact.open_workspace emitted"],
+      "existing_bugs_fixed": [
+        "artifacts only opened in right-side dashboard editor tabs"
+      ],
+      "functional_test_refs": [
+        "v2-artifact-left-scroll-draft",
+        "v2-artifact-error-retry",
+        "v2-history-artifact-coexistence"
+      ],
+      "visual_evidence_refs": [
+        "verification/results/run-*/"
+      ],
+      "probable_plan_owners": [
+        "FileManager",
+        "assistant-chat-design"
+      ],
+      "command_impacts": [
+        "uncataloged cmd.artifact.open_workspace emitted"
+      ],
       "wiring_impacts": [],
-      "dry_component_impacts": ["candidate DRY component: artifact workspace shell with 8 presentations"],
-      "schema_event_storage_impacts": ["ui.artwsByWin; per-thread artState/extraArtifacts"],
+      "dry_component_impacts": [
+        "candidate DRY component: artifact workspace shell with 8 presentations"
+      ],
+      "schema_event_storage_impacts": [
+        "ui.artwsByWin; per-thread artState/extraArtifacts"
+      ],
       "usage_impacts": [],
       "settings_impacts": [],
       "slint_notes": "state machine trivially portable; presentations are layout-only",
@@ -64,16 +285,42 @@
     {
       "change_id": "chat-delta-102",
       "requirement": "Concept-specific question renderers + triggerable flow with shared semantics",
-      "implemented_in": ["threads/_thread-kit.js (quest api + opts.questRenderer)", "threads/t1..t8.js renderers"],
-      "state_or_demo_refs": ["question.prepare", "question.select", "question.next", "question.validation_error", "question.skip", "question.cancel", "question.submit"],
-      "video_or_motion_reference": ["05_VIDEO_REFERENCE_QUESTIONS_AND_ACTIVITY.md Recording A principles"],
-      "existing_bugs_fixed": ["single shared questionnaire renderer across all concepts"],
-      "functional_test_refs": ["v2-question-flow-all-renderers", "polish-quest-hooks"],
-      "visual_evidence_refs": ["verification/results/run-*/"],
-      "probable_plan_owners": ["assistant-chat-design"],
-      "command_impacts": ["cmd.questionnaire.* was NEVER cataloged (corrected: prototype emitted them uncataloged); superseded by cmd.chat.question.answer/skip/submit/cancel in the final cumulative cutover"],
+      "implemented_in": [
+        "threads/_thread-kit.js (quest api + opts.questRenderer)",
+        "threads/t1..t8.js renderers"
+      ],
+      "state_or_demo_refs": [
+        "question.prepare",
+        "question.select",
+        "question.next",
+        "question.validation_error",
+        "question.skip",
+        "question.cancel",
+        "question.submit"
+      ],
+      "video_or_motion_reference": [
+        "05_VIDEO_REFERENCE_QUESTIONS_AND_ACTIVITY.md Recording A principles"
+      ],
+      "existing_bugs_fixed": [
+        "single shared questionnaire renderer across all concepts"
+      ],
+      "functional_test_refs": [
+        "v2-question-flow-all-renderers",
+        "polish-quest-hooks"
+      ],
+      "visual_evidence_refs": [
+        "verification/results/run-*/"
+      ],
+      "probable_plan_owners": [
+        "assistant-chat-design"
+      ],
+      "command_impacts": [
+        "cmd.questionnaire.* was NEVER cataloged (corrected: prototype emitted them uncataloged); superseded by cmd.chat.question.answer/skip/submit/cancel in the final cumulative cutover"
+      ],
       "wiring_impacts": [],
-      "dry_component_impacts": ["shared question STATE controller is the DRY unit; renderers are not"],
+      "dry_component_impacts": [
+        "shared question STATE controller is the DRY unit; renderers are not"
+      ],
       "schema_event_storage_impacts": [],
       "usage_impacts": [],
       "settings_impacts": [],
@@ -84,17 +331,43 @@
     {
       "change_id": "chat-delta-103",
       "requirement": "Compact expandable Goal/Todo/subagent/activity/diff compositions",
-      "implemented_in": ["threads/t1..t8.js workRender", "threads/_thread-kit.js (workApi, activityLiveCard, todo interactivity, appendRecords)"],
-      "state_or_demo_refs": ["goal.*", "todo.*", "subagent.*", "activity.*", "diff.*"],
-      "video_or_motion_reference": ["05_VIDEO_REFERENCE_QUESTIONS_AND_ACTIVITY.md Recording B principles"],
-      "existing_bugs_fixed": ["todo checkboxes were non-interactive", "one shared surfaces renderer"],
-      "functional_test_refs": ["v2-compact-work-budget", "polish-grid-rows"],
-      "visual_evidence_refs": ["verification/results/run-*/"],
-      "probable_plan_owners": ["assistant-chat-design", "FinalGUISpec"],
+      "implemented_in": [
+        "threads/t1..t8.js workRender",
+        "threads/_thread-kit.js (workApi, activityLiveCard, todo interactivity, appendRecords)"
+      ],
+      "state_or_demo_refs": [
+        "goal.*",
+        "todo.*",
+        "subagent.*",
+        "activity.*",
+        "diff.*"
+      ],
+      "video_or_motion_reference": [
+        "05_VIDEO_REFERENCE_QUESTIONS_AND_ACTIVITY.md Recording B principles"
+      ],
+      "existing_bugs_fixed": [
+        "todo checkboxes were non-interactive",
+        "one shared surfaces renderer"
+      ],
+      "functional_test_refs": [
+        "v2-compact-work-budget",
+        "polish-grid-rows"
+      ],
+      "visual_evidence_refs": [
+        "verification/results/run-*/"
+      ],
+      "probable_plan_owners": [
+        "assistant-chat-design",
+        "FinalGUISpec"
+      ],
       "command_impacts": [],
       "wiring_impacts": [],
-      "dry_component_impacts": ["workData summary + builder cards are the shared layer"],
-      "schema_event_storage_impacts": ["per-thread todos/subagentStatus/activityLive runtime state"],
+      "dry_component_impacts": [
+        "workData summary + builder cards are the shared layer"
+      ],
+      "schema_event_storage_impacts": [
+        "per-thread todos/subagentStatus/activityLive runtime state"
+      ],
       "usage_impacts": [],
       "settings_impacts": [],
       "slint_notes": "collapsed budget (<=64px) should become a spec constant",
@@ -104,19 +377,45 @@
     {
       "change_id": "chat-delta-104",
       "requirement": "Selectors v2: provider/account/model, favorites, recents, search, disabled reasons, requested-vs-effective, effort + Normal/Fast nested",
-      "implemented_in": ["windows/_window-kit.js (modelPopup v2, selectorRow, accessPopup)", "_shared/demo-extend.js (catalog)", "_shared/store.js (effectiveSettings, favorites, applyModelChange, modelConsequence)"],
-      "state_or_demo_refs": ["decision.branch"],
+      "implemented_in": [
+        "windows/_window-kit.js (modelPopup v2, selectorRow, accessPopup)",
+        "_shared/demo-extend.js (catalog)",
+        "_shared/store.js (effectiveSettings, favorites, applyModelChange, modelConsequence)"
+      ],
+      "state_or_demo_refs": [
+        "decision.branch"
+      ],
       "video_or_motion_reference": [],
-      "existing_bugs_fixed": ["no accounts/favorites/Fast/disabled reasons previously"],
-      "functional_test_refs": ["features (manual v2 smoke)", "v2-warning-branch-flow"],
+      "existing_bugs_fixed": [
+        "no accounts/favorites/Fast/disabled reasons previously"
+      ],
+      "functional_test_refs": [
+        "features (manual v2 smoke)",
+        "v2-warning-branch-flow"
+      ],
       "visual_evidence_refs": [],
-      "probable_plan_owners": ["assistant-chat-design", "settings-redesign"],
-      "command_impacts": ["uncataloged cmd.model.change / cmd.access.set candidates"],
-      "wiring_impacts": ["selector row gains Access axis; Wiring Matrix row needed"],
-      "dry_component_impacts": ["model catalog shape is a DRY contract candidate"],
-      "schema_event_storage_impacts": ["thread-local settings overrides"],
-      "usage_impacts": ["replay/cache-loss warnings reference Usage recording"],
-      "settings_impacts": ["favorites + access profiles belong in Settings inventory"],
+      "probable_plan_owners": [
+        "assistant-chat-design",
+        "settings-redesign"
+      ],
+      "command_impacts": [
+        "uncataloged cmd.model.change / cmd.access.set candidates"
+      ],
+      "wiring_impacts": [
+        "selector row gains Access axis; Wiring Matrix row needed"
+      ],
+      "dry_component_impacts": [
+        "model catalog shape is a DRY contract candidate"
+      ],
+      "schema_event_storage_impacts": [
+        "thread-local settings overrides"
+      ],
+      "usage_impacts": [
+        "replay/cache-loss warnings reference Usage recording"
+      ],
+      "settings_impacts": [
+        "favorites + access profiles belong in Settings inventory"
+      ],
       "slint_notes": "nested submenu with confirm semantics needs Slint popup stacking support",
       "status": "implemented",
       "notes": []
@@ -124,19 +423,41 @@
     {
       "change_id": "chat-delta-105",
       "requirement": "Compact approvals, tiered warnings, attachment routing, capacity/cross-project",
-      "implemented_in": ["threads/_thread-kit.js (approvalCards, warningCards, attach routes)", "_shared/store.js (approval/warning/attach actions)"],
-      "state_or_demo_refs": ["decision.*", "system.port_collision", "system.worktree_collision", "system.cross_project", "system.crew"],
+      "implemented_in": [
+        "threads/_thread-kit.js (approvalCards, warningCards, attach routes)",
+        "_shared/store.js (approval/warning/attach actions)"
+      ],
+      "state_or_demo_refs": [
+        "decision.*",
+        "system.port_collision",
+        "system.worktree_collision",
+        "system.cross_project",
+        "system.crew"
+      ],
       "video_or_motion_reference": [],
       "existing_bugs_fixed": [],
-      "functional_test_refs": ["v2-approval-actions", "v2-warning-branch-flow", "v2-cross-project-scoped"],
+      "functional_test_refs": [
+        "v2-approval-actions",
+        "v2-warning-branch-flow",
+        "v2-cross-project-scoped"
+      ],
       "visual_evidence_refs": [],
-      "probable_plan_owners": ["assistant-chat-design", "FileSafe"],
-      "command_impacts": ["uncataloged cmd.approval.* / cmd.warning.* candidates"],
+      "probable_plan_owners": [
+        "assistant-chat-design",
+        "FileSafe"
+      ],
+      "command_impacts": [
+        "uncataloged cmd.approval.* / cmd.warning.* candidates"
+      ],
       "wiring_impacts": [],
-      "dry_component_impacts": ["approval card + tiered warning are DRY candidates"],
+      "dry_component_impacts": [
+        "approval card + tiered warning are DRY candidates"
+      ],
       "schema_event_storage_impacts": [],
       "usage_impacts": [],
-      "settings_impacts": ["cross-project scope choice must not persist silently"],
+      "settings_impacts": [
+        "cross-project scope choice must not persist silently"
+      ],
       "slint_notes": [],
       "status": "implemented",
       "notes": []
@@ -144,19 +465,48 @@
     {
       "change_id": "chat-delta-106",
       "requirement": "Context Lens breakdown, Compact Now, rewind/restore, branch, inter-thread, redirect, passive spellcheck",
-      "implemented_in": ["windows/_window-kit.js (openLensBreakdown, lens Compact Now)", "threads/_thread-kit.js (hover restore/branch, rewind divider, redirect menu, spellcheck wiring)", "_shared/spellcheck.js", "_shared/store.js"],
-      "state_or_demo_refs": ["system.compact_now", "system.redirect", "thread.*"],
+      "implemented_in": [
+        "windows/_window-kit.js (openLensBreakdown, lens Compact Now)",
+        "threads/_thread-kit.js (hover restore/branch, rewind divider, redirect menu, spellcheck wiring)",
+        "_shared/spellcheck.js",
+        "_shared/store.js"
+      ],
+      "state_or_demo_refs": [
+        "system.compact_now",
+        "system.redirect",
+        "thread.*"
+      ],
       "video_or_motion_reference": [],
-      "existing_bugs_fixed": ["cmd.chat.create_restore_point had no emitter"],
-      "functional_test_refs": ["v2-redirect-and-compactnow", "v2-spellcheck-menu", "polish-spellcheck-passive", "features rewind divider"],
+      "existing_bugs_fixed": [
+        "cmd.chat.create_restore_point had no emitter"
+      ],
+      "functional_test_refs": [
+        "v2-redirect-and-compactnow",
+        "v2-spellcheck-menu",
+        "polish-spellcheck-passive",
+        "features rewind divider"
+      ],
       "visual_evidence_refs": [],
-      "probable_plan_owners": ["assistant-chat-design", "Commands_System"],
-      "command_impacts": ["cmd.chat.create_restore_point now emitted; cmd.chat.rewind/branch/turn.redirect uncataloged candidates"],
+      "probable_plan_owners": [
+        "assistant-chat-design",
+        "Commands_System"
+      ],
+      "command_impacts": [
+        "cmd.chat.create_restore_point now emitted; cmd.chat.rewind/branch/turn.redirect uncataloged candidates"
+      ],
       "wiring_impacts": [],
-      "dry_component_impacts": ["spellcheck service must be Slint-portable (GAP candidate)"],
-      "schema_event_storage_impacts": ["restorePoints, threadRequests, compactEvents per thread"],
-      "usage_impacts": ["Compact Now runtime record owned by Usage"],
-      "settings_impacts": ["personal/project spelling dictionaries"],
+      "dry_component_impacts": [
+        "spellcheck service must be Slint-portable (GAP candidate)"
+      ],
+      "schema_event_storage_impacts": [
+        "restorePoints, threadRequests, compactEvents per thread"
+      ],
+      "usage_impacts": [
+        "Compact Now runtime record owned by Usage"
+      ],
+      "settings_impacts": [
+        "personal/project spelling dictionaries"
+      ],
       "slint_notes": "textarea-native underline assumption must be re-proven in Slint",
       "status": "implemented",
       "notes": []
@@ -164,13 +514,28 @@
     {
       "change_id": "chat-delta-107",
       "requirement": "Demo harness + richer content (17 threads, thread-17 showcase, triggers, deterministic reset)",
-      "implemented_in": ["_shared/demo-triggers.js", "_shared/demo-extend.js", "index.html demo drawer", "host.html harness drawer", "_shared/host-boot.js pm-trigger"],
-      "state_or_demo_refs": ["DEMO_TRIGGER_CONTRACT.json families"],
+      "implemented_in": [
+        "_shared/demo-triggers.js",
+        "_shared/demo-extend.js",
+        "index.html demo drawer",
+        "host.html harness drawer",
+        "_shared/host-boot.js pm-trigger"
+      ],
+      "state_or_demo_refs": [
+        "DEMO_TRIGGER_CONTRACT.json families"
+      ],
       "video_or_motion_reference": [],
-      "existing_bugs_fixed": ["resetForRestart had no callers", "no trigger vocabulary in host"],
-      "functional_test_refs": ["v2-deterministic-reset"],
+      "existing_bugs_fixed": [
+        "resetForRestart had no callers",
+        "no trigger vocabulary in host"
+      ],
+      "functional_test_refs": [
+        "v2-deterministic-reset"
+      ],
       "visual_evidence_refs": [],
-      "probable_plan_owners": ["governance (harness is non-product)"],
+      "probable_plan_owners": [
+        "governance (harness is non-product)"
+      ],
       "command_impacts": [],
       "wiring_impacts": [],
       "dry_component_impacts": [],
@@ -179,17 +544,31 @@
       "settings_impacts": [],
       "slint_notes": [],
       "status": "implemented",
-      "notes": ["triggers are harness-only by contract"]
+      "notes": [
+        "triggers are harness-only by contract"
+      ]
     },
     {
       "change_id": "chat-delta-108",
       "requirement": "Test harness extensions + collision safety + truthful docs",
-      "implemented_in": ["verification/run-matrix.mjs (v2 suite, port-0 server spawn, run-scoped shots, playwright fallbacks)", "verification/probes.js (sideRegions, questSignature, compactWorkBudget, spellAttrs, srmark, workingFooter, measureCap, pinMeasure rewrite)", "verification/gen-contact-sheet.mjs"],
+      "implemented_in": [
+        "verification/run-matrix.mjs (v2 suite, port-0 server spawn, run-scoped shots, playwright fallbacks)",
+        "verification/probes.js (sideRegions, questSignature, compactWorkBudget, spellAttrs, srmark, workingFooter, measureCap, pinMeasure rewrite)",
+        "verification/gen-contact-sheet.mjs"
+      ],
       "state_or_demo_refs": [],
       "video_or_motion_reference": [],
-      "existing_bugs_fixed": ["known-limitations overclaims now backed by real probes (srmark, working footer, measure cap)", "playwright-core fallback path broken", "contact sheet referenced missing screenshots with no generator"],
-      "functional_test_refs": ["v2 suite 15/15"],
-      "visual_evidence_refs": ["verification/results/contact-sheet.html"],
+      "existing_bugs_fixed": [
+        "known-limitations overclaims now backed by real probes (srmark, working footer, measure cap)",
+        "playwright-core fallback path broken",
+        "contact sheet referenced missing screenshots with no generator"
+      ],
+      "functional_test_refs": [
+        "v2 suite 15/15"
+      ],
+      "visual_evidence_refs": [
+        "verification/results/contact-sheet.html"
+      ],
       "probable_plan_owners": [],
       "command_impacts": [],
       "wiring_impacts": [],
@@ -204,34 +583,86 @@
     {
       "change_id": "chat-delta-109",
       "requirement": "v3 state domains: BSD advisor, account/connection identity, offline/outbox/replay/snapshot, notification inbox, admission receipt, operational awareness, attachment resolution lifecycle, persistence repair",
-      "implemented_in": ["_shared/store.js (bsdSet/bsdEffective/bsdResolve, effectiveAccount/setAccount, connQueue/connReconnect/connSnapshot/connServerWork, notifyPush/notifyRead, admissionOf/admissionRemove/contextSourceAdd, opsAddPort/portResolve/worktreeSetState/opsAddSession, attachResolve/attachStartJob, applyModelChange accountId + recentModels {model, accountId} migration, persist/restore incl. extraThreads/connection/notifications)", "_shared/types.d.ts (full API parity)"],
-      "state_or_demo_refs": ["state.connection", "state.notifications", "threads[].bsd/bsdAdvice/operational/admission/attachRoutes"],
+      "implemented_in": [
+        "_shared/store.js (bsdSet/bsdEffective/bsdResolve, effectiveAccount/setAccount, connQueue/connReconnect/connSnapshot/connServerWork, notifyPush/notifyRead, admissionOf/admissionRemove/contextSourceAdd, opsAddPort/portResolve/worktreeSetState/opsAddSession, attachResolve/attachStartJob, applyModelChange accountId + recentModels {model, accountId} migration, persist/restore incl. extraThreads/connection/notifications)",
+        "_shared/types.d.ts (full API parity)"
+      ],
+      "state_or_demo_refs": [
+        "state.connection",
+        "state.notifications",
+        "threads[].bsd/bsdAdvice/operational/admission/attachRoutes"
+      ],
       "video_or_motion_reference": [],
-      "existing_bugs_fixed": ["extraThreads not persisted (branch/spawn lost on reload)", "recentModels string entries (now {model, accountId})"],
-      "functional_test_refs": ["probe-phase1-store 7/7", "probe-phase1b-contracts 8/8", "probe-persistence 9/9"],
+      "existing_bugs_fixed": [
+        "extraThreads not persisted (branch/spawn lost on reload)",
+        "recentModels string entries (now {model, accountId})"
+      ],
+      "functional_test_refs": [
+        "probe-phase1-store 7/7",
+        "probe-phase1b-contracts 8/8",
+        "probe-persistence 9/9"
+      ],
       "visual_evidence_refs": [],
-      "probable_plan_owners": ["assistant-chat-design", "Server/Project Sync integration", "Notifications", "Multi-Account"],
-      "command_impacts": ["cmd.chat.bsd.set", "cmd.chat.route.select", "cmd.chat.access.set", "cmd.chat.outbox.queue/.flush", "cmd.chat.context.source.add/.remove", "cmd.chat.attachment.resolve/.route"],
-      "wiring_impacts": ["outbox entry id = idempotency key; sentOnce skips replays"],
+      "probable_plan_owners": [
+        "assistant-chat-design",
+        "Server/Project Sync integration",
+        "Notifications",
+        "Multi-Account"
+      ],
+      "command_impacts": [
+        "cmd.chat.bsd.set",
+        "cmd.chat.route.select",
+        "cmd.chat.access.set",
+        "cmd.chat.outbox.queue/.flush",
+        "cmd.chat.context.source.add/.remove",
+        "cmd.chat.attachment.resolve/.route"
+      ],
+      "wiring_impacts": [
+        "outbox entry id = idempotency key; sentOnce skips replays"
+      ],
       "dry_component_impacts": [],
-      "schema_event_storage_impacts": ["connection + notifications persisted", "seed fields yield to persisted snapshot values"],
-      "usage_impacts": ["BSD attribution states", "cache-loss wording"],
+      "schema_event_storage_impacts": [
+        "connection + notifications persisted",
+        "seed fields yield to persisted snapshot values"
+      ],
+      "usage_impacts": [
+        "BSD attribution states",
+        "cache-loss wording"
+      ],
       "settings_impacts": [],
       "slint_notes": [],
       "status": "implemented",
-      "notes": ["outbox contract: { id, draft { threadKey, text, attachments }, at, sentOnce }"]
+      "notes": [
+        "outbox contract: { id, draft { threadKey, text, attachments }, at, sentOnce }"
+      ]
     },
     {
       "change_id": "chat-delta-110",
       "requirement": "Clean cutover to the cmd.chat.* command vocabulary (no aliases)",
-      "implemented_in": ["_shared/commands.js (CATALOGED 52 IDs)", "_shared/store.js (all emitters)", "_shared/shell.js (cmd.browser_program.open)", "threads/_thread-kit.js (approvalDetails wiring)"],
+      "implemented_in": [
+        "_shared/commands.js (CATALOGED 52 IDs)",
+        "_shared/store.js (all emitters)",
+        "_shared/shell.js (cmd.browser_program.open)",
+        "threads/_thread-kit.js (approvalDetails wiring)"
+      ],
       "state_or_demo_refs": [],
       "video_or_motion_reference": [],
-      "existing_bugs_fixed": ["cmd.questionnaire.* falsely claimed cataloged (corrected in chat-delta-102)", "cmd.chat.turn.redirect dropped text", "warning.resolve emitted for kinds outside the packet set"],
-      "functional_test_refs": ["probe-phase2-commands 7/7 (every canonical row + payload contracts + visible Switch-here button path)"],
+      "existing_bugs_fixed": [
+        "cmd.questionnaire.* falsely claimed cataloged (corrected in chat-delta-102)",
+        "cmd.chat.turn.redirect dropped text",
+        "warning.resolve emitted for kinds outside the packet set"
+      ],
+      "functional_test_refs": [
+        "probe-phase2-commands 7/7 (every canonical row + payload contracts + visible Switch-here button path)"
+      ],
       "visual_evidence_refs": [],
-      "probable_plan_owners": ["assistant-chat-design", "Commands_System"],
-      "command_impacts": ["44 cmd.chat.* IDs adopted; cmd.questionnaire.* / cmd.goal.* / cmd.context_lens.* / cmd.context.* / cmd.approval.* / generic cmd.warning.* / cmd.artifact.open_workspace / cmd.chat.turn.redirect / cmd.chat.create_restore_point / cmd.chat.rewind / cmd.chat.thread.request_send|request_receive|spawn_related / cmd.browser.open all removed from producers (zero grep hits)"],
+      "probable_plan_owners": [
+        "assistant-chat-design",
+        "Commands_System"
+      ],
+      "command_impacts": [
+        "44 cmd.chat.* IDs adopted; cmd.questionnaire.* / cmd.goal.* / cmd.context_lens.* / cmd.context.* / cmd.approval.* / generic cmd.warning.* / cmd.artifact.open_workspace / cmd.chat.turn.redirect / cmd.chat.create_restore_point / cmd.chat.rewind / cmd.chat.thread.request_send|request_receive|spawn_related / cmd.browser.open all removed from producers (zero grep hits)"
+      ],
       "wiring_impacts": [],
       "dry_component_impacts": [],
       "schema_event_storage_impacts": [],
@@ -239,18 +670,37 @@
       "settings_impacts": [],
       "slint_notes": [],
       "status": "implemented",
-      "notes": ["cmd.chat.goal.clear intentionally not cataloged (local presentation mutation)", "see candidate-command-delta.json census"]
+      "notes": [
+        "cmd.chat.goal.clear intentionally not cataloged (local presentation mutation)",
+        "see candidate-command-delta.json census"
+      ]
     },
     {
       "change_id": "chat-delta-111",
       "requirement": "18-thread fixture with full packet scenario coverage",
-      "implemented_in": ["_shared/demo-extend.js (thread-18 offline story, thread-17 showcase upgrades, catalog setup states + Gemini group + GPT-5.6 Mini disabled)", "_shared/demo-triggers.js (21 new triggers, 84 total)", "host.html + index.html (full-registry drawer parity)", "threads/_thread-kit.js (read/search/web/verify stage kinds)"],
-      "state_or_demo_refs": ["thread-18 (13 msgs, waiting for reconnect)", "thread-17 (5 routed subagents, port 3000, worktrees, sessions, capacity forecast, cross-project grant, unsupported attachment, admission receipt, bsdEvents)"],
+      "implemented_in": [
+        "_shared/demo-extend.js (thread-18 offline story, thread-17 showcase upgrades, catalog setup states + Gemini group + GPT-5.6 Mini disabled)",
+        "_shared/demo-triggers.js (21 new triggers, 84 total)",
+        "host.html + index.html (full-registry drawer parity)",
+        "threads/_thread-kit.js (read/search/web/verify stage kinds)"
+      ],
+      "state_or_demo_refs": [
+        "thread-18 (13 msgs, waiting for reconnect)",
+        "thread-17 (5 routed subagents, port 3000, worktrees, sessions, capacity forecast, cross-project grant, unsupported attachment, admission receipt, bsdEvents)"
+      ],
       "video_or_motion_reference": [],
-      "existing_bugs_fixed": ["activity stage kinds read/search/web/verify unmapped"],
-      "functional_test_refs": ["probe-phase3-fixture 19/19"],
+      "existing_bugs_fixed": [
+        "activity stage kinds read/search/web/verify unmapped"
+      ],
+      "functional_test_refs": [
+        "probe-phase3-fixture 19/19"
+      ],
       "visual_evidence_refs": [],
-      "probable_plan_owners": ["assistant-chat-design", "Orchestrator/Subagents", "Worktrees/Git"],
+      "probable_plan_owners": [
+        "assistant-chat-design",
+        "Orchestrator/Subagents",
+        "Worktrees/Git"
+      ],
       "command_impacts": [],
       "wiring_impacts": [],
       "dry_component_impacts": [],
@@ -259,58 +709,131 @@
       "settings_impacts": [],
       "slint_notes": [],
       "status": "implemented",
-      "notes": ["see demo-trigger-report.json (registry + §07 coverage map)"]
+      "notes": [
+        "see demo-trigger-report.json (registry + §07 coverage map)"
+      ]
     },
     {
       "change_id": "chat-delta-112",
       "requirement": "Window chrome: provider rail, selectable accounts, setup states, BSD selector, Context Lens receipt, sync strip, title-bar inbox, Browser Program terminology",
-      "implemented_in": ["windows/_window-kit.js (modelPopup rail/accounts/setup, bsdPopup + selectorRow BSD chip, ringButton cache line + Compact Now, openLensBreakdown admission receipt, search passage actions)", "_shared/shell.js (sync strip + inbox + editor tab Browser Program label)", "_shared/icons.js (bell)", "windows/_window-kit.css + _shared/shell.css", "_shared/demoData.json (Browser Program strings)"],
+      "implemented_in": [
+        "windows/_window-kit.js (modelPopup rail/accounts/setup, bsdPopup + selectorRow BSD chip, ringButton cache line + Compact Now, openLensBreakdown admission receipt, search passage actions)",
+        "_shared/shell.js (sync strip + inbox + editor tab Browser Program label)",
+        "_shared/icons.js (bell)",
+        "windows/_window-kit.css + _shared/shell.css",
+        "_shared/demoData.json (Browser Program strings)"
+      ],
       "state_or_demo_refs": [],
       "video_or_motion_reference": [],
       "existing_bugs_fixed": [],
-      "functional_test_refs": ["probe-phase4-chrome 19/19"],
-      "visual_evidence_refs": ["matrix-visual surface captures"],
-      "probable_plan_owners": ["assistant-chat-design", "Models System", "Multi-Account", "Notifications", "Testing/Browser/Artifacts"],
+      "functional_test_refs": [
+        "probe-phase4-chrome 19/19"
+      ],
+      "visual_evidence_refs": [
+        "matrix-visual surface captures"
+      ],
+      "probable_plan_owners": [
+        "assistant-chat-design",
+        "Models System",
+        "Multi-Account",
+        "Notifications",
+        "Testing/Browser/Artifacts"
+      ],
       "command_impacts": [],
       "wiring_impacts": [],
       "dry_component_impacts": [],
       "schema_event_storage_impacts": [],
       "usage_impacts": [],
-      "settings_impacts": ["provider setup states deep-link to settings:provider"],
-      "slint_notes": ["BSD glow bounded (2 alternations), theme tokens only, reduced-motion snap"],
+      "settings_impacts": [
+        "provider setup states deep-link to settings:provider"
+      ],
+      "slint_notes": [
+        "BSD glow bounded (2 alternations), theme tokens only, reduced-motion snap"
+      ],
       "status": "implemented",
-      "notes": ["CHAT-019 respected: sync strip compact only; MGR-003 respected: no Activity Bar icon"]
+      "notes": [
+        "CHAT-019 respected: sync strip compact only; MGR-003 respected: no Activity Bar icon"
+      ]
     },
     {
       "change_id": "chat-delta-113",
       "requirement": "Thread surfaces: typed receipts, BSD/operational/capacity/attachment/grant cards, offline composer, eight-concept work parity",
-      "implemented_in": ["threads/_thread-kit.js (receiptCards/appendReceipts, bsdCards, opsCards, capacityCards, attachmentResolutionCards, grantCard, warningAction consent-before-route + attachment choices, composer offline/setup states, surfaceList/workApi extensions)", "threads/t1..t8.js (per-idiom v3 domains + artifact cards on t1/t2/t3/t4/t5/t6/t7/t8)", "threads/_thread-kit.css"],
+      "implemented_in": [
+        "threads/_thread-kit.js (receiptCards/appendReceipts, bsdCards, opsCards, capacityCards, attachmentResolutionCards, grantCard, warningAction consent-before-route + attachment choices, composer offline/setup states, surfaceList/workApi extensions)",
+        "threads/t1..t8.js (per-idiom v3 domains + artifact cards on t1/t2/t3/t4/t5/t6/t7/t8)",
+        "threads/_thread-kit.css"
+      ],
       "state_or_demo_refs": [],
       "video_or_motion_reference": [],
-      "existing_bugs_fixed": ["attachment chip renderer crashed on object-shaped seeded attachments (normalized)", "artifact cards missing from six concepts", "attachment.unsupported trigger could only render resolver cards on fixture-seeded threads (resolver now enumerates draft + message + route-key union; trigger pushes the attachment into the live draft)", "collapsed grid folds (.pmq-gw) stayed hit-testable at 0fr, so t1's work strip intercepted strict clicks on collapsed warning cards — fixed with delayed visibility:hidden on collapsed folds (instant under reduced motion); strict pointer click on Switch here now succeeds"],
-      "functional_test_refs": ["probe-phase5-surfaces 23/23", "probe-attachment-trigger 7/7", "probe-phase2-commands 7/7 (strict pointer click on Switch here)"],
+      "existing_bugs_fixed": [
+        "attachment chip renderer crashed on object-shaped seeded attachments (normalized)",
+        "artifact cards missing from six concepts",
+        "attachment.unsupported trigger could only render resolver cards on fixture-seeded threads (resolver now enumerates draft + message + route-key union; trigger pushes the attachment into the live draft)",
+        "collapsed grid folds (.pmq-gw) stayed hit-testable at 0fr, so t1's work strip intercepted strict clicks on collapsed warning cards — fixed with delayed visibility:hidden on collapsed folds (instant under reduced motion); strict pointer click on Switch here now succeeds"
+      ],
+      "functional_test_refs": [
+        "probe-phase5-surfaces 23/23",
+        "probe-attachment-trigger 7/7",
+        "probe-phase2-commands 7/7 (strict pointer click on Switch here)"
+      ],
       "visual_evidence_refs": [],
-      "probable_plan_owners": ["assistant-chat-design", "Permissions", "Media"],
+      "probable_plan_owners": [
+        "assistant-chat-design",
+        "Permissions",
+        "Media"
+      ],
       "command_impacts": [],
-      "wiring_impacts": ["consent precedes cmd.chat.attachment.route; Cancel removes unsupported attachments"],
+      "wiring_impacts": [
+        "consent precedes cmd.chat.attachment.route; Cancel removes unsupported attachments"
+      ],
       "dry_component_impacts": [],
       "schema_event_storage_impacts": [],
       "usage_impacts": [],
       "settings_impacts": [],
       "slint_notes": [],
       "status": "implemented",
-      "notes": ["each concept keeps its own idiom; receipts use the appendRecords dedupe-guard pattern"]
+      "notes": [
+        "each concept keeps its own idiom; receipts use the appendRecords dedupe-guard pattern"
+      ]
     },
     {
       "change_id": "chat-delta-114",
       "requirement": "Seven packet reports + rebuilt verification gate outside the validator-sensitive tree",
-      "implemented_in": ["impact-register.json", "candidate-command-delta.json", "candidate-wiring-delta.json", "candidate-dry-delta.json", "plan-owner-delta.md", "demo-trigger-report.json", "interaction-test-report.json (162/0 across 9 suites)", "_build/tests (static-server.mjs, pw.mjs, report.mjs, 17 probe scripts: 8 packet-mandated suites + probe-attachment-trigger regression + 7 phase-gate probes + probe-smoke)", "%LOCALAPPDATA%/pm-concept-tests (playwright-core)", "%LOCALAPPDATA%/pm-concept-evidence/qwen-3-8 (screenshots + contact-sheet.html)"],
+      "implemented_in": [
+        "impact-register.json",
+        "candidate-command-delta.json",
+        "candidate-wiring-delta.json",
+        "candidate-dry-delta.json",
+        "plan-owner-delta.md",
+        "demo-trigger-report.json",
+        "interaction-test-report.json (288/0 across 11 runs after correction packet: 9 mandated suites + probe-motion-continuity + probe-coverage-expansion)",
+        "_build/tests (static-server.mjs, pw.mjs, report.mjs, 19 probe scripts: 8 packet-mandated suites + probe-attachment-trigger regression + 7 phase-gate probes + probe-smoke + probe-motion-continuity + probe-coverage-expansion)",
+        "%LOCALAPPDATA%/pm-concept-tests (playwright-core)",
+        "%LOCALAPPDATA%/pm-concept-evidence/qwen-3-8 (screenshots + contact-sheet.html)"
+      ],
       "state_or_demo_refs": [],
       "video_or_motion_reference": [],
-      "existing_bugs_fixed": ["verification/ harness absent from disk; rebuilt validator-safe in _build/tests with evidence outside the folder"],
-      "functional_test_refs": ["probe-smoke 3/3", "probe-pinned 24/24", "probe-question 28/28", "probe-work 20/20", "probe-artifact 10/10", "probe-general 14/14", "probe-offline 6/6", "probe-persistence 9/9", "matrix-visual 44/44", "probe-attachment-trigger 7/7"],
-      "visual_evidence_refs": ["evidence dir contact-sheet.html (>=32 theme/width variants)"],
-      "probable_plan_owners": ["assistant-chat-design"],
+      "existing_bugs_fixed": [
+        "verification/ harness absent from disk; rebuilt validator-safe in _build/tests with evidence outside the folder"
+      ],
+      "functional_test_refs": [
+        "probe-smoke 3/3",
+        "probe-pinned 24/24",
+        "probe-question 28/28",
+        "probe-work 20/20",
+        "probe-artifact 10/10",
+        "probe-general 14/14",
+        "probe-offline 6/6",
+        "probe-persistence 9/9",
+        "matrix-visual 44/44",
+        "probe-attachment-trigger 7/7"
+      ],
+      "visual_evidence_refs": [
+        "evidence dir contact-sheet.html (>=32 theme/width variants)"
+      ],
+      "probable_plan_owners": [
+        "assistant-chat-design"
+      ],
       "command_impacts": [],
       "wiring_impacts": [],
       "dry_component_impacts": [],
@@ -319,8 +842,73 @@
       "settings_impacts": [],
       "slint_notes": [],
       "status": "implemented",
-      "notes": ["ConceptHub validate.py passes; remaining defects disclosed in interaction-test-report.json"]
-     }
+      "notes": [
+        "ConceptHub validate.py passes; remaining defects disclosed in interaction-test-report.json"
+      ]
+    },
+    {
+      "change_id": "chat-delta-115",
+      "requirement": "Correction packet 2026-08-13: dependency/media audit corrections — causal motion continuity (4 videos), picker/adjudication copy, fixture coherence, coverage expansion, reference-review report",
+      "implemented_in": [
+        "reference-review-report.json (23 media/fixture items, all opened, change-or-no-change rationale)",
+        "threads/_thread-kit.js (arrival glide + header sweep; prepare/submitting pills + review page + Escape cancel through the custom-renderer path; activity two-chip condense + persistent Verified row + live condense beat)",
+        "threads/_thread-kit.css (sweep/chips/verified/review styles, reduced-motion static bar)",
+        "threads/t1..t8.js (lifecycle wired per concept idiom: prepare pill, Skip on all pages, Review answers on last, review page with back links, Submit via shared morph)",
+        "windows/_window-kit.js (Favorites->Recents order, per-row kbd chips + activation, provider sub-row, adjudication copy set, exact-row deep-link with continuation token, discover/verify states)",
+        "_shared/store.js + _shared/shell.js + _shared/demo-triggers.js (conn.reconnect_fail failed state, error row + retry, recover+drain)",
+        "_shared/demo-extend.js (Slint reviewer Qwen 3.8 failed->retrying; crew aligned; Google provenance sub)",
+        "_build/tests/probe-motion-continuity.mjs + probe-coverage-expansion.mjs (new gates)"
+      ],
+      "state_or_demo_refs": [
+        "question.prepare",
+        "question.submit",
+        "conn.reconnect_fail",
+        "capacity.forecast",
+        "artifact.error"
+      ],
+      "video_or_motion_reference": [
+        "01_message_arrival_spatial_continuity.mov",
+        "02_stable_paged_questionnaire.mov",
+        "03_compact_execution_activity.mov",
+        "04_questionnaire_morph_prepare_submit.mov",
+        "questionnaire_motion_contact_sheet.jpg",
+        "compact_activity_motion_contact_sheet.jpg"
+      ],
+      "existing_bugs_fixed": [
+        "custom questionnaire renderers bypassed the shared prepare/submit pill morph (dormant default-renderer-only lifecycle)",
+        "no pre-submit review step (video 02)",
+        "message arrival jump-scrolled; no off-bottom arrival indicator beyond the Latest pill",
+        "live activity -> completed group was an instant replacement; no two-chip strip or persistent Verified row",
+        "picker section order Recent-before-Favorites violated 01 doc order; no kbd chips; account-only sub-row",
+        "provider copy lacked adjudication concepts (Provider Setup Required verbatim, official source, install-vs-auth, Host/Environment, exact-row deep-link + continuation, Auto/On consent boundary, discover/verify)",
+        "Slint reviewer route/state inconsistent with manifest and built message text",
+        "no reconnect-failure path existed"
+      ],
+      "functional_test_refs": [
+        "probe-motion-continuity 26/26 (full + reduced)",
+        "probe-coverage-expansion 100/100",
+        "full 19-probe suite green; interaction-test-report.json 288/0 across 11 runs"
+      ],
+      "visual_evidence_refs": [
+        "%LOCALAPPDATA%/pm-concept-evidence/qwen-3-8 (regenerated contact sheet)"
+      ],
+      "probable_plan_owners": [
+        "assistant-chat-design",
+        "FinalGUISpec",
+        "Models System",
+        "Settings inventory",
+        "Server/Project Sync integration",
+        "Testing/Browser/Artifacts"
+      ],
+      "command_impacts": [
+        "uncataloged: cmd.chat.connection.fail (candidate)",
+        "payload extension: cmd.shell.page {row, resume} (candidate)"
+      ],
+      "status": "implemented",
+      "notes": [
+        "reference-review-report.json records every opened media item; compliant-by-design judgments (card height adjusts smoothly; Submit replaces Skip on last answered question; t8 minimal motion) disclosed, not 'fixed'."
+      ]
+    }
   ],
   "files_modified_outside_workspace": []
 }

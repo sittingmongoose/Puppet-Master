@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L11015-L11065
+Source lines: L11099-L11152
 
-Source SHA256: `42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca`
+Source SHA256: `78420b4d2c670dadc9747ffd98d3e2c1b817ace8238e70df542967f62f2e8a45`
 
 ---
 
@@ -18,16 +18,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  Tools consumes Automated_Testing_System capability discovery for browser automation, GUI automation, device/emulator automation, screenshot capture, logs, app launch, headless/headed modes, project-native test runners, and official testing option research. For web projects, once Puppet Master is built, Puppet Master built-in browser automation is the primary native web test automation path; Playwright can remain optional, fallback, or project-native. Slint live preview/live reload is a Puppet Master build example only and must not become the default testing assumption for all user projects.
-  For web testing, Playwright optional remains fallback or project-native rather than the native default.
+  Tools consumes Automated_Testing_System capability discovery for browser automation, GUI automation, device/emulator automation, screenshot capture, logs, app launch, headless/headed modes, project-native test runners, and official testing option research. Puppet Master's Browser Program and Expert Browser Program are the only PM-native web browser automation and testing paths. A user Project may independently depend on and run its own Playwright suite only as a generic external Project command/process under Project tooling policy; PM may ingest generic Test Capture or artifact refs with explicit external-Project attribution, but that process creates no PM browser authority or compatibility surface. Slint live preview/live reload is a Puppet Master build example only and must not become the default testing assumption for all user projects.
 gui_related: true
 gui_classification_reason: Browser automation, GUI automation, emulator sessions, screenshots, and visual evidence are user-visible tool surfaces.
 depends_on: [ATS-001, ATS-002, ATS-004]
 unblocks: [ATS-002, ATS-004, RAP-029]
 acceptance_criteria:
   - Tools can report browser, GUI, device/emulator, screenshot, log, launch, headless/headed, and native runner capabilities to Automated_Testing_System.
-  - Built-in browser automation is the preferred native path for web testing once available.
-  - Playwright remains optional/fallback/project-native and Slint remains an example only.
+  - Browser Program and Expert Browser Program remain the only PM-native web browser automation and testing paths.
+  - A user Project Playwright suite runs only as a generic external Project command/process; any ingested generic Test Capture or artifact refs carry explicit external-Project attribution and confer no PM browser authority or compatibility surface.
+  - Slint remains an example only.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
   - future tool capability discovery tests
@@ -45,13 +45,16 @@ source_lineage:
 preserved_exact_tokens:
   - "browser automation"
   - "emulator"
-  - "Puppet Master built-in browser automation"
-  - "Playwright optional"
+  - "Browser Program"
+  - "Expert Browser Program"
+  - "generic external Project command/process"
+  - "external-Project attribution"
   - "Slint"
   - "example only"
 negative_constraints:
   - Do not hyper-focus automated testing around Slint.
-  - Do not default native Puppet Master web testing to Playwright when the built-in browser can do it.
+  - Do not create or imply a PM Playwright runtime, facade, compatibility vocabulary or namespace, package, port, MCP route, command or alias, Settings/Doctor/support capability, or capture engine.
+  - Do not grant an external Project command/process PM browser authority through artifact ingestion.
 owner_hints:
   - Plans/Tools.md
   - Plans/Automated_Testing_System.md

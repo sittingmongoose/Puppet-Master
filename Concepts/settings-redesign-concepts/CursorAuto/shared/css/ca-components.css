@@ -2045,3 +2045,46 @@ mark {
 [data-ca-stage="enter-workspace"] .ca-mgr-wrap {
   transform-origin: var(--ca-origin-x, 50%) var(--ca-origin-y, 40%);
 }
+
+
+/* ---- ObservableWork projection (CursorAuto correction) ---- */
+.ca-ow-host { margin-block: 10px; }
+.ca-ow {
+  border: 1px solid color-mix(in oklab, CanvasText 16%, Canvas);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: color-mix(in oklab, Canvas 92%, CanvasText 8%);
+  display: grid;
+  gap: 6px;
+}
+.ca-ow-title { font-weight: 650; font-size: 0.92rem; }
+.ca-ow-phase, .ca-ow-msg, .ca-ow-wait, .ca-ow-units, .ca-ow-lkg { font-size: 0.82rem; opacity: 0.9; }
+.ca-ow-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: color-mix(in oklab, CanvasText 12%, Canvas);
+  overflow: hidden;
+}
+.ca-ow-bar > span {
+  display: block;
+  height: 100%;
+  background: color-mix(in oklab, LinkText 70%, CanvasText 30%);
+}
+.ca-ow-pulse {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, color-mix(in oklab, LinkText 50%, Canvas), transparent);
+  background-size: 200% 100%;
+  animation: ca-ow-slide 1.2s linear infinite;
+}
+.ca-ow-pulse.is-static { animation: none; opacity: 0.45; }
+@keyframes ca-ow-slide {
+  from { background-position: 100% 0; }
+  to { background-position: -100% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ca-ow-pulse { animation: none; opacity: 0.45; }
+}
+.ca-ow-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.ca-advanced { margin-block-start: 4px; font-size: 0.8rem; }
+.ca-advanced > summary { cursor: pointer; opacity: 0.85; }

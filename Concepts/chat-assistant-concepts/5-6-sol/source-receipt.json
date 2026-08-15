@@ -1,14 +1,41 @@
 {
-  "schema_id": "pm.chat.5_6_sol.source_receipt.v1",
+  "schema_id": "pm.chat.5_6_sol.source_receipt.v2",
   "model": "5.6 Sol",
-  "packet": "PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10.zip",
-  "packet_sha256": "a391ed571c9a2f27adb14c923c7a914f685a6486d4944a000e1ec5d6bd6083fc",
-  "packet_manifest_schema": "pm.chat.5_6_sol.packet_manifest.v1",
-  "repository_head_at_start": "43b5b635c4ae285544745762b79218b07786263c",
+  "repository_head_at_original_bakeoff_start": "43b5b635c4ae285544745762b79218b07786263c",
+  "repository_head_at_correction_start": "df9dfa9eb0765f84392b146570f73b2427132953",
+  "original_packet": {
+    "name": "PM_Assistant_Chat_5_6_Sol_Creative_Bakeoff_2026-08-10.zip",
+    "sha256": "a391ed571c9a2f27adb14c923c7a914f685a6486d4944a000e1ec5d6bd6083fc",
+    "archive_hash_verified": true,
+    "packet_manifest_schema": "pm.chat.5_6_sol.packet_manifest.v1",
+    "packet_manifest_sha256": "cbf7c1f2fd08980c242cfef265c36461927d23aab8250325e0b1d789a0757ad7",
+    "manifest_sha256_file_sha256": "5baca524fa96aac35d6ba39f85d4461587797b9c86965cb00608c298238429e3",
+    "stale_self_hash_caveat": {
+      "self_entry_recorded_sha256": "cc660f65e6d02dad9ca76e89e4f3665180f29551f92fa526055d4913121e00e3",
+      "actual_packet_manifest_sha256": "cbf7c1f2fd08980c242cfef265c36461927d23aab8250325e0b1d789a0757ad7",
+      "self_entry_matches": false
+    }
+  },
+  "correction_packet": {
+    "name": "PM_Assistant_Chat_5_6_Sol_Dependency_Path_and_Work_Correction_2026-08-13.zip",
+    "sha256": "3ac3d191f98371f5802dd0db71127627be8612c9daff460b973455574ef11603",
+    "archive_hash_verified": true,
+    "packet_manifest_schema": "pm.packet_dependency_correction.v1",
+    "packet_manifest_sha256": "3b9d880bd8452381b0b010ebbe36f8a3847a34580d90a897de8623fa998e3bb0",
+    "listed_payload_file_count": 60,
+    "listed_payload_hash_and_size_failures": 0,
+    "sorted_listed_payload_digest_sha256": "83c8f805589159dd57dad07ce2fddcbc3fe4267713a6b59f149faa40888d9c6f",
+    "manifest_self_hash_policy": "excluded_by_design"
+  },
+  "standalone_provider_adjudication": {
+    "sha256": "9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1",
+    "identical_to_correction_packet_copy": true
+  },
   "source_precedence": [
     "current_user_instructions",
-    "packet_creative_brief_and_fixed_behavior",
-    "packet_machine_registers",
+    "correction_packet_directives_and_final_provider_adjudication",
+    "original_packet_creative_brief_and_fixed_behavior",
+    "original_and_restored_machine_registers",
     "current_live_plans",
     "pmconcept7_functional_evidence",
     "original_packet_source_history",
@@ -16,11 +43,16 @@
   ],
   "read_only_evidence_lanes": [
     "canon_inventory",
-    "video_inventory",
+    "packet_and_alias_identity",
+    "raw_video_decode_contact_sheet_and_keyframe_review",
     "command_wiring_inventory",
     "test_inventory"
   ],
   "persistent_write_root": "Concepts/chat-assistant-concepts/5-6-sol",
+  "authorized_receipt_writes": [
+    "reference-review-report.json",
+    "source-receipt.json"
+  ],
   "forbidden_writes": [
     "PMConcept7",
     "Plans",
@@ -33,5 +65,20 @@
     "ConceptHub",
     "other Assistant Chat concept folders"
   ],
-  "prototype_boundary": "Functional comparison concepts and provisional impact evidence only; no production authority or canonical mutation."
+  "opened_reviewed_coverage": {
+    "correction_documents_and_manifests": 7,
+    "demo_contracts": 2,
+    "machine_alias_pairs": 6,
+    "screenshot_alias_pairs": 2,
+    "video_source_map": 1,
+    "raw_video_files_hash_read_and_container_signature_opened": 4,
+    "raw_video_files_fully_decoded": 4,
+    "raw_video_files_directly_reviewed_from_evenly_spaced_decode_sheets": 4,
+    "directly_reviewed_raw_decode_frames": 64,
+    "contact_sheets_visually_inspected": 4,
+    "keyframes_individually_visually_inspected": 37
+  },
+  "prototype_boundary": "Functional comparison concepts and provisional impact evidence only; no production authority or canonical mutation. Browser prototype evidence is not native Slint implementation evidence.",
+  "raw_video_review_receipt": "All four MOV streams were fully decoded through their terminal frames with ffmpeg 7.0.2 from a temporary SHA-256-verified imageio-ffmpeg 0.6.0 wheel. Four temporary 16-frame decode sheets were directly inspected in addition to the supplied contact sheets and all 37 packet keyframes; temporary decoder outputs were not copied into the concept or treated as product sources.",
+  "custody_report": "reference-review-report.json"
 }

@@ -121,6 +121,22 @@
       "projection": "capacity forecast card (Requested 6 / Recommended 2 / 3 waves)",
       "usage_diagnostics": "crew_id payload",
       "retry_recovery": "Start waves resolves capacity warning via warningAction"
+    },
+    {
+      "family": "questions",
+      "control": "shared causal lifecycle controller (prepare pill -> card -> review -> submitting pill -> receipt) consumed by all eight concept renderers via api.preparePill/submittingPill/reviewHtml/submit",
+      "command": "cmd.chat.question.prepare/answer/skip/submit",
+      "owning_service": "Thread service (question runtime projection)",
+      "validation": "review page lists every answer with per-question back links; Submit only from review; Escape cancels; reduced motion reaches identical end states (probe-motion-continuity)",
+      "note": "Correction 2026-08-13: videos 02/04 behaviors wired through the custom-renderer path that previously bypassed the shared morph."
+    },
+    {
+      "family": "connection",
+      "control": "sync strip + outbox popup with failed state, error row, retry",
+      "command": "cmd.chat.connection.fail / cmd.chat.outbox.flush",
+      "owning_service": "Shell connection monitor",
+      "validation": "probe-coverage-expansion: offline -> reconnect_fail -> failed; retry -> live + outbox drained",
+      "note": "Correction 2026-08-13: reconnect-failure path added (was absent)."
     }
   ]
 }

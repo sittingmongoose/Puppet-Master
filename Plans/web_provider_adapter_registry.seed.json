@@ -7,7 +7,7 @@
     "Provider config files, MCP projections, model-native tool declarations, coding-agent bridge files, and GUI settings rows are projections of these registry rows.",
     "Projection examples serialize capability refs, health refs, egress policy refs, and credential refs only; they never serialize raw API keys, OAuth tokens, passwords, cookies, headers, or local machine paths.",
     "DirectApi coding providers use PM-native registry capability projection and do not require provider-side MCP config files as canonical truth.",
-    "Site Reader is PM-managed native runtime; Playwright and CDP are fallback/reference only and do not become product dependency terms.",
+    "Site Reader uses the PM-native Browser Program; external Project test tools and external control protocols are neither provider adapters nor browser-runtime fallbacks.",
     "Seeded provider capability claims cite packet/receipt provenance and keep health_state=unknown until an explicit live health/projection sync records current provider evidence."
   ],
   "registry_rows": [

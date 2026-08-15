@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8385-L9533
+Source lines: L8385-L9536
 
-Source SHA256: `013f1bc60b079da5946a981f2b9d7fe43d3eb1d14c36633974c9a1de5d66486d`
+Source SHA256: `d3de1b7e49a2d74fdd891868bddb92276ec2c61e9a5c079acc6bcc4c67a94961`
 
 ---
 
@@ -533,15 +533,17 @@ owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
   Browser pane navigation commands are `cmd.browser.navigate` and `cmd.browser.reload`. Both operate on the
   embedded browser pane within the session-class policy from the Wiring_Matrix.md browser invariants
-  (workspace_preview, detached_preview, automation_session, auth_session), preserve session class and recovery
-  identity (URL, tabs, originating session), and never reclassify a session. `cmd.gui_dev_preview.reload` remains
+  (workspace_preview, detached_preview, automation_session), require `session_security_class=ordinary`, preserve
+  session class and recovery identity (URL, tabs, originating session), and never reclassify a session. Protected
+  AuthBrowserSession is not a generic navigation subject. `cmd.gui_dev_preview.reload` remains
   dev/test-build only and is not reused for production reload.
 gui_related: true
 gui_classification_reason: Registers user-visible browser pane URL navigation and reload commands.
 depends_on: [UCC-061, UCC-063]
 unblocks: []
 acceptance_criteria:
-  - Navigate and reload preserve session class and recovery identity and never auto-resume automation or auth work.
+  - Navigate and reload preserve ordinary session class and recovery identity and never auto-resume automation work.
+  - Protected AuthBrowserSession returns `protected_session_forbidden` before handler dispatch and exposes no URL or content.
   - Navigation outside the session policy is unavailable with a projected disabled reason.
   - Production reload does not dispatch cmd.gui_dev_preview.reload.
 validation_surfaces:
@@ -565,7 +567,8 @@ preserved_exact_tokens:
   - "cmd.browser.reload"
 negative_constraints:
   - Do not reuse cmd.gui_dev_preview.reload as the production browser reload.
-  - Do not reclassify or auto-resume automation or auth sessions from navigation commands.
+  - Do not reclassify or auto-resume automation sessions from navigation commands.
+  - Do not route protected AuthBrowserSession through generic navigate or reload commands.
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Wiring_Matrix.md

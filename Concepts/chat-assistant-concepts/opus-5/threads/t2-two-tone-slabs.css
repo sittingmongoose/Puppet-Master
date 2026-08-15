@@ -432,6 +432,64 @@
   }
 }
 
+/* ---------------------------------------------------------------- arrival, out of the tone
+ * 01_message_arrival_spatial_continuity.mov, frames 47 to 63 (about 280ms at 57.6fps): the
+ * arriving message is first a flattened SLIVER at a seam, then expands into its own box, then
+ * settles with a small overshoot. At f.50 the glyphs are already at full size and simply cut off
+ * by the growing box — they are clipped, never scaled — which is why this is a clip animation and
+ * not a transform on the text.
+ *
+ * The reference's seam is a header, because its list inserts at the top. This concept's seam is
+ * neither an edge nor a direction: two tones are the whole signal here, so the slab's OWN TONE is
+ * what the message comes out of. A band of the speaker's colour lands at full strength on the
+ * first frame — the tone never fades in for an arriving turn, which is what the second rule below
+ * enforces — and the box then unrolls downward out of that band. You know who is speaking before
+ * a single word is legible.
+ *
+ * Only the ARRIVING slab gets this. motion.displace stamps data-pmx-arrived on the node it
+ * inserted; every other slab keeps its position and its identity, and because the append-only path
+ * no longer rebuilds them they do not replay their tone fade either.
+ */
+@keyframes pmx-t2-arrive {
+  from { clip-path: inset(0 0 calc(100% - 3px) 0); transform: translateY(2px); }
+  to   { clip-path: inset(0 0 0 0);                transform: none; }
+}
+
+/* Beats motion.css's blanket `[data-pmx-arrived] { animation: none }` on specificity. That rule is
+   right for the reference, where the arrival is genuinely static and only its neighbours move; in a
+   bottom-anchored list the neighbours do not move at all, so a static arrival would mean nothing
+   moved anywhere and the message would simply blink into existence.
+
+   The settle overshoot at f.63 comes from the spring token rather than from a hand-written keyframe
+   step, and it is only 2px: position is the settle here, colour is the entrance. */
+[data-pmx-thread="t2"] .t2-turn[data-pmx-arrived] {
+  animation: pmx-t2-arrive var(--motion-med) var(--ease-spring-real) backwards;
+}
+/* The tone IS the seam, so it cannot be faded up at the same time: at f.47 the sliver has to be
+   visible colour, and pmx-t2-tone would have it at zero opacity for that frame. */
+[data-pmx-thread="t2"] .t2-turn[data-pmx-arrived] .t2-slab {
+  animation: none;
+  opacity: 1;
+}
+
+/* Reduced motion lands the arrival instantly and FULLY REVEALED. A clip animation frozen at its
+   first frame would leave 3px of tone and hide the message entirely, which is worse than no
+   animation at all. */
+[data-motion="reduced"][data-pmx-thread="t2"] .t2-turn[data-pmx-arrived] {
+  animation: none !important;
+  clip-path: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-pmx-thread="t2"] .t2-turn[data-pmx-arrived] {
+    animation: none !important;
+    clip-path: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
 /* ---------------------------------------------------------------- jump pill clearance
  * The pill floats over the transcript, and nothing reserved space for it, so when it
  * appeared it sat directly on top of live message text and hid whole words. Readable
@@ -477,12 +535,22 @@
   background: var(--surface-elevated);
   color: var(--text-primary);
   overflow: hidden;
-  /* The height is animated by springHeight, so it must not also be transitioned here - two owners for
-     one property is how a spring turns into a stutter. Radius and padding carry the shape change. */
+  /* The height has exactly ONE owner and it is motion.resizeBounce, which sets the transition inline
+     for the length of the change and clears it again. It must not also be transitioned here: two owners
+     for one property is how a bounce turns into a stutter, and that warning is why this concept's
+     hand-rolled springHeight call was retired rather than kept alongside the primitive. Radius and
+     padding carry the rest of the shape change, on their own properties, uncontested. */
   transition: border-radius var(--motion-med) var(--ease-default),
               padding var(--motion-med) var(--ease-default),
               background var(--motion-med) var(--ease-default);
 }
+
+/* `.pmx-resize-up` is carried on this element by the renderer. It is the shared opt-in for a
+   bottom-anchored resize, and this is the case it was written for: the capsule is the last thing in the
+   question host, which every window places immediately above its composer, and the transcript above is
+   the flexible sibling that yields. So the capsule expanding from strip to card moves its OWN top edge
+   and no slab below it moves - the composer does not get shoved down, and the reader's place in the
+   transcript is where they left it. */
 
 /* The slim form: a strip above the composer. */
 [data-pmx-thread="t2"] .t2-capsule[data-expanded="0"] { min-height: 28px; }
@@ -908,4 +976,119 @@
 [data-motion="reduced"] .pmx-popup[data-pmx-thread="t2"] button.t2-op-chip { transition: none !important; }
 @media (prefers-reduced-motion: reduce) {
   .pmx-popup[data-pmx-thread="t2"] button.t2-op-chip { transition: none !important; }
+}
+
+/* ================================================================ the run capsule
+ *
+ * 03_compact_execution_activity.mov drawn in this concept's own material. The reference lays a glyph
+ * chain and one headline out as a single inline strip; here the run is a CHIP RUN, because a chip is
+ * how anything announces itself in t2 and because the chip's element survives a re-render - which is
+ * what lets a count be rewritten inside a chip that has been on screen since the phase started
+ * rather than in one that was built a frame ago. Same five behaviours, this concept's geometry.
+ *
+ * Nothing below borrows the reference's colour, radius, ring treatment or easing. Those are its look;
+ * what is carried over is its logic.
+ * ---------------------------------------------------------------------------------------------- */
+
+/* One row: the lead chip, then the chain, then the disclosed phase's line beneath both. It wraps only
+   at the detail line, which claims a full basis - the chain itself scrolls instead of wrapping. */
+[data-pmx-thread="t2"] .t2-run {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  padding: var(--sm) var(--md) 0;
+}
+
+/* The chain takes the rest of the row and scrolls inside it; shared/motion.css owns the scrolling and
+   the overflow mask. It must never wrap: a wrapping chain would change the capsule's height every
+   time a phase entered, and the whole surface below would step down with it. */
+[data-pmx-thread="t2"] .t2-run-chain {
+  flex: 1 1 120px;
+  min-width: 0;
+  gap: 5px;
+  /* Room for the chip's own hover lift, which the scroller would otherwise clip flat. */
+  padding: 1px 0;
+}
+
+[data-pmx-thread="t2"] .t2-run-lead,
+[data-pmx-thread="t2"] .t2-run-chip { flex: 0 0 auto; }
+
+/* Tabular figures are the layout half of the count morph: 6 and 7 have to occupy the same width, or
+   rewriting the digit shifts the word beside it and "rewritten in place" stops being true. */
+[data-pmx-thread="t2"] .t2-run-lead,
+[data-pmx-thread="t2"] .t2-run-chip { font-variant-numeric: tabular-nums; }
+
+/* Verb at full contrast, argument muted: a reader scanning a settled run reads a column of verbs, and
+   the verb is the half that carries the tense. */
+[data-pmx-thread="t2"] .t2-run-verb {
+  color: var(--text-primary);
+  font-weight: 600;
+  white-space: nowrap;
+}
+[data-pmx-thread="t2"] .t2-run-arg { color: var(--text-muted); }
+
+/* A chip that is not the subject is its glyph alone. The empty spans are kept in the DOM so their
+   text can be morphed later, but an empty span would still buy a gap in the chip's flex row. */
+[data-pmx-thread="t2"] .t2-run-verb:empty,
+[data-pmx-thread="t2"] .t2-run-arg:empty { display: none; }
+
+/* In flight is dashed-and-italic everywhere in this concept - the capsule while it prepares, the
+   handoff while it compiles, an operation chip while it runs - so the running phase wears that same
+   treatment rather than a colour this row would have no room to explain. */
+[data-pmx-thread="t2"] .t2-run-chip[data-state="running"] {
+  border-style: dashed;
+  border-color: var(--accent-primary);
+}
+[data-pmx-thread="t2"] .t2-run-chip[data-state="running"] .t2-run-arg { font-style: italic; }
+
+/* The disclosed chip changes FIELD, which is this concept's whole way of saying which one you are
+   reading: the chip drops from the elevated surface to the tinted one, the same move that separates a
+   user slab from an assistant slab. The border only agrees with it. */
+[data-pmx-thread="t2"] .t2-run-chip[data-open="1"] {
+  background: var(--surface);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+}
+
+/* The lead chip is one element in both states, so only its border tells you which one it is in:
+   dashed while the run rests as `13 tools used`, solid while the run is open and it says `Condense`.
+   That is the same signal the collapsed domain chip above already wears. */
+[data-pmx-thread="t2"] .t2-run-lead[data-condensed="1"] { border-style: dashed; }
+
+/* The disclosed phase's line. A tinted field with a rule down its left edge - the slab the artifact
+   handoff and the question receipt already use - so a disclosure reads as this concept's material
+   rather than as a card that has grown inside the run. */
+[data-pmx-thread="t2"] .t2-run-detail {
+  flex: 1 0 100%;
+  display: flex;
+  align-items: baseline;
+  gap: var(--sm);
+  min-width: 0;
+  margin-top: var(--xs);
+  padding: 4px var(--md);
+  border-left: 2px solid var(--accent-primary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--surface);
+}
+[data-pmx-thread="t2"] .t2-run-detail-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: var(--fs-2xs);
+  color: var(--text-secondary);
+  overflow-wrap: anywhere;
+}
+[data-pmx-thread="t2"] .t2-run-detail-dur {
+  flex: 0 0 auto;
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+[data-pmx-thread="t2"] .t2-run-record { flex: 0 0 auto; }
+
+/* Narrow: the chain gives up its minimum basis before the lead chip does, because the summary is the
+   one thing a compact run must not lose - the chain can scroll, the count cannot. */
+@container pmx-thread (max-width: 620px) {
+  [data-pmx-thread="t2"] .t2-run-chain { flex-basis: 60px; }
 }

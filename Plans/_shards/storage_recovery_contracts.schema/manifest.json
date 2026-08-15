@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-08-13T17:12:34Z",
+  "generated_at_utc": "2026-08-15T03:16:34Z",
   "index_path": "Plans/_shards/storage_recovery_contracts.schema/00-index.md",
-  "index_sha256": "f354e0eabb1ddf532144fde26a3747cbabb7eb529450e1d92c997255bc6fa519",
+  "index_sha256": "9553a847c6f5d77f887fd1867bd0ace4a9a12c67cac9ae955c30088fdf098bcd",
   "manifest_path": "Plans/_shards/storage_recovery_contracts.schema/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Lines 1-200",
       "path": "Plans/_shards/storage_recovery_contracts.schema/001-lines-1-200.md",
-      "sha256": "a942f70c5adbb0e552b6bb8b13430d3f5e61e835fcbeb2a21caddf8d1734f1cf",
+      "sha256": "29b4320358ed22514accb20226337591c8f02e15e7cf7523c136776a5b66ad4c",
       "shard_id": "001",
       "source_line_end": 200,
       "source_line_start": 1,
@@ -17,25 +17,25 @@
     {
       "heading": "Lines 201-400",
       "path": "Plans/_shards/storage_recovery_contracts.schema/002-lines-201-400.md",
-      "sha256": "71e662e426f80605cea2ab212bce398bcbee6a8009f70685944cfd9721619852",
+      "sha256": "dd873eadc3e5f33fd7642f994ee319daa5798d35fe30b42299b4e8f3e970b32e",
       "shard_id": "002",
       "source_line_end": 400,
       "source_line_start": 201,
       "split_rule": "line-count-200"
     },
     {
-      "heading": "Lines 401-418",
-      "path": "Plans/_shards/storage_recovery_contracts.schema/003-lines-401-418.md",
-      "sha256": "7cce73df1ca1b09d4b5f896b0c0a5e6ba3a2cff8dfbc35d0088e9c217ab20f6c",
+      "heading": "Lines 401-579",
+      "path": "Plans/_shards/storage_recovery_contracts.schema/003-lines-401-579.md",
+      "sha256": "808c9f174b5be771467054eaeae31da9e34272cf7295a80778b2664badc29318",
       "shard_id": "003",
-      "source_line_end": 418,
+      "source_line_end": 579,
       "source_line_start": 401,
       "split_rule": "line-count-200"
     }
   ],
   "source": {
-    "line_count": 418,
+    "line_count": 579,
     "path": "Plans/storage_recovery_contracts.schema.json",
-    "sha256": "66cb1b8bacd9e9179cbc7ef4b961686a87ea95733298408daf06ca25a0fe1814"
+    "sha256": "b00d0e8cbf50b322f9502cb7fadc65dc390390b2cbb917033a24fc373fa485cd"
   }
 }

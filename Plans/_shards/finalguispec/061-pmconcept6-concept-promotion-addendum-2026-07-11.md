@@ -1,0 +1,252 @@
+# Shard 061: PMConcept6 Concept Promotion Addendum - 2026-07-11
+
+Source: `Plans/FinalGUISpec.md`
+
+Source lines: L29062-L29303
+
+Source SHA256: `ac1b5d4e14ca7f69b72f955f18e9dd90a8c469aa93212dffc5a524dfaade9523`
+
+---
+
+## PMConcept6 Concept Promotion Addendum - 2026-07-11
+
+This addendum promotes user-approved PMConcept6 shell, chat, and editor behaviors into canonical PlanUnits. `Concepts/pm6-build/**` remains illustrative source-lineage only per `Plans/usage-feature.md`; persistence reuses the existing `activity_bar_order:v1` storage contract and no new storage keys are registered. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+### F3-419 - Activity Bar Reorder, Hide, And More Tray
+
+```yaml
+plan_unit_id: F3-419
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Activity bar items support drag-to-reorder along the bar, drag-onto-More-tray to hide, and
+  restore from the More tray by click or by dragging a tray row back onto the bar for a
+  positioned restore. Persistence reuses the already-registered `activity_bar_order:v1`
+  storage contract as one ordered list of activity bar item IDs plus a separator position,
+  where items after the separator position are the hidden tray set; no new storage key is
+  introduced. Activity-item hotkeys follow the visual order of the bar, so reordering changes
+  hotkey targets and hidden items drop out of the hotkey sequence.
+gui_related: true
+gui_classification_reason: This unit defines visible activity bar reorder, hide, tray, and hotkey behavior.
+split_recommended: false
+depends_on: [F3-041, F3-071, F3-217]
+unblocks: []
+acceptance_criteria:
+- "Activity bar icons can be drag-reordered, hidden by dragging onto the More tray control, and restored from the tray by click or by drag-back onto the bar."
+- "Order and hidden set persist through the existing activity_bar_order:v1 key as an ordered id list with a separator position; no new storage key is registered."
+- "Hotkeys resolve against visual order after reorder and skip hidden items."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: activity_bar_reorder_hide_and_more_tray
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:2290"
+- "Plans/FinalGUISpec.md:2377"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "activity_bar_order:v1"
+- "separator position"
+- "More tray"
+negative_constraints:
+- "Do not register a new storage key for activity bar hidden state; the separator position inside activity_bar_order:v1 encodes the hidden set."
+compatibility_only_notes:
+- "Slint portability: drag ghosts, drop indicators, and the More tray render as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+stale_retired_dispositions:
+- "The pre-2026-07-23 default visible set (which included Orchestrator, Run Graph, Planning Wizard, Notifications, Settings, and Usage shortcuts) is retired per the PMConcept7 activity-bar trim; those pages stay reachable via the title-bar page tabs and the alerts affordance is the title-bar notification stack (F3-460). Reorder, hide, tray, persistence, and hotkey mechanics of this unit are unchanged and now operate over the trimmed default set."
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-420 - Chat Component Unification And Embedded Chrome Flags
+
+```yaml
+plan_unit_id: F3-420
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Assistant Chat ships as one component with per-instance chrome flags for panel, embedded,
+  and floating presentation: a single chat template and state source renders the docked chat
+  panel, the floating chat window, and wizard-embedded chat instances. Chrome flags toggle the
+  header, thread rail, thread search, issues and worktree indicators, persona and model
+  selectors, mode strip, panel toggles, and composer affordances per mount; embedded mode is
+  chrome-reduced to the message stream, composer, and quick-reply chips with gated send.
+  Stream and footer content resolve per thread, and context boxes are
+  thread-scoped. The unified component is consumed by wizard embedding and promoted surfaces,
+  and the separate `#chatPanel` side panel mount remains canonical.
+gui_related: true
+gui_classification_reason: This unit defines visible chat component mounts and per-instance chrome presentation.
+split_recommended: false
+depends_on: [F3-131, F3-357, F3-149]
+unblocks: []
+acceptance_criteria:
+- "Docked panel, floating window, and wizard-embedded chat instances render from one chat component, template, and state source distinguished only by chrome flags."
+- "Embedded mode keeps the message stream, composer, quick-reply chips, and gated send while omitting thread rail, thread search, issues and worktree indicators, persona and model selectors, mode strip, and panel toggles."
+- "The separate #chatPanel side panel mount remains canonical and is not replaced by embedded instances."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+- "Plans/assistant-chat-design.md"
+node_compile_hint:
+  mode: chat_component_unification_and_embedded_chrome_flags
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:2092"
+- "Plans/assistant-chat-design.md"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "#chatPanel"
+- "quick-reply chips"
+- "embedded"
+- "floating"
+negative_constraints:
+- "Chat must remain available as the separate side panel; embedded instances must not replace the #chatPanel mount."
+compatibility_only_notes:
+- "Slint portability: per-instance chrome flags map to conditional widget composition; embedded chat chrome requires no arbitrary-content backdrop blur or SVG filters, color styling is precomputed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
+stale_retired_dispositions:
+- "The standalone web-suggestions strip is retired per the 2026-07-16 chat polish promotion; embedded-mode quick-reply chips are a different element and remain canonical."
+owner_boundary_notes:
+- "Plans/assistant-chat-design.md remains the prose owner for chat behavior taxonomy (message stream, composer, and thread model sections); this unit records the component unification and chrome-flag presentation contract in FinalGUISpec without byte-editing assistant-chat-design.md."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+- "Plans/assistant-chat-design.md"
+```
+
+### F3-421 - Editor Tab Close, Pane Close, And Tab Overflow
+
+```yaml
+plan_unit_id: F3-421
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Editor tabs support per-tab close controls with editor-model bookkeeping so closing a tab
+  updates the open-tab list and activates a neighboring tab. Editor panes support per-pane
+  close with sibling expansion, and an editor empty state is shown when no editor panes remain
+  visible. When the tab strip overflows its width, a width-aware "+N more" overflow chip
+  collects non-active tabs into a picker with per-item close, keeping the active tab visible.
+  Non-file tabs, including thread context detail tabs and browser preview tabs, participate in
+  the same close and overflow behavior. Amended 2026-08-13 - tab drag-reorder is canonical
+  and persists on all four editor panes: pane 1 through the open-tab model, panes 2 through 4
+  through strip-owned order lists reasserted by every fitter and mirrored to the Home
+  overlay's buffer order via the pm6:ed-tab-order event; a newly opened tab inserts at its
+  model index. The +N more chip and its picker render in the shared app portal-menu family
+  (portal recipe, sprout-in opening, neutral chip treatment) rather than as a bespoke pill.
+  Amended 2026-08-13 (tweak wave) - the dedicated per-pane close glyph on editor panels is
+  retired; the kebab menu's Close Panel row is the single pane-close affordance. Pane-close
+  semantics (sibling expansion, editor empty state) are unchanged - only the affordance
+  changed. Amended 2026-08-13 (wave 3) - the overflow chip always sits immediately left of
+  the strip's actions cluster, and overflow fitting runs LIVE on tab add and remove; a
+  newly opened tab that would overflow stays visible and instead displaces the
+  chip-adjacent non-active tab into the picker. Tab drag-reorder is animated: the native
+  drag ghost is suppressed, the dragged tab tracks the pointer transform-only while its
+  layout slot stays at the insertion position, neighbours FLIP over roughly 140 ms, and
+  reduced motion is instant; the connected silhouette stays glued to the insertion slot
+  throughout (see F3-505). Wave-3 follow-up (2026-08-13): ghost suppression is
+  Safari-compatible - an attached off-viewport ghost element backs setDragImage with a
+  -webkit-user-drag hint on the tab - and overflow fitters fit against the strip's
+  CONTENT box, so padding reserve can never be occupied by tabs; the actions-cluster
+  reserve has a 44 px floor covering the kebab column and grip lane even when the
+  cluster is empty. Extended (final wave-3 build): the overflow condition itself is
+  content-box child-edge measurement at all three fitter sites
+  (edStripContentOverflows: rightmost in-flow child edge vs clientWidth minus the
+  padding-right reserve, skipping the actions span, the shape layer, and
+  display:none children) - the naive scrollWidth comparison is retired with this
+  dated disposition because scrollWidth equals clientWidth on a non-overflowing
+  strip, which collapsed all tabs into the picker. Amended 2026-08-13 (wave 4) - the
+  HTML5 drag-and-drop reorder mechanism is retired (and with it the wave-3
+  attached-ghost Safari compatibility layer, now moot): reorder is a pointer-capture
+  gesture with gesture-scoped window listeners, a 4 px activation threshold, a 1:1
+  translateX glide, cached transform-free midpoint re-slotting, a 220 ms
+  cubic-bezier(.22,1,.36,1) neighbour FLIP, a 200 ms low-bounce settle, and the model
+  re-render deferred to settle-end; the dragged tab renders at .92 opacity and
+  z-index 40. Amended 2026-08-14 (wave 7) - the dragged tab fully covers tabs it
+  passes: its opacity re-tunes .92 to 1 with this dated disposition, and while a drag
+  is live the silhouette lifts to z-index 39 - above the neighbour labels at z 1 and
+  below the carried label at z 40 - so the fused plate occludes crossed labels
+  (verified watched at 3x zoom; see F3-505 for the silhouette layer contract).
+  Amended 2026-08-15 (wave 8) - the wave-7 drag-cover fix stands (opacity 1 and
+  the z 39 / z 40 sandwich are unchanged) but was INCOMPLETE: it addressed the
+  plate's opacity and stacking, not the mechanism that still exposed the tab
+  underneath. That mechanism was the GRAB-SPRING. Grabbing a NON-ACTIVE tab
+  flips the strip's active key, so EDSHAPE.sync() consumed the lastActive change
+  as a selection event, set animate = true and SPRUNG the travelling plate
+  across the strip over roughly 12 frames while the carried tab itself paints
+  nothing (its background is transparent under .ed-shape-on) - the tab beneath
+  showed through for the whole flight. Worse, pointermoves smaller than 0.5 px
+  landed in the spring-preservation early-return guard, which held that hole
+  open indefinitely on slow, careful drags. It was also a live violation of the
+  1:1-no-independent-easing canon this unit shares with F3-505. The fix, with
+  this dated disposition: sync() computes
+  draggingLive = Boolean(strip.querySelector('.tab.dragging')) immediately after
+  the lastActive update and forces animate = false whenever it is true, and the
+  spring-preservation guard gains "&& !draggingLive" so the snap branch runs -
+  cancelling the in-flight rAF, jumping x and w to target, zeroing both
+  velocities and painting - in the same frame the gesture activates. Selection
+  springs are untouched, release settle is untouched (the reorder gesture still
+  owns the 160 ms settle transition plus its per-frame snap ride), and retro
+  themes already forced animate = false. Verified live: worst plate-versus-tab
+  lag 0.00 px across 2,615 samples of a deliberately slow drag (40 moves of
+  0.4 px with pauses) on a non-active tab, while a click-to-select still travels
+  through 18 distinct intermediate positions, monotonic and without overshoot.
+gui_related: true
+gui_classification_reason: This unit defines visible editor tab, pane, and overflow controls.
+split_recommended: false
+depends_on: [F3-140, F3-131, F3-132, F3-152]
+unblocks: []
+acceptance_criteria:
+- "Closing a tab updates the open-tab model and activates a neighboring tab; closing the last tab yields the editor empty state or the underlying view."
+- "Closing a pane expands the sibling pane; when no panes remain visible the editor empty state is shown."
+- "A width-aware +N more overflow chip exposes hidden tabs through a picker with per-item close while the active tab stays visible."
+- "Thread context detail tabs and browser preview tabs participate in close and overflow behavior."
+- "Dragging a tab to a new position persists on all four editor panes and survives any re-render or fitter pass; a newly opened tab inserts at its model index rather than appending."
+- "The overflow chip and its picker use the shared portal menu family styling with no bespoke accent glow."
+- "The overflow chip sits immediately left of the actions cluster, fitting runs live on tab add/remove, and a newly opened overflowing tab stays visible while the chip-adjacent non-active tab moves into the picker (wave 3, 2026-08-13)."
+- "Tab drag-reorder animates: no native drag ghost, the dragged tab tracks the pointer transform-only with its layout at the insertion slot, reduced motion is instant, and the silhouette stays at the insertion slot throughout; as of wave 4 the gesture is pointer-capture (4 px threshold, 1:1 translateX glide, 220 ms neighbour FLIP, 200 ms low-bounce settle), works identically in Safari, survives its first re-slot, and defers the model re-render to settle-end."
+- "Grabbing a NON-ACTIVE tab never springs the travelling plate: any EDSHAPE sync while the strip contains .tab.dragging snaps in-frame, so the plate never lags the carried tab and never exposes the tab underneath (worst lag 0.00 px over 2,615 slow-drag samples), while click-to-select springs still travel (18 monotonic intermediate positions, no overshoot) (wave 8, 2026-08-15)."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: editor_tab_close_pane_close_and_tab_overflow
+  create_worknodes: false
+source_lineage:
+- "Plans/FinalGUISpec.md:1653-1656"
+- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+preserved_exact_tokens:
+- "+N more"
+- "empty state"
+negative_constraints:
+- "Closing the last visible editor pane must not leave a dead surface; it must show the editor empty state or yield to the underlying view."
+compatibility_only_notes:
+- "Slint portability: the overflow picker, drag affordances, and pane-close overlays are opaque surfaces; no arbitrary-content backdrop blur or SVG filters, and color math is precomputed."
+stale_retired_dispositions:
+- "Amended 2026-08-13: pane-1-only reorder persistence (DOM-only reorder on panes 2-4 that the next re-render scrambled) is retired; the lime-accent pill chip and its generic gray picker are retired in favour of the app portal-menu family."
+- "Amended 2026-08-13 (tweak wave): the dedicated per-pane close glyph is retired; the kebab Close Panel row is the single pane-close affordance, with pane-close semantics unchanged."
+- "Amended 2026-08-13 (wave 4): HTML5 DnD tab reorder is retired along with the wave-3 attached-ghost/-webkit-user-drag Safari shim. Root causes recorded: Safari's sparse dragover cadence, the native drag snapshot taken when the custom drag image is unrenderable (opacity 0), and the lostpointercapture-on-reparent trap — a re-slot insertBefore releases pointer capture, so a tab-scoped cancel killed the gesture on the first re-slot, the same trap the T20 grip comments document. The pointer-capture gesture uses gesture-scoped window listeners (the T07 document-pointermove pin is untouched)."
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```

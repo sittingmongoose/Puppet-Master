@@ -161,8 +161,11 @@ export const EXTRA_MANAGERS = [
   {
     "id": "future-server-shell",
     "title": "Future Server module shell",
-    "purpose": "Reserved insertion contract for Servers, Execution Hosts, Clients, remote files, access, and updates.",
-    "icon": "server"
+    "purpose": "Inspect-only insertion contract. The exact canonical Server owner is unresolved, so no Server mutation is available here.",
+    "icon": "server",
+    "insertionOnly": true,
+    "owner": null,
+    "ownerStatus": "unresolved"
   }
 ];
 
@@ -1416,255 +1419,1345 @@ export const EXTRA_MANAGER_INVENTORIES = {
   },
   "future-server-shell": {
     "title": "Future Server module shell",
-    "state": "ready",
-    "summary": "This is an insertion contract, not an invented backend implementation.",
-    "primaryAction": "Add or configure",
+    "state": "missing-owner",
+    "summary": "The exact canonical Server owner is unresolved. This insertion contract is inspect-only and fail-closed.",
+    "primaryAction": "Inspect residual risk",
+    "owner": null,
+    "ownerStatus": "unresolved",
+    "mutationEnabled": false,
     "items": [
       {
         "id": "server-module",
         "title": "Servers",
-        "kind": "Deferred module",
-        "status": "Deferred",
-        "detail": "Reserved destination for native and standalone server identities.",
+        "kind": "Owner-unresolved insertion",
+        "status": "Missing owner",
+        "detail": "Reserved destination for native and standalone server identities. Mutation remains blocked until the canonical owner is adjudicated.",
         "actions": [
           "Inspect insertion contract"
         ],
-        "owner": "Server/Sync owner docs",
-        "stateMachine": "Deferred"
+        "owner": null,
+        "ownerStatus": "unresolved",
+        "stateMachine": "Unavailable",
+        "disabled": true,
+        "disabledReason": "Mutation blocked: canonical Server owner unresolved"
       },
       {
         "id": "execution-hosts",
         "title": "Execution Hosts",
-        "kind": "Deferred module",
-        "status": "Deferred",
-        "detail": "Reserved destination for execution-host selection, capabilities, WSL, containers, and reachability.",
+        "kind": "Owner-unresolved insertion",
+        "status": "Missing owner",
+        "detail": "Reserved destination for execution-host selection, capabilities, WSL, containers, and reachability. Mutation remains blocked until the canonical owner is adjudicated.",
         "actions": [
           "Inspect insertion contract"
         ],
-        "owner": "Server/Sync owner docs",
-        "stateMachine": "Deferred"
+        "owner": null,
+        "ownerStatus": "unresolved",
+        "stateMachine": "Unavailable",
+        "disabled": true,
+        "disabledReason": "Mutation blocked: canonical Server owner unresolved"
       },
       {
         "id": "clients",
         "title": "Clients",
-        "kind": "Deferred module",
-        "status": "Deferred",
-        "detail": "Reserved destination for connected clients and continuity.",
+        "kind": "Owner-unresolved insertion",
+        "status": "Missing owner",
+        "detail": "Reserved destination for connected clients and continuity. Mutation remains blocked until the canonical owner is adjudicated.",
         "actions": [
           "Inspect insertion contract"
         ],
-        "owner": "Server/Sync owner docs",
-        "stateMachine": "Deferred"
+        "owner": null,
+        "ownerStatus": "unresolved",
+        "stateMachine": "Unavailable",
+        "disabled": true,
+        "disabledReason": "Mutation blocked: canonical Server owner unresolved"
       },
       {
         "id": "project-hosting",
         "title": "Project Hosting & Files",
-        "kind": "Deferred module",
-        "status": "Deferred",
-        "detail": "Reserved destination for NAS, SSH, GitHub, remote files, and sync animation.",
+        "kind": "Owner-unresolved insertion",
+        "status": "Missing owner",
+        "detail": "Reserved destination for NAS, SSH, GitHub, remote files, and sync animation. Mutation remains blocked until the canonical owner is adjudicated.",
         "actions": [
           "Inspect insertion contract"
         ],
-        "owner": "Server/Sync owner docs",
-        "stateMachine": "Deferred"
+        "owner": null,
+        "ownerStatus": "unresolved",
+        "stateMachine": "Unavailable",
+        "disabled": true,
+        "disabledReason": "Mutation blocked: canonical Server owner unresolved"
       },
       {
         "id": "remote-access",
         "title": "Remote Access",
-        "kind": "Deferred module",
-        "status": "Deferred",
-        "detail": "Reserved destination for Tailscale, MagicDNS, reverse proxy, and Funnel policy.",
+        "kind": "Owner-unresolved insertion",
+        "status": "Missing owner",
+        "detail": "Reserved destination for Tailscale, MagicDNS, reverse proxy, and Funnel policy. Mutation remains blocked until the canonical owner is adjudicated.",
         "actions": [
           "Inspect insertion contract"
         ],
-        "owner": "Server/Sync owner docs",
-        "stateMachine": "Deferred"
+        "owner": null,
+        "ownerStatus": "unresolved",
+        "stateMachine": "Unavailable",
+        "disabled": true,
+        "disabledReason": "Mutation blocked: canonical Server owner unresolved"
       },
       {
         "id": "updates-module",
         "title": "Updates",
-        "kind": "Deferred module",
-        "status": "Deferred",
-        "detail": "Reserved destination for server/client update behavior; provider CLI updates remain provider-owned.",
+        "kind": "Owner-unresolved insertion",
+        "status": "Missing owner",
+        "detail": "Reserved destination for server/client update behavior; provider CLI updates remain provider-owned and app/content updates remain Project Syncing and Updates-owned. Server mutation remains blocked.",
         "actions": [
           "Inspect insertion contract"
         ],
-        "owner": "Server/Sync owner docs",
-        "stateMachine": "Deferred"
+        "owner": null,
+        "ownerStatus": "unresolved",
+        "stateMachine": "Unavailable",
+        "disabled": true,
+        "disabledReason": "Mutation blocked: canonical Server owner unresolved"
       }
     ]
   }
 };
 
+export const PROVIDER_CLI_ACQUISITION_POLICY = {
+  "schemaId": "pm.provider_cli_acquisition_policy.fixture.v1",
+  "status": "final-provider-specific-adjudication",
+  "negativeContract": [
+    "no Puppet Master core bundle",
+    "no default native/server/container/WSL/Kubernetes baseline",
+    "no preseed in Tool Store",
+    "no Project/model/provider/Goal/Plan/WorkNode/agent/Auto/On silent first acquisition"
+  ],
+  "positiveContract": [
+    "explicit initial Setup/Install only",
+    "exact selected Host/Environment",
+    "official source",
+    "install and auth separate",
+    "Auto/On may only maintain a previously approved installation"
+  ],
+  "initialAcquisition": {
+    "requiresExplicitUserAction": true,
+    "allowedEntryPoints": [
+      "Provider Settings",
+      "Provider setup"
+    ],
+    "requiresExactHostAndEnvironmentSelection": true,
+    "requiresOfficialSource": true,
+    "authenticationIsSeparate": true
+  },
+  "postConsentLifecycle": {
+    "autoOnMeaning": "maintenance_of_previously_approved_installation_only",
+    "allowedOperations": [
+      "discover compatible existing installation",
+      "verify",
+      "update",
+      "repair",
+      "rollback",
+      "activate later generation"
+    ],
+    "mayAuthorizeFirstAcquisition": false
+  },
+  "namedExceptionRule": "A bundled exception requires direct user approval naming the exact provider CLI, platform, source, and lifecycle owner. No catalog or adapter decision creates it implicitly."
+};
+
+export const OMP_PROVIDER_CATALOG_RESEARCH_FIXTURE = {
+  "schemaId": "pm.omp_provider_reference.fixture.v1",
+  "source": "Oh My Pi 17.2.10 supplied archive",
+  "status": "research_baseline_not_runtime_authority",
+  "runtimeAuthority": false,
+  "allowedUse": [
+    "setup presentation research",
+    "official destination research",
+    "authentication choreography research"
+  ],
+  "forbiddenUse": [
+    "runtime provider truth",
+    "silent acquisition authority",
+    "arbitrary executable procedure source"
+  ]
+};
+
+const providerInstallationFixture = ({
+  id,
+  providerFamilyId,
+  name,
+  qualifier,
+  summary,
+  state,
+  selected,
+  shadowed,
+  host,
+  environment,
+  source,
+  ownership,
+  version,
+  architecture,
+  acquisition,
+  lifecyclePolicy,
+  authentication,
+  readiness,
+  technicalDetails,
+  actions
+}) => ({
+  id,
+  providerFamilyId,
+  schemaId: "pm.provider_installation.fixture.v2",
+  display: {
+    name,
+    qualifier,
+    summary
+  },
+  name: qualifier ? `${name} — ${qualifier}` : name,
+  state,
+  selected,
+  shadowed,
+  host,
+  environment,
+  source,
+  ownership,
+  version,
+  architecture,
+  acquisition,
+  lifecyclePolicy,
+  authentication,
+  readiness,
+  technicalDetails,
+  actions
+});
+
 export const PROVIDER_INSTALLATIONS = {
   "openai": [
-    {
+    providerInstallationFixture({
       "id": "codex-store-selected",
-      "name": "Codex CLI — Microsoft Store",
+      "providerFamilyId": "openai",
+      "name": "Codex CLI",
+      "qualifier": "Microsoft Store",
+      "summary": "Codex CLI on This Windows computer · Ready · selected",
       "state": "ready",
       "selected": true,
       "shadowed": false,
-      "owner": "Microsoft Store",
-      "ownershipConfidence": "proven",
-      "path": "WindowsApps / package alias",
-      "method": "Existing install",
-      "version": "fixture-current",
-      "authBoundary": "PM-direct OAuth for supported account connection",
-      "updatePolicy": "Ask first",
-      "updateState": "update available",
-      "officialSource": "Official Microsoft Store package",
-      "resolvedCommand": "codex → selected Store launcher",
+      "host": {
+        "id": "host-fixture-windows-local",
+        "displayName": "This Windows computer",
+        "kind": "native-desktop"
+      },
+      "environment": {
+        "id": "environment-fixture-windows-native",
+        "displayName": "Windows native",
+        "kind": "windows-native",
+        "hostId": "host-fixture-windows-local"
+      },
+      "source": {
+        "displayName": "Official Microsoft Store package",
+        "provenance": "OpenAI-published package identified through Microsoft Store metadata",
+        "kind": "official-store-package",
+        "official": true
+      },
+      "ownership": {
+        "displayName": "Microsoft Store",
+        "kind": "windows_store_or_app_installer",
+        "confidence": "proven",
+        "maintenance": "eligible-after-recorded-consent"
+      },
+      "version": {
+        "current": "fixture-current",
+        "target": "fixture-compatible-update",
+        "channel": "stable",
+        "compatibility": "compatible"
+      },
+      "architecture": {
+        "executable": "x86_64",
+        "host": "x86_64",
+        "compatibility": "compatible"
+      },
+      "acquisition": {
+        "status": "compatible-existing-selected",
+        "initialConsent": "recorded-fixture-consent",
+        "approvedForUse": true,
+        "acquiredByPuppetMaster": false,
+        "firstAcquisitionMayBeSilent": false
+      },
+      "lifecyclePolicy": {
+        "scope": "post-consent-only",
+        "checkUpdates": "automatic",
+        "installUpdates": "ask-first",
+        "versionPolicy": "latest-compatible",
+        "rollbackAfterFailedVerification": "on-where-supported",
+        "autoOnMeaning": "maintain-previously-approved-installation-only",
+        "state": "update-available"
+      },
+      "authentication": {
+        "separateFromInstallation": true,
+        "owner": "pm-direct-approved-client",
+        "method": "oauth",
+        "status": "authenticated",
+        "boundary": "PM-direct OAuth is a distinct supported account connection; installing the CLI never signs it in"
+      },
+      "readiness": {
+        "overall": "ready",
+        "installationFound": true,
+        "executableHealthy": true,
+        "authenticationKnown": true,
+        "authenticated": true,
+        "accountIdentityKnown": true,
+        "productOrPlanKnown": true,
+        "modelCatalogAvailable": true,
+        "adapterHandshakeReady": true,
+        "requiredCapabilitiesReady": true,
+        "generationVerified": true,
+        "usageTelemetryAvailable": true
+      },
+      "technicalDetails": {
+        "paths": {
+          "configured": "WindowsApps package alias",
+          "resolved": "Selected Microsoft Store launcher",
+          "actualExecutable": "Hydrate exact host-local path in Details"
+        },
+        "resolvedCommand": "codex → selected Store launcher",
+        "packageAlias": "codex",
+        "hash": {
+          "algorithm": "sha256",
+          "value": null,
+          "status": "not-live-evidence-in-concept-fixture"
+        },
+        "internalIds": {
+          "installationId": "codex-store-selected",
+          "providerFamilyId": "openai",
+          "hostId": "host-fixture-windows-local",
+          "environmentId": "environment-fixture-windows-native"
+        }
+      },
       "actions": [
         "Preview scheduled update",
         "Verify selected installation"
       ]
-    },
-    {
+    }),
+    providerInstallationFixture({
       "id": "codex-npm-shadowed",
-      "name": "Codex CLI — npm",
+      "providerFamilyId": "openai",
+      "name": "Codex CLI",
+      "qualifier": "npm",
+      "summary": "Codex CLI on This Windows computer · compatible duplicate · shadowed",
       "state": "shadowed",
       "selected": false,
       "shadowed": true,
-      "owner": "npm global prefix",
-      "ownershipConfidence": "proven",
-      "path": "User npm bin / codex",
-      "method": "Existing install",
-      "version": "fixture-older",
-      "authBoundary": "Not selected; credentials not imported",
-      "updatePolicy": "Manual",
-      "updateState": "shadowed",
-      "officialSource": "Official OpenAI npm package",
-      "resolvedCommand": "Shadowed by selected Store launcher",
+      "host": {
+        "id": "host-fixture-windows-local",
+        "displayName": "This Windows computer",
+        "kind": "native-desktop"
+      },
+      "environment": {
+        "id": "environment-fixture-windows-native",
+        "displayName": "Windows native",
+        "kind": "windows-native",
+        "hostId": "host-fixture-windows-local"
+      },
+      "source": {
+        "displayName": "Official OpenAI npm package",
+        "provenance": "OpenAI package identity matched by the npm global package database",
+        "kind": "official-package-feed",
+        "official": true
+      },
+      "ownership": {
+        "displayName": "npm global prefix",
+        "kind": "npm_global",
+        "confidence": "proven",
+        "maintenance": "manual-while-shadowed"
+      },
+      "version": {
+        "current": "fixture-older",
+        "target": null,
+        "channel": "stable",
+        "compatibility": "compatible-but-not-selected"
+      },
+      "architecture": {
+        "executable": "x86_64",
+        "host": "x86_64",
+        "compatibility": "compatible"
+      },
+      "acquisition": {
+        "status": "compatible-existing-not-selected",
+        "initialConsent": "not-requested-for-this-installation",
+        "approvedForUse": false,
+        "acquiredByPuppetMaster": false,
+        "firstAcquisitionMayBeSilent": false
+      },
+      "lifecyclePolicy": {
+        "scope": "post-consent-only",
+        "checkUpdates": "manual",
+        "installUpdates": "manual",
+        "versionPolicy": "keep-current-until-selected",
+        "rollbackAfterFailedVerification": "not-applicable",
+        "autoOnMeaning": "maintain-previously-approved-installation-only",
+        "state": "shadowed"
+      },
+      "authentication": {
+        "separateFromInstallation": true,
+        "owner": "unbound",
+        "method": "none-selected",
+        "status": "not-inspected",
+        "boundary": "The shadowed installation is not selected and no credentials are imported"
+      },
+      "readiness": {
+        "overall": "found-not-selected",
+        "installationFound": true,
+        "executableHealthy": true,
+        "authenticationKnown": false,
+        "authenticated": false,
+        "accountIdentityKnown": false,
+        "productOrPlanKnown": false,
+        "modelCatalogAvailable": false,
+        "adapterHandshakeReady": false,
+        "requiredCapabilitiesReady": false,
+        "generationVerified": false,
+        "usageTelemetryAvailable": false
+      },
+      "technicalDetails": {
+        "paths": {
+          "configured": "User npm bin alias",
+          "resolved": "Shadowed npm launcher",
+          "actualExecutable": "Hydrate exact host-local path in Details"
+        },
+        "resolvedCommand": "Shadowed by selected Store launcher",
+        "packageAlias": "@openai/codex",
+        "hash": {
+          "algorithm": "sha256",
+          "value": null,
+          "status": "not-live-evidence-in-concept-fixture"
+        },
+        "internalIds": {
+          "installationId": "codex-npm-shadowed",
+          "providerFamilyId": "openai",
+          "hostId": "host-fixture-windows-local",
+          "environmentId": "environment-fixture-windows-native"
+        }
+      },
       "actions": [
         "Select installation",
         "Inspect shadow reason"
       ]
-    }
+    })
   ],
   "claude": [
-    {
+    providerInstallationFixture({
       "id": "claude-homebrew-selected",
-      "name": "Claude CLI — Homebrew",
+      "providerFamilyId": "claude",
+      "name": "Claude CLI",
+      "qualifier": "Homebrew",
+      "summary": "Claude CLI on This Mac · Ready · selected",
       "state": "ready",
       "selected": true,
       "shadowed": false,
-      "owner": "Homebrew",
-      "ownershipConfidence": "proven",
-      "path": "Homebrew prefix / claude",
-      "method": "Existing install",
-      "version": "fixture-current",
-      "authBoundary": "Claude CLI-owned OAuth only; PM never performs Claude OAuth",
-      "updatePolicy": "Ask first",
-      "updateState": "current",
-      "officialSource": "Official provider instructions",
-      "resolvedCommand": "claude → Homebrew executable",
+      "host": {
+        "id": "host-fixture-mac-local",
+        "displayName": "This Mac",
+        "kind": "native-desktop"
+      },
+      "environment": {
+        "id": "environment-fixture-macos-native",
+        "displayName": "macOS native",
+        "kind": "macos-native",
+        "hostId": "host-fixture-mac-local"
+      },
+      "source": {
+        "displayName": "Official Anthropic installation route",
+        "provenance": "Homebrew-owned executable matched to Anthropic's documented installation route",
+        "kind": "official-documented-package-manager-route",
+        "official": true
+      },
+      "ownership": {
+        "displayName": "Homebrew",
+        "kind": "homebrew_formula",
+        "confidence": "proven",
+        "maintenance": "eligible-after-recorded-consent"
+      },
+      "version": {
+        "current": "fixture-current",
+        "target": null,
+        "channel": "stable",
+        "compatibility": "compatible"
+      },
+      "architecture": {
+        "executable": "arm64",
+        "host": "arm64",
+        "compatibility": "compatible"
+      },
+      "acquisition": {
+        "status": "compatible-existing-selected",
+        "initialConsent": "recorded-fixture-consent",
+        "approvedForUse": true,
+        "acquiredByPuppetMaster": false,
+        "firstAcquisitionMayBeSilent": false
+      },
+      "lifecyclePolicy": {
+        "scope": "post-consent-only",
+        "checkUpdates": "automatic",
+        "installUpdates": "ask-first",
+        "versionPolicy": "latest-compatible",
+        "rollbackAfterFailedVerification": "on-where-supported",
+        "autoOnMeaning": "maintain-previously-approved-installation-only",
+        "state": "current"
+      },
+      "authentication": {
+        "separateFromInstallation": true,
+        "owner": "cli-owned",
+        "method": "oauth",
+        "status": "authenticated",
+        "boundary": "Claude CLI owns OAuth; Puppet Master launches and verifies the provider-owned flow without copying raw tokens"
+      },
+      "readiness": {
+        "overall": "ready",
+        "installationFound": true,
+        "executableHealthy": true,
+        "authenticationKnown": true,
+        "authenticated": true,
+        "accountIdentityKnown": true,
+        "productOrPlanKnown": true,
+        "modelCatalogAvailable": true,
+        "adapterHandshakeReady": true,
+        "requiredCapabilitiesReady": true,
+        "generationVerified": true,
+        "usageTelemetryAvailable": false
+      },
+      "technicalDetails": {
+        "paths": {
+          "configured": "Homebrew command alias",
+          "resolved": "Selected Homebrew executable",
+          "actualExecutable": "Hydrate exact host-local path in Details"
+        },
+        "resolvedCommand": "claude → Homebrew executable",
+        "packageAlias": "claude",
+        "hash": {
+          "algorithm": "sha256",
+          "value": null,
+          "status": "not-live-evidence-in-concept-fixture"
+        },
+        "internalIds": {
+          "installationId": "claude-homebrew-selected",
+          "providerFamilyId": "claude",
+          "hostId": "host-fixture-mac-local",
+          "environmentId": "environment-fixture-macos-native"
+        }
+      },
       "actions": [
         "Verify selected installation",
         "Open CLI-owned sign-in"
       ]
-    },
-    {
+    }),
+    providerInstallationFixture({
       "id": "claude-wrapper-unknown",
-      "name": "claude-wrapper",
+      "providerFamilyId": "claude",
+      "name": "Claude wrapper",
+      "qualifier": "Unknown owner",
+      "summary": "Claude wrapper on This Mac · ownership unknown · manual only",
       "state": "manual-only",
       "selected": false,
       "shadowed": true,
-      "owner": "Unknown",
-      "ownershipConfidence": "unknown",
-      "path": "User bin / claude-wrapper",
-      "method": "Unknown existing executable",
-      "version": "unknown",
-      "authBoundary": "No credentials read",
-      "updatePolicy": "Manual only",
-      "updateState": "blocked",
-      "officialSource": "Unknown",
-      "resolvedCommand": "Never selected automatically",
+      "host": {
+        "id": "host-fixture-mac-local",
+        "displayName": "This Mac",
+        "kind": "native-desktop"
+      },
+      "environment": {
+        "id": "environment-fixture-macos-native",
+        "displayName": "macOS native",
+        "kind": "macos-native",
+        "hostId": "host-fixture-mac-local"
+      },
+      "source": {
+        "displayName": "Unverified discovered executable",
+        "provenance": "No package database, provider metadata, or signature proves an official source",
+        "kind": "unknown-existing",
+        "official": false
+      },
+      "ownership": {
+        "displayName": "Unknown",
+        "kind": "unknown",
+        "confidence": "unknown",
+        "maintenance": "manual-only"
+      },
+      "version": {
+        "current": "unknown",
+        "target": null,
+        "channel": "unknown",
+        "compatibility": "unverified"
+      },
+      "architecture": {
+        "executable": "unknown",
+        "host": "arm64",
+        "compatibility": "unverified"
+      },
+      "acquisition": {
+        "status": "discovered-unapproved",
+        "initialConsent": "not-recorded",
+        "approvedForUse": false,
+        "acquiredByPuppetMaster": false,
+        "firstAcquisitionMayBeSilent": false
+      },
+      "lifecyclePolicy": {
+        "scope": "manual-only-until-ownership-proven-and-consent-recorded",
+        "checkUpdates": "manual",
+        "installUpdates": "blocked",
+        "versionPolicy": "unknown",
+        "rollbackAfterFailedVerification": "unavailable",
+        "autoOnMeaning": "maintain-previously-approved-installation-only",
+        "state": "blocked-unknown-owner"
+      },
+      "authentication": {
+        "separateFromInstallation": true,
+        "owner": "unknown",
+        "method": "not-inspected",
+        "status": "not-inspected",
+        "boundary": "No credentials are read while installation ownership is unknown"
+      },
+      "readiness": {
+        "overall": "manual-only",
+        "installationFound": true,
+        "executableHealthy": false,
+        "authenticationKnown": false,
+        "authenticated": false,
+        "accountIdentityKnown": false,
+        "productOrPlanKnown": false,
+        "modelCatalogAvailable": false,
+        "adapterHandshakeReady": false,
+        "requiredCapabilitiesReady": false,
+        "generationVerified": false,
+        "usageTelemetryAvailable": false
+      },
+      "technicalDetails": {
+        "paths": {
+          "configured": "User-selected wrapper alias",
+          "resolved": "Unverified wrapper",
+          "actualExecutable": "Not trusted or displayed in the compact row"
+        },
+        "resolvedCommand": "Never selected automatically",
+        "packageAlias": null,
+        "hash": {
+          "algorithm": "sha256",
+          "value": null,
+          "status": "not-collected"
+        },
+        "internalIds": {
+          "installationId": "claude-wrapper-unknown",
+          "providerFamilyId": "claude",
+          "hostId": "host-fixture-mac-local",
+          "environmentId": "environment-fixture-macos-native"
+        }
+      },
       "actions": [
         "Inspect detection evidence"
       ]
-    }
+    })
   ],
   "antigravity": [
-    {
+    providerInstallationFixture({
       "id": "antigravity-selected",
+      "providerFamilyId": "antigravity",
       "name": "Antigravity CLI",
+      "qualifier": "Official installer",
+      "summary": "Antigravity CLI on This Linux workstation · sign-in required · selected",
       "state": "signed-out",
       "selected": true,
       "shadowed": false,
-      "owner": "Official installer",
-      "ownershipConfidence": "proven",
-      "path": "User applications / antigravity",
-      "method": "Existing install",
-      "version": "fixture-current",
-      "authBoundary": "Antigravity CLI-owned Google login; PM launches provider-owned flow",
-      "updatePolicy": "When idle",
-      "updateState": "scheduled when idle",
-      "officialSource": "Official provider download",
-      "resolvedCommand": "antigravity → selected executable",
+      "host": {
+        "id": "host-fixture-linux-local",
+        "displayName": "This Linux workstation",
+        "kind": "native-desktop"
+      },
+      "environment": {
+        "id": "environment-fixture-linux-native",
+        "displayName": "Linux native",
+        "kind": "linux-native",
+        "hostId": "host-fixture-linux-local"
+      },
+      "source": {
+        "displayName": "Official Antigravity download",
+        "provenance": "Provider-published artifact with fixture provenance verification",
+        "kind": "official-provider-artifact",
+        "official": true
+      },
+      "ownership": {
+        "displayName": "Official installer",
+        "kind": "provider_native",
+        "confidence": "proven",
+        "maintenance": "eligible-after-recorded-consent"
+      },
+      "version": {
+        "current": "fixture-current",
+        "target": "fixture-compatible-update",
+        "channel": "stable",
+        "compatibility": "compatible"
+      },
+      "architecture": {
+        "executable": "x86_64",
+        "host": "x86_64",
+        "compatibility": "compatible"
+      },
+      "acquisition": {
+        "status": "compatible-existing-selected",
+        "initialConsent": "recorded-fixture-consent",
+        "approvedForUse": true,
+        "acquiredByPuppetMaster": false,
+        "firstAcquisitionMayBeSilent": false
+      },
+      "lifecyclePolicy": {
+        "scope": "post-consent-only",
+        "checkUpdates": "automatic",
+        "installUpdates": "automatically-when-idle",
+        "versionPolicy": "latest-compatible",
+        "rollbackAfterFailedVerification": "on-where-supported",
+        "autoOnMeaning": "maintain-previously-approved-installation-only",
+        "state": "scheduled-when-idle"
+      },
+      "authentication": {
+        "separateFromInstallation": true,
+        "owner": "cli-owned",
+        "method": "oauth",
+        "status": "signed-out",
+        "boundary": "Antigravity CLI owns Google login; Puppet Master launches the provider-owned flow"
+      },
+      "readiness": {
+        "overall": "needs-sign-in",
+        "installationFound": true,
+        "executableHealthy": true,
+        "authenticationKnown": true,
+        "authenticated": false,
+        "accountIdentityKnown": false,
+        "productOrPlanKnown": false,
+        "modelCatalogAvailable": false,
+        "adapterHandshakeReady": false,
+        "requiredCapabilitiesReady": false,
+        "generationVerified": false,
+        "usageTelemetryAvailable": false
+      },
+      "technicalDetails": {
+        "paths": {
+          "configured": "Provider launcher alias",
+          "resolved": "Selected provider executable",
+          "actualExecutable": "Hydrate exact host-local path in Details"
+        },
+        "resolvedCommand": "antigravity → selected executable",
+        "packageAlias": "antigravity",
+        "hash": {
+          "algorithm": "sha256",
+          "value": null,
+          "status": "fixture-provenance-only"
+        },
+        "internalIds": {
+          "installationId": "antigravity-selected",
+          "providerFamilyId": "antigravity",
+          "hostId": "host-fixture-linux-local",
+          "environmentId": "environment-fixture-linux-native"
+        }
+      },
       "actions": [
         "Open CLI-owned sign-in",
         "Preview idle update"
       ]
-    }
+    })
   ],
   "ollama": [
-    {
+    providerInstallationFixture({
       "id": "ollama-not-installed",
-      "name": "Ollama",
+      "providerFamilyId": "ollama",
+      "name": "Ollama CLI",
+      "qualifier": "Not installed",
+      "summary": "Ollama CLI on This Mac · Provider Setup Required",
       "state": "not-installed",
       "selected": false,
       "shadowed": false,
-      "owner": "Not installed",
-      "ownershipConfidence": "not-applicable",
-      "path": "No executable detected",
-      "method": "Explicit install available",
-      "version": "not installed",
-      "authBoundary": "No account required for local runtime",
-      "updatePolicy": "Ask first",
-      "updateState": "not installed",
-      "officialSource": "Official Ollama download",
-      "resolvedCommand": "Unavailable until explicit install",
+      "host": {
+        "id": "host-fixture-mac-local",
+        "displayName": "This Mac",
+        "kind": "native-desktop"
+      },
+      "environment": {
+        "id": "environment-fixture-macos-native",
+        "displayName": "macOS native",
+        "kind": "macos-native",
+        "hostId": "host-fixture-mac-local"
+      },
+      "source": {
+        "displayName": "Official Ollama download",
+        "provenance": "Provider-owned download selected from the trusted setup manifest",
+        "kind": "official-provider-installer",
+        "official": true
+      },
+      "ownership": {
+        "displayName": "Not installed",
+        "kind": "not_installed",
+        "confidence": "not-applicable",
+        "maintenance": "unavailable-before-explicit-acquisition"
+      },
+      "version": {
+        "current": null,
+        "target": "fixture-latest-compatible",
+        "channel": "stable",
+        "compatibility": "verify-after-acquisition"
+      },
+      "architecture": {
+        "executable": "not-installed",
+        "host": "arm64",
+        "compatibility": "verify-before-acquisition"
+      },
+      "acquisition": {
+        "status": "not-acquired",
+        "initialConsent": "required-not-granted",
+        "approvedForUse": false,
+        "acquiredByPuppetMaster": false,
+        "firstAcquisitionMayBeSilent": false
+      },
+      "lifecyclePolicy": {
+        "scope": "unavailable-until-explicit-setup",
+        "checkUpdates": "not-applicable",
+        "installUpdates": "not-applicable",
+        "versionPolicy": "latest-compatible-after-consent",
+        "rollbackAfterFailedVerification": "on-where-supported-after-consent",
+        "autoOnMeaning": "maintain-previously-approved-installation-only",
+        "state": "awaiting-explicit-setup"
+      },
+      "authentication": {
+        "separateFromInstallation": true,
+        "owner": "not-required-for-local-runtime",
+        "method": "none",
+        "status": "not-applicable",
+        "boundary": "No account is required for the local runtime; this does not waive explicit installation consent"
+      },
+      "readiness": {
+        "overall": "provider-setup-required",
+        "installationFound": false,
+        "executableHealthy": false,
+        "authenticationKnown": true,
+        "authenticated": true,
+        "accountIdentityKnown": false,
+        "productOrPlanKnown": false,
+        "modelCatalogAvailable": false,
+        "adapterHandshakeReady": false,
+        "requiredCapabilitiesReady": false,
+        "generationVerified": false,
+        "usageTelemetryAvailable": false
+      },
+      "technicalDetails": {
+        "paths": {
+          "configured": null,
+          "resolved": null,
+          "actualExecutable": null
+        },
+        "resolvedCommand": null,
+        "packageAlias": null,
+        "hash": {
+          "algorithm": "sha256",
+          "value": null,
+          "status": "not-acquired"
+        },
+        "internalIds": {
+          "installationId": "ollama-not-installed",
+          "providerFamilyId": "ollama",
+          "hostId": "host-fixture-mac-local",
+          "environmentId": "environment-fixture-macos-native"
+        }
+      },
       "actions": [
-        "Review official install",
-        "Start explicit install flow"
+        "Review official source and target",
+        "Continue to explicit Install confirmation"
       ]
-    }
+    })
   ],
   "openrouter-free": [],
   "local-server": [],
   "opencode-server": [
-    {
+    providerInstallationFixture({
       "id": "opencode-external",
+      "providerFamilyId": "opencode-server",
       "name": "OpenCode external server",
+      "qualifier": "User managed",
+      "summary": "OpenCode external server on This Linux workstation · Ready · Usage unavailable",
       "state": "ready",
       "selected": true,
       "shadowed": false,
-      "owner": "User-managed external service",
-      "ownershipConfidence": "declared",
-      "path": "http://127.0.0.1:4096 fixture endpoint",
-      "method": "External server connection",
-      "version": "API fixture v2",
-      "authBoundary": "Server-defined; PM stores only explicitly supplied connection data",
-      "updatePolicy": "Externally managed",
-      "updateState": "not managed by PM",
-      "officialSource": "User-managed OpenCode server",
-      "resolvedCommand": "No local CLI required",
+      "host": {
+        "id": "host-fixture-linux-local",
+        "displayName": "This Linux workstation",
+        "kind": "native-desktop"
+      },
+      "environment": {
+        "id": "environment-fixture-local-external-service",
+        "displayName": "Local external service",
+        "kind": "external-service",
+        "hostId": "host-fixture-linux-local"
+      },
+      "source": {
+        "displayName": "User-managed OpenCode server",
+        "provenance": "Endpoint explicitly supplied by the user; server lifecycle remains external",
+        "kind": "user-declared-external-service",
+        "official": false
+      },
+      "ownership": {
+        "displayName": "User-managed external service",
+        "kind": "external_service",
+        "confidence": "declared",
+        "maintenance": "externally-managed"
+      },
+      "version": {
+        "current": "API fixture v2",
+        "target": null,
+        "channel": "server-defined",
+        "compatibility": "compatible"
+      },
+      "architecture": {
+        "executable": "server-defined",
+        "host": "x86_64",
+        "compatibility": "not-applicable-to-client-connection"
+      },
+      "acquisition": {
+        "status": "external-connection-selected",
+        "initialConsent": "explicit-endpoint-selection",
+        "approvedForUse": true,
+        "acquiredByPuppetMaster": false,
+        "firstAcquisitionMayBeSilent": false
+      },
+      "lifecyclePolicy": {
+        "scope": "external-service-not-managed-by-puppet-master",
+        "checkUpdates": "externally-managed",
+        "installUpdates": "externally-managed",
+        "versionPolicy": "server-defined-compatible",
+        "rollbackAfterFailedVerification": "externally-managed",
+        "autoOnMeaning": "not-applicable",
+        "state": "not-managed-by-puppet-master"
+      },
+      "authentication": {
+        "separateFromInstallation": true,
+        "owner": "external-service",
+        "method": "server-defined",
+        "status": "ready",
+        "boundary": "Puppet Master stores only explicitly supplied connection data"
+      },
+      "readiness": {
+        "overall": "ready-usage-unavailable",
+        "installationFound": true,
+        "executableHealthy": true,
+        "authenticationKnown": true,
+        "authenticated": true,
+        "accountIdentityKnown": true,
+        "productOrPlanKnown": false,
+        "modelCatalogAvailable": true,
+        "adapterHandshakeReady": true,
+        "requiredCapabilitiesReady": true,
+        "generationVerified": true,
+        "usageTelemetryAvailable": false
+      },
+      "technicalDetails": {
+        "paths": {
+          "configured": "Fixture loopback endpoint",
+          "resolved": "Explicit external endpoint",
+          "actualExecutable": null
+        },
+        "resolvedCommand": "No local CLI required",
+        "packageAlias": null,
+        "hash": {
+          "algorithm": null,
+          "value": null,
+          "status": "not-applicable-to-external-service"
+        },
+        "internalIds": {
+          "installationId": "opencode-external",
+          "providerFamilyId": "opencode-server",
+          "hostId": "host-fixture-linux-local",
+          "environmentId": "environment-fixture-local-external-service"
+        }
+      },
       "actions": [
         "Test deterministic connection",
         "Inspect server contract"
       ]
-    }
+    })
   ]
 };
+
+export const PROVIDER_SETUP_CONTINUATION_FIXTURE = {
+  "schemaId": "pm.provider_setup_continuation.fixture.v1",
+  "id": "provider-setup-continuation-openai-fixture",
+  "providerFamilyId": "openai",
+  "status": {
+    "code": "provider_setup_required",
+    "displayName": "Provider Setup Required",
+    "reason": "No compatible installation is both explicitly selected and ready on the required Host/Environment"
+  },
+  "originatingOperation": {
+    "operationId": "operation-fixture-plan-compile-042",
+    "displayName": "Continue Plan Compile",
+    "projectId": "project-fixture-atlas",
+    "planId": "plan-fixture-provider-setup",
+    "requiredProviderFamilyId": "openai"
+  },
+  "continuation": {
+    "token": "continuation-fixture-provider-setup-0007",
+    "revision": 7,
+    "state": "current",
+    "preserveAcrossSetup": true
+  },
+  "coalescing": {
+    "requestFingerprint": "openai|host-fixture-windows-local|environment-fixture-windows-native|fixture-compatible",
+    "identicalRequestsShareOneSetupOperation": true,
+    "eachOriginKeepsItsOwnContinuationTokenAndRevision": true,
+    "oneOriginBecomingStaleDoesNotInvalidateCurrentOrigins": true
+  },
+  "requiredTarget": {
+    "host": {
+      "id": "host-fixture-windows-local",
+      "displayName": "This Windows computer"
+    },
+    "environment": {
+      "id": "environment-fixture-windows-native",
+      "displayName": "Windows native"
+    }
+  },
+  "compatibleExistingDiscovery": {
+    "state": "found-compatible-not-selected",
+    "installationIds": [
+      "codex-npm-shadowed"
+    ],
+    "automaticSelection": false,
+    "userMustSelectExactInstallation": true
+  },
+  "deepLink": {
+    "managerId": "providers",
+    "tab": "installations",
+    "providerId": "openai",
+    "rowId": "codex-npm-shadowed",
+    "exactRow": true
+  },
+  "allowedNextActions": [
+    "Select compatible existing installation explicitly",
+    "Review official source and exact Host/Environment",
+    "Confirm explicit Install"
+  ],
+  "officialAcquisition": {
+    "sourceRequired": true,
+    "sourceKind": "official-provider-or-documented-package-source",
+    "initialConsentRequired": true,
+    "silentAcquisitionAllowed": false
+  },
+  "authentication": {
+    "separateOperation": true,
+    "startsOnlyAfterInstallationVerification": true,
+    "completionDoesNotImplyReadiness": true
+  },
+  "readinessVerification": {
+    "required": [
+      "exact selected installation identity",
+      "version and architecture compatibility",
+      "authentication identity",
+      "model catalogue",
+      "adapter handshake",
+      "required capabilities"
+    ],
+    "usageTelemetryMayRemainUnavailable": true
+  },
+  "resume": {
+    "requiresContinuationCurrentnessCheck": true,
+    "requiredToken": "continuation-fixture-provider-setup-0007",
+    "requiredRevision": 7,
+    "onCurrent": "resume-originating-operation",
+    "onStale": "reject-without-resume"
+  },
+  "staleRejectionFixture": {
+    "presentedToken": "continuation-fixture-provider-setup-0006",
+    "presentedRevision": 6,
+    "currentToken": "continuation-fixture-provider-setup-0007",
+    "currentRevision": 7,
+    "result": "stale_continuation_rejected",
+    "originatingOperationResumed": false
+  }
+};
+
+export const PROVIDER_POLICY_CASES = [
+  {
+    "id": "provider-case-selected-shadowed",
+    "label": "Selected and shadowed compatible installations",
+    "kind": "installation-resolution",
+    "providerFamilyId": "openai",
+    "installationIds": [
+      "codex-store-selected",
+      "codex-npm-shadowed"
+    ],
+    "expected": {
+      "selectedInstallationId": "codex-store-selected",
+      "shadowedInstallationId": "codex-npm-shadowed",
+      "pathOrderMayChangeSelection": false
+    }
+  },
+  {
+    "id": "provider-case-unknown-owner-manual-only",
+    "label": "Unknown ownership remains manual-only",
+    "kind": "installation-resolution",
+    "providerFamilyId": "claude",
+    "installationIds": [
+      "claude-wrapper-unknown"
+    ],
+    "expected": {
+      "maintenance": "manual-only",
+      "packageManagerGuessAllowed": false,
+      "automaticSelectionAllowed": false
+    }
+  },
+  {
+    "id": "provider-case-claude-cli-owned-oauth",
+    "label": "Claude OAuth is CLI-owned",
+    "kind": "authentication-boundary",
+    "providerFamilyId": "claude",
+    "installationIds": [
+      "claude-homebrew-selected"
+    ],
+    "expected": {
+      "owner": "cli-owned",
+      "rawTokenCopiedByPuppetMaster": false,
+      "pmDirectOAuthLabelAllowed": false
+    }
+  },
+  {
+    "id": "provider-case-antigravity-cli-owned-oauth",
+    "label": "Antigravity OAuth is CLI-owned",
+    "kind": "authentication-boundary",
+    "providerFamilyId": "antigravity",
+    "installationIds": [
+      "antigravity-selected"
+    ],
+    "expected": {
+      "owner": "cli-owned",
+      "providerOwnedFlowLaunched": true,
+      "pmDirectOAuthLabelAllowed": false
+    }
+  },
+  {
+    "id": "provider-case-approved-direct-oauth-distinct",
+    "label": "Approved direct OAuth remains a distinct connection",
+    "kind": "authentication-boundary",
+    "providerFamilyId": "openai",
+    "installationIds": [
+      "codex-store-selected"
+    ],
+    "connectionFixture": {
+      "id": "connection-fixture-openai-pm-direct-oauth",
+      "owner": "pm-direct-approved-client",
+      "method": "oauth",
+      "installationMutation": false
+    },
+    "expected": {
+      "installationAndAuthenticationSeparate": true,
+      "installingCliAuthenticatesConnection": false
+    }
+  },
+  {
+    "id": "provider-case-authenticated-not-ready",
+    "label": "Authenticated but provider route is not ready",
+    "kind": "readiness",
+    "providerFamilyId": "openai",
+    "installationIds": [
+      "codex-store-selected"
+    ],
+    "readinessOverlay": {
+      "overall": "authenticated-not-ready",
+      "authenticated": true,
+      "modelCatalogAvailable": true,
+      "adapterHandshakeReady": false,
+      "requiredCapabilitiesReady": false,
+      "generationVerified": false,
+      "usageTelemetryAvailable": true
+    },
+    "expected": {
+      "ready": false,
+      "reason": "adapter-handshake-failed"
+    }
+  },
+  {
+    "id": "provider-case-ready-usage-unavailable",
+    "label": "Ready while Usage details are unavailable",
+    "kind": "readiness",
+    "providerFamilyId": "opencode-server",
+    "installationIds": [
+      "opencode-external"
+    ],
+    "expected": {
+      "ready": true,
+      "usageTelemetryAvailable": false,
+      "usageGatesReadiness": false
+    }
+  },
+  {
+    "id": "provider-case-post-consent-update",
+    "label": "Update applies only after prior installation consent",
+    "kind": "post-consent-lifecycle",
+    "providerFamilyId": "openai",
+    "installationIds": [
+      "codex-store-selected"
+    ],
+    "operation": {
+      "type": "update",
+      "state": "awaiting-user-approval",
+      "requiresPriorApprovedInstallation": true
+    }
+  },
+  {
+    "id": "provider-case-post-consent-repair",
+    "label": "Repair preserves the approved installation identity",
+    "kind": "post-consent-lifecycle",
+    "providerFamilyId": "claude",
+    "installationIds": [
+      "claude-homebrew-selected"
+    ],
+    "operation": {
+      "type": "repair",
+      "state": "verifying",
+      "requiresPriorApprovedInstallation": true,
+      "mayChangeAuthenticationOwner": false
+    }
+  },
+  {
+    "id": "provider-case-post-consent-rollback",
+    "label": "Failed verification rolls back a previously approved generation",
+    "kind": "post-consent-lifecycle",
+    "providerFamilyId": "antigravity",
+    "installationIds": [
+      "antigravity-selected"
+    ],
+    "operation": {
+      "type": "rollback",
+      "state": "rolled-back",
+      "requiresPriorApprovedInstallation": true,
+      "priorGenerationRetained": true
+    }
+  },
+  {
+    "id": "provider-case-official-provenance-failure",
+    "label": "Official provenance failure blocks acquisition",
+    "kind": "acquisition-failure",
+    "providerFamilyId": "ollama",
+    "installationIds": [
+      "ollama-not-installed"
+    ],
+    "sourceOverlay": {
+      "official": false,
+      "provenance": "publisher-or-integrity-verification-failed"
+    },
+    "expected": {
+      "state": "blocked-provenance",
+      "downloadActivated": false,
+      "authenticationStarted": false
+    }
+  },
+  {
+    "id": "provider-case-offline-wait",
+    "label": "Offline acquisition waits without losing explicit consent boundary",
+    "kind": "acquisition-wait",
+    "providerFamilyId": "ollama",
+    "installationIds": [
+      "ollama-not-installed"
+    ],
+    "observableWork": {
+      "state": "waiting-network",
+      "progressKind": "unknown",
+      "waitReason": "Host is offline",
+      "canCancel": true,
+      "canRetry": true
+    },
+    "expected": {
+      "silentRetryMayAcquire": false,
+      "resumeRequiresCurrentConsentAndTarget": true
+    }
+  }
+];
+
+export function buildProviderInstallationScaleFixture(count = 100) {
+  const total = Number.isInteger(count) && count > 0 ? count : 100;
+  const providers = [
+    ["openai", "Codex CLI"],
+    ["claude", "Claude CLI"],
+    ["antigravity", "Antigravity CLI"],
+    ["gemini", "Gemini CLI"]
+  ];
+  const targets = [
+    ["host-scale-windows", "Windows build host", "environment-scale-windows-native", "Windows native", "x86_64"],
+    ["host-scale-mac", "Mac review host", "environment-scale-macos-native", "macOS native", "arm64"],
+    ["host-scale-linux", "Linux execution host", "environment-scale-linux-native", "Linux native", "x86_64"],
+    ["host-scale-wsl", "Windows build host", "environment-scale-wsl-ubuntu", "Ubuntu 24.04 in WSL", "x86_64"]
+  ];
+  const states = ["ready", "found-not-selected", "shadowed", "manual-only", "needs-sign-in", "update-available"];
+  const rows = Array.from({ length: total }, (_, index) => {
+    const sequence = String(index + 1).padStart(3, "0");
+    const [providerFamilyId, providerName] = providers[index % providers.length];
+    const [hostId, hostDisplayName, environmentId, environmentDisplayName, architecture] = targets[index % targets.length];
+    const state = states[index % states.length];
+    const id = `provider-installation-scale-${sequence}`;
+    return {
+      "id": id,
+      "schemaId": "pm.provider_installation_summary.fixture.v1",
+      "providerFamilyId": providerFamilyId,
+      "name": `${providerName} ${sequence}`,
+      "summary": `${providerName} ${sequence} on ${hostDisplayName} · ${environmentDisplayName} · ${state.replaceAll("-", " ")}`,
+      "state": state,
+      "host": {
+        "id": hostId,
+        "displayName": hostDisplayName
+      },
+      "environment": {
+        "id": environmentId,
+        "displayName": environmentDisplayName
+      },
+      "version": {
+        "display": `fixture-${1 + (index % 9)}.${index % 20}.${index % 7}`
+      },
+      "architecture": {
+        "displayName": architecture
+      },
+      "source": {
+        "displayName": "Official provider source fixture",
+        "kind": "official-source-summary",
+        "official": true
+      },
+      "readinessSummary": state === "ready" ? "Ready" : state.replaceAll("-", " "),
+      "technicalDetails": {
+        "hydration": "deferred",
+        "detailsRef": `provider-installation-details:${id}`,
+        "rawPathDataIncluded": false
+      }
+    };
+  });
+  return {
+    "schemaId": "pm.provider_installation_scale.fixture.v1",
+    "fixtureId": `provider-installation-scale-${String(total).padStart(3, "0")}`,
+    "deterministic": true,
+    "baselineProviderArraysExpanded": false,
+    "total": total,
+    "summaryRows": rows
+  };
+}
 
 export const FLOW_TEMPLATES = {
   "provider-install": {
     "label": "Explicit official-source installation",
     "stages": [
-      "Detect",
-      "Review official source",
-      "Confirm explicit install",
-      "Verify ownership and version",
+      "Discover compatible existing installations",
+      "Select exact Host and Environment",
+      "Review official source, provenance, version, architecture, license, cost, and permissions",
+      "Confirm explicit Install",
+      "Acquire from official source",
+      "Verify installation identity and readiness facets",
+      "Authenticate separately when required",
+      "Check continuation currentness",
+      "Ready"
+    ],
+    "failureStage": 5
+  },
+  "provider-auth": {
+    "label": "Separate provider authentication",
+    "stages": [
+      "Use verified selected installation",
+      "Review authentication owner and method",
+      "Start explicit provider or PM-approved flow",
+      "Verify account and product identity",
+      "Refresh model catalogue and adapter readiness",
       "Ready"
     ],
     "failureStage": 3
@@ -1963,13 +3056,13 @@ export const DETERMINISTIC_TRIGGERS = [
     "message": "Active durable state cannot be selected for cleanup."
   },
   {
-    "id": "deferred-server-shell",
-    "label": "Deferred Server insertion",
+    "id": "missing-owner-server-shell",
+    "label": "Server insertion owner unresolved",
     "managerId": "future-server-shell",
     "kind": "manager-state",
     "target": "future-server-shell",
-    "status": "Deferred",
-    "message": "Insertion destinations are named without inventing backend state."
+    "status": "Missing owner",
+    "message": "Insertion destinations remain inspect-only and mutation-blocked until the exact canonical owner is adjudicated."
   },
   {
     "id": "no-search-results",

@@ -217,7 +217,7 @@
   "command_id_impacts": [
     {
       "impact": "Actions in this concept's scope",
-      "count": 62
+      "count": 66
     },
     {
       "impact": "Adjudicated against candidate families",
@@ -466,5 +466,35 @@
       "why_it_matters": "The concepts render it as an explicit per-installation choice with no global default, which is safe but may not be the intended shipping behaviour.",
       "blocking": false
     }
-  ]
+  ],
+  "correction_2026_08_13": {
+    "packet": "PM_Settings_Dependency_and_Work_Correction_2026-08-13",
+    "materially_affected": true,
+    "defects_corrected": 16,
+    "new_plan_owner_impacts": [
+      {
+        "owner": "Performance / RuntimeResourceGovernor owner",
+        "impact": "Settings now carries a human resource-policy surface and a read-only permit projection. The governor remains the only admission owner.",
+        "kind": "extend"
+      },
+      {
+        "owner": "ObservableWork owner",
+        "impact": "One progress/wait projection with 24 states, wait reasons and a progress source. Settings renders it; it does not own it.",
+        "kind": "extend"
+      },
+      {
+        "owner": "Release/updates and BinaryLocator owners",
+        "impact": "Acquisition classes and readiness words are now typed, and provider CLIs are structurally barred from any baseline class.",
+        "kind": "conflict"
+      }
+    ],
+    "test_fixture_changes": {
+      "settings": 855,
+      "installations_scale": 100,
+      "mcp_scale": 50,
+      "search_records": 1015,
+      "search_kinds": 11,
+      "demo_states": 9
+    }
+  }
 }

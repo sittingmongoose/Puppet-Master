@@ -231,3 +231,19 @@ Findings from the visual review and their fixes:
 2. **Deck @900 subcategory nav**: the subnav was a horizontally scrolled strip rather than a drawer at narrow widths. Added a `Sections` drawer trigger + fixed-position drawer (open/close, auto-close on jump) mirroring Atlas's pattern; verified in `deck-w900-drawer-fixed.png`. Atlas's existing drawer verified working (`atlas-w900-drawer-fixed.png`); Ledger and Spoke drawers were already compliant.
 
 Visual observations (no defects remaining): destinations read as places with OPEN affordances (no pills); notices are compact with status chip + headline + reason + ≤2 actions; themes keep stable hierarchy (retro-light, glass-dark, basic-dark reviewed); no emoji, no left accent borders, no clipped text at 900/1280; provider manager shows installations, confidence labels, update states honestly; Spoke backup manager renders action vs setting vs status distinctly.
+
+## Dependency-closure correction (2026-08-13 correction packet)
+
+Reference review: `reference-review-report.json` lists every reference opened during the original build (and the two that were absent/mispathed), each prior omission, affected concepts, changes, and tests rerun.
+
+Corrections and their probe evidence (`correction-probes.py`, 10 checks × 4 concepts = 40/40 PASS):
+1. Index rebuild projects truthful phases + ObservableWork fields; no fake percentage (Spoke bar now indeterminate, reduced-motion static).
+2. Closed assistant panel no longer measured (`display:none` + `contain:strict`).
+3. Installation cards show humanized identity by default; raw command/resolved/evidence behind an Advanced disclosure.
+4. Provider runtime-demand flow: Provider Setup Required receipt with continuation token + deep link; `cmd.provider.setup_required` added to command deltas as candidate (not minted).
+5. Low-resource profile and poor-network (stale-while-revalidate, LKG) scenarios in demo tray; verified on all four concepts.
+6. Registers: RuntimeResourceGovernor (sole owner) + ObservableWork entries, §20.3 coverage rows (45 families, 0 missing), runtime-demand wiring trace, DRY consumption notes.
+
+Regression after corrections: harness 55/55, probes.mjs 124/124, probes2.mjs 113/113, walkthrough 67/67, validator passed. Total 399 automated checks green.
+
+Materiality: the omission MATERIALLY affected the work (fake progress, measured closed panel, raw identities, missing demand flow and degradation states); all corrected. Acquisition policy was already compliant pre-pass.

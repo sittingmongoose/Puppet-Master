@@ -1416,8 +1416,12 @@
     { domainId: 'system', afterSub: 'maintenance', sub: { id: 'settings-lifecycle', title: 'Settings lifecycle', blurb: 'Export, import with preview and rollback, and reset.', settingIds: ['system.maintenance.import-export'] } }
   ];
 
-  /* Amendments to existing rows (fixture states + typo synonyms). */
+  /* Amendments to existing rows (fixture states + typo synonyms).
+     2026-08-13 correction: the skills-discovery desc implied a startup scan,
+     which the performance decision register forbids (no probe/scan storms at
+     startup; discovery is bounded and demand-driven). */
   var ROW_AMENDMENTS = [
+    { id: 'extensions.skills.discovery', patch: { desc: 'Discovers skill folders in your project and computer when skills are first used, and again on demand — never as a startup scan. When two skills share a name, the project copy wins.' } },
     { id: 'general.interaction.notifications-enabled', patch: { search: ['+', 'notifcations'] } },
     { id: 'general.visual.theme', patch: { search: ['+', 'apperance'] } },
     { id: 'general.visual.ui-scale', patch: { restartPending: true, flags: { restart: true } } },

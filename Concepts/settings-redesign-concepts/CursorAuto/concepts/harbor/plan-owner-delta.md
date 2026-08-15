@@ -137,3 +137,12 @@ Audit of packet `10` owners. Depth concentrates on assigned families; others rec
 - Stale right-panel language
 - Stale regular/yolo mode coupling
 - Invalid inventory empty-field Auto/Inherit ambiguity
+
+
+## 2026-08-13 dependency correction
+
+- **RuntimeResourceGovernor** remains the sole resource/admission owner. Settings does not admit work.
+- **ObservableWork** remains the sole progress/wait projection owner. CursorAuto `CAObservableWork` is a demo projection adapter only.
+- Provider CLI acquisition follows final adjudication: not bundled / not baseline / not pre-seeded / not silent Project-triggered; explicit official-source Install for exact Host/Environment; auth separate; post-consent lifecycle allowed.
+- Settings opening model: compact Home summaries; lazy manager hydrate; dispose inactive scopes; virtualize large lists; no fake percent progress.
+- Older hardware / poor network are launch targets for degraded concurrency/caches/motion — capability is not removed.

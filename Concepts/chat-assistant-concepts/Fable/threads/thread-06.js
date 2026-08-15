@@ -14,7 +14,7 @@ import { ensureCss } from "../shared/contracts.js";
 import { escapeHtml } from "../shared/popup.js";
 import {
   transcriptSlice, isLongMessage, isExpanded, previewText, lensMark, copyMessage,
-  workCluster, createScrollKeeper, questionnaireState, activityGroups, bodyHtml,
+  workCluster, createScrollKeeper, questionnaireState, activityGroups, bodyHtml, liveTurn,
 } from "../shared/thread-common.js";
 import { createComposer, createSelectorRow, createDecisionStack, openMoreInfo, openMessageOps } from "../shared/components.js";
 import { fmtDuration, fmtTime, workedLabel, JUMP_TO_LATEST, QUESTIONNAIRE_ACTIONS, TODO_STATE_LABELS } from "../shared/strings.js";
@@ -200,17 +200,26 @@ export function createThread(ctx) {
     const pan = document.createElement("div");
     pan.className = "ft6-pan";
 
-    if (w.turn) {
+    const lt = liveTurn();
+    if (lt) {
       const wt = document.createElement("div");
       wt.className = "ft6-weight ft6-weight-live";
-      wt.innerHTML = `<span class="ft6-weight-label">${escapeHtml(w.turn.summary)}</span><span class="ft6-weight-val ft6-live-time">${fmtDuration(w.turn.workedSeconds)}</span>`;
+      wt.innerHTML = `<span class="ft6-weight-label">${escapeHtml(lt.summary)}</span><span class="ft6-weight-val ft6-live-time">${fmtDuration(lt.workedSeconds)}</span>`;
+      for (const item of lt.items) {
+        const line = document.createElement("div");
+        line.className = "ft6-weight-item";
+        line.innerHTML = `<span>${escapeHtml(item.text)}</span>${item.side ? `<span class="ft6-weight-val">${escapeHtml(item.side)}</span>` : ""}`;
+        wt.appendChild(line);
+      }
       pan.appendChild(wt);
     }
     if (w.goal) {
       const wt = document.createElement("div");
       wt.className = "ft6-weight";
       wt.dataset.status = w.goal.status;
-      wt.innerHTML = `<span class="ft6-weight-label">${escapeHtml(w.goal.title)}</span><span class="ft6-weight-val">${escapeHtml(w.goal.status)}</span>`;
+      const phaseTxt = w.goal.phases ? ` · ${escapeHtml(w.goal.phases[w.goal.phaseIndex || 0])} ${(w.goal.phaseIndex || 0) + 1}/${w.goal.phases.length}` : "";
+      const replanTxt = w.goal.replanApplied ? " · replanned" : "";
+      wt.innerHTML = `<span class="ft6-weight-label">${escapeHtml(w.goal.title)}</span><span class="ft6-weight-val">${escapeHtml(w.goal.status)}${phaseTxt}${replanTxt}</span>`;
       const ctrl = document.createElement("div");
       ctrl.className = "ft6-weight-ctrl";
       const btn = (t, ok, fn) => { const b = document.createElement("button"); b.textContent = t; if (!ok) b.disabled = true; else b.addEventListener("click", fn); return b; };
@@ -249,7 +258,7 @@ export function createThread(ctx) {
       const wt = document.createElement("div");
       wt.className = "ft6-weight";
       const c = w.subagents.counts;
-      wt.innerHTML = `<span class="ft6-weight-label">${escapeHtml(w.subagents.label)}</span><span class="ft6-weight-val">${c.working}·${c.complete}·${c.blocked}·${c.waiting}</span>`;
+      wt.innerHTML = `<span class="ft6-weight-label">${escapeHtml(w.subagents.label)}</span><span class="ft6-weight-val">${c.working} working · ${c.complete} done${c.failed ? ` · ${c.failed} failed` : ""}${c.retrying ? ` · ${c.retrying} retrying` : ""}${c.blocked ? ` · ${c.blocked} blocked` : ""}${c.waiting ? ` · ${c.waiting} waiting` : ""}</span>`;
       for (const a of w.subagents.agents) {
         const line = document.createElement("div");
         line.className = "ft6-agent-line";

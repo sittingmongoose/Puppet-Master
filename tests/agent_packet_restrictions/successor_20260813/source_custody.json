@@ -1,0 +1,166 @@
+{
+  "schema_id": "pm.prompt_complexity_successor.source_custody.v1",
+  "captured_at_utc": "2026-08-13T17:08:00Z",
+  "workspace": {
+    "root": "/mnt/Cursor/PuppetMaster",
+    "branch": "main",
+    "head": "d056a16141f65d46a1c34d5bccea766be7aca422",
+    "dirty_checkout_preserved": true,
+    "worktree_created": false,
+    "exclusive_write_root": "tests/agent_packet_restrictions/successor_20260813/"
+  },
+  "authority_precedence": [
+    {
+      "rank": 1,
+      "source_id": "current_delegated_controller_charter",
+      "source_ref": "thread:019fbb7d-29ac-7e82-93b3-fff057d7a561 -> successor:019ffbff-994a-76f0-9c06-57bab28b7ee3",
+      "authority": "current task scope and phase authority",
+      "sha256": null,
+      "hash_unavailable_reason": "The delegated chat instruction was not exposed as a standalone byte-addressable file."
+    },
+    {
+      "rank": 2,
+      "source_id": "project_rules",
+      "source_ref": "AGENTS.md",
+      "authority": "repository work and governance rules",
+      "sha256": "8e3055a55e7b5a06adb0186cb0b912a81d693502f3eef285213cbcd932ecb5ed"
+    },
+    {
+      "rank": 3,
+      "source_id": "live_canonical_plans",
+      "source_ref": "Plans/** owner documents routed by Plans/00-plans-index.md",
+      "authority": "canonical product and build prose",
+      "sha256": null,
+      "hash_unavailable_reason": "This is a routed document set; each inspected owner is independently hash-bound below."
+    },
+    {
+      "rank": 4,
+      "source_id": "provider_cli_final_adjudication",
+      "source_ref": "/home/sittingmongoose/.codex/attachments/14bc63c4-575c-43eb-ae0d-33debc653a75/PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "authority": "fixed direct provider-CLI decision; highest provider-policy source in this precompile source bundle",
+      "sha256": "9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1"
+    },
+    {
+      "rank": 5,
+      "source_id": "active_v2_ledger_projections",
+      "source_ref": "Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/",
+      "authority": "noncanonical planning and source-lineage memory",
+      "sha256": null,
+      "hash_unavailable_reason": "The projection set is independently hash-bound below."
+    },
+    {
+      "rank": 6,
+      "source_id": "final_course_correction_archive",
+      "source_ref": "/home/sittingmongoose/.codex/attachments/e5971003-fd3c-4394-80e4-ffffac9cbfae/PM_Prompt_Complexity_Final_Course_Correction_2026-08-08.zip",
+      "authority": "noncanonical course-correction source input; core files outrank reference entries inside the archive",
+      "sha256": "7e2c87155b781fdefdcc3c83e5120aeac51b157aea5a4133f10379f59951dc29"
+    },
+    {
+      "rank": 7,
+      "source_id": "historical_agent_packet_restriction_lane",
+      "source_ref": "tests/agent_packet_restrictions/ excluding successor_20260813/",
+      "authority": "historical preregistration, lineage, zero-call closeout, and preserved failure evidence only",
+      "sha256": null,
+      "hash_unavailable_reason": "All 59 inherited files are independently hash-bound in historical_artifact_disposition.json."
+    }
+  ],
+  "read_sequence": [
+    "Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/handoff.json",
+    "Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/current.json",
+    "Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/open_items.json",
+    "Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/operating_capsule.json",
+    "tests/agent_packet_restrictions/reports/terminal_preflight_closeout-20260802.md",
+    "tests/agent_packet_restrictions/charter/control_plane_defect-0004-v4-boundary-invalid.md",
+    "bounded inherited artifact families",
+    "final course-correction archive beginning with 00_START_HERE.md and precedence entries",
+    "separate provider-CLI final adjudication"
+  ],
+  "hash_bindings": [
+    {"kind":"file","path":"AGENTS.md","sha256":"8e3055a55e7b5a06adb0186cb0b912a81d693502f3eef285213cbcd932ecb5ed","authority":"project_rules"},
+    {"kind":"file","path":"Plans/00-plans-index.md","sha256":"2e5a08ce9c09cc8b67cb51bf43c01d72f2e7839d35769056bcaf5125e8ac7648","authority":"canonical_owner_map"},
+    {"kind":"file","path":"Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/handoff.json","sha256":"82e9800b6905f3d7cb77b78a4b58ea6f4f0a5b056cf4636c46f3bd57e1270f4f","authority":"noncanonical_ledger_projection"},
+    {"kind":"file","path":"Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/current.json","sha256":"813b219dac1bef99d85971ab2411e0b3bb3f5df2a0bb1df224467f2855df3914","authority":"noncanonical_ledger_projection"},
+    {"kind":"file","path":"Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/open_items.json","sha256":"36c73492e33546c22d2e0ad1aff2aa7548b8d543f445a9ffc984fe4c5bcf2e47","authority":"noncanonical_ledger_projection"},
+    {"kind":"file","path":"Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/operating_capsule.json","sha256":"64f24ae78d22728442bebd95859f27a6cebc24135b77e23e506aabe235a89f93","authority":"noncanonical_ledger_projection"},
+    {"kind":"file","path":"tests/agent_packet_restrictions/reports/terminal_preflight_closeout-20260802.md","sha256":"be404df2e6c209f58db7ae6bf2e32abf8b1cd3aa991c0ee3bc10e158136a646d","authority":"historical_terminal_evidence"},
+    {"kind":"file","path":"tests/agent_packet_restrictions/charter/control_plane_defect-0004-v4-boundary-invalid.md","sha256":"5554fb8560572786614476c997ba66102bfdb78b3e600ee25ee7d4323b813ae4","authority":"preserved_failure_only"},
+    {"kind":"file","path":"Plans/Prompt_Pipeline.md","sha256":"d853429e5967defde777fa8cdc1d79dc201ae4fde3a7165850a1d2dc8c724ea0","authority":"canonical_owner"},
+    {"kind":"file","path":"Plans/Plugins_System.md","sha256":"0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7","authority":"canonical_owner"},
+    {"kind":"file","path":"Plans/Automated_Testing_System.md","sha256":"d24307d69857bf939e2d9e3514d15fa7a4af41e225633e2f19eb40aeba10012c","authority":"canonical_owner"},
+    {"kind":"file","path":"Plans/FileSafe.md","sha256":"efecff59153c90ec0a8dd33d6982b5ed891688de490ddcebfb45639be8d2e91e","authority":"canonical_owner"},
+    {"kind":"file","path":"Plans/Permissions_System.md","sha256":"248ce6522a6c7ce3405184c54b408f4454330ab5c1c078e73e5e09b99320201e","authority":"canonical_owner"},
+    {"kind":"file","path":"Plans/Contracts_V0.md","sha256":"9f09a8ab2bed0549cd7c4954ecf837b31885e7dd3804026dc938334e4974dd04","authority":"canonical_owner"},
+    {"kind":"file","path":"Plans/Tools.md","sha256":"42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca","authority":"canonical_owner"},
+    {"kind":"file","path":"Plans/Models_System.md","sha256":"f5098861c5cd12d3908e8fdd2bdecd3d4da92ba1157851b3fae1f4284f006de1","authority":"canonical_owner"},
+    {"kind":"file","path":"Plans/Goal_Runtime_System.md","sha256":"19b669a1c0c1e827d0b2cc40fa4c9c138032a10212259096201ba08d070a74f3","authority":"canonical_owner"},
+    {"kind":"file","path":"Plans/orchestrator-subagent-integration.md","sha256":"d4691388bb5c1f972f3841a2bd86eb6be915692095d9d8c07d7dba78d9cfe2b7","authority":"canonical_owner"},
+    {"kind":"file","path":"Plans/Executor_Protocol.md","sha256":"fdc88d1ce136a9594060eca989fd77ade3904c54ce32cd093bb47da87438f162","authority":"canonical_owner"},
+    {"kind":"file","path":"Plans/Planning_Wizard.md","sha256":"2b9591954871986cc5af23764d026ce102ca67be66634c7d1e49dc6988833d00","authority":"canonical_owner"},
+    {"kind":"file","path":"Plans/PRD_Builder.md","sha256":"27dacbbe7a1bcad074c650e89c8411bf044858dcacfeb0236b7b9492a590cbda","authority":"canonical_owner"},
+    {"kind":"file","path":"Plans/interview-subagent-integration.md","sha256":"4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e","authority":"canonical_owner"},
+    {"kind":"file","path":"Plans/Plan_To_Node_Compilation.md","sha256":"196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2","authority":"canonical_owner"},
+    {"kind":"file","path":"Plans/Personas.md","sha256":"69cb4ea1040f565b0af80a5cf9309c3bc2bbdfb90db5548097dee4bfae128155","authority":"canonical_owner"},
+    {"kind":"file","path":"Plans/Skills_System.md","sha256":"4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53","authority":"canonical_owner"},
+    {"kind":"file","path":"Plans/agent-rules-context.md","sha256":"4ada052877422d058478c1d7cdbac00842b98b8d0a9e00ed2f802c8371851475","authority":"canonical_owner"},
+    {"kind":"file","path":"Plans/assistant-chat-design.md","sha256":"78559cba7f65191775f78a5486fe67b910942780eec61eb9aa98641b82b5a959","authority":"canonical_owner"},
+    {"kind":"external_file","path":"/home/sittingmongoose/.codex/attachments/14bc63c4-575c-43eb-ae0d-33debc653a75/PROVIDER_CLI_FINAL_ADJUDICATION.md","sha256":"9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1","authority":"fixed_provider_policy_source"},
+    {"kind":"external_file","path":"/home/sittingmongoose/.codex/attachments/e5971003-fd3c-4394-80e4-ffffac9cbfae/PM_Prompt_Complexity_Final_Course_Correction_2026-08-08.zip","sha256":"7e2c87155b781fdefdcc3c83e5120aeac51b157aea5a4133f10379f59951dc29","authority":"noncanonical_course_correction_archive"}
+  ],
+  "course_correction_archive": {
+    "archive_entry_count": 26,
+    "manifest_row_count": 25,
+    "manifest_rows_verified": 25,
+    "manifest_self_entry_present": false,
+    "provider_adjudication_entry_present": false,
+    "provider_adjudication_supplied_separately": true,
+    "entry_hashes": [
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/00_START_HERE.md","bytes":1671,"sha256":"39c7a5960e23d93bc7566e95a86c9c2dfd3f902e58087f5a73ae0c55b41a3f5c"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/01_CONTEXT_ADMISSION_AND_INSTRUCTION_LOAD.md","bytes":2834,"sha256":"2251cfdb9641152e964d7fa5d10425361fc8c4a674f522e34374e8e660a366e8"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/02_GOAL_LEDGER_STAGE_MACHINE_AND_SLICING.md","bytes":2843,"sha256":"f75d1568c1e42a1183a7781b553d05e6606943ec2a91273bda4a6921236da63c"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/03_PERSONAS_MEMORY_RULES_TOOLS_AND_COMPACTION.md","bytes":2311,"sha256":"f236c96040e572942dc1dfc5ab5420ae28805afd835e1f3280ab2ed9b28af903"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/04_BSD_TIME_TRAVEL_AND_TOOL_RECOVERY.md","bytes":2450,"sha256":"4a81d78f727f9e099476f033e530dfbf3fbad67851663de2e87eb0cde3fc47e5"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/05_MODEL_QUALITY_CAPACITY_SERVER_AND_RESOURCE_POLICY.md","bytes":2556,"sha256":"f144d7d3d48e88c0e6f31cb6a959594571c6a3b8d3586cdeb5dcd0e600fbf54b"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/06_LOW_QUALITY_AND_ABLATION_TEST_MATRIX.md","bytes":3209,"sha256":"9d82e517e0e6ddb5b16a987743b034bf7a72cf3076c0a4a6da18ed8f3aabcf78"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/07_GUI_PLAN_COMMAND_WIRING_DRY_IMPACT.md","bytes":2339,"sha256":"1a805b406770559d7201ea4962e362bc895da99462fa29d711642a641650f150"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/AUDIT_PROMPT.md","bytes":2271,"sha256":"85bf9ca27721b89158eca7ea95e3453184b651eb17dcaddead306d15ce8a2084"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/CANDIDATE_COMMAND_ID_REGISTER.json","bytes":771,"sha256":"3cb8ad9e67091c3a31554bd5f457a201a848a5af4d0fe0c2c89fffee3424430f"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/DECISION_COVERAGE.json","bytes":31355,"sha256":"34dad0bd1f738dcdcac055256c1355b8caa21fd3f907f6c8d58f40a647dc0209"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/IMPLEMENTATION_OUTPUT_REGISTER.template.json","bytes":509,"sha256":"4a291d10a106a4c67e169218496f3712208f67c45a0f4600a07ebccb65bf2233"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/IMPLEMENTATION_PROMPT.md","bytes":2617,"sha256":"e3913e33858c1d21727ab12eadb5055df83877893961d938c1984ce08934aff2"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/PACKET_MANIFEST.json","bytes":4651,"sha256":"a1f59afb9d239a81899355b44139de742221a1ed58f62445f65a3f73dbe0ad8d"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/PROMPT_CAPSULE.example.json","bytes":971,"sha256":"76c5f84f183d8bccab407a7a96c8519f1d562e685f3061780acd6aea330a1e35"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/PROMPT_USAGE.md","bytes":431,"sha256":"cd9ca7e82d03ef364a7de01bbf2d7b83aae1b52e66a6a66bb2b4ea6169eaff8c"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/REFERENCE_SUPERSESSIONS.md","bytes":1254,"sha256":"5f3f1c16ed2f41408503cf36ae60be597a5598833fae5d7fcc2fc5bc429ecdb2"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/SHARED_PROCESS_RULES.md","bytes":2216,"sha256":"0ce29d11481ec4f6c9d15e3b69479d64359c017e6ba27226bc657579a8e82d0c"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/SOURCE_AND_PRECEDENCE_MAP.md","bytes":2846,"sha256":"f8983850875fda4edbbefb38415465f87545ff1ad96e1457a6ff375b18cb98d4"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/reference/EGOLITE_PROMPT_CONTEXT_RETURN.md","bytes":6770,"sha256":"3ea2dbebd033e0cbdd33da145b43700c2a8e30000e1253ea31b3eae0ca5cef93"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/reference/HERMES_SOURCE_REVIEW.md","bytes":32560,"sha256":"7343c3d7081cf0d8d396647dce4dad0c34485b0a7a24079bb8c56057fc5c5b1e"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/reference/PERFORMANCE_FUTURE_GOAL_SCOPE.md","bytes":14398,"sha256":"feeb8cb1d47e3cecf7268470ba68bf751c59d62c83052cc86d1a297e3fad35fa"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/reference/PRIOR_PROMPT_COMPLEXITY_HANDOFF.md","bytes":15057,"sha256":"d2078a1be09520cbe7b059b53a33e09cbf2532b3d8285e7e2d9be101a5e04c05"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/reference/SERVER_BACKBONE_PROMPT_CONTEXT_RETURN.md","bytes":4636,"sha256":"ef4e7e7e9ef38edcf87f6842e210b6bab1e46d3838d3099a68fe11982d413b86"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/reference/SERVER_WSL_PROMPT_COMPLEXITY_HANDOFF.md","bytes":8761,"sha256":"cf105955f5eb394d22c6acff8c2bacbdf70eac25a6a4985fa93e410ea3277dce"},
+      {"entry":"PM_Prompt_Complexity_Final_Course_Correction_2026-08-08/reference/T3_OMP_SOURCE_REVIEW.md","bytes":75755,"sha256":"907324a3b89a4426c55abc603cfe67cae6f742d4a98a8bc7118dab5e2a2accc7"}
+    ]
+  },
+  "fixed_source_decisions": [
+    "Durable breadth and narrow turn context.",
+    "One conservative weak-model-safe automated contract; measured InstructionLoad, tokens, adapter behavior, and outcomes remain diagnostics, not predicted or per-model safety budgets.",
+    "Direct Assistant Chat and Chat-originated delegation are distinct from each other and from ordinary strict-policy automation.",
+    "Deterministic Context Admission precedes PromptCapsule, RuntimePolicySnapshot, and explanatory ContextReceipt; provider rendering precedes independent Packet Admission and FileSafe over identical final bytes; dispatch is immutable; ordinary execution has one assigned worker call; response conformance is deterministic.",
+    "BSD is optional and default Off.",
+    "Provider CLI first acquisition is explicit, official-source based, bound to the exact Host/Environment, and separate from authentication; Auto or On only maintains an already approved installation.",
+    "No Playwright-shaped Puppet Master runtime and no SQLite sidecar.",
+    "The former exact 8-low/2-high cohort, A-E method, and post-V4 recipe are superseded.",
+    "Historical task 019fc3fd-4061-7d01-9c22-a3c82f34de1f is terminal at STOPPED_BEFORE_SUBJECT_LAUNCH and supports no empirical result."
+  ],
+  "claim_boundary": {
+    "canonical_plans_compiled": false,
+    "runtime_implementation_proven": false,
+    "subject_models_selected": false,
+    "subject_test_method_selected": false,
+    "subject_model_or_provider_calls_made": false,
+    "empirical_model_result_supported": false,
+    "production_enforcement_supported": false,
+    "release_or_safety_certification_supported": false
+  }
+}

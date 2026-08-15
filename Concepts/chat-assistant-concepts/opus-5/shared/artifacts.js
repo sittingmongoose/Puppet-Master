@@ -126,8 +126,10 @@
 
   /* ---- the catalogue -----------------------------------------------------------------
    * Metadata for the supplied records comes from the demo data; bodies live here because a
-   * body is a rendering fixture, not part of the supplied dataset (demoData.json is frozen and
-   * byte-identical). The five entries cover every category the packet requires a concept to
+   * body is a rendering fixture, not part of the supplied dataset. (This used to say demoData.json
+   * was frozen and byte-identical. The freeze was retired when DEMO_SCENARIO_MANIFEST.json was
+   * instantiated; what still holds, and is asserted, is that the generator reproduces the corpus
+   * byte-identically across runs.) The five entries cover every category the packet requires a concept to
    * demonstrate: code/file, multi-file diff, image or test screenshot, test report, and a
    * structured document. */
   var CATALOG = [
@@ -139,6 +141,14 @@
       projectPath: 'worktree: chat-selector-redesign',
       /* The designated UPDATE demo: its counts change in place while it is open. */
       supportsUpdate: true,
+      /* The three files and their line counts come from DEMO_SCENARIO_MANIFEST.json `diff_files`
+       * (92/18, 61/39, 31/10, and the +184 -67 total above). The PATHS are deliberately not the
+       * manifest's: it names `threads/provider-selector.js`, `threads/access-controls.css` and
+       * `verification/interaction-probes.mjs`, and none of those exist in this workspace — the demo
+       * is a change set against THIS concept, so a diff naming files it does not contain would be a
+       * diff of an imaginary repository. They are mapped one-for-one onto the real files that do the
+       * same jobs here. Written down because a checker comparing the manifest to the corpus finds
+       * three paths missing and cannot tell a deliberate localisation from an omission. */
       files: [
         { path: 'shared/selectors.js', additions: 92, deletions: 18, status: 'edited' },
         { path: 'shared/access-controls.css', additions: 61, deletions: 39, status: 'created' },
@@ -170,21 +180,6 @@
       failsFirstLoad: true
     },
     {
-      id: 'artifact-test',
-      title: 'Interaction verification report',
-      kind: 'test_report',
-      subtitle: '18 checks · 1 skipped',
-      projectPath: 'artifacts/interaction-verification.json',
-      rows: [
-        { name: 'Pinned history clears the transcript at 520', result: 'pass' },
-        { name: 'Full pin demotes to compact under the floor', result: 'pass' },
-        { name: 'Artifact opens left of the composer rectangle', result: 'pass' },
-        { name: 'Composer draft survives a question flow', result: 'pass' },
-        { name: 'History and artifact coexist at 1200', result: 'pass' },
-        { name: 'Pop-out preserves pin density', result: 'skipped', note: 'covered by the width sweep' }
-      ]
-    },
-    {
       id: 'artifact-handoff',
       title: 'Implementation impact handoff',
       kind: 'document',
@@ -210,8 +205,12 @@
       verification: {
         result: 'passed',
         note: 'Updated provider settings screen renders correctly',
-        elapsedSeconds: 5640,
-        workedSeconds: 4210
+        /* 94 and 71 seconds, matching the corpus's own completion receipt and the manifest's
+         * `elapsed: "1m 34s"`. These read 5640 and 4210 - the same string misparsed as 1h34m - so the
+         * artifact reported a run an hour and a half long while the goal beside it reported a minute
+         * and a half of the same work. */
+        elapsedSeconds: 94,
+        workedSeconds: 71
       },
       rows: [
         { name: 'Pinned history clears the transcript at 520', result: 'pass' },
@@ -278,7 +277,21 @@
   ];
 
   var BY_ID = {};
-  CATALOG.forEach(function (a) { BY_ID[a.id] = a; });
+  /* CATALOG carried `artifact-test` TWICE, and every consequence of that was silent. BY_ID is
+   * last-wins, so the first record — the one without the verification block — was dead. `list()`
+   * returned the duplicate, so any switcher rendering it showed the same report in two rows. And
+   * `PMXDemo.artifact.switch` walks list() by index, so from artifact-handoff it advanced onto the
+   * second copy and back again: a two-cycle from which `artifact-context` and `artifact-crew` were
+   * UNREACHABLE. The `artifact` suite asserted `list().length >= 7`, which the duplicate satisfied,
+   * so the count that should have caught this was the thing hiding it.
+   *
+   * The records are merged and this loop now refuses a repeat id rather than absorbing it. A
+   * catalogue with two rows claiming one id has no correct interpretation, so the honest response
+   * is to fail loudly at load. */
+  CATALOG.forEach(function (a) {
+    if (BY_ID[a.id]) throw new Error('PMXArtifacts: duplicate catalog id ' + a.id);
+    BY_ID[a.id] = a;
+  });
 
   /* Supplied demo records are surfaced too, so a thread that references its own artifact opens
    * something real rather than a dead id. They render through the document renderer. */

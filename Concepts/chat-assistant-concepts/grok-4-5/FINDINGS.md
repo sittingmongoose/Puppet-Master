@@ -1,8 +1,35 @@
+# FINDINGS — Grok 4.5 Assistant Chat
+
+## Correction 2026-08-14 (Dependency / Media / Work)
+
+Packet: `PM_Assistant_Chat_Dependency_Media_and_Work_Correction_2026-08-13` + original cumulative `2026-08-08`.
+
+Honesty:
+- Media reviewed via correction packet (`reference-review-report.json` — every video/screenshot/contact sheet/keyframe/JSON fixture opened).
+- Motion incorporates causal continuity from all 4 videos **without** frame-matching clone.
+- Provider adjudication copy present: official-source / not bundled / not baseline; Chat deep-link only; Settings-owned.
+
+| Gate | Result |
+|------|--------|
+| Media review | `reference-review-report.json` — 64 assets opened; `video_causal_continuity_map` statuses **applied**; MOV playback limitation recorded |
+| Provider adjudication | Official-source Install/Setup copy; not bundled / not baseline; install≠auth; Settings deep-link stub |
+| Peek / pin / artifact | Peek opens UI; artifact scroll restore; pin sibling floors (live 20/20) |
+| Distinct Q + compact work | 8 Q renderer IDs; per-thread work compositions |
+| Motion | Causal continuity hooks for videos 01–04 in `motion.js`/`motion.css` — **not** frame-matched clones |
+| Triggers | prepare≠open, next≠skip, update≠replan; reset→`rehydrateFromDemo`; provider install/update events |
+| Probes | ConceptHub **pass**; correction-live **20/20**; matrix **64/64** (BSD 8/8, Q 8/8); goal lifecycle **8/8**; syntax **36/36**; cache `?v=42` |
+| Probe dir | `%TEMP%\pm-grok45-probes\correction-2026-08-14` |
+| Boot fix | Removed `__omp_shell` corruption in `threads/_thread-kit.js` |
+
+Known residuals: [`known-gaps.md`](./known-gaps.md). **No winner.**
+
+---
+
 # Findings — Grok 4.5 chat concepts
 
 Authority: handoff testing contract + live measurements. Design law: **peer level, original look**.
 
-Spec gaps: [`SPEC_GAPS.md`](./SPEC_GAPS.md) · Probes: `%TEMP%/pm-grok45-probes/` (not shipped) · Reports: seven packet JSON/MD at concept root · Cache: `?v=39`
+Spec gaps: [`SPEC_GAPS.md`](./SPEC_GAPS.md) · Known gaps: [`known-gaps.md`](./known-gaps.md) · Probes: `%TEMP%/pm-grok45-probes/` (+ `correction-2026-08-14/`) · Reports at concept root · Cache: `?v=42`
 
 ## Step 8 — Fixtures, triggers, probes, ConceptHub, reports (2026-08-11)
 

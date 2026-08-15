@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.chat_interaction_test_report.v1",
   "model": "Qwen 3.8",
-  "generated_at": "2026-08-12T00:42:48.876Z",
+  "generated_at": "2026-08-14T06:03:14.703Z",
   "runs": [
     {
       "suite": "probe-pinned",
@@ -152,7 +152,7 @@
         {
           "name": "t1@520-rm: draft intact through flow",
           "pass": true,
-          "detail": "probe draft wvbv70sp6fa"
+          "detail": "probe draft h2murj7e3v6"
         },
         {
           "name": "t1@520-rm: durable receipt",
@@ -162,7 +162,7 @@
         {
           "name": "t1@520-rm: cancel drains + no focus trap",
           "pass": true,
-          "detail": "{\"none\":true,\"cancelCmd\":true,\"trapped\":false,\"draftStill\":\"probe draft wvbv70sp6fa\"}"
+          "detail": "{\"none\":true,\"cancelCmd\":true,\"trapped\":false,\"draftStill\":\"probe draft h2murj7e3v6\"}"
         },
         {
           "name": "t1@520-rm: draft recovery after drain",
@@ -187,7 +187,7 @@
         {
           "name": "t1@975: draft intact through flow",
           "pass": true,
-          "detail": "probe draft tcqz75acqyd"
+          "detail": "probe draft jtozmj7qmo"
         },
         {
           "name": "t1@975: durable receipt",
@@ -197,7 +197,7 @@
         {
           "name": "t1@975: cancel drains + no focus trap",
           "pass": true,
-          "detail": "{\"none\":true,\"cancelCmd\":true,\"trapped\":false,\"draftStill\":\"probe draft tcqz75acqyd\"}"
+          "detail": "{\"none\":true,\"cancelCmd\":true,\"trapped\":false,\"draftStill\":\"probe draft jtozmj7qmo\"}"
         },
         {
           "name": "t1@975: draft recovery after drain",
@@ -222,7 +222,7 @@
         {
           "name": "t8@520-rm: draft intact through flow",
           "pass": true,
-          "detail": "probe draft cbtf93z8e1r"
+          "detail": "probe draft dcrw0k26n5h"
         },
         {
           "name": "t8@520-rm: durable receipt",
@@ -232,7 +232,7 @@
         {
           "name": "t8@520-rm: cancel drains + no focus trap",
           "pass": true,
-          "detail": "{\"none\":true,\"cancelCmd\":true,\"trapped\":false,\"draftStill\":\"probe draft cbtf93z8e1r\"}"
+          "detail": "{\"none\":true,\"cancelCmd\":true,\"trapped\":false,\"draftStill\":\"probe draft dcrw0k26n5h\"}"
         },
         {
           "name": "t8@520-rm: draft recovery after drain",
@@ -257,7 +257,7 @@
         {
           "name": "t8@975: draft intact through flow",
           "pass": true,
-          "detail": "probe draft qad7u8ogckj"
+          "detail": "probe draft n9qzcnk58ce"
         },
         {
           "name": "t8@975: durable receipt",
@@ -267,7 +267,7 @@
         {
           "name": "t8@975: cancel drains + no focus trap",
           "pass": true,
-          "detail": "{\"none\":true,\"cancelCmd\":true,\"trapped\":false,\"draftStill\":\"probe draft qad7u8ogckj\"}"
+          "detail": "{\"none\":true,\"cancelCmd\":true,\"trapped\":false,\"draftStill\":\"probe draft n9qzcnk58ce\"}"
         },
         {
           "name": "t8@975: draft recovery after drain",
@@ -622,6 +622,50 @@
       ]
     },
     {
+      "suite": "probe-attachment-trigger",
+      "concept": "thread-02",
+      "width": "975",
+      "theme": "friendly-dark",
+      "motion": "full",
+      "checks": [
+        {
+          "name": "thread-02 starts without attachments/routes",
+          "pass": true,
+          "detail": "{\"draft\":0,\"routes\":0}"
+        },
+        {
+          "name": "trigger adds attachment to live draft + route",
+          "pass": true,
+          "detail": "{\"draft\":true,\"route\":\"unsupported\"}"
+        },
+        {
+          "name": "resolver card renders on unseeded thread",
+          "pass": true,
+          "detail": "{\"name\":\"att-demo-video\",\"badge\":\"Unsupported\",\"lineage\":\"from att-demo-video\",\"buttons\":[\"Cancel\",\"Extract in PM\",\"Use Gemini\"]}"
+        },
+        {
+          "name": "resolver shows lineage + 3 buttons",
+          "pass": true,
+          "detail": "Cancel|Extract in PM|Use Gemini"
+        },
+        {
+          "name": "Extract in PM routes + starts job",
+          "pass": true,
+          "detail": "{\"route\":\"pm-transformed\",\"job\":\"running\"}"
+        },
+        {
+          "name": "Cancel removes attachment + route",
+          "pass": true,
+          "detail": "{\"inDraft\":false,\"hasRoute\":false}"
+        },
+        {
+          "name": "zero page errors",
+          "pass": true,
+          "detail": ""
+        }
+      ]
+    },
+    {
       "suite": "matrix-visual",
       "concept": "all",
       "width": "520/750/975/1200",
@@ -851,44 +895,648 @@
       ]
     },
     {
-      "suite": "probe-attachment-trigger",
-      "concept": "thread-02",
-      "width": "975",
+      "suite": "probe-motion-continuity",
+      "concept": "correction",
+      "width": 975,
       "theme": "friendly-dark",
-      "motion": "full",
+      "motion": "full+reduced",
       "checks": [
         {
-          "name": "thread-02 starts without attachments/routes",
+          "name": "full: arrival glides (intermediate position between start and end)",
           "pass": true,
-          "detail": "{\"draft\":0,\"routes\":0}"
+          "detail": "{\"h0\":2390,\"s0\":1866,\"s1\":1890,\"s2\":1890,\"max\":1890}"
         },
         {
-          "name": "trigger adds attachment to live draft + route",
+          "name": "full: header sweep engages on off-bottom arrival",
           "pass": true,
-          "detail": "{\"draft\":true,\"route\":\"unsupported\"}"
+          "detail": "{\"sweeping\":true,\"exists\":true,\"op\":\"0.999936\"}"
         },
         {
-          "name": "resolver card renders on unseeded thread",
+          "name": "full: activity condense chips (tools used + Made … with +/-)",
           "pass": true,
-          "detail": "{\"name\":\"att-demo-video\",\"badge\":\"Unsupported\",\"lineage\":\"from att-demo-video\",\"buttons\":[\"Cancel\",\"Extract in PM\",\"Use Gemini\"]}"
+          "detail": "{\"chips\":true,\"tools\":true,\"edits\":true,\"plus\":true,\"verified\":true,\"expanded\":\"false\"}"
         },
         {
-          "name": "resolver shows lineage + 3 buttons",
+          "name": "full: persistent Verified row below condensed activity",
           "pass": true,
-          "detail": "Cancel|Extract in PM|Use Gemini"
+          "detail": "{\"chips\":true,\"tools\":true,\"edits\":true,\"plus\":true,\"verified\":true,\"expanded\":\"false\"}"
         },
         {
-          "name": "Extract in PM routes + starts job",
+          "name": "full: condensed activity reopenable to full stage list",
           "pass": true,
-          "detail": "{\"route\":\"pm-transformed\",\"job\":\"running\"}"
+          "detail": "{\"open1\":\"true\",\"stages\":true}"
         },
         {
-          "name": "Cancel removes attachment + route",
+          "name": "full: visible 'Preparing questions…' pill before card",
           "pass": true,
-          "detail": "{\"inDraft\":false,\"hasRoute\":false}"
+          "detail": "Preparing questions…"
         },
         {
-          "name": "zero page errors",
+          "name": "full: questionnaire card mounts after prepare",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "full: Skip visible on question page",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "full: last question offers enabled 'Review answers'",
+          "pass": true,
+          "detail": "{\"found\":true,\"disabled\":false}"
+        },
+        {
+          "name": "full: review page lists all answers with back links",
+          "pass": true,
+          "detail": "{\"head\":true,\"rows\":3,\"backs\":3}"
+        },
+        {
+          "name": "full: review back link returns to question 1",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "full: 'Submitting answers…' pill during submit",
+          "pass": true,
+          "detail": "Submitting answers…"
+        },
+        {
+          "name": "full: durable receipt after lifecycle submit",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "rm: arrival settles instantly under reduced motion",
+          "pass": true,
+          "detail": "{\"h0\":2390,\"s0\":1890,\"s1\":1890,\"s2\":1890,\"max\":1890}"
+        },
+        {
+          "name": "rm: header sweep engages on off-bottom arrival",
+          "pass": true,
+          "detail": "{\"sweeping\":true,\"exists\":true,\"op\":\"1\"}"
+        },
+        {
+          "name": "rm: reduced-motion sweep is a visible static bar",
+          "pass": true,
+          "detail": "1"
+        },
+        {
+          "name": "rm: activity condense chips (tools used + Made … with +/-)",
+          "pass": true,
+          "detail": "{\"chips\":true,\"tools\":true,\"edits\":true,\"plus\":true,\"verified\":true,\"expanded\":\"false\"}"
+        },
+        {
+          "name": "rm: persistent Verified row below condensed activity",
+          "pass": true,
+          "detail": "{\"chips\":true,\"tools\":true,\"edits\":true,\"plus\":true,\"verified\":true,\"expanded\":\"false\"}"
+        },
+        {
+          "name": "rm: condensed activity reopenable to full stage list",
+          "pass": true,
+          "detail": "{\"open1\":\"true\",\"stages\":true}"
+        },
+        {
+          "name": "rm: reduced motion mounts questionnaire without lingering pill",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "rm: questionnaire card mounts after prepare",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "rm: Skip visible on question page",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "rm: last question offers enabled 'Review answers'",
+          "pass": true,
+          "detail": "{\"found\":true,\"disabled\":false}"
+        },
+        {
+          "name": "rm: review page lists all answers with back links",
+          "pass": true,
+          "detail": "{\"head\":true,\"rows\":3,\"backs\":3}"
+        },
+        {
+          "name": "rm: review back link returns to question 1",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "rm: durable receipt after lifecycle submit",
+          "pass": true,
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "suite": "probe-coverage-expansion",
+      "concept": "correction",
+      "width": 975,
+      "theme": "friendly-dark",
+      "motion": "full+reduced",
+      "checks": [
+        {
+          "name": "questionnaire t1 @750 mounts clean",
+          "pass": true,
+          "detail": "{\"card\":true,\"noScroll\":true}"
+        },
+        {
+          "name": "questionnaire t1 @1200 mounts clean",
+          "pass": true,
+          "detail": "{\"card\":true,\"noScroll\":true}"
+        },
+        {
+          "name": "w1 pin @520: present, demoted mode, no overlap",
+          "pass": true,
+          "detail": "{\"pin\":true,\"mode\":\"compact\",\"overlap\":false}"
+        },
+        {
+          "name": "w1 pin @750: present, demoted mode, no overlap",
+          "pass": true,
+          "detail": "{\"pin\":true,\"mode\":\"compact\",\"overlap\":false}"
+        },
+        {
+          "name": "w1 pin @1200: present, demoted mode, no overlap",
+          "pass": true,
+          "detail": "{\"pin\":true,\"mode\":\"micro\",\"overlap\":false}"
+        },
+        {
+          "name": "w3 pin @520: present, demoted mode, no overlap",
+          "pass": true,
+          "detail": "{\"pin\":true,\"mode\":\"compact\",\"overlap\":false}"
+        },
+        {
+          "name": "w3 pin @750: present, demoted mode, no overlap",
+          "pass": true,
+          "detail": "{\"pin\":true,\"mode\":\"compact\",\"overlap\":false}"
+        },
+        {
+          "name": "w3 pin @1200: present, demoted mode, no overlap",
+          "pass": true,
+          "detail": "{\"pin\":true,\"mode\":\"micro\",\"overlap\":false}"
+        },
+        {
+          "name": "w5 pin @520: present, demoted mode, no overlap",
+          "pass": true,
+          "detail": "{\"pin\":true,\"mode\":\"compact\",\"overlap\":false}"
+        },
+        {
+          "name": "w5 pin @750: present, demoted mode, no overlap",
+          "pass": true,
+          "detail": "{\"pin\":true,\"mode\":\"compact\",\"overlap\":false}"
+        },
+        {
+          "name": "w5 pin @1200: present, demoted mode, no overlap",
+          "pass": true,
+          "detail": "{\"pin\":true,\"mode\":\"micro\",\"overlap\":false}"
+        },
+        {
+          "name": "w7 pin @520: present, demoted mode, no overlap",
+          "pass": true,
+          "detail": "{\"pin\":true,\"mode\":\"compact\",\"overlap\":false}"
+        },
+        {
+          "name": "w7 pin @750: present, demoted mode, no overlap",
+          "pass": true,
+          "detail": "{\"pin\":true,\"mode\":\"compact\",\"overlap\":false}"
+        },
+        {
+          "name": "w7 pin @1200: present, demoted mode, no overlap",
+          "pass": true,
+          "detail": "{\"pin\":true,\"mode\":\"micro\",\"overlap\":false}"
+        },
+        {
+          "name": "w8 pin @520: present, demoted mode, no overlap",
+          "pass": true,
+          "detail": "{\"pin\":true,\"mode\":\"compact\",\"overlap\":false}"
+        },
+        {
+          "name": "w8 pin @750: present, demoted mode, no overlap",
+          "pass": true,
+          "detail": "{\"pin\":true,\"mode\":\"compact\",\"overlap\":false}"
+        },
+        {
+          "name": "w8 pin @1200: present, demoted mode, no overlap",
+          "pass": true,
+          "detail": "{\"pin\":true,\"mode\":\"micro\",\"overlap\":false}"
+        },
+        {
+          "name": "artifact @520: open, no overlap with transcript",
+          "pass": true,
+          "detail": "{\"art\":true,\"overlap\":false}"
+        },
+        {
+          "name": "artifact @750: open, no overlap with transcript",
+          "pass": true,
+          "detail": "{\"art\":true,\"overlap\":false}"
+        },
+        {
+          "name": "rm: bsd evaluates and resolves (no active glow)",
+          "pass": true,
+          "detail": "pmq-sel pmq-sel-bsd pmq-bsd-auto"
+        },
+        {
+          "name": "rm: offline -> reconnect reaches live",
+          "pass": true,
+          "detail": "live"
+        },
+        {
+          "name": "rm: artifact error -> retry -> ready",
+          "pass": true,
+          "detail": "ready"
+        },
+        {
+          "name": "rm: capacity forecast card resolves",
+          "pass": true,
+          "detail": "{\"capResolved\":true,\"capGone\":true}"
+        },
+        {
+          "name": "rm: attachment resolver reachable",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "Escape closes model popup and returns focus to opener",
+          "pass": true,
+          "detail": "{\"esc\":{\"open\":true,\"openerTag\":\"pmq-sel\"},\"after\":{\"popup\":false,\"focusBack\":true}}"
+        },
+        {
+          "name": "Enter activates selector chip",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "Tab moves focus to a visible control",
+          "pass": true,
+          "detail": "{\"cls\":\"pmq-btn pmq-btn-icon pmq-search-btn\",\"visible\":true}"
+        },
+        {
+          "name": "Escape cancels active questionnaire",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "long prompt/option wrap without horizontal scroll",
+          "pass": true,
+          "detail": "{\"noH\":true,\"zoneFit\":true,\"scFit\":true}"
+        },
+        {
+          "name": "long draft + unbroken URL wrap in composer",
+          "pass": true,
+          "detail": "{\"noH\":true,\"cFit\":true}"
+        },
+        {
+          "name": "reconnect failure surfaces failed state",
+          "pass": true,
+          "detail": "{\"status\":\"failed\",\"strip\":\"failed\"}"
+        },
+        {
+          "name": "failed popup shows error row + retry",
+          "pass": true,
+          "detail": "{\"err\":true,\"retry\":true}"
+        },
+        {
+          "name": "retry after failure recovers and drains outbox",
+          "pass": true,
+          "detail": "{\"status\":\"live\",\"outbox\":0}"
+        },
+        {
+          "name": "quota/allowance warning presents with recovery action",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pop-out resize grip present with pin+artifact",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pin + artifact + draft survive pop-out resize drag",
+          "pass": true,
+          "detail": "{\"pin\":true,\"art\":true,\"draft\":\"survives pop-out resize\"}"
+        },
+        {
+          "name": "pair w1xt1 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w1xt2 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w1xt3 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w1xt4 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w1xt5 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w1xt6 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w1xt7 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w1xt8 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w2xt1 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w2xt2 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w2xt3 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w2xt4 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w2xt5 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w2xt6 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w2xt7 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w2xt8 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w3xt1 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w3xt2 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w3xt3 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w3xt4 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w3xt5 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w3xt6 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w3xt7 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w3xt8 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w4xt1 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w4xt2 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w4xt3 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w4xt4 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w4xt5 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w4xt6 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w4xt7 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w4xt8 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w5xt1 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w5xt2 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w5xt3 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w5xt4 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w5xt5 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w5xt6 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w5xt7 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w5xt8 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w6xt1 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w6xt2 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w6xt3 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w6xt4 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w6xt5 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w6xt6 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w6xt7 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w6xt8 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w7xt1 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w7xt2 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w7xt3 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w7xt4 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w7xt5 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w7xt6 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w7xt7 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w7xt8 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w8xt1 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w8xt2 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w8xt3 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w8xt4 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w8xt5 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w8xt6 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w8xt7 renders clean",
+          "pass": true,
+          "detail": ""
+        },
+        {
+          "name": "pair w8xt8 renders clean",
           "pass": true,
           "detail": ""
         }
@@ -896,7 +1544,7 @@
     }
   ],
   "totals": {
-    "pass": 162,
+    "pass": 288,
     "fail": 0
   },
   "remaining_defects": [

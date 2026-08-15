@@ -81,6 +81,16 @@
           "pattern": "^(crate::)?[A-Za-z_][A-Za-z0-9_]*(::[A-Za-z_][A-Za-z0-9_]*)+$",
           "description": "Canonical Rust module/function path for the handler (e.g., \"handlers::github_auth::connect\" or \"crate::core::widget_layout::add_widget\"). Final segment must be the callable handler symbol."
         },
+        "request_schema_ref": {
+          "type": "string",
+          "pattern": "^Plans/[A-Za-z0-9_.-]+\\.schema\\.json#/\\$defs/[a-z][a-z0-9_]*$",
+          "description": "Optional exact pre-build JSON Schema definition for the dispatched request. Shared-runtime command rows require it through their bounded validator."
+        },
+        "result_schema_ref": {
+          "type": "string",
+          "pattern": "^Plans/[A-Za-z0-9_.-]+\\.schema\\.json#/\\$defs/[a-z][a-z0-9_]*$",
+          "description": "Optional exact pre-build JSON Schema definition for the returned result. Shared-runtime command rows require it through their bounded validator."
+        },
         "expected_event_types": {
           "type": "array",
           "description": "List of event type strings emitted by the handler. May be empty for UI-only commands that declare no persisted domain event. Each entry should match an EventRecord type string.",

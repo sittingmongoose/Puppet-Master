@@ -1,0 +1,69 @@
+{
+  "schema_id": "pw-r6-decomposed-experiment-contract-v1",
+  "protocol_id": "PW-R6-DECOMPOSED-20260814.1",
+  "status": "UNFINISHED_THROWAWAY_FROZEN_SNAPSHOT_EXPERIMENT",
+  "r5_static_root": "tests/agent_packet_restrictions/successor_20260813/model_retest_r5_snapshot_v1",
+  "postmortem_root": "tests/agent_packet_restrictions/successor_20260813/r5_postmortem_20260814_v1",
+  "frozen_snapshot_descriptor_sha256": "28730f6ea44a5720cb8e473f8fb736353dfe5c412e21261eacc88d70ffe46392",
+  "routes": [
+    {"slot":"slot-alpha","model":"gpt-5.4-mini","thinking":"xhigh"},
+    {"slot":"slot-bravo","model":"gpt-5.4-mini","thinking":"medium"},
+    {"slot":"slot-charlie","model":"gpt-5.6-luna","thinking":"medium"}
+  ],
+  "immutable_bindings": [
+    {"path":"tests/agent_packet_restrictions/successor_20260813/model_retest_r5_snapshot_v1/topic_a_capsule.json","sha256":"6a37b1ab477e98b87d85b5e9569617b456d4dcc0e8a19762effaeb6218d18b52","bytes":51204},
+    {"path":"tests/agent_packet_restrictions/successor_20260813/model_retest_r5_snapshot_v1/topic_b_capsule.json","sha256":"75ca7224c90d44d32a29f2e766402d9e9eccf8fda584073ee82ca4bad5a41c96","bytes":72807},
+    {"path":"tests/agent_packet_restrictions/successor_20260813/model_retest_r5_snapshot_v1/scorer_key.json","sha256":"5b4614bea59b3f3740864324d33e346be254bff012da4ab6476077d5e80c2912","bytes":9429},
+    {"path":"tests/agent_packet_restrictions/successor_20260813/model_retest_r5_snapshot_v1/integration_contract.json","sha256":"d0cace7ea9d62925084245d1160d574f8f4b49c420abe60c8892de2f2a762e1a","bytes":4094},
+    {"path":"tests/agent_packet_restrictions/successor_20260813/r5_postmortem_20260814_v1/evidence_manifest.json","sha256":"7d699670ba88417a74b3c60bcc143297d41475ffa89587345366a7f957767d34","bytes":26254},
+    {"path":"tests/agent_packet_restrictions/successor_20260813/r5_postmortem_20260814_v1/typed_failure_diffs.json","sha256":"4d925e7f71e0eecd662c60481035833a88f190070fe61cc6e94930debb8ab713","bytes":10712},
+    {"path":"tests/agent_packet_restrictions/successor_20260813/r5_postmortem_20260814_v1/retest_recommendation.json","sha256":"e5bb51f95da1d571a938180b816a7e8995d3ef10f4aaec6b95337482f7644b21","bytes":6983}
+  ],
+  "r5_failure_preservation": {
+    "matrix_terminal_binding_sha256": "a6a0c31c7886976efb6957ca055eb4e3890bb42dca2974f31bcacb0451d073b4",
+    "failed_cells": ["slot-bravo/S10B","slot-charlie/S10B","slot-alpha/S50"],
+    "reinterpretation_forbidden": true
+  },
+  "s10b": {
+    "core_model_owned_fields": ["decisions","supported_edge_ids"],
+    "core_deterministic_fields": ["protocol_id","stage","topic_id","source_capsule_sha256","source_capsule_bytes","claim_boundary","external_audit_status","forbidden_action_violations"],
+    "semantic_objectives_per_core_call": 2,
+    "candidate_facts": [
+      {"fact_id":"BF-LEDGER-IS-COMPILE-AUTHORITY","decision_id":"B12","accepted_choices":[],"value":false,"source_record_ids":["B-S07"]},
+      {"fact_id":"BF-PACK-IS-COMPILE-AUTHORITY","decision_id":"B12","accepted_choices":["immutable_approved_plan_pack_plus_frozen_indexes"],"value":true,"source_record_ids":["B-S07"]},
+      {"fact_id":"BF-CURRENT-COUNT-77-61","decision_id":"B10","accepted_choices":["77_atoms_61_decisions"],"value":true,"source_record_ids":["B-S20"]},
+      {"fact_id":"BF-STALE-COUNT-76-60","decision_id":"B11","accepted_choices":["stale_projection_text_not_current_count_authority"],"value":true,"source_record_ids":["B-S15"]},
+      {"fact_id":"BF-PLANNING-READY-AFTER-AUDIT","decision_id":"B02","accepted_choices":["after_conversion_and_audit_pass"],"value":true,"source_record_ids":["B-S01"]},
+      {"fact_id":"BF-BUILDABILITY-UNPROVEN","decision_id":"B08","accepted_choices":["preconditions_only_buildability_unproven_approval_disabled"],"value":true,"source_record_ids":["B-S04"]}
+    ],
+    "candidate_admission": [
+      {"candidate_id":"B-T03","source_order":0,"required_true_fact_ids":["BF-LEDGER-IS-COMPILE-AUTHORITY","BF-PACK-IS-COMPILE-AUTHORITY"],"oracle_verdict":"unsupported_claim","supporting_fact_ids":["BF-LEDGER-IS-COMPILE-AUTHORITY","BF-PACK-IS-COMPILE-AUTHORITY"]},
+      {"candidate_id":"B-T02","source_order":1,"required_true_fact_ids":["BF-CURRENT-COUNT-77-61","BF-STALE-COUNT-76-60"],"oracle_verdict":"supported_unresolved_tension","supporting_fact_ids":["BF-CURRENT-COUNT-77-61","BF-STALE-COUNT-76-60"]},
+      {"candidate_id":"B-T01","source_order":2,"required_true_fact_ids":["BF-PLANNING-READY-AFTER-AUDIT","BF-BUILDABILITY-UNPROVEN"],"oracle_verdict":"supported_unresolved_tension","supporting_fact_ids":["BF-PLANNING-READY-AFTER-AUDIT","BF-BUILDABILITY-UNPROVEN"]}
+    ],
+    "admitted_candidate_ids": ["B-T02","B-T01"],
+    "semantic_objectives_per_tension_call": 1,
+    "tension_model_owned_fields": ["verdict","supporting_fact_ids"],
+    "tension_deterministic_fields": ["protocol_id","stage","candidate_id","candidate_lineage_sha256","claim_boundary","external_audit_status","forbidden_action_violations"]
+  },
+  "s50": {
+    "authority_projection": [
+      {"id":"I01","label":"ledger_authority","value_type":"string","sources":[{"decision_id":"A01","choice_map":{"ledger_lineage_only":"lineage_only"}}]},
+      {"id":"I02","label":"context_receipt","value_type":"string","sources":[{"decision_id":"A03","choice_map":{"explanation_only":"explanatory_only"}}]},
+      {"id":"I03","label":"worker_completion","value_type":"string","sources":[{"decision_id":"A12","choice_map":{"bounded_proposal_only_no_global_certification":"parent_or_stronger_verification"}}]},
+      {"id":"I04","label":"planning_write","value_type":"string","sources":[{"decision_id":"B06","choice_map":{"planning_controller_or_assigned_owner":"controller_or_assigned_owner"}}]},
+      {"id":"I05","label":"plancompile_authority","value_type":"string","sources":[{"decision_id":"B12","choice_map":{"immutable_approved_plan_pack_plus_frozen_indexes":"approved_pack_plus_frozen_indexes"}}]},
+      {"id":"I06","label":"worknodes_from_wizard","value_type":"boolean","sources":[{"decision_id":"B09","choice_map":{"no":false,"yes":true}},{"decision_id":"B13","required_choices":["indexes_and_readiness_only_no_runtime_nodes"]}]},
+      {"id":"I07","label":"buildability","value_type":"string","sources":[{"decision_id":"B08","choice_map":{"preconditions_only_buildability_unproven_approval_disabled":"unproven"}}]},
+      {"id":"I08","label":"external_audit","value_type":"string","sources":[{"decision_id":"B18","choice_map":{"external_audit_excluded":"excluded"}}]}
+    ],
+    "semantic_model_owned_fields": ["edge_verdicts"],
+    "semantic_deterministic_fields": ["protocol_id","stage","topic_artifact_hashes","checked_edge_ids","claim_boundary","external_audit_status","forbidden_action_violations"],
+    "semantic_objectives_per_call": 1,
+    "reducer_deterministic_fields": ["authority_matrix","cross_topic_edge_order","unresolved_tension_join","closed_finding_join","fixed_claim_fields"],
+    "authority_subject_owned_fields": []
+  },
+  "affected_path": ["S10B_CORE","S10B_T02","S10B_T01","S10B_REDUCE","S20A","S20B","S30A","S30B","S40A","S40B","S45A","S45B","S50_SEMANTIC","S50_REDUCE","S55","S60P","S60C","S60K","S70","S80","S90"],
+  "execution_policy": {"fresh_first_attempt_per_subject_cell":true,"retries":0,"best_of":false,"replacement_results":false,"failed_revision_preserved":true},
+  "nonclaims": ["current_plans","production_runtime_enforcement","full_planning_wizard_audit_process","release_readiness","safety_certification","permission_to_compile_plans"]
+}

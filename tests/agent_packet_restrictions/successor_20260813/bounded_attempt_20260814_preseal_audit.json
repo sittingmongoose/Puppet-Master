@@ -1,0 +1,44 @@
+{
+  "schema_id": "pw-r4-composed-preseal-audit-v1",
+  "attempt_id": "PW-R4-BOUNDED-20260814.1",
+  "audit_terminal": "PRESEAL_COMPOSED_TRUST_BOUNDARY_PASS",
+  "launch_ready_at_audit_boundary": true,
+  "counted_launch_authorized_subject_to_launch_source_currentness": true,
+  "candidate": {
+    "protocol.json": "af75e6a2a6443314888c51d657279c0e2fdaed9d7fc2198146505996698c1de7",
+    "r4_harness.py": "5405c4d50ef02372a8873bcc383f6b6b7e85d128a8e033b77a1cd301da5c1050",
+    "schemas.json": "466abf2f0079bf989c9d6cc635e821ef9bdb4b8782fce3e321de4e5f5e042d67",
+    "execution_contract.json": "b5295a43161794be4d0eab08fd0665776b3c1f492aef4eb621a1dcb8d8bee37d",
+    "source_custody.json": "058f37474a04f5ec90fd32f50e5b0f58649bc18bfdddc7b46714efbafd847725"
+  },
+  "external_overlay": {
+    "external_verifier.py": {
+      "sha256": "082c0490179d262c9e74618f47ff8c85fc8d29bf802d76bc59ed08f0fb7cecea",
+      "bytes": 21367
+    },
+    "contract.json": {
+      "sha256": "0f22f9c34424a1e5299d12348c4af437fc203cedf139fef751bf52433eba04b7",
+      "bytes": 2368
+    },
+    "custody": {
+      "sha256": "ace719f0bd0005479efff755ce4bde27fc9e8e76cb5218ebdb1b4fa5ba94d948",
+      "bytes": 903
+    }
+  },
+  "checks": {
+    "outer_raw_hash_anchor": "PASS",
+    "actual_preseal_check": "PASS",
+    "candidate_import_or_execution_by_verifier": "ABSENT",
+    "caller_supplied_expectations": "REJECTED",
+    "exact_self_hosting_controls": 3,
+    "exact_external_checkpoints": 6,
+    "runtime_manifest_and_detached_binding": "PASS_IN_MEMORY",
+    "forbidden_controller_invalid_states": "ALL_NON_ABSENT_STATES_ABORT_WITH_ZERO_CREDIT",
+    "self_hosting_drift": "ABORT_WITH_ZERO_CREDIT",
+    "preserved_forged_receipt_countability": "REJECTED_BY_EXTERNAL_CLOSED_WORLD",
+    "ordinary_subject_failure_path": "UNAFFECTED",
+    "candidate_prompts_roster_stages_routes_scorer": "UNCHANGED",
+    "launch_blocking_defects": 0
+  },
+  "claim_boundary": "This audit passed the composed external trust boundary only. It did not execute launch-source currentness, seal the candidate, call a subject model, or produce empirical model evidence."
+}

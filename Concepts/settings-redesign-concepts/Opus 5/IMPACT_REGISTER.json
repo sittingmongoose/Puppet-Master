@@ -248,20 +248,52 @@
   "fixture_totals": {
     "categories": 11,
     "subcategories": 56,
-    "settings": 274,
+    "settings": 855,
     "managers": 38,
     "registered_builders": 37,
     "bespoke_provider_surfaces": 4,
     "providers": 8,
     "installations": 7,
     "notices": 13,
-    "search_records": 416,
-    "distinct_action_ids": 222
+    "search_records": 1015,
+    "distinct_action_ids": 226
   },
   "supersessions": [
     "Settings chip/bloom/no-sidebar contract",
     "Stale right-panel language (the shell panel is a review surface, not a settings detail pane)",
     "regular/yolo access-mode coupling",
     "Inventory values that cannot express requested versus effective"
-  ]
+  ],
+  "correction_2026_08_13": {
+    "packet": "PM_Settings_Dependency_and_Work_Correction_2026-08-13",
+    "materially_affected_the_work": true,
+    "defects_found": 16,
+    "defects_corrected": 15,
+    "defects_disproven": 1,
+    "defects_deferred_to_owner": 1,
+    "new_shared_modules": [
+      "shared/pm-work.js",
+      "shared/pm-virtual.js",
+      "shared/pm-data-scale.js"
+    ],
+    "new_manager_family": {
+      "id": "manager-performance",
+      "assigned": "every concept",
+      "reason": "RuntimeResourceGovernor must be visible exactly once; the packet matrix has no such family so this is recorded as a delta."
+    },
+    "singular_owners_preserved": [
+      "RuntimeResourceGovernor",
+      "ObservableWork"
+    ],
+    "fixture_totals_after": {
+      "settings": 855,
+      "search_records": 1015,
+      "search_kinds": 11,
+      "installations_scale": 100,
+      "mcp_scale": 50,
+      "demo_states": 9,
+      "managers": 38
+    },
+    "provider_cli_policy": "18/18 adjudication assertions pass; provider CLIs are structurally barred from any baseline acquisition state unless a named user exception is supplied."
+  }
 }

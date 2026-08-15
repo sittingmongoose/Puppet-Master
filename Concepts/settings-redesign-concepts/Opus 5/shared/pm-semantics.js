@@ -238,7 +238,134 @@
     return groups;
   }
 
+
+  /* ============================================ ACQUISITION AND READINESS */
+
+  /* Added by the 2026-08-13 dependency correction.
+   *
+   * SERVER_BACKBONE_SETTINGS_RETURN §6 asks for per-tool acquisition and
+   * readiness states instead of blanket "not bundled" copy. PROVIDER_CLI_FINAL_
+   * ADJUDICATION supersedes that for one class: a provider CLI may never be
+   * presented as included, pre-seeded, or baseline without a later named user
+   * exception. Both rules are expressed here so a concept cannot satisfy one by
+   * violating the other. */
+  var ACQUISITION = {
+    included_with_server: { label: "Included with this Server", baseline: true },
+    pm_tool_store: { label: "Installed in the Puppet Master Tool Store", baseline: false },
+    available_to_install: { label: "Available to install", baseline: false },
+    installed_externally: { label: "Installed and managed externally", baseline: false },
+    organization_managed: { label: "Managed by your organization", baseline: false },
+    needs_license: { label: "Needs a licence or permission", baseline: false },
+    needs_sign_in: { label: "Needs sign-in", baseline: false },
+    not_installed: { label: "Not installed", baseline: false }
+  };
+
+  var READINESS = {
+    ready: "Ready",
+    update_available: "Update available",
+    needs_repair: "Needs repair",
+    waiting_for_work: "Waiting for work to finish",
+    sign_in_required: "Sign-in required",
+    waiting_for_you: "Waiting for you",
+    could_not_connect: "Could not connect",
+    organization_managed: "Managed by your organization",
+    shadowed: "Another installation is being used",
+    not_on_environment: "Source files are not available on this environment"
+  };
+
+  /* The load-bearing rule. A provider CLI is never baseline. */
+  function acquisitionLabel(key, opts) {
+    var o = opts || {};
+    var entry = ACQUISITION[key];
+    if (!entry) return null;
+    if (o.isProviderCli && entry.baseline && o.namedException !== true) {
+      /* Refuse rather than render: the adjudication supersedes the permissive
+       * wording, and a silent downgrade would hide the conflict. */
+      return ACQUISITION.available_to_install.label;
+    }
+    return entry.label;
+  }
+
+  function isBaselineAcquisition(key) { return !!(ACQUISITION[key] && ACQUISITION[key].baseline); }
+  function readinessLabel(key) { return READINESS[key] || null; }
+
+  /* ---------------------------------------------------------- scope words */
+
+  /* Audit §6 requires scopes beyond global/project/thread. Every one of these
+   * renders as human text; the key itself never reaches ordinary copy. */
+  var SCOPE_WORD = {
+    global: "Everywhere",
+    project: "This project",
+    thread: "This thread",
+    turn: "This turn",
+    goal: "This Goal",
+    planningRun: "This planning run",
+    crew: "This Crew",
+    host: "This host",
+    environment: "This environment",
+    installation: "This installation",
+    device: "This device",
+    worktree: "This worktree"
+  };
+
+  function scopeWord(scope) { return SCOPE_WORD[scope] || SCOPE_WORD.global; }
+
+  /* -------------------------------------------------------- secret classes */
+
+  /* Audit §6 secret/auth distinctions. Puppet Master never copies a credential
+   * it does not own, so the class decides what the UI may even offer. */
+  var SECRET_CLASS = {
+    pmSecret: { label: "Stored by Puppet Master", canReveal: true, canEdit: true },
+    vaultReference: { label: "Reference to a vault entry", canReveal: false, canEdit: true },
+    pmOAuth: { label: "Puppet Master sign-in", canReveal: false, canEdit: false },
+    cliOwned: { label: "Owned by the tool's own login", canReveal: false, canEdit: false },
+    envBacked: { label: "Read from the environment", canReveal: false, canEdit: false },
+    helperBacked: { label: "Provided by a credential helper", canReveal: false, canEdit: false },
+    nonSecret: { label: "Not a secret", canReveal: true, canEdit: true }
+  };
+
+  function secretClass(kind) { return SECRET_CLASS[kind] || SECRET_CLASS.pmSecret; }
+
+
+  /* Installation provenance in human words. EGOLITE §10 and §12: values such as
+   * `npm_global` or `strongly_identified` belong in Technical Details, never in
+   * ordinary copy. Added by the 2026-08-13 correction after the bespoke provider
+   * surfaces were found rendering the raw keys. */
+  var OWNER_KIND_WORD = {
+    npm_global: "Installed with npm",
+    npm_managed: "Installed with npm by Puppet Master",
+    homebrew_formula: "Homebrew formula",
+    pm_tool_store: "Puppet Master Tool Store",
+    system_package: "System package",
+    manual: "Installed by hand",
+    unknown: "Unknown installer"
+  };
+
+  var CONFIDENCE_WORD = {
+    proven: "Confirmed",
+    strongly_identified: "Almost certain",
+    probable: "Likely",
+    weak: "Uncertain",
+    unknown: "Not established"
+  };
+
+  function ownerKindWord(k) { return OWNER_KIND_WORD[k] || OWNER_KIND_WORD.unknown; }
+  function confidenceWord(c) { return CONFIDENCE_WORD[c] || CONFIDENCE_WORD.unknown; }
+
   window.PMSemantics = {
+    OWNER_KIND_WORD: OWNER_KIND_WORD,
+    CONFIDENCE_WORD: CONFIDENCE_WORD,
+    ownerKindWord: ownerKindWord,
+    confidenceWord: confidenceWord,
+    ACQUISITION: ACQUISITION,
+    READINESS: READINESS,
+    acquisitionLabel: acquisitionLabel,
+    isBaselineAcquisition: isBaselineAcquisition,
+    readinessLabel: readinessLabel,
+    SCOPE_WORD: SCOPE_WORD,
+    scopeWord: scopeWord,
+    SECRET_CLASS: SECRET_CLASS,
+    secretClass: secretClass,
     stateLabel: stateLabel,
     stateLabelShort: stateLabelShort,
     stateStatus: stateStatus,

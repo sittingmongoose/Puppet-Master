@@ -1,0 +1,9 @@
+{
+  "schema_id":"pw-r6-generic-counterfactual-holdouts-v3",
+  "cases":[
+    {"case_id":"CF-MICRO-EDGE-01","kind":"micro_edge_reduce","candidate_order":["REN-E4","REN-E1","REN-E9"],"units":[{"edge_id":"REN-E9","verdict":"supported"},{"edge_id":"REN-E4","verdict":"unsupported"},{"edge_id":"REN-E1","verdict":"supported"}],"expected":["REN-E1","REN-E9"]},
+    {"case_id":"CF-MICRO-EDGE-02","kind":"micro_edge_reduce","candidate_order":["X2","X8"],"units":[{"edge_id":"X8","verdict":"unsupported"},{"edge_id":"X2","verdict":"supported"}],"expected":["X2"]},
+    {"case_id":"CF-SOURCE-JOIN-01","kind":"source_join","endpoint_rows":[{"id":"D7","source_record_ids":["S2","S1"]},{"id":"D3","source_record_ids":["S1","S9"]}],"available_record_ids":["S9","S1","S2","S4"],"expected":["S2","S1","S9"]},
+    {"case_id":"CF-SOURCE-JOIN-02","kind":"source_join","endpoint_rows":[{"id":"Q1","source_record_ids":["R5"]},{"id":"Q2","source_record_ids":["R6"]}],"available_record_ids":["R6","R5"],"expected":["R5","R6"]}
+  ]
+}

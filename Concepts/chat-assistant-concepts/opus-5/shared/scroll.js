@@ -78,7 +78,12 @@
     this.scrollEl = scrollEl;
     this.opts = opts || {};
     this.messageAttr = this.opts.messageAttr || DEFAULT_MESSAGE_ATTR;
-    this.messageSelector = '[' + this.messageAttr + ']';
+    /* All eight concepts pass a `messageSelector` option and it was being silently discarded in
+     * favour of the derived attribute selector. Honouring it matters now that preserveAcross uses
+     * the selector to decide whether it was handed a message or a container: a concept that scopes
+     * its messages more tightly than "anything carrying the attribute" has to be able to say so, and
+     * an option a caller sets and the callee ignores is worse than no option at all. */
+    this.messageSelector = this.opts.messageSelector || ('[' + this.messageAttr + ']');
     this.threshold = typeof this.opts.bottomThreshold === 'number'
       ? this.opts.bottomThreshold
       : DEFAULT_BOTTOM_THRESHOLD;
@@ -182,6 +187,34 @@
       if (typeof mutateFn === 'function') mutateFn();
       return;
     }
+    /* Two different jobs share this entry point, and telling them apart is the whole fix.
+     *
+     * When `el` is ONE message whose body is expanding or collapsing, the correct correction is its
+     * own height delta, and only when it sits entirely above the viewport.
+     *
+     * When `el` is the LIST — which is what all eight "Load N earlier messages" handlers pass — that
+     * test can never be true, because the list's bottom edge is far below the container's top. So
+     * `isAbove` was always false, the function returned before correcting anything, and loading a
+     * hundred earlier messages jumped the reader's position every time. With
+     * `overflow-anchor: none` set in the constructor there was nothing else to catch it either.
+     *
+     * A container mutation needs the SEMANTIC anchor, not a height delta: capture which message the
+     * reader is looking at, let the mutation run, then put that message back under the same edge.
+     * The instruments for that already existed and simply had no caller. */
+    var containedMessages = el === this.scrollEl || el.contains(this.scrollEl) ||
+      (el.querySelector && el.querySelector(this.messageSelector) &&
+       !el.hasAttribute(this.messageAttr));
+
+    if (containedMessages) {
+      var token = this.captureAnchor();
+      if (typeof mutateFn === 'function') mutateFn();
+      /* A false return means the anchored message is not rendered any more — a range change, a
+       * filter — and there is no honest position to restore. Leaving the scroll where it is beats
+       * moving it to a message the reader was not reading. */
+      if (token) this.restoreAnchor(token);
+      return;
+    }
+
     var containerTop = this.scrollEl.getBoundingClientRect().top;
     var beforeRect = el.getBoundingClientRect();
     var isAbove = beforeRect.bottom <= containerTop;

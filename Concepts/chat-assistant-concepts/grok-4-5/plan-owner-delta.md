@@ -1,8 +1,8 @@
 # Plan-owner delta — Grok 4.5 Assistant Chat
 
-Packet: PM_Assistant_Chat_Concept_Update_Final_Cumulative_2026-08-08 · updated 2026-08-11.
+Packet: PM_Assistant_Chat_Concept_Update_Final_Cumulative_2026-08-08 + correction PM_Assistant_Chat_Dependency_Media_and_Work_Correction_2026-08-13 · updated 2026-08-14.
 Concept folder only — **no** edits to Plans, Commands, Wiring, DRY owners, Settings, Usage, or sibling model folders.
-Status: **complete** (2026-08-11). Step2/Step3 released shared demo/harness/motion; fixtures, probes, ConceptHub validate, and seven packet reports finalized. Dispositions below remain locked from the plan census.
+Status: **complete** (2026-08-14 correction closeout). Step2/Step3 released shared demo/harness/motion; fixtures, probes, ConceptHub validate, and seven packet reports finalized. Dispositions below remain locked from the plan census.
 
 ## Plan-owner audit (packet 08 list)
 
@@ -172,3 +172,11 @@ Summary: {'named-owner-deferred': 29, 'demonstrated': 85}
 | PROC-009 | demonstrated | Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces. |
 | PROC-010 | demonstrated | Required by IMPLEMENTATION_PROMPT; represented/demonstrated in Chat concept surfaces. |
 
+## Correction 2026-08-14 — Provider CLI adjudication
+
+Status: **complete** (Chat surfaces only; Settings remains owner).
+
+- Chat provider-setup / install / update copy now states **official provider/package source**, **not bundled in PM core**, **not in execution baseline**, and **install ≠ auth**.
+- Deep-link + continuation token remain concept stubs to Settings (`settings://providers/...`); Chat is not Provider Manager.
+- No Plans/Commands/Wiring/DRY owner edits in this correction; candidate deltas updated provisionally only.
+- Peek/pin/artifact, distinct Q + compact work, and four-video causal-continuity motion corrected inside `grok-4-5` only.

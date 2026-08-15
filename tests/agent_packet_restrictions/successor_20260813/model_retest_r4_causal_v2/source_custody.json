@@ -1,0 +1,135 @@
+{
+  "schema_id": "pm.hard_causal_source_custody.v2",
+  "protocol_id": "PW-R4-CAUSAL-20260813.2",
+  "captured_at_utc": "2026-08-13T22:45:00Z",
+  "corpus_files": [
+    {
+      "path": "Plans/00-plans-index.md",
+      "bytes": 362486,
+      "lines": 5567,
+      "sha256": "ab8d8fa81caad14feb2cb10ab2409b33d3c125b01f9ad7d27d7fdeaa9e88268c",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "path": "Plans/Planning_Wizard.md",
+      "bytes": 93549,
+      "lines": 1671,
+      "sha256": "2b9591954871986cc5af23764d026ce102ca67be66634c7d1e49dc6988833d00",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "path": "Plans/Prompt_Pipeline.md",
+      "bytes": 301379,
+      "lines": 5604,
+      "sha256": "f16b05797a55799c4c9d66d370011ceda04af646b0d41593418aa48098740094",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "bytes": 1147392,
+      "lines": 24489,
+      "sha256": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "bytes": 1402008,
+      "lines": 31560,
+      "sha256": "8078b6464132748058490281b8578ef42f68f91c5700444901114e4d9286a10c",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "path": "Plans/Planning_Ledger_System.md",
+      "bytes": 70805,
+      "lines": 1227,
+      "sha256": "8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "path": "Plans/Plan_Document_System.md",
+      "bytes": 67485,
+      "lines": 1194,
+      "sha256": "f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "path": "Plans/Plan_To_Node_Compilation.md",
+      "bytes": 103867,
+      "lines": 1488,
+      "sha256": "196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "bytes": 271215,
+      "lines": 4532,
+      "sha256": "34a66a5218a0fda775c650df3d630b2fbb4920b349623f605b41a497bc1f9218",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "bytes": 267313,
+      "lines": 3211,
+      "sha256": "975472ff73c949fea277805b1317b1f67f56972bbfe401c73c3f38267edac4b3",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "path": "Plans/ledgers/v2/ledger_registry.json",
+      "bytes": 61169,
+      "lines": 1363,
+      "sha256": "23d36152dd8d14de849d1d22ba0df5ca0a6864f8f0331efb3446e1d4c498e988",
+      "authority": "lineage_only_state"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/handoff.json",
+      "bytes": 9160,
+      "lines": 137,
+      "sha256": "82e9800b6905f3d7cb77b78a4b58ea6f4f0a5b056cf4636c46f3bd57e1270f4f",
+      "authority": "lineage_only_state"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/current.json",
+      "bytes": 8940,
+      "lines": 158,
+      "sha256": "813b219dac1bef99d85971ab2411e0b3bb3f5df2a0bb1df224467f2855df3914",
+      "authority": "lineage_only_state"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/open_items.json",
+      "bytes": 20100,
+      "lines": 322,
+      "sha256": "36c73492e33546c22d2e0ad1aff2aa7548b8d543f445a9ffc984fe4c5bcf2e47",
+      "authority": "lineage_only_state"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/operating_capsule.json",
+      "bytes": 6686,
+      "lines": 130,
+      "sha256": "64f24ae78d22728442bebd95859f27a6cebc24135b77e23e506aabe235a89f93",
+      "authority": "lineage_only_state"
+    }
+  ],
+  "totals": {
+    "files": 15,
+    "bytes": 4193554,
+    "lines": 82653
+  },
+  "capsules": {
+    "topic_a": {
+      "bytes": 50345,
+      "sha256": "246c88f0cc87b994c8589a4783a5c05ce9c15b44e67a42e31fa6eacfaae68949",
+      "source_records": 16
+    },
+    "topic_b": {
+      "bytes": 72101,
+      "sha256": "5cefc70c9620548b63aea4e38ad98087feaa381d0499e1bb9a19d0d6ccbd5f01",
+      "source_records": 20
+    }
+  },
+  "precedence": [
+    "live canonical owner prose controls product semantics within scope",
+    "active ledger state is lineage/current-planning evidence only",
+    "current explicit Jared instructions authorize this bounded test but do not amend Plans"
+  ],
+  "write_boundary": "tests/agent_packet_restrictions/successor_20260813/model_retest_r4_causal_v2/ only"
+}

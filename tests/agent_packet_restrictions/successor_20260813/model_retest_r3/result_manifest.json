@@ -1,0 +1,95 @@
+{
+  "protocol_id": "PW-R3-20260813.1",
+  "analysis_version": "A2",
+  "source_sha256": "2b9591954871986cc5af23764d026ce102ca67be66634c7d1e49dc6988833d00",
+  "summary": {
+    "requested_configurations": 3,
+    "required_stage_types": 11,
+    "counted_tasks": 33,
+    "unique_tasks": 33,
+    "exact_wrapper_and_capsule_matches": 33,
+    "exact_json_oracle_passes": 33,
+    "observed_tool_items": 0,
+    "dag_edges_checked": 36,
+    "dag_edges_passed": 36,
+    "retries": 0,
+    "global_issues": []
+  },
+  "configurations": {
+    "gpt-5.4-mini-xhigh": {
+      "requested_model": "gpt-5.4-mini",
+      "requested_reasoning_effort": "xhigh",
+      "result": "pass_once",
+      "stages": {
+        "l1": {"thread_id": "019ffd0e-9f0f-75b0-afdb-a0b38b0d7eb8", "duration_ms": 8049, "result": "pass"},
+        "l2": {"thread_id": "019ffd10-3a09-7892-99ab-1896ae8c5567", "duration_ms": 12029, "result": "pass"},
+        "l3": {"thread_id": "019ffd10-cd25-76d1-a320-55a4dd1dc0d4", "duration_ms": 12701, "result": "pass"},
+        "l4": {"thread_id": "019ffd11-04f4-75f1-b3c6-037e62a27dd2", "duration_ms": 80775, "result": "pass"},
+        "l5": {"thread_id": "019ffd12-45ba-7ee2-8629-dfcb0358bfec", "duration_ms": 6652, "result": "pass"},
+        "l6_fidelity": {"thread_id": "019ffd12-db19-7431-972e-add8ad8bc0dd", "duration_ms": 66378, "result": "pass"},
+        "l6_authority": {"thread_id": "019ffd12-e081-7c90-be70-be17a5424811", "duration_ms": 9077, "result": "pass"},
+        "l6_safety": {"thread_id": "019ffd12-e60e-74b2-a969-62204b605edb", "duration_ms": 10899, "result": "pass"},
+        "l7": {"thread_id": "019ffd14-4aee-7642-9063-80b636841c08", "duration_ms": 9582, "result": "pass"},
+        "l8": {"thread_id": "019ffd14-74b9-7143-9259-fd758a71c56b", "duration_ms": 16244, "result": "pass"},
+        "l9": {"thread_id": "019ffd14-b87c-7e03-8c53-95b9da6e2c85", "duration_ms": 12731, "result": "pass"}
+      }
+    },
+    "gpt-5.4-mini-medium": {
+      "requested_model": "gpt-5.4-mini",
+      "requested_reasoning_effort": "medium",
+      "result": "pass_once",
+      "stages": {
+        "l1": {"thread_id": "019ffd0e-a45f-72a3-bf1c-9f89a5a0b80f", "duration_ms": 6824, "result": "pass"},
+        "l2": {"thread_id": "019ffd10-3ec6-7662-854c-6bb9f72ebe02", "duration_ms": 9362, "result": "pass"},
+        "l3": {"thread_id": "019ffd10-d85f-7341-8abb-07f7cf26def6", "duration_ms": 7856, "result": "pass"},
+        "l4": {"thread_id": "019ffd11-0a82-7192-a5dc-5dbc506d6373", "duration_ms": 15643, "result": "pass"},
+        "l5": {"thread_id": "019ffd12-4a95-7931-b3a3-e7ab513a1072", "duration_ms": 5582, "result": "pass"},
+        "l6_fidelity": {"thread_id": "019ffd12-eb4c-7160-a860-d82bcb5a35ee", "duration_ms": 7994, "result": "pass"},
+        "l6_authority": {"thread_id": "019ffd12-f0bc-7aa1-88a1-d8837389d2f2", "duration_ms": 5110, "result": "pass"},
+        "l6_safety": {"thread_id": "019ffd12-f5d6-76c2-983d-c4fdbc7c84c5", "duration_ms": 7856, "result": "pass"},
+        "l7": {"thread_id": "019ffd14-4642-7180-b5ae-a301bdcd10d7", "duration_ms": 5050, "result": "pass"},
+        "l8": {"thread_id": "019ffd14-7947-7f13-a424-8c7888e6fe92", "duration_ms": 6579, "result": "pass"},
+        "l9": {"thread_id": "019ffd14-c1c7-7220-8abb-10d8a5799503", "duration_ms": 7440, "result": "pass"}
+      }
+    },
+    "gpt-5.6-luna-medium": {
+      "requested_model": "gpt-5.6-luna",
+      "requested_reasoning_effort": "medium",
+      "result": "pass_once",
+      "stages": {
+        "l1": {"thread_id": "019ffd0e-a9cb-7621-a39b-033d2ba4c3e1", "duration_ms": 5536, "result": "pass"},
+        "l2": {"thread_id": "019ffd10-43f8-7ad1-a9c4-7f193123cdd1", "duration_ms": 6715, "result": "pass"},
+        "l3": {"thread_id": "019ffd10-d29b-7623-9aaa-98fd479e9291", "duration_ms": 6913, "result": "pass"},
+        "l4": {"thread_id": "019ffd11-100d-73a3-8113-8fd7d54fbfb0", "duration_ms": 6938, "result": "pass"},
+        "l5": {"thread_id": "019ffd12-4f85-7fc3-b778-5888530c1c9a", "duration_ms": 5718, "result": "pass"},
+        "l6_fidelity": {"thread_id": "019ffd12-fc20-7e40-a037-a3cc986cfd07", "duration_ms": 8282, "result": "pass"},
+        "l6_authority": {"thread_id": "019ffd13-01a0-7322-902a-9011b32d03fd", "duration_ms": 4656, "result": "pass"},
+        "l6_safety": {"thread_id": "019ffd13-06ba-7541-bc13-85231399b6f1", "duration_ms": 4720, "result": "pass"},
+        "l7": {"thread_id": "019ffd14-4f75-7d50-83a1-7a4a422146ce", "duration_ms": 4807, "result": "pass"},
+        "l8": {"thread_id": "019ffd14-7dee-7dc3-b017-2f3e3e48b1bc", "duration_ms": 6864, "result": "pass"},
+        "l9": {"thread_id": "019ffd14-bcf7-7ba2-8714-afeaf15050d5", "duration_ms": 6006, "result": "pass"}
+      }
+    }
+  },
+  "noncounted_preflight_tasks": [
+    {"source_run": "R2_preflight", "thread_id": "019ffd0a-f202-7cf3-b567-cee0ce1ef4f1", "configuration": "gpt-5.4-mini-xhigh", "stage": "l1", "observed_result": "pass", "counted": false, "disposition": "noncounted_after_scorer_and_wrapper_correction"},
+    {"source_run": "R2_preflight", "thread_id": "019ffd0a-ec76-7e03-b791-68527958b8dd", "configuration": "gpt-5.4-mini-medium", "stage": "l1", "observed_result": "pass", "counted": false, "disposition": "noncounted_after_scorer_and_wrapper_correction"},
+    {"source_run": "R2_preflight", "thread_id": "019ffd0a-f73d-7020-984a-68465dc87b2b", "configuration": "gpt-5.6-luna-medium", "stage": "l1", "observed_result": "pass", "counted": false, "disposition": "noncounted_after_scorer_and_wrapper_correction"}
+  ],
+  "preserved_prior_protocol_failures": {
+    "status": "remain_failures_in_their_original_protocols",
+    "examples": [
+      "earlier GPT-5.4 mini xhigh L5 malformed dependency edge",
+      "earlier GPT-5.4 mini medium L5 truncated receipt hash",
+      "earlier GPT-5.4 mini medium L6 authority false positive",
+      "earlier GPT-5.6 Luna medium L6 authority false positive"
+    ],
+    "effect_of_r3": "R3 adds new passing evidence and does not rewrite, erase, or convert those failures"
+  },
+  "review": {
+    "controller_reopening": "33 of 33 passed under analysis A2",
+    "sol_medium_manifest_check": "internally consistent; 3 times 11 equals 33 and 3 times 12 DAG edges equals 36",
+    "sol_xhigh_claim_audit": "no blocking defect in the narrow descriptive conclusion",
+    "reviewers_were_subject_tests": false
+  }
+}

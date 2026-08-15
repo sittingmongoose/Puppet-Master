@@ -1,24 +1,26 @@
 # Shard Index: Plans/Section15_MVP_Promoted_Features_Spec.md
 
-Generated: 2026-08-13T17:12:34Z
+Generated: 2026-08-15T03:16:34Z
 
-Source SHA256: `dc0625ec8d68b6f9d9f74f7b9268e96f5e178277dfb8ee427f13efdd0fd512d2`
+Source SHA256: `595d843ab1ce0458bba7dbb3c441a189602733aa6ad229b7ce44a2b59079f8b5`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `b912447de8aa5944dd180124308ae3dc8a4e9fd2ee6736ea05af01a4bf917cda`
-- [002 - 0. Scope and SSOT status](002-0.-scope-and-ssot-status.md) L6-L19 `76d2cb1471d1b4905cf295242cb1531229f35f68e6719dcba5810a8215f5bcd7`
-- [003 - 1. Canonical shell and surface model](003-1.-canonical-shell-and-surface-model.md) L21-L348 `0169a498ea709857d294467602fe628c8171bd3ea611d497fa8e22de5f119465`
-- [004 - 2. Cross-feature runtime contracts](004-2.-cross-feature-runtime-contracts.md) L349-L429 `239eb1e70d39dde0e27cb7a55790d5e94e202d3622e66bc3523df331b202fdf2`
-- [005 - 3. Feature requirements](005-3.-feature-requirements.md) L431-L741 `ae92e0bd16867d4a98d4fdc2b7c09c10a6932a8fb647b6b0f8911fe0840f8d91`
-- [006 - 4. Command families required by the promoted features](006-4.-command-families-required-by-the-promoted-features.md) L742-L761 `e8e969331655193598320b8162a701684c46dda602b1c26a19617cffcf5a75a6`
-- [007 - 5. Persistence and restore rules](007-5.-persistence-and-restore-rules.md) L762-L797 `acba92aed4cc807016985ef1db9cc5bb2bbc93b56295caff1809d0d67c429fb7`
-- [008 - 6. Non-goals and anti-drift rules](008-6.-non-goals-and-anti-drift-rules.md) L798-L814 `4f1807ed0030ce87b8b18694c33d9a5134fa48b13203410956fe2d8fa6a35653`
-- [009 - Owner / Consumer Map](009-owner-consumer-map.md) L816-L820 `ef74b3ca0f4aabf9539538e8e296e28fa9665f9c6b8aadbaab9f0d5f450d193a`
-- [010 - PlanUnits](010-planunits.md) L822-L8356 `2933632e27fd8e3cba8fa384c1fd3bd667620207c11d7b2206d51ca36b31cc3d`
-- [011 - Migration Coverage](011-migration-coverage.md) L8358-L8368 `72f458a390670b7954ded8ed661f0680d5bf503ed4e5174ee327a01e0b461519`
-- [012 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](012-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L8370-L8456 `ec50c851d8adaf702efe27365ae60b71d3a0b1a86f085272581176bd4f0b4330`
-- [013 - PMConcept7 Home Workspace terminal reconciliation — 2026-08-04](013-pmconcept7-home-workspace-terminal-reconciliation-2026-08-04.md) L8458-L8523 `b47d25f24af879a48fa2c8da252c8f46fc1d508cbb25bf1712e2215c146d2461`
-- [014 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](014-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L8525-L9550 `f23bb6be205e974d7d0bbefcad091b1aac38e4f0ab5eb5db8e2b4d721885d206`
+- [001 - Preamble](001-preamble.md) L1-L4 `7d12ff4044242da1a917685db516176e3ee0561ad7239b0031507ac825de37af`
+- [002 - 0. Scope and SSOT status](002-0.-scope-and-ssot-status.md) L6-L19 `8413826798b07ee12388d3ad286e4b8d22d1898e63e3f71b00a998f443b4b709`
+- [003 - 1. Canonical shell and surface model](003-1.-canonical-shell-and-surface-model.md) L21-L348 `34d6b86330717a2a2f605a063cc922fbeb69eb23eff12055198a75e73e687f8c`
+- [004 - 2. Cross-feature runtime contracts](004-2.-cross-feature-runtime-contracts.md) L349-L429 `f1aac9e221fae81e68eb9e2b4e2b7bc0b532a4b949f5247d0310762410ff1e4f`
+- [005 - 3. Feature requirements](005-3.-feature-requirements.md) L431-L757 `49c8ce54ff19a782e14f3b4ceadbfb4b08085317ae7a60127c6db1df531c7e84`
+- [006 - 4. Command families required by the promoted features](006-4.-command-families-required-by-the-promoted-features.md) L759-L778 `e149a93091de28f1c4ae146f61149cea6a1d750534417a4b451d46f010871ecb`
+- [007 - 5. Persistence and restore rules](007-5.-persistence-and-restore-rules.md) L779-L814 `67c4c5e3bcd0661c29ccd6ffb1b04033406f1d701f47bdf7922897a308ec4ba3`
+- [008 - 6. Non-goals and anti-drift rules](008-6.-non-goals-and-anti-drift-rules.md) L815-L831 `b83c542b4d4192aecdbcd523ac3ac58ceb770dc6a774e7c1a889e0868c5495a2`
+- [009 - Owner / Consumer Map](009-owner-consumer-map.md) L833-L837 `14f8de1ab3cfde8bd81c0f0ff8b3bd18590a51bb5990ef6634990bb4170123f8`
+- [010 - PlanUnits](010-planunits.md) L839-L8397 `1ebe4fafc526492d6c6165cd625b2ec64f646fcb44ce579aa7386f981e2689ef`
+- [011 - Migration Coverage](011-migration-coverage.md) L8399-L8409 `aaf8e1dabc9b6bf16f4aa7fb536c167ed8296a3fdc722fa721f67869d2be9991`
+- [012 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](012-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L8411-L8497 `f5c62b7de86363824788efb0bffaca2c23fe43ba713242ebec547e72fcb22b75`
+- [013 - Remaining Runtime Onboarding Ownership Addendum (2026-08-14)](013-remaining-runtime-onboarding-ownership-addendum-2026-08-14.md) L8499-L8543 `0fd595bb28ee2e0a5d0f231bab83936d1826f89a30d7af89f5168d8bc3e00db8`
+- [014 - Runtime Integration Addendum - 2026-08-13](014-runtime-integration-addendum-2026-08-13.md) L8545-L8834 `4641781144e01955d1b082e0c6a2bd29f8bd85c962af838ed93e523217cec4a0`
+- [015 - PMConcept7 Home Workspace terminal reconciliation — 2026-08-04](015-pmconcept7-home-workspace-terminal-reconciliation-2026-08-04.md) L8836-L8901 `676d5340312e8475e176baa697660e42631e45be6f5be2b16b14510753947dea`
+- [016 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](016-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L8903-L9928 `ffc0037d59c2f5e492c98bb1634ef062dd495eebd96d94db943d7ed1ad3d273a`

@@ -1,45 +1,184 @@
 {
-  "schema_id": "pm.chat_interaction_test_report.v1",
-  "concept_id": "kimi-k3",
-  "model": "Kimi K3",
-  "environment": {
-    "os": "Windows 11 Pro (10.0.26200)",
-    "node": "v22.18.0",
-    "browser": "Chrome (system, headless=new) via CDP driver; playwright-core 1.62.1 driver also verified",
-    "drivers_used": ["driver-cdp.mjs (zero-dependency CDP, primary for all suites)", "driver-playwright.mjs (boot smoke verified)"],
-    "results_dir": "%TMP%/k3h-<pid>/ (OS temp; never the repo)"
+ "schema_id": "pm.chat_interaction_test_report.v1",
+ "concept_id": "kimi-k3",
+ "model": "Kimi K3",
+ "environment": {
+  "os": "Windows 11 Pro (10.0.26200)",
+  "node": "v22.18.0",
+  "browser": "Chrome (system, headless=new) via CDP driver; playwright-core 1.62.1 driver also verified",
+  "drivers_used": [
+   "driver-cdp.mjs (zero-dependency CDP, primary for all suites)",
+   "driver-playwright.mjs (boot smoke verified)"
+  ],
+  "results_dir": "%TMP%/k3h-<pid>/ (OS temp; never the repo)"
+ },
+ "suites": [
+  {
+   "suite": "run-boot-smoke.mjs",
+   "total": 7,
+   "passed": 7,
+   "notes": "19 threads, 5 providers, routeByKey, BSD Auto/On + duplicate seeds, zero page errors (both drivers)"
   },
-  "suites": [
-    { "suite": "run-boot-smoke.mjs", "total": 7, "passed": 7, "notes": "19 threads, 5 providers, routeByKey, BSD Auto/On + duplicate seeds, zero page errors (both drivers)" },
-    { "suite": "run-pair-smoke.mjs", "total": 64, "passed": 64, "notes": "all window×thread pairings: overflow/console/emoji/labels/x-leak/clipping" },
-    { "suite": "run-matrix.mjs", "total": 1408, "passed": 1408, "notes": "8 themes × 4 widths × rail open/closed × 22 pairings" },
-    { "suite": "run-feature-states.mjs", "total": 4544, "passed": 4544, "notes": "71 state keys (28 legacy + 43 packet) × 64 pairings; __k3.stateApplied asserted" },
-    { "suite": "run-reduced-motion.mjs", "total": 112, "passed": 112, "notes": "full vs reduced final-state parity incl. artifact/BSD/questionnaire/compact/offline/goal" },
-    { "suite": "run-mounts.mjs", "total": 64, "passed": 64, "notes": "docked↔pop-out remounts, thread switches, simulated restart" },
-    { "suite": "run-packet-probes.mjs", "total": 304, "passed": 304, "notes": "19 behavioral probes × 4 pairings (inline+chip) × 2 themes × 2 widths" },
-    { "suite": "run-terminology.mjs", "total": 1, "passed": 1, "notes": "source + rendered scan: no Playwright-shaped PM terms, no 'yolo'; 'Browser Program' + Full Access present" },
-    { "suite": "ConceptHub validate.py", "total": 1, "passed": 1, "notes": "Concept validation passed" }
+  {
+   "suite": "run-pair-smoke.mjs",
+   "total": 64,
+   "passed": 64,
+   "notes": "all window\u00d7thread pairings: overflow/console/emoji/labels/x-leak/clipping"
+  },
+  {
+   "suite": "run-matrix.mjs",
+   "total": 1408,
+   "passed": 1408,
+   "notes": "8 themes \u00d7 4 widths \u00d7 rail open/closed \u00d7 22 pairings"
+  },
+  {
+   "suite": "run-feature-states.mjs",
+   "total": 4544,
+   "passed": 4544,
+   "notes": "71 state keys (28 legacy + 43 packet) \u00d7 64 pairings; __k3.stateApplied asserted"
+  },
+  {
+   "suite": "run-reduced-motion.mjs",
+   "total": 112,
+   "passed": 112,
+   "notes": "full vs reduced final-state parity incl. artifact/BSD/questionnaire/compact/offline/goal"
+  },
+  {
+   "suite": "run-mounts.mjs",
+   "total": 64,
+   "passed": 64,
+   "notes": "docked\u2194pop-out remounts, thread switches, simulated restart"
+  },
+  {
+   "suite": "run-packet-probes.mjs",
+   "total": 304,
+   "passed": 304,
+   "notes": "19 behavioral probes \u00d7 4 pairings (inline+chip) \u00d7 2 themes \u00d7 2 widths"
+  },
+  {
+   "suite": "run-terminology.mjs",
+   "total": 1,
+   "passed": 1,
+   "notes": "source + rendered scan: no Playwright-shaped PM terms, no 'yolo'; 'Browser Program' + Full Access present"
+  },
+  {
+   "suite": "ConceptHub validate.py",
+   "total": 1,
+   "passed": 1,
+   "notes": "Concept validation passed"
+  }
+ ],
+ "named_cases": [
+  {
+   "case": "offline idempotency",
+   "expected": "queue 2 messages offline; reconnect replays exactly once; forced second replay fenced",
+   "observed": "one copy each; replay log shows 'already applied \u2014 skipped'; badges flipped to sent; pill cycles reconnecting\u2192replay\u2192snapshot\u2192live",
+   "result": "pass"
+  },
+  {
+   "case": "route warning material switch",
+   "expected": "anthropic/work \u2192 anthropic/personal switch warns with cache/privacy/tools consequences; Branch creates a lineage thread; setup-needed route deep-links instead of warning",
+   "observed": "warning card with choices; branch thread created; google sign-in-required routes to Provider Settings + notification",
+   "result": "pass"
+  },
+  {
+   "case": "BSD truthfulness",
+   "expected": "glow only while autoActive; manual On distinct; turn scope reverts after the turn; unavailable never blocks send",
+   "observed": "all asserted in bsdStates probe across 16 configs",
+   "result": "pass"
+  },
+  {
+   "case": "artifact geometry",
+   "expected": "surface left of chat (w7 band above transcript; w8 sheet/dock), never overlapping thread/composer slots, draft+scroll preserved, pin coexistence",
+   "observed": "per-idiom assertions green on w1/w3/w7/w8 \u00d7 2 themes \u00d7 2 widths",
+   "result": "pass"
+  },
+  {
+   "case": "spellcheck",
+   "expected": "'teh' \u2192 Replace once/dictionaries/thread-disable menu; URL stays silent; no toolbar button",
+   "observed": "menu rows complete; URL/path skips verified",
+   "result": "pass"
+  },
+  {
+   "case": "Goal lifecycle + route-frozen",
+   "expected": "start/pause/resume/update/replan/complete/stop all mutate the record; route change while running aborts with notice",
+   "observed": "goalLifecycle probe: select() returns false, routeKey unchanged, frozen notice rendered, completion receipt appended",
+   "result": "pass"
+  },
+  {
+   "case": "notification boundary",
+   "expected": "title-bar stack badge + inbox; Open deep-links; no chat-side panel",
+   "observed": "notificationInbox probe green",
+   "result": "pass"
+  },
+  {
+   "case": "question flows",
+   "expected": "answer/skip/cancel/submit/reset with draft intact + focus recovery, both input types",
+   "observed": "questionFlow probe green across 16 configs",
+   "result": "pass"
+  },
+  {
+   "case": "Hub bridge",
+   "expected": "pm-concept-state applies theme/reducedMotion/testWidth (chat role); pm-concept-ready announced; both entries render with visible Kimi K3 label",
+   "observed": "width 975 + retro-dark + reduced-motion applied; --hub-chat-width set; catalog lists both entries; validate.py exit 0",
+   "result": "pass"
+  }
+ ],
+ "matrix_dims": {
+  "themes": 8,
+  "widths": [
+   520,
+   750,
+   975,
+   1200
   ],
-  "named_cases": [
-    { "case": "offline idempotency", "expected": "queue 2 messages offline; reconnect replays exactly once; forced second replay fenced", "observed": "one copy each; replay log shows 'already applied — skipped'; badges flipped to sent; pill cycles reconnecting→replay→snapshot→live", "result": "pass" },
-    { "case": "route warning material switch", "expected": "anthropic/work → anthropic/personal switch warns with cache/privacy/tools consequences; Branch creates a lineage thread; setup-needed route deep-links instead of warning", "observed": "warning card with choices; branch thread created; google sign-in-required routes to Provider Settings + notification", "result": "pass" },
-    { "case": "BSD truthfulness", "expected": "glow only while autoActive; manual On distinct; turn scope reverts after the turn; unavailable never blocks send", "observed": "all asserted in bsdStates probe across 16 configs", "result": "pass" },
-    { "case": "artifact geometry", "expected": "surface left of chat (w7 band above transcript; w8 sheet/dock), never overlapping thread/composer slots, draft+scroll preserved, pin coexistence", "observed": "per-idiom assertions green on w1/w3/w7/w8 × 2 themes × 2 widths", "result": "pass" },
-    { "case": "spellcheck", "expected": "'teh' → Replace once/dictionaries/thread-disable menu; URL stays silent; no toolbar button", "observed": "menu rows complete; URL/path skips verified", "result": "pass" },
-    { "case": "Goal lifecycle + route-frozen", "expected": "start/pause/resume/update/replan/complete/stop all mutate the record; route change while running aborts with notice", "observed": "goalLifecycle probe: select() returns false, routeKey unchanged, frozen notice rendered, completion receipt appended", "result": "pass" },
-    { "case": "notification boundary", "expected": "title-bar stack badge + inbox; Open deep-links; no chat-side panel", "observed": "notificationInbox probe green", "result": "pass" },
-    { "case": "question flows", "expected": "answer/skip/cancel/submit/reset with draft intact + focus recovery, both input types", "observed": "questionFlow probe green across 16 configs", "result": "pass" },
-    { "case": "Hub bridge", "expected": "pm-concept-state applies theme/reducedMotion/testWidth (chat role); pm-concept-ready announced; both entries render with visible Kimi K3 label", "observed": "width 975 + retro-dark + reduced-motion applied; --hub-chat-width set; catalog lists both entries; validate.py exit 0", "result": "pass" }
+  "rail": [
+   "open",
+   "closed"
   ],
-  "matrix_dims": { "themes": 8, "widths": [520, 750, 975, 1200], "rail": ["open", "closed"], "pairings": 22, "pair_smoke_pairings": 64, "feature_state_keys": 71, "behavioral_probes": 19 },
-  "reduced_motion_parity": "112/112 — identical final states; animations resolve instantly under the global gate",
-  "reconnect_idempotency_evidence": "offlineIdempotency probe: outbox opId fence via appliedOps; forced re-replay skipped and logged",
-  "known_limitations": [
-    "w7 artifact workspace is the documented in-flow 'artifact bay' band (stack), not literal left-of-chat — intentional per w7's zero-side-column identity; packet allows a stack approach",
-    "w6 narrow (<720px) artifact viewing is a deliberate focused overlay (scrim+Esc, user-initiated) — the packet's narrow fallback",
-    "w8 persistent artifact form is the docked 26vh strip above the composer; the left sheet is its transient form",
-    "capture-shots visual audit frames write to OS temp (validate.py bans screenshots in the model folder)",
-    "Hub server.py requires the documented os.getuid shim on Windows (Hub-owned; K3-GAP-032)",
-    "Hub static card-count fixture goes 91→92 (Hub-owned; K3-GAP-031)"
+  "pairings": 22,
+  "pair_smoke_pairings": 64,
+  "feature_state_keys": 71,
+  "behavioral_probes": 19
+ },
+ "reduced_motion_parity": "112/112 \u2014 identical final states; animations resolve instantly under the global gate",
+ "reconnect_idempotency_evidence": "offlineIdempotency probe: outbox opId fence via appliedOps; forced re-replay skipped and logged",
+ "known_limitations": [
+  "w7 artifact workspace is the documented in-flow 'artifact bay' band (stack), not literal left-of-chat \u2014 intentional per w7's zero-side-column identity; packet allows a stack approach",
+  "w6 narrow (<720px) artifact viewing is a deliberate focused overlay (scrim+Esc, user-initiated) \u2014 the packet's narrow fallback",
+  "w8 persistent artifact form is the docked 26vh strip above the composer; the left sheet is its transient form",
+  "capture-shots visual audit frames write to OS temp (validate.py bans screenshots in the model folder)",
+  "Hub server.py requires the documented os.getuid shim on Windows (Hub-owned; K3-GAP-032)",
+  "Hub static card-count fixture goes 91\u219292 (Hub-owned; K3-GAP-031)"
+ ],
+ "correction_run_2026_08_13": {
+  "packet": "PM_Assistant_Chat_Dependency_Media_and_Work_Correction_2026-08-13",
+  "sweeps": {
+   "boot_smoke": "7/7",
+   "pair_smoke": "64/64",
+   "matrix": "1408/1408",
+   "feature_states": "4544/4544",
+   "reduced_motion": "112/112",
+   "mounts": "64/64",
+   "packet_probes": "416/416 (26 probes x 4 pairings x 2 themes x 2 widths)",
+   "terminology": "clean (extended with provider-bundling copy bans)",
+   "concepthub_validate": "exit 0"
+  },
+  "new_probes": {
+   "providerSetupCopy": "official-source/never-bundles/continuation copy on cli-not-found; never-silently on update-available; forbidden-copy absence",
+   "questionLifecycle": "prepare pill -> card -> submitting pill -> composer restored + durable receipt",
+   "questionPaging": "card geometry locked across pages (max delta 0px after fix; was 147px)",
+   "triggerCoverage": "todo.block, subagent.retry, decision.branch, history.peek/switch_thread, worktree_collision",
+   "motionContinuity": "k3-msg-arrive entrance on live appends; activity kind cluster; working artifact card",
+   "pinSurvival": "pin survives resize 520->1200->520, thread switch, pop-out round-trip; chat width floor",
+   "keyboardFocus": "picker roving tabindex, Arrows/Home/End, Enter detail, two-step Esc, focus-ring rule"
+  },
+  "defects_fixed": [
+   "w1/w8 pinned history not restored on remount (pop-out round-trip dropped the pin despite persisted pref)",
+   "injected + seeded route-warning cards missing pendingRoute \u2014 their Continue/Branch/New buttons failed closed (dead demo controls)",
+   "Ollama fixture masked the cli-not-found cause behind a generic model-unavailable status",
+   "questionnaire card jumped up to 147px between pages; no prepare/submit lifecycle beats",
+   "route picker had no arrow-key model (click-only rows)"
   ]
+ }
 }

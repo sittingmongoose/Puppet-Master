@@ -7,9 +7,9 @@
   "source_register": "PACKET/CANDIDATE_COMMAND_ID_REGISTER.json",
   "discipline_note": "Candidate IDs are provisional. This delta is a census of what the concept actually invokes, adjudicated against the packet's candidate families. No canon is minted here.",
   "summary": {
-    "actions_in_scope": 70,
+    "actions_in_scope": 74,
     "adjudicated_against_candidates": 31,
-    "needing_new_ids": 29,
+    "needing_new_ids": 33,
     "read_only_diagnostics": 10,
     "by_verdict": {
       "reuse": 15,
@@ -649,6 +649,46 @@
       "verdict": "new",
       "proposed_family": "terminal",
       "note": "No candidate family covers this operation. Provisional ID only \u2014 census the live catalog before minting."
+    },
+    {
+      "concept_action_id": "performance.explain",
+      "label": "Explain the effective policy",
+      "managers": [
+        "manager-performance"
+      ],
+      "verdict": "new",
+      "proposed_family": "performance",
+      "note": "No candidate family covers resource policy. The candidate register predates the Performance decision register. Provisional only: census the live catalog and confirm the governor owns the verb before minting."
+    },
+    {
+      "concept_action_id": "performance.profile.set",
+      "label": "Use this behaviour profile",
+      "managers": [
+        "manager-performance"
+      ],
+      "verdict": "new",
+      "proposed_family": "performance",
+      "note": "No candidate family covers resource policy. The candidate register predates the Performance decision register. Provisional only: census the live catalog and confirm the governor owns the verb before minting."
+    },
+    {
+      "concept_action_id": "diag-perf-permits",
+      "label": "Open the recent permit decisions",
+      "managers": [
+        "manager-performance"
+      ],
+      "verdict": "new",
+      "proposed_family": "performance",
+      "note": "No candidate family covers resource policy. The candidate register predates the Performance decision register. Provisional only: census the live catalog and confirm the governor owns the verb before minting."
+    },
+    {
+      "concept_action_id": "diag-perf-budget",
+      "label": "Open the cache byte budgets",
+      "managers": [
+        "manager-performance"
+      ],
+      "verdict": "new",
+      "proposed_family": "performance",
+      "note": "No candidate family covers resource policy. The candidate register predates the Performance decision register. Provisional only: census the live catalog and confirm the governor owns the verb before minting."
     }
   ],
   "read_only_diagnostics": [
@@ -732,5 +772,9 @@
       ],
       "note": "Read-only diagnostic projection opened from a manager; it reads an existing log or receipt and must not mint a command."
     }
-  ]
+  ],
+  "correction_2026_08_13": {
+    "note": "Added by the dependency correction. Settings expresses policy; RuntimeResourceGovernor owns admission, so these IDs must resolve to governor-owned handlers rather than a Settings-local scheduler.",
+    "observable_work_requirement": "Every one of these, and every pre-existing action, now returns an ObservableWork projection with a named state and wait reason. cancel/background/retry appear only where semantically valid."
+  }
 }

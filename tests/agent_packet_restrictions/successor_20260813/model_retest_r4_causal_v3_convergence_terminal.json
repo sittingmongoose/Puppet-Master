@@ -1,0 +1,72 @@
+{
+  "schema_id": "pw-r4-control-plane-convergence-terminal-v1",
+  "protocol_id": "PW-R4-CAUSAL-20260813.3",
+  "attempt": "model_retest_r4_causal_v3",
+  "terminal": "NOT_READY_CONTROL_PLANE_CONVERGENCE",
+  "launch_ready": false,
+  "counted_launch_authorized": false,
+  "candidate": {
+    "protocol.json": {
+      "sha256": "38fe5b035862a49fd64fc6b1ca265a36e2bba3a93a5cde70008189dd6b036d51",
+      "bytes": 111748
+    },
+    "r4_harness.py": {
+      "sha256": "bd46e3da173d362a9815fadb75882f7ba923e9970ebaab79bc66a7bb4132c68b",
+      "bytes": 262093
+    },
+    "schemas.json": {
+      "sha256": "951cf7cd65284200d463ff994877f2d6d3ca651d68a62e0181ff3d4960419803",
+      "bytes": 15781
+    },
+    "execution_contract.json": {
+      "sha256": "afdf9df9da3e7408b4e8463489f763ca4a01aab2fbe2e4a48e4dedd8c9f379bf",
+      "bytes": 15038
+    },
+    "source_custody.json": {
+      "sha256": "058f37474a04f5ec90fd32f50e5b0f58649bc18bfdddc7b46714efbafd847725",
+      "bytes": 4673
+    }
+  },
+  "reviews": {
+    "byte_level_reviews_completed": 2,
+    "launch_ready_true": 0,
+    "launch_ready_false": 2,
+    "non_self_reference_checks_passed": 42,
+    "self_reference_probes_failed": 3
+  },
+  "blocking_defects": [
+    {
+      "id": "STATIC_INVENTORY_ENTRY_SELF_REFERENCE",
+      "affected_files": [
+        "protocol.json",
+        "r4_harness.py",
+        "schemas.json"
+      ],
+      "finding": "The runtime/W99 STATIC_INVENTORY_ENTRY route cannot independently and reliably terminalize drift in the protocol, harness, or schema that the same route must execute or load before constructing and validating its mandatory observation, receipt, and close.",
+      "manifestations": [
+        "protocol.json drift requires receipt validation through the current potentially changed protocol",
+        "schemas.json drift requires parsing and validation through the current potentially changed schemas",
+        "r4_harness.py drift requires executing the current potentially changed harness"
+      ]
+    }
+  ],
+  "counts": {
+    "subject_calls": 0,
+    "provider_calls": 0,
+    "preparation_agents_observed_in_r4_preseal_tree": 8,
+    "current_byte_level_review_interactions": 2,
+    "formal_preseal_candidate_audit_cycles_including_this_one": 4,
+    "previous_durable_preseal_failure_entries": 3,
+    "controller_process_failure_entries": 1
+  },
+  "artifact_state": {
+    "launch_manifest_created": false,
+    "detached_custody_created": false,
+    "source_check_receipts_created": false,
+    "runtime_artifacts_created": false,
+    "sandbox_artifacts_created": false,
+    "subject_tasks_created": false,
+    "bytecode_artifacts_present": false
+  },
+  "claim_boundary": "The candidate passed deterministic unsealed checks for 15 sources, 4195641 source bytes, 13 templates, and 17 recomputed oracle baselines, and 42 non-self-reference adversarial checks passed. This is not empirical model evidence, production enforcement, completeness, release readiness, safety certification, external audit completion, or permission to compile Plans. The convergence correction forbids repair or another audit cycle in this attempt."
+}

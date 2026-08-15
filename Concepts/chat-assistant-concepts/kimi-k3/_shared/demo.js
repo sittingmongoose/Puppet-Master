@@ -508,6 +508,9 @@
             { kind: 'context', text: 'Context window changes from 200k to 1M tokens.' }
           ],
           choices: ['continue', 'branch', 'new', 'cancel'],
+          // resolveWarning fails closed without a recoverable route — the
+          // injected card must carry one or its choice buttons dead-end.
+          pendingRoute: { routeKey: 'google/personal/gemini-3-pro', effort: null, speed: null },
           status: 'open'
         }
       });
@@ -999,7 +1002,83 @@
       return card;
     },
     // spell demo is interactive (right-click the composer) — no trigger
-    spellDemo: function () { return false; }
+    spellDemo: function () { return false; },
+
+    /* --- trigger-contract completion (correction 2026-08-13) ------------------ */
+    todoBlock: function (ctx) {
+      var tid = activeTid(ctx);
+      var t = threadOf(ctx, tid);
+      var items = t && t.todo && arr(t.todo.items);
+      if (!items.length) return false;
+      var target = null;
+      items.forEach(function (i) { if (!target && i.state === 'pending') target = i; });
+      if (!target) target = items[items.length - 1];
+      target.state = 'blocked';
+      touch(ctx, tid);
+      return true;
+    },
+    subagentRetry: function (ctx) {
+      var tid = activeTid(ctx);
+      var t = threadOf(ctx, tid);
+      var groups = t && arr(t.subagentGroups);
+      if (!groups.length) return false;
+      var ag = null;
+      groups.forEach(function (g) {
+        arr(g.agents).forEach(function (a) { if (!ag && (a.status === 'failed' || a.status === 'blocked')) ag = a; });
+      });
+      if (!ag) { // no failed agent yet — fail one first so the arc demos end-to-end
+        groups.forEach(function (g) {
+          arr(g.agents).forEach(function (a) {
+            if (!ag && (a.status === 'working' || a.status === 'queued' || a.status === 'waiting for capacity')) {
+              a.status = 'failed';
+              a.currentActivity = 'Failed — provider allowance exhausted';
+              ag = a;
+            }
+          });
+        });
+      }
+      if (!ag) return false;
+      ag.status = 'retrying';
+      ag.currentActivity = 'Retrying after the failure — backoff elapsed';
+      groups.forEach(function (g) { recountAgents(g); });
+      touch(ctx, tid);
+      return true;
+    },
+    decisionBranch: function (ctx) {
+      var tid = activeTid(ctx);
+      if (!tid) return false;
+      var card = null;
+      arr(ctx.data.messages(tid)).forEach(function (m) {
+        if (m.routeWarningCard && m.routeWarningCard.status === 'open') card = m.routeWarningCard;
+      });
+      if (!card) {
+        K3Demo.injectRouteWarning(ctx);
+        arr(ctx.data.messages(tid)).forEach(function (m) {
+          if (m.routeWarningCard && m.routeWarningCard.status === 'open') card = m.routeWarningCard;
+        });
+      }
+      return card ? window.K3Route.resolveWarning(ctx, tid, card.id, 'branch') : false;
+    },
+    historyPeek: function (ctx) { return K3Demo.openHistory(ctx); }, // transient, unpinned view
+    historySwitchThread: function (ctx) {
+      var cur = activeTid(ctx);
+      var next = cur === 'thread-16' ? 'thread-17' : 'thread-16';
+      ctx.store.set('activeThreadId', next);
+      emit(ctx, { type: 'threads-changed' });
+      return next;
+    },
+    worktreeCollision: function (ctx) {
+      var tid = activeTid(ctx);
+      if (!tid) return false;
+      var wts = ctx.data.worktrees();
+      var wt = null;
+      wts.forEach(function (w) { if (!wt && w.id === 'wt-docs') wt = w; });
+      if (!wt) return false;
+      wt.state = 'conflict-detected';
+      wt.detail = 'Merge conflict surfaced while the Verifier wave wrote — patch staged';
+      touch(ctx, tid, 'ops-conflict');
+      return true;
+    }
   };
 
   /* --- family helpers --------------------------------------------------------- */

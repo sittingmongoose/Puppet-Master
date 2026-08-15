@@ -915,12 +915,23 @@
   }
 
   /* Truthful ObservableWork-style phase event. Concepts render these; they
-     are never skipped in reduced motion (state changes are not animation). */
+     are never skipped in reduced motion (state changes are not animation).
+     Decision-register alignment (§11, §16.6): every event declares its
+     progress kind and source; determinate progress exists ONLY when a real
+     denominator is present, and a bare percentage is never emitted. */
   function op(name, ref, phase, extra) {
     var store = currentStore;
     if (!store) return;
     var payload = { name: name, ref: ref == null ? null : String(ref), phase: phase };
     if (extra) { Object.keys(extra).forEach(function (k) { payload[k] = extra[k]; }); }
+    if (typeof payload.completed === 'number' && typeof payload.total === 'number' && payload.total > 0) {
+      payload.progressKind = 'determinate';
+      payload.source = payload.source || 'measured';
+    } else {
+      payload.progressKind = 'indeterminate';
+      payload.source = payload.source || 'derived';
+      delete payload.pct; // no denominator, no percentage
+    }
     store.emit('op', payload);
   }
 
@@ -1255,7 +1266,7 @@
       if (!data.notifications) return Promise.resolve(null);
       var now = Date.now();
       if (timeScale > 0 && now - lastTestSend < 30000 && lastTestSend !== 0) {
-        op('dest-test', ref, 'rate-limited');
+        op('dest-test', ref, 'rate-limited', { waitReason: 'waiting_resource' });
         receipt('Test held', 'Test sends are limited to one per 30 seconds per destination.');
         return Promise.resolve({ ok: false, rateLimited: true });
       }
@@ -1343,20 +1354,26 @@
     'index-rebuild': function (store, data) {
       if (!data.searchIndex) return Promise.resolve(null);
       var ix = data.searchIndex;
+      var total = 14382; // known only once the scan completes
       ix.enabled = true;
-      ix.phase = 'scanning'; ix.progress = { pct: 0, note: 'Scanning the tree' };
-      op('index-rebuild', null, 'scanning', { pct: 0 });
+      /* Scanning has no denominator yet: honest indeterminate phase. */
+      ix.phase = 'scanning';
+      ix.progress = { note: 'Scanning the tree', source: 'unknown' };
+      op('index-rebuild', null, 'scanning');
       store.emit('searchIndex', { phase: 'scanning' });
       return delay(800).then(function () {
-        ix.phase = 'indexing'; ix.progress = { pct: 45, note: 'Indexing 14,382 files' };
-        op('index-rebuild', null, 'indexing', { pct: 45 });
+        /* The scan produced a real file count: determinate from here on. */
+        ix.phase = 'indexing';
+        ix.progress = { completed: 6470, total: total, note: 'Indexing files', source: 'measured' };
+        op('index-rebuild', null, 'indexing', { completed: 6470, total: total });
         store.emit('searchIndex', { phase: 'indexing' });
         return delay(1000);
       }).then(function () {
         ix.phase = 'ready'; ix.progress = null;
+        ix.files = total;
         ix.lastBuild = new Date().toISOString();
         ix.failures = [{ path: 'assets/font-pack.bin', reason: 'Binary detection failed; skipped.' }];
-        op('index-rebuild', null, 'done');
+        op('index-rebuild', null, 'done', { completed: total, total: total });
         store.emit('searchIndex', { phase: 'ready' });
         receipt('Index rebuilt', '14,382 files indexed. One path skipped, listed under failures.');
         return { ok: true };

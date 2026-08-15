@@ -3,10 +3,13 @@
  *
  * WHY THIS EXISTS
  * ---------------
+ * (The sketch below transcribes a screenshot. Its glyphs are written as words: this project forbids
+ * emoji and pictographic characters ANYWHERE, code, strings and comments alike, and a docblock is
+ * not an exemption. The real marks are inline SVG from shared/icons.js.)
  * `reference/screenshots/pm7_popout.png` shows how PMConcept7 renders one unit of tool work, and it
  * is far denser than the one-line "Read file" row this workspace was building from prose alone:
  *
- *     🔍 Searching Web: schema.org Recipe markup coverage 2026        [COMPLETED ✓]
+ *     (search)  Searching Web: schema.org Recipe markup coverage 2026   [COMPLETED (check)]
  *     Agent searched web because freshness was required for import coverage claims.
  *     COMMAND          cmd.chat.web.search
  *     PROVIDER         model-native · effective adapter model-native
@@ -14,7 +17,7 @@
  *     PERMISSION       websearch scope * · granted
  *     COST             included in plan
  *     OPERATION_INPUT  { query: "schema.org Recipe markup coverage 2026" }
- *     [/sources · 5]  [Runtime Artifact ⇱ art-op-web-s1]                              ⌄
+ *     [/sources · 5]  [Runtime Artifact (open) art-op-web-s1]                    (disclose)
  *
  * That screenshot was supplied as loose prose in the original packet and was not indexed as media,
  * so none of it was built: `COMMAND`, `CACHE`, `PERMISSION` and `OPERATION_INPUT` appeared nowhere in
@@ -40,14 +43,32 @@
   /* Command ids are concept-local CANDIDATES. The Commands registry is owned elsewhere and this
    * workspace must not edit it, so every id minted here is also recorded in
    * candidate-command-delta.json for the owner to accept, rename or reject. The `cmd.chat.` prefix
-   * and dotted-noun shape follow the 75 ids already present in this workspace. */
+   * and dotted-noun shape follow the 75 ids already present in this workspace.
+   *
+   * That sentence was true as an intention and false as a fact: NINE of the ten ids below were
+   * absent from candidate-command-delta.json for the whole build, so a card printed a COMMAND row
+   * the catalog owner had never been shown. `node tools/drive.mjs scan` now fails on any `cmd.chat.*`
+   * id in this workspace that the delta does not carry, which is the difference between a contract
+   * and a note about one.
+   *
+   * Checking them against `Plans/UI_Command_Catalog.md` also found three that must NOT be minted,
+   * because a canonical id already owns the operation, and the rule is not to mint where one exists:
+   *   - web      -> `cmd.chat.web.search` is canonical (:1044, :2078, :5954), and the catalog retires
+   *                 legacy `cmd.web.search` as compatibility-only evidence (:181).
+   *   - browser  -> `cmd.browser.navigate` (:8319) already owns driving a page, and :989 routes
+   *                 visual and page-evidence work through BrowserAction under the same dispatcher.
+   *   - test     -> `cmd.testing.run` (:8275) already owns running a suite, and the testing family
+   *                 carries the receipt and failure rows an operation card links out to.
+   * The remainder are genuinely new: the catalog has no family for a RECORD of an agent tool
+   * operation (`cmd.tool.discover` / `cmd.tool.select` choose tools, they do not record runs), and
+   * `cmd.chat.search` is Search Thread (:726) — the transcript, not the repository. */
   var COMMAND_BY_KIND = {
     thought:  'cmd.chat.activity.reasoning_summary',
     read:     'cmd.chat.activity.read',
     search:   'cmd.chat.activity.search',
     web:      'cmd.chat.web.search',
-    browser:  'cmd.chat.browser.open_page',
-    test:     'cmd.chat.activity.run_suite',
+    browser:  'cmd.browser.navigate',
+    test:     'cmd.testing.run',
     edit:     'cmd.chat.activity.edit',
     generate: 'cmd.chat.activity.generate',
     verify:   'cmd.chat.activity.verify'
@@ -135,22 +156,34 @@
   }
 
 
+  /* Run state — which phase is running, and how far its count has got — belongs to PMXRunTrace.
+   * These two used to read a second copy kept on `view.surfaces` by shared/surfaces.js, so an
+   * operation card and the activity capsule beside it could disagree about whether the same phase
+   * was still running. Reading the owner is what makes them agree by construction. */
+  function traceOf(ctx, threadId) {
+    var rt = svcOf(ctx, 'PMXRunTrace');
+    if (!rt || !rt.read) return null;
+    try { return rt.read(threadId); } catch (e) { return null; }
+  }
+
+  function phaseIn(trace, id) {
+    if (!trace) return null;
+    for (var i = 0; i < trace.phases.length; i++) if (trace.phases[i].id === id) return trace.phases[i];
+    return null;
+  }
+
   function statusOf(ctx, threadId, stage) {
-    var store = ctx && ctx.store;
-    var v = store ? store.view(threadId) : null;
-    var running = v && v.surfaces && v.surfaces.runningId;
-    if (running && running === stage.id) return { key: 'running', label: 'RUNNING' };
+    var p = phaseIn(traceOf(ctx, threadId), stage.id);
+    if (p && p.running) return { key: 'running', label: 'RUNNING' };
     return { key: 'completed', label: 'COMPLETED' };
   }
 
-  /* The count the header prints. While a stage runs, the view holds a partial count that grows,
+  /* The count the header prints. While a stage runs the trace holds a partial count that grows,
    * which is what reference 03 shows as `Exploring 5 files` becoming `7 files`. */
   function countOf(ctx, threadId, stage) {
-    var store = ctx && ctx.store;
-    var v = store ? store.view(threadId) : null;
-    var seen = v && v.surfaces && v.surfaces.counts ? v.surfaces.counts[stage.id] : null;
-    if (seen == null) return typeof stage.count === 'number' ? stage.count : null;
-    return seen;
+    var p = phaseIn(traceOf(ctx, threadId), stage.id);
+    if (p && p.count != null) return p.count;
+    return typeof stage.count === 'number' ? stage.count : null;
   }
 
   /* of(ctx, threadId, stage) -> normalized operation record, or null when the stage carries no
@@ -166,7 +199,11 @@
     var running = st.key === 'running';
 
     var fields = [
-      { key: 'COMMAND', value: COMMAND_BY_KIND[stage.kind] || 'cmd.chat.activity.' + stage.kind },
+      /* An unknown kind used to build `cmd.chat.activity.<kind>` on the spot, which reads exactly
+       * like a registered id and is not one — a mint that no source grep and therefore no delta gate
+       * could ever see, because the string never appears in the source. It now says what it is. All
+       * nine kinds the corpus carries are in the table above; this branch is the one for a tenth. */
+      { key: 'COMMAND', value: COMMAND_BY_KIND[stage.kind] || 'unregistered kind "' + stage.kind + '" — no command id' },
       { key: 'PROVIDER', value: providerLine(ctx, threadId) || 'unknown' },
       { key: 'CACHE', value: op.cache || 'not applicable' },
       { key: 'PERMISSION', value: permissionLine(ctx, threadId, stage.kind) },

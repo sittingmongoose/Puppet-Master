@@ -79,7 +79,7 @@
     },
     {
       "owner": "MCP",
-      "impact": "Transport/auth/logs/states (connected/needs-auth/error; Local Docs disabled pending repair) in shared grammar. Browser MCP routes are excluded per packet canon — PM uses its own Browser Program API."
+      "impact": "Transport/auth/logs/states (connected/needs-auth/error; Local Docs disabled pending repair) in shared grammar. Browser MCP routes are excluded per packet canon \u2014 PM uses its own Browser Program API."
     },
     {
       "owner": "Skills",
@@ -153,7 +153,15 @@
   ],
   "schema_event_storage_impacts": [
     "Demo persistence uses localStorage[pm.settings-demo.<conceptId>] with 300ms debounce; production maps to settings schema revisions + receipts.",
-    "Receipts are append-only in-session; production needs EventRecord 2.0 equivalents for lifecycle mutations."
+    "Receipts are append-only in-session; production needs EventRecord 2.0 equivalents for lifecycle mutations.",
+    {
+      "owner": "RuntimeResourceGovernor",
+      "impact": "Sole resource/admission owner per decision register \u00a72.3. The concept demo introduces no second governor: low-resource profile, catalog admission, hydration delays, and process-like fixtures all defer to the governor's permit grammar (admitted/queued/admitted_degraded/blocked_resource/cancelled) in copy and receipts."
+    },
+    {
+      "owner": "ObservableWork",
+      "impact": "Sole truthful progress/wait projection per \u00a711. Index rebuild now projects phase + last-activity with progress_kind derived and no fake denominator; update lifecycle uses Updating/Verifying/Ready/Rolled-back with wait reasons; receipts carry operation_id, can_cancel/can_background/can_retry, and progress source."
+    }
   ],
   "migration_supersession_impacts": [
     {
@@ -175,6 +183,10 @@
     {
       "item": "Media destination retired",
       "detail": "media destination removed; continuation settings moved into the Provider manager; honest not-configured audio row kept as a Desktop fixture; video output kept searchable as an unavailable-capability exemplar."
+    },
+    {
+      "item": "Silent provider-CLI bundling/install",
+      "detail": "Superseded per PROVIDER_CLI_FINAL_ADJUDICATION.md: no core/default-baseline/pre-seeded provider CLI, no silent Project/model/Goal-triggered acquisition; initial install explicit + official source + exact Host/Environment; post-consent lifecycle management allowed. Fixtures and copy comply; installation cards show humanized identity by default with raw evidence under an Advanced disclosure; runtime demand returns Provider Setup Required with a continuation token."
     }
   ],
   "slint_port_impacts": [
@@ -183,7 +195,10 @@
     "color-mix() \u2192 precomputed per-theme tokens.",
     "Long lists \u2192 virtualized/segmented repeaters.",
     "prompt() replaced by PMCore.promptDialog modal (already done in this build).",
-    "Width tiers \u2192 size-change callbacks writing a tier enum."
+    "Width tiers \u2192 size-change callbacks writing a tier enum.",
+    "Inactive side panels stop being measured (closed assistant panel display:none + contain:strict).",
+    "Large lists (provider/model/installation, history, artifacts) must virtualize in the Slint port; demo lists are fixtures and stay bounded.",
+    "Byte-bounded caches: search results, receipts, and terminal-like logs carry explicit caps in the demo store."
   ],
   "test_fixtures": [
     "Search typo 'notifcation' \u2192 Notifications; Enter deep-links + focus wash.",
