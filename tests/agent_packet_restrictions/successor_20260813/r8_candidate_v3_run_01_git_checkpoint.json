@@ -1,0 +1,23 @@
+{
+  "schema_id": "pw-r8-git-checkpoint-v1",
+  "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-3",
+  "run_id": "PW-R8-C3-RUN-01-20260815",
+  "checkpoint": "DURABLE_NONQUALIFYING_RUN_TERMINAL",
+  "terminal": "CONTROLLER_INVALID_MATRIX_WITH_SUBJECT_FAILURES",
+  "qualification_clean_run_credit": 0,
+  "committed_evidence_head": "83fccf08b00f0ccc9c639d50627cb5464bdba165",
+  "fetched_origin_main": "83fccf08b00f0ccc9c639d50627cb5464bdba165",
+  "local_remote_equal": true,
+  "tree_clean_after_push": true,
+  "candidate_freeze_storage_sha256": "e112692c2a9b29e70c4975f953a4cf47ebe2f95e815a8d3b37ed85a76eeb1695",
+  "terminal_report_storage_sha256": "7ae39cf48ce26670ce73f02fa3dd229898d4cebdc14ec590f81328cac137ab44",
+  "external_reopen_status": "PASS",
+  "completed_subject_calls": 131,
+  "pass_count": 130,
+  "fail_count": 1,
+  "no_start_controller_invalid_count": 2,
+  "retry_count": 0,
+  "best_of_count": 0,
+  "replacement_count": 0,
+  "note": "The referenced commit contains the complete candidate-v3 run-01 evidence, terminal chain, external reopen receipt, and terminal report. This checkpoint file is committed separately to avoid self-reference; its containing commit is bound by the next frozen revision lineage."
+}
