@@ -1,0 +1,368 @@
+{
+  "schema_id": "pw-r8-independent-preseal-audit-v13",
+  "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-13",
+  "audit_mode": "INDEPENDENT_READ_ONLY_ZERO_SUBJECT_PROVIDER_NETWORK_CALL_PRESEAL",
+  "status": "COMPLETE",
+  "verdict": "PRESEAL_FAIL",
+  "independent_decision": "CHURN_SUSPECTED",
+  "loop_broken": false,
+  "freeze_authorized": false,
+  "launch_authorized": false,
+  "subject_calls": 0,
+  "provider_calls": 0,
+  "network_calls": 0,
+  "candidate_input_files_modified": 0,
+  "audit_output_files_created": 1,
+  "audit_output_path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v13/independent_preseal_audit.json",
+  "candidate_byte_identity": {
+    "status": "PASS",
+    "files": [
+      {
+        "path": "README.md",
+        "sha256": "cf3f99c2526c45eb110f7701152391364e167f19dae05a0fabae82ecaebf4eae",
+        "bytes": 3311
+      },
+      {
+        "path": "architecture_contract.json",
+        "sha256": "616965d1fe82cad21d8b70ddd020f22e3baea723a9927d732fc7bea68e0bd6c1",
+        "bytes": 15626
+      },
+      {
+        "path": "controller_contract.json",
+        "sha256": "461dfaf123894f5d6398e67ddfe3909fa3bb932386e9f7f0ea090d293171337e",
+        "bytes": 5932
+      },
+      {
+        "path": "deterministic_preflight_report.json",
+        "sha256": "75ef7c749f6612bdcaa098aec222d129ff2e13e251be3aca8115d006f5a7b612",
+        "bytes": 43593
+      },
+      {
+        "path": "process_completion_contract.json",
+        "sha256": "278a6205da5df271cbd676d0f8b0ad88e1317f7d3ccd40a3e24c8dc734e51cec",
+        "bytes": 3446
+      },
+      {
+        "path": "r8_clean_room_controller.py",
+        "sha256": "570d9c8409d7c7052bd2191076b9bedcb341be1b340c19f7397c358c2398315e",
+        "bytes": 127511
+      },
+      {
+        "path": "r8_run_verifier.py",
+        "sha256": "92d5f1117130518c8af536d0b6460fe9cea35555caf404029c474d2bf34096fb",
+        "bytes": 7913
+      }
+    ]
+  },
+  "source_bindings": {
+    "goal_loop_buster_addendum": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r8_goal_loop_buster_addendum_v1.json",
+      "sha256": "d3f901e724d785ba3d053a961a8559b6f5b5add7e7b660a9fbb503586ad822d0",
+      "bytes": 4468
+    },
+    "clean_room_diagnosis": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r8_clean_room_execution_controller_diagnosis_v1.json",
+      "sha256": "8dc73fa45c1848e60de969ba79561ec4f0c1a94177196ee56daaa1ee3067df91",
+      "bytes": 29516
+    },
+    "v12_process_completion_contract": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v12/process_completion_contract.json",
+      "sha256": "d487293e5c3d0bd3136ef6a4953e8437699ae846ac35b7a64af298e98df2af1b",
+      "bytes": 7274
+    },
+    "v12_a02_render": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v12_run_01/slot-alpha/rendered/S10A_DECISION_A02.txt",
+      "sha256": "e130177971d1506bcdd75f209e5fd93bc88ed66def837d337e174b8f96b2d309",
+      "bytes": 3933
+    },
+    "v12_a02_receipt": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v12_run_01/direct_appserver_receipts/slot-alpha_S10A_DECISION_A02.json",
+      "sha256": "935e9abbe89491e92b514629ce7a6302598c50e06514fcea4c3a845438dec78d",
+      "bytes": 7107
+    },
+    "apply_patch_adjudication": {
+      "source": "parent_agent_result_history",
+      "authority": "CORRECTS_DIAGNOSIS_DIRECT_WRITER_WORDING",
+      "binding_used": "external apply_patch create-only state machine; exact 25-key attempt; exact 39-key completion-v3; attempt without receipt permanent invalid; receipt prefix zero-call resumable; completion last; independent reopen before schedule advance"
+    }
+  },
+  "reproduced_controls": {
+    "stored_preflight_byte_reproduction": {
+      "status": "PASS",
+      "sha256": "75ef7c749f6612bdcaa098aec222d129ff2e13e251be3aca8115d006f5a7b612",
+      "bytes": 43593,
+      "controller_self_test_exit_code": 0,
+      "independent_verifier_exit_code": 0
+    },
+    "runtime_dependency_closure": {
+      "status": "PASS",
+      "exact_sorted_unique_files": 60,
+      "inventory_sha256": "edc80610fc227e2a76f1d1270e8c73209d086f00f841b65e3889605a2cdd35aa",
+      "inventory_bytes": 12504,
+      "hash_or_byte_mismatches": [],
+      "live_plans_paths": [],
+      "candidate_v12_process_controller_present": false,
+      "candidate_v12_completion_adapter_present": false,
+      "candidate_v12_subject_driver_facade_present": false,
+      "observed_successor_file_count": 57,
+      "observed_successor_inventory_sha256": "2bd7242808dc4f6addb930450aace46fd3de717cfd0299081d73486dd27e6c16",
+      "observed_successor_inventory_bytes": 9097,
+      "undeclared_observed_successor_files": [],
+      "observed_live_plans_paths": [],
+      "declared_but_not_observed_during_semantic_gate": [
+        "model_retest_r8_candidate_v9/r8_subject_task_driver.py",
+        "r8_clean_room_execution_controller_diagnosis_v1.json",
+        "r8_goal_loop_buster_addendum_v1.json"
+      ]
+    },
+    "schema_contracts": {
+      "status": "PASS",
+      "dispatch_attempt_exact_key_count": 25,
+      "dispatch_attempt_order_equal_controller_contract_and_preflight": true,
+      "completion_v3_exact_key_count": 39,
+      "completion_order_equal_process_contract_and_preflight": true,
+      "forbidden_outer_child_session_poll_terminal_envelope_fields_present": []
+    },
+    "predecessor_successor": {
+      "status": "PASS_AS_BOUNDED_ZERO_CALL_EVIDENCE",
+      "predecessor_case": "ZC-PRED-001",
+      "predecessor_expected_failure_reproduced": "EXTERNAL_OUTER_SESSION_COMPLETION_METADATA_DISCARDED_AFTER_TERMINAL_POLL_BEFORE_CELL_SEAL",
+      "successor_case": "ZC-SUCC-001",
+      "same_receipt_sha256": "935e9abbe89491e92b514629ce7a6302598c50e06514fcea4c3a845438dec78d",
+      "capture_sha256": "0c85e3ed81a0c4d11d8885628df8d50188db842b4468c2ae7464af898e75f152",
+      "score_sha256": "bb9f819a2c8643686b7df3bb83f3f387a3cd909899b37d8a3b2a7e29eac0329f",
+      "completion_sha256": "2a2d1d4fd1e1b93c11921a73b56245aab30895b0e48b15fc5189fb847129d791",
+      "successor_score_verdict": "PASS",
+      "successor_subject_calls": 0
+    },
+    "historical_normalized_signatures": {
+      "status": "PASS_AS_EXECUTED",
+      "count": 8,
+      "signatures": [
+        "SCHEMA_RECEIPT_V4_CAPTURE_V3_INTERFACE_MISMATCH",
+        "PROCESS_SESSION_OUTER_LIVE_SESSION_NOT_POLLED_TO_TERMINAL_AND_INCOMPLETE_RECEIPT_PERSISTED",
+        "CUSTODY_DECLARED_AUDITED_BUNDLE_MISSING_REQUIRED_FILES",
+        "ADMISSION_WRONG_RENDER_DIRECTORY_RENDERS_INSTEAD_OF_RENDERED",
+        "EVIDENCE_PERSISTENCE_RENDER_NOT_EXACTLY_ONE_TERMINAL_LF_BEFORE_DISPATCH",
+        "EVIDENCE_PERSISTENCE_RENDER_BYTES_MUTATED_AFTER_SUBJECT_START",
+        "TASK_LIFECYCLE_STOP_ACCEPTED_BEFORE_STARTED_CELL_EVIDENCE_CHAIN_SEALED",
+        "EXTERNAL_OUTER_SESSION_COMPLETION_METADATA_DISCARDED_AFTER_TERMINAL_POLL_BEFORE_CELL_SEAL"
+      ]
+    },
+    "semantic_identity": {
+      "status": "PASS_AS_DETERMINISTIC_IDENTITY_ONLY",
+      "cells_compared": 97,
+      "render_identity": "97/97",
+      "oracle_identity": "97/97",
+      "schedule_identity": "97/97",
+      "routes_unchanged": true,
+      "answer_literals_found_in_runtime_controller_or_verifier": false,
+      "runtime_cell_special_cases_found": false,
+      "a02_literal_use": "ZERO_CALL_PREDECESSOR_SUCCESSOR_WITNESS_ONLY"
+    },
+    "persistence_proposal_shape": {
+      "status": "PASS_AS_STATIC_AND_EXECUTED_PROPOSAL_SHAPE_ONLY",
+      "controller_direct_filesystem_write_open_flags_found": false,
+      "verifier_direct_filesystem_write_open_flags_found": false,
+      "proposal_create_only": true,
+      "proposal_method": "external_apply_patch",
+      "proposal_binds_storage_utf8_sha256_bytes": true,
+      "completion_proposal_ordered_last": true
+    }
+  },
+  "blocking_findings": [
+    {
+      "finding_id": "V13-PRESEAL-BLOCK-001",
+      "severity": "BLOCKER",
+      "normalized_failure_signature": "DURABLE_DISPATCH_ATTEMPT_FUSE_REUSABLE_FOR_MULTIPLE_RUN_SUBJECT_INVOCATIONS",
+      "layer": "subject_call_admission_and_recovery",
+      "source_locations": [
+        "r8_clean_room_controller.py:507",
+        "r8_clean_room_controller.py:611"
+      ],
+      "failure": "The launch gate only checks immutable attempt values and a caller-supplied boolean that run_subject hard-codes true. It consumes or mutates no durable authority. With an exact attempt present and receipt absent, run_subject admits the same row again even though recover-state classifies that durable prefix permanent invalid and never relaunchable.",
+      "executable_counterexample": {
+        "probe": "same_durable_attempt_state_run_subject_twice",
+        "method": "Imported the exact candidate controller with bytecode disabled, retained the real armed-fuse gate, replaced only the provider primitive and material validators with zero-call instrumentation, and invoked run_subject twice without persisting the returned receipt proposal.",
+        "fake_subject_primitive_calls": 2,
+        "first_status": "SUBJECT_COMPLETED_APPLY_RECEIPT_CREATE_ONLY",
+        "second_status": "SUBJECT_COMPLETED_APPLY_RECEIPT_CREATE_ONLY",
+        "receipt_path_still_absent": true,
+        "actual_subject_calls": 0,
+        "actual_provider_calls": 0,
+        "actual_network_calls": 0
+      },
+      "required_effect": "An attempt-only durable prefix must make the launch path itself reject permanently, not merely make a separate recovery command report invalid. A crash or signal after the actual call but before external receipt persistence must not leave a callable relaunch surface."
+    },
+    {
+      "finding_id": "V13-PRESEAL-BLOCK-002",
+      "severity": "BLOCKER",
+      "normalized_failure_signature": "FREEZE_AND_RUN_AUTHORIZATION_ACCEPT_SHALLOW_CALLER_MINTED_MANIFESTS",
+      "layer": "freeze_run_contract_and_launch_authority",
+      "source_locations": [
+        "r8_clean_room_controller.py:315",
+        "r8_run_verifier.py:94"
+      ],
+      "failure": "Run admission checks only the freeze file hash/bytes, candidate_id, status, and equality of an arbitrary audited_candidate_bundle value. The freeze verifier checks only eight candidate filenames and their hashes. Neither path requires the audit verdict PRESEAL_PASS and LOOP_BROKEN, exact addendum binding, runtime dependency closure, diagnosis/zero-call receipt binding, or a closed freeze schema.",
+      "executable_counterexamples": [
+        {
+          "probe": "shallow_fake_freeze_admitted",
+          "launch_authorized": true,
+          "fake_freeze_keys": [
+            "candidate_id",
+            "status",
+            "audited_candidate_bundle",
+            "attacker_unbound_evidence"
+          ],
+          "audited_candidate_bundle": {},
+          "actual_subject_calls": 0,
+          "actual_provider_calls": 0,
+          "actual_network_calls": 0
+        },
+        {
+          "probe": "freeze_validator_accepts_preseal_fail_audit_and_unbound_manifest",
+          "validator_status": "PASS",
+          "embedded_audit_verdict": "PRESEAL_FAIL",
+          "manifest_keys": [
+            "candidate_id",
+            "status",
+            "files",
+            "unbound_claim"
+          ],
+          "addendum_bound": false,
+          "runtime_dependency_closure_bound": false,
+          "actual_subject_calls": 0,
+          "actual_provider_calls": 0,
+          "actual_network_calls": 0
+        }
+      ],
+      "required_effect": "Freeze validation and run admission must reject any manifest that does not bind the exact post-audit closed world, PRESEAL_PASS plus LOOP_BROKEN decision, addendum, dependency closure, and required run protocol."
+    },
+    {
+      "finding_id": "V13-PRESEAL-BLOCK-003",
+      "severity": "BLOCKER",
+      "normalized_failure_signature": "CAUSAL_PRIOR_PASS_REOPEN_ACCEPTS_HASH_ONLY_FORGED_CHAIN_MEMBERS",
+      "layer": "causal_schedule_ordering",
+      "source_locations": [
+        "r8_clean_room_controller.py:381",
+        "r8_clean_room_controller.py:414"
+      ],
+      "failure": "Prior same-slot admission uses _completion_shallow. It checks the completion claim and that five member bytes match hashes recorded by that same completion, but it does not parse or recompute the attempt, receipt, capture, score, rollout, or semantic verdict. Therefore a self-consistent forged PASS completion can authorize the next cell.",
+      "executable_counterexample": {
+        "probe": "forged_prior_chain_admitted_by_causal_shallow_reopen",
+        "accepted_status": "FULL_CHAIN_SEALED_SAFE",
+        "accepted_score_verdict": "PASS",
+        "forged_non_json_members": [
+          "attempt",
+          "capture",
+          "receipt",
+          "render",
+          "score"
+        ],
+        "actual_subject_calls": 0,
+        "actual_provider_calls": 0,
+        "actual_network_calls": 0
+      },
+      "required_effect": "Every prior causal PASS used for launch admission must independently run the same exact full-chain validation, including receipt-v4, rollout/wrapper, capture-v3, scorer recomputation, nonce/thread/turn bindings, and completion-v3."
+    },
+    {
+      "finding_id": "V13-PRESEAL-BLOCK-004",
+      "severity": "BLOCKER",
+      "normalized_failure_signature": "MANDATED_ZERO_CALL_RECOVERY_AND_LIVE_CASES_NOT_EXECUTED_AS_SPECIFIED",
+      "layer": "loop_buster_counterfactual_and_fault_injection",
+      "source_locations": [
+        "r8_clean_room_controller.py:1673",
+        "r8_clean_room_controller.py:1942"
+      ],
+      "failure": "The stored self-test reports PASS, but the authoritative recovery case identities are substituted or shifted, and the live case stops after assembling receipt bytes. ZC-LIVE-001 does not run recovery, emit capture/score/completion, reopen a seal, or exercise a yielded outer session; its PASS therefore cannot establish the required end-to-end live recovery. Required route and thread/turn replay variants are also absent from the named recovery set.",
+      "observed_case_substitutions": [
+        {
+          "case_id": "ZC-REC-002",
+          "required": "attempt-only permanent invalid",
+          "observed": "two-terminal-LF render rejection"
+        },
+        {
+          "case_id": "ZC-REC-003",
+          "required": "receipt-prefix zero-call continuation",
+          "observed": "attempt-only permanent invalid"
+        },
+        {
+          "case_id": "ZC-REC-004",
+          "required": "capture-prefix continuation",
+          "observed": "receipt-prefix full continuation with declarative signal field"
+        },
+        {
+          "case_id": "ZC-REC-006",
+          "required": "exact completion reopen",
+          "observed": "five malformed or partial receipt variants"
+        },
+        {
+          "case_id": "ZC-REC-008",
+          "required": "bad render prestart rejection",
+          "observed": "rollout hash mismatch"
+        },
+        {
+          "case_id": "ZC-REC-009",
+          "required": "nonce, route, thread, and rollout mismatch or replay rejection",
+          "observed": "duplicate in-memory receipt create collision"
+        }
+      ],
+      "live_counterexample": {
+        "observed_case_id": "ZC-LIVE-001",
+        "observed_receipt_sha256": "935e9abbe89491e92b514629ce7a6302598c50e06514fcea4c3a845438dec78d",
+        "observed_receipt_bytes": 7107,
+        "capture_hash_present": false,
+        "score_hash_present": false,
+        "completion_hash_present": false,
+        "full_chain_reopen_present": false,
+        "outer_yielded_session_exercised": false,
+        "signal_target": "local receipt emitter child",
+        "controller_recovery_exercised": false
+      },
+      "required_effect": "Execute the exact named recovery cases and a structurally distinct live local process case that reaches byte-identical capture, score, completion-v3, and independent reopen without outer metadata."
+    }
+  ],
+  "additional_fail_closed_observations": [
+    {
+      "observation_id": "V13-PRESEAL-OBS-001",
+      "status": "FAIL_CLOSED_CONCERN",
+      "text": "r8_run_verifier delegates cell, artifact, path, matrix, and two-run validation directly to the controller module instead of implementing an independent validation boundary. The controller also exposes validate-cell itself and may return schedule_advance_allowed true."
+    },
+    {
+      "observation_id": "V13-PRESEAL-OBS-002",
+      "status": "FAIL_CLOSED_CONCERN",
+      "text": "validate-matrix emits qualification_credit=1 without directly requiring run_kind QUALIFICATION_MATRIX, and validate-two-runs checks sequence fields but not run_kind."
+    },
+    {
+      "observation_id": "V13-PRESEAL-OBS-003",
+      "status": "PASS_WITHOUT_AUTHORIZATION_EFFECT",
+      "text": "The deterministic reducer emit/reopen functions and 97-cell, 291-cell, and two-run validator entry points are constructible in source and preserve the frozen semantic module, but no full durable matrix was created or validated by this zero-call audit."
+    }
+  ],
+  "loop_buster_assessment": {
+    "predecessor_byte_addressed_fail": true,
+    "successor_byte_addressed_pass": true,
+    "historical_normalized_signatures_pass": true,
+    "independent_preseal_pass": false,
+    "decision": "CHURN_SUSPECTED",
+    "basis": [
+      "The same durable attempt can reach the subject primitive more than once.",
+      "Caller-mintable shallow freeze bytes can authorize launch and can validate while binding a PRESEAL_FAIL audit.",
+      "Causal prior-cell admission can accept self-consistent forged PASS chains without recomputation.",
+      "The required live recovery and exact named fault-injection set were not executed end-to-end."
+    ]
+  },
+  "required_disposition": {
+    "preserve_candidate_bytes": true,
+    "freeze": false,
+    "canary": false,
+    "matrix": false,
+    "repair_during_this_audit": false,
+    "next_step": "Preserve this failed candidate and counterexamples. Any successor must structurally close each blocker and receive a new independent zero-call preseal audit before freeze consideration."
+  },
+  "nonclaims": [
+    "This audit made no subject, provider, or network call.",
+    "The reproduced deterministic preflight is not empirical evidence or launch authorization.",
+    "No candidate freeze, canary, matrix, qualification credit, release claim, or repair was performed."
+  ]
+}
