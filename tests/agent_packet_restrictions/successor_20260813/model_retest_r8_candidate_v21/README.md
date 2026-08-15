@@ -1,0 +1,17 @@
+# R8 candidate-21 — closed preflight projection
+
+Candidate-21 is the narrowly scoped successor to standalone candidate-20. It preserves the root-bound runtime operations, single-process `run-cell` transaction, exact causal-prefix and terminal verification, 65-row checkpoint-bound dependency closure, three routes, frozen 97-cell semantics, receipt-v4, capture-v3, exact 25-key dispatch attempt, and exact 39-key completion.
+
+The operative change removes candidate-20's module-global `_preflight_gate(operation)` callback boundary. `preflight_report()` and the independent verifier's `validate_preflight()` accept zero caller arguments. Each fixed internal preflight case builder independently reopens the exact dependency closure before any external execution. Loaders, harnesses, semantic modules, drivers, controls, functions, classes, generators, coroutines, context managers, and closure cells remain lexical and cannot be returned through the public preflight API.
+
+The controller recursively validates its complete report as strict JSON primitives and containers, then verifies a canonical JSON round trip. The independent verifier parses and validates only the persisted report; it exposes no preflight loader or module. Static AST checks enumerate all module-global runtime and preflight callables, require every fixed preflight builder to be zero-argument, reject the old callback gate, and assign every external execute site to a root-bound runtime operation or a fixed closed preflight builder.
+
+The executable regression reopens candidate-20's failed audit `c8678951ff5653b0a9b4c0d3421dc0707ea64d70e0f94ae3926222b78699afe6/24732`, byte-addresses both controller and verifier callback-escape examples, reproduces the returned raw loader/harness and escaped driver load inside a contained predecessor model, and proves all eight resulting authority-bearing objects are rejected from the candidate-21 JSON projection. No such object leaves the closed builder.
+
+Runtime output remains canonical proposal bytes only. A trusted external caller must persist each proposal create-only with `apply_patch` and return the exact cryptographic ACK after reopen. The controller performs zero filesystem writes. Process death after durable attempt and before receipt is permanently invalid and cannot be relaunched. Completion is last; schedule advance requires independent exact-chain reopen.
+
+The deterministic preflight retains the candidate-20 runtime entrypoint suite, dual load-order suite, 65 deletion and 65 mutation closure cases, 24 authority cases, 48 exact-prefix cases, 20 named/live zero-call cases, eight historical signatures, candidate-13 through candidate-19 regressions, 97/291/582 terminal constructibility, and 97/97 semantic identity. It makes zero subject, provider, or network calls and confers no audit, freeze, launch, empirical credit, qualification, or readiness claim.
+
+Lineage is exact: addendum `d3f901e724d785ba3d053a961a8559b6f5b5add7e7b660a9fbb503586ad822d0/4468`, candidate-20 audit `c8678951ff5653b0a9b4c0d3421dc0707ea64d70e0f94ae3926222b78699afe6/24732`, candidate-20 progress `50e83c5b81e7b63599351fea3cc7268bbbb29b2ac8afdae5a23f99fa9998288c/4527`, and checkpoint `be7b91c738a2a8238f55309a301523aa14ee1810`.
+
+Tested boundary: unchanged candidate bytes and ordinary supported or direct callable invocation. Candidate-21 makes no claim against arbitrary replacement of Python code at runtime.
