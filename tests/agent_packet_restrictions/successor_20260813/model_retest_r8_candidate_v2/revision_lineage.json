@@ -1,0 +1,20 @@
+{
+  "schema_id": "pw-r8-candidate-revision-lineage-v1",
+  "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-2",
+  "identity_family": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815",
+  "create_only_revision": true,
+  "predecessor_candidate": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-1",
+  "predecessor_preseal_terminal": "PRESEAL_FAIL",
+  "predecessor_preseal_receipt_path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v1/preseal_audit.json",
+  "predecessor_checkpoint_commit": "411f71feb7663fdc748ce097ad10e13d354fa43e",
+  "predecessor_checkpoint_remote": "origin/main",
+  "predecessor_checkpoint_verified_local_equals_remote": true,
+  "repair_scope": [
+    "completed subject-response conformance is classified as permanent subject FAIL rather than controller INVALID",
+    "closed-world receipt, capture, score, causal-stop, accounting, and terminal verification",
+    "complete binding of dynamically read frozen R5/R6 dependencies",
+    "generic every-decision source-join and sibling-exclusion validation"
+  ],
+  "subject_calls_before_candidate_freeze": 0,
+  "qualification_credit_from_predecessor": 0
+}

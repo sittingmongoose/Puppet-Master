@@ -1,0 +1,16 @@
+{
+  "schema_id":"pw-r8-subject-controller-contract-v2",
+  "candidate_id":"PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-2",
+  "status":"unfrozen_candidate",
+  "driver":"r8_subject_task_driver.py",
+  "verifier":"r8_run_verifier.py",
+  "harness":"r8_harness.py",
+  "routes":{"slot-alpha":{"requested_model":"gpt-5.4-mini","requested_thinking":"xhigh"},"slot-bravo":{"requested_model":"gpt-5.4-mini","requested_thinking":"medium"},"slot-charlie":{"requested_model":"gpt-5.6-luna","requested_thinking":"medium"}},
+  "driver_usage":"python3 -B r8_subject_task_driver.py --run-id <run-id> --execution-root <contained-run-root> --slot <slot> --cell <harness-declared-cell>",
+  "pre_dispatch_gate":"The driver invokes the frozen read-only verifier admit command itself before render or app-server creation; failed admission is a positive no-start controller-invalid receipt.",
+  "invariants":{"fresh_thread_per_invocation":true,"turns_per_thread":1,"first_attempts_per_invocation":1,"retry":false,"best_of":false,"replacement":false,"fallback":false,"evidence_writes":false,"app_servers_per_invocation":1,"external_fanout":false},
+  "identity":{"candidate_and_run_ids_are_metadata_only":true,"semantic_payload_is_exact_harness_render_payload_without_storage_lf":true,"wrapper_source_thread_id":"019ffbff-994a-76f0-9c06-57bab28b7ee3","provider_effective_limitation":"Requested route, openai provider, turn-context model/effort, and pm-dev thread/turn are attestable; a separate provider-effective serving snapshot is not exposed."},
+  "completed_subject_evidence":{"rule":"After turn/start is sent and the unique task completes, response-shape, JSON, schema, canonicalization, duplicate-key, multi-content, missing-final, and prohibited-activity nonconformance remains completed permanent first-attempt subject evidence.","captured_fields":["full assistant_final_messages array","exact canonical-array SHA-256 and bytes","single text output or null with exact UTF-8 SHA-256 and bytes","full prohibited activity item array and exact binding","typed conformance observations","unique rollout/thread/turn and route identity"],"controller_invalid_only_for":["transport uncertainty","route or provider identity drift","rollout/capture ambiguity","missing unique task-complete terminal"]},
+  "controller_invalid":{"driver_authorizes_retry":false,"positive_no_start_rule":"External verifier may admit exact recreation only when every preserved controller-invalid receipt says subject_call_started=false and the frozen input/route remain identical.","sent_turn_start_rule":"The driver marks subject_call_started=true before sending turn/start; started or uncertain calls are never recreated by this driver."},
+  "nonclaims":["Disposable experimental controller only.","Completed transport is not semantic PASS.","Static verification is not empirical qualification or production enforcement."]
+}
