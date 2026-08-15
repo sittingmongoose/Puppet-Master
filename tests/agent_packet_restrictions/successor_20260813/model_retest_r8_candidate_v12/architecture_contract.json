@@ -1,0 +1,674 @@
+{
+  "schema_id": "pw-r8-candidate-architecture-contract-v12",
+  "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-12",
+  "status": "CANDIDATE_BYTES_FROZEN_ONLY_BY_EXTERNAL_FREEZE_MANIFEST",
+  "goal_loop_buster_addendum": {
+    "path": "tests/agent_packet_restrictions/successor_20260813/r8_goal_loop_buster_addendum_v1.json",
+    "storage_sha256": "d3f901e724d785ba3d053a961a8559b6f5b5add7e7b660a9fbb503586ad822d0",
+    "storage_bytes": 4468
+  },
+  "freeze_rule": "An external create-only manifest may freeze audited candidate bytes; this contract is never edited to claim frozen status.",
+  "baseline": "candidate-v11 exact 97 semantic prompts, oracles, schedule, scorers, reducers, routes, receipt-v4, capture-v3, process completion, and frozen fixture",
+  "frozen_fixture": {
+    "status": "UNFINISHED_THROWAWAY_TEST_FIXTURE",
+    "descriptor_sha256": "28730f6ea44a5720cb8e473f8fb736353dfe5c412e21261eacc88d70ffe46392",
+    "provenance_manifest_path": "tests/agent_packet_restrictions/successor_20260813/frozen_plans_snapshot_20260814_v1/provenance_manifest.json",
+    "provenance_manifest_storage_sha256": "56ddf926b4106bee4e774b91b17ed4fab5ca03a7e25154bc467955bb25274c0c",
+    "live_plans_policy": "NEVER_READ"
+  },
+  "semantic_identity": {
+    "subject_cells": 97,
+    "calls_per_complete_matrix": 291,
+    "routes": ["slot-alpha", "slot-bravo", "slot-charlie"],
+    "provider_visible_packets": "byte-identical to candidate-v11 except outer candidate, run, dispatch, and controller bindings",
+    "oracles_scorers_reducers_schedule": "unchanged candidate-v11",
+    "answer_cell_model_route_specific_exceptions": false,
+    "semantic_acceptance_weakened": false
+  },
+  "predispatch_persisted_render": {
+    "observation_schema_id": "pw-r8-pre-dispatch-render-observation-v1",
+    "path": "<execution_root>/<slot>/rendered/<cell>.txt",
+    "required_before_subject_process_start": true,
+    "storage_requirements": [
+      "regular non-link opened with lstat and O_NOFOLLOW",
+      "exactly one terminal LF",
+      "exact SHA-256 and byte count",
+      "byte-identical to an independent inherited harness render",
+      "stable inode, metadata, and bytes across reopen"
+    ],
+    "fail_closed_before_start": ["missing", "two terminal LF", "byte drift", "nonregular"],
+    "admit": "only exact stable independently reproduced one-LF bytes",
+    "forbidden_inputs": ["expected answer", "answer literal", "cell-specific branch", "model-specific branch", "route-specific branch"]
+  },
+  "safe_boundary_transaction": {
+    "schema_id": "pw-r8-cell-transaction-state-v1",
+    "safe_before_start": "BEFORE_START_SAFE / SAFE_STOP_BEFORE_START",
+    "unsafe_after_start_before_seal": "MUST_SEAL_CURRENT_CELL",
+    "safe_after_full_chain": "FULL_CHAIN_SEALED_SAFE / SAFE_STOP_AFTER_CURRENT_CELL",
+    "full_chain": ["receipt", "completion", "capture", "score", "validate-cell PASS", "exact-chain reopen"],
+    "schedule_advance_during_seal": false,
+    "completion_observation_state": "RECEIPT_AND_COMPLETION_PERSISTED_UNSEALED",
+    "completion_observation_stop_disposition": "MUST_SEAL_CURRENT_CELL"
+  },
+  "capture_and_scoring": {
+    "driver_receipt_schema_id": "pw-r8-direct-appserver-subject-receipt-v4",
+    "capture_envelope_schema_id": "pw-r8-subject-capture-envelope-v3",
+    "completion_observation_schema_id": "pw-r8-invocation-completion-observation-v2",
+    "terminal_envelope_schema_id": "pw-r8-process-controller-terminal-envelope-v2",
+    "receipt_admission": "v12 completion validation precedes unchanged candidate-v9 receipt-v4 and capture-v3 semantic validation",
+    "first_attempt_only": true,
+    "retries": 0,
+    "best_of": false,
+    "replacement_results": false
+  },
+  "bundle_custody": {
+    "non_audit_file_count": 12,
+    "non_audit_files": [
+      "README.md",
+      "architecture_contract.json",
+      "controller_contract.json",
+      "counterfactual_holdouts.json",
+      "deterministic_preflight_report.json",
+      "process_completion_contract.json",
+      "r8_harness.py",
+      "r8_process_controller.py",
+      "r8_run_verifier.py",
+      "r8_subject_task_driver.py",
+      "revision_lineage.json",
+      "verifier_contract.json"
+    ],
+    "audit_excluded_path": "independent_preseal_audit.json",
+    "independent_preseal_audit_schema": "pw-r8-candidate-v12-independent-preseal-audit-v2",
+    "external_freeze_manifest_schema": "pw-r8-external-candidate-freeze-manifest-v6",
+    "counted_run_contract_schema": "pw-r8-run-contract-v6",
+    "runtime_dependency_count_is_derived_directly_from_sorted_closure": true,
+    "redundant_runtime_dependency_closure_contract": false,
+    "terminal_addendum_commitment": "existing candidate_freeze_manifest path/hash/bytes transitively commits the manifest-v6 direct addendum binding"
+  },
+  "runtime_dependency_closure": [
+    {
+      "path": "frozen_plans_snapshot_20260814_v1/fixture/Plans/00-plans-index.md",
+      "sha256": "19fcbd110827a949df25cfb2f9f61bdbbc28ffc4f46f01bbe9f3981f94efb311",
+      "bytes": 367909,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "frozen_plans_snapshot_20260814_v1/fixture/Plans/Automated_Testing_System.md",
+      "sha256": "975472ff73c949fea277805b1317b1f67f56972bbfe401c73c3f38267edac4b3",
+      "bytes": 267313,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "frozen_plans_snapshot_20260814_v1/fixture/Plans/Plan_To_Node_Compilation.md",
+      "sha256": "196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2",
+      "bytes": 103867,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "frozen_plans_snapshot_20260814_v1/fixture/Plans/Planning_Ledger_System.md",
+      "sha256": "8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07",
+      "bytes": 70805,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "frozen_plans_snapshot_20260814_v1/fixture/Plans/Planning_Wizard.md",
+      "sha256": "2b9591954871986cc5af23764d026ce102ca67be66634c7d1e49dc6988833d00",
+      "bytes": 93549,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "frozen_plans_snapshot_20260814_v1/fixture/Plans/Prompt_Pipeline.md",
+      "sha256": "5455de88e0eb4b9f7cc02f3828ce5aa836058f03e12715532ad2c761908fb5d8",
+      "bytes": 303738,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "frozen_plans_snapshot_20260814_v1/fixture/Plans/assistant-chat-design.md",
+      "sha256": "8d6dfb862784206b0c4db9ebe7d0e7b149723161aecbbb7282c750a86eddf7b9",
+      "bytes": 1150138,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "frozen_plans_snapshot_20260814_v1/fixture/Plans/ledgers/v2/ledger_registry.json",
+      "sha256": "23d36152dd8d14de849d1d22ba0df5ca0a6864f8f0331efb3446e1d4c498e988",
+      "bytes": 61169,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "frozen_plans_snapshot_20260814_v1/fixture/Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/current.json",
+      "sha256": "813b219dac1bef99d85971ab2411e0b3bb3f5df2a0bb1df224467f2855df3914",
+      "bytes": 8940,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "frozen_plans_snapshot_20260814_v1/fixture/Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/handoff.json",
+      "sha256": "82e9800b6905f3d7cb77b78a4b58ea6f4f0a5b056cf4636c46f3bd57e1270f4f",
+      "bytes": 9160,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "frozen_plans_snapshot_20260814_v1/fixture/Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/open_items.json",
+      "sha256": "36c73492e33546c22d2e0ad1aff2aa7548b8d543f445a9ffc984fe4c5bcf2e47",
+      "bytes": 20100,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "frozen_plans_snapshot_20260814_v1/provenance_manifest.json",
+      "sha256": "56ddf926b4106bee4e774b91b17ed4fab5ca03a7e25154bc467955bb25274c0c",
+      "bytes": 9327,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r5_snapshot_v1/integration_contract.json",
+      "sha256": "d0cace7ea9d62925084245d1160d574f8f4b49c420abe60c8892de2f2a762e1a",
+      "bytes": 4094,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r5_snapshot_v1/r4_harness.py",
+      "sha256": "29d330d4dbef05a9f4e26a3bd1958cd50734d46af0d830acda5071ce4347ec82",
+      "bytes": 279029,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r5_snapshot_v1/scorer_key.json",
+      "sha256": "5b4614bea59b3f3740864324d33e346be254bff012da4ab6476077d5e80c2912",
+      "bytes": 9429,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r5_snapshot_v1/templates/S10A.txt",
+      "sha256": "627b03177ed4aa23f15217ccca326cfc995f5720bcec4cf71489dd32c9860958",
+      "bytes": 1649,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r5_snapshot_v1/topic_a_capsule.json",
+      "sha256": "6a37b1ab477e98b87d85b5e9569617b456d4dcc0e8a19762effaeb6218d18b52",
+      "bytes": 51204,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r5_snapshot_v1/topic_b_capsule.json",
+      "sha256": "75ca7224c90d44d32a29f2e766402d9e9eccf8fda584073ee82ca4bad5a41c96",
+      "bytes": 72807,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v1/contract.json",
+      "sha256": "9bee0c39beb4982c4daac1656f9f7a1327d4d31b9244c0ceebb22f630765f4b1",
+      "bytes": 7482,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v1/r6_harness.py",
+      "sha256": "a9a2ad6d11979da96571603a2297f890cf4c2b5bfb84f1a3aaa2b7c27c4e07a0",
+      "bytes": 45927,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v2/contract.json",
+      "sha256": "fdafa86048249a3b4325a84ce6e8f14e8cbafa0cc4e40360be3490d17e46bde6",
+      "bytes": 6618,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v2/r6v2_harness.py",
+      "sha256": "0cfd8e25d06a12c7294a15c182af0da095da33848ae96ca62b93349579a90e34",
+      "bytes": 28103,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v3/contract.json",
+      "sha256": "4ea1bbe15c2828582ff670a281030be6d549542c491ab4ae726aff37e5a1c41d",
+      "bytes": 3074,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v3/r6v3_harness.py",
+      "sha256": "472e8aa0b50e0bdf1ff33d5d880b6f6355282590b7dcd7a6168093257e0917be",
+      "bytes": 15118,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v4/contract.json",
+      "sha256": "8e3ab005f1f7e2f52cd8abd9486ff594a60557f69f829bdefa510ac5d0b0733e",
+      "bytes": 3182,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v4/r6v4_harness.py",
+      "sha256": "33c30afcab4b6c2602481c3e1fb0c8c3b54f5e4c3a4588c283df1d19d2b2ba22",
+      "bytes": 34628,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v5/contract.json",
+      "sha256": "6cc660b51bc0dd390e71cd2bab48c3ef5ca8943bf254c9ca0e349d5cd53b7144",
+      "bytes": 1972,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v5/r6v5_harness.py",
+      "sha256": "82f9dbb66f810d526e9260304a0cbcca671df2840cb11ac403289eb97ce83acc",
+      "bytes": 23722,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v6/contract.json",
+      "sha256": "6452f78be024d61f4a3fe13f7c95ca9efee7943e82eefc25cba9efe9dc497a41",
+      "bytes": 3377,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v6/r6v6_harness.py",
+      "sha256": "b950d61ace51798c914db358eb4580aa79a0cbf475ccfc7560ef38cdf6cab4d0",
+      "bytes": 15014,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v7/contract.json",
+      "sha256": "79b84db9cf3081893d1f63d4fa1240dcc028f365ba47be00ce72ea27ce390137",
+      "bytes": 3902,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r6_decomposed_v7/r6v7_harness.py",
+      "sha256": "8638110bd1b0e40f4e9ed334f77b85bdeeb21648369929ea03125e0aa11c0a0f",
+      "bytes": 16975,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v11/architecture_contract.json",
+      "sha256": "de484022a029e14ea8072333415875a69e4ae38b142915ad1ae85c6547b2c661",
+      "bytes": 37181,
+      "roles": [
+        "candidate_v11_facade_baseline"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v11/controller_contract.json",
+      "sha256": "f3a4ef5eeed6833d9bdf987b3d930b1ec11771bd9393f6b190a763b2679bce92",
+      "bytes": 2944,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v11/counterfactual_holdouts.json",
+      "sha256": "4e4f9aa70e854ac92a9c6fd3b2b263e76450e3e292a3aab749fadde66677fc47",
+      "bytes": 47465,
+      "roles": [
+        "candidate_v11_facade_baseline"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v11/deterministic_preflight_report.json",
+      "sha256": "9e45d23d97584f74825dc51bd28b880729989a7b839e788467c8b4f826a1aa3a",
+      "bytes": 103697,
+      "roles": [
+        "candidate_v11_facade_baseline"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v11/process_completion_contract.json",
+      "sha256": "0bec3fd862d6ad7247349e40821ff0dcd1bcc519c251ad24de4ef9a1a5a4d077",
+      "bytes": 5588,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v11/r8_harness.py",
+      "sha256": "a4c8cd25e3990516adc580b87cac0170520b985691b89b9305adaa2945883c81",
+      "bytes": 25688,
+      "roles": [
+        "candidate_v11_facade_baseline"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v11/r8_process_controller.py",
+      "sha256": "a7e9f23e60534b0daa2297db920362046d6eaa098ce923de5eda95462cc31738",
+      "bytes": 22004,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v11/r8_run_verifier.py",
+      "sha256": "5286c461f8525343f1a53923e9150846903d1ac13a960469890f7b3eee0ad48c",
+      "bytes": 9037,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v11/r8_subject_task_driver.py",
+      "sha256": "663645cb6cfbd5ef0d6bba5de91d63833593aa6e55d71c485e97ee6cad5f8abf",
+      "bytes": 1330,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v12/controller_contract.json",
+      "sha256": "01def40d604b3a86afab188b53778af288c1a6272dcee953d317706b1d72d3e6",
+      "bytes": 5843,
+      "roles": [
+        "candidate_v12_controller_interface"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v12/process_completion_contract.json",
+      "sha256": "d487293e5c3d0bd3136ef6a4953e8437699ae846ac35b7a64af298e98df2af1b",
+      "bytes": 7274,
+      "roles": [
+        "candidate_v12_controller_interface"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v12/r8_process_controller.py",
+      "sha256": "be9f25048ba4b88ad40461470f3f612643820fe39f7974bd165a02da08bf8815",
+      "bytes": 43594,
+      "roles": [
+        "candidate_v12_controller_interface"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v12/r8_run_verifier.py",
+      "sha256": "08cfee13e097c87c5330b84b293ec0151ade73e8078a05b105a12ce710ac0076",
+      "bytes": 31463,
+      "roles": [
+        "candidate_v12_controller_interface"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v12/r8_subject_task_driver.py",
+      "sha256": "b45ec90db53ac1e17e626f7ecec78b7af12e34b76aae18446ee73857fbe5cfb5",
+      "bytes": 1344,
+      "roles": [
+        "candidate_v12_controller_interface"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v12/revision_lineage.json",
+      "sha256": "22eba1bc3299a4ee09068214da45087fdfb6fd85ddc5fbcfb5587c8e7c1a2849",
+      "bytes": 6333,
+      "roles": [
+        "candidate_v12_controller_interface"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v12/verifier_contract.json",
+      "sha256": "32a68d1ed3669e613b45f6a2c5848810d2dc166f656da82b895a02e3bcd38ea4",
+      "bytes": 12825,
+      "roles": [
+        "candidate_v12_controller_interface"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v3/deterministic_preflight_report.json",
+      "sha256": "bf8dfca3a0a6d9c282b3a29cfa2c6ee9b88955accf965828bd3a7c1fb173458f",
+      "bytes": 74229,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v4/deterministic_preflight_report.json",
+      "sha256": "a88e262c5b0f0d18ad899a3e0cce8265d4061285c642410cb357ef73b3df90c0",
+      "bytes": 74630,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v4/r8_harness.py",
+      "sha256": "c9dc4e4ccc8f526db147822915c3597ec7f26f4980c96a68477f867bdfba8769",
+      "bytes": 78223,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v5/counterfactual_holdouts.json",
+      "sha256": "d77a62c62e76de2d895aa1141d1ce75735e41945a5b3eef5ecf818e781c5faba",
+      "bytes": 37155,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v5/deterministic_preflight_report.json",
+      "sha256": "dce5e30deede76d91bc8d3a43fd6391d8688a8262277e437958c7591f96f20b3",
+      "bytes": 82907,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v5/r8_harness.py",
+      "sha256": "df620714978572aba79f3d0836d6fc61e433c4ca11d9bfd0b3d2ad242c7fd736",
+      "bytes": 105519,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v5/tension_decomposition.json",
+      "sha256": "b6e2443313b477f660daadccc48800c68162ada8f3ad84ad658dfd7b5ed48c26",
+      "bytes": 42515,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v6/architecture_contract.json",
+      "sha256": "60ae0c98fa305da395bd07e9ac809fa7d7d86b8191ad5cd34b89130c3c7367db",
+      "bytes": 14243,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v6/counterfactual_holdouts.json",
+      "sha256": "6c6480920bc7e9e69cc20ee02c7b7a2fde936a81eadc0cc3a3f5d4801a00e7f1",
+      "bytes": 37376,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v6/r8_harness.py",
+      "sha256": "ef5a239e995c96209bc67c2a6ec16cbf721f1cf6ea4368d8204c70b2e74119e5",
+      "bytes": 111710,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v7/architecture_contract.json",
+      "sha256": "b309b0f372c34e183786869e97aa8082abc67baa51deb9be9f75442fec52c23d",
+      "bytes": 24518,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v7/counterfactual_holdouts.json",
+      "sha256": "ef28d15b388c2a28fdf842cfa5662f38a6d4e2ba5bb9ada5dbe6e264f7ae7821",
+      "bytes": 44108,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v7/deterministic_preflight_report.json",
+      "sha256": "c899f09642eb98d61a3518dba21789f53586be36f7157887c0e6c8ac3644499e",
+      "bytes": 91385,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v7/r8_harness.py",
+      "sha256": "08f4753658e2fea3c8e31d316b2aeb9691cea52b5b735058b06a6939ada57762",
+      "bytes": 20317,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v8/architecture_contract.json",
+      "sha256": "1c1ffdf8bdbc2bc0ee341fb0cb8903c442dc01df16a6e8cc34e44f0989362bb2",
+      "bytes": 27710,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v8/counterfactual_holdouts.json",
+      "sha256": "489e58ec16ab6063d08187d813b8458049da85cf00fe03bdc6a6cfe820fb8c24",
+      "bytes": 44468,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v8/deterministic_preflight_report.json",
+      "sha256": "cd1d832de9d26eb215ebccdf20fc02bbe7fea33b6e362cb26d2f889b5c70b868",
+      "bytes": 95055,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v8/r8_harness.py",
+      "sha256": "a59e958aa8f32ea49e48216493f772ccfd24413f37a452887048f9a8a9c85b02",
+      "bytes": 21637,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v9/architecture_contract.json",
+      "sha256": "314c855aa354c7f8983454150c29f19124228db7cbf3adbf18eee42771f3aae7",
+      "bytes": 32248,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v9/counterfactual_holdouts.json",
+      "sha256": "94e8c271ad939e3697b5253448de001aade2c36e81ed208939fa70012a3ea6e4",
+      "bytes": 46206,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v9/deterministic_preflight_report.json",
+      "sha256": "96f73db70e85c392b092540d4acad7d97ba438544b4087d26455454e074e0613",
+      "bytes": 99510,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v9/r8_harness.py",
+      "sha256": "854af1c88d64992a86e8f319bbc506ddefce0913aed926a352fb235c4602a027",
+      "bytes": 41395,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v9/r8_run_verifier.py",
+      "sha256": "cf6451f16fef37da6ea269769435cf08626d1ec88a9d4e927626cec41987ede7",
+      "bytes": 116215,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "model_retest_r8_candidate_v9/r8_subject_task_driver.py",
+      "sha256": "21a442cb2a5729e59577a3639ca46d003e67a06b377f6e29f71609a53615ddbb",
+      "bytes": 24872,
+      "roles": [
+        "candidate_v11_transitive_closure"
+      ]
+    },
+    {
+      "path": "r8_goal_loop_buster_addendum_v1.json",
+      "sha256": "d3f901e724d785ba3d053a961a8559b6f5b5add7e7b660a9fbb503586ad822d0",
+      "bytes": 4468,
+      "roles": [
+        "goal_acceptance_custody"
+      ]
+    }
+  ]
+}

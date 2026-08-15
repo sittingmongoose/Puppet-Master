@@ -1,0 +1,126 @@
+{
+  "schema_id": "pw-r8-process-controller-contract-v12",
+  "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-12",
+  "status": "neutral_unsealed_candidate",
+  "goal_loop_buster_addendum": {
+    "path": "tests/agent_packet_restrictions/successor_20260813/r8_goal_loop_buster_addendum_v1.json",
+    "storage_sha256": "d3f901e724d785ba3d053a961a8559b6f5b5add7e7b660a9fbb503586ad822d0",
+    "storage_bytes": 4468
+  },
+  "executable": "r8_process_controller.py",
+  "write_behavior": "none; commands read and emit canonical JSON only",
+  "fixed_command": "python3 -B r8_process_controller.py run --run-id <run-id> --execution-root <contained-run-root> --slot <slot> --cell <harness-declared-cell>",
+  "pre_dispatch_render_gate": {
+    "observation_schema_id": "pw-r8-pre-dispatch-render-observation-v1",
+    "path": "<execution_root>/<slot>/rendered/<cell>.txt",
+    "ordering": "The persisted rendered file is lstat/O_NOFOLLOW opened and read, the current cell is independently rendered through the candidate harness, and the same file identity and bytes are reopened before subject-driver Popen.",
+    "required_storage": "regular non-link, stable device/inode/size/mtime, exact byte equality to independent render, and exactly one terminal LF",
+    "bound_identity": [
+      "storage SHA-256 and bytes",
+      "provider-visible payload SHA-256 and bytes",
+      "device",
+      "inode",
+      "size",
+      "mtime_ns",
+      "independent expected-render SHA-256 and bytes"
+    ],
+    "no_start_rejections": [
+      "missing rendered file",
+      "nonregular or link",
+      "two terminal LF",
+      "render byte drift",
+      "identity or byte mutation during preflight",
+      "independent render failure"
+    ],
+    "post_call_correction_policy": "never validates; verifier admission requires the current device/inode/size/mtime and bytes to equal the bound pre-dispatch observation and a fresh independent render"
+  },
+  "child_process_gate": {
+    "fixed_child": "candidate-local r8_subject_task_driver.py with the same run, execution-root, slot, and cell bindings",
+    "new_session": true,
+    "poll_rule": "communicate(timeout) repeats until actual child exit",
+    "stdout_rule": "withhold stdout until exit zero and full exact canonical receipt-v4 validation",
+    "invalid_output": "empty, LF-only, partial, malformed, noncanonical, nonzero-exit, binding mismatch, or rendered-observation mismatch rejects",
+    "receipt_schema_id": "pw-r8-direct-appserver-subject-receipt-v4"
+  },
+  "cell_transaction": {
+    "schema_id": "pw-r8-cell-transaction-state-v1",
+    "safe_before_start": {
+      "state": "BEFORE_START_SAFE",
+      "stop_disposition": "SAFE_STOP_BEFORE_START"
+    },
+    "unsafe_after_start": {
+      "states": [
+        "CHILD_RUNNING_UNSEALED",
+        "ENVELOPE_READY_UNSEALED",
+        "RECEIPT_AND_COMPLETION_PERSISTED_UNSEALED",
+        "PERSISTENCE_IN_PROGRESS_UNSEALED"
+      ],
+      "stop_disposition": "MUST_SEAL_CURRENT_CELL"
+    },
+    "safe_after_full_chain": {
+      "state": "FULL_CHAIN_SEALED_SAFE",
+      "stop_disposition": "SAFE_STOP_AFTER_CURRENT_CELL"
+    },
+    "full_chain": [
+      "exact receipt persisted create-only",
+      "exact completion sidecar persisted create-only",
+      "exact capture persisted create-only",
+      "exact score persisted create-only",
+      "validate-cell passed",
+      "all exact chain members reopened"
+    ],
+    "schedule_rule": "never advance to another cell while MUST_SEAL_CURRENT_CELL"
+  },
+  "interrupt_policy": {
+    "handled_signals": [
+      "SIGINT",
+      "SIGTERM"
+    ],
+    "after_invocation_start": "defer and report signal names only after the child exits and the canonical terminal envelope is emitted",
+    "after_child_exit_before_external_seal": "MUST_SEAL_CURRENT_CELL",
+    "unmaskable_limit": "SIGKILL and host loss cannot be deferred by a user-space Python process"
+  },
+  "external_persistence": {
+    "authority": "external controller",
+    "method": "apply_patch create-only",
+    "controller_filesystem_writes": 0,
+    "required_outer_gate": "poll a yielded unified-exec session through actual exit zero and reconstruct exactly one canonical terminal envelope before persistence",
+    "safe_stop_requires": "receipt, completion, capture, score, validate-cell PASS, and exact-chain reopen"
+  },
+  "holdout_exports": {
+    "process_completion_holdouts": 4,
+    "predispatch_render_holdouts": 6,
+    "safe_boundary_holdouts": 4,
+    "case_range": "CF-R8-72 through CF-R8-85",
+    "answer_cell_model_specific_logic": false,
+    "subject_calls": 0,
+    "provider_calls": 0,
+    "filesystem_writes": 0
+  },
+  "audited_candidate_bundle": {
+    "schema_id": "pw-r8-audited-candidate-bundle-v1",
+    "file_count_excluding_audit": 12,
+    "audit_excluded_path": "independent_preseal_audit.json"
+  },
+  "custody_versions": {
+    "revision_lineage_schema": "pw-r8-candidate-revision-lineage-v9",
+    "independent_preseal_audit_schema": "pw-r8-candidate-v12-independent-preseal-audit-v2",
+    "external_freeze_manifest_schema": "pw-r8-external-candidate-freeze-manifest-v6",
+    "counted_run_contract_schema": "pw-r8-run-contract-v6",
+    "controller_canary_contract_schema": "pw-r8-controller-canary-contract-v1",
+    "controller_canary_terminal_schema": "pw-r8-controller-canary-terminal-v1",
+    "terminal_freeze_binding_shape_changed": false,
+    "terminal_manifest_hash_transitively_commits_addendum": true
+  },
+  "genericity": {
+    "answer_specific_logic": false,
+    "cell_specific_logic": false,
+    "model_specific_logic": false,
+    "route_specific_logic": false
+  },
+  "nonclaims": [
+    "No provider or subject call is made by self-test or holdouts.",
+    "Static process proofs are not empirical model qualification.",
+    "This candidate is not audited, frozen, launch-ready, or qualified by this contract."
+  ]
+}

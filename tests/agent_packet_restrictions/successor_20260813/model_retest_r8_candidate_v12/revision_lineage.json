@@ -1,0 +1,132 @@
+{
+  "schema_id": "pw-r8-candidate-revision-lineage-v9",
+  "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-12",
+  "status": "neutral_unsealed_candidate",
+  "goal_loop_buster_addendum": {
+    "path": "tests/agent_packet_restrictions/successor_20260813/r8_goal_loop_buster_addendum_v1.json",
+    "storage_sha256": "d3f901e724d785ba3d053a961a8559b6f5b5add7e7b660a9fbb503586ad822d0",
+    "storage_bytes": 4468
+  },
+  "predecessor_candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-11",
+  "predecessor_preseal_audit": {
+    "path": "model_retest_r8_candidate_v11/independent_preseal_audit.json",
+    "storage_sha256": "1cf1e633ebc3d77652a4b93bff603849b7bf1eaa461282c239b86e7538ac250f",
+    "storage_bytes": 16766,
+    "schema_id": "pw-r8-candidate-v11-independent-preseal-audit-v1",
+    "terminal": "PRESEAL_PASS",
+    "launch_ready": true,
+    "subject_calls": 0,
+    "provider_calls": 0
+  },
+  "predecessor_run": {
+    "run_id": "PW-R8-C11-RUN-03-20260815",
+    "status": "controller_invalid",
+    "qualification_credit": 0,
+    "failures_remain_failures": true,
+    "repair_does_not_recredit_run": true
+  },
+  "fixed_defects": [
+    {
+      "classification": "persisted_render_not_admitted_before_subject_start",
+      "evidence": {
+        "path": "model_retest_r8_candidate_v11_run_03/controller_invalid/slot-bravo/S10A_DECISION_A01/attempt-0001.json",
+        "storage_sha256": "e34e447e7b7eb6caced152f7f0964beb2743a5b44752f831f3b940f104c53cf1",
+        "storage_bytes": 4801,
+        "phase": "post_subject_rendered_evidence_create_only_mutation"
+      },
+      "generic_repair": "Before Popen, lstat/O_NOFOLLOW read the exact persisted rendered cell, independently rerender, require exact one-terminal-LF bytes, hash, size, regular-nonlink identity, and stability across reopen; bind the observation into completion-v2 and require verifier-time stat/byte/rerender equality.",
+      "post_call_render_correction_can_validate": false,
+      "no_start_on_missing_two_lf_drift_or_nonregular": true
+    },
+    {
+      "classification": "stop_after_child_exit_lost_unsealed_current_cell",
+      "evidence": {
+        "path": "model_retest_r8_candidate_v11_run_03/controller_invalid/slot-alpha/S10A_DECISION_A06/attempt-0001.json",
+        "storage_sha256": "edf823474ae86dfd1618a6d197f94bbbe752e2ee4a87286945ef749e1b4dfa03",
+        "storage_bytes": 5434,
+        "phase": "outer_process_controller_after_subject_call_before_receipt_persistence"
+      },
+      "generic_repair": "Formalize a monotonic cell transaction: a stop is safe before invocation or after receipt, completion, capture, score, validate-cell PASS, and exact-chain reopen; every state after invocation and before that seal returns MUST_SEAL_CURRENT_CELL.",
+      "sigint_sigterm_deferred_after_start": true,
+      "schedule_advance_while_unsealed": false
+    }
+  ],
+  "preserved_semantics": {
+    "semantic_packet_schedule_identical_to_candidate_v11": true,
+    "semantic_oracles_identical_to_candidate_v11": true,
+    "ordered_schedule_identical_to_candidate_v11": true,
+    "subject_cells_per_route": 97,
+    "routes_per_matrix": 3,
+    "subject_calls_per_matrix": 291,
+    "two_run_subject_calls": 582,
+    "direct_subject_receipt_schema_id": "pw-r8-direct-appserver-subject-receipt-v4",
+    "capture_envelope_schema_id": "pw-r8-subject-capture-envelope-v3",
+    "process_completion_observation_schema_id": "pw-r8-invocation-completion-observation-v2",
+    "driver_treats_subject_answer_as_opaque_text": true,
+    "harness_score_remains_authoritative": true,
+    "answer_specific_literals_or_exceptions": false,
+    "route_model_slot_cell_answer_exceptions": false
+  },
+  "holdout_lineage": {
+    "total": 85,
+    "inherited_candidate_v11_cases": 75,
+    "candidate_v12_render_cases": 6,
+    "candidate_v12_safe_boundary_cases": 4,
+    "case_range": "CF-R8-01 through CF-R8-85",
+    "answer_cell_model_specific_logic": false,
+    "subject_calls": 0,
+    "provider_calls": 0
+  },
+  "candidate_v12_changes": [
+    "rebind candidate identity and candidate-local controller/verifier paths",
+    "add pre-dispatch persisted rendered-file observation and admission",
+    "upgrade completion observation from v1 to v2 to bind the render observation and unsealed transaction state",
+    "add deterministic render-mutation and safe-boundary holdouts",
+    "defer SIGINT/SIGTERM after subject invocation begins and isolate the child process session",
+    "require verifier-time render stat identity, byte identity, receipt binding, and independent rerender equality"
+  ],
+  "audited_candidate_bundle_contract": {
+    "schema_id": "pw-r8-audited-candidate-bundle-v1",
+    "candidate_file_count_excluding_audit": 12,
+    "audit_is_thirteenth_freeze_candidate_file": true,
+    "exact_keys": [
+      "schema_id",
+      "candidate_id",
+      "excluded_path",
+      "file_count",
+      "aggregate_file_bytes",
+      "files",
+      "canonical_rows_sha256",
+      "canonical_rows_bytes"
+    ],
+    "row_keys": [
+      "path",
+      "sha256",
+      "bytes"
+    ],
+    "row_order": "sorted exact non-audit candidate paths",
+    "canonical_hash_subject": "canonical minified UTF-8 files array"
+  },
+  "candidate_freeze": {
+    "path": "tests/agent_packet_restrictions/successor_20260813/r8_candidate_v12_freeze_manifest.json",
+    "storage_sha256": null,
+    "storage_bytes": null,
+    "status": "external_manifest_not_created",
+    "sealed": false,
+    "manifest_excludes_itself": true
+  },
+  "provider_semantic_packet_change_from_candidate_v11": false,
+  "provider_transport_wrapper_structure_change_from_candidate_v11": false,
+  "provider_transport_wrapper_bytes_change_from_candidate_v11": true,
+  "provider_transport_wrapper_bytes_change_reason": "Candidate identity changes from candidate-11 to candidate-12; semantic input and wrapper structure do not change.",
+  "route_change_from_candidate_v11": false,
+  "oracle_change_from_candidate_v11": false,
+  "ordered_schedule_change_from_candidate_v11": false,
+  "driver_receipt_schema_change_from_candidate_v11": false,
+  "capture_envelope_schema_change_from_candidate_v11": false,
+  "process_completion_contract_change_from_candidate_v11": true,
+  "scorer_or_reducer_change_from_candidate_v11": false,
+  "subject_calls": 0,
+  "provider_calls": 0,
+  "predecessor_qualification_credit": 0
+}
