@@ -1,0 +1,176 @@
+{
+  "schema_id": "pw-r8-candidate-architecture-contract-v2",
+  "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-3",
+  "status": "CANDIDATE_BYTES_FROZEN_ONLY_BY_EXTERNAL_FREEZE_MANIFEST",
+  "freeze_rule": "An external create-only manifest may freeze the audited candidate bytes; this contract is never edited to claim frozen status.",
+  "frozen_fixture": {
+    "status": "UNFINISHED_THROWAWAY_TEST_FIXTURE",
+    "descriptor_sha256": "28730f6ea44a5720cb8e473f8fb736353dfe5c412e21261eacc88d70ffe46392",
+    "provenance_manifest_path": "tests/agent_packet_restrictions/successor_20260813/frozen_plans_snapshot_20260814_v1/provenance_manifest.json",
+    "provenance_manifest_storage_sha256": "56ddf926b4106bee4e774b91b17ed4fab5ca03a7e25154bc467955bb25274c0c",
+    "live_plans_policy": "NEVER_READ"
+  },
+  "subject_contract": {
+    "fresh_task_per_cell": true,
+    "fresh_context_per_cell": true,
+    "first_attempt_only": true,
+    "retries": 0,
+    "best_of": false,
+    "replacement_results": false,
+    "stop_failed_path_before_downstream_calls": true,
+    "one_semantic_objective_per_call": true,
+    "response_shapes": {
+      "decision": {"selected_choice": "one exact closed option"},
+      "edge": {"verdict": ["supported", "unsupported"]},
+      "tension": {"verdict": ["supported_unresolved_tension", "resolved_difference", "unsupported_claim"]},
+      "audit": {"selected_choice": "one exact closed option, chosen without seeing the candidate choice"}
+    }
+  },
+  "capture_and_scoring": {
+    "capture_path": "<execution_root>/<slot>/captures/<cell>.json",
+    "driver_receipt_path": "<execution_root>/direct_appserver_receipts/<slot>_<cell>.json",
+    "caller_selected_capture_path_allowed": false,
+    "capture_envelope_schema_id": "pw-r8-subject-capture-envelope-v2",
+    "driver_receipt_schema_id": "pw-r8-direct-appserver-subject-receipt-v2",
+    "assistant_final_messages_binding": "canonical minified array bytes plus sha256 and byte count",
+    "single_text_output_binding": "exact UTF-8 string plus sha256 and byte count, or all three null",
+    "receipt_binding": "capture envelope binds the exact derived receipt storage sha256 and bytes; harness independently reopens and compares identity, final-message, text, prohibited-activity, and observation fields",
+    "completed_subject_conformance_failures": {
+      "exit_code": 1,
+      "permanent_first_attempt_failure": true,
+      "classes": [
+        "missing or multiple final content",
+        "non-text final content",
+        "prohibited activity",
+        "invalid JSON or extra content",
+        "noncanonical JSON",
+        "duplicate keys",
+        "extra or missing response keys",
+        "wrong type, shape, closed option, or enum",
+        "semantically incorrect canonical response"
+      ]
+    },
+    "controller_invalid": {
+      "exit_code": 2,
+      "classes": ["missing or malformed envelope/receipt", "identity mismatch", "hash or byte mismatch", "noncanonical envelope/receipt storage"]
+    }
+  },
+  "runtime_dependency_closure": [
+    {"path": "model_retest_r6_decomposed_v1/contract.json", "sha256": "9bee0c39beb4982c4daac1656f9f7a1327d4d31b9244c0ceebb22f630765f4b1", "bytes": 7482},
+    {"path": "model_retest_r6_decomposed_v2/contract.json", "sha256": "fdafa86048249a3b4325a84ce6e8f14e8cbafa0cc4e40360be3490d17e46bde6", "bytes": 6618},
+    {"path": "model_retest_r6_decomposed_v3/contract.json", "sha256": "4ea1bbe15c2828582ff670a281030be6d549542c491ab4ae726aff37e5a1c41d", "bytes": 3074},
+    {"path": "model_retest_r6_decomposed_v4/contract.json", "sha256": "8e3ab005f1f7e2f52cd8abd9486ff594a60557f69f829bdefa510ac5d0b0733e", "bytes": 3182},
+    {"path": "model_retest_r6_decomposed_v5/contract.json", "sha256": "6cc660b51bc0dd390e71cd2bab48c3ef5ca8943bf254c9ca0e349d5cd53b7144", "bytes": 1972},
+    {"path": "model_retest_r6_decomposed_v6/contract.json", "sha256": "6452f78be024d61f4a3fe13f7c95ca9efee7943e82eefc25cba9efe9dc497a41", "bytes": 3377},
+    {"path": "model_retest_r6_decomposed_v7/contract.json", "sha256": "79b84db9cf3081893d1f63d4fa1240dcc028f365ba47be00ce72ea27ce390137", "bytes": 3902},
+    {"path": "model_retest_r5_snapshot_v1/templates/S10A.txt", "sha256": "627b03177ed4aa23f15217ccca326cfc995f5720bcec4cf71489dd32c9860958", "bytes": 1649}
+    ,{"path": "model_retest_r8_candidate_v2/deterministic_preflight_report.json", "sha256": "ed48b0b42dcbea253dbee00e74e937886ad4f0a387e42738f7433fce23efa774", "bytes": 74156}
+  ],
+  "ownership": {
+    "model_owned": [
+      "one closed option choice per S10 decision",
+      "one semantic verdict per edge candidate",
+      "one semantic verdict per admitted tension candidate",
+      "one answer-first closed option choice per non-direct S30 decision",
+      "unchanged R6-v7 S50 semantic edge verdicts",
+      "unchanged R6-v7 S60 role verdicts"
+    ],
+    "deterministic": [
+      "cell identity and source order",
+      "decision ID, evidence_record_ids lineage, authority, and fixed envelope fields",
+      "exact source joins and context selectors",
+      "candidate admission, exclusion, resolved routing, and final projection",
+      "edge and tension IDs and ordering",
+      "S30 candidate choice hiding, comparison, verdict, finding shape, lineage, classification, and ordering",
+      "boolean versus string versus null type enforcement",
+      "S40, S45, S50 direct authority projection, S55, S60 joins, S70, S80, and S90"
+    ]
+  },
+  "decomposition": {
+    "s10_decisions": "one decision per subject call for both topics; provider returns selected_choice only",
+    "s10_edges": "one edge candidate per subject call for both topics; provider returns verdict only",
+    "s10_tensions": "one admitted candidate per subject call; topic B generic routing excludes unsupported and deterministically resolved candidates before render",
+    "s30": "one non-direct decision per answer-first subject call; candidate value is absent from provider bytes; reducer compares independently selected option to hidden candidate",
+    "s50_s60": "reuse frozen R6-v7 semantic design and deterministic reducers"
+  },
+  "topic_a_tension_context_selectors": {
+    "A-T03": ["A-S11"],
+    "A-T01": ["A-S01", "A-S02", "A-S11"],
+    "A-T02": ["A-S05", "A-S06", "A-S11"]
+  },
+  "topic_b_prefilter": {
+    "algorithm": "generic boolean-fact candidate routing from the frozen R6-v2 routing definition, recomputed from the fresh reduced decision artifact",
+    "allowed_routes": ["unsupported_excluded", "resolved_deterministically", "semantic_subject"],
+    "subject_route_only": true,
+    "no_non_subject_candidate_bytes": true
+  },
+  "measurement": {
+    "per_packet": [
+      "packet_payload_sha256",
+      "packet_payload_bytes",
+      "admitted_source_bytes",
+      "instruction_line_count",
+      "instruction_word_count",
+      "semantic_objectives_per_call",
+      "model_owned_fields",
+      "deterministic_fields"
+    ],
+    "comparison": ["r7_before_packet_bytes", "r7_before_admitted_source_bytes"],
+    "diagnostic_capacity_ceilings": {
+      "new_s10_and_s30_packet_payload_bytes_max": 12000,
+      "new_s10_and_s30_admitted_source_bytes_max": 11000,
+      "new_s10_and_s30_instruction_line_count_max": 12,
+      "decision_packet_payload_bytes_max": 9000,
+      "decision_admitted_source_bytes_max": 8000,
+      "decision_instruction_line_count_max": 10
+    },
+    "interpretation": "diagnostic_only_not_a_predicted_model_budget_or_safety_profile"
+  },
+  "anti_overfit": {
+    "forbidden": [
+      "frozen answer literals outside the independent scorer/oracle",
+      "cell-specific control-flow branches for expected answers",
+      "model-specific or route-specific semantic exceptions",
+      "subject-visible scorer keys, expected payloads, prior outputs, or prior findings",
+      "acceptance weakening, retries, best-of, replacement, or hidden semantic repair"
+    ],
+    "required_holdouts": [
+      "renamed and reordered IDs",
+      "option permutations",
+      "eligibility pattern changes",
+      "clean and finding projections",
+      "boolean, string, and null typing",
+      "source binding mutation",
+      "instruction-like excluded siblings",
+      "missing and duplicate units",
+      "stable structural diff order",
+      "provider prompt oracle-leakage scan"
+      ,"prose, pretty JSON, duplicate keys, extra content and keys"
+      ,"wrong type and enum, canonical semantic pass and fail"
+      ,"missing text and prohibited activity are permanent subject failures"
+    ]
+  },
+  "routes": [
+    {"slot": "slot-alpha", "requested_model": "gpt-5.4-mini", "thinking": "xhigh"},
+    {"slot": "slot-bravo", "requested_model": "gpt-5.4-mini", "thinking": "medium"},
+    {"slot": "slot-charlie", "requested_model": "gpt-5.6-luna", "thinking": "medium"}
+  ],
+  "qualification": {
+    "required_consecutive_clean_runs": 2,
+    "byte_identical_architecture_between_runs": true,
+    "all_three_routes_each_run": true,
+    "zero_subject_failures": true,
+    "zero_invalid_or_missing_cells": true,
+    "zero_retries_best_of_or_replacements": true,
+    "fresh_disjoint_subject_tasks_between_all_cells_and_runs": true
+  },
+  "nonclaims": [
+    "current Plans evidence",
+    "production runtime enforcement",
+    "complete planning-wizard audit proof",
+    "release readiness",
+    "safety certification",
+    "permission to compile Plans",
+    "general weak-model safety certification"
+  ]
+}
