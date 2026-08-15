@@ -1,0 +1,15 @@
+# R8 candidate-20 — root-bound operation boundary
+
+Candidate-20 is the narrowly scoped successor to standalone candidate-19. It preserves the single-process `run-cell` transaction, exact causal-prefix and terminal verification, the 65-row checkpoint-bound closure, three routes, frozen 97-cell semantics, receipt-v4, capture-v3, the exact 25-key dispatch attempt, and the exact 39-key completion.
+
+The operative change removes the candidate-19 capability, token, seal, semantic cache, diagnostic schedule, and raw module-loader surface. Every supported runtime operation begins with an execution root and performs the complete candidate-local freeze/dependency and static route/schedule/nonce gate internally. Only then does a lexical callback load the frozen semantic module. That module and its schedule exist only for the duration of the operation and are never stored in module globals or returned to the caller.
+
+`preflight_report` and the independent verifier's `validate-preflight` use a separate lexical preflight gate. It reopens the exact current 65-file dependency closure before its first external import and cannot authorize runtime work. Static AST checks enumerate module globals, callables, CLI routes, and all four external execute sites across controller and verifier; each execute site is lexically owned by either `_root_bound_operation` or `_preflight_gate`.
+
+The executable direct-entry suite reopens candidate-19's failed audit `984e99bf430fc00fe48774c6d4d8644cfd4139fc9505ebc4012539418b64bf70/22449`, byte-addresses all 16 accepted predecessor bypasses, and proves the corresponding candidate-20 authority globals are absent. It also runs the retained 20-entry/11-class invalid-authority matrix and six controller CLI probes with zero external events. Valid synthetic authority records freeze/dependency and static schedule/route/nonce PASS before the first actual external execution.
+
+Runtime output remains canonical proposal bytes only. A trusted external caller must persist each proposal create-only with `apply_patch` and return the exact cryptographic ACK after reopen. The controller performs zero filesystem writes. Process death after durable attempt and before receipt is permanently invalid and cannot be relaunched. Completion is last; schedule advance requires independent exact-chain reopen.
+
+The deterministic preflight retains the 20 named/live zero-call cases, eight historical control-plane signatures, four candidate-13 blockers, candidate-14 future-evidence reproducer, 48 exact-prefix cases, 24 authority cases, 65 deletion and 65 mutation closure cases, 97/291/582 terminal constructibility, and 97/97 render/oracle/schedule identity. It makes zero subject, provider, or network calls and confers no audit, freeze, launch, empirical credit, qualification, or readiness claim.
+
+Tested boundary: unchanged candidate bytes and ordinary supported or direct callable invocation. Candidate-20 makes no claim against arbitrary replacement of Python code at runtime.
