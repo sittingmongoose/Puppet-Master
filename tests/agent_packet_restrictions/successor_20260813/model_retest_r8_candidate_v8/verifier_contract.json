@@ -1,0 +1,260 @@
+{
+  "schema_id": "pw-r8-run-verifier-contract-v6",
+  "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-8",
+  "status": "neutral_unsealed_candidate",
+  "executable": "r8_run_verifier.py",
+  "write_behavior": "none; commands read and emit canonical JSON only",
+  "schedule_authority": {
+    "source": "r8_harness.py list-cells",
+    "cells_per_route": 97,
+    "cells_per_matrix": 291,
+    "two_run_calls": 582,
+    "admission_rule": "Consume the exact harness schedule generically without answer, tension-ID, model, route, slot, or cell-specific semantic exceptions."
+  },
+  "external_freeze_manifest": {
+    "schema_id": "pw-r8-external-candidate-freeze-manifest-v5",
+    "fixed_path": "tests/agent_packet_restrictions/successor_20260813/r8_candidate_v8_freeze_manifest.json",
+    "storage_framing": "Canonical minified UTF-8 JSON with exactly one terminal LF and no CR.",
+    "manifest_includes_itself": false,
+    "exact_top_level_keys": [
+      "schema_id",
+      "candidate_id",
+      "identity_family",
+      "claim_boundary",
+      "candidate_root",
+      "frozen_snapshot_descriptor_sha256",
+      "preseal_terminal",
+      "preseal_launch_ready",
+      "audited_candidate_bundle",
+      "independent_preseal_audit",
+      "qualification_contract",
+      "candidate_file_count",
+      "candidate_files",
+      "runtime_dependency_count",
+      "runtime_dependencies"
+    ],
+    "candidate_files_exact_sorted_paths": [
+      "README.md",
+      "architecture_contract.json",
+      "controller_contract.json",
+      "counterfactual_holdouts.json",
+      "deterministic_preflight_report.json",
+      "independent_preseal_audit.json",
+      "r8_harness.py",
+      "r8_run_verifier.py",
+      "r8_subject_task_driver.py",
+      "revision_lineage.json",
+      "verifier_contract.json"
+    ],
+    "independent_preseal_audit_schema": "pw-r8-candidate-v8-independent-preseal-audit-v1",
+    "audited_candidate_bundle_required": true,
+    "runtime_dependencies_derivation": "Exact path/sha256/bytes projection of the candidate-v8 architecture_contract.json 46-row runtime_dependency_closure, sorted by path and independently reopened beneath successor_20260813.",
+    "runtime_dependency_count": 46,
+    "closed_world_rule": "The candidate directory contains exactly ten audited non-audit files plus the independent audit as the eleventh freeze candidate file. Manifest and dependency inventories are derived from current v8 bytes."
+  },
+  "audited_candidate_bundle": {
+    "schema_id": "pw-r8-audited-candidate-bundle-v1",
+    "exact_keys": [
+      "schema_id",
+      "candidate_id",
+      "excluded_path",
+      "file_count",
+      "aggregate_file_bytes",
+      "files",
+      "canonical_rows_sha256",
+      "canonical_rows_bytes"
+    ],
+    "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-8",
+    "excluded_path": "independent_preseal_audit.json",
+    "file_count": 10,
+    "files_exact_sorted_paths": [
+      "README.md",
+      "architecture_contract.json",
+      "controller_contract.json",
+      "counterfactual_holdouts.json",
+      "deterministic_preflight_report.json",
+      "r8_harness.py",
+      "r8_run_verifier.py",
+      "r8_subject_task_driver.py",
+      "revision_lineage.json",
+      "verifier_contract.json"
+    ],
+    "row_exact_keys": [
+      "path",
+      "sha256",
+      "bytes"
+    ],
+    "canonical_aggregate_rule": "canonical_rows_sha256 and canonical_rows_bytes bind canonical minified UTF-8 JSON of the exact files array only",
+    "audit_rule": "validate_audit requires the PASS audit's exact audited_candidate_bundle to equal the bundle recomputed from the same current ten rows used by freeze validation.",
+    "manifest_rule": "The external manifest carries the same full bundle before its independent audit binding.",
+    "run_contract_rule": "Every run contract carries the same full bundle after manifest path/hash/bytes; freeze_binding propagates it through all run evidence."
+  },
+  "qualification_contract": {
+    "required_matrices": 2,
+    "qualification_sequences": [
+      1,
+      2
+    ],
+    "routes_per_matrix": 3,
+    "cells_per_route": 97,
+    "subject_calls_per_matrix": 291,
+    "required_subject_calls": 582,
+    "required_fresh_thread_create_evidence_count": 582,
+    "required_matrix_terminal": "COMPLETE_CLEAN_MATRIX_PASS",
+    "required_clean_credit_per_matrix": 1,
+    "required_pass_count": 582,
+    "allowed_fail_count": 0,
+    "allowed_invalid_count": 0,
+    "allowed_missing_count": 0,
+    "allowed_ineligible_count": 0,
+    "allowed_retry_count": 0,
+    "allowed_best_of_count": 0,
+    "allowed_replacement_count": 0,
+    "fresh_task_identity_basis": "thread_id",
+    "required_unique_task_identity_count": 582,
+    "required_unique_thread_count": 582,
+    "required_unique_turn_count": 582,
+    "required_predeclared_dispatch_nonce_count": 582,
+    "required_unique_dispatch_nonce_count": 582
+  },
+  "run_contract": {
+    "schema_id": "pw-r8-run-contract-v5",
+    "exact_keys": [
+      "schema_id",
+      "candidate_id",
+      "run_id",
+      "routes",
+      "dispatch_schedule_path",
+      "dispatch_schedule_storage_sha256",
+      "dispatch_schedule_storage_bytes",
+      "candidate_freeze_manifest_path",
+      "candidate_freeze_manifest_storage_sha256",
+      "candidate_freeze_manifest_storage_bytes",
+      "audited_candidate_bundle",
+      "qualification_sequence",
+      "predecessor_run_id"
+    ],
+    "dispatch_schedule_path": "dispatch_schedule.json",
+    "freeze_rule": "Fixed repository-relative manifest path plus current storage SHA-256/bytes and exact full audited_candidate_bundle; manifest, audit, and all inventory files are reopened before each run command."
+  },
+  "dispatch_schedule": {
+    "schema_id": "pw-r8-dispatch-schedule-v1",
+    "exact_top_level_keys": [
+      "schema_id",
+      "candidate_id",
+      "run_id",
+      "nonce_encoding",
+      "entry_count",
+      "entries"
+    ],
+    "nonce_encoding": "lowercase-hex-256",
+    "entry_count": 291,
+    "entry_exact_keys": [
+      "slot",
+      "cell",
+      "dispatch_nonce"
+    ],
+    "order": "slot-alpha, slot-bravo, slot-charlie; within each slot, exact harness cell order",
+    "uniqueness": "Every nonce is unique across all 291 entries. Qualification requires the two 291-nonce sets to be disjoint.",
+    "persistence": "Externally created once before any subject call and byte-bound by run_contract plus the external prelaunch/Git checkpoint.",
+    "mutation_failure": "Every command reopens the schedule. Mutation of schedule alone fails its run-contract hash/bytes; coordinated schedule/run-contract mutation fails stored admissions, dispatch objects, and primary wrappers after any receipt."
+  },
+  "dispatch_binding": {
+    "schema_id": "pw-r8-dispatch-binding-v1",
+    "exact_keys_in_order": [
+      "schema_id",
+      "candidate_id",
+      "run_id",
+      "slot",
+      "cell",
+      "dispatch_nonce",
+      "semantic_packet_sha256",
+      "semantic_packet_bytes",
+      "dispatch_schedule_sha256",
+      "dispatch_schedule_bytes"
+    ],
+    "wrapper_rule": "Canonical binding JSON appears in one constant typed opaque wrapper and is explicitly semantically ignored. No expected answer, oracle, score, model, route exception, or cell-specific branch enters construction.",
+    "separate_measurements": [
+      "render storage SHA-256 and bytes",
+      "semantic packet SHA-256 and bytes",
+      "full dispatch wrapper SHA-256 and bytes"
+    ]
+  },
+  "primary_rollout_revalidation": {
+    "schema_id": "pw-r8-independent-rollout-validation-v2",
+    "configured_session_root": "/home/sittingmongoose/.codex/sessions",
+    "file_rule": "Exact absolute resolved path beneath the session root; lstat regular nonlink, O_NOFOLLOW open, stable fstat/read, and exact storage SHA-256/bytes.",
+    "parse_rule": "UTF-8 JSONL with terminal LF, no CR or blank rows, and duplicate JSON keys rejected at every object depth.",
+    "independent_derivations": [
+      "session/thread, turn, task_started, and task_complete identity",
+      "current predeclared schedule entry and schedule storage binding",
+      "candidate/run/slot/cell/nonce/semantic-packet dispatch object",
+      "exact full wrapper bytes recorded in the relevant user message",
+      "openai provider and requested model/thinking in turn context and collaboration settings",
+      "raw assistant final-message array and exact text normalization",
+      "fail-closed prohibited response-item array and types",
+      "status, timing, first attempt, fresh context, one session, and one turn"
+    ],
+    "historical_replay_rejection": [
+      "old candidate",
+      "different run",
+      "different slot",
+      "different cell",
+      "different nonce",
+      "different semantic packet",
+      "different dispatch schedule"
+    ]
+  },
+  "response_item_classification": {
+    "policy": "FAIL_CLOSED_SAFE_LIST",
+    "safe_non_tool_response_item_types": [
+      "message",
+      "reasoning"
+    ],
+    "known_prohibited_tool_capable_types": [
+      "computer_tool_call",
+      "custom_tool_call",
+      "custom_tool_call_output",
+      "function_call",
+      "function_call_output",
+      "image_generation_call",
+      "local_shell_call",
+      "local_shell_call_output",
+      "mcp_tool_call",
+      "mcp_tool_call_output",
+      "tool_search_call",
+      "tool_search_output",
+      "web_search_call"
+    ],
+    "unknown_or_malformed_response_item_type": "prohibited",
+    "tool_output_policy": "prohibited",
+    "valid_final_text_policy": "message remains safe; existing exact final-content and idempotent byte-identical duplicate-final semantics remain unchanged."
+  },
+  "execution_root_schemas": {
+    "run_contract.json": "pw-r8-run-contract-v5",
+    "dispatch_schedule.json": "pw-r8-dispatch-schedule-v1",
+    "ordered_schedule.json": "pw-r8-ordered-schedule-v2",
+    "admission_output": "pw-r8-cell-admission-v5",
+    "direct_appserver_receipts": "pw-r8-direct-appserver-subject-receipt-v4",
+    "independent_rollout_validation": "pw-r8-independent-rollout-validation-v2",
+    "controller_invalid_receipts": "pw-r8-direct-appserver-controller-invalid-v3",
+    "qualification_output": "pw-r8-two-run-qualification-verification-v5"
+  },
+  "commands": {
+    "self-test": "No evidence-filesystem, harness, subject, or provider call. Preserve seven replay/schedule and six response-item proofs; additionally reject all ten non-audit file mutations plus stale audit, manifest retag, row reorder/extra/missing, and run-contract mismatch.",
+    "validate-freeze": "Validate the fixed v8 external manifest, exact current ten-file audit bundle, PASS audit equality, eleven-file freeze inventory, and architecture-derived 46-row runtime closure.",
+    "admit": "Validate freeze, run contract, immutable predeclared schedule, exact next same-slot cell, deterministic prerequisites, and absence of downstream/terminal evidence.",
+    "validate-cell": "Independently reopen primary rollout and reconstruct dispatch, response-item, receipt, capture, render, and score evidence.",
+    "qualify-two-runs": "Require sequence 1 then 2, different run IDs, disjoint 291-nonce schedule sets, two clean matrices, 582 PASS calls, 582 independent rollout validations, and unique nonce/thread/turn identities."
+  },
+  "identity_limits": [
+    "Exact audited_candidate_bundle equality proves the audited subject bytes, not cryptographic auditor authorship; audit-file and repository custody remain trusted boundaries.",
+    "The verifier cannot retrospectively prove CSPRNG entropy; external creation and prelaunch/Git checkpoint receipts own that fact.",
+    "A standalone verification has no global registry of abandoned run_id/schedule pairs; external create-only run custody must prohibit reusing a full prior run identity, while two-run qualification proves disjointness for the two supplied roots.",
+    "No separate platform task_id, direct thread-create invocation receipt, provider-effective model/thinking, or serving-snapshot attestation is exposed.",
+    "The disposable session store and root-controller workflow remain trusted custody boundaries."
+  ],
+  "nonclaims": [
+    "No freeze, passing audit, launch, subject/provider call, empirical model pass, qualification, production enforcement, release readiness, or safety certification is claimed."
+  ]
+}
