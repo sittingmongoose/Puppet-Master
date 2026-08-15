@@ -1,0 +1,515 @@
+{
+  "schema_id": "pw-r8-independent-preseal-audit-v19",
+  "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-19",
+  "status": "COMPLETE",
+  "verdict": "PRESEAL_FAIL",
+  "independent_decision": "CHURN_SUSPECTED",
+  "loop_broken": false,
+  "blocker_count": 1,
+  "freeze_authorized": false,
+  "launch_authorized": false,
+  "subject_calls": 0,
+  "provider_calls": 0,
+  "network_calls": 0,
+  "candidate_byte_identity": {
+    "status": "PASS",
+    "files": [
+      {
+        "path": "README.md",
+        "sha256": "4856a80bbbf140120b2d6d73eac8139564722a4ff3f194d0f88adcf8f15a5a38",
+        "bytes": 3218
+      },
+      {
+        "path": "architecture_contract.json",
+        "sha256": "3d62a41d1af3816dd728449ec678610bcf006d5f9b3b0cf95667960188d98bf0",
+        "bytes": 16805
+      },
+      {
+        "path": "controller_contract.json",
+        "sha256": "6dfa6208386ffca4ee083a25963392b46bf38811e4bbb53eb1ad548a042df417",
+        "bytes": 4684
+      },
+      {
+        "path": "deterministic_preflight_report.json",
+        "sha256": "da711f0c101ffc010df6d13c8adc37e7a7310db7ca5e7176ae28c178da954f8d",
+        "bytes": 172636
+      },
+      {
+        "path": "process_completion_contract.json",
+        "sha256": "27f2dcef08b682c21be22d5d0ed3c3451db358cf158907957bb25cdbfa91fd98",
+        "bytes": 2272
+      },
+      {
+        "path": "r8_clean_room_controller.py",
+        "sha256": "40cc7f8f4a4fe6ab861f547d112ef86f3f99129698645f5ef39e6db398691399",
+        "bytes": 268859
+      },
+      {
+        "path": "r8_run_verifier.py",
+        "sha256": "6276930f4af99797e850c287bb2c43fde24a61ac0bf8bb2731366f7f0f312a19",
+        "bytes": 181087
+      }
+    ]
+  },
+  "source_bindings": {
+    "parent_checkpoint_commit": "b888b46bb85fd97dfd3afc33a231695ef731aab7",
+    "goal_loop_buster_addendum": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r8_goal_loop_buster_addendum_v1.json",
+      "sha256": "d3f901e724d785ba3d053a961a8559b6f5b5add7e7b660a9fbb503586ad822d0",
+      "bytes": 4468
+    },
+    "v18_failed_audit": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v18/independent_preseal_audit.json",
+      "sha256": "5811cca14b949c289e020375d92c5e44d7b714b2aec1a0f03c61e11934b85d57",
+      "bytes": 16720,
+      "verdict": "PRESEAL_FAIL"
+    },
+    "v18_progress_assessment": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r8_progress_assessment_candidate_v18_preseal_fail_v1.json",
+      "sha256": "b155116f7eb4ea6df9a8a915b86437b97149be83c5d31b9965b452e5d4e4cf24",
+      "bytes": 4482,
+      "decision": "CHURN_SUSPECTED"
+    },
+    "dependency_inventory": {
+      "exact_sorted_unique_files": 65,
+      "canonical_rows_sha256": "b334963a9709c0974c3b2610e5771fccc2069ce37b771cfbaefaa1ab482b01e9",
+      "canonical_rows_bytes": 13559
+    }
+  },
+  "blocking_findings": [
+    {
+      "finding_id": "V19-PRESEAL-BLOCK-001",
+      "severity": "BLOCKER",
+      "normalized_failure_signature": "MODULE_PUBLISHED_PREFLIGHT_AND_CONTROL_OBJECTS_BYPASS_ROOT_BOUND_VALIDATION_SEQUENCE",
+      "layer": "validated_controls_interface_encapsulation",
+      "source_locations": [
+        "README.md:7",
+        "architecture_contract.json:1",
+        "process_completion_contract.json:1",
+        "r8_clean_room_controller.py:270",
+        "r8_clean_room_controller.py:271",
+        "r8_clean_room_controller.py:298",
+        "r8_clean_room_controller.py:301",
+        "r8_clean_room_controller.py:320",
+        "r8_clean_room_controller.py:321",
+        "r8_clean_room_controller.py:330",
+        "r8_clean_room_controller.py:344",
+        "r8_clean_room_controller.py:367",
+        "r8_clean_room_controller.py:376",
+        "r8_run_verifier.py:284",
+        "r8_run_verifier.py:285",
+        "r8_run_verifier.py:312",
+        "r8_run_verifier.py:315",
+        "r8_run_verifier.py:334",
+        "r8_run_verifier.py:335",
+        "r8_run_verifier.py:344",
+        "r8_run_verifier.py:358",
+        "r8_run_verifier.py:381",
+        "r8_run_verifier.py:390"
+      ],
+      "failure": "Both active modules expose the exact _PREFLIGHT_CAPABILITY identity accepted by _require_external_capability and expose both _CONTROLS_SEAL and _mint_validated_controls. A normal module caller can therefore invoke schedule, semantic_module, or _module with the published preflight object, or mint/reconstruct an exact-type validated-controls object with an arbitrary dict payload, and execute the declared v9 semantic harness without a run root, run contract, freeze/dependency validation, or static route/schedule/nonce validation. The no-argument _diagnostic_schedule helper is itself an ungated semantic-loading entry. This contradicts the candidate contract that only the internal dispatcher can produce usable validated controls and defeats the required root-bound validation sequence.",
+      "executable_counterexamples": {
+        "components": [
+          "r8_clean_room_controller.py",
+          "r8_run_verifier.py"
+        ],
+        "component_count": 2,
+        "accepted_case_count_per_component": 8,
+        "accepted_case_count_total": 16,
+        "accepted_cases": [
+          {
+            "probe": "published-preflight-capability-schedule",
+            "call_shape": "module.schedule(module._PREFLIGHT_CAPABILITY)",
+            "observed_result": "ACCEPTED_97_CELL_TUPLE",
+            "external_module_events": 1
+          },
+          {
+            "probe": "published-preflight-capability-semantic-module",
+            "call_shape": "module.semantic_module(module._PREFLIGHT_CAPABILITY)",
+            "observed_result": "ACCEPTED_MODULE",
+            "external_module_events": 1
+          },
+          {
+            "probe": "published-preflight-capability-direct-module",
+            "call_shape": "module._module(module.V9_HARNESS, name, module._PREFLIGHT_CAPABILITY)",
+            "observed_result": "ACCEPTED_MODULE",
+            "external_module_events": 1
+          },
+          {
+            "probe": "no-argument-diagnostic-schedule",
+            "call_shape": "module._diagnostic_schedule()",
+            "observed_result": "ACCEPTED_97_CELL_TUPLE",
+            "external_module_events": 1
+          },
+          {
+            "probe": "caller-mint-with-published-seal",
+            "call_shape": "module.schedule(module._mint_validated_controls({}, module._CONTROLS_SEAL))",
+            "observed_result": "ACCEPTED_97_CELL_TUPLE",
+            "external_module_events": 1
+          },
+          {
+            "probe": "caller-reconstruction-with-published-seal",
+            "call_shape": "object.__new__ exact token class; set private payload to {}; set private seal to module._CONTROLS_SEAL; module.schedule(token)",
+            "observed_result": "ACCEPTED_97_CELL_TUPLE",
+            "external_module_events": 1
+          },
+          {
+            "probe": "caller-alias-copy-token",
+            "call_shape": "alias a caller-minted exact token and pass alias to module.schedule",
+            "observed_result": "ACCEPTED_97_CELL_TUPLE",
+            "external_module_events": 1
+          },
+          {
+            "probe": "caller-monkeypatch-guard",
+            "call_shape": "replace module._require_external_capability with a local accepting function; module.schedule(object())",
+            "observed_result": "ACCEPTED_97_CELL_TUPLE",
+            "external_module_events": 1
+          }
+        ],
+        "common_event_trace": [
+          {
+            "ordinal": 0,
+            "event": "external_module_execute",
+            "path": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v9/r8_harness.py",
+            "module_name": "pw_r8_candidate_v9_semantics_for_v19"
+          }
+        ],
+        "direct_module_probe_module_name": "audit_direct_module",
+        "freeze_dependency_gate_present": false,
+        "static_schedule_route_nonce_gate_present": false,
+        "import_time_external_module_events": {
+          "controller": 0,
+          "independent_verifier": 0
+        },
+        "rejected_controls_copy_cases": [
+          {
+            "probe": "caller-shallow-copy-token",
+            "components_rejected": 2,
+            "error": "Invalid: validated-controls tokens are dispatcher-minted only",
+            "external_module_events": 0
+          },
+          {
+            "probe": "caller-pickle-roundtrip-token",
+            "components_rejected": 2,
+            "error": "Invalid: validated-controls tokens are dispatcher-minted only",
+            "external_module_events": 0
+          },
+          {
+            "probe": "caller-subclass-token",
+            "components_rejected": 2,
+            "error": "Invalid: opaque validated-controls token required",
+            "external_module_events": 0
+          }
+        ],
+        "subject_calls": 0,
+        "provider_calls": 0,
+        "network_calls": 0,
+        "filesystem_writes": 0
+      },
+      "surface_enumeration": {
+        "controller_cli_routes": [
+          "emit-capture",
+          "score-cell",
+          "emit-completion",
+          "recover-state",
+          "run-cell",
+          "emit-artifact",
+          "self-test"
+        ],
+        "controller_cli_route_count": 7,
+        "independent_verifier_cli_routes": [
+          "validate-cell",
+          "validate-artifact",
+          "validate-path",
+          "validate-matrix",
+          "validate-two-runs",
+          "validate-preflight",
+          "validate-freeze",
+          "self-test"
+        ],
+        "independent_verifier_cli_route_count": 8,
+        "total_cli_route_count": 15,
+        "semantic_reaching_functions": {
+          "controller": 36,
+          "independent_verifier": 26,
+          "total": 62
+        },
+        "public_semantic_reaching_functions": {
+          "controller": 13,
+          "independent_verifier": 9,
+          "total": 22
+        },
+        "authority_dispatcher_reachable_functions": {
+          "controller": 16,
+          "independent_verifier": 8,
+          "total": 24
+        },
+        "direct_token_guard_functions": {
+          "controller": 10,
+          "independent_verifier": 11,
+          "total": 21
+        },
+        "diagnostic_only_semantic_reaching_functions": {
+          "controller": 13,
+          "independent_verifier": 7,
+          "total": 20
+        },
+        "stored_runtime_or_helper_negative_cases": 20,
+        "stored_controller_runtime_cli_negative_cases": 6,
+        "stored_direct_token_negative_cases": 6,
+        "omitted_from_stored_direct_token_cases": [
+          "published _PREFLIGHT_CAPABILITY",
+          "published _CONTROLS_SEAL passed to published _mint_validated_controls",
+          "exact-type reconstruction with published seal",
+          "no-argument _diagnostic_schedule",
+          "caller alias of a caller-minted exact token"
+        ]
+      },
+      "required_effect": "A usable semantic-loading authority must not be a caller-readable module object or reconstructible from caller-readable module state. Every controller/verifier CLI route and callable that can reach schedule, renderer, oracle, scorer, reducer, verifier, harness, or task-driver code must first establish root-bound run controls, full freeze/dependency custody, and applicable static route/schedule/nonce identity. Diagnostic and preflight paths must obey the same external-load ordering or be moved outside the operative module boundary. Add negative cases that use every module-published object and callable, not only object() and the rejecting class constructor.",
+      "independent_audit_coverage": {
+        "candidate_hashes_and_bytes_reopened": "7/7 exact",
+        "stored_preflight_reproduction": {
+          "controller_self_test_exit_code": 0,
+          "controller_self_test_byte_identical": true,
+          "controller_self_test_stdout_sha256": "da711f0c101ffc010df6d13c8adc37e7a7310db7ca5e7176ae28c178da954f8d",
+          "controller_self_test_stdout_bytes": 172636,
+          "controller_self_test_outer_session_actually_yielded": true,
+          "controller_self_test_terminal_observed_after_yield": true,
+          "independent_verifier_validate_preflight_exit_code": 0,
+          "independent_verifier_validate_preflight_stdout_sha256": "4d82bddce356ec36b73314664c25cf55a3fdd27274a30a9eb61b749b804df1ba",
+          "independent_verifier_validate_preflight_stdout_bytes": 716,
+          "independent_verifier_self_test_exit_code": 0,
+          "independent_verifier_self_test_stdout_sha256": "4d82bddce356ec36b73314664c25cf55a3fdd27274a30a9eb61b749b804df1ba",
+          "independent_verifier_self_test_stdout_bytes": 716
+        },
+        "v18_artifact_entry_reproduction_and_v19_result": [
+          {
+            "entry": "controller.emit_artifact",
+            "v18_terminal_error": "Invalid:dispatch schedule nonce lookup: absent",
+            "v18_external_module_events_before_gate": 1,
+            "v18_freeze_gate_reached": false,
+            "v19_terminal_error": "Invalid:minimal run contract: absent",
+            "v19_external_module_events_before_reject": 0,
+            "v19_result": "PASS_CORRECTED"
+          },
+          {
+            "entry": "controller.validate_artifact",
+            "v18_terminal_error": "Invalid:dispatch schedule nonce lookup: absent",
+            "v18_external_module_events_before_gate": 1,
+            "v18_freeze_gate_reached": false,
+            "v19_terminal_error": "Invalid:minimal run contract: absent",
+            "v19_external_module_events_before_reject": 0,
+            "v19_result": "PASS_CORRECTED"
+          }
+        ],
+        "retained_primary_load_order": {
+          "controller_invalid_cases_zero_external": "11/11",
+          "independent_verifier_invalid_cases_zero_external": "11/11",
+          "controller_valid_cases": "1/1",
+          "independent_verifier_valid_cases": "1/1",
+          "valid_event_order": [
+            "freeze_dependency_gate_pass",
+            "static_schedule_route_nonce_gate_pass",
+            "external_semantic_schedule_factory",
+            "external_module_execute"
+          ],
+          "runtime_or_helper_absent_root_cases_zero_external": "20/20",
+          "controller_runtime_cli_absent_root_cases_zero_external": "6/6",
+          "scope_limit": "These retained cases do not exercise the module-published preflight object, seal-assisted mint, exact-type reconstruction, or no-argument diagnostic helper counterexamples above."
+        },
+        "dependency_closure": {
+          "declared_rows": 65,
+          "canonical_rows_sha256": "b334963a9709c0974c3b2610e5771fccc2069ce37b771cfbaefaa1ab482b01e9",
+          "canonical_rows_bytes": 13559,
+          "current_HEAD": "b888b46bb85fd97dfd3afc33a231695ef731aab7",
+          "current_regular_nonlink": "65/65",
+          "manifest_hash_bytes_equal": "65/65",
+          "current_HEAD_git_blob_equal": "65/65",
+          "deletion_iterations_rejected": "65/65",
+          "committed_byte_substitution_iterations_rejected": "65/65",
+          "missing_extra_duplicate_reordered_tampered_uncommitted_symlink_nonregular_cases_rejected": "7/7",
+          "missing_dependency_count": 0,
+          "mismatch_count": 0,
+          "live_Plans_paths": [],
+          "dynamic_v15_v16_v17_v18_controller_verifier_preflight_loads": [],
+          "unbound_inherited_runtime_files": [],
+          "unbound_inherited_runtime_file_count": 0
+        },
+        "authority_and_regressions": {
+          "authority_cases": 24,
+          "post_audit_authority_constructible_with_two_distinct_audit_progress_identities": true,
+          "freeze_manifest_self_bound": false,
+          "first_cell_admitted": [
+            "slot-alpha",
+            "slot-bravo",
+            "slot-charlie"
+          ],
+          "next_cell_rejected": [
+            "slot-alpha",
+            "slot-bravo",
+            "slot-charlie"
+          ],
+          "run_kinds": [
+            "ZERO_CREDIT_THREE_ROUTE_CANARY",
+            "QUALIFICATION_MATRIX"
+          ],
+          "run_contract_qualification_credit": 0,
+          "actual_post_audit_HEAD_dry_run": "NOT_AUTHORIZED_BECAUSE_THIS_AUDIT_IS_PRESEAL_FAIL"
+        },
+        "retained_zero_call_and_prefix": {
+          "case_count": 20,
+          "exact_named_cases": [
+            "ZC-PRED-001",
+            "ZC-SUCC-001",
+            "ZC-REC-002",
+            "ZC-REC-003",
+            "ZC-REC-004",
+            "ZC-REC-005",
+            "ZC-REC-006",
+            "ZC-REC-007",
+            "ZC-REC-008",
+            "ZC-REC-009",
+            "ZC-REC-010",
+            "ZC-LIVE-001"
+          ],
+          "historical_normalized_control_plane_signatures": "8/8 PASS",
+          "candidate_v13_blocker_regressions": "4/4 PASS",
+          "ZC_LIVE_001_genuinely_yielded_and_full_chain_reopened": true,
+          "ZC_LIVE_001_outer_metadata_used": false,
+          "future_prefix_boundary_cases": 48,
+          "future_evidence_wrong_slot_unknown_regular_malformed_duplicate_symlink_nonregular_attacks_rejected": true,
+          "legitimate_exact_prefixes_passed": true
+        },
+        "contracts": {
+          "dispatch_attempt_exact_key_count": 25,
+          "dispatch_attempt_exact_keys": [
+            "schema_id",
+            "candidate_id",
+            "run_id",
+            "slot",
+            "cell",
+            "execution_root",
+            "ordered_index",
+            "attempt_ordinal",
+            "requested_model",
+            "requested_thinking",
+            "dispatch_nonce",
+            "dispatch_schedule_sha256",
+            "dispatch_schedule_bytes",
+            "rendered_relative_path",
+            "render_storage_sha256",
+            "render_storage_bytes",
+            "provider_visible_payload_sha256",
+            "provider_visible_payload_bytes",
+            "fresh_task_required",
+            "first_attempt_subject_call",
+            "subject_call_count_ceiling",
+            "retry_count",
+            "best_of",
+            "replacement_result",
+            "status"
+          ],
+          "completion_v3_exact_key_count": 39,
+          "completion_v3_exact_keys": [
+            "schema_id",
+            "candidate_id",
+            "run_id",
+            "slot",
+            "cell",
+            "execution_root",
+            "status",
+            "dispatch_attempt_relative_path",
+            "dispatch_attempt_storage_sha256",
+            "dispatch_attempt_storage_bytes",
+            "rendered_relative_path",
+            "render_storage_sha256",
+            "render_storage_bytes",
+            "provider_visible_payload_sha256",
+            "provider_visible_payload_bytes",
+            "receipt_relative_path",
+            "receipt_storage_sha256",
+            "receipt_storage_bytes",
+            "capture_relative_path",
+            "capture_storage_sha256",
+            "capture_storage_bytes",
+            "score_relative_path",
+            "score_storage_sha256",
+            "score_storage_bytes",
+            "score_verdict",
+            "dispatch_nonce",
+            "thread_id",
+            "turn_id",
+            "rollout_path",
+            "rollout_storage_sha256",
+            "rollout_storage_bytes",
+            "fresh_context",
+            "first_attempt_subject_call",
+            "retry_count",
+            "best_of",
+            "replacement_result",
+            "material_validation_passed",
+            "exact_chain_reopened",
+            "stop_disposition"
+          ],
+          "completion_forbidden_outer_child_session_poll_terminal_envelope_fields_present": false,
+          "receipt_v4_capture_v3_render_score_nonce_thread_turn_rollout_bindings_reopened": true,
+          "create_only_proposal_ACK_semantics": true,
+          "completion_last": true,
+          "schedule_advance_only_after_independent_reopen": true
+        },
+        "independent_terminal_verification": {
+          "verifier_imports_controller": false,
+          "authoritative_functions": [
+            "validate_artifact",
+            "validate_cell",
+            "validate_matrix",
+            "validate_path",
+            "validate_two_runs"
+          ],
+          "terminal_constructibility": [
+            97,
+            291,
+            582
+          ],
+          "cross_run_task_thread_turn_rollout_uniqueness": true,
+          "controller_invalid_extras": 0,
+          "QUALIFICATION_MATRIX_credit_only_after_full_terminal_validation": true
+        },
+        "semantic_identity": {
+          "render": "97/97",
+          "oracle": "97/97",
+          "schedule": "97/97",
+          "routes_scorer_reducers_unchanged": true,
+          "answer_literals_or_cell_model_special_cases_found": false,
+          "render_inventory_sha256": "73caa91618b402a60cf86ff853e6b0f3771818cf4d423511b59154ff586d90fb",
+          "oracle_inventory_sha256": "e542ff0c700a96ee70bc180979d888e6fbd4d867820090b911020e18ad48089b",
+          "schedule_sha256": "24c5f04731ac554733cc1df20067f70335b5349fdc2aa802948af893efe24b65"
+        },
+        "control_surface": {
+          "controller_filesystem_write_calls": [],
+          "verifier_filesystem_write_calls": [],
+          "controller_provider_call_sites": 1,
+          "standalone_run_subject_present": false,
+          "single_live_process_is_only_call_owner": true,
+          "standalone_relaunch_surface": false,
+          "attempt_without_receipt_permanent_invalid": true
+        },
+        "calls": {
+          "subject": 0,
+          "provider": 0,
+          "network": 0,
+          "filesystem_writes_before_report": 0
+        }
+      }
+    }
+  ],
+  "nonclaims": [
+    "No subject, provider, or network call was made.",
+    "No freeze manifest, progress receipt, run control, canary, subject task, empirical evidence, qualification credit, repair, or launch artifact was created.",
+    "Candidate v19 corrects the two candidate-v18 emit-artifact and validate_artifact ordering inconsistencies; that does not cure the independently reproduced module-level validated-controls encapsulation defect.",
+    "Passing retained controller-generated and verifier-reopened suites does not override an executable counterexample omitted by those suites.",
+    "The 65-row closure is complete and byte exact; the blocker is a local API boundary inconsistency, not an undeclared dependency.",
+    "Freeze and launch remain unauthorized because verdict is PRESEAL_FAIL and independent decision is CHURN_SUSPECTED.",
+    "All seven candidate inputs and all prior evidence bytes were preserved unchanged."
+  ]
+}
