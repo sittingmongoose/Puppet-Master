@@ -1,0 +1,70 @@
+{
+  "schema_id": "pw-r8-subject-controller-contract-v1",
+  "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-1",
+  "status": "candidate_bytes_frozen_only_by_external_freeze_manifest",
+  "owned_adapter": "r8_subject_task_driver.py",
+  "semantic_renderer": "r8_harness.py",
+  "routes": {
+    "slot-alpha": {
+      "requested_model": "gpt-5.4-mini",
+      "requested_thinking": "xhigh"
+    },
+    "slot-bravo": {
+      "requested_model": "gpt-5.4-mini",
+      "requested_thinking": "medium"
+    },
+    "slot-charlie": {
+      "requested_model": "gpt-5.6-luna",
+      "requested_thinking": "medium"
+    }
+  },
+  "usage": "python3 -B r8_subject_task_driver.py --run-id <immutable-run-id> --slot <slot-alpha|slot-bravo|slot-charlie> --cell <harness-declared-cell> --execution-root <absolute-successor-contained-run-execution-root>",
+  "cell_admission": {
+    "authority": "The frozen r8_harness.py render command is the closed-world cell authority.",
+    "driver_duplicates_cell_list": false,
+    "render_command": "python3 -B r8_harness.py render --slot <slot> --cell <cell> --execution-root <absolute-successor-contained-run-execution-root>",
+    "storage_rule": "Renderer stdout is UTF-8 with exactly one terminal LF; the LF is storage-only and excluded from provider-visible payload identity."
+  },
+  "dispatch_invariants": {
+    "fresh_thread_per_invocation": true,
+    "turns_per_thread": 1,
+    "subject_attempts_per_invocation": 1,
+    "retry": false,
+    "best_of": false,
+    "replacement": false,
+    "fallback_route": false,
+    "subject_tools": false,
+    "evidence_writes": false,
+    "app_servers_per_invocation": 1,
+    "concurrency_policy": "External controller must pace invocations; this adapter starts and cleanly stops one app-server and performs no fanout."
+  },
+  "identity_rules": {
+    "candidate_id_and_run_id_are_metadata_only": true,
+    "provider_visible_payload_is_renderer_stdout_without_storage_lf": true,
+    "wrapper_source_thread_id_is_fixed": "019ffbff-994a-76f0-9c06-57bab28b7ee3",
+    "reopen_checks": [
+      "exact subject wrapper",
+      "one subject input",
+      "one matching turn context",
+      "one matching task-complete terminal",
+      "one final answer",
+      "openai model provider",
+      "requested turn-context model and effort",
+      "zero prohibited tool activity"
+    ]
+  },
+  "controller_invalid_semantics": {
+    "typed_receipt_on_stdout": true,
+    "exit_code": 2,
+    "empirical_credit": false,
+    "subject_call_started_false_meaning": "No turn/start request was sent; exact recreation may be considered only by the external frozen-run controller.",
+    "subject_call_started_true_meaning": "A turn/start request was sent, so this adapter never authorizes recreation or replacement.",
+    "driver_permits_retry": false
+  },
+  "provider_identity_limitation": "Requested route, openai provider, turn-context model/effort, and pm-dev thread/turn are attestable; a separate provider-effective serving snapshot is not exposed.",
+  "non_claims": [
+    "This disposable controller is not production infrastructure.",
+    "A controller-valid receipt is not a semantic PASS.",
+    "Static validation is not subject execution or qualification evidence."
+  ]
+}

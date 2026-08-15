@@ -1,0 +1,65 @@
+{
+  "schema_id": "pw-r8-qualification-contract-v1",
+  "identity_family": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815",
+  "claim_boundary": "disposable frozen-snapshot prompt-architecture qualification only",
+  "frozen_snapshot_descriptor_sha256": "28730f6ea44a5720cb8e473f8fb736353dfe5c412e21261eacc88d70ffe46392",
+  "routes": [
+    {"slot":"slot-alpha","model":"gpt-5.4-mini","effort":"xhigh"},
+    {"slot":"slot-bravo","model":"gpt-5.4-mini","effort":"medium"},
+    {"slot":"slot-charlie","model":"gpt-5.6-luna","effort":"medium"}
+  ],
+  "candidate_lifecycle": [
+    "diagnose",
+    "build_create_only_revision",
+    "counterfactual_gate",
+    "independent_preseal_audit",
+    "freeze",
+    "clean_run_1",
+    "unchanged_clean_run_2",
+    "qualify"
+  ],
+  "execution_policy": {
+    "fresh_task_per_semantic_cell": true,
+    "thread_reuse_within_or_across_runs": false,
+    "started_call_retries": 0,
+    "best_of": 0,
+    "replacement_results": 0,
+    "prior_output_exposure": false,
+    "same_wave_failure": "Finish already scheduled independent peers, preserve the failure, and do not create downstream causal artifacts from a failed prerequisite.",
+    "no_start_controller_recovery": "Allowed only with positive subject_call_started=false evidence and byte-identical provider input and route; preserve the invalid creation.",
+    "unknown_started_state": "Invalidate the run and do not recreate the cell."
+  },
+  "streak_reset_conditions": [
+    "subject_fail",
+    "subject_invalid",
+    "required_cell_missing",
+    "invalid_or_incomplete_path_terminal",
+    "invalid_or_incomplete_matrix_terminal",
+    "controller_defect_affecting_empirical_validity",
+    "freeze_hash_mismatch",
+    "any_frozen_candidate_byte_change"
+  ],
+  "qualification_predicate": {
+    "consecutive_complete_clean_matrices": 2,
+    "byte_identical_candidate_between_runs": true,
+    "routes_complete_per_run": 3,
+    "all_frozen_subject_cells_pass": true,
+    "all_deterministic_finalizers_pass": true,
+    "subject_failures": 0,
+    "invalid_cells": 0,
+    "missing_cells": 0,
+    "started_call_retries": 0,
+    "best_of": 0,
+    "replacement_results": 0,
+    "all_thread_and_turn_ids_fresh_and_globally_disjoint": true,
+    "terminal_and_manifest_reopen_validation": "PASS",
+    "qualification_credit_from_r6_r7_or_failed_r8": 0
+  },
+  "nonclaims": [
+    "current Plans correctness",
+    "production enforcement",
+    "release readiness",
+    "safety certification",
+    "provider-effective serving snapshot attestation"
+  ]
+}

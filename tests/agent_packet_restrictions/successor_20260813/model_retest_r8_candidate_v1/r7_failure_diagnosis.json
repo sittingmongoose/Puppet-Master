@@ -1,0 +1,69 @@
+{
+  "schema_id": "pw-r8-r7-failure-diagnosis-v1",
+  "identity_family": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815",
+  "source_replicate": "PW-R7-REPLICATION-20260814.1",
+  "source_matrix_terminal_sha256": "b12f73030224a5e8115e7d8ba6a4f358892704e364ec5ffa7d607aa0d6a8ea4d",
+  "source_results_remain_immutable": true,
+  "valid_first_attempt_failures": [
+    {
+      "slot": "slot-alpha",
+      "route": "gpt-5.4-mini/xhigh",
+      "cell": "S10A",
+      "typed_location": "$.decisions[4].source_record_ids[0]",
+      "expected": "A-S02",
+      "observed": "A-S04",
+      "semantic_choice_correct": true,
+      "classification": [
+        "model_instruction_omission_or_misread",
+        "excessive_instruction_load",
+        "mixed_objective_work_unit",
+        "model_owned_deterministic_lineage_join"
+      ],
+      "excluded_causes": [
+        "insufficient_admitted_context",
+        "upstream_artifact_defect",
+        "scorer_brittleness",
+        "controller_influence"
+      ],
+      "generic_repair": "Compile one semantic decision, edge, or tension candidate per call; let the subject return only one closed-enum judgment; project identity, declared lineage, authority, order, bindings, and fixed fields deterministically."
+    },
+    {
+      "slot": "slot-charlie",
+      "route": "gpt-5.6-luna/medium",
+      "cell": "S30_B11",
+      "typed_locations": [
+        "$.verdict",
+        "$.expected_choice"
+      ],
+      "expected": {
+        "verdict": "clean",
+        "expected_choice": null
+      },
+      "observed": {
+        "verdict": "finding",
+        "expected_choice": "current_exact_count"
+      },
+      "classification": [
+        "prompt_capsule_ambiguity",
+        "excessive_irrelevant_instruction_like_context",
+        "model_semantic_misorientation",
+        "genuinely_incorrect_semantic_result"
+      ],
+      "excluded_causes": [
+        "insufficient_admitted_context",
+        "upstream_candidate_defect",
+        "scorer_brittleness",
+        "controller_influence",
+        "accumulated_thread_state"
+      ],
+      "generic_repair": "Ask an answer-first one-decision chooser to return only an option ID from focused source-bound evidence; hide the candidate choice and derive clean-versus-finding and typed replacement deterministically."
+    }
+  ],
+  "controller_process_findings": {
+    "preserved_r7_receipts": 10,
+    "additional_r8_prelaunch_receipts": 1,
+    "empirical_credit": 0,
+    "interpretation": "R7 transport, file-descriptor, notification-race, state-leak, diff-order, and temporary-write incidents are controller evidence, not explanations for either valid subject failure. R8 reuses the proven one-app-server-per-call rollout reopen path, serializes or narrowly bounds fanout, uses fresh-process validation, stable-sorts structural diffs, and preserves any new invalid receipt."
+  },
+  "anti_overfit_boundary": "Observed and expected R7 literals may appear in this non-executable diagnosis only. Executable compiler, renderer, reducer, scorer, controller, and holdout logic must be route-independent, model-independent, and decision-ID-independent."
+}
