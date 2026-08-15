@@ -1,0 +1,102 @@
+{
+  "schema_id": "pw-r8-candidate-revision-lineage-v3",
+  "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-7",
+  "status": "neutral_unsealed_candidate",
+  "predecessor_candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-6",
+  "predecessor_preseal_audit_path": "model_retest_r8_candidate_v6/independent_preseal_audit.json",
+  "predecessor_preseal_audit_storage_sha256": "a61fdd33c0f69957a3d8602dd1a80ff9e739bfa2d5e776225dd0a4e9ee9f32f0",
+  "predecessor_preseal_audit_storage_bytes": 18491,
+  "predecessor_preseal_terminal": "PRESEAL_FAIL",
+  "predecessor_launch_ready": false,
+  "predecessor_blockers": [
+    {
+      "blocker_id": "C6-PRESEAL-B001",
+      "classification": "critical",
+      "repair": "Predeclare one unpredictable lowercase-hex-256 nonce per slot/cell in a canonical create-only run schedule, bind the schedule by run-contract hash/bytes and external prelaunch checkpoint, include candidate/run/slot/cell/nonce/exact semantic-packet/schedule identity in a constant opaque primary wrapper, and independently reconstruct it from primary rollout bytes."
+    },
+    {
+      "blocker_id": "C6-PRESEAL-B002",
+      "classification": "critical",
+      "repair": "Replace the finite prohibited list with an explicit message/reasoning safe list; classify every other current, unknown, malformed, call, or output response-item type as prohibited activity."
+    },
+    {
+      "blocker_id": "C6-PRESEAL-B003",
+      "classification": "critical",
+      "repair": "Candidate-v7 architecture exposes the complete 42-row runtime dependency closure; external freeze validation derives its dependency inventory only from that current closure and requires exactly 42 independently reopened rows."
+    }
+  ],
+  "preserved_provider_semantics": {
+    "semantic_packet_schedule_identical_to_candidate_v6": true,
+    "semantic_oracles_identical_to_candidate_v6": true,
+    "subject_cells_per_route": 97,
+    "subject_calls_per_matrix": 291,
+    "two_run_subject_calls": 582,
+    "driver_treats_subject_answer_as_opaque_text": true,
+    "harness_score_remains_authoritative": true,
+    "answer_specific_literals_or_exceptions": false,
+    "tension_id_exceptions": false,
+    "route_model_slot_cell_answer_exceptions": false
+  },
+  "preserved_controller_semantics": [
+    "fresh app-server and thread per call",
+    "one turn and one first attempt",
+    "raw final and prohibited-item capture",
+    "identical-final normalization only",
+    "same-slot causal stopping and cross-slot isolation",
+    "root-only terminal publication",
+    "closed-world run inventory and invalid accounting",
+    "two consecutive clean-run qualification"
+  ],
+  "candidate_v7_changes": [
+    "prelaunch dispatch_schedule.json with 291 globally unique lowercase-hex-256 nonces",
+    "run-contract path/hash/bytes binding for dispatch schedule",
+    "constant opaque primary wrapper binding candidate, run, slot, cell, nonce, exact semantic packet, and schedule storage",
+    "separate semantic-packet and full-wrapper SHA-256/byte measurements",
+    "independent wrapper reconstruction from current schedule and primary rollout bytes",
+    "cross-run disjoint nonce-set qualification",
+    "fail-closed response-item safe-list classification",
+    "current custom_tool_call/output and tool_search_call/output coverage",
+    "unknown and malformed response-item prohibition",
+    "seven dispatch replay/schedule and six response-item in-memory adversarial proofs",
+    "current architecture-derived exact 42-row dependency closure"
+  ],
+  "adversarial_static_proofs": {
+    "command": "python3 -B r8_run_verifier.py self-test",
+    "dispatch_replay_mutations_rejected": 7,
+    "response_item_classification_cases_passed": 6,
+    "subject_calls": 0,
+    "provider_calls": 0,
+    "filesystem_reads_by_proof_function": 0,
+    "filesystem_writes": 0
+  },
+  "identity_boundary": {
+    "dispatch_identity_basis": "predeclared nonce plus candidate_id, run_id, slot, cell, exact semantic packet, and schedule storage identity in primary rollout bytes",
+    "fresh_task_identity_basis": "thread_id",
+    "task_started_and_task_complete_identity": "turn_id",
+    "separate_platform_task_id_exposed": false,
+    "direct_thread_create_invocation_receipt_exposed": false,
+    "separate_provider_effective_model_or_thinking_exposed": false,
+    "separate_provider_effective_serving_snapshot_exposed": false,
+    "entropy_quality_mechanically_reconstructible": false,
+    "entropy_residual": "Verifier proves 256-bit lowercase-hex shape and uniqueness; external controller and prelaunch/Git checkpoint must prove CSPRNG creation before calls.",
+    "abandoned_run_reuse_residual": "A standalone verifier has no global registry of abandoned run identities. External create-only custody must prohibit reusing a run_id with its entire prior schedule; two-run qualification proves only its two supplied roots are disjoint."
+  },
+  "candidate_freeze": {
+    "path": "tests/agent_packet_restrictions/successor_20260813/r8_candidate_v7_freeze_manifest.json",
+    "storage_sha256": null,
+    "storage_bytes": null,
+    "status": "external_manifest_not_created",
+    "sealed": false,
+    "manifest_excludes_itself": true
+  },
+  "provider_semantic_packet_change_from_candidate_v6": false,
+  "provider_transport_wrapper_change_from_candidate_v6": true,
+  "route_change_from_candidate_v6": false,
+  "oracle_change_from_candidate_v6": false,
+  "ordered_schedule_change_from_candidate_v6": false,
+  "controller_evidence_validation_change": true,
+  "freeze_contract_change": true,
+  "subject_calls": 0,
+  "provider_calls": 0,
+  "predecessor_qualification_credit": 0
+}
