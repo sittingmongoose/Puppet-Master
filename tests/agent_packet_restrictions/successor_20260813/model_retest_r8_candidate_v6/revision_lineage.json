@@ -1,0 +1,85 @@
+{
+  "schema_id": "pw-r8-candidate-revision-lineage-v2",
+  "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-6",
+  "status": "neutral_unsealed_candidate",
+  "predecessor_candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-5",
+  "predecessor_preseal_audit_path": "model_retest_r8_candidate_v5/independent_preseal_audit.json",
+  "predecessor_preseal_audit_storage_sha256": "c972e1d99c6ab4f65514383b6f50518131af92ad7c2ecde3e8775cba8618c3f6",
+  "predecessor_preseal_audit_storage_bytes": 14987,
+  "predecessor_preseal_terminal": "PRESEAL_FAIL",
+  "predecessor_launch_ready": false,
+  "predecessor_checkpoint_containing_commit": "dd4380afba56b1c04a15b4130d48e42f66e8380a",
+  "predecessor_blockers": [
+    {
+      "blocker_id": "C5-PRESEAL-B001",
+      "classification": "critical",
+      "repair": "Verifier independently lstat-opens and strictly parses every exact primary rollout, recomputes all task, payload, route, timing, final, prohibited, and normalization evidence, and binds compact validation evidence through terminalization and qualification."
+    },
+    {
+      "blocker_id": "C5-PRESEAL-B002",
+      "classification": "critical",
+      "repair": "Replace the naked digest with a fixed external manifest path plus storage hash/bytes and independently reopened candidate, audit, qualification, and runtime-dependency closure."
+    },
+    {
+      "blocker_id": "C5-PRESEAL-B003",
+      "classification": "high",
+      "repair": "Candidate-v6 harness binds the candidate-v4 harness and full declared runtime closure; the external freeze derives and reopens the same architecture closure."
+    }
+  ],
+  "preserved_provider_semantics": {
+    "provider_prompt_schedule_identical_to_candidate_v5": true,
+    "semantic_oracles_identical_to_candidate_v5": true,
+    "subject_cells_per_route": 97,
+    "subject_calls_per_matrix": 291,
+    "two_run_subject_calls": 582,
+    "boolean_boundary_output_remains_opaque_to_driver": true,
+    "harness_score_remains_authoritative": true,
+    "answer_specific_literals_or_exceptions": false,
+    "tension_id_exceptions": false,
+    "route_model_slot_exceptions": false
+  },
+  "preserved_controller_semantics": [
+    "fresh app-server and thread per call",
+    "one turn and one first attempt",
+    "raw final and prohibited-item capture",
+    "identical-final normalization only",
+    "same-slot causal stopping and cross-slot isolation",
+    "root-only terminal publication",
+    "closed-world run inventory and invalid accounting",
+    "two consecutive clean-run qualification"
+  ],
+  "candidate_v6_changes": [
+    "independent primary-rollout reopen and derivation for every completed call",
+    "compact independent rollout-validation aggregate in path, matrix, accounting, validation, and qualification evidence",
+    "fixed external freeze-manifest path and exact path/hash/bytes run binding",
+    "exact closed-world candidate inventory, passing-audit binding, qualification contract, and architecture-derived runtime-dependency inventory",
+    "neutral no-subject validate-freeze command",
+    "candidate-v6 harness complete dependency closure including frozen candidate-v4 baseline"
+  ],
+  "task_identity_boundary": {
+    "fresh_task_identity_basis": "thread_id",
+    "unique_task_identity_count_equals_unique_thread_count": true,
+    "task_started_and_task_complete_identity": "turn_id",
+    "separate_platform_task_id_exposed": false,
+    "direct_thread_create_invocation_receipt_exposed": false,
+    "separate_provider_effective_model_or_thinking_exposed": false,
+    "separate_provider_effective_serving_snapshot_exposed": false
+  },
+  "candidate_freeze": {
+    "path": "tests/agent_packet_restrictions/successor_20260813/r8_candidate_v6_freeze_manifest.json",
+    "storage_sha256": null,
+    "storage_bytes": null,
+    "status": "external_manifest_identity_not_embedded",
+    "sealed": false,
+    "manifest_excludes_itself": true
+  },
+  "provider_visible_prompt_change_from_candidate_v5": false,
+  "route_change_from_candidate_v5": false,
+  "oracle_change_from_candidate_v5": false,
+  "ordered_schedule_change_from_candidate_v5": false,
+  "controller_evidence_validation_change": true,
+  "freeze_contract_change": true,
+  "subject_calls": 0,
+  "provider_calls": 0,
+  "predecessor_qualification_credit": 0
+}

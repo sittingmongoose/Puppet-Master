@@ -1,0 +1,141 @@
+{
+  "schema_id": "pw-r8-subject-controller-contract-v4",
+  "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-6",
+  "status": "neutral_unsealed_candidate",
+  "claim_boundary": "unfinished throwaway frozen-snapshot prompt-architecture experiment only",
+  "driver": "r8_subject_task_driver.py",
+  "verifier": "r8_run_verifier.py",
+  "harness": "r8_harness.py",
+  "routes": {
+    "slot-alpha": {
+      "requested_model": "gpt-5.4-mini",
+      "requested_thinking": "xhigh"
+    },
+    "slot-bravo": {
+      "requested_model": "gpt-5.4-mini",
+      "requested_thinking": "medium"
+    },
+    "slot-charlie": {
+      "requested_model": "gpt-5.6-luna",
+      "requested_thinking": "medium"
+    }
+  },
+  "frozen_harness": {
+    "r8_harness.py": {
+      "sha256": "ef5a239e995c96209bc67c2a6ec16cbf721f1cf6ea4368d8204c70b2e74119e5",
+      "bytes": 111710
+    },
+    "architecture_contract.json": {
+      "sha256": "60ae0c98fa305da395bd07e9ac809fa7d7d86b8191ad5cd34b89130c3c7367db",
+      "bytes": 14243
+    },
+    "counterfactual_holdouts.json": {
+      "sha256": "6c6480920bc7e9e69cc20ee02c7b7a2fde936a81eadc0cc3a3f5d4801a00e7f1",
+      "bytes": 37376
+    },
+    "deterministic_preflight_report.json": {
+      "sha256": "cd1f791f0402e0d8092bd7a0e103f5d127726e318c2d8154341a11745de7bb81",
+      "bytes": 87246
+    },
+    "README.md": {
+      "sha256": "d1765b58304c69a67e910c19154df15af4e33d813861a1fc7f04a8ae03761919",
+      "bytes": 7295
+    }
+  },
+  "driver_usage": "python3 -B r8_subject_task_driver.py --run-id <run-id> --execution-root <contained-run-root> --slot <slot> --cell <harness-declared-cell>",
+  "pre_dispatch_gate": "Before app-server creation, the driver obtains the exact harness render and invokes verifier admit. Admit independently validates the fixed external freeze manifest and current candidate/dependency bytes, then enforces exact same-slot schedule causality. Other-slot failure or terminal evidence does not block a surviving slot.",
+  "schedule_binding": {
+    "authority": "r8_harness.py list-cells exact ordered output",
+    "cells_per_route": 97,
+    "cells_per_matrix": 291,
+    "two_run_subject_calls": 582,
+    "provider_prompt_and_oracle_schedule_identical_to_candidate_v5": true,
+    "tension_or_boundary_ids_hard_coded_in_driver_or_verifier": false,
+    "route_model_answer_exceptions": false
+  },
+  "invariants": {
+    "fresh_app_server_per_invocation": true,
+    "thread_create_per_invocation": 1,
+    "fresh_thread_per_invocation": true,
+    "fresh_task_identity_basis": "thread_id",
+    "turns_per_thread": 1,
+    "first_attempts_per_invocation": 1,
+    "retry": false,
+    "best_of": false,
+    "replacement": false,
+    "fallback": false,
+    "evidence_writes": false,
+    "external_fanout": false
+  },
+  "identity": {
+    "candidate_and_run_ids_are_metadata_only": true,
+    "semantic_payload_is_exact_harness_render_payload_without_storage_lf": true,
+    "candidate_v6_boolean_boundary_packets_are_owned_only_by_the_harness": true,
+    "driver_treats_subject_output_as_opaque_text": true,
+    "harness_score_is_authoritative": true,
+    "wrapper_source_thread_id": "019ffbff-994a-76f0-9c06-57bab28b7ee3",
+    "task_identity_limitation": "The fresh user-visible Codex task is the newly created thread_id. Rollout task_started and task_complete identify its one turn by turn_id; no separate platform task_id or direct thread/create invocation receipt is exposed.",
+    "provider_effective_limitation": "Requested route, openai provider, turn-context model/effort, and collaboration settings are independently reopenable. Separate provider-effective model/thinking and a provider serving-snapshot attestation are not exposed."
+  },
+  "run_contract_binding": {
+    "schema_id": "pw-r8-run-contract-v3",
+    "exact_fields": [
+      "schema_id",
+      "candidate_id",
+      "run_id",
+      "routes",
+      "candidate_freeze_manifest_path",
+      "candidate_freeze_manifest_storage_sha256",
+      "candidate_freeze_manifest_storage_bytes",
+      "qualification_sequence",
+      "predecessor_run_id"
+    ],
+    "candidate_freeze_manifest_path": "tests/agent_packet_restrictions/successor_20260813/r8_candidate_v6_freeze_manifest.json",
+    "manifest_identity": "Exact fixed path plus current storage SHA-256 and byte count; a naked digest is invalid.",
+    "qualification_sequence": "Exactly 1 with null predecessor or exactly 2 with a different valid predecessor run_id; two-run qualification additionally requires sequence 2 to name sequence 1.",
+    "seal_status": "neutral_unsealed; external manifest validation and passing independent audit are separate evidence"
+  },
+  "completed_subject_evidence": {
+    "rule": "After turn/start is sent and the unique task completes, every assistant final and prohibited response item remains immutable first-attempt evidence. The driver records raw arrays and a deterministic normalization observation. The verifier independently lstat-opens, hashes, strictly parses, and derives the receipt from the exact primary rollout before any completed-call credit.",
+    "receipt_schema": "pw-r8-direct-appserver-subject-receipt-v3",
+    "independent_rollout_validation_schema": "pw-r8-independent-rollout-validation-v1",
+    "compact_terminal_binding": "Every path and matrix terminal records the count and canonical aggregate SHA-256/bytes of independent rollout-validation bindings; raw rollout JSONL is never copied into Git.",
+    "controller_invalid_only_for": [
+      "transport uncertainty",
+      "route or provider identity drift",
+      "rollout/capture ambiguity",
+      "missing unique task-started or task-complete terminal"
+    ]
+  },
+  "terminal_publication": {
+    "authority": "root_controller_only",
+    "slot_worker_rule": "Slot workers dispatch and persist only their own render, receipt, capture, score, deterministic artifact, and controller-invalid evidence. They never publish path or matrix terminals.",
+    "publication_order": [
+      "persist three root-derived path terminals",
+      "persist matrix terminal",
+      "persist call accounting",
+      "persist artifact manifest",
+      "persist validation report",
+      "reopen matrix terminal chain"
+    ],
+    "cross_slot_isolation": "A failed or invalid path is ineligible only on that path. Other slots continue to their own honest terminals."
+  },
+  "qualification": {
+    "matrices": 2,
+    "calls_per_matrix": 291,
+    "completed_pass_calls": 582,
+    "independently_reopened_primary_rollouts": 582,
+    "fresh_thread_create_evidence_count": 582,
+    "unique_task_identity_count": 582,
+    "unique_thread_count": 582,
+    "unique_turn_count": 582,
+    "allowed_invalid_missing_ineligible_retry_best_of_replacement": 0,
+    "same_validated_manifest_identity_across_runs": true
+  },
+  "nonclaims": [
+    "Disposable experimental controller only.",
+    "Boolean output is opaque transport text to the driver; only the frozen harness scorer interprets it.",
+    "Static validation is not empirical qualification, production enforcement, release readiness, or safety certification.",
+    "No subject or provider call is authorized until a passing independent audit and valid external freeze manifest exist."
+  ]
+}
