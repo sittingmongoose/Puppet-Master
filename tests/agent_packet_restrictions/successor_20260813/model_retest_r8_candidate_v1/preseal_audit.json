@@ -1,0 +1,78 @@
+{
+  "schema_id": "pw-r8-independent-preseal-audit-v1",
+  "candidate_id": "PW-R8-ITERATIVE-FIX-TWO-CLEAN-RUNS-20260815.CANDIDATE-1",
+  "verdict": "PRESEAL_FAIL",
+  "launch_ready": false,
+  "subject_calls": 0,
+  "provider_calls": 0,
+  "files_modified_by_auditor": 0,
+  "blocking_defects": [
+    {
+      "id": "R8-PRESEAL-001",
+      "type": "SUBJECT_CONFORMANCE_FAILURE_MISCLASSIFIED_AS_CONTROLLER_INVALID",
+      "locations": ["r8_harness.py:701-703","r8_harness.py:1125-1134","r8_subject_task_driver.py:227-247","r8_subject_task_driver.py:386-408"],
+      "probes": [
+        {"input":"prose final","observed":"INVALID rc2","required":"permanent subject FAIL"},
+        {"input":"pretty but valid JSON final","observed":"INVALID rc2","required":"permanent subject FAIL"},
+        {"input":"duplicate-key final","observed":"INVALID rc2","required":"permanent subject FAIL"}
+      ],
+      "minimum_correction": "Separate raw-capture transport validity from response conformance. Preserve the completed provider call and raw output, then emit a typed subject FAIL for noncanonical, schema, multi-content, or prohibited-activity conformance violations. Add holdouts for prose, pretty JSON, duplicate keys, extra content, and prohibited subject activity."
+    },
+    {
+      "id": "R8-PRESEAL-002",
+      "type": "CAPTURE_LINEAGE_AND_CAUSAL_CONTROLLER_NOT_CLOSED",
+      "locations": ["README.md:3","README.md:18","README.md:27-32","controller_contract.json:21-39","r8_harness.py:589-592","r8_harness.py:701-703","r8_harness.py:1100-1102","r8_harness.py:1125-1127","r8_subject_task_driver.py:248-260","r8_subject_task_driver.py:341-365"],
+      "meaning": "The scorer accepts an arbitrary caller-selected capture path and no audited executable verifier binds it byte-for-byte to driver raw_final_output. Pacing, causal stop, score persistence, terminal construction, and global task-ID disjointness were delegated to an unspecified external controller.",
+      "minimum_correction": "Add a small externally frozen closed-world verifier/controller that derives the only legal capture path, binds it to the driver receipt, classifies subject conformance failures as FAIL, enforces no downstream dispatch after prerequisite failure, and validates complete accounting and globally disjoint thread/turn IDs."
+    },
+    {
+      "id": "R8-PRESEAL-003",
+      "type": "INCOMPLETE_RUNTIME_DEPENDENCY_FREEZE_CLOSURE",
+      "unbound_runtime_dependencies": [
+        {"path":"model_retest_r6_decomposed_v1/contract.json","sha256":"9bee0c39beb4982c4daac1656f9f7a1327d4d31b9244c0ceebb22f630765f4b1","bytes":7482},
+        {"path":"model_retest_r6_decomposed_v2/contract.json","sha256":"fdafa86048249a3b4325a84ce6e8f14e8cbafa0cc4e40360be3490d17e46bde6","bytes":6618},
+        {"path":"model_retest_r6_decomposed_v4/contract.json","sha256":"8e3ab005f1f7e2f52cd8abd9486ff594a60557f69f829bdefa510ac5d0b0733e","bytes":3182},
+        {"path":"model_retest_r6_decomposed_v5/contract.json","sha256":"6cc660b51bc0dd390e71cd2bab48c3ef5ca8943bf254c9ca0e349d5cd53b7144","bytes":1972},
+        {"path":"model_retest_r6_decomposed_v7/contract.json","sha256":"79b84db9cf3081893d1f63d4fa1240dcc028f365ba47be00ce72ea27ce390137","bytes":3902}
+      ],
+      "preflight_only_unbound_dependency": {"path":"model_retest_r5_snapshot_v1/templates/S10A.txt","sha256":"627b03177ed4aa23f15217ccca326cfc995f5720bcec4cf71489dd32c9860958","bytes":1649},
+      "minimum_correction": "Bind every dynamically read dependency in the candidate verifier and freeze manifest, or vendor the required immutable data into the new create-only candidate."
+    }
+  ],
+  "passing_checks": {
+    "candidate_files_reopened": 9,
+    "claimed_frozen_bindings": "13/13",
+    "frozen_snapshot_files": "15/15 regular nonlinks mode 0444 with exact hashes bytes lines and descriptor",
+    "preflight_recomputed_sha256": "9e0078dae14baffda0023b4e00ecb3b90c52ac1e7e845617cc12b6309cab2afc",
+    "schedule": "97 unique cells per route and 291 per complete matrix",
+    "unique_provider_visible_payloads": 97,
+    "deterministic_s90_payload_sha256": "2104999baf80db35f5cae7f633998450e98226f518951c713762d3b5c20c9a5e",
+    "deterministic_s90_terminal": "bounded_causal_simulation_pass",
+    "route_prompt_identity": "All 97 prompts are byte-identical across the three routes for equal predecessors.",
+    "oracle_leakage": "No scorer/oracle control token or complete expected payload found in 97 prompts.",
+    "counterfactual_holdouts": "15/15 PASS",
+    "route_or_model_semantic_exceptions": 0
+  },
+  "s30_b11_assessment": {
+    "classification": "MEASURED_RESIDUAL_NOT_AN_INDEPENDENT_LAUNCH_BLOCKER",
+    "packet_payload_bytes": 5813,
+    "admitted_source_bytes": 4626,
+    "instruction_line_count": 11,
+    "records": ["B-S15","B-S20"],
+    "positive_change": "Candidate answer is absent, subject owns only selected_choice, and clean/finding plus typed replacement are deterministic.",
+    "residual": "B-S15 remains a broad instruction-like excerpt; admitted context shrank only 138 bytes from R7. B-S20 is necessary to distinguish stale historical text from current counts.",
+    "judgment": "Reasonable to measure empirically after the blocking control-plane defects are corrected."
+  },
+  "audited_file_hashes": {
+    "README.md":"f7bb9d54d7423556d1b8812e68146c1abf63b1078fa6377e0da452e9139087ed",
+    "architecture_contract.json":"03ce4f1d11b9f92e58352c26457189751ca742356e6b1a7c99668df115f2faf2",
+    "controller_contract.json":"1136c7cc4da4aa6b49f135ca606cb282ff906fdb508b39182a6de7f999845dd0",
+    "counterfactual_holdouts.json":"2542f005452d0f68a776451faef393eeb67d7e7b2249023155083c7b808d9eba",
+    "deterministic_preflight_report.json":"9e0078dae14baffda0023b4e00ecb3b90c52ac1e7e845617cc12b6309cab2afc",
+    "qualification_contract.json":"e39a5275c94bd9140703d55bc25fa687f6bdb10c30f9163ae5503e56a012b836",
+    "r7_failure_diagnosis.json":"94856975d366416aea67954635f283b5a9d3c9713c8ec55ca9bac9f4ec68a5eb",
+    "r8_harness.py":"84decbf02cd74021b755162d2206b62e0bab1da08db2bd24858861ee35df222b",
+    "r8_subject_task_driver.py":"235f9579cc631f7388c1b245df3740c825c193da44107055230d4a672642335a"
+  },
+  "nonclaims": ["No subject/provider call occurred.","Deterministic constructibility is not empirical success.","No current-Plans, production, completeness, release, safety, or Plan-compilation claim is made."]
+}
