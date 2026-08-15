@@ -1,0 +1,1105 @@
+{
+  "schema_id": "pm.r8.source_only_tension_decomposition.v5",
+  "schema_version": 5,
+  "fixture_status": "generic_candidate_fixture_not_execution_evidence",
+  "purpose": "Atomize each tension candidate into controller-adjudicated source claims, exclude unsupported candidates, and render one preserve_boundary objective for each fully supported candidate.",
+  "byte_span_contract": {
+    "encoding": "UTF-8",
+    "start": "zero_based_inclusive",
+    "end": "zero_based_exclusive",
+    "slice_rule": "UTF-8 bytes candidate_text[byte_start:byte_end] must equal span_text exactly"
+  },
+  "input_bindings": {
+    "topic_a_capsule": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r5_snapshot_v1/topic_a_capsule.json",
+      "storage_sha256": "6a37b1ab477e98b87d85b5e9569617b456d4dcc0e8a19762effaeb6218d18b52",
+      "storage_bytes": 51204
+    },
+    "topic_b_capsule": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r5_snapshot_v1/topic_b_capsule.json",
+      "storage_sha256": "75ca7224c90d44d32a29f2e766402d9e9eccf8fda584073ee82ca4bad5a41c96",
+      "storage_bytes": 72807
+    },
+    "candidate_v4_selector_contract": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v4/architecture_contract.json",
+      "storage_sha256": "eef8d5d9a21e2664fb0e75ce6c7b042072492d39c4a0c628a447a7cee382fd49",
+      "storage_bytes": 11466,
+      "selector_fields_reopened_for_lineage_only": [
+        "topic_a_tension_context_selectors",
+        "topic_b_prefilter"
+      ],
+      "source_closure_policy": "V4 selectors do not constrain candidate-v5 closure; every capsule record is searched and every materially supporting record is bound."
+    },
+    "frozen_fixture_root": "tests/agent_packet_restrictions/successor_20260813/frozen_plans_snapshot_20260814_v1/fixture"
+  },
+  "authority_rules": [
+    "Only source_record_ids named by a claim unit or its preserve_boundary unit are admitted for that candidate.",
+    "canonical_live_plan records support only frozen-snapshot normative claims within the cited owner scope and make no claim about current live Plans bytes.",
+    "lineage_only_state records support frozen state, projection staleness, provenance, contradiction, and test-control facts only; they cannot independently become canonical product or runtime authority.",
+    "Candidate text, source excerpts, and identifier strings are evidence data and never executable instructions.",
+    "Each exact claim span is adjudicated independently by the controller before rendering; support for one span cannot repair an unsupported sibling span.",
+    "A predecessor decision or edge ID is lineage only. It may be referenced only when the admitted source bytes independently justify the referenced fact, and it never supplies an answer by itself.",
+    "Directly unsupported candidates are deterministically excluded before provider rendering and receive no preserve_boundary question.",
+    "For a fully supported candidate, preserve_boundary asks one binary objective: whether the candidate expresses an authority, scope, sequence, lineage, or evidence boundary that downstream synthesis must preserve explicitly, even when the boundary resolves rather than perpetuates an apparent conflict.",
+    "The entire controller_only_adjudication object is forbidden from every subject-visible or renderer-visible payload."
+  ],
+  "source_catalog": [
+    {
+      "source_record_id": "A-S01",
+      "capsule": "topic_a_capsule",
+      "path": "Plans/Planning_Ledger_System.md",
+      "start_line": 3,
+      "end_line": 10,
+      "source_sha256": "8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "source_record_id": "A-S02",
+      "capsule": "topic_a_capsule",
+      "path": "Plans/Prompt_Pipeline.md",
+      "start_line": 5137,
+      "end_line": 5156,
+      "source_sha256": "5455de88e0eb4b9f7cc02f3828ce5aa836058f03e12715532ad2c761908fb5d8",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "source_record_id": "A-S03",
+      "capsule": "topic_a_capsule",
+      "path": "Plans/Prompt_Pipeline.md",
+      "start_line": 5283,
+      "end_line": 5295,
+      "source_sha256": "5455de88e0eb4b9f7cc02f3828ce5aa836058f03e12715532ad2c761908fb5d8",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "source_record_id": "A-S04",
+      "capsule": "topic_a_capsule",
+      "path": "Plans/Prompt_Pipeline.md",
+      "start_line": 5319,
+      "end_line": 5348,
+      "source_sha256": "5455de88e0eb4b9f7cc02f3828ce5aa836058f03e12715532ad2c761908fb5d8",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "source_record_id": "A-S05",
+      "capsule": "topic_a_capsule",
+      "path": "Plans/assistant-chat-design.md",
+      "start_line": 2453,
+      "end_line": 2458,
+      "source_sha256": "8d6dfb862784206b0c4db9ebe7d0e7b149723161aecbbb7282c750a86eddf7b9",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "source_record_id": "A-S06",
+      "capsule": "topic_a_capsule",
+      "path": "Plans/assistant-chat-design.md",
+      "start_line": 2487,
+      "end_line": 2510,
+      "source_sha256": "8d6dfb862784206b0c4db9ebe7d0e7b149723161aecbbb7282c750a86eddf7b9",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "source_record_id": "A-S11",
+      "capsule": "topic_a_capsule",
+      "path": "Plans/00-plans-index.md",
+      "start_line": 415,
+      "end_line": 425,
+      "source_sha256": "19fcbd110827a949df25cfb2f9f61bdbbc28ffc4f46f01bbe9f3981f94efb311",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "source_record_id": "A-S12",
+      "capsule": "topic_a_capsule",
+      "path": "Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/open_items.json",
+      "start_line": 211,
+      "end_line": 281,
+      "source_sha256": "36c73492e33546c22d2e0ad1aff2aa7548b8d543f445a9ffc984fe4c5bcf2e47",
+      "authority": "lineage_only_state"
+    },
+    {
+      "source_record_id": "A-S13",
+      "capsule": "topic_a_capsule",
+      "path": "Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/handoff.json",
+      "start_line": 98,
+      "end_line": 123,
+      "source_sha256": "82e9800b6905f3d7cb77b78a4b58ea6f4f0a5b056cf4636c46f3bd57e1270f4f",
+      "authority": "lineage_only_state"
+    },
+    {
+      "source_record_id": "B-S03",
+      "capsule": "topic_b_capsule",
+      "path": "Plans/Planning_Wizard.md",
+      "start_line": 875,
+      "end_line": 908,
+      "source_sha256": "2b9591954871986cc5af23764d026ce102ca67be66634c7d1e49dc6988833d00",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "source_record_id": "B-S04",
+      "capsule": "topic_b_capsule",
+      "path": "Plans/Planning_Wizard.md",
+      "start_line": 1150,
+      "end_line": 1166,
+      "source_sha256": "2b9591954871986cc5af23764d026ce102ca67be66634c7d1e49dc6988833d00",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "source_record_id": "B-S05",
+      "capsule": "topic_b_capsule",
+      "path": "Plans/Planning_Wizard.md",
+      "start_line": 1464,
+      "end_line": 1498,
+      "source_sha256": "2b9591954871986cc5af23764d026ce102ca67be66634c7d1e49dc6988833d00",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "source_record_id": "B-S07",
+      "capsule": "topic_b_capsule",
+      "path": "Plans/Planning_Ledger_System.md",
+      "start_line": 760,
+      "end_line": 780,
+      "source_sha256": "8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "source_record_id": "B-S09",
+      "capsule": "topic_b_capsule",
+      "path": "Plans/Plan_To_Node_Compilation.md",
+      "start_line": 1,
+      "end_line": 40,
+      "source_sha256": "196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "source_record_id": "B-S10",
+      "capsule": "topic_b_capsule",
+      "path": "Plans/Plan_To_Node_Compilation.md",
+      "start_line": 217,
+      "end_line": 238,
+      "source_sha256": "196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "source_record_id": "B-S11",
+      "capsule": "topic_b_capsule",
+      "path": "Plans/Plan_To_Node_Compilation.md",
+      "start_line": 880,
+      "end_line": 910,
+      "source_sha256": "196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "source_record_id": "B-S12",
+      "capsule": "topic_b_capsule",
+      "path": "Plans/Plan_To_Node_Compilation.md",
+      "start_line": 1395,
+      "end_line": 1401,
+      "source_sha256": "196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "source_record_id": "B-S13",
+      "capsule": "topic_b_capsule",
+      "path": "Plans/Automated_Testing_System.md",
+      "start_line": 1,
+      "end_line": 26,
+      "source_sha256": "975472ff73c949fea277805b1317b1f67f56972bbfe401c73c3f38267edac4b3",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "source_record_id": "B-S14",
+      "capsule": "topic_b_capsule",
+      "path": "Plans/Automated_Testing_System.md",
+      "start_line": 2241,
+      "end_line": 2260,
+      "source_sha256": "975472ff73c949fea277805b1317b1f67f56972bbfe401c73c3f38267edac4b3",
+      "authority": "canonical_live_plan"
+    },
+    {
+      "source_record_id": "B-S15",
+      "capsule": "topic_b_capsule",
+      "path": "Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/current.json",
+      "start_line": 18,
+      "end_line": 65,
+      "source_sha256": "813b219dac1bef99d85971ab2411e0b3bb3f5df2a0bb1df224467f2855df3914",
+      "authority": "lineage_only_state"
+    },
+    {
+      "source_record_id": "B-S18",
+      "capsule": "topic_b_capsule",
+      "path": "Plans/ledgers/v2/ledger_registry.json",
+      "start_line": 1,
+      "end_line": 29,
+      "source_sha256": "23d36152dd8d14de849d1d22ba0df5ca0a6864f8f0331efb3446e1d4c498e988",
+      "authority": "lineage_only_state"
+    },
+    {
+      "source_record_id": "B-S20",
+      "capsule": "topic_b_capsule",
+      "path": "Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/current.json",
+      "start_line": 63,
+      "end_line": 66,
+      "source_sha256": "813b219dac1bef99d85971ab2411e0b3bb3f5df2a0bb1df224467f2855df3914",
+      "authority": "lineage_only_state"
+    }
+  ],
+  "tension_candidates": [
+    {
+      "tension_candidate_id": "A-T03",
+      "topic_id": "PROMPT_AUTHORITY_AND_WEAK_WORKER",
+      "candidate_text": "BSD Off disables all provider calls including the primary worker call.",
+      "candidate_utf8_bytes": 70,
+      "admitted_source_record_ids": [
+        "A-S11",
+        "A-S13"
+      ],
+      "claim_units": [
+        {
+          "claim_unit_id": "CU-0001",
+          "byte_start": 0,
+          "byte_end": 35,
+          "span_text": "BSD Off disables all provider calls",
+          "controller_support_question": "Do the admitted source bytes support that stored BSD Off disables all provider calls?",
+          "source_record_ids": [
+            "A-S11",
+            "A-S13"
+          ],
+          "predecessor_fact_ids": {
+            "decision_ids": [
+              "A14",
+              "A15"
+            ],
+            "edge_ids": [
+              "A-E06"
+            ]
+          }
+        },
+        {
+          "claim_unit_id": "CU-0002",
+          "byte_start": 35,
+          "byte_end": 70,
+          "span_text": " including the primary worker call.",
+          "controller_support_question": "Do the admitted source bytes support the claimed inclusion of the primary worker call in BSD Off's disabled calls?",
+          "source_record_ids": [
+            "A-S11",
+            "A-S13"
+          ],
+          "predecessor_fact_ids": {
+            "decision_ids": [
+              "A14",
+              "A15"
+            ],
+            "edge_ids": [
+              "A-E06"
+            ]
+          }
+        }
+      ],
+      "preserve_boundary_unit": {
+        "preserve_boundary_question_id": "PBQ-0001",
+        "render_eligibility": "only_if_all_claim_units_are_controller_supported",
+        "question": "Does this source-supported candidate express an authority, scope, sequence, lineage, or evidence boundary that downstream synthesis must preserve explicitly?",
+        "source_record_ids": [
+          "A-S11",
+          "A-S13"
+        ],
+        "predecessor_fact_ids": {
+          "decision_ids": [
+            "A14",
+            "A15"
+          ],
+          "edge_ids": [
+            "A-E06"
+          ]
+        }
+      }
+    },
+    {
+      "tension_candidate_id": "A-T01",
+      "topic_id": "PROMPT_AUTHORITY_AND_WEAK_WORKER",
+      "candidate_text": "The ledger records intended deterministic one-worker dispatch, while the live canonical Prompt Pipeline already defines zero-model deterministic gates but does not make the ledger itself runtime authority.",
+      "candidate_utf8_bytes": 205,
+      "admitted_source_record_ids": [
+        "A-S01",
+        "A-S02",
+        "A-S03",
+        "A-S04",
+        "A-S11",
+        "A-S12",
+        "A-S13"
+      ],
+      "claim_units": [
+        {
+          "claim_unit_id": "CU-0003",
+          "byte_start": 0,
+          "byte_end": 62,
+          "span_text": "The ledger records intended deterministic one-worker dispatch,",
+          "controller_support_question": "Do the admitted source bytes support that the ledger records intended deterministic one-worker dispatch?",
+          "source_record_ids": [
+            "A-S01",
+            "A-S12"
+          ],
+          "predecessor_fact_ids": {
+            "decision_ids": [
+              "A01",
+              "A16"
+            ],
+            "edge_ids": [
+              "A-E01"
+            ]
+          }
+        },
+        {
+          "claim_unit_id": "CU-0004",
+          "byte_start": 62,
+          "byte_end": 150,
+          "span_text": " while the live canonical Prompt Pipeline already defines zero-model deterministic gates",
+          "controller_support_question": "Do the admitted source bytes support that the frozen canonical Prompt Pipeline defines deterministic gates before the provider call with zero mandatory hidden gate-model calls?",
+          "source_record_ids": [
+            "A-S02",
+            "A-S03",
+            "A-S04",
+            "A-S12"
+          ],
+          "predecessor_fact_ids": {
+            "decision_ids": [
+              "A02",
+              "A04",
+              "A05",
+              "A16"
+            ],
+            "edge_ids": [
+              "A-E02",
+              "A-E03"
+            ]
+          }
+        },
+        {
+          "claim_unit_id": "CU-0005",
+          "byte_start": 150,
+          "byte_end": 205,
+          "span_text": " but does not make the ledger itself runtime authority.",
+          "controller_support_question": "Do the admitted source bytes support that Prompt Pipeline's deterministic gates do not promote the ledger itself to runtime authority?",
+          "source_record_ids": [
+            "A-S01",
+            "A-S11",
+            "A-S12",
+            "A-S13"
+          ],
+          "predecessor_fact_ids": {
+            "decision_ids": [
+              "A01",
+              "A15",
+              "A16"
+            ],
+            "edge_ids": [
+              "A-E01"
+            ]
+          }
+        }
+      ],
+      "preserve_boundary_unit": {
+        "preserve_boundary_question_id": "PBQ-0002",
+        "render_eligibility": "only_if_all_claim_units_are_controller_supported",
+        "question": "Does this source-supported candidate express an authority, scope, sequence, lineage, or evidence boundary that downstream synthesis must preserve explicitly?",
+        "source_record_ids": [
+          "A-S01",
+          "A-S02",
+          "A-S03",
+          "A-S04",
+          "A-S11",
+          "A-S12",
+          "A-S13"
+        ],
+        "predecessor_fact_ids": {
+          "decision_ids": [
+            "A01",
+            "A02",
+            "A04",
+            "A05",
+            "A15",
+            "A16"
+          ],
+          "edge_ids": [
+            "A-E01",
+            "A-E02",
+            "A-E03"
+          ]
+        }
+      }
+    },
+    {
+      "tension_candidate_id": "A-T02",
+      "topic_id": "PROMPT_AUTHORITY_AND_WEAK_WORKER",
+      "candidate_text": "Direct Chat persona routing and strict automated provider admission are adjacent but distinct scopes and must not be collapsed.",
+      "candidate_utf8_bytes": 127,
+      "admitted_source_record_ids": [
+        "A-S02",
+        "A-S03",
+        "A-S04",
+        "A-S05",
+        "A-S06",
+        "A-S11",
+        "A-S12",
+        "A-S13"
+      ],
+      "claim_units": [
+        {
+          "claim_unit_id": "CU-0006",
+          "byte_start": 0,
+          "byte_end": 27,
+          "span_text": "Direct Chat persona routing",
+          "controller_support_question": "Do the admitted source bytes establish a Direct Chat persona-routing scope?",
+          "source_record_ids": [
+            "A-S05",
+            "A-S06",
+            "A-S11",
+            "A-S13"
+          ],
+          "predecessor_fact_ids": {
+            "decision_ids": [
+              "A09",
+              "A10"
+            ],
+            "edge_ids": [
+              "A-E04"
+            ]
+          }
+        },
+        {
+          "claim_unit_id": "CU-0007",
+          "byte_start": 27,
+          "byte_end": 67,
+          "span_text": " and strict automated provider admission",
+          "controller_support_question": "Do the admitted source bytes establish a strict provider-request-admission scope separate from visible Direct Chat controls?",
+          "source_record_ids": [
+            "A-S02",
+            "A-S03",
+            "A-S04",
+            "A-S11",
+            "A-S12",
+            "A-S13"
+          ],
+          "predecessor_fact_ids": {
+            "decision_ids": [
+              "A02",
+              "A04",
+              "A05",
+              "A15",
+              "A16"
+            ],
+            "edge_ids": []
+          }
+        },
+        {
+          "claim_unit_id": "CU-0008",
+          "byte_start": 67,
+          "byte_end": 100,
+          "span_text": " are adjacent but distinct scopes",
+          "controller_support_question": "Do the admitted source bytes support that Direct Chat routing and provider admission are related surfaces with distinct owners and semantics?",
+          "source_record_ids": [
+            "A-S02",
+            "A-S04",
+            "A-S05",
+            "A-S06",
+            "A-S11",
+            "A-S13"
+          ],
+          "predecessor_fact_ids": {
+            "decision_ids": [
+              "A09",
+              "A10",
+              "A15",
+              "A16"
+            ],
+            "edge_ids": [
+              "A-E04"
+            ]
+          }
+        },
+        {
+          "claim_unit_id": "CU-0009",
+          "byte_start": 100,
+          "byte_end": 127,
+          "span_text": " and must not be collapsed.",
+          "controller_support_question": "Do the admitted owner and eligibility boundaries support keeping these scopes uncollapsed?",
+          "source_record_ids": [
+            "A-S11",
+            "A-S13"
+          ],
+          "predecessor_fact_ids": {
+            "decision_ids": [
+              "A09",
+              "A10",
+              "A15",
+              "A16"
+            ],
+            "edge_ids": [
+              "A-E04"
+            ]
+          }
+        }
+      ],
+      "preserve_boundary_unit": {
+        "preserve_boundary_question_id": "PBQ-0003",
+        "render_eligibility": "only_if_all_claim_units_are_controller_supported",
+        "question": "Does this source-supported candidate express an authority, scope, sequence, lineage, or evidence boundary that downstream synthesis must preserve explicitly?",
+        "source_record_ids": [
+          "A-S02",
+          "A-S03",
+          "A-S04",
+          "A-S05",
+          "A-S06",
+          "A-S11",
+          "A-S12",
+          "A-S13"
+        ],
+        "predecessor_fact_ids": {
+          "decision_ids": [
+            "A09",
+            "A10",
+            "A15"
+          ],
+          "edge_ids": [
+            "A-E04"
+          ]
+        }
+      }
+    },
+    {
+      "tension_candidate_id": "B-T03",
+      "topic_id": "PLANNING_AUDIT_COMPILE_AND_TESTING",
+      "candidate_text": "A mutable active ledger and an immutable ApprovedPlanPack are interchangeable Plan Compile authority.",
+      "candidate_utf8_bytes": 101,
+      "admitted_source_record_ids": [
+        "B-S04",
+        "B-S07",
+        "B-S11",
+        "B-S12",
+        "B-S18"
+      ],
+      "claim_units": [
+        {
+          "claim_unit_id": "CU-0010",
+          "byte_start": 0,
+          "byte_end": 23,
+          "span_text": "A mutable active ledger",
+          "controller_support_question": "Do the admitted source bytes establish an active ledger whose synchronized working state can change?",
+          "source_record_ids": [
+            "B-S07",
+            "B-S18"
+          ],
+          "predecessor_fact_ids": {
+            "decision_ids": [
+              "B12",
+              "B16"
+            ],
+            "edge_ids": []
+          }
+        },
+        {
+          "claim_unit_id": "CU-0011",
+          "byte_start": 23,
+          "byte_end": 57,
+          "span_text": " and an immutable ApprovedPlanPack",
+          "controller_support_question": "Do the admitted source bytes establish an immutable ApprovedPlanPack in the Plan Compile boundary?",
+          "source_record_ids": [
+            "B-S07",
+            "B-S11",
+            "B-S12"
+          ],
+          "predecessor_fact_ids": {
+            "decision_ids": [
+              "B12"
+            ],
+            "edge_ids": []
+          }
+        },
+        {
+          "claim_unit_id": "CU-0012",
+          "byte_start": 57,
+          "byte_end": 101,
+          "span_text": " are interchangeable Plan Compile authority.",
+          "controller_support_question": "Do the admitted source bytes support that the active ledger and immutable ApprovedPlanPack are interchangeable Plan Compile authority?",
+          "source_record_ids": [
+            "B-S04",
+            "B-S07",
+            "B-S11",
+            "B-S12",
+            "B-S18"
+          ],
+          "predecessor_fact_ids": {
+            "decision_ids": [
+              "B12",
+              "B16"
+            ],
+            "edge_ids": []
+          }
+        }
+      ],
+      "preserve_boundary_unit": {
+        "preserve_boundary_question_id": "PBQ-0004",
+        "render_eligibility": "only_if_all_claim_units_are_controller_supported",
+        "question": "Does this source-supported candidate express an authority, scope, sequence, lineage, or evidence boundary that downstream synthesis must preserve explicitly?",
+        "source_record_ids": [
+          "B-S04",
+          "B-S07",
+          "B-S11",
+          "B-S12",
+          "B-S18"
+        ],
+        "predecessor_fact_ids": {
+          "decision_ids": [
+            "B12",
+            "B16"
+          ],
+          "edge_ids": []
+        }
+      }
+    },
+    {
+      "tension_candidate_id": "B-T02",
+      "topic_id": "PLANNING_AUDIT_COMPILE_AND_TESTING",
+      "candidate_text": "Top-level ledger counts are 77/61 while embedded last-known-good prose still says 76/60.",
+      "candidate_utf8_bytes": 88,
+      "admitted_source_record_ids": [
+        "B-S15",
+        "B-S20"
+      ],
+      "claim_units": [
+        {
+          "claim_unit_id": "CU-0013",
+          "byte_start": 0,
+          "byte_end": 33,
+          "span_text": "Top-level ledger counts are 77/61",
+          "controller_support_question": "Do the admitted source bytes record top-level design-atom and accepted-decision counts of 77 and 61?",
+          "source_record_ids": [
+            "B-S20"
+          ],
+          "predecessor_fact_ids": {
+            "decision_ids": [
+              "B10"
+            ],
+            "edge_ids": []
+          }
+        },
+        {
+          "claim_unit_id": "CU-0014",
+          "byte_start": 33,
+          "byte_end": 88,
+          "span_text": " while embedded last-known-good prose still says 76/60.",
+          "controller_support_question": "Do the admitted source bytes contain embedded last_known_good_state prose that still reports 76 design atoms and 60 accepted decisions?",
+          "source_record_ids": [
+            "B-S15"
+          ],
+          "predecessor_fact_ids": {
+            "decision_ids": [
+              "B11"
+            ],
+            "edge_ids": []
+          }
+        }
+      ],
+      "preserve_boundary_unit": {
+        "preserve_boundary_question_id": "PBQ-0005",
+        "render_eligibility": "only_if_all_claim_units_are_controller_supported",
+        "question": "Does this source-supported candidate express an authority, scope, sequence, lineage, or evidence boundary that downstream synthesis must preserve explicitly?",
+        "source_record_ids": [
+          "B-S15",
+          "B-S20"
+        ],
+        "predecessor_fact_ids": {
+          "decision_ids": [
+            "B10",
+            "B11"
+          ],
+          "edge_ids": []
+        }
+      }
+    },
+    {
+      "tension_candidate_id": "B-T01",
+      "topic_id": "PLANNING_AUDIT_COMPILE_AND_TESTING",
+      "candidate_text": "Planning completeness may be described as implementation-ready prose, but runtime buildability remains unproven until separate gates and executable evidence pass.",
+      "candidate_utf8_bytes": 162,
+      "admitted_source_record_ids": [
+        "B-S03",
+        "B-S04",
+        "B-S05",
+        "B-S09",
+        "B-S10",
+        "B-S11",
+        "B-S12",
+        "B-S13",
+        "B-S14"
+      ],
+      "claim_units": [
+        {
+          "claim_unit_id": "CU-0015",
+          "byte_start": 0,
+          "byte_end": 69,
+          "span_text": "Planning completeness may be described as implementation-ready prose,",
+          "controller_support_question": "Do the admitted source bytes support a planning-layer, prose-completeness description without treating that description as runtime buildability proof?",
+          "source_record_ids": [
+            "B-S03",
+            "B-S04",
+            "B-S05",
+            "B-S13",
+            "B-S14"
+          ],
+          "predecessor_fact_ids": {
+            "decision_ids": [
+              "B08",
+              "B14",
+              "B15"
+            ],
+            "edge_ids": [
+              "B-E08"
+            ]
+          }
+        },
+        {
+          "claim_unit_id": "CU-0016",
+          "byte_start": 69,
+          "byte_end": 111,
+          "span_text": " but runtime buildability remains unproven",
+          "controller_support_question": "Do the admitted source bytes support that runtime buildability remains unproven by static planning and validation evidence alone?",
+          "source_record_ids": [
+            "B-S04",
+            "B-S05",
+            "B-S09",
+            "B-S10",
+            "B-S11",
+            "B-S12",
+            "B-S13",
+            "B-S14"
+          ],
+          "predecessor_fact_ids": {
+            "decision_ids": [
+              "B08",
+              "B13",
+              "B14",
+              "B15"
+            ],
+            "edge_ids": [
+              "B-E07",
+              "B-E08"
+            ]
+          }
+        },
+        {
+          "claim_unit_id": "CU-0017",
+          "byte_start": 111,
+          "byte_end": 162,
+          "span_text": " until separate gates and executable evidence pass.",
+          "controller_support_question": "Do the admitted source bytes require separate buildability gates and executable lifecycle evidence before runtime readiness or buildability can pass?",
+          "source_record_ids": [
+            "B-S03",
+            "B-S04",
+            "B-S05",
+            "B-S10",
+            "B-S11",
+            "B-S12",
+            "B-S13",
+            "B-S14"
+          ],
+          "predecessor_fact_ids": {
+            "decision_ids": [
+              "B08",
+              "B14",
+              "B15"
+            ],
+            "edge_ids": [
+              "B-E08"
+            ]
+          }
+        }
+      ],
+      "preserve_boundary_unit": {
+        "preserve_boundary_question_id": "PBQ-0006",
+        "render_eligibility": "only_if_all_claim_units_are_controller_supported",
+        "question": "Does this source-supported candidate express an authority, scope, sequence, lineage, or evidence boundary that downstream synthesis must preserve explicitly?",
+        "source_record_ids": [
+          "B-S03",
+          "B-S04",
+          "B-S05",
+          "B-S09",
+          "B-S10",
+          "B-S11",
+          "B-S12",
+          "B-S13",
+          "B-S14"
+        ],
+        "predecessor_fact_ids": {
+          "decision_ids": [
+            "B08",
+            "B13",
+            "B14",
+            "B15"
+          ],
+          "edge_ids": [
+            "B-E07",
+            "B-E08"
+          ]
+        }
+      }
+    }
+  ],
+  "complete_coverage_invariants": [
+    "The ordered tension_candidate_id sequence is exactly A-T03, A-T01, A-T02, B-T03, B-T02, B-T01, matching the two capsule records without omission or duplication.",
+    "Every candidate has one or more claim units and exactly one preserve_boundary unit whose render eligibility is controlled only by complete claim support.",
+    "claim_unit_id and preserve_boundary_question_id values are globally unique opaque identifiers.",
+    "Within each candidate, claim units are ordered by byte_start, begin at byte 0, end at candidate_utf8_bytes, and form a gap-free non-overlapping partition.",
+    "Every span_text is the exact UTF-8 byte slice declared by byte_start and byte_end; concatenating span_text in order reproduces candidate_text byte-for-byte.",
+    "Every claim-unit and preserve_boundary source_record_id exists in source_catalog and is a member of that candidate's admitted_source_record_ids.",
+    "Every admitted_source_record_id is used by at least one claim unit or the preserve_boundary unit for that candidate.",
+    "Every predecessor decision or edge ID exists in the corresponding source capsule and is relevant only as independently source-justified lineage.",
+    "Claim support checks and their adjudications are controller-owned and never become downstream model objectives.",
+    "A candidate with any unsupported claim unit is excluded before provider rendering; every fully supported candidate renders exactly one preserve_boundary boolean objective.",
+    "No controller-only adjudication field may be copied into a rendered question, source block, subject response schema, or subject-visible metadata.",
+    "No reduction step may inspect a route, model, slot, cell, provider identity, prior answer, score, capture, receipt, or expected result."
+  ],
+  "deterministic_reduction_contract": {
+    "controller_claim_support_schema": {
+      "supported": "boolean"
+    },
+    "downstream_model_response_schema": {
+      "preserve_boundary": "boolean"
+    },
+    "downstream_semantic_objectives_per_rendered_candidate": 1,
+    "route_enum": [
+      "deterministic_excluded",
+      "selected",
+      "resolved"
+    ],
+    "disposition_enum": [
+      "unsupported_claim",
+      "preserved",
+      "omitted"
+    ],
+    "rules_in_order": [
+      "Reject as controller_invalid if any expected claim unit is missing, duplicated, misidentified, non-boolean, or joined to a source outside its declared closure.",
+      "If any claim unit has supported=false, do not render candidate or preserve_boundary bytes; emit route=deterministic_excluded and disposition=unsupported_claim.",
+      "If every claim unit has supported=true, render exactly one preserve_boundary question with the declared source closure and accept exactly one boolean preserve_boundary field.",
+      "If preserve_boundary=true, emit route=selected and disposition=preserved.",
+      "If preserve_boundary=false, emit route=resolved and disposition=omitted."
+    ],
+    "ordering": "capsule candidate order, then ascending byte_start",
+    "controller_branch_inputs": [
+      "claim_unit_id",
+      "claim supported boolean"
+    ],
+    "downstream_model_owned_fields": [
+      "preserve_boundary"
+    ],
+    "final_reduction_inputs": [
+      "preserve_boundary_question_id",
+      "preserve_boundary boolean"
+    ],
+    "forbidden_branch_inputs": [
+      "route",
+      "model",
+      "slot",
+      "cell",
+      "provider",
+      "prior answer",
+      "score",
+      "capture",
+      "receipt",
+      "expected result"
+    ]
+  },
+  "controller_only_adjudication": {
+    "renderer_policy": "EXCLUDE_THIS_ENTIRE_OBJECT_FROM_ALL_SUBJECT_VISIBLE_BYTES",
+    "basis": "Independent source-only adjudication after reopening every record in both capsule catalogs and the directly cited frozen fixture bytes; v4 selectors did not constrain source closure.",
+    "claim_support": [
+      {
+        "claim_unit_id": "CU-0001",
+        "supported": false,
+        "reason": "A-S11 says BSD mode changes frequency only and cannot grant tools or authority, while A-S13 addresses BSD default/mandatoriness; neither says Off disables provider calls."
+      },
+      {
+        "claim_unit_id": "CU-0002",
+        "supported": false,
+        "reason": "Neither A-S11 nor A-S13 states that BSD Off disables a primary worker provider call."
+      },
+      {
+        "claim_unit_id": "CU-0003",
+        "supported": true,
+        "reason": "A-S12 is the ledger record requiring deterministic compilation and gates, one assigned worker-model call, and zero mandatory hidden gate-model calls per ordinary dispatch."
+      },
+      {
+        "claim_unit_id": "CU-0004",
+        "supported": true,
+        "reason": "A-S02/A-S04 define deterministic admission gates before dispatch, A-S03 prevents model-reasoned conditional rules from implementing deterministic safety, and A-S12 records zero hidden gate-model calls."
+      },
+      {
+        "claim_unit_id": "CU-0005",
+        "supported": true,
+        "reason": "A-S01 denies ledger records canonical product authority before compilation; A-S11 assigns runtime owners; A-S12 remains pending compile reconciliation; and A-S13 forbids treating the lane as canonical compile."
+      },
+      {
+        "claim_unit_id": "CU-0006",
+        "supported": true,
+        "reason": "A-S05/A-S06 define direct-chat persona eligibility and routing, A-S11 assigns visible chat controls to Assistant Chat, and A-S13 protects the direct-chat exclusion."
+      },
+      {
+        "claim_unit_id": "CU-0007",
+        "supported": true,
+        "reason": "A-S02/A-S04 define strict deterministic provider admission, A-S11 assigns it to Shared Integration Runtime, A-S12 records the strict gate design, and A-S13 distinguishes the strict automated lane from Direct Chat."
+      },
+      {
+        "claim_unit_id": "CU-0008",
+        "supported": true,
+        "reason": "A-S05/A-S06 define chat routing, A-S02/A-S04 define provider admission, and A-S11/A-S13 preserve distinct owner and lane semantics."
+      },
+      {
+        "claim_unit_id": "CU-0009",
+        "supported": true,
+        "reason": "A-S11 gives the surfaces distinct owners, and A-S13 directly forbids forcing Direct Chat or Chat-originated delegation through the strict automated lane."
+      },
+      {
+        "claim_unit_id": "CU-0010",
+        "supported": true,
+        "reason": "B-S07 defines a synchronized working ledger and B-S18 records it as active."
+      },
+      {
+        "claim_unit_id": "CU-0011",
+        "supported": true,
+        "reason": "B-S11 and B-S12 explicitly name the immutable ApprovedPlanPack; B-S07 identifies it and frozen indexes as compile authority."
+      },
+      {
+        "claim_unit_id": "CU-0012",
+        "supported": false,
+        "reason": "B-S04, B-S07, and B-S11 assign Plan Compile authority to an approved pack and explicitly make the ledger lineage rather than executable authority; B-S18 merely records the ledger as active."
+      },
+      {
+        "claim_unit_id": "CU-0013",
+        "supported": true,
+        "reason": "B-S20 records design_atoms_total=77 and accepted_decisions_count=61."
+      },
+      {
+        "claim_unit_id": "CU-0014",
+        "supported": true,
+        "reason": "B-S15 contains last_known_good_state prose reporting 76 design atoms and 60 accepted decisions."
+      },
+      {
+        "claim_unit_id": "CU-0015",
+        "supported": true,
+        "reason": "B-S03/B-S04/B-S05 recognize planning outputs, implementation-readiness review, and plan-complete documentation; B-S13/B-S14 establish that contract prose or static materialization is not runtime execution. Support is limited to that planning-layer reading."
+      },
+      {
+        "claim_unit_id": "CU-0016",
+        "supported": true,
+        "reason": "B-S04/B-S05/B-S09/B-S10/B-S11/B-S12/B-S13/B-S14 consistently separate planning, indexes, schemas, and test contracts from runtime buildability or execution proof."
+      },
+      {
+        "claim_unit_id": "CU-0017",
+        "supported": true,
+        "reason": "B-S03/B-S04/B-S05 require audit and buildability gates, while B-S10/B-S11/B-S12/B-S13/B-S14 require executable lifecycle and testing evidence rather than static presence."
+      }
+    ],
+    "preserve_boundary_truth": [
+      {
+        "preserve_boundary_question_id": "PBQ-0002",
+        "preserve_boundary": true,
+        "reason": "Downstream synthesis must preserve both the one-worker/zero-hidden-gate intent and the lineage-versus-canonical runtime-authority boundary even though that boundary resolves the apparent conflict."
+      },
+      {
+        "preserve_boundary_question_id": "PBQ-0003",
+        "preserve_boundary": true,
+        "reason": "The Direct Chat versus strict automated-lane scope boundary is an explicit non-collapse requirement."
+      },
+      {
+        "preserve_boundary_question_id": "PBQ-0005",
+        "preserve_boundary": false,
+        "reason": "The candidate is a stale embedded-count observation resolved by the current top-level fields, not a durable authority, scope, sequence, lineage, or evidence boundary for synthesis."
+      },
+      {
+        "preserve_boundary_question_id": "PBQ-0006",
+        "preserve_boundary": true,
+        "reason": "The planning-completeness versus executable-buildability distinction is an explicit evidence and sequence boundary that synthesis must retain."
+      }
+    ],
+    "candidate_outcomes": [
+      {
+        "tension_candidate_id": "A-T03",
+        "route": "deterministic_excluded",
+        "disposition": "unsupported_claim",
+        "preserve_boundary": null
+      },
+      {
+        "tension_candidate_id": "A-T01",
+        "route": "selected",
+        "disposition": "preserved",
+        "preserve_boundary": true
+      },
+      {
+        "tension_candidate_id": "A-T02",
+        "route": "selected",
+        "disposition": "preserved",
+        "preserve_boundary": true
+      },
+      {
+        "tension_candidate_id": "B-T03",
+        "route": "deterministic_excluded",
+        "disposition": "unsupported_claim",
+        "preserve_boundary": null
+      },
+      {
+        "tension_candidate_id": "B-T02",
+        "route": "resolved",
+        "disposition": "omitted",
+        "preserve_boundary": false
+      },
+      {
+        "tension_candidate_id": "B-T01",
+        "route": "selected",
+        "disposition": "preserved",
+        "preserve_boundary": true
+      }
+    ],
+    "ambiguities": [
+      {
+        "tension_candidate_id": "B-T01",
+        "text": "implementation-ready prose is not a verbatim source term; the adjudication treats it narrowly as plan-complete documentation that is ready only at the planning layer, because the same sources explicitly deny that it proves runtime buildability."
+      }
+    ]
+  },
+  "attestation": {
+    "files_read": [
+      "tests/agent_packet_restrictions/successor_20260813/model_retest_r5_snapshot_v1/topic_a_capsule.json",
+      "tests/agent_packet_restrictions/successor_20260813/model_retest_r5_snapshot_v1/topic_b_capsule.json",
+      "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v4/architecture_contract.json",
+      "tests/agent_packet_restrictions/successor_20260813/frozen_plans_snapshot_20260814_v1/fixture/Plans/Planning_Ledger_System.md",
+      "tests/agent_packet_restrictions/successor_20260813/frozen_plans_snapshot_20260814_v1/fixture/Plans/Prompt_Pipeline.md",
+      "tests/agent_packet_restrictions/successor_20260813/frozen_plans_snapshot_20260814_v1/fixture/Plans/assistant-chat-design.md",
+      "tests/agent_packet_restrictions/successor_20260813/frozen_plans_snapshot_20260814_v1/fixture/Plans/00-plans-index.md",
+      "tests/agent_packet_restrictions/successor_20260813/frozen_plans_snapshot_20260814_v1/fixture/Plans/Planning_Wizard.md",
+      "tests/agent_packet_restrictions/successor_20260813/frozen_plans_snapshot_20260814_v1/fixture/Plans/Plan_To_Node_Compilation.md",
+      "tests/agent_packet_restrictions/successor_20260813/frozen_plans_snapshot_20260814_v1/fixture/Plans/Automated_Testing_System.md",
+      "tests/agent_packet_restrictions/successor_20260813/frozen_plans_snapshot_20260814_v1/fixture/Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/open_items.json",
+      "tests/agent_packet_restrictions/successor_20260813/frozen_plans_snapshot_20260814_v1/fixture/Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/handoff.json",
+      "tests/agent_packet_restrictions/successor_20260813/frozen_plans_snapshot_20260814_v1/fixture/Plans/ledgers/v2/pldg-20260801-001-feature-intake/state/current.json",
+      "tests/agent_packet_restrictions/successor_20260813/frozen_plans_snapshot_20260814_v1/fixture/Plans/ledgers/v2/ledger_registry.json",
+      "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v5/tension_decomposition.json"
+    ],
+    "forbidden_evidence_not_read": [
+      "scorer_key.json",
+      "r8_harness.py expected_tension or expected-output material",
+      "counterfactual holdouts",
+      "candidate-v4 run evidence",
+      "path or matrix terminals",
+      "scores",
+      "captures",
+      "receipts",
+      "prior model answers",
+      "frozen selected IDs or expected outputs"
+    ],
+    "entire_capsule_record_catalogs_reopened": true,
+    "provider_calls_made": false,
+    "plans_writes_made": false,
+    "route_model_slot_cell_special_branches_added": false,
+    "assigned_output_only": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v5/tension_decomposition.json"
+  }
+}
