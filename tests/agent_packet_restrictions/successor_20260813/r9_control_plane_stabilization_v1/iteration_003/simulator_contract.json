@@ -1,0 +1,187 @@
+{
+  "schema_id": "pw-r9-simulator-contract-v3",
+  "status": "STABILIZATION_INTERNAL_ZERO_CREDIT",
+  "authority": {
+    "binding_parent": "tests/agent_packet_restrictions/successor_20260813/r9_goal_operating_contract_v1.json",
+    "semantic_pipeline": "pipeline_contract.json",
+    "normalized_history": "regression_catalog.json",
+    "does_not_authorize": [
+      "stabilization exit",
+      "candidate minting",
+      "preseal audit",
+      "freeze",
+      "canary",
+      "subject or provider calls",
+      "qualification credit",
+      "Goal completion"
+    ]
+  },
+  "purpose": "Drive the public controller CLI over immutable iteration_003 source/data in place, retain two complete clean causal traversals, retain typed compact fault evidence for all 20 normalized and iteration-003 causal cases, prove the historical-HEAD repair against its exact predecessor, and emit an independently reopenable exact retained-file inventory.",
+  "owned_files": [
+    "simulator.py",
+    "simulator_contract.json",
+    "fault_scenarios.json"
+  ],
+  "controller_public_surface": [
+    "simulate",
+    "run-canary",
+    "run-matrix",
+    "reopen"
+  ],
+  "simulator_surface": {
+    "commands": [
+      "check",
+      "run-clean-pair",
+      "run-regressions",
+      "self-test",
+      "reopen-suite"
+    ],
+    "controller_invocation": "subprocess public simulate and reopen CLI only",
+    "private_controller_import": false,
+    "actual_commands_forbidden": true,
+    "network_forbidden": true,
+    "subject_calls": 0,
+    "provider_calls": 0,
+    "simulator_only_evidence_root": "PW_R9_SIMULATOR_EVIDENCE_ROOT names an existing absolute regular nonlink directory; controller run roots remain absent direct children"
+  },
+  "compact_root": {
+    "required_parent": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs",
+    "caller_root_rule": "Caller supplies one absent safe direct-child suite root; reuse is forbidden.",
+    "source_strategy": "Normal traversals read the controller, backend, verifier, contracts, manifests, and transitive semantic files from immutable iteration_003/SUCCESSOR locations in place and bind them once by path, SHA-256, bytes, Git blob OID, HEAD blob OID, local HEAD, and local origin/main. The R9-REG-020 causal variant alone creates two minimal local Git source-closure sandboxes, advances only one unbound marker, reopens recorded blobs, and exact-unlinks both sandboxes with no network.",
+    "clean_evidence": "evidence/synthetic-clean-001 and evidence/synthetic-clean-002 retain every provider_input.txt, attempt.json, raw_result.json, completion.json, 54 route-local artifacts, three path terminals, matrix terminal, accounting, and run manifest.",
+    "fault_evidence": "fault_evidence retains only compact controller roots needed for direct lifecycle or path-stop observation; faults retains one canonical typed receipt per normalized variant/global case and exact before/after capture bytes for mutation cases.",
+    "working_roots": "work/tmp-* is never final evidence. It may be removed only by exact regular-file unlink and directory rmdir after typed captures are durable. No gio, trash, recursive remove, symlink, or broad deletion is permitted.",
+    "final_evidence": "Never deleted or compacted after simulator_receipt.json is created.",
+    "pycache": false
+  },
+  "source_bundle": {
+    "semantic_transitive_rows": 38,
+    "frozen_fixture_plan_rows": 15,
+    "bytecode_rows": 0,
+    "validation": "Every semantic_manifest files row is a safe regular nonlink with exact declared SHA-256 and bytes. Top-level iteration controls and the operating contract are also bound.",
+    "git": "Record exact current Git blob OID and HEAD blob OID for every bound file plus local HEAD, local origin/main, scoped porcelain-v2 bytes, and equality booleans. No fetch or network occurs.",
+    "custody_rule": "A suite can test exact current binding while stabilization exit remains FAIL until every bound byte matches a pushed local HEAD equal to fetched origin/main and external review closes."
+  },
+  "clean_pair": {
+    "runs": 2,
+    "rows_per_run": 291,
+    "pass_completions_per_run": 291,
+    "route_local_artifacts_per_run": 54,
+    "stages_per_route": 18,
+    "s90_artifacts_per_run": 3,
+    "path_terminals_per_run": 3,
+    "controller_rc": 0,
+    "controller_status": "PASS",
+    "public_reopens_per_run": 2,
+    "unchanged_source_bundle": true,
+    "globally_unique_across_pair": [
+      "nonce",
+      "task_id",
+      "thread_id",
+      "turn_id"
+    ],
+    "qualification_credit": 0
+  },
+  "causal_requirements": {
+    "rule": "pw-r9-exact-input-frozen-artifact-v1",
+    "cell_dependency_gate_count": 97,
+    "stage_order_count": 18,
+    "route_local_stage_artifact_count": 54,
+    "stage_storage": "canonical exact expected_artifact plus one LF",
+    "post_fail": "The first valid FAIL in a route stops that route before any later attempt; other routes may start their own first row, so uniform synthetic FAIL yields exactly three row chains and zero later same-slot starts.",
+    "controller_invalid": "Abort every route with no later attempt or artifact.",
+    "reopen": "Controller public reopen invokes the independent verifier, which replays cell gates, stage eligibility, artifact exactness, terminals, bundle binding, freshness, deterministic score, and accounting."
+  },
+  "regression_coverage": {
+    "catalog_families": 20,
+    "normalized_variants": 47,
+    "global_and_iteration_003_cases": 10,
+    "mapping": "Every catalog regression_id and stabilized scenario_id appears exactly once; all variants become terminal before the coverage meta-case passes.",
+    "predecessor_rule": "Every predecessor receipt is reopened against catalog SHA-256 and bytes and remains typed FAIL.",
+    "current_rule": "PASS means only the current zero-provider simulator observed the required behavior or rejection; it never reclassifies predecessor evidence.",
+    "qualification_credit": 0,
+    "historical_head_reproducer": {
+      "normalized_signature": "R9_REG_20_HISTORICAL_RUN_GIT_HEAD_DRIFT",
+      "predecessor": "iteration_002 public reopen returns CONTROLLER_INVALID with offline verifier RUN_GIT_HEAD_DRIFT after only current HEAD advances",
+      "successor": "iteration_003 public reopen returns the unchanged valid subject-failure terminal with typed historical_head_reopen PASS after the same HEAD-only advance",
+      "bounded_rows_per_sandbox": 3,
+      "recorded_commit_source_closure_reopened": true,
+      "experiment_bytes_changed_across_head_advance": 0,
+      "subject_calls": 0,
+      "provider_calls": 0,
+      "network_calls": 0,
+      "qualification_credit": 0
+    }
+  },
+  "required_faults": [
+    "immediate completion",
+    "yielded multi-poll completion",
+    "nonzero exit",
+    "missing output",
+    "LF-only output",
+    "partial output",
+    "malformed output",
+    "attempt-only process loss",
+    "process loss after raw persistence",
+    "process loss after completion persistence",
+    "ordered stop at a row boundary",
+    "abrupt stop drained through completion",
+    "forced loss instead of drain",
+    "one-terminal-LF render",
+    "render drift",
+    "wrong render directory",
+    "illegal future evidence",
+    "deterministic score recomputation",
+    "raw-result mutation",
+    "embedded-score mutation",
+    "restart and repeated reopen",
+    "missing bundle member",
+    "extra bundle member",
+    "nonregular bundle member",
+    "identity-drifted bundle member",
+    "terminal mutation",
+    "accounting mutation",
+    "subject FAIL path stop",
+    "identity collision",
+    "nonce collision",
+    "causal stage finalizer",
+    "54 artifact completeness",
+    "exact Git/bundle binding",
+    "historical recorded-commit reopen"
+  ],
+  "retained_inventory": {
+    "schema_id": "pw-r9-retained-evidence-inventory-v1",
+    "path": "inventory.json",
+    "write_order": "last after simulator_receipt.json and after work is empty and removed",
+    "coverage": "Every retained regular file is listed by relative path, SHA-256, and bytes. inventory.json is the sole explicit cryptographic self-reference exclusion.",
+    "independent_reopen": "The simulator immediately reopens the canonical inventory, compares the exact retained path set and every identity, and reopen-suite repeats the check plus controller public reopen for each retained clean run."
+  },
+  "suite_receipt": {
+    "schema_id": "pw-r9-simulator-suite-receipt-v2",
+    "path": "simulator_receipt.json",
+    "write": "create-only canonical JSON plus one LF after all requested work is terminal and before inventory.json",
+    "calls": {"subject": 0, "provider": 0, "network": 0},
+    "qualification_credit": 0
+  },
+  "fail_closed": [
+    "A missing or nonregular controller.py, backend.py, verifier.py, contract, manifest, or semantic source blocks execution.",
+    "Any source-bundle change during a clean traversal or suite fails the suite.",
+    "Any controller invocation outside public simulate or reopen is impossible in simulator code and fails static inspection.",
+    "Any malformed or noncanonical durable controller JSON fails the scenario.",
+    "Any clean run other than exactly 291 PASS chains, 54 artifacts, three path terminals, matrix terminal, and accounting fails.",
+    "Any post-FAIL later same-slot start fails.",
+    "Any missing normalized family, variant, required fault label, causal global case, or predecessor identity fails.",
+    "Any retained symlink, nonregular member, pycache, bytecode, un-inventoried file, inventory mismatch, retry, replacement, best-of, or duplicate clean identity fails.",
+    "An incomplete suite never writes a PASS receipt."
+  ],
+  "stabilization_exit": {
+    "status": "FAIL",
+    "rule": "The simulator always reports stabilization exit FAIL/NOT_AUTHORIZED and names remaining pushed-Git custody and independent-review blockers. Suite PASS is subordinate zero-credit evidence only."
+  },
+  "nonclaims": [
+    "Synthetic runs earn zero empirical or qualification credit.",
+    "A suite PASS is not stabilization exit, preseal audit, formal candidate, freeze, canary, matrix qualification, production readiness, or release authority.",
+    "Static source-binding projections do not claim hostile-code execution or malicious-controller resistance.",
+    "The simulator does not claim resistance to a malicious trusted controller, host compromise, arbitrary private callers, callbacks, reflection, or missing capability tokens."
+  ]
+}

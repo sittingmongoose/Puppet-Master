@@ -1,0 +1,183 @@
+{
+  "schema_id": "pw-r9-backend-contract-v1",
+  "status": "STABILIZATION_INTERNAL_ITERATION_ZERO_CREDIT",
+  "module": "backend.py",
+  "interface": "invoke(request: dict) -> dict",
+  "standalone": true,
+  "experiment_persistence": false,
+  "callbacks": false,
+  "runtime_imports_from_prior_candidates": false,
+  "request": {
+    "schema_id": "pw-r9-backend-request-v1",
+    "required_fields": [
+      "schema_id",
+      "mode",
+      "run_id",
+      "slot",
+      "cell",
+      "index",
+      "route",
+      "nonce",
+      "provider_input_utf8",
+      "provider_input_sha256",
+      "provider_input_bytes",
+      "attempt_sha256",
+      "attempt_bytes"
+    ],
+    "mode_enum": ["synthetic", "actual"],
+    "route_rule": "route is exactly one frozen {slot,model,thinking} row and slot equals request.slot",
+    "provider_input_rule": "UTF-8 encoding of provider_input_utf8 must exactly match provider_input_sha256 and provider_input_bytes",
+    "synthetic_optional_fields": [
+      "scenario",
+      "synthetic_scenario",
+      "synthetic_expected_output_utf8",
+      "synthetic_response_utf8",
+      "synthetic_poll_count",
+      "synthetic_returncode"
+    ],
+    "actual_optional_fields": ["timeout_seconds"]
+  },
+  "result": {
+    "schema_id": "pw-r9-backend-result-v1",
+    "closed_terminal_field": {"terminal": true},
+    "required_fields": [
+      "schema_id",
+      "mode",
+      "terminal",
+      "nonce",
+      "resolved_route",
+      "provider_input_sha256",
+      "provider_input_bytes",
+      "task_id",
+      "thread_id",
+      "turn_id",
+      "returncode",
+      "stdout_utf8",
+      "stderr_utf8",
+      "process",
+      "dispatch_count",
+      "retry_count",
+      "best_of",
+      "replacement_result"
+    ],
+    "fixed_attempt_fields": {
+      "dispatch_count": 1,
+      "retry_count": 0,
+      "best_of": false,
+      "replacement_result": false,
+      "first_attempt": true,
+      "fresh_context": true,
+      "provider_model_fallback_allowed": false
+    },
+    "terminal_status_enum": [
+      "TASK_COMPLETE",
+      "PROCESS_EXIT_NONZERO",
+      "PROCESS_EXIT_BEFORE_TASK_COMPLETE",
+      "TIMEOUT_BEFORE_TASK_COMPLETE",
+      "BACKEND_ERROR"
+    ],
+    "process_required_fields": [
+      "kind",
+      "pid",
+      "started_utc",
+      "ended_utc",
+      "terminal_reason",
+      "poll_count",
+      "live_poll_count",
+      "polls",
+      "task_complete_observed",
+      "task_terminal",
+      "child_reaped",
+      "reap_action",
+      "protocol_stdout_sha256",
+      "protocol_stdout_bytes",
+      "stderr_sha256",
+      "stderr_bytes"
+    ],
+    "poll_required_fields": [
+      "poll_index",
+      "observed_utc",
+      "state",
+      "process_returncode",
+      "rollout_match_count",
+      "task_complete_match_count"
+    ]
+  },
+  "synthetic": {
+    "provider_calls": 0,
+    "durable_experiment_writes": 0,
+    "identity_rule": "task_id, thread_id, and turn_id are distinct deterministic hashes of the run/row/nonce/input/attempt binding",
+    "scenario_aliases": {
+      "pass": "immediate",
+      "yielded": "yielded_multi_poll",
+      "yielded-multi-poll-complete-stdout": "yielded_multi_poll",
+      "nonzero": "nonzero_exit",
+      "nonzero-exit": "nonzero_exit",
+      "missing": "missing_output",
+      "missing-output": "missing_output",
+      "lf_only_output": "lf_only_output",
+      "lf-only-output": "lf_only_output",
+      "partial": "partial_output",
+      "partial-output": "partial_output",
+      "malformed": "malformed_output",
+      "malformed-output": "malformed_output",
+      "abrupt_stop": "abrupt_stop_before_task_complete",
+      "abrupt-stop-during-backend": "abrupt_stop_before_task_complete"
+    },
+    "scenarios": [
+      "immediate",
+      "yielded_multi_poll",
+      "nonzero_exit",
+      "missing_output",
+      "lf_only_output",
+      "partial_output",
+      "malformed_output",
+      "abrupt_stop_before_task_complete",
+      "abrupt_stop_after_task_complete"
+    ],
+    "full_metadata": "Every scenario returns the full ordered synthetic poll list, typed terminal status, process return code, task-terminal observation, output digest/count, and reaped state."
+  },
+  "actual": {
+    "transport": "fresh codex app-server --listen stdio:// child",
+    "sequence": [
+      "start one app-server child",
+      "initialize once",
+      "create one fresh thread with requested model and allowProviderModelFallback=false",
+      "start one first-attempt turn with provider_input_utf8 as the only text input",
+      "wait synchronously in-process until the matching rollout task_complete",
+      "reopen and validate exact rollout identity, route, sole input, terminal, output, hash, and byte count",
+      "reap the app-server child",
+      "return one closed typed envelope"
+    ],
+    "provider_visible_dynamic_wrapper": false,
+    "retry": false,
+    "best_of": false,
+    "replacement": false,
+    "task_identity_basis": "derived_from_fresh_thread_id",
+    "task_identity_kind": "DERIVED_FROM_FRESH_THREAD_ID",
+    "identity_limitation": "Codex app-server exposes a fresh thread_id and its sole turn_id but no separate platform task_id. task_id is therefore the stable derived value codex-task:<thread_id>, not a separately exposed platform identity; freshness is proven by the new thread plus its one new turn and the request nonce.",
+    "rollout_capture": "The result binds the exact reopened JSONL path, SHA-256, byte count, row count, session metadata, matching turn context, task_started, task_complete, sole provider-input message, all raw assistant final messages, and all prohibited response items.",
+    "output_normalization": "One structurally valid raw assistant final output_text is admitted unchanged when it already has a terminal LF, otherwise exactly one LF is appended. Raw final-message evidence and raw-text hashes remain preserved; no trimming, parsing, repair, or duplicate merge occurs.",
+    "prohibited_activity_rule": "Every response_item outside the explicit message/reasoning safe set is preserved with types and digest. Presence forces a nonzero backend returncode even if app-server itself exits zero.",
+    "development_prohibition": "Do not invoke actual mode or a provider during development or synthetic self-test."
+  },
+  "self_test": {
+    "command": "python3 -B backend.py self-test",
+    "covers": [
+      "immediate",
+      "yielded_multi_poll",
+      "nonzero_exit",
+      "missing_output",
+      "lf_only_output",
+      "partial_output",
+      "malformed_output",
+      "abrupt_stop_before_task_complete",
+      "abrupt_stop_after_task_complete",
+      "deterministic repeat",
+      "distinct synthetic identities"
+    ],
+    "actual_invocations": 0,
+    "provider_calls": 0,
+    "durable_experiment_writes": 0
+  }
+}
