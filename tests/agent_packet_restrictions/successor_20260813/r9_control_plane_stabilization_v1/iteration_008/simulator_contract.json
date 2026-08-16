@@ -1,0 +1,319 @@
+{
+  "schema_id": "pw-r9-simulator-contract-v6",
+  "status": "STABILIZATION_INTERNAL_ZERO_CREDIT",
+  "authority": {
+    "binding_parent": "tests/agent_packet_restrictions/successor_20260813/r9_goal_operating_contract_v1.json",
+    "semantic_pipeline": "pipeline_contract.json",
+    "normalized_history": "regression_catalog.json",
+    "does_not_authorize": [
+      "stabilization exit",
+      "candidate minting",
+      "preseal audit",
+      "freeze",
+      "canary",
+      "subject or provider calls",
+      "qualification credit",
+      "Goal completion"
+    ]
+  },
+  "purpose": "Preserve the complete iteration_007 20-family, 48-variant, 10-global simulator baseline and add one generic zero-call semantic-predicate gate for iteration_008, yielding 21 families and 49 variants without reclassifying the candidate-V3 predecessor FAIL or authorizing a retained-suite rerun.",
+  "owned_files": [
+    "README.md",
+    "fault_scenarios.json",
+    "simulator.py",
+    "simulator_contract.json"
+  ],
+  "controller_public_surface": [
+    "simulate",
+    "run-canary",
+    "run-matrix",
+    "reopen"
+  ],
+  "simulator_surface": {
+    "commands": [
+      "check",
+      "run-clean-pair",
+      "run-regressions",
+      "self-test",
+      "reopen-suite"
+    ],
+    "controller_invocation": "subprocess public simulate and reopen CLI only",
+    "private_controller_import": false,
+    "backend_test_invocation": "subprocess backend.py self-test only; no new backend command or private import",
+    "actual_commands_forbidden": true,
+    "network_forbidden": true,
+    "subject_calls": 0,
+    "provider_calls": 0,
+    "simulator_only_evidence_root": "PW_R9_SIMULATOR_EVIDENCE_ROOT names an existing absolute regular nonlink directory; controller run roots remain absent direct children"
+  },
+  "compact_root": {
+    "required_parent": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs",
+    "caller_root_rule": "Caller supplies one absent safe direct-child suite root; reuse is forbidden.",
+    "source_strategy": "Normal traversals read the controller, backend, verifier, contracts, manifests, and transitive semantic files from immutable iteration_008/SUCCESSOR locations in place and bind them once by path, SHA-256, bytes, Git blob OID, HEAD blob OID, local HEAD, and local origin/main. The bounded check also reopens iteration_007 semantic/catalog/fault baselines and the run-01 diagnosis to prove the one generic semantic delta. The R9-REG-007 selector variant retains the exact archived candidate-V2 rollout, failed terminal, diagnosis, predecessor backend, and backend self-test. The R9-REG-020 historical-HEAD repair is retained unchanged.",
+    "clean_evidence": "evidence/synthetic-clean-001 and evidence/synthetic-clean-002 retain every provider_input.txt, attempt.json, raw_result.json, completion.json, 54 route-local artifacts, three path terminals, matrix terminal, accounting, and run manifest.",
+    "fault_evidence": "fault_evidence retains only compact controller roots needed for direct lifecycle or path-stop observation; faults retains one canonical typed receipt per normalized variant/global case and exact before/after capture bytes for mutation cases.",
+    "working_roots": "work/tmp-* is never final evidence. It may be removed only by exact regular-file unlink and directory rmdir after typed captures are durable. No gio, trash, recursive remove, symlink, or broad deletion is permitted.",
+    "final_evidence": "Never deleted or compacted after simulator_receipt.json is created.",
+    "pycache": false
+  },
+  "source_bundle": {
+    "semantic_transitive_rows": 38,
+    "frozen_fixture_plan_rows": 15,
+    "bytecode_rows": 0,
+    "validation": "Every semantic_manifest files row is a safe regular nonlink with exact declared SHA-256 and bytes. Top-level iteration controls and the operating contract are also bound.",
+    "git": "Record exact current Git blob OID and HEAD blob OID for every bound file plus local HEAD, local origin/main, scoped porcelain-v2 bytes, and equality booleans. No fetch or network occurs.",
+    "durable_reopen_projection": "Compare receipt before, receipt after, and current only as exact sorted path/SHA-256/bytes rows. Mutable historical HEAD, origin/main, porcelain status, tracking state, Git OIDs, and status digests are excluded from historical equality.",
+    "current_custody": "Report current local HEAD equality with local origin/main and require every recorded bound file to match its current HEAD blob as a separate fail-closed result.",
+    "custody_rule": "A suite reopen fails unless the retained simulator receipt and every section required by its recorded command are PASS, and also fails for stable path/identity drift, missing or extra recorded paths, current HEAD/origin inequality, or any bound file not matching current HEAD. It does not fail merely because historical HEAD or tracking/status observations differ from current custody. Stabilization exit remains separately unauthorized until external review closes."
+  },
+  "clean_pair": {
+    "runs": 2,
+    "rows_per_run": 291,
+    "pass_completions_per_run": 291,
+    "route_local_artifacts_per_run": 54,
+    "stages_per_route": 18,
+    "s90_artifacts_per_run": 3,
+    "path_terminals_per_run": 3,
+    "controller_rc": 0,
+    "controller_status": "PASS",
+    "public_reopens_per_run": 2,
+    "unchanged_source_bundle": true,
+    "globally_unique_across_pair": [
+      "nonce",
+      "task_id",
+      "thread_id",
+      "turn_id"
+    ],
+    "qualification_credit": 0
+  },
+  "causal_requirements": {
+    "rule": "pw-r9-exact-input-frozen-artifact-v1",
+    "cell_dependency_gate_count": 97,
+    "stage_order_count": 18,
+    "route_local_stage_artifact_count": 54,
+    "stage_storage": "canonical exact expected_artifact plus one LF",
+    "post_fail": "The first valid FAIL in a route stops that route before any later attempt; other routes may start their own first row, so uniform synthetic FAIL yields exactly three row chains and zero later same-slot starts.",
+    "controller_invalid": "Abort every route with no later attempt or artifact.",
+    "reopen": "Controller public reopen invokes the independent verifier, which replays cell gates, stage eligibility, artifact exactness, terminals, bundle binding, freshness, deterministic score, and accounting."
+  },
+  "supervised_persistence": {
+    "observed_files": {
+      "attempt": "pw-r9-attempt-v2",
+      "raw_result": "pw-r9-raw-result-v2",
+      "completion": "pw-r9-completion-v2"
+    },
+    "admission": "A supervisor may signal only after the same regular nonlink path is observed twice consecutively with identical SHA-256 and bytes, exact canonical JSON plus one terminal LF and no CR, and the expected schema_id. The retained bytes must remain identical after process termination.",
+    "malformed_or_partial": "Existence, zero bytes, partial JSON, noncanonical JSON, the wrong schema, or a single canonical observation is not persistence and cannot authorize a signal.",
+    "predecessor_receipt": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-004-final-self-test-001/faults/025-loss-after-completion/receipt.json",
+      "sha256": "1955606fdbfd1d0b3d349c6ebc618111ce1b5036d6c233b512551f5d2851bb3e",
+      "bytes": 451,
+      "result": "FAIL"
+    },
+    "predecessor_zero_byte_completion": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-004-final-self-test-001/fault_evidence/025-loss-after-completion/run/cells/slot-alpha/000_S10A_DECISION_A01/completion.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "phased_writer_reproducer": "The loss-after-completion variant create-only phases one local completion witness through empty, canonical JSON without terminal LF, and full canonical one-LF storage. The iteration_004 existence predicate accepts the first two phases; iteration_006 rejects both, then requires two identical full observations and retained-byte identity. It uses zero subject, provider, and network calls.",
+    "stage_specific_replacement": {
+      "deleted_dependency": "The supervised_observation strategy never calls the generic _evidence_summary partial-root summarizer.",
+      "hard_loss": "SIGKILL requires process rc -9 with no controller result; the canonical witnessed prefix is row-, schema-, and identity-bound; every later stage is typed ABSENT, INCOMPLETE_OR_MALFORMED with raw path/hash/bytes and no valid admission, or CANONICAL_PRE_CRASH. Public reopen must return rc 2 CONTROLLER_INVALID without changing one inventory byte, and no path/matrix/accounting terminal, later row, retry, relaunch, replacement, best-of selection, or credit may exist.",
+      "graceful_drain": "SIGTERM requires controller and public reopen rc 2 STOPPED_AFTER_DRAIN, one complete exact row chain, valid offline verification, exact three path terminals plus matrix/accounting terminals, no later row, and byte-identical inventory across reopen.",
+      "expect_enforcement": "Every key declared by a supervised scenario expect object is explicitly recognized and compared; unknown fields fail closed.",
+      "predecessor_receipt": {
+        "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-005-final-self-test-001/faults/024-loss-after-raw/receipt.json",
+        "sha256": "df700199e1e458de29fd12a8bc3a0ee6e6fb4719791e1e624d7e7561449c538f",
+        "bytes": 444,
+        "result": "FAIL"
+      },
+      "predecessor_zero_byte_completion": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "classification": "INCOMPLETE_OR_MALFORMED"
+      },
+      "bounded_shapes": [
+        "ABSENT",
+        "ZERO_BYTE",
+        "PARTIAL_OR_NONCANONICAL",
+        "WRONG_SCHEMA",
+        "CANONICAL_RACED_AHEAD",
+        "GRACEFUL_DRAIN"
+      ]
+    }
+  },
+  "rollout_selector_reproducer": {
+    "regression_id": "R9-REG-007",
+    "family": "transaction_owned_completion",
+    "variant_id": "app-server-precontext-turn-scoped-rollout-reopen",
+    "scenario_id": "app-server-precontext-turn-scoped-rollout-reopen",
+    "selector_contract": "turn-scoped-provider-input-selection",
+    "normalized_variant": "R9_REG_007_ROLLOUT_PREEXISTING_USER_CONTEXT_CARDINALITY_REJECTED",
+    "normalized_signature": "SESSION_WIDE_USER_CARDINALITY_FALSE_REJECTS_TURN_BOUND_PROVIDER_INPUT",
+    "strategy": "backend_rollout_selector",
+    "predecessor": {
+      "result": "FAIL",
+      "typed_error": "BackendError",
+      "reason": "The candidate-V2 selector counted one precontext user response_item plus the exact target-turn prompt and rejected session-wide user cardinality 2.",
+      "backend": {"path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/formal_candidate_v2/backend.py", "sha256": "21e5ab30c4ed5b01d19ecdb0687d92ed4a356202cc89359a5a6e46a5511b4343", "bytes": 34910},
+      "rollout": {"path": "tests/agent_packet_restrictions/successor_20260813/r9_candidate_v2_canary_01_failed_rollout.jsonl", "sha256": "c081fb0d3df01214d97a1805e8e91a1667453429c5d4f4960e74a6dd3b37b86f", "bytes": 86063},
+      "terminal": {"path": "tests/agent_packet_restrictions/successor_20260813/r9_candidate_v2_canary_01_terminal.json", "sha256": "ecbf1898ce78a71d9d8e5f8fe0f597405ce71b1070ef3ed6f68cc393efbb828f", "bytes": 7668},
+      "diagnosis": {"path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/canary_v2_failure_diagnosis_v1.json", "sha256": "271a7536389186be1ff852409ae095c934f546bbfe03fbc3d818bc8ebde42bef", "bytes": 19805},
+      "preserved_terminal": "CONTROLLER_INVALID_CANARY_ZERO_CREDIT_NO_RETRY",
+      "retroactive_credit": 0
+    },
+    "successor": {
+      "result": "PASS",
+      "selection": "Exactly one user message strictly after the unique matching turn_context and before the matching task_complete, with one input_text equal to provider_input byte-for-byte.",
+      "accepted_precontext_user_counts": [0, 1, 2],
+      "preserves": ["exact assistant final", "exact matching task_complete"],
+      "rejects": ["zero target input", "duplicate exact target input", "wrong target input", "malformed target input content", "extra post-context user", "post-terminal target input", "wrong-turn target input", "multiple turn contexts", "wrong or extra task_started/task_complete", "zero finals", "multiple finals", "wrong-turn or malformed final content"]
+    },
+    "execution": "The simulator invokes only backend.py self-test in a bounded subprocess and binds its rollout_selector causal receipt. The self-test uses local JSONL fixtures and the archived rollout; it does not start app-server or make a provider, subject, model, or network call.",
+    "qualification_credit": 0
+  },
+  "semantic_predicate_repair": {
+    "regression_id": "R9-REG-021",
+    "scenario_id": "resolved-tension-predicate-clarification",
+    "change_class": "GENERIC_TENSION_PROMPT_PREDICATE_CLARIFICATION_ONLY",
+    "predecessor_question": "Does this source-supported candidate express an authority, scope, sequence, lineage, or evidence boundary that downstream synthesis must preserve explicitly?",
+    "successor_question": "After applying the supplied predecessor_outputs, does this candidate still leave a durable unresolved authority, scope, sequence, lineage, or evidence boundary that downstream synthesis must preserve explicitly?",
+    "prompt_delta": {"changed_tension_prompts": 4, "unchanged_prompts": 93},
+    "preserved": {"expected_outputs": 97, "deterministic_stage_artifacts": 18, "routes": true, "schedule": true, "historical_families": 20, "historical_variants": 48, "global_cases": 10},
+    "frozen_false_oracle": {"cell": "S10B_TENSION_B-T02", "utf8": "{\"preserve_boundary\":false}\n", "sha256": "f2d425dcbb4f36497eab2f8c0476773a60bc144acea6415275629d9cc2cbdad9", "bytes": 28},
+    "generic_pair": {"resolved_projection_beta": false, "durable_noncollapse_delta": true},
+    "predecessor_disposition": "PRESERVED_FAIL_NEVER_RECLASSIFIED",
+    "execution": "The public check reopens exact JSON and prompt bytes only. It performs no model, provider, subject, or network call and writes no evidence.",
+    "qualification_credit": 0
+  },
+  "regression_coverage": {
+    "catalog_families": 21,
+    "normalized_variants": 49,
+    "global_and_iteration_004_cases": 10,
+    "mapping": "Every catalog regression_id and primary stabilized scenario_id appears exactly once. The original 20 family rows, 48 fault variants, 10 global cases, selector archive/self-test, and every existing fault remain object-identical; R9-REG-021 adds exactly one generic data-only semantic variant.",
+    "predecessor_rule": "Every predecessor receipt is reopened against catalog SHA-256 and bytes and remains typed FAIL.",
+    "current_rule": "PASS means only the current zero-provider simulator observed the required behavior or rejection; it never reclassifies predecessor evidence.",
+    "qualification_credit": 0,
+    "historical_head_reproducer": {
+      "normalized_signature": "R9_REG_20_HISTORICAL_RUN_GIT_HEAD_DRIFT",
+      "predecessor": "iteration_002 public reopen returns CONTROLLER_INVALID with offline verifier RUN_GIT_HEAD_DRIFT after only current HEAD advances",
+      "successor": "iteration_008 preserves iteration_007's run-level and suite-level historical-head repair, stage-specific partial-root fault evaluation, and backend-local R9-REG-007 selector repair while adding only R9-REG-021 semantic clarification",
+      "bounded_rows_per_sandbox": 3,
+      "recorded_commit_source_closure_reopened": true,
+      "experiment_bytes_changed_across_head_advance": 0,
+      "subject_calls": 0,
+      "provider_calls": 0,
+      "network_calls": 0,
+      "qualification_credit": 0,
+      "same_family_post_push_suite_reproducer": {
+        "normalized_family": "DURABLE_REOPEN_COUPLED_TO_MUTABLE_GIT_STATE",
+        "predecessor_checkpoint": {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/git_checkpoint_iteration_003_v1.json",
+          "sha256": "f71b6d8fa4749fc7a212d104bd158b83dfa8933253527b2b31e57df53afcd027",
+          "bytes": 6197,
+          "result": "POST_PUSH_REOPEN_FAIL"
+        },
+        "predecessor_progress": {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/progress_assessment_iteration_003_final_v1.json",
+          "sha256": "a1684c896e846d445f4bcfef0d6ff367a903c2fefc4666d3abe2eda525ea5904",
+          "bytes": 2542,
+          "result": "CHURN_DECLARED_RETURN_TO_STABILIZATION"
+        },
+        "predecessor_suite_receipt": {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-003-final-self-test-001/simulator_receipt.json",
+          "sha256": "365bc09467296174762cac501e1ec25a7f7203299c0d7ba8583eeeab24eb7749",
+          "bytes": 260482
+        },
+        "predecessor": "FAIL because the suite comparator required pre-push mutable Git/status snapshot equality after bytes became tracked and pushed",
+        "successor": "PASS only when stable sorted path/SHA-256/bytes identities, independently reopened inventory, both receipt-bound public clean-run reopens, and separately reported current Git custody all pass",
+        "tracking_or_status_transition_required_in_bounded_proof": true,
+        "subject_calls": 0,
+        "provider_calls": 0,
+        "network_calls": 0,
+        "qualification_credit": 0
+      }
+    }
+  },
+  "required_faults": [
+    "immediate completion",
+    "yielded multi-poll completion",
+    "nonzero exit",
+    "missing output",
+    "LF-only output",
+    "partial output",
+    "malformed output",
+    "attempt-only process loss",
+    "process loss after raw persistence",
+    "process loss after completion persistence",
+    "ordered stop at a row boundary",
+    "abrupt stop drained through completion",
+    "forced loss instead of drain",
+    "one-terminal-LF render",
+    "render drift",
+    "wrong render directory",
+    "illegal future evidence",
+    "deterministic score recomputation",
+    "raw-result mutation",
+    "embedded-score mutation",
+    "restart and repeated reopen",
+    "missing bundle member",
+    "extra bundle member",
+    "nonregular bundle member",
+    "identity-drifted bundle member",
+    "terminal mutation",
+    "accounting mutation",
+    "subject FAIL path stop",
+    "identity collision",
+    "nonce collision",
+    "causal stage finalizer",
+    "54 artifact completeness",
+    "exact Git/bundle binding",
+    "historical recorded-commit reopen",
+    "turn-scoped provider-input selection",
+    "precontext user context cardinality",
+    "exact rollout task/final cardinality",
+    "resolved tension predicate clarification"
+  ],
+  "retained_inventory": {
+    "schema_id": "pw-r9-retained-evidence-inventory-v1",
+    "path": "inventory.json",
+    "write_order": "last after simulator_receipt.json and after work is empty and removed",
+    "coverage": "Every retained regular file is listed by relative path, SHA-256, and bytes. inventory.json is the sole explicit cryptographic self-reference exclusion.",
+    "independent_reopen": "The simulator immediately reopens the canonical inventory. reopen-suite first requires the retained simulator receipt and the clean_pair plus command-required faults section to be PASS, then repeats the exact retained-file inventory check, compares stable sorted receipt-before/receipt-after/current path/SHA-256/bytes rows, reports current Git custody separately, and invokes the receipt-bound public controller reopen for exactly both clean runs."
+  },
+  "suite_receipt": {
+    "schema_id": "pw-r9-simulator-suite-receipt-v2",
+    "path": "simulator_receipt.json",
+    "write": "create-only canonical JSON plus one LF after all requested work is terminal and before inventory.json",
+    "calls": {"subject": 0, "provider": 0, "network": 0},
+    "qualification_credit": 0
+  },
+  "fail_closed": [
+    "A missing or nonregular controller.py, backend.py, verifier.py, contract, manifest, or semantic source blocks execution.",
+    "Any source-bundle change during a clean traversal or suite fails the suite.",
+    "A retained suite receipt that is not PASS, has an error, has nonzero calls, changed source bytes, or lacks PASS sections required by its recorded command fails reopen-suite before any clean-run reopen; the exact pushed iteration_004 failed suite remains FAIL.",
+    "Any missing or extra stable source path, source byte-identity drift, current HEAD/origin inequality, or bound-file/current-HEAD mismatch fails reopen-suite; historical mutable Git/status equality is never required.",
+    "Any controller invocation outside public simulate or reopen is impossible in simulator code and fails static inspection.",
+    "Any malformed, partial, noncanonical, wrong-schema, singly observed, or post-observation-mutated durable controller JSON fails the scenario and cannot authorize a supervisor signal.",
+    "A malformed next-stage file remains invalid even when the fault scenario correctly observes fail-closed behavior; scenario PASS never reclassifies it as admitted evidence.",
+    "Any clean run other than exactly 291 PASS chains, 54 artifacts, three path terminals, matrix terminal, and accounting fails.",
+    "Any post-FAIL later same-slot start fails.",
+    "Any missing normalized family, variant, required fault label, causal global case, or predecessor identity fails.",
+    "Any candidate-V2 archive drift, backend self-test failure, selector case omission, acceptance outside precontext counts 0/1/2, or ambiguous/malformed target-turn fixture admission fails.",
+    "Any change to the 20 historical family objects, 48 historical fault variants, 10 global cases, or existing backend selector archive/self-test fails.",
+    "Any successor tension prompt retaining the predecessor generic question, omitting the clarified question, changing more or fewer than four prompts, changing any of 93 non-tension prompts, or changing any expected output, dependency gate, route, schedule row, or deterministic artifact fails.",
+    "Any B-T02 oracle flip, predecessor FAIL reclassification, answer leakage, cell/model/route/slot branch, or generic renamed/reordered pair other than resolved false and durable unresolved true fails.",
+    "Any retained symlink, nonregular member, pycache, bytecode, un-inventoried file, inventory mismatch, retry, replacement, best-of, or duplicate clean identity fails.",
+    "An incomplete suite never writes a PASS receipt."
+  ],
+  "stabilization_exit": {
+    "status": "FAIL",
+    "rule": "The simulator always reports stabilization exit FAIL/NOT_AUTHORIZED and names remaining pushed-Git custody and independent-review blockers. Suite PASS is subordinate zero-credit evidence only."
+  },
+  "nonclaims": [
+    "Synthetic runs earn zero empirical or qualification credit.",
+    "A suite PASS is not stabilization exit, preseal audit, formal candidate, freeze, canary, matrix qualification, production readiness, or release authority.",
+    "Static source-binding projections do not claim hostile-code execution or malicious-controller resistance.",
+    "The simulator does not claim resistance to a malicious trusted controller, host compromise, arbitrary private callers, callbacks, reflection, or missing capability tokens."
+  ]
+}
