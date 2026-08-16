@@ -1,0 +1,197 @@
+{
+  "schema_id": "pw-r9-simulator-contract-v1",
+  "status": "STABILIZATION_INTERNAL_ZERO_CREDIT",
+  "authority": {
+    "binding_parent": "tests/agent_packet_restrictions/successor_20260813/r9_goal_operating_contract_v1.json",
+    "implementation_boundary": "architecture_contract.json",
+    "informative_lifecycle_source": "state_machine_design.json",
+    "schema_precedence": "The minimum architecture is binding where state_machine_design names deleted receipt layers.",
+    "does_not_authorize": [
+      "candidate minting",
+      "freeze",
+      "canary",
+      "subject or provider calls",
+      "qualification credit",
+      "Goal completion"
+    ]
+  },
+  "purpose": "One deterministic zero-provider driver for the public R9 controller CLI, its create-only evidence boundary, and the independent offline verifier.",
+  "owned_files": [
+    "simulator.py",
+    "simulator_contract.json",
+    "fault_scenarios.json"
+  ],
+  "controller_public_surface": [
+    "simulate",
+    "run-canary",
+    "run-matrix",
+    "reopen"
+  ],
+  "simulator_surface": {
+    "commands": [
+      "check",
+      "run-clean-pair",
+      "run-regressions",
+      "self-test"
+    ],
+    "controller_invocation": "subprocess public CLI only",
+    "private_controller_import": false,
+    "actual_commands_forbidden": true,
+    "network_forbidden": true,
+    "subject_calls": 0,
+    "provider_calls": 0
+  },
+  "sandbox": {
+    "required_parent": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs",
+    "caller_root_rule": "Caller supplies one absent direct-child root. The simulator creates it once and never reuses it.",
+    "materialization": "Each execution sandbox receives create-only regular copies of the exact current controller, backend, verifier, contracts, manifests, and every semantic_manifest transitive file under the same repository-relative paths.",
+    "symlinks": false,
+    "hardlinks": false,
+    "reuse": false,
+    "tamper_rule": "A tamper case changes only its disposable sandbox copy, records the original and changed SHA-256 and byte count, and never repairs the copy.",
+    "artifact_rule": "All simulator-created files and controller evidence remain below the caller root."
+  },
+  "trusted_byte_set": [
+    "tests/agent_packet_restrictions/successor_20260813/r9_goal_operating_contract_v1.json",
+    "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_001/architecture_contract.json",
+    "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_001/semantic_manifest.json",
+    "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_001/schedule.json",
+    "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_001/routes.json",
+    "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_001/controller.py",
+    "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_001/backend.py",
+    "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_001/verifier.py",
+    "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_001/simulator.py",
+    "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_001/simulator_contract.json",
+    "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_001/fault_scenarios.json"
+  ],
+  "minimum_durable_row_surface": [
+    "provider_input.txt",
+    "attempt.json",
+    "raw_result.json",
+    "completion.json"
+  ],
+  "minimum_durable_row_rules": {
+    "provider_input": "Exact frozen render storage bytes with one terminal LF; provider-visible bytes remove only that storage LF.",
+    "attempt": "Create-only once-only fuse before backend invocation.",
+    "raw_result": "Complete terminal backend result including start, terminal, process, output, route, and identity facts.",
+    "completion": "Last row write; binds render, attempt, raw result, identities, and embedded deterministic score.",
+    "deleted_peer_receipts": [
+      "backend_started.json",
+      "backend_terminal.json",
+      "score.json"
+    ]
+  },
+  "clean_pair": {
+    "run_kind": "synthetic",
+    "backend_scenario": "immediate",
+    "runs": 2,
+    "rows_per_run": 291,
+    "expected_pass_seals_per_run": 291,
+    "expected_controller_rc": 0,
+    "expected_controller_status": "PASS",
+    "independent_reopens_per_run": 2,
+    "unchanged_byte_set": true,
+    "identity_uniqueness_across_pair": [
+      "nonce",
+      "task_id",
+      "thread_id",
+      "turn_id"
+    ],
+    "qualification_credit": 0
+  },
+  "regression_coverage": {
+    "catalog": "regression_catalog.json",
+    "required_regression_ids": "every catalog families[].regression_id exactly once",
+    "required_scenario_ids": "every catalog families[].stabilized_simulator_scenario.scenario_id exactly once",
+    "predecessor_rule": "Every predecessor receipt is reopened and checked against its catalog SHA-256 and byte count. Its result remains typed FAIL.",
+    "current_rule": "A current scenario PASS means only that the frozen simulator observed the required rejection or valid behavior. It never changes predecessor history.",
+    "qualification_credit": 0
+  },
+  "required_faults": [
+    "immediate completion",
+    "yielded multi-poll completion",
+    "nonzero exit",
+    "missing output",
+    "LF-only output",
+    "partial output",
+    "malformed output",
+    "attempt-only process loss",
+    "process loss after raw persistence",
+    "process loss after completion persistence",
+    "ordered stop at a row boundary",
+    "abrupt stop drained through completion",
+    "forced loss instead of drain",
+    "one-terminal-LF render",
+    "render drift",
+    "wrong render directory",
+    "illegal future evidence",
+    "deterministic score recomputation",
+    "raw-result mutation",
+    "embedded-score mutation",
+    "restart and repeated reopen",
+    "missing bundle member",
+    "extra bundle member",
+    "nonregular bundle member",
+    "identity-drifted bundle member",
+    "terminal mutation",
+    "accounting mutation",
+    "subject FAIL path stop",
+    "identity collision",
+    "nonce collision"
+  ],
+  "receipt": {
+    "schema_id": "pw-r9-simulator-suite-receipt-v1",
+    "path": "simulator_receipt.json",
+    "write": "create-only canonical JSON plus one LF, last after every requested scenario is terminal",
+    "required_fields": [
+      "schema_id",
+      "status",
+      "qualification_credit",
+      "calls",
+      "trusted_byte_set_before",
+      "trusted_byte_set_after",
+      "clean_pair",
+      "regressions",
+      "historical_predecessors",
+      "residual_risks"
+    ],
+    "calls": {
+      "subject": 0,
+      "provider": 0,
+      "network": 0
+    },
+    "history_shape": {
+      "regression_id": "R9-REG-NNN",
+      "predecessor_result": "FAIL",
+      "predecessor_disposition": "PRESERVED_FAIL_NEVER_RECLASSIFIED",
+      "evidence": "list of exact path, sha256, bytes, and role bindings",
+      "current_result": "PASS or FAIL",
+      "current_credit": "SIMULATION_ONLY_ZERO_EMPIRICAL_OR_QUALIFICATION_CREDIT"
+    }
+  },
+  "fail_closed": [
+    "A missing backend.py or verifier.py blocks execution.",
+    "Any trusted-byte change during the clean pair fails the pair.",
+    "Any controller invocation of run-canary or run-matrix fails the suite.",
+    "Any malformed or noncanonical durable JSON fails the scenario.",
+    "Any missing normalized regression scenario fails check and execution.",
+    "Any predecessor evidence hash or byte mismatch remains a current simulator FAIL and does not alter the predecessor FAIL.",
+    "Any absent expected invalidation, unexpected backend continuation, retry, replacement, best-of, or duplicate identity fails the suite.",
+    "An incomplete suite never writes a PASS receipt."
+  ],
+  "stabilization_exit": {
+    "status": "FAIL",
+    "open_blockers": [
+      {
+        "blocker_id": "OPEN_PIPELINE_BLOCKER_NO_CAUSAL_STAGE_FINALIZER_EXECUTION",
+        "meaning": "Iteration 001 does not execute the causal stage/finalizer pipeline. Controller simulation and offline reopen cannot close this external experiment-validity blocker."
+      }
+    ],
+    "rule": "A simulator suite PASS is subordinate and zero-credit. It must not be presented as stabilization-exit PASS while any named blocker remains."
+  },
+  "nonclaims": [
+    "Synthetic runs earn zero empirical or qualification credit.",
+    "A simulator PASS is not a preseal audit, formal candidate, freeze, canary, matrix qualification, production-readiness result, or release decision.",
+    "The simulator does not claim resistance to a malicious trusted controller, host compromise, arbitrary in-process private callers, callbacks, reflection, or missing capability tokens."
+  ]
+}

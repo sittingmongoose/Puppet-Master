@@ -1,0 +1,928 @@
+{
+  "schema_id": "pw-r9-bounded-experiment-state-machine-design-v1",
+  "artifact_id": "PW-R9-STATE-MACHINE-DESIGN-ITERATION-001",
+  "status": "SUBORDINATE_IMPLEMENTATION_DESIGN",
+  "authority": {
+    "binding_parent": "tests/agent_packet_restrictions/successor_20260813/r9_goal_operating_contract_v1.json",
+    "purpose": "Small data-oriented design for implementing and simulating the bounded R9 controller state machine.",
+    "does_not_authorize": [
+      "candidate minting",
+      "freeze",
+      "canary",
+      "subject calls",
+      "qualification credit",
+      "Goal completion"
+    ]
+  },
+  "experiment_shape": {
+    "matrix_rows": 291,
+    "paths": 3,
+    "semantic_cells_per_path": 97,
+    "attempts_per_row": 1,
+    "execution_order": "STRICTLY_SEQUENTIAL_LOWEST_ELIGIBLE_SCHEDULE_INDEX",
+    "maximum_in_flight_attempts": 1,
+    "routes": [
+      {
+        "route_id": "gpt-5.4-mini-xhigh",
+        "model": "gpt-5.4-mini",
+        "reasoning_effort": "xhigh"
+      },
+      {
+        "route_id": "gpt-5.4-mini-medium",
+        "model": "gpt-5.4-mini",
+        "reasoning_effort": "medium"
+      },
+      {
+        "route_id": "gpt-5.6-luna-medium",
+        "model": "gpt-5.6-luna",
+        "reasoning_effort": "medium"
+      }
+    ],
+    "qualification_rule": "Only a matrix with 291 independently reopened VALID_PASS completions, zero other dispositions, and zero retries, replacements, or best-of is a clean matrix."
+  },
+  "trusted_controller_boundary": {
+    "trusted": [
+      "the single foreground controller process",
+      "the controlled host, filesystem durability primitives, and pinned pushed Git bytes",
+      "the frozen data-only manifest, schedule, render inputs, route tuples, scorer, oracle, and reducer identities",
+      "the tiny backend adapter returning start, poll, terminal, and capture data",
+      "the offline verifier reopening immutable artifacts"
+    ],
+    "controller_responsibilities": [
+      "render exact provider-input bytes",
+      "fuse one create-only attempt before dispatch",
+      "start exactly one fresh task and thread for that attempt",
+      "wait in the foreground until a typed backend terminal is observed",
+      "retain all returned poll and terminal data needed for exact raw capture",
+      "persist raw capture, deterministic score, and completion in that order",
+      "drop in-memory state and independently reopen before advance",
+      "stop dispatch permanently on controller invalidity"
+    ],
+    "not_claimed": [
+      "resistance to fabrication by the trusted controller",
+      "resistance to compromise or rollback by the trusted host or operating system",
+      "safety against arbitrary in-process callers invoking implementation internals",
+      "provider or model correctness beyond the exact captured boundary facts",
+      "production filesystem or read-isolation guarantees"
+    ]
+  },
+  "durable_write_protocol": {
+    "rule": "Every controller-created final path is create-only: open with O_WRONLY|O_CREAT|O_EXCL and mode 0600, write the complete canonical bytes, fsync the file, close it, then fsync its parent directory. Never overwrite, truncate, delete, rename over, or repair an existing final path.",
+    "existing_path": "EEXIST is never success-by-assumption. Reopen and validate exact expected schema, bytes, bindings, and phase legality; any mismatch is CONTROLLER_INVALID.",
+    "partial_file": "A visible partial or unparsable file is permanent evidence. It is never repaired in place and makes the run CONTROLLER_INVALID.",
+    "timestamps": "Timestamps are diagnostic only. File presence plus validated content determines state.",
+    "completion_last": "Within an attempt, completion.json is created only after all six upstream attempt artifacts are durable. No later attempt artifact is permitted.",
+    "no_mutable_cursor": "There is no cursor, checkpoint, mutable counter, or progress file. The next eligible schedule row is derived from reopened completion seals and path dispositions."
+  },
+  "durable_layout": [
+    {
+      "path": "run.json",
+      "writer": "controller admission",
+      "required": true,
+      "purpose": "Frozen run identity, 291-row schedule, exact route and render expectations, 291 predeclared nonces, scorer identities, and prior-series identity input."
+    },
+    {
+      "path": "rendered/{schedule_index:03d}.prompt",
+      "writer": "controller",
+      "required_per_attempt": true,
+      "purpose": "Exact provider-input bytes."
+    },
+    {
+      "path": "attempts/{schedule_index:03d}/attempt.json",
+      "writer": "controller",
+      "required_per_attempt": true,
+      "purpose": "Pre-dispatch once-only fuse."
+    },
+    {
+      "path": "attempts/{schedule_index:03d}/backend_started.json",
+      "writer": "controller",
+      "required_for_started_attempt": true,
+      "purpose": "Accepted start receipt and fresh task, thread, turn identity."
+    },
+    {
+      "path": "attempts/{schedule_index:03d}/backend_terminal.json",
+      "writer": "controller",
+      "required_for_seal": true,
+      "purpose": "Typed terminal, typed return code, and exact poll accounting."
+    },
+    {
+      "path": "attempts/{schedule_index:03d}/raw_result.json",
+      "writer": "controller",
+      "required_for_seal": true,
+      "purpose": "Exact captured output and capture-completeness classification."
+    },
+    {
+      "path": "attempts/{schedule_index:03d}/score.json",
+      "writer": "controller deterministic scorer",
+      "required_for_seal": true,
+      "purpose": "Deterministic PASS, FAIL, or INVALID result bound to raw input and scorer identity."
+    },
+    {
+      "path": "attempts/{schedule_index:03d}/completion.json",
+      "writer": "controller",
+      "required_for_valid_seal": true,
+      "purpose": "Last attempt artifact; binds every upstream artifact by relative path, SHA-256, and byte count."
+    },
+    {
+      "path": "stop_request.json",
+      "writer": "authorized outer operator or simulator",
+      "required": false,
+      "purpose": "Create-only ordered or abrupt stop request."
+    },
+    {
+      "path": "run_terminal.json",
+      "writer": "controller",
+      "required_at_run_terminal": true,
+      "purpose": "Final matrix disposition and exact derived accounting."
+    }
+  ],
+  "minimal_record_schemas": {
+    "common_row_key": {
+      "required": [
+        "run_id",
+        "schedule_index",
+        "path_id",
+        "path_index",
+        "cell_id",
+        "route_id",
+        "attempt_ordinal",
+        "nonce"
+      ],
+      "constraints": {
+        "schedule_index": "integer 0..290",
+        "path_index": "integer 0..96",
+        "attempt_ordinal": "integer exactly 1",
+        "nonce": "exactly 64 lowercase hexadecimal characters and equal to the value predeclared for this row"
+      }
+    },
+    "run.json": {
+      "required": [
+        "schema_id",
+        "architecture_id",
+        "run_id",
+        "run_kind",
+        "expected_rows",
+        "schedule",
+        "scorer_identity",
+        "oracle_identity",
+        "reducer_identity",
+        "prior_identity_sets"
+      ],
+      "constraints": [
+        "run_kind is MATRIX for this 291-row machine",
+        "expected_rows is exactly 291",
+        "schedule has exactly 291 entries with contiguous unique schedule_index values",
+        "each route has exactly 97 unique cell rows",
+        "all 291 nonces are present and unique across prior_identity_sets and this schedule",
+        "each schedule entry fixes route tuple and expected rendered SHA-256 and byte count"
+      ]
+    },
+    "attempt.json": {
+      "required": [
+        "schema_id",
+        "common_row_key",
+        "rendered_ref",
+        "expected_route",
+        "attempt_state"
+      ],
+      "constants": {
+        "attempt_state": "FUSED_BEFORE_DISPATCH"
+      },
+      "rendered_ref_required": [
+        "path",
+        "sha256",
+        "bytes"
+      ]
+    },
+    "backend_started.json": {
+      "required": [
+        "schema_id",
+        "common_row_key",
+        "start_status",
+        "task_id",
+        "thread_id",
+        "turn_id",
+        "backend_instance_id"
+      ],
+      "constants": {
+        "start_status": "ACCEPTED"
+      },
+      "constraints": [
+        "task_id, thread_id, and turn_id are nonempty exact opaque strings",
+        "each identity is globally fresh in its own namespace across the experiment series",
+        "the started route exactly equals expected_route"
+      ]
+    },
+    "backend_terminal.json": {
+      "required": [
+        "schema_id",
+        "common_row_key",
+        "task_id",
+        "thread_id",
+        "turn_id",
+        "terminal_status",
+        "backend_rc",
+        "poll_count",
+        "terminal_poll_index"
+      ],
+      "terminal_status_enum": [
+        "EXITED_ZERO",
+        "EXITED_NONZERO",
+        "SIGNALED",
+        "TIMED_OUT",
+        "TRANSPORT_ERROR",
+        "PROTOCOL_ERROR"
+      ],
+      "backend_rc": {
+        "required": [
+          "kind",
+          "value"
+        ],
+        "kind_enum": [
+          "EXIT_CODE",
+          "SIGNAL",
+          "TIMEOUT",
+          "TRANSPORT",
+          "PROTOCOL"
+        ],
+        "value_rule": "integer for EXIT_CODE or SIGNAL; otherwise null"
+      },
+      "constraints": [
+        "poll_count is an integer >= 1, including immediate completion",
+        "terminal_poll_index equals poll_count - 1",
+        "EXITED_ZERO iff backend_rc is {kind: EXIT_CODE, value: 0}",
+        "all common and backend identities exactly equal backend_started.json"
+      ]
+    },
+    "raw_result.json": {
+      "required": [
+        "schema_id",
+        "common_row_key",
+        "task_id",
+        "thread_id",
+        "turn_id",
+        "capture_status",
+        "captures"
+      ],
+      "capture_status_enum": [
+        "COMPLETE",
+        "MISSING",
+        "PARTIAL",
+        "MALFORMED"
+      ],
+      "capture_entry_required": [
+        "name",
+        "encoding",
+        "data",
+        "decoded_bytes",
+        "decoded_sha256"
+      ],
+      "constraints": [
+        "encoding is base64",
+        "data decodes to exactly decoded_bytes and decoded_sha256",
+        "captures preserve every backend poll fragment and terminal output required by the frozen capture contract",
+        "MISSING is represented by exact empty captures, never invented content",
+        "all identities exactly equal backend_started.json"
+      ]
+    },
+    "score.json": {
+      "required": [
+        "schema_id",
+        "common_row_key",
+        "raw_result_ref",
+        "scorer_identity",
+        "oracle_identity",
+        "result",
+        "reason_codes"
+      ],
+      "result_enum": [
+        "PASS",
+        "FAIL",
+        "INVALID"
+      ],
+      "constraints": [
+        "PASS or FAIL requires EXITED_ZERO and COMPLETE raw capture",
+        "nonzero, signal, timeout, transport error, protocol error, missing, partial, or malformed input deterministically yields INVALID",
+        "offline recomputation over reopened raw bytes and frozen scorer inputs must reproduce the entire result and ordered reason_codes"
+      ]
+    },
+    "completion.json": {
+      "required": [
+        "schema_id",
+        "common_row_key",
+        "task_id",
+        "thread_id",
+        "turn_id",
+        "terminal",
+        "upstream_refs"
+      ],
+      "terminal_enum": [
+        "VALID_PASS",
+        "VALID_SUBJECT_FAIL",
+        "SEALED_CONTROLLER_INVALID"
+      ],
+      "upstream_refs_exact_keys": [
+        "rendered",
+        "attempt",
+        "backend_started",
+        "backend_terminal",
+        "raw_result",
+        "score"
+      ],
+      "upstream_ref_required": [
+        "path",
+        "sha256",
+        "bytes"
+      ],
+      "constraints": [
+        "VALID_PASS iff score result is PASS and every eligibility predicate passes",
+        "VALID_SUBJECT_FAIL iff score result is FAIL and every controller-validity predicate passes",
+        "SEALED_CONTROLLER_INVALID iff an observed attempt can be closed with complete exact invalid evidence",
+        "the completion contains no hash of itself",
+        "a completion is a valid seal only after independent reopen validates schema, exact bindings, identities, order, and deterministic score recomputation"
+      ]
+    },
+    "run_terminal.json": {
+      "required": [
+        "schema_id",
+        "architecture_id",
+        "run_id",
+        "terminal",
+        "controller_rc",
+        "first_decisive_row",
+        "path_accounting",
+        "matrix_accounting"
+      ],
+      "terminal_enum": [
+        "CLEAN_PASS",
+        "VALID_SUBJECT_FAIL",
+        "CONTROLLER_INVALID_SEALED",
+        "CONTROLLER_INVALID_UNSEALED_ATTEMPT",
+        "STOPPED_ORDERED_BOUNDARY",
+        "STOPPED_AFTER_DRAIN"
+      ],
+      "constraints": [
+        "accounting is derived from independently reopened artifacts, never copied from mutable counters",
+        "first_decisive_row is null only for CLEAN_PASS or a stop before any decisive row"
+      ]
+    }
+  },
+  "state_axes": {
+    "row_state_enum": [
+      "PENDING",
+      "RENDER_PERSISTED",
+      "ATTEMPT_FUSED",
+      "BACKEND_STARTED",
+      "BACKEND_TERMINAL_CAPTURED",
+      "RAW_PERSISTED",
+      "SCORE_PERSISTED",
+      "COMPLETION_PERSISTED",
+      "REOPEN_VALIDATED",
+      "ADVANCED"
+    ],
+    "path_state_enum": [
+      "ACTIVE",
+      "CLEAN_PASS",
+      "SUBJECT_FAIL_STOPPED",
+      "STOPPED",
+      "INVALID"
+    ],
+    "matrix_state_enum": [
+      "NEW",
+      "ADMITTED",
+      "ACTIVE",
+      "DRAINING",
+      "CLEAN_PASS",
+      "VALID_SUBJECT_FAIL",
+      "STOPPED",
+      "INVALID"
+    ],
+    "derivation": "All durable row states are derived from the longest exact create-only prefix. REOPEN_VALIDATED and ADVANCED are transient controller states and are recomputed after restart. Any artifact gap, extra attempt artifact after completion, malformed prefix, or out-of-order artifact makes the matrix INVALID."
+  },
+  "allowed_row_transitions": [
+    {
+      "from": "PENDING",
+      "event": "persist_exact_frozen_render",
+      "to": "RENDER_PERSISTED",
+      "guard": "row is the lowest eligible schedule index; no attempt is in flight; path is ACTIVE; rendered bytes equal frozen hash and byte count"
+    },
+    {
+      "from": "RENDER_PERSISTED",
+      "event": "persist_attempt_fuse",
+      "to": "ATTEMPT_FUSED",
+      "guard": "render independently reopens exact; nonce and route equal run.json; no stop is observed"
+    },
+    {
+      "from": "ATTEMPT_FUSED",
+      "event": "backend_start_accepted",
+      "to": "BACKEND_STARTED",
+      "guard": "one backend start only; accepted receipt supplies fresh task, thread, and turn identities"
+    },
+    {
+      "from": "BACKEND_STARTED",
+      "event": "foreground_wait_observes_terminal",
+      "to": "BACKEND_TERMINAL_CAPTURED",
+      "guard": "terminal and typed rc are internally consistent; every poll belongs to the exact started identity"
+    },
+    {
+      "from": "BACKEND_TERMINAL_CAPTURED",
+      "event": "persist_exact_raw_capture",
+      "to": "RAW_PERSISTED",
+      "guard": "all observed output is represented exactly; completeness has a typed value"
+    },
+    {
+      "from": "RAW_PERSISTED",
+      "event": "persist_deterministic_score",
+      "to": "SCORE_PERSISTED",
+      "guard": "scorer and oracle identities equal run.json; scorer consumes reopened raw bytes"
+    },
+    {
+      "from": "SCORE_PERSISTED",
+      "event": "persist_completion_last",
+      "to": "COMPLETION_PERSISTED",
+      "guard": "all six upstream artifacts are durable and their exact path, SHA-256, and byte count are bound"
+    },
+    {
+      "from": "COMPLETION_PERSISTED",
+      "event": "drop_memory_and_reopen_validate",
+      "to": "REOPEN_VALIDATED",
+      "guard": "fresh file descriptors reproduce schema, hashes, bytes, identities, phase order, and deterministic score"
+    },
+    {
+      "from": "REOPEN_VALIDATED",
+      "event": "derive_next_eligible_row",
+      "to": "ADVANCED",
+      "guard": "completion is VALID_PASS, or it is VALID_SUBJECT_FAIL and the path is atomically made SUBJECT_FAIL_STOPPED in derived state; completion is not invalid; no stop preempts advance"
+    },
+    {
+      "from": "ADVANCED",
+      "event": "select_lowest_eligible_schedule_index",
+      "to": "PENDING",
+      "target_scope": "LOWEST_ELIGIBLE_OTHER_ROW",
+      "guard": "another row exists on an ACTIVE path and matrix remains ACTIVE"
+    }
+  ],
+  "forbidden_transition_rule": "Every row transition not listed above is forbidden. A forbidden transition, skipped eligible row, second start, identity change, attempt_ordinal other than 1, or dispatch before reopen makes the matrix permanently INVALID and permits no further backend start.",
+  "matrix_transition_rules": [
+    {
+      "from": "NEW",
+      "to": "ADMITTED",
+      "when": "run.json and every frozen input validate before any attempt"
+    },
+    {
+      "from": "ADMITTED",
+      "to": "ACTIVE",
+      "when": "read-only reopen finds no invalid prefix and derives the first eligible row"
+    },
+    {
+      "from": "ACTIVE",
+      "to": "DRAINING",
+      "when": "an abrupt or ordered stop is observed while one attempt is fused or started"
+    },
+    {
+      "from": "ACTIVE",
+      "to": "STOPPED",
+      "when": "a stop is observed at a boundary with no fused attempt"
+    },
+    {
+      "from": "DRAINING",
+      "to": "STOPPED",
+      "when": "the sole current attempt reaches a valid reopened PASS seal; no new attempt is fused"
+    },
+    {
+      "from": [
+        "ACTIVE",
+        "DRAINING"
+      ],
+      "to": "VALID_SUBJECT_FAIL",
+      "when": "all still-active paths finish or stop and at least one path has a reopened VALID_SUBJECT_FAIL seal, with no invalidity"
+    },
+    {
+      "from": "ACTIVE",
+      "to": "CLEAN_PASS",
+      "when": "all 291 rows have reopened VALID_PASS seals and all clean-matrix invariants pass"
+    },
+    {
+      "from": [
+        "ADMITTED",
+        "ACTIVE",
+        "DRAINING"
+      ],
+      "to": "INVALID",
+      "when": "any controller-validity invariant fails; invalidity dominates subject failure and stop"
+    }
+  ],
+  "subject_fail_rule": {
+    "classification": "A FAIL is a valid subject result only when backend terminal is EXITED_ZERO, raw capture is COMPLETE, deterministic score recomputes to FAIL, all identities and bindings validate, and completion reopens as VALID_SUBJECT_FAIL.",
+    "effect": "The failing path becomes SUBJECT_FAIL_STOPPED. No later schedule row on that path may be rendered, fused, started, retried, replaced, or selected best-of. Other ACTIVE paths may continue in global schedule order. The final matrix is VALID_SUBJECT_FAIL and receives zero clean-matrix credit.",
+    "no_retry": "The failed row already consumed its sole first attempt. It is never called again."
+  },
+  "invalidity_and_seal_rule": {
+    "unsealed_attempt": "The existence of attempt.json without a valid independently reopened completion.json permanently makes the matrix CONTROLLER_INVALID_UNSEALED_ATTEMPT on restart or adjudication. No completion may be synthesized after process loss, and no backend call may be repeated.",
+    "sealed_invalid": "If the controller remains alive and exact evidence shows nonzero exit, signal, timeout, transport or protocol failure, missing/partial/malformed output, identity collision, or deterministic-score invalidity, it persists the observed raw facts, deterministic INVALID score, and SEALED_CONTROLLER_INVALID completion. The matrix then becomes CONTROLLER_INVALID_SEALED.",
+    "priority": "INVALID dominates SUBJECT_FAIL, STOPPED, and CLEAN_PASS; SUBJECT_FAIL dominates STOPPED and CLEAN_PASS; STOPPED dominates CLEAN_PASS.",
+    "no_post_invalid_dispatch": "Once any invalidity is observed or derived, backend_start_count cannot increase."
+  },
+  "stop_and_drain": {
+    "ordered_boundary_stop": "Observe stop before fusing the next attempt. Persist run terminal STOPPED_ORDERED_BOUNDARY; do not render or start another row.",
+    "ordered_or_abrupt_during_attempt": "Set matrix state DRAINING in memory, issue no kill, start no new attempt, continue foreground polling of the sole attempt, capture terminal and raw data, score, persist completion last, and reopen. If the completion is VALID_PASS, persist STOPPED_AFTER_DRAIN. If VALID_SUBJECT_FAIL, subject-fail precedence applies. If invalid, invalidity precedence applies.",
+    "forced_process_loss": "A process loss after attempt.json exists but before a valid completion is durable is not a successful drain; reopen permanently classifies the matrix CONTROLLER_INVALID_UNSEALED_ATTEMPT.",
+    "partial_credit": "Every stopped matrix is preserved but receives zero clean-matrix or qualification credit."
+  },
+  "restart_and_reopen": {
+    "algorithm": [
+      "Open run.json read-only and validate the full schedule and frozen identities before examining progress.",
+      "Enumerate only exact expected final paths; reject unknown attempt artifacts, duplicate indexes, gaps inside an attempted prefix, and more than one open attempt.",
+      "For each existing completion in schedule order, open all bound upstream paths using fresh file descriptors and validate exact schema, bytes, hashes, identities, and deterministic score.",
+      "Derive each path state and the matrix accounting without trusting prior in-memory counters.",
+      "If run_terminal.json exists, reopen it and require exact equality with derived disposition and accounting; make no backend call.",
+      "If any attempt.json lacks a valid completion, persist only the derived invalid run terminal if absent and make no backend call.",
+      "If a complete valid completion is the last row artifact, derive the next eligible row; never reexecute the completed row.",
+      "If only an exact complete rendered file exists for the next row and no attempt exists, reuse that exact render and proceed to the fuse; otherwise render the pending row.",
+      "If all eligible rows are terminal, persist run_terminal.json create-only and reopen it before returning."
+    ],
+    "reopen_surface": "reopen is read-only when run_terminal.json exists. It performs no backend or provider action and emits the same typed disposition and rc derived from disk."
+  },
+  "crash_outcomes": [
+    {
+      "last_durable_state": "PENDING with no visible new file",
+      "restart": "safe to derive and render the same row; no attempt existed"
+    },
+    {
+      "last_durable_state": "RENDER_PERSISTED",
+      "restart": "reuse only if exact frozen bytes validate; partial, corrupt, unexpected, or drifted render makes matrix INVALID before dispatch"
+    },
+    {
+      "last_durable_state": "ATTEMPT_FUSED",
+      "restart": "permanent INVALID_UNSEALED_ATTEMPT; zero repeat starts"
+    },
+    {
+      "last_durable_state": "BACKEND_STARTED",
+      "restart": "permanent INVALID_UNSEALED_ATTEMPT; do not recover, poll, or restart the external session"
+    },
+    {
+      "last_durable_state": "BACKEND_TERMINAL_CAPTURED",
+      "restart": "permanent INVALID_UNSEALED_ATTEMPT; do not invent discarded output or terminal metadata"
+    },
+    {
+      "last_durable_state": "RAW_PERSISTED",
+      "restart": "permanent INVALID_UNSEALED_ATTEMPT; do not resume scoring"
+    },
+    {
+      "last_durable_state": "SCORE_PERSISTED",
+      "restart": "permanent INVALID_UNSEALED_ATTEMPT; do not synthesize completion"
+    },
+    {
+      "last_durable_state": "COMPLETION_PERSISTED",
+      "restart": "independently reopen; if valid, derive advance without another call; if partial or invalid, matrix INVALID"
+    },
+    {
+      "last_durable_state": "REOPEN_VALIDATED or ADVANCED",
+      "restart": "transient state is discarded and deterministically re-derived from immutable files"
+    },
+    {
+      "last_durable_state": "run_terminal.json",
+      "restart": "read-only reopen; terminal matrix cannot return to ACTIVE"
+    }
+  ],
+  "identity_and_dispatch_rules": {
+    "predeclared_nonce": "Exactly one nonce is fixed per schedule row before admission. The 291 current nonces and every nonce in prior_identity_sets are pairwise distinct.",
+    "fresh_backend_identity": "Each accepted start returns one task_id, thread_id, and turn_id. Each is pairwise distinct within its own namespace across the current run plus every prior run named by the experiment-series manifest.",
+    "exact_binding": "For a row, task_id, thread_id, turn_id, nonce, route, cell, path, and schedule index must match exactly in backend_started, backend_terminal, raw_result, score, and completion wherever that field occurs.",
+    "pre_dispatch_checks": [
+      "selected row is the lowest eligible schedule index",
+      "path state is ACTIVE",
+      "render bytes equal the frozen expectation",
+      "no other attempt lacks completion",
+      "attempt path does not exist before O_EXCL creation",
+      "nonce has not appeared in current or prior identity sets",
+      "no stop has been observed"
+    ],
+    "post_start_collision": "If any returned task, thread, or turn identity is not fresh, preserve the exact receipt, close with SEALED_CONTROLLER_INVALID if exact closure remains possible, make the matrix INVALID, and start nothing else."
+  },
+  "controller_return_codes": [
+    {
+      "rc": 0,
+      "meaning": "CLEAN_PASS or valid read-only reopen of CLEAN_PASS"
+    },
+    {
+      "rc": 10,
+      "meaning": "VALID_SUBJECT_FAIL"
+    },
+    {
+      "rc": 20,
+      "meaning": "CONTROLLER_INVALID_SEALED or CONTROLLER_INVALID_UNSEALED_ATTEMPT"
+    },
+    {
+      "rc": 30,
+      "meaning": "STOPPED_ORDERED_BOUNDARY"
+    },
+    {
+      "rc": 31,
+      "meaning": "STOPPED_AFTER_DRAIN"
+    },
+    {
+      "rc": 64,
+      "meaning": "usage or pre-admission error with zero fused attempts"
+    }
+  ],
+  "accounting": {
+    "path_fields": [
+      "path_id",
+      "route_id",
+      "expected_rows",
+      "rendered_count",
+      "attempt_count",
+      "backend_started_count",
+      "sealed_count",
+      "pass_count",
+      "subject_fail_count",
+      "sealed_invalid_count",
+      "unsealed_attempt_count",
+      "unstarted_path_fail_stop_count",
+      "unstarted_run_stop_count",
+      "unstarted_run_invalid_count",
+      "pending_count",
+      "retry_count",
+      "replacement_count",
+      "best_of_count",
+      "unique_nonce_count",
+      "unique_task_count",
+      "unique_thread_count",
+      "unique_turn_count",
+      "terminal"
+    ],
+    "matrix_fields": [
+      "expected_rows",
+      "rendered_count",
+      "attempt_count",
+      "backend_started_count",
+      "sealed_count",
+      "pass_count",
+      "subject_fail_count",
+      "sealed_invalid_count",
+      "unsealed_attempt_count",
+      "unstarted_path_fail_stop_count",
+      "unstarted_run_stop_count",
+      "unstarted_run_invalid_count",
+      "pending_count",
+      "ineligible_count",
+      "retry_count",
+      "replacement_count",
+      "best_of_count",
+      "unique_nonce_count",
+      "unique_task_count",
+      "unique_thread_count",
+      "unique_turn_count",
+      "terminal"
+    ],
+    "equations": [
+      "for every path: expected_rows = sealed_count + unsealed_attempt_count + unstarted_path_fail_stop_count + unstarted_run_stop_count + unstarted_run_invalid_count + pending_count",
+      "matrix values equal exact sums of the three path values except identity counts, which are recomputed from sets",
+      "attempt_count = sealed_count + unsealed_attempt_count",
+      "sealed_count = pass_count + subject_fail_count + sealed_invalid_count",
+      "ineligible_count = subject_fail_count + sealed_invalid_count + unsealed_attempt_count + unstarted_path_fail_stop_count + unstarted_run_stop_count + unstarted_run_invalid_count + pending_count",
+      "retry_count = sum(max(0, attempts_for_schedule_index - 1)) and must equal 0",
+      "replacement_count and best_of_count are always 0 because neither operation exists",
+      "CLEAN_PASS requires expected_rows = sealed_count = pass_count = unique_nonce_count = unique_task_count = unique_thread_count = unique_turn_count = 291 and every other count equals 0"
+    ]
+  },
+  "simulator_assertions": [
+    {
+      "case_id": "SIM-001-IMMEDIATE",
+      "fixture": "all 291 starts report terminal on the first poll with exit code 0, complete PASS output",
+      "assert": "291 VALID_PASS seals, poll_count 1 each, maximum one in flight, rc 0, no duplicate dispatch"
+    },
+    {
+      "case_id": "SIM-002-MULTIPOLL",
+      "fixture": "all 291 attempts yield two or more polls before exit code 0",
+      "assert": "every fragment is present in raw capture, terminal_poll_index equals poll_count-1, 291 reopened PASS seals, rc 0"
+    },
+    {
+      "case_id": "SIM-003-NONZERO",
+      "fixture": "one started row exits with a nonzero integer rc",
+      "assert": "typed EXITED_NONZERO, exact rc retained, deterministic INVALID score, SEALED_CONTROLLER_INVALID, matrix rc 20, no later start"
+    },
+    {
+      "case_id": "SIM-004-MISSING",
+      "fixture": "terminal is exit code 0 but required subject output is absent",
+      "assert": "raw MISSING with exact empty capture, INVALID score, sealed invalid matrix, no FAIL misclassification"
+    },
+    {
+      "case_id": "SIM-005-PARTIAL",
+      "fixture": "terminal is exit code 0 but only a strict prefix of required output is returned",
+      "assert": "raw PARTIAL preserves the prefix, INVALID score, sealed invalid matrix, no invented suffix"
+    },
+    {
+      "case_id": "SIM-006-ATTEMPT-ONLY-CRASH",
+      "fixture": "process loss immediately after durable attempt.json and before backend start",
+      "assert": "reopen rc 20, CONTROLLER_INVALID_UNSEALED_ATTEMPT, backend start count 0, attempt count 1, no retry or completion synthesis"
+    },
+    {
+      "case_id": "SIM-007-POST-START-CRASH",
+      "fixture": "process loss after backend start, including after terminal observation but before completion",
+      "assert": "reopen rc 20, one unsealed attempt, no poll recovery, no second start, no invented task/session metadata"
+    },
+    {
+      "case_id": "SIM-008-PHASE-CRASH-SWEEP",
+      "fixture": "inject process loss after each durable phase from render through score",
+      "assert": "render-only exact prefix resumes without duplicate render; every attempt-through-score prefix is permanently invalid; completion prefix reopens and advances without backend activity"
+    },
+    {
+      "case_id": "SIM-009-ORDERED-STOP",
+      "fixture": "create ordered stop at a row boundary",
+      "assert": "no next attempt fused, STOPPED_ORDERED_BOUNDARY, rc 30, exact partial accounting, zero qualification credit"
+    },
+    {
+      "case_id": "SIM-010-ABRUPT-DRAIN",
+      "fixture": "deliver handled abrupt stop while an attempt is polling, then return complete PASS",
+      "assert": "no new start, current attempt seals and reopens, STOPPED_AFTER_DRAIN, rc 31; forced process loss instead yields rc 20"
+    },
+    {
+      "case_id": "SIM-011-RENDER-DRIFT",
+      "fixture": "change one rendered byte or expected byte count before fuse and after restart",
+      "assert": "INVALID before backend start, no rerender overwrite, no qualification credit"
+    },
+    {
+      "case_id": "SIM-012-ILLEGAL-ADVANCE",
+      "fixture": "request a later row while a lower eligible row exists or before completion reopen",
+      "assert": "request rejected, matrix INVALID, backend start count does not increase"
+    },
+    {
+      "case_id": "SIM-013-SCORE-RECOMPUTE",
+      "fixture": "recompute every score from reopened raw bytes; separately mutate a copied fixture score or raw byte",
+      "assert": "clean bytes reproduce exact result and reasons; changed copied fixture is rejected as INVALID without repair"
+    },
+    {
+      "case_id": "SIM-014-REOPEN",
+      "fixture": "drop all controller memory after every completion and reopen a complete 291-row terminal twice",
+      "assert": "same states, accounting, terminal, and rc are derived both times with zero backend starts during reopen"
+    },
+    {
+      "case_id": "SIM-015-SUBJECT-FAIL",
+      "fixture": "one complete exit-zero row deterministically scores FAIL",
+      "assert": "VALID_SUBJECT_FAIL seal; that path has exactly one subject_fail and no later attempts; no retry; other active paths follow schedule; matrix rc 10"
+    },
+    {
+      "case_id": "SIM-016-IDENTITY-COLLISION",
+      "fixture": "duplicate a nonce before admission and separately return a previously seen task, thread, or turn identity after start",
+      "assert": "nonce duplication blocks admission with zero starts; returned identity collision is preserved and makes the started matrix INVALID with no later start"
+    },
+    {
+      "case_id": "SIM-017-PARTIAL-COMPLETION",
+      "fixture": "process loss during direct O_EXCL write of completion.json",
+      "assert": "visible partial completion is not repaired, is not a valid seal, and reopens as CONTROLLER_INVALID_UNSEALED_ATTEMPT"
+    },
+    {
+      "case_id": "SIM-018-TWO-CLEAN-TRAVERSALS",
+      "fixture": "two clean-directory synthetic 291-row traversals on byte-identical controller and verifier inputs",
+      "assert": "both independently produce 291 reopened PASS seals and identical derived accounting while all task, thread, turn, and nonce values remain unique across both traversal identity sets"
+    }
+  ],
+  "historical_failure_constraints": [
+    {
+      "source": "tests/agent_packet_restrictions/successor_20260813/r8_candidate_v12_run01_controller_invalid_terminal.json",
+      "fact": "A started row completed externally but outer session completion metadata was discarded before seal; the row remained unsealed and the run was controller-invalid.",
+      "design_constraint": "Terminal identity, typed rc, and poll count are captured as one durable phase before raw and score; any process loss before the final seal stays permanently invalid and is never reconstructed."
+    },
+    {
+      "source": "tests/agent_packet_restrictions/successor_20260813/r8_candidate_v21_unfrozen_development_snapshot_receipt.json",
+      "fact": "Candidate-v21 bytes are an unfrozen zero-call development snapshot with zero empirical and qualification credit.",
+      "design_constraint": "This design imports no candidate-v12-through-v21 runtime code and makes no retroactive evidence or readiness claim."
+    }
+  ],
+  "mechanical_invariants_table": [
+    {
+      "id": "SMI-001",
+      "predicate": "schedule length = 291; schedule_index = 0..290 exactly; each of 3 paths has 97 rows",
+      "check_time": "admission and reopen",
+      "violation": "INVALID before further dispatch"
+    },
+    {
+      "id": "SMI-002",
+      "predicate": "attempt_ordinal = 1 and at most one attempt.json exists per schedule_index",
+      "check_time": "before fuse and reopen",
+      "violation": "INVALID; retry_count > 0 is never creditable"
+    },
+    {
+      "id": "SMI-003",
+      "predicate": "at most one attempt lacks completion and no new start occurs while one exists",
+      "check_time": "before every start and reopen",
+      "violation": "INVALID; no further backend start"
+    },
+    {
+      "id": "SMI-004",
+      "predicate": "every started attempt has a preexisting exact render and durable attempt fuse",
+      "check_time": "before and after start",
+      "violation": "INVALID"
+    },
+    {
+      "id": "SMI-005",
+      "predicate": "durable phase paths form only a contiguous allowed prefix and completion.json is last",
+      "check_time": "after every write and reopen",
+      "violation": "INVALID; existing bytes preserved"
+    },
+    {
+      "id": "SMI-006",
+      "predicate": "an attempt without an independently valid completion seal is permanently invalid after process loss or reopen",
+      "check_time": "restart and terminal adjudication",
+      "violation": "CONTROLLER_INVALID_UNSEALED_ATTEMPT; no resume or retry"
+    },
+    {
+      "id": "SMI-007",
+      "predicate": "selected row is always the lowest schedule_index whose path is ACTIVE and whose row is pending",
+      "check_time": "before render, fuse, and start",
+      "violation": "INVALID_ILLEGAL_ADVANCE"
+    },
+    {
+      "id": "SMI-008",
+      "predicate": "rendered SHA-256 and byte count exactly equal the frozen schedule expectation",
+      "check_time": "before fuse and reopen",
+      "violation": "INVALID_RENDER_DRIFT; zero dispatch for that row"
+    },
+    {
+      "id": "SMI-009",
+      "predicate": "all 291 predeclared nonces are unique across the experiment series and exactly match their rows",
+      "check_time": "admission and reopen",
+      "violation": "INVALID before dispatch"
+    },
+    {
+      "id": "SMI-010",
+      "predicate": "every task_id, thread_id, and turn_id is nonempty and globally unique in its own namespace across the experiment series",
+      "check_time": "immediately after start and reopen",
+      "violation": "SEALED_CONTROLLER_INVALID if closable; otherwise INVALID_UNSEALED_ATTEMPT"
+    },
+    {
+      "id": "SMI-011",
+      "predicate": "row, route, nonce, task, thread, and turn identities match exactly across all records",
+      "check_time": "before each later phase and reopen",
+      "violation": "INVALID_IDENTITY_BINDING"
+    },
+    {
+      "id": "SMI-012",
+      "predicate": "terminal status and typed backend_rc are consistent; poll_count >= 1 and terminal_poll_index = poll_count-1",
+      "check_time": "terminal capture and reopen",
+      "violation": "SEALED_CONTROLLER_INVALID if exact invalid evidence is closable"
+    },
+    {
+      "id": "SMI-013",
+      "predicate": "PASS or FAIL score implies EXITED_ZERO and COMPLETE raw capture",
+      "check_time": "score and reopen",
+      "violation": "INVALID_SCORE_CLASSIFICATION"
+    },
+    {
+      "id": "SMI-014",
+      "predicate": "recomputed deterministic score equals persisted result and ordered reason_codes",
+      "check_time": "before completion, after completion reopen, and offline verification",
+      "violation": "INVALID_SCORE_RECOMPUTE"
+    },
+    {
+      "id": "SMI-015",
+      "predicate": "completion binds exactly six upstream artifacts by path, SHA-256, and bytes and contains no self-reference",
+      "check_time": "completion reopen",
+      "violation": "completion is not a valid seal; matrix INVALID"
+    },
+    {
+      "id": "SMI-016",
+      "predicate": "VALID_SUBJECT_FAIL stops only its path and no later row on that path has a render or attempt",
+      "check_time": "selection, accounting, and reopen",
+      "violation": "INVALID_POST_FAIL_DISPATCH"
+    },
+    {
+      "id": "SMI-017",
+      "predicate": "after stop observation no new attempt is fused; an in-flight attempt is either fully drained and reopened or the run is invalid",
+      "check_time": "every loop edge and reopen",
+      "violation": "INVALID_POST_STOP_DISPATCH or INVALID_UNSEALED_ATTEMPT"
+    },
+    {
+      "id": "SMI-018",
+      "predicate": "after invalidity backend_started_count never increases",
+      "check_time": "every proposed transition and terminal verification",
+      "violation": "INVALID_POST_INVALID_DISPATCH"
+    },
+    {
+      "id": "SMI-019",
+      "predicate": "per-path equations hold and matrix accounting is their exact derived sum",
+      "check_time": "reopen and run terminal",
+      "violation": "INVALID_ACCOUNTING"
+    },
+    {
+      "id": "SMI-020",
+      "predicate": "retry_count = replacement_count = best_of_count = 0",
+      "check_time": "before every start, reopen, and terminal",
+      "violation": "INVALID_ATTEMPT_POLICY"
+    },
+    {
+      "id": "SMI-021",
+      "predicate": "CLEAN_PASS iff all 291 rows independently reopen as VALID_PASS and all uniqueness and accounting invariants pass",
+      "check_time": "matrix terminal and offline verification",
+      "violation": "no clean-matrix or qualification credit"
+    },
+    {
+      "id": "SMI-022",
+      "predicate": "run_terminal.json exactly matches independently derived disposition, rc, first decisive row, and accounting",
+      "check_time": "terminal write and every reopen",
+      "violation": "INVALID_TERMINAL_MISMATCH"
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "authority": {
+    "external_binding_required": [
+      "verifier.py",
+      "verifier_contract.json",
+      "architecture_contract.json",
+      "semantic_manifest.json",
+      "r9_goal_operating_contract_v1.json"
+    ],
+    "recursive_or_self_hosting_authority": false,
+    "runtime_authority": "verifier.py verify is the only experiment-facing surface; this contract is descriptive and grants no dispatch or repair authority"
+  },
+  "calls": {
+    "network": 0,
+    "provider": 0,
+    "subject": 0
+  },
+  "checks": [
+    "expected interface and exact control bindings",
+    "semantic manifest routes schedule cells and every declared file hash and byte count",
+    "schedule.json exact slot-major product and routes.json exact route identity",
+    "semantic inventory receipt hashes byte counts and per-cell render and expected-output bindings",
+    "run kind mode row count route cell ordinal 64-hex nonce and exact selected schedule",
+    "exact run root directory inventory with no symlinks special paths extra files missing files or future-row evidence",
+    "provider_input.txt exact render storage bytes and exact provider-visible render-minus-terminal-LF hash and byte bindings",
+    "one attempt only zero retry zero best-of zero replacement and permanent invalidity of any attempted row without a valid completion",
+    "full backend terminal core identity route nonce input output process and dispatch accounting",
+    "actual derived task identity exact route model effort attestation raw final-message binding rollout digest output capture terminal process and prohibited-activity evidence when published",
+    "strict JSON response parsing and deterministic exact canonical expected_output plus one-LF score recomputation",
+    "completion-last structural seal and exact completion score binding",
+    "contiguous completed prefix including valid ordered-stop prefixes and complete canary matrix and synthetic runs",
+    "exact path terminal matrix terminal and accounting recomputation",
+    "global cross-run task thread turn and nonce uniqueness across the evidence root"
+  ],
+  "commands": {
+    "run-canary": {
+      "mode": "actual",
+      "selected_rows": "manifest canary_cell once per route in route order"
+    },
+    "run-matrix": {
+      "mode": "actual",
+      "selected_rows": "exact 291-row slot-major semantic matrix"
+    },
+    "simulate": {
+      "mode": "synthetic",
+      "selected_rows": "exact 291-row slot-major semantic matrix"
+    }
+  },
+  "expected": {
+    "exact_keys": [
+      "schema_id",
+      "run_id",
+      "command",
+      "scheduled_rows",
+      "evidence_root",
+      "operating_contract",
+      "architecture_contract",
+      "semantic_manifest"
+    ],
+    "schema_id": "pw-r9-verifier-expectation-v1",
+    "signature": "verify(run_root: pathlib.Path, expected: dict) -> dict"
+  },
+  "identity": "r9-offline-verifier-contract-v1",
+  "nonclaims": [
+    "No provider subject or network call is made.",
+    "No candidate v12 through v21 controller verifier or process module is imported or executed.",
+    "No evidence is written repaired deleted renamed or resumed.",
+    "A valid synthetic run is zero-credit simulator evidence and is not empirical or qualification evidence.",
+    "Verifier validity is not a preseal audit freeze canary qualification production-readiness release-readiness or safety-certification claim."
+  ],
+  "public_surface": {
+    "callbacks": false,
+    "entrypoint": "verify",
+    "imports": "standard library only",
+    "offline": true,
+    "persistence": false,
+    "report": {
+      "required_fields": {
+        "calls": "object",
+        "checks": "object",
+        "command": "string or null",
+        "error": "object or null",
+        "matrix_status": "string",
+        "run_id": "string or null",
+        "schema_id": "pw-r9-offline-verifier-report-v1",
+        "valid": "boolean"
+      },
+      "serialization": "canonical-JSON-able"
+    }
+  },
+  "residuals": [
+    "Reflection resistance capability-token confinement callback confinement and hostile in-process caller resistance are explicitly out of scope and nonblocking.",
+    "A final filesystem snapshot can validate exact bytes paths and bindings but cannot independently reconstruct historical O_EXCL or fsync system calls; those remain trusted-controller obligations."
+  ],
+  "schema_id": "pw-r9-offline-verifier-contract-v1",
+  "status": "STABILIZATION_INTERNAL_ITERATION_ZERO_CREDIT"
+}

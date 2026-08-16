@@ -1,0 +1,169 @@
+{
+  "schema_id": "pw-r9-stabilization-progress-assessment-v1",
+  "identity": "PW-R9-STABILIZE-THEN-TWO-CLEAN-RUNS-20260815.ITERATION-002.PRE-REVIEW",
+  "parent_iteration": "iteration_001",
+  "candidate_status": "STABILIZATION_DEVELOPMENT_NOT_A_FORMAL_CANDIDATE",
+  "operating_contract": {
+    "path": "tests/agent_packet_restrictions/successor_20260813/r9_goal_operating_contract_v1.json",
+    "sha256": "764dd27b3f472a90eef0f8493e63ac8fb349fe05a3a97dc4673a4a835e6e8dbd",
+    "bytes": 7024
+  },
+  "normalized_failure": {
+    "family": "CAUSAL_PIPELINE_ORACLE_SUBSTITUTION_AND_POST_FAIL_ADVANCEMENT",
+    "layers": [
+      "semantic",
+      "admission",
+      "verifier"
+    ],
+    "predecessor_meaning": "Iteration 001 could emit 291 expected-answer matches without executing the 18-stage causal reducer/finalizer pipeline and did not stop a route after a valid subject failure, so later prompts could receive oracle-derived predecessor state.",
+    "successor_meaning": "Iteration 002 admits each row only after reopening declared PASS cells and exact stage artifacts, emits 18 exact route-local stages at their boundaries, stops a route after its first valid subject failure, and independently replays the same chain."
+  },
+  "predecessor_reproducer": {
+    "diagnosis": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_001/causal_pipeline_diagnosis_v1.json",
+      "sha256": "099dd1905b6864622f19b62ec0e6f35abce880a71f05b83cc8dc890975462be5",
+      "bytes": 3520,
+      "result": "FAIL"
+    },
+    "suite": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/implementation-final-self-test-001/simulator_receipt.json",
+      "sha256": "6e27f22af059ec7602958b22c2ed432876666c5b96fb1f194c0a2a90f136d3df",
+      "bytes": 1509259,
+      "result": "STABILIZATION_EXIT_FAIL_NO_CAUSAL_STAGE_FINALIZER_EXECUTION"
+    }
+  },
+  "successor_reproducer": {
+    "suite_root": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-002",
+    "suite_receipt": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-002/simulator_receipt.json",
+      "sha256": "c8e70b76f34c61219a524670542ba1d094fa9fcb9778b3ea1a625c90c46b4d0c",
+      "bytes": 256387
+    },
+    "inventory": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-002/inventory.json",
+      "sha256": "60e862f3c361d6295b1e06c61eddb11cd8fc34b62dddf27a1d2bc55d3819e222",
+      "bytes": 486721,
+      "entry_count_excluding_self": 2724
+    },
+    "result": "PASS"
+  },
+  "synthetic_results": {
+    "complete_clean_matrices": 2,
+    "scheduled_cells_per_matrix": 291,
+    "pass_cells_per_matrix": 291,
+    "stage_artifacts_per_matrix": 54,
+    "s90_artifacts_per_matrix": 3,
+    "cross_run_unique_nonces": "582/582",
+    "cross_run_unique_task_ids": "582/582",
+    "cross_run_unique_thread_ids": "582/582",
+    "cross_run_unique_turn_ids": "582/582",
+    "normalized_variants": "46/46 PASS",
+    "global_and_causal_cases": "10/10 PASS",
+    "separate_reopen": "PASS",
+    "qualification_credit": 0
+  },
+  "longest_valid_causal_prefix": {
+    "predecessor_cells": 0,
+    "successor_cells": 291,
+    "strictly_increased": true,
+    "basis": "The predecessor never executed or sealed the causal stage pipeline; each successor clean matrix independently reopens all 291 cells and all 54 route-local stage artifacts."
+  },
+  "longest_empirical_valid_prefix": {
+    "cells": 27,
+    "changed_in_r9": false,
+    "basis": "Historical R9-entry evidence: candidate v9 reached 27 valid first-attempt PASS cells before a controller persistence defect. Iteration 002 made zero empirical calls."
+  },
+  "historical_regressions": {
+    "families": 19,
+    "variants": 46,
+    "global_and_causal_cases": 10,
+    "previously_closed_failure_classes_regressed": [],
+    "predecessors_preserved_as_failures": true
+  },
+  "architectural_change": {
+    "added": [
+      "data-only per-cell causal dependency gates",
+      "18 exact deterministic stage definitions and 54 route-local artifact seals per clean matrix",
+      "route-local permanent stop after a valid subject failure",
+      "global stop after controller invalidity",
+      "independent verifier replay of causal gates, stage eligibility, and terminal accounting",
+      "compact complete retained evidence inventories"
+    ],
+    "removed_or_replaced": [
+      "replaced all-oracle static traversal with exact causal admission",
+      "replaced copied-repository simulator sandboxes with one hash-bound source bundle and complete compact row evidence",
+      "excluded cache/bytecode and v12-v21 controller machinery from semantic runtime inputs"
+    ],
+    "new_public_controller_surfaces": 0
+  },
+  "surface_census": {
+    "controller_cli_commands": [
+      "simulate",
+      "run-canary",
+      "run-matrix",
+      "reopen"
+    ],
+    "controller_cli_surface_count": 4,
+    "backend_public_surface": "invoke(request)->dict",
+    "verifier_public_surface": "verify(run_root,expected)->dict",
+    "total_experiment_facing_surface_count": 6,
+    "recursive_authority_or_capability_surfaces": 0,
+    "runtime_imports_from_candidate_v12_through_v21_control_code": 0
+  },
+  "stabilized_bytes": {
+    "controller": {
+      "sha256": "9ce66d809af46711d82800c90129d224a54535d7d6cb296b1838bba924d396ad",
+      "bytes": 64978
+    },
+    "verifier": {
+      "sha256": "daf698ede28c90446a2a879afd082d919d37de83e938aea46efb40a2d8a7a5db",
+      "bytes": 77607
+    },
+    "backend": {
+      "sha256": "21e5ab30c4ed5b01d19ecdb0687d92ed4a356202cc89359a5a6e46a5511b4343",
+      "bytes": 34910
+    },
+    "semantic_manifest": {
+      "sha256": "860d03af33ac1e44a9aea05e3f0cc45b984f632fcefcc0ca511bca1fd2862a7a",
+      "bytes": 595323
+    },
+    "component_bundle": {
+      "file_count": 16,
+      "aggregate_file_bytes": 996292,
+      "rows_sha256": "11baa6a3562c168404b1f95cb037ca480625be35e5815c3014af21a54a55fb2f",
+      "rows_bytes": 2680
+    }
+  },
+  "calls": {
+    "subject": 0,
+    "provider": 0,
+    "network": 0,
+    "preparation_agent_interactions": "multiple bounded delegated implementation and verification turns; not empirical credit"
+  },
+  "open_experiment_validity_blockers": [
+    "one holistic independent Sol xhigh design review with zero experiment-validity blockers",
+    "safe commit and push of unchanged stabilized bytes with fetched origin/main equal to local HEAD"
+  ],
+  "qualification": {
+    "streak": 0,
+    "empirical_calls": 0,
+    "credit": 0,
+    "formal_candidate_minted": false,
+    "canary_authorized": false,
+    "matrix_authorized": false
+  },
+  "decision": {
+    "value": "PROGRESSING_PENDING_HOLISTIC_REVIEW_AND_GIT_CUSTODY",
+    "evidence": "The named causal-pipeline blocker closed, the complete regression suite remained green, and the valid synthetic causal prefix increased from zero to two independently reopened 291-cell plus 54-stage matrices without adding a public surface. Formal review, candidate mint, freeze, canary, and subject launch remain unauthorized."
+  },
+  "terminal": "STABILIZATION_ITERATION_PASS_PENDING_EXIT_GATES",
+  "nonclaims": [
+    "not a formal candidate",
+    "not a preseal audit",
+    "not a freeze",
+    "not a canary",
+    "not empirical evidence",
+    "not qualification credit",
+    "not production readiness"
+  ]
+}

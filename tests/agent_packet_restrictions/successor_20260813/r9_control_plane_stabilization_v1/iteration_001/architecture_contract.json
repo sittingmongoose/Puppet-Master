@@ -1,0 +1,227 @@
+{
+  "schema_id": "pw-r9-minimal-controller-architecture-v1",
+  "status": "STABILIZATION_INTERNAL_ITERATION_ZERO_CREDIT",
+  "lineage": {
+    "operating_contract": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r9_goal_operating_contract_v1.json",
+      "sha256": "764dd27b3f472a90eef0f8493e63ac8fb349fe05a3a97dc4673a4a835e6e8dbd",
+      "bytes": 7024,
+      "schema_id": "pw-r9-goal-operating-contract-v1"
+    },
+    "required_checkpoint": "d1d139e01d99a612319148c43b6d9e43b0cb8a0e",
+    "prior_candidate_code_imported": false
+  },
+  "trust_boundary": {
+    "trusted": [
+      "controller.py and controlled host pinned by the external freeze",
+      "backend.py invoke function",
+      "verifier.py verify function",
+      "semantic_manifest.json and every read-only transitive source it hash-binds"
+    ],
+    "controller_rules": {
+      "foreground_sequential_dispatch": true,
+      "manifest_verified_once_before_run": true,
+      "render_persisted_before_attempt": true,
+      "attempt_is_once_only_admission": true,
+      "completion_is_last_row_write": true,
+      "reopen_before_advance": true,
+      "resume_or_relaunch_existing_run": false,
+      "retry_count": 0,
+      "best_of": false,
+      "replacement_result": false
+    },
+    "explicit_nonblocking_residuals": [
+      "malicious trusted-controller fabrication",
+      "host or OS compromise",
+      "arbitrary in-process Python callers invoking private helpers",
+      "capability tokens",
+      "recursive or self-hosting verifier authority",
+      "callback confinement",
+      "reflection resistance",
+      "production FileSafe or read-isolation proof"
+    ]
+  },
+  "surface": {
+    "commands": [
+      "simulate",
+      "run-canary",
+      "run-matrix",
+      "reopen"
+    ],
+    "help_only_additional_surface": true,
+    "return_codes": {
+      "0": "PASS",
+      "1": "VALID_SUBJECT_FAIL",
+      "2": "CONTROLLER_INVALID"
+    }
+  },
+  "semantic_manifest": {
+    "path": "semantic_manifest.json",
+    "schema_id": "pw-r9-semantic-manifest-v1",
+    "required_routes": 3,
+    "required_cells": 97,
+    "required_matrix_rows": 291,
+    "required_fields": [
+      "schema_id",
+      "routes",
+      "schedule",
+      "cells",
+      "files"
+    ],
+    "route_fields": [
+      "slot",
+      "model",
+      "thinking"
+    ],
+    "cell_fields": [
+      "index",
+      "cell",
+      "render_utf8",
+      "expected_output"
+    ],
+    "render_rule": "provider_input.txt stores manifest render UTF-8 with exactly one terminal LF and no CR; backend provider_input_utf8 is those exact bytes minus only the storage LF, with no dynamic wrapper",
+    "score_rule": "exact byte equality with canonical expected_output JSON plus one LF",
+    "additional_files": "sorted unique regular nonlink transitive sources relative to successor_20260813, each bound by sha256 and bytes and never imported or executed by controller.py",
+    "canary_rule": "one manifest canary_cell, default schedule[0], for each route in slot order"
+  },
+  "backend_interface": {
+    "module": "backend.py",
+    "import": "from backend import invoke",
+    "signature": "invoke(request: dict) -> dict",
+    "blocking": true,
+    "persistence": false,
+    "callbacks": false,
+    "nonce_format": "exactly 64 lowercase hexadecimal characters predeclared once per selected row",
+    "calls_per_attempt": 1,
+    "request_core_fields": [
+      "schema_id",
+      "mode",
+      "run_id",
+      "slot",
+      "cell",
+      "index",
+      "route",
+      "nonce",
+      "provider_input_utf8",
+      "provider_input_sha256",
+      "provider_input_bytes",
+      "attempt_sha256",
+      "attempt_bytes"
+    ],
+    "synthetic_only_request_field": "synthetic_expected_output_utf8",
+    "result_core_fields": [
+      "schema_id",
+      "mode",
+      "terminal",
+      "nonce",
+      "resolved_route",
+      "provider_input_sha256",
+      "provider_input_bytes",
+      "task_id",
+      "thread_id",
+      "turn_id",
+      "returncode",
+      "stdout_utf8",
+      "stderr_utf8",
+      "process",
+      "dispatch_count",
+      "retry_count",
+      "best_of",
+      "replacement_result"
+    ],
+    "process_core_fields": [
+      "kind",
+      "pid",
+      "started_utc",
+      "ended_utc",
+      "terminal_reason"
+    ],
+    "error_rule": "after attempt admission invoke must return a terminal JSON-able result for subject failures; an exception or malformed result leaves no valid completion and permanently invalidates the run"
+  },
+  "verifier_interface": {
+    "module": "verifier.py",
+    "import": "from verifier import verify",
+    "signature": "verify(run_root: pathlib.Path, expected: dict) -> dict",
+    "offline": true,
+    "persistence": false,
+    "callbacks": false,
+    "required_return": {
+      "type": "JSON-able object",
+      "valid_field": "boolean"
+    },
+    "required_checks": [
+      "bundle and control identities",
+      "slot-major exact selected schedule",
+      "canonical create-only chain bindings",
+      "render immutability",
+      "attempt once-only accounting",
+      "global task/thread/turn/nonce freshness across iteration evidence",
+      "full raw terminal result integrity",
+      "deterministic score recomputation",
+      "path and matrix terminal accounting",
+      "zero retries, replacements, or best-of"
+    ]
+  },
+  "evidence_contract": {
+    "root": "evidence/<run_id>/",
+    "all_files": "regular nonlinks, create-only, canonical JSON plus one LF except provider_input.txt",
+    "durability": "fsync each file and its parent directory",
+    "row_path": "cells/<slot>/<index>_<cell>/",
+    "row_order": [
+      "provider_input.txt",
+      "attempt.json",
+      "raw_result.json",
+      "completion.json"
+    ],
+    "attempt_required_fields": [
+      "schema_id",
+      "run_id",
+      "slot",
+      "cell",
+      "index",
+      "route",
+      "nonce",
+      "render_storage_sha256",
+      "render_storage_bytes",
+      "provider_input_sha256",
+      "provider_input_bytes",
+      "attempt",
+      "retry_count",
+      "best_of",
+      "replacement_result",
+      "no_retry",
+      "no_relaunch"
+    ],
+    "raw_result": "exact canonical wrapper around the complete backend return object plus dispatch timing and attempt binding",
+    "completion": "last row write; binds attempt, render, raw result, deterministic score, identities, and no-retry flags",
+    "terminal_order": [
+      "one path terminal per route",
+      "matrix_terminal.json",
+      "accounting.json"
+    ],
+    "permanent_invalid_rule": "any attempt without a valid completion, any mutation, or any inconsistent chain permanently invalidates the run; the controller has no resume path"
+  },
+  "schedule": {
+    "ordering": "slot-major: manifest route order outer, manifest schedule order inner",
+    "simulate": {
+      "mode": "synthetic",
+      "rows": 291,
+      "qualification_credit": 0
+    },
+    "run-canary": {
+      "mode": "actual",
+      "rows": 3,
+      "qualification_credit": 0
+    },
+    "run-matrix": {
+      "mode": "actual",
+      "rows": 291,
+      "qualification_credit": "external phase adjudication only"
+    },
+    "stop": "SIGINT or SIGTERM sets a request flag; the current admitted call remains foreground until terminal and is sealed/reopened, then no new attempt or dispatch is made before terminal accounting"
+  },
+  "nonclaims": [
+    "This internal iteration is not a candidate, audit, freeze, canary result, qualification run, readiness claim, or empirical evidence.",
+    "Static checks and synthetic output cannot prove provider behavior, production enforcement, host integrity, or qualification."
+  ]
+}
