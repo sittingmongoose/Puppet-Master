@@ -1,0 +1,192 @@
+{
+  "schema_id": "pw-r9-minimal-controller-architecture-v2",
+  "status": "STABILIZATION_INTERNAL_ITERATION_ZERO_CREDIT",
+  "lineage": {
+    "operating_contract": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r9_goal_operating_contract_v1.json",
+      "sha256": "764dd27b3f472a90eef0f8493e63ac8fb349fe05a3a97dc4673a4a835e6e8dbd",
+      "bytes": 7024
+    },
+    "parent_iteration": "iteration_002",
+    "prior_controller_runtime_imported": false,
+    "checkpoint_authority": "EXACT_RUNTIME_BUNDLE_AND_RECORDED_RUN_GIT_COMMIT",
+    "external_freeze_rule": "Actual canary or matrix launch requires every declared bundle file to equal git show HEAD:path. Later reopen uses the immutable run.git_head commit, not the repository's then-current HEAD; a later external freeze must prove that recorded commit was pushed.",
+    "repaired_regression": {
+      "regression_id": "R9-REG-020",
+      "scenario_id": "historical-head-reopen",
+      "normalized_signature": "R9_REG_20_HISTORICAL_RUN_GIT_HEAD_DRIFT"
+    }
+  },
+  "trust_boundary": {
+    "trusted": [
+      "standalone controller.py and controlled host",
+      "backend.py invoke function",
+      "verifier.py verify function",
+      "semantic_manifest.json and pipeline_contract.json as data-only declarations",
+      "every regular nonlink transitive source hash-bound by semantic_manifest.json"
+    ],
+    "controller_rules": {
+      "foreground_sequential_dispatch": true,
+      "manifest_and_pipeline_verified_before_run": true,
+      "causal_dependencies_reopened_before_each_attempt": true,
+      "sorted_causal_inputs_bound_in_attempt": true,
+      "provider_input_persisted_with_one_lf_and_sent_minus_that_lf": true,
+      "attempt_is_once_only_admission": true,
+      "raw_result_precedes_transport_adjudication": true,
+      "completion_is_last_row_write": true,
+      "reopen_before_advance": true,
+      "eligible_stage_artifacts_finalized_create_only_after_pass": true,
+      "slot_stops_after_first_valid_subject_fail": true,
+      "other_slots_continue_after_valid_subject_fail": true,
+      "controller_invalid_stops_all_slots": true,
+      "resume_or_relaunch_existing_run": false,
+      "retry_count": 0,
+      "best_of": false,
+      "replacement_count": 0
+    },
+    "explicit_nonblocking_residuals": [
+      "malicious trusted-controller fabrication",
+      "host or OS compromise",
+      "arbitrary in-process Python callers invoking private helpers",
+      "capability tokens",
+      "recursive or self-hosting verifier authority",
+      "callback confinement",
+      "reflection resistance",
+      "production FileSafe or read-isolation proof"
+    ]
+  },
+  "surface": {
+    "commands": [
+      "simulate",
+      "run-canary",
+      "run-matrix",
+      "reopen"
+    ],
+    "help_only_additional_surface": true,
+    "simulator_evidence_override": "PW_R9_SIMULATOR_EVIDENCE_ROOT is a hidden synthetic simulate/reopen-only containment seam and does not authorize actual calls.",
+    "return_codes": {
+      "0": "PASS",
+      "1": "VALID_SUBJECT_FAIL",
+      "2": "CONTROLLER_INVALID_OR_STOPPED"
+    }
+  },
+  "semantic_pipeline": {
+    "manifest_path": "semantic_manifest.json",
+    "manifest_schema_id": "pw-r9-semantic-manifest-v2",
+    "pipeline_path": "pipeline_contract.json",
+    "pipeline_schema_id": "pw-r9-semantic-pipeline-contract-v1",
+    "required_routes": 3,
+    "required_cells": 97,
+    "required_matrix_rows": 291,
+    "required_stages_per_route": 18,
+    "required_clean_stage_artifacts": 54,
+    "dependency_rule": "pw-r9-exact-input-frozen-artifact-v1",
+    "cell_gate": "Before each attempt, reopen every exact same-slot required PASS completion and required stage artifact and bind the sorted kind/id/path/hash/bytes rows into attempt.json.",
+    "finalizer": "After a PASS completion, create every newly eligible same-slot artifact as canonical expected_artifact payload plus one LF, verify its declared payload and storage identities, then reopen it.",
+    "fail_stop": "A complete TASK_COMPLETE result with deterministic subject mismatch is durably completed as FAIL and makes all later same-slot rows ineligible; no later same-slot attempt is admitted.",
+    "invalid_stop": "Any transport, dependency, mutation, custody, identity, or evidence INVALID aborts all slots."
+  },
+  "backend_interface": {
+    "module": "backend.py",
+    "import": "from backend import invoke",
+    "signature": "invoke(request: dict) -> dict",
+    "blocking": true,
+    "persistence": false,
+    "callbacks": false,
+    "calls_per_attempt": 1,
+    "transport_admission": "Result must be request-bound, terminal=true, terminal_status=TASK_COMPLETE, task_complete observed and turn-bound, and child_reaped=true.",
+    "subject_failure_boundary": "A transport-admitted result is deterministically scored; exact rc0 response mismatch is permanent subject FAIL, not controller INVALID.",
+    "provider_input_rule": "provider_input.txt is exact manifest render UTF-8 with one terminal LF; provider_input_utf8 is exactly those bytes minus only that LF."
+  },
+  "verifier_interface": {
+    "module": "verifier.py",
+    "import": "from verifier import verify",
+    "signature": "verify(run_root: pathlib.Path, expected: dict) -> dict",
+    "offline": true,
+    "persistence": false,
+    "callbacks": false,
+    "required_return": "JSON-able object containing boolean valid",
+    "clean_rule": "A full clean matrix requires exactly 291 PASS completions and 54 valid route-local stage artifacts.",
+    "historical_reopen_rule": "Synthetic custody reopens the exact live run-bound bundle without requiring current-HEAD equality. Actual custody resolves run.git_head as a commit and compares every exact live bundle storage to its blob at that recorded commit."
+  },
+  "run_custody": {
+    "hardcoded_checkpoint": false,
+    "run_fields": [
+      "schema_id",
+      "operating_contract",
+      "run_id",
+      "run_kind",
+      "mode",
+      "scenario",
+      "created_utc",
+      "git_head",
+      "custody_mode",
+      "bundle",
+      "semantic_manifest",
+      "pipeline_contract",
+      "routes",
+      "schedule",
+      "route_count",
+      "cells_per_route",
+      "planned_call_count",
+      "stage_count",
+      "retry_count",
+      "best_of",
+      "replacement_count"
+    ],
+    "bundle_binding": "Sorted successor-root-relative path/sha256/bytes rows for operating contract, controller, backend, verifier, semantic and pipeline data, routes, schedule, architecture and static contracts/catalogs.",
+    "synthetic": "WORKTREE_EXACT_BUNDLE and qualification credit zero; current-HEAD equality is not a reopen condition",
+    "actual": "GIT_HEAD_PINNED at launch; reopen requires run.git_head to resolve as a commit and every exact live bundle byte to equal git show run.git_head:path"
+  },
+  "evidence_contract": {
+    "root": "evidence/<run_id>/ or the simulator-only selected root",
+    "durability": "All evidence is regular nonlink, create-only, fsynced, and reopened; JSON is canonical plus one LF except provider_input.txt.",
+    "row_path": "cells/<slot>/<index>_<cell>/",
+    "row_order": [
+      "provider_input.txt",
+      "attempt.json",
+      "raw_result.json",
+      "completion.json"
+    ],
+    "artifact_path": "artifacts/<slot>/<stage>.json",
+    "terminal_order": [
+      "optional controller_invalid.json",
+      "one terminals/<slot>.json per route",
+      "matrix_terminal.json",
+      "accounting.json"
+    ],
+    "terminal_distinctions": [
+      "VALID_SUBJECT_FAIL",
+      "ineligible_after_subject_fail",
+      "STOPPED_AFTER_DRAIN",
+      "CONTROLLER_ABORTED",
+      "CONTROLLER_INVALID",
+      "missing"
+    ],
+    "permanent_invalid_rule": "Any admitted attempt without a valid completion, mutation, malformed dependency or transport, illegal post-FAIL advance, inconsistent chain, unexplained missing row, or missing eligible stage artifact permanently invalidates the run; there is no resume path."
+  },
+  "schedule": {
+    "ordering": "slot-major: manifest route order outer, selected manifest schedule order inner",
+    "simulate": {
+      "mode": "synthetic",
+      "rows": 291,
+      "qualification_credit": 0
+    },
+    "run-canary": {
+      "mode": "actual",
+      "rows": 3,
+      "qualification_credit": 0
+    },
+    "run-matrix": {
+      "mode": "actual",
+      "rows": 291,
+      "qualification_credit": "external phase adjudication only"
+    },
+    "stop": "SIGINT or SIGTERM sets a request flag; an admitted foreground invoke drains through raw capture, validation, completion seal, reopen, and eligible artifact finalization, then no new attempt is admitted before stopped terminal accounting."
+  },
+  "nonclaims": [
+    "This internal iteration is not a formal candidate, audit, freeze, canary result, qualification run, readiness claim, or empirical evidence.",
+    "Development simulations have zero qualification credit.",
+    "Static checks and synthetic output cannot prove provider behavior, production enforcement, host integrity, pushed-commit custody, or qualification."
+  ]
+}
