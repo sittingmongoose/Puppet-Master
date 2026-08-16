@@ -1,0 +1,207 @@
+{
+  "schema_id": "pw-r9-fault-scenarios-v4",
+  "status": "STABILIZATION_INTERNAL_ZERO_CREDIT",
+  "catalog": "regression_catalog.json",
+  "retention": {
+    "clean_runs": "retain every controller evidence byte for both 291-row traversals",
+    "faults": "retain one typed compact receipt per variant and every compact controller root used as direct evidence",
+    "working_roots": "ephemeral exact copies may be exact-unlinked and rmdir only after their before/after captures and typed receipt are durable",
+    "source_bundle": "reference immutable iteration_003 sources in place and bind each regular nonlink by path, SHA-256, bytes, and Git blob OID; the historical-HEAD variant alone creates and exact-unlinks two minimal local Git source-closure sandboxes with no network"
+  },
+  "scenarios": [
+    {
+      "regression_id": "R9-REG-001",
+      "scenario_id": "receipt-schema-score-binding",
+      "variants": [
+        {"variant_id": "receipt-schema-mismatch", "strategy": "evidence_mutation", "tamper": "change_raw_result_schema", "fault_labels": ["deterministic score recomputation", "raw-result mutation"], "expect": {"rc": 2, "status": "CONTROLLER_INVALID", "no_repair": true}}
+      ]
+    },
+    {
+      "regression_id": "R9-REG-002",
+      "scenario_id": "yielded-multi-poll-complete-stdout",
+      "variants": [
+        {"variant_id": "immediate-complete", "strategy": "clean_reference", "backend_scenario": "immediate", "fault_labels": ["immediate completion"], "expect": {"terminal_status": "TASK_COMPLETE", "minimum_poll_count": 1, "complete_output": true}},
+        {"variant_id": "yielded-multi-poll", "strategy": "supervised_observation", "backend_scenario": "yielded_multi_poll", "observe": "completion", "stop_signal": "SIGTERM", "fault_labels": ["yielded multi-poll completion"], "expect": {"terminal_status": "TASK_COMPLETE", "minimum_poll_count": 3, "complete_output": true}},
+        {"variant_id": "nonzero-exit", "strategy": "controller_invalid_backend", "backend_scenario": "nonzero_exit", "fault_labels": ["nonzero exit"], "expect": {"rc": 2, "status": "CONTROLLER_INVALID", "rows": 1, "attempts": 1, "raw_results": 1, "completions": 0, "no_later_start": true}},
+        {"variant_id": "missing-output", "strategy": "subject_fail_path_stop", "backend_scenario": "missing_output", "fault_labels": ["missing output", "subject FAIL path stop"], "expect": {"rc": 1, "status": "VALID_SUBJECT_FAIL", "rows": 3, "capture_class": "MISSING", "no_later_same_slot_start": true}},
+        {"variant_id": "lf-only-output", "strategy": "subject_fail_path_stop", "backend_scenario": "lf_only_output", "fault_labels": ["LF-only output", "subject FAIL path stop"], "expect": {"rc": 1, "status": "VALID_SUBJECT_FAIL", "rows": 3, "stdout_bytes": 1, "no_later_same_slot_start": true}},
+        {"variant_id": "partial-output", "strategy": "subject_fail_path_stop", "backend_scenario": "partial_output", "fault_labels": ["partial output", "subject FAIL path stop"], "expect": {"rc": 1, "status": "VALID_SUBJECT_FAIL", "rows": 3, "no_later_same_slot_start": true}},
+        {"variant_id": "malformed-output", "strategy": "subject_fail_path_stop", "backend_scenario": "malformed_output", "fault_labels": ["malformed output", "subject FAIL path stop"], "expect": {"rc": 1, "status": "VALID_SUBJECT_FAIL", "rows": 3, "no_later_same_slot_start": true}}
+      ]
+    },
+    {
+      "regression_id": "R9-REG-003",
+      "scenario_id": "exact-bundle-inventory",
+      "variants": [
+        {"variant_id": "missing-member", "strategy": "source_binding_projection", "tamper": "omit_declared_semantic_source", "fault_labels": ["missing bundle member"], "expect": {"admitted": false, "backend_invocations": 0}},
+        {"variant_id": "extra-member", "strategy": "source_binding_projection", "tamper": "add_undeclared_control_member", "fault_labels": ["extra bundle member"], "expect": {"admitted": false, "backend_invocations": 0}},
+        {"variant_id": "nonregular-member", "strategy": "source_binding_projection", "tamper": "declared_source_as_directory", "fault_labels": ["nonregular bundle member"], "expect": {"admitted": false, "backend_invocations": 0}},
+        {"variant_id": "identity-drift", "strategy": "source_binding_projection", "tamper": "change_declared_source_byte", "fault_labels": ["identity-drifted bundle member"], "expect": {"admitted": false, "backend_invocations": 0}}
+      ]
+    },
+    {
+      "regression_id": "R9-REG-004",
+      "scenario_id": "fixed-render-directory",
+      "variants": [
+        {"variant_id": "wrong-render-directory", "strategy": "evidence_mutation", "tamper": "create_wrong_render_directory_member", "fault_labels": ["wrong render directory"], "expect": {"rc": 2, "status": "CONTROLLER_INVALID", "no_repair": true}}
+      ]
+    },
+    {
+      "regression_id": "R9-REG-005",
+      "scenario_id": "one-lf-immutable-render",
+      "variants": [
+        {"variant_id": "one-terminal-lf", "strategy": "clean_reference", "backend_scenario": "immediate", "fault_labels": ["one-terminal-LF render"], "expect": {"all_renders_one_lf": true}},
+        {"variant_id": "two-terminal-lfs", "strategy": "evidence_mutation", "tamper": "append_lf_to_render", "fault_labels": ["render drift"], "expect": {"rc": 2, "status": "CONTROLLER_INVALID", "no_repair": true}},
+        {"variant_id": "post-start-render-mutation", "strategy": "evidence_mutation", "tamper": "change_render_byte", "fault_labels": ["render drift"], "expect": {"rc": 2, "status": "CONTROLLER_INVALID", "no_repair": true}}
+      ]
+    },
+    {
+      "regression_id": "R9-REG-006",
+      "scenario_id": "abrupt-and-ordered-stop-drain",
+      "variants": [
+        {"variant_id": "ordered-boundary", "strategy": "supervised_observation", "backend_scenario": "immediate", "observe": "completion", "stop_signal": "SIGTERM", "fault_labels": ["ordered stop at a row boundary"], "expect": {"rc": 2, "status": "STOPPED_AFTER_DRAIN", "minimum_completions": 1, "drained": true}},
+        {"variant_id": "abrupt-during-backend", "strategy": "supervised_observation", "backend_scenario": "yielded_multi_poll", "observe": "attempt", "stop_signal": "SIGTERM", "fault_labels": ["abrupt stop drained through completion"], "expect": {"rc": 2, "status": "STOPPED_AFTER_DRAIN", "minimum_completions": 1, "drained": true}},
+        {"variant_id": "forced-loss-instead-of-drain", "strategy": "supervised_observation", "backend_scenario": "yielded_multi_poll", "observe": "attempt", "stop_signal": "SIGKILL", "fault_labels": ["forced loss instead of drain", "attempt-only process loss"], "expect": {"rc": 2, "status": "CONTROLLER_INVALID", "minimum_attempts": 1, "incomplete_chain": true}},
+        {"variant_id": "stop-after-attempt-before-raw", "strategy": "supervised_observation", "backend_scenario": "immediate", "observe": "attempt", "stop_signal": "SIGTERM", "fault_labels": ["abrupt stop drained through completion"], "expect": {"rc": 2, "status": "STOPPED_AFTER_DRAIN", "minimum_completions": 1, "drained": true}},
+        {"variant_id": "stop-after-raw-before-completion", "strategy": "supervised_observation", "backend_scenario": "immediate", "observe": "raw_result", "stop_signal": "SIGTERM", "fault_labels": ["process loss after raw persistence"], "expect": {"rc": 2, "status": "STOPPED_AFTER_DRAIN", "minimum_raw_results": 1, "drained": true}},
+        {"variant_id": "stop-after-completion-before-reopen", "strategy": "supervised_observation", "backend_scenario": "immediate", "observe": "completion", "stop_signal": "SIGTERM", "fault_labels": ["process loss after completion persistence"], "expect": {"rc": 2, "status": "STOPPED_AFTER_DRAIN", "minimum_completions": 1, "drained": true}}
+      ]
+    },
+    {
+      "regression_id": "R9-REG-007",
+      "scenario_id": "foreground-transaction-owns-terminal-and-seal",
+      "variants": [
+        {"variant_id": "multi-poll-terminal-owned", "strategy": "supervised_observation", "backend_scenario": "yielded_multi_poll", "observe": "completion", "stop_signal": "SIGTERM", "fault_labels": ["yielded multi-poll completion"], "expect": {"minimum_poll_count": 3, "terminal_metadata_durable": true}},
+        {"variant_id": "loss-after-raw", "strategy": "supervised_observation", "backend_scenario": "immediate", "observe": "raw_result", "stop_signal": "SIGKILL", "fault_labels": ["process loss after raw persistence"], "expect": {"rc": 2, "status": "CONTROLLER_INVALID", "no_completion_synthesis": true}},
+        {"variant_id": "loss-after-completion", "strategy": "supervised_observation", "backend_scenario": "immediate", "observe": "completion", "stop_signal": "SIGKILL", "fault_labels": ["process loss after completion persistence"], "expect": {"rc": 2, "status": "CONTROLLER_INVALID", "reopen_without_backend": true}}
+      ]
+    },
+    {
+      "regression_id": "R9-REG-008",
+      "scenario_id": "durable-attempt-once-only",
+      "variants": [
+        {"variant_id": "attempt-only-crash", "strategy": "supervised_observation", "backend_scenario": "yielded_multi_poll", "observe": "attempt", "stop_signal": "SIGKILL", "fault_labels": ["attempt-only process loss"], "expect": {"rc": 2, "status": "CONTROLLER_INVALID", "minimum_attempts": 1, "no_relaunch": true}},
+        {"variant_id": "same-root-reinvoke", "strategy": "same_root_reinvoke", "backend_scenario": "immediate", "fault_labels": ["restart and repeated reopen"], "expect": {"second_rc": 2, "second_backend_invocations": 0, "evidence_unchanged": true}}
+      ]
+    },
+    {
+      "regression_id": "R9-REG-009",
+      "scenario_id": "exact-contract-manifest-run-binding",
+      "variants": [
+        {"variant_id": "semantic-identity-drift", "strategy": "evidence_mutation", "tamper": "change_run_semantic_binding", "fault_labels": ["identity-drifted bundle member"], "expect": {"rc": 2, "status": "CONTROLLER_INVALID"}},
+        {"variant_id": "operating-identity-drift", "strategy": "evidence_mutation", "tamper": "change_run_operating_binding", "fault_labels": ["identity-drifted bundle member"], "expect": {"rc": 2, "status": "CONTROLLER_INVALID"}}
+      ]
+    },
+    {
+      "regression_id": "R9-REG-010",
+      "scenario_id": "full-causal-chain-reopen",
+      "variants": [
+        {"variant_id": "raw-byte-mutation", "strategy": "evidence_mutation", "tamper": "change_raw_result_byte", "fault_labels": ["raw-result mutation", "deterministic score recomputation"], "expect": {"rc": 2, "status": "CONTROLLER_INVALID", "no_repair": true}},
+        {"variant_id": "embedded-score-mutation", "strategy": "evidence_mutation", "tamper": "change_embedded_score", "fault_labels": ["embedded-score mutation", "deterministic score recomputation"], "expect": {"rc": 2, "status": "CONTROLLER_INVALID", "no_repair": true}}
+      ]
+    },
+    {
+      "regression_id": "R9-REG-011",
+      "scenario_id": "complete-live-recovery-suite",
+      "variants": [
+        {"variant_id": "required-fault-union", "strategy": "coverage_meta", "fault_labels": [], "expect": {"all_dependency_variants_pass": true}}
+      ]
+    },
+    {
+      "regression_id": "R9-REG-012",
+      "scenario_id": "exact-causal-prefix-inventory",
+      "variants": [
+        {"variant_id": "future-attempt", "strategy": "evidence_mutation", "tamper": "plant_future_attempt", "fault_labels": ["illegal future evidence"], "expect": {"rc": 2, "status": "CONTROLLER_INVALID", "no_advance": true}},
+        {"variant_id": "future-completion", "strategy": "evidence_mutation", "tamper": "plant_future_completion", "fault_labels": ["illegal future evidence"], "expect": {"rc": 2, "status": "CONTROLLER_INVALID", "no_advance": true}}
+      ]
+    },
+    {
+      "regression_id": "R9-REG-013",
+      "scenario_id": "constructible-current-authority",
+      "variants": [
+        {"variant_id": "current-byte-check-only", "strategy": "static_assertion", "assertion": "public_check_only_pass", "fault_labels": [], "expect": {"rc": 0, "status": "PASS", "backend_invocations": 0, "evidence_writes": 0}},
+        {"variant_id": "stale-checkpoint", "strategy": "source_binding_projection", "tamper": "change_required_checkpoint", "fault_labels": ["identity-drifted bundle member"], "expect": {"admitted": false, "backend_invocations": 0}}
+      ]
+    },
+    {
+      "regression_id": "R9-REG-014",
+      "scenario_id": "complete-local-blob-closure",
+      "variants": [
+        {"variant_id": "all-declared-regular-exact", "strategy": "static_assertion", "assertion": "all_declared_regular_exact", "fault_labels": [], "expect": {"all_declared_present": true, "all_regular_nonlinks": true, "all_hashes_exact": true}},
+        {"variant_id": "candidate-import-scan", "strategy": "static_assertion", "assertion": "candidate_import_scan", "fault_labels": [], "expect": {"candidate_v12_v21_runtime_imports": 0}}
+      ]
+    },
+    {
+      "regression_id": "R9-REG-015",
+      "scenario_id": "validate-before-dependency-use",
+      "variants": [
+        {"variant_id": "invalid-authority-zero-backend", "strategy": "source_binding_projection", "tamper": "change_architecture_schema", "fault_labels": ["identity-drifted bundle member"], "expect": {"admitted": false, "backend_invocations": 0, "evidence_writes": 0}}
+      ]
+    },
+    {
+      "regression_id": "R9-REG-016",
+      "scenario_id": "four-surface-common-admission",
+      "variants": [
+        {"variant_id": "exact-public-command-set", "strategy": "static_assertion", "assertion": "public_command_set", "fault_labels": [], "expect": {"commands": ["simulate", "run-canary", "run-matrix", "reopen"], "extra_commands": 0}},
+        {"variant_id": "invalid-control-check-only", "strategy": "source_binding_projection", "tamper": "change_architecture_schema", "fault_labels": ["identity-drifted bundle member"], "expect": {"admitted": false, "backend_invocations": 0, "evidence_writes": 0}}
+      ]
+    },
+    {
+      "regression_id": "R9-REG-017",
+      "scenario_id": "minimum-public-surface-no-runtime-import",
+      "variants": [
+        {"variant_id": "minimum-surface", "strategy": "static_assertion", "assertion": "public_command_set", "fault_labels": [], "expect": {"commands": ["simulate", "run-canary", "run-matrix", "reopen"]}},
+        {"variant_id": "no-v12-v21-import", "strategy": "static_assertion", "assertion": "candidate_import_scan", "fault_labels": [], "expect": {"candidate_v12_v21_runtime_imports": 0, "capability_token_claim": false, "reflection_resistance_claim": false}}
+      ]
+    },
+    {
+      "regression_id": "R9-REG-018",
+      "scenario_id": "closed-data-preflight-projection",
+      "variants": [
+        {"variant_id": "data-only-check-result", "strategy": "static_assertion", "assertion": "public_check_only_pass", "fault_labels": [], "expect": {"check_only_json_object": true, "callable_values": 0, "callback_parameters": 0, "callback_confinement_claim": false}}
+      ]
+    },
+    {
+      "regression_id": "R9-REG-019",
+      "scenario_id": "reject-v21-snapshot-authority-and-import",
+      "variants": [
+        {"variant_id": "v21-remains-zero-credit", "strategy": "static_assertion", "assertion": "historical_predecessor_exact", "fault_labels": [], "expect": {"receipt_hash_exact": true, "historical_result": "FAIL", "current_authority": false}},
+        {"variant_id": "v21-runtime-import-absent", "strategy": "static_assertion", "assertion": "candidate_import_scan", "fault_labels": [], "expect": {"candidate_v12_v21_runtime_imports": 0}}
+      ]
+    },
+    {
+      "regression_id": "R9-REG-020",
+      "scenario_id": "historical-head-reopen",
+      "variants": [
+        {
+          "variant_id": "R9_REG_20_HISTORICAL_RUN_GIT_HEAD_DRIFT",
+          "strategy": "historical_head_reopen_pair",
+          "fault_labels": ["historical recorded-commit reopen", "exact Git/bundle binding"],
+          "expect": {
+            "predecessor_result": "FAIL",
+            "predecessor_error_code": "RUN_GIT_HEAD_DRIFT",
+            "successor_result": "PASS",
+            "head_equal": false,
+            "recorded_run_evidence_unchanged": true,
+            "recorded_commit_source_blobs_reopened": true,
+            "subject_calls": 0,
+            "provider_calls": 0,
+            "qualification_credit": 0
+          }
+        }
+      ]
+    }
+  ],
+  "global_fault_cases": [
+    {"case_id": "GF-REOPEN-TWICE", "strategy": "clean_reference", "fault_labels": ["restart and repeated reopen"], "expect": {"identical_status": true, "identical_verifier_report": true, "backend_invocations": 0}},
+    {"case_id": "GF-TERMINAL-MUTATION", "strategy": "evidence_mutation", "tamper": "change_matrix_terminal_byte", "fault_labels": ["terminal mutation"], "expect": {"rc": 2, "status": "CONTROLLER_INVALID", "no_repair": true}},
+    {"case_id": "GF-ACCOUNTING-MUTATION", "strategy": "evidence_mutation", "tamper": "change_accounting_count", "fault_labels": ["accounting mutation"], "expect": {"rc": 2, "status": "CONTROLLER_INVALID", "no_repair": true}},
+    {"case_id": "GF-SUBJECT-FAIL-PATH-STOP", "strategy": "subject_fail_path_stop", "backend_scenario": "malformed_output", "fault_labels": ["subject FAIL path stop"], "expect": {"rc": 1, "status": "VALID_SUBJECT_FAIL", "rows": 3, "fail_rows": 3, "no_later_same_slot_start": true}},
+    {"case_id": "GF-IDENTITY-COLLISION", "strategy": "evidence_mutation", "tamper": "reuse_prior_backend_identities", "fault_labels": ["identity collision"], "expect": {"rc": 2, "status": "CONTROLLER_INVALID", "no_repair": true}},
+    {"case_id": "GF-NONCE-COLLISION", "strategy": "evidence_mutation", "tamper": "duplicate_run_nonce", "fault_labels": ["nonce collision"], "expect": {"rc": 2, "status": "CONTROLLER_INVALID", "backend_invocations": 0}},
+    {"case_id": "GF-CAUSAL-STAGE-COMPLETE", "strategy": "clean_reference", "fault_labels": ["causal stage finalizer", "54 artifact completeness"], "expect": {"rows": 291, "pass_rows": 291, "stage_artifacts": 54, "s90_artifacts": 3}},
+    {"case_id": "GF-STAGE-ARTIFACT-MUTATION", "strategy": "evidence_mutation", "tamper": "change_stage_artifact_byte", "fault_labels": ["causal stage finalizer", "deterministic score recomputation"], "expect": {"rc": 2, "status": "CONTROLLER_INVALID", "no_repair": true}},
+    {"case_id": "GF-FINALIZER-ARTIFACT-MUTATION", "strategy": "evidence_mutation", "tamper": "change_s90_artifact_byte", "fault_labels": ["causal stage finalizer", "54 artifact completeness"], "expect": {"rc": 2, "status": "CONTROLLER_INVALID", "no_repair": true}},
+    {"case_id": "GF-EXACT-GIT-BUNDLE-BINDING", "strategy": "static_assertion", "assertion": "git_bundle_binding", "fault_labels": ["exact Git/bundle binding"], "expect": {"bundle_exact": true, "git_binding_recorded": true}}
+  ]
+}
