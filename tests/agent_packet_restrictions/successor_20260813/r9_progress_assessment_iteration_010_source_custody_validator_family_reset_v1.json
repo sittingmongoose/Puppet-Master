@@ -1,0 +1,72 @@
+{
+  "schema_id": "pw-r9-progress-assessment-iteration-010-source-custody-validator-family-reset-v1",
+  "artifact_id": "PW-R9-SUCCESSOR-LOOP-BROKEN-TWO-CLEAN-RUNS-20260816",
+  "status": "CONTROLLER_FAMILY_RESET_FRAGMENTED_SOURCE_CUSTODY_VALIDATORS_REJECTED",
+  "trigger": {
+    "prior_churn_assessment": {"path": "r9_progress_assessment_iteration_010_exit_005_pass_source_collector_churn_v1.json", "sha256": "690391390141043288445e8ec4f2f08b85613b4341d67986ed7ca14e154ab4ea", "bytes": 6599},
+    "post_replacement_falsifier": {"path": "r9_control_plane_stabilization_v1/iteration_010_strict_source_collector_falsifier_report_v1.json", "sha256": "a7645bdefdd2daaf20eed152b47b255f91c9f9adc9033c30c29e2070a08ca98f", "bytes": 3919},
+    "condition": "The SOURCE_BUNDLE_TRANSITIVE_AUTHORITY_CLOSURE family recurred in retained reopen after the strict initial collector component replacement.",
+    "binding_action": "Reject the fragmented validator family and rebuild one separable source-custody validator inside the offline-verifier part."
+  },
+  "goal": {"status": "ACTIVE", "completion": false, "blocked": false},
+  "four_separable_parts": {
+    "immutable_semantic_bundle": {
+      "status": "PRESERVED_UNCHANGED",
+      "owners": ["semantic_manifest.json", "semantic_inventory_receipt.json", "pipeline_contract.json", "routes.json", "schedule.json"],
+      "reset_scope": false
+    },
+    "isolated_subject_runner": {
+      "status": "PRESERVED_UNCHANGED",
+      "implementation": "trusted root collaboration subagent spawn adapter plus synthetic data-only adapter for zero-call testing",
+      "reset_scope": false
+    },
+    "append_only_evidence_recorder": {
+      "status": "PRESERVED_UNCHANGED",
+      "implementation": "controller row and terminal evidence state machine",
+      "reset_scope": false
+    },
+    "offline_verifier": {
+      "status": "SOURCE_CUSTODY_SUBCOMPONENT_FAMILY_RESET",
+      "rejected_surfaces": [
+        "resolve-key dictionary coalescing before per-occurrence validation",
+        "retained source reopen using final-component lstat/read only",
+        "recorded component lookup reconstructing paths without canonical admission",
+        "source evidence lookup reading before repository containment"
+      ],
+      "replacement_surface": "one internal canonical repository-path admission function used before reads by live collection, sandbox collection, retained reopen, recorded component lookup, and historical source-evidence lookup"
+    }
+  },
+  "replacement_contract": {
+    "repository_root": "Normalized lexical REPO must equal strict resolved REPO.",
+    "containment_before_read": "Every candidate normalized lexical path must be inside canonical REPO before any content read.",
+    "no_symlink_components": "Strict resolved path must equal normalized lexical path, rejecting final or ancestor symlinks before content read.",
+    "canonical_relative_rows": "Retained source rows must use one canonical repository-relative spelling with no absolute, dot, dot-dot, redundant separator, or alias spelling.",
+    "duplicate_rule": "Every occurrence is validated; identical canonical lexical repeats may coalesce to the canonical lexical Path; all other aliases reject.",
+    "consumer_rule": "Creation, historical sandboxing, retained reopen, component-root reconstruction, and historical source evidence use the same admission function."
+  },
+  "scope_lock": {
+    "files_may_change": ["iteration_010/simulator.py", "iteration_010/simulator_contract.json"],
+    "files_must_not_change": ["controller.py", "backend.py", "verifier.py", "semantic_manifest.json", "semantic_inventory_receipt.json", "pipeline_contract.json", "routes.json", "schedule.json", "regression_catalog.json", "fault_scenarios.json"],
+    "new_public_surface": 0,
+    "new_authority_file": 0,
+    "subject_calls": 0
+  },
+  "loop_breaker": {
+    "controller_family_reset_declared": true,
+    "parent_task_notified": true,
+    "candidate_mint_formal_audit_freeze_canary_and_subject_calls_paused": true,
+    "same_action_on_unchanged_premises": false,
+    "next_action": "Replace the validator family once, obtain fresh adversarial falsification, then run a fresh complete zero-call suite only if the replacement has zero blocker."
+  },
+  "qualification": {"streak": "0_OF_2", "credit": 0, "empirical_calls_since_transport_correction": 0},
+  "authority": {
+    "family_reset_implementation_authorized": true,
+    "fresh_exit_authorized_only_after_zero_blocker_falsification": true,
+    "candidate_mint_authorized": false,
+    "formal_audit_authorized": false,
+    "freeze_authorized": false,
+    "canary_authorized": false,
+    "subject_launch_authorized": false,
+    "goal_completion_authorized": false
+  }
+}

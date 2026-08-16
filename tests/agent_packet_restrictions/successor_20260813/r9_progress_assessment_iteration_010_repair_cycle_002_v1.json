@@ -1,0 +1,166 @@
+{
+  "schema_id": "pw-r9-progress-assessment-iteration-010-repair-cycle-002-v1",
+  "artifact_id": "PW-R9-SUCCESSOR-LOOP-BROKEN-TWO-CLEAN-RUNS-20260816.ITERATION-010-REPAIR-CYCLE-002-ASSESSMENT-V1",
+  "goal_identity": "PW-R9-SUCCESSOR-LOOP-BROKEN-TWO-CLEAN-RUNS-20260816",
+  "created_utc": "2026-08-16T17:14:23Z",
+  "status": "STABILIZATION_CHURN_HOLD_CONTINUES_CHANGED_REPAIRS_REQUIRE_COMPLETE_REGRESSION",
+  "authority": {
+    "allowed_next_action": "RUN_THE_CHANGED_ZERO_CALL_STATIC_AND_COMPLETE_CLEAN_DIRECTORY_EXIT_GATE_THEN_FALSIFY_EXACT_BYTES",
+    "candidate_authorized": false,
+    "formal_audit_authorized": false,
+    "freeze_authorized": false,
+    "canary_authorized": false,
+    "matrix_authorized": false,
+    "subject_launch_authorized": false,
+    "subject_calls_authorized": 0,
+    "goal_completion_authorized": false
+  },
+  "normalized_failure_families": [
+    {
+      "family": "STATIC_COUNTERFACTUAL_SELF_ATTESTATION",
+      "layer": "deterministic_regression_evaluator",
+      "state": "IMPLEMENTATION_REPLACED_BY_ANSWER_FREE_PROJECTION_EVALUATION_AND_EXECUTED_PREDECESSOR_NEGATIVE_CONTROL_COMPLETE_SUITE_PENDING"
+    },
+    {
+      "family": "SEMANTIC_RECEIPT_SCHEMA_MISMATCH",
+      "layer": "offline_verifier",
+      "state": "V3_DATA_ONLY_RECEIPT_BINDING_REPAIRED_TARGETED_ZERO_CALL_CHECK_PASS_COMPLETE_SUITE_PENDING"
+    },
+    {
+      "family": "ADMITTED_DRAIN_TERMINAL_SIGNAL_WINDOW",
+      "layer": "controller_process_state_machine",
+      "state": "HANDLER_LIFETIME_COMPONENT_REPLACED_TARGETED_REPEAT_SIGNAL_PROBE_PASS_COMPLETE_SUITE_PENDING"
+    },
+    {
+      "family": "RAW_SELECTED_RESULT_COMPLETENESS_NOT_FAIL_CLOSED_AT_CONTROLLER_GATE",
+      "layer": "controller_and_offline_verifier",
+      "state": "SUBSET_GATE_REPLACED_BY_EXACT_RECOMPUTED_SELECTED_RESULT_VALIDATION_TARGETED_TAMPER_CHECKS_PASS_COMPLETE_SUITE_PENDING"
+    }
+  ],
+  "predecessor_fail_successor_pass_reproducers": [
+    {
+      "predecessor_fail": "simulator_runs/iteration-010-successor-exit-001/simulator_receipt.json:SEMANTIC_RECEIPT_SCHEMA_MISMATCH",
+      "predecessor_evidence": {
+        "sha256": "6f017abffce5dd97a7f43e327539fcedb2ed0b40e3efc98372aff437922880eb",
+        "bytes": 68158,
+        "status": "FAIL",
+        "qualification_credit": 0
+      },
+      "successor_pass": "verifier v3 data-only receipt validation targeted zero-call witness",
+      "successor_evidence_state": "LOCAL_DIAGNOSTIC_ONLY_COMPLETE_SUITE_PENDING"
+    },
+    {
+      "predecessor_fail": "independent-runtime-falsifier:ADMITTED_DRAIN_TERMINAL_SIGNAL_WINDOW",
+      "successor_pass": "simulator_runs/iteration-010-terminal-signal-probe-001/run:STOPPED_AFTER_DRAIN",
+      "successor_evidence": {
+        "matrix_terminal_sha256": "926605348800acb8e2110bc6b607b5b8c3b7a2ac6af6a83da0ba0baced92444e",
+        "matrix_terminal_bytes": 845,
+        "accounting_sha256": "6a46f80b657ff7ace3542bd7bbfc447c97b6dded2b0949e064cfb50725dfdecd",
+        "accounting_bytes": 535,
+        "attempts": 1,
+        "captured_raw_results": 1,
+        "valid_completions": 1,
+        "pass_rows": 1,
+        "stopped_rows": 290,
+        "invalid_rows": 0,
+        "unknown_or_uncaptured_dispatches": 0
+      },
+      "successor_evidence_state": "TARGETED_ZERO_CALL_DIAGNOSTIC_ONLY_COMPLETE_FAULT_SUITE_PENDING"
+    },
+    {
+      "predecessor_fail": "independent-runtime-falsifier:RAW_SELECTED_RESULT_COMPLETENESS_NOT_FAIL_CLOSED_AT_CONTROLLER_GATE",
+      "successor_pass": "controller live-and-reopen exact selected-result gate plus offline verifier four accepted witnesses and twelve tamper rejections",
+      "successor_evidence_state": "TARGETED_ZERO_CALL_DIAGNOSTIC_ONLY_COMPLETE_FAULT_SUITE_PENDING"
+    }
+  ],
+  "longest_valid_prefix": {
+    "synthetic": {
+      "cells": 291,
+      "status": "ITERATION_010_EXIT_001_FIRST_TRAVERSAL_RETAINED_291_PASS_THEN_SUITE_FAILED_AT_REOPEN",
+      "complete_clean_pairs": 0,
+      "qualification_credit": 0
+    },
+    "empirical": {
+      "source": "R9-FORMAL-CANDIDATE-V4-MATRIX-01",
+      "completed": 211,
+      "pass": 209,
+      "subject_fail": 2,
+      "status": "VALID_SUBJECT_FAIL",
+      "qualification_credit": 0
+    }
+  },
+  "historical_regressions": {
+    "declared_normalized_families": 22,
+    "declared_normalized_variants": 56,
+    "declared_global_cases": 10,
+    "changed_byte_complete_suite": "PENDING",
+    "full_regression_suite_remains_green": false,
+    "closed_class_reopened": false
+  },
+  "open_experiment_validity_blockers": [
+    "Current owner identities and contract projections must pass the exact static gate on the changed bytes.",
+    "Two complete clean-directory 291-cell traversals and every normalized regression, transport, process, crash, drain, render, score, schedule, restart, reopen, and terminal fault must pass on identical bytes.",
+    "Fresh independent xhigh semantic and runtime falsification plus one holistic xhigh review must report zero experiment-validity blockers on the exact exit bytes.",
+    "Owned artifacts must be quiesced, committed alone, pushed, fetched, and reopened with local HEAD equal to origin/main before any formal candidate decision."
+  ],
+  "surface_accounting": {
+    "supported_controller_surface_count": 4,
+    "supported_controller_surfaces": ["simulate", "run-canary", "run-matrix", "reopen"],
+    "code_bytes": {
+      "backend": 55948,
+      "controller": 81379,
+      "verifier": 91156,
+      "runtime_total": 228483,
+      "simulator": 248320,
+      "runtime_plus_simulator": 476803
+    },
+    "changed_component_identities": {
+      "backend_sha256": "ca212a7cb7ce5869c0c851bb99efa838434e3acc3575e645d3daba19ca998f98",
+      "controller_sha256": "78fd2256320dfc928f253c074ee03c5985761e78a91311547422421acd7034b8",
+      "verifier_sha256": "9721090c83dfb3d09f223f0f1e60d45f5614a452c1bc928a5b55c4e8cfac134f",
+      "simulator_sha256": "a2528648c6b0ec658b9d18b093353af3bab5258d2e584a8c215675835fba9247"
+    },
+    "surfaces_deleted_or_replaced": [
+      "iteration_009 receipt self-attestation authority replaced by independent answer-free projection evaluation",
+      "selected-result subset validation replaced by exact mode-specific structured recomputation in controller and offline verifier",
+      "pre-terminal signal-handler restoration window deleted so admitted drain owns terminalization and reopen"
+    ],
+    "public_surfaces_added": 0,
+    "facades_callbacks_tokens_recursive_verifiers_or_sibling_bypasses_added": 0
+  },
+  "calls": {
+    "iteration_010_subject": 0,
+    "iteration_010_provider": 0,
+    "iteration_010_network": 0,
+    "qualification_credit": 0
+  },
+  "qualification": {
+    "clean_matrices": 0,
+    "qualification_streak": 0,
+    "required_clean_matrices": 2
+  },
+  "progress": {
+    "credited": false,
+    "reason": "Named causal components have changed and targeted zero-call reproducers pass, but the binding loop breaker permits progress credit only while the complete changed-byte regression suite remains green; that gate has not yet completed."
+  },
+  "churn": {
+    "parent_churn_hold_active": true,
+    "new_churn_declared": true,
+    "trigger": "TWO_CONSECUTIVE_ASSESSMENTS_WITHOUT_FULL_REGRESSION_QUALIFIED_PREFIX_BLOCKER_CLOSURE_OR_SURFACE_REDUCTION_CREDIT",
+    "response": "Candidate minting, formal audit, freeze, canary, and subject calls remain paused. The smallest causal components were replaced rather than wrapped; the next action is the changed-byte complete zero-call gate, not a repeated unchanged action.",
+    "controller_family_rejected": false,
+    "reason_controller_family_not_rejected": "Neither repaired defect has recurred after component replacement; complete changed-byte regression evidence is pending."
+  },
+  "preserved_failure": {
+    "exit_001_inventory_sha256": "c2ad21f46dd45bbbabc4412db10423279adfe50befd96532652c14c88d32acda",
+    "exit_001_inventory_bytes": 219943,
+    "classification": "DURABLE_ZERO_CALL_FAILED_ATTEMPT_WITH_ONE_291_PASS_TRAVERSAL_NOT_A_CLEAN_PAIR_OR_STABILIZATION_EXIT"
+  },
+  "next_gate": "Close any static identity or contract drift, then execute one fresh complete clean-directory zero-call exit suite on unchanged bytes; preserve every result and reassess before independent falsification.",
+  "nonclaims": [
+    "Targeted diagnostics are not a complete regression terminal, stabilization exit, candidate, audit, readiness, or qualification result.",
+    "The retained first synthetic traversal is not a complete clean pair and carries zero qualification credit.",
+    "No predecessor failure is retried, reinterpreted, replaced, or promoted.",
+    "No candidate, freeze, canary, empirical matrix, subject launch, or Goal-completion authority is minted."
+  ]
+}

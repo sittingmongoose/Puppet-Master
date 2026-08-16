@@ -1,0 +1,50 @@
+{
+  "schema": "pm.agent_packet_restrictions.r9_takeover_receipt.v1",
+  "goal_identity": "PW-R9-SUCCESSOR-LOOP-BROKEN-TWO-CLEAN-RUNS-20260816",
+  "captured_at_utc": "2026-08-16T16:06:16Z",
+  "controller_role": "fresh_replacement_controller",
+  "source_checkout": "/mnt/Cursor/PuppetMaster",
+  "iteration_path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010",
+  "custody_status": "in_progress_predecessor_state",
+  "iteration_mutated_during_takeover": false,
+  "candidate_authority": "closed",
+  "subject_calls_authorized": false,
+  "git": {
+    "head": "8bf0f38976d456e4ab4485b78fcbd563e5137a9b",
+    "origin_main": "8bf0f38976d456e4ab4485b78fcbd563e5137a9b",
+    "equal_at_capture": true,
+    "iteration_tracking_state": "untracked_preserved_successor_work"
+  },
+  "inventory": {
+    "algorithm": "sha256",
+    "file_count": 17,
+    "aggregate_algorithm": "sha256_of_lexicographically_sorted_lines_sha256_two_spaces_relative_path_newline",
+    "aggregate_sha256": "415f497b85d25b5e6c34eafa04a6995f51da4b668fc1cb2640fb1c51633d4850",
+    "files": [
+      {"path": "README.md", "bytes": 6184, "sha256": "96165c22bb8ef0816274dd59ca2a3b2640ff4f8430e964ddf2fb3c636ab492ef"},
+      {"path": "architecture_contract.json", "bytes": 16811, "sha256": "1a33a3d85f67a052ba2576baef1358e95f82158dd2bca60b69c0fbeea1abbd16"},
+      {"path": "backend.py", "bytes": 53011, "sha256": "4fc579ffe89b3da43def867f57a75a7808a97f9215695041459be3fd5c3b3df3"},
+      {"path": "backend_contract.json", "bytes": 10932, "sha256": "41ddecd0eb121469818d55489cb61c0e42b5fb51435ba922bcf919c8b6a318de"},
+      {"path": "controller.py", "bytes": 64978, "sha256": "9ce66d809af46711d82800c90129d224a54535d7d6cb296b1838bba924d396ad"},
+      {"path": "fault_scenarios.json", "bytes": 24898, "sha256": "4cde7f1457a9fa50413ac29a9f65ef2e3da79db286372e9bbbe4718ea8c9c95a"},
+      {"path": "pipeline_contract.json", "bytes": 5275, "sha256": "9fd8830c233f13e0fa0289fa534e7da96229387d33a32c33599d1a0aeeb2a462"},
+      {"path": "regression_catalog.json", "bytes": 55969, "sha256": "df5e2e15243fbbb55d95f61b0c535639f450c28fba8a25c1f6c5e047195320a4"},
+      {"path": "regression_inventory_receipt.json", "bytes": 19347, "sha256": "1cc9728a5d791658aa3191c2f152a05fd79fdc1679b3c70e6512a74613db3968"},
+      {"path": "routes.json", "bytes": 239, "sha256": "9baa62ac8c8a01cb2c4e0dcc32951131769e4c99d44dbcf92f4ec159cddd3f96"},
+      {"path": "schedule.json", "bytes": 38410, "sha256": "2422c40998f7541268a72df9a7fed6ff3f45464de741110487e5900f664e5fb0"},
+      {"path": "semantic_inventory_receipt.json", "bytes": 109946, "sha256": "9a47baa6840fa88a0f38ea23c98b0d8ef70820048b0c975f43c1671f9981bffc"},
+      {"path": "semantic_manifest.json", "bytes": 597495, "sha256": "47337f3225c1a810ede548ca93e947d3ec7e8db23710a10c0909c042c0b2075c"},
+      {"path": "simulator.py", "bytes": 211211, "sha256": "57bf88953e6244bf792b48753e8d6a654d8263860015982c3d0e95b4a46a2e95"},
+      {"path": "simulator_contract.json", "bytes": 27160, "sha256": "bf4f9eb432dfc40ffeda546d179575d3847d5f51fc54895e405c573925d95b55"},
+      {"path": "verifier.py", "bytes": 77974, "sha256": "5a8c953f740d874c29797e4586e5348acdfa21138b6b0c0282b4088f9e9edfa5"},
+      {"path": "verifier_contract.json", "bytes": 6525, "sha256": "ac6a567240c2a77f39cc6c548be16ca0c8d7d7b3e9f52c7b26bb44071fde722f"}
+    ]
+  },
+  "custody_assertions": [
+    "Iteration 010 remains zero-call unfinished stabilization work.",
+    "No iteration 010 byte was edited while this receipt was produced.",
+    "The listed hashes are the takeover baseline, not a readiness or qualification claim.",
+    "Canonical Plans, ledgers, Concepts, governance, and production runtime remain read-only.",
+    "Candidate minting, formal audit, freeze, canary, and subject launch remain closed pending the full stabilization exit gate."
+  ]
+}

@@ -1,0 +1,221 @@
+{
+  "schema_id": "pw-r9-progress-assessment-iteration-010-subagent-transport-pre-exit-003-v1",
+  "artifact_id": "PW-R9-SUCCESSOR-LOOP-BROKEN-TWO-CLEAN-RUNS-20260816.ITERATION-010-SUBAGENT-TRANSPORT-PRE-EXIT-003-ASSESSMENT-V1",
+  "goal_identity": "PW-R9-SUCCESSOR-LOOP-BROKEN-TWO-CLEAN-RUNS-20260816",
+  "created_utc": "2026-08-16T18:58:54Z",
+  "status": "STABILIZATION_CHURN_HOLD_CONTINUES_CURRENT_BYTES_STATIC_GREEN_FULL_SUITE_PENDING",
+  "progress": {
+    "credited": false,
+    "reason": "The retired app-server and task-thread-turn transport surfaces were deleted and replaced, the semantic predecessor negative control and current static gate pass, and the catalog delta is applied; however the binding loop breaker grants progress only while the complete changed-byte regression suite remains green. No complete suite has yet run on these bytes.",
+    "irreversible_phase_advanced": false,
+    "longest_valid_prefix_increased_on_current_bytes": false,
+    "named_blocker_closed_subject_to_complete_suite": "SUBAGENT_TRANSPORT_STATIC_CONTRACT_AND_CATALOG_INTEGRATION",
+    "trusted_or_public_surface_deleted_or_replaced": true,
+    "complete_clean_matrix_finished": false
+  },
+  "churn": {
+    "parent_churn_hold_active": true,
+    "new_churn_declared": false,
+    "closed_failure_class_reopened": false,
+    "same_normalized_family_recurred_on_current_bytes": false,
+    "controller_family_rejected": false,
+    "reason_controller_family_not_rejected": "The collaboration request/event replacement has not recurred with the retired transport defect and has not yet received one complete changed-byte regression result.",
+    "response": "Candidate minting, formal audit, freeze, canary, and subject calls remain paused. The next action is the novel complete zero-call exit-003 suite on settled bytes, not a repeated unchanged action. Any failure is preserved and returns to the smallest causal component."
+  },
+  "normalized_failure_families": [
+    {
+      "family": "STATIC_COUNTERFACTUAL_SELF_ATTESTATION",
+      "layer": "deterministic_regression_evaluator",
+      "state": "ITERATION_009_GATE_EXECUTED_AS_ADVERSE_NEGATIVE_CONTROL_AND_ITERATION_010_PROVIDER_PROJECTION_EVALUATOR_STATIC_PASS_COMPLETE_SUITE_PENDING"
+    },
+    {
+      "family": "USER_VISIBLE_TASK_THREAD_TRANSPORT_REQUIREMENT_SUPERSEDED",
+      "layer": "subject_transport_and_admission",
+      "state": "OLD_ACTUAL_APP_SERVER_TASK_THREAD_TURN_SURFACE_DELETED_AND_REPLACED_BY_ONE_FRESH_FORK_NONE_COLLABORATION_SUBAGENT_INVOCATION_PER_ROW_STATIC_PASS_COMPLETE_SUITE_PENDING"
+    },
+    {
+      "family": "RAW_BYTE_MUTATION_EXPECTATION_STALE_AFTER_CONTROLLER_ERROR_CONTRACT_CHANGE",
+      "layer": "simulator_fault_harness",
+      "state": "EXIT_002_FAIL_PRESERVED_EXACTLY_ACTIVE_VARIANT_AND_ERROR_CONTRACT_UPDATED_COMPLETE_SUITE_PENDING"
+    },
+    {
+      "family": "ADMITTED_DRAIN_TERMINAL_SIGNAL_WINDOW",
+      "layer": "controller_process_state_machine",
+      "state": "COLLABORATION_EVENT_CHAIN_DRAIN_TARGETED_SMOKE_PASS_COMPLETE_SUITE_PENDING"
+    },
+    {
+      "family": "RAW_SELECTED_RESULT_COMPLETENESS_NOT_FAIL_CLOSED_AT_CONTROLLER_GATE",
+      "layer": "controller_and_offline_verifier",
+      "state": "REPLACED_BY_EXACT_SPAWN_RECEIPT_TERMINAL_DELIVERY_ACTIVITY_AND_SCORE_RECOMPUTATION_COMPLETE_SUITE_PENDING"
+    }
+  ],
+  "predecessor_fail_successor_pass_reproducers": [
+    {
+      "predecessor_fail": "iteration_009._semantic_repair_gate admits an adverse provider_projection while retaining its false expected declaration",
+      "predecessor_result": "FAIL_SELF_ATTESTATION_ADMITTED_ADVERSE_PROJECTION",
+      "successor_pass": "iteration_010 simulator.py check independently evaluates provider_projection-only cases before reading expected metadata",
+      "successor_state": "ZERO_CALL_STATIC_PASS_COMPLETE_SUITE_PENDING"
+    },
+    {
+      "predecessor_fail": "simulator_runs/iteration-010-successor-exit-002/faults/031-raw-byte-mutation/receipt.json",
+      "predecessor_result": "FAIL_CONTROLLER_ERROR_CONTRACT_EXPECTATION_MISMATCH",
+      "predecessor_receipt": {
+        "bytes": 478,
+        "sha256": "6c2eff7da9a2e2113063710636bd2efcfd84ba4db0b844432eee72bc9492d6e7"
+      },
+      "successor_pass": "PENDING_COMPLETE_EXIT_003",
+      "successor_state": "NO_PASS_CLAIM_FROM_STATIC_OR_TARGETED_SMOKE"
+    },
+    {
+      "predecessor_fail": "iteration_009 active backend.invoke/_actual app-server process, rollout, task-thread-turn admission family",
+      "successor_pass": "iteration_010 AST and exact-token census shows zero backend actual/invoke/app-server/Popen/poll/rollout/thread-start/turn-start surfaces and one simulator-owned controller Popen",
+      "successor_state": "MECHANICAL_SURFACE_REPLACEMENT_COMPLETE_SUITE_PENDING"
+    }
+  ],
+  "longest_valid_prefix": {
+    "empirical": {
+      "source": "R9-FORMAL-CANDIDATE-V4-MATRIX-01",
+      "status": "VALID_SUBJECT_FAIL",
+      "completed": 211,
+      "pass": 209,
+      "subject_fail": 2,
+      "qualification_credit": 0
+    },
+    "synthetic_historical_exit_002": {
+      "source": "iteration-010-successor-exit-002",
+      "clean_traversals": 2,
+      "pass_cells_per_traversal": 291,
+      "independent_reopens_per_traversal": 2,
+      "normalized_passed": 54,
+      "normalized_total": 56,
+      "sequential_normalized_pass_prefix": 30,
+      "global_passed": 10,
+      "global_total": 10,
+      "suite_status": "FAIL",
+      "current_byte_authority": false,
+      "qualification_credit": 0
+    },
+    "synthetic_current_bytes": {
+      "complete_clean_pairs": 0,
+      "complete_regression_suites": 0,
+      "static_gate": "PASS",
+      "qualification_credit": 0
+    }
+  },
+  "historical_regressions": {
+    "declared_normalized_families": 22,
+    "declared_normalized_variants": 56,
+    "declared_global_cases": 10,
+    "catalog_delta": {
+      "status": "APPLIED_AND_VERIFIED_BY_AUTHORIZED_CATALOG_SOLE_WRITER",
+      "one_for_one_replacements": 14,
+      "in_place_transport_updates": 2,
+      "global_case_updates": 1,
+      "unique_active_variant_ids": 56,
+      "old_variant_ids_active": 0
+    },
+    "current_static_gate": "PASS",
+    "changed_byte_complete_suite": "PENDING",
+    "full_regression_suite_remains_green": false,
+    "closed_class_reopened": false
+  },
+  "surface_accounting": {
+    "supported_controller_surface_count": 4,
+    "supported_controller_surfaces": [
+      "simulate",
+      "run-canary",
+      "run-matrix",
+      "reopen"
+    ],
+    "iteration_009_four_code_bytes": 388142,
+    "iteration_010_current_four_code_bytes": 435611,
+    "four_code_byte_delta": 47469,
+    "current_code_identities": {
+      "backend.py": {
+        "bytes": 25191,
+        "sha256": "251b33aa08ad324e5aeb241c62131f5f5552b1b2b3a90ef8df41c7bae291ef5a"
+      },
+      "controller.py": {
+        "bytes": 88251,
+        "sha256": "3457888eea820c2312ba64e62de7ff3c19c568f3a2001f1ae6a9df63ba94951a"
+      },
+      "verifier.py": {
+        "bytes": 101050,
+        "sha256": "969471bd428cb0f4e408adcbfaa1d9236429832846f215aa0d0f193959698ad4"
+      },
+      "simulator.py": {
+        "bytes": 221119,
+        "sha256": "8c4e5a1007c7dfc5161e1dec04b786aa24b647b3554b822c0117fd5e8661e251"
+      }
+    },
+    "current_catalog_identities": {
+      "regression_catalog.json": {
+        "bytes": 57200,
+        "sha256": "5147d228270f3671f6c80ad1810cf74087cac70b4352803396f4390f8e130c80"
+      },
+      "regression_inventory_receipt.json": {
+        "bytes": 19768,
+        "sha256": "2c89dc98c4006f049295981a8c7d626dec57e76d9008be9723af4646bdaae567"
+      },
+      "fault_scenarios.json": {
+        "bytes": 25212,
+        "sha256": "fe5afa3fc3a563de5f689a24a5159c8d07f0b850fbd4d4eaa08e6c0892000d26"
+      },
+      "simulator_contract.json": {
+        "bytes": 21297,
+        "sha256": "8ab9d47b0c1c5316932a8e2f50d6aa747022429e681c219e2b94356412f547a8"
+      }
+    },
+    "surfaces_deleted_or_replaced": [
+      "backend.invoke actual branch and backend._actual",
+      "backend-owned Codex app-server subprocess, process polling, and child reaping",
+      "session rollout discovery, task_complete waiting, and rollout reopen",
+      "thread/start and turn/start admission requirements",
+      "receipt-declared semantic expected/status proof authority"
+    ],
+    "replacement_surface": "controller stdout spawn-request plus root stdin event protocol, append-only row evidence, independent offline verifier, and synthetic-only backend fixtures",
+    "backend_actual_or_provider_popen_calls": 0,
+    "simulator_owned_controller_popen_calls": 1,
+    "facades_callbacks_tokens_recursive_verifiers_or_sibling_bypasses_added": 0,
+    "public_surfaces_added": 0
+  },
+  "open_experiment_validity_blockers": [
+    "One fresh complete zero-call exit-003 suite must pass two clean 291-cell traversals, all 56 normalized variants, all 10 globals, restart/reopen, process, signal, loss, render, scoring, schedule, terminal, semantic, and custody cases on these exact bytes.",
+    "The retained suite and both clean runs must independently reopen after owned bytes are committed and pushed with local HEAD equal to fetched origin/main.",
+    "Fresh independent xhigh semantic/runtime falsification and one holistic xhigh review must report zero experiment-validity blockers on the exact exit bytes.",
+    "No formal candidate may be minted until the complete stabilization exit gate closes."
+  ],
+  "calls": {
+    "iteration_010_collaboration_subject_calls": 0,
+    "iteration_010_model_calls": 0,
+    "iteration_010_network_calls": 0,
+    "iteration_010_provider_calls": 0,
+    "iteration_010_subject_calls": 0,
+    "qualification_credit": 0
+  },
+  "qualification": {
+    "clean_matrices": 0,
+    "qualification_streak": 0,
+    "required_clean_matrices": 2,
+    "required_total_empirical_pass": 582
+  },
+  "authority": {
+    "allowed_next_action": "RUN_FRESH_COMPLETE_ZERO_CALL_EXIT_003_ON_SETTLED_BYTES",
+    "candidate_authorized": false,
+    "formal_audit_authorized": false,
+    "freeze_authorized": false,
+    "canary_authorized": false,
+    "matrix_authorized": false,
+    "subject_launch_authorized": false,
+    "subject_calls_authorized": 0,
+    "goal_completion_authorized": false
+  },
+  "next_gate": "Execute simulator.py self-test once in the absent create-only iteration-010-successor-exit-003 root, preserve its exact terminal and inventory, then independently reopen and reassess churn before any xhigh review or Git milestone.",
+  "nonclaims": [
+    "Static, targeted, capability, and catalog evidence has zero empirical and qualification credit.",
+    "The historical exit-002 clean pair is bound to obsolete bytes and its suite remains FAIL.",
+    "A surface deletion, static PASS, new hash, or catalog receipt is not a complete regression terminal or stabilization exit.",
+    "No predecessor failure is retried, repaired in place, reinterpreted, replaced for credit, or promoted.",
+    "No candidate, audit, freeze, canary, empirical matrix, readiness, release, or Goal-completion authority is minted."
+  ]
+}

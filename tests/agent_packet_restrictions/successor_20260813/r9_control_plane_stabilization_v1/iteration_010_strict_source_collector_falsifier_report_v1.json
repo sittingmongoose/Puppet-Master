@@ -1,0 +1,59 @@
+{
+  "schema_id": "pw-r9-iteration-010-strict-source-collector-falsifier-report-v1",
+  "artifact_id": "PW-R9-SUCCESSOR-LOOP-BROKEN-TWO-CLEAN-RUNS-20260816",
+  "review_task": "/root/strict_source_collector_falsifier",
+  "review_model": "gpt-5.6-sol",
+  "review_reasoning_effort": "xhigh",
+  "status": "FAIL_RETAINED_REOPEN_BYPASSES_STRICT_PATH_VALIDATION",
+  "reviewed_identities": {
+    "simulator.py": {"sha256": "a7e3f5dab0ab55e8b1ec537a4bc5aa72d2391bb982e3841c468f4f154b9755cd", "bytes": 223224},
+    "simulator_contract.json": {"sha256": "9a16c48430e15f4fd396a7888a046f2583843afe7427a3902d2b8697cf149bf7", "bytes": 21620},
+    "subject_transport_addendum": {"sha256": "7b5186b3c9f244488a75695b34b0d06e79ee6b720acb934fc3767315c4b005d8", "bytes": 5909},
+    "route_capability_receipt": {"sha256": "3d523eac087e691b2336a6ab878dbfe64b8359891831dc866641039f97f8646a", "bytes": 4780}
+  },
+  "passed_checks": {
+    "final_component_symlink_rejected": true,
+    "missing_path_rejected": true,
+    "nonregular_path_rejected": true,
+    "identical_normalized_lexical_overlap_preserved": true,
+    "live_and_predecessor_sandbox_separation_preserved": true
+  },
+  "blocker": {
+    "blocker_id": "RETAINED_SOURCE_REOPEN_BYPASSES_CANONICAL_PATH_VALIDATION",
+    "normalized_family": "SOURCE_BUNDLE_TRANSITIVE_AUTHORITY_CLOSURE",
+    "layer": "RETAINED_REOPEN_SOURCE_PATH_ADMISSION",
+    "detail": "_snapshot_recorded_source_paths reconstructs REPO / recorded path and calls only final-component lstat/read. It never applies the strict containment and resolution rule, so an ancestor directory symlink can escape or alias the repository while the final target remains regular.",
+    "decisive_counterfactual": "With two safe recorded lexical strings routed through aliased ancestors to exact-byte targets and matching Git observations, source identity comparison and current Git custody can both pass because strict-source calls and resolve calls are zero.",
+    "same_family_after_component_replacement": true
+  },
+  "additional_component_findings": [
+    "Initial collection reads an existing out-of-repository or ancestor-symlink target before eventual rejection because _regular precedes containment and strict resolution.",
+    "Normalized duplicate spellings return the first original Path, so raw helper output depends on input order even when downstream relative rows match.",
+    "The retained contract wording overstates reopen enforcement."
+  ],
+  "family_reset_requirement": {
+    "rejected_family": "FRAGMENTED_SOURCE_CUSTODY_VALIDATORS",
+    "replacement": "One shared canonical repository-path admission component used before reads by live collection, sandbox collection, retained reopen, recorded component lookup, and source-evidence lookup.",
+    "required_rules": [
+      "Reject out-of-repository lexical paths before content read.",
+      "Require canonical repository root and each strict resolved candidate to equal its normalized lexical path.",
+      "Reject final and ancestor symlinks before content read.",
+      "Require canonical relative path spelling in retained rows.",
+      "Return canonical lexical Paths, not first-seen aliases.",
+      "Allow only identical canonical lexical overlaps after every occurrence is independently validated."
+    ]
+  },
+  "expected_later_gate": "Current untracked Git custody remains expected and must close only after the complete stabilization suite and zero-blocker holistic review.",
+  "calls": {"collaboration_subject": 0, "model": 0, "network": 0, "provider": 0, "subject": 0},
+  "qualification_credit": 0,
+  "authority": {
+    "family_reset_required": true,
+    "fresh_complete_zero_call_suite_authorized_only_after_reset": true,
+    "candidate_mint_authorized": false,
+    "formal_audit_authorized": false,
+    "freeze_authorized": false,
+    "canary_authorized": false,
+    "subject_launch_authorized": false,
+    "goal_completion_authorized": false
+  }
+}

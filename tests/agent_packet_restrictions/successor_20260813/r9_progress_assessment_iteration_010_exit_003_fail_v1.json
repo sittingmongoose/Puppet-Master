@@ -1,0 +1,138 @@
+{
+  "schema_id": "pw-r9-progress-assessment-iteration-010-exit-003-fail-v1",
+  "artifact_id": "PW-R9-SUCCESSOR-LOOP-BROKEN-TWO-CLEAN-RUNS-20260816.ITERATION-010-EXIT-003-FAIL-ASSESSMENT-V1",
+  "goal_identity": "PW-R9-SUCCESSOR-LOOP-BROKEN-TWO-CLEAN-RUNS-20260816",
+  "created_utc": "2026-08-16T19:21:33Z",
+  "status": "STABILIZATION_CHURN_HOLD_CONTINUES_EXIT_003_FAIL_SMALLEST_FIXTURE_CLOSURE_REPAIR_REQUIRED",
+  "terminal": {
+    "run_id": "iteration-010-successor-exit-003",
+    "status": "FAIL",
+    "qualification_credit": 0,
+    "simulator_receipt": {
+      "bytes": 5454369,
+      "sha256": "501a276fa93787e1b3228f312e89231a1da0085165e2e686d49027e61ae6da80"
+    },
+    "inventory": {
+      "bytes": 1494817,
+      "sha256": "06c238d7f2a9479ff82f74b41104eb4e8ffe0ffccf590a2a67ba3bf6c293eeed",
+      "entry_count": 7698,
+      "entries_bytes": 1494416,
+      "entries_sha256": "29ffec26c4dcb5f79d42bb600370fbcaed832f596acef93dc22602d1665aa82f",
+      "creation_time_independent_reopen": "PASS"
+    },
+    "calls": {
+      "collaboration": 0,
+      "model": 0,
+      "network": 0,
+      "provider": 0,
+      "subject": 0
+    }
+  },
+  "progress_vector": {
+    "normalized_failure_family": "R9_REG_20_HISTORICAL_RUN_GIT_HEAD_DRIFT",
+    "failure_layer": "SIMULATOR_FIXTURE_MATERIALIZATION_SOURCE_CLOSURE",
+    "defect_class": "OMITTED_TRANSITIVE_ROOT_DEPENDENCIES",
+    "predecessor_fail_reproducer": "faults/048-r9_reg_20_historical_run_git_head_drift/receipt.json",
+    "predecessor_fail_reproducer_identity": {
+      "bytes": 676,
+      "sha256": "9272788fff6074494bffa92e09f3ea67128167f0c6617053df197bfe6cb964e9"
+    },
+    "successor_pass_reproducer": "PENDING_AFTER_SMALLEST_COMPONENT_REPAIR",
+    "longest_synthetic_valid_prefix": {
+      "two_clean_291_cell_traversals": "PASS",
+      "total_clean_requests": 582,
+      "globally_unique_nonces": 582,
+      "globally_unique_invocation_ids": 582,
+      "globally_unique_canonical_task_paths": 582,
+      "normalized_literal_sequential_pass_sequences": "1-32",
+      "normalized_causal_failure_sequence": 48,
+      "normalized_passed": 54,
+      "normalized_total": 56,
+      "global_passed": 10,
+      "global_total": 10,
+      "suite_status": "FAIL"
+    },
+    "longest_empirical_valid_prefix": {
+      "source": "R9-FORMAL-CANDIDATE-V4-MATRIX-01",
+      "completed": 211,
+      "pass": 209,
+      "subject_fail": 2,
+      "qualification_credit": 0
+    },
+    "historical_regressions_passing": "54_OF_56_NORMALIZED_AND_10_OF_10_GLOBAL_ON_EXIT_003_BYTES",
+    "open_experiment_validity_blockers": [
+      "R9-REG-020 successor sandbox omits two required successor-root transport authority files.",
+      "A fresh complete suite must pass on repaired unchanged bytes.",
+      "Independent xhigh falsification and holistic review remain pending.",
+      "Owned-byte commit, push, fetch, and local HEAD equals origin/main custody remain pending."
+    ],
+    "supported_controller_surface_count": 4,
+    "surfaces_deleted_or_replaced": [
+      "actual app-server backend",
+      "rollout and task-thread-turn admission",
+      "receipt self-attestation authority"
+    ],
+    "subject_calls": 0,
+    "qualification_streak": 0
+  },
+  "causal_fault_tree": [
+    "The historical-head successor subcase materializes iteration_010 into an isolated local Git sandbox.",
+    "simulator.py::_sandbox_source_paths begins with only the operating contract plus iteration and semantic/pipeline files.",
+    "It omits r9_subject_transport_addendum_subagent_invocations_v1.json and r9_subject_transport_subagent_route_capability_receipt_v1.json from the sandbox successor root.",
+    "The sandboxed controller correctly resolves the first required file at SUCCESSOR and fails closed with subject-transport addendum: absent before emitting a request.",
+    "The required-fault-union case is a derived FAIL because R9-REG-020 did not pass."
+  ],
+  "adjudication": {
+    "controller_transport_defect": false,
+    "simulator_fixture_closure_defect": true,
+    "controller_behavior": "CORRECT_FAIL_CLOSED",
+    "closed_failure_class_reopened": false,
+    "same_normalized_family_recurred": false,
+    "controller_family_reset_required": false,
+    "smallest_causal_component": "iteration_010/simulator.py::_sandbox_source_paths",
+    "minimal_repair": "For component_root == ROOT, materialize the exact subject-transport addendum and route-capability receipt at their existing successor-root paths; update only the directly stale simulator-contract source-closure sentence.",
+    "forbidden_repairs": [
+      "Do not change the expected result to CONTROLLER_INVALID.",
+      "Do not delete or bypass R9-REG-020.",
+      "Do not weaken controller._controls or move the authority files.",
+      "Do not overwrite or reinterpret exit-003.",
+      "Do not mint a candidate, formal audit, freeze, canary, or subject run."
+    ]
+  },
+  "progress": {
+    "credited": false,
+    "reason": "Exit-003 increased the literal normalized pass prefix from 30 to 32 and closed the prior raw-byte-mutation failure, but the complete changed-byte regression suite is not green, so the binding loop breaker grants no progress credit.",
+    "prefix_increased": true,
+    "named_prior_blocker_closed": "RAW_BYTE_MUTATION_EXPECTATION_STALE_AFTER_CONTROLLER_ERROR_CONTRACT_CHANGE",
+    "complete_suite_green": false
+  },
+  "churn": {
+    "parent_churn_hold_active": true,
+    "new_churn_declared": false,
+    "reason": "This is a new fixture-closure family, the prior first failure closed, and the valid prefix increased; the existing churn hold nonetheless remains until a complete suite passes.",
+    "next_action_is_changed_premise": true
+  },
+  "qualification": {
+    "clean_matrices": 0,
+    "qualification_streak": 0,
+    "required_clean_matrices": 2,
+    "required_total_empirical_pass": 582
+  },
+  "authority": {
+    "allowed_next_action": "REPAIR_ONLY_THE_HISTORICAL_HEAD_SANDBOX_SOURCE_CLOSURE_THEN_RUN_TARGETED_ZERO_CALL_REPRODUCER_AND_FRESH_COMPLETE_EXIT_004",
+    "candidate_authorized": false,
+    "formal_audit_authorized": false,
+    "freeze_authorized": false,
+    "canary_authorized": false,
+    "matrix_authorized": false,
+    "subject_launch_authorized": false,
+    "subject_calls_authorized": 0,
+    "goal_completion_authorized": false
+  },
+  "nonclaims": [
+    "The two synthetic clean traversals have zero empirical and qualification credit.",
+    "Exit-003 is a durable FAIL and is never retried, replaced, or reclassified.",
+    "The creation-time inventory check does not make the failed suite a stabilization exit.",
+    "No candidate, audit, freeze, canary, empirical matrix, readiness, release, or Goal-completion authority is minted."
+  ]
+}

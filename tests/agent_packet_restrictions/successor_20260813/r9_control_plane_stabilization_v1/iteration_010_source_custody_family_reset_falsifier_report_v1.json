@@ -1,0 +1,72 @@
+{
+  "schema_id": "pw-r9-iteration-010-source-custody-family-reset-falsifier-report-v1",
+  "artifact_id": "PW-R9-SUCCESSOR-LOOP-BROKEN-TWO-CLEAN-RUNS-20260816",
+  "review_task": "/root/source_custody_family_reset_falsifier",
+  "review_model": "gpt-5.6-sol",
+  "review_reasoning_effort": "xhigh",
+  "status": "FAIL_RESET_REVIEW_FINDINGS_REQUIRE_IN_RESET_REPAIR",
+  "reviewed_identities": {
+    "simulator.py": {"sha256": "9ec7529062ba51264e24013a10fa48a47074fa54f21dec657e1ad6959847a1c1", "bytes": 224011},
+    "simulator_contract.json": {"sha256": "4e592fb68839432d8fa50b661e424b5059cb81b271ca9445dd97afc6d30d0e95", "bytes": 21836},
+    "current_stable_source_rows": {"file_count": 58, "sha256": "d593da291cfef6e5310d424c307513549964b02310c0ff96d7a1ba3665bf513c", "bytes": 12456}
+  },
+  "passed_checks": [
+    "Outside-repository direct path rejects before content read.",
+    "Missing and nonregular paths reject.",
+    "Final and ancestor symlinks reject whenever canonical admission is reached.",
+    "Retained noncanonical and duplicate source rows reject before content reads.",
+    "Historical noncanonical spelling rejects before content reads.",
+    "Live source comparison reopens 58 of 58 exact rows.",
+    "Current untracked Git custody fails as expected for the later push gate."
+  ],
+  "in_reset_blockers": [
+    {
+      "blocker_id": "SOURCE_DECLARATION_READ_PRECEDES_CANONICAL_ADMISSION",
+      "detail": "Live and sandbox collectors read semantic manifests, semantic sources, or pipeline-bound sources before routing those paths through canonical repository admission."
+    },
+    {
+      "blocker_id": "SOURCE_DECLARATION_RELATIVE_SPELLING_NOT_CANONICAL",
+      "detail": "Live semantic rows and sandbox semantic/pipeline rows accept leading-dot aliases because their relative strings do not use the shared canonical-relative parser."
+    },
+    {
+      "blocker_id": "SANDBOX_COMPONENT_ROOT_CLASSIFIED_BEFORE_CANONICALIZATION",
+      "detail": "A dot-dot spelling resolving to the live iteration root compares unequal to ROOT and omits the two live transport authorities."
+    },
+    {
+      "blocker_id": "RECORDED_COMPONENT_ROOT_NOT_ANCHORED_TO_CURRENT_ITERATION",
+      "detail": "A self-consistent four-file predecessor closure can be selected even though current reopen must use the recorded iteration-010 controller root."
+    }
+  ],
+  "adjudicated_repair": [
+    "Canonical-admit SEMANTIC and sandbox semantic_manifest before JSON reads.",
+    "Use the canonical-relative parser for every semantic and pipeline declared path before constructing its repository path.",
+    "Canonical-admit each constructed source before identity reads.",
+    "Reject pycache and pyc path components consistently in live and sandbox rows.",
+    "Reject raw dot-dot components before lexical normalization.",
+    "Canonicalize component_root before live/predecessor comparison.",
+    "Anchor recorded component root to canonical ROOT."
+  ],
+  "named_nonblocking_residuals": [
+    "PATH_ADMISSION_TO_READ_TOCTOU is not fd-anchored; the controlled host is trusted by the minimum experiment boundary.",
+    "_current_git_custody is a private projection consumer whose sole public callsite receives a validated snapshot.",
+    "_reopen_recorded_sources accepts a symbolic revision privately; its only inspected caller supplies rev-parse commit output.",
+    "Historical evidence roles and paths are exact catalog-bound identities but not independently allowlisted."
+  ],
+  "loop_breaker_adjudication": {
+    "new_post_reset_recurrence": false,
+    "reason": "This is the first adversarial review of the not-yet-accepted family reset. Findings are repaired inside the same stabilization reset before any complete suite.",
+    "candidate_and_subject_hold": "ACTIVE"
+  },
+  "calls": {"collaboration_subject": 0, "model": 0, "network": 0, "provider": 0, "subject": 0},
+  "qualification_credit": 0,
+  "authority": {
+    "in_reset_repair_authorized": true,
+    "fresh_complete_suite_authorized_only_after_zero_blocker_review": true,
+    "candidate_mint_authorized": false,
+    "formal_audit_authorized": false,
+    "freeze_authorized": false,
+    "canary_authorized": false,
+    "subject_launch_authorized": false,
+    "goal_completion_authorized": false
+  }
+}

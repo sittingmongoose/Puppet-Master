@@ -1,0 +1,67 @@
+{
+  "schema_id": "pw-r9-iteration-010-exit-005-source-collector-falsifier-report-v1",
+  "artifact_id": "PW-R9-SUCCESSOR-LOOP-BROKEN-TWO-CLEAN-RUNS-20260816",
+  "review_task": "/root/exit005_source_closure_falsifier",
+  "review_model": "gpt-5.6-sol",
+  "review_reasoning_effort": "xhigh",
+  "status": "FAIL_ONE_EXPERIMENT_VALIDITY_BLOCKER",
+  "reviewed_identities": {
+    "simulator.py": {"sha256": "d49198d68d8d863c63aac5d2073da428803e4cd6fc81bb83a1f05da7b1a648a0", "bytes": 221503},
+    "simulator_contract.json": {"sha256": "0c7ec9ac58ef16b0a0e9fdabcf790c5df89d6b9068f74ba10304f9c927d60472", "bytes": 21360},
+    "subject_transport_addendum": {"sha256": "7b5186b3c9f244488a75695b34b0d06e79ee6b720acb934fc3767315c4b005d8", "bytes": 5909},
+    "route_capability_receipt": {"sha256": "3d523eac087e691b2336a6ab878dbfe64b8359891831dc866641039f97f8646a", "bytes": 4780}
+  },
+  "passed_checks": {
+    "general_live_snapshot_includes_both_transport_authorities": true,
+    "before_after_and_source_now_use_recorded_path_sha256_bytes_rows": true,
+    "historical_head_live_sandbox_places_both_authorities_at_correct_copied_successor_paths": true,
+    "predecessor_branch_excludes_new_authorities_and_preserves_run_git_head_drift_fail": true,
+    "capability_receipt_cross_binds_addendum_path_sha256_bytes": true
+  },
+  "blocker": {
+    "blocker_id": "SOURCE_COLLECTOR_PREVALIDATION_RESOLVED_PATH_COALESCING",
+    "normalized_family": "SOURCE_BUNDLE_TRANSITIVE_AUTHORITY_CLOSURE",
+    "layer": "SOURCE_MEMBER_ADMISSION_AND_IDENTITY_NORMALIZATION",
+    "current_behavior": "Both _source_paths and _sandbox_source_paths build a resolved-path dictionary before validating every candidate occurrence as a regular nonlink. A direct-authority symlink or lexical alias can be overwritten by a later row and disappear before _regular examines it.",
+    "impact": "The happy-path source bundle is complete, but the declared nonregular/symlink fail-closed property is not complete.",
+    "minimum_experiment_boundary_relevance": "This is deterministic source admission, not a malicious-host or production-isolation residual."
+  },
+  "counterevidence_and_reassessment": {
+    "initial_overbroad_recommendation": "Reject every duplicate lexical or resolved declaration.",
+    "counterevidence": {
+      "live_candidate_occurrences": 64,
+      "live_unique_paths": 60,
+      "predecessor_candidate_occurrences": 62,
+      "predecessor_unique_paths": 58,
+      "intentional_exact_lexical_overlaps_each": ["r9_goal_operating_contract_v1.json", "routes.json", "schedule.json", "semantic_manifest.json"]
+    },
+    "adjudication": "EXACT_LEXICAL_OVERLAP_IS_LEGITIMATE_AND_MUST_REMAIN_ADMISSIBLE",
+    "revised_smallest_component_replacement": [
+      "Validate every candidate occurrence as a final regular nonlink before any resolve or coalescing.",
+      "Normalize a lexical absolute path and require it to remain within the canonical repository.",
+      "Resolve strictly and require the resolved path to equal the normalized lexical path, rejecting any symlink-bearing ancestor.",
+      "Allow repeated declarations only when the normalized lexical path is identical.",
+      "Reject distinct normalized lexical paths that resolve to one target.",
+      "Sort and retain one deterministic representative per identical lexical path."
+    ]
+  },
+  "expected_git_custody_gate": {
+    "local_head": "8bf0f38976d456e4ab4485b78fcbd563e5137a9b",
+    "origin_main": "8bf0f38976d456e4ab4485b78fcbd563e5137a9b",
+    "head_equals_origin_main": true,
+    "current_iteration_bytes_tracked_at_head": false,
+    "adjudication": "EXPECTED_PRE_PUSH_GATE_NOT_A_REASON_TO_CHANGE_THE_SOURCE_COLLECTOR_REPAIR"
+  },
+  "calls": {"collaboration_subject": 0, "model": 0, "network": 0, "provider": 0, "subject": 0},
+  "qualification_credit": 0,
+  "authority": {
+    "component_replacement_required": true,
+    "fresh_full_zero_call_suite_required": true,
+    "candidate_mint_authorized": false,
+    "formal_audit_authorized": false,
+    "freeze_authorized": false,
+    "canary_authorized": false,
+    "subject_launch_authorized": false,
+    "goal_completion_authorized": false
+  }
+}

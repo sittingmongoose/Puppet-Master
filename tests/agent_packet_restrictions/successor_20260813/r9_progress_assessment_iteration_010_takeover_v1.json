@@ -1,0 +1,158 @@
+{
+  "schema_id": "pw-r9-progress-assessment-iteration-010-takeover-v1",
+  "artifact_id": "PW-R9-SUCCESSOR-LOOP-BROKEN-TWO-CLEAN-RUNS-20260816.ITERATION-010-TAKEOVER-ASSESSMENT-V1",
+  "goal_identity": "PW-R9-SUCCESSOR-LOOP-BROKEN-TWO-CLEAN-RUNS-20260816",
+  "created_utc": "2026-08-16T16:16:26Z",
+  "status": "STABILIZATION_CONTINUES_BLOCKERS_PRESERVED_NO_CANDIDATE_AUTHORITY",
+  "authority": {
+    "allowed_next_action": "REPAIR_SMALLEST_CAUSAL_COMPONENTS_INSIDE_UNFINISHED_ITERATION_010_AND_RERUN_COMPLETE_ZERO_CALL_EXIT_GATE",
+    "candidate_authorized": false,
+    "formal_audit_authorized": false,
+    "freeze_authorized": false,
+    "canary_authorized": false,
+    "matrix_authorized": false,
+    "subject_launch_authorized": false,
+    "subject_calls_authorized": 0,
+    "goal_completion_authorized": false
+  },
+  "takeover_binding": {
+    "path": "tests/agent_packet_restrictions/successor_20260813/r9_iteration_010_takeover_receipt_20260816.json",
+    "sha256": "678b8ac154a9e5ec2690974c2bc9f347f9fb24bf3f28a9bffcec9f4bdfeb411a",
+    "bytes": 3862,
+    "iteration_010_files": 17,
+    "iteration_010_aggregate_sha256": "415f497b85d25b5e6c34eafa04a6995f51da4b668fc1cb2640fb1c51633d4850"
+  },
+  "normalized_failure": {
+    "family": "STATIC_COUNTERFACTUAL_SELF_ATTESTATION",
+    "layer": "deterministic_regression_evaluator",
+    "predecessor": "iteration_009",
+    "recurrence": "FIRST_OBSERVED_FAMILY_PRESERVED_FROM_PREDECESSOR_ASSESSMENT"
+  },
+  "predecessor_successor_reproducer": {
+    "predecessor": {
+      "identity": "iteration-009-self-attested-operational-boundary-counterfactual-evaluator",
+      "result": "FAIL_INDEPENDENT_FALSIFICATION"
+    },
+    "successor": {
+      "identity": "iteration-010-concrete-projection-independent-deterministic-evaluator",
+      "result": "PARTIAL_IMPLEMENTATION_BLOCKED_BEFORE_EXIT_EXECUTION"
+    }
+  },
+  "longest_valid_prefix": {
+    "synthetic": {
+      "cells": 291,
+      "status": "PRIOR_BASELINE_RETAINED",
+      "iteration_010_complete_clean_traversals": 0
+    },
+    "empirical": {
+      "source": "R9-FORMAL-CANDIDATE-V4-MATRIX-01",
+      "completed": 211,
+      "pass": 209,
+      "subject_fail": 2,
+      "status": "VALID_SUBJECT_FAIL"
+    }
+  },
+  "historical_regressions": {
+    "last_retained_baseline": {
+      "normalized_families": 21,
+      "normalized_variants": 49,
+      "global_cases": 10
+    },
+    "iteration_010_declared": {
+      "normalized_families": 22,
+      "normalized_variants": 56,
+      "global_cases": 10
+    },
+    "iteration_010_static_check": "PASS_STATIC_ONLY_ZERO_CREDIT",
+    "iteration_010_complete_suite_terminal": "ABSENT",
+    "previously_closed_class_regression_observed": false
+  },
+  "open_experiment_validity_blockers": [
+    {
+      "family": "PREDECESSOR_CAUSAL_FAIL_NOT_EXERCISED",
+      "layer": "semantic_causal_reproducer",
+      "smallest_component": "iteration_010 simulator semantic repair gate",
+      "evidence": "The gate computes the six successor observations but emits predecessor_result from diagnosis metadata without executing the iteration_009 self-attestation defect against an adverse structured projection."
+    },
+    {
+      "family": "SEMANTIC_DISCREPANCY_GRAPH_COMPLETENESS_AND_COHERENCE_NOT_VALIDATED",
+      "layer": "deterministic_projection_evaluator",
+      "smallest_component": "_evaluate_provider_projection",
+      "evidence": "The evaluator does not reject orphan contradictory claims, false VALUE_CONFLICT declarations, duplicate claim-pair discrepancies, cyclic supersession, decision-kind mismatch, leakage aliases, or non-integer canonical byte declarations."
+    },
+    {
+      "family": "ITERATION_009_CATALOG_CUSTODY_RETAINED_IN_ITERATION_010",
+      "layer": "regression_mapping_and_receipt",
+      "smallest_component": "R9-REG-022 catalog mapping plus regression receipt path",
+      "evidence": "The catalog still names STATIC_PROVIDER_VISIBLE_PROMPT_CONTRACT_COUNTERFACTUAL and PENDING_UNTIL_ITERATION_009_SIMULATOR while fault execution uses deterministic_projection_execution; the receipt binds the iteration_009 catalog pathname."
+    },
+    {
+      "family": "CLEANUP_RETURNCODE_CONFLATED_WITH_SUBJECT_RESULT",
+      "layer": "process_runner_scoring_boundary",
+      "smallest_component": "backend actual-result returncode derivation",
+      "evidence": "After TASK_COMPLETE, forced daemon reap return codes can flow into result.returncode and be scored as subject FAIL even when the admitted final output is exact."
+    },
+    {
+      "family": "NONATOMIC_SIGNAL_ADMISSION_AND_SHARED_PROCESS_GROUP",
+      "layer": "controller_process_state_machine",
+      "smallest_component": "stop-signal admission boundary and app-server process isolation",
+      "evidence": "A signal may arrive between the pre-row STOP check and attempt admission, and the child is not isolated from terminal process-group signals."
+    },
+    {
+      "family": "RAW_ROLLOUT_NOT_SELF_CONTAINED_FOR_OFFLINE_REOPEN",
+      "layer": "append_only_evidence_and_offline_verifier",
+      "smallest_component": "raw_result rollout storage plus verifier independent parser",
+      "evidence": "Actual raw_result records a rollout path, digest, byte count, and selected rows, but the offline verifier does not reopen exact rollout bytes or independently reproduce the row selection."
+    }
+  ],
+  "explicit_nonblocking_residuals": [
+    "Codex task and thread are one platform task identity; task_id remains a deterministic unique alias of the independently returned fresh thread_id.",
+    "Malicious trusted-controller fabrication and controlled-host or OS compromise remain outside the experiment boundary.",
+    "Arbitrary private-helper invocation, capability tokens, callback confinement, reflection resistance, recursive verifier authority, and production FileSafe or read-isolation remain nonblocking.",
+    "Synthetic static checks and future synthetic traversals carry zero empirical or qualification credit."
+  ],
+  "surface_accounting": {
+    "supported_controller_surface_count": 4,
+    "supported_controller_surfaces": ["simulate", "run-canary", "run-matrix", "reopen"],
+    "bytes": {
+      "controller": 64978,
+      "backend": 53011,
+      "verifier": 77974,
+      "runtime_total": 195963,
+      "simulator": 211211,
+      "runtime_plus_simulator": 407174
+    },
+    "surface_replacement_state": [
+      "prose-only fixture assertions removed from the iteration_010 projection lane but not yet exit-qualified",
+      "static_assertion fault re-emitter replaced by deterministic_projection_execution but predecessor negative control and evaluator closure remain blocked"
+    ],
+    "new_public_surface_count": 0
+  },
+  "calls": {
+    "iteration_010_subject": 0,
+    "iteration_010_provider": 0,
+    "iteration_010_network": 0,
+    "iteration_010_model": 0,
+    "qualification_credit": 0
+  },
+  "qualification": {
+    "clean_matrices": 0,
+    "qualification_streak": 0,
+    "required_clean_matrices": 2
+  },
+  "progress": {
+    "credited": false,
+    "reason": "No irreversible phase advanced, current-iteration prefix increased, named blocker closed, trusted public surface reduced, or complete clean matrix finished. The static PASS is preserved as a zero-credit diagnostic only."
+  },
+  "churn": {
+    "parent_churn_hold_active": true,
+    "new_churn_declared": false,
+    "reason": "Iteration 010 is unfinished first-pass stabilization and has not repeated an unchanged repair or proposed a candidate or formal audit. The preserved V3/V4 recurrence continues to prohibit empirical phases until the full exit gate passes."
+  },
+  "next_gate": "Repair the named smallest causal components once inside iteration 010, rerun every static and dynamic regression plus two clean 291-row synthetic traversals on identical bytes, then obtain fresh falsification and holistic review before any candidate decision.",
+  "nonclaims": [
+    "The green static command is not a full regression terminal, stabilization exit, candidate, audit, readiness, or qualification result.",
+    "No predecessor failure has been repaired, retried, reinterpreted, replaced, or retro-promoted.",
+    "No candidate, freeze, canary, empirical matrix, subject launch, or Goal-completion authority is minted."
+  ]
+}

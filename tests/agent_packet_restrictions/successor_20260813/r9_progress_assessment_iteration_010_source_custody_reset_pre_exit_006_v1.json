@@ -1,0 +1,68 @@
+{
+  "schema_id": "pw-r9-progress-assessment-iteration-010-source-custody-reset-pre-exit-006-v1",
+  "artifact_id": "PW-R9-SUCCESSOR-LOOP-BROKEN-TWO-CLEAN-RUNS-20260816",
+  "status": "CHURN_HOLD_ACTIVE_SOURCE_CUSTODY_RESET_ZERO_BLOCKER_REVIEW_FRESH_EXIT_006_AUTHORIZED",
+  "trigger": ["controller-family reset review complete", "before fresh stabilization suite", "before any formal gate"],
+  "reset_review": {
+    "report": {"path": "r9_control_plane_stabilization_v1/iteration_010_source_custody_reset_final_falsifier_report_v1.json", "sha256": "ab86d128a1bbefce3eaeb5c41f2d235b00df4b58ee233bfed0b50af42f4ea330", "bytes": 4352},
+    "source_custody_implementation": "PASS",
+    "experiment_validity_blockers_within_reset_scope": [],
+    "expected_later_git_custody_gate": "OPEN_PRE_PUSH"
+  },
+  "current_exact_bytes": {
+    "simulator.py": {"sha256": "0b3bf777e57f5a45435b7cbe8dd834ff15a914cc32de2c02b8cd5fb16784e402", "bytes": 225204},
+    "simulator_contract.json": {"sha256": "6e82551498d79921610d668aee4cc1e7ec38fe128d2dec95328942733e60a0a2", "bytes": 22087},
+    "static_check": "PASS",
+    "static_calls": {"collaboration": 0, "model": 0, "network": 0, "provider": 0, "subject": 0}
+  },
+  "progress_vector": {
+    "normalized_failure_family": "SOURCE_BUNDLE_TRANSITIVE_AUTHORITY_CLOSURE",
+    "layer": "UNIFIED_SOURCE_CUSTODY_ADMISSION_CREATION_SANDBOX_REOPEN_COMPONENT_HISTORY",
+    "predecessor_fail_reproducer": "strict collector review retained reopen bypass and family-reset review four admission/classification/anchor findings",
+    "successor_pass_reproducer": "final xhigh reset falsifier closes all four prior blockers and reopens the current 58-row stable snapshot exactly",
+    "longest_synthetic_valid_prefix": "EXIT_005_TWO_COMPLETE_291_ROW_TRAVERSALS_PLUS_56_OF_56_NORMALIZED_PLUS_10_OF_10_GLOBAL_ON_PRE_RESET_BYTES",
+    "longest_empirical_valid_prefix": "V4_MATRIX_1_211_COMPLETED_209_PASS_2_SUBJECT_FAIL_80_CAUSALLY_INELIGIBLE",
+    "historical_regressions_passing": "STATIC_22_FAMILIES_CURRENT_BYTES_FULL_SUITE_PENDING",
+    "open_experiment_validity_blockers": ["FRESH_COMPLETE_SUITE_ON_RESET_BYTES", "POST_SUITE_HOLISTIC_REVIEW", "PUSHED_GIT_CUSTODY"],
+    "supported_controller_surface_count": 4,
+    "supported_controller_code_bytes": 439696,
+    "surfaces_deleted_or_replaced": [
+      "fragmented resolved-key source collector",
+      "retained reopen final-component-only path reader",
+      "unanchored recorded component selector",
+      "pre-admission semantic and pipeline source reads"
+    ],
+    "surfaces_added": ["one shared internal canonical repository-path admission component"],
+    "subject_calls_since_transport_correction": 0,
+    "qualification_streak": "0_OF_2"
+  },
+  "progress_adjudication": {
+    "full_regression_suite_green_on_current_bytes": false,
+    "reason": "No complete suite has run after the accepted reset byte changes.",
+    "progress_credited_now": false,
+    "named_blocker_closure_is_provisional_until_full_suite": true
+  },
+  "churn_adjudication": {
+    "hold": "ACTIVE",
+    "same_action_repeated": false,
+    "family_reset_performed": true,
+    "fresh_complete_suite_is_new_action_on_new_bytes": true,
+    "candidate_mint_formal_audit_freeze_canary_and_subject_calls_paused": true
+  },
+  "next_action": {
+    "run_id": "iteration-010-successor-exit-006",
+    "launch_count": 1,
+    "requirements": ["fresh absent root", "two 291-row synthetic clean traversals", "56 normalized", "10 global", "zero calls", "exact terminal inventory and independent reopen"],
+    "qualification_credit": 0
+  },
+  "authority": {
+    "fresh_exit_006_authorized": true,
+    "git_commit_push_authorized_now": false,
+    "candidate_mint_authorized": false,
+    "formal_audit_authorized": false,
+    "freeze_authorized": false,
+    "canary_authorized": false,
+    "subject_launch_authorized": false,
+    "goal_completion_authorized": false
+  }
+}

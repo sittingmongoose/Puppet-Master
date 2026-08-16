@@ -1,0 +1,67 @@
+{
+  "schema_id": "pw-r9-iteration-010-source-custody-reset-final-falsifier-report-v1",
+  "artifact_id": "PW-R9-SUCCESSOR-LOOP-BROKEN-TWO-CLEAN-RUNS-20260816",
+  "review_task": "/root/source_custody_reset_final_falsifier",
+  "review_model": "gpt-5.6-sol",
+  "review_reasoning_effort": "xhigh",
+  "status": "PASS_SOURCE_CUSTODY_RESET_IMPLEMENTATION_GIT_CUSTODY_REMAINS_LATER_GATE",
+  "reviewed_identities": {
+    "simulator.py": {"sha256": "0b3bf777e57f5a45435b7cbe8dd834ff15a914cc32de2c02b8cd5fb16784e402", "bytes": 225204},
+    "simulator_contract.json": {"sha256": "6e82551498d79921610d668aee4cc1e7ec38fe128d2dec95328942733e60a0a2", "bytes": 22087},
+    "source_bundle_contract_projection": {"sha256": "876eaa4f0b2c24c385cb4f3e8c7d827e1a5c57b41ce8d9b180c13c14969995be", "bytes": 2182},
+    "current_stable_source_rows": {"file_count": 58, "sha256": "52a36d3952edc67791b99bd86104a5e734236137367f30f3c46aff63114abb9b", "bytes": 12456},
+    "current_complete_snapshot": {"sha256": "390ee5098c43ed698e7b79ca95c41a0dabe4f6ed3b123bbbfb6d3bbff121d81b", "bytes": 22390}
+  },
+  "prior_blocker_closure": {
+    "source_declaration_read_precedes_canonical_admission": "PASS_ZERO_TARGET_READS_AFTER_INJECTED_ADMISSION_FAILURE",
+    "source_declaration_relative_spelling_not_canonical": "PASS_NONCANONICAL_MATRIX_REJECTED_ZERO_TARGET_READS",
+    "sandbox_component_root_classified_before_canonicalization": "PASS_DOTDOT_ALIAS_REJECTED_BEFORE_CLASSIFICATION",
+    "recorded_component_root_not_anchored": "PASS_PREDECESSOR_REDIRECT_REJECTED_ZERO_COMPONENT_READS"
+  },
+  "additional_passes": [
+    "Direct final symlink, ancestor symlink, and outside-repository paths reject before content reads.",
+    "Identical canonical declarations are each validated and then coalesced.",
+    "Live sandbox has 60 sources and predecessor sandbox has 58; the two transport authorities appear only in live closure.",
+    "Current exact stable snapshot/reopen comparison passes before/after/current equality.",
+    "Recorded component reopening resolves exactly to iteration_010."
+  ],
+  "component_closure": {
+    "backend.py": {"sha256": "251b33aa08ad324e5aeb241c62131f5f5552b1b2b3a90ef8df41c7bae291ef5a", "bytes": 25191},
+    "controller.py": {"sha256": "3457888eea820c2312ba64e62de7ff3c19c568f3a2001f1ae6a9df63ba94951a", "bytes": 88251},
+    "semantic_manifest.json": {"sha256": "47337f3225c1a810ede548ca93e947d3ec7e8db23710a10c0909c042c0b2075c", "bytes": 597495},
+    "verifier.py": {"sha256": "969471bd428cb0f4e408adcbfaa1d9236429832846f215aa0d0f193959698ad4", "bytes": 101050}
+  },
+  "git_custody_observation": {
+    "local_head": "8bf0f38976d456e4ab4485b78fcbd563e5137a9b",
+    "origin_main": "8bf0f38976d456e4ab4485b78fcbd563e5137a9b",
+    "head_equals_origin_main": true,
+    "bound_files_matching_head": 39,
+    "bound_files_total": 58,
+    "untracked_bound_files": 19,
+    "status": "FAIL_EXPECTED_PRE_PUSH"
+  },
+  "controller_adjudication": {
+    "implementation_blockers": [],
+    "git_custody_is_current_reset_implementation_blocker": false,
+    "reason": "Binding order requires the complete zero-call stabilization suite and holistic zero-blocker review before quiescing writers, committing owned completed artifacts, pushing, fetching, and proving local HEAD equals origin/main. Pre-suite untracked status is therefore an expected later fail-closed gate, not a reason to commit incomplete stabilization bytes.",
+    "fresh_complete_zero_call_suite_warranted_now": true
+  },
+  "named_nonblocking_residuals": [
+    "Controlled-host admission/read TOCTOU is not fd-anchored.",
+    "Private-helper misuse outside validated production callsites is not separately authoritative.",
+    "A symbolic Git selector is accepted privately; the pinned internal caller supplies rev-parse commit output.",
+    "Historical evidence roles are exact catalog-bound identities but not separately allowlisted."
+  ],
+  "calls": {"collaboration_subject": 0, "model": 0, "network": 0, "provider": 0, "subject": 0},
+  "qualification_credit": 0,
+  "authority": {
+    "fresh_complete_zero_call_suite_authorized": true,
+    "git_commit_push_authorized_now": false,
+    "candidate_mint_authorized": false,
+    "formal_audit_authorized": false,
+    "freeze_authorized": false,
+    "canary_authorized": false,
+    "subject_launch_authorized": false,
+    "goal_completion_authorized": false
+  }
+}

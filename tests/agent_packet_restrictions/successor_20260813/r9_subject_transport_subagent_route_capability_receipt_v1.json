@@ -1,0 +1,90 @@
+{
+  "schema_id": "pw-r9-subagent-route-capability-receipt-v1",
+  "artifact_id": "PW-R9-SUCCESSOR-LOOP-BROKEN-TWO-CLEAN-RUNS-20260816.SUBAGENT-ROUTE-CAPABILITY-RECEIPT-V1",
+  "goal_identity": "PW-R9-SUCCESSOR-LOOP-BROKEN-TWO-CLEAN-RUNS-20260816",
+  "created_utc": "2026-08-16T17:37:05Z",
+  "status": "PASS_REQUESTED_COLLABORATION_ROUTE_OVERRIDES_ACCEPTED_NON_EMPIRICAL_ZERO_CREDIT",
+  "transport_addendum": {
+    "path": "tests/agent_packet_restrictions/successor_20260813/r9_subject_transport_addendum_subagent_invocations_v1.json",
+    "sha256": "7b5186b3c9f244488a75695b34b0d06e79ee6b720acb934fc3767315c4b005d8",
+    "bytes": 5909
+  },
+  "purpose": "Resolve exact collaboration model and reasoning-effort request capability without presenting any frozen empirical packet or receiving any qualification-bearing subject result.",
+  "official_model_reference": {
+    "url": "https://developers.openai.com/api/docs/models/gpt-5.4-mini",
+    "observed_claim": "GPT-5.4 mini supports subagents and reasoning efforts including medium and xhigh.",
+    "does_not_attest": "The official model page does not itself attest this collaboration tool invocation or its effective provider route."
+  },
+  "invocations": [
+    {
+      "sequence": 1,
+      "task_name": "gpt54mini_capability_probe",
+      "canonical_task_path": "/root/gpt54mini_capability_probe",
+      "agent_type": "default",
+      "fork_turns": "none",
+      "requested_model": "gpt-5.4-mini",
+      "requested_reasoning_effort": "xhigh",
+      "request_message_sha256": "a5476fe477663c8ec1ad2d8fac7e636a5319759cabfb701611cc267f11a7ae90",
+      "request_message_bytes": 429,
+      "terminal_message_type": "FINAL_ANSWER",
+      "terminal_utf8": "{\"requested_model\":\"gpt-5.4-mini\",\"requested_effort\":\"xhigh\",\"classification\":\"NON_EMPIRICAL_CAPABILITY_HELPER_ZERO_CREDIT\"}",
+      "terminal_sha256": "86360c09989b96dd0177ba5b8bbaa5536a9b7f9e45470a494eb2c7d9f7d07bca",
+      "terminal_bytes": 124,
+      "result": "PASS_REQUEST_ACCEPTED_AND_TERMINAL_RETURNED"
+    },
+    {
+      "sequence": 2,
+      "task_name": "gpt54mini_medium_capability_probe",
+      "canonical_task_path": "/root/gpt54mini_medium_capability_probe",
+      "agent_type": "default",
+      "fork_turns": "none",
+      "requested_model": "gpt-5.4-mini",
+      "requested_reasoning_effort": "medium",
+      "request_message_sha256": "6ea9f4d2e2d86f9dd7f3e5f4b95361192a643445d9be4f6fe674928abe6e7418",
+      "request_message_bytes": 430,
+      "terminal_message_type": "FINAL_ANSWER",
+      "terminal_utf8": "{\"requested_model\":\"gpt-5.4-mini\",\"requested_effort\":\"medium\",\"classification\":\"NON_EMPIRICAL_CAPABILITY_HELPER_ZERO_CREDIT\"}",
+      "terminal_sha256": "57e9739bfe06663d8a70b48e9b455cc05473b84e9e0603942052a5567675e005",
+      "terminal_bytes": 125,
+      "result": "PASS_REQUEST_ACCEPTED_AND_TERMINAL_RETURNED"
+    },
+    {
+      "sequence": 3,
+      "task_name": "gpt56luna_medium_capability_probe",
+      "canonical_task_path": "/root/gpt56luna_medium_capability_probe",
+      "agent_type": "default",
+      "fork_turns": "none",
+      "requested_model": "gpt-5.6-luna",
+      "requested_reasoning_effort": "medium",
+      "request_message_sha256": "5c5c7e7779a98cc150625bec9211437fd57f5db2d2aab2afcbeb5e147f2408e1",
+      "request_message_bytes": 430,
+      "terminal_message_type": "FINAL_ANSWER",
+      "terminal_utf8": "{\"requested_model\":\"gpt-5.6-luna\",\"requested_effort\":\"medium\",\"classification\":\"NON_EMPIRICAL_CAPABILITY_HELPER_ZERO_CREDIT\"}",
+      "terminal_sha256": "3c1728f9fcd8c82591c85042b17554b81a3f23c1998f13e7184cfda77f225d5d",
+      "terminal_bytes": 125,
+      "result": "PASS_REQUEST_ACCEPTED_AND_TERMINAL_RETURNED"
+    }
+  ],
+  "adjudication": {
+    "exact_roster_requestable": true,
+    "silent_substitution_used": false,
+    "gpt_5_4_mini_xhigh_request_accepted": true,
+    "gpt_5_4_mini_medium_request_accepted": true,
+    "gpt_5_6_luna_medium_request_accepted": true,
+    "effective_provider_model_or_effort_independently_attested": false,
+    "effective_provider_attestation_disposition": "NAMED_TRUSTED_COLLABORATION_PLATFORM_RESIDUAL",
+    "capability_blocker_closed": true,
+    "subject_launch_authorized": false
+  },
+  "calls": {
+    "non_empirical_helper_model_invocations": 3,
+    "empirical_subject_invocations": 0,
+    "frozen_test_packets_presented": 0,
+    "qualification_credit": 0
+  },
+  "nonclaims": [
+    "These helper invocations are not a canary, matrix, subject result, qualification result, or empirical evidence.",
+    "The terminal text is not self-attestation of effective provider routing; the accepted explicit spawn request is the bounded capability observation.",
+    "No candidate, freeze, canary, matrix, readiness, or Goal-completion authority is minted."
+  ]
+}

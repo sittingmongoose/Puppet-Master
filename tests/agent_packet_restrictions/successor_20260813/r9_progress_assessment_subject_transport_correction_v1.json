@@ -1,0 +1,116 @@
+{
+  "schema_id": "pw-r9-progress-assessment-subject-transport-correction-v1",
+  "artifact_id": "PW-R9-SUCCESSOR-LOOP-BROKEN-TWO-CLEAN-RUNS-20260816.SUBJECT-TRANSPORT-CORRECTION-ASSESSMENT-V1",
+  "goal_identity": "PW-R9-SUCCESSOR-LOOP-BROKEN-TWO-CLEAN-RUNS-20260816",
+  "created_utc": "2026-08-16T17:39:09Z",
+  "status": "STABILIZATION_CONTROLLER_TRANSPORT_FAMILY_RESET_USER_AUTHORIZED_NO_CANDIDATE_AUTHORITY",
+  "binding_addendum": {
+    "path": "tests/agent_packet_restrictions/successor_20260813/r9_subject_transport_addendum_subagent_invocations_v1.json",
+    "sha256": "7b5186b3c9f244488a75695b34b0d06e79ee6b720acb934fc3767315c4b005d8",
+    "bytes": 5909
+  },
+  "route_capability_receipt": {
+    "path": "tests/agent_packet_restrictions/successor_20260813/r9_subject_transport_subagent_route_capability_receipt_v1.json",
+    "sha256": "3d523eac087e691b2336a6ab878dbfe64b8359891831dc866641039f97f8646a",
+    "bytes": 4780,
+    "result": "PASS_REQUESTED_COLLABORATION_ROUTE_OVERRIDES_ACCEPTED_NON_EMPIRICAL_ZERO_CREDIT"
+  },
+  "transport_correction": {
+    "retired_family": "FRESH_USER_VISIBLE_CODEX_TASK_OR_APP_SERVER_THREAD_PER_ROW",
+    "replacement_family": "ONE_FRESH_FORK_NONE_COLLABORATION_SUBAGENT_INVOCATION_PER_EMPIRICAL_ROW",
+    "scope": "SUBJECT_TRANSPORT_ONLY",
+    "semantic_or_roster_change": false,
+    "frozen_roster": [
+      "gpt-5.4-mini/xhigh",
+      "gpt-5.4-mini/medium",
+      "gpt-5.6-luna/medium"
+    ],
+    "old_empirical_evidence_reinterpreted": false,
+    "old_actual_runner_candidate_authority": false,
+    "reason": "Jared explicitly superseded only the separate user-visible task/thread transport requirement and required fresh isolated collaboration subagents in this controller task."
+  },
+  "minimum_replacement_architecture": [
+    "immutable semantic bundle plus binding subject-transport addendum",
+    "trusted-root one-shot collaboration dispatcher",
+    "append-only controller evidence recorder and deterministic scorer",
+    "independent offline verifier"
+  ],
+  "unchanged_acceptance": {
+    "canary_before_matrix": true,
+    "matrix_rows": 291,
+    "two_consecutive_clean_matrices": true,
+    "required_total_pass": 582,
+    "allowed_subject_fail": 0,
+    "allowed_controller_invalid": 0,
+    "allowed_missing": 0,
+    "allowed_retry": 0,
+    "allowed_replacement": 0,
+    "allowed_best_of": 0
+  },
+  "latest_terminal": {
+    "run": "simulator_runs/iteration-010-successor-exit-002",
+    "suite_receipt_sha256": "569264d26f6a06f8f5a355168c0ba6a1d5c58c7be0da1ef10c9c996e757c65cd",
+    "suite_receipt_bytes": 272922,
+    "status": "FAIL",
+    "clean_291_cell_traversals_passed": 2,
+    "normalized_faults_passed": 54,
+    "normalized_faults_total": 56,
+    "global_faults_passed": 10,
+    "global_faults_total": 10,
+    "first_failure": "raw-byte-mutation targeted selected-result error was masked by the temporary clone root-name scaffold",
+    "smallest_scaffold_repair": "retain the cloned run basename inside a uniquely named temporary parent so public reopen reaches the intended row gate",
+    "qualification_credit": 0
+  },
+  "longest_valid_prefix": {
+    "synthetic": {
+      "complete_291_cell_traversals": 2,
+      "complete_clean_pair": false,
+      "reason": "Required normalized fault union failed; the transport family is also superseded before exit qualification."
+    },
+    "empirical": {
+      "completed": 211,
+      "pass": 209,
+      "subject_fail": 2,
+      "status": "HISTORICAL_VALID_SUBJECT_FAIL_ZERO_STREAK"
+    }
+  },
+  "calls": {
+    "empirical_subject_invocations_after_correction": 0,
+    "frozen_test_packets_presented_after_correction": 0,
+    "non_empirical_route_capability_helpers": 3,
+    "qualification_credit": 0
+  },
+  "progress": {
+    "credited": false,
+    "reason": "The changed-byte complete regression suite is not green and the replacement transport is not yet implemented or synthetically qualified."
+  },
+  "churn": {
+    "hold_active": true,
+    "controller_transport_family_reset": true,
+    "reset_authority": "EXPLICIT_JARED_SUBJECT_TRANSPORT_CORRECTION",
+    "candidate_mint_formal_audit_freeze_canary_and_subject_calls_paused": true,
+    "unchanged_action_repeated": false,
+    "facade_over_old_actual_runner_allowed": false,
+    "required_action": "Delete or replace the old actual app-server transport rather than wrap it; keep the four separable disposable components and rerun the complete zero-call exit gate."
+  },
+  "open_experiment_validity_blockers": [
+    "The collaboration subagent spawn/capture adapter, once-only fuse, and stop/drain state machine are not implemented.",
+    "The offline verifier does not yet reopen collaboration invocation, exact response, activity, uniqueness, and addendum bindings.",
+    "The complete deterministic spawn-adapter fault suite and two clean 291-cell traversals on replacement bytes have not passed.",
+    "Fresh independent falsification, holistic review, and pushed Git custody remain pending."
+  ],
+  "authority": {
+    "subject_launch_authorized": false,
+    "candidate_authorized": false,
+    "formal_audit_authorized": false,
+    "freeze_authorized": false,
+    "canary_authorized": false,
+    "matrix_authorized": false,
+    "goal_completion_authorized": false
+  },
+  "nonclaims": [
+    "The accepted route-capability helper requests are not subject tests or empirical evidence.",
+    "The two synthetic traversals in exit-002 do not form a stabilization exit because the required fault union failed and the actual transport was superseded.",
+    "No unavailable route is substituted, and no historical task/thread evidence gains qualification credit."
+  ]
+}

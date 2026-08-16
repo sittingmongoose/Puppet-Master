@@ -1,0 +1,72 @@
+{
+  "schema_id": "pw-r9-progress-assessment-iteration-010-exit-006-pass-pre-holistic-v1",
+  "artifact_id": "PW-R9-SUCCESSOR-LOOP-BROKEN-TWO-CLEAN-RUNS-20260816",
+  "status": "EXIT_006_COMPLETE_ZERO_CALL_PASS_HOLISTIC_AND_PUSHED_GIT_GATES_REMAIN",
+  "assessment_trigger": ["completed stabilization terminal", "post-family-reset full regression", "before holistic review or any formal gate"],
+  "exit_006_terminal": {
+    "launch_count": 1,
+    "command_rc": 0,
+    "status": "PASS",
+    "receipt": {"path": "r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/simulator_receipt.json", "sha256": "cf8d943ea72b1975eb9e1220fa1e4bd8bbe0e727c4bafebc132a07bcf15b1980", "bytes": 5455786},
+    "inventory": {"path": "r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/inventory.json", "sha256": "8c6973734ca2eebdbff79cec2912c6b47a33a7ea475420ea258c9e69c1253f10", "bytes": 1494820, "entry_count": 7698, "entries_sha256": "3cedaaf13928dfc51c43077e75838757ddc3d4c94e6a1f5a66283ee98663f57d", "entries_bytes": 1494419, "creation_reopen": "PASS", "post_creation_reopen": "PASS"},
+    "clean_traversals": [
+      {"run_id": "synthetic-clean-001", "run_sha256": "1b61df4169b1b80dd6bd3b298e12a87bec8e7815692529a4fa3e4e22a7acace0", "run_bytes": 151513, "planned": 291, "pass": 291, "fail": 0, "invalid": 0, "missing": 0, "stage_artifacts": 54, "reopen_a": "PASS", "reopen_b": "PASS"},
+      {"run_id": "synthetic-clean-002", "run_sha256": "1caea823116f353b6688311229e3d7cec89a567a47893170eb3213e800eea09b", "run_bytes": 151513, "planned": 291, "pass": 291, "fail": 0, "invalid": 0, "missing": 0, "stage_artifacts": 54, "reopen_a": "PASS", "reopen_b": "PASS"}
+    ],
+    "global_identity_and_nonce_values": 1746,
+    "faults": {"normalized_passed": 56, "normalized_total": 56, "global_passed": 10, "global_total": 10, "first_failure": null},
+    "source_bundle": {"file_count": 58, "before_after_unchanged": true, "transport_addendum_present": true, "route_capability_receipt_present": true},
+    "calls": {"collaboration": 0, "model": 0, "network": 0, "provider": 0, "subject": 0},
+    "qualification_credit": 0
+  },
+  "progress_vector": {
+    "normalized_failure_family": "NONE_CURRENT_SOURCE_CUSTODY_FAMILY_CLOSED",
+    "layer": "STABILIZATION_EXIT_PRE_HOLISTIC_AND_GIT",
+    "predecessor_fail_reproducer": "fragmented source-custody validators admitted or omitted authority paths across sandbox and retained reopen",
+    "successor_pass_reproducer": "exit-006 complete clean pair plus all 66 fault receipts on unified validator bytes",
+    "longest_synthetic_valid_prefix": "TWO_COMPLETE_291_ROW_TRAVERSALS_PLUS_56_OF_56_NORMALIZED_PLUS_10_OF_10_GLOBAL",
+    "longest_empirical_valid_prefix": "V4_MATRIX_1_211_COMPLETED_209_PASS_2_SUBJECT_FAIL_80_CAUSALLY_INELIGIBLE",
+    "historical_regressions_passing": "22_FAMILIES_56_VARIANTS_10_GLOBALS_ALL_PASS_EXIT_006",
+    "open_experiment_validity_blockers": ["HOLISTIC_INDEPENDENT_XHIGH_REVIEW", "PUSHED_GIT_BYTE_CUSTODY"],
+    "supported_controller_surface_count": 4,
+    "supported_controller_code_bytes": 439696,
+    "surfaces_deleted_or_replaced": [
+      "actual app-server and process-poll transport",
+      "task-thread-turn rollout admission",
+      "receipt self-attestation authority",
+      "fragmented source-custody collectors and reopen readers"
+    ],
+    "surfaces_added": ["root collaboration spawn adapter", "one shared canonical source-custody admission component"],
+    "subject_calls_since_transport_correction": 0,
+    "qualification_streak": "0_OF_2"
+  },
+  "progress_adjudication": {
+    "full_regression_suite_green": true,
+    "named_source_custody_family_blocker_closed": true,
+    "complete_clean_synthetic_pair_finished": true,
+    "progress_credited": true,
+    "candidate_numbers_files_hashes_or_review_activity_used_as_progress": false
+  },
+  "churn_adjudication": {
+    "source_custody_family_recurred_after_accepted_reset": false,
+    "closed_failure_class_reopened": false,
+    "new_churn_declared": false,
+    "stabilization_hold": "ACTIVE_UNTIL_HOLISTIC_AND_GIT_GATES_CLOSE",
+    "same_action_repeated": false
+  },
+  "next_gate": {
+    "action": "one holistic independent xhigh review of exact current bytes and exit-006 evidence",
+    "required_result": "ZERO_EXPERIMENT_VALIDITY_BLOCKERS",
+    "repair_disposition": "Any valid finding is repaired inside stabilization and requires a fresh complete suite."
+  },
+  "authority": {
+    "holistic_review_authorized": true,
+    "git_commit_push_authorized_now": false,
+    "candidate_mint_authorized": false,
+    "formal_preseal_audit_authorized": false,
+    "freeze_authorized": false,
+    "canary_authorized": false,
+    "subject_launch_authorized": false,
+    "goal_completion_authorized": false
+  }
+}

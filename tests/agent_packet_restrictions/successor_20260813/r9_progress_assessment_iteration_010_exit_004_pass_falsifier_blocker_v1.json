@@ -1,0 +1,94 @@
+{
+  "schema_id": "pw-r9-progress-assessment-iteration-010-exit-004-pass-falsifier-blocker-v1",
+  "artifact_id": "PW-R9-SUCCESSOR-LOOP-BROKEN-TWO-CLEAN-RUNS-20260816",
+  "status": "STABILIZATION_CHURN_HOLD_CONTINUES_EXIT_004_SUITE_PASS_ONE_SOURCE_SNAPSHOT_BLOCKER",
+  "assessment_trigger": [
+    "completed stabilization terminal",
+    "post-repair independent falsification",
+    "before any candidate mint formal audit freeze canary or subject launch"
+  ],
+  "frozen_input_identities": {
+    "simulator.py": {"sha256": "dc00f412f498b6faa714531343f846aa5903a408479a253918d89ad45cc78433", "bytes": 221449},
+    "simulator_contract.json": {"sha256": "0c7ec9ac58ef16b0a0e9fdabcf790c5df89d6b9068f74ba10304f9c927d60472", "bytes": 21360},
+    "subject_transport_addendum": {"sha256": "7b5186b3c9f244488a75695b34b0d06e79ee6b720acb934fc3767315c4b005d8", "bytes": 5909},
+    "route_capability_receipt": {"sha256": "3d523eac087e691b2336a6ab878dbfe64b8359891831dc866641039f97f8646a", "bytes": 4780}
+  },
+  "exit_004_terminal": {
+    "command_launch_count": 1,
+    "command_rc": 0,
+    "status": "PASS",
+    "receipt": {"path": "r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-004/simulator_receipt.json", "sha256": "6019f05916035cdd613c90743a317e870c002275ed84a1566c37efdbb4bbac76", "bytes": 5454078},
+    "inventory": {"path": "r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-004/inventory.json", "sha256": "267d5d309f63b609ba5eb60784d1cb210bdbd6aa166d34c0ae1e626fc1d3bfcb", "bytes": 1494820, "entry_count": 7698, "entries_sha256": "4930393e1d17168dc103f49c55744b6af81e8f8b03a04666e611ad93ac731e4b", "entries_bytes": 1494419, "creation_time_independent_reopen": "PASS"},
+    "clean_pair": {
+      "status": "PASS",
+      "runs": [
+        {"run_id": "synthetic-clean-001", "scheduled": 291, "pass": 291, "fail": 0, "invalid": 0, "missing": 0, "stage_artifacts": 54, "public_reopen_a": "PASS", "public_reopen_b": "PASS"},
+        {"run_id": "synthetic-clean-002", "scheduled": 291, "pass": 291, "fail": 0, "invalid": 0, "missing": 0, "stage_artifacts": 54, "public_reopen_a": "PASS", "public_reopen_b": "PASS"}
+      ],
+      "globally_unique_nonce_invocation_path_values": 1746
+    },
+    "regressions": {"normalized_passed": 56, "normalized_total": 56, "global_passed": 10, "global_total": 10, "first_literal_failure": null, "first_causal_failure": null},
+    "calls": {"collaboration": 0, "model": 0, "network": 0, "provider": 0, "subject": 0},
+    "qualification_credit": 0
+  },
+  "independent_falsifier": {
+    "report": {"path": "r9_control_plane_stabilization_v1/iteration_010_exit_004_fixture_closure_falsifier_report_v1.json", "sha256": "0c02c4c017bba09b1acf7d434a55a2a9fda80438330cba29ff787ceef0c85da2", "bytes": 4208},
+    "status": "FAIL_ONE_EXPERIMENT_VALIDITY_BLOCKER",
+    "narrow_historical_head_repair": "PASS_SMALLEST_CAUSAL_REPAIR",
+    "predecessor_preservation": "PASS",
+    "blocker_id": "SOURCE_BUNDLE_VALIDATION_SCOPE_NOT_IMPLEMENTED"
+  },
+  "progress_vector": {
+    "normalized_failure_family": "TRANSITIVE_SUBJECT_TRANSPORT_AUTHORITY_OMITTED_FROM_LIVE_SUITE_SOURCE_SNAPSHOT",
+    "layer": "SUITE_SOURCE_SNAPSHOT_TRANSITIVE_AUTHORITY_CLOSURE",
+    "predecessor_fail_reproducer": "exit-003 sequence 048 R9_REG_20_HISTORICAL_RUN_GIT_HEAD_DRIFT: CONTROLLER_INVALID because subject-transport addendum absent",
+    "successor_pass_reproducer": "exit-004 R9-REG-020 historical-head normalized variant PASS on the narrow sandbox repair",
+    "longest_synthetic_valid_prefix": "TWO_COMPLETE_291_ROW_TRAVERSALS_PLUS_56_OF_56_NORMALIZED_PLUS_10_OF_10_GLOBAL",
+    "longest_empirical_valid_prefix": "V4_MATRIX_1_211_COMPLETED_209_PASS_2_SUBJECT_FAIL_80_CAUSALLY_INELIGIBLE",
+    "historical_regressions_passing": "22_FAMILIES_56_VARIANTS_10_GLOBALS_ALL_PASS_EXIT_004",
+    "open_experiment_validity_blockers": ["SOURCE_BUNDLE_VALIDATION_SCOPE_NOT_IMPLEMENTED"],
+    "supported_controller_surface_count": 4,
+    "supported_controller_code_bytes": 435941,
+    "surfaces_deleted_or_replaced": [
+      "actual app-server backend and process poll surface",
+      "rollout task thread turn admission surface",
+      "receipt self-attestation proof authority",
+      "recursive or callback confinement authority"
+    ],
+    "surfaces_added": ["root collaboration spawn-request and terminal-delivery adapter"],
+    "subject_calls_since_transport_correction": 0,
+    "qualification_streak": "0_OF_2"
+  },
+  "progress_adjudication": {
+    "full_regression_suite_green": true,
+    "named_predecessor_blocker_closed": "R9_REG_20_HISTORICAL_RUN_GIT_HEAD_DRIFT_FIXTURE_MATERIALIZATION_SOURCE_CLOSURE",
+    "longest_valid_prefix_increased": true,
+    "progress_credited": true,
+    "candidate_numbers_files_hashes_or_review_activity_used_as_progress": false
+  },
+  "churn_adjudication": {
+    "same_normalized_family_recurred": false,
+    "closed_failure_class_reopened": false,
+    "two_consecutive_no_progress_assessments": false,
+    "facade_callback_capability_recursive_verifier_or_bookkeeping_layer_added": false,
+    "unchanged_action_proposed": false,
+    "new_churn_declared": false,
+    "existing_stabilization_hold": "ACTIVE_UNTIL_COMPLETE_EXIT_GATE"
+  },
+  "smallest_next_repair": {
+    "component": "simulator.py general _source_paths",
+    "change": "Add the already declared subject-transport addendum and route-capability receipt to the live suite source snapshot.",
+    "forbidden_scope": ["controller", "backend", "verifier", "scorer", "semantic oracle", "schedule", "routes", "catalog", "acceptance rules", "predecessor behavior"],
+    "required_after_change": ["static check", "fresh complete two-traversal 56-normalized 10-global zero-call suite", "fresh independent falsification"]
+  },
+  "authority": {
+    "repair_authorized": true,
+    "fresh_exit_authorized": true,
+    "candidate_mint_authorized": false,
+    "formal_audit_authorized": false,
+    "freeze_authorized": false,
+    "canary_authorized": false,
+    "subject_launch_authorized": false,
+    "goal_completion_authorized": false
+  }
+}

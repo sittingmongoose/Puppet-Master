@@ -1,0 +1,1237 @@
+{
+  "schema_id": "pw-r9-iteration-010-exit-006-holistic-xhigh-review-v1",
+  "artifact_id": "PW-R9-ITERATION-010-EXIT-006-HOLISTIC-XHIGH-REVIEW-V1",
+  "created_utc": "2026-08-16T21:26:24.044641Z",
+  "reviewer": {
+    "task": "/root/exit006_holistic_xhigh_review",
+    "effort": "xhigh",
+    "independence": "create-only report owner; no source/evidence authorship"
+  },
+  "status": "PASS_ZERO_EXPERIMENT_VALIDITY_BLOCKERS",
+  "decision": {
+    "blocker_count": 0,
+    "all_exit_requirements_except_later_pushed_git_custody_met": true,
+    "simulator_self_authorization_used": false,
+    "pushed_git_custody_is_next_ordered_gate_not_current_implementation_blocker": true
+  },
+  "scope": {
+    "reviewed": [
+      "five named successor-root controls/receipts",
+      "all iteration_010 immediate regular files",
+      "exit-006 simulator receipt and inventory",
+      "both clean run/terminal sets",
+      "all 66 compact fault receipts",
+      "six inventory-addressed row chains",
+      "exit-003/004/005 terminal-progress-falsifier lineage"
+    ],
+    "later_gate_excluded": "PUSHED_GIT_BYTE_CUSTODY_NOT_YET_CLOSED",
+    "actions": {
+      "full_suite_launched": false,
+      "model_or_test_taker_call": false,
+      "provider_call": false,
+      "subject_call": false,
+      "network_call": false,
+      "source_or_evidence_write": false
+    },
+    "count_clarification": {
+      "observed_immediate_regular_files": 17,
+      "all_reviewed": true,
+      "declared_runtime_bundle_files": 18,
+      "explanation": "18 denotes 15 iteration runtime members plus three successor-root controls. iteration_010 contains those 15 plus README.md and simulator.py, hence 17 immediate files. No runtime member is missing.",
+      "disposition": "NONBLOCKING_SCOPE_COUNT_CLARIFICATION"
+    }
+  },
+  "reviewed_identities": {
+    "primary": {
+      "count": 7,
+      "aggregate_rows_sha256": "8e920ae92dca5403d24267d1808060792de904e07041a227e4d4d8beaba2dd0d",
+      "aggregate_rows_bytes": 1543,
+      "aggregate_file_bytes": 6976960,
+      "aggregate_algorithm": "path-sorted rows; UTF-8 JSON; sorted keys; comma/colon separators",
+      "rows": [
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/inventory.json",
+          "sha256": "8c6973734ca2eebdbff79cec2912c6b47a33a7ea475420ea258c9e69c1253f10",
+          "bytes": 1494820
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/simulator_receipt.json",
+          "sha256": "cf8d943ea72b1975eb9e1220fa1e4bd8bbe0e727c4bafebc132a07bcf15b1980",
+          "bytes": 5455786
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_goal_operating_contract_v1.json",
+          "sha256": "764dd27b3f472a90eef0f8493e63ac8fb349fe05a3a97dc4673a4a835e6e8dbd",
+          "bytes": 7024
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_iteration_010_takeover_receipt_20260816.json",
+          "sha256": "678b8ac154a9e5ec2690974c2bc9f347f9fb24bf3f28a9bffcec9f4bdfeb411a",
+          "bytes": 3862
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_progress_assessment_iteration_010_exit_006_pass_pre_holistic_v1.json",
+          "sha256": "464f78f599d05ea3a85cb9de7a9db97f9b399501253e2d443bf259f73f8e06cd",
+          "bytes": 4779
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_subject_transport_addendum_subagent_invocations_v1.json",
+          "sha256": "7b5186b3c9f244488a75695b34b0d06e79ee6b720acb934fc3767315c4b005d8",
+          "bytes": 5909
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_subject_transport_subagent_route_capability_receipt_v1.json",
+          "sha256": "3d523eac087e691b2336a6ab878dbfe64b8359891831dc866641039f97f8646a",
+          "bytes": 4780
+        }
+      ]
+    },
+    "iteration_and_root_direct_source_post_review": {
+      "count": 20,
+      "aggregate_rows_sha256": "437b5540c6d4dfade52449526cb21597997e83cadf081073159cb932fef9ac10",
+      "aggregate_rows_bytes": 4348,
+      "aggregate_file_bytes": 1388108,
+      "aggregate_algorithm": "path-sorted rows; UTF-8 JSON; sorted keys; comma/colon separators",
+      "rows": [
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/README.md",
+          "sha256": "ad90c34baf38b6ba705b19e1b9ef44c288aa46bcc032f4aacd1d59d19505ef66",
+          "bytes": 8965
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/architecture_contract.json",
+          "sha256": "804b3054b6ae74d00081f51b78f7b5ce810a237322b6c89cf4094130d25979d4",
+          "bytes": 28966
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/backend.py",
+          "sha256": "251b33aa08ad324e5aeb241c62131f5f5552b1b2b3a90ef8df41c7bae291ef5a",
+          "bytes": 25191
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/backend_contract.json",
+          "sha256": "6f896b1a477c447e55a86b480aad4f0aaf34808714ba1641f062663a33b35576",
+          "bytes": 8009
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/controller.py",
+          "sha256": "3457888eea820c2312ba64e62de7ff3c19c568f3a2001f1ae6a9df63ba94951a",
+          "bytes": 88251
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/fault_scenarios.json",
+          "sha256": "fe5afa3fc3a563de5f689a24a5159c8d07f0b850fbd4d4eaa08e6c0892000d26",
+          "bytes": 25212
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/pipeline_contract.json",
+          "sha256": "16e05403a36719b0a5d8133f894a2403abd2b0c8521c7261610e197ed719e708",
+          "bytes": 5547
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/regression_catalog.json",
+          "sha256": "5147d228270f3671f6c80ad1810cf74087cac70b4352803396f4390f8e130c80",
+          "bytes": 57200
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/regression_inventory_receipt.json",
+          "sha256": "2c89dc98c4006f049295981a8c7d626dec57e76d9008be9723af4646bdaae567",
+          "bytes": 19768
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/routes.json",
+          "sha256": "9baa62ac8c8a01cb2c4e0dcc32951131769e4c99d44dbcf92f4ec159cddd3f96",
+          "bytes": 239
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/schedule.json",
+          "sha256": "2422c40998f7541268a72df9a7fed6ff3f45464de741110487e5900f664e5fb0",
+          "bytes": 38410
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/semantic_inventory_receipt.json",
+          "sha256": "16a4d4215aada316eaf64336c0a23a971b406bc7bd77e0356f98b0fdd0d216c7",
+          "bytes": 110641
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/semantic_manifest.json",
+          "sha256": "47337f3225c1a810ede548ca93e947d3ec7e8db23710a10c0909c042c0b2075c",
+          "bytes": 597495
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/simulator.py",
+          "sha256": "0b3bf777e57f5a45435b7cbe8dd834ff15a914cc32de2c02b8cd5fb16784e402",
+          "bytes": 225204
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/simulator_contract.json",
+          "sha256": "6e82551498d79921610d668aee4cc1e7ec38fe128d2dec95328942733e60a0a2",
+          "bytes": 22087
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/verifier.py",
+          "sha256": "969471bd428cb0f4e408adcbfaa1d9236429832846f215aa0d0f193959698ad4",
+          "bytes": 101050
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/verifier_contract.json",
+          "sha256": "e96413eee29d287baa2b4b87e97d26c666a1717c4aae9ad2117a828d5eaf8ea4",
+          "bytes": 8160
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_goal_operating_contract_v1.json",
+          "sha256": "764dd27b3f472a90eef0f8493e63ac8fb349fe05a3a97dc4673a4a835e6e8dbd",
+          "bytes": 7024
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_subject_transport_addendum_subagent_invocations_v1.json",
+          "sha256": "7b5186b3c9f244488a75695b34b0d06e79ee6b720acb934fc3767315c4b005d8",
+          "bytes": 5909
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_subject_transport_subagent_route_capability_receipt_v1.json",
+          "sha256": "3d523eac087e691b2336a6ab878dbfe64b8359891831dc866641039f97f8646a",
+          "bytes": 4780
+        }
+      ]
+    },
+    "exact_runtime_bundle": {
+      "count": 18,
+      "aggregate_rows_sha256": "146e377f70908438c013a391a440347a03854f2f1a5ffe98de89410d0930c2b4",
+      "aggregate_rows_bytes": 3925,
+      "aggregate_file_bytes": 1153939,
+      "receipt_native_rows_sha256": "3fa1c65d43a8a612a7bb3b17377fbb8cec166fcb8ca910d504be4e3ed5c30f38",
+      "receipt_native_rows_bytes": 3007,
+      "rows": [
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/architecture_contract.json",
+          "sha256": "804b3054b6ae74d00081f51b78f7b5ce810a237322b6c89cf4094130d25979d4",
+          "bytes": 28966
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/backend.py",
+          "sha256": "251b33aa08ad324e5aeb241c62131f5f5552b1b2b3a90ef8df41c7bae291ef5a",
+          "bytes": 25191
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/backend_contract.json",
+          "sha256": "6f896b1a477c447e55a86b480aad4f0aaf34808714ba1641f062663a33b35576",
+          "bytes": 8009
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/controller.py",
+          "sha256": "3457888eea820c2312ba64e62de7ff3c19c568f3a2001f1ae6a9df63ba94951a",
+          "bytes": 88251
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/fault_scenarios.json",
+          "sha256": "fe5afa3fc3a563de5f689a24a5159c8d07f0b850fbd4d4eaa08e6c0892000d26",
+          "bytes": 25212
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/pipeline_contract.json",
+          "sha256": "16e05403a36719b0a5d8133f894a2403abd2b0c8521c7261610e197ed719e708",
+          "bytes": 5547
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/regression_catalog.json",
+          "sha256": "5147d228270f3671f6c80ad1810cf74087cac70b4352803396f4390f8e130c80",
+          "bytes": 57200
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/regression_inventory_receipt.json",
+          "sha256": "2c89dc98c4006f049295981a8c7d626dec57e76d9008be9723af4646bdaae567",
+          "bytes": 19768
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/routes.json",
+          "sha256": "9baa62ac8c8a01cb2c4e0dcc32951131769e4c99d44dbcf92f4ec159cddd3f96",
+          "bytes": 239
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/schedule.json",
+          "sha256": "2422c40998f7541268a72df9a7fed6ff3f45464de741110487e5900f664e5fb0",
+          "bytes": 38410
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/semantic_inventory_receipt.json",
+          "sha256": "16a4d4215aada316eaf64336c0a23a971b406bc7bd77e0356f98b0fdd0d216c7",
+          "bytes": 110641
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/semantic_manifest.json",
+          "sha256": "47337f3225c1a810ede548ca93e947d3ec7e8db23710a10c0909c042c0b2075c",
+          "bytes": 597495
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/simulator_contract.json",
+          "sha256": "6e82551498d79921610d668aee4cc1e7ec38fe128d2dec95328942733e60a0a2",
+          "bytes": 22087
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/verifier.py",
+          "sha256": "969471bd428cb0f4e408adcbfaa1d9236429832846f215aa0d0f193959698ad4",
+          "bytes": 101050
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/verifier_contract.json",
+          "sha256": "e96413eee29d287baa2b4b87e97d26c666a1717c4aae9ad2117a828d5eaf8ea4",
+          "bytes": 8160
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_goal_operating_contract_v1.json",
+          "sha256": "764dd27b3f472a90eef0f8493e63ac8fb349fe05a3a97dc4673a4a835e6e8dbd",
+          "bytes": 7024
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_subject_transport_addendum_subagent_invocations_v1.json",
+          "sha256": "7b5186b3c9f244488a75695b34b0d06e79ee6b720acb934fc3767315c4b005d8",
+          "bytes": 5909
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_subject_transport_subagent_route_capability_receipt_v1.json",
+          "sha256": "3d523eac087e691b2336a6ab878dbfe64b8359891831dc866641039f97f8646a",
+          "bytes": 4780
+        }
+      ]
+    },
+    "clean_manifests_matrix_accounting_path_terminals": {
+      "count": 12,
+      "aggregate_rows_sha256": "e9fbba45b2885b9ab88630e3f00b6db4fddae954b1870d722a83219a4108f70d",
+      "aggregate_rows_bytes": 3397,
+      "aggregate_file_bytes": 324970,
+      "aggregate_algorithm": "path-sorted rows; UTF-8 JSON; sorted keys; comma/colon separators",
+      "rows": [
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/evidence/synthetic-clean-001/accounting.json",
+          "sha256": "26eab49044113895498d9c85506aeacc2e0e72a49d3e58fc63e7c210c08337d1",
+          "bytes": 543
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/evidence/synthetic-clean-001/matrix_terminal.json",
+          "sha256": "11f929a3a277dadc636a6404f2ad29d4c914646ea4c5ead7304b44a264d45889",
+          "bytes": 770
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/evidence/synthetic-clean-001/run.json",
+          "sha256": "1b61df4169b1b80dd6bd3b298e12a87bec8e7815692529a4fa3e4e22a7acace0",
+          "bytes": 151513
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/evidence/synthetic-clean-001/terminals/slot-alpha.json",
+          "sha256": "974bd2a69108bb8d85a00e1e0acf4de3d41474323cbd876c4d96ada467ba3e53",
+          "bytes": 3207
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/evidence/synthetic-clean-001/terminals/slot-bravo.json",
+          "sha256": "808e029caeefbca990a7fabc18ecc6bb6633342f0c066a31f5e9af347b8b6ded",
+          "bytes": 3207
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/evidence/synthetic-clean-001/terminals/slot-charlie.json",
+          "sha256": "578bcb0ac44500309adb09bc25e0d1e48f80cac45a74782f58b795a12cdf9f23",
+          "bytes": 3245
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/evidence/synthetic-clean-002/accounting.json",
+          "sha256": "7757f793e0271ef511bd87a0d3fea476aac6bafd98bb4fd96fb336de0b1afabc",
+          "bytes": 543
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/evidence/synthetic-clean-002/matrix_terminal.json",
+          "sha256": "887ff7ac620ce83598b222048fbaea1cfc92a77886b486ed26ac2ec8c69a0e3f",
+          "bytes": 770
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/evidence/synthetic-clean-002/run.json",
+          "sha256": "1caea823116f353b6688311229e3d7cec89a567a47893170eb3213e800eea09b",
+          "bytes": 151513
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/evidence/synthetic-clean-002/terminals/slot-alpha.json",
+          "sha256": "2c3a22ecd5d548cdaf99f855f536b9c6d4c7ea5ebb9e4f550ac95a471a1cd12a",
+          "bytes": 3207
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/evidence/synthetic-clean-002/terminals/slot-bravo.json",
+          "sha256": "1a259c60b2d21445ec1dfd76139837f70685eaa59fd22718993f4d3087615d84",
+          "bytes": 3207
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/evidence/synthetic-clean-002/terminals/slot-charlie.json",
+          "sha256": "f0ed92bd9fd33ef4c997c14edf21bb34a9fc1af8a73835242dd008e8c07c8c81",
+          "bytes": 3245
+        }
+      ]
+    },
+    "compact_fault_receipts": {
+      "count": 66,
+      "aggregate_rows_sha256": "1a56d5241d46b0dac48b3339b80898925ee959afba9bfee977f697c5c514026e",
+      "aggregate_rows_bytes": 18771,
+      "aggregate_file_bytes": 10245029,
+      "aggregate_algorithm": "path-sorted rows; UTF-8 JSON; sorted keys; comma/colon separators",
+      "rows": [
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/001-receipt-schema-mismatch/receipt.json",
+          "sha256": "fc5e82a9e54f66730a759c38dc4401dbd94481453406d18e8142d299edb0f399",
+          "bytes": 4576
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/002-clean-root-event-complete/receipt.json",
+          "sha256": "06abae28c838ac907b1a7a339b6fc97a5095763d15787e618c6b0213b09965dd",
+          "bytes": 783306
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/003-delayed-poll-terminal-complete/receipt.json",
+          "sha256": "5f4e53fffe60c32dd3efa4b0f1e2ca119f072fcc68ed61f533f2ba275f843f3a",
+          "bytes": 2680716
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/004-missing-spawn-event/receipt.json",
+          "sha256": "7dcda78df094a3363c6991e45eef38f0d89afc7f11d3e27cc6b2c7b6ae326ea8",
+          "bytes": 17267
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/005-missing-terminal-event/receipt.json",
+          "sha256": "22c038d063915563ae91467c17a126c5af6fc3745d0f8877f9131af86bfde037",
+          "bytes": 17665
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/006-failed-spawn-event/receipt.json",
+          "sha256": "92c81b7b6ee641a73a9546e8066e3476683d9505218881ca33df711436c7c16e",
+          "bytes": 17265
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/007-partial-output/receipt.json",
+          "sha256": "89b6d844e337ce74bb326a5815f717a360dfc504571a84eae63bdd4356325463",
+          "bytes": 96688
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/008-malformed-output/receipt.json",
+          "sha256": "fffca0fd1f3144a991e0b3624ee9633a53ab33e0c97232e16ecfa16fc40cd092",
+          "bytes": 96698
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/009-missing-member/receipt.json",
+          "sha256": "9aa9b5ece1e14164b4f3aba57bd232e037c9342085fd28cd13429affa78ffc63",
+          "bytes": 680
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/010-extra-member/receipt.json",
+          "sha256": "08cbac5d4661feb275420f97b1c9cfd4bc653fbf4b9f82f2ec51b1f6eea77b5b",
+          "bytes": 677
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/011-nonregular-member/receipt.json",
+          "sha256": "824e45112565f8f028de84d1bb4fb7ab6623383b2713e36124b587b532c64737",
+          "bytes": 828
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/012-identity-drift/receipt.json",
+          "sha256": "0f2c73c431deb82f37b02e23fb1de7c2368ef8631b96a55f600051b14b1cea11",
+          "bytes": 973
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/013-wrong-render-directory/receipt.json",
+          "sha256": "6df665cc683c4f81302b6e33b6dd9889012442f33fd23e08651492e95975ee7d",
+          "bytes": 4451
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/014-one-terminal-lf/receipt.json",
+          "sha256": "cef9e2d5c0392cf2f572b8c17485d19c3af89e04326db54682d7cea7363474b4",
+          "bytes": 783143
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/015-two-terminal-lfs/receipt.json",
+          "sha256": "4c6f2d3d5af4b8c3e7027df6d9f3c63b59b144de64411b5ccb6b9c5b4ee6dd2b",
+          "bytes": 4508
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/016-post-start-render-mutation/receipt.json",
+          "sha256": "243b8f1ee90b62f59132c6e6cad914c94f824ae8f83d8510db01b4762e2aca59",
+          "bytes": 4517
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/017-stop-after-receipt-drain/receipt.json",
+          "sha256": "8e75b1b75c0599ce1a27621ae60b593f820cdf37be076920cd8c5277004cfbb0",
+          "bytes": 108104
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/018-repeated-signal-safe-drain/receipt.json",
+          "sha256": "b3ae3038c306d8f1c2c1a2902a87bd525e9d488286e3f39a9203644c4413c90a",
+          "bytes": 108208
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/019-hard-loss-after-request/receipt.json",
+          "sha256": "f6e5a4fe5d777dba596175ba483eaa4ba1ce8f67aec4cd0c88e5a21145bbce45",
+          "bytes": 8845
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/020-stop-after-attempt-drain/receipt.json",
+          "sha256": "6aaecb23cd2946e3a51554c27b0c012eb67d8ac81aec18c7b8f36d2d63e2003f",
+          "bytes": 108089
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/021-raw-prefix-reopen-invalid/receipt.json",
+          "sha256": "62aa1b4728d3b987e92ad96876916860dae8eac04e2ac9f9bdc248f3fc005f6b",
+          "bytes": 4491
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/022-completion-prefix-reopen-invalid/receipt.json",
+          "sha256": "d36485a21f80faa124e9ecda3c9a2c607d933053a60b36b016c41f349581b291",
+          "bytes": 2230
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/023-delayed-terminal-same-invocation/receipt.json",
+          "sha256": "b6b1ce8ff01ba7b9a4f0ba2b1d9801b56f2a1b4d14b2c24fed9847d93ce8b570",
+          "bytes": 2680737
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/024-loss-after-raw/receipt.json",
+          "sha256": "fb8192ed210437f89513ba1e18695cf8b9105634e28ab36dbac46e080d798c4b",
+          "bytes": 4412
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/025-loss-after-completion/receipt.json",
+          "sha256": "13dcdc8cb048d91e4e16299c9ff004b4bdcd0712950db8cbb0447b0c132c8d9e",
+          "bytes": 2146
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/026-historical-app-server-fail-current-protocol-matrix/receipt.json",
+          "sha256": "de4f6828de8470d3930243ac66b5ff54d988d74dfa99b5ed0e9c4b2230f31ecf",
+          "bytes": 798508
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/027-incomplete-fuse-after-request/receipt.json",
+          "sha256": "9fdbb7d9579639960674e33d9af92a239941ab68dca7b299bdbd87b7cdbe3199",
+          "bytes": 8787
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/028-same-root-reinvoke/receipt.json",
+          "sha256": "dbda046ca4e51bff23b43702bac51f3d47f0fbc0cd31dfd1d660112f48b0240d",
+          "bytes": 8732
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/029-semantic-identity-drift/receipt.json",
+          "sha256": "333d16cfedfef99c8983009a40eeedc5bd8afa89e94d9d2c31a8b9c83b623734",
+          "bytes": 2312
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/030-operating-identity-drift/receipt.json",
+          "sha256": "eda05515a396dd94194f1e6d6d1bf573720d05ec0157fdc7c278fefb305cf94a",
+          "bytes": 2314
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/031-raw-byte-mutation/receipt.json",
+          "sha256": "f2770b1d0ac564af42c84a6c6afd733fe7f1a851e6ce1ec14a1c0e16bb0c5b03",
+          "bytes": 4598
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/032-embedded-score-mutation/receipt.json",
+          "sha256": "e7898faf5a98c1bdc63a768697b69f616588c67c3af647b1fec5ce57a4fbaa71",
+          "bytes": 4574
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/033-required-fault-union/receipt.json",
+          "sha256": "cd661117cc718d7bc00a3ce835d26a052aa32966e0529032c8cf46d23594f514",
+          "bytes": 559
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/034-future-attempt/receipt.json",
+          "sha256": "bec0a7c711d4a39182b56558b3b61ecc654cd9aa4f7872adbe0dfa5dc8546240",
+          "bytes": 4375
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/035-future-completion/receipt.json",
+          "sha256": "f26a61a165d275c83c25b42e10b8a67931dfeed6590ce60514b9424cc25b620f",
+          "bytes": 4384
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/036-current-byte-check-only/receipt.json",
+          "sha256": "81b7edf2a6ec54c0106c07b6497a4cee2a519f1bd6c3edb01d4fc6a829a3f70e",
+          "bytes": 1356
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/037-stale-checkpoint/receipt.json",
+          "sha256": "0ddd26acd66813cba204580e1d5f64e1fc3bd761b64672faac97757fc22fc5c3",
+          "bytes": 983
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/038-all-declared-regular-exact/receipt.json",
+          "sha256": "c5edbac6c5419e18b10329ed62bca41cc2a4a55e21e79b06086d9b1234ddc2cc",
+          "bytes": 671
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/039-candidate-import-scan/receipt.json",
+          "sha256": "5d8f5daa46c297028e0ef68457469a60f51a4ad335baf13ea47d94681780aad2",
+          "bytes": 637
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/040-invalid-authority-zero-backend/receipt.json",
+          "sha256": "d63f74712577cda38e249ba4cc65ccf0123d3e45d5179451114380a0a5843189",
+          "bytes": 1016
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/041-exact-public-command-set/receipt.json",
+          "sha256": "4c545d3eaf389261cadf4c5889e0e9d47cd8768861e72ebd8f2edbecafde56bf",
+          "bytes": 682
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/042-invalid-control-check-only/receipt.json",
+          "sha256": "9b26c2862c9f765ff87198c50b28e57392ae8f6b509d4d22a43068eae0ebb661",
+          "bytes": 1011
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/043-minimum-surface/receipt.json",
+          "sha256": "10dc00637e660ff7004ef8157e8c14a5601796be1e262c4a466b10e373a0793d",
+          "bytes": 665
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/044-no-v12-v21-import/receipt.json",
+          "sha256": "d1476dc2e8733099c6d5f2e60745f59499654133b5a9f9418bc3cb2721f2bcc1",
+          "bytes": 713
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/045-data-only-check-result/receipt.json",
+          "sha256": "414ade0b5cd2138ce47e8a3a8be29a0e45f5652de2d0e40db7aa91fbe6a98a37",
+          "bytes": 1398
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/046-v21-remains-zero-credit/receipt.json",
+          "sha256": "92ec9c7758f03b0bda8b0f42804ecec18461ce85be998488bca39d1cdb837d87",
+          "bytes": 783
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/047-v21-runtime-import-absent/receipt.json",
+          "sha256": "9c994c94205ef1bc2923c79a2b0d0ab541f81e160cd422a773ea160a4f05c278",
+          "bytes": 654
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/048-r9_reg_20_historical_run_git_head_drift/receipt.json",
+          "sha256": "bbac22751bcc456fccde7bdf153feb039b8a8d87dc3a595288a4bf1e66291284",
+          "bytes": 124837
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/049-resolved-tension-predicate-clarification/receipt.json",
+          "sha256": "7c7a47a7048f52e2db6f7d61737d8594cc354a49db85875333df883dc5333f58",
+          "bytes": 12162
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/050-operational-boundary-predicate-renamed-reordered-resolved/receipt.json",
+          "sha256": "29a2be4392b6ef24b109ae9dbcb27c188b5e757bacc2ecca2bf8c61363f65adb",
+          "bytes": 1314
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/051-operational-boundary-predicate-stale-vs-current/receipt.json",
+          "sha256": "6f37e9b2262f66aacd225264ead9b03105fc70b89578e6252aa5a5a4b3ea1994",
+          "bytes": 1294
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/052-operational-boundary-predicate-lineage-only-metadata/receipt.json",
+          "sha256": "494fc94e7f79bd5054362a2223427bd4abb07bc59bcfd75b24e21bf3f47ea20c",
+          "bytes": 1304
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/053-operational-boundary-predicate-genuinely-unresolved-conflict/receipt.json",
+          "sha256": "5ac671dcba0d3c94dbabf05293ff9e8796fcf8125e58de52f8ec566ef76d558e",
+          "bytes": 1317
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/054-operational-boundary-predicate-deliberately-separate-authorities/receipt.json",
+          "sha256": "4f100927e33ab81f49317959060098a1af51d02e791ff711057e8fab769c8775",
+          "bytes": 1325
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/055-operational-boundary-predicate-missing-predecessor-resolution/receipt.json",
+          "sha256": "fb8eb95d9ee2a6e2b695ea5464c1b5930acdef9226559afdbdd0d23dc74ec968",
+          "bytes": 1319
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/056-operational-boundary-predicate-no-answer-leakage/receipt.json",
+          "sha256": "f7f867b9130a7ec2358219244896e82c36b14e17fb53c705cf2cfb0f02fdf24d",
+          "bytes": 2006
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/057-gf-reopen-twice/receipt.json",
+          "sha256": "9137677f0bd478e45886259bfc05a8a1658f43f101777a173e31661c48bada47",
+          "bytes": 783037
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/058-gf-terminal-mutation/receipt.json",
+          "sha256": "c555e841651496136236c215c91ba6270d97baef43f1edad9550e83fbf573c76",
+          "bytes": 2131
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/059-gf-accounting-mutation/receipt.json",
+          "sha256": "e2d95b22b112ac9070a0ca598d9ad36176b41ba842db1f1feda29d8fbc3528a1",
+          "bytes": 4328
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/060-gf-subject-fail-path-stop/receipt.json",
+          "sha256": "2ce7ce62419faa0ff031651cd9bb671decb20e4bc12d817351ae6f9fd91bf4e6",
+          "bytes": 96512
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/061-gf-identity-collision/receipt.json",
+          "sha256": "4d3421e7cc2e587a708376ca927748fa53cd1e7c3176fb0d33a256e6ea3f9a9f",
+          "bytes": 4387
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/062-gf-nonce-collision/receipt.json",
+          "sha256": "decbd36f2125e6faac385145745f42f0b3ffefc39b715d50243abb951172e968",
+          "bytes": 2154
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/063-gf-causal-stage-complete/receipt.json",
+          "sha256": "c0199c192067e8265a41dd4bbf2cbf70ef5fd6af6f741a2b088b49d13b7e5e2f",
+          "bytes": 783053
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/064-gf-stage-artifact-mutation/receipt.json",
+          "sha256": "8a47c7b00f0c65ea87421a0c3e116d245fa323de18d56a6d9e224add3947af36",
+          "bytes": 4420
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/065-gf-finalizer-artifact-mutation/receipt.json",
+          "sha256": "5326c48125d0bbdeba041f9e8ff98b279821d23e4d64ba02782d55f7bbd078a0",
+          "bytes": 4408
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/066-gf-exact-git-bundle-binding/receipt.json",
+          "sha256": "5f07d683c7d7a6da119eb51dd880ec06bfb71c12c3d283c5ae837126d1841825",
+          "bytes": 22789
+        }
+      ]
+    },
+    "exit003_004_005_lineage": {
+      "count": 8,
+      "aggregate_rows_sha256": "5ad80788f4595e8977c8a15cabe11390338d994453f2ff6a8ba06fd03a52ec88",
+      "aggregate_rows_bytes": 1948,
+      "aggregate_file_bytes": 16391926,
+      "aggregate_algorithm": "path-sorted rows; UTF-8 JSON; sorted keys; comma/colon separators",
+      "rows": [
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010_exit_004_fixture_closure_falsifier_report_v1.json",
+          "sha256": "0c02c4c017bba09b1acf7d434a55a2a9fda80438330cba29ff787ceef0c85da2",
+          "bytes": 4208
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010_exit_005_source_collector_falsifier_report_v1.json",
+          "sha256": "62071c884a90d7f784e65d43c262c80d0d38edd84a73ad1e8b4960408a217b15",
+          "bytes": 4137
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-003/simulator_receipt.json",
+          "sha256": "501a276fa93787e1b3228f312e89231a1da0085165e2e686d49027e61ae6da80",
+          "bytes": 5454369
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-004/simulator_receipt.json",
+          "sha256": "6019f05916035cdd613c90743a317e870c002275ed84a1566c37efdbb4bbac76",
+          "bytes": 5454078
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-005/simulator_receipt.json",
+          "sha256": "86dc145d8d80af519de30370d1fddfb0565d4aeeaa69b31fda99bd886f0bbb20",
+          "bytes": 5455786
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_progress_assessment_iteration_010_exit_003_fail_v1.json",
+          "sha256": "466a9360d5566fecd11fd3ea634cdb432b8c092de60b7bc6cb4b4d2977b1bffe",
+          "bytes": 6681
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_progress_assessment_iteration_010_exit_004_pass_falsifier_blocker_v1.json",
+          "sha256": "fef13b0bf6003f572713b81d7cab2e0279454af2e40acd7002f9ac552786d7df",
+          "bytes": 6068
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_progress_assessment_iteration_010_exit_005_pass_source_collector_churn_v1.json",
+          "sha256": "690391390141043288445e8ec4f2f08b85613b4341d67986ed7ca14e154ab4ea",
+          "bytes": 6599
+        }
+      ]
+    }
+  },
+  "checks": [
+    {
+      "check_id": "ANSWER_FREE_COUNTERFACTUALS_AND_NEGATIVE_CONTROL",
+      "result": "PASS",
+      "evidence": [
+        "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/049-resolved-tension-predicate-clarification/receipt.json#/observation/evaluator",
+        "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/049-resolved-tension-predicate-clarification/receipt.json#/observation/predecessor_negative_control"
+      ],
+      "finding": "Six independently evaluated projections are false,false,false,true,true,true with zero forbidden keys/tokens; iteration-009 self-attested PASS on declared false while the adverse projection independently returns true, was not persisted, and restored its monkeypatch."
+    },
+    {
+      "check_id": "TWO_EXACT_291_ROW_SYNTHETIC_TRAVERSALS",
+      "result": "PASS",
+      "evidence": [
+        "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/simulator_receipt.json#/clean_pair",
+        "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/inventory.json#/entries"
+      ],
+      "finding": "Both slot-major runs are 291/291 PASS, zero failed/stopped/ineligible rows, 54 artifacts, PASS terminals, and two successful 16-check reopens each."
+    },
+    {
+      "check_id": "ALL_NORMALIZED_AND_GLOBAL_REGRESSIONS",
+      "result": "PASS",
+      "evidence": [
+        "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/regression_catalog.json",
+        "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/simulator_receipt.json#/faults",
+        "fault receipt aggregate 1a56d5241d46b0dac48b3339b80898925ee959afba9bfee977f697c5c514026e"
+      ],
+      "finding": "56/56 normalized variants in 22 R8/R9 families and 10/10 global cases cover transport, spawn, capture, activity, missing/failure, stop/drain, hard loss, restart prohibition, reopen, render, scoring, schedule, causal artifacts, accounting, terminal, source, identity, nonce, and Git bundle. All 22 historical families remain FAIL, never reclassified."
+    },
+    {
+      "check_id": "CONTROLLER_VERIFIER_STATE_MACHINE_AGREEMENT",
+      "result": "PASS",
+      "evidence": [
+        "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/controller.py#_admit,_complete_admitted,_finalize_eligible,_terminalize,_reopen,_execute",
+        "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/verifier.py#_validate_row,_replay_schedule,_validate_terminals,verify"
+      ],
+      "finding": "Admission, once-only attempt, events, completion-last, finalization, stop/drain, slot/global stop, accounting, schedule, and reopen predicates agree; four stored reopens and six independently reconstructed row chains found no disagreement."
+    },
+    {
+      "check_id": "ADDENDUM_CAPABILITY_AND_18_FILE_BINDING",
+      "result": "PASS",
+      "evidence": [
+        "tests/agent_packet_restrictions/successor_20260813/r9_subject_transport_addendum_subagent_invocations_v1.json#/subject_transport",
+        "tests/agent_packet_restrictions/successor_20260813/r9_subject_transport_subagent_route_capability_receipt_v1.json#/adjudication",
+        "runtime bundle receipt rows 3fa1c65d43a8a612a7bb3b17377fbb8cec166fcb8ca910d504be4e3ed5c30f38"
+      ],
+      "finding": "Exact 18-file bundle includes the addendum and capability receipt; 174-byte instruction SHA-256 0c04a3327ef979fbd6a562399250ee26a213d4eb50de764a53bf07f14ab5997c; three requested routes accepted with fork none and no silent substitution."
+    },
+    {
+      "check_id": "GLOBAL_UNIQUENESS_NO_RETRY_REPLACEMENT_BEST_OF",
+      "result": "PASS",
+      "evidence": [
+        "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/simulator_receipt.json#/clean_pair/identity_uniqueness",
+        "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/architecture_contract.json#/trust_boundary/controller_rules"
+      ],
+      "finding": "582 unique invocation IDs, 582 unique nonces, 582 unique canonical task paths; no retry, replacement, best-of, reuse, follow-up, resume, or relaunch."
+    },
+    {
+      "check_id": "EXACT_INVENTORY_REOPEN_AND_TERMINALS",
+      "result": "PASS",
+      "evidence": [
+        "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/inventory.json",
+        "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/057-gf-reopen-twice/receipt.json"
+      ],
+      "finding": "7698 unique self-excluding inventory entries; canonical entries identity 3cedaaf13928dfc51c43077e75838757ddc3d4c94e6a1f5a66283ee98663f57d / 1494419 bytes; all clean identities and four reopens agree."
+    },
+    {
+      "check_id": "MINIMUM_EXPERIMENT_BOUNDARY_AND_RESIDUALS",
+      "result": "PASS",
+      "evidence": [
+        "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/architecture_contract.json#/surface",
+        "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/043-minimum-surface/receipt.json",
+        "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/faults/044-no-v12-v21-import/receipt.json"
+      ],
+      "finding": "Only simulate, run-canary, run-matrix, reopen are public; backend is synthetic-only, controller records, verifier is offline, simulator is zero-call containment; no candidate runtime import or hidden launch authority."
+    },
+    {
+      "check_id": "LOOP_BREAKER_PROGRESS_NO_HIDDEN_AUTHORITY_CHURN",
+      "result": "PASS",
+      "evidence": [
+        "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/simulator.py#_canonical_repository_path,_strict_source_paths,_source_paths,_sandbox_source_paths",
+        "exit003-005 lineage aggregate 5ad80788f4595e8977c8a15cabe11390338d994453f2ff6a8ba06fd03a52ec88"
+      ],
+      "finding": "Exit-006 validates every source occurrence as a canonical regular repository path before coalescing, closing the exit-005 falsifier with the smallest source-collector replacement while semantics, routes, schedule, scorer, oracle, bars, and historical FAIL lineage remain frozen."
+    },
+    {
+      "check_id": "ZERO_EXPERIMENTAL_CALLS_ZERO_CREDIT_NO_AUTHORITY",
+      "result": "PASS",
+      "evidence": [
+        "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/simulator_receipt.json#/calls",
+        "tests/agent_packet_restrictions/successor_20260813/r9_subject_transport_subagent_route_capability_receipt_v1.json#/calls",
+        "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_010/architecture_contract.json#/nonclaims"
+      ],
+      "finding": "Exit-006, clean reopens, and all 66 fault receipts have zero provider/subject/model/network/collaboration calls and zero credit. Three historical capability helpers had zero empirical calls, zero frozen packets, and zero credit. No candidate/audit/freeze/canary/qualification/launch authority is minted."
+    }
+  ],
+  "semantic_counterfactuals": [
+    {
+      "fixture_id": "renamed_reordered_resolved",
+      "projection": {
+        "bytes": 845,
+        "sha256": "b9ca1af72fc6ba2615cce3a88411e1d56fa8dc58e5071a8d71f3920463d31192"
+      },
+      "observed_without_expected": false,
+      "expected_compared_after": false,
+      "agreement": true,
+      "answer_free": true
+    },
+    {
+      "fixture_id": "stale_vs_current",
+      "projection": {
+        "bytes": 828,
+        "sha256": "c62a0232468c0629eec9ea4b4735bb07b5a31e5a0416295c7a51b70bb65ab94f"
+      },
+      "observed_without_expected": false,
+      "expected_compared_after": false,
+      "agreement": true,
+      "answer_free": true
+    },
+    {
+      "fixture_id": "lineage_only_metadata",
+      "projection": {
+        "bytes": 824,
+        "sha256": "816b13e8fe2f5e9e93960d4aabb5543761c14d005d2a989e5e344b880838929e"
+      },
+      "observed_without_expected": false,
+      "expected_compared_after": false,
+      "agreement": true,
+      "answer_free": true
+    },
+    {
+      "fixture_id": "genuinely_unresolved_conflict",
+      "projection": {
+        "bytes": 791,
+        "sha256": "bca6f2d9683992e039e2071adee17822d7561d4c7cc3fe0916c78c88c16a7711"
+      },
+      "observed_without_expected": true,
+      "expected_compared_after": true,
+      "agreement": true,
+      "answer_free": true
+    },
+    {
+      "fixture_id": "deliberately_separate_authorities",
+      "projection": {
+        "bytes": 827,
+        "sha256": "1dd8b84806d0f69d7f7527a88abcb2e584841bbff9b7ee7c46f30fb331cf0f08"
+      },
+      "observed_without_expected": true,
+      "expected_compared_after": true,
+      "agreement": true,
+      "answer_free": true
+    },
+    {
+      "fixture_id": "missing_predecessor_resolution",
+      "projection": {
+        "bytes": 655,
+        "sha256": "5215e5c30cce04d3c53e6d091ace37e5c30172d0844d23d64fae8095dfd2244b"
+      },
+      "observed_without_expected": true,
+      "expected_compared_after": true,
+      "agreement": true,
+      "answer_free": true
+    }
+  ],
+  "iteration_009_negative_control": {
+    "actual_predecessor_gate": {
+      "declared_expected": false,
+      "declared_fixture": "renamed_reordered_resolved",
+      "declared_result": "PASS",
+      "function": "iteration_009._semantic_repair_gate",
+      "status": "PASS"
+    },
+    "adverse_projection": {
+      "canonical_projection": {
+        "bytes": 655,
+        "sha256": "5215e5c30cce04d3c53e6d091ace37e5c30172d0844d23d64fae8095dfd2244b"
+      },
+      "independent_observed": true,
+      "iteration_010_receipt_id": "R9-SEM-REG-012-CONCRETE-PROJECTION"
+    },
+    "classification": "FAIL_SELF_ATTESTATION_ADMITTED_ADVERSE_PROJECTION",
+    "exact_original_inputs": [
+      {
+        "bytes": 192179,
+        "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_009/simulator.py",
+        "sha256": "4d4b83e804537eb961da45f90e047d17c00cdbbe4218d0d6523c2829a0ec7ff9"
+      },
+      {
+        "bytes": 107083,
+        "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_009/semantic_inventory_receipt.json",
+        "sha256": "8f3d916eaada5db179fd94de73a9c2420e3379f60a3fb72af301566af743a91c"
+      },
+      {
+        "bytes": 9678,
+        "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/iteration_009_falsifier_report_v1.json",
+        "sha256": "ad500690671fad27280bbdd61fab39443185b76554f2722f7756ac68a5db7a48"
+      }
+    ],
+    "falsifier_family": "STATIC_COUNTERFACTUAL_SELF_ATTESTATION",
+    "receipt_negative_control": {
+      "monkeypatch_restored": true,
+      "mutated_in_memory": {
+        "bytes": 107761,
+        "sha256": "28520ad00ccd414d11729f7265fd19d036b2a15a74f3b956c5f652b793307e69"
+      },
+      "original": {
+        "bytes": 107083,
+        "sha256": "8f3d916eaada5db179fd94de73a9c2420e3379f60a3fb72af301566af743a91c"
+      },
+      "persisted": false
+    }
+  },
+  "clean_traversals": [
+    {
+      "run_id": "synthetic-clean-001",
+      "run_manifest": {
+        "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/evidence/synthetic-clean-001/run.json",
+        "sha256": "1b61df4169b1b80dd6bd3b298e12a87bec8e7815692529a4fa3e4e22a7acace0",
+        "bytes": 151513
+      },
+      "matrix_terminal": {
+        "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/evidence/synthetic-clean-001/matrix_terminal.json",
+        "sha256": "11f929a3a277dadc636a6404f2ad29d4c914646ea4c5ead7304b44a264d45889",
+        "bytes": 770
+      },
+      "accounting": {
+        "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/evidence/synthetic-clean-001/accounting.json",
+        "sha256": "26eab49044113895498d9c85506aeacc2e0e72a49d3e58fc63e7c210c08337d1",
+        "bytes": 543
+      },
+      "path_terminals": [
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/evidence/synthetic-clean-001/terminals/slot-alpha.json",
+          "sha256": "974bd2a69108bb8d85a00e1e0acf4de3d41474323cbd876c4d96ada467ba3e53",
+          "bytes": 3207
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/evidence/synthetic-clean-001/terminals/slot-bravo.json",
+          "sha256": "808e029caeefbca990a7fabc18ecc6bb6633342f0c066a31f5e9af347b8b6ded",
+          "bytes": 3207
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/evidence/synthetic-clean-001/terminals/slot-charlie.json",
+          "sha256": "578bcb0ac44500309adb09bc25e0d1e48f80cac45a74782f58b795a12cdf9f23",
+          "bytes": 3245
+        }
+      ],
+      "rows": {
+        "planned": 291,
+        "completed": 291,
+        "pass": 291,
+        "subject_fail": 0,
+        "controller_aborted": 0,
+        "stopped": 0,
+        "ineligible": 0
+      },
+      "stage_artifacts": 54,
+      "matrix_status": "PASS",
+      "reopen_a": {
+        "rc": 0,
+        "valid": true,
+        "all_16_checks_true": true
+      },
+      "reopen_b": {
+        "rc": 0,
+        "valid": true,
+        "all_16_checks_true": true
+      },
+      "calls": {
+        "collaboration": 0,
+        "model": 0,
+        "network": 0,
+        "provider": 0,
+        "subject": 0
+      },
+      "qualification_credit": 0
+    },
+    {
+      "run_id": "synthetic-clean-002",
+      "run_manifest": {
+        "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/evidence/synthetic-clean-002/run.json",
+        "sha256": "1caea823116f353b6688311229e3d7cec89a567a47893170eb3213e800eea09b",
+        "bytes": 151513
+      },
+      "matrix_terminal": {
+        "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/evidence/synthetic-clean-002/matrix_terminal.json",
+        "sha256": "887ff7ac620ce83598b222048fbaea1cfc92a77886b486ed26ac2ec8c69a0e3f",
+        "bytes": 770
+      },
+      "accounting": {
+        "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/evidence/synthetic-clean-002/accounting.json",
+        "sha256": "7757f793e0271ef511bd87a0d3fea476aac6bafd98bb4fd96fb336de0b1afabc",
+        "bytes": 543
+      },
+      "path_terminals": [
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/evidence/synthetic-clean-002/terminals/slot-alpha.json",
+          "sha256": "2c3a22ecd5d548cdaf99f855f536b9c6d4c7ea5ebb9e4f550ac95a471a1cd12a",
+          "bytes": 3207
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/evidence/synthetic-clean-002/terminals/slot-bravo.json",
+          "sha256": "1a259c60b2d21445ec1dfd76139837f70685eaa59fd22718993f4d3087615d84",
+          "bytes": 3207
+        },
+        {
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/evidence/synthetic-clean-002/terminals/slot-charlie.json",
+          "sha256": "f0ed92bd9fd33ef4c997c14edf21bb34a9fc1af8a73835242dd008e8c07c8c81",
+          "bytes": 3245
+        }
+      ],
+      "rows": {
+        "planned": 291,
+        "completed": 291,
+        "pass": 291,
+        "subject_fail": 0,
+        "controller_aborted": 0,
+        "stopped": 0,
+        "ineligible": 0
+      },
+      "stage_artifacts": 54,
+      "matrix_status": "PASS",
+      "reopen_a": {
+        "rc": 0,
+        "valid": true,
+        "all_16_checks_true": true
+      },
+      "reopen_b": {
+        "rc": 0,
+        "valid": true,
+        "all_16_checks_true": true
+      },
+      "calls": {
+        "collaboration": 0,
+        "model": 0,
+        "network": 0,
+        "provider": 0,
+        "subject": 0
+      },
+      "qualification_credit": 0
+    }
+  ],
+  "sampled_row_chains": {
+    "samples": [
+      {
+        "run": "synthetic-clean-001",
+        "ordinal": 0,
+        "slot": "slot-alpha",
+        "cell": "S10A_DECISION_A01",
+        "causal_refs": 0
+      },
+      {
+        "run": "synthetic-clean-001",
+        "ordinal": 153,
+        "slot": "slot-bravo",
+        "cell": "S10B_TENSION_B-T02",
+        "causal_refs": 28
+      },
+      {
+        "run": "synthetic-clean-001",
+        "ordinal": 290,
+        "slot": "slot-charlie",
+        "cell": "S60_K_I-E99",
+        "causal_refs": 4
+      },
+      {
+        "run": "synthetic-clean-002",
+        "ordinal": 96,
+        "slot": "slot-alpha",
+        "cell": "S60_K_I-E99",
+        "causal_refs": 4
+      },
+      {
+        "run": "synthetic-clean-002",
+        "ordinal": 97,
+        "slot": "slot-bravo",
+        "cell": "S10A_DECISION_A01",
+        "causal_refs": 0
+      },
+      {
+        "run": "synthetic-clean-002",
+        "ordinal": 250,
+        "slot": "slot-charlie",
+        "cell": "S10B_TENSION_B-T02",
+        "causal_refs": 28
+      }
+    ],
+    "files_reopened": 36,
+    "errors": 0,
+    "method": "Inventory identities plus independent reconstruction of the exact six-file chain, packet/message/request, route/nonce/task, activity/final capture, deterministic score, causal references, completion-last, reopen, and once-only rules."
+  },
+  "fault_coverage": {
+    "normalized_passed": 56,
+    "normalized_total": 56,
+    "global_passed": 10,
+    "global_total": 10,
+    "historical_families": 22,
+    "historical_fails_never_reclassified": true
+  },
+  "inventory": {
+    "file": {
+      "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-006/inventory.json",
+      "sha256": "8c6973734ca2eebdbff79cec2912c6b47a33a7ea475420ea258c9e69c1253f10",
+      "bytes": 1494820
+    },
+    "entries": 7698,
+    "entries_sha256": "3cedaaf13928dfc51c43077e75838757ddc3d4c94e6a1f5a66283ee98663f57d",
+    "entries_bytes": 1494419,
+    "unique_paths": true,
+    "self_excluded": true,
+    "offline_reopens": 4,
+    "all_valid_all_16_checks_true": true
+  },
+  "calls_credit": {
+    "exit006_calls": {
+      "collaboration": 0,
+      "model": 0,
+      "network": 0,
+      "provider": 0,
+      "subject": 0
+    },
+    "exit006_credit": 0,
+    "review_experimental_provider_subject_model_network_calls": 0,
+    "review_qualification_credit": 0,
+    "capability_history": {
+      "non_empirical_helpers": 3,
+      "empirical_subject_calls": 0,
+      "frozen_packets": 0,
+      "credit": 0
+    }
+  },
+  "source_byte_post_review_stability": {
+    "opening": {
+      "count": 20,
+      "rows_sha256": "437b5540c6d4dfade52449526cb21597997e83cadf081073159cb932fef9ac10",
+      "rows_bytes": 4348,
+      "file_bytes": 1388108
+    },
+    "post_review_immediately_before_report": {
+      "count": 20,
+      "rows_sha256": "437b5540c6d4dfade52449526cb21597997e83cadf081073159cb932fef9ac10",
+      "rows_bytes": 4348,
+      "file_bytes": 1388108
+    },
+    "stable": true,
+    "report_excluded": true,
+    "exit006_transitive_source_files": 58,
+    "exit006_before_equals_after": true
+  },
+  "blockers": [],
+  "named_nonblocking_residuals": [
+    "malicious trusted-controller fabrication",
+    "host or OS compromise",
+    "arbitrary in-process private callers",
+    "capability tokens",
+    "recursive or self-hosting verifier authority",
+    "callback confinement",
+    "reflection resistance",
+    "production FileSafe or read-isolation proof",
+    "effective provider model/effort is requested and retained but not independently attested",
+    "root-visible activity does not attest absence of unexposed platform activity",
+    "final bytes do not reconstruct historical create-only and fsync system calls"
+  ],
+  "authority": {
+    "holistic_gate": "CLOSED_PASS_ZERO_EXPERIMENT_VALIDITY_BLOCKERS",
+    "only_next_gate": "commit current exact bytes, push, fetch origin/main, verify every bound blob and this report byte",
+    "next_owner": "PUSHED_GIT_BYTE_CUSTODY_OPERATOR",
+    "next_gate_may_begin": true,
+    "pushed_git_custody_closed": false,
+    "candidate": false,
+    "audit": false,
+    "freeze": false,
+    "canary": false,
+    "empirical_matrix": false,
+    "qualification": false,
+    "readiness": false,
+    "launch": false,
+    "release": false,
+    "goal_completion": false
+  }
+}
+

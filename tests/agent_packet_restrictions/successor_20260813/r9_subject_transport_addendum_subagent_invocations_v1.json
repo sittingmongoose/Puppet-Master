@@ -1,0 +1,125 @@
+{
+  "schema_id": "pw-r9-subject-transport-addendum-v1",
+  "artifact_id": "PW-R9-SUCCESSOR-LOOP-BROKEN-TWO-CLEAN-RUNS-20260816.SUBJECT-TRANSPORT-SUBAGENT-INVOCATIONS-V1",
+  "goal_identity": "PW-R9-SUCCESSOR-LOOP-BROKEN-TWO-CLEAN-RUNS-20260816",
+  "goal_thread_id": "01a00b52-4879-7c41-a826-7b4609ad3c3b",
+  "created_utc": "2026-08-16T17:30:16Z",
+  "status": "BINDING_CREATE_ONLY_TRANSPORT_CORRECTION_SUBJECT_LAUNCH_FAIL_CLOSED_UNTIL_EXACT_ROUTE_CAPABILITY",
+  "authority": {
+    "source_thread_id": "019fbb7d-29ac-7e82-93b3-fff057d7a561",
+    "confirmed_directly_by_jared": true,
+    "goal_replaced_or_duplicated": false,
+    "supersedes_only": "SEPARATE_USER_VISIBLE_CODEX_TASK_OR_THREAD_PER_EMPIRICAL_INVOCATION",
+    "does_not_supersede": [
+      "frozen semantic inputs, prompts, manifests, schemas, routes, schedule, scorer, oracle, reducers, verifier, and acceptance rules",
+      "one fresh isolated test taker per row",
+      "global freshness and predeclared dispatch nonce",
+      "once-only attempt fuse",
+      "no retry, replacement, best-of, reuse, semantic repair, sibling exposure, or between-run tuning",
+      "durable raw response capture, deterministic scoring, terminal accounting, and independent reopen",
+      "loop breaker, zero-failure clean-matrix bars, and two consecutive unchanged full matrices"
+    ]
+  },
+  "subject_transport": {
+    "kind": "COLLABORATION_SUBAGENT_INVOCATION",
+    "freshness_unit": "ONE_NEWLY_SPAWNED_SUBAGENT_PER_EMPIRICAL_ROW",
+    "fork_turns": "none",
+    "reuse_or_followup": false,
+    "simultaneous_fanout_required": false,
+    "bounded_waves_required": true,
+    "user_visible_task_or_thread_required": false,
+    "internal_thread_or_turn_required": false,
+    "internal_thread_or_turn_rule": "Record only when the collaboration API exposes it; never fabricate it or make it an admission requirement.",
+    "global_freshness_rule": "Every row has a globally unique returned subagent invocation identity and a globally unique predeclared dispatch nonce.",
+    "once_only_fuse": "The row becomes permanently attempted when spawn is submitted. A failed spawn, crash, missing output, malformed output, prohibited activity, controller loss, or ambiguous terminal can never be relaunched.",
+    "initial_message_rule": "The initial message contains only the fixed minimal transport instruction followed byte-for-byte by the frozen provider-visible test packet. It contains no controller history, prior or sibling output, answer key, oracle, scorer, expected value, hidden repair context, or route-derived answer signal.",
+    "minimal_transport_instruction_utf8": "TEST-TAKER TRANSPORT: Answer the frozen packet below directly in your first final response. Do not use tools, files, browsing, network, memory, delegation, or other agents.\n\n",
+    "minimal_transport_instruction_sha256": "0c04a3327ef979fbd6a562399250ee26a213d4eb50de764a53bf07f14ab5997c",
+    "minimal_transport_instruction_bytes": 174,
+    "prohibited_activity": [
+      "tool call",
+      "file read or write",
+      "browsing or network access",
+      "delegation or another agent",
+      "memory access",
+      "follow-up turn",
+      "reuse of a test-taker subagent"
+    ],
+    "prohibited_activity_disposition": "Preserve the first attempt and classify under the frozen FAIL or controller-invalid boundary; never retry."
+  },
+  "required_capture": [
+    "requested model",
+    "requested reasoning effort",
+    "returned subagent ID or canonical task path",
+    "predeclared dispatch nonce",
+    "frozen packet SHA-256 and byte count",
+    "exact initial-message SHA-256 and byte count",
+    "first terminal response UTF-8 bytes, SHA-256, and byte count",
+    "observed activity and prohibited-activity classification",
+    "spawn submission and terminal status",
+    "deterministic score and permanent row disposition"
+  ],
+  "frozen_roster": [
+    {
+      "slot": "slot-alpha",
+      "model": "gpt-5.4-mini",
+      "reasoning_effort": "xhigh"
+    },
+    {
+      "slot": "slot-bravo",
+      "model": "gpt-5.4-mini",
+      "reasoning_effort": "medium"
+    },
+    {
+      "slot": "slot-charlie",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "medium"
+    }
+  ],
+  "capability_observation_at_creation": {
+    "collaboration_schema_exposes": [
+      "gpt-5.4",
+      "gpt-5.5",
+      "gpt-5.6-luna",
+      "gpt-5.6-terra",
+      "gpt-5.6-sol"
+    ],
+    "gpt-5.4-mini_exposed": false,
+    "gpt-5.6-luna_medium_exposed": true,
+    "silent_substitution_allowed": false,
+    "subject_launch_disposition": "FAIL_CLOSED_BEFORE_CANARY_OR_MATRIX_UNLESS_THE_COLLABORATION_API_EXPOSES_AN_EXACT_GPT_5_4_MINI_SELECTION_OR_JARED_SEPARATELY_CHANGES_THE_ROSTER"
+  },
+  "synthetic_exit_requirements": [
+    "spawn-adapter request formation without a subject call",
+    "exact first-response capture",
+    "prohibited-activity detection",
+    "missing or failed spawn",
+    "stop and admitted drain",
+    "global invocation and nonce uniqueness",
+    "once-only fuse after spawn submission",
+    "terminal accounting and independent reopen"
+  ],
+  "qualification": {
+    "matrix_rows": 291,
+    "required_consecutive_unchanged_clean_matrices": 2,
+    "required_total_pass": 582,
+    "allowed_subject_fail": 0,
+    "allowed_controller_invalid": 0,
+    "allowed_missing": 0,
+    "allowed_retry": 0,
+    "allowed_replacement": 0,
+    "allowed_best_of": 0,
+    "historical_task_or_thread_evidence_reinterpreted": false
+  },
+  "calls": {
+    "subject": 0,
+    "provider": 0,
+    "network": 0,
+    "qualification_credit": 0
+  },
+  "nonclaims": [
+    "This addendum does not authorize a subject launch, candidate, audit, freeze, canary, matrix, readiness, or Goal completion.",
+    "A requested model or effort is not treated as effective-provider attestation unless the collaboration API exposes such evidence.",
+    "No unavailable model is silently replaced by a selectable sibling model."
+  ]
+}

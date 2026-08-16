@@ -1,0 +1,101 @@
+{
+  "schema_id": "pw-r9-progress-assessment-iteration-010-exit-005-pass-source-collector-churn-v1",
+  "artifact_id": "PW-R9-SUCCESSOR-LOOP-BROKEN-TWO-CLEAN-RUNS-20260816",
+  "status": "CHURN_DECLARED_SOURCE_BUNDLE_CLOSURE_FAMILY_SMALLEST_COMPONENT_REPLACEMENT_REQUIRED",
+  "assessment_trigger": [
+    "completed stabilization terminal",
+    "second internal repair cycle",
+    "independent xhigh falsifier blocker",
+    "before any candidate mint formal audit freeze canary or subject launch"
+  ],
+  "exit_005_terminal": {
+    "launch_count": 1,
+    "command_rc": 0,
+    "status": "PASS",
+    "receipt": {"path": "r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-005/simulator_receipt.json", "sha256": "86dc145d8d80af519de30370d1fddfb0565d4aeeaa69b31fda99bd886f0bbb20", "bytes": 5455786},
+    "inventory": {"path": "r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-005/inventory.json", "sha256": "b97c4f8adf84503937a6ce1391214d0a6e9e48c1e5c14b2cd856218f1c813847", "bytes": 1494820, "entry_count": 7698, "entries_sha256": "4937781dd9aca05c9926826f7e92413e9a3ed1b1226b2da082a5fe33c360c0d9", "entries_bytes": 1494419, "creation_time_reopen": "PASS", "post_creation_reopen": "PASS"},
+    "clean_pair": [
+      {"run_id": "synthetic-clean-001", "scheduled": 291, "pass": 291, "fail": 0, "invalid": 0, "missing": 0, "stage_artifacts": 54, "reopen_a": "PASS", "reopen_b": "PASS"},
+      {"run_id": "synthetic-clean-002", "scheduled": 291, "pass": 291, "fail": 0, "invalid": 0, "missing": 0, "stage_artifacts": 54, "reopen_a": "PASS", "reopen_b": "PASS"}
+    ],
+    "regressions": {"normalized_passed": 56, "normalized_total": 56, "global_passed": 10, "global_total": 10, "first_failure": null},
+    "source_bundle_unchanged": true,
+    "transport_authority_rows_present": true,
+    "calls": {"collaboration": 0, "model": 0, "network": 0, "provider": 0, "subject": 0},
+    "qualification_credit": 0
+  },
+  "independent_falsifier": {
+    "report": {"path": "r9_control_plane_stabilization_v1/iteration_010_exit_005_source_collector_falsifier_report_v1.json", "sha256": "62071c884a90d7f784e65d43c262c80d0d38edd84a73ad1e8b4960408a217b15", "bytes": 4137},
+    "status": "FAIL_ONE_EXPERIMENT_VALIDITY_BLOCKER",
+    "blocker_id": "SOURCE_COLLECTOR_PREVALIDATION_RESOLVED_PATH_COALESCING",
+    "counterevidence_adjudication": "ALLOW_IDENTICAL_LEXICAL_OVERLAP_ONLY_AFTER_EVERY_OCCURRENCE_IS_VALIDATED"
+  },
+  "progress_vector": {
+    "normalized_failure_family": "SOURCE_BUNDLE_TRANSITIVE_AUTHORITY_CLOSURE",
+    "layer": "SOURCE_MEMBER_ADMISSION_AND_IDENTITY_NORMALIZATION",
+    "predecessor_fail_reproducer": "exit-004 xhigh blocker SOURCE_BUNDLE_VALIDATION_SCOPE_NOT_IMPLEMENTED",
+    "successor_pass_reproducer": "exit-005 source bundle directly contains exact addendum and capability rows and R9-REG-020 passes",
+    "longest_synthetic_valid_prefix": "TWO_COMPLETE_291_ROW_TRAVERSALS_PLUS_56_OF_56_NORMALIZED_PLUS_10_OF_10_GLOBAL",
+    "longest_empirical_valid_prefix": "V4_MATRIX_1_211_COMPLETED_209_PASS_2_SUBJECT_FAIL_80_CAUSALLY_INELIGIBLE",
+    "historical_regressions_passing": "22_FAMILIES_56_VARIANTS_10_GLOBALS_ALL_PASS_EXIT_005",
+    "open_experiment_validity_blockers": ["SOURCE_COLLECTOR_PREVALIDATION_RESOLVED_PATH_COALESCING"],
+    "supported_controller_surface_count": 4,
+    "supported_controller_code_bytes": 435995,
+    "surfaces_deleted_or_replaced": [
+      "actual app-server backend and process poll surface",
+      "rollout task thread turn admission surface",
+      "receipt self-attestation proof authority",
+      "recursive or callback confinement authority"
+    ],
+    "surfaces_added": ["root collaboration spawn-request and terminal-delivery adapter"],
+    "subject_calls_since_transport_correction": 0,
+    "qualification_streak": "0_OF_2"
+  },
+  "progress_adjudication": {
+    "full_regression_suite_green": true,
+    "prior_named_blocker_closed": "SOURCE_BUNDLE_VALIDATION_SCOPE_NOT_IMPLEMENTED",
+    "longest_valid_prefix_maintained_at_complete_suite": true,
+    "progress_credited": true,
+    "new_experiment_validity_blocker_open": true
+  },
+  "churn_adjudication": {
+    "two_internal_repair_cycles_completed": true,
+    "same_normalized_family_recurred_through_another_helper": true,
+    "family": "SOURCE_BUNDLE_TRANSITIVE_AUTHORITY_CLOSURE",
+    "new_churn_declared": true,
+    "goal_remains_active": true,
+    "candidate_mint_formal_audit_freeze_canary_and_subject_calls_paused": true,
+    "unchanged_action_will_not_be_repeated": true,
+    "controller_family_rejected_now": false,
+    "controller_family_rejection_condition": "Reject the family only if the same source-admission defect recurs after the strict collector component replacement."
+  },
+  "fault_tree": {
+    "root": "Source candidates are coalesced by resolved path before every occurrence is validated.",
+    "branch_1": "A final-component symlink is not regular but can disappear through later resolved-key overwrite.",
+    "branch_2": "A symlink-bearing ancestor can make a lexical path resolve elsewhere while the final component itself is regular.",
+    "branch_3": "Four exact lexical repeats are intentional overlapping authority declarations and cannot simply be rejected.",
+    "smallest_causal_component": "The two resolved-path dictionary comprehensions shared by _source_paths and _sandbox_source_paths."
+  },
+  "component_replacement": {
+    "strategy": "Replace both dictionary comprehensions with one strict source-candidate admission helper.",
+    "rules": [
+      "Validate every occurrence as a final regular nonlink before resolve or coalescing.",
+      "Require normalized lexical and strict resolved paths to be identical and inside canonical REPO.",
+      "Allow only identical normalized lexical repeats.",
+      "Reject distinct lexical aliases to one target.",
+      "Retain one deterministic lexically sorted representative."
+    ],
+    "forbidden_scope": ["controller", "backend", "verifier", "scorer", "semantic oracle", "schedule", "routes", "regression catalog", "acceptance rules", "predecessor outcome"],
+    "required_after_replacement": ["static check", "targeted adversarial falsification", "fresh complete two-traversal 56-normalized 10-global zero-call suite"]
+  },
+  "authority": {
+    "component_replacement_authorized": true,
+    "fresh_exit_authorized_after_replacement": true,
+    "candidate_mint_authorized": false,
+    "formal_audit_authorized": false,
+    "freeze_authorized": false,
+    "canary_authorized": false,
+    "subject_launch_authorized": false,
+    "goal_completion_authorized": false
+  }
+}
