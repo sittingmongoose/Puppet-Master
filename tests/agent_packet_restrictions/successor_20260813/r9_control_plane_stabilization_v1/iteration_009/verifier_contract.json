@@ -1,0 +1,118 @@
+{
+  "schema_id": "pw-r9-offline-verifier-contract-v2",
+  "identity": "r9-iteration-003-historical-head-causal-offline-verifier-contract-v3",
+  "status": "STABILIZATION_INTERNAL_ITERATION_ZERO_CREDIT",
+  "public_surface": {
+    "module": "verifier.py",
+    "entrypoint": "verify",
+    "signature": "verify(run_root: pathlib.Path, expected: dict) -> dict",
+    "only_public_component_api": true,
+    "cli": false,
+    "offline": true,
+    "persistence": false,
+    "callbacks": false,
+    "imports": "Python standard library only; controller.py, backend.py, simulator.py, prior controllers, and candidate-v12-through-v21 runtime code are not imported"
+  },
+  "expected": {
+    "schema_id": "pw-r9-verifier-expectation-v2",
+    "exact_keys": [
+      "schema_id",
+      "run_id",
+      "run_kind",
+      "planned_call_count",
+      "evidence_root",
+      "operating_contract",
+      "bundle",
+      "semantic_manifest",
+      "pipeline_contract"
+    ],
+    "run_kind_enum": [
+      "simulate",
+      "run-canary",
+      "run-matrix"
+    ],
+    "planned_call_count": {
+      "simulate": 291,
+      "run-canary": 3,
+      "run-matrix": 291
+    }
+  },
+  "report": {
+    "schema_id": "pw-r9-offline-verifier-report-v2",
+    "required_fields": {
+      "schema_id": "string",
+      "valid": "boolean",
+      "run_id": "string or null",
+      "run_kind": "string or null",
+      "matrix_status": "string",
+      "error": "object or null",
+      "checks": "object",
+      "counts": "object or null",
+      "credit": "object",
+      "bundle": "object or null",
+      "custody": "object or null",
+      "calls": "object",
+      "residuals": "array"
+    },
+    "valid_meaning": "The supplied terminal evidence is internally exact and independently reopenable under this contract. valid does not convert CONTROLLER_INVALID, STOPPED_AFTER_DRAIN, VALID_SUBJECT_FAIL, synthetic, or canary evidence into qualification credit.",
+    "controller_invalid_credit": 0,
+    "synthetic_credit": 0
+  },
+  "custody": {
+    "bundle_file_count": 16,
+    "bundle_rows": "exact sorted successor-relative path, SHA-256, and byte-count rows recomputed from live files",
+    "synthetic": "WORKTREE_EXACT_BUNDLE with launch Git HEAD recorded as data; later current-HEAD equality is not required because the exact run-bound live bundle is independently recomputed and compared",
+    "actual": "GIT_HEAD_PINNED at launch; reopen requires run.git_head to resolve as an existing commit and every exact live bundle file to equal its blob at that recorded historical commit; unrelated worktree dirt and later commits are ignored",
+    "historical_reopen_report": "custody records the recorded head, exact-live-bundle result, recorded-commit-blob result, and historical_head_reopen PASS without treating that status as qualification credit",
+    "network_or_remote_git": false
+  },
+  "repaired_regression": {
+    "regression_id": "R9-REG-020",
+    "scenario_id": "historical-head-reopen",
+    "normalized_signature": "R9_REG_20_HISTORICAL_RUN_GIT_HEAD_DRIFT",
+    "predecessor": "iteration_002 rejects an otherwise valid synthetic historical-head witness solely at RUN_GIT_HEAD_DRIFT",
+    "successor": "iteration_003 accepts the same unchanged exact-bundle witness; actual custody instead reopens every bundle blob from the recorded run.git_head commit",
+    "fail_closed": "Malformed or missing recorded commit, missing blob, or blob/storage byte drift is invalid."
+  },
+  "causal_rules": {
+    "rule": "pw-r9-exact-input-frozen-artifact-v1",
+    "attempt_causal_inputs": "exact sorted references by kind, id, path with storage SHA-256 and bytes",
+    "cell_eligibility": "every declared prior cell is an exact durable PASS completion and every declared stage artifact is exact before attempt creation",
+    "stage_eligibility": "declared boundary cell and all direct cells are exact PASS and all predecessor stages are exact",
+    "stage_path": "artifacts/<slot>/<stage>.json",
+    "stage_storage": "manifest-declared insertion-order minified expected_artifact plus exactly one LF",
+    "subject_fail": "first valid FAIL permanently stops that slot; no later same-slot attempt, raw result, completion, or artifact may exist",
+    "controller_invalid": "global stop, exact receipt and terminals, zero qualification credit",
+    "clean_matrix": "291 exact PASS completions and exactly 54 eligible route-local stage artifacts including S90 for all three routes"
+  },
+  "checks": [
+    "exact expected interface and direct-child nonlink run root",
+    "semantic v2 manifest, pipeline contract, inventory receipt, routes, schedule, frozen source hashes and bytes",
+    "exact 16-row live controller backend verifier semantic and paired-inventory bundle",
+    "run kind, mode, custody, route, selected slot-major schedule, row identity, and unique predeclared nonce",
+    "create-only row directory inventory and provider_input.txt exact frozen storage and provider-visible bytes",
+    "attempt causal_inputs exact sorted refs with no missing, extra, duplicate, future, failed, or mutated input",
+    "backend closed terminal, route, nonce, provider bytes, task/thread/turn, poll, output, raw rollout, and prohibited-activity evidence",
+    "deterministic insertion-order exact-output score and completion-last chain recomputation",
+    "stage eligibility, total order, exact path, payload, payload hash and bytes, storage hash and bytes",
+    "no post-first-FAIL same-slot evidence and no post-controller-invalid global evidence",
+    "exact path terminals, matrix terminal, clean-matrix bar, and accounting",
+    "global cross-run task, thread, turn, and nonce freshness across the evidence root"
+  ],
+  "calls": {
+    "network": 0,
+    "provider": 0,
+    "subject": 0
+  },
+  "nonclaims": [
+    "No provider, subject, or network call is made.",
+    "No evidence is written, repaired, deleted, renamed, resumed, or relaunched.",
+    "No recursive or self-hosting verifier authority is granted.",
+    "No private-helper, reflection, callback-confinement, capability-token, or hostile in-process caller threat is pursued.",
+    "A valid synthetic run remains zero-credit development evidence.",
+    "Verifier validity is not a candidate, audit, freeze, canary qualification, production readiness, release readiness, or safety certification claim."
+  ],
+  "residuals": [
+    "A final filesystem snapshot verifies exact bytes and causal closure but cannot independently reconstruct historical O_EXCL or fsync system calls; those remain trusted-controller obligations."
+  ]
+}
