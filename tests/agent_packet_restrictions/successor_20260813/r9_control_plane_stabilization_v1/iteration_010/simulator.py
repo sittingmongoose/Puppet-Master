@@ -27,9 +27,52 @@ from typing import Any, Callable
 sys.dont_write_bytecode = True
 
 
+def _bootstrap_context() -> tuple[Path, Path]:
+    """Reject lexical simulator/root aliases before importing any sibling code."""
+    supplied = Path(os.fspath(__file__))
+    if ".." in supplied.parts:
+        raise RuntimeError("simulator bootstrap rejects dot-dot lexical aliases")
+    script = Path(os.path.abspath(os.fspath(supplied)))
+    try:
+        info = os.lstat(script)
+    except (FileNotFoundError, NotADirectoryError) as exc:
+        raise RuntimeError("simulator bootstrap path absent") from exc
+    if not stat.S_ISREG(info.st_mode):
+        raise RuntimeError("simulator bootstrap path is not a regular nonlink")
+    try:
+        resolved_script = script.resolve(strict=True)
+    except (OSError, RuntimeError) as exc:
+        raise RuntimeError(f"simulator bootstrap resolution failed: {exc}") from exc
+    if resolved_script != script:
+        raise RuntimeError("simulator bootstrap path contains a symlink alias")
+    root = script.parent
+    try:
+        repository = root.parents[4]
+    except IndexError as exc:
+        raise RuntimeError("simulator bootstrap repository depth invalid") from exc
+    for path, label in ((root, "component root"), (repository, "repository root")):
+        lexical = Path(os.path.abspath(os.fspath(path)))
+        try:
+            directory_info = os.lstat(lexical)
+            resolved = lexical.resolve(strict=True)
+        except (OSError, RuntimeError) as exc:
+            raise RuntimeError(f"simulator bootstrap {label} invalid: {exc}") from exc
+        if not stat.S_ISDIR(directory_info.st_mode) or resolved != lexical:
+            raise RuntimeError(f"simulator bootstrap {label} is not a canonical directory")
+    try:
+        script.relative_to(repository)
+    except ValueError as exc:
+        raise RuntimeError("simulator bootstrap path escapes repository") from exc
+    return script, root
+
+
+SCRIPT, ROOT = _bootstrap_context()
+
+
 def _load_synthetic_backend() -> Any:
     """Load only the data-only fixture module without creating bytecode."""
-    path = Path(__file__).resolve().with_name("backend.py")
+    path = _canonical_repository_path(ROOT / "backend.py", "synthetic backend bootstrap")
+    _regular(path, "synthetic backend bootstrap")
     spec = importlib.util.spec_from_file_location("r9_iteration_010_synthetic_backend", path)
     if spec is None or spec.loader is None:
         raise RuntimeError("synthetic backend module spec unavailable")
@@ -38,9 +81,6 @@ def _load_synthetic_backend() -> Any:
     return module
 
 
-synthetic_backend = _load_synthetic_backend()
-
-ROOT = Path(__file__).resolve().parent
 STABILIZATION = ROOT.parent
 SUCCESSOR = ROOT.parents[1]
 REPO = ROOT.parents[4]
@@ -284,12 +324,12 @@ SEMANTIC_OWNER_IDENTITIES = {
         "bytes": 5547,
     },
     ROOT / "architecture_contract.json": {
-        "sha256": "804b3054b6ae74d00081f51b78f7b5ce810a237322b6c89cf4094130d25979d4",
-        "bytes": 28966,
+        "sha256": "6168057f0ffb5f146c011ec4c13d483e5820da7d476b187060d7adaa96c63432",
+        "bytes": 29145,
     },
     ROOT / "README.md": {
-        "sha256": "ad90c34baf38b6ba705b19e1b9ef44c288aa46bcc032f4aacd1d59d19505ef66",
-        "bytes": 8965,
+        "sha256": "d0261c10093d7afc9930440ccff1a39376caf77c1cd145fe14e47504d21ca7a8",
+        "bytes": 10962,
     },
 }
 REGRESSION_OWNER_IDENTITIES = {
@@ -308,6 +348,35 @@ FORBIDDEN_IMPORT = re.compile(
     r"(?:model_retest_r8_candidate_v|r8_candidate_v)(?:1[2-9]|20|21)(?:\.|/|\b)"
 )
 CONTROLLER_COMMANDS = ["reopen", "run-canary", "run-matrix", "simulate"]
+COMPONENT_FILE_NAMES = (
+    "README.md",
+    "architecture_contract.json",
+    "backend.py",
+    "backend_contract.json",
+    "controller.py",
+    "fault_scenarios.json",
+    "pipeline_contract.json",
+    "regression_catalog.json",
+    "regression_inventory_receipt.json",
+    "routes.json",
+    "schedule.json",
+    "semantic_inventory_receipt.json",
+    "semantic_manifest.json",
+    "simulator.py",
+    "simulator_contract.json",
+    "verifier.py",
+    "verifier_contract.json",
+)
+CONTROLLER_COMPONENT_FILE_NAMES = tuple(
+    name for name in COMPONENT_FILE_NAMES if name not in {"README.md", "simulator.py"}
+)
+SHARED_BUNDLE_PATHS = (
+    "r9_goal_operating_contract_v1.json",
+    "r9_subject_transport_addendum_subagent_invocations_v1.json",
+    "r9_subject_transport_subagent_route_capability_receipt_v1.json",
+)
+FORMAL_CANDIDATE_ROOT_NAME = re.compile(r"formal_candidate_v[1-9][0-9]*\Z")
+RECORDED_COMPONENT_SOURCE_ROOT = STABILIZATION / "iteration_010"
 ROW_FILES = [
     "attempt.json", "completion.json", "provider_input.txt", "raw_result.json",
     "spawn_message.txt", "spawn_receipt.json",
@@ -941,6 +1010,9 @@ def _strict_source_paths(paths: list[Path], label: str) -> list[Path]:
     return sorted(lexical_sources.values(), key=_relative)
 
 
+synthetic_backend = _load_synthetic_backend()
+
+
 def _suite_root(text: str, create: bool) -> Path:
     if not text:
         raise SimulationError("--run-root required")
@@ -1336,28 +1408,338 @@ def _current_git_custody(snapshot: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def _recorded_component_root(snapshot: dict[str, Any]) -> Path:
-    """Resolve the one controller directory already bound by the suite receipt."""
+def _validated_component_rows(rows: object, label: str) -> list[dict[str, Any]]:
+    """Validate and sort pathless complete-component identity rows."""
+    if not isinstance(rows, list):
+        raise SimulationError(f"{label}: component rows absent")
+    validated: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for index, row in enumerate(rows):
+        if not isinstance(row, dict) or set(row) != {"name", "sha256", "bytes"}:
+            raise SimulationError(f"{label}: component row {index} shape mismatch")
+        name = row.get("name")
+        sha256 = row.get("sha256")
+        byte_count = row.get("bytes")
+        if (
+            not isinstance(name, str) or not SAFE.fullmatch(name) or "/" in name
+            or name in seen
+        ):
+            raise SimulationError(f"{label}: invalid or duplicate component name: {name}")
+        if not isinstance(sha256, str) or not HEX64.fullmatch(sha256):
+            raise SimulationError(f"{label}: invalid component SHA-256: {name}")
+        if (
+            not isinstance(byte_count, int) or isinstance(byte_count, bool)
+            or byte_count < 0
+        ):
+            raise SimulationError(f"{label}: invalid component byte count: {name}")
+        seen.add(name)
+        validated.append({"name": name, "sha256": sha256, "bytes": byte_count})
+    return sorted(validated, key=lambda row: row["name"])
+
+
+def _component_row_comparison(expected: object, observed: object) -> dict[str, Any]:
+    """Compare complete component rows without giving a directory spelling authority."""
+    expected_rows = _validated_component_rows(expected, "expected component")
+    observed_rows = _validated_component_rows(observed, "observed component")
+    expected_by_name = {row["name"]: row for row in expected_rows}
+    observed_by_name = {row["name"]: row for row in observed_rows}
+    missing = sorted(set(expected_by_name) - set(observed_by_name))
+    extra = sorted(set(observed_by_name) - set(expected_by_name))
+    drift = [
+        {
+            "name": name,
+            "expected": expected_by_name[name],
+            "observed": observed_by_name[name],
+        }
+        for name in sorted(set(expected_by_name) & set(observed_by_name))
+        if expected_by_name[name] != observed_by_name[name]
+    ]
+    equal = not missing and not extra and not drift
+    return {
+        "status": "PASS" if equal else "FAIL",
+        "projection": "sorted basename/sha256/bytes",
+        "expected_file_count": len(expected_rows),
+        "observed_file_count": len(observed_rows),
+        "expected_rows_sha256": _sha(_canon(expected_rows)),
+        "expected_rows_bytes": len(_canon(expected_rows)),
+        "observed_rows_sha256": _sha(_canon(observed_rows)),
+        "observed_rows_bytes": len(_canon(observed_rows)),
+        "missing_names": missing,
+        "extra_names": extra,
+        "identity_drift": drift,
+    }
+
+
+def _component_rows(root: Path, label: str) -> list[dict[str, Any]]:
+    """Independently enumerate every immediate component member before reading bytes."""
+    admitted_root = _canonical_repository_path(root, f"{label} root")
+    _directory(admitted_root, f"{label} root")
+    entries = sorted(admitted_root.iterdir(), key=lambda path: path.name)
+    observed_names = [path.name for path in entries]
+    expected_names = list(COMPONENT_FILE_NAMES)
+    if observed_names != expected_names:
+        missing = sorted(set(expected_names) - set(observed_names))
+        extra = sorted(set(observed_names) - set(expected_names))
+        raise SimulationError(
+            f"{label}: complete component member set mismatch; "
+            f"missing={missing}; extra={extra}"
+        )
+    admitted_entries: list[Path] = []
+    for index, entry in enumerate(entries):
+        admitted = _canonical_repository_path(entry, f"{label} member {index}")
+        info = os.lstat(admitted)
+        if not stat.S_ISREG(info.st_mode):
+            raise SimulationError(f"{label} member {entry.name}: not a regular nonlink")
+        admitted_entries.append(admitted)
+    rows: list[dict[str, Any]] = []
+    for admitted in admitted_entries:
+        storage = _regular(admitted, f"{label} member {admitted.name}")
+        rows.append({"name": admitted.name, **_identity(storage)})
+    return _validated_component_rows(rows, label)
+
+
+def _recorded_component_anchor(snapshot: dict[str, Any]) -> Path:
+    """Resolve only the immutable iteration_010 source principal from recorded rows."""
     rows = _stable_source_rows(snapshot, "recorded component source bundle")
     matches = [row for row in rows if row["path"].endswith("/controller.py")]
     if len(matches) != 1:
         raise SimulationError("recorded source bundle must contain exactly one controller.py")
-    root = _canonical_repository_path(
+    controller = _canonical_repository_path(
         REPO / _canonical_relative_source_path(
             matches[0]["path"], "recorded controller source row"
         ),
         "recorded controller source",
-    ).parent
-    if root != _canonical_repository_path(ROOT, "current iteration controller root"):
-        raise SimulationError("recorded component root is not current iteration_010")
-    for name in ("backend.py", "controller.py", "semantic_manifest.json", "verifier.py"):
-        path = _canonical_repository_path(root / name, f"recorded {name}")
-        expected = [row for row in rows if row["path"] == _relative(path)]
-        if len(expected) != 1 or _identity(_regular(path, f"recorded {name}")) != {
-            "sha256": expected[0]["sha256"], "bytes": expected[0]["bytes"],
-        }:
-            raise SimulationError(f"recorded component closure mismatch: {name}")
+    )
+    root = controller.parent
+    expected = _canonical_repository_path(
+        RECORDED_COMPONENT_SOURCE_ROOT, "canonical iteration_010 source root"
+    )
+    if root != expected:
+        raise SimulationError("recorded component source is not canonical iteration_010")
     return root
+
+
+def _snapshot_component_rows(snapshot: dict[str, Any], root: Path) -> list[dict[str, Any]]:
+    """Project the complete direct component closure from one source snapshot."""
+    rows = _stable_source_rows(snapshot, "recorded component source bundle")
+    root_relative = _relative(root)
+    prefix = f"{root_relative}/"
+    direct: list[dict[str, Any]] = []
+    nested: list[str] = []
+    for row in rows:
+        if not row["path"].startswith(prefix):
+            continue
+        relative = row["path"][len(prefix):]
+        if "/" in relative:
+            nested.append(row["path"])
+            continue
+        direct.append({"name": relative, "sha256": row["sha256"], "bytes": row["bytes"]})
+    if nested:
+        raise SimulationError(f"recorded component contains nested source rows: {nested}")
+    projected = _validated_component_rows(direct, "recorded component projection")
+    names = [row["name"] for row in projected]
+    if names != list(COMPONENT_FILE_NAMES):
+        missing = sorted(set(COMPONENT_FILE_NAMES) - set(names))
+        extra = sorted(set(names) - set(COMPONENT_FILE_NAMES))
+        raise SimulationError(
+            "recorded complete component projection mismatch; "
+            f"missing={missing}; extra={extra}"
+        )
+    return projected
+
+
+def _admit_current_component_root() -> tuple[Path, str]:
+    """Admit only the source root or one direct versioned formal-candidate relocation."""
+    root = _canonical_repository_path(ROOT, "current executing component root")
+    stabilization = _canonical_repository_path(STABILIZATION, "stabilization root")
+    source = _canonical_repository_path(
+        RECORDED_COMPONENT_SOURCE_ROOT, "canonical iteration_010 source root"
+    )
+    if root.parent != stabilization:
+        raise SimulationError("current component root is not a direct stabilization child")
+    if root == source:
+        return root, "ITERATION_010_SOURCE"
+    if not FORMAL_CANDIDATE_ROOT_NAME.fullmatch(root.name):
+        raise SimulationError("current component root is not a versioned formal candidate")
+    return root, "FORMAL_CANDIDATE_RELOCATION"
+
+
+def _strict_current_component_custody(
+    snapshot: dict[str, Any], root: Path,
+) -> dict[str, Any]:
+    """Tighten the independently collected current source snapshot for execution."""
+    custody = _current_git_custody(snapshot)
+    bound_status = snapshot.get("bound_status_porcelain_v2")
+    clean = isinstance(bound_status, str) and bound_status == ""
+    return {
+        **custody,
+        "status": "PASS" if custody["status"] == "PASS" and clean else "FAIL",
+        "component_root": _relative(root),
+        "bound_source_status_clean": clean,
+        "mint_manifest_assertions_used": False,
+    }
+
+
+def _component_identity_gate() -> dict[str, Any]:
+    """Compare source and executing roots completely while ignoring only the root prefix."""
+    source_root = _canonical_repository_path(
+        RECORDED_COMPONENT_SOURCE_ROOT, "canonical iteration_010 source root"
+    )
+    current_root, current_kind = _admit_current_component_root()
+    source_rows = _component_rows(source_root, "iteration_010 source component")
+    current_rows = _component_rows(current_root, "current executing component")
+    comparison = _component_row_comparison(source_rows, current_rows)
+    if comparison["status"] != "PASS":
+        raise SimulationError("current component is not byte-identical to iteration_010")
+    return {
+        "status": "PASS",
+        "source_root": _relative(source_root),
+        "current_root": _relative(current_root),
+        "current_root_kind": current_kind,
+        "relocated": current_root != source_root,
+        "comparison": comparison,
+        "manifest_path_digest_authority": False,
+    }
+
+
+def _component_relocation_counterfactuals() -> dict[str, Any]:
+    """Exercise complete pathless comparison and custody truth tables without calls."""
+    base = [
+        {"name": name, "sha256": _sha(name.encode("utf-8")), "bytes": len(name)}
+        for name in COMPONENT_FILE_NAMES
+    ]
+    missing = base[:-1]
+    extra = base + [{"name": "unexpected.txt", "sha256": "0" * 64, "bytes": 0}]
+    drift = [dict(row) for row in base]
+    drift[0] = {**drift[0], "sha256": "f" * 64, "bytes": drift[0]["bytes"] + 1}
+    same = _component_row_comparison(base, base)
+    reversed_order = _component_row_comparison(base, list(reversed(base)))
+    missing_result = _component_row_comparison(base, missing)
+    extra_result = _component_row_comparison(base, extra)
+    drift_result = _component_row_comparison(base, drift)
+    source_path_rows = [
+        {"path": f"iteration_010/{row['name']}", "sha256": row["sha256"], "bytes": row["bytes"]}
+        for row in base
+    ]
+    candidate_path_rows = [
+        {"path": f"formal_candidate_v999/{row['name']}", "sha256": row["sha256"], "bytes": row["bytes"]}
+        for row in base
+    ]
+    redirect_rejected = False
+    redirect_error = None
+    try:
+        _recorded_component_anchor({
+            "file_count": 1,
+            "files": [{
+                "path": _relative(ITERATION_009 / "controller.py"),
+                "sha256": "0" * 64,
+                "bytes": 0,
+            }],
+        })
+    except SimulationError as exc:
+        redirect_error = str(exc)
+        redirect_rejected = "not canonical iteration_010" in redirect_error
+    cases = {
+        "same_root_projection": same["status"] == "PASS",
+        "reversed_order": (
+            reversed_order["status"] == "PASS"
+            and reversed_order["observed_rows_sha256"] == same["observed_rows_sha256"]
+        ),
+        "missing_member": missing_result["status"] == "FAIL",
+        "extra_member": extra_result["status"] == "FAIL",
+        "noncore_drift": drift_result["status"] == "FAIL",
+        "path_digest_is_nonauthoritative": (
+            _sha(_canon(source_path_rows)) != _sha(_canon(candidate_path_rows))
+            and same["status"] == "PASS"
+        ),
+        "tracked_clean_custody": _strict_current_component_custody({
+            "head": "a" * 40,
+            "origin_main": "a" * 40,
+            "head_equals_origin_main": True,
+            "all_bound_files_match_head": True,
+            "bound_status_porcelain_v2": "",
+            "bound_status_identity": _identity(b""),
+        }, ROOT)["status"] == "PASS",
+        "untracked_or_dirty_custody": all(
+            _strict_current_component_custody(snapshot, ROOT)["status"] == "FAIL"
+            for snapshot in (
+                {
+                    "head_equals_origin_main": True,
+                    "all_bound_files_match_head": False,
+                    "bound_status_porcelain_v2": "",
+                },
+                {
+                    "head_equals_origin_main": False,
+                    "all_bound_files_match_head": True,
+                    "bound_status_porcelain_v2": "",
+                },
+                {
+                    "head_equals_origin_main": True,
+                    "all_bound_files_match_head": True,
+                    "bound_status_porcelain_v2": "1 .M N... dirty\n",
+                },
+            )
+        ),
+        "iteration_009_redirect": redirect_rejected,
+    }
+    if not all(cases.values()):
+        raise SimulationError(f"component relocation counterfactual failed: {cases}")
+    return {
+        "status": "PASS",
+        "case_count": len(cases),
+        "cases": cases,
+        "iteration_009_error": redirect_error,
+        "source_path_rows_sha256": _sha(_canon(source_path_rows)),
+        "candidate_path_rows_sha256": _sha(_canon(candidate_path_rows)),
+        "pathless_rows_sha256": same["expected_rows_sha256"],
+        "calls": dict(SIMULATOR_CALLS_ZERO),
+        "qualification_credit": 0,
+    }
+
+
+def _recorded_component_binding(snapshot: dict[str, Any]) -> tuple[dict[str, Any], Path]:
+    """Bind immutable source and executing component as two separately custodied principals."""
+    source_root = _recorded_component_anchor(snapshot)
+    recorded_rows = _snapshot_component_rows(snapshot, source_root)
+    source_rows = _component_rows(source_root, "recorded iteration_010 component")
+    recorded_comparison = _component_row_comparison(recorded_rows, source_rows)
+    if recorded_comparison["status"] != "PASS":
+        raise SimulationError("recorded component projection differs from iteration_010 bytes")
+    current_root, current_kind = _admit_current_component_root()
+    current_rows = _component_rows(current_root, "current executing component")
+    current_snapshot = _source_snapshot()
+    current_snapshot_rows = _snapshot_component_rows(current_snapshot, current_root)
+    current_snapshot_comparison = _component_row_comparison(
+        current_snapshot_rows, current_rows,
+    )
+    if current_snapshot_comparison["status"] != "PASS":
+        raise SimulationError("current component snapshot differs from executing bytes")
+    current_comparison = _component_row_comparison(source_rows, current_rows)
+    if current_comparison["status"] != "PASS":
+        raise SimulationError("current component differs from recorded iteration_010 component")
+    current_custody = _strict_current_component_custody(current_snapshot, current_root)
+    status = "PASS" if current_custody["status"] == "PASS" else "FAIL"
+    return {
+        "status": status,
+        "recorded_component_identity": {
+            "status": "PASS",
+            "root": _relative(source_root),
+            "file_count": len(source_rows),
+            "comparison": recorded_comparison,
+        },
+        "current_component_identity": {
+            "status": "PASS",
+            "root": _relative(current_root),
+            "root_kind": current_kind,
+            "file_count": len(current_rows),
+            "comparison": current_comparison,
+            "snapshot_comparison": current_snapshot_comparison,
+        },
+        "component_relocation_equivalent": True,
+        "relocated": current_root != source_root,
+        "current_component_git_custody": current_custody,
+        "manifest_path_digest_authority": False,
+    }, current_root
 
 
 def _reopen_repair_causal_proof(receipt_storage: bytes, before: dict[str, Any],
@@ -2737,6 +3119,18 @@ def _static_check() -> dict[str, Any]:
     _, architecture = _json(ROOT / "architecture_contract.json", "architecture contract")
     if contract.get("schema_id") != "pw-r9-simulator-contract-v9":
         raise SimulationError("simulator contract v9 required")
+    component_relocation_contract = contract.get("source_bundle", {}).get(
+        "component_relocation"
+    )
+    if (
+        not isinstance(component_relocation_contract, dict)
+        or set(component_relocation_contract) != {
+            "current_component_principal", "manifest_digest_authority",
+            "recorded_source_principal", "surface_delta",
+        }
+        or component_relocation_contract.get("manifest_digest_authority") is not False
+    ):
+        raise SimulationError("simulator dual-root component contract drift")
     if faults.get("schema_id") != "pw-r9-fault-scenarios-v8":
         raise SimulationError("fault scenarios v8 required")
     catalog_rows = catalog.get("families")
@@ -2824,6 +3218,25 @@ def _static_check() -> dict[str, Any]:
             == "one canonical JSON object per line"
     ):
         raise SimulationError("architecture collaboration transport binding drift")
+    run_custody = architecture.get("run_custody")
+    transport_source_bundle = subject_transport.get("root_events", {}).get("source_bundle")
+    if (
+        not isinstance(run_custody, dict)
+        or run_custody.get("bundle_file_count") != 18
+        or run_custody.get("bundle_component_exact_basenames")
+            != list(CONTROLLER_COMPONENT_FILE_NAMES)
+        or run_custody.get("bundle_shared_exact_paths") != list(SHARED_BUNDLE_PATHS)
+        or not isinstance(run_custody.get("bundle_component_root_rule"), str)
+        or "bundle_exact_paths" in run_custody
+        or not isinstance(transport_source_bundle, dict)
+        or transport_source_bundle.get("file_count") != 18
+        or transport_source_bundle.get("component_exact_basenames")
+            != list(CONTROLLER_COMPONENT_FILE_NAMES)
+        or transport_source_bundle.get("shared_exact_paths") != list(SHARED_BUNDLE_PATHS)
+        or not isinstance(transport_source_bundle.get("component_root_rule"), str)
+        or "exact_paths" in transport_source_bundle
+    ):
+        raise SimulationError("architecture relocation-safe bundle contract drift")
 
     cells = semantic.get("cells")
     stages = semantic.get("deterministic_stages")
@@ -2876,6 +3289,8 @@ def _static_check() -> dict[str, Any]:
     backend_self_test = _backend_self_test()
     controller_check_only = _controller_check_only()
     semantic_repair = _semantic_repair_gate()
+    component_identity = _component_identity_gate()
+    component_counterfactuals = _component_relocation_counterfactuals()
     snapshot = _source_snapshot()
     return {
         "schema_id": "pw-r9-simulator-check-v3", "status": "PASS",
@@ -2898,6 +3313,8 @@ def _static_check() -> dict[str, Any]:
             "route_local_artifacts": 54,
         },
         "semantic_repair": semantic_repair,
+        "component_identity": component_identity,
+        "component_relocation_counterfactuals": component_counterfactuals,
         "controller_check_only": controller_check_only,
         "backend_self_test": backend_self_test,
         "source_bundle": snapshot,
@@ -4475,6 +4892,7 @@ def _verify_inventory(suite: Path) -> dict[str, Any]:
 def _suite_receipt(command: str, before: dict[str, Any], clean: dict[str, Any] | None,
                    faults: dict[str, Any] | None, error: Exception | None) -> dict[str, Any]:
     after = _source_snapshot()
+    component_counterfactuals = _component_relocation_counterfactuals()
     status = "PASS"
     if error is not None or before != after:
         status = "FAIL"
@@ -4497,6 +4915,7 @@ def _suite_receipt(command: str, before: dict[str, Any], clean: dict[str, Any] |
         "calls": dict(SIMULATOR_CALLS_ZERO),
         "source_bundle_before": before, "source_bundle_after": after,
         "source_bundle_unchanged": before == after,
+        "component_relocation_counterfactuals": component_counterfactuals,
         "clean_pair": clean, "faults": faults,
         "historical_predecessors": _history(),
         "stabilization_exit": {"status": "FAIL", "open_blockers": open_blockers,
@@ -4531,6 +4950,12 @@ def _suite_receipt_gate(receipt: dict[str, Any]) -> dict[str, Any]:
         blockers.append("SUITE_SOURCE_BUNDLE_NOT_UNCHANGED")
     if receipt.get("calls") != SIMULATOR_CALLS_ZERO:
         blockers.append("SUITE_CALL_ACCOUNTING_NOT_ZERO")
+    component_counterfactuals = receipt.get("component_relocation_counterfactuals")
+    if (
+        not isinstance(component_counterfactuals, dict)
+        or component_counterfactuals.get("status") != "PASS"
+    ):
+        blockers.append("COMPONENT_RELOCATION_COUNTERFACTUALS_NOT_PASS")
     clean = receipt.get("clean_pair")
     if not isinstance(clean, dict) or clean.get("status") != "PASS":
         blockers.append("COMMAND_REQUIRED_CLEAN_PAIR_NOT_PASS")
@@ -4565,7 +4990,7 @@ def _reopen_suite(suite: Path) -> dict[str, Any]:
     source_now = _snapshot_recorded_source_paths(before)
     source_identity = _source_identity_comparison(before, after, source_now)
     custody = _current_git_custody(source_now)
-    component_root = _recorded_component_root(before)
+    component_binding, component_root = _recorded_component_binding(before)
     clean_reports: list[dict[str, Any]] = []
     clean = receipt.get("clean_pair")
     if not isinstance(clean, dict):
@@ -4580,6 +5005,7 @@ def _reopen_suite(suite: Path) -> dict[str, Any]:
             receipt_gate.get("status") != "PASS"
             or source_identity.get("status") != "PASS"
             or custody.get("status") != "PASS"
+            or component_binding.get("status") != "PASS"
         ):
             break
         invocation = _invoke_from(
@@ -4598,6 +5024,7 @@ def _reopen_suite(suite: Path) -> dict[str, Any]:
     status = "PASS" if (
         receipt_gate.get("status") == "PASS"
         and source_identity.get("status") == "PASS" and custody.get("status") == "PASS"
+        and component_binding.get("status") == "PASS"
         and len(clean_reports) == 2 and causal_pass
     ) else "FAIL"
     return {
@@ -4607,6 +5034,7 @@ def _reopen_suite(suite: Path) -> dict[str, Any]:
         "retained_suite_gate": receipt_gate,
         "stable_source_identity": source_identity,
         "current_git_custody": custody,
+        "component_binding": component_binding,
         "historical_mutable_snapshot_equality_required": False,
         "clean_reopens": clean_reports,
         "same_family_causal_proof": causal_proof,
