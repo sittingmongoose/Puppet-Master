@@ -1,0 +1,83 @@
+{
+  "schema_id": "pm.settings_bakeoff_manager_coverage.v1",
+  "concept_count": 4,
+  "groups": [
+    {
+      "id": "core",
+      "required_in": "all",
+      "managers": [
+        "Settings Home",
+        "Settings Search",
+        "Settings Workspace",
+        "Provider/Account/Model/Installation",
+        "Ordinary setting grammar"
+      ]
+    },
+    {
+      "id": "concept_1",
+      "required_in": "concept_1",
+      "managers": [
+        "Context & Instructions",
+        "Memory",
+        "Personas",
+        "Goal & Automation",
+        "Crew",
+        "Permissions & FileSafe",
+        "Back Seat Driver"
+      ]
+    },
+    {
+      "id": "concept_2",
+      "required_in": "concept_2",
+      "managers": [
+        "Notifications & Sounds",
+        "Sound Library/Uploads/Packs",
+        "Appearance",
+        "Spellcheck & Dictionaries",
+        "Desktop/Tray/Window",
+        "Teacher/Help"
+      ]
+    },
+    {
+      "id": "concept_3",
+      "required_in": "concept_3",
+      "managers": [
+        "File Manager/Editor",
+        "Terminal",
+        "LSP",
+        "Formatters",
+        "Commands & Shortcuts",
+        "MCP",
+        "Skills",
+        "Plugins",
+        "Tools",
+        "Testing & Debug"
+      ]
+    },
+    {
+      "id": "concept_4",
+      "required_in": "concept_4",
+      "managers": [
+        "Storage & Retention",
+        "Backup & Restore",
+        "Settings Lifecycle",
+        "History & Sessions",
+        "Runtime Artifacts",
+        "Source Control/Worktrees",
+        "GitHub Actions",
+        "Containers & Registries",
+        "Web/Search/Fetch",
+        "Project Search Index",
+        "Workspace Cleanup",
+        "Future Server Module Shell"
+      ]
+    }
+  ],
+  "classification": [
+    "demonstrated",
+    "shared_grammar",
+    "deferred_named_owner",
+    "missing"
+  ],
+  "rule": "missing is a failure; deferred requires a named canonical owner and insertion contract"
+}

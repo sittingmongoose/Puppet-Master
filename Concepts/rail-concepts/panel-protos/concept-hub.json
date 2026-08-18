@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "rail:unknown-panel-protos",
+  "topic": "rail",
+  "model": "Unknown — panel-protos",
+  "unknownModel": true,
+  "presentation": "workspace",
+  "order": 50,
+  "widthControl": {
+    "enabled": true,
+    "label": "Panel width",
+    "role": "panel",
+    "min": 220,
+    "max": 560,
+    "step": 1,
+    "default": 280,
+    "presets": [
+      220,
+      280,
+      420,
+      560
+    ],
+    "previewWidth": 1200
+  },
+  "workspace": {
+    "path": "index.html",
+    "title": "Panel Prototypes",
+    "openActions": "both",
+    "controlMode": "internal",
+    "tags": [
+      "variants",
+      "panels"
+    ],
+    "id": "workspace",
+    "openPath": "index.html"
+  }
+}

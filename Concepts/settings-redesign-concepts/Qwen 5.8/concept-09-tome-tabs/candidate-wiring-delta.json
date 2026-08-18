@@ -1,0 +1,17 @@
+{
+  "schema_id": "pm.settings_bakeoff.candidate_wiring_delta.v2.concept",
+  "concept_id": "concept-09-tome-tabs",
+  "model": "Qwen 5.8",
+  "provisional": true,
+  "note": "Wiring observations only; canon (Plans/Wiring_Matrix.md) untouched. Each item names the surface, the headless owner it must wire to, and the equivalence surfaces (GUI, palette, NL, automation).",
+  "items": [
+    { "surface": "edge chapter tab activation", "wires_to": "PMState2 route state + view-state (scroll memory)", "equivalence": "palette cmd.settings.category.select; NL 'open the Code chapter'", "open_items": "tab order personalization owner" },
+    { "surface": "universal search selection", "wires_to": "PMSearch2.byRid -> route push (#/q then dest) -> locate (scroll/focus/.pm2-locate)", "equivalence": "palette cmd.settings.search.select_result", "open_items": "none; rid routing already canonical" },
+    { "surface": "provider install/update/rollback actions", "wires_to": "ObservableWork (PMState2.beginOp/advanceOp/finishOp) + receipts; BinaryLocator for host/environment resolution", "equivalence": "provider card buttons and palette", "open_items": "signed-build verification event names" },
+    { "surface": "copy transaction", "wires_to": "PMCopy2 preview/apply/rollbackLast + restore points", "equivalence": "palette cmd.settings.copy_from_project.*", "open_items": "none" },
+    { "surface": "cleanup dry-run dialog", "wires_to": "Workspace Cleanup owner; protected-path registry", "equivalence": "palette + GUI dialog", "open_items": "protected path list source of truth" },
+    { "surface": "import conflict dialog", "wires_to": "Settings Lifecycle owner; keep-or-take per row; restore point before apply", "equivalence": "GUI only today; palette candidate", "open_items": "conflict payload schema" },
+    { "surface": "narrow push navigation", "wires_to": "route stack with named Back targets", "equivalence": "hardware Back / breadcrumb", "open_items": "cmd.settings.chapter.push adjudication" },
+    { "surface": "deferred insertion shells", "wires_to": "named owners only (Server Backbone, Project Syncing and Updates, Provider Lifecycle, Product Onboarding)", "equivalence": "deep-link return contracts as listed in manager-coverage.json", "open_items": "owner-side module availability" }
+  ]
+}

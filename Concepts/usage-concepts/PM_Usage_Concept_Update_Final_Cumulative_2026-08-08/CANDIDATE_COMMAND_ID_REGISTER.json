@@ -1,0 +1,19 @@
+{
+  "schema_id": "pm.usage_candidate_command_delta.v1",
+  "preserve_or_reuse": [
+    "cmd.usage.refresh",
+    "cmd.usage.export",
+    "cmd.account.select_profile",
+    "cmd.provider.switch_route",
+    "canonical widget commands",
+    "semantic Settings deep-link"
+  ],
+  "candidate": [
+    "cmd.usage.detail.open",
+    "cmd.usage.forecast.request",
+    "cmd.usage.range.set",
+    "cmd.usage.filter.set",
+    "cmd.provider.usage.open_management"
+  ],
+  "rule": "Local filters do not need canonical commands unless they create durable/shared state. Purchases and reset application require distinct real commands only when actually supported."
+}

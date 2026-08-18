@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "id": "usage:qwen-usage",
+  "topic": "usage",
+  "model": "Qwen",
+  "presentation": "hybrid",
+  "order": 10,
+  "widthControl": {
+    "enabled": true,
+    "label": "App width",
+    "role": "page",
+    "min": 520,
+    "max": 1920,
+    "step": 10,
+    "default": 1280,
+    "presets": [520, 768, 1280, 1600, 1920],
+    "previewWidth": "test"
+  },
+  "workspace": {
+    "id": "workspace",
+    "title": "Qwen Usage Index",
+    "path": "index.html",
+    "openPath": "index.html",
+    "openActions": "both",
+    "controlMode": "internal",
+    "previewWidth": 1440,
+    "tags": ["index", "dashboard", "configurator"],
+    "order": 5
+  },
+  "entries": [
+    {
+      "id": "u1-signal",
+      "title": "U1 Signal",
+      "path": "u1-signal.html",
+      "tags": ["triage", "attention"],
+      "order": 10
+    },
+    {
+      "id": "u2-stream",
+      "title": "U2 Stream",
+      "path": "u2-stream.html",
+      "tags": ["timeline", "ledger"],
+      "order": 20
+    },
+    {
+      "id": "u3-cockpit",
+      "title": "U3 Cockpit",
+      "path": "u3-cockpit.html",
+      "tags": ["telemetry", "dense"],
+      "order": 30
+    },
+    {
+      "id": "u4-focus",
+      "title": "U4 Focus",
+      "path": "u4-focus.html",
+      "tags": ["focus", "spacious"],
+      "order": 40
+    },
+    {
+      "id": "u5-cozy-console",
+      "title": "U5 Cozy Console",
+      "path": "u5-cozy-console.html",
+      "tags": ["cozy", "shelves"],
+      "order": 50
+    },
+    {
+      "id": "u6-workspace",
+      "title": "U6 Workspace",
+      "path": "u6-workspace.html",
+      "tags": ["master-detail", "workspace"],
+      "order": 60
+    },
+    {
+      "id": "u7-board",
+      "title": "U7 Board",
+      "path": "u7-board.html",
+      "tags": ["widgets", "board"],
+      "order": 70
+    },
+    {
+      "id": "u8-canvas",
+      "title": "U8 Canvas",
+      "path": "u8-canvas.html",
+      "tags": ["widgets", "canvas"],
+      "order": 80
+    },
+    {
+      "id": "u9-deck",
+      "title": "U9 Deck",
+      "path": "u9-deck.html",
+      "tags": ["widgets", "deck"],
+      "order": 90
+    },
+    {
+      "id": "u10-prism",
+      "title": "U10 Prism",
+      "path": "u10-prism.html",
+      "tags": ["widgets", "focus", "provider-scope"],
+      "order": 100
+    },
+    {
+      "id": "u11-prism",
+      "title": "U11 Prism II",
+      "path": "u11-prism.html",
+      "tags": ["widgets", "focus", "stable-identities", "capacity"],
+      "order": 110
+    }
+  ]
+}

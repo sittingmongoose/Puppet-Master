@@ -1,0 +1,113 @@
+{
+  "schema_id": "pm.settings_candidate_command_delta.v1",
+  "note": "Candidate families; implementation audit must census existing catalog and adjudicate exact IDs.",
+  "preserve_or_reuse": [
+    "cmd.account.select_profile",
+    "cmd.provider.switch_route",
+    "cmd.usage.refresh",
+    "cmd.usage.export"
+  ],
+  "retire_or_alias": [
+    {
+      "id": "cmd.settings.bloom.open",
+      "reason": "old chip/bloom architecture; preserve compatibility alias only if needed"
+    }
+  ],
+  "candidate_families": {
+    "navigation": [
+      "cmd.settings.open",
+      "cmd.settings.navigate",
+      "cmd.settings.search.focus",
+      "cmd.settings.search.select_result",
+      "cmd.settings.category.select",
+      "cmd.settings.subcategory.select",
+      "cmd.settings.setting.focus",
+      "cmd.settings.manager.open"
+    ],
+    "values": [
+      "cmd.settings.value.set",
+      "cmd.settings.default.restore",
+      "cmd.settings.scope.inspect"
+    ],
+    "lifecycle": [
+      "cmd.settings.export",
+      "cmd.settings.import.preview",
+      "cmd.settings.import.apply",
+      "cmd.settings.import.rollback",
+      "cmd.settings.reset.preview",
+      "cmd.settings.reset.apply",
+      "cmd.settings.copy_from_project.preview",
+      "cmd.settings.copy_from_project.apply"
+    ],
+    "providers": [
+      "cmd.provider.installation.scan",
+      "cmd.provider.installation.select",
+      "cmd.provider.installation.install",
+      "cmd.provider.installation.update",
+      "cmd.provider.installation.repair",
+      "cmd.provider.installation.rollback",
+      "cmd.provider.installation.verify",
+      "cmd.provider.connection.add",
+      "cmd.provider.connection.authenticate",
+      "cmd.provider.connection.reconnect",
+      "cmd.provider.catalog.refresh",
+      "cmd.model.favorite.set",
+      "cmd.model.alias.set",
+      "cmd.model.priority.set",
+      "cmd.model.visibility.set"
+    ],
+    "memory_persona_crew": [
+      "cmd.memory.open",
+      "cmd.memory.verify",
+      "cmd.memory.edit",
+      "cmd.memory.delete",
+      "cmd.memory.restore",
+      "cmd.persona.manage",
+      "cmd.crew.template.create",
+      "cmd.crew.template.update",
+      "cmd.crew.template.delete"
+    ],
+    "permissions": [
+      "cmd.permissions.rule.add",
+      "cmd.permissions.rule.update",
+      "cmd.permissions.rule.reorder",
+      "cmd.permissions.rule.delete",
+      "cmd.permissions.rule.test"
+    ],
+    "notifications": [
+      "cmd.notifications.sound.upload",
+      "cmd.notifications.sound.import_pack",
+      "cmd.notifications.sound.preview",
+      "cmd.notifications.sound.delete",
+      "cmd.notifications.sound.export",
+      "cmd.notifications.destination.test"
+    ],
+    "appearance": [
+      "cmd.theme.create",
+      "cmd.theme.import",
+      "cmd.theme.export",
+      "cmd.theme.preview",
+      "cmd.theme.apply"
+    ],
+    "commands_shortcuts": [
+      "cmd.commands.custom.create",
+      "cmd.commands.custom.update",
+      "cmd.commands.custom.delete",
+      "cmd.commands.custom.dry_run",
+      "cmd.shortcuts.bind",
+      "cmd.shortcuts.reset",
+      "cmd.shortcuts.import",
+      "cmd.shortcuts.export"
+    ],
+    "resources": [
+      "cmd.mcp.server.add",
+      "cmd.mcp.server.restart",
+      "cmd.lsp.server.add",
+      "cmd.lsp.server.restart",
+      "cmd.formatter.add",
+      "cmd.formatter.test",
+      "cmd.storage.backup.open",
+      "cmd.artifact.manager.open"
+    ]
+  }
+}

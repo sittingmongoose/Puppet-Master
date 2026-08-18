@@ -33,8 +33,8 @@
     .sr-h1 { font-size: clamp(24px,3vw,36px); font-weight: 800; letter-spacing: -.025em; margin: 6px 0 6px; line-height: 1.1; }
     .sr-h1 .sr-thesis { color: var(--accent); }
     .sr-sub { color: var(--ink-2); max-width: 60ch; margin-bottom: 16px; }
-    .sr-search { display: flex; align-items: center; gap: 10px; padding: 0 14px; height: 44px; background: var(--surface-elev); border: 1px solid var(--line); border-radius: var(--r-pill); max-width: 560px; transition: border-color var(--t-fast) var(--ease); }
-    .sr-search:focus-within { border-color: var(--accent-line); }
+    .sr-search { display: flex; align-items: center; gap: 10px; padding: 0 14px; height: 44px; background: var(--surface-elev); border: 1px solid var(--line); border-radius: var(--r-pill); max-width: 560px; transition: border-color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease); }
+    .sr-search:focus-within { border-color: var(--accent-line); box-shadow: 0 0 0 3px var(--accent-soft); }
     .sr-search input { flex: 1; background: transparent; border: none; outline: none; font-size: 14px; color: var(--ink); }
     .sr-results { position: relative; max-width: 560px; margin-top: 8px; }
     .sr-results-inner { background: var(--surface-elev); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--sh-3); max-height: 320px; overflow: auto; padding: 6px; }
@@ -65,10 +65,17 @@
     .sr-section-purpose { color: var(--ink-2); font-size: 13px; margin-bottom: 14px; max-width: 70ch; }
     .sr-section-status { margin-left: auto; }
     /* channels (subsections / managers) as tabs within a section */
-    .sr-channels { display: flex; gap: 2px; border-bottom: 1px solid var(--line); margin-bottom: 14px; overflow-x: auto; }
-    .sr-channel { padding: 8px 12px; background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--ink-2); cursor: pointer; font-size: 13px; white-space: nowrap; }
+    .sr-channels { position: relative; display: flex; gap: 2px; border-bottom: 1px solid var(--line); margin-bottom: 14px; overflow-x: auto; }
+    .sr-channel { padding: 8px 12px; background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--ink-2); cursor: pointer; font-size: 13px; white-space: nowrap; transition: color var(--t-fast) var(--ease); }
     .sr-channel:hover { color: var(--ink); }
-    .sr-channel.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .sr-channel.active { color: var(--accent); }
+    /* sliding channel ink — the active-channel underline glides between tabs */
+    .sr-channel-ink { position: absolute; bottom: -1px; height: 2px; background: var(--accent); border-radius: 99px; opacity: 0; transition: left var(--t-mid) var(--ease-settle), width var(--t-mid) var(--ease-settle), opacity var(--t-fast) var(--ease); }
+    .sr-channels.has-ink .sr-channel-ink { opacity: 1; }
+    [data-reduced-motion="1"] .sr-channel-ink { transition: opacity var(--t-fast) var(--ease); }
+
+    /* lazy manager channel placeholder — hydrates on first view/click (bounded DOM) */
+    .sr-manager-hold { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; padding: 14px; border: 1px dashed var(--line); border-radius: var(--r); background: var(--surface-2); }
     .sr-sub-section { padding: 12px 0; scroll-margin-top: 16px; }
     .sr-sub-section + .sr-sub-section { border-top: 1px solid var(--line-2); }
     .sr-sub-section h3 { font-size: 15px; margin: 0 0 10px; display: flex; align-items: center; gap: 8px; }
@@ -79,10 +86,31 @@
     /* manager rendered inside a channel */
     .sr-manager-host { border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
 
-    /* scroll progress along the landmark rail */
+    /* scroll progress along the landmark rail — a position bead rides the tip,
+       with a velocity-mapped wake that exists ONLY while the river is scrolling
+       (strict packet-calm: exactly zero at rest) */
     .sr-progress { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); width: 2px; background: var(--accent); transition: height var(--t-fast) var(--ease); border-radius: 99px; z-index: 0; }
+    .sr-progress::before {
+      content: ""; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 2px; height: calc(var(--flow, 0) * 46px); border-radius: 99px;
+      background: linear-gradient(to top, var(--accent), transparent);
+      opacity: var(--flow, 0);
+      transition: height 140ms linear, opacity 240ms var(--ease);
+    }
+    .sr-progress::after { content: ""; position: absolute; bottom: -3px; left: 50%; transform: translateX(-50%); width: 8px; height: 8px; border-radius: 50%; background: var(--accent); border: 2px solid var(--surface); box-sizing: border-box; }
 
-    /* motion: scroll-linked flow, gentle — nothing animates when calm */
+    /* concept-04 motion personality: scroll-linked flow, calm at rest */
+    /* landmark tick pops when it becomes the active marker + one-shot ripple ring */
+    .sr-landmark-tick { position: relative; }
+    [data-reduced-motion="0"] .sr-landmark.active .sr-landmark-tick { animation: sr-tick-pop 320ms var(--ease-pop); }
+    @keyframes sr-tick-pop { 0% { transform: scale(1); } 45% { transform: scale(1.55); } 100% { transform: scale(1); } }
+    [data-reduced-motion="0"] .sr-landmark.active .sr-landmark-tick::after {
+      content: ""; position: absolute; inset: -4px; border-radius: 50%;
+      border: 2px solid var(--accent); opacity: 0;
+      animation: sr-ripple 520ms var(--ease) 1;
+    }
+    @keyframes sr-ripple { 0% { transform: scale(.6); opacity: .8; } 100% { transform: scale(2.1); opacity: 0; } }
+    /* sections rise out of the current as you read (existing reveal) */
     [data-reduced-motion="0"] .sr-section { opacity: 0; transform: translateY(6px); transition: opacity var(--t-slow) var(--ease-settle), transform var(--t-slow) var(--ease-settle); }
     [data-reduced-motion="0"] .sr-section.in-view { opacity: 1; transform: none; }
     @media (prefers-reduced-motion: reduce) { .sr-section { opacity: 1 !important; transform: none !important; } }
@@ -142,6 +170,8 @@
           PM.shared.chat() +
           PM.shared.footer();
         PM.shared.wireShell();
+        // showcase: pointer-reactive glow/magnetic press (auto-gated)
+        PM.motion.pointerFX && PM.motion.pointerFX(document);
       }
 
       function sectionIcon(catId) {
@@ -172,7 +202,8 @@
           var channels = cat.sub.map(function (s, i) {
             return '<button class="sr-channel' + (i===0?" active":"") + '" data-channel="' + s.id + '"' + (s.manager?' data-channel-manager="' + s.manager + '"':'') + '>' + s.title + '</button>';
           }).join("");
-          // first subcategory content shown by default
+          // first subcategory content shown by default — manager channels start as lazy
+          // placeholders (correction 2026-08-13: no manager renders at startup)
           var firstSub = cat.sub[0];
           var body = channelBody(cat, firstSub);
           var statusText = d ? d.status : (cat.sub.length + ' sections');
@@ -186,7 +217,7 @@
                 '<div class="sr-section-status">' + statusChip + '</div>',
               '</div>',
               '<p class="sr-section-purpose">' + cat.purpose + '</p>',
-              '<div class="sr-channels">' + channels + '</div>',
+              '<div class="sr-channels">' + channels + '<span class="sr-channel-ink" data-ink></span></div>',
               '<div class="sr-channel-body" data-channel-body>' + body + '</div>',
             '</section>'
           ].join("");
@@ -221,7 +252,22 @@
         initRiverScroll();
       }
 
-      function channelBody(cat, sub) {
+      /* channel content. Manager channels are LAZY: until hydrated they render a
+         lightweight placeholder; hydration happens on first view (IntersectionObserver)
+         or on open. No manager markup is built during startup (correction 2026-08-13). */
+      function channelBody(cat, sub, opts) {
+        opts = opts || {};
+        if (sub.manager && !opts.hydrated) {
+          var m = PM.managers[sub.manager];
+          return [
+            '<div class="sr-manager-hold" data-lazy-manager="' + sub.manager + '">',
+              '<div class="row center gap-sm wrap"><span style="color:var(--accent)">' + PM.svg(m.icon, 16) + '</span>',
+              '<strong>' + m.title + '</strong><span class="chip info">lazy channel</span></div>',
+              '<span class="muted small">Hydrates when this section enters view or the channel is opened — manager surfaces never render at startup, so the river stays light.</span>',
+              '<button class="btn sm" data-hydrate="' + sub.manager + '">Open ' + m.title + ' now</button>',
+            '</div>'
+          ].join("");
+        }
         if (sub.manager) {
           // render the manager inline as a channel
           return '<div class="sr-manager-host" data-manager-host="' + sub.manager + '"><div data-manager-id="' + sub.manager + '">' + PM.managers_lib.render(sub.manager) + '</div></div>';
@@ -232,38 +278,62 @@
           PM.shared.proseField("Notes for this channel", "I definately want to recieve seperate reports on this cuz the occured issue is thru the roof.");
       }
 
+      /* hydrate a section's active manager channel (cross-faded, wired) */
+      function hydrateChannel(sec, managerId, animate) {
+        var hold = sec.querySelector('[data-lazy-manager="' + managerId + '"]');
+        if (!hold) return;
+        var cat = PM.catById(sec.getAttribute("data-section"));
+        var sub = cat.sub.filter(function (s) { return s.manager === managerId; })[0];
+        if (!sub) return;
+        var wrap = document.createElement("div");
+        wrap.innerHTML = channelBody(cat, sub, { hydrated: true });
+        var node = wrap.firstElementChild;
+        var place = function () {
+          hold.parentNode.replaceChild(node, hold);
+          PM.managers_lib.wire(node.querySelector(".mgr"));
+        };
+        if (animate && PM.motion && !PM.state.reducedMotion) PM.motion.crossFade(hold, place);
+        else place();
+      }
+
+      /* glide a section's channel ink to its active tab */
+      function moveInk(sec) {
+        var tabs = sec.querySelector(".sr-channels");
+        var active = tabs && tabs.querySelector(".sr-channel.active");
+        var ink = tabs && tabs.querySelector("[data-ink]");
+        if (!tabs || !active || !ink) return;
+        tabs.classList.add("has-ink");
+        ink.style.left = active.offsetLeft + "px";
+        ink.style.width = active.offsetWidth + "px";
+      }
+
       function wireHome() {
-        // search
+        // search: keyboard arrows/enter + empty state + typo tolerance + match highlight
         var inp = document.querySelector("[data-search-input]");
         var res = document.querySelector("[data-results]");
         var resInner = res.querySelector(".sr-results-inner");
-        inp.addEventListener("input", function () {
-          var results = PM.runSearch(this.value);
-          if (!this.value.trim() || !results.length) { res.classList.add("hidden"); return; }
-          res.classList.remove("hidden");
-          resInner.innerHTML = results.map(function (r) {
-            var km = PM.shared.searchKindMeta(r.kind);
-            var target = r.manager ? 'data-r-manager="' + r.manager + '"' : 'data-r-cat="' + r.cat + '" data-r-sub="' + (r.sub||"") + '"';
-            return '<div class="sr-result" ' + target + '><span class="sr-rkind ' + km.cls + '">' + km.label + '</span><div class="col"><strong>' + r.label + '</strong><span class="muted small"> ' + (r.expl||"").slice(0,46) + '</span></div></div>';
-          }).join("");
-        });
-        resInner.addEventListener("click", function (e) {
-          var r = e.target.closest(".sr-result"); if (!r) return;
-          inp.value = ""; res.classList.add("hidden");
-          var mgr = r.getAttribute("data-r-manager");
-          var cat = r.getAttribute("data-r-cat"), sub = r.getAttribute("data-r-sub");
-          // scroll to the section, then switch to channel
-          var sec = document.querySelector('[data-section="' + cat + '"]');
-          if (sec) {
-            PM.focusSub(cat + "__section", { jump: true });
+        PM.shared.wireSearchDropdown({
+          input: inp, resultsHost: resInner, itemSelector: ".sr-result",
+          render: function (results) {
+            return results.map(function (r) {
+              var km = PM.shared.searchKindMeta(r.kind);
+              var target = r.manager ? 'data-r-manager="' + r.manager + '"' : 'data-r-cat="' + r.cat + '" data-r-sub="' + (r.sub||"") + '"';
+              return '<div class="sr-result" ' + target + ' tabindex="0" role="option"><span class="sr-rkind ' + km.cls + '">' + km.label + '</span><div class="col"><strong>' + PM.shared.hl(r.label, r.range) + '</strong><span class="muted small"> ' + (r.expl||"").slice(0,46) + '</span></div></div>';
+            }).join("");
+          },
+          onPick: function (r, el) {
+            if (!el) return;
+            var mgr = el.getAttribute("data-r-manager");
+            var cat = el.getAttribute("data-r-cat"), sub = el.getAttribute("data-r-sub");
+            var sec = document.querySelector('[data-section="' + cat + '"]');
+            if (!sec) return;
             var scroller = PM.scroller();
             scroller && scroller.scrollTo({ top: sec.offsetTop - 20, behavior: PM.state.reducedMotion ? "auto" : "smooth" });
-            // switch channel
+            if (mgr) { hydrateChannel(sec, mgr, true); return; }
             if (sub) {
               var chBtn = sec.querySelector('[data-channel="' + sub + '"]');
               if (chBtn) chBtn.click();
             }
-            // if it's a setting, focus-flash its row after jump
             setTimeout(function () {
               if (sub) {
                 var row = sec.querySelector('[data-setting-row$=".' + sub + '"]') || sec.querySelector('[data-sub-section="' + sub + '"]');
@@ -283,7 +353,14 @@
             }
           });
         });
-        // channel switching (B2: clear pending timeouts on outgoing manager; C2: cross-fade)
+        // manual lazy-channel open buttons
+        document.querySelectorAll("[data-hydrate]").forEach(function (b) {
+          b.addEventListener("click", function () {
+            var sec = this.closest(".sr-section");
+            if (sec) hydrateChannel(sec, this.getAttribute("data-hydrate"), true);
+          });
+        });
+        // channel switching (B2: clear pending timeouts on outgoing manager; C2: cross-fade + ink glide)
         document.querySelectorAll("[data-channel]").forEach(function (b) {
           b.addEventListener("click", function () {
             var sec = this.closest(".sr-section");
@@ -292,15 +369,16 @@
             var manager = this.getAttribute("data-channel-manager");
             sec.querySelectorAll(".sr-channel").forEach(function (c) { c.classList.remove("active"); });
             this.classList.add("active");
+            moveInk(sec);
             var sub = PM.catById(cat).sub.find(function (s) { return s.id === subId; });
             var bodyHost = sec.querySelector("[data-channel-body]");
             // B2: cancel any pending refresh-overlay timeout on the outgoing manager
             var oldMgr = bodyHost.querySelector("[data-manager-host] .mgr");
             if (oldMgr && oldMgr.dataset.pmTimer) { clearTimeout(Number(oldMgr.dataset.pmTimer)); }
             bodyHost.querySelectorAll(".refresh-overlay").forEach(function (o) { o.remove(); });
-            // C2 motion: cross-fade the channel body
+            // C2 motion: cross-fade the channel body (explicit opens hydrate immediately)
             PM.motion.crossFade(bodyHost, function () {
-              bodyHost.innerHTML = channelBody(PM.catById(cat), sub);
+              bodyHost.innerHTML = channelBody(PM.catById(cat), sub, { hydrated: true });
               if (manager) {
                 var host = bodyHost.querySelector('[data-manager-host="' + manager + '"]');
                 if (host) PM.managers_lib.wire(host.querySelector(".mgr"));
@@ -311,6 +389,18 @@
             });
           });
         });
+        // lazy hydration: when a section scrolls into view, hydrate its ACTIVE manager
+        // channel (startup rendered none — this is the lazy-hydration contract)
+        var lazyIO = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (!en.isIntersecting) return;
+            var sec = en.target;
+            var active = sec.querySelector(".sr-channel.active[data-channel-manager]");
+            if (active) hydrateChannel(sec, active.getAttribute("data-channel-manager"), true);
+            lazyIO.unobserve(sec);
+          });
+        }, { root: PM.scroller(), rootMargin: "120px 0px", threshold: 0.05 });
+        document.querySelectorAll(".sr-section").forEach(function (sec) { lazyIO.observe(sec); });
         // notices
         document.querySelectorAll("[data-notice-target]").forEach(function (b) {
           b.addEventListener("click", function () {
@@ -329,14 +419,30 @@
         PM.shared.wireShell();
       }
 
-      /* river scroll: update active landmark + progress + in-view reveals */
+      /* river scroll: update active landmark + progress + in-view reveals.
+         showcase: the current's wake maps to scroll velocity and decays to exactly
+         zero at rest — no timers, no loops, nothing runs when the river is calm. */
       function initRiverScroll() {
         var scroller = PM.scroller();
         if (!scroller) return;
         var sections = Array.prototype.slice.call(scroller.querySelectorAll("[data-section]"));
         var landmarks = Array.prototype.slice.call(document.querySelectorAll("[data-landmark]"));
         var progress = document.getElementById("srProgress");
+        var lastTop = scroller.scrollTop, lastT = 0, decayTimer = 0;
+        function updateFlow() {
+          var now = Date.now();
+          var dt = Math.max(1, now - lastT);
+          var v = Math.abs(scroller.scrollTop - lastTop) / dt; // px per ms
+          lastTop = scroller.scrollTop; lastT = now;
+          if (progress && !PM.state.reducedMotion) {
+            var flow = Math.max(0, Math.min(1, v / 1.4));
+            progress.style.setProperty("--flow", flow.toFixed(2));
+            clearTimeout(decayTimer);
+            decayTimer = setTimeout(function () { progress.style.setProperty("--flow", "0"); }, 140);
+          }
+        }
         function update() {
+          updateFlow();
           var st = scroller.scrollTop;
           var sh = scroller.scrollHeight - scroller.clientHeight;
           if (progress && sh > 0) progress.style.height = Math.max(0, Math.min(1, st/sh)) * 100 + "%";
@@ -344,9 +450,17 @@
           var active = sections[0] && sections[0].getAttribute("data-section");
           sections.forEach(function (s) {
             if (s.getBoundingClientRect().top - scroller.getBoundingClientRect().top < 120) active = s.getAttribute("data-section");
-            // in-view reveal
+            // in-view reveal + one-time bounded child stagger (head → purpose → channels → body)
             var r = s.getBoundingClientRect();
-            if (r.top < window.innerHeight * 0.85 && r.bottom > 60) s.classList.add("in-view");
+            if (r.top < window.innerHeight * 0.85 && r.bottom > 60) {
+              if (!s.classList.contains("in-view")) {
+                s.classList.add("in-view");
+                if (PM.motion && !PM.state.reducedMotion && !s.dataset.childStagger) {
+                  s.dataset.childStagger = "1";
+                  PM.motion.staggerIn(s, ".sr-section-head, .sr-section-purpose, .sr-channels, [data-channel-body]", { step: 42, duration: 260 });
+                }
+              }
+            }
           });
           landmarks.forEach(function (l) { l.classList.toggle("active", l.getAttribute("data-landmark") === active); });
         }
@@ -356,8 +470,15 @@
 
       PM.render = home;
       PM._inboxRoute = function (t) {
-        if (PM.managers[t]) { PM.openManager(t); } else { PM.openCategory(t.split(".")[0], t.split(".")[1]); }
-        PM.render();
+        // managers route through this concept's own IA (scroll to section + hydrate channel)
+        if (PM.managers[t]) { PM.openOwnedManager(t); return; }
+        var sec = document.querySelector('[data-section="' + t.split(".")[0] + '"]');
+        if (sec) {
+          var scroller = PM.scroller();
+          scroller && scroller.scrollTo({ top: sec.offsetTop - 20, behavior: PM.state.reducedMotion ? "auto" : "smooth" });
+          var ch = sec.querySelector('[data-channel="' + (t.split(".")[1] || "") + '"]');
+          if (ch) ch.click();
+        }
       };
       PM.init();
       PM.motion.install();

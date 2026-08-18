@@ -1,0 +1,1504 @@
+{
+  "generatedAt": "2026-08-17T19:35:25.963Z",
+  "groups": {
+    "plansRows": {
+      "shown": [
+        {
+          "label": "ChatGPT Business plan",
+          "value": "100 %",
+          "unitEl": "%",
+          "sub": [
+            "OpenAI · Work · Codex · Business plan · resets in 3h 05m · 17:47 EDT"
+          ],
+          "next": "When this plan reaches its limit, fall back to Personal OpenAI. No extra usage is enabled on the Work account."
+        },
+        {
+          "label": "Extra Bundle",
+          "value": "80 %",
+          "unitEl": "%",
+          "sub": [
+            "Alibaba · Personal · Coding Plan connection · expires in 42d · Sep 15 00:00 EDT"
+          ],
+          "next": null
+        },
+        {
+          "label": "Claude Max plan",
+          "value": "78 %",
+          "unitEl": "%",
+          "sub": [
+            "Claude · Work · Claude CLI profile · resets in 2h 14m · 16:56 EDT"
+          ],
+          "next": "When included usage runs out, continue with extra usage up to the $100 spending limit. Then stop."
+        },
+        {
+          "label": "Credit plan",
+          "value": "76 %",
+          "unitEl": "%",
+          "sub": [
+            "Z.AI · Personal · Credit plan connection"
+          ],
+          "next": "When credits run out, metered continuation applies at list price. Otherwise stop."
+        },
+        {
+          "label": "OpenCode Go plan",
+          "value": "72 %",
+          "unitEl": "%",
+          "sub": [
+            "OpenCode · Personal · OpenCode Go · resets in 55m · 15:37 EDT",
+            "Monthly credits · Provider data unavailable · PM estimate 63% · medium confidence"
+          ],
+          "next": "When OpenCode Go reaches its limit, continue with configured free models. Zen balance is off."
+        },
+        {
+          "label": "Requested",
+          "value": "8",
+          "unitEl": null,
+          "sub": [
+            "2 at a time · 4 waves · capacity kept aside for synthesis, testing, verification, repair",
+            "8 hard max · 4 preferred · 2 advertised · 2 sustainable",
+            "Reasonable forecast · based on 12 similar runs · generated 14:14 EDT"
+          ],
+          "next": "Likely enough capacity to finish before the next reset."
+        },
+        {
+          "label": "Requested",
+          "value": "6",
+          "unitEl": null,
+          "sub": [
+            "2 at a time · 3 waves · capacity kept aside for synthesis, testing, audit, repair",
+            "8 hard max · 4 preferred · 2 advertised · 2 sustainable",
+            "Limited history · may change after a route switch · generated 14:20 EDT"
+          ],
+          "next": "Enough for two complete extraction children at a time, with synthesis and audit reserved."
+        },
+        {
+          "label": "Requested",
+          "value": "5",
+          "unitEl": null,
+          "sub": [
+            "3 at a time · 2 waves · capacity kept aside for reducer",
+            "8 hard max · 6 preferred · 3 advertised · 3 sustainable"
+          ],
+          "next": null
+        }
+      ],
+      "other": [
+        {
+          "label": "Kimi Code plan",
+          "value": "71 %",
+          "unitEl": "%"
+        },
+        {
+          "label": "Team seat credits",
+          "value": "70 %",
+          "unitEl": "%"
+        },
+        {
+          "label": "Baseline plan",
+          "value": "64 %",
+          "unitEl": "%"
+        },
+        {
+          "label": "Copilot Free",
+          "value": "64 %",
+          "unitEl": "%"
+        },
+        {
+          "label": "Z.AI free tier",
+          "value": "60 %",
+          "unitEl": "%"
+        },
+        {
+          "label": "Shared Usage Pack",
+          "value": "58 %",
+          "unitEl": "%"
+        },
+        {
+          "label": "Coding Plan",
+          "value": "52 %",
+          "unitEl": "%"
+        },
+        {
+          "label": "ChatGPT plan",
+          "value": "46 %",
+          "unitEl": "%"
+        },
+        {
+          "label": "Gemini free tier",
+          "value": "30 %",
+          "unitEl": "%"
+        },
+        {
+          "label": "Personal Token Plan",
+          "value": "24 %",
+          "unitEl": "%"
+        },
+        {
+          "label": "Usage credits",
+          "value": "21 %",
+          "unitEl": "%"
+        },
+        {
+          "label": "K2 trial",
+          "value": "21 %",
+          "unitEl": "%"
+        },
+        {
+          "label": "Extra usage",
+          "value": "12 %",
+          "unitEl": "%"
+        },
+        {
+          "label": "Claude API · PAYG",
+          "value": "4 %",
+          "unitEl": "%"
+        },
+        {
+          "label": "Saved reset",
+          "value": "0 %",
+          "unitEl": "%"
+        },
+        {
+          "label": "Zen balance",
+          "value": "0 %",
+          "unitEl": "%"
+        },
+        {
+          "label": "Shared membership pool",
+          "value": "limit not exposed",
+          "unitEl": null
+        },
+        {
+          "label": "Legacy plan",
+          "value": "limit not exposed",
+          "unitEl": null
+        },
+        {
+          "label": "AI Credit Overages",
+          "value": "limit not exposed",
+          "unitEl": null
+        },
+        {
+          "label": "Included free models",
+          "value": "limit not exposed",
+          "unitEl": null
+        },
+        {
+          "label": "Shared free route",
+          "value": "limit not exposed",
+          "unitEl": null
+        },
+        {
+          "label": "Local models",
+          "value": "limit not exposed",
+          "unitEl": null
+        }
+      ],
+      "moreHiddenByDefault": true
+    },
+    "meterUnitMatrix": [
+      {
+        "id": "meter:alibaba-5h",
+        "product": "Coding Plan",
+        "kind": "subscription",
+        "unit": "requests",
+        "windowKind": "rolling",
+        "used": 340,
+        "limit": 1000,
+        "usedPct": 34,
+        "resetAt": "2026-08-04T22:42:00.000Z",
+        "expiresAt": null,
+        "vs": "provider_reported",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:alibaba-weekly",
+        "product": "Coding Plan",
+        "kind": "subscription",
+        "unit": "requests",
+        "windowKind": "rolling",
+        "used": 2600,
+        "limit": 5000,
+        "usedPct": 52,
+        "resetAt": "2026-08-10T04:00:00Z",
+        "expiresAt": null,
+        "vs": "provider_reported",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:alibaba-monthly",
+        "product": "Coding Plan",
+        "kind": "subscription",
+        "unit": "requests",
+        "windowKind": "billing_cycle",
+        "used": 8200,
+        "limit": 20000,
+        "usedPct": 41,
+        "resetAt": "2026-09-01T04:00:00Z",
+        "expiresAt": null,
+        "vs": "provider_reported",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:alibaba-ptp",
+        "product": "Personal Token Plan",
+        "kind": "prepaid_balance",
+        "unit": "tokens",
+        "windowKind": "balance",
+        "used": 1200000,
+        "limit": 5000000,
+        "usedPct": 24,
+        "resetAt": null,
+        "expiresAt": null,
+        "vs": "provider_reported",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:alibaba-bundle",
+        "product": "Extra Bundle",
+        "kind": "purchased_pack",
+        "unit": "requests",
+        "windowKind": "pack",
+        "used": 160,
+        "limit": 200,
+        "usedPct": 80,
+        "resetAt": null,
+        "expiresAt": "2026-09-15T04:00:00Z",
+        "vs": "provider_reported",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:alibaba-team-seats",
+        "product": "Team seat credits",
+        "kind": "subscription",
+        "unit": "credits",
+        "windowKind": "billing_cycle",
+        "used": 28,
+        "limit": 40,
+        "usedPct": 70,
+        "resetAt": "2026-09-01T04:00:00Z",
+        "expiresAt": null,
+        "vs": "stale",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:alibaba-shared",
+        "product": "Shared Usage Pack",
+        "kind": "purchased_pack",
+        "unit": "USD",
+        "windowKind": "pack",
+        "used": 11.6,
+        "limit": 20,
+        "usedPct": 58,
+        "resetAt": null,
+        "expiresAt": null,
+        "vs": "stale",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:codex-5h",
+        "product": "ChatGPT plan",
+        "kind": "subscription",
+        "unit": "%",
+        "windowKind": "rolling",
+        "used": null,
+        "limit": null,
+        "usedPct": 46,
+        "resetAt": "2026-08-05T03:26:00.000Z",
+        "expiresAt": null,
+        "vs": "provider_reported",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:codex-weekly",
+        "product": "ChatGPT plan",
+        "kind": "subscription",
+        "unit": "%",
+        "windowKind": "rolling",
+        "used": null,
+        "limit": null,
+        "usedPct": 38,
+        "resetAt": "2026-08-08T04:00:00Z",
+        "expiresAt": null,
+        "vs": "provider_reported",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:codex-credits",
+        "product": "Usage credits",
+        "kind": "prepaid_balance",
+        "unit": "USD",
+        "windowKind": "balance",
+        "used": 4.2,
+        "limit": 20,
+        "usedPct": 21,
+        "resetAt": null,
+        "expiresAt": null,
+        "vs": "provider_reported",
+        "settlement": "streaming_partial"
+      },
+      {
+        "id": "meter:codex-saved",
+        "product": "Saved reset",
+        "kind": "saved_reset",
+        "unit": "count",
+        "windowKind": "banked",
+        "used": 0,
+        "limit": 1,
+        "usedPct": 0,
+        "resetAt": null,
+        "expiresAt": "2026-09-01T04:00:00Z",
+        "vs": "measured",
+        "settlement": "settled"
+      },
+      {
+        "id": "meter:codex-biz-5h",
+        "product": "ChatGPT Business plan",
+        "kind": "subscription",
+        "unit": "%",
+        "windowKind": "rolling",
+        "used": null,
+        "limit": null,
+        "usedPct": 100,
+        "resetAt": "2026-08-04T21:47:00.000Z",
+        "expiresAt": null,
+        "vs": "provider_reported",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:codex-biz-weekly",
+        "product": "ChatGPT Business plan",
+        "kind": "subscription",
+        "unit": "%",
+        "windowKind": "rolling",
+        "used": null,
+        "limit": null,
+        "usedPct": 96,
+        "resetAt": "2026-08-08T04:00:00Z",
+        "expiresAt": null,
+        "vs": "provider_reported",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:claude-5h",
+        "product": "Claude Max plan",
+        "kind": "subscription",
+        "unit": "%",
+        "windowKind": "rolling",
+        "used": null,
+        "limit": null,
+        "usedPct": 78,
+        "resetAt": "2026-08-04T20:56:00.000Z",
+        "expiresAt": null,
+        "vs": "provider_reported",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:claude-weekly",
+        "product": "Claude Max plan",
+        "kind": "subscription",
+        "unit": "%",
+        "windowKind": "rolling",
+        "used": null,
+        "limit": null,
+        "usedPct": 61,
+        "resetAt": "2026-08-07T04:00:00Z",
+        "expiresAt": null,
+        "vs": "provider_reported",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:claude-extra",
+        "product": "Extra usage",
+        "kind": "metered_continuation",
+        "unit": "USD",
+        "windowKind": "billing_cycle",
+        "used": 12.4,
+        "limit": 100,
+        "usedPct": 12,
+        "resetAt": "2026-09-01T04:00:00Z",
+        "expiresAt": null,
+        "vs": "provider_reported",
+        "settlement": "streaming_partial"
+      },
+      {
+        "id": "meter:claude-api",
+        "product": "Claude API · PAYG",
+        "kind": "payg_route",
+        "unit": "USD",
+        "windowKind": "billing_cycle",
+        "used": 6.18,
+        "limit": 150,
+        "usedPct": 4,
+        "resetAt": "2026-09-01T04:00:00Z",
+        "expiresAt": null,
+        "vs": "provider_reported",
+        "settlement": "streaming_partial"
+      },
+      {
+        "id": "meter:kimi-weekly",
+        "product": "Kimi Code plan",
+        "kind": "subscription",
+        "unit": "%",
+        "windowKind": "rolling",
+        "used": null,
+        "limit": null,
+        "usedPct": 71,
+        "resetAt": "2026-08-05T20:42:00.000Z",
+        "expiresAt": null,
+        "vs": "provider_reported",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:kimi-pool",
+        "product": "Shared membership pool",
+        "kind": "shared_pool",
+        "unit": "requests",
+        "windowKind": "pool",
+        "used": 3100,
+        "limit": null,
+        "usedPct": null,
+        "resetAt": null,
+        "expiresAt": null,
+        "vs": "unknown",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:kimi-trial",
+        "product": "K2 trial",
+        "kind": "trial",
+        "unit": "requests",
+        "windowKind": "trial",
+        "used": 42,
+        "limit": 200,
+        "usedPct": 21,
+        "resetAt": null,
+        "expiresAt": "2026-08-16T04:00:00Z",
+        "vs": "provider_reported",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:oc-go-5h",
+        "product": "OpenCode Go plan",
+        "kind": "subscription",
+        "unit": "credits",
+        "windowKind": "rolling",
+        "used": 145,
+        "limit": 200,
+        "usedPct": 72,
+        "resetAt": "2026-08-04T19:37:00.000Z",
+        "expiresAt": null,
+        "vs": "provider_reported",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:oc-go-monthly",
+        "product": "OpenCode Go plan",
+        "kind": "subscription",
+        "unit": "credits",
+        "windowKind": "billing_cycle",
+        "used": 4200,
+        "limit": null,
+        "usedPct": null,
+        "resetAt": "2026-09-01T04:00:00Z",
+        "expiresAt": null,
+        "vs": "unavailable",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:oc-zen-bal",
+        "product": "Zen balance",
+        "kind": "prepaid_balance",
+        "unit": "USD",
+        "windowKind": "balance",
+        "used": 0,
+        "limit": 3.2,
+        "usedPct": 0,
+        "resetAt": null,
+        "expiresAt": null,
+        "vs": "provider_reported",
+        "settlement": "settled"
+      },
+      {
+        "id": "meter:zai-legacy-req",
+        "product": "Legacy plan",
+        "kind": "subscription",
+        "unit": "requests",
+        "windowKind": "billing_cycle",
+        "used": 118,
+        "limit": null,
+        "usedPct": null,
+        "resetAt": "2026-08-16T04:00:00Z",
+        "expiresAt": null,
+        "vs": "unknown",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:zai-credits",
+        "product": "Credit plan",
+        "kind": "subscription",
+        "unit": "credits",
+        "windowKind": "balance",
+        "used": 760,
+        "limit": 1000,
+        "usedPct": 76,
+        "resetAt": null,
+        "expiresAt": null,
+        "vs": "provider_reported",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:agi-baseline",
+        "product": "Baseline plan",
+        "kind": "subscription",
+        "unit": "%",
+        "windowKind": "rolling",
+        "used": null,
+        "limit": null,
+        "usedPct": 64,
+        "resetAt": "2026-08-05T03:42:00.000Z",
+        "expiresAt": null,
+        "vs": "provider_reported",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:agi-overage",
+        "product": "AI Credit Overages",
+        "kind": "metered_continuation",
+        "unit": "USD",
+        "windowKind": "balance",
+        "used": 0,
+        "limit": null,
+        "usedPct": null,
+        "resetAt": null,
+        "expiresAt": null,
+        "vs": "disabled",
+        "settlement": "unknown"
+      },
+      {
+        "id": "meter:google-free-day",
+        "product": "Gemini free tier",
+        "kind": "free_allowance",
+        "unit": "requests",
+        "windowKind": "fixed_reset",
+        "used": 18,
+        "limit": 60,
+        "usedPct": 30,
+        "resetAt": "2026-08-05T04:00:00Z",
+        "expiresAt": null,
+        "vs": "provider_reported",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:github-free-mo",
+        "product": "Copilot Free",
+        "kind": "free_allowance",
+        "unit": "requests",
+        "windowKind": "billing_cycle",
+        "used": 32,
+        "limit": 50,
+        "usedPct": 64,
+        "resetAt": "2026-09-01T04:00:00Z",
+        "expiresAt": null,
+        "vs": "provider_reported",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:zai-free-day",
+        "product": "Z.AI free tier",
+        "kind": "free_allowance",
+        "unit": "tokens",
+        "windowKind": "fixed_reset",
+        "used": 120000,
+        "limit": 200000,
+        "usedPct": 60,
+        "resetAt": "2026-08-05T04:00:00Z",
+        "expiresAt": null,
+        "vs": "estimated",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:oc-go-free",
+        "product": "Included free models",
+        "kind": "free_allowance",
+        "unit": "requests",
+        "windowKind": "none",
+        "used": 26,
+        "limit": null,
+        "usedPct": null,
+        "resetAt": null,
+        "expiresAt": null,
+        "vs": "measured",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:shared-gw",
+        "product": "Shared free route",
+        "kind": "free_allowance",
+        "unit": "requests",
+        "windowKind": "none",
+        "used": 7,
+        "limit": null,
+        "usedPct": null,
+        "resetAt": null,
+        "expiresAt": null,
+        "vs": "measured",
+        "settlement": "observed"
+      },
+      {
+        "id": "meter:local-ollama",
+        "product": "Local models",
+        "kind": "local_route",
+        "unit": "runtime",
+        "windowKind": "session_only",
+        "used": null,
+        "limit": null,
+        "usedPct": null,
+        "resetAt": null,
+        "expiresAt": null,
+        "vs": "not_exposed",
+        "settlement": "unknown"
+      }
+    ],
+    "continuationSheet": [
+      {
+        "productId": "prod:alibaba-coding-plan",
+        "productLabel": "Coding Plan",
+        "dataOrder": [
+          "included",
+          "prod:alibaba-ptp",
+          "prod:alibaba-extra-bundle",
+          "wait_reset"
+        ],
+        "whatHappensNext": "When included usage runs out, draw on the Personal Token Plan, then the Extra Bundle. Otherwise wait for the window reset.",
+        "renderedOptions": [
+          {
+            "value": "included",
+            "text": "included",
+            "selected": true
+          },
+          {
+            "value": "prod",
+            "text": "Draw on the balance/pack",
+            "selected": false
+          },
+          {
+            "value": "wait_reset",
+            "text": "Wait for the reset",
+            "selected": false
+          }
+        ],
+        "selectValueShown": "included",
+        "selectedIndex": 0,
+        "storedPreference": null,
+        "productSelectStillCorrect": true
+      },
+      {
+        "productId": "prod:alibaba-team-seats",
+        "productLabel": "Team seat credits",
+        "dataOrder": [
+          "included",
+          "prod:alibaba-shared-pack",
+          "wait_reset"
+        ],
+        "whatHappensNext": "When seat credits run out, draw on the Shared Usage Pack. Otherwise wait for the monthly refresh.",
+        "renderedOptions": [
+          {
+            "value": "included",
+            "text": "included",
+            "selected": true
+          },
+          {
+            "value": "prod",
+            "text": "Draw on the balance/pack",
+            "selected": false
+          },
+          {
+            "value": "wait_reset",
+            "text": "Wait for the reset",
+            "selected": false
+          }
+        ],
+        "selectValueShown": "included",
+        "selectedIndex": 0,
+        "storedPreference": null,
+        "productSelectStillCorrect": false
+      },
+      {
+        "productId": "prod:codex-plus",
+        "productLabel": "ChatGPT plan",
+        "dataOrder": [
+          "included",
+          "prod:codex-credits",
+          "prod:codex-saved-reset",
+          "wait_reset"
+        ],
+        "whatHappensNext": "When included usage runs out, use credits up to $20 this month. One saved reset is banked. Otherwise wait for the window reset.",
+        "renderedOptions": [
+          {
+            "value": "included",
+            "text": "included",
+            "selected": true
+          },
+          {
+            "value": "prod",
+            "text": "Draw on the balance/pack",
+            "selected": false
+          },
+          {
+            "value": "wait_reset",
+            "text": "Wait for the reset",
+            "selected": false
+          }
+        ],
+        "selectValueShown": "included",
+        "selectedIndex": 0,
+        "storedPreference": "credits",
+        "productSelectStillCorrect": false
+      },
+      {
+        "productId": "prod:codex-business",
+        "productLabel": "ChatGPT Business plan",
+        "dataOrder": [
+          "included",
+          "fallback:acct:openai-personal",
+          "hard_stop"
+        ],
+        "whatHappensNext": "When this plan reaches its limit, fall back to Personal OpenAI. No extra usage is enabled on the Work account.",
+        "renderedOptions": [
+          {
+            "value": "included",
+            "text": "included",
+            "selected": true
+          },
+          {
+            "value": "prod",
+            "text": "Draw on the balance/pack",
+            "selected": false
+          },
+          {
+            "value": "wait_reset",
+            "text": "Wait for the reset",
+            "selected": false
+          }
+        ],
+        "selectValueShown": "included",
+        "selectedIndex": 0,
+        "storedPreference": null,
+        "productSelectStillCorrect": false
+      },
+      {
+        "productId": "prod:claude-max",
+        "productLabel": "Claude Max plan",
+        "dataOrder": [
+          "included",
+          "prod:claude-extra",
+          "hard_stop"
+        ],
+        "whatHappensNext": "When included usage runs out, continue with extra usage up to the $100 spending limit. Then stop.",
+        "renderedOptions": [
+          {
+            "value": "included",
+            "text": "included",
+            "selected": true
+          },
+          {
+            "value": "prod",
+            "text": "Draw on the balance/pack",
+            "selected": false
+          },
+          {
+            "value": "wait_reset",
+            "text": "Wait for the reset",
+            "selected": false
+          }
+        ],
+        "selectValueShown": "included",
+        "selectedIndex": 0,
+        "storedPreference": "extra_usage",
+        "productSelectStillCorrect": false
+      },
+      {
+        "productId": "prod:claude-api-payg",
+        "productLabel": "Claude API · PAYG",
+        "dataOrder": [
+          "metered",
+          "spending_limit"
+        ],
+        "whatHappensNext": "API use is metered. The org spending limit of $150 bounds this month.",
+        "renderedOptions": [
+          {
+            "value": "included",
+            "text": "included",
+            "selected": true
+          },
+          {
+            "value": "prod",
+            "text": "Draw on the balance/pack",
+            "selected": false
+          },
+          {
+            "value": "wait_reset",
+            "text": "Wait for the reset",
+            "selected": false
+          }
+        ],
+        "selectValueShown": "included",
+        "selectedIndex": 0,
+        "storedPreference": null,
+        "productSelectStillCorrect": false
+      },
+      {
+        "productId": "prod:kimi-code-plan",
+        "productLabel": "Kimi Code plan",
+        "dataOrder": [
+          "included",
+          "prod:kimi-pool",
+          "wait_reset"
+        ],
+        "whatHappensNext": "When this plan reaches its limit, draw on the shared membership pool. Otherwise wait for the rolling week.",
+        "renderedOptions": [
+          {
+            "value": "included",
+            "text": "included",
+            "selected": true
+          },
+          {
+            "value": "prod",
+            "text": "Draw on the balance/pack",
+            "selected": false
+          },
+          {
+            "value": "wait_reset",
+            "text": "Wait for the reset",
+            "selected": false
+          }
+        ],
+        "selectValueShown": "included",
+        "selectedIndex": 0,
+        "storedPreference": null,
+        "productSelectStillCorrect": false
+      },
+      {
+        "productId": "prod:oc-go-plan",
+        "productLabel": "OpenCode Go plan",
+        "dataOrder": [
+          "included",
+          "free_fallback",
+          "wait_reset"
+        ],
+        "whatHappensNext": "When OpenCode Go reaches its limit, continue with configured free models. Zen balance is off.",
+        "renderedOptions": [
+          {
+            "value": "included",
+            "text": "included",
+            "selected": true
+          },
+          {
+            "value": "prod",
+            "text": "Draw on the balance/pack",
+            "selected": false
+          },
+          {
+            "value": "wait_reset",
+            "text": "Wait for the reset",
+            "selected": false
+          }
+        ],
+        "selectValueShown": "included",
+        "selectedIndex": 0,
+        "storedPreference": "free_fallback",
+        "productSelectStillCorrect": false
+      },
+      {
+        "productId": "prod:oc-zen-balance",
+        "productLabel": "Zen balance",
+        "dataOrder": [
+          "balance",
+          "hard_stop"
+        ],
+        "whatHappensNext": "Spend draws the Zen balance. Auto-reload is off, so at zero it stops.",
+        "renderedOptions": [
+          {
+            "value": "included",
+            "text": "included",
+            "selected": true
+          },
+          {
+            "value": "prod",
+            "text": "Draw on the balance/pack",
+            "selected": false
+          },
+          {
+            "value": "wait_reset",
+            "text": "Wait for the reset",
+            "selected": false
+          }
+        ],
+        "selectValueShown": "included",
+        "selectedIndex": 0,
+        "storedPreference": null,
+        "productSelectStillCorrect": false
+      },
+      {
+        "productId": "prod:zai-legacy-plan",
+        "productLabel": "Legacy plan",
+        "dataOrder": [
+          "included",
+          "hard_stop"
+        ],
+        "whatHappensNext": "When this plan reaches its limit, wait for the reset. Your general Z.AI balance will not be used.",
+        "renderedOptions": [
+          {
+            "value": "included",
+            "text": "included",
+            "selected": true
+          },
+          {
+            "value": "prod",
+            "text": "Draw on the balance/pack",
+            "selected": false
+          },
+          {
+            "value": "wait_reset",
+            "text": "Wait for the reset",
+            "selected": false
+          }
+        ],
+        "selectValueShown": "included",
+        "selectedIndex": 0,
+        "storedPreference": null,
+        "productSelectStillCorrect": false
+      },
+      {
+        "productId": "prod:zai-credit-plan",
+        "productLabel": "Credit plan",
+        "dataOrder": [
+          "included",
+          "metered",
+          "hard_stop"
+        ],
+        "whatHappensNext": "When credits run out, metered continuation applies at list price. Otherwise stop.",
+        "renderedOptions": [
+          {
+            "value": "included",
+            "text": "included",
+            "selected": true
+          },
+          {
+            "value": "prod",
+            "text": "Draw on the balance/pack",
+            "selected": false
+          },
+          {
+            "value": "wait_reset",
+            "text": "Wait for the reset",
+            "selected": false
+          }
+        ],
+        "selectValueShown": "included",
+        "selectedIndex": 0,
+        "storedPreference": null,
+        "productSelectStillCorrect": false
+      },
+      {
+        "productId": "prod:antigravity-baseline",
+        "productLabel": "Baseline plan",
+        "dataOrder": [
+          "included",
+          "wait_reset"
+        ],
+        "whatHappensNext": "When included usage runs out, wait for the window reset. AI Credit Overages are off.",
+        "renderedOptions": [
+          {
+            "value": "included",
+            "text": "included",
+            "selected": true
+          },
+          {
+            "value": "prod",
+            "text": "Draw on the balance/pack",
+            "selected": false
+          },
+          {
+            "value": "wait_reset",
+            "text": "Wait for the reset",
+            "selected": false
+          }
+        ],
+        "selectValueShown": "included",
+        "selectedIndex": 0,
+        "storedPreference": null,
+        "productSelectStillCorrect": false
+      }
+    ],
+    "sheetText": {
+      "fullText": "Usage settings\nCompact quick controls — a consumer of the shared Settings registry, never a second settings system.\nPREFERENCES\nWarn me before I run low\nAutomatic account/provider switching\nAFTER INCLUDED USAGE\nProduct\nCoding Plan\nTeam seat credits\nChatGPT plan\nChatGPT Business plan\nClaude Max plan\nClaude API · PAYG\nKimi Code plan\nOpenCode Go plan\nZen balance\nLegacy plan\nCredit plan\nBaseline plan\nThen\nincluded\nDraw on the balance/pack\nWait for the reset\nEXTRA PAID USAGE\nExtra usage\nSpending limit\n$ / month\nAI Credit Overages\nCURRENT ALLOWANCE (READ-ONLY)\nChatGPT Business plan · 5-hour window\n100%\nChatGPT Business plan · Weekly window\n96%\nExtra Bundle · Bundle requests\n80%\nSaved resets\n1 banked · expires Sep 1 00:00 EDT\nPersonal Token Plan\n3.8M left\nExtra Bundle\n40 left\nOpen provider settings\nSee all usage settings\nRaw meter policies, source authority, route epochs, probe cadence and price versions live in Advanced/support views. Widget settings never change these policies.",
+      "visible": true,
+      "afterOptionTexts": [
+        "included",
+        "Draw on the balance/pack",
+        "Wait for the reset"
+      ]
+    },
+    "costsRoom": {
+      "identityHolds": true,
+      "figures": {
+        "spentMonthMicro": 187420000,
+        "apiBilledMicro": 61850000,
+        "planIncludedMicro": 125570000,
+        "spendingLimitMicro": 300000000
+      },
+      "renderedText": "03\nCosts & spending\nWhat this month has cost so far — API-billed vs plan-included against one cost authority. The spending limit is yours; it is not a plan allowance.\nall current usage\nlimit $300.00 · warn at 80%\nAdd widget\nDrag the grip to move, drag the corner to resize, open a widget menu for focus, size, config and remove.\nCosts & spending\n$187.42\nspent of $300.00 spending limit · warn at 80%\nSpending limit used\n62\n%\nAPI-billed\n$61.85\nPlan-included\n$125.57\nBurn\n$2.85/h · $20.30/d\nForecast\n$224.10 by month end\nClaude\n$74.21\nOpenAI\n$52.38\nAlibaba\n$31.24\nKimi\n$14.96\nZ.AI\n$8.12\nAntigravity\n$4.31\nOne cost authority · the API/plan split is a projection, not a second model. Spending limit is user-controlled, not a plan allowance.\nDuplicate\nOpen Usage settings\nToken analytics\n5h\n24h\n7d\n00\n02\n04\n06\n08\n10\n12\n14\n16\n18\n20\n22\nInput\nOutput\nReasoning\nCache read\nDuplicate\nOpen Usage settings"
+    },
+    "kpiStrip": "$187.42Spent this month100%Hottest plan · ChatGPT Business plan33%Context window · 42.2k / 128.0k$5.67Cache saved today11 / 12Accounts readyB84/100Efficiency signals7Free routes eligible45Ledger events · immutable",
+    "referencePrice": {
+      "rx": {
+        "referenceApiPrice": false,
+        "referencePrice": false,
+        "catalogPrice": false,
+        "listPrice": true,
+        "perMillionTokens": false,
+        "priceVersion": true,
+        "dollarPerMtok": false
+      },
+      "roomsChecked": 13
+    },
+    "authorityRoom": "13\nSource authority\nThe advanced layer — provenance, settlement, freshness and route evidence. Raw IDs and receipts live here, never in Essentials.\nall current usage\nsource class · settlement · freshness\nAdd widget\nDrag the grip to move, drag the corner to resize, open a widget menu for focus, size, config and remove.\nSource authority\ncli reported\n18\nevents\npm observed\n1\nevents\nprovider reported\n23\nevents\nunknown\n3\nevents\nSettlement & freshness\nProjection freshness\ncurrent\nProjection health\ncurrent\nNext auto-refresh\n14:47 EDT\nRetention\n90 days\nCatalog & probes\nStale catalog served immediately\nBackground refresh succeeded · no provider usage · free coding models · stale served then refreshed · 14:02 EDT\nCatalog refresh in backoff\nLast known good used · no provider usage unless probed · models dev · backoff · 14:27 EDT\nActive probe · GLM-4.7\n1.2k input · 60 output · attributed to validation, never user work · 13:57 EDT\nActive probe · Qwen3 Coder Plus\n1.5k input · 210 output · attributed to validation, never user work · 13:50 EDT\nRoute snapshots, receipt refs, pricing versions and source authority live here — never in the Essentials view. Absent is not zero; unknown is not unavailable.\nDuplicate\nOpen Usage settings",
+    "ledgerAttemptInspector": {
+      "clicked": "ue-501",
+      "rundetailPresent": true,
+      "text": "Fix pricing migration\nTURN\ncompleted\nFix pricing migration\nOne immutable usage event per real provider attempt. The final route never overwrites earlier attempts.\nATTEMPTS IN THIS WORK\n8\nMAIN WORK\nuser work\ncompleted\nGPT-5.6-Codex · OpenAI · Personal · Codex · ChatGPT plan\n42.1k in · 3.2k out · 18.0k cache read · 2.4k cache write · $0.00\nAug 4 · 14:26 EDT · settlement observed · source cli reported · rcpt-501\nCONTEXT & COMPRESSION\ncompression\ncompleted\nQwen3 Coder Plus · Alibaba · Personal · Coding Plan connection\n2.4k in · 310 out · $0.00\nCompression helper for turn context\nAug 4 · 14:28 EDT · settlement observed · source provider reported · rcpt-502\nSPECIALISTS & SUBAGENTS\nsubagent\ncompleted\nKimi K2 · Kimi · Personal · Kimi Code subscription\n8.9k in · 1.1k out · 4.1k cache read · $0.00\nRole Reviewer · persona Skeptical reviewer\nAug 4 · 14:29 EDT · settlement observed · source provider reported · rcpt-503\nRESEARCH, ATTACHMENTS & MEDIA\nweb extract\ncompleted\nGemini 2.5 Flash · Google · Personal · Gemini CLI profile\n1.9k in · 240 out · $0.00\nWeb extraction helper on free tier\nAug 4 · 14:30 EDT · settlement observed · source cli reported · rcpt-504\nVALIDATION & PROBES\nbsd\ncompleted\nClaude Opus 4.6 · Claude · Work · Claude CLI profile\n2.6k in · 120 out · 1.4k cache read · $0.00\nAug 4 · 14:23 EDT · settlement observed · source cli reported · rcpt-630\nTOOL & MCP HELPERS\nmcp router\ncompleted\nQwen3 Max · OpenCode · Personal · Shared gateway\n1.1k in · 140 out · $0.00\nAug 4 · 14:31 EDT · settlement observed · source provider reported · rcpt-633\nTOOL & MCP HELPERS\nskill search\ncompleted\nQwen3 Coder Plus · Alibaba · Personal · Coding Plan connection\n900 in · 110 out · 300 cache read · $0.00\nAug 4 · 14:32 EDT · settlement observed · source provider reported · rcpt-634\nMAIN WORK\nuser work\ncompleted\nQwen3 Coder Plus · Alibaba · Personal · Coding Plan connection\n3.9k in · 540 out · 1.2k cache read · $0.00\nDrawn from the Extra Bundle after included usage ran low\nAug 4 · 14:36 EDT · settlement observed · source provider reported · rcpt-641\nCONNECTION USED\nROUTE EVIDENCE\nConnection\nCodex · ChatGPT plan\nAuthentication\nPuppet Master OAuth\nAuth owned by\nPuppet Master\nAccount\nOpenAI · Personal\nExpected product\nChatGPT plan\nBilling route\nplan included\nSettlement\nobserved\nCache write\n2.4k",
+      "kvPairs": [
+        "Connection Codex · ChatGPT plan",
+        "Authentication Puppet Master OAuth",
+        "Auth owned by Puppet Master",
+        "Account OpenAI · Personal",
+        "Expected product ChatGPT plan",
+        "Billing route plan included",
+        "Settlement observed",
+        "Cache write 2.4k"
+      ]
+    },
+    "routeLabelMap": {
+      "schemaClaimedValues": [
+        "plan_included",
+        "api_billed",
+        "free",
+        "usage_pack",
+        "extra_balance",
+        "no_charge_observed",
+        "unknown"
+      ],
+      "humanLabels": {
+        "plan_included": "plan included",
+        "api_billed": "api billed",
+        "free": "free",
+        "usage_pack": "usage pack",
+        "extra_balance": "extra balance",
+        "no_charge_observed": "no charge observed",
+        "unknown": "unknown"
+      },
+      "presentInAttempts": {
+        "plan_included": 38,
+        "free": 3,
+        "api_billed": 3,
+        "usage_pack": 1
+      },
+      "settlementPresentInAttempts": {
+        "observed": 32,
+        "settled": 4,
+        "streaming_partial": 6,
+        "unknown": 3
+      },
+      "attemptCount": 45
+    },
+    "productKindVisibility": {
+      "kinds": {
+        "subscription": [
+          "Coding Plan",
+          "Team seat credits",
+          "ChatGPT plan",
+          "ChatGPT Business plan",
+          "Claude Max plan",
+          "Kimi Code plan",
+          "OpenCode Go plan",
+          "Legacy plan",
+          "Credit plan",
+          "Baseline plan"
+        ],
+        "prepaid_balance": [
+          "Personal Token Plan",
+          "Usage credits",
+          "Zen balance"
+        ],
+        "purchased_pack": [
+          "Extra Bundle",
+          "Shared Usage Pack"
+        ],
+        "saved_reset": [
+          "Saved reset"
+        ],
+        "metered_continuation": [
+          "Extra usage",
+          "AI Credit Overages"
+        ],
+        "payg_route": [
+          "Claude API · PAYG"
+        ],
+        "shared_pool": [
+          "Shared membership pool"
+        ],
+        "trial": [
+          "K2 trial"
+        ],
+        "free_allowance": [
+          "Gemini free tier",
+          "Copilot Free",
+          "Z.AI free tier",
+          "Included free models",
+          "Shared free route"
+        ],
+        "local_route": [
+          "Local models"
+        ]
+      },
+      "seen": {
+        "subscription": {
+          "rawTokenRooms": [
+            "overview",
+            "accounts",
+            "free",
+            "context",
+            "cache"
+          ],
+          "humanRooms": [
+            "overview",
+            "accounts",
+            "free",
+            "context",
+            "cache"
+          ]
+        },
+        "prepaid_balance": {
+          "rawTokenRooms": [],
+          "humanRooms": []
+        },
+        "purchased_pack": {
+          "rawTokenRooms": [],
+          "humanRooms": []
+        },
+        "saved_reset": {
+          "rawTokenRooms": [],
+          "humanRooms": [
+            "overview",
+            "plans"
+          ]
+        },
+        "metered_continuation": {
+          "rawTokenRooms": [],
+          "humanRooms": [
+            "overview",
+            "plans"
+          ]
+        },
+        "payg_route": {
+          "rawTokenRooms": [],
+          "humanRooms": []
+        },
+        "shared_pool": {
+          "rawTokenRooms": [],
+          "humanRooms": []
+        },
+        "trial": {
+          "rawTokenRooms": [
+            "overview",
+            "plans"
+          ],
+          "humanRooms": [
+            "overview",
+            "plans",
+            "free"
+          ]
+        },
+        "free_allowance": {
+          "rawTokenRooms": [],
+          "humanRooms": []
+        },
+        "local_route": {
+          "rawTokenRooms": [],
+          "humanRooms": []
+        }
+      }
+    },
+    "productLabelReach": {
+      "prods": [
+        {
+          "id": "prod:alibaba-coding-plan",
+          "label": "Coding Plan",
+          "kind": "subscription"
+        },
+        {
+          "id": "prod:alibaba-ptp",
+          "label": "Personal Token Plan",
+          "kind": "prepaid_balance"
+        },
+        {
+          "id": "prod:alibaba-extra-bundle",
+          "label": "Extra Bundle",
+          "kind": "purchased_pack"
+        },
+        {
+          "id": "prod:alibaba-team-seats",
+          "label": "Team seat credits",
+          "kind": "subscription"
+        },
+        {
+          "id": "prod:alibaba-shared-pack",
+          "label": "Shared Usage Pack",
+          "kind": "purchased_pack"
+        },
+        {
+          "id": "prod:codex-plus",
+          "label": "ChatGPT plan",
+          "kind": "subscription"
+        },
+        {
+          "id": "prod:codex-credits",
+          "label": "Usage credits",
+          "kind": "prepaid_balance"
+        },
+        {
+          "id": "prod:codex-saved-reset",
+          "label": "Saved reset",
+          "kind": "saved_reset"
+        },
+        {
+          "id": "prod:codex-business",
+          "label": "ChatGPT Business plan",
+          "kind": "subscription"
+        },
+        {
+          "id": "prod:claude-max",
+          "label": "Claude Max plan",
+          "kind": "subscription"
+        },
+        {
+          "id": "prod:claude-extra",
+          "label": "Extra usage",
+          "kind": "metered_continuation"
+        },
+        {
+          "id": "prod:claude-api-payg",
+          "label": "Claude API · PAYG",
+          "kind": "payg_route"
+        },
+        {
+          "id": "prod:kimi-code-plan",
+          "label": "Kimi Code plan",
+          "kind": "subscription"
+        },
+        {
+          "id": "prod:kimi-pool",
+          "label": "Shared membership pool",
+          "kind": "shared_pool"
+        },
+        {
+          "id": "prod:kimi-trial",
+          "label": "K2 trial",
+          "kind": "trial"
+        },
+        {
+          "id": "prod:oc-go-plan",
+          "label": "OpenCode Go plan",
+          "kind": "subscription"
+        },
+        {
+          "id": "prod:oc-zen-balance",
+          "label": "Zen balance",
+          "kind": "prepaid_balance"
+        },
+        {
+          "id": "prod:zai-legacy-plan",
+          "label": "Legacy plan",
+          "kind": "subscription"
+        },
+        {
+          "id": "prod:zai-credit-plan",
+          "label": "Credit plan",
+          "kind": "subscription"
+        },
+        {
+          "id": "prod:antigravity-baseline",
+          "label": "Baseline plan",
+          "kind": "subscription"
+        },
+        {
+          "id": "prod:antigravity-overage",
+          "label": "AI Credit Overages",
+          "kind": "metered_continuation"
+        },
+        {
+          "id": "prod:google-gemini-free",
+          "label": "Gemini free tier",
+          "kind": "free_allowance"
+        },
+        {
+          "id": "prod:github-copilot-free",
+          "label": "Copilot Free",
+          "kind": "free_allowance"
+        },
+        {
+          "id": "prod:zai-free-tier",
+          "label": "Z.AI free tier",
+          "kind": "free_allowance"
+        },
+        {
+          "id": "prod:oc-go-free-models",
+          "label": "Included free models",
+          "kind": "free_allowance"
+        },
+        {
+          "id": "prod:shared-gw-route",
+          "label": "Shared free route",
+          "kind": "free_allowance"
+        },
+        {
+          "id": "prod:local-ollama",
+          "label": "Local models",
+          "kind": "local_route"
+        }
+      ],
+      "hit": {
+        "prod:alibaba-coding-plan": [
+          "overview",
+          "plans",
+          "accounts",
+          "context",
+          "ledger",
+          "cache"
+        ],
+        "prod:alibaba-ptp": [
+          "overview",
+          "plans"
+        ],
+        "prod:alibaba-extra-bundle": [
+          "overview",
+          "plans"
+        ],
+        "prod:alibaba-team-seats": [
+          "overview",
+          "plans"
+        ],
+        "prod:alibaba-shared-pack": [
+          "overview",
+          "plans"
+        ],
+        "prod:codex-plus": [
+          "overview",
+          "plans",
+          "accounts",
+          "context",
+          "ledger",
+          "cache"
+        ],
+        "prod:codex-credits": [
+          "overview",
+          "plans"
+        ],
+        "prod:codex-saved-reset": [
+          "overview",
+          "plans"
+        ],
+        "prod:codex-business": [
+          "overview",
+          "plans"
+        ],
+        "prod:claude-max": [
+          "overview",
+          "plans",
+          "ledger"
+        ],
+        "prod:claude-extra": [
+          "overview",
+          "plans"
+        ],
+        "prod:claude-api-payg": [
+          "overview",
+          "plans",
+          "attention"
+        ],
+        "prod:kimi-code-plan": [
+          "overview",
+          "plans",
+          "ledger"
+        ],
+        "prod:kimi-pool": [
+          "overview",
+          "plans"
+        ],
+        "prod:kimi-trial": [
+          "overview",
+          "plans"
+        ],
+        "prod:oc-go-plan": [
+          "overview",
+          "plans",
+          "free"
+        ],
+        "prod:oc-zen-balance": [
+          "overview",
+          "plans"
+        ],
+        "prod:zai-legacy-plan": [
+          "overview",
+          "plans",
+          "accounts",
+          "free",
+          "context",
+          "cache"
+        ],
+        "prod:zai-credit-plan": [
+          "overview",
+          "plans",
+          "accounts"
+        ],
+        "prod:antigravity-baseline": [
+          "overview",
+          "plans"
+        ],
+        "prod:antigravity-overage": [
+          "overview",
+          "plans"
+        ],
+        "prod:google-gemini-free": [
+          "overview",
+          "plans"
+        ],
+        "prod:github-copilot-free": [
+          "overview",
+          "plans",
+          "accounts",
+          "free"
+        ],
+        "prod:zai-free-tier": [
+          "overview",
+          "plans"
+        ],
+        "prod:oc-go-free-models": [
+          "overview",
+          "plans"
+        ],
+        "prod:shared-gw-route": [
+          "overview",
+          "plans"
+        ],
+        "prod:local-ollama": [
+          "overview",
+          "plans"
+        ]
+      }
+    }
+  },
+  "consoleErrors": []
+}

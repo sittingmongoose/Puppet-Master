@@ -1,0 +1,29 @@
+{
+  "schema_id": "pm.settings_bakeoff.candidate_dry_delta.v1",
+  "concept_id": "concept-11-tabbed-organizer",
+  "reuse": [
+    "PMInventoryData (828 rows, 12 categories)",
+    "PMManagers2Data (42 families, 17 providers, 9 deferred, 6 projects, searchEntries)",
+    "PMState2 (state, receipts, restore points, scenarios, ObservableWork)",
+    "PMSearch2 (headless index, rid routing)",
+    "PMManagers2 (row grammar, bindRows, virtualList, popupMenu, esc/ico)",
+    "PMCopy2 (preview/apply/rollback)",
+    "PMShell2 + pm-shell.css tokens + PMIcons"
+  ],
+  "concept_native": [
+    "layered sheet surface + sheet-slide motion",
+    "domain tab system + edge tabs",
+    "roster+detail sheet with section tabs",
+    "related-manager strip",
+    "one-pane push stack narrow transform",
+    "medium density/type rhythm"
+  ],
+  "candidates": [
+    {
+      "name": "tabbed sheet stack",
+      "kind": "presentation-only",
+      "note": "no second state owner; headless semantics stay shared"
+    }
+  ],
+  "dry_family_visible_state": "#/mgr/dry shows reuse detections, reported savings, opt-outs, and review action (read-only statuses + receipted review)."
+}

@@ -42,3 +42,35 @@ python Concepts/settings-redesign-concepts/CursorAuto/scripts/ca-interactive-qa.
 ```
 
 QA starts ConceptHub with `--port 0 --no-runtime-state` and a unique Playwright user-data-dir under temp `ca-qa-<pid>`.
+
+## 2026-08-18 addition
+
+Seven additional complete Settings concepts (`concept-05` … `concept-11`) live beside the frozen Harbor/Score/Switchboard/Archive pages. Historical 01–04 reports are unchanged. New evidence and reports use the `SEVEN_NEW_CONCEPTS_*` filenames plus per-stem folders.
+
+| ID | Path |
+|---|---|
+| 05 | `concept-05-directory-take-1.html` + `concept-05-directory-take-1/` |
+| 06 | `concept-06-directory-take-2.html` + `concept-06-directory-take-2/` |
+| 07 | `concept-07-compendium-workspace.html` + `concept-07-compendium-workspace/` |
+| 08 | `concept-08-directory-take-3.html` + `concept-08-directory-take-3/` |
+| 09 | `concept-09-tome-tabs.html` + `concept-09-tome-tabs/` |
+| 10 | `concept-10-command-suite.html` + `concept-10-command-suite/` |
+| 11 | `concept-11-tabbed-organizer.html` + `concept-11-tabbed-organizer/` |
+
+Verify (concepts 05–11):
+
+```bash
+python Concepts/settings-redesign-concepts/PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/tools/validate_seven_new_concepts.py Concepts/settings-redesign-concepts/CursorAuto
+python Concepts/settings-redesign-concepts/CursorAuto/scripts/seven-new-concepts-qa.py
+python Concepts/ConceptHub/validate.py Concepts/settings-redesign-concepts/CursorAuto
+```
+
+`validate_seven_new_concepts.py` is structural (7 concepts, 42 manager names, 9 evidence files, 5 model reports). Behavioral coverage — search IDs, managers, copy item lists, hydration, Escape, 336 theme×width cells — is `scripts/seven-new-concepts-qa.py`. Alternate packet path: `C:\Users\sitti\Downloads\PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18\PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18\tools\validate_seven_new_concepts.py`.
+
+Each of `concept-05` … `concept-11` HTML roots sets `data-concept-model="CursorAuto"`. Copy preview, receipts, CLI install, and Details origin persist through simulated `sessionStorage` (`pm.settings-v2.{ns}`), not a live ResourceGovernor. Winner is not selected.
+
+**Fixed:** (a) live index completeness of all 828 setting IDs, (b) default copy preview no longer includes host-bound conflicts, (c) theme matrix searchDropOk / Escape popup-in-viewport, (d) Slint sticky / inset box-shadow.
+
+**Still true:** copy/CLI still simulated via `sessionStorage`; search clicks only rendered results (cap 24, not all 1007 indexed hits); packet validator is structural only; no winner is claimed among concepts 05–11 or the frozen 01–04 set.
+
+Latest behavioral QA reference: ConceptHub port **55050**, report `ca7-qa-report-42200.json` (OS temp, not shipped).

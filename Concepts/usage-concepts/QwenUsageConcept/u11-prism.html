@@ -26,6 +26,56 @@
    Deterministic grid (NO dense flow), Slint-portable CSS only.
    ===================================================================== */
 
+/* =====================================================================
+   FONT LOADING — the CDN reference is DELIBERATE, the fallback is now EXPLICIT
+   (audit A09-12)
+   ---------------------------------------------------------------------
+   The four references in <head> above — two preconnects, one preload-as-style
+   and the <noscript> stylesheet — are the same four-reference prelude
+   PMConcept7 ships (Concepts/PMConcept7.html:142-147). This is therefore an
+   app-level pattern the concept SHARES, not a concept deviation, and stripping
+   it here would make the two diverge. The decision is to keep it.
+
+   What was wrong was not the CDN, it was the silence. With no network the
+   stylesheet request completes with transferSize 0, Chromium raises no
+   requestfailed and nothing is logged, so five of the eight families simply do
+   not resolve. Every theme stack then ended in a bare `system-ui, sans-serif`,
+   which means the offline face was accidental rather than chosen: a geometric
+   body and a humanist body fell through to the same OS font, and the condensed
+   retro body fell through to something not condensed at all.
+
+   The rules below re-declare each family's stack with the SAME web faces first,
+   so nothing changes when the CDN answers, then a local chain picked to match
+   that family's voice. An offline load now renders predictably. Selectors use
+   html[data-theme^=...] to outrank the shims at the end of _shared/themes.css;
+   this page's sheet also loads last.
+   ===================================================================== */
+html[data-theme^="friendly"] {
+  --display-font: 'Cal Sans', 'Nunito', 'Trebuchet MS', 'Segoe UI', Verdana, 'DejaVu Sans', system-ui, sans-serif;
+  --body-font: 'Quicksand', 'Nunito', 'Century Gothic', 'URW Gothic', 'Trebuchet MS', system-ui, sans-serif;
+  --num-font: 'Nunito', 'Quicksand', 'Trebuchet MS', 'Segoe UI', Verdana, system-ui, sans-serif;
+}
+html[data-theme^="glass"] {
+  --display-font: 'Sora', 'Outfit', 'Century Gothic', 'URW Gothic', 'Segoe UI', system-ui, sans-serif;
+  --body-font: 'Outfit', 'Inter', 'Century Gothic', 'URW Gothic', 'Segoe UI', system-ui, sans-serif;
+  --num-font: 'Sora', 'Inter', 'Helvetica Neue', Helvetica, Arial, 'Liberation Sans', system-ui, sans-serif;
+}
+html[data-theme^="basic"] {
+  --display-font: 'Inter', 'Helvetica Neue', Helvetica, Arial, 'Liberation Sans', system-ui, sans-serif;
+  --body-font: 'Inter', 'Helvetica Neue', Helvetica, Arial, 'Liberation Sans', system-ui, sans-serif;
+  --num-font: 'Inter', 'Helvetica Neue', Helvetica, Arial, 'Liberation Sans', system-ui, sans-serif;
+}
+html[data-theme^="retro"] {
+  --display-font: 'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+  --display-font-sm: 'Rajdhani', 'Roboto Condensed', 'Arial Narrow', 'Liberation Sans Narrow', 'Segoe UI', system-ui, sans-serif;
+  --body-font: 'Rajdhani', 'Roboto Condensed', 'Arial Narrow', 'Liberation Sans Narrow', 'Segoe UI', system-ui, sans-serif;
+  --num-font: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+}
+html[data-theme] {
+  --mono-font: 'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+}
+
 .u11-body { flex: 1 1 auto; min-height: 0; min-width: 0; display: flex; gap: var(--us-gap); padding: var(--us-pad); }
 
 /* ---------- rail ---------- */
@@ -169,12 +219,13 @@
 [data-theme^="glass"] .u11-kpi { background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * .5)); border-color: var(--glass-hairline); }
 .u11-kpi-ico { flex: none; width: 30px; height: 30px; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; }
 .u11-kpi-ico svg { width: 14px; height: 14px; }
-.u11-kpi-ico.h-blue { background: rgba(76,141,255,.14); color: var(--accent-blue, #4c8dff); }
-.u11-kpi-ico.h-pink { background: rgba(255,77,109,.14); color: #ff4d6d; }
-.u11-kpi-ico.h-teal { background: rgba(45,212,191,.14); color: #2dd4bf; }
-.u11-kpi-ico.h-lime { background: rgba(163,230,53,.13); color: #a3e635; }
-.u11-kpi-ico.h-orange { background: rgba(255,140,58,.14); color: #ff8c3a; }
-.u11-kpi-ico.h-purple { background: rgba(167,139,250,.15); color: #a78bfa; }
+/* hues come from the one .u11 palette in u11-widgets.css — no second copy */
+.u11-kpi-ico.h-blue { background: rgba(76,141,255,.14); color: var(--u11-blue); }
+.u11-kpi-ico.h-pink { background: rgba(255,77,109,.14); color: var(--u11-pink); }
+.u11-kpi-ico.h-teal { background: rgba(45,212,191,.14); color: var(--u11-teal); }
+.u11-kpi-ico.h-lime { background: rgba(163,230,53,.13); color: var(--u11-lime); }
+.u11-kpi-ico.h-orange { background: rgba(255,140,58,.14); color: var(--u11-orange); }
+.u11-kpi-ico.h-purple { background: rgba(167,139,250,.15); color: var(--u11-purple); }
 .u11-kpi-ico.h-mute { background: rgba(128,128,128,.12); color: var(--text-muted); }
 .u11-kpi-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
 .u11-kpi-val { display: flex; align-items: baseline; gap: 3px; }
@@ -205,8 +256,11 @@
   background: var(--surface-elevated); border: 1px solid var(--border); border-radius: var(--radius-lg);
   box-shadow: var(--elev-3); overflow: hidden;
   opacity: 0; transform: translateX(26px) scale(.985); transform-origin: top right; pointer-events: none;
-  transition: transform var(--mo-popup-close-dur) var(--pm-ease-in), opacity var(--mo-popup-close-dur) var(--pm-ease-in); }
-.u11-pop.on { opacity: 1; transform: none; pointer-events: auto;
+  /* visibility removes the closed popover from the tab order and the
+     accessibility tree while still allowing the transition (A12-03). */
+  visibility: hidden;
+  transition: transform var(--mo-popup-close-dur) var(--pm-ease-in), opacity var(--mo-popup-close-dur) var(--pm-ease-in), visibility 0s linear var(--mo-popup-close-dur); }
+.u11-pop.on { opacity: 1; transform: none; pointer-events: auto; visibility: visible; transition-delay: 0s;
   transition: transform var(--mo-spring-dur) var(--pm-ease-spring), opacity var(--mo-popup-open-fade) var(--pm-ease-out); }
 [data-theme^="glass"] .u11-pop { background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .12)); border-color: var(--glass-hairline); }
 [data-theme^="retro"] .u11-pop { border-width: 2px; }
@@ -235,7 +289,11 @@
 .u11-pop-row:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
 .u11-pop-row.on { background: rgba(120,120,255,.09); background: color-mix(in srgb, var(--accent-primary) 9%, transparent);
   border-color: rgba(120,120,255,.34); border-color: color-mix(in srgb, var(--accent-primary) 34%, transparent); }
+/* One indent step per level. Products and their meters used to share lv3, so a
+   sibling product and a child meter both computed padding-left 50px and the
+   reader could not tell where one product's meters ended (audit A02-11). */
 .u11-pop-row.lv1 { padding-left: 22px; } .u11-pop-row.lv2 { padding-left: 36px; } .u11-pop-row.lv3 { padding-left: 50px; }
+.u11-pop-row.lv4 { padding-left: 64px; }
 .u11-pop-dot { width: 7px; height: 7px; border-radius: 50%; flex: none; background: var(--tone-mute); }
 .u11-pop-dot.ok { background: var(--tone-ok); } .u11-pop-dot.warn { background: var(--tone-warn); } .u11-pop-dot.err { background: var(--tone-err); }
 .u11-pop-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
@@ -245,6 +303,9 @@
 .u11-pop-row.on .u11-pop-name { color: var(--accent-primary); }
 .u11-pop-val { flex: none; font-family: var(--mono-font); font-size: 9.5px; font-weight: 700; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
 .u11-pop-val.hot { color: var(--tone-err-text); } .u11-pop-val.warm { color: var(--tone-warn-text); }
+/* No reading available. Stated in words, never as a number and never behind a
+   pressure colour, so it cannot be mistaken for an all-clear (A03-01). */
+.u11-pop-val.is-unknown { font-family: inherit; font-size: 9px; font-weight: 500; letter-spacing: .02em; color: var(--text-tertiary, var(--text-secondary)); opacity: .8; }
 .u11-pop-meta { font-family: var(--mono-font); font-size: 8px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .u11-pop-cli { font-size: 7px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 1px 5px;
   border-radius: var(--radius-sm); color: var(--accent-primary); flex: none;
@@ -258,6 +319,10 @@
   font-size: var(--fs-2xs); color: var(--text-muted); line-height: 1.5;
   background: rgba(128,128,128,.04); background: color-mix(in srgb, var(--text-primary) 3%, transparent); }
 .u11-pop-foot b { color: var(--text-secondary); }
+/* Current usage and removed-account history are two statements, so they get two
+   lines and are never added together (audit A02-01). */
+.u11-pop-footline + .u11-pop-footline { margin-top: 5px; padding-top: 5px; border-top: 1px solid var(--border-light); }
+.u11-pop-footline.hist { color: var(--text-tertiary, var(--text-muted)); }
 
 /* ---------- settings sheet + export flow (sprouts) ---------- */
 .u11-sheet { display: flex; flex-direction: column; gap: 10px; padding: 13px 14px; width: 320px; max-width: calc(100vw - 24px); }
@@ -280,7 +345,35 @@
   transition: all var(--motion-fast) var(--ease-out); }
 .u11-sheet-link svg { width: 12px; height: 12px; flex: none; }
 .u11-sheet-link:hover { color: var(--accent-primary); border-color: var(--accent-primary); background: var(--accent-soft); }
+.u11-fontnote { font-family: var(--display-font); font-size: 8.5px; font-weight: 700; letter-spacing: .4px;
+  text-transform: uppercase; color: var(--text-muted); border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm); padding: 1px 5px; white-space: nowrap; }
+.u11-sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
 .u11-sheet-note { font-size: 8.5px; color: var(--text-muted); line-height: 1.5; }
+
+/* Read-only policy reporting. Usage states what Settings says and offers a route
+   to the setting that owns it; it never edits the value here (A01-01). */
+.u11-sheet-row.is-ro { align-items: baseline; }
+.u11-sheet-val { flex: none; font-family: var(--mono-font); font-size: 9px; font-weight: 700; color: var(--text-primary); }
+.u11-sheet-change { flex: none; border: 1px solid var(--border-light); background: transparent; cursor: pointer;
+  color: var(--accent-primary); font-family: var(--display-font); font-size: 8px; font-weight: 700;
+  letter-spacing: .4px; padding: 2px 6px; border-radius: var(--radius-sm);
+  transition: background var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out); }
+.u11-sheet-change:hover { background: var(--accent-soft); border-color: var(--accent-primary); }
+.u11-sheet-change:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 1px; }
+
+/* The provider's continuation ladder, every step kept distinct (A03-02). */
+.u11-sheet-ladder { list-style: none; margin: 2px 0 4px; padding: 0; display: flex; flex-direction: column; gap: 2px; counter-reset: none; }
+.u11-sheet-step { display: flex; align-items: baseline; gap: 7px; padding: 4px 7px; border-radius: var(--radius-sm);
+  font-size: var(--fs-2xs); color: var(--text-secondary); border: 1px solid transparent; }
+.u11-sheet-step.is-current { border-color: var(--accent-primary); background: var(--accent-soft); color: var(--text-primary); }
+.u11-sheet-stepn { flex: none; font-family: var(--mono-font); font-size: 8px; font-weight: 700; color: var(--text-muted); min-width: 10px; }
+.u11-sheet-steplabel { flex: 1 1 auto; min-width: 0; }
+.u11-sheet-stepcur { flex: none; font-family: var(--display-font); font-size: 7.5px; font-weight: 700;
+  letter-spacing: .6px; text-transform: uppercase; color: var(--accent-primary); }
+.u11-sheet-warn { font-size: 8.5px; line-height: 1.5; color: var(--tone-warn-text); padding: 5px 7px;
+  border: 1px solid var(--tone-warn-text); border-radius: var(--radius-sm); background: transparent; }
 
 .u11-exp-intents { display: flex; flex-direction: column; gap: 6px; }
 .u11-exp-intent { display: flex; flex-direction: column; gap: 2px; padding: 9px 11px; border-radius: var(--radius-md);
@@ -306,6 +399,139 @@
   font-family: var(--display-font); font-size: 9px; font-weight: 700; padding: 2px 4px; display: inline-flex; align-items: center; gap: 5px; }
 .u11-exp-back svg { width: 10px; height: 10px; }
 .u11-exp-back:hover { color: var(--text-primary); }
+
+/* ---------- embed mode keeps the whole PM shell (audit A09-05) ----------
+   usage-chrome.js injects `html.pm-embed .title-bar,html.pm-embed .status-bar
+   {display:none}` whenever the URL carries embed=1, which CONCEPT_RULES rule 5
+   forbids in as many words ("never remove its top or bottom bars for
+   iframe/embed mode"). The collateral damage was worse than the rule: #sbChips
+   lives inside the status bar, so the context-ring trigger, the reduced-motion
+   toggle and the width harness all measured 0x0 and could not be hit. These two
+   rules carry one element more than the injected selector, so they win on
+   specificity whatever order the stylesheets land in. */
+html.pm-embed body .title-bar { display: flex; }
+html.pm-embed body .status-bar { display: flex; }
+
+/* ---------- room strip: the range facts, then the room's own caveat ---------- */
+.u11-roomstrip { flex: none; display: flex; flex-direction: column; gap: 6px; padding: 8px 11px;
+  border-radius: var(--radius-md); border: 1px solid var(--border-light);
+  background: rgba(128,128,128,.05); background: color-mix(in srgb, var(--text-primary) 4%, transparent); }
+[data-theme^="glass"] .u11-roomstrip { border-color: var(--glass-hairline); }
+.u11-rs-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-width: 0; }
+.u11-rs-chip { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: var(--radius-pill);
+  font-family: var(--mono-font); font-size: 9px; font-weight: 700; letter-spacing: .02em; color: var(--text-secondary);
+  background: rgba(128,128,128,.09); background: color-mix(in srgb, var(--text-primary) 7%, transparent); }
+.u11-rs-chip.lead { color: var(--accent-primary); background: var(--accent-soft); }
+.u11-rs-chip.words { font-family: inherit; font-size: 9.5px; font-weight: 500; letter-spacing: 0; }
+.u11-rs-note { font-size: 9.5px; color: var(--text-muted); line-height: 1.55; }
+.u11-rs-note b { color: var(--text-secondary); }
+
+/* ---------- date range control (audit A09-09) ---------- */
+.u11-rangebtn { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 9px; flex: none;
+  border-radius: var(--radius-sm); border: 1px solid var(--border-light); background: transparent;
+  color: var(--text-secondary); cursor: pointer; transition: all var(--motion-fast) var(--ease-out); }
+.u11-rangebtn:hover { color: var(--accent-primary); border-color: var(--accent-primary); background: var(--accent-soft); }
+.u11-rangebtn svg { width: 13px; height: 13px; flex: none; }
+.u11-rangetxt { font-family: var(--display-font); font-size: 10px; font-weight: 700; white-space: nowrap; }
+@media (max-width: 1000px) { .u11-rangetxt { display: none; } }
+.u11-range-opt { display: flex; align-items: baseline; gap: 8px; width: 100%; text-align: left; padding: 6px 9px;
+  border-radius: var(--radius-sm); border: 1px solid transparent; background: transparent; cursor: pointer;
+  color: var(--text-secondary); font-size: var(--fs-2xs);
+  transition: background var(--motion-fast) var(--ease-out), border-color var(--motion-fast) var(--ease-out); }
+.u11-range-opt:hover { background: rgba(128,128,128,.07); background: color-mix(in srgb, var(--text-primary) 5%, transparent); }
+.u11-range-opt.on { color: var(--accent-primary); background: var(--accent-soft); border-color: var(--accent-primary); }
+.u11-range-opt b { flex: 1 1 auto; font-family: var(--display-font); font-size: 10px; font-weight: 700; }
+.u11-range-opt span { flex: none; font-family: var(--mono-font); font-size: 8.5px; color: var(--text-muted); }
+.u11-range-opt.on span { color: var(--accent-primary); }
+.u11-range-custom { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; padding-top: 4px; }
+.u11-range-custom label { font-size: 8.5px; color: var(--text-muted); }
+.u11-range-custom input[type="date"] { font-family: var(--mono-font); font-size: 9px; color: var(--text-primary);
+  background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 3px 5px; }
+.u11-range-apply { border: 1px solid var(--accent-primary); background: var(--accent-soft); color: var(--accent-primary);
+  border-radius: var(--radius-sm); font-family: var(--display-font); font-size: 9px; font-weight: 700;
+  padding: 4px 9px; cursor: pointer; }
+
+/* ---------- demo fixture index (audit A10-13) ---------- */
+/* one scroller only: the sprout itself scrolls, so the list must not nest a
+   second scroll region inside it */
+.u11-fx-list { display: flex; flex-direction: column; gap: 4px; }
+.u11-fx-row { display: flex; align-items: flex-start; gap: 9px; width: 100%; text-align: left; padding: 6px 8px;
+  border-radius: var(--radius-sm); border: 1px solid var(--border-light); background: transparent; cursor: pointer;
+  transition: border-color var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out); }
+.u11-fx-row:hover { border-color: var(--accent-primary); background: var(--accent-soft); }
+.u11-fx-n { flex: none; min-width: 16px; font-family: var(--mono-font); font-size: 9px; font-weight: 700; color: var(--text-muted); }
+.u11-fx-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.u11-fx-t { font-family: var(--display-font); font-size: 10px; font-weight: 700; color: var(--text-primary); line-height: 1.35; }
+.u11-fx-w { font-size: 8.5px; color: var(--text-muted); line-height: 1.4; }
+.u11-fx-row.is-absence .u11-fx-n { color: var(--tone-warn-text); }
+
+/* ---------- a room with nothing at this level says so (audit A09-03) ---------- */
+.u11-pane.is-levelempty .uw-addbtn { display: none; }
+.u11-empty { flex: none; display: flex; align-items: flex-start; gap: 11px; padding: 14px 15px;
+  border-radius: var(--radius-md); border: 1px dashed var(--border); background: transparent; }
+.u11-empty-ic { flex: none; width: 26px; height: 26px; border-radius: 8px; display: inline-flex; align-items: center;
+  justify-content: center; color: var(--text-muted);
+  background: rgba(128,128,128,.08); background: color-mix(in srgb, var(--text-primary) 6%, transparent); }
+.u11-empty-ic svg { width: 13px; height: 13px; }
+.u11-empty-main { flex: 1 1 auto; min-width: 0; }
+.u11-empty b { font-family: var(--display-font); font-size: 11.5px; color: var(--text-primary); }
+.u11-empty p { margin: 3px 0 0; font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+.u11-empty-act { flex: none; align-self: center; }
+
+/* ---------- local-only operations (audit A08-09) ---------- */
+.u11-localops { flex: none; display: flex; flex-direction: column; gap: 6px; padding: 10px 12px;
+  border-radius: var(--radius-md); border: 1px solid var(--border-light);
+  background: rgba(128,128,128,.04); background: color-mix(in srgb, var(--text-primary) 3%, transparent); }
+[data-theme^="glass"] .u11-localops { border-color: var(--glass-hairline); }
+
+/* ---------- day by day: a real table and a real graph (audit A09-09) ---------- */
+.u11-tb { flex: none; display: flex; flex-direction: column; gap: 8px; padding: 10px 12px;
+  border-radius: var(--radius-md); border: 1px solid var(--border-light);
+  background: rgba(128,128,128,.04); background: color-mix(in srgb, var(--text-primary) 3%, transparent); }
+[data-theme^="glass"] .u11-tb { border-color: var(--glass-hairline); }
+.u11-tb-head { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; min-width: 0; }
+.u11-tb-t { font-family: var(--display-font); font-size: 11px; font-weight: 700; color: var(--text-primary); }
+.u11-tb-c { font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); }
+.u11-tb-chart { display: flex; align-items: flex-end; justify-content: flex-start; gap: 5px; height: 74px;
+  padding: 2px 0; min-width: 0; overflow-x: auto; }
+.u11-tb-col { flex: 1 1 0; min-width: 16px; max-width: 72px; display: flex; flex-direction: column; align-items: center;
+  justify-content: flex-end; gap: 3px; height: 100%; }
+.u11-tb-bar { width: 100%; max-width: 26px; border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  background: rgba(120,120,255,.42); background: color-mix(in srgb, var(--accent-primary) 42%, transparent);
+  border: 1px solid rgba(120,120,255,.55); border-color: color-mix(in srgb, var(--accent-primary) 55%, transparent); }
+.u11-tb-x { flex: none; font-family: var(--mono-font); font-size: 7.5px; color: var(--text-muted); white-space: nowrap; }
+.u11-tb-scroll { overflow-x: auto; scrollbar-width: thin; scrollbar-color: var(--pm6-sb-thumb) transparent; }
+.u11-tb-scroll::-webkit-scrollbar { height: 8px; }
+.u11-tb-scroll::-webkit-scrollbar-thumb { background: var(--pm6-sb-thumb); border-radius: 8px; }
+.u11-tb-tbl { border-collapse: collapse; width: 100%; min-width: 460px; }
+.u11-tb-tbl th, .u11-tb-tbl td { text-align: left; padding: 4px 10px 4px 0; font-size: 10px;
+  color: var(--text-secondary); white-space: nowrap; vertical-align: baseline; }
+.u11-tb-tbl thead th { font-family: var(--display-font); font-size: 8px; font-weight: 700; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-light); }
+.u11-tb-tbl tbody th { font-family: var(--display-font); font-weight: 700; color: var(--text-primary); }
+.u11-tb-tbl tfoot th, .u11-tb-tbl tfoot td { border-top: 1px solid var(--border-light);
+  font-weight: 700; color: var(--text-primary); }
+.u11-tb-tbl .num { font-family: var(--mono-font); font-variant-numeric: tabular-nums; }
+/* A day with nothing reported says so in words. It never renders as 0 or $0.00. */
+.u11-tb-unk { font-size: 9px; font-weight: 500; color: var(--text-tertiary, var(--text-muted)); }
+.u11-tb-note { font-size: 9.5px; color: var(--text-muted); line-height: 1.55; }
+.u11-tb-note b { color: var(--text-secondary); }
+.u11-tb-note.hist { padding-top: 6px; border-top: 1px solid var(--border-light); color: var(--text-tertiary, var(--text-muted)); }
+.u11-lo-head { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+.u11-lo-t { font-family: var(--display-font); font-size: 11px; font-weight: 700; color: var(--text-primary); }
+.u11-lo-c { font-family: var(--mono-font); font-size: 9px; color: var(--text-muted); }
+.u11-lo-rows { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 12px; }
+@media (max-width: 900px) { .u11-lo-rows { grid-template-columns: minmax(0, 1fr); } }
+.u11-lo-row { display: flex; align-items: baseline; gap: 8px; min-width: 0; padding: 3px 0; }
+.u11-lo-lbl { flex: 1 1 auto; min-width: 0; font-size: 10.5px; color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.u11-lo-when { flex: none; font-family: var(--mono-font); font-size: 8.5px; color: var(--text-muted); }
+.u11-lo-state { flex: none; font-family: var(--mono-font); font-size: 8px; font-weight: 700; letter-spacing: .03em;
+  padding: 1px 7px; border-radius: var(--radius-pill); }
+.u11-lo-state.zero { color: var(--tone-ok-text, var(--text-secondary));
+  background: rgba(80,200,120,.12); background: color-mix(in srgb, var(--tone-ok) 12%, transparent); }
+.u11-lo-state.unknown { color: var(--text-tertiary, var(--text-secondary)); font-family: inherit; font-weight: 500; font-size: 9px;
+  background: rgba(128,128,128,.10); background: color-mix(in srgb, var(--text-primary) 8%, transparent); }
+.u11-lo-note { font-size: 9.5px; color: var(--text-muted); line-height: 1.55; }
 
 /* responsive */
 @media (max-width: 1060px) {
@@ -341,7 +567,7 @@ html[data-reduced-motion="1"] .u11-scopechip-rail,
 html[data-reduced-motion="1"] .u11-scope { transition: none; }
 </style>
 </head>
-<body>
+<body data-concept-model="Qwen">
 <div id="app"></div>
 
 <template id="usage-page">
@@ -352,6 +578,8 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
       <div class="us-head-sub" id="u11HeadSub"></div>
       <span class="us-fresh" id="u11Fresh" title="Projection freshness"><span class="d"></span><span id="u11FreshTxt"></span></span>
       <div class="us-head-acts">
+        <button class="u11-rangebtn" id="u11Range" title="Choose the date range" aria-haspopup="dialog" aria-expanded="false"><i data-ico="clock" class="pm-ico"></i><span class="u11-rangetxt" id="u11RangeTxt">Last 24 hours</span></button>
+        <button class="us-hbtn" id="u11Fixtures" title="Demo fixtures" aria-label="Demo fixtures" aria-haspopup="dialog" aria-expanded="false"><i data-ico="book" class="pm-ico"></i></button>
         <button class="us-hbtn" id="u11Settings" title="Usage settings" aria-label="Usage settings"><i data-ico="cog" class="pm-ico"></i></button>
         <button class="us-hbtn" id="u11Refresh" title="Refresh usage projections" aria-label="Refresh usage projections"><i data-ico="refresh" class="pm-ico"></i></button>
         <button class="us-hbtn" id="u11Export" title="Export usage" aria-label="Export usage"><i data-ico="exportIc" class="pm-ico"></i></button>
@@ -363,36 +591,36 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
     <div class="us-pane-scope u11-body">
 
       <nav class="u11-rail" aria-label="Usage sections">
-        <button class="u11-item active" data-tab="overview"><span class="u11-iico"><i data-ico="gauge" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Overview</span><span class="u11-dot" data-dot="overview"></span></span><span class="u11-imeta" data-meta="overview"></span></span></button>
+        <button class="u11-item active" data-tab="overview" id="u11tab-overview" aria-controls="u11pane-overview"><span class="u11-iico"><i data-ico="gauge" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Overview</span><span class="u11-dot" data-dot="overview"></span></span><span class="u11-imeta" data-meta="overview"></span></span></button>
         <button class="u11-item u11-scoperow" data-scope-open aria-haspopup="listbox" title="Choose the scope"><span class="u11-iico"><i data-ico="filter" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Scope</span><span class="u11-dot ok" data-dot="scope"></span></span><span class="u11-imeta" data-meta="scope">all current usage</span></span><span class="u11-scopechip-rail" id="u11ScopeChip">All</span></button>
-        <button class="u11-item" data-tab="plans"><span class="u11-iico"><i data-ico="dial" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Plans &amp; limits</span><span class="u11-dot" data-dot="plans"></span></span><span class="u11-imeta" data-meta="plans"></span></span></button>
-        <button class="u11-item" data-tab="costs"><span class="u11-iico"><i data-ico="wallet" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Costs</span><span class="u11-dot" data-dot="costs"></span></span><span class="u11-imeta" data-meta="costs"></span></span></button>
-        <button class="u11-item" data-tab="accounts"><span class="u11-iico"><i data-ico="users" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Accounts</span><span class="u11-dot" data-dot="accounts"></span></span><span class="u11-imeta" data-meta="accounts"></span></span></button>
-        <button class="u11-item" data-tab="free"><span class="u11-iico"><i data-ico="spark" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Free models</span><span class="u11-dot" data-dot="free"></span></span><span class="u11-imeta" data-meta="free"></span></span></button>
-        <button class="u11-item" data-tab="context"><span class="u11-iico"><i data-ico="inbox" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Context</span><span class="u11-dot" data-dot="context"></span></span><span class="u11-imeta" data-meta="context"></span></span></button>
-        <button class="u11-item" data-tab="analytics"><span class="u11-iico"><i data-ico="trend" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Analytics</span><span class="u11-dot" data-dot="analytics"></span></span><span class="u11-imeta" data-meta="analytics"></span></span></button>
-        <button class="u11-item" data-tab="ledger"><span class="u11-iico"><i data-ico="clipboard" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Ledger</span><span class="u11-dot" data-dot="ledger"></span></span><span class="u11-imeta" data-meta="ledger"></span></span></button>
+        <button class="u11-item" data-tab="plans" id="u11tab-plans" aria-controls="u11pane-plans"><span class="u11-iico"><i data-ico="dial" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Plans &amp; limits</span><span class="u11-dot" data-dot="plans"></span></span><span class="u11-imeta" data-meta="plans"></span></span></button>
+        <button class="u11-item" data-tab="costs" id="u11tab-costs" aria-controls="u11pane-costs"><span class="u11-iico"><i data-ico="wallet" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Costs</span><span class="u11-dot" data-dot="costs"></span></span><span class="u11-imeta" data-meta="costs"></span></span></button>
+        <button class="u11-item" data-tab="accounts" id="u11tab-accounts" aria-controls="u11pane-accounts"><span class="u11-iico"><i data-ico="users" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Accounts</span><span class="u11-dot" data-dot="accounts"></span></span><span class="u11-imeta" data-meta="accounts"></span></span></button>
+        <button class="u11-item" data-tab="free" id="u11tab-free" aria-controls="u11pane-free"><span class="u11-iico"><i data-ico="spark" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Free models</span><span class="u11-dot" data-dot="free"></span></span><span class="u11-imeta" data-meta="free"></span></span></button>
+        <button class="u11-item" data-tab="context" id="u11tab-context" aria-controls="u11pane-context"><span class="u11-iico"><i data-ico="inbox" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Context</span><span class="u11-dot" data-dot="context"></span></span><span class="u11-imeta" data-meta="context"></span></span></button>
+        <button class="u11-item" data-tab="analytics" id="u11tab-analytics" aria-controls="u11pane-analytics"><span class="u11-iico"><i data-ico="trend" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Analytics</span><span class="u11-dot" data-dot="analytics"></span></span><span class="u11-imeta" data-meta="analytics"></span></span></button>
+        <button class="u11-item" data-tab="ledger" id="u11tab-ledger" aria-controls="u11pane-ledger"><span class="u11-iico"><i data-ico="clipboard" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Ledger</span><span class="u11-dot" data-dot="ledger"></span></span><span class="u11-imeta" data-meta="ledger"></span></span></button>
         <div class="u11-railsep" role="separator"></div>
         <div class="u11-moregrp closed" id="u11MoreGrp">
           <button class="u11-item" data-more-toggle aria-expanded="false"><span class="u11-iico"><i data-ico="more" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">More</span></span><span class="u11-imeta">guard · cache · tools · signals</span></span></button>
-          <button class="u11-item u11-sub" data-tab="attention"><span class="u11-iico"><i data-ico="shield" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Attention</span><span class="u11-dot" data-dot="attention"></span></span><span class="u11-imeta" data-meta="attention"></span></span></button>
-          <button class="u11-item u11-sub" data-tab="cache"><span class="u11-iico"><i data-ico="layers" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Prompt cache</span><span class="u11-dot" data-dot="cache"></span></span><span class="u11-imeta" data-meta="cache"></span></span></button>
-          <button class="u11-item u11-sub" data-tab="tools"><span class="u11-iico"><i data-ico="chip" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Tools</span><span class="u11-dot" data-dot="tools"></span></span><span class="u11-imeta" data-meta="tools"></span></span></button>
-          <button class="u11-item u11-sub" data-tab="signals"><span class="u11-iico"><i data-ico="spark" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Signals</span><span class="u11-dot" data-dot="signals"></span></span><span class="u11-imeta" data-meta="signals"></span></span></button>
-          <button class="u11-item u11-sub u11-advonly" data-tab="authority"><span class="u11-iico"><i data-ico="book" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Source authority</span><span class="u11-dot" data-dot="authority"></span></span><span class="u11-imeta" data-meta="authority"></span></span></button>
+          <button class="u11-item u11-sub" data-tab="attention" id="u11tab-attention" aria-controls="u11pane-attention"><span class="u11-iico"><i data-ico="shield" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Attention</span><span class="u11-dot" data-dot="attention"></span></span><span class="u11-imeta" data-meta="attention"></span></span></button>
+          <button class="u11-item u11-sub" data-tab="cache" id="u11tab-cache" aria-controls="u11pane-cache"><span class="u11-iico"><i data-ico="layers" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Prompt cache</span><span class="u11-dot" data-dot="cache"></span></span><span class="u11-imeta" data-meta="cache"></span></span></button>
+          <button class="u11-item u11-sub" data-tab="tools" id="u11tab-tools" aria-controls="u11pane-tools"><span class="u11-iico"><i data-ico="chip" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Tools</span><span class="u11-dot" data-dot="tools"></span></span><span class="u11-imeta" data-meta="tools"></span></span></button>
+          <button class="u11-item u11-sub" data-tab="signals" id="u11tab-signals" aria-controls="u11pane-signals"><span class="u11-iico"><i data-ico="spark" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Signals</span><span class="u11-dot" data-dot="signals"></span></span><span class="u11-imeta" data-meta="signals"></span></span></button>
+          <button class="u11-item u11-sub u11-advonly" data-tab="authority" id="u11tab-authority" aria-controls="u11pane-authority"><span class="u11-iico"><i data-ico="book" class="pm-ico sm"></i></span><span class="u11-itxt"><span class="u11-ilbl"><span class="u11-ilbl-t">Source authority</span><span class="u11-dot" data-dot="authority"></span></span><span class="u11-imeta" data-meta="authority"></span></span></button>
         </div>
         <div class="u11-railsep" role="separator"></div>
-        <div class="u11-disc" id="u11Disc" role="group" aria-label="Disclosure level">
-          <button type="button" data-disc="essentials" class="on" title="Decisions and plain-language state">Essen</button>
-          <button type="button" data-disc="standard" title="Token, context, cache, account, cost and plan details">Std</button>
-          <button type="button" data-disc="advanced" title="Raw meters, source authority, receipts and diagnostics">Adv</button>
+        <div class="u11-disc" id="u11Disc" role="radiogroup" aria-label="Disclosure level">
+          <button type="button" data-disc="essentials" class="on" title="Decisions and plain-language state" role="radio" aria-checked="true">Essen</button>
+          <button type="button" data-disc="standard" title="Token, context, cache, account, cost and plan details" role="radio" aria-checked="false">Std</button>
+          <button type="button" data-disc="advanced" title="Raw meters, source authority, receipts and diagnostics" role="radio" aria-checked="false">Adv</button>
         </div>
         <div class="u11-disc-cap" id="u11DiscCap">Essentials — decisions &amp; plain language</div>
       </nav>
 
       <div class="u11-panes">
 
-        <section class="u11-pane" data-pane="overview" aria-label="Overview">
+        <section class="u11-pane" data-pane="overview" id="u11pane-overview" aria-labelledby="u11tab-overview" aria-label="Overview">
           <header class="u11-kick">
             <b class="u11-kn">01</b>
             <div class="u11-kmain"><h2 class="u11-kt">Right now</h2>
@@ -403,17 +631,17 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
           <div class="uw-canvas" data-u11-page="u11-overview" data-u11-types="capacity,plans,costs,attention,context,accounts"></div>
         </section>
 
-        <section class="u11-pane pm-hidden" data-pane="plans" aria-label="Plans and limits">
+        <section class="u11-pane pm-hidden" data-pane="plans" id="u11pane-plans" aria-labelledby="u11tab-plans" aria-label="Plans and limits">
           <header class="u11-kick">
             <b class="u11-kn">02</b>
             <div class="u11-kmain"><h2 class="u11-kt">Plans &amp; limits</h2>
-              <p class="u11-kd">Included allowances and extra capacity per product — each with a plain-language <b>what happens next</b>. Unknown limits say so; they never render as zero.</p></div>
+              <p class="u11-kd">Included allowances and extra capacity per product. Where the provider publishes a continuation path, the row says <b>what happens next</b> in plain language — the rest say nothing rather than guess. Unknown limits say so; they never render as zero.</p></div>
             <div class="u11-kmeta"><button class="u11-scope pm-hidden" data-scope></button><span class="u11-km" data-kmeta></span></div>
           </header>
           <div class="uw-canvas" data-u11-page="u11-plans" data-u11-types="plans,capacity,authority"></div>
         </section>
 
-        <section class="u11-pane pm-hidden" data-pane="costs" aria-label="Costs">
+        <section class="u11-pane pm-hidden" data-pane="costs" id="u11pane-costs" aria-labelledby="u11tab-costs" aria-label="Costs">
           <header class="u11-kick">
             <b class="u11-kn">03</b>
             <div class="u11-kmain"><h2 class="u11-kt">Costs &amp; spending</h2>
@@ -423,7 +651,7 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
           <div class="uw-canvas" data-u11-page="u11-costs" data-u11-types="costs,analytics"></div>
         </section>
 
-        <section class="u11-pane pm-hidden" data-pane="accounts" aria-label="Accounts">
+        <section class="u11-pane pm-hidden" data-pane="accounts" id="u11pane-accounts" aria-labelledby="u11tab-accounts" aria-label="Accounts">
           <header class="u11-kick">
             <b class="u11-kn">04</b>
             <div class="u11-kmain"><h2 class="u11-kt">Accounts &amp; connections</h2>
@@ -433,7 +661,7 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
           <div class="uw-canvas" data-u11-page="u11-accounts" data-u11-types="accounts,authority"></div>
         </section>
 
-        <section class="u11-pane pm-hidden" data-pane="free" aria-label="Free models">
+        <section class="u11-pane pm-hidden" data-pane="free" id="u11pane-free" aria-labelledby="u11tab-free" aria-label="Free models">
           <header class="u11-kick">
             <b class="u11-kn">05</b>
             <div class="u11-kmain"><h2 class="u11-kt">Free models</h2>
@@ -443,7 +671,7 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
           <div class="uw-canvas" data-u11-page="u11-free" data-u11-types="free,authority"></div>
         </section>
 
-        <section class="u11-pane pm-hidden" data-pane="context" aria-label="Context">
+        <section class="u11-pane pm-hidden" data-pane="context" id="u11pane-context" aria-labelledby="u11tab-context" aria-label="Context">
           <header class="u11-kick">
             <b class="u11-kn">06</b>
             <div class="u11-kmain"><h2 class="u11-kt">Context &amp; cache</h2>
@@ -453,47 +681,47 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
           <div class="uw-canvas" data-u11-page="u11-context" data-u11-types="context,cache"></div>
         </section>
 
-        <section class="u11-pane pm-hidden" data-pane="analytics" aria-label="Analytics">
+        <section class="u11-pane pm-hidden" data-pane="analytics" id="u11pane-analytics" aria-labelledby="u11tab-analytics" aria-label="Analytics">
           <header class="u11-kick">
             <b class="u11-kn">07</b>
             <div class="u11-kmain"><h2 class="u11-kt">Token analytics</h2>
-              <p class="u11-kd">Input, output, reasoning and cache-read traffic stacked across 5h / 24h / 7d. Click a legend entry to mute its series.</p></div>
+              <p class="u11-kd">Input, output, reasoning and cache-read traffic across the chart's own 5h / 24h / 7d windows. Cache read keeps its own band and is added to a total only for providers that bill it as a separate bucket. Click a legend entry to mute its series.</p></div>
             <div class="u11-kmeta"><button class="u11-scope pm-hidden" data-scope></button><span class="u11-km" data-kmeta></span></div>
           </header>
           <div class="uw-canvas" data-u11-page="u11-analytics" data-u11-types="analytics,costs"></div>
         </section>
 
-        <section class="u11-pane pm-hidden" data-pane="ledger" aria-label="Ledger">
+        <section class="u11-pane pm-hidden" data-pane="ledger" id="u11pane-ledger" aria-labelledby="u11tab-ledger" aria-label="Ledger">
           <header class="u11-kick">
             <b class="u11-kn">08</b>
             <div class="u11-kmain"><h2 class="u11-kt">Ledger</h2>
-              <p class="u11-kd">One immutable event per real provider attempt, grouped under the logical work you asked for. Failed, interrupted and queued attempts stay in history; removed accounts keep their identity but leave the picker.</p></div>
+              <p class="u11-kd">One immutable event per real provider attempt, grouped under the logical work you asked for. Failed, interrupted and queued attempts stay in history; removed accounts keep their identity but leave the picker. Local-only work is listed underneath and is never counted as provider usage.</p></div>
             <div class="u11-kmeta"><button class="u11-scope pm-hidden" data-scope></button><span class="u11-km" data-kmeta></span></div>
           </header>
           <div class="uw-canvas" data-u11-page="u11-ledger" data-u11-types="ledger,runs,operations"></div>
         </section>
 
-        <section class="u11-pane pm-hidden" data-pane="attention" aria-label="Attention">
+        <section class="u11-pane pm-hidden" data-pane="attention" id="u11pane-attention" aria-labelledby="u11tab-attention" aria-label="Attention">
           <header class="u11-kick">
             <b class="u11-kn">09</b>
             <div class="u11-kmain"><h2 class="u11-kt">Attention</h2>
-              <p class="u11-kd">Anomaly &amp; quota guard decisions — blocked, warned, allowed, watching — each carrying its why.</p></div>
+              <p class="u11-kd">Anomaly &amp; quota guard decisions, each carrying its why. Blocked and warned decisions are shown by default; set the widget's <b>Show</b> control to <b>all</b> for the allowed and watching ones.</p></div>
             <div class="u11-kmeta"><button class="u11-scope pm-hidden" data-scope></button><span class="u11-km" data-kmeta></span></div>
           </header>
           <div class="uw-canvas" data-u11-page="u11-attention" data-u11-types="attention"></div>
         </section>
 
-        <section class="u11-pane pm-hidden" data-pane="cache" aria-label="Prompt cache">
+        <section class="u11-pane pm-hidden" data-pane="cache" id="u11pane-cache" aria-labelledby="u11tab-cache" aria-label="Prompt cache">
           <header class="u11-kick">
             <b class="u11-kn">10</b>
             <div class="u11-kmain"><h2 class="u11-kt">Prompt cache</h2>
-              <p class="u11-kd">Per-connection prompt-cache hit and savings. Zero is a measurement; unsupported is a capability — they are never rendered the same way.</p></div>
+              <p class="u11-kd">Per-connection prompt-cache hit and savings. A reported zero, a route that does not expose cache, and a route we could not read are three different statements — never the same one.</p></div>
             <div class="u11-kmeta"><button class="u11-scope pm-hidden" data-scope></button><span class="u11-km" data-kmeta></span></div>
           </header>
           <div class="uw-canvas" data-u11-page="u11-cache" data-u11-types="cache"></div>
         </section>
 
-        <section class="u11-pane pm-hidden" data-pane="tools" aria-label="Tools">
+        <section class="u11-pane pm-hidden" data-pane="tools" id="u11pane-tools" aria-labelledby="u11tab-tools" aria-label="Tools">
           <header class="u11-kick">
             <b class="u11-kn">11</b>
             <div class="u11-kmain"><h2 class="u11-kt">Tool usage</h2>
@@ -503,7 +731,7 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
           <div class="uw-canvas" data-u11-page="u11-tools" data-u11-types="tools"></div>
         </section>
 
-        <section class="u11-pane pm-hidden" data-pane="signals" aria-label="Signals">
+        <section class="u11-pane pm-hidden" data-pane="signals" id="u11pane-signals" aria-labelledby="u11tab-signals" aria-label="Signals">
           <header class="u11-kick">
             <b class="u11-kn">12</b>
             <div class="u11-kmain"><h2 class="u11-kt">Signals &amp; efficiency</h2>
@@ -513,11 +741,11 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
           <div class="uw-canvas" data-u11-page="u11-signals" data-u11-types="signals"></div>
         </section>
 
-        <section class="u11-pane pm-hidden" data-pane="authority" aria-label="Source authority">
+        <section class="u11-pane pm-hidden" data-pane="authority" id="u11pane-authority" aria-labelledby="u11tab-authority" aria-label="Source authority">
           <header class="u11-kick">
             <b class="u11-kn">13</b>
             <div class="u11-kmain"><h2 class="u11-kt">Source authority</h2>
-              <p class="u11-kd">The advanced layer — provenance, settlement, freshness and route evidence. Raw IDs and receipts live here, never in Essentials.</p></div>
+              <p class="u11-kd">The advanced layer — where every figure came from: source class per event, settlement, projection freshness and health, retention, and what the catalog refreshes and probes did.</p></div>
             <div class="u11-kmeta"><button class="u11-scope pm-hidden" data-scope></button><span class="u11-km" data-kmeta></span></div>
           </header>
           <div class="uw-canvas" data-u11-page="u11-authority" data-u11-types="authority"></div>
@@ -544,6 +772,8 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
 
 <div class="pm-sprout uw-sprout" id="u11SheetSprout" role="dialog" aria-label="Usage settings" hidden></div>
 <div class="pm-sprout uw-sprout" id="u11ExportSprout" role="dialog" aria-label="Export usage" hidden></div>
+<div class="pm-sprout uw-sprout" id="u11RangeSprout" role="dialog" aria-label="Date range" hidden></div>
+<div class="pm-sprout uw-sprout" id="u11FxSprout" role="dialog" aria-label="Demo fixtures" hidden></div>
 
 <script src="_shared/icons.js"></script>
 <script src="_shared/usage-icons.js"></script>
@@ -586,10 +816,171 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
   if (!scopeExists(savedScope)) savedScope = 'scope:all';
   window.U11W.pageScope = savedScope;
 
-  var settings = STORE.get('u11:settings', null) || JSON.parse(JSON.stringify(D.settingsDefaults));
+  /* Settings-owned policy, read-only.
+
+     Corrected 2026-08-18 (audit A01-01, A01-02, A01-04). This used to be
+     rehydrated from localStorage and written back on every change, which made
+     Usage a second policy store: five Settings-owned policies were persisted
+     here, no command was dispatched, no deep link fired, and — because the
+     renderers still read the fixture — the page went on reporting the old value
+     as current fact. Usage reports; Settings configures. The projection below is
+     what the Settings owner currently says, and nothing in this page writes it. */
+  var settingsOwned = D.settingsDefaults;
+
+  /* Local view state only: which product's continuation ladder is on screen.
+     That is a view filter with no durable side effect, which the packet
+     explicitly allows to stay local. */
+  var settingsView = STORE.get('u11:settingsView', {}) || {};
+
+  /* ---------- date range (audit A09-09) ----------
+
+     Before this, the whole application exposed exactly three preset windows on
+     one widget (the analytics chart's 5h/24h/7d) and nothing else: no custom
+     range, no calendar, no per-room window. The control below is page-level and
+     really drives the figures this page renders itself — the key figures on
+     Overview, the room strip in every room, the scope picker's footer and the
+     export. Widgets that publish their own window (plan resets, the chart's
+     5h/24h/7d, the 24h tool table) keep it, and the room strip says so rather
+     than implying the range reaches everywhere. The clock is the demo clock, so
+     every preset is deterministic. */
+  var NOWMS = Date.parse(D.meta.now);
+  var RANGE_PRESETS = [
+    { id: '5h', label: 'Last 5 hours', ms: 5 * 3600000 },
+    { id: '24h', label: 'Last 24 hours', ms: 24 * 3600000 },
+    { id: '7d', label: 'Last 7 days', ms: 7 * 86400000 },
+    { id: '30d', label: 'Last 30 days', ms: 30 * 86400000 },
+    { id: 'all', label: 'All recorded usage', ms: null }
+  ];
+  function presetById(id) {
+    for (var i = 0; i < RANGE_PRESETS.length; i++) if (RANGE_PRESETS[i].id === id) return RANGE_PRESETS[i];
+    return null;
+  }
+  function isDay(s) { return typeof s === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(s); }
+  function normRange(r) {
+    if (!r || typeof r !== 'object') return { id: '24h', from: null, to: null };
+    if (r.id === 'custom' && isDay(r.from) && isDay(r.to) && r.from <= r.to) {
+      return { id: 'custom', from: r.from, to: r.to };
+    }
+    return { id: presetById(r.id) ? r.id : '24h', from: null, to: null };
+  }
+  var range = normRange(STORE.get('u11:range', { id: '24h' }));
+  function rangeWindow() {
+    if (range.id === 'custom') {
+      var f = Date.parse(range.from + 'T00:00:00Z'), t = Date.parse(range.to + 'T23:59:59Z');
+      return { from: f, to: t, id: 'custom',
+        label: 'Custom · ' + T.atMonthDayClock(new Date(f).toISOString()) + ' to ' + T.atMonthDayClock(new Date(t).toISOString()) };
+    }
+    var p = presetById(range.id) || RANGE_PRESETS[1];
+    if (p.ms == null) return { from: null, to: null, id: p.id, label: p.label };
+    return { from: NOWMS - p.ms, to: NOWMS, id: p.id, label: p.label };
+  }
+  function rangeShort() {
+    if (range.id !== 'custom') return (presetById(range.id) || RANGE_PRESETS[1]).label;
+    return 'Custom range';
+  }
+  function inWindow(iso, win) {
+    if (!iso) return false;
+    if (win.from == null) return true;
+    var ms = Date.parse(iso);
+    return !isNaN(ms) && ms >= win.from && ms <= win.to;
+  }
+  /* Events for the current scope AND range. Attempts with no start time are
+     never silently folded in or dropped: they are counted and stated. */
+  function rangeEvents() {
+    var scope = window.U11W.pageScope, win = rangeWindow();
+    var scoped = D.attempts.filter(function (a) { return D.attemptInScope(a, scope); });
+    var list = [], untimed = 0;
+    scoped.forEach(function (a) {
+      if (!a.startedAt) { untimed += 1; return; }
+      if (inWindow(a.startedAt, win)) list.push(a);
+    });
+    return { win: win, list: list, untimed: untimed, scoped: scoped.length, all: D.attempts.length };
+  }
+
+  /* ---------- cost is a statement, never a defaulted number (GUI-USG-003/004) ----------
+
+     costMicro is 0 on plan-covered, BYOK and unknown attempts alike, so any
+     surface that reads it directly prints "$0.00" for three different facts —
+     exactly what GUI-USG-003 forbids ("unknown cost fails closed", MUST_NOT
+     $0.00) and what GUI-USG-004 forbids for BYOK/subscription routes. Every
+     cost this page renders or exports goes through costFacet() first: the
+     provider's own number is shown only where display_cost_policy says show,
+     a plan-covered or BYOK route says which one it is, and an unknown cost says
+     it is unknown. A provider-reported zero stays a reported zero (GUI-USG-002)
+     because it arrives as policy show with cost_status provider_reported. */
+  function costFacet(a) {
+    if (a.hiddenSubscription || a.costStatus === 'hidden_subscription' || a.displayCostPolicy === 'subscription_covered') return 'covered';
+    if (a.hiddenByok || a.costStatus === 'hidden_byok' || a.displayCostPolicy === 'hide') return 'byok';
+    if (a.displayCostPolicy === 'show' && a.costMicro != null) return 'money';
+    return 'unknown';
+  }
+  function costSummary(list) {
+    var s = { micro: 0, money: 0, covered: 0, byok: 0, unknown: 0, count: (list || []).length };
+    (list || []).forEach(function (a) {
+      var f = costFacet(a);
+      if (f === 'money') { s.micro += a.costMicro; s.money += 1; }
+      else s[f] += 1;
+    });
+    return s;
+  }
+  /* One phrase, in words, that can never read as a zero for a missing value. */
+  function costPhrase(s) {
+    var parts = [];
+    if (s.money) parts.push(fmt.cost(s.micro / 1e6) + ' priced by the provider on ' + s.money + ' event' + (s.money > 1 ? 's' : ''));
+    else parts.push('no event here carries a published price');
+    if (s.covered) parts.push(s.covered + ' covered by a plan');
+    if (s.byok) parts.push(s.byok + ' billed to your own key');
+    if (s.unknown) parts.push(s.unknown + ' cost not reported');
+    return parts.join(' · ');
+  }
+  var COST_TITLE = 'A plan-covered route, a bring-your-own-key route and an unreported cost are three different statements. ' +
+    'None of them is a zero, and a provider-reported zero is still a reported figure.';
 
   /* ---------- boot chrome + widgets ---------- */
   window.PMUsageChrome.boot({ badge: { id: 'U11', name: 'Prism II' } });
+
+  /* Webfont arrival, stated rather than assumed (audit A09-12, part two).
+
+     The fallback stacks above make an offline render deliberate instead of
+     accidental, but they cannot make it VISIBLE. With no network the stylesheet
+     request completes with transferSize 0, Chromium raises no requestfailed and
+     nothing is logged, so a reader on an air-gapped box has no way to know the
+     typography they are looking at is not the intended one. This says so, in the
+     same register the rest of the page uses for unknown state: it reports what
+     did not arrive, and claims nothing about why. */
+  (function () {
+    var WEB_FAMILIES = ['Cal Sans', 'Inter', 'JetBrains Mono', 'Nunito', 'Outfit', 'Quicksand', 'Rajdhani', 'Sora'];
+    function missingFamilies() {
+      if (!document.fonts || !document.fonts.check) return null; /* cannot tell: say nothing */
+      var out = [];
+      WEB_FAMILIES.forEach(function (f) {
+        try { if (!document.fonts.check('1em "' + f + '"')) out.push(f); } catch (e) { /* unqueryable */ }
+      });
+      return out;
+    }
+    function report() {
+      var missing = missingFamilies();
+      if (!missing || !missing.length) return; /* all arrived, or not knowable */
+      var host = $('u11HeadSub');
+      if (!host) return;
+      var note = document.createElement('span');
+      note.className = 'u11-fontnote';
+      note.setAttribute('data-u11-fields', 'webfonts_missing:' + missing.length + ' · of:' + WEB_FAMILIES.length);
+      note.title = missing.length + ' of ' + WEB_FAMILIES.length + ' web typefaces did not load: ' +
+        missing.join(', ') + '. The page is rendering its local fallback stacks, which are chosen to match ' +
+        'each family rather than left to chance. Nothing else about the page is affected.';
+      note.textContent = missing.length === WEB_FAMILIES.length
+        ? 'Local typefaces — no web fonts loaded'
+        : 'Local typefaces for ' + missing.length + ' of ' + WEB_FAMILIES.length;
+      host.appendChild(document.createTextNode(' '));
+      host.appendChild(note);
+    }
+    if (document.fonts && document.fonts.ready && document.fonts.ready.then) {
+      document.fonts.ready.then(report, function () {});
+    } else {
+      setTimeout(report, 1200);
+    }
+  })();
   window.U11W.register();
   if (window.U11Context) window.U11Context.mountTriggers($('sbChips'));
 
@@ -601,7 +992,120 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
     return roomTypes.filter(function (t) { return allowed.indexOf(t) !== -1; });
   }
 
-  /* curated hole-free boards on the 4-track tier (deterministic; no dense flow) */
+  /* ---------- disclosure actually filters what mounts (audit A09-03) ----------
+
+     typesForRoom() always computed the right list, but the list never reached
+     the items: mount() was handed defaultBoard as well, and the engine prefers
+     a board whenever one exists (seedItems, _shared/usage-widgets.js:108-110)
+     while boardItems() filters on type registration alone. A stored layout took
+     the same path. Measured consequence: the mounted-type list was byte
+     identical at Essentials, Standard and Advanced for all thirteen rooms, so
+     the Advanced-only Source authority widget mounted at Essentials — under its
+     own footnote saying it never appears there.
+
+     Two rules now hold together:
+       · a level may only mount the types it allows (the board is filtered, and
+         a stored layout is filtered before the engine reads it);
+       · a level never DELETES anything (§5.1). Out-of-level widgets are parked
+         with their position and come back the moment the level allows them.
+     A type the room's board introduces is seeded once per level, so raising the
+     level still ADDS what that level brings, and a widget the user removed on
+     purpose stays removed. */
+  var PMW_VERSION = 2;
+  var parked = STORE.get('u11:parked', {}) || {};
+  var seededTypes = STORE.get('u11:seeded', {}) || {};
+  function pmwKey(pageId) { return 'pmw:' + pageId; }
+  function storedItems(pageId) {
+    var env = STORE.get(pmwKey(pageId), null);
+    if (!env) return null;
+    var items = Array.isArray(env) ? env : (Array.isArray(env.items) ? env.items : null);
+    return items ? items.slice() : null;
+  }
+  function levelReconcile(pageId, allowed, board) {
+    var items = storedItems(pageId);
+    var park = (parked[pageId] || []).filter(function (p) { return p && p.item && p.item.type; });
+    /* what this page had already seeded BEFORE this level — copied, because the
+       new list below is what gets stored and the two must stay distinguishable */
+    var before = (seededTypes[pageId] || []).slice();
+    var seen = before.slice();
+    var i, restored = [];
+
+    /* the types this level introduces are seeded once, from the room's board */
+    (board || []).forEach(function (b) { if (seen.indexOf(b.type) === -1) seen.push(b.type); });
+    if (!items) { seededTypes[pageId] = seen; STORE.set('u11:seeded', seededTypes); return; }
+
+    var keep = [], stay = [];
+    items.forEach(function (it, idx) {
+      if (it && allowed.indexOf(it.type) !== -1) keep.push(it);
+      else if (it) stay.push({ at: idx, item: it });
+    });
+    park.forEach(function (p) {
+      if (allowed.indexOf(p.item.type) !== -1) restored.push(p);
+      else stay.push(p);
+    });
+    restored.sort(function (a, b) { return a.at - b.at; });
+    for (i = 0; i < restored.length; i++) {
+      keep.splice(Math.min(restored[i].at, keep.length), 0, restored[i].item);
+    }
+    /* board types this level introduces and this page has never seeded: a level
+       ADDS what it brings, once — after that the layout is the user's */
+    (board || []).forEach(function (b) {
+      var present = keep.filter(function (k) { return k.type === b.type; }).length;
+      if (!present && before.indexOf(b.type) === -1) {
+        keep.push({ uid: 'seed_' + b.type + '_' + pageId, type: b.type, c: b.c, r: b.r, cfg: {}, focus: false });
+      }
+    });
+    parked[pageId] = stay;
+    seededTypes[pageId] = seen;
+    STORE.set('u11:parked', parked);
+    STORE.set('u11:seeded', seededTypes);
+    STORE.set(pmwKey(pageId), { v: PMW_VERSION, items: keep });
+  }
+
+  /* plain-language names for the widget types, so an empty room can say what
+     it would hold without printing a raw enum token */
+  var TYPE_LABELS = {
+    plans: 'Plans & limits', costs: 'Costs & spending', accounts: 'Accounts & connections',
+    attention: 'Attention', context: 'Context & cache', capacity: 'Completion capacity',
+    free: 'Free models', ledger: 'Ledger', runs: 'Runs & agents', operations: 'Maintenance & operations',
+    analytics: 'Token analytics', tools: 'Tool usage', cache: 'Prompt cache', signals: 'Signals & efficiency',
+    authority: 'Source authority'
+  };
+  var LEVEL_LABELS = { essentials: 'Essentials', standard: 'Standard', advanced: 'Advanced' };
+  function typeLabel(t) { return TYPE_LABELS[t] || R.humanCap(t); }
+  function firstLevelFor(types) {
+    var order = window.U11W.DISC_ORDER, i, j;
+    for (i = 0; i < order.length; i++) {
+      var allow = window.U11W.typesForDisclosure[order[i]];
+      for (j = 0; j < types.length; j++) if (allow.indexOf(types[j]) !== -1) return order[i];
+    }
+    return 'advanced';
+  }
+  /* A room with nothing at this level says so, in that room. It never borrows an
+     out-of-level widget to look full. */
+  function roomLevelNotice(cv, allowedHere, roomTypes) {
+    var pane = cv.closest('.u11-pane');
+    if (!pane) return;
+    var old = pane.querySelector('.u11-empty');
+    if (old) old.parentNode.removeChild(old);
+    /* with no types at this level the Add-widget picker would offer nothing, so
+       the button is not left as a control that opens an empty menu */
+    pane.classList.toggle('is-levelempty', !allowedHere.length);
+    if (allowedHere.length) return;
+    var need = firstLevelFor(roomTypes);
+    var names = roomTypes.map(typeLabel);
+    var el = document.createElement('div');
+    el.className = 'u11-empty';
+    el.innerHTML = '<span class="u11-empty-ic">' + ic('layers') + '</span>' +
+      '<span class="u11-empty-main"><b>Nothing in this room at the ' + LEVEL_LABELS[disclosure] + ' level.</b>' +
+      '<p>' + names.join(' and ') + (names.length > 1 ? ' belong' : ' belongs') + ' to the ' + LEVEL_LABELS[need] +
+      ' level. Nothing was removed and nothing is hidden — this room has no ' + LEVEL_LABELS[disclosure] +
+      ' content, and no out-of-level widget is mounted to make it look full.</p></span>' +
+      '<span class="u11-empty-act"><button type="button" class="u11w-minibtn" data-u11-golevel="' + need + '">Switch to ' + LEVEL_LABELS[need] + '</button></span>';
+    cv.insertAdjacentElement('beforebegin', el);
+  }
+
+  /* curated hole-free boards on the 4-track layout (deterministic; no dense flow) */
   var BOARDS = {
     'u11-overview': [
       { type: 'capacity', c: 4, r: 8 }, { type: 'plans', c: 4, r: 10 },
@@ -627,7 +1131,12 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
       var pageId = cv.getAttribute('data-u11-page');
       var roomTypes = (cv.getAttribute('data-u11-types') || '').split(',').filter(Boolean);
       var types = typesForRoom(roomTypes);
-      var h = window.PMWidgets.mount(cv, { pageId: pageId, types: types.length ? types : roomTypes.slice(0, 1), defaultBoard: BOARDS[pageId] || null });
+      /* the board is filtered to this level too — passing the full board is how
+         out-of-level widgets used to mount (A09-03) */
+      var board = (BOARDS[pageId] || []).filter(function (b) { return types.indexOf(b.type) !== -1; });
+      levelReconcile(pageId, types, board);
+      var h = window.PMWidgets.mount(cv, { pageId: pageId, types: types, defaultBoard: board.length ? board : null });
+      roomLevelNotice(cv, types, roomTypes);
       HANDLES.push(h);
       CANVASES.push(cv);
       window.U11W.wireCanvas(cv);
@@ -726,16 +1235,26 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
   }
 
   function kickerMeta() {
+    /* Corrected 2026-08-18 (audit A03-12). This read "<n> products · continuation
+       each" at every disclosure level while only 12 of the 29 products have a
+       continuation entry — and the two most-pressured non-plan rows have none.
+       Having 12 is correct behaviour (a continuation path is rendered only where
+       the provider publishes one); the claim of coverage for all of them was
+       not. The count is now read from the data instead of asserted. */
+    var withNext = Object.keys(D.continuation).length;
+    var guardsShown = D.guards.filter(function (g) { return g.state === 'blocked' || g.state === 'warn'; }).length;
     var km = {
       overview: 'as of ' + T.atClock(D.meta.now) + ' · next ' + T.atClock(D.meta.nextAutoRefresh),
-      plans: D.products.length + ' products · continuation each',
+      plans: D.products.length + ' products · ' + withNext + ' publish what happens next',
       costs: 'limit ' + fmt.cost(D.costs.spendingLimitMicro / 1e6) + ' · warn at ' + D.costs.warningThresholdPct + '%',
       accounts: D.visibleAccounts().length + ' accounts · requested vs used',
       free: D.eligibleFreeModels().length + ' eligible · ' + (D.freeModels.length - D.eligibleFreeModels().length) + ' flagged',
       context: fmt.tok(D.threadById['thread:t-88'].context.used) + ' / ' + fmt.tok(D.threadById['thread:t-88'].context.limit) + ' · ' + D.threadById['thread:t-88'].context.pct + '%',
       analytics: 'stacked shares · mute via legend',
-      ledger: D.attempts.length + ' events · ' + D.works.length + ' work items',
-      attention: D.guards.length + ' decisions',
+      /* both counts are what this room actually groups and shows, not what the
+         collections happen to hold (audit A03-12's general rule) */
+      ledger: D.attempts.length + ' events · ' + D.worksWithAttempts(window.U11W.pageScope).length + ' work items · ' + D.localOps.length + ' local records',
+      attention: D.guards.length + ' decisions · ' + guardsShown + ' shown by default',
       cache: D.cacheStats.length + ' connections',
       tools: D.tools.length + ' tools · last 24h',
       signals: D.signals.grade + ' · ' + D.signals.score,
@@ -744,7 +1263,9 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
     document.querySelectorAll('.u11-pane').forEach(function (p) {
       var name = p.getAttribute('data-pane');
       var m = p.querySelector('[data-kmeta]');
-      if (m && km[name] != null) m.textContent = km[name];
+      /* This line ellipsises at narrow widths, so the full text has to stay
+         recoverable rather than simply disappearing (audit A09-08 class). */
+      if (m && km[name] != null) { m.textContent = km[name]; m.setAttribute('title', km[name]); }
       var chip = p.querySelector('[data-scope]');
       if (!chip) return;
       var scope = window.U11W.pageScope;
@@ -770,6 +1291,262 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
     chip.textContent = txt;
   }
 
+  /* ---------- the room strip: what the range says here, and this room's caveat ----------
+
+     Two audit findings meet in this element. A09-09: the range control needs a
+     surface it genuinely drives, and it must not imply it drives the widgets
+     that publish their own window. A06-15/A06-13: the capacity block prints
+     "8 hard max" with nothing telling the reader those figures are a completion
+     forecast, and the reserved synthesis/testing/repair capacity is named but
+     carries no quantity anywhere in the fixture — so the honest thing is to say
+     that outright rather than let the named reserve imply a budget. */
+  var ROOM_NOTES = {
+    overview: 'The capacity block is a <b>completion forecast</b>, not a hard provider concurrency limit — the hard maximum is Puppet Master’s own safety ceiling. Capacity kept aside for synthesis, testing and repair now carries a published quantity — workers and tokens, with the effect it has on the sustainable figure — so the reservation is measurable rather than merely named.',
+    plans: 'The capacity block here is the same <b>completion forecast</b>, not a hard provider concurrency limit. Plan meters keep their provider-native windows and resets — the range above does not move them.',
+    costs: 'Month-to-date spending, the burn rate and the forecast are month-scoped by the provider, not by the range above. The range figures count events.',
+    ledger: 'Every row is one real provider attempt. Local-only work is listed under this room and never counted as provider usage.',
+    authority: 'Provenance and settlement counts cover every recorded event. Reference and catalog pricing provenance is shown here — the price list, its version and effective date, and the one call priced from it. That is the catalog price, not what you were billed; settlement is the separate column.',
+    analytics: 'The chart publishes its own 5h / 24h / 7d windows and is not moved by the range above.',
+    tools: 'The tool table publishes its own 24-hour window and is not moved by the range above.'
+  };
+  function roomStripHost(pane) {
+    var el = pane.querySelector('.u11-roomstrip');
+    if (el) return el;
+    el = document.createElement('div');
+    el.className = 'u11-roomstrip';
+    var head = pane.querySelector('.u11-kick');
+    if (head) head.insertAdjacentElement('afterend', el);
+    else pane.insertBefore(el, pane.firstChild);
+    return el;
+  }
+  function renderRoomStrips() {
+    var ev = rangeEvents();
+    var tt = window.U11W.tokenTotalMany(ev.list, { subject: 'range' });
+    var cs = costSummary(ev.list);
+    var tokTxt = tt.total == null ? 'no provider token count reported' : fmt.tok(tt.total) + ' tokens';
+    var winTxt = ev.win.from == null ? 'every recorded event' :
+      T.stamp(new Date(ev.win.from).toISOString()) + ' to ' + T.stamp(new Date(ev.win.to).toISOString());
+    document.querySelectorAll('.u11-pane').forEach(function (p) {
+      var name = p.getAttribute('data-pane');
+      var host = roomStripHost(p);
+      var chips = '';
+      chips += '<span class="u11-rs-chip lead" title="' + winTxt + '">' + ev.win.label + '</span>';
+      chips += '<span class="u11-rs-chip">' + ev.list.length + ' of ' + ev.scoped + ' events</span>';
+      chips += '<span class="u11-rs-chip" title="' + (tt.note || '').replace(/"/g, '') + '">' + tokTxt + '</span>';
+      chips += '<span class="u11-rs-chip words" title="' + COST_TITLE + '">' + costPhrase(cs) + '</span>';
+      if (ev.untimed) chips += '<span class="u11-rs-chip words" title="An attempt with no start time is not in any window. It is counted here instead of being dropped.">' + ev.untimed + ' with no start time</span>';
+      var note = 'The range drives these figures, the key figures on Overview and what Export writes. ' +
+        (ROOM_NOTES[name] || 'Widgets that publish their own window keep it and say so.');
+      host.innerHTML = '<div class="u11-rs-chips">' + chips + '</div><div class="u11-rs-note">' + note + '</div>';
+    });
+  }
+
+  /* ---------- local-only operations (audit A08-09) ----------
+
+     The eight localOps records existed in the fixture and rendered nowhere, so
+     the one distinction they exist to prove — local work with a reported zero
+     provider usage versus local work whose provider usage is genuinely unknown
+     — was invisible. They are listed in the Ledger room, outside the immutable
+     provider-attempt ledger, because that is exactly what they are not. */
+  function renderLocalOps() {
+    var pane = document.querySelector('.u11-pane[data-pane="ledger"]');
+    if (!pane || !D.localOps) return;
+    var host = pane.querySelector('.u11-localops');
+    if (!host) {
+      host = document.createElement('div');
+      host.className = 'u11-localops';
+      var anchor = pane.querySelector('.u11-roomstrip') || pane.querySelector('.u11-kick');
+      if (anchor) anchor.insertAdjacentElement('afterend', host);
+      else pane.appendChild(host);
+    }
+    var zero = 0, unk = 0;
+    var rows = D.localOps.map(function (o) {
+      var isUnknown = o.providerUsage === 'unknown';
+      if (isUnknown) unk += 1; else zero += 1;
+      var state = isUnknown
+        ? '<span class="u11-lo-state unknown" title="' + o.detail + '">provider usage unknown</span>'
+        : '<span class="u11-lo-state zero" title="' + o.detail + '">zero provider usage</span>';
+      return '<div class="u11-lo-row"><span class="u11-lo-lbl" title="' + o.detail + '">' + o.label + '</span>' +
+        '<span class="u11-lo-when">' + T.atClock(o.at) + '</span>' + state + '</div>';
+    }).join('');
+    host.innerHTML = '<div class="u11-lo-head"><span class="u11-lo-t">Local operations</span>' +
+      '<span class="u11-lo-c">' + D.localOps.length + ' records · ' + zero + ' measured at zero · ' + unk + ' unknown</span></div>' +
+      '<div class="u11-lo-rows">' + rows + '</div>' +
+      '<div class="u11-lo-note">These ran on this machine and are not provider attempts, so they carry no event id, no tokens and no cost. ' +
+      'A record measured at <b>zero</b> is a measurement; the background indexer is <b>unknown</b> because nobody has established whether it calls a provider — the two are never merged.</div>';
+  }
+
+
+  /* ---------- the range, bucketed: a real table and a real graph (audit A09-09) ----------
+
+     "Date ranges / tables / graphs" was only partly preserved. The page range
+     control closed the ranges half, but the whole document still held exactly
+     one HTML table (the tool table, on its own fixed 24-hour window) and two
+     chart surfaces (costs and analytics, the analytics one on its own
+     5h/24h/7d windows) — so no table and no graph anywhere followed the range
+     the reader had chosen, and there was no per-day view of anything.
+
+     This block is the page's own: one <table> and one column graph, both driven
+     by the page range and the page scope, bucketed in the reader's own zone
+     rather than in UTC. The bucket follows the range — hours inside a two-day
+     window, days beyond it — so a five-hour range shows the shape of those five
+     hours instead of collapsing to a single column.
+
+     It must never turn a missing measurement into a number. How many events
+     landed in a bucket is always known, so that is what the graph plots. Tokens
+     and money are shown only where the provider reported them: the token total
+     comes from U11W.tokenTotalMany, which honours per-provider counting
+     semantics and returns null when nothing was reported, and a bucket with no
+     published price says so in words instead of drawing a zero bar or $0.00.
+
+     It also must not repeat A02-01 in a new place. rangeEvents() uses
+     attemptInScope, which deliberately matches removed accounts so their
+     history stays reachable, and at "All recorded usage" that put a retired API
+     key's $0.67 inside a per-day spend total. The table and the graph are
+     current accounts only; removed-account events in the same range are stated
+     underneath, on their own, and are never added to the figures above. */
+  var DAY_KEY_FMT = null, DAY_LBL_FMT = null, DAY_SHORT_FMT = null, HOUR_FMT = null;
+  function dayFormatters() {
+    if (DAY_KEY_FMT) return;
+    var opt = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    var lbl = { weekday: 'short', month: 'short', day: 'numeric' };
+    var shrt = { month: 'short', day: 'numeric' };
+    var hr = { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' };
+    /* The reader's zone, resolved once by u11-time.js and reported by name, is
+       the only zone these buckets use — a "day" here is the reader's day. */
+    try {
+      DAY_KEY_FMT = new Intl.DateTimeFormat('en-CA', { timeZone: T.zoneId, year: opt.year, month: opt.month, day: opt.day });
+      DAY_LBL_FMT = new Intl.DateTimeFormat('en-US', { timeZone: T.zoneId, weekday: lbl.weekday, month: lbl.month, day: lbl.day });
+      DAY_SHORT_FMT = new Intl.DateTimeFormat('en-US', { timeZone: T.zoneId, month: shrt.month, day: shrt.day });
+      HOUR_FMT = new Intl.DateTimeFormat('en-GB', { timeZone: T.zoneId, hour: hr.hour, minute: hr.minute, hourCycle: hr.hourCycle });
+    } catch (e) {
+      DAY_KEY_FMT = new Intl.DateTimeFormat('en-CA', opt);
+      DAY_LBL_FMT = new Intl.DateTimeFormat('en-US', lbl);
+      DAY_SHORT_FMT = new Intl.DateTimeFormat('en-US', shrt);
+      HOUR_FMT = new Intl.DateTimeFormat('en-GB', hr);
+    }
+  }
+  /* hours while the window is short enough for hours to mean something */
+  var HOUR_BUCKET_MAX_MS = 48 * 3600000;
+  function bucketOf(ms, byHour) {
+    var d = new Date(ms);
+    var day = DAY_KEY_FMT.format(d);
+    return byHour ? day + ' ' + HOUR_FMT.format(d).slice(0, 2) : day;
+  }
+  function bucketLabel(ms, byHour) {
+    var d = new Date(ms);
+    return byHour ? DAY_LBL_FMT.format(d) + ' · ' + HOUR_FMT.format(d).slice(0, 2) + ':00'
+      : DAY_LBL_FMT.format(d);
+  }
+  function bucketShort(ms, byHour) {
+    var d = new Date(ms);
+    return byHour ? HOUR_FMT.format(d).slice(0, 2) + ':00' : DAY_SHORT_FMT.format(d);
+  }
+  /* words, never a zero, for the cost states that are not a published price */
+  function otherCostStates(cs) {
+    var parts = [];
+    if (cs.covered) parts.push(cs.covered + ' covered by a plan');
+    if (cs.byok) parts.push(cs.byok + ' billed to your own key');
+    if (cs.unknown) parts.push(cs.unknown + ' cost not reported');
+    return parts.length ? parts.join(' · ') : 'none — every event here carries a published price';
+  }
+  function renderTimeBreakdown() {
+    var pane = document.querySelector('.u11-pane[data-pane="costs"]');
+    if (!pane) return;
+    var host = pane.querySelector('.u11-tb');
+    if (!host) {
+      host = document.createElement('div');
+      host.className = 'u11-tb';
+      var anchor = pane.querySelector('.u11-roomstrip') || pane.querySelector('.u11-kick');
+      if (anchor) anchor.insertAdjacentElement('afterend', host);
+      else pane.appendChild(host);
+    }
+    dayFormatters();
+    var ev = rangeEvents();
+    var who = D.scopeNode(window.U11W.pageScope).label;
+    var curList = ev.list.filter(function (a) { return D.attemptIsCurrent(a); });
+    var histList = ev.list.filter(function (a) { return D.attemptIsHistorical(a); });
+    var span = (ev.win.from == null || ev.win.to == null) ? null : (ev.win.to - ev.win.from);
+    var byHour = span != null && span <= HOUR_BUCKET_MAX_MS;
+    var unit = byHour ? 'hour' : 'day';
+    var head = '<div class="u11-tb-head"><span class="u11-tb-t">' + (byHour ? 'Hour by hour' : 'Day by day') + '</span>' +
+      '<span class="u11-tb-c">' + ev.win.label + ' · ' + who + ' · current accounts · ' + unit + 's in ' + T.zone + '</span></div>';
+    var histCs = costSummary(histList);
+    var histLine = histList.length
+      ? '<div class="u11-tb-note hist"><b>' + histList.length + '</b> further event' +
+        (histList.length === 1 ? ' in this range belongs' : 's in this range belong') +
+        ' to an account you have removed · <span title="' + COST_TITLE + '">' + costPhrase(histCs) +
+        '</span>. That history stays in the Ledger and is not in the table or the graph above.</div>'
+      : '';
+    var keys = [], byDay = {}, dayMs = {};
+    curList.forEach(function (a) {
+      var ms = T._toMs(a.startedAt);
+      if (ms == null) return;
+      var k = bucketOf(ms, byHour);
+      if (!byDay[k]) { byDay[k] = []; dayMs[k] = ms; keys.push(k); }
+      if (ms < dayMs[k]) dayMs[k] = ms;
+      byDay[k].push(a);
+    });
+    keys.sort();
+    var untimedTxt = ev.untimed
+      ? ' Separately, <b>' + ev.untimed + '</b> recorded attempt' + (ev.untimed === 1 ? ' carries' : 's carry') +
+        ' no start time, so ' + (ev.untimed === 1 ? 'it belongs' : 'they belong') + ' to no bucket and to no range; ' +
+        (ev.untimed === 1 ? 'it is' : 'they are') + ' counted here rather than dropped.'
+      : '';
+    if (!keys.length) {
+      host.innerHTML = head + '<div class="u11-tb-note">No event from a current account in this range falls inside <b>' + who +
+        '</b>, so there is nothing to break down by day — that is an empty range, not a zero.' + untimedTxt + '</div>' + histLine;
+      return;
+    }
+    var maxN = 0;
+    keys.forEach(function (k) { if (byDay[k].length > maxN) maxN = byDay[k].length; });
+    var bars = keys.map(function (k) {
+      var n = byDay[k].length;
+      var h = Math.max(6, Math.round(n / maxN * 100));
+      return '<span class="u11-tb-col" title="' + bucketLabel(dayMs[k], byHour) + ' · ' + n +
+        ' event' + (n === 1 ? '' : 's') + '">' +
+        '<span class="u11-tb-bar" style="height:' + h + '%"></span>' +
+        '<span class="u11-tb-x">' + bucketShort(dayMs[k], byHour) + '</span></span>';
+    }).join('');
+    var rows = keys.map(function (k) {
+      var list = byDay[k];
+      var tt = window.U11W.tokenTotalMany(list, { subject: 'day' });
+      var cs = costSummary(list);
+      var tokCell = tt.total == null
+        ? '<span class="u11-tb-unk" title="' + (tt.note || '').replace(/"/g, '') + '">not reported</span>'
+        : '<span class="num" title="' + (tt.note || '').replace(/"/g, '') + '">' + fmt.tok(tt.total) + '</span>';
+      var costCell = cs.money
+        ? '<span class="num" title="' + COST_TITLE + '">' + fmt.cost(cs.micro / 1e6) + '</span>'
+        : '<span class="u11-tb-unk" title="' + COST_TITLE + '">no published price</span>';
+      return '<tr><th scope="row">' + bucketLabel(dayMs[k], byHour) + '</th>' +
+        '<td class="num">' + list.length + '</td><td>' + tokCell + '</td><td>' + costCell + '</td>' +
+        '<td>' + otherCostStates(cs) + '</td></tr>';
+    }).join('');
+    var allTt = window.U11W.tokenTotalMany(curList, { subject: 'range' });
+    var allCs = costSummary(curList);
+    var foot = '<tr><th scope="row">' + keys.length + ' ' + unit + (keys.length === 1 ? '' : 's') + '</th>' +
+      '<td class="num">' + curList.length + '</td>' +
+      '<td>' + (allTt.total == null
+        ? '<span class="u11-tb-unk">not reported</span>'
+        : '<span class="num" title="' + (allTt.note || '').replace(/"/g, '') + '">' + fmt.tok(allTt.total) + '</span>') + '</td>' +
+      '<td>' + (allCs.money
+        ? '<span class="num" title="' + COST_TITLE + '">' + fmt.cost(allCs.micro / 1e6) + '</span>'
+        : '<span class="u11-tb-unk" title="' + COST_TITLE + '">no published price</span>') + '</td>' +
+      '<td>' + otherCostStates(allCs) + '</td></tr>';
+    host.innerHTML = head +
+      '<div class="u11-tb-chart" role="img" aria-label="Events per ' + unit + ' for this range and scope. The table below carries the same figures.">' + bars + '</div>' +
+      /* the accessible name is an aria-label, not an off-screen <caption>: a
+         1px-wide caption is a clipped label with no way to recover it, which is
+         exactly what the concept's own fit guard forbids */
+      '<div class="u11-tb-scroll"><table class="u11-tb-tbl" aria-label="Usage by ' + unit + ' for the selected date range and scope">' +
+      '<thead><tr><th scope="col">' + (byHour ? 'Hour' : 'Day') + '</th><th scope="col">Events</th><th scope="col">Tokens</th>' +
+      '<th scope="col">Priced by the provider</th><th scope="col">Other cost states</th></tr></thead>' +
+      '<tbody>' + rows + '</tbody><tfoot>' + foot + '</tfoot></table></div>' +
+      '<div class="u11-tb-note">The graph plots how many events landed in each ' + unit + ', which is always known. ' +
+      'Tokens and money are reported only where the provider reported them — one with nothing published says so ' +
+      'rather than drawing an empty bar or <b>$0.00</b>.' + untimedTxt + '</div>' + histLine;
+  }
+
   /* ---------- data-quality banner (only when there is a real problem) ---------- */
   function renderBanner() {
     var slot = $('u11BannerSlot');
@@ -789,24 +1566,44 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
   var pop = $('u11Pop'), scrim = $('u11PopScrim'), popList = $('u11PopList');
   var popOpen = false, lastFocus = null;
 
-  function meterPressure(m) {
-    return m.usedPct == null ? -1 : m.usedPct;
-  }
+  /* Pressure for a set of products.
+
+     Corrected 2026-08-18 (audit A03-01). This used to return a -1 sentinel when
+     no meter in the set exposed a limit. scopeRow only suppressed on null, and
+     toneCls(-1) fell through to 'ok', so ten rows — including a bucket the user
+     had switched OFF and the whole local route — rendered "-1%" behind a green
+     all-clear dot. Unknown is now unrepresentable as a number: the only way to
+     say "no reading" is null, which every caller already handles. */
   function pressureOfProductSet(ids) {
-    var max = -1;
+    var max = null;
     D.meters.forEach(function (m) {
-      if (ids[m.productId] && m.usedPct != null && m.usedPct > max) max = m.usedPct;
+      if (ids[m.productId] && m.usedPct != null && (max == null || m.usedPct > max)) max = m.usedPct;
     });
     return max;
+  }
+  /* Why a set has no reading, so the row can say so instead of staying silent.
+     Wording matches the Plans widget, which already got this right. */
+  function noReadingReason(ids) {
+    var any = false, disabled = false;
+    D.meters.forEach(function (m) {
+      if (!ids[m.productId]) return;
+      any = true;
+      if (m.vs === 'disabled') disabled = true;
+    });
+    if (!any) return 'no meters';
+    return disabled ? 'switched off' : 'limit not exposed';
   }
   function toneCls(p) { return p >= 90 ? 'err' : (p >= 70 ? 'warn' : 'ok'); }
   function valCls(p) { return p >= 90 ? ' hot' : (p >= 70 ? ' warm' : ''); }
 
-  function scopeRow(id, label, metaTxt, level, pressure, extra) {
+  function scopeRow(id, label, metaTxt, level, pressure, extra, noReadTxt) {
     var on = window.U11W.pageScope === id;
     var dotHtml = pressure == null ? '<span class="u11-pop-dot"></span>'
       : '<span class="u11-pop-dot ' + toneCls(pressure) + '"></span>';
-    var valHtml = pressure == null ? '' : '<span class="u11-pop-val' + valCls(pressure) + '">' + pressure + '%</span>';
+    /* No reading is stated, never implied by a blank or a green dot (A03-01). */
+    var valHtml = pressure == null
+      ? (noReadTxt ? '<span class="u11-pop-val is-unknown">' + noReadTxt + '</span>' : '')
+      : '<span class="u11-pop-val' + valCls(pressure) + '">' + pressure + '%</span>';
     return '<button type="button" class="u11-pop-row lv' + level + (on ? ' on' : '') + '" role="option" aria-selected="' + on + '" tabindex="-1" data-scopeid="' + id + '">' +
       dotHtml +
       '<span class="u11-pop-main">' +
@@ -821,7 +1618,7 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
     D.comparisonSets.forEach(function (c) {
       var set = {};
       c.productIds.forEach(function (p) { set[p] = true; });
-      html += scopeRow(c.id, c.label, 'comparison set · ' + c.productIds.length + ' products', 0, pressureOfProductSet(set));
+      html += scopeRow(c.id, c.label, 'comparison set · ' + c.productIds.length + ' products', 0, pressureOfProductSet(set), '', noReadingReason(set));
     });
     html += '<div class="u11-pop-g">Provider families · accounts grouped</div>';
 
@@ -829,28 +1626,46 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
       var famAccts = D.accountsOfFamily(f.id).filter(function (a) { return !a.removed; });
       if (!famAccts.length) return;
       var famSet = D.scopeProductSet(f.id);
-      html += scopeRow(f.id, f.label, famAccts.length + ' account' + (famAccts.length > 1 ? 's' : ''), 0, pressureOfProductSet(famSet));
+      html += scopeRow(f.id, f.label, famAccts.length + ' account' + (famAccts.length > 1 ? 's' : ''), 0, pressureOfProductSet(famSet), '', noReadingReason(famSet));
 
       famAccts.forEach(function (a) {
         var conns = D.connectionsOfAccount(a.id);
         var acctSet = D.scopeProductSet(a.id);
         var attn = a.state !== 'ready' ? ' · needs attention' : '';
-        html += scopeRow(a.id, a.label, conns.length + ' connection' + (conns.length > 1 ? 's' : '') + attn, 1, pressureOfProductSet(acctSet));
+        html += scopeRow(a.id, a.label, conns.length + ' connection' + (conns.length > 1 ? 's' : '') + attn, 1, pressureOfProductSet(acctSet), '', noReadingReason(acctSet));
 
+        var acctFamilyId = a.familyId;
         conns.forEach(function (cn) {
           var cliBadge = cn.authMethod === 'cli_owned_profile' ? '<span class="u11-pop-cli" title="OAuth owned by ' + cn.authOwnedBy + '">CLI</span>' : '';
           var connSet = D.scopeProductSet(cn.id);
           var connAttn = cn.state === 'needs_reconnect' ? ' · reconnect needed' : '';
-          html += scopeRow(cn.id, cn.label, D.accountLabel(a.id) + connAttn, 2, pressureOfProductSet(connSet), cliBadge);
+          html += scopeRow(cn.id, cn.label, D.accountLabel(a.id) + connAttn, 2, pressureOfProductSet(connSet), cliBadge, noReadingReason(connSet));
 
           D.productsOfConnection(cn.id).forEach(function (p) {
             var meters = D.metersOfProduct(p.id);
             if (!meters.length) return;
             var prodSet = {}; prodSet[p.id] = true;
             var cont = D.continuation[p.id];
-            html += scopeRow(p.id, p.label, meters.length + ' meter' + (meters.length > 1 ? 's' : '') + (cont ? ' · ' + p.kind.replace(/_/g, ' ') : ''), 3, pressureOfProductSet(prodSet));
+            html += scopeRow(p.id, p.label, meters.length + ' meter' + (meters.length > 1 ? 's' : '') + (cont ? ' · ' + p.kind.replace(/_/g, ' ') : ''), 3, pressureOfProductSet(prodSet), '', noReadingReason(prodSet));
             meters.forEach(function (m) {
-              html += scopeRow(m.id, m.label, m.windowKind.replace(/_/g, ' ') + (m.resetAt ? ' · ' + T.when(m.resetAt, D.meta.now, 'reset') : ''), 3, m.usedPct);
+              /* level 4, not 3: a meter is a child of the product above it, and
+                 sharing the product's indent made a sibling product and a child
+                 meter identical to the eye (audit A02-11). */
+              html += scopeRow(m.id, m.label, m.windowKind.replace(/_/g, ' ') + (m.resetAt ? ' · ' + T.when(m.resetAt, D.meta.now, 'reset') : ''), 4, m.usedPct, '', m.vs === 'disabled' ? 'switched off' : 'limit not exposed');
+            });
+            /* Models are the fifth canonical hierarchy level and were navigable
+               nowhere: a model id resolved to "Unknown scope" and the picker
+               offered no model row at all (audit A02-10). These are the models
+               actually observed on this product, not the vendor's catalog, and
+               where the vendor differs from the routing family the row says
+               both rather than silently picking one. */
+            D.modelsOfProduct(p.id).forEach(function (mdl) {
+              var origin = D.modelOrigin(mdl.id, acctFamilyId);
+              var meta = mdl.contextWindow ? fmt.tok(mdl.contextWindow) + ' context window' : 'model';
+              if (origin && origin.differs && origin.builtBy && origin.routedThrough) {
+                meta += ' · built by ' + origin.builtBy.label + ', routed through ' + origin.routedThrough.label;
+              }
+              html += scopeRow(mdl.id, mdl.label, meta, 4, null, '', '');
             });
           });
         });
@@ -860,12 +1675,37 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
     updatePopFoot();
   }
 
+  /* Corrected 2026-08-18 (audit GUI-USG-003/004). This summed costMicro across
+     every attempt in scope and called the result "measured cost", which folded
+     38 plan-covered, 1 BYOK and 6 unreported costs into the total as zeroes and
+     presented the sum as if all of them had been measured.
+
+     Corrected again 2026-08-18 (audit A02-01). attemptInScope deliberately
+     matches a removed account, by account and by family, so the Ledger can
+     still show that account's history — it answers "does this event belong to
+     this scope", not "is this current usage". This footer used it as a
+     current-usage filter and then ended the same sentence with the promise
+     that removed accounts never appear here: "All current usage" read
+     54 events and $0.8800 when 2 events and $0.67 of that belong to a retired
+     API key, and scoped to OpenAI it read $0.6700 when the live accounts there
+     carry no published price at all. Current and historical are two questions,
+     so there are now two answers and neither is added to the other. Both come
+     from U11.scopeEventTotals, so this footer and the data layer cannot
+     disagree about what belongs where. */
   function updatePopFoot() {
     var scope = window.U11W.pageScope;
-    var evts = D.attempts.filter(function (a) { return D.attemptInScope(a, scope); });
-    var cost = evts.reduce(function (s, a) { return s + (a.costMicro || 0); }, 0);
+    var tot = D.scopeEventTotals(scope);
+    var cur = tot.current, hist = tot.historical;
     var who = D.scopeNode(scope).label;
-    $('u11PopFoot').innerHTML = '<b>' + evts.length + '</b> usage events · <b>' + fmt.cost(cost / 1e6) + '</b> measured cost for <b>' + who + '</b>. Removed accounts keep their history but never appear here.';
+    var html = '<div class="u11-pop-footline"><b>' + cur.count + '</b> current usage event' +
+      (cur.count === 1 ? '' : 's') + ' for <b>' + who + '</b> · ' +
+      '<span title="' + COST_TITLE + '">' + costPhrase(cur) + '</span>.</div>';
+    html += hist.count
+      ? '<div class="u11-pop-footline hist"><b>' + hist.count + '</b> more event' +
+        (hist.count === 1 ? ' belongs' : 's belong') + ' to an account you have removed · ' +
+        '<span title="' + COST_TITLE + '">' + costPhrase(hist) + '</span>. That history stays in the Ledger and is not counted above.</div>'
+      : '<div class="u11-pop-footline hist">No removed account has history in this scope. Where one does, it stays in the Ledger and is never folded into the figure above.</div>';
+    $('u11PopFoot').innerHTML = html;
   }
 
   function placePop() {
@@ -882,6 +1722,7 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
       if (top + h > window.innerHeight - 12) pop.style.top = Math.max(12, window.innerHeight - h - 12) + 'px';
     });
   }
+  function scopeTrigger() { return document.querySelector('[data-scope-open]'); }
   function openPop() {
     if (popOpen) return;
     popOpen = true;
@@ -890,6 +1731,11 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
     placePop();
     scrim.classList.add('on');
     pop.classList.add('on');
+    /* The trigger declared aria-haspopup but never said whether it was open,
+       and the dialog was never marked modal (audit A12-03). */
+    var trg = scopeTrigger();
+    if (trg) { trg.setAttribute('aria-expanded', 'true'); trg.setAttribute('aria-controls', 'u11Pop'); }
+    pop.setAttribute('aria-modal', 'true');
     var sel = popList.querySelector('.u11-pop-row.on') || popList.querySelector('.u11-pop-row');
     if (sel) sel.focus();
   }
@@ -898,8 +1744,26 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
     popOpen = false;
     scrim.classList.remove('on');
     pop.classList.remove('on');
-    if (lastFocus && lastFocus.focus) lastFocus.focus();
+    var trg = scopeTrigger();
+    if (trg) trg.setAttribute('aria-expanded', 'false');
+    pop.removeAttribute('aria-modal');
+    /* Prefer the trigger. lastFocus is only a fallback, because a popover opened
+       programmatically records document.body and focus would be dumped there. */
+    var back = (trg && trg.focus) ? trg : lastFocus;
+    if (back && back.focus) back.focus();
   }
+  /* Keep focus inside the open dialog. Without this, one Tab from the focused
+     option landed on document.body with the dialog still open, and because the
+     popover is last in the document the next Tab restarted behind the scrim. */
+  pop.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab' || !popOpen) return;
+    var f = pop.querySelectorAll('button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    var list = Array.prototype.filter.call(f, function (el) { return el.offsetParent !== null || el === document.activeElement; });
+    if (!list.length) return;
+    var first = list[0], last = list[list.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
   function pickScope(id) {
     var changed = window.U11W.pageScope !== id;
     window.U11W.pageScope = id;
@@ -937,13 +1801,47 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
     railStatus();
     kickerMeta();
     updateScopeChip();
-    D.dispatch('cmd.account.select_profile', { scope: window.U11W.pageScope });
+    renderRoomStrips();
+    renderKpis();
+    renderTimeBreakdown();
+    writeHash();
+    /* No command is dispatched for a scope change (audit A11-02). Page scope is
+       a view filter: it changes what these widgets count and nothing else, it
+       creates no durable or shared state, and packet section 06 asks for a
+       canonical command only where a local filter does. This used to dispatch
+       cmd.account.select_profile with the scope id as the payload — and that
+       command's production contract declares effect_kind "event" with
+       expected_event_types ["account switch event"], consumed by the append-only
+       switch history — so filtering to a family, a comparison set or a single
+       meter wrote an account switch that never happened. Nothing replaces it:
+       there is no canonical command for a local view filter, and minting one
+       would be the same fabrication under a different id. */
   }
 
   /* ---------- depth flight (calm pane switch, ported from U10) ---------- */
   var DEPTH = { cur: null, flight: null };
   function railItems() { return Array.prototype.slice.call(document.querySelectorAll('.u11-rail .u11-item[data-tab]')); }
   function paneEl(n) { return document.querySelector('.u11-pane[data-pane="' + n + '"]'); }
+
+  /* Room changes are announced politely, because moving between the thirteen
+     rooms is the primary navigation of this page and it used to be completely
+     silent to assistive technology (audit A12-01). */
+  var liveRegion = null;
+  function announceRoom(name) {
+    if (!liveRegion) {
+      liveRegion = document.createElement('div');
+      liveRegion.id = 'u11RoomAnnounce';
+      liveRegion.className = 'u11-sr-only';
+      liveRegion.setAttribute('role', 'status');
+      liveRegion.setAttribute('aria-live', 'polite');
+      document.body.appendChild(liveRegion);
+    }
+    var btn = document.querySelector('.u11-item[data-tab="' + name + '"] .u11-ilbl-t');
+    var items = railItems();
+    var idx = items.map(function (it) { return it.getAttribute('data-tab'); }).indexOf(name);
+    liveRegion.textContent = (btn ? btn.textContent : name) +
+      (idx >= 0 ? ' — section ' + (idx + 1) + ' of ' + items.length : '');
+  }
   function currentPane() {
     if (DEPTH.cur) return DEPTH.cur;
     var p = document.querySelector('.u11-pane:not(.pm-hidden)');
@@ -974,7 +1872,17 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
     var items = railItems();
     var order = items.map(function (it) { return it.getAttribute('data-tab'); });
     var deeper = order.indexOf(name) > order.indexOf(cur);
-    items.forEach(function (it) { it.classList.toggle('active', it.getAttribute('data-tab') === name); });
+    items.forEach(function (it) {
+      var on = it.getAttribute('data-tab') === name;
+      it.classList.toggle('active', on);
+      /* Selection was previously carried by class alone, so a screen reader was
+         told nothing when the room changed (audit A12-01). The rail is a mixed
+         navigation region — rooms, a scope control, a More group and the
+         disclosure switch — so it is not a strict tablist; aria-current is the
+         honest way to mark the active destination here. */
+      if (on) it.setAttribute('aria-current', 'page'); else it.removeAttribute('aria-current');
+    });
+    announceRoom(name);
     placeRailInd(true);
     var grp = $('u11MoreGrp');
     if (grp && ['attention', 'cache', 'tools', 'signals', 'authority'].indexOf(name) !== -1) {
@@ -983,6 +1891,7 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
       if (mt) mt.setAttribute('aria-expanded', 'true');
     }
     DEPTH.cur = name;
+    writeHash();
     var out = paneEl(cur), inn = paneEl(name);
     if (reduced()) { settlePanes(name); return; }
     out.classList.add('u11-anim', 'u11-leaving');
@@ -1055,82 +1964,196 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
   };
   function applyDisclosureUI() {
     document.querySelectorAll('#u11Disc button').forEach(function (b) {
-      b.classList.toggle('on', b.getAttribute('data-disc') === disclosure);
+      var isOn = b.getAttribute('data-disc') === disclosure;
+      b.classList.toggle('on', isOn);
+      /* State was class-only, so the level was unannounced (A12-01). */
+      b.setAttribute('aria-checked', isOn ? 'true' : 'false');
     });
     $('u11DiscCap').textContent = DISC_CAP[disclosure];
     var advOnly = document.querySelectorAll('.u11-advonly');
     advOnly.forEach(function (el) { el.style.display = disclosure === 'advanced' ? '' : 'none'; });
   }
-  $('u11Disc').addEventListener('click', function (e) {
-    var b = e.target.closest('[data-disc]');
-    if (!b) return;
-    var lvl = b.getAttribute('data-disc');
-    if (lvl === disclosure) return;
+  function setDisclosure(lvl, quiet) {
+    if (['essentials', 'standard', 'advanced'].indexOf(lvl) === -1 || lvl === disclosure) return;
     disclosure = lvl;
     window.U11W.disclosure = lvl;
     STORE.set('u11:disclosure', lvl);
     applyDisclosureUI();
-    /* re-mount canvases: available types change, stored items persist (§5.1) */
+    /* re-mount canvases: available types change, out-of-level widgets are parked
+       rather than deleted, and the level's own types are seeded once (§5.1) */
     HANDLES.forEach(function (h) { try { h.unmount(); } catch (e2) {} });
     HANDLES = []; CANVASES = [];
     mountCanvases();
-    railStatus(); kickerMeta();
-    if (window.toast) window.toast('Disclosure: ' + lvl + ' — your layout and data are kept');
+    railStatus(); kickerMeta(); renderRoomStrips(); renderLocalOps(); renderTimeBreakdown();
+    writeHash();
+    if (!quiet && window.toast) window.toast('Disclosure: ' + lvl + ' — widgets outside this level are kept and come back with it');
+  }
+  $('u11Disc').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-disc]');
+    if (!b) return;
+    setDisclosure(b.getAttribute('data-disc'));
+  });
+  /* the empty-room notice offers the level that actually holds this room */
+  document.addEventListener('click', function (e) {
+    var go = e.target.closest && e.target.closest('[data-u11-golevel]');
+    if (go) { setDisclosure(go.getAttribute('data-u11-golevel')); return; }
+    /* "Reset layout" must also drop what this room had parked out of level and
+       the record of which types it has seeded, or a later level change would
+       bring back widgets the reset just cleared */
+    var rst = e.target.closest && e.target.closest('[data-pmw-resetpage]');
+    if (!rst) return;
+    var pane = rst.closest('.u11-pane');
+    var cv = pane && pane.querySelector('[data-u11-page]');
+    if (!cv) return;
+    var pid = cv.getAttribute('data-u11-page');
+    delete parked[pid]; delete seededTypes[pid];
+    STORE.set('u11:parked', parked); STORE.set('u11:seeded', seededTypes);
   });
 
   /* ---------- usage settings quick-controls sheet (§10 consumer) ---------- */
   var sheetSprout = $('u11SheetSprout');
-  function afterIncludedOptions(productId) {
+  /* what opened the sheet, so focus can go back there when it closes */
+  var sheetOpener = null;
+  function sheetIsOpen() { return !sheetSprout.hidden && sheetSprout.classList.contains('is-open'); }
+  /* The provider's own continuation ladder, reported step by step.
+
+     Corrected 2026-08-18 (audit A03-02, A03-03, A10-03, A01-08). The previous
+     version normalised every 'prod:*' step to a single key 'prod' and then
+     deduped on it, which had four separate consequences measured across the
+     twelve policies: two ladders silently LOST a step (the Coding Plan's Extra
+     Bundle and the ChatGPT plan's Saved reset — the latter contradicted by this
+     same sheet two rows below); one label, "Draw on the balance/pack", stood in
+     for four different product kinds including metered continuation, i.e. new
+     paid charges presented as spending a pre-paid pack; eleven of twelve ladders
+     opened on an unlabelled raw enum token because the map had no entry for
+     'included' or 'balance'; and two of the three Settings-owned values could
+     not be represented at all.
+
+     Every step now keeps its own identity and its own plain-language label,
+     derived from the real product where the step names one. Nothing is
+     collapsed and nothing is dropped. */
+  var STEP_LABELS = {
+    included: 'Use the usage included with your plan',
+    balance: 'Draw on the remaining balance',
+    credits: 'Use credits',
+    wait_reset: 'Wait for the reset',
+    hard_stop: 'Stop and wait',
+    metered: 'Continue metered',
+    spending_limit: 'Continue up to the spending limit',
+    free_fallback: 'Continue with free models',
+    saved_reset: 'Apply a saved reset'
+  };
+  var PRODUCT_KIND_STEP = {
+    subscription: 'Stay on ',
+    prepaid_balance: 'Draw on ',
+    purchased_pack: 'Use ',
+    metered_continuation: 'Use paid usage after the plan · ',
+    saved_reset: 'Apply the saved reset · ',
+    payg_route: 'Continue pay-as-you-go on ',
+    shared_pool: 'Use the shared pool · ',
+    trial: 'Use the trial allowance · ',
+    free_allowance: 'Use the free allowance · ',
+    local_route: 'Continue on the local route · '
+  };
+  function stepLabel(step) {
+    if (step.indexOf('prod:') === 0) {
+      var p = D.productById[step];
+      if (!p) return R.humanCap(step);
+      var lead = PRODUCT_KIND_STEP[p.kind];
+      return lead ? lead + p.label : 'Use ' + p.label;
+    }
+    if (step.indexOf('fallback:') === 0) {
+      var aid = step.slice('fallback:'.length);
+      var acct = D.accountById[aid];
+      return acct ? 'Switch to ' + acct.label : 'Switch account';
+    }
+    return STEP_LABELS[step] || R.humanCap(step);
+  }
+  function continuationLadder(productId) {
     var cont = D.continuation[productId];
     if (!cont) return [];
-    var labels = { wait_reset: 'Wait for the reset', credits: 'Use credits', prod: 'Draw on the balance/pack',
-      fallback: 'Fall back to another account', free_fallback: 'Continue with free models',
-      metered: 'Continue metered', hard_stop: 'Stop', spending_limit: 'Bound by spending limit',
-      saved_reset: 'Apply the saved reset' };
-    var seen = {}, out = [];
-    cont.order.forEach(function (step) {
-      var key = step.indexOf('prod:') === 0 ? 'prod' : (step.indexOf('fallback:') === 0 ? 'fallback' : step);
-      if (seen[key]) return;
-      seen[key] = true;
-      out.push(key + ' · ' + (labels[key] || key));
+    return cont.order.map(function (step) {
+      var p = step.indexOf('prod:') === 0 ? D.productById[step] : null;
+      return { key: step, label: stepLabel(step), kind: p ? p.kind : null };
     });
-    return out;
   }
+  /* Canonical Settings rows this sheet reports on, so every "change this" route
+     lands on a real setting id rather than an invented destination (A01-06). */
+  var SETTING_ROWS = {
+    warnLow: { id: 'ai.usage.pressure-visibility', label: 'Show Usage Pressure Warnings' },
+    autoSwitch: { id: 'ai.accounts.multi-account-switching', label: 'Auto-Switch Between Accounts' },
+    after: { id: 'ai.usage.budget-policy', label: 'When the Budget Runs Out' },
+    extra: { id: 'ai.usage.quota-management', label: 'Quota and Budget Console' },
+    limit: { id: 'ai.usage.monthly-spend-limit', label: 'Monthly Spend Limit' }
+  };
+  function changeLink(key) {
+    var row = SETTING_ROWS[key];
+    return '<button type="button" class="u11-sheet-change" data-u11open="' + row.id + '"' +
+      ' title="Change in Settings · ' + row.label + '">Change in Settings</button>';
+  }
+  function roRow(labelTxt, valueHtml, key) {
+    return '<div class="u11-sheet-row is-ro"><span>' + labelTxt + '</span>' +
+      '<b class="u11-sheet-val">' + valueHtml + '</b>' + (key ? changeLink(key) : '') + '</div>';
+  }
+  function onOff(v) { return v ? 'On' : 'Off'; }
+
   function sheetHTML() {
-    var selProd = settings.selectedProduct || 'prod:codex-plus';
+    var selProd = settingsView.selectedProduct || 'prod:codex-plus';
     var prod = D.productById[selProd] ? selProd : 'prod:codex-plus';
     var html = '<div class="u11-sheet">';
     html += '<div class="u11-sheet-head"><div><div class="u11-sheet-tt">Usage settings</div>' +
-      '<div class="u11-sheet-sub">Compact quick controls — a consumer of the shared Settings registry, never a second settings system.</div></div></div>';
+      '<div class="u11-sheet-sub">What Settings currently says, reported here. Usage does not change policy — every change opens the setting that owns it.</div></div></div>';
 
     html += '<div class="u11-sheet-sec">Preferences</div>';
-    html += '<label class="u11-sheet-row"><span>Warn me before I run low</span><input type="checkbox" data-u11set="warnLow"' + (settings.warnLow ? ' checked' : '') + '></label>';
-    html += '<label class="u11-sheet-row"><span>Automatic account/provider switching</span><input type="checkbox" data-u11set="autoSwitch"' + (settings.autoSwitch ? ' checked' : '') + '></label>';
+    html += roRow('Warn me before I run low', onOff(settingsOwned.warnLow), 'warnLow');
+    html += roRow('Automatic account and provider switching', onOff(settingsOwned.autoSwitch), 'autoSwitch');
 
     html += '<div class="u11-sheet-sec">After included usage</div>';
-    html += '<div class="u11-sheet-row"><span>Product</span><select data-u11set="product">';
+    html += '<div class="u11-sheet-row"><span>Product</span><select data-u11view="product">';
     Object.keys(D.continuation).forEach(function (pid) {
       var p = D.productById[pid];
       html += '<option value="' + pid + '"' + (pid === prod ? ' selected' : '') + '>' + p.label + '</option>';
     });
     html += '</select></div>';
-    var opts = afterIncludedOptions(prod);
-    var cur = settings.afterIncludedByProduct[prod] || opts[0];
-    html += '<div class="u11-sheet-row"><span>Then</span><select data-u11set="after">';
-    opts.forEach(function (o) {
-      var key = o.split(' · ')[0];
-      html += '<option value="' + key + '"' + (o === cur || key === cur ? ' selected' : '') + '>' + o.split(' · ')[1] + '</option>';
+
+    /* The ladder is provider-native fact, reported in order. The chosen step is
+       Settings-owned and only displayed. */
+    var ladder = continuationLadder(prod);
+    var chosen = settingsOwned.afterIncludedByProduct[prod] || null;
+    var chosenInLadder = false;
+    ladder.forEach(function (s) { if (s.key === chosen) chosenInLadder = true; });
+    html += '<ol class="u11-sheet-ladder">';
+    ladder.forEach(function (s, i) {
+      var isCur = s.key === chosen || (!chosen && i === 0);
+      html += '<li class="u11-sheet-step' + (isCur ? ' is-current' : '') + '">' +
+        '<span class="u11-sheet-stepn">' + (i + 1) + '</span>' +
+        '<span class="u11-sheet-steplabel">' + s.label + '</span>' +
+        (isCur ? '<span class="u11-sheet-stepcur">current</span>' : '') + '</li>';
     });
-    html += '</select></div>';
+    html += '</ol>';
+    if (chosen && !chosenInLadder) {
+      /* Do not hide the mismatch — it is a real inconsistency between the
+         Settings value and what this provider offers (A03-03). */
+      html += '<div class="u11-sheet-warn">Settings holds "' + R.human(chosen) +
+        '" for this product, which is not a step this provider offers. Open the setting to resolve it.</div>';
+    }
+    html += '<div class="u11-sheet-row is-ro"><span>Chosen by</span><b class="u11-sheet-val">' +
+      SETTING_ROWS.after.label + '</b>' + changeLink('after') + '</div>';
 
     var extra = D.products.filter(function (p) { return p.kind === 'metered_continuation'; });
     if (extra.length) {
       html += '<div class="u11-sheet-sec">Extra paid usage</div>';
       extra.forEach(function (p) {
-        var st = settings.extraUsage[p.id] || { enabled: false, limitMicro: null };
-        html += '<label class="u11-sheet-row"><span>' + p.label + '</span><input type="checkbox" data-u11extra="' + p.id + '"' + (st.enabled ? ' checked' : '') + '></label>';
-        if (st.enabled && p.spendingLimitMicro != null) {
-          html += '<div class="u11-sheet-row"><span>Spending limit</span><input type="number" min="0" step="5" value="' + Math.round((st.limitMicro || p.spendingLimitMicro) / 1e6) + '" data-u11limit="' + p.id + '"><span style="flex:none">$ / month</span></div>';
+        var st = settingsOwned.extraUsage[p.id] || { enabled: false, limitMicro: null };
+        html += roRow(p.label, onOff(st.enabled), 'extra');
+        if (st.enabled) {
+          var lim = st.limitMicro != null ? st.limitMicro : p.spendingLimitMicro;
+          /* fmt.cost takes dollars; spendingLimitMicro is microdollars. The
+             read-only rewrite dropped the /1e6 the editable version had, so a
+             $100 cap rendered as "$100000000.00" while the Plans widget showed
+             the same datum correctly. Found by verification, not by review. */
+          html += roRow('Spending limit',
+            lim == null ? 'not set' : fmt.cost(lim / 1e6) + ' per month', 'limit');
         }
       });
     }
@@ -1145,21 +2168,44 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
     var saved = D.meters.filter(function (m) { return D.productById[m.productId].kind === 'saved_reset'; })[0];
     if (saved) html += '<div class="u11-sheet-row"><span>Saved resets</span><b style="font-family:var(--mono-font)">' + (saved.limit - saved.used) + ' banked · expires ' + T.atMonthDayClock(saved.expiresAt) + '</b></div>';
     var packs = D.products.filter(function (p) { return p.kind === 'purchased_pack' || p.kind === 'prepaid_balance'; });
-    packs.slice(0, 2).forEach(function (p) {
+    /* Corrected 2026-08-18 (audit A03-17). Two defects lived here: the list was
+       sliced to two of five products with nothing saying three were hidden, and
+       the non-USD branch formatted every unit with the token formatter, so a
+       requests-denominated pack read "40 left" with no unit noun. */
+    var packShown = packs.slice(0, 2);
+    packShown.forEach(function (p) {
       var m = D.metersOfProduct(p.id)[0];
-      if (m) html += '<div class="u11-sheet-row"><span>' + p.label + '</span><b style="font-family:var(--mono-font)">' + (m.unit === 'USD' ? fmt.cost(m.limit - m.used) : fmt.tok(m.limit - m.used) + ' left') + '</b></div>';
+      if (!m) return;
+      var left = m.limit - m.used;
+      var val;
+      if (m.unit === 'USD') val = fmt.cost(left);
+      else if (m.unit === 'tokens') val = fmt.tok(left) + ' tokens left';
+      else val = left.toLocaleString() + ' ' + R.human(m.unit) + ' left';
+      html += '<div class="u11-sheet-row"><span>' + p.label + '</span><b style="font-family:var(--mono-font)">' + val + '</b></div>';
     });
+    if (packs.length > packShown.length) {
+      html += '<div class="u11-sheet-row is-ro"><span>' + (packs.length - packShown.length) +
+        ' more pack or balance ' + (packs.length - packShown.length === 1 ? 'product' : 'products') +
+        ' not shown here</span>' + changeLink('extra') + '</div>';
+    }
     html += '</div>';
 
     html += '<div class="u11-sheet-links">';
     html += '<button type="button" class="u11-sheet-link" data-u11link="provider">' + ic('key') + '<span>Open provider settings</span></button>';
     html += '<button type="button" class="u11-sheet-link" data-u11link="usage">' + ic('sliders') + '<span>See all usage settings</span></button>';
     html += '</div>';
-    html += '<div class="u11-sheet-note">Raw meter policies, source authority, route epochs, probe cadence and price versions live in Advanced/support views. Widget settings never change these policies.</div>';
+    /* Corrected 2026-08-18 (audit A03-09). This used to promise that "raw meter
+       policies, source authority, route epochs, probe cadence and price
+       versions live in Advanced/support views". Source authority, settlement,
+       freshness and the catalog probes really are there; meter-policy versions,
+       route epochs and any price or pricing-version surface are not rendered
+       anywhere in this concept, so they are no longer advertised. */
+    html += '<div class="u11-sheet-note">Source authority, settlement, projection freshness and the catalog probes are in the <b>Source authority</b> room at the Advanced level. Meter-policy versions and reference or catalog prices are not shown anywhere in this view. Widget settings never change these policies.</div>';
     html += '</div>';
     return html;
   }
-  function openSheet() {
+  function openSheet(opener) {
+    sheetOpener = (opener && opener.focus) ? opener : null;
     if (window.PMMenu && window.PMMenu.closeAll) window.PMMenu.closeAll();
     if (window.U11Context) window.U11Context.closeAll();
     sheetSprout.hidden = false;
@@ -1171,49 +2217,102 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
     else { sheetSprout.classList.add('is-open'); sheetSprout.style.right = '12px'; sheetSprout.style.bottom = '48px'; }
   }
   sheetSprout.addEventListener('click', function (e) {
+    /* Every route out of this sheet is a canonical Settings open. Nothing here
+       writes policy (A01-01). */
+    var open = e.target.closest('[data-u11open]');
+    if (open) {
+      var res = D.openSettings('ai', open.getAttribute('data-u11open'), 'usage_sheet');
+      if (window.toast) window.toast(res.toast);
+      return;
+    }
     var link = e.target.closest('[data-u11link]');
     if (link) {
       var kind = link.getAttribute('data-u11link');
-      var dest = kind === 'provider'
-        ? { surface: 'settings', manager: 'providers', section: 'routing', focus_reason: 'usage_quick_controls' }
-        : { surface: 'settings', manager: 'usage', section: 'usage_and_extra_usage', focus_reason: 'see_all' };
-      var res = D.deepLink(dest);
-      if (window.toast) window.toast(res.toast);
-      return;
+      var target = kind === 'provider' ? 'ai.accounts.default-account' : 'ai.usage.quota-management';
+      var r2 = D.openSettings('ai', target, 'usage_sheet');
+      if (window.toast) window.toast(r2.toast);
     }
   });
   sheetSprout.addEventListener('change', function (e) {
     var t = e.target;
-    if (t.hasAttribute('data-u11set')) {
-      var k = t.getAttribute('data-u11set');
-      if (k === 'warnLow') settings.warnLow = t.checked;
-      else if (k === 'autoSwitch') settings.autoSwitch = t.checked;
-      else if (k === 'product') { settings.selectedProduct = t.value; sheetSprout.innerHTML = sheetHTML(); }
-      else if (k === 'after') { settings.afterIncludedByProduct[settings.selectedProduct || 'prod:codex-plus'] = t.value; }
-      STORE.set('u11:settings', settings);
-      return;
-    }
-    if (t.hasAttribute('data-u11extra')) {
-      var pid = t.getAttribute('data-u11extra');
-      settings.extraUsage[pid] = settings.extraUsage[pid] || { enabled: false, limitMicro: null };
-      settings.extraUsage[pid].enabled = t.checked;
-      STORE.set('u11:settings', settings);
+    /* Only view state is accepted here. Which product's ladder is on screen is a
+       filter, not a policy, so it may persist locally. */
+    if (t.hasAttribute('data-u11view') && t.getAttribute('data-u11view') === 'product') {
+      settingsView.selectedProduct = t.value;
+      STORE.set('u11:settingsView', settingsView);
       sheetSprout.innerHTML = sheetHTML();
-      return;
-    }
-    if (t.hasAttribute('data-u11limit')) {
-      var pid2 = t.getAttribute('data-u11limit');
-      settings.extraUsage[pid2] = settings.extraUsage[pid2] || { enabled: true, limitMicro: null };
-      settings.extraUsage[pid2].limitMicro = Math.max(0, parseInt(t.value, 10) || 0) * 1e6;
-      STORE.set('u11:settings', settings);
+      /* the re-render destroys the control that was just used, so focus is put
+         back on its replacement instead of falling to the document body */
+      var again = sheetSprout.querySelector('[data-u11view="product"]');
+      if (again && again.focus) again.focus();
     }
   });
+
+  /* Focus stays inside the sheet while it is up and goes back to whatever
+     opened it when it closes. Without this a reader who opened the sheet from a
+     widget footer could not reach it at all: the sprout is the last element in
+     the document, so one Tab from the footer button landed on the next widget
+     control and the sheet's "Change in Settings" deep links were unreachable
+     by keyboard (audit A10-08, A12-02). */
+  sheetSprout.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab' || !sheetIsOpen()) return;
+    var f = sheetSprout.querySelectorAll('button:not([disabled]), select, [href], input, textarea, [tabindex]:not([tabindex="-1"])');
+    var list = Array.prototype.filter.call(f, function (el) { return el.offsetParent !== null || el === document.activeElement; });
+    if (!list.length) return;
+    var first = list[0], last = list[list.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+  new MutationObserver(function () {
+    if (!sheetOpener) return;
+    /* deferred one task: the sprout guard below reasserts .is-open in its own
+       observer callback for in-sheet clicks, and this must not read the class
+       mid-flight and declare the sheet closed while it is still up */
+    setTimeout(function () {
+      if (sheetIsOpen() || !sheetOpener) return;
+      var ae = document.activeElement;
+      if (ae && ae !== document.body && !sheetSprout.contains(ae)) { sheetOpener = null; return; }
+      var back = sheetOpener; sheetOpener = null;
+      if (back.focus) back.focus();
+    }, 0);
+  }).observe(sheetSprout, { attributes: true, attributeFilter: ['class', 'hidden'] });
   $('u11Settings').addEventListener('click', function (e) {
     e.stopPropagation();
     if (!sheetSprout.hidden && sheetSprout.classList.contains('is-open')) {
       if (window.PMMenu && window.PMMenu.close) window.PMMenu.close(sheetSprout);
       sheetSprout.hidden = true;
     } else openSheet();
+  });
+
+  /* Every widget footer emits this when its "Open Usage settings" button is
+     pressed (u11-widgets.js:1993). Nothing listened, so 27 real, focusable,
+     screen-reader-announced buttons did nothing at all on click, Enter or Space
+     — a dead control reachable by keyboard (audit A09-02, A12-02, A11-10).
+
+     Listening turned out not to be enough (audit A10-08). The sheet was built
+     DURING the click that asked for it, and _shared/menu.js keeps a
+     document-level "outside click" handler that closes every tracked sprout for
+     any click not inside one — the opening click is, by definition, outside. So
+     PMMenu.openAt added .is-open and menu.js stripped it again in the same
+     event: measured on a real mouse click, the sheet ended at opacity 0,
+     visibility hidden, pointer-events none, with its markup fully built, while
+     the header cog opened the identical sheet at opacity 1. All 27 footer
+     buttons were still dead to the reader, and the "policy actions deep-link to
+     Settings" claim rested on a surface nobody could see.
+
+     Opening on the next task puts the sheet up after that click has finished
+     travelling, and focus is moved into it so the canonical "Change in
+     Settings" deep links are one key away. Nothing is dispatched here: this
+     sheet REPORTS Settings, so opening it is not a Settings open, and the
+     deep-link commands stay on the rows that really do open one. */
+  document.addEventListener('u11:opensettings', function () {
+    if (sheetIsOpen()) return;
+    var opener = document.activeElement;
+    setTimeout(function () {
+      openSheet(opener);
+      var first = sheetSprout.querySelector('button:not([disabled]), select, [href], input');
+      if (first && first.focus) first.focus();
+    }, 0);
   });
 
   /* ---------- export intent flow (§18) ---------- */
@@ -1224,18 +2323,25 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
      handler cannot tell sprout-internal clicks from real outside clicks —
      so it closes the sheet/export mid-flow (packet §05 hard failure: dead
      controls). U11-local fix, shared files untouched:
-     - a capture-phase click sets _keepOpen only for in-sprout clicks;
+     - a click listener bound in the capture pass sets _keepOpen only for
+       in-sprout clicks;
      - a MutationObserver reasserts .is-open when menu.js strips it while
-       _keepOpen holds (the sprout's own target-phase handlers already ran);
+       _keepOpen holds (the sprout's own target handlers already ran);
      - genuine outside clicks clear _keepOpen first and close via U11, so
        Esc / trigger-toggle / outside-close all still work. */
   (function () {
-    var sprouts = [sheetSprout, expSprout];
+    /* looked up by id, not by variable, so the range and fixture sprouts
+       declared further down are covered by the same guard */
+    var sprouts = [$('u11SheetSprout'), $('u11ExportSprout'), $('u11RangeSprout'), $('u11FxSprout')];
     function isOpen(s2) { return !s2.hidden && s2.classList.contains('is-open'); }
-    function hideSprout(s2) { s2.classList.remove('is-open', 'is-closing'); s2.hidden = true; }
+    function hideSprout(s2) {
+      s2.classList.remove('is-open', 'is-closing'); s2.hidden = true;
+      var trg = s2.id === 'u11RangeSprout' ? $('u11Range') : (s2.id === 'u11FxSprout' ? $('u11Fixtures') : null);
+      if (trg) trg.setAttribute('aria-expanded', 'false');
+    }
     document.addEventListener('click', function (e) {
-      var inside = !!(e.target.closest && e.target.closest('#u11SheetSprout, #u11ExportSprout'));
-      var onTrigger = !!(e.target.closest && e.target.closest('#u11Settings, #u11Export'));
+      var inside = !!(e.target.closest && e.target.closest('#u11SheetSprout, #u11ExportSprout, #u11RangeSprout, #u11FxSprout'));
+      var onTrigger = !!(e.target.closest && e.target.closest('#u11Settings, #u11Export, #u11Range, #u11Fixtures'));
       sprouts.forEach(function (s2) {
         if (inside && e.target.closest('#' + s2.id)) { s2._keepOpen = true; return; }
         s2._keepOpen = false;
@@ -1251,19 +2357,33 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
           s2.classList.remove('is-closing');
           s2.classList.add('is-open');
         }
+        /* the two triggers that declare aria-expanded follow the class, whoever
+           closed the sprout — including menu.js closeAll from another trigger */
+        var trg = s2.id === 'u11RangeSprout' ? $('u11Range') : (s2.id === 'u11FxSprout' ? $('u11Fixtures') : null);
+        if (trg) trg.setAttribute('aria-expanded', s2.classList.contains('is-open') ? 'true' : 'false');
       }).observe(s2, { attributes: true, attributeFilter: ['class'] });
     });
   })();
   var expState = { intent: null, fmt: null };
   function exportHTML() {
     var html = '<div class="u11-sheet">';
+    var exEv = rangeEvents();
+    var exHist = exEv.list.filter(function (a) { return D.attemptIsHistorical(a); }).length;
     html += '<div class="u11-sheet-head"><div><div class="u11-sheet-tt">Export usage</div>' +
-      '<div class="u11-sheet-sub">Choose an intent — formats appear contextually, not as a permanent settings list.</div></div></div>';
+      '<div class="u11-sheet-sub">Choose an intent — formats appear contextually, not as a permanent settings list. This export carries <b>' +
+      exEv.list.length + '</b> event' + (exEv.list.length === 1 ? '' : 's') + ': ' + D.scopeNode(window.U11W.pageScope).label +
+      ' · ' + exEv.win.label + (exEv.untimed ? ' · ' + exEv.untimed + ' event' + (exEv.untimed > 1 ? 's' : '') + ' with no start time are outside every range' : '') +
+      /* how many of them belong to an account that has been removed, said here
+         rather than left for the reader to discover in the file (A02-01) */
+      (exHist ? ' · ' + exHist + ' from an account you have removed' : '') + '.</div></div></div>';
     if (!expState.intent) {
       html += '<div class="u11-exp-intents">';
-      html += '<button type="button" class="u11-exp-intent" data-u11exp="view"><b>Current view</b><span>The filtered chart/table you see, in the current scope.</span></button>';
-      html += '<button type="button" class="u11-exp-intent" data-u11exp="records"><b>Usage records</b><span>Normalized machine-readable usage events with stable identity.</span></button>';
-      html += '<button type="button" class="u11-exp-intent" data-u11exp="bundle"><b>Support / analysis bundle</b><span>Records plus metadata, source &amp; price versions, redacted receipts.</span></button>';
+      html += '<button type="button" class="u11-exp-intent" data-u11exp="view"><b>Current view</b><span>The events you are looking at — current scope and date range.</span></button>';
+      html += '<button type="button" class="u11-exp-intent" data-u11exp="records"><b>Usage records</b><span>Normalized machine-readable usage events with stable identity and cost state.</span></button>';
+      /* Corrected 2026-08-18 (audit A03-09): the bundle carries a catalog
+         version and a pricing snapshot label, not a price surface — so it is
+         named as exactly that, and nothing promises a reference price. */
+      html += '<button type="button" class="u11-exp-intent" data-u11exp="bundle"><b>Support / analysis bundle</b><span>Records plus the scope, the range, the catalog and pricing snapshot labels, and redacted receipt refs.</span></button>';
       html += '</div>';
     } else {
       html += '<button type="button" class="u11-exp-back" data-u11expback>' + ic('chevR') + '<span>Back to intents</span></button>';
@@ -1310,43 +2430,74 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
   }
   function doExport() {
     var scope = window.U11W.pageScope;
-    var evts = D.attempts.filter(function (a) { return D.attemptInScope(a, scope); });
+    var ev = rangeEvents();
+    var evts = ev.list;
     var payload = '', name = '', mime = 'text/plain';
     if (expState.intent === 'view' && expState.fmt === 'csv') {
-      var rows = [['event_id', 'work', 'bucket', 'purpose', 'status', 'account', 'connection', 'product', 'model', 'input', 'output', 'cache_read', 'cost_usd', 'started_at']];
+      /* cost_usd is left EMPTY, never 0, whenever the provider published no
+         per-call price — the cost_status / display_cost_policy columns carry
+         which of the four statements applies (GUI-USG-003, GUI-USG-004). */
+      var rows = [['event_id', 'work', 'bucket', 'purpose', 'status', 'account', 'connection', 'product', 'model', 'input', 'output', 'cache_read', 'cost_usd', 'cost_status', 'display_cost_policy', 'started_at', 'account_state']];
       evts.forEach(function (a) {
+        var shown = costFacet(a) === 'money';
         rows.push([a.eventId, a.workId || '', a.bucket, a.purpose, a.status,
           a.effectiveAccountId || '', a.connectionId || '', a.productId || '',
           a.effectiveModelId || a.requestedModelId || '',
           a.tokens.input != null ? a.tokens.input : '', a.tokens.output != null ? a.tokens.output : '',
           a.tokens.cacheRead != null ? a.tokens.cacheRead : '',
-          ((a.costMicro || 0) / 1e6).toFixed(6), a.startedAt || '']);
+          shown ? (a.costMicro / 1e6).toFixed(6) : '',
+          a.costStatus || 'unknown', a.displayCostPolicy || 'unknown', a.startedAt || '',
+          /* current or removed, per row: a total that mixes the two is the
+             contradiction the scope footer used to print (A02-01) */
+          D.attemptIsHistorical(a) ? 'removed' : 'current']);
       });
       payload = rows.map(function (r) { return r.join(','); }).join('\n');
       name = 'u11-current-view.csv'; mime = 'text/csv';
     } else if (expState.intent === 'records') {
       var recs = evts.map(function (a) {
+        var shown = costFacet(a) === 'money';
         return { usage_event_id: a.eventId, logical_work_id: a.workId, bucket: a.bucket, purpose: a.purpose,
           status: a.status, requested_account_id: a.requestedAccountId, effective_account_id: a.effectiveAccountId,
           connection_id: a.connectionId, product_id: a.productId, requested_model_id: a.requestedModelId,
           effective_model_id: a.effectiveModelId, billing_route: a.billingRoute, tokens: a.tokens,
-          cost_microdollars: a.costMicro || 0, settlement_status: a.settlement, source_class: a.sourceClass,
+          /* null, not 0, whenever no per-call price was published (GUI-USG-003) */
+          cost_microdollars: shown ? a.costMicro : null,
+          cost_status: a.costStatus || 'unknown', display_cost_policy: a.displayCostPolicy || 'unknown',
+          hidden_byok: !!a.hiddenByok, hidden_subscription: !!a.hiddenSubscription,
+          unknown_reason: a.unknownReason || null,
+          settlement_status: a.settlement, source_class: a.sourceClass,
+          account_state: D.attemptIsHistorical(a) ? 'removed' : 'current',
           receipt_ref: a.receiptRef, started_at: a.startedAt, finished_at: a.finishedAt };
       });
       if (expState.fmt === 'jsonl') { payload = recs.map(function (r) { return JSON.stringify(r); }).join('\n'); name = 'u11-usage-records.jsonl'; }
       else { payload = JSON.stringify(recs, null, 2); name = 'u11-usage-records.json'; }
       mime = 'application/json';
     } else {
+      /* Current accounts and removed ones are summarised apart and never added
+         together, and the whole-scope figures come from the same accessor the
+         scope footer reads (audit A02-01). */
+      var bcur = evts.filter(function (a) { return D.attemptIsCurrent(a); });
+      var bhist = evts.filter(function (a) { return D.attemptIsHistorical(a); });
+      var bcs = costSummary(bcur), bhs = costSummary(bhist);
       payload = JSON.stringify({
         bundle: 'support/analysis', generated_at: new Date().toISOString(), scope: scope,
-        source_versions: { catalog: 'free_coding_models@' + '2026-08-04', pricing: 'v2026.08' },
-        records: evts.length, redacted_receipts: evts.map(function (a) { return a.receiptRef; }).filter(Boolean),
-        note: 'raw payloads, credentials and local paths are redacted'
+        range: { id: range.id, from: ev.win.from == null ? null : new Date(ev.win.from).toISOString(),
+          to: ev.win.to == null ? null : new Date(ev.win.to).toISOString(), label: ev.win.label },
+        source_versions: { catalog: 'free_coding_models@' + '2026-08-04', pricing_snapshot: 'v2026.08' },
+        records: evts.length, events_without_start_time: ev.untimed,
+        current_records: bcur.length, historical_records: bhist.length,
+        cost_states: { priced: bcs.money, priced_microdollars: bcs.micro, plan_covered: bcs.covered,
+          hidden_byok: bcs.byok, unknown: bcs.unknown },
+        historical_cost_states: { priced: bhs.money, priced_microdollars: bhs.micro, plan_covered: bhs.covered,
+          hidden_byok: bhs.byok, unknown: bhs.unknown },
+        scope_totals: D.scopeEventTotals(scope),
+        redacted_receipts: evts.map(function (a) { return a.receiptRef; }).filter(Boolean),
+        note: 'raw payloads, credentials and local paths are redacted; a cost is absent, not zero, unless cost_status says it was priced; cost_states covers current accounts only and is never summed with historical_cost_states'
       }, null, 2);
       name = 'u11-support-bundle.json'; mime = 'application/json';
     }
     var ok = downloadBlob(name, payload, mime);
-    D.dispatch('cmd.usage.export', { intent: expState.intent, format: expState.fmt, scope: scope });
+    D.dispatch('cmd.usage.export', { intent: expState.intent, format: expState.fmt, scope: scope, range: range.id });
     if (window.toast) window.toast(ok ? 'Export ready — ' + name : 'Export prepared (demo)');
     if (window.PMMenu && window.PMMenu.close) window.PMMenu.close(expSprout);
     expSprout.hidden = true;
@@ -1370,6 +2521,290 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
     } else openExport();
   });
 
+  /* ---------- date range sprout (audit A09-09) ---------- */
+  var rangeSprout = $('u11RangeSprout');
+  function isoDay(ms) { return new Date(ms).toISOString().slice(0, 10); }
+  function rangeHTML() {
+    var ev = rangeEvents();
+    var html = '<div class="u11-sheet">';
+    html += '<div class="u11-sheet-head"><div><div class="u11-sheet-tt">Date range</div>' +
+      '<div class="u11-sheet-sub">Drives the room strip in every room, the key figures on Overview, the scope picker totals and Export. Widgets with a provider-native or published window keep it.</div></div></div>';
+    html += '<div class="u11-sheet-sec">Presets</div>';
+    RANGE_PRESETS.forEach(function (p) {
+      var win = p.ms == null ? { from: null } : { from: NOWMS - p.ms, to: NOWMS };
+      var n = D.attempts.filter(function (a) {
+        return D.attemptInScope(a, window.U11W.pageScope) && a.startedAt && inWindow(a.startedAt, win);
+      }).length;
+      html += '<button type="button" class="u11-range-opt' + (range.id === p.id ? ' on' : '') + '" data-u11range="' + p.id + '">' +
+        '<b>' + p.label + '</b><span>' + n + ' events</span></button>';
+    });
+    html += '<div class="u11-sheet-sec">Custom range</div>';
+    var from = range.id === 'custom' ? range.from : isoDay(NOWMS - 7 * 86400000);
+    var to = range.id === 'custom' ? range.to : isoDay(NOWMS);
+    html += '<div class="u11-range-custom">' +
+      '<label for="u11RangeFrom">From</label><input type="date" id="u11RangeFrom" value="' + from + '" max="' + isoDay(NOWMS) + '">' +
+      '<label for="u11RangeTo">To</label><input type="date" id="u11RangeTo" value="' + to + '" max="' + isoDay(NOWMS) + '">' +
+      '<button type="button" class="u11-range-apply" data-u11rangeapply>Apply</button></div>';
+    html += '<div class="u11-sheet-note">The clock in this prototype is fixed at ' + T.stamp(D.meta.now) +
+      ', so every preset is deterministic. This fixture is one working session — nearly every timestamped event falls inside five hours — which is why the three shortest presets report the same count; the counts beside each preset are the real ones. ' +
+      ev.untimed + ' recorded event' + (ev.untimed === 1 ? '' : 's') +
+      ' in this scope carr' + (ev.untimed === 1 ? 'ies' : 'y') + ' no start time; ' + (ev.untimed === 1 ? 'it belongs' : 'they belong') +
+      ' to no window and ' + (ev.untimed === 1 ? 'is' : 'are') + ' counted separately rather than dropped.</div>';
+    html += '</div>';
+    return html;
+  }
+  function openRange() {
+    if (window.PMMenu && window.PMMenu.closeAll) window.PMMenu.closeAll();
+    if (window.U11Context) window.U11Context.closeAll();
+    rangeSprout.hidden = false;
+    rangeSprout.innerHTML = rangeHTML();
+    var r = $('u11Range').getBoundingClientRect();
+    rangeSprout.style.position = 'fixed';
+    $('u11Range').setAttribute('aria-expanded', 'true');
+    if (window.PMMenu && window.PMMenu.openAt) window.PMMenu.openAt(rangeSprout, r.right, r.top - 6);
+    else { rangeSprout.classList.add('is-open'); rangeSprout.style.right = '12px'; rangeSprout.style.bottom = '48px'; }
+  }
+  function applyRange(next, quiet) {
+    range = normRange(next);
+    STORE.set('u11:range', range);
+    $('u11RangeTxt').textContent = rangeShort();
+    $('u11Range').title = 'Date range · ' + rangeWindow().label;
+    renderRoomStrips();
+    renderKpis();
+    renderTimeBreakdown();
+    if (popOpen) updatePopFoot();
+    writeHash();
+    if (!quiet && window.toast) window.toast('Range: ' + rangeWindow().label);
+  }
+  rangeSprout.addEventListener('click', function (e) {
+    var opt = e.target.closest('[data-u11range]');
+    if (opt) {
+      applyRange({ id: opt.getAttribute('data-u11range') });
+      rangeSprout.innerHTML = rangeHTML();
+      return;
+    }
+    if (e.target.closest('[data-u11rangeapply]')) {
+      var f = $('u11RangeFrom').value, t = $('u11RangeTo').value;
+      if (!isDay(f) || !isDay(t) || f > t) {
+        if (window.toast) window.toast('Choose a start date on or before the end date');
+        return;
+      }
+      applyRange({ id: 'custom', from: f, to: t });
+      rangeSprout.innerHTML = rangeHTML();
+    }
+  });
+  $('u11Range').addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (!rangeSprout.hidden && rangeSprout.classList.contains('is-open')) {
+      if (window.PMMenu && window.PMMenu.close) window.PMMenu.close(rangeSprout);
+      rangeSprout.hidden = true;
+      this.setAttribute('aria-expanded', 'false');
+    } else openRange();
+  });
+
+  /* ---------- demo fixture index (audit A10-13) ----------
+
+     DECISION_COVERAGE VIS-005 asks for a deterministic trigger for every major
+     state. The concept had none for its own acceptance fixtures: no registry,
+     no query parameter, no picker, and the only runtime switcher was a two-tab
+     context tablist a reviewer had to discover. Each row below carries the room,
+     the disclosure level and — where the evidence is an inspector — the exact
+     event or run it opens, so a reviewer reaches all twenty from one list, and
+     #fixture=<n> is a shareable link to any of them. Fixtures whose evidence is
+     an absence say so instead of pretending to open something. */
+  var FIXTURES = [
+    { n: 1, t: 'Codex plan reaches its limit, then optional credits', room: 'plans', lvl: 'essentials',
+      look: 'ChatGPT Business at 100% and its continuation ladder in Usage settings' },
+    { n: 2, t: 'Alibaba Token Plan consumes an Extra Bundle', room: 'ledger', lvl: 'advanced', att: 'ue-611',
+      look: 'billing route “usage pack” on the pack draw' },
+    { n: 3, t: 'Work account hits its limit; later work switches to Personal', room: 'ledger', lvl: 'advanced', att: 'ue-608',
+      look: 'requested account differs from the account that served it' },
+    { n: 4, t: 'Text-only model calls a separately settled vision helper', room: 'ledger', lvl: 'advanced', att: 'ue-551',
+      look: 'the helper settles on its own API-billed route' },
+    { n: 5, t: 'Model change causes a replay and a cache reset', room: 'context', lvl: 'standard', thread: 'thread:t-91',
+      look: 'the What changed timeline on the second thread' },
+    { n: 6, t: 'Free model cooldown', room: 'free', lvl: 'essentials', look: '“Cooldown · back in 40m” on GLM-4.5-Air' },
+    { n: 7, t: 'Background model validation consumes allowance', room: 'authority', lvl: 'advanced', att: 'ue-620',
+      look: 'the probe attributed to validation, never to your work' },
+    { n: 8, t: 'Six required specialists run in three two-agent waves', room: 'overview', lvl: 'essentials', run: 'run:plan-12',
+      look: 'requested 6 · 2 at a time · 3 waves in the run detail' },
+    { n: 9, t: 'Provider data unavailable; Puppet Master shows its own estimate', room: 'plans', lvl: 'standard',
+      look: '“Provider data unavailable · PM estimate 63% · medium confidence”' },
+    { n: 10, t: 'Requested and effective model differ', room: 'context', lvl: 'standard', thread: 'thread:t-91',
+      look: 'models and connections used, with the switch' },
+    { n: 11, t: 'Back Seat Driver silent, advice and suppressed calls', room: 'ledger', lvl: 'advanced', att: 'ue-600',
+      look: 'the Back Seat Driver section; the suppressed duplicate made no provider call at all' },
+    { n: 12, t: 'Attachment transform', room: 'ledger', lvl: 'advanced', att: 'ue-602', look: 'the Attachment section' },
+    { n: 13, t: 'CLI update waits for idle, verifies, rolls back', room: 'ledger', lvl: 'standard', att: 'ue-609',
+      look: 'the verification call the update made' },
+    { n: 14, t: 'Offline queued message and reconnect replay', room: 'ledger', lvl: 'standard', att: 'ue-610',
+      look: 'the replay attributed to the reconnect, not to new work' },
+    { n: 15, t: 'Server work continues while the client is offline', room: 'ledger', lvl: 'standard',
+      look: 'the server-continuity card in Maintenance & operations' },
+    { n: 16, t: 'Cross-project Goal', room: 'ledger', lvl: 'advanced', att: 'ue-652',
+      look: 'the cross-project note with the source project redacted' },
+    { n: 17, t: 'Local sound preview and external notification test', room: 'ledger', lvl: 'standard',
+      look: 'both operational cards — neither carries provider usage' },
+    { n: 18, t: 'Unconfigured accounts stay out of the normal view', room: 'accounts', lvl: 'standard', absence: true,
+      look: 'Mistral, Fireworks, OpenRouter and Cohere appear nowhere — this fixture is an absence' },
+    { n: 19, t: 'Missing provider CLI returns Provider Setup Required', room: 'ledger', lvl: 'standard',
+      look: '“Provider Setup Required” and its setup route in Maintenance & operations' },
+    { n: 20, t: 'Explicit first acquisition versus post-consent update', room: 'ledger', lvl: 'advanced', att: 'ue-609',
+      look: 'the acquisition lineage on the card, then the same lineage in the inspector' }
+  ];
+  var fxSprout = $('u11FxSprout');
+  function fixtureById(n) {
+    for (var i = 0; i < FIXTURES.length; i++) if (FIXTURES[i].n === Number(n)) return FIXTURES[i];
+    return null;
+  }
+  function fixtureTargetOk(f) {
+    if (f.att) return !!D.attemptById[f.att];
+    if (f.run) return !!D.runById[f.run];
+    if (f.thread) return !!D.threadById[f.thread];
+    return true;
+  }
+  function fxHTML() {
+    var html = '<div class="u11-sheet">';
+    html += '<div class="u11-sheet-head"><div><div class="u11-sheet-tt">Demo fixtures</div>' +
+      '<div class="u11-sheet-sub">The twenty acceptance fixtures this prototype carries. Each one sets the disclosure level, opens the room and — where the evidence lives in an inspector — opens it. Every row is also a link: <b>#fixture=' + FIXTURES[0].n + '</b>.</div></div></div>';
+    html += '<div class="u11-fx-list">';
+    FIXTURES.forEach(function (f) {
+      var ok = fixtureTargetOk(f);
+      html += '<button type="button" class="u11-fx-row' + (f.absence ? ' is-absence' : '') + '" data-u11fx="' + f.n + '">' +
+        '<span class="u11-fx-n">' + f.n + '</span><span class="u11-fx-main">' +
+        '<span class="u11-fx-t">' + f.t + '</span>' +
+        '<span class="u11-fx-w">' + LEVEL_LABELS[f.lvl] + ' · ' + (TYPE_LABELS[f.room] || R.humanCap(f.room)) + ' room — ' + f.look +
+        (ok ? '' : ' · the record this fixture names is not in the current dataset') + '</span></span></button>';
+    });
+    html += '</div>';
+    html += '<div class="u11-sheet-note">Fixture 18 is an absence check: nothing opens, because nothing should render. Everything else lands on the surface that carries the evidence.</div>';
+    html += '</div>';
+    return html;
+  }
+  function openFixtures() {
+    if (window.PMMenu && window.PMMenu.closeAll) window.PMMenu.closeAll();
+    if (window.U11Context) window.U11Context.closeAll();
+    fxSprout.hidden = false;
+    fxSprout.innerHTML = fxHTML();
+    var r = $('u11Fixtures').getBoundingClientRect();
+    fxSprout.style.position = 'fixed';
+    $('u11Fixtures').setAttribute('aria-expanded', 'true');
+    if (window.PMMenu && window.PMMenu.openAt) window.PMMenu.openAt(fxSprout, r.right, r.top - 6);
+    else { fxSprout.classList.add('is-open'); fxSprout.style.right = '12px'; fxSprout.style.bottom = '48px'; }
+  }
+  function showFixture(n) {
+    var f = fixtureById(n);
+    if (!f) return false;
+    setDisclosure(f.lvl, true);
+    goTo(f.room);
+    if (window.PMMenu && window.PMMenu.close) { window.PMMenu.close(fxSprout); window.PMMenu.close(rangeSprout); }
+    fxSprout.hidden = true;
+    $('u11Fixtures').setAttribute('aria-expanded', 'false');
+    var reachable = fixtureTargetOk(f);
+    setTimeout(function () {
+      if (!reachable) return;
+      if (f.att && window.U11RunDetail) window.U11RunDetail.openAttempt(f.att);
+      else if (f.run && window.U11RunDetail) window.U11RunDetail.open(f.run);
+      else if (f.thread && window.U11Context) window.U11Context.openDetails(f.thread);
+    }, reduced() ? 0 : 420);
+    if (window.toast) {
+      window.toast('Fixture ' + f.n + ' — look for: ' + f.look + (reachable ? '' : ' (this record is not in the current dataset)'));
+    }
+    return true;
+  }
+  fxSprout.addEventListener('click', function (e) {
+    var row = e.target.closest('[data-u11fx]');
+    if (row) showFixture(row.getAttribute('data-u11fx'));
+  });
+  $('u11Fixtures').addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (!fxSprout.hidden && fxSprout.classList.contains('is-open')) {
+      if (window.PMMenu && window.PMMenu.close) window.PMMenu.close(fxSprout);
+      fxSprout.hidden = true;
+      this.setAttribute('aria-expanded', 'false');
+    } else openFixtures();
+  });
+
+  /* ---------- URL addressability (audit A10-12) ----------
+
+     The concept read the URL exactly once, for the embed flag, and wrote it
+     never: no room, scope, level, range or fixture was re-enterable, linkable
+     or assertable by URL. The hash now carries the four pieces of view state
+     plus a one-shot fixture trigger. localStorage still holds the same state —
+     the hash simply wins on load and is kept in step afterwards, so an existing
+     stored view is never lost by opening a link. */
+  /* replaceState throws on a file:// document (opaque origin), which is exactly
+     how these prototypes are opened, so the fallback writes the fragment
+     directly and hashSelf keeps the resulting hashchange from re-entering. */
+  var hashSelf = null;
+  function writeHash() {
+    var parts = ['room=' + currentPane(), 'level=' + disclosure, 'scope=' + window.U11W.pageScope];
+    parts.push('range=' + (range.id === 'custom' ? 'custom:' + range.from + '..' + range.to : range.id));
+    var h = '#' + parts.join('&');
+    if (location.hash === h) return;
+    hashSelf = h;
+    try { history.replaceState(null, '', h); } catch (e) { location.hash = h; }
+  }
+  function parseHash() {
+    var raw = String(location.hash || '').replace(/^#/, '');
+    var out = {};
+    if (!raw) return out;
+    raw.split('&').forEach(function (kv) {
+      var i = kv.indexOf('=');
+      if (i < 1) return;
+      out[decodeURIComponent(kv.slice(0, i))] = decodeURIComponent(kv.slice(i + 1));
+    });
+    return out;
+  }
+  function rangeFromHash(v) {
+    if (!v) return null;
+    if (v.indexOf('custom:') === 0) {
+      var pair = v.slice(7).split('..');
+      return normRange({ id: 'custom', from: pair[0], to: pair[1] });
+    }
+    return presetById(v) ? normRange({ id: v }) : null;
+  }
+  function applyHash(initial) {
+    var h = parseHash();
+    if (h.level && h.level !== disclosure) setDisclosure(h.level, true);
+    if (h.range) {
+      var r = rangeFromHash(h.range);
+      if (r && (r.id !== range.id || r.from !== range.from || r.to !== range.to)) applyRange(r, true);
+    }
+    if (h.scope && h.scope !== window.U11W.pageScope && scopeExists(h.scope)) {
+      window.U11W.pageScope = h.scope;
+      STORE.set('u11:scope', h.scope);
+      applyScope();
+    }
+    if (h.room && paneEl(h.room)) {
+      if (initial) {
+        /* first paint: settle straight onto the room, no flight from Overview */
+        var items = railItems();
+        items.forEach(function (it) {
+          var on = it.getAttribute('data-tab') === h.room;
+          it.classList.toggle('active', on);
+          if (on) it.setAttribute('aria-current', 'page'); else it.removeAttribute('aria-current');
+        });
+        var grp = $('u11MoreGrp');
+        if (grp && ['attention', 'cache', 'tools', 'signals', 'authority'].indexOf(h.room) !== -1) {
+          grp.classList.remove('closed');
+          var mt = grp.querySelector('[data-more-toggle]');
+          if (mt) mt.setAttribute('aria-expanded', 'true');
+        }
+        DEPTH.cur = h.room;
+        settlePanes(h.room);
+        placeRailInd(false);
+        announceRoom(h.room);
+      } else goTo(h.room);
+    }
+    if (h.fixture) showFixture(h.fixture);
+    writeHash();
+  }
+  window.addEventListener('hashchange', function () {
+    if (location.hash === hashSelf) { hashSelf = null; return; }
+    applyHash(false);
+  });
+
   /* ---------- refresh ---------- */
   $('u11Refresh').addEventListener('click', function () {
     var b = this; b.classList.add('spinning');
@@ -1381,7 +2816,7 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
       $('u11Fresh').classList.remove('stale');
       headLine();
       HANDLES.forEach(function (h) { try { h.rerender(); } catch (e) {} });
-      railStatus(); kickerMeta(); renderBanner(); renderKpis();
+      railStatus(); kickerMeta(); renderBanner(); renderKpis(); renderRoomStrips(); renderLocalOps(); renderTimeBreakdown();
       if (window.toast) window.toast('Usage projections refreshed (demo)');
     }, 900);
   });
@@ -1399,6 +2834,7 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
     return '<span class="u11w-ring"><svg viewBox="0 0 64 64"><circle class="dbg" cx="32" cy="32" r="26"></circle>' +
       '<circle class="dfill" cx="32" cy="32" r="26" stroke="' + stroke + '" data-pct="' + pct + '" style="stroke-dasharray:163.4;stroke-dashoffset:163.4"></circle></svg></span>';
   }
+  function kpiLab(t) { return '<div class="u11-kpi-lab" title="' + String(t).replace(/"/g, '&quot;') + '">' + t + '</div>'; }
   function renderKpis() {
     var el = $('u11Kpis');
     if (!el) return;
@@ -1412,34 +2848,42 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
     var cards = [];
     cards.push('<div class="u11-kpi"><span class="u11-kpi-ico h-blue">' + ic('wallet') + '</span><div class="u11-kpi-main">' +
       '<div class="u11-kpi-val">' + kpiNum(D.costs.spentMonthMicro / 1e6, 'cost') + '</div>' +
-      '<div class="u11-kpi-lab">Spent this month</div></div>' +
+      kpiLab('Spent this month</div>') +
       '<span class="u11-kpi-vis"><span class="us-track u11w-track"><span class="us-fill ' + (limitPct >= 90 ? 'f-pink' : limitPct >= 70 ? 'f-orange' : 'f-lime') + '" data-fill="' + limitPct + '" style="--wf:' + limitPct + '%"></span></span></span></div>');
     cards.push('<div class="u11-kpi"><span class="u11-kpi-ico h-pink">' + ic('dial') + '</span><div class="u11-kpi-main">' +
       '<div class="u11-kpi-val">' + kpiNum(hot ? hot.usedPct : 0, 'num') + '<i class="u11w-unit">%</i></div>' +
-      '<div class="u11-kpi-lab">Hottest plan · ' + (hot ? (D.productById[hot.productId] || {}).label : '—') + '</div></div>' +
+      kpiLab('Hottest plan · ' + (hot ? (D.productById[hot.productId] || {}).label : '—') + '</div>') +
       '<span class="u11-kpi-vis">' + kpiRing(hot ? hot.usedPct : 0, hot && hot.usedPct >= 90 ? 'var(--tone-err)' : 'var(--u11-pink, #ff4d6d)') + '</span></div>');
     cards.push('<div class="u11-kpi"><span class="u11-kpi-ico h-teal">' + ic('inbox') + '</span><div class="u11-kpi-main">' +
       '<div class="u11-kpi-val">' + kpiNum(th.context.pct, 'num') + '<i class="u11w-unit">%</i></div>' +
-      '<div class="u11-kpi-lab">Context window · ' + fmt.tok(th.context.used) + ' / ' + fmt.tok(th.context.limit) + '</div></div>' +
+      kpiLab('Context window · ' + fmt.tok(th.context.used) + ' / ' + fmt.tok(th.context.limit) + '</div>') +
       '<span class="u11-kpi-vis">' + kpiRing(th.context.pct, 'var(--u11-teal, #2dd4bf)') + '</span></div>');
     cards.push('<div class="u11-kpi"><span class="u11-kpi-ico h-lime">' + ic('layers') + '</span><div class="u11-kpi-main">' +
       '<div class="u11-kpi-val">' + kpiNum(saved, 'dec', 2, '$') + '</div>' +
-      '<div class="u11-kpi-lab">Cache saved today</div></div>' +
+      kpiLab('Cache saved today</div>') +
       '<span class="u11-kpi-vis"><span class="u11w-spark">' + D.cacheStats.map(function (c) { return '<i class="sp-teal" data-h="' + Math.round((c.save || 0) / Math.max(saved, 0.01) * 100) + '" style="height:8%"></i>'; }).join('') + '</span></span></div>');
     cards.push('<div class="u11-kpi"><span class="u11-kpi-ico h-orange">' + ic('users') + '</span><div class="u11-kpi-main">' +
       '<div class="u11-kpi-val"><b class="u11w-num static">' + ready + ' / ' + total + '</b></div>' +
-      '<div class="u11-kpi-lab">Accounts ready</div></div>' +
+      kpiLab('Accounts ready</div>') +
       '<span class="u11-kpi-vis"><span class="u11w-dots">' + Array.apply(null, Array(total)).map(function (_, i) { return '<i class="' + (i < ready ? 'on h-blue' : '') + '"></i>'; }).join('') + '</span></span></div>');
     cards.push('<div class="u11-kpi"><span class="u11-kpi-ico h-purple">' + ic('spark') + '</span><div class="u11-kpi-main">' +
       '<div class="u11-kpi-val"><b class="u11w-num static">' + D.signals.grade + '</b><i class="u11w-unit">' + D.signals.score + '/100</i></div>' +
-      '<div class="u11-kpi-lab">Efficiency signals</div></div>' +
+      kpiLab('Efficiency signals</div>') +
       '<span class="u11-kpi-vis"><span class="u11w-grad"><span class="u11w-gradmask" data-gm="' + (100 - D.signals.score) + '"></span></span></span></div>');
     cards.push('<div class="u11-kpi"><span class="u11-kpi-ico h-teal">' + ic('globe2') + '</span><div class="u11-kpi-main">' +
       '<div class="u11-kpi-val">' + kpiNum(D.eligibleFreeModels().length, 'num') + '</div>' +
-      '<div class="u11-kpi-lab">Free routes eligible</div></div></div>');
-    cards.push('<div class="u11-kpi"><span class="u11-kpi-ico h-mute">' + ic('clipboard') + '</span><div class="u11-kpi-main">' +
-      '<div class="u11-kpi-val">' + kpiNum(D.attempts.length, 'num') + '</div>' +
-      '<div class="u11-kpi-lab">Ledger events · immutable</div></div></div>');
+      kpiLab('Free routes eligible</div></div>'));
+    /* range-driven (audit A09-09): the count follows the date range and the
+       current scope, and the label says which window produced it */
+    var kev = rangeEvents();
+    cards.push('<div class="u11-kpi" title="' + kev.scoped + ' events in this scope · ' + kev.all + ' recorded in total' +
+      (kev.untimed ? ' · ' + kev.untimed + ' carry no start time and belong to no window' : '') + '"><span class="u11-kpi-ico h-mute">' + ic('clipboard') + '</span><div class="u11-kpi-main">' +
+      '<div class="u11-kpi-val">' + kpiNum(kev.list.length, 'num') + '</div>' +
+      kpiLab('Ledger events · ' + rangeShort() + '</div></div>'));
+    var kcs = costSummary(kev.list);
+    cards.push('<div class="u11-kpi" title="' + COST_TITLE + '"><span class="u11-kpi-ico h-blue">' + ic('wallet') + '</span><div class="u11-kpi-main">' +
+      '<div class="u11-kpi-val"><b class="u11w-num static">' + (kcs.money ? fmt.cost(kcs.micro / 1e6) : '—') + '</b></div>' +
+      kpiLab('' + (kcs.money ? 'Priced by the provider · ' + kcs.money + ' of ' + kev.list.length + ' events' : 'No published price in this range') + '</div></div>'));
     el.innerHTML = cards.map(function (c, i) { return c.replace('class="u11-kpi"', 'class="u11-kpi" style="animation-delay:' + (i * 55) + 'ms"'); }).join('');
     window.U11W.animateBody(el);
   }
@@ -1447,17 +2891,24 @@ html[data-reduced-motion="1"] .u11-scope { transition: none; }
   /* ---------- boot ---------- */
   headLine();
   mountCanvases();
+  $('u11RangeTxt').textContent = rangeShort();
+  $('u11Range').title = 'Date range · ' + rangeWindow().label;
   renderKpis();
   railStatus();
   kickerMeta();
   updateScopeChip();
   renderBanner();
+  renderRoomStrips();
+  renderLocalOps();
+  renderTimeBreakdown();
   applyDisclosureUI();
   initRailInd();
   document.querySelectorAll('.u11-rail .u11-item').forEach(function (it, i) { it.style.setProperty('--u11-ri', String(i)); });
   document.querySelectorAll('.u11-pop-head i[data-ico], .u11-pop-x i[data-ico]').forEach(function (el) {
     el.innerHTML = window.PMIcon(el.getAttribute('data-ico'), el.className);
   });
+  /* the URL is read last, so a link lands on a fully built page */
+  applyHash(true);
   R.deText(document);
 })();
 </script>

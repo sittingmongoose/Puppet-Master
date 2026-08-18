@@ -1,0 +1,179 @@
+{
+  "schema_id": "pm.packet_manifest.v2",
+  "packet_key": "settings",
+  "packet_name": "PM_Settings_Bakeoff_Final_Cumulative_2026-08-08",
+  "title": "Puppet Master Settings Bakeoff \u2014 Final Cumulative Packet",
+  "mode": "concept_bakeoff",
+  "decision_topics": 129,
+  "direct_prompts": [
+    "IMPLEMENTATION_PROMPT.md",
+    "AUDIT_PROMPT.md"
+  ],
+  "files": [
+    {
+      "path": "00_START_HERE.md",
+      "bytes": 1885,
+      "sha256": "6029b97f89429847d0edd1ebd1049faf3a92e8b9ccaa7bc89bf140a3f80be08e"
+    },
+    {
+      "path": "01_CORE_ARCHITECTURE.md",
+      "bytes": 3362,
+      "sha256": "a4fe99df171e8fc042f32adf12fa4eb92f5e5fdaef9c37f48d9b64b814abcc3d"
+    },
+    {
+      "path": "02_MANAGER_GRAMMAR_AND_SETTING_MODEL.md",
+      "bytes": 2961,
+      "sha256": "d43f60f5d77d2fe20c928d535fb6a5d851da3aa10ab73ca095be2e2425712629"
+    },
+    {
+      "path": "03_PROVIDER_AGENT_MODEL_AND_INSTALLATION.md",
+      "bytes": 5207,
+      "sha256": "5d792108c360c5b21220bf52267bc226fe5fb439ba6e9945fd2e30b9c6a63853"
+    },
+    {
+      "path": "04_CONTEXT_MEMORY_PERSONAS_GOAL_CREW_PERMISSIONS.md",
+      "bytes": 3894,
+      "sha256": "bcb345c2cada09f956c7db8f4a96f902883a9ad3e0604ff9ca61f584eb658fec"
+    },
+    {
+      "path": "05_DESKTOP_DEVELOPER_AND_SYSTEM_MANAGERS.md",
+      "bytes": 4269,
+      "sha256": "2094e01c46a5ab5609aa0908336cce981236dea63b804c480dd61f86cb89783e"
+    },
+    {
+      "path": "06_NOTIFICATIONS_SOUNDS_APPEARANCE_AND_INPUT.md",
+      "bytes": 2899,
+      "sha256": "7533b7e79f348fa4f6da9e1c92fb974ae58ab9b0ecd24c58d02f82fe915d8e4a"
+    },
+    {
+      "path": "07_SERVER_HOST_AND_OWNER_BOUNDARIES.md",
+      "bytes": 2494,
+      "sha256": "4dd964ed11dcc2fe1700294942efea199d79e818fab94cc0d81d2f13338a9889"
+    },
+    {
+      "path": "08_CONCEPT_COVERAGE_AND_FIXTURES.md",
+      "bytes": 2898,
+      "sha256": "4806b255783e111a3fea61efd113c5aadd67152b79824ea90907a62d12b4bf72"
+    },
+    {
+      "path": "09_GUI_MOTION_THEME_SLINT_AND_TESTS.md",
+      "bytes": 2326,
+      "sha256": "a81bd5fc778f1831bb7c248b92ac6b03be7217690cd54b8d9fa0ae335e2100fd"
+    },
+    {
+      "path": "10_PLAN_COMMAND_WIRING_DRY_IMPACT.md",
+      "bytes": 2716,
+      "sha256": "5dc4a0999341f50924b0517b1c5d91c0df24680ba10d072a04519743d1b2d6cc"
+    },
+    {
+      "path": "AUDIT_PROMPT.md",
+      "bytes": 2829,
+      "sha256": "5970e036a4d0e144c96f1ecd72b0c28234cb8da5bf92a019683fe5ec074c46cd"
+    },
+    {
+      "path": "CANDIDATE_COMMAND_ID_REGISTER.json",
+      "bytes": 3397,
+      "sha256": "b10393b4c0947faedf96d28243dc1fc134872d3b40083e77cb6253b2a83df25c"
+    },
+    {
+      "path": "DECISION_COVERAGE.json",
+      "bytes": 54472,
+      "sha256": "befbc67733876d9f03ea2aff526c166692348e629240800fcf7c5925a1dad46d"
+    },
+    {
+      "path": "IMPACT_REGISTER.template.json",
+      "bytes": 465,
+      "sha256": "fe2dcd5d930acfe3e259b92101e651a11aa819f24fd6bd539bb2defdac6fa266"
+    },
+    {
+      "path": "IMPLEMENTATION_PROMPT.md",
+      "bytes": 2861,
+      "sha256": "5a14fbb336241f1a8a7146456b7079af68c67ec8a0aebe9e1ef7ccdfe4d92fa4"
+    },
+    {
+      "path": "MANAGER_COVERAGE_MATRIX.json",
+      "bytes": 1915,
+      "sha256": "b04db01fb7ff6ae8ca91deb32488317f4b6345afa7f33f5c924a75da35bfbfa2"
+    },
+    {
+      "path": "PROMPT_USAGE.md",
+      "bytes": 431,
+      "sha256": "cd9ca7e82d03ef364a7de01bbf2d7b83aae1b52e66a6a66bb2b4ea6169eaff8c"
+    },
+    {
+      "path": "REFERENCE_SUPERSESSIONS.md",
+      "bytes": 1254,
+      "sha256": "5f3f1c16ed2f41408503cf36ae60be597a5598833fae5d7fcc2fc5bc429ecdb2"
+    },
+    {
+      "path": "SHARED_PROCESS_RULES.md",
+      "bytes": 2216,
+      "sha256": "0ce29d11481ec4f6c9d15e3b69479d64359c017e6ba27226bc657579a8e82d0c"
+    },
+    {
+      "path": "SOURCE_AND_PRECEDENCE_MAP.md",
+      "bytes": 2846,
+      "sha256": "f8983850875fda4edbbefb38415465f87545ff1ad96e1457a6ff375b18cb98d4"
+    },
+    {
+      "path": "reference/CONCEPT_RULES.md",
+      "bytes": 1519,
+      "sha256": "e59011b56f3321462087cfaad8655a078b82621b7a10605256a5171f494721b1"
+    },
+    {
+      "path": "reference/EGOLITE_SETTINGS_RETURN.md",
+      "bytes": 6633,
+      "sha256": "aff9e52da7e80f291c1559055c66dd31efb279f1108f869ea1b18aaf4bf3a8b3"
+    },
+    {
+      "path": "reference/OMP_PROVIDER_CATALOG_REFERENCE.json",
+      "bytes": 15660,
+      "sha256": "7204e5fc96c040c6bc206fb98f0913c1546f328ee97766064ba01767cb038051"
+    },
+    {
+      "path": "reference/PERFORMANCE_SETTINGS_RETURN.md",
+      "bytes": 19800,
+      "sha256": "259883117d9dbb8d1d65f6568a35a3ce38f9fd1e81806fc0485d4863ca3ab6bb"
+    },
+    {
+      "path": "reference/PM_CROSS_SYSTEM_COMPLETENESS_AUDIT.md",
+      "bytes": 33495,
+      "sha256": "f20af36219e1d7d985a831c974d3008920483c3ee01a5696e49b2ac27888e467"
+    },
+    {
+      "path": "reference/PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "bytes": 4857,
+      "sha256": "9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1"
+    },
+    {
+      "path": "reference/PROVIDER_IDENTIFICATION_INSTALLATION_AUTH_UPDATE_HANDOFF.md",
+      "bytes": 32219,
+      "sha256": "ab29a3fbe7846ae9996ba22d8dbfa97d000cdc78b64a9db927834d4d649758ac"
+    },
+    {
+      "path": "reference/SERVER_BACKBONE_SETTINGS_RETURN.md",
+      "bytes": 6774,
+      "sha256": "ebc2d28314ede35a94b7aa8830a85ada57300b31701ab6f96d12097859dec018"
+    },
+    {
+      "path": "reference/SETTINGS_NAVIGATION_VIDEO_DESCRIPTION.md",
+      "bytes": 2706,
+      "sha256": "670a057f6b410a128a7844dd745b25e51cc9dbffc17222ac512a382c01164fc6"
+    },
+    {
+      "path": "reference/T3_MODEL_PICKER_REFERENCE.png",
+      "bytes": 82646,
+      "sha256": "76915ba3abb456415fe1acaf0f76dd84750cf2a9b8f1c6e5ff2efa16022c7963"
+    },
+    {
+      "path": "reference/current_model_picker_reference.png",
+      "bytes": 82646,
+      "sha256": "76915ba3abb456415fe1acaf0f76dd84750cf2a9b8f1c6e5ff2efa16022c7963"
+    },
+    {
+      "path": "reference/settings_navigation_contact_sheet.jpg",
+      "bytes": 594207,
+      "sha256": "f22d0c1e6d715b1317d878d3b983367cab5685e1e8d179bf3cac2b1f4e73b717"
+    }
+  ]
+}

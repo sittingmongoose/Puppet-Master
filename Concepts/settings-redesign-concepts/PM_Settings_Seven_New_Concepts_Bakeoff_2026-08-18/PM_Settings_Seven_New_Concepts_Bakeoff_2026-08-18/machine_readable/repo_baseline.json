@@ -1,0 +1,132 @@
+{
+  "schema_id": "pm.settings_bakeoff.repo_baseline.v2",
+  "repository_snapshot_date": "2026-08-17",
+  "settings_inventory": {
+    "schema_id": "pm.settings_inventory.v1",
+    "schema_version": "1.0.0",
+    "generated_at_utc": "2026-08-05T00:00:00Z",
+    "settings_count": 828,
+    "category_count": 12,
+    "categories": [
+      {
+        "id": "general",
+        "title": "General & Appearance",
+        "subgroups": [
+          "Visual Style",
+          "Interaction & Defaults",
+          "Startup & Recovery"
+        ]
+      },
+      {
+        "id": "ai",
+        "title": "AI Brains & Providers",
+        "subgroups": [
+          "Accounts & Sign-in",
+          "Models & Defaults",
+          "Status, Usage & Costs"
+        ]
+      },
+      {
+        "id": "safety",
+        "title": "Permissions & Safety",
+        "subgroups": [
+          "Rules & Presets",
+          "Approvals & Gates",
+          "Files & Tools Protection"
+        ]
+      },
+      {
+        "id": "code",
+        "title": "Code & Execution",
+        "subgroups": [
+          "Terminal & Shell",
+          "Editing & Languages",
+          "Execution Environment"
+        ]
+      },
+      {
+        "id": "memory",
+        "title": "Memory & Context",
+        "subgroups": [
+          "Context Assembly",
+          "Memory & Retention",
+          "Limits & Budgets"
+        ]
+      },
+      {
+        "id": "planning",
+        "title": "Planning & Verification",
+        "subgroups": [
+          "Interview & Wizard",
+          "Testing Policy",
+          "Verification & Goal Mode"
+        ]
+      },
+      {
+        "id": "branching",
+        "title": "Branching & Collaboration",
+        "subgroups": [
+          "Worktrees & Git",
+          "Crew & Consensus",
+          "Subagents & Parallelism"
+        ]
+      },
+      {
+        "id": "media",
+        "title": "Media & Output",
+        "subgroups": [
+          "Image Generation",
+          "Media In & Out",
+          "Capabilities"
+        ]
+      },
+      {
+        "id": "web",
+        "title": "Web & Search",
+        "subgroups": [
+          "Web Providers",
+          "Fetch & Crawl Policy",
+          "Project Search Index"
+        ]
+      },
+      {
+        "id": "personas",
+        "title": "Personas",
+        "subgroups": [
+          "Library",
+          "Behavior Tuning",
+          "Tools & Support"
+        ]
+      },
+      {
+        "id": "extensions",
+        "title": "Skills, Plugins & Commands",
+        "subgroups": [
+          "Skills",
+          "Plugins",
+          "Commands & Shortcuts"
+        ]
+      },
+      {
+        "id": "system",
+        "title": "System & Advanced",
+        "subgroups": [
+          "Health & Doctor",
+          "MCP Servers",
+          "Advanced & Debug"
+        ]
+      }
+    ]
+  },
+  "known_stale_scope_note": "Inventory contains legacy scope metadata such as global; new concept UX is current-Project-only and must record future schema impact without editing canon.",
+  "model_folders": [
+    "5.6 Sol",
+    "CursorAuto",
+    "fable",
+    "glm-5-2",
+    "kimi",
+    "kimi-k3",
+    "Opus 5",
+    "Qwen 5.8"
+  ]
+}

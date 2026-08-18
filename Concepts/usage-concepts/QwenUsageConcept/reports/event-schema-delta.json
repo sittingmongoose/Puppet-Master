@@ -1,7 +1,24 @@
 {
+  "schema_id": "pm.usage_event_schema_delta.v1",
+  "schema_id_provenance": "Locally minted 2026-08-18 in the family of the one schema id the packet does declare (pm.usage_candidate_command_delta.v1, PM_Usage_Concept_Update_Final_Cumulative_2026-08-08/CANDIDATE_COMMAND_ID_REGISTER.json:2). Neither packet declares a schema id for this output, so this id is not canonical and the packet owner should ratify or replace it. It is recorded rather than omitted so the file is at least self-identifying.",
   "concept": "QwenUsageConcept/u11-prism",
   "packet": "PM_Usage_Concept_Update_Final_Cumulative_2026-08-08",
-  "date": "2026-08-11",
+  "date": "2026-08-18",
+  "revision_history": [
+    "2026-08-11 - first issue.",
+    "2026-08-13 - correction content added while the file kept its 2026-08-11 date.",
+    "2026-08-18 - audit repair: the meter schema is declared for the first time, the value-state domain is declared, the setupLink shape is corrected onto canon, and enum fixture coverage is re-measured.",
+    "2026-08-18 (second pass) - residual A11-15 measured rather than assumed: the settlement enum was declaring four values while the data carries six, and the meter field list was declaring fifteen of the twenty-one keys the 33 meters actually use. Both are corrected in place with the original text preserved. The production Event Authority boundary (A11-22) is recorded so a reader knows these proposals have no wiring row to attach to."
+  ],
+  "measurement_context": {
+    "measured_at_utc": "2026-08-18T00:58:19Z",
+    "measured_against": {
+      "u11-data.js": "sha256:c6124a6ab8839168...",
+      "u11-widgets.js": "sha256:ea94379b27d6d33f...",
+      "u11-prism.html": "sha256:edce2e8290306dd1..."
+    },
+    "warning": "The concept source is under concurrent edit on 2026-08-18 - u11-data.js changed twice during this repair, gaining 14 attempts and 4 operational entries between measurements. Every count below is a point-in-time reading against the hashes above, not a standing fact. Re-derive with the stated command before relying on any of them. This warning exists because the failure this whole repair addresses was numbers quoted as facts after the thing they measured had moved."
+  },
   "attempt_schema": {
     "core": {
       "eventId": "stable id (ue-*)",
@@ -60,6 +77,145 @@
       "historicalIdentity{accountId,label}"
     ]
   },
+  "meter_schema": {
+    "added_on": "2026-08-18",
+    "why_it_is_here": "This file shipped with zero occurrences of the strings 'meter' and 'estimate' while the dataset defines 33 meters, every one of which carries provenance (sourceClass), a value state (vs), a confidence (conf) and an explanatory note - and one of which carries a user-visible estimated percentage with its own basis and confidence. A user-facing estimate governed by no clause in the required event and schema output is an undeclared contract. Audit finding A11-15.",
+    "count": 33,
+    "counted_by": "grep -c \"{ id: 'meter:\" u11-data.js",
+    "scoping_note": "Meters are provider-native quota state (packet section 01) rather than events, so a case can be made that an event-schema delta need not carry them. That case is weakened by this same file already declaring the non-event collections hosts[] and environments[]. The meter schema is declared here because meters are the surface on which the packet's 'unknown displayed as zero' hard failure actually lives.",
+    "fields": {
+      "id": "stable id (meter:*)",
+      "productId": "products[].id - the plan or product whose allowance this meter measures",
+      "label": "user-visible name of the allowance",
+      "unit": "the unit the allowance is counted in (credits, requests, tokens, runtime, ...)",
+      "windowKind": "the reset window shape (billing_cycle, rolling_5h, weekly, session_only, none, ...)",
+      "used": "int | null - null means not known and is never rendered as zero",
+      "limit": "int | null - null means not exposed or not knowable, never zero",
+      "usedPct": "int | null - null means not known and is never rendered as zero",
+      "resetAt": "ISO UTC | null",
+      "vs": "value state of the figure - see value_state_enum",
+      "sourceClass": "provenance of the figure",
+      "settlement": "source-quality of the settlement fact, same domain as on attempts",
+      "conf": "confidence in the figure where it is not directly reported",
+      "note": "human explanation rendered beside the figure whenever the value state is not a plain reported number",
+      "estimate": "optional object, present only when the provider figure is unavailable and PM computes one - see estimate_object",
+      "expiresAt": "ISO UTC | null - optional; present on 3 of 33 meters. When the allowance itself expires, as distinct from resetAt, which is when the window rolls.",
+      "sourceAuthority": "string | absent - optional; present on 4 of 33. The named authority behind the figure, in words, where sourceClass alone is not specific enough.",
+      "pressure": "object | absent - optional; present on 2 of 33. The precomputed pressure band for the row, so a renderer does not re-derive it from usedPct.",
+      "quotaStatus": "string | absent - optional; present on 2 of 33. The CLI-bridged quota state (reported | disabled | not_exposed), shared with the CBP-027 quota vocabulary.",
+      "evidenceSource": "string | absent - optional; present on 2 of 33. Which read produced the figure (cli_command, provider_api, not_exposed).",
+      "allowanceAttribution": "string | absent - optional; present on 2 of 33. Which allowance a draw-down was attributed to, where more than one could claim it."
+    },
+    "estimate_object": {
+      "shape": "{ usedPct: int, basis: string, conf: 'high' | 'medium' | 'low' }",
+      "instance": "meter:oc-go-monthly carries { usedPct: 63, basis: 'PM history · last 7 days', conf: 'medium' } with vs 'unavailable' and note 'Provider ready · Usage details unavailable'.",
+      "user_visible_rendering": "'Provider data unavailable · PM estimate 63% · medium confidence' in the Plans and limits widget",
+      "contract": "An estimate object may be present only when vs is 'unavailable' or 'estimated'. It must carry its own basis and confidence. The rendered copy must attribute the figure to PM rather than to the provider. It must never substitute for a provider figure that exists, and it must never be rendered as zero.",
+      "verification_basis": "The harness case 'new plans estimate (unavailable -> PM estimate 63%)' waits for that exact string in document.body.innerText, so the rendered copy is DOM-verified for this one meter. No harness case checks the contract's other clauses, and no other meter carries an estimate, so the contract is declared here and demonstrated once.",
+      "open_question": "Audit finding A07-02 notes that packet 04 specifies the exact string 'Provider ready · Usage details unavailable' for this state, and demo-fixture-report.json records the concept's own different copy as a pass without noting the divergence. The meter's note field does carry the packet string; the widget renders its own. Which is authoritative is not settled here."
+    },
+    "value_state_enum": {
+      "declared_here_for_the_first_time": true,
+      "values": [
+        {
+          "value": "provider_reported",
+          "meaning": "the provider reported the figure directly",
+          "occurrences_at_stamp": 22
+        },
+        {
+          "value": "measured",
+          "meaning": "PM measured it locally from receipts",
+          "occurrences_at_stamp": 3
+        },
+        {
+          "value": "stale",
+          "meaning": "a real figure, older than the freshness window",
+          "occurrences_at_stamp": 2
+        },
+        {
+          "value": "unknown",
+          "meaning": "the figure is not knowable from any source - never rendered as zero",
+          "occurrences_at_stamp": 2
+        },
+        {
+          "value": "disabled",
+          "meaning": "the meter exists but the route is turned off",
+          "occurrences_at_stamp": 1
+        },
+        {
+          "value": "estimated",
+          "meaning": "PM computed the figure; an estimate object must accompany it",
+          "occurrences_at_stamp": 1
+        },
+        {
+          "value": "not_exposed",
+          "meaning": "the provider has the figure but does not expose it - distinct from unknown and from zero",
+          "occurrences_at_stamp": 1
+        },
+        {
+          "value": "unavailable",
+          "meaning": "provider telemetry is temporarily unavailable; an estimate object may accompany it",
+          "occurrences_at_stamp": 1
+        }
+      ],
+      "measured_by": "grep -o \"vs: '[a-z_]*'\" u11-data.js | sort | uniq -c",
+      "prior_state": "Before 2026-08-18 this domain was declared in exactly one place, in passing: candidate-dry-delta.json's UsageDataQuality role string, which listed seven values and omitted not_exposed - a value the data uses on meter:local-ollama. A rendered value state was therefore undeclared in every required output."
+    },
+    "field_completeness": {
+      "measured_on": "2026-08-18",
+      "method": "Union of Object.keys over all 33 live meters read from window.U11.meters in a booted page, compared against the fields block above.",
+      "distinct_keys_on_the_data": 21,
+      "always_present": [
+        "id",
+        "productId",
+        "label",
+        "unit",
+        "windowKind",
+        "used",
+        "limit",
+        "usedPct",
+        "resetAt",
+        "vs",
+        "sourceClass",
+        "settlement",
+        "conf"
+      ],
+      "optional": {
+        "note": 9,
+        "sourceAuthority": 4,
+        "expiresAt": 3,
+        "pressure": 2,
+        "quotaStatus": 2,
+        "evidenceSource": 2,
+        "allowanceAttribution": 2,
+        "estimate": 1
+      },
+      "corrections_2026_08_18": {
+        "corrected_on": "2026-08-18",
+        "retracted_claim": {
+          "fields": {
+            "id": "stable id (meter:*)",
+            "productId": "products[].id - the plan or product whose allowance this meter measures",
+            "label": "user-visible name of the allowance",
+            "unit": "the unit the allowance is counted in (credits, requests, tokens, runtime, ...)",
+            "windowKind": "the reset window shape (billing_cycle, rolling_5h, weekly, session_only, none, ...)",
+            "used": "int | null - null means not known and is never rendered as zero",
+            "limit": "int | null - null means not exposed or not knowable, never zero",
+            "usedPct": "int | null - null means not known and is never rendered as zero",
+            "resetAt": "ISO UTC | null",
+            "vs": "value state of the figure - see value_state_enum",
+            "sourceClass": "provenance of the figure",
+            "settlement": "source-quality of the settlement fact, same domain as on attempts",
+            "conf": "confidence in the figure where it is not directly reported",
+            "note": "human explanation rendered beside the figure whenever the value state is not a plain reported number",
+            "estimate": "optional object, present only when the provider figure is unavailable and PM computes one - see estimate_object"
+          }
+        },
+        "why_the_claim_was_false": "The block was added on 2026-08-18 to close A11-15 and declared 15 of the 21 keys the meters actually carry. Six optional keys - expiresAt, sourceAuthority, pressure, quotaStatus, evidenceSource and allowanceAttribution - were undeclared, and two of them (quotaStatus, evidenceSource) belong to the CBP-027 vocabulary this same concept renders. A schema block that declares most of a shape reads as if it declares all of it, which is the failure mode A11-15 named in the first place.",
+        "note": "The original 15 entries are unchanged; the six above are additions, not rewrites."
+      }
+    }
+  },
   "purpose_taxonomy": {
     "canonical_values": [
       "user_work",
@@ -97,7 +253,16 @@
       "subagent": "subagent (unchanged)",
       "probe": "probe (unchanged)"
     },
-    "rendering": "No renderer label map exists; purposes render via R().human() in ledger, run detail, and context details — renames required zero renderer edits."
+    "rendering": "No renderer label map exists; purposes render via R().human() in ledger, run detail, and context details — renames required zero renderer edits.",
+    "declared_count": 18,
+    "fixture_coverage": {
+      "measured_at_utc": "2026-08-18T00:58:19Z",
+      "occurring_on_at_least_one_attempt": 18,
+      "declared_but_unfixtured": [],
+      "history": "At the 2026-08-17 audit, 17 of the 18 declared values occurred in the data and 'catalog_validation' occurred nowhere in the concept outside this report - a declared value with no fixture and no disclosure that it had none (audit A11-15). At the stamp above all 18 occur, so the gap has closed; the concept source was being edited while this repair ran, so re-measure with the command below rather than trusting this line.",
+      "measured_by": "grep -o \"purpose: '[a-z_]*'\" u11-data.js | sort -u | wc -l"
+    },
+    "rendering_caveat": "Added 2026-08-18. R().human is _shared/usage-data.js:921, `String(s).replace(/_/g, ' ')`. Because it strips underscores at render time, the harness's 'zero underscores in any text node' assertion cannot detect a raw enum token leaking into user-visible copy - the token simply renders de-underscored and passes. That is why renaming the entire purpose taxonomy required zero renderer edits, and it is a limitation of the check, not a property of the copy."
   },
   "billing_route_enum": {
     "existing": [
@@ -117,38 +282,135 @@
       "api_billed": "ue-551, ue-091, ue-092",
       "free": "ue-504, ue-603, ue-620"
     },
-    "not_yet_fixtured": [
-      "extra_balance",
-      "no_charge_observed"
-    ]
+    "not_yet_fixtured": [],
+    "fixture_coverage": {
+      "measured_at_utc": "2026-08-18T00:58:19Z",
+      "counts": {
+        "plan_included": 42,
+        "api_billed": 4,
+        "free": 4,
+        "no_charge_observed": 1,
+        "unknown": 1,
+        "usage_pack": 1,
+        "extra_balance": 1
+      },
+      "measured_by": "grep -o \"billingRoute: '[a-z_]*'\" u11-data.js | sort | uniq -c",
+      "declared_but_unfixtured": [],
+      "history": "At the 2026-08-17 audit only four of the seven values occurred in the data (plan_included 38, api_billed 3, free 3, usage_pack 1), and the not_yet_fixtured list named only two of the three missing values, silently omitting 'unknown'. At the stamp above all seven occur. Re-measure before relying on this."
+    },
+    "not_yet_fixtured_retraction": {
+      "retracted_on": "2026-08-18",
+      "retracted_claim": [
+        "extra_balance",
+        "no_charge_observed"
+      ],
+      "why_the_claim_was_false": "The list named two of the three unused values and silently omitted 'unknown', which this same file added to the enum in added_2026_08 and which no attempt carried. A disclosure list that is itself incomplete is worse than no list, because it implies the values it omits are demonstrated (audit A11-15).",
+      "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A11-15"
+    }
   },
   "settlement_enum": {
     "values": [
       "observed",
       "settled",
       "streaming_partial",
-      "unknown"
+      "unknown",
+      "failed",
+      "adjusted"
     ],
-    "changed": false,
-    "note": "Settlement is the source-quality of the settlement fact; billingRoute is what paid. Orthogonal by design — both now render in the attempt inspector."
+    "changed": true,
+    "note": "Settlement is the source-quality of the settlement fact; billingRoute is what paid. Orthogonal by design - both render in the attempt inspector, and the harness case 'guard every billing route renders its own label plus connection, account and product evidence' asserts that no two routes render the same label.",
+    "carried_by": "attempts[].settlement and meters[].settlement - the same domain on both collections.",
+    "fixture_coverage": {
+      "measured_at_utc": "2026-08-18T14:20:00Z",
+      "measured_by": "grep -o \"settlement: '[a-z_]*'\" u11-data.js | sort | uniq -c",
+      "counts_across_attempts_and_meters": {
+        "observed": 61,
+        "streaming_partial": 11,
+        "unknown": 7,
+        "settled": 6,
+        "failed": 1,
+        "adjusted": 1
+      },
+      "counts_on_attempts_only": {
+        "observed": 35,
+        "streaming_partial": 8,
+        "unknown": 5,
+        "settled": 4,
+        "failed": 1,
+        "adjusted": 1
+      },
+      "attempts_total": 54,
+      "declared_but_unfixtured": []
+    },
+    "corrections_2026_08_18": {
+      "corrected_on": "2026-08-18",
+      "retracted_claim": {
+        "values": [
+          "observed",
+          "settled",
+          "streaming_partial",
+          "unknown"
+        ],
+        "changed": false,
+        "note": "Settlement is the source-quality of the settlement fact; billingRoute is what paid. Orthogonal by design — both now render in the attempt inspector."
+      },
+      "why_the_claim_was_false": "It declared four values and said 'changed: false'. The data carries six: 'failed' and 'adjusted' are both in active use and neither was declared anywhere in this file, so two rendered settlement states were undeclared in the required event and schema output - the same defect A11-15 scored against the meter schema and the value-state domain, in the one enum block the file did claim to declare completely. 'changed: false' compounded it by asserting the domain had not moved.",
+      "measured_evidence": "grep -o \"settlement: '[a-z_]*'\" u11-data.js | sort | uniq -c returns six distinct values; a live read of window.U11.attempts at 2026-08-18 returns the same six on attempts alone.",
+      "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A11-15 (minor), residual pass"
+    }
   },
   "new_collections": {
     "bsdEvents[]": "{ id, eventId|null (null = duplicate suppressed, zero usage), requestedState, effectiveState, trigger, result: silent|advice_emitted|duplicate_suppressed, advice, latencyMs, overrideScope, copy, detail }",
-    "operational[]": "{ id, kind: cli_update|offline_outbox|server_continuity|sound_preview|notification_test|backup|project_move|setup_required, title, status, hostId, envId, providerUsage: none|validation_only, validationEventId, phases[{label, ms}], failureClass, outcome, copy, detail, acquisition?{ consent: explicit_user_setup, source, acquiredAt, installation{version, targetVersion, provenance, arch} }, setupLink?{ surface, manager, section, focus_reason, continuation } } — NEVER token totals. Added 2026-08-13 per PROVIDER_CLI_FINAL_ADJUDICATION.md.",
+    "operational[]": "{ id, kind, title, status, hostId, envId, providerUsage: none|validation_only, validationEventId, phases[{label, ms}], failureClass, outcome, copy, detail, acquisition?{ consent: explicit_user_setup, source, acquiredAt, installation{version, targetVersion, provenance, arch} }, setupLink?{ category, focusSettingId, continuation } } - NEVER token totals. Added 2026-08-13 per PROVIDER_CLI_FINAL_ADJUDICATION.md.",
     "hosts[]": "{ id, label, kind: desktop|home_server, os }",
-    "environments[]": "{ id, label }"
+    "environments[]": "{ id, label }",
+    "operational[].kind_domain": {
+      "measured_at_utc": "2026-08-18T00:58:19Z",
+      "kinds": [
+        "backup",
+        "bsd_suppressed",
+        "cli_update",
+        "environment_check",
+        "notification_test",
+        "offline_outbox",
+        "project_move",
+        "server_continuity",
+        "setup_required",
+        "sound_preview"
+      ],
+      "entries_at_stamp": 12,
+      "note": "The 2026-08-11 issue enumerated the kind domain inline in the operational[] string and said '7 kinds'; the enum then grew without the string being updated. The domain is measured here instead of asserted, with the command: grep -o \"kind: '[a-z_]*'\" over the operational[] block."
+    },
+    "operational[].setupLink_correction": {
+      "corrected_on": "2026-08-18",
+      "retracted_shape": "setupLink?{ surface, manager, section, focus_reason, continuation }",
+      "why_the_claim_was_false": "The declared shape named destinations that do not exist. Plans/settings_inventory.json has 12 categories (general, ai, safety, code, memory, planning, branching, media, web, personas, extensions, system) and neither 'providers' nor 'usage' is one of them - 'providers' exists only as a subgroup of web, meaning web-search providers, and 'usage' only as a subgroup of ai. The tokens focus_reason, usage_and_extra_usage, usage_quick_controls and see_all have zero occurrences anywhere under Plans/ (measured 2026-08-18). The canonical contract is F3-434's open(category, focusSettingId), bound to cmd.settings.bloom.open and certified at Plans/Wiring_Matrix.production.json row catalog.settings_bloom_open.",
+      "known_gap": "The ops-8 record in u11-data.js still carries the legacy setupLink keys and reaches the canonical row through LEGACY_DEST_MAP in U11.deepLink. Migrating the data to the canonical shape is a concept-side change and is not part of this register repair. The contract declared above is the canonical one; the data has not yet caught up to it, and this register says so rather than describing the legacy shape as if it were the contract.",
+      "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ findings A01-06, A01-07, A10-01, A11-09"
+    }
   },
   "id_renumbers": {
     "ue-600": "ue-650 (old work-11 branch replay; freed for packet BSD silent fixture)",
     "ue-601": "ue-651 (old work-11 main; freed for packet BSD advice fixture)",
     "ue-610": "ue-652 (old work-12 cross-project child; freed for packet offline replay fixture)",
-    "reason": "Packet fixtures and the verification harness are pinned to ue-600/ue-601/ue-610; the colliding definitions had no external references."
+    "reason": "Packet fixtures and the verification harness are pinned to ue-600/ue-601/ue-610; the colliding definitions had no external references.",
+    "scope_note": "Added 2026-08-18. These are demo dataset ids with no external references, renumbered so the packet fixtures could take ue-600, ue-601 and ue-610. It is disclosed prototype bookkeeping, not a production usage-event identity migration. It is called out here because impact-register.json shipped with the unqualified clause 'historical attempts keep immutable identity' and candidate-wiring-delta.json asserts 'append-only ... immutable usage event', so a reader could reasonably read the three documents as contradicting each other. Both of those clauses are now qualified in place (audit A11-14). There is still no migration or supersession register anywhere in reports/, and this note is not one."
   },
   "cost_identity": {
     "apiBilledMicro": 61850000,
     "planIncludedMicro": 125570000,
     "spentMonthMicro": 187420000,
     "rule": "All 12 new attempts carry costMicro 0 with plan_included/free/usage_pack routes — identity untouched and re-verified by the harness."
+  },
+  "production_wiring_and_event_authority_2026_08_18": {
+    "finding": "A11-22 (info) - closed as recorded, not as repaired.",
+    "measured_on": "2026-08-18",
+    "statement": "Nothing proposed in this file has a production wiring row that would carry it as a domain event. All five usage rows in Plans/Wiring_Matrix.production.json - catalog.usage_refresh, catalog.usage_export, catalog.usage_forecast_request, catalog.nav_open_usage_subject and catalog.artifacts_show_in_usage - carry expected_event_types []. 160 of the matrix's 726 entries declare event types; none of the usage ones does.",
+    "what_the_rows_do_declare": "effect_kind 'receipt'. catalog.usage_refresh states it outright: 'cmd.usage.refresh has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.' So the shapes in this file are receipt and projection shapes, not event payloads.",
+    "denominator": "Plans/DRY_Rules.md ':2139', in the section 'Unresolved schema and Event Authority boundary' (:2132-2143): 'The Event Authority denominator remains UNKNOWN_OPEN. No event family is inferred, registered, or declared emitted from a service name in this registry.' Admitting a usage event family is an Event Authority adjudication. This file does not perform one and does not name a candidate family, because naming one would be exactly the inference that clause forbids.",
+    "how_to_read_this_file_until_then": "attempt_schema, meter_schema, the four new collections and the id renumbers are proposals against a receipt-and-projection contract. They are not evidence that a usage event family exists, and the word 'event' in this file's own name should not be read as one.",
+    "scope_note": "Plans/** is read-only to this concept; nothing there was edited.",
+    "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A11-22 (info)"
   },
   "correction_2026_08_13": {
     "source": "PM_Usage_Dependency_and_Work_Correction_2026-08-13 / PROVIDER_CLI_FINAL_ADJUDICATION.md (highest-precedence decision omitted from the original archive)",
@@ -157,5 +419,16 @@
       "operational.acquisition lineage added: explicit first acquisition vs post-consent update/repair; official source; exact host/env binding; installation provenance",
       "setupLink carries the semantic deep-link to Provider Settings with continuation token; no new command family minted"
     ]
-  }
+  },
+  "what_this_file_still_does_not_declare": {
+    "compiled_on": "2026-08-18",
+    "purpose": "Stated so the next reader does not have to discover it by measuring, which is how the last three gaps were found.",
+    "items": [
+      "No migration or supersession register exists in reports/ at all. id_renumbers is a change log entry, not a migration contract.",
+      "The cacheStats[] row shape is declared only in candidate-dry-delta.json's CacheReceipt role string, not here, even though it carries its own state enum (measured | estimated | unsupported) and its own null-versus-zero semantics.",
+      "The client-persistence contract for the five localStorage keys lives in impact-register.json storage_retention_impacts, not here. Whether persisted client state belongs in an event-schema delta is an open packet question.",
+      "The counting-semantics block that u11-data.js carries (provider_total_semantics, cache_reporting_state, cache_write_breakdown_state, quota_status, evidence_source) is not declared in this file. It was added to the concept after the 2026-08-11 issue and no required output declares it."
+    ]
+  },
+  "source_citation_policy": "Source citations into u11-prism.html, u11-data.js, u11-widgets.js, u11-rundetail.js and u11-context.js name a symbol, identifier or exact string rather than a line number. Those five files were under concurrent edit on 2026-08-18 - u11-data.js moved twice while this repair was being written - so a line number here would be wrong by the time it was read. Line numbers are retained only for files that are stable in this pass: everything under Plans/ and under _shared/. Text preserved inside a `retraction` or `retracted_claim` object is left exactly as it was written, line numbers included, because its purpose is to record what a document said on a past date."
 }

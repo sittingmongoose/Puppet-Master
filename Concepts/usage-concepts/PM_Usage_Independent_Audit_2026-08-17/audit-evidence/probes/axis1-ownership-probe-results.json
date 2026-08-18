@@ -1,0 +1,452 @@
+{
+  "steps": [
+    {
+      "k": "plans-BEFORE",
+      "v": {
+        "nexts": [
+          "When this plan reaches its limit, fall back to Personal OpenAI. No extra usage is enabled on the Work account.",
+          "When included usage runs out, continue with extra usage up to the $100 spending limit. Then stop.",
+          "When credits run out, metered continuation applies at list price. Otherwise stop.",
+          "When OpenCode Go reaches its limit, continue with configured free models. Zen balance is off.",
+          "Likely enough capacity to finish before the next reset.",
+          "Enough for two complete extraction children at a time, with synthesis and audit reserved."
+        ],
+        "rows": [
+          "ChatGPT Business plan 100 % OpenAI · Work · Codex · Business plan · resets in 3h 05m · 17:47 EDT When this plan reaches its limit, fall back to Personal OpenAI. No extra usage is enabled on the Work account.",
+          "Extra Bundle 80 % Alibaba · Personal · Coding Plan connection · expires in 42d · Sep 15 00:00 EDT",
+          "Claude Max plan 78 % Claude · Work · Claude CLI profile · resets in 2h 14m · 16:56 EDT When included usage runs out, continue with extra usage up to the $100 spending limit. Then stop.",
+          "Credit plan 76 % Z.AI · Personal · Credit plan connection When credits run out, metered continuation applies at list price. Otherwise stop.",
+          "OpenCode Go plan 72 % OpenCode · Personal · OpenCode Go · resets in 55m · 15:37 EDT Monthly credits · Provider data unavailable · PM estimate 63% · medium confidence When OpenCode Go reaches its limit, continue with configured free models. Zen balance is off.",
+          "Refactor pricing pipeline GOAL Requested 8 Can run now 2 Queued 6 2 at a time · 4 waves · capacity kept aside for synthesis, testing, verification, repair 8 hard max · 4 preferred · 2 advertised · 2 sustainable Likely enough capacity to finish before the next reset. Reasonable forecast · based on 12 similar runs · generated 14:14 EDT Refresh forecast Open run detail",
+          "Spec: U11 usage concept PLANNING RUN Requested 6 Can run now 2 Queued 4 2 at a time · 3 waves · capacity kept aside for synthesis, testing, audit, repair 8 hard max · 4 preferred · 2 advertised · 2 sustainable Enough for two complete extraction children at a time, with synthesis and audit reserved. Limited history · may change after a route switch · generated 14:20 EDT Refresh forecast Open run detail",
+          "Design critique crew CREW Requested 5 Can run now 3 Queued 2 3 at a time · 2 waves · capacity kept aside for reducer 8 hard max · 6 preferred · 3 advertised · 3 sustainable Open run detail"
+        ],
+        "paneVisible": true
+      }
+    },
+    {
+      "k": "sheet-controls",
+      "v": {
+        "open": true,
+        "subtitle": "Compact quick controls — a consumer of the shared Settings registry, never a second settings system.",
+        "sections": [
+          "PREFERENCES",
+          "AFTER INCLUDED USAGE",
+          "EXTRA PAID USAGE",
+          "CURRENT ALLOWANCE (READ-ONLY)"
+        ],
+        "note": "Raw meter policies, source authority, route epochs, probe cadence and price versions live in Advanced/support views. Widget settings never change these policies.",
+        "ctrls": [
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "attrs": {
+              "data-u11set": "warnLow"
+            },
+            "label": "Warn me before I run low",
+            "value": true,
+            "options": null
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "attrs": {
+              "data-u11set": "autoSwitch"
+            },
+            "label": "Automatic account/provider switching",
+            "value": true,
+            "options": null
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "attrs": {
+              "data-u11set": "product"
+            },
+            "label": "Product Coding Plan Team seat credits ChatGPT plan ChatGPT Business plan Claude Max plan C",
+            "value": "prod:codex-plus",
+            "options": [
+              {
+                "v": "prod:alibaba-coding-plan",
+                "t": "Coding Plan"
+              },
+              {
+                "v": "prod:alibaba-team-seats",
+                "t": "Team seat credits"
+              },
+              {
+                "v": "prod:codex-plus",
+                "t": "ChatGPT plan"
+              },
+              {
+                "v": "prod:codex-business",
+                "t": "ChatGPT Business plan"
+              },
+              {
+                "v": "prod:claude-max",
+                "t": "Claude Max plan"
+              },
+              {
+                "v": "prod:claude-api-payg",
+                "t": "Claude API · PAYG"
+              },
+              {
+                "v": "prod:kimi-code-plan",
+                "t": "Kimi Code plan"
+              },
+              {
+                "v": "prod:oc-go-plan",
+                "t": "OpenCode Go plan"
+              },
+              {
+                "v": "prod:oc-zen-balance",
+                "t": "Zen balance"
+              },
+              {
+                "v": "prod:zai-legacy-plan",
+                "t": "Legacy plan"
+              },
+              {
+                "v": "prod:zai-credit-plan",
+                "t": "Credit plan"
+              },
+              {
+                "v": "prod:antigravity-baseline",
+                "t": "Baseline plan"
+              }
+            ]
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "attrs": {
+              "data-u11set": "after"
+            },
+            "label": "Then included Draw on the balance/pack Wait for the reset",
+            "value": "included",
+            "options": [
+              {
+                "v": "included",
+                "t": "included"
+              },
+              {
+                "v": "prod",
+                "t": "Draw on the balance/pack"
+              },
+              {
+                "v": "wait_reset",
+                "t": "Wait for the reset"
+              }
+            ]
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "attrs": {
+              "data-u11extra": "prod:claude-extra"
+            },
+            "label": "Extra usage",
+            "value": true,
+            "options": null
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "attrs": {
+              "data-u11limit": "prod:claude-extra"
+            },
+            "label": "Spending limit $ / month",
+            "value": "100",
+            "options": null
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "attrs": {
+              "data-u11extra": "prod:antigravity-overage"
+            },
+            "label": "AI Credit Overages",
+            "value": false,
+            "options": null
+          },
+          {
+            "tag": "button",
+            "type": "button",
+            "attrs": {
+              "data-u11link": "provider"
+            },
+            "label": "Open provider settings",
+            "value": "",
+            "options": null
+          },
+          {
+            "tag": "button",
+            "type": "button",
+            "attrs": {
+              "data-u11link": "usage"
+            },
+            "label": "See all usage settings",
+            "value": "",
+            "options": null
+          }
+        ],
+        "text": "Usage settings Compact quick controls — a consumer of the shared Settings registry, never a second settings system. PREFERENCES Warn me before I run low Automatic account/provider switching AFTER INCLUDED USAGE Product Coding Plan Team seat credits ChatGPT plan ChatGPT Business plan Claude Max plan Claude API · PAYG Kimi Code plan OpenCode Go plan Zen balance Legacy plan Credit plan Baseline plan Then included Draw on the balance/pack Wait for the reset EXTRA PAID USAGE Extra usage Spending limit $ / month AI Credit Overages CURRENT ALLOWANCE (READ-ONLY) ChatGPT Business plan · 5-hour window 100% ChatGPT Business plan · Weekly window 96% Extra Bundle · Bundle requests 80% Saved resets 1 banked · expires Sep 1 00:00 EDT Personal Token Plan 3.8M left Extra Bundle 40 left Open provider settings See all usage settings Raw meter policies, source authority, route epochs, probe cadence and price versions live in Advanced/support views. Widget settings never change these policies."
+      }
+    },
+    {
+      "k": "cmdLog-len-before",
+      "v": {
+        "len": 0,
+        "ls": null
+      }
+    },
+    {
+      "k": "after-autoSwitch-off",
+      "v": {
+        "ls": "{\"warnLow\":true,\"autoSwitch\":false,\"afterIncludedByProduct\":{\"prod:codex-plus\":\"credits\",\"prod:claude-max\":\"extra_usage\",\"prod:oc-go-plan\":\"free_fallback\"},\"extraUsage\":{\"prod:claude-extra\":{\"enabled\":true,\"limitMicro\":100000000},\"prod:antigravity-overage\":{\"enabled\":false,\"limitMicro\":null}}}",
+        "cmdLogLen": 0
+      }
+    },
+    {
+      "k": "then-options-for-claude-max",
+      "v": {
+        "value": "included",
+        "options": [
+          {
+            "v": "included",
+            "t": "included"
+          },
+          {
+            "v": "prod",
+            "t": "Draw on the balance/pack"
+          },
+          {
+            "v": "hard_stop",
+            "t": "Stop"
+          }
+        ]
+      }
+    },
+    {
+      "k": "after-then-change",
+      "v": {
+        "ls": "{\"warnLow\":true,\"autoSwitch\":false,\"afterIncludedByProduct\":{\"prod:codex-plus\":\"credits\",\"prod:claude-max\":\"prod\",\"prod:oc-go-plan\":\"free_fallback\"},\"extraUsage\":{\"prod:claude-extra\":{\"enabled\":true,\"limitMicro\":100000000},\"prod:antigravity-overage\":{\"enabled\":false,\"limitMicro\":null}},\"selectedProduct\":\"prod:claude-max\"}",
+        "cmdLogLen": 0
+      }
+    },
+    {
+      "k": "spending-limit-control-present",
+      "v": {
+        "id": "prod:claude-extra",
+        "value": "100"
+      }
+    },
+    {
+      "k": "after-limit-20",
+      "v": {
+        "ls": "{\"warnLow\":true,\"autoSwitch\":false,\"afterIncludedByProduct\":{\"prod:codex-plus\":\"credits\",\"prod:claude-max\":\"prod\",\"prod:oc-go-plan\":\"free_fallback\"},\"extraUsage\":{\"prod:claude-extra\":{\"enabled\":true,\"limitMicro\":20000000},\"prod:antigravity-overage\":{\"enabled\":false,\"limitMicro\":null}},\"selectedProduct\":\"prod:claude-max\"}",
+        "cmdLogLen": 0
+      }
+    },
+    {
+      "k": "extra-usage-toggles",
+      "v": [
+        {
+          "id": "prod:claude-extra",
+          "checked": true,
+          "label": "Extra usage"
+        },
+        {
+          "id": "prod:antigravity-overage",
+          "checked": false,
+          "label": "AI Credit Overages"
+        }
+      ]
+    },
+    {
+      "k": "after-extra-enable",
+      "v": {
+        "ls": "{\"warnLow\":true,\"autoSwitch\":false,\"afterIncludedByProduct\":{\"prod:codex-plus\":\"credits\",\"prod:claude-max\":\"prod\",\"prod:oc-go-plan\":\"free_fallback\"},\"extraUsage\":{\"prod:claude-extra\":{\"enabled\":true,\"limitMicro\":20000000},\"prod:antigravity-overage\":{\"enabled\":true,\"limitMicro\":null}},\"selectedProduct\":\"prod:claude-max\"}",
+        "cmdLogLen": 0,
+        "newLimitCtrl": false
+      }
+    },
+    {
+      "k": "cmdLog-delta-across-all-policy-mutations",
+      "v": {
+        "before": 0,
+        "after": 0,
+        "added": []
+      }
+    },
+    {
+      "k": "plans-AFTER-same-session",
+      "v": {
+        "nexts": [
+          "When this plan reaches its limit, fall back to Personal OpenAI. No extra usage is enabled on the Work account.",
+          "When included usage runs out, continue with extra usage up to the $100 spending limit. Then stop.",
+          "When credits run out, metered continuation applies at list price. Otherwise stop.",
+          "When OpenCode Go reaches its limit, continue with configured free models. Zen balance is off.",
+          "Likely enough capacity to finish before the next reset.",
+          "Enough for two complete extraction children at a time, with synthesis and audit reserved."
+        ],
+        "rows": [
+          "ChatGPT Business plan 100 % OpenAI · Work · Codex · Business plan · resets in 3h 05m · 17:47 EDT When this plan reaches its limit, fall back to Personal OpenAI. No extra usage is enabled on the Work account.",
+          "Extra Bundle 80 % Alibaba · Personal · Coding Plan connection · expires in 42d · Sep 15 00:00 EDT",
+          "Claude Max plan 78 % Claude · Work · Claude CLI profile · resets in 2h 14m · 16:56 EDT When included usage runs out, continue with extra usage up to the $100 spending limit. Then stop.",
+          "Credit plan 76 % Z.AI · Personal · Credit plan connection When credits run out, metered continuation applies at list price. Otherwise stop.",
+          "OpenCode Go plan 72 % OpenCode · Personal · OpenCode Go · resets in 55m · 15:37 EDT Monthly credits · Provider data unavailable · PM estimate 63% · medium confidence When OpenCode Go reaches its limit, continue with configured free models. Zen balance is off.",
+          "Refactor pricing pipeline GOAL Requested 8 Can run now 2 Queued 6 2 at a time · 4 waves · capacity kept aside for synthesis, testing, verification, repair 8 hard max · 4 preferred · 2 advertised · 2 sustainable Likely enough capacity to finish before the next reset. Reasonable forecast · based on 12 similar runs · generated 14:14 EDT Refresh forecast Open run detail",
+          "Spec: U11 usage concept PLANNING RUN Requested 6 Can run now 2 Queued 4 2 at a time · 3 waves · capacity kept aside for synthesis, testing, audit, repair 8 hard max · 4 preferred · 2 advertised · 2 sustainable Enough for two complete extraction children at a time, with synthesis and audit reserved. Limited history · may change after a route switch · generated 14:20 EDT Refresh forecast Open run detail",
+          "Design critique crew CREW Requested 5 Can run now 3 Queued 2 3 at a time · 2 waves · capacity kept aside for reducer 8 hard max · 6 preferred · 3 advertised · 3 sustainable Open run detail"
+        ],
+        "paneVisible": true
+      }
+    },
+    {
+      "k": "plans-diff-same-session",
+      "v": {
+        "identical": true,
+        "nextsIdentical": true
+      }
+    },
+    {
+      "k": "plans-AFTER-reload",
+      "v": {
+        "nexts": [
+          "When this plan reaches its limit, fall back to Personal OpenAI. No extra usage is enabled on the Work account.",
+          "When included usage runs out, continue with extra usage up to the $100 spending limit. Then stop.",
+          "When credits run out, metered continuation applies at list price. Otherwise stop.",
+          "When OpenCode Go reaches its limit, continue with configured free models. Zen balance is off.",
+          "Likely enough capacity to finish before the next reset.",
+          "Enough for two complete extraction children at a time, with synthesis and audit reserved."
+        ],
+        "rows": [
+          "ChatGPT Business plan 100 % OpenAI · Work · Codex · Business plan · resets in 3h 05m · 17:47 EDT When this plan reaches its limit, fall back to Personal OpenAI. No extra usage is enabled on the Work account.",
+          "Extra Bundle 80 % Alibaba · Personal · Coding Plan connection · expires in 42d · Sep 15 00:00 EDT",
+          "Claude Max plan 78 % Claude · Work · Claude CLI profile · resets in 2h 14m · 16:56 EDT When included usage runs out, continue with extra usage up to the $100 spending limit. Then stop.",
+          "Credit plan 76 % Z.AI · Personal · Credit plan connection When credits run out, metered continuation applies at list price. Otherwise stop.",
+          "OpenCode Go plan 72 % OpenCode · Personal · OpenCode Go · resets in 55m · 15:37 EDT Monthly credits · Provider data unavailable · PM estimate 63% · medium confidence When OpenCode Go reaches its limit, continue with configured free models. Zen balance is off.",
+          "Refactor pricing pipeline GOAL Requested 8 Can run now 2 Queued 6 2 at a time · 4 waves · capacity kept aside for synthesis, testing, verification, repair 8 hard max · 4 preferred · 2 advertised · 2 sustainable Likely enough capacity to finish before the next reset. Reasonable forecast · based on 12 similar runs · generated 14:14 EDT Refresh forecast Open run detail",
+          "Spec: U11 usage concept PLANNING RUN Requested 6 Can run now 2 Queued 4 2 at a time · 3 waves · capacity kept aside for synthesis, testing, audit, repair 8 hard max · 4 preferred · 2 advertised · 2 sustainable Enough for two complete extraction children at a time, with synthesis and audit reserved. Limited history · may change after a route switch · generated 14:20 EDT Refresh forecast Open run detail",
+          "Design critique crew CREW Requested 5 Can run now 3 Queued 2 3 at a time · 2 waves · capacity kept aside for reducer 8 hard max · 6 preferred · 3 advertised · 3 sustainable Open run detail"
+        ],
+        "paneVisible": true
+      }
+    },
+    {
+      "k": "plans-diff-after-reload",
+      "v": {
+        "identical": true,
+        "nextsIdentical": true,
+        "persistedSettings": "{\"warnLow\":true,\"autoSwitch\":false,\"afterIncludedByProduct\":{\"prod:codex-plus\":\"credits\",\"prod:claude-max\":\"prod\",\"prod:oc-go-plan\":\"free_fallback\"},\"extraUsage\":{\"prod:claude-extra\":{\"enabled\":true,\"limitMicro\":20000000},\"prod:antigravity-overage\":{\"enabled\":true,\"limitMicro\":null}},\"selectedProduct\":\"prod:claude-max\"}"
+      }
+    },
+    {
+      "k": "policy-consumers",
+      "v": {
+        "persisted": {
+          "warnLow": true,
+          "autoSwitch": false,
+          "afterIncludedByProduct": {
+            "prod:codex-plus": "credits",
+            "prod:claude-max": "prod",
+            "prod:oc-go-plan": "free_fallback"
+          },
+          "extraUsage": {
+            "prod:claude-extra": {
+              "enabled": true,
+              "limitMicro": 20000000
+            },
+            "prod:antigravity-overage": {
+              "enabled": true,
+              "limitMicro": null
+            }
+          },
+          "selectedProduct": "prod:claude-max"
+        },
+        "fixture_claude_extra_spendingLimitMicro": 100000000,
+        "fixture_antigravity_overage_enabled": false,
+        "fixture_meter_claude_extra": {
+          "id": "meter:claude-extra",
+          "productId": "prod:claude-extra",
+          "label": "Extra usage",
+          "unit": "USD",
+          "windowKind": "billing_cycle",
+          "used": 12.4,
+          "limit": 100,
+          "usedPct": 12,
+          "resetAt": "2026-09-01T04:00:00Z",
+          "vs": "provider_reported",
+          "sourceClass": "provider_reported",
+          "settlement": "streaming_partial",
+          "conf": "high",
+          "note": "User spending limit"
+        },
+        "fixture_continuation_claude_max": {
+          "order": [
+            "included",
+            "prod:claude-extra",
+            "hard_stop"
+          ],
+          "whatHappensNext": "When included usage runs out, continue with extra usage up to the $100 spending limit. Then stop."
+        },
+        "fixture_continuation_antigravity": {
+          "order": [
+            "included",
+            "wait_reset"
+          ],
+          "whatHappensNext": "When included usage runs out, wait for the window reset. AI Credit Overages are off."
+        },
+        "U11_has_settings_key": [
+          "settingsDefaults"
+        ]
+      }
+    },
+    {
+      "k": "opensettings-buttons",
+      "v": {
+        "total": 27,
+        "visibleNow": 3,
+        "label": "Open Usage settings",
+        "eventFired": 1,
+        "cmdLogDelta": 0,
+        "sheetOpenedAfterClick": false,
+        "listeners": "no-devtools-api"
+      }
+    },
+    {
+      "k": "continuation-heading-search",
+      "v": {
+        "packetHeadingInHTML": false,
+        "packetHeadingInText": false,
+        "sheetSectionHeadings": []
+      }
+    },
+    {
+      "k": "adapter-choice-fields",
+      "v": {
+        "continuationFieldNames": [
+          "order",
+          "whatHappensNext"
+        ],
+        "productFieldNames": [
+          "id",
+          "connectionId",
+          "label",
+          "kind",
+          "included",
+          "purchasedAt",
+          "capMicro",
+          "expiresAt",
+          "enabled",
+          "spendingLimitMicro",
+          "autoReload",
+          "meterPolicyVersion",
+          "requiresProduct"
+        ]
+      }
+    }
+  ],
+  "errors": []
+}

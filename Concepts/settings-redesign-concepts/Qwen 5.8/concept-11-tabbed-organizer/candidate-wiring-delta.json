@@ -1,0 +1,32 @@
+{
+  "schema_id": "pm.settings_bakeoff.candidate_wiring_delta.v1",
+  "concept_id": "concept-11-tabbed-organizer",
+  "provisional_only": true,
+  "traces": [
+    {
+      "control": "setting row toggle/select",
+      "chain": "UI atom -> settings.set (PMState2.setSetting) -> validation (managed/unavailable block) -> mutation -> receipt -> row chip re-render -> attribution (this Project only) -> recovery (reset/rollback)"
+    },
+    {
+      "control": "search result row",
+      "chain": "UI dropdown -> byRid -> route_target -> view render -> locate (pm2-locate) -> focus; Back via #/q/<q>"
+    },
+    {
+      "control": "provider approve update",
+      "chain": "UI -> update owner (ask-first) -> ObservableWork determinate(3) -> verification -> receipt -> roster health re-render -> rollback path (rolled-back fixture)"
+    },
+    {
+      "control": "copy apply",
+      "chain": "UI -> PMCopy2.preview -> restore point -> atomic apply -> verify -> receipt -> rollbackLast recovery"
+    },
+    {
+      "control": "import with conflicts",
+      "chain": "UI -> lifecycle owner -> preview -> conflict queue (keep/take) -> apply separate -> receipt; validation-failure scenario shows rejected import"
+    },
+    {
+      "control": "reset all",
+      "chain": "UI -> restore point -> confirm -> mutation -> receipt -> rollback recovery"
+    }
+  ],
+  "simulated": "All chains run on the PMState2 demo simulator; production wiring evidence deferred to owners."
+}

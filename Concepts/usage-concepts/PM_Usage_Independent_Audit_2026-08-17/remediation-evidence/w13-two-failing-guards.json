@@ -1,0 +1,132 @@
+{
+ "schema_id": "pm.usage_audit.guard_closure_run.v1",
+ "evidence_id": "w13-two-failing-guards",
+ "generated_utc": "2026-08-18",
+ "purpose": "Closes the two closure guards that failed after the third remediation pass, and records the two real defects and one self-introduced defect that failure exposed.",
+ "harness": {
+  "clean": {
+   "cases": 114,
+   "pass": 114,
+   "fail": 0,
+   "seconds": 195.4,
+   "id_dump": "empty ([])",
+   "note": "PM_DUMP_IDS wrote an empty array, so the sweep found nothing rather than not running."
+  },
+  "negative_controls": {
+   "mechanism": "PM_FAULT env var, added in this pass; no in-file control mechanism existed before.",
+   "PM_FAULT=gauge": {
+    "result": "113 pass \u00b7 1 fail",
+    "failed_case": "closure the spending limit gauge fills from billed money, not plan-included valuation",
+    "detail": "dataFill=62 geometry=21% valueText=62% billed=21% valuation=62% costIdentity=true",
+    "reads": "only the intended case went red"
+   },
+   "PM_FAULT=idprose": {
+    "result": "113 pass \u00b7 1 fail",
+    "failed_case": "closure no internal identifier reaches prose, a tooltip, or an affordance label",
+    "detail": "occurrences=1 :: text in room:overview \"ue-610\" ctx=\"Injected control: see ue-610 for the replay.\"",
+    "reads": "only the injected sentence was reported, so the structural exemption for labelled identity displays is not blinding the guard to real prose"
+   }
+  }
+ },
+ "guard_3": {
+  "verdict": "the code was correct; the guard's oracle was wrong",
+  "why_it_failed": "It asserted document.body.innerText contained the contiguous string \"21%\". valHTML puts the number in a <b> and the unit in an <i>, so the laid-out copy yields \"21\\n%\" and that substring never exists. The two percentages that DO appear as text, 80% and 62%, are the warn threshold and a deliberate counterfactual explaining the exclusion.",
+  "now_asserts": "dataFill=21 \u00b7 geometry=21% \u00b7 valueText=21% \u00b7 billed=21% \u00b7 valuation=62% \u00b7 cost identity holds",
+  "second_error_found": "The first replacement measured the FIRST matching .u11w-mrow. This widget renders into three panes (overview, costs, analytics) and only one is laid out, so that read a hidden copy with a zero-width track. The guard now filters to the visible copy."
+ },
+ "guard_4": {
+  "verdict": "the guard was right to fail, but for a different reason than it reported, and it was too weak to say so",
+  "what_its_six_hits_actually_were": "The lineage block's labelled identity row. Its regex required see|ref|event before the id and \\s+ spans newlines, so \"This event\" + newline + \"ue-615\" matched. Those hits were not the defect.",
+  "real_defects_found_and_fixed": [
+   {
+    "site": "u11-widgets.js allowanceSplitText",
+    "was": "1 background validation (ue-615)",
+    "now": "a clickable link labelled from the record: \"probe at 17:44\"",
+    "surface": "prose, free room"
+   },
+   {
+    "site": "u11-widgets.js eventLink",
+    "was": "visible label defaulted to the bare id, so \"see ue-610\" became a link still reading \"see ue-610\"",
+    "now": "label built from the record's purpose and start time; id on data-u11-event",
+    "surface": "affordance label"
+   },
+   {
+    "site": "u11-widgets.js costTitle",
+    "was": "'usage event ' + eventId pushed into a title attribute",
+    "now": "removed; id on data-u11-event",
+    "surface": "tooltip"
+   },
+   {
+    "site": "u11-widgets.js ledger id cell",
+    "was": "tooltip spelled out dedupe key and pricing snapshot id",
+    "now": "keys on data-u11-rollup / data-u11-snapshot",
+    "surface": "tooltip"
+   },
+   {
+    "site": "u11-rundetail.js streamHTML",
+    "was": "'and counted once under dk-613' inside a sentence",
+    "now": "'and counted once'; the key is already a labelled Rollup key row",
+    "surface": "prose"
+   },
+   {
+    "site": "u11-rundetail.js parent row",
+    "was": "'Follows user work \u00b7 ue-501' with an 'open parent' button on the same line",
+    "now": "'Follows user work'; the button makes the join",
+    "surface": "prose - the original A08-08 shape exactly"
+   },
+   {
+    "site": "u11-context.js attempt row",
+    "was": "'ue-501 \u00b7 counted once under dk-501' - two internal tokens welded into a phrase",
+    "now": "event id in its own element as the row identity, rollup key on data-u11-rollup",
+    "surface": "prose"
+   },
+   {
+    "site": "u11-widgets.js bsd card",
+    "was": "'Operational decision record ops-12 \u00b7 ...'",
+    "now": "names the record by its own title field",
+    "surface": "prose"
+   }
+  ],
+  "deliberately_kept": {
+   "what": "An internal id that is the entire text of its own element, or the value of a labelled key/value row.",
+   "examples": [
+    "the ledger's id column, which sits beside an 'inspect' button",
+    "the lineage block's 'This event / ue-615'",
+    "'Follows / user work \u00b7 ue-501' as a labelled kv value"
+   ],
+   "why": "These are identity displays on Advanced detail surfaces, not prose. The audit finding was about a dead end inside a sentence; an event ledger showing event ids is the conventional and useful thing, and removing them would leave a reader nothing to quote back. The exemption is implemented structurally - the id must be the whole text of its element, or a labelled sibling must name it - so it cannot quietly widen to excuse whatever the code happens to do.",
+   "disclosed_as": "a scoping decision, not a closure"
+  }
+ },
+ "port_checkers": {
+  "variant": "cand-A",
+  "result": "all nine PASS with the base control passing",
+  "checkers": [
+   "check_original",
+   "check_structure",
+   "check_js",
+   "check_css",
+   "check_ids",
+   "check_hooks",
+   "check_settings_data",
+   "check_no_emoji",
+   "check_vocab"
+  ],
+  "why_this_mattered": "new user-visible copy was written in this pass, and an earlier pass regressed check_vocab with exactly that kind of edit",
+  "cand_B": "check_ids FAIL, byte-identical to the pre-existing failure (projectMenu, projectMenuWrap, themeMenu, themeMenuLabel, themeMenuWrap) - not caused by this work"
+ },
+ "plans_gates": {
+  "source": "pm-plans-verify.py run-gates per-gate log",
+  "gates": 26,
+  "passing": 19,
+  "failing": 7,
+  "vs_target": "the engagement target was no worse than 7 failing",
+  "must_stay_green": {
+   "verify_spec_lock": "pass",
+   "check_shards": "pass",
+   "validate_usage_gui_fixtures": "pass",
+   "validate_usage_contract_drift": "pass",
+   "validate_wiring_matrix": "pass"
+  }
+ }
+}

@@ -1,0 +1,229 @@
+{
+ "schema_id": "pm.usage_audit.real_gate_runs.v1",
+ "evidence_id": "w12-port-gate-runs",
+ "generated_utc": "2026-08-18",
+ "purpose": "Final-verification re-run of the nine REAL pm6-build checkers against a u11-substituted candidate built from the CURRENT concept, with an unmodified CONTROL through the identical path. Supersedes the 2026-08-17 audit run and the first remediation run for the port-readiness verdict.",
+ "method": {
+  "scratch_root": "/tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate3",
+  "setup_script": "/tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate3/setup_candidate.py",
+  "runner": "/tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate3/run_gates.py",
+  "why_a_scratch_tree": "assemble.py hardcodes PARTS = HERE/\"parts\" (assemble.py:23), so a substituted part set cannot be fed to the repo copy without writing into Concepts/pm6-build/parts/. The whole pm6-build tree was copied into the scratchpad, the parts substituted there, and the SCRATCH assemble.py run with --gate g2 --out pointing into the scratchpad.",
+  "gate_used": "g2 only. --gate g3 was never invoked.",
+  "repo_write_proof": "git status --porcelain over Concepts/pm6-build/ reports no modification from this probe; Concepts/pm6-build/manifest.json still lists 54 parts. The repo build tree was never written.",
+  "variants": {
+   "base": "byte copy of Concepts/pm6-build with no substitutions - the CONTROL. base.assembled.html sha256 prefix 3d82a850dad0e412 matches build_pm7.py BASE_SHA, so the control is the pinned base exactly.",
+   "cand-A": "the port handoff proposal (PORT_HANDOFF_PM7_BUILD_ROUTE.md sec 1.2/1.3 as corrected by HANDOFF_CORRECTIONS.md): parts 15/27/47 substituted, new part slots created, _shared/usage-chrome.js NOT ported. 61 parts.",
+   "cand-B": "cand-A plus _shared/usage-chrome.js in its own script part - the naive straight port. 62 parts."
+  },
+  "known_deviations_from_the_handoff": [
+   "Icons were given their own balanced script part (29x-pm6-js-usage-icons.part.html) instead of being folded into the PM_ICONS hoist in 29x-pm6-js-globals.part.html, so the substitution stays purely additive and auditable. Effect: one extra balanced-zero advisory in check_structure and one extra script block in the check_js count. No gate verdict changes.",
+   "Part 47 (the PM_DEMO bridge) was left byte-unchanged. Rewriting it is design work, not a measurable transform, and no checker reads it semantically.",
+   "Part 18 unlabeled <style> emitted as the handoff documented stub. This is the configuration that MAXIMISES the check_css raw-hex finding count, i.e. the conservative measurement."
+  ],
+  "inherited_from": "The same setup_candidate.py / run_gates.py used by the first remediation pass, re-pointed at a fresh scratch root so the earlier run remains intact for comparison."
+ },
+ "artifacts": {
+  "base": {
+   "path": "/tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate3/out/base.assembled.html",
+   "bytes": 3230711,
+   "lines": 49353,
+   "sha256_16": "3d82a850dad0e412",
+   "parts_registered": 54
+  },
+  "cand-A": {
+   "path": "/tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate3/out/cand-A.assembled.html",
+   "bytes": 4120176,
+   "lines": 63321,
+   "sha256_16": "4b44ee7131003535",
+   "parts_registered": 61
+  },
+  "cand-B": {
+   "path": "/tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate3/out/cand-B.assembled.html",
+   "bytes": 4141878,
+   "lines": 63720,
+   "sha256_16": "b5e0b7a1e49bf77b",
+   "parts_registered": 62
+  }
+ },
+ "runs": {
+  "base": {
+   "check_original": {
+    "verdict": "PASS",
+    "stdout_first_lines": "check_original: OK (PMConcept4.html sha256 470c4f795ddcc381\u2026 matches record)"
+   },
+   "check_structure": {
+    "verdict": "PASS",
+    "stdout_first_lines": "check_structure: OK (global deltas {'div': 0, 'span': 0, 'style': 0, 'script': 0, 'template': 0}, body x1, </html> last, 54 parts match lock)"
+   },
+   "check_js": {
+    "verdict": "PASS",
+    "stdout_first_lines": "check_js: OK (18 script blocks parse clean)"
+   },
+   "check_css": {
+    "verdict": "PASS",
+    "stdout_first_lines": "check_css: OK (13 style blocks balanced; 251 distinct vars all defined; pm6 hex rule clean)"
+   },
+   "check_ids": {
+    "verdict": "PASS",
+    "stdout_first_lines": "check_ids: OK (482 distinct ids; 1 baseline dups unchanged; 0 new dups)"
+   },
+   "check_hooks": {
+    "verdict": "PASS",
+    "stdout_first_lines": "check_hooks: OK (72 id hooks, 51 selector probes, 8 inline handler symbols all defined)"
+   },
+   "check_settings_data": {
+    "verdict": "PASS",
+    "stdout_first_lines": "check_settings_data: OK (12 categories, 818 settings, all tiers valid, 1 assignment in assembled)"
+   },
+   "check_no_emoji": {
+    "verdict": "PASS",
+    "stdout_first_lines": "check_no_emoji: 566 WARNING glyph(s) >= U+2190 outside allowlist (not banned ranges):\n  ~ '\u2212' U+2212 MINUS SIGN x3 (lines [9789, 42271, 42272])\n  ~ '\u2500' U+2500 BOX DRAWINGS LIGHT HORIZONTAL x435 (lines [147, 147, 147, 147, 1848, 1848, 1848, 1848]\u2026)\n  ~ '\u2502' U+2502 BOX DRAWINGS LIGHT VERTICAL x1 (lines [23642])\n  ~ '\u2550' U+2550 BOX DRAWINGS DOUBLE HORIZONTAL x126 (lines [26708, 26708, 26708, 26708, 26708, 26708, 26708, 26708]\u2026)\n  ~ '\u25b6' U+25B6 BLACK RIGHT-POINTING TRIANGLE x1 (lines [26704])\ncheck_no_emoji: OK (0 banned glyphs; 566 warnings)"
+   },
+   "check_vocab": {
+    "verdict": "PASS",
+    "stdout_first_lines": "check_vocab: OK (no gate-regex matches)"
+   },
+   "_assemble_py_gate_g2": {
+    "verdict": "PASS",
+    "summary_block": "gate g2 summary:\n  check_original         PASS\n  check_structure        PASS\n  check_js               PASS\n  check_css              PASS\n  check_ids              PASS\n  check_hooks            PASS\n  check_settings_data    PASS\n  check_no_emoji         PASS\n  check_vocab            PASS\ngate g2: PASS\n"
+   }
+  },
+  "cand-A": {
+   "check_original": {
+    "verdict": "PASS",
+    "stdout_first_lines": "check_original: OK (PMConcept4.html sha256 470c4f795ddcc381\u2026 matches record)"
+   },
+   "check_structure": {
+    "verdict": "PASS",
+    "stdout_first_lines": "check_structure: advisory \u2014 10x-pm6-css-usage-u11.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)\ncheck_structure: advisory \u2014 29x-pm6-js-usage-icons.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)\ncheck_structure: advisory \u2014 29x-pm6-js-usage-data-a.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)\ncheck_structure: advisory \u2014 29x-pm6-js-usage-data-b.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)\ncheck_structure: advisory \u2014 29x-pm6-js-usage-widgets-a.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)\ncheck_structure: advisory \u2014 29x-pm6-js-usage-widgets-b.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)\ncheck_structure: advisory \u2014 29x-pm6-js-usage-detail.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)\ncheck_structure: OK (global deltas {'div': 0, 'span': 0, 'style': 0, 'script': 0, 'template': 0}, body x1, </html> last, 61 parts match lock)"
+   },
+   "check_js": {
+    "verdict": "PASS",
+    "stdout_first_lines": "check_js: OK (24 script blocks parse clean)"
+   },
+   "check_css": {
+    "verdict": "PASS",
+    "stdout_first_lines": "check_css: OK (14 style blocks balanced; 336 distinct vars all defined; pm6 hex rule clean)"
+   },
+   "check_ids": {
+    "verdict": "PASS",
+    "stdout_first_lines": "check_ids: OK (529 distinct ids; 1 baseline dups unchanged; 0 new dups)"
+   },
+   "check_hooks": {
+    "verdict": "PASS",
+    "stdout_first_lines": "check_hooks: OK (72 id hooks, 51 selector probes, 8 inline handler symbols all defined)"
+   },
+   "check_settings_data": {
+    "verdict": "PASS",
+    "stdout_first_lines": "check_settings_data: OK (12 categories, 818 settings, all tiers valid, 1 assignment in assembled)"
+   },
+   "check_no_emoji": {
+    "verdict": "PASS",
+    "stdout_first_lines": "check_no_emoji: 580 WARNING glyph(s) >= U+2190 outside allowlist (not banned ranges):\n  ~ '\u2194' U+2194 LEFT RIGHT ARROW x3 (lines [15406, 45400, 45400])\n  ~ '\u21ba' U+21BA ANTICLOCKWISE OPEN CIRCLE ARROW x1 (lines [52931])\n  ~ '\u2212' U+2212 MINUS SIGN x5 (lines [9789, 24348, 53001, 56239, 56240])\n  ~ '\u2248' U+2248 ALMOST EQUAL TO x3 (lines [16436, 16436, 54813])\n  ~ '\u2260' U+2260 NOT EQUAL TO x1 (lines [47591])\n  ~ '\u2264' U+2264 LESS-THAN OR EQUAL TO x4 (lines [15402, 15452, 15636, 46169])\n  ~ '\u2500' U+2500 BOX DRAWINGS LIGHT HORIZONTAL x435 (lines [147, 147, 147, 147, 1848, 1848, 1848, 1848]\u2026)"
+   },
+   "check_vocab": {
+    "verdict": "FAIL",
+    "stdout_first_lines": "check_vocab: 4 gate-regex match(es)\n  [tiers] x3\n    line 16952: 'tier' | /* One indent step per tier. Products and their meters used to share lv3, so a\n    line 47953: 'tier' | { bucket_id: 'agy:quota-high', label: 'High-tier model requests', quota_status: 'disabled',\n    line 47975: 'tier' | { field: 'active_model', label: 'Active model', value: 'Standard tier', state: 'reported' },\n  [Gemini CLI] x1\n    line 47883: 'Gemini CLI' | by `agy`. It is not Gemini Direct and not the retired Gemini CLI,"
+   },
+   "_assemble_py_gate_g2": {
+    "verdict": "FAIL",
+    "summary_block": "gate g2 summary:\n  check_original         PASS\n  check_structure        PASS\n  check_js               PASS\n  check_css              PASS\n  check_ids              PASS\n  check_hooks            PASS\n  check_settings_data    PASS\n  check_no_emoji         PASS\n  check_vocab            FAIL\ngate g2: FAIL\n"
+   }
+  },
+  "cand-B": {
+   "check_original": {
+    "verdict": "PASS",
+    "stdout_first_lines": "check_original: OK (PMConcept4.html sha256 470c4f795ddcc381\u2026 matches record)"
+   },
+   "check_structure": {
+    "verdict": "PASS",
+    "stdout_first_lines": "check_structure: advisory \u2014 10x-pm6-css-usage-u11.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)\ncheck_structure: advisory \u2014 29x-pm6-js-usage-icons.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)\ncheck_structure: advisory \u2014 29x-pm6-js-usage-data-a.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)\ncheck_structure: advisory \u2014 29x-pm6-js-usage-data-b.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)\ncheck_structure: advisory \u2014 29x-pm6-js-usage-widgets-a.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)\ncheck_structure: advisory \u2014 29x-pm6-js-usage-widgets-b.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)\ncheck_structure: advisory \u2014 29x-pm6-js-usage-detail.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)\ncheck_structure: advisory \u2014 29x-pm6-js-usage-chrome.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)"
+   },
+   "check_js": {
+    "verdict": "PASS",
+    "stdout_first_lines": "check_js: OK (25 script blocks parse clean)"
+   },
+   "check_css": {
+    "verdict": "PASS",
+    "stdout_first_lines": "check_css: OK (14 style blocks balanced; 336 distinct vars all defined; pm6 hex rule clean)"
+   },
+   "check_ids": {
+    "verdict": "FAIL",
+    "stdout_first_lines": "check_ids: FAIL\n  - NEW duplicate id \"projectMenu\" x2\n  - NEW duplicate id \"projectMenuWrap\" x2\n  - NEW duplicate id \"themeMenu\" x2\n  - NEW duplicate id \"themeMenuLabel\" x2\n  - NEW duplicate id \"themeMenuWrap\" x2"
+   },
+   "check_hooks": {
+    "verdict": "PASS",
+    "stdout_first_lines": "check_hooks: OK (72 id hooks, 51 selector probes, 8 inline handler symbols all defined)"
+   },
+   "check_settings_data": {
+    "verdict": "PASS",
+    "stdout_first_lines": "check_settings_data: OK (12 categories, 818 settings, all tiers valid, 1 assignment in assembled)"
+   },
+   "check_no_emoji": {
+    "verdict": "PASS",
+    "stdout_first_lines": "check_no_emoji: 580 WARNING glyph(s) >= U+2190 outside allowlist (not banned ranges):\n  ~ '\u2194' U+2194 LEFT RIGHT ARROW x3 (lines [15406, 45400, 45400])\n  ~ '\u21ba' U+21BA ANTICLOCKWISE OPEN CIRCLE ARROW x1 (lines [52931])\n  ~ '\u2212' U+2212 MINUS SIGN x5 (lines [9789, 24348, 53001, 56638, 56639])\n  ~ '\u2248' U+2248 ALMOST EQUAL TO x3 (lines [16436, 16436, 54813])\n  ~ '\u2260' U+2260 NOT EQUAL TO x1 (lines [47591])\n  ~ '\u2264' U+2264 LESS-THAN OR EQUAL TO x4 (lines [15402, 15452, 15636, 46169])\n  ~ '\u2500' U+2500 BOX DRAWINGS LIGHT HORIZONTAL x435 (lines [147, 147, 147, 147, 1848, 1848, 1848, 1848]\u2026)"
+   },
+   "check_vocab": {
+    "verdict": "FAIL",
+    "stdout_first_lines": "check_vocab: 4 gate-regex match(es)\n  [tiers] x3\n    line 16952: 'tier' | /* One indent step per tier. Products and their meters used to share lv3, so a\n    line 47953: 'tier' | { bucket_id: 'agy:quota-high', label: 'High-tier model requests', quota_status: 'disabled',\n    line 47975: 'tier' | { field: 'active_model', label: 'Active model', value: 'Standard tier', state: 'reported' },\n  [Gemini CLI] x1\n    line 47883: 'Gemini CLI' | by `agy`. It is not Gemini Direct and not the retired Gemini CLI,"
+   },
+   "_assemble_py_gate_g2": {
+    "verdict": "FAIL",
+    "summary_block": "gate g2 summary:\n  check_original         PASS\n  check_structure        PASS\n  check_js               PASS\n  check_css              PASS\n  check_ids              FAIL\n  check_hooks            PASS\n  check_settings_data    PASS\n  check_no_emoji         PASS\n  check_vocab            FAIL\ngate g2: FAIL\n"
+   }
+  }
+ },
+ "headline": {
+  "control_all_nine": "PASS",
+  "cand_A": "8 of 9 PASS; check_vocab FAIL",
+  "cand_B": "7 of 9 PASS; check_vocab FAIL, check_ids FAIL",
+  "regression_since_the_first_remediation": "check_vocab. The first remediation run (scratchpad/gate/out, 2026-08-18T03:42) recorded cand-A check_vocab OK with 0 matches and gate g2 PASS. It is now 4 matches and gate g2 FAIL.",
+  "attributable_to_u11": "yes - the control is clean on all nine, so every candidate failure is u11-borne."
+ },
+ "check_vocab_regression": {
+  "checker": "Concepts/pm6-build/checks/check_vocab.py",
+  "gate_severity": "hard at g2 (assemble.py)",
+  "matches": 4,
+  "items": [
+   {
+    "assembled_line": 16952,
+    "gate": "tiers",
+    "token": "tier",
+    "source": "Concepts/usage-concepts/QwenUsageConcept/u11-prism.html:292",
+    "context": "/* One indent step per tier. Products and their meters used to share lv3, so a",
+    "kind": "CSS comment"
+   },
+   {
+    "assembled_line": 47883,
+    "gate": "Gemini CLI",
+    "token": "Gemini CLI",
+    "source": "Concepts/usage-concepts/QwenUsageConcept/u11-data.js:1361",
+    "context": "by `agy`. It is not Gemini Direct and not the retired Gemini CLI,",
+    "kind": "JS comment"
+   },
+   {
+    "assembled_line": 47953,
+    "gate": "tiers",
+    "token": "tier",
+    "source": "Concepts/usage-concepts/QwenUsageConcept/u11-data.js:1431",
+    "context": "{ bucket_id: 'agy:quota-high', label: 'High-tier model requests', quota_status: 'disabled',",
+    "kind": "user-visible label string"
+   },
+   {
+    "assembled_line": 47975,
+    "gate": "tiers",
+    "token": "tier",
+    "source": "Concepts/usage-concepts/QwenUsageConcept/u11-data.js:1453",
+    "context": "{ field: 'active_model', label: 'Active model', value: 'Standard tier', state: 'reported' },",
+    "kind": "user-visible value string"
+   }
+  ],
+  "introduced_by": "the second remediation wave that added the CBP-027 / Antigravity surfaces. All four lines are absent from the 2026-08-18T03:42 candidate.",
+  "base_count": 0
+ },
+ "check_ids_candB": {
+  "verdict": "FAIL - unchanged from the audit and from the first remediation",
+  "diagnostic": "NEW duplicate id \"projectMenu\" x2, \"projectMenuWrap\" x2, \"themeMenu\" x2, \"themeMenuLabel\" x2, \"themeMenuWrap\" x2",
+  "note": "cand-A reports OK (529 distinct ids; 1 baseline dup unchanged; 0 new dups). Dropping _shared/usage-chrome.js clears it entirely, which is what the handoff already prescribes, so this is not a regression."
+ }
+}

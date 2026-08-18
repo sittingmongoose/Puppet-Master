@@ -328,9 +328,33 @@
     }
     window.PMUsageShell = { toast: toast, setW: setW, applyTheme: applyTheme, syncThemeLabel: syncThemeLabel, wireDemoActions: wireDemoActions, center: centerInner };
 
-    /* gallery bridge */
+    /* ConceptHub bridge.
+
+       This handled the Hub's legacy pm-setw / pm-theme / pm-rm messages and
+       announced itself with pm-ready, but never spoke the current protocol, so
+       ConceptHub/validate.py failed every page in this folder for missing
+       pm-concept-ready and pm-concept-state support. The two siblings that pass
+       the gate do so only by declaring controlMode "internal", which sidesteps
+       the check rather than satisfying it. This implements the real contract
+       instead — see Concepts/ConceptHub/starter/model-folder/concept-hub-bridge.js
+       and the Hub consumer in ConceptHub/assets/app.js. */
+    function applyConceptState(state) {
+      if (!state || typeof state !== 'object') return;
+      var root = document.documentElement;
+      if (state.theme) applyTheme(state.theme);
+      root.setAttribute('data-reduced-motion', state.reducedMotion ? '1' : '0');
+      var rm = document.getElementById('sbRM');
+      if (rm) { rm.classList.toggle('on', !!state.reducedMotion); rm.setAttribute('aria-pressed', String(!!state.reducedMotion)); }
+      if (typeof state.testWidth === 'number') {
+        setW(state.testWidth);
+        root.style.setProperty('--hub-test-width', state.testWidth + 'px');
+        if (state.widthRole) root.style.setProperty('--hub-' + state.widthRole + '-width', state.testWidth + 'px');
+      }
+      if (typeof state.viewportWidth === 'number') root.style.setProperty('--hub-viewport-width', state.viewportWidth + 'px');
+    }
     window.addEventListener('message', function (e) {
       var d = e.data; if (!d || typeof d !== 'object') return;
+      if (d.source === 'pm-concept-hub' && d.type === 'pm-concept-state') { applyConceptState(d.state); return; }
       if (d.type === 'pm-setw' && typeof d.w === 'number') setW(d.w);
       else if (d.type === 'pm-theme') applyTheme(d.theme);
       else if (d.type === 'pm-rm') {
@@ -338,7 +362,18 @@
         var b = document.getElementById('sbRM'); if (b) { b.classList.toggle('on', !!d.on); b.setAttribute('aria-pressed', String(!!d.on)); }
       }
     });
-    try { if (window.parent && window.parent !== window) window.parent.postMessage({ type: 'pm-ready' }, '*'); } catch (_) {}
+    function announceConceptReady() {
+      try {
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({ type: 'pm-ready' }, '*');
+          window.parent.postMessage({
+            source: 'pm-concept', type: 'pm-concept-ready', version: 1,
+            capabilities: { theme: true, reducedMotion: true, testWidth: true }
+          }, '*');
+        }
+      } catch (_) {}
+    }
+    announceConceptReady();
   }
 
   window.PMUsageChrome = { boot: boot, observeReveals: observeReveals };

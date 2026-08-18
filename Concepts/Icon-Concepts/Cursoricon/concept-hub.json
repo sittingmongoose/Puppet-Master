@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "icons:cursor",
+  "topic": "icons",
+  "model": "Cursor",
+  "presentation": "workspace",
+  "order": 10,
+  "widthControl": {
+    "enabled": false,
+    "label": "Workspace width",
+    "role": "none",
+    "default": 1440,
+    "previewWidth": 1440
+  },
+  "workspace": {
+    "path": "index.html",
+    "title": "Cursor Icon Mix Lab",
+    "openActions": "none",
+    "controlMode": "internal",
+    "tags": [
+      "icons",
+      "configurator"
+    ],
+    "id": "workspace",
+    "openPath": "index.html"
+  }
+}

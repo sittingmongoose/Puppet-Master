@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "icons:fable",
+  "topic": "icons",
+  "model": "Fable",
+  "presentation": "workspace",
+  "order": 20,
+  "widthControl": {
+    "enabled": false,
+    "label": "Workspace width",
+    "role": "none",
+    "default": 1440,
+    "previewWidth": 1440
+  },
+  "workspace": {
+    "path": "index.html",
+    "title": "Fable Icon Theme Pack",
+    "openActions": "none",
+    "controlMode": "internal",
+    "tags": [
+      "icons",
+      "themes"
+    ],
+    "id": "workspace",
+    "openPath": "index.html"
+  }
+}

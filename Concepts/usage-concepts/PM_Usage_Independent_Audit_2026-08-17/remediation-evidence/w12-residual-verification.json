@@ -1,0 +1,1440 @@
+{
+ "schema_id": "pm.usage_audit.residual_verification.v1",
+ "evidence_id": "w12-residual-verification",
+ "ran_at_utc": "2026-08-18T15:25:00Z",
+ "ran_by": "independent final-verification pass; wrote none of the concept and none of the earlier audit documents",
+ "driver": {
+  "browser": "/home/sittingmongoose/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome",
+  "playwright": "QwenUsageConcept/.verify/node_modules/playwright-core",
+  "page": "file:///mnt/Cursor/PuppetMaster/Concepts/usage-concepts/QwenUsageConcept/u11-prism.html",
+  "disclosure": "advanced unless a case states otherwise",
+  "scripts": [
+   "w12-residual-probe-1.mjs",
+   "w12-residual-probe-2.mjs",
+   "w12-residual-probe-3.mjs",
+   "w12-blocker-recheck.mjs"
+  ]
+ },
+ "note": "probe-1 round for A02-10/A02-11/A03-22/A11-02/SELF-8/SELF-10 used the selector [data-scope], which the concept no longer emits; those cells are NULL MEASUREMENTS in probe-1 and were re-measured in probe-2 against the real selector .u11-pop-row[data-scopeid]. Only the probe-2 values are cited. The same applies to probe-1 A07-09, re-measured in probe-3.",
+ "probe_1": {
+  "rooms": [
+   "overview",
+   "plans",
+   "costs",
+   "accounts",
+   "free",
+   "context",
+   "analytics",
+   "ledger",
+   "attention",
+   "cache",
+   "tools",
+   "signals",
+   "authority"
+  ],
+  "corpus": {
+   "text_chars": 109941,
+   "html_chars": 643997
+  },
+  "A01-06/A10-01/A08-04": {
+   "setupLink": {
+    "surface": "settings",
+    "manager": "providers",
+    "section": "setup",
+    "focus_reason": "setup_required",
+    "category": "ai",
+    "focusSettingId": "ai.accounts.provider-connections",
+    "provider_family_id": "fam:openai",
+    "account_id": "acct:openai-personal",
+    "connection_id": "conn:openai-personal-codex",
+    "provider_cli": "codex",
+    "provider_route_kind": "cli_bridged",
+    "host_id": "host:truenas",
+    "env_id": "env:docker",
+    "originating_operation_id": "ops-8",
+    "continuation": "cont-8841",
+    "reason": "setup required"
+   },
+   "ops8_keys": [
+    "id",
+    "kind",
+    "title",
+    "status",
+    "hostId",
+    "envId",
+    "providerUsage",
+    "validationEventId",
+    "sourceLocationId",
+    "clientId",
+    "stages",
+    "failureClass",
+    "outcome",
+    "copy",
+    "detail",
+    "setupLink",
+    "relatedEventIds"
+   ],
+   "ops8_hostId": "host:truenas",
+   "ops8_envId": "env:docker",
+   "actions_in_operations": [
+    "Refresh forecast",
+    "Open run detail",
+    "Refresh forecast",
+    "Open run detail",
+    "Open run detail",
+    "Duplicate",
+    "Open Usage settings",
+    "Duplicate",
+    "Open Usage settings",
+    "Duplicate",
+    "Open Usage settings",
+    "Open Context details",
+    "Duplicate",
+    "Open Usage settings",
+    "Duplicate",
+    "Open Usage settings",
+    "Use next",
+    "Open provider console",
+    "Reconnect",
+    "Use next",
+    "Open provider console",
+    "Use next",
+    "Open provider console",
+    "Use next",
+    "Open provider console",
+    "Use next",
+    "Open provider console",
+    "Use next",
+    "Open provider console",
+    "Use next",
+    "Open provider console",
+    "Use next",
+    "Open provider console",
+    "Use next",
+    "Open provider console",
+    "Use next",
+    "Open provider console",
+    "Use next",
+    "Open provider console",
+    "Use next"
+   ],
+   "found_setup_button": true,
+   "dispatched": [
+    {
+     "cmd": "cmd.settings.bloom.open",
+     "payload": {
+      "category": "ai",
+      "focus_setting_id": "ai.accounts.provider-connections",
+      "reason": "setup required",
+      "provider_family_id": "fam:openai",
+      "account_id": "acct:openai-personal",
+      "connection_id": "conn:openai-personal-codex",
+      "provider_cli": "codex",
+      "provider_route_kind": "cli_bridged",
+      "host_id": "host:truenas",
+      "env_id": "env:docker",
+      "originating_operation_id": "ops-8",
+      "continuation": "cont-8841"
+     },
+     "at": "2026-08-18T15:16:19.469Z"
+    }
+   ],
+   "cont8841_in_html": false,
+   "cont8841_in_text": false,
+   "continuation_words_in_text": true
+  },
+  "A01-07": {
+   "dispatches": [
+    {
+     "label": "reconnect",
+     "found": true,
+     "log": [
+      {
+       "cmd": "cmd.settings.bloom.open",
+       "payload": {
+        "category": "ai",
+        "focus_setting_id": "ai.accounts.multi-account-switching",
+        "reason": "reconnect",
+        "provider_family_id": "fam:alibaba",
+        "account_id": "acct:alibaba-team"
+       },
+       "at": "2026-08-18T15:16:20.916Z"
+      }
+     ]
+    },
+    {
+     "label": "provider console",
+     "found": true,
+     "log": [
+      {
+       "cmd": "cmd.provider.usage.open_management",
+       "payload": {
+        "familyId": "fam:alibaba",
+        "provider_family_id": "fam:alibaba"
+       },
+       "at": "2026-08-18T15:16:22.271Z"
+      }
+     ]
+    },
+    {
+     "label": "use next",
+     "found": true,
+     "log": [
+      {
+       "cmd": "cmd.provider.switch_route",
+       "payload": {
+        "accountId": "acct:alibaba-personal",
+        "provider_family_id": "fam:alibaba"
+       },
+       "at": "2026-08-18T15:16:23.626Z"
+      }
+     ]
+    }
+   ]
+  },
+  "A08-01": {
+   "ops1_keys": [
+    "id",
+    "kind",
+    "title",
+    "status",
+    "hostId",
+    "envId",
+    "providerUsage",
+    "validationEventId",
+    "sourceLocationId",
+    "clientId",
+    "acquisition",
+    "stages",
+    "failureClass",
+    "failureStage",
+    "outcome",
+    "copy",
+    "detail",
+    "relatedEventIds"
+   ],
+   "failureClass": "verify_failed",
+   "outcome": "rolled_back",
+   "affectedConnections": null,
+   "affected_like_keys": [],
+   "label_failure_class": true,
+   "label_outcome": true,
+   "label_affected": false
+  },
+  "A08-03": {
+   "found": true,
+   "kind_badges": [],
+   "text": "Open provider setup"
+  },
+  "A08-05": {
+   "ue609_workId": null,
+   "ue609_purpose": "probe",
+   "ledger_context": ".6 \u00b7 Claude \u00b7 Work \u00b7 Claude Max plan\nMain work\nuser work\ncompleted\n9.6k input \u00b7 1.3k output \u00b7 430 reasoning \u00b7 5.2k cache read\n$0.1800\nue-617\ninspect\nClaude Opus 4.6 \u00b7 Claude \u00b7 Work \u00b7 Extra usage\nTURN\nRun integration tests\n18:01 UTC\n2 provider families \u00b7 Kimi \u00b7 Z.AI\nThis work item ran across 2 provider families. It is never collapsed under one member's route.\nWork item total \u00b7 27.9k input \u00b7 2.3k output \u00b7 7.7k cache read\nCost \u00b7 1 call the plan covers \u00b7 1 call billed to your own key \u00b7 1 call with no price reported\n3 attempts \u00b7 3 primary calls\nSession sess-t88-2\nMain work\nuser work\ncompleted\n15.3k"
+  },
+  "A08-06": {
+   "route": {
+    "model": "model:gpt-5-6-codex",
+    "conn": "conn:openai-personal-codex",
+    "product": "prod:codex-plus"
+   },
+   "explains_why": false,
+   "matches": [],
+   "verify_sentences": []
+  },
+  "A08-07": {
+   "ops2_providerUsage": "replay_only",
+   "ue610_purpose": "conversation_replay"
+  },
+  "A08-08/A10-11": {
+   "found": false,
+   "raw_id_in_prose": null,
+   "act_count": 0,
+   "act_labels": [],
+   "act_attrs": []
+  },
+  "A08-10": {
+   "count": 2,
+   "keys": [
+    "id",
+    "source",
+    "mode",
+    "status",
+    "at",
+    "modelsChanged",
+    "freeStateChanges",
+    "copy",
+    "detail",
+    "failureBackoffUntil",
+    "probeEventId"
+   ],
+   "join_like": [
+    "id",
+    "probeEventId"
+   ],
+   "sample": {
+    "id": "cat-1",
+    "source": "free_coding_models",
+    "mode": "background",
+    "status": "stale_served_then_refreshed",
+    "at": "2026-08-04T18:02:00.000Z",
+    "modelsChanged": 3,
+    "freeStateChanges": 1,
+    "copy": "Stale catalog served immediately",
+    "detail": "Background refresh succeeded \u00b7 no provider usage"
+   }
+  },
+  "A08-11": {
+   "active_probe_qwen": false,
+   "catalog_validation_row": true,
+   "mentions_maintenance_op": true,
+   "ue609_ctx": null,
+   "probe_group_slice": ""
+  },
+  "A02-01": {
+   "footer_all": "52 current usage events for All current usage \u00b7 $0.2100 priced by the provider on 7 events \u00b7 38 covered by a plan \u00b7 1 billed to your own key \u00b7 6 cost not reported.\n2 more events belong to an account you have removed \u00b7 $0.6700 priced by the provider on 2 events. That history stays in the Ledger and is not counted above.",
+   "row_count": 0,
+   "kinds": {},
+   "removed_accounts": [
+    "acct:openai-old"
+   ],
+   "total_attempts": 54,
+   "attempts_on_removed": 0
+  },
+  "A02-02/A04-08": {
+   "card_ctx": "2.0k cache read\ncost hidden \u00b7 plan covers it\nue-607\ninspect\nClaude Opus 4.6 \u00b7 Claude \u00b7 Work \u00b7 Claude Max plan\nCREW STEP\nCritique round 1\nnow\n4 provider families \u00b7 Claude \u00b7 Alibaba \u00b7 Kimi \u00b7 OpenAI\nThis run ran across 4 provider families. It is never collapsed under one member's route.\nWork item total \u00b7 35.5k input \u00b7 3.0k output \u00b7 520 reasoning \u00b7 2 attempts reported no provider usage\nCost \u00b7 3 calls the plan cover \u00b7 2 calls with no price reported\n5 attempts \u00b7 5 crew members\nSession sess-crew-3\nSpecialists & subagents\ncrew member\ncompleted\n14.2k input \u00b7 1.6k output \u00b7 520 reasoning\ncost hidden \u00b7 plan covers it\nue-580\ninspect\nClaude Sonnet 4.6 \u00b7 Claude \u00b7 Work \u00b7 Claude Max plan\nSpecialists & subagents\ncrew member\ncompleted\n11.9k input \u00b7 1.1k output\ncost hidden \u00b7 plan covers it\nue-581\ninspect\nQwen3 Coder Plus \u00b7 Alibaba \u00b7 Personal \u00b7 Coding Plan\nSpecialists & subagents\ncrew member\nrunning\n9.4k input \u00b7 300 output\ncost hidden \u00b7 plan covers it\nue-582\ninspect\nKimi K2 \u00b7 Kimi \u00b7 Personal \u00b7 Kimi Code plan\nSpecialists & sub",
+   "work_families": [
+    null
+   ],
+   "work_attempts": 5
+  },
+  "A02-09": {
+   "config_selector_found": false,
+   "historical_present_unfiltered": true
+  },
+  "A02-10": {
+   "rows": 0,
+   "kinds": {},
+   "model_rows": 0
+  },
+  "A02-11": {
+   "padding_by_kind": {}
+  },
+  "A02-13/A04-12": {
+   "total": 54,
+   "requestedAccessProfile": 54,
+   "effectiveAccessProfile": 54,
+   "reasoningEffort": 54,
+   "speedMode": 54,
+   "conversationMode": 54,
+   "sessionId": 50
+  },
+  "A06-09": {
+   "coverage": "CLONE_ERR \"undefined\" is not valid JSON"
+  },
+  "A06-10": {
+   "occurrences": {
+    "port_conflict": 1,
+    "file_writer_conflict": 1,
+    "host_resource_pressure": 1,
+    "waiting_for_update_repair": 1,
+    "waiting_for_reset": 1,
+    "provider_permit": 3,
+    "approval_wait": 3,
+    "dependency_wait": 0
+   }
+  },
+  "A06-13": {
+   "rows": [
+    {
+     "id": "run:goal-47",
+     "advertised": 2,
+     "sustainable": 2,
+     "reserveKeys": [],
+     "capKeys": [
+      "hardMax",
+      "configuredPreferred",
+      "providerAdvertised",
+      "effectiveNow",
+      "predictedSustainable",
+      "actualPeak",
+      "actualPeakAt",
+      "actualPeakBasis"
+     ]
+    },
+    {
+     "id": "run:plan-12",
+     "advertised": 2,
+     "sustainable": 2,
+     "reserveKeys": [],
+     "capKeys": [
+      "hardMax",
+      "configuredPreferred",
+      "providerAdvertised",
+      "effectiveNow",
+      "predictedSustainable",
+      "actualPeak",
+      "actualPeakAt",
+      "actualPeakBasis"
+     ]
+    },
+    {
+     "id": "run:crew-3",
+     "advertised": 3,
+     "sustainable": 2,
+     "reserveKeys": [],
+     "capKeys": [
+      "hardMax",
+      "configuredPreferred",
+      "providerAdvertised",
+      "effectiveNow",
+      "predictedSustainable",
+      "actualPeak",
+      "actualPeakAt",
+      "actualPeakBasis"
+     ]
+    }
+   ]
+  },
+  "A06-15": {
+   "ctx": "current usage\nas of 18:42 UTC \u00b7 next 18:47 UTC\nLast 24 hours\n48 of 54 events\n776.6k tokens\n$0.2100 priced by the provider on 7 events \u00b7 38 covered by a plan \u00b7 1 billed to your own key \u00b7 2 cost not reported\n4 with no start time\nThe range drives these figures, the key figures on Overview and what Export writes. The capacity block is a completion forecast, not a hard provider concurrency limit \u2014 the hard maximum is Puppet Master\u2019s own safety ceiling. Capacity kept aside for synthesis, testing and repair now carries a published quantity \u2014 workers and tokens, with the effect it has on the sustainable figure \u2014 so the reservation is measurable rather than merely named.\n$187.42\nSpent this month\n100\n%\nHottest plan \u00b7 ChatGPT Business plan\n33\n%\nContext window \u00b7 42.2k / 128.0k\n$5.67\nCache saved today\n",
+   "forecast_words_near": true
+  },
+  "A06-16": {
+   "actualPeak_in_data": true,
+   "peak_values": [
+    2,
+    2,
+    3
+   ],
+   "rendered_phrase": true,
+   "peak_concurrency_literal": false
+  },
+  "A09-06": {
+   "with_reasoning": 20,
+   "total": 54
+  },
+  "A09-09": {
+   "tables": 2,
+   "canvases": 0,
+   "range_control": true
+  },
+  "A10-17": {
+   "purpose": "vision",
+   "modelId": "model:claude-sonnet-4-6",
+   "model_vision": true
+  },
+  "A05-19": {
+   "bars": [
+    {
+     "h": "37",
+     "height": "42.04%",
+     "title": "37% of the largest bar",
+     "cls": "sp-teal"
+    },
+    {
+     "h": "29",
+     "height": "34.68%",
+     "title": "29% of the largest bar",
+     "cls": "sp-teal"
+    },
+    {
+     "h": "17",
+     "height": "23.64%",
+     "title": "17% of the largest bar",
+     "cls": "sp-teal"
+    },
+    {
+     "h": "8",
+     "height": "15.36%",
+     "title": "8% of the largest bar",
+     "cls": "sp-teal"
+    },
+    {
+     "h": "0",
+     "height": "0%",
+     "title": "nothing reported for this bar \u2014 unknown, not a small value",
+     "cls": "sp-teal nil"
+    },
+    {
+     "h": "0",
+     "height": "0%",
+     "title": "nothing reported for this bar \u2014 unknown, not a small value",
+     "cls": "sp-teal nil"
+    },
+    {
+     "h": "0",
+     "height": "0%",
+     "title": "nothing reported for this bar \u2014 unknown, not a small value",
+     "cls": "sp-teal nil"
+    },
+    {
+     "h": "4",
+     "height": "11.68%",
+     "title": "4% of the largest bar",
+     "cls": "sp-teal"
+    },
+    {
+     "h": "5",
+     "height": "12.6%",
+     "title": "5% of the largest bar",
+     "cls": "sp-teal"
+    },
+    {
+     "h": "7",
+     "height": "7%",
+     "title": null,
+     "cls": "s-input"
+    },
+    {
+     "h": "2",
+     "height": "2%",
+     "title": null,
+     "cls": "s-output"
+    },
+    {
+     "h": "5",
+     "height": "5%",
+     "title": null,
+     "cls": "s-cache"
+    },
+    {
+     "h": "4",
+     "height": "4%",
+     "title": null,
+     "cls": "s-input"
+    },
+    {
+     "h": "2",
+     "height": "2%",
+     "title": null,
+     "cls": "s-output"
+    },
+    {
+     "h": "4",
+     "height": "4%",
+     "title": null,
+     "cls": "s-cache"
+    },
+    {
+     "h": "5",
+     "height": "5%",
+     "title": null,
+     "cls": "s-input"
+    },
+    {
+     "h": "2",
+     "height": "2%",
+     "title": null,
+     "cls": "s-output"
+    },
+    {
+     "h": "4",
+     "height": "4%",
+     "title": null,
+     "cls": "s-cache"
+    },
+    {
+     "h": "11",
+     "height": "11%",
+     "title": null,
+     "cls": "s-input"
+    },
+    {
+     "h": "4",
+     "height": "4%",
+     "title": null,
+     "cls": "s-output"
+    }
+   ],
+   "count": 97
+  },
+  "A11-02": {
+   "dispatched": []
+  },
+  "A11-05": {
+   "run_open": [
+    {
+     "cmd": "cmd.nav.open_subject",
+     "payload": {
+      "route_target": {
+       "object_kind": "run",
+       "object_id": "run:plan-12"
+      },
+      "open_subject": {
+       "kind": "planning_run",
+       "id": "run:plan-12",
+       "title": "Spec: U11 usage concept",
+       "owning_surface": "planning_wizard"
+      },
+      "run_id": "run:plan-12",
+      "thread_id": null,
+      "project": "Puppet Master",
+      "projection_freshness": "current",
+      "projection_health": "current"
+     },
+     "at": "2026-08-18T15:16:32.268Z"
+    }
+   ],
+   "attempt_open": [
+    {
+     "cmd": "cmd.nav.open_usage_subject",
+     "payload": {
+      "route_target": {
+       "object_kind": "usage_event",
+       "object_id": "ue-501"
+      },
+      "usage_event_ref": "ue-501",
+      "usage_record_id": "rcpt-501",
+      "provider_attempt_ref": "rcpt-501",
+      "attempt_id": "ue-501",
+      "parent_usage_record_id": null,
+      "dedupe_key": "dk-501",
+      "run_id": null,
+      "thread_id": "thread:t-88",
+      "source_class": "cli_reported",
+      "settlement_status": "observed",
+      "projection_freshness": "current",
+      "projection_health": "current"
+     },
+     "at": "2026-08-18T15:16:33.001Z"
+    }
+   ]
+  },
+  "A03-08": {
+   "total": 54,
+   "cost_status": 54,
+   "display_cost_policy": 54,
+   "hidden_byok": 54,
+   "hidden_subscription": 54,
+   "pricing_tokens_in_U11": [
+    "pricingSnapshotId",
+    "pricing_source",
+    "pricingSource",
+    "pricingEffectiveAt",
+    "pricingVersion"
+   ]
+  },
+  "A03-10": {
+   "ctx": "ese figures, the key figures on Overview and what Export writes. Widgets that publish their own window keep it and say so.\nAdd widget\nDrag the grip to move, drag the corner to resize, open a widget menu for focus, size, config and remove.\nAttention\nToken spike blocked\n18:20 UTC\nWork OpenAI \u00b7 Codex\nA 4.1\u00d7 input spike tripped the 1-hour 3.0\u00d7 rule.\nWhy\nSpend rate elevated\n17:55 UTC\nClaude API \u00b7 PAYG\nBurn is 2.2\u00d7 the 7-day norm; still under the org spending limit.\nWhy\nDuplicate\nOpen Usage settings",
+   "costs_ctx": "ncluded valuation your subscriptions already cover. $61.85 is billed to a card, which is 21% of the same limit. The 80% warning is measured against the whole figure, and the limit itself is one user-set number, not the sum of the per-product limits.\nAPI-billed\n$61.85\nPlan-included\n$125.57\nBurn\n$2.85/h \u00b7 $20.30/d\nForecast\n$224.10 by month end\nClaude\n$74.21\nOpenAI\n$52.38\nAlibaba\n$31.24\nKimi\n$14.96\nOpenCode\n$2.20\nZ.AI\n$8.12\nAntigravity\n$4.31\nOne cost authority \u00b7 the API/plan split is a projection, not a second model. Spending limit is user-controlled, not a plan allowance.\nDuplicate\nOpen Usage se"
+  },
+  "A03-16": {
+   "ctx": "pts carry no start time, so they belong to no bucket and to no range; they are counted here rather than dropped.\nAdd widget\nDrag the grip to move, drag the corner to resize, open a widget menu for focus, size, config and remove.\nCosts & spending\n$187.42\nspent of $300.00 spending limit \u00b7 warn at 80%\nSpending limit used\n62\n%\nCounted against the limit \u00b7 the whole $187.42, of which $125.57 is plan-included valuation your subscriptions already cover. $61.85 is billed to a card, which is 21% of the same limit. The 80% warning is measured against the whole figure, and the limit itself is one user-set number, not the sum of the per-product limits.\nAPI-billed\n$61.85\nPlan-included\n$125.57\nBurn\n$2.85/h \u00b7 $20.30/d\nForecast\n$224.10 by month end\nClaude\n$74.21\nOpenAI\n$52.38\nAlibaba\n$31.24\nKimi\n$14.96\nOpenCode\n$2.20\nZ.AI\n$8.12\nAntigravity\n$4.31\nOne cost authority \u00b7 the API/plan split is a projection, not a second model. Spending limit is user-controlled, not a plan allowance.\nDuplicate\nOpen Usage settings\nToken analytics\n5h\n24h\n7d\n00\n02\n04\n06\n08\n10\n12\n14\n16\n18\n20\n22\nInput\nOutput\nReasoning\nCache read"
+  },
+  "A03-17": {
+   "sheet_text": "Usage settings\nWhat Settings currently says, reported here. Usage does not change policy \u2014 every change opens the setting that owns it.\nPREFERENCES\nWarn me before I run low\nOn\nChange in Settings\nAutomatic account and provider switching\nOn\nChange in Settings\nAFTER INCLUDED USAGE\nProduct\nCoding Plan\nTeam seat credits\nChatGPT plan\nChatGPT Business plan\nClaude Max plan\nClaude API \u00b7 PAYG\nKimi Code plan\nOpenCode Go plan\nZen balance\nLegacy plan\nCredit plan\nBaseline plan\n1\nUse the usage included with your plan\n2\nDraw on Usage credits\n3\nApply the saved reset \u00b7 Saved reset\n4\nWait for the reset\nSettings holds \"credits\" for this product, which is not a step this provider offers. Open the setting to resolve it.\nChosen by\nWhen the Budget Runs Out\nChange in Settings\nEXTRA PAID USAGE\nExtra usage\nOn\nChange in Settings\nSpending limit\n$100.00 per month\nChange in Settings\nAI Credit Overages\nOff\nChange in Settings\nCURRENT ALLOWANCE (READ-ONLY)\nChatGPT Business plan \u00b7 5-hour window\n100%\nChatGPT Business plan \u00b7 Weekly window\n96%\nExtra Bundle \u00b7 Bundle requests\n80%\nSaved resets\n1 banked \u00b7 expires Sep 1 04:00 UTC\nPersonal Token Plan\n3.8M tokens left\nExtra Bundle\n40 requests left\n3 more pack or balance products not shown here\nChange in Settings\nOpen provider settings\nSee all usage settings\nSource authority, settlement, projection freshness and the catalog probes are in the Source authority room at the Advanced level. Meter-policy versions and reference or catalog prices are not shown anywhere in this view. Widget settings never change these policies."
+  },
+  "A03-19": {
+   "meter": {
+    "id": "meter:kimi-pool",
+    "windowKind": "pool",
+    "resetAt": null,
+    "vs": "unknown"
+   },
+   "resetState": {
+    "hasReset": false,
+    "state": "no_reset_window",
+    "at": null,
+    "expiresAt": null,
+    "text": "",
+    "why": "A pool window has no reset to show, so none is claimed."
+   },
+   "windowHasReset_pool": false
+  },
+  "A03-22": {
+   "neg_percent_hits": [],
+   "rows": 0
+  },
+  "A07-07": {
+   "hits": {
+    "/stats": 18,
+    "/usage": 18,
+    "/quota": 18,
+    "/credits": 18,
+    "G1 credits": 48,
+    "Models & Quota": 40,
+    "statusline": 68,
+    "not exposed": 147,
+    "unknown": 101,
+    "broken": 18,
+    "disabled": 19
+   }
+  },
+  "A07-09": {
+   "essentials": {
+    "ledger_attempt_rows": 14
+   },
+   "standard": {
+    "ledger_attempt_rows": 18
+   },
+   "advanced": {
+    "ledger_attempt_rows": 54
+   }
+  },
+  "A04-04/A04-05": {
+   "card_ctx": "\u00b7 160 output\n$0.00 reported\nue-618\ninspect\nQwen3 Max \u00b7 OpenCode \u00b7 Personal \u00b7 Shared free route\nTURN\nRedirect: rewrite rate limiter\n18:40 UTC\nClaude \u00b7 2 routes on this family\nWork item total \u00b7 58.3k input \u00b7 4.8k output \u00b7 2.2k reasoning \u00b7 29.0k cache read\nCost \u00b7 $0.1800 on 1 priced call \u00b7 3 calls the plan cover\n4 attempts \u00b7 3 primary calls \u00b7 1 helper call\nSession sess-t88-1\nInterrupted by your correction; partial usage retained.\nMain work\nuser work\ninterrupted\n6.2k input \u00b7 400 output \u00b7 260 reasoning\ncost hidden \u00b7 plan covers it\nue-520\ninspect\nClaude Opus 4.6 \u00b7 Claude \u00b7 Work \u00b7 Claude Max plan\nMain work\nuser work\ncompleted\n38.4k input \u00b7 2.9k output \u00b7 1.4k reasoning \u00b7 22.0k cache read\ncost hidden \u00b7 plan covers it\nue-521\ninspect\nClaude Opus 4.6 \u00b7 Claude \u00b7 Work \u00b7 Claude Max plan\nValidation & prob",
+   "work_id": "work-3",
+   "attempts": [
+    {
+     "id": "ue-520",
+     "purpose": "user_work",
+     "input": 6200,
+     "output": 400
+    },
+    {
+     "id": "ue-521",
+     "purpose": "user_work",
+     "input": 38400,
+     "output": 2900
+    },
+    {
+     "id": "ue-601",
+     "purpose": "bsd",
+     "input": 4100,
+     "output": 260
+    },
+    {
+     "id": "ue-617",
+     "purpose": "user_work",
+     "input": 9600,
+     "output": 1250
+    }
+   ],
+   "input_total": 58300,
+   "primaries": 3
+  },
+  "SELF-1": {
+   "duplicate_ids": []
+  },
+  "SELF-2": {
+   "spend_limit_ctx": "absent"
+  },
+  "SELF-7_raw_enum_titles": {
+   "count": 0,
+   "sample": []
+  },
+  "SELF-8": {
+   "scope": "unknown",
+   "historical_block_present": true,
+   "openai_in_ledger": true,
+   "slice": "Historical \u00b7 removed sources\nTURN\nLegacy: catalog sync\nremoved source\nRows shown \u00b7 53.0k tokens \u00b7 2 attempts\nRemoved account \u00b7 Old OpenAI\nJul 28 \u00b7 18:40 UTC\n30.2k input \u00b7 2.4k output \u00b7 900 reasoning \u00b7 $0.4100 \u00b7 Main work \u00b7 user work\ninspect\nRemoved account \u00b7 Old OpenAI\nJul 28 \u00b7 17:55 UTC\n18.9k input \u00b7 1.5k output \u00b7 560 reasoning \u00b7 $0.2600 \u00b7 Main work \u00b7 user work\ninspect\nA removed account keeps its history. "
+  },
+  "SELF-9": {
+   "reserved_ctx": "absent"
+  },
+  "SELF-11": {
+   "priced_ctx": "absent"
+  },
+  "console_error_count": 0,
+  "page_errors": [],
+  "console_errors": []
+ },
+ "probe_2": {
+  "A02-10": {
+   "rows": 116,
+   "kinds": {
+    "scope": 1,
+    "cmp": 1,
+    "fam": 10,
+    "acct": 12,
+    "conn": 16,
+    "prod": 27,
+    "meter": 33,
+    "model": 16
+   },
+   "model_rows": 16
+  },
+  "A02-11": {
+   "padding_by_kind": {
+    "scope": [
+     "10px"
+    ],
+    "cmp": [
+     "10px"
+    ],
+    "fam": [
+     "10px"
+    ],
+    "acct": [
+     "22px"
+    ],
+    "conn": [
+     "36px"
+    ],
+    "prod": [
+     "50px"
+    ],
+    "meter": [
+     "64px"
+    ],
+    "model": [
+     "64px"
+    ]
+   },
+   "lv_by_kind": {
+    "scope": [
+     "lv0"
+    ],
+    "cmp": [
+     "lv0"
+    ],
+    "fam": [
+     "lv0"
+    ],
+    "acct": [
+     "lv1"
+    ],
+    "conn": [
+     "lv2"
+    ],
+    "prod": [
+     "lv3"
+    ],
+    "meter": [
+     "lv4"
+    ],
+    "model": [
+     "lv4"
+    ]
+   }
+  },
+  "A03-22": {
+   "neg_percent_hits": [],
+   "rows": 116
+  },
+  "A11-02": {
+   "target": "acct:alibaba-personal",
+   "dispatched": []
+  },
+  "SELF-8": {
+   "picked": "fam:claude",
+   "historical_block_present": false,
+   "openai_removed_row": false,
+   "hist_rows": 0,
+   "hist_groups": 0,
+   "slice": "",
+   "after_restore_hist": true
+  },
+  "SELF-10": {
+   "scoped_rows": 0,
+   "unique": 0,
+   "dupes": [],
+   "all_rows": 0,
+   "all_unique": 0,
+   "all_dupes": []
+  },
+  "A06-09": {
+   "coverage": {
+    "run:goal-47": {
+     "runId": "run:goal-47",
+     "total": 11,
+     "recorded": 11,
+     "recordedKinds": [
+      "provider_active",
+      "local_compute",
+      "tool_runtime",
+      "resource_wait",
+      "provider_permit_wait",
+      "approval_wait",
+      "outbox_offline_wait",
+      "reconnect_sync_replay",
+      "reset_wait",
+      "maintenance",
+      "total_elapsed"
+     ],
+     "missing": []
+    },
+    "run:plan-12": {
+     "runId": "run:plan-12",
+     "total": 11,
+     "recorded": 9,
+     "recordedKinds": [
+      "provider_active",
+      "local_compute",
+      "tool_runtime",
+      "resource_wait",
+      "provider_permit_wait",
+      "approval_wait",
+      "outbox_offline_wait",
+      "reconnect_sync_replay",
+      "total_elapsed"
+     ],
+     "missing": [
+      {
+       "kind": "reset_wait",
+       "label": "Waiting for reset",
+       "why": "This run has not reached a window boundary, so no reset wait was measured. That is unknown for this run, not a measured zero."
+      },
+      {
+       "kind": "maintenance",
+       "label": "Maintenance",
+       "why": "The maintenance that ran on this server is kept in Maintenance and operations and was never attributed to this run."
+      }
+     ]
+    },
+    "run:crew-3": {
+     "runId": "run:crew-3",
+     "total": 11,
+     "recorded": 9,
+     "recordedKinds": [
+      "provider_active",
+      "local_compute",
+      "tool_runtime",
+      "provider_permit_wait",
+      "approval_wait",
+      "outbox_offline_wait",
+      "reconnect_sync_replay",
+      "reset_wait",
+      "total_elapsed"
+     ],
+     "missing": [
+      {
+       "kind": "resource_wait",
+       "label": "Resource wait",
+       "why": "No worktree, device or browser wait was measured for this crew. Nothing was recorded, which is not the same as nothing having happened."
+      },
+      {
+       "kind": "maintenance",
+       "label": "Maintenance",
+       "why": "The offline and reconnect maintenance on this machine is kept in Maintenance and operations and was never attributed to this run."
+      }
+     ]
+    }
+   },
+   "type": "function",
+   "rd_goal47": {
+    "time_kinds_line": "Time kinds",
+    "maintenance": "Maintenance",
+    "local_compute": [
+     "Local compute"
+    ],
+    "tool_runtime": [
+     "Tool/runtime execution"
+    ]
+   }
+  },
+  "A08-03": {
+   "btn_found": true,
+   "card_class": "u11w-opcard",
+   "card_text": "Codex CLI requested on Home Server \u00b7 not installed\nSETUP REQUIRED\nProvider Setup Required \u2014 no compatible installation on this host/environment\nOutcome \u00b7 Setup required \u00b7 failure class none recorded \u00b7 run status completed \u00b7 provider usage none\nTastebook \u00b7 TrueNAS Home Server \u00b7 home server \u00b7 Docker \u00b7 pm-server \u00b7 Tastebook \u00b7 server checkout \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected\nThe Studio PC installation is not assumed here: installations bind to the exact host and environment. Originating operation and continuation token preserved; Auto/On may maintain an approved installation but never perform first acquisition. Resume only after explicit Install from the official source and separate authentication.\nOpen provider setup",
+   "badges": [
+    {
+     "cls": "u11w-kind warn",
+     "txt": "setup required"
+    }
+   ]
+  },
+  "A08-08/A10-11": {
+   "cta_found": true,
+   "cta_label": "View the replayed provider attempt",
+   "cta_attrs": {
+    "act": "openattempt",
+    "ue": null,
+    "ops": null
+   },
+   "dispatch": [
+    {
+     "cmd": "cmd.nav.open_usage_subject",
+     "payload": {
+      "route_target": {
+       "object_kind": "usage_event",
+       "object_id": "ue-610"
+      },
+      "usage_event_ref": "ue-610",
+      "usage_record_id": "rcpt-640",
+      "provider_attempt_ref": "rcpt-640",
+      "attempt_id": "ue-610",
+      "parent_usage_record_id": "ue-592",
+      "dedupe_key": "dk-610",
+      "run_id": null,
+      "thread_id": "thread:t-91",
+      "source_class": "provider_reported",
+      "settlement_status": "observed",
+      "projection_freshness": "current",
+      "projection_health": "current"
+     },
+     "at": "2026-08-18T15:20:25.344Z"
+    }
+   ],
+   "inspector_open": true,
+   "inspector_head": "Checkout service audit\nTHREAD REQUEST\nrunning\nCheckout service audit\nOne immutable usage event per real provider attempt. The final route never overwrites earlier attempts.\nATTEMPTS IN THIS WORK\n5\nMAI",
+   "raw_id_still_in_prose": false
+  },
+  "A08-11": {
+   "slice": "Catalog refresh \u2014 never active model probing\nStale catalog served immediately\nBackground refresh succeeded \u00b7 no provider usage \u00b7 free coding models \u00b7 stale served then refreshed \u00b7 18:02 UTC\n3 models changed \u00b7 1 free-state change \u00b7 no model request was sent by this refresh, so there is no probe event to join\nCatalog refresh in backoff\nLast known good used \u00b7 no provider usage unless probed \u00b7 models dev \u00b7 backoff \u00b7 18:27 UTC\nbacking off until 19:07 UTC \u00b7 this refresh did send one model request \u00b7 ue-612\nOpen the refresh call\nBackground and validation calls\nActive probe \u00b7 GLM-4.7\n1.2k input \u00b7 60 output \u00b7 active model probe \u00b7 attributed to validation, never user work \u00b7 completed \u00b7 17:57 UTC\nNo allowance recorded for this route \u2014 nothing to draw down, which is not the same as drawing zero.\nTastebook \u00b7 Source location not recorded \u00b7 No client attached\ninspect\nMaintenance verification call \u00b7 GPT-5.6-Codex\n1.5k input \u00b7 210 output \u00b7 verification call for maintenance \u00b7 Codex CLI update \u2014 attributed to that flow, never user work and never catalog probing \u00b7 completed \u00b7 17:50 UTC\nNo allowance recorded for this route \u2014 nothing to draw down, which is not the same as drawing zero.\nTastebook \u00b7 Source locati",
+   "active_probe_rows": [
+    "Active probe \u00b7 GLM-4.7",
+    "Active probe \u00b7 Gemini 2.5 Flash"
+   ],
+   "catalog_validation_rows": [
+    "Catalog validation call \u00b7 GLM-4.7"
+   ],
+   "mentions_ops1": true
+  },
+  "A06-13": {
+   "reserve_keys_in_runs": [
+    "\"reservedFor\"",
+    "\"reserve\"",
+    "\"withoutReserve\"",
+    "\"withReserve\"",
+    "\"reserved\""
+   ],
+   "sample": [
+    {
+     "id": "run:goal-47",
+     "reserve": {
+      "workers": 0,
+      "tokens": 48000,
+      "costMicro": null,
+      "costStatus": "hidden_subscription",
+      "displayCostPolicy": "subscription_covered",
+      "categories": [
+       "synthesis",
+       "testing",
+       "verification",
+       "repair"
+      ],
+      "workersNote": "No worker slot is reserved here: the provider ceiling of 2 is already the binding constraint, so reserving a slot would not change what runs.",
+      "tokensNote": "Two synthesis passes at the observed 18k\u201326k per child are kept back from the extraction children.",
+      "effect": {
+       "field": "forecast.tokenBudget.usable",
+       "withoutReserve": 208000,
+       "withReserve": 160000,
+       "unit": "tokens"
+      }
+     },
+     "cap": {
+      "hardMax": 8,
+      "configuredPreferred": 4,
+      "providerAdvertised": 2,
+      "effectiveNow": 2,
+      "predictedSustainable": 2,
+      "actualPeak": 2,
+      "actualPeakAt": "2026-08-04T17:06:00.000Z",
+      "actualPeakBasis": "highest number of children dispatched at the same instant since the run started"
+     }
+    },
+    {
+     "id": "run:plan-12",
+     "reserve": {
+      "workers": 0,
+      "tokens": 55000,
+      "costMicro": null,
+      "costStatus": "hidden_subscription",
+      "displayCostPolicy": "subscription_covered",
+      "categories": [
+       "synthesis",
+       "testing",
+       "audit",
+       "repair"
+      ],
+      "workersNote": "The provider ceiling of 2 already binds this run, so the reserve here is allowance rather than a held-back worker slot.",
+      "tokensNote": "Synthesis and audit are kept back from the extraction children at the observed 20k\u201330k per child.",
+      "effect": {
+       "field": "forecast.tokenBudget.usable",
+       "withoutReserve": 180000,
+       "withReserve": 125000,
+       "unit": "tokens"
+      }
+     },
+     "cap": {
+      "hardMax": 8,
+      "configuredPreferred": 4,
+      "providerAdvertised": 2,
+      "effectiveNow": 2,
+      "predictedSustainable": 2,
+      "actualPeak": 2,
+      "actualPeakAt": "2026-08-04T17:31:00.000Z",
+      "actualPeakBasis": "highest number of extraction children dispatched at the same instant"
+     }
+    },
+    {
+     "id": "run:crew-3",
+     "reserve": {
+      "workers": 1,
+      "tokens": null,
+      "costMicro": null,
+      "costStatus": "hidden_subscription",
+      "displayCostPolicy": "subscription_covered",
+      "categories": [
+       "reducer"
+      ],
+      "workersNote": "One of the three dispatch slots the provider advertises is never given to a critique member, so the Reducer can run the moment the members finish.",
+      "tokensNote": "No token budget is reserved on this run \u2014 the reserve here is the slot.",
+      "effect": {
+       "field": "capacity.predictedSustainable",
+       "withoutReserve": 3,
+       "withReserve": 2,
+       "unit": "workers"
+      }
+     },
+     "cap": {
+      "hardMax": 8,
+      "configuredPreferred": 6,
+      "providerAdvertised": 3,
+      "effectiveNow": 3,
+      "predictedSustainable": 2,
+      "actualPeak": 3,
+      "actualPeakAt": "2026-08-04T17:58:00.000Z",
+      "actualPeakBasis": "highest number of crew members dispatched at the same instant"
+     }
+    }
+   ],
+   "rendered": [
+    "Reserved worker slots",
+    "Reserved tokens",
+    "Reserved spend",
+    "Kept aside for synthesis, testing, verification, repair \u00b7 No worker slot is reserved here: the provider ceiling of 2 is already the binding constraint, so reserving a slot would not change what runs. \u00b7 Two synthesis passes at the observed 18k\u201326k per child are kept back from the extraction children.",
+    "Effect \u00b7 208.0k tokens usable without the reserve, 160.0k with it \u00b7 the forecast this run is judged against uses the smaller figure.",
+    "Projected from 6 queued children \u00d7 18.0k\u201326.0k per child, against 160.0k usable once the 48.0k reserve is held back \u2014 4.0k to spare at the high end.",
+    "Reserved worker slots",
+    "Reserved tokens"
+   ]
+  },
+  "A09-09": {
+   "tables": 2,
+   "canvases": 0,
+   "svgs": 0,
+   "chartish": 3,
+   "range_control": true,
+   "range_options": []
+  },
+  "A07-09": {
+   "by_level": {
+    "essentials": {
+     "rows": 0,
+     "host_bearing_rows": 0
+    },
+    "standard": {
+     "rows": 0,
+     "host_bearing_rows": 0
+    },
+    "advanced": {
+     "rows": 0,
+     "host_bearing_rows": 0
+    }
+   },
+   "inspectors_opened": 5,
+   "with_lineage_section": 5
+  },
+  "SELF-9": {
+   "nodes": [
+    {
+     "room": "plans",
+     "text": "Reserved spend",
+     "cls": "u11w-vlab",
+     "own_title": null,
+     "nearest_title": null,
+     "scrollW": 567,
+     "clientW": 567,
+     "clipped": 0,
+     "overflow": "visible/clip"
+    },
+    {
+     "room": "plans",
+     "text": "Reserved spend",
+     "cls": "u11w-vlab",
+     "own_title": null,
+     "nearest_title": null,
+     "scrollW": 567,
+     "clientW": 567,
+     "clipped": 0,
+     "overflow": "visible/clip"
+    },
+    {
+     "room": "plans",
+     "text": "Reserved spend",
+     "cls": "u11w-vlab",
+     "own_title": null,
+     "nearest_title": null,
+     "scrollW": 567,
+     "clientW": 567,
+     "clipped": 0,
+     "overflow": "visible/clip"
+    },
+    {
+     "room": "overview",
+     "text": "Reserved spend",
+     "cls": "u11w-vlab",
+     "own_title": null,
+     "nearest_title": null,
+     "scrollW": 1375,
+     "clientW": 1375,
+     "clipped": 0,
+     "overflow": "visible/clip"
+    },
+    {
+     "room": "overview",
+     "text": "Reserved spend",
+     "cls": "u11w-vlab",
+     "own_title": null,
+     "nearest_title": null,
+     "scrollW": 1375,
+     "clientW": 1375,
+     "clipped": 0,
+     "overflow": "visible/clip"
+    },
+    {
+     "room": "overview",
+     "text": "Reserved spend",
+     "cls": "u11w-vlab",
+     "own_title": null,
+     "nearest_title": null,
+     "scrollW": 1375,
+     "clientW": 1375,
+     "clipped": 0,
+     "overflow": "visible/clip"
+    }
+   ]
+  },
+  "SELF-11": {
+   "priced_lines": [
+    "Cost \u00b7 $0.1800 on 1 priced call \u00b7 3 calls the plan cover",
+    "Cost \u00b7 $0.0300 on 1 priced call \u00b7 2 calls the plan cover"
+   ],
+   "zero_reported_lines": [
+    "Cost \u00b7 $0.00 reported on 2 calls \u00b7 7 calls the plan cover",
+    "$0.00 reported",
+    "$0.00 reported",
+    "Cost \u00b7 $0.00 reported on 1 call \u00b7 2 calls the plan cover \u00b7 1 call with no price reported",
+    "$0.00 reported"
+   ],
+   "cost_lines": [
+    "Cost \u00b7 $0.00 reported on 2 calls \u00b7 7 calls the plan cover",
+    "Cost \u00b7 $0.00 reported on 1 call \u00b7 2 calls the plan cover \u00b7 1 call with no price reported",
+    "Cost \u00b7 $0.1800 on 1 priced call \u00b7 3 calls the plan cover",
+    "Cost \u00b7 1 call the plan covers \u00b7 1 call billed to your own key \u00b7 1 call with no price reported",
+    "Cost \u00b7 2 calls the plan cover \u00b7 1 call with no price reported",
+    "Cost \u00b7 $0.0300 on 1 priced call \u00b7 2 calls the plan cover",
+    "Cost \u00b7 2 calls the plan cover",
+    "Cost \u00b7 6 calls the plan cover \u00b7 1 call with no price reported",
+    "Cost \u00b7 3 calls the plan cover \u00b7 2 calls with no price reported",
+    "Cost \u00b7 5 calls the plan cover",
+    "Cost \u00b7 2 calls the plan cover",
+    "Cost \u00b7 1 call the plan covers"
+   ],
+   "data": {
+    "priced_gt_zero": 0,
+    "reported_zero": 0,
+    "total": 54
+   }
+  },
+  "SELF-7": {
+   "titles_with_snake_case": 0,
+   "total_titles": 1200,
+   "sample": []
+  },
+  "SELF-2": {
+   "line": "Spending limit\n$100.00 per month\nChange in Settings\nAI Credit Overages\nOff"
+  },
+  "A03-10": {
+   "card": "Spend rate elevated\n17:55 UTC\nClaude API \u00b7 PAYG\nBurn is 2.2\u00d7 the 7-day norm; still under the org spending limit.\nWhy\nburn\n$0.0680/h\nnorm\n$0.0310/h\nlimit\n$150\nDuplicate\nOpen Usage settings"
+  },
+  "A08-06": {
+   "attempt": {
+    "id": "ue-609",
+    "purpose": "probe",
+    "workId": null,
+    "model": "model:gpt-5-6-codex",
+    "conn": "conn:openai-personal-codex",
+    "prod": "prod:codex-plus"
+   },
+   "inspector": "Attempt detail\nATTEMPT\ncompleted\nOne immutable usage event per real provider attempt. The final route never overwrites earlier attempts.\nATTEMPTS IN THIS WORK\n1\nVALIDATION & PROBES\nprobe\ncompleted\nGPT-5.6-Codex \u00b7 OpenAI \u00b7 Personal \u00b7 Codex \u00b7 ChatGPT plan\n1.5k in \u00b7 210 out\nIncluded in plan\nno separate charge\nVerification call for the Codex CLI update. It runs through the CLI that was just installed, on that CLI's own connection, which is why the Codex plan allowance moved and no other account's did. The installer time is not usage; this call is. This call completed; the verify step it belongs to did not \u2014 the update record's failure class is verify failed, so v0.43.1 was rolled back and v0.42.0 is what is installed.\nReasoning effort: Medium \u00b7 Speed: Fast \u00b7 Mode: Not applicable\nAug 4 \u00b7 17:50 UTC \u2192 17:50 UTC \u00b7 provider active under a minute \u00b7 settlement observed \u00b7 source reported by the provider CLI \u00b7 rcpt-639\nWHERE IT RAN\nSERVER-FIRST LINEAGE\nProject\nTastebook\nHome server, execution host, execution environment, source location and client were not recorded for this event, and the work that owns it records none either. That is unknown, not \"ran nowhere\".\nVerification call for maintenance \u201cCodex CLI update\u201d \u2014 the installer time is not usage; this call is.\nInstallation v0.42.0 \u00b7 publisher-signed release artifact \u00b7 explicit user setup \u00b7 official OpenAI installer \u00b7 bound to Studio PC / "
+  },
+  "page_errors": []
+ },
+ "probe_3": {
+  "A07-09": {
+   "essentials": {
+    "prows": 2,
+    "inspect_ctas": 14,
+    "ids_sample": [
+     "ue-501",
+     "ue-511",
+     "ue-520",
+     "ue-530",
+     "ue-541",
+     "ue-550"
+    ],
+    "host_bearing": 0
+   },
+   "standard": {
+    "prows": 5,
+    "inspect_ctas": 18,
+    "ids_sample": [
+     "ue-501",
+     "ue-511",
+     "ue-520",
+     "ue-530",
+     "ue-541",
+     "ue-550"
+    ],
+    "host_bearing": 0
+   },
+   "advanced": {
+    "prows": 5,
+    "inspect_ctas": 54,
+    "ids_sample": [
+     "ue-501",
+     "ue-502",
+     "ue-503",
+     "ue-504",
+     "ue-600",
+     "ue-603"
+    ],
+    "host_bearing": 3
+   },
+   "data_attempts_with_host": 4,
+   "total_attempts": 54
+  },
+  "A09-06": {
+   "attempts_with_reasoning": 20,
+   "total": 54,
+   "ledger_reasoning_sum": 13220,
+   "chart_has_reasoning_series": true,
+   "analytics_slice": "Reasoning\nCache read\n20 usage events report a reasoning bucket of 54 \u00b7 each one prints the same bucket on its Ledger row, so the band can be checked against them rather than taken on trust.\nBreak down by model, provider or account\nColumn totals add input plus"
+  },
+  "A02-09": {
+   "setup": {
+    "uid": "w58_msytc3lb",
+    "ownBuckets": [
+     "main"
+    ],
+    "otherBucket": "specialists",
+    "histRows": 2
+   }
+  },
+  "A09-09": {
+   "tables": 2,
+   "chart_nodes": [
+    "u11-tb-chart",
+    "u11w-chart",
+    "u11w-chart"
+   ],
+   "spark_nodes": 1,
+   "range_control_present": true,
+   "range_html": "<i data-ico=\"clock\" class=\"pm-ico\"><svg class=\"pm-ico\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"9\"></circle><polyline points=\"12 7 12 12 15 14"
+  },
+  "A08-08_prose": {
+   "room": "ledger",
+   "slice": "The reconnect replay is a real provider attempt \u2014 see ue-610. Queue time itself is never model usage.\nView the replayed provider attempt"
+  },
+  "A06-13_rendered": {
+   "overview": [
+    "The range drives these figures, the key figures on Overview and what Export writes. The capacity block is a completion forecast, not a hard provider concurrency limit \u2014 the hard maximum is Puppet Master\u2019s own safety ceiling. Capacity kept aside for synthesis, testing and repair now carries a published quantity \u2014 workers and tokens, with the effect it has on the sustainable figure \u2014 so the reservation is measurable rather than merely named.",
+    "Reserved worker slots",
+    "Reserved tokens",
+    "Reserved spend",
+    "Kept aside for synthesis, testing, verification, repair \u00b7 No worker slot is reserved here: the provider ceiling of 2 is already the binding constraint, so reserving a slot would not change what runs. \u00b7 Two synthesis passes at the observed 18k\u201326k per child are kept back from the extraction children.",
+    "Effect \u00b7 208.0k tokens usable without the reserve, 160.0k with it \u00b7 the forecast this run is judged against uses the smaller figure."
+   ],
+   "plans": [
+    "Reserved worker slots",
+    "Reserved tokens",
+    "Reserved spend",
+    "Kept aside for synthesis, testing, verification, repair \u00b7 No worker slot is reserved here: the provider ceiling of 2 is already the binding constraint, so reserving a slot would not change what runs. \u00b7 Two synthesis passes at the observed 18k\u201326k per child are kept back from the extraction children.",
+    "Effect \u00b7 208.0k tokens usable without the reserve, 160.0k with it \u00b7 the forecast this run is judged against uses the smaller figure.",
+    "Projected from 6 queued children \u00d7 18.0k\u201326.0k per child, against 160.0k usable once the 48.0k reserve is held back \u2014 4.0k to spare at the high end."
+   ]
+  },
+  "A10-08": {
+   "affordance_count": 27,
+   "labels": [
+    "Open Usage settings"
+   ],
+   "opens_sheet": true,
+   "dispatch_on_open": [],
+   "sheet_row_dispatch": [
+    {
+     "cmd": "cmd.settings.bloom.open",
+     "payload": {
+      "category": "ai",
+      "focus_setting_id": "ai.accounts.default-account",
+      "reason": "usage_sheet"
+     },
+     "at": "2026-08-18T15:24:14.639Z"
+    }
+   ]
+  },
+  "page_errors": []
+ },
+ "blocker_recheck": {
+  "A04-01": {
+   "counting_semantics": true,
+   "input_total_includes_cache": true,
+   "provider_total_semantics": true,
+   "analytics_note": "Column totals add input plus output only. A range mixes routes whose counting rules differ, so cache read keeps its own band and is never added on top \u2014 adding it would double-count every provider that reports cache inside input."
+  },
+  "A07-01": {
+   "free_slice": "05\nFree models\n\nA catalog & routing lens over the free routes you actually set up \u2014 not a provider, not a billing identity. Unconfigured upstream providers never appear here.\n\nall current usage\n7 eligible \u00b7 2 flagged\nLast 24 hours\n48 of 54 events\n776.6k tokens\n$0.2100 priced by the provider on 7 events \u00b7 38 covered by a plan \u00b7 1 billed to your own key \u00b7 2 cost not reported\n4 with no start time\nThe range drives these figures, the key figures on Overview and what Export writes. Widgets that publish their own window keep it and say so.\nAdd widget\nDrag the grip to move, drag the corner to resize, open a widget menu for focus, size, config and remove.\nFree models\nFREE, LIMITED\nGemini 2.5 Flash\nGoogle \u00b7 Personal \u00b7 Google CLI profile \u00b7 Gemini free allowance \u00b7 jared@personal.dev\nFree, limited \u00b7 selected through Free Models\nAllowance used\n30\n% used\nFree requests today \u00b7 fixed window \u00b7 18 of 60 requests used \u00b7 42 left \u00b7 resets in 9h 18m \u00b7 04:00 UTC\nAllowance drawn \u00b7 18 requests \u00b7 17 your work \u00b7 1 background validation (ue-615)\nFree while the daily request allowance lasts\nGLM-4.5-Air\nZ.AI \u00b7 Personal \u00b7 Legacy plan connection \u00b7 Z.AI free allowance \u00b7 jared@personal.dev\nFree, limited \u00b7 selected through Free Models \u00b7 cooling down\nCooldown \u00b7 back in 40m\nAllowance used\nestimated\nmedium confidence\n60\n% used\nFree tokens today \u00b7 fixed window \u00b7 120.0k of 200.0k tokens used \u00b7 80.0k left \u00b7 resets in 9",
+   "rows": 9,
+   "freeModels": [
+    {
+     "id": "free:gemini-flash",
+     "model": "model:gemini-2-5-flash",
+     "conn": "conn:google-antigravity-cli",
+     "meter": "meter:google-free-day"
+    },
+    {
+     "id": "free:glm-air",
+     "model": "model:glm-4-5-air",
+     "conn": "conn:zai-legacy",
+     "meter": "meter:zai-free-day"
+    },
+    {
+     "id": "free:copilot-req",
+     "model": "model:gpt-5-6",
+     "conn": "conn:github-copilot-free",
+     "meter": "meter:github-free-mo"
+    },
+    {
+     "id": "free:oc-go-models",
+     "model": "model:qwen3-coder-plus",
+     "conn": "conn:opencode-go",
+     "meter": "meter:oc-go-free"
+    },
+    {
+     "id": "free:kimi-trial",
+     "model": "model:kimi-k2",
+     "conn": "conn:kimi-code",
+     "meter": "meter:kimi-trial"
+    },
+    {
+     "id": "free:shared-gw",
+     "model": "model:qwen3-max",
+     "conn": "conn:opencode-shared-gw",
+     "meter": "meter:shared-gw"
+    },
+    {
+     "id": "free:local-qwen",
+     "model": "model:qwen3-coder-30b",
+     "conn": "conn:local-ollama",
+     "meter": "meter:local-ollama"
+    },
+    {
+     "id": "free:ds-ended",
+     "model": "model:deepseek-v3-2",
+     "conn": "conn:zai-credits",
+     "meter": null
+    },
+    {
+     "id": "free:glm-unverified",
+     "model": "model:glm-4-7",
+     "conn": "conn:zai-credits",
+     "meter": null
+    }
+   ]
+  },
+  "A01-01": {
+   "editable_inputs": 1,
+   "header": "Usage settings\nWhat Settings currently says, reported here. Usage does not change policy \u2014 every change opens the setting that owns it.\nPREFERENCES\nWarn me before I run low\nOn\nChange in Settings\nAutomatic account and pro",
+   "localstorage_keys": [
+    "u11:seeded",
+    "u11:disclosure"
+   ]
+  },
+  "A03-02": {
+   "sheet_has_all_products": true
+  }
+ }
+}

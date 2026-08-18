@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "icons:qwen",
+  "topic": "icons",
+  "model": "Qwen",
+  "presentation": "workspace",
+  "order": 60,
+  "widthControl": {
+    "enabled": false,
+    "label": "Workspace width",
+    "role": "none",
+    "default": 1440,
+    "previewWidth": 1440
+  },
+  "workspace": {
+    "path": "index.html",
+    "title": "Qwen Logo Kit",
+    "openActions": "none",
+    "controlMode": "internal",
+    "tags": [
+      "icons",
+      "logo"
+    ],
+    "id": "workspace",
+    "openPath": "index.html"
+  }
+}

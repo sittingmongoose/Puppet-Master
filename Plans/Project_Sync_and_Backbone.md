@@ -118,6 +118,37 @@ source_lineage:
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/09_TEST_MIGRATION_AND_ACCEPTANCE_MATRIX.md
 ```
 
+```yaml
+plan_unit_id: PSB-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Sync_and_Backbone.md
+canonical_text: Server continuity while the client is offline is readable by Usage as a bounded operational record only; sync, move, relocation, and update time is local operational time and never provider usage, a slow load or a long transfer never becomes a billed provider attempt, and Project Sync and Backbone keeps sole authority over direction, selection, collision, deletion, and recovery while Usage issues no sync mutation.
+gui_related: true
+gui_classification_reason: Sync currentness and continuity-while-offline appear on the Usage page as explanations for elapsed time.
+depends_on: [PSB-001, PSB-002, UF-091, UF-092]
+unblocks: []
+acceptance_criteria:
+  - Usage renders bounded sync currentness and continuity projections and issues no sync, move, relocation, or update mutation.
+  - Project sync and transfer time is attributed as operational time and never as provider usage or provider cost.
+  - A slow load, a long transfer, or a stale currentness projection never becomes a billed provider attempt or a fabricated cost.
+validation_surfaces: [python3 scripts/pm-plan-index.py validate, future Usage operational-attribution fixtures for sync continuity]
+risk_class: sync_time_misattributed_as_provider_usage
+reasoning_tier: high
+context_scope: usage_sync_continuity_projection
+implementation_surfaces: [Plans/Project_Sync_and_Backbone.md, Plans/usage-feature.md]
+node_compile_hint: {mode: usage_sync_continuity_projection, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - "Concepts/usage-concepts/QwenUsageConcept/u11-prism.html (u11 Prism II Usage concept; source-lineage-only)"
+  - Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/handoff/PORT_HANDOFF_PLANS_ROUTE.md
+preserved_exact_tokens: [server_continuity, project_move, current, terminal_unknown_with_disclosure]
+negative_constraints:
+  - Do not let Usage mutate sync direction, selection, collision, deletion, or recovery.
+  - Do not attribute local sync or transfer time to a provider.
+  - Do not turn a stale currentness projection into a usage or cost figure.
+owner_hints: [Plans/Project_Sync_and_Backbone.md, Plans/usage-feature.md]
+```
+
 ## 7. Stage boundary
 
 These PlanUnits close canonical ownership only. They create no WorkNodes, NodeSeeds, WorkGraphs, queues, implementation manifests, runtime code, deployment code, or certification evidence. Generated shards, indexes, evidence, and governance seals remain pending the post-PNC seal handoff.

@@ -1,0 +1,309 @@
+{
+  "schema_id": "pm.settings_seven_new_concepts_impact_register.v1",
+  "model": "CursorAuto",
+  "folder": "Concepts/settings-redesign-concepts/CursorAuto",
+  "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+  "generated": "2026-08-18T17:45:00Z",
+  "winner_selected": false,
+  "winner_selection_statement": "No winner is claimed or selected among concepts 05\u201311 or the frozen 01\u201304 set.",
+  "canon_edited": false,
+  "concepts_01_04": "unmodified",
+  "live_verification": {
+    "generated": "2026-08-18T17:45:00Z",
+    "winner_selected": false,
+    "packet_validator": {
+      "result": "pass",
+      "failures": [],
+      "checks": {
+        "new_concepts_expected": 7,
+        "required_manager_names_per_concept": 42,
+        "required_evidence_files_per_concept": 9,
+        "model_reports_expected": 5
+      },
+      "note": "Structural only: filenames and required manager name strings. Does not execute routes, copy depth, search, or deferred owners."
+    },
+    "concept_hub_validate": {
+      "command": "python Concepts/ConceptHub/validate.py Concepts/settings-redesign-concepts/CursorAuto",
+      "result": "pass"
+    },
+    "node_check": {
+      "result": "pass",
+      "files": [
+        "shared/v2/pmv2.js",
+        "concept-05-directory-take-1/concept-05-directory-take-1.js",
+        "concept-06-directory-take-2/concept-06-directory-take-2.js",
+        "concept-07-compendium-workspace/concept-07-compendium-workspace.js",
+        "concept-08-directory-take-3/concept-08-directory-take-3.js",
+        "concept-09-tome-tabs/concept-09-tome-tabs.js",
+        "concept-10-command-suite/concept-10-command-suite.js",
+        "concept-11-tabbed-organizer/concept-11-tabbed-organizer.js"
+      ]
+    },
+    "frozen_sha256": {
+      "result": "pass",
+      "files_matched": 54,
+      "baseline": "shared/v2/frozen-baseline.json"
+    },
+    "regression_01_04": {
+      "script": "scripts/ca-interactive-qa.py",
+      "unmodified": true,
+      "ok": true,
+      "failures": [],
+      "hub_port": 55939,
+      "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca-qa-40700",
+      "output": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca-01-04-qa.json",
+      "output_shipped": false
+    },
+    "qa_05_11": {
+      "script": "scripts/seven-new-concepts-qa.py",
+      "status": "pass",
+      "failures": [],
+      "hub_port": 55050,
+      "hub_pid": 43564,
+      "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-42200",
+      "report": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-report-42200.json",
+      "summary": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-summary-42200.json",
+      "artifacts_dir": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-artifacts-42200",
+      "theme_width_cells_pass": 336,
+      "matrix_checks": [
+        "overflow",
+        "clipControls",
+        "scrollbar",
+        "popupOk",
+        "searchDropOk",
+        "searchEscClosed",
+        "reducedOk"
+      ],
+      "index_complete": {
+        "settings": 828,
+        "indexed": 828,
+        "productIndex": 1007,
+        "synthetic": 2000,
+        "syntheticInDefaultSearch": false
+      },
+      "search": {
+        "matrix_cases": 16,
+        "extra_queries": [
+          "Theme",
+          "Default",
+          "Copy",
+          "Ollama"
+        ],
+        "all_rendered_clicked": true,
+        "note": "Routed by pickResult(immutable id); Theme/Default/Copy/Ollama every rendered result. Not a Playwright DOM click (chrome intercepts)."
+      },
+      "copy_depth": {
+        "default_conflicts": 1,
+        "host_bound": "general.startup.window-state",
+        "importConflictDemo": false,
+        "simulated": true,
+        "addition": true,
+        "replacement": true,
+        "unchanged": true,
+        "unavailable": true,
+        "conflicts": true,
+        "previewConflictCount": 1,
+        "previewCounts": {
+          "additions": 1,
+          "replacements": 1,
+          "unchanged": 756,
+          "unavailable": 1,
+          "conflicts": 1
+        }
+      },
+      "provider_density_probed": [
+        "concept-05-directory-take-1",
+        "concept-07-compendium-workspace",
+        "concept-10-command-suite"
+      ],
+      "provider_density_code": [
+        "concept-05-directory-take-1",
+        "concept-06-directory-take-2",
+        "concept-07-compendium-workspace",
+        "concept-08-directory-take-3",
+        "concept-09-tome-tabs",
+        "concept-10-command-suite",
+        "concept-11-tabbed-organizer"
+      ],
+      "frozen_sha256_matched": 54,
+      "provider_density": {
+        "code_on_all_seven": true,
+        "report_42200_live_probed": [
+          "concept-05-directory-take-1",
+          "concept-07-compendium-workspace",
+          "concept-10-command-suite"
+        ],
+        "qa_updated_to_probe_all_seven": true,
+        "note": "QA updated to probe all seven. Report 42200 live-probed 05/07/10; 06/08/09/11 code verified, live probe lands on next rerun."
+      }
+    },
+    "inventory": {
+      "settings": 828,
+      "categories": 12,
+      "snapshot": "shared/v2"
+    },
+    "coverage_per_concept": {
+      "demonstrated": 42,
+      "deferred_named_owner": 9,
+      "shared_grammar": 0,
+      "missing": 0
+    },
+    "slint": {
+      "target": "1.17.1",
+      "position_sticky_05_11": false,
+      "box_shadow_inset_05_11": false
+    }
+  },
+  "concepts": [
+    {
+      "id": "concept-05-directory-take-1",
+      "plan_owner_delta": "concept-05-directory-take-1/plan-owner-delta.md",
+      "command_delta": "concept-05-directory-take-1/candidate-command-delta.json",
+      "wiring_delta": "concept-05-directory-take-1/candidate-wiring-delta.json",
+      "dry_delta": "concept-05-directory-take-1/candidate-dry-delta.json",
+      "impact_register": "concept-05-directory-take-1/impact-register.json"
+    },
+    {
+      "id": "concept-06-directory-take-2",
+      "plan_owner_delta": "concept-06-directory-take-2/plan-owner-delta.md",
+      "command_delta": "concept-06-directory-take-2/candidate-command-delta.json",
+      "wiring_delta": "concept-06-directory-take-2/candidate-wiring-delta.json",
+      "dry_delta": "concept-06-directory-take-2/candidate-dry-delta.json",
+      "impact_register": "concept-06-directory-take-2/impact-register.json"
+    },
+    {
+      "id": "concept-07-compendium-workspace",
+      "plan_owner_delta": "concept-07-compendium-workspace/plan-owner-delta.md",
+      "command_delta": "concept-07-compendium-workspace/candidate-command-delta.json",
+      "wiring_delta": "concept-07-compendium-workspace/candidate-wiring-delta.json",
+      "dry_delta": "concept-07-compendium-workspace/candidate-dry-delta.json",
+      "impact_register": "concept-07-compendium-workspace/impact-register.json"
+    },
+    {
+      "id": "concept-08-directory-take-3",
+      "plan_owner_delta": "concept-08-directory-take-3/plan-owner-delta.md",
+      "command_delta": "concept-08-directory-take-3/candidate-command-delta.json",
+      "wiring_delta": "concept-08-directory-take-3/candidate-wiring-delta.json",
+      "dry_delta": "concept-08-directory-take-3/candidate-dry-delta.json",
+      "impact_register": "concept-08-directory-take-3/impact-register.json"
+    },
+    {
+      "id": "concept-09-tome-tabs",
+      "plan_owner_delta": "concept-09-tome-tabs/plan-owner-delta.md",
+      "command_delta": "concept-09-tome-tabs/candidate-command-delta.json",
+      "wiring_delta": "concept-09-tome-tabs/candidate-wiring-delta.json",
+      "dry_delta": "concept-09-tome-tabs/candidate-dry-delta.json",
+      "impact_register": "concept-09-tome-tabs/impact-register.json"
+    },
+    {
+      "id": "concept-10-command-suite",
+      "plan_owner_delta": "concept-10-command-suite/plan-owner-delta.md",
+      "command_delta": "concept-10-command-suite/candidate-command-delta.json",
+      "wiring_delta": "concept-10-command-suite/candidate-wiring-delta.json",
+      "dry_delta": "concept-10-command-suite/candidate-dry-delta.json",
+      "impact_register": "concept-10-command-suite/impact-register.json"
+    },
+    {
+      "id": "concept-11-tabbed-organizer",
+      "plan_owner_delta": "concept-11-tabbed-organizer/plan-owner-delta.md",
+      "command_delta": "concept-11-tabbed-organizer/candidate-command-delta.json",
+      "wiring_delta": "concept-11-tabbed-organizer/candidate-wiring-delta.json",
+      "dry_delta": "concept-11-tabbed-organizer/candidate-dry-delta.json",
+      "impact_register": "concept-11-tabbed-organizer/impact-register.json"
+    }
+  ],
+  "cumulative_candidates": {
+    "preserve_or_reuse": [
+      "cmd.settings.open",
+      "cmd.account.select_profile",
+      "cmd.provider.switch_route",
+      "cmd.usage.refresh"
+    ],
+    "new_candidates": [
+      "cmd.settings.search.submit",
+      "cmd.settings.copy_from_project.preview",
+      "cmd.settings.copy_from_project.apply",
+      "cmd.settings.copy_from_project.rollback",
+      "cmd.provider.cli.install_official"
+    ],
+    "retire_or_alias": [
+      {
+        "id": "cmd.settings.bloom.open",
+        "note": "Mention only. Old chip/bloom architecture. Not minted; not applied to canon."
+      }
+    ],
+    "do_not_create": [
+      "second ResourceGovernor",
+      "universal visible manager renderer",
+      "cross-concept iframe"
+    ],
+    "note": "Candidate IDs only. Do not mint canon."
+  },
+  "dry": {
+    "no_second_ResourceGovernor": true,
+    "no_universal_visible_manager_renderer": true,
+    "shared_v2_headless_only": true
+  },
+  "plan_owner_summary": {
+    "FinalGUISpec": "Seven layout families (directory cards, editorial list, compendium, spacious directory, chapter tabs, command index, sheet stack) remain inside one Settings shell each.",
+    "settings inventory and schema": "828 rows in shared/v2 snapshot. Inventory still carries legacy scope:global metadata; UI projects project-only.",
+    "Models System": "Provider CLI install is explicit official-source; auth is a separate step.",
+    "Commands / Wiring / DRY": "Candidate IDs only. Preserve RuntimeResourceGovernor and ObservableWork singular owners. shared/v2 is headless only."
+  },
+  "known_limitations": [
+    "Copy/CLI/receipts simulated via sessionStorage, not live ResourceGovernor",
+    "Search clicks every rendered result for Theme/Default/Copy/Ollama (cap 24), not all 1007 index IDs; all 828 setting IDs are indexed",
+    "Packet validator is structural only",
+    "336-cell popup check is search dropdown in-viewport + Escape, not every nested submenu",
+    "confirmOfficialCli(local-ollama) stays waiting_user when owner is unknown (manual-only)"
+  ],
+  "fixes_applied": {
+    "index_complete_runtime": {
+      "status": "fixed"
+    },
+    "search_all_rendered_theme_default_copy_ollama": {
+      "status": "fixed"
+    },
+    "default_copy_host_bound_conflict": {
+      "status": "fixed",
+      "id": "general.startup.window-state",
+      "previewCounts": {
+        "additions": 1,
+        "replacements": 1,
+        "unchanged": 756,
+        "unavailable": 1,
+        "conflicts": 1
+      }
+    },
+    "applyCopy_phases_and_confirmOfficialCli": {
+      "status": "fixed"
+    },
+    "provider_density_06_08_09_11": {
+      "status": "fixed"
+    },
+    "slint_sticky_and_inset_shadow": {
+      "status": "fixed"
+    },
+    "candidate_census_depth": {
+      "status": "fixed",
+      "command_entries_each": 13,
+      "wiring_traces_each": 10
+    },
+    "matrix_search_dropdown_viewport": {
+      "status": "fixed"
+    },
+    "qa_script_omp_shell_and_pickResult": {
+      "status": "fixed",
+      "note": "INDEX_COMPLETE_JS / exhaustive pick / confirmOfficialCli(app,id)"
+    },
+    "provider_density_all_seven_code": {
+      "status": "fixed",
+      "live_qa_report_42200_probed": [
+        "05",
+        "07",
+        "10"
+      ],
+      "qa_updated_to_probe_all_seven": true
+    }
+  }
+}

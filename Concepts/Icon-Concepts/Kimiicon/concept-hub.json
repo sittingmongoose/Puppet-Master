@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "icons:kimi",
+  "topic": "icons",
+  "model": "Kimi",
+  "presentation": "workspace",
+  "order": 40,
+  "widthControl": {
+    "enabled": false,
+    "label": "Workspace width",
+    "role": "none",
+    "default": 1440,
+    "previewWidth": 1440
+  },
+  "workspace": {
+    "path": "dashboard.html",
+    "title": "Kimi Icon and Loading Suite",
+    "openActions": "none",
+    "controlMode": "internal",
+    "tags": [
+      "icons",
+      "loading"
+    ],
+    "id": "workspace",
+    "openPath": "dashboard.html"
+  }
+}

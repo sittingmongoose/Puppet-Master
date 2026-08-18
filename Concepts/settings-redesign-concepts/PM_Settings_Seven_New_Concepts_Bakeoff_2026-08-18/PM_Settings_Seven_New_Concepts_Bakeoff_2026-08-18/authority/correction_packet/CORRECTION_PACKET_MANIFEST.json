@@ -1,0 +1,38 @@
+{
+  "schema_id": "pm.packet_dependency_correction.v1",
+  "packet_name": "PM_Settings_Dependency_and_Work_Correction_2026-08-13",
+  "target_packet": "PM_Settings_Bakeoff_Final_Cumulative_2026-08-08",
+  "prompt_chars": 2552,
+  "corrections": [
+    "missing performance decision register",
+    "provider adjudication path",
+    "work reinspection requirement"
+  ],
+  "files": [
+    {
+      "path": "00_READ_ME_FIRST.md",
+      "bytes": 1108,
+      "sha256": "ce842cd19acb419c7b6096e1c4b43725a3006d27f0ec4167b3adc0a2d118e073"
+    },
+    {
+      "path": "02_FULL_THREAD_CURRENT_DECISION_REGISTER.md",
+      "bytes": 47350,
+      "sha256": "3df7ad729c5ea1be0df192d19845e42326b5047de03e9f59fbe4918943e0150d"
+    },
+    {
+      "path": "CORRECTION_GOAL_PROMPT.md",
+      "bytes": 2553,
+      "sha256": "16c78a7db4bd54a6696d5a3a2b6a9ae662a051d955123ff7f40406804b7640a8"
+    },
+    {
+      "path": "PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "bytes": 4857,
+      "sha256": "9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1"
+    },
+    {
+      "path": "REFERENCE_REVIEW_AND_REPAIR_REQUIREMENTS.md",
+      "bytes": 1130,
+      "sha256": "b559fc38f910d18d454aa7ad149fa6f7d6f7384998b3ac0afe7f2e03bccc64f8"
+    }
+  ]
+}

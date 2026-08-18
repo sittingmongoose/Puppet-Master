@@ -1,0 +1,466 @@
+{
+  "schema_id": "pm.omp_provider_reference.v1",
+  "source": "Oh My Pi 17.2.10 supplied archive",
+  "source_archive_sha256": "024f155b15aee03520cf49d3560f5741c8615e4d954d7cdb389b646b916311e4",
+  "registry_path": "packages/ai/src/registry/registry.ts",
+  "provider_count": 76,
+  "status": "research_baseline_not_runtime_authority",
+  "providers": [
+    {
+      "registry_variable": "azureProvider",
+      "provider_id": "azure",
+      "display_name": "Azure OpenAI",
+      "source_path": "packages/ai/src/registry/azure.ts"
+    },
+    {
+      "registry_variable": "openaiCodexProvider",
+      "provider_id": "openai-codex",
+      "display_name": "ChatGPT Plus/Pro (Codex Subscription)",
+      "source_path": "packages/ai/src/registry/openai-codex.ts"
+    },
+    {
+      "registry_variable": "anthropicProvider",
+      "provider_id": "anthropic",
+      "display_name": "Anthropic (Claude Pro/Max)",
+      "source_path": "packages/ai/src/registry/anthropic.ts"
+    },
+    {
+      "registry_variable": "zaiProvider",
+      "provider_id": "zai",
+      "display_name": "Z.AI (GLM Coding Plan)",
+      "source_path": "packages/ai/src/registry/zai.ts"
+    },
+    {
+      "registry_variable": "zaiCodingPlanProvider",
+      "provider_id": "zai-coding-plan",
+      "display_name": "Z.AI (GLM Coding Plan \u00b7 Sign in)",
+      "source_path": "packages/ai/src/registry/zai.ts"
+    },
+    {
+      "registry_variable": "kimiCodeProvider",
+      "provider_id": "kimi-code",
+      "display_name": "Kimi Code",
+      "source_path": "packages/ai/src/registry/kimi-code.ts"
+    },
+    {
+      "registry_variable": "openrouterProvider",
+      "provider_id": "openrouter",
+      "display_name": "OpenRouter",
+      "source_path": "packages/ai/src/registry/openrouter.ts"
+    },
+    {
+      "registry_variable": "githubCopilotProvider",
+      "provider_id": "github-copilot",
+      "display_name": "GitHub Copilot",
+      "source_path": "packages/ai/src/registry/github-copilot.ts"
+    },
+    {
+      "registry_variable": "cursorProvider",
+      "provider_id": "cursor",
+      "display_name": "Cursor (Claude, GPT, etc.)",
+      "source_path": "packages/ai/src/registry/cursor.ts"
+    },
+    {
+      "registry_variable": "devinProvider",
+      "provider_id": "devin",
+      "display_name": "Devin",
+      "source_path": "packages/ai/src/registry/devin.ts"
+    },
+    {
+      "registry_variable": "googleAntigravityProvider",
+      "provider_id": "google-antigravity",
+      "display_name": "Antigravity (Gemini 3, Claude, GPT-OSS)",
+      "source_path": "packages/ai/src/registry/google-antigravity.ts"
+    },
+    {
+      "registry_variable": "googleGeminiCliProvider",
+      "provider_id": "google-gemini-cli",
+      "display_name": "Google Cloud Code Assist (Gemini CLI)",
+      "source_path": "packages/ai/src/registry/google-gemini-cli.ts"
+    },
+    {
+      "registry_variable": "openaiCodexDeviceProvider",
+      "provider_id": "openai-codex-device",
+      "display_name": "ChatGPT Plus/Pro (Codex, headless/device)",
+      "source_path": "packages/ai/src/registry/openai-codex-device.ts"
+    },
+    {
+      "registry_variable": "xaiProvider",
+      "provider_id": "xai",
+      "display_name": "xAI API",
+      "source_path": "packages/ai/src/registry/xai.ts"
+    },
+    {
+      "registry_variable": "xaiOauthProvider",
+      "provider_id": "xai-oauth",
+      "display_name": "xAI Grok OAuth (SuperGrok or X Premium+)",
+      "source_path": "packages/ai/src/registry/xai-oauth.ts"
+    },
+    {
+      "registry_variable": "gitlabDuoProvider",
+      "provider_id": "gitlab-duo",
+      "display_name": "GitLab Duo Non-Agentic",
+      "source_path": "packages/ai/src/registry/gitlab-duo.ts"
+    },
+    {
+      "registry_variable": "gitLabDuoWorkflowProvider",
+      "provider_id": "gitlab-duo-agent",
+      "display_name": "GitLab Duo Agent",
+      "source_path": "packages/ai/src/registry/gitlab-duo-workflow.ts"
+    },
+    {
+      "registry_variable": "alibabaCodingPlanProvider",
+      "provider_id": "alibaba-coding-plan",
+      "display_name": "Alibaba Coding Plan",
+      "source_path": "packages/ai/src/registry/alibaba-coding-plan.ts"
+    },
+    {
+      "registry_variable": "alibabaTokenPlanProvider",
+      "provider_id": "alibaba-token-plan",
+      "display_name": "QwenCloud Token Plan",
+      "source_path": "packages/ai/src/registry/alibaba-token-plan.ts"
+    },
+    {
+      "registry_variable": "aiandProvider",
+      "provider_id": "aiand",
+      "display_name": "ai&",
+      "source_path": "packages/ai/src/registry/aiand.ts"
+    },
+    {
+      "registry_variable": "aimlApiProvider",
+      "provider_id": "aimlapi",
+      "display_name": "AIML API",
+      "source_path": "packages/ai/src/registry/aimlapi.ts"
+    },
+    {
+      "registry_variable": "zhipuCodingPlanProvider",
+      "provider_id": "zhipu-coding-plan",
+      "display_name": "Zhipu Coding Plan (\u667a\u8c31)",
+      "source_path": "packages/ai/src/registry/zhipu-coding-plan.ts"
+    },
+    {
+      "registry_variable": "umansProvider",
+      "provider_id": "umans",
+      "display_name": "Umans AI Coding Plan",
+      "source_path": "packages/ai/src/registry/umans.ts"
+    },
+    {
+      "registry_variable": "qwenPortalProvider",
+      "provider_id": "qwen-portal",
+      "display_name": "Qwen Portal",
+      "source_path": "packages/ai/src/registry/qwen-portal.ts"
+    },
+    {
+      "registry_variable": "sakanaProvider",
+      "provider_id": "sakana",
+      "display_name": "Sakana AI",
+      "source_path": "packages/ai/src/registry/sakana.ts"
+    },
+    {
+      "registry_variable": "minimaxCodeProvider",
+      "provider_id": "minimax-code",
+      "display_name": "MiniMax Token Plan (International)",
+      "source_path": "packages/ai/src/registry/minimax-code.ts"
+    },
+    {
+      "registry_variable": "minimaxCodeCnProvider",
+      "provider_id": "minimax-code-cn",
+      "display_name": "MiniMax Token Plan (China)",
+      "source_path": "packages/ai/src/registry/minimax-code-cn.ts"
+    },
+    {
+      "registry_variable": "xiaomiProvider",
+      "provider_id": "xiaomi",
+      "display_name": "Xiaomi MiMo",
+      "source_path": "packages/ai/src/registry/xiaomi.ts"
+    },
+    {
+      "registry_variable": "xiaomiTokenPlanSgpProvider",
+      "provider_id": "xiaomi-token-plan-sgp",
+      "display_name": "Xiaomi Token Plan (Singapore)",
+      "source_path": "packages/ai/src/registry/xiaomi-token-plan-sgp.ts"
+    },
+    {
+      "registry_variable": "xiaomiTokenPlanAmsProvider",
+      "provider_id": "xiaomi-token-plan-ams",
+      "display_name": "Xiaomi Token Plan (Europe)",
+      "source_path": "packages/ai/src/registry/xiaomi-token-plan-ams.ts"
+    },
+    {
+      "registry_variable": "xiaomiTokenPlanCnProvider",
+      "provider_id": "xiaomi-token-plan-cn",
+      "display_name": "Xiaomi Token Plan (China)",
+      "source_path": "packages/ai/src/registry/xiaomi-token-plan-cn.ts"
+    },
+    {
+      "registry_variable": "firepassProvider",
+      "provider_id": "firepass",
+      "display_name": "Fire Pass (Fireworks Kimi K2.6 Turbo subscription)",
+      "source_path": "packages/ai/src/registry/firepass.ts"
+    },
+    {
+      "registry_variable": "deepseekProvider",
+      "provider_id": "deepseek",
+      "display_name": "DeepSeek",
+      "source_path": "packages/ai/src/registry/deepseek.ts"
+    },
+    {
+      "registry_variable": "metaProvider",
+      "provider_id": "meta",
+      "display_name": "Meta Model API",
+      "source_path": "packages/ai/src/registry/meta.ts"
+    },
+    {
+      "registry_variable": "moonshotProvider",
+      "provider_id": "moonshot",
+      "display_name": "Moonshot (Kimi API)",
+      "source_path": "packages/ai/src/registry/moonshot.ts"
+    },
+    {
+      "registry_variable": "cerebrasProvider",
+      "provider_id": "cerebras",
+      "display_name": "Cerebras",
+      "source_path": "packages/ai/src/registry/cerebras.ts"
+    },
+    {
+      "registry_variable": "basetenProvider",
+      "provider_id": "baseten",
+      "display_name": "Baseten",
+      "source_path": "packages/ai/src/registry/baseten.ts"
+    },
+    {
+      "registry_variable": "fireworksProvider",
+      "provider_id": "fireworks",
+      "display_name": "Fireworks",
+      "source_path": "packages/ai/src/registry/fireworks.ts"
+    },
+    {
+      "registry_variable": "togetherProvider",
+      "provider_id": "together",
+      "display_name": "Together",
+      "source_path": "packages/ai/src/registry/together.ts"
+    },
+    {
+      "registry_variable": "nvidiaProvider",
+      "provider_id": "nvidia",
+      "display_name": "NVIDIA",
+      "source_path": "packages/ai/src/registry/nvidia.ts"
+    },
+    {
+      "registry_variable": "novitaProvider",
+      "provider_id": "novita",
+      "display_name": "Novita",
+      "source_path": "packages/ai/src/registry/novita.ts"
+    },
+    {
+      "registry_variable": "huggingfaceProvider",
+      "provider_id": "huggingface",
+      "display_name": "Hugging Face Inference",
+      "source_path": "packages/ai/src/registry/huggingface.ts"
+    },
+    {
+      "registry_variable": "perplexityProvider",
+      "provider_id": "perplexity",
+      "display_name": "Perplexity (Pro/Max)",
+      "source_path": "packages/ai/src/registry/perplexity.ts"
+    },
+    {
+      "registry_variable": "qianfanProvider",
+      "provider_id": "qianfan",
+      "display_name": "Qianfan",
+      "source_path": "packages/ai/src/registry/qianfan.ts"
+    },
+    {
+      "registry_variable": "veniceProvider",
+      "provider_id": "venice",
+      "display_name": "Venice",
+      "source_path": "packages/ai/src/registry/venice.ts"
+    },
+    {
+      "registry_variable": "siliconflowProvider",
+      "provider_id": "siliconflow",
+      "display_name": "SiliconFlow",
+      "source_path": "packages/ai/src/registry/siliconflow.ts"
+    },
+    {
+      "registry_variable": "siliconflowCnProvider",
+      "provider_id": "siliconflow-cn",
+      "display_name": "SiliconFlow (China)",
+      "source_path": "packages/ai/src/registry/siliconflow-cn.ts"
+    },
+    {
+      "registry_variable": "syntheticProvider",
+      "provider_id": "synthetic",
+      "display_name": "Synthetic",
+      "source_path": "packages/ai/src/registry/synthetic.ts"
+    },
+    {
+      "registry_variable": "nanogptProvider",
+      "provider_id": "nanogpt",
+      "display_name": "NanoGPT",
+      "source_path": "packages/ai/src/registry/nanogpt.ts"
+    },
+    {
+      "registry_variable": "waferServerlessProvider",
+      "provider_id": "wafer-serverless",
+      "display_name": "Wafer Serverless (pay-as-you-go)",
+      "source_path": "packages/ai/src/registry/wafer-serverless.ts"
+    },
+    {
+      "registry_variable": "coreWeaveProvider",
+      "provider_id": "coreweave",
+      "display_name": "CoreWeave Serverless Inference",
+      "source_path": "packages/ai/src/registry/coreweave.ts"
+    },
+    {
+      "registry_variable": "vercelAiGatewayProvider",
+      "provider_id": "vercel-ai-gateway",
+      "display_name": "Vercel AI Gateway",
+      "source_path": "packages/ai/src/registry/vercel-ai-gateway.ts"
+    },
+    {
+      "registry_variable": "cloudflareAiGatewayProvider",
+      "provider_id": "cloudflare-ai-gateway",
+      "display_name": "Cloudflare AI Gateway",
+      "source_path": "packages/ai/src/registry/cloudflare-ai-gateway.ts"
+    },
+    {
+      "registry_variable": "litellmProvider",
+      "provider_id": "litellm",
+      "display_name": "LiteLLM",
+      "source_path": "packages/ai/src/registry/litellm.ts"
+    },
+    {
+      "registry_variable": "kiloProvider",
+      "provider_id": "kilo",
+      "display_name": "Kilo Gateway",
+      "source_path": "packages/ai/src/registry/kilo.ts"
+    },
+    {
+      "registry_variable": "zenmuxProvider",
+      "provider_id": "zenmux",
+      "display_name": "ZenMux",
+      "source_path": "packages/ai/src/registry/zenmux.ts"
+    },
+    {
+      "registry_variable": "opencodeZenProvider",
+      "provider_id": "opencode-zen",
+      "display_name": "OpenCode Zen",
+      "source_path": "packages/ai/src/registry/opencode-zen.ts"
+    },
+    {
+      "registry_variable": "opencodeGoProvider",
+      "provider_id": "opencode-go",
+      "display_name": "OpenCode Go",
+      "source_path": "packages/ai/src/registry/opencode-go.ts"
+    },
+    {
+      "registry_variable": "tavilyProvider",
+      "provider_id": "tavily",
+      "display_name": "Tavily",
+      "source_path": "packages/ai/src/registry/tavily.ts"
+    },
+    {
+      "registry_variable": "kagiProvider",
+      "provider_id": "kagi",
+      "display_name": "Kagi",
+      "source_path": "packages/ai/src/registry/kagi.ts"
+    },
+    {
+      "registry_variable": "exaProvider",
+      "provider_id": "exa",
+      "display_name": "Exa",
+      "source_path": "packages/ai/src/registry/exa.ts"
+    },
+    {
+      "registry_variable": "parallelProvider",
+      "provider_id": "parallel",
+      "display_name": "Parallel",
+      "source_path": "packages/ai/src/registry/parallel.ts"
+    },
+    {
+      "registry_variable": "ollamaProvider",
+      "provider_id": "ollama",
+      "display_name": "Ollama (Local OpenAI-compatible)",
+      "source_path": "packages/ai/src/registry/ollama.ts"
+    },
+    {
+      "registry_variable": "ollamaCloudProvider",
+      "provider_id": "ollama-cloud",
+      "display_name": "Ollama Cloud",
+      "source_path": "packages/ai/src/registry/ollama-cloud.ts"
+    },
+    {
+      "registry_variable": "lmStudioProvider",
+      "provider_id": "lm-studio",
+      "display_name": "LM Studio (Local OpenAI-compatible)",
+      "source_path": "packages/ai/src/registry/lm-studio.ts"
+    },
+    {
+      "registry_variable": "llamaCppProvider",
+      "provider_id": "llama-cpp",
+      "display_name": "llama.cpp (Local OpenAI-compatible)",
+      "source_path": "packages/ai/src/registry/llama-cpp.ts"
+    },
+    {
+      "registry_variable": "vllmProvider",
+      "provider_id": "vllm",
+      "display_name": "vLLM (Local OpenAI-compatible)",
+      "source_path": "packages/ai/src/registry/vllm.ts"
+    },
+    {
+      "registry_variable": "openaiProvider",
+      "provider_id": "openai",
+      "display_name": "OpenAI",
+      "source_path": "packages/ai/src/registry/openai.ts"
+    },
+    {
+      "registry_variable": "googleProvider",
+      "provider_id": "google",
+      "display_name": "Google Gemini",
+      "source_path": "packages/ai/src/registry/google.ts"
+    },
+    {
+      "registry_variable": "googleVertexProvider",
+      "provider_id": "google-vertex",
+      "display_name": "Google Vertex AI",
+      "source_path": "packages/ai/src/registry/google-vertex.ts"
+    },
+    {
+      "registry_variable": "groqProvider",
+      "provider_id": "groq",
+      "display_name": "Groq",
+      "source_path": "packages/ai/src/registry/groq.ts"
+    },
+    {
+      "registry_variable": "mistralProvider",
+      "provider_id": "mistral",
+      "display_name": "Mistral",
+      "source_path": "packages/ai/src/registry/mistral.ts"
+    },
+    {
+      "registry_variable": "minimaxProvider",
+      "provider_id": "minimax",
+      "display_name": "MiniMax",
+      "source_path": "packages/ai/src/registry/minimax.ts"
+    },
+    {
+      "registry_variable": "amazonBedrockProvider",
+      "provider_id": "amazon-bedrock",
+      "display_name": "Amazon Bedrock",
+      "source_path": "packages/ai/src/registry/amazon-bedrock.ts"
+    },
+    {
+      "registry_variable": "bedrockMantleProvider",
+      "provider_id": "bedrock-mantle",
+      "display_name": "Amazon Bedrock Mantle",
+      "source_path": "packages/ai/src/registry/bedrock-mantle.ts"
+    },
+    {
+      "registry_variable": "gmiCloudProvider",
+      "provider_id": "gmi-cloud",
+      "display_name": "GMI Cloud",
+      "source_path": "packages/ai/src/registry/gmi-cloud.ts"
+    }
+  ]
+}

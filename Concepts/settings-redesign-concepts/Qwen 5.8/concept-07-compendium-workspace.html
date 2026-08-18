@@ -1,0 +1,1301 @@
+<!doctype html>
+<html lang="en" data-theme="friendly-dark" data-reduced-motion="0" data-concept-id="concept-07-compendium-workspace">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compendium Workspace — Qwen 5.8</title>
+<link rel="stylesheet" href="_shared/pm-shell.css">
+<link rel="stylesheet" href="_shared/pm-managers2.css">
+<style>
+/* ── Concept 07 · Compendium Workspace ─────────────────────────────
+   Identity: a quiet two-pane workspace whose spine is the All Settings
+   compendium — faceted, virtualized, readable. Dense but legible type
+   rhythm (12.5px body, small-caps captions), pane-transfer motion:
+   every route change slides the incoming pane along the reading axis. */
+.cw-top {
+  display: flex; align-items: center; gap: 8px; padding: 8px 14px;
+  border-bottom: 1px solid var(--border); background: var(--bg-shell); flex: none;
+}
+.cw-crumb { display: flex; align-items: center; gap: 6px; min-width: 0; color: var(--text-2); font-size: 12px; flex-wrap: wrap; }
+.cw-crumb b { color: var(--text-1); font-weight: 600; }
+.cw-crumb .sep { color: var(--text-3); }
+.cw-top .pm-spacer { flex: 1; }
+.cw { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+.cw-body { display: grid; grid-template-columns: 218px minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); min-height: 0; flex: 1; }
+#app[data-wtier="narrow"] .cw-body, #app[data-wtier="squeezed"] .cw-body { grid-template-columns: minmax(0, 1fr); }
+
+/* left nav */
+.cw-nav { border-right: 1px solid var(--border); background: var(--bg-shell); overflow-y: auto; overflow-x: hidden; padding: 10px 8px; min-height: 0; max-height: 100%; scrollbar-gutter: stable; }
+.cw-nav-cap { font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--text-3); padding: 8px 10px 4px; }
+.cw-nav-item {
+  display: flex; align-items: center; gap: 9px; width: 100%; text-align: left; border: none;
+  background: none; color: var(--text-2); padding: 6px 10px; border-radius: var(--radius-s);
+  cursor: pointer; font-size: 12.5px;
+}
+.cw-nav-item:hover { background: var(--surface-2); color: var(--text-1); }
+.cw-nav-item.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.cw-nav-item .n { margin-left: auto; color: var(--text-3); font-size: 10.5px; }
+.cw-nav-close { display: none; }
+#app[data-wtier="narrow"] .cw-nav, #app[data-wtier="squeezed"] .cw-nav {
+  display: none; position: absolute; z-index: 45; top: 0; bottom: 0; left: 0; width: min(280px, 86vw);
+  box-shadow: var(--shadow); border-right-color: var(--border-strong);
+}
+#app[data-wtier="narrow"] .cw-nav.open, #app[data-wtier="squeezed"] .cw-nav.open { display: block; }
+#app[data-wtier="narrow"] .cw-nav-close, #app[data-wtier="squeezed"] .cw-nav-close {
+  display: inline-flex; margin: 2px 8px 6px auto;
+}
+.cw-browse-btn { display: none; }
+#app[data-wtier="narrow"] .cw-browse-btn, #app[data-wtier="squeezed"] .cw-browse-btn { display: inline-flex; }
+
+/* pane + motion metaphor: pane transfer along reading axis */
+.cw-pane { overflow-y: auto; min-height: 0; padding: 18px 22px 40px; position: relative; scroll-behavior: auto; }
+.cw-pane-inner { max-width: 1160px; margin: 0 auto; }
+#app[data-wtier="wide"] .cw-pane-inner { max-width: 1240px; }
+[data-reduced-motion="0"] .cw-pane[data-anim="fwd"] .cw-pane-inner { animation: cwFwd .26s cubic-bezier(.2,.8,.2,1); }
+[data-reduced-motion="0"] .cw-pane[data-anim="back"] .cw-pane-inner { animation: cwBack .26s cubic-bezier(.2,.8,.2,1); }
+@keyframes cwFwd { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: none; } }
+@keyframes cwBack { from { opacity: 0; transform: translateX(-18px); } to { opacity: 1; transform: none; } }
+
+.cw-h1 { font-size: 17px; font-weight: 700; color: var(--text-1); margin: 0 0 4px; display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.cw-sub { color: var(--text-2); font-size: 12.5px; max-width: 75ch; margin: 0 0 14px; }
+.cw-cap { font-size: 11px; text-transform: uppercase; letter-spacing: .09em; color: var(--text-3); margin: 18px 0 8px; }
+.cw-card { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); padding: 14px 16px; margin-bottom: 12px; }
+.cw-banner { display: flex; align-items: center; gap: 10px; border: 1px solid color-mix(in srgb, var(--warn) 45%, transparent); background: color-mix(in srgb, var(--warn) 10%, transparent); color: var(--text-1); border-radius: var(--radius-m); padding: 10px 14px; margin-bottom: 12px; font-size: 12.5px; }
+.cw-banner .pm-ico { color: var(--warn); }
+
+/* home */
+.cw-hero-search { position: relative; margin: 10px 0 18px; }
+.cw-hero-search input {
+  width: 100%; height: 42px; border-radius: var(--radius-m); border: 1px solid var(--border-strong);
+  background: var(--surface); color: var(--text-1); padding: 0 44px 0 38px; font-size: 13.5px; outline: none;
+}
+.cw-hero-search input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.cw-hero-search .mag { position: absolute; left: 12px; top: 13px; color: var(--text-3); }
+.cw-hero-search .kbd { position: absolute; right: 12px; top: 12px; }
+.cw-dests { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+#app[data-wtier="squeezed"] .cw-dests { grid-template-columns: 1fr; }
+.cw-dest {
+  display: flex; align-items: center; gap: 11px; border: 1px solid var(--border); border-radius: var(--radius-m);
+  background: var(--surface); padding: 11px 13px; cursor: pointer; text-align: left; color: var(--text-1); width: 100%;
+}
+.cw-dest:hover { border-color: var(--border-strong); background: var(--surface-2); }
+.cw-dest .ic { color: var(--accent); flex: none; }
+.cw-dest .t { font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 8px; }
+.cw-dest .d { color: var(--text-2); font-size: 11.5px; margin-top: 2px; max-width: 52ch; }
+.cw-dest .m { color: var(--text-3); font-size: 10.5px; margin-top: 4px; display: flex; gap: 10px; flex-wrap: wrap; }
+.cw-dest .chev { margin-left: auto; color: var(--text-3); flex: none; }
+.cw-utils { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 6px; }
+.cw-attn { display: flex; flex-direction: column; gap: 6px; }
+.cw-attn-row { display: flex; align-items: center; gap: 10px; border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); padding: 8px 12px; font-size: 12.5px; color: var(--text-1); }
+.cw-attn-row .why { color: var(--text-2); font-size: 11.5px; }
+.cw-attn-row .pm-btn { margin-left: auto; }
+.cw-recent-row { display: flex; align-items: center; gap: 10px; padding: 6px 2px; border-bottom: 1px solid var(--border); font-size: 12.5px; color: var(--text-1); }
+.cw-recent-row:last-child { border-bottom: none; }
+.cw-recent-row .when { margin-left: auto; color: var(--text-3); font-size: 11px; }
+
+/* universal search dropdown */
+.cw-sdrop {
+  position: absolute; z-index: 80; left: 0; right: 0; top: calc(100% + 4px);
+  background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-m);
+  box-shadow: var(--shadow); max-height: min(430px, 60vh); overflow-y: auto; padding: 6px;
+}
+.cw-sdrop .row { display: flex; align-items: center; gap: 9px; padding: 7px 9px; border-radius: var(--radius-s); cursor: pointer; width: 100%; border: none; background: none; text-align: left; color: var(--text-1); }
+.cw-sdrop .row:hover, .cw-sdrop .row.active { background: var(--accent-soft); }
+.cw-sdrop .row .lab { font-size: 12.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cw-sdrop .row .pth { color: var(--text-3); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cw-sdrop .row .col { min-width: 0; display: flex; flex-direction: column; gap: 1px; flex: 1; }
+.cw-sdrop .note { color: var(--text-3); font-size: 10.5px; }
+.cw-compact-search { position: relative; width: min(320px, 38vw); }
+.cw-compact-search input { width: 100%; height: 30px; border-radius: var(--radius-s); border: 1px solid var(--border-strong); background: var(--surface-3); color: var(--text-1); padding: 0 10px 0 30px; font-size: 12px; outline: none; }
+.cw-compact-search input:focus { border-color: var(--accent); }
+.cw-compact-search .mag { position: absolute; left: 9px; top: 8px; color: var(--text-3); }
+
+/* all settings compendium */
+.cw-all { display: grid; grid-template-columns: 224px minmax(0, 1fr); gap: 16px; min-height: 0; }
+#app[data-wtier="narrow"] .cw-all, #app[data-wtier="squeezed"] .cw-all { grid-template-columns: minmax(0, 1fr); }
+.cw-facets { min-height: 0; }
+#app[data-wtier="narrow"] .cw-facets, #app[data-wtier="squeezed"] .cw-facets {
+  display: none; position: absolute; z-index: 46; top: 0; bottom: 0; left: 0; width: min(300px, 88vw);
+  background: var(--bg); box-shadow: var(--shadow); overflow-y: auto; padding: 12px; border-right: 1px solid var(--border-strong);
+}
+#app[data-wtier="narrow"] .cw-facets.open, #app[data-wtier="squeezed"] .cw-facets.open { display: block; }
+.cw-facet-close { display: none; }
+#app[data-wtier="narrow"] .cw-facet-close, #app[data-wtier="squeezed"] .cw-facet-close { display: inline-flex; float: right; }
+.cw-facet-grp { margin-bottom: 14px; }
+.cw-facet-opt { display: flex; align-items: center; gap: 8px; width: 100%; border: none; background: none; color: var(--text-2); padding: 4px 8px; border-radius: var(--radius-s); cursor: pointer; font-size: 12px; text-align: left; }
+.cw-facet-opt:hover { background: var(--surface-2); color: var(--text-1); }
+.cw-facet-opt.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.cw-facet-opt .ct { margin-left: auto; color: var(--text-3); font-size: 10.5px; }
+.cw-all-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+.cw-all-count { color: var(--text-2); font-size: 12px; }
+.cw-vlist { height: calc(100vh - 250px); min-height: 320px; overflow-y: auto; border-top: 1px solid var(--border); }
+.cw-allrow {
+  height: 64px; box-sizing: border-box; display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2px 14px; align-items: center; padding: 8px 10px; border-bottom: 1px solid var(--border); cursor: pointer;
+  border-left: none; border-right: none; border-top: none; width: 100%; background: none; text-align: left; color: var(--text-1);
+}
+.cw-allrow:hover { background: var(--surface-2); }
+.cw-allrow .t { font-size: 12.5px; font-weight: 600; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; min-width: 0; }
+.cw-allrow .p { color: var(--text-3); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cw-allrow .v { color: var(--text-2); font-size: 11.5px; text-align: right; max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cw-allrow .ty { color: var(--text-3); font-size: 10.5px; text-transform: uppercase; letter-spacing: .05em; }
+.cw-refresh-chip { display: inline-flex; align-items: center; gap: 6px; color: var(--info); font-size: 11px; }
+
+/* domain pages */
+.cw-overview { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 8px; margin-bottom: 12px; }
+.cw-stat { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); padding: 10px 12px; }
+.cw-stat .k { font-size: 10.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--text-3); }
+.cw-stat .v { font-size: 14px; font-weight: 700; color: var(--text-1); margin-top: 3px; }
+.cw-stat .s { font-size: 11px; color: var(--text-2); margin-top: 2px; }
+.cw-mgr-row { display: flex; align-items: center; gap: 11px; width: 100%; text-align: left; border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); padding: 10px 13px; cursor: pointer; color: var(--text-1); margin-bottom: 7px; }
+.cw-mgr-row:hover { background: var(--surface-2); border-color: var(--border-strong); }
+.cw-mgr-row .ic { color: var(--accent); }
+.cw-mgr-row .t { font-weight: 600; font-size: 12.5px; }
+.cw-mgr-row .d { color: var(--text-2); font-size: 11.5px; margin-top: 1px; max-width: 70ch; }
+.cw-mgr-row .chev { margin-left: auto; color: var(--text-3); }
+.cw-subchips { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* manager workspace: integrated list/detail */
+.cw-mgrws { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 16px; min-height: 0; }
+#app[data-wtier="narrow"] .cw-mgrws, #app[data-wtier="squeezed"] .cw-mgrws { grid-template-columns: minmax(0, 1fr); }
+.cw-roster { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); overflow-y: auto; max-height: calc(100vh - 240px); }
+.cw-roster-item { display: flex; align-items: center; gap: 9px; width: 100%; text-align: left; border: none; background: none; padding: 9px 12px; border-bottom: 1px solid var(--border); cursor: pointer; color: var(--text-1); font-size: 12.5px; }
+.cw-roster-item:last-child { border-bottom: none; }
+.cw-roster-item:hover { background: var(--surface-2); }
+.cw-roster-item.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.cw-roster-item .n { margin-left: auto; color: var(--text-3); font-size: 10.5px; }
+#app[data-wtier="narrow"] .cw-roster-only .cw-detail, #app[data-wtier="squeezed"] .cw-roster-only .cw-detail { display: none; }
+#app[data-wtier="narrow"] .cw-mgrws.has-obj .cw-roster, #app[data-wtier="squeezed"] .cw-mgrws.has-obj .cw-roster { display: none; }
+.cw-tabs { display: flex; gap: 2px; flex-wrap: wrap; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
+.cw-tabs button { border: none; background: none; color: var(--text-2); padding: 6px 11px; cursor: pointer; font-size: 12px; border-radius: var(--radius-s) var(--radius-s) 0 0; }
+.cw-tabs button:hover { background: var(--surface-2); color: var(--text-1); }
+.cw-tabs button.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.cw-kv { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 6px 18px; font-size: 12px; }
+.cw-kv .k { color: var(--text-3); font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; }
+.cw-kv .v { color: var(--text-1); margin: 1px 0 6px; word-break: break-word; }
+.cw-deferred { border: 1px dashed var(--border-strong); border-radius: var(--radius-m); padding: 14px 16px; background: var(--surface-3); }
+.cw-logline { font-family: var(--font-mono); font-size: 11px; color: var(--text-2); padding: 2px 0; }
+details.cw-drawer { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); margin-bottom: 8px; }
+details.cw-drawer summary { cursor: pointer; padding: 9px 13px; color: var(--text-1); font-size: 12.5px; font-weight: 600; }
+details.cw-drawer .body { padding: 4px 13px 12px; }
+
+/* copy */
+.cw-steps { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.cw-step { display: inline-flex; align-items: center; gap: 7px; color: var(--text-3); font-size: 12px; }
+.cw-step .bub { width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--border-strong); display: inline-flex; align-items: center; justify-content: center; font-size: 10.5px; }
+.cw-step.active { color: var(--text-1); font-weight: 600; }
+.cw-step.active .bub { background: var(--accent); border-color: var(--accent); color: var(--accent-contrast); }
+.cw-step.done { color: var(--ok); }
+.cw-step.done .bub { border-color: var(--ok); }
+.cw-step-line { width: 26px; height: 1px; background: var(--border-strong); }
+.cw-counts { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin: 12px 0; }
+.cw-src { display: flex; align-items: center; gap: 10px; border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); padding: 10px 13px; cursor: pointer; width: 100%; text-align: left; color: var(--text-1); margin-bottom: 7px; }
+.cw-src.active { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+.cw-catchk { display: flex; align-items: center; gap: 8px; border: 1px solid var(--border); border-radius: var(--radius-s); background: var(--surface); padding: 6px 10px; font-size: 12px; color: var(--text-1); cursor: pointer; }
+.cw-catchk .ct { color: var(--text-3); font-size: 10.5px; }
+.cw-cats { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 6px; }
+.cw-diff-add { color: var(--ok); } .cw-diff-rep { color: var(--warn); } .cw-diff-con { color: var(--err); } .cw-diff-una { color: var(--text-3); }
+
+/* ops strip */
+.cw-ops { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.cw-op { display: flex; align-items: center; gap: 10px; border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); padding: 8px 12px; font-size: 12px; color: var(--text-1); }
+.cw-op .bar { flex: 1; height: 4px; border-radius: 2px; background: var(--surface-3); overflow: hidden; min-width: 60px; }
+.cw-op .bar i { display: block; height: 100%; background: var(--accent); }
+.cw-op .why { color: var(--text-3); font-size: 11px; }
+
+.pm2-locate { outline: none; }
+@media (max-width: 700px) { .cw-pane { padding: 14px 12px 40px; } }
+</style>
+</head>
+<body data-concept-model="Qwen 5.8" data-concept="concept-07-compendium-workspace">
+<div id="app"></div>
+<script src="_shared/pm-icons.js"></script>
+<script src="_shared/pm-inventory-data.js"></script>
+<script src="_shared/pm-managers2-data.js"></script>
+<script src="_shared/pm-state2.js"></script>
+<script src="_shared/pm-search2.js"></script>
+<script src="_shared/pm-managers2.js"></script>
+<script src="_shared/pm-copy2.js"></script>
+<script src="_shared/pm-shell2.js"></script>
+<script src="_shared/concept-hub-bridge.js"></script>
+<script>
+(function () {
+  "use strict";
+  var D = window.PMInventoryData, S2 = window.PMState2, M2 = window.PMManagers2,
+      MD = window.PMManagers2Data, C2 = window.PMCopy2, Q = window.PMSearch2;
+  var esc = M2.esc, ico = M2.ico;
+
+  S2.init("concept-07-compendium-workspace");
+  Q.register(MD.searchEntries());
+  // Concept-local reachability for the five deferred shells that have no shared search entry.
+  Q.register([
+    { rid: "sr:manager:installation", type: "setup", label: "Installation / Deployment", path: ["AI Brains & Providers", "Installation / Deployment"], dest: { kind: "manager", manager: "installation" }, keywords: ["install", "deployment", "provider lifecycle"], note: "Named-owner shell — Provider Lifecycle owner" },
+    { rid: "sr:manager:server-claim", type: "setup", label: "Server Claim / Bootstrap", path: ["System & Advanced", "Server Claim / Bootstrap"], dest: { kind: "manager", manager: "server-claim" }, keywords: ["claim", "bootstrap", "server"], note: "Named-owner shell — Server Backbone" },
+    { rid: "sr:manager:remote-access", type: "manager", label: "Remote Access", path: ["System & Advanced", "Remote Access"], dest: { kind: "manager", manager: "remote-access" }, keywords: ["remote", "pairing", "approvals"], note: "Named-owner shell — Server Backbone" },
+    { rid: "sr:manager:sync-move", type: "manager", label: "Project Sync / Move", path: ["System & Advanced", "Project Sync / Move"], dest: { kind: "manager", manager: "sync-move" }, keywords: ["sync", "move", "relocate"], note: "Named-owner shell — Project Syncing and Updates" },
+    { rid: "sr:manager:server-backup", type: "manager", label: "Full Server Backup", path: ["System & Advanced", "Full Server Backup"], dest: { kind: "manager", manager: "server-backup" }, keywords: ["server backup", "full backup"], note: "Named-owner shell — Server Backbone" }
+  ]);
+  var DEFERRED_DOMAIN = { onboarding: "general", installation: "ai", "server-claim": "system", servers: "system", hosting: "system", "remote-access": "system", "sync-move": "system", updates: "system", "server-backup": "system" };
+
+  var shell = PMShell2.mount({ conceptName: "Compendium Workspace", model: "Qwen 5.8", onHome: goHome, onTier: function () {} });
+
+  var UI = {
+    q: "", sActive: -1, sOpen: false,
+    facets: { cat: "all", type: "all", status: "all", tier: "all", q: "", synth: false, sort: "az" },
+    facetGen: 0, navOpen: false, facetOpen: false,
+    tabs: {}, roster: {}, scroll: {}, anim: "fwd", depth: 0,
+    copy: { step: 1, source: null, cats: [], preview: null, applied: null, expanded: false },
+    pending: null, lastRoute: ""
+  };
+  var SYNTH = null;
+
+  /* ---------- helpers ---------- */
+  function catOf(id) { return id.split(".")[0]; }
+  function catTitle(id) { var c = D.byCategory(id); return c ? c.category.title : id; }
+  function subTitle(id) {
+    var parts = id.split("."), c = D.byCategory(parts[0]);
+    if (!c) return { cat: parts[0], sub: parts[1] || "" };
+    var g = null; (c.category.subgroups || []).forEach(function (s) { if (s.id === parts[1]) g = s; });
+    return { cat: c.category.title, sub: g ? g.title : (parts[1] || "") };
+  }
+  function families() { return MD.families || []; }
+  function famById(id) { var f = null; families().forEach(function (x) { if (x.id === id) f = x; }); return f; }
+  function deferredById(id) { var f = null; (MD.deferred || []).forEach(function (x) { if (x.id === id) f = x; }); return f; }
+  function isDeferred(id) { return !!deferredById(id); }
+  function famDomain(f) { return (f && f.domain) || DEFERRED_DOMAIN[f && f.id] || null; }
+  function domainFamilies(catId) { return families().filter(function (f) { return famDomain(f) === catId; }); }
+  function changedCount(catId) {
+    var n = 0; (D.byCategory(catId) || { settings: [] }).settings.forEach(function (s) {
+      var st = S2.getSetting(s.id); if (st && st.source !== "default") n++;
+    }); return n;
+  }
+  function timeAgo(ts) {
+    var d = Math.max(0, Date.now() - ts), m = Math.round(d / 60000);
+    if (m < 1) return "just now"; if (m < 60) return m + "m ago";
+    var h = Math.round(m / 60); if (h < 24) return h + "h ago"; return Math.round(h / 24) + "d ago";
+  }
+  function synthRows() {
+    if (SYNTH) return SYNTH;
+    SYNTH = [];
+    for (var i = 1; i <= 2000; i++) {
+      SYNTH.push({
+        id: "synthetic.stress." + i, label: "Synthetic Stress Setting " + i,
+        desc: "Generated stress row for virtualization proof. Not part of the real 828-setting inventory.",
+        type: i % 3 === 0 ? "toggle" : (i % 3 === 1 ? "number" : "select"),
+        tier: i % 4 === 0 ? "advanced" : "simple", default: false, synthetic: true,
+        options: ["Low", "High"], cat: "synthetic"
+      });
+    }
+    return SYNTH;
+  }
+
+  /* ---------- routing ---------- */
+  function parseRoute() {
+    var h = location.hash || "#/home";
+    var qi = h.indexOf("?"), q = {};
+    var path = qi >= 0 ? h.slice(0, qi) : h;
+    if (qi >= 0) h.slice(qi + 1).split("&").forEach(function (kv) {
+      var p = kv.split("="); q[decodeURIComponent(p[0])] = decodeURIComponent(p[1] || "");
+    });
+    var parts = path.replace(/^#\//, "").split("/").filter(Boolean);
+    return { name: parts[0] || "home", parts: parts, q: q, raw: h.replace(/^#/, "") };
+  }
+  function routeDepth(r) {
+    if (r.name === "home" || r.name === "q") return 0;
+    if (r.name === "cat") return r.parts[2] ? 2 : 1;
+    if (r.name === "mgr") return r.parts[2] ? 2 : 1;
+    return 1;
+  }
+  function destHash(dest) {
+    if (!dest) return null;
+    if (dest.kind === "setting") return "#/cat/" + dest.category + "/" + dest.subgroup + "?row=" + encodeURIComponent(dest.settingId);
+    if (dest.kind === "manager") {
+      var h = "#/mgr/" + dest.manager;
+      if (dest.object) h += "/" + dest.object;
+      var qs = [];
+      if (dest.section) qs.push("sec=" + encodeURIComponent(dest.section));
+      if (dest.row) qs.push("row=" + encodeURIComponent(dest.row));
+      if (qs.length) h += "?" + qs.join("&");
+      return h;
+    }
+    if (dest.kind === "route") return dest.hash;
+    return "#/home";
+  }
+  function goHome() { location.hash = "#/home"; }
+
+  /* ---------- search ---------- */
+  function searchBox(large) {
+    return large
+      ? '<div class="cw-hero-search"><span class="mag">' + ico("search", 15) + '</span>' +
+        '<input data-test="search-input" id="cw-search" type="text" autocomplete="off" spellcheck="false" placeholder="Search settings, managers, providers, actions…" aria-label="Universal settings search">' +
+        '<span class="kbd pm-kbd">⌘K</span><div class="cw-sdrop" data-test="search-results" hidden></div></div>'
+      : '<div class="cw-compact-search"><span class="mag">' + ico("search", 13) + '</span>' +
+        '<input data-test="search-input" id="cw-search" type="text" autocomplete="off" spellcheck="false" placeholder="Search settings" aria-label="Universal settings search">' +
+        '<div class="cw-sdrop" data-test="search-results" hidden></div></div>';
+  }
+  var TYPE_ORDER = ["setting", "manager", "managed_object", "action", "setup", "diagnostic", "unavailable"];
+  var TYPE_LABEL = { setting: "Settings", manager: "Managers", managed_object: "Managed objects", action: "Actions", setup: "Setup", diagnostic: "Diagnostics", unavailable: "Unavailable" };
+  function renderDrop(results) {
+    var drop = shell.content.querySelector("[data-test='search-results']");
+    if (!drop) return;
+    UI.sOpen = results.length > 0;
+    if (!results.length) {
+      drop.hidden = false;
+      drop.innerHTML = '<div class="pm2-empty" style="margin:6px">No results for “' + esc(UI.q) + '”. Check the spelling or browse the compendium.</div>';
+      return;
+    }
+    var html = "", active = 0;
+    TYPE_ORDER.forEach(function (t) {
+      var rs = results.filter(function (r) { return r.type === t; });
+      if (!rs.length) return;
+      html += '<div class="pm2-group-cap" style="margin:8px 6px 3px">' + TYPE_LABEL[t] + "</div>";
+      rs.forEach(function (r) {
+        html += '<button class="row" data-rid="' + esc(r.rid) + '" data-idx="' + (active++) + '" role="option">' +
+          '<span class="col"><span class="lab pm2-r-title">' + esc(r.label) + '</span>' +
+          '<span class="pth">' + esc((r.path || []).join(" › ")) + "</span>" +
+          (r.note ? '<span class="note">' + esc(r.note) + "</span>" : "") + "</span>" +
+          '<span class="pm-search-type" data-rt="' + esc(r.type) + '">' + esc(r.type.replace("_", " ")) + "</span></button>";
+      });
+    });
+    drop.hidden = false;
+    drop.innerHTML = html;
+    UI.sActive = -1;
+  }
+  function closeDrop() {
+    var drop = shell.content.querySelector("[data-test='search-results']");
+    if (drop) drop.hidden = true;
+    UI.sOpen = false;
+  }
+  function bindSearch(root) {
+    var input = root.querySelector("[data-test='search-input']");
+    if (!input) return;
+    if (UI.q) input.value = UI.q;
+    input.addEventListener("input", function () {
+      UI.q = input.value;
+      if (!UI.q.trim()) { renderDrop([]); closeDrop(); return; }
+      Q.searchAsync(UI.q, function (res) { if (input.value === UI.q) renderDrop(res); });
+    });
+    input.addEventListener("focus", function () { if (UI.q.trim()) Q.searchAsync(UI.q, renderDrop); });
+    input.addEventListener("keydown", function (e) {
+      var drop = root.querySelector("[data-test='search-results']");
+      var rows = drop ? Array.prototype.slice.call(drop.querySelectorAll(".row")) : [];
+      if (e.key === "Escape") { closeDrop(); e.stopPropagation(); return; }
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        if (!rows.length) return;
+        e.preventDefault();
+        UI.sActive = e.key === "ArrowDown" ? Math.min(rows.length - 1, UI.sActive + 1) : Math.max(0, UI.sActive - 1);
+        rows.forEach(function (r, i) { r.classList.toggle("active", i === UI.sActive); });
+        if (rows[UI.sActive]) rows[UI.sActive].scrollIntoView({ block: "nearest" });
+        return;
+      }
+      if (e.key === "Enter") {
+        var pick = rows[UI.sActive >= 0 ? UI.sActive : 0];
+        if (pick) pick.click();
+        else if (UI.q.trim()) { // no selection: land in the compendium with the query
+          history.pushState(null, "", "#/q/" + encodeURIComponent(UI.q));
+          UI.facets.q = UI.q; location.hash = "#/all";
+        }
+      }
+    });
+    var drop = root.querySelector("[data-test='search-results']");
+    drop.addEventListener("click", function (e) {
+      var row = e.target.closest ? e.target.closest(".cw-sdrop .row") : null;
+      if (!row) return;
+      var rid = row.getAttribute("data-rid");
+      var entry = Q.byRid(rid); // route by immutable id only
+      if (!entry) return;
+      var dh = destHash(entry.dest);
+      if (!dh) { S2.receipt(entry.label, entry.note || "Unavailable in this product.", "info"); return; }
+      if (UI.q.trim()) history.pushState(null, "", "#/q/" + encodeURIComponent(UI.q)); // Back restores query + results
+      UI.q = "";
+      location.hash = dh;
+      UI.pending = entry.dest;
+    });
+  }
+
+  /* ---------- locate / focus ---------- */
+  function applyPending(root) {
+    var p = UI.pending; UI.pending = null;
+    if (!p) return;
+    var target = null;
+    function qattr(v) { return String(v).replace(/["\\]/g, "\\$&"); }
+    var rowId = p.row || p.settingId;
+    if (rowId) target = root.querySelector('[data-row="' + qattr(rowId) + '"]') || root.querySelector('[data-setting="' + qattr(rowId) + '"]');
+    if (!target && p.object) target = root.querySelector('[data-object="' + qattr(p.object) + '"]');
+    if (!target) return;
+    setTimeout(function () {
+      target.scrollIntoView({ block: "center" });
+      var foc = target.querySelector("[data-ctl]") || target;
+      if (foc.setAttribute) { foc.setAttribute("tabindex", "-1"); foc.focus({ preventScroll: true }); }
+      target.classList.add("pm2-locate");
+      setTimeout(function () { target.classList.remove("pm2-locate"); }, 1700);
+    }, 40);
+  }
+
+  /* ---------- frame ---------- */
+  function crumbHTML(r) {
+    var parts = ['<span>Settings</span>'];
+    function seg(t) { return '<span class="sep">/</span><span>' + esc(t) + "</span>"; }
+    function end(t) { return '<span class="sep">/</span><b>' + esc(t) + "</b>"; }
+    if (r.name === "cat") {
+      if (r.parts[2]) { parts.push(seg(catTitle(r.parts[1]))); parts.push(end(subTitle(r.parts[1] + "." + r.parts[2]).sub)); }
+      else parts.push('<span class="sep">/</span><b>' + esc(catTitle(r.parts[1])) + "</b>");
+    } else if (r.name === "mgr") {
+      var f = famById(r.parts[1]) || deferredById(r.parts[1]);
+      parts.push(famDomain(f) ? seg(catTitle(famDomain(f))) : seg("Managers"));
+      if (r.parts[2]) { parts.push(f ? seg(f.title) : seg(r.parts[1])); parts.push(end(r.parts[2])); }
+      else parts.push(f ? '<span class="sep">/</span><b>' + esc(f.title) + "</b>" : end(r.parts[1]));
+    }
+    else if (r.name === "all") parts.push("<b>All Settings</b>");
+    else if (r.name === "copy") parts.push("<b>Copy Settings</b>");
+    else if (r.name === "lifecycle") parts.push("<b>Lifecycle</b>");
+    else if (r.name === "q") parts.push("<b>Search</b>");
+    return '<nav class="cw-crumb" data-test="breadcrumb" aria-label="Breadcrumb">' + parts.join("") + "</nav>";
+  }
+  function backLabel(r) {
+    if (r.name === "cat" && r.parts[2]) return "Back to " + catTitle(r.parts[1]);
+    if (r.name === "cat") return "Back to Home";
+    if (r.name === "mgr") return "Back to " + (famDomain(famById(r.parts[1]) || deferredById(r.parts[1])) ? catTitle(famDomain(famById(r.parts[1]) || deferredById(r.parts[1]))) : "Home");
+    if (r.name === "all" || r.name === "copy" || r.name === "lifecycle") return "Back to Home";
+    if (r.name === "q") return "Back to Home";
+    return null;
+  }
+  function opsStrip() {
+    var ops = Object.keys(S2.state.ops).map(function (k) { return S2.state.ops[k]; })
+      .filter(function (o) { return o.state !== "completed" && o.state !== "failed" && o.state !== "cancelled"; });
+    if (!ops.length) return "";
+    var html = '<div class="cw-ops">';
+    ops.forEach(function (o) {
+      var pct = o.total ? Math.round(100 * o.completed / o.total) : null;
+      html += '<div class="cw-op" data-op="' + esc(o.operation_id) + '"><span class="pm-spinner"></span><strong>' + esc(o.title) +
+        '</strong><span class="why">' + esc(o.human_phase) + (o.wait_reason ? " — waiting: " + esc(o.wait_reason) : "") + "</span>" +
+        '<span class="bar">' + (pct !== null ? '<i style="width:' + pct + '%"></i>' : "") + "</span>" +
+        (pct !== null ? '<span class="pm-note">' + o.completed + "/" + o.total + "</span>" : "") +
+        (o.can_cancel ? '<button class="pm-btn pm-btn-sm" data-opcancel="' + esc(o.operation_id) + '">Cancel</button>' : "") + "</div>";
+    });
+    return html + "</div>";
+  }
+  function navHTML(r) {
+    var html = '<button class="pm-btn pm-btn-quiet pm-btn-sm cw-nav-close" data-navclose>' + ico("x", 12) + " Close</button>";
+    html += '<div class="cw-nav-cap">Start</div>';
+    html += navBtn("home", "home", "Home", r);
+    html += navBtn("all", "list", "All Settings", r, D.count);
+    html += navBtn("copy", "layers", "Copy Settings", r);
+    html += navBtn("lifecycle", "history", "Lifecycle", r);
+    html += '<div class="cw-nav-cap">Domains</div>';
+    D.categories.forEach(function (c) {
+      html += '<button class="cw-nav-item' + (r.name === "cat" && r.parts[1] === c.id ? " active" : "") + '" data-nav="cat:' + c.id + '">' +
+        ico(c.icon, 14) + '<span style="flex:1;min-width:0;white-space:normal;line-height:1.25">' + esc(c.title) + "</span>" +
+        '<span class="n">' + (D.byCategory(c.id) || { settings: [] }).settings.length + "</span></button>";
+    });
+    return html;
+  }
+  function navBtn(route, icon, label, r, n) {
+    return '<button class="cw-nav-item' + (r.name === route ? " active" : "") + '" data-nav="' + route + '">' + ico(icon, 14) + " " + esc(label) + (n ? '<span class="n">' + n + "</span>" : "") + "</button>";
+  }
+
+  /* ---------- views ---------- */
+  function viewHome(r) {
+    var n = S2.notices();
+    var sc = S2.state.scenario;
+    var html = '<div data-test="home">';
+    html += '<h1 class="cw-h1">Welcome to Project Settings</h1>';
+    html += '<p class="cw-sub">Search or browse to configure how Puppet Master works in this Project. Every change applies to <strong>' + esc("Orion Data Pipeline") + "</strong> only.</p>";
+    if (sc === "import-conflict") html += '<div class="cw-banner">' + ico("alertTriangle", 15) + " Import needs review — 3 incoming values conflict with this Project's current settings. <button class=\"pm-btn pm-btn-sm\" data-goroute=\"#/lifecycle\" style=\"margin-left:auto\">Review conflicts</button></div>";
+    else if (sc === "offline") html += '<div class="cw-banner">' + ico("alertTriangle", 15) + " Working offline — catalogs and usage show last-known values; changes still apply locally.</div>";
+    html += searchBox(true);
+    if (n.length) {
+      html += '<div class="cw-cap">Needs attention</div><div class="cw-attn">';
+      n.forEach(function (it) {
+        html += '<div class="cw-attn-row">' + ico(it.kind === "warn" ? "alertTriangle" : it.kind === "ok" ? "checkCircle" : "info", 14) +
+          '<span style="min-width:0"><strong>' + esc(it.title) + '</strong> <span class="why">' + esc(it.reason) + "</span></span>" +
+          (it.action ? '<button class="pm-btn pm-btn-sm" data-dest=\'' + JSON.stringify(it.dest || {}) + '\' data-destaction="1">' + esc(it.action) + "</button>" : "") + "</div>";
+      });
+      html += "</div>";
+    }
+    html += '<div class="cw-cap">Browse by area</div><div class="cw-dests">';
+    D.categories.forEach(function (c) {
+      var cnt = (D.byCategory(c.id) || { settings: [] }).settings.length;
+      var ch = changedCount(c.id), mf = domainFamilies(c.id).length;
+      html += '<button class="cw-dest" data-nav="cat:' + c.id + '"><span class="ic">' + ico(c.icon, 17) + "</span>" +
+        '<span style="min-width:0;flex:1"><span class="t">' + esc(c.title) + "</span>" +
+        '<span class="d" style="display:block">' + esc(c.description) + "</span>" +
+        '<span class="m"><span>' + cnt + " settings</span><span>" + ch + " changed</span><span>" + mf + " managers</span></span></span>" +
+        '<span class="chev">' + ico("chevronRight", 14) + "</span></button>";
+    });
+    html += "</div>";
+    html += '<div class="cw-cap">Utilities</div><div class="cw-utils">' +
+      '<button class="pm-btn pm-btn-sm" data-nav="all">' + ico("list", 13) + " All Settings compendium</button>" +
+      '<button class="pm-btn pm-btn-sm" data-nav="copy">' + ico("layers", 13) + " Copy Settings From Another Project</button>" +
+      '<button class="pm-btn pm-btn-sm" data-nav="lifecycle">' + ico("history", 13) + " Lifecycle & rollback</button></div>";
+    html += '<div class="cw-cap">Recently changed</div><div class="cw-card" style="padding:8px 14px">';
+    var rec = S2.state.recent || [];
+    if (!rec.length) html += '<div class="pm-note" style="padding:8px 2px">No recent changes yet in this Project. Edits you make will appear here.</div>';
+    rec.forEach(function (it) {
+      var inv = D.byId(it.id);
+      var label = inv ? inv.label : it.label || it.id;
+      var dest = inv ? { kind: "setting", settingId: it.id, category: catOf(it.id), subgroup: it.id.split(".")[1] } : (it.dest || null);
+      html += '<div class="cw-recent-row">' + ico("clock", 12) + "<span>" + esc(label) + "</span>" +
+        '<span class="pm-note">' + esc(it.kind === "setting" ? "edited" : it.kind) + "</span>" +
+        (dest ? '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-dest=\'' + JSON.stringify(dest) + '\'>Open</button>' : "") +
+        '<span class="when">' + timeAgo(it.at) + "</span></div>";
+    });
+    html += "</div></div>";
+    return html;
+  }
+
+  function viewCat(r) {
+    var c = D.byCategory(r.parts[1]);
+    if (!c) return '<div class="pm2-empty">Unknown domain.</div>';
+    if (r.parts[2]) return viewSub(r, c);
+    var sets = c.settings;
+    var ch = changedCount(c.id);
+    var html = '<h1 class="cw-h1">' + ico(c.icon, 18) + esc(c.title) + "</h1>";
+    html += '<p class="cw-sub">' + esc(c.description) + "</p>";
+    html += '<div class="cw-overview">' +
+      '<div class="cw-stat"><div class="k">Settings</div><div class="v">' + sets.length + '</div><div class="s">in this domain</div></div>' +
+      '<div class="cw-stat"><div class="k">Changed</div><div class="v">' + ch + '</div><div class="s">differ from default</div></div>' +
+      '<div class="cw-stat"><div class="k">Managers</div><div class="v">' + domainFamilies(c.id).length + '</div><div class="s">integrated here</div></div>' +
+      '<div class="cw-stat"><div class="k">Areas</div><div class="v">' + c.category.subgroups.length + '</div><div class="s">subgroups</div></div></div>';
+    html += '<div class="cw-cap">Areas</div><div class="cw-subchips">';
+    c.category.subgroups.forEach(function (g) {
+      var gn = sets.filter(function (s) { return s.id.split(".")[1] === g.id; }).length;
+      html += '<button class="pm-btn pm-btn-sm" data-goroute="#/cat/' + c.id + "/" + g.id + '">' + esc(g.title) + ' <span class="pm-note">' + gn + "</span></button>";
+    });
+    html += '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-goroute="#/all?cat=' + c.id + '">' + ico("filter", 12) + " View in All Settings</button></div>";
+    html += '<div class="cw-cap">Key settings</div><div class="cw-card" style="padding:4px 14px" data-bindrows>';
+    var key = sets.filter(function (s) { return s.curated; }).slice(0, 6);
+    if (!key.length) key = sets.slice(0, 5);
+    key.forEach(function (s) { html += M2.row(D.byId(s.id), S2.getSetting(s.id)); });
+    html += "</div>";
+    html += '<div class="cw-cap">Related managers</div>';
+    var fams = domainFamilies(c.id);
+    if (!fams.length) html += '<div class="pm-note">No manager families are attached to this domain.</div>';
+    fams.forEach(function (f) {
+      html += '<button class="cw-mgr-row" data-goroute="#/mgr/' + f.id + '"><span class="ic">' + ico(f.icon || "gear", 15) + "</span>" +
+        '<span style="min-width:0;flex:1"><span class="t">' + esc(f.title) + '</span><span class="d" style="display:block">' + esc(f.summary || "") + "</span></span>" +
+        '<span class="pm-note">' + (f.archetype || "") + "</span>" + '<span class="chev">' + ico("chevronRight", 14) + "</span></button>";
+    });
+    var def = (MD.deferred || []).filter(function (d) { return DEFERRED_DOMAIN[d.id] === c.id; });
+    if (def.length) {
+      html += '<div class="cw-cap">Owner-module insertions</div>';
+      def.forEach(function (d) {
+        html += '<button class="cw-mgr-row" data-goroute="#/mgr/' + d.id + '"><span class="ic">' + ico("inbox", 15) + '</span><span style="min-width:0;flex:1"><span class="t">' + esc(d.title) + '</span><span class="d" style="display:block">Owner: ' + esc(d.owner) + " — named-owner shell, inserted here.</span></span>" + '<span class="chev">' + ico("chevronRight", 14) + "</span></button>";
+      });
+    }
+    return html;
+  }
+  function viewSub(r, c) {
+    var g = null; c.category.subgroups.forEach(function (s) { if (s.id === r.parts[2]) g = s; });
+    if (!g) return '<div class="pm2-empty">Unknown area.</div>';
+    var sets = c.settings.filter(function (s) { return s.id.split(".")[1] === g.id; });
+    var html = '<h1 class="cw-h1">' + esc(g.title) + "</h1><p class=" + '"cw-sub">' + esc(g.description || "") + " " + sets.length + " settings.</p>";
+    if (r.q.row && D.byId(r.q.row)) {
+      var inv0 = D.byId(r.q.row), st0 = S2.getSetting(r.q.row);
+      html += '<div class="cw-card" style="border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)">' +
+        '<div class="cw-cap" style="margin:0 0 6px">About this setting</div>' +
+        '<div class="pm2-row-title" style="margin-bottom:4px">' + esc(inv0.label) + "</div>" +
+        '<div class="pm2-row-desc" style="max-width:75ch">' + esc(inv0.desc) + "</div>" +
+        '<div class="cw-kv" style="margin-top:8px">' +
+        '<div><div class="k">Default</div><div class="v">' + esc(inv0.default !== undefined ? inv0.default : "—") + "</div></div>" +
+        '<div><div class="k">Type</div><div class="v">' + esc(inv0.type) + "</div></div>" +
+        '<div><div class="k">Current value</div><div class="v">' + esc(S2.humanValue(st0, inv0)) + "</div></div>" +
+        '<div><div class="k">Status</div><div class="v">' + (st0 && st0.source !== "default" ? esc(st0.source) : "default") + "</div></div>" +
+        "</div></div>";
+    }
+    if (!sets.length) html += '<div class="pm2-empty">This area has no settings in the current inventory.</div>';
+    else {
+      html += '<div class="cw-card" style="padding:4px 14px" data-bindrows>';
+      sets.forEach(function (s) { html += M2.row(D.byId(s.id), S2.getSetting(s.id)); });
+      html += "</div>";
+    }
+    html += '<div class="cw-utils"><button class="pm-btn pm-btn-quiet pm-btn-sm" data-goroute="#/all?cat=' + c.id + '">' + ico("filter", 12) + " Filter compendium to " + esc(c.category.title) + "</button></div>";
+    return html;
+  }
+
+  /* ---------- All Settings compendium ---------- */
+  var vlist = null;
+  function allData() {
+    var f = UI.facets;
+    var rows = D.settings.slice();
+    if (f.synth) rows = rows.concat(synthRows());
+    if (f.cat !== "all") rows = rows.filter(function (s) { return (s.synthetic ? "synthetic" : catOf(s.id)) === f.cat; });
+    if (f.type !== "all") rows = rows.filter(function (s) { return s.type === f.type; });
+    if (f.tier !== "all") rows = rows.filter(function (s) { return s.tier === f.tier; });
+    if (f.status !== "all") rows = rows.filter(function (s) {
+      if (s.synthetic) return f.status === "default";
+      var st = S2.getSetting(s.id);
+      var src = st ? st.source : "default";
+      if (f.status === "changed") return src !== "default";
+      if (f.status === "default") return src === "default";
+      return src === f.status;
+    });
+    if (f.q.trim()) {
+      var t = f.q.trim().toLowerCase();
+      rows = rows.filter(function (s) { return (s.label + " " + (s.search || []).join(" ")).toLowerCase().indexOf(t) >= 0; });
+    }
+    if (f.sort === "az") rows.sort(function (a, b) { return a.label < b.label ? -1 : 1; });
+    else rows.sort(function (a, b) { return a.id < b.id ? -1 : 1; });
+    return rows;
+  }
+  function facetCounts(dim) {
+    // counts with every other facet applied (standard faceting)
+    var save = UI.facets[dim], counts = {};
+    UI.facets[dim] = "all";
+    var base = allData();
+    UI.facets[dim] = save;
+    base.forEach(function (s) {
+      var key;
+      if (dim === "cat") key = s.synthetic ? "synthetic" : catOf(s.id);
+      else if (dim === "type") key = s.type;
+      else if (dim === "tier") key = s.tier;
+      else {
+        var st = s.synthetic ? null : S2.getSetting(s.id);
+        var src = st ? st.source : "default";
+        key = src === "default" ? "default" : (src === "custom" || src === "changed-elsewhere" || src === "restart" || src === "reconnect" ? "changed" : src);
+      }
+      counts[key] = (counts[key] || 0) + 1;
+    });
+    return counts;
+  }
+  function facetsHTML() {
+    var f = UI.facets;
+    function grp(title, dim, opts) {
+      var counts = facetCounts(dim);
+      var h = '<div class="cw-facet-grp"><div class="cw-nav-cap" style="padding-left:8px">' + title + "</div>";
+      h += opt(dim, "all", "All", counts);
+      opts.forEach(function (o) { h += opt(dim, o[0], o[1], counts); });
+      return h + "</div>";
+    }
+    function opt(dim, val, label, counts) {
+      return '<button class="cw-facet-opt' + (f[dim] === val ? " active" : "") + '" data-facet="' + dim + '" data-val="' + esc(val) + '">' +
+        esc(label) + '<span class="ct">' + (counts[val] || 0) + "</span></button>";
+    }
+    var types = ["toggle", "select", "number", "text", "slider", "radio", "action", "list", "multiselect", "keyvalue", "path"];
+    var html = '<button class="pm-btn pm-btn-quiet pm-btn-sm cw-facet-close" data-facetclose>' + ico("x", 12) + " Close filters</button>";
+    html += grp("Category", "cat", D.categories.map(function (c) { return [c.id, c.title]; }));
+    html += grp("Setting type", "type", types.map(function (t) { return [t, t]; }));
+    html += grp("Status", "status", [["changed", "Changed from default"], ["default", "Default"], ["managed", "Managed"], ["unavailable", "Unavailable"]]);
+    html += grp("Tier", "tier", [["simple", "Simple"], ["advanced", "Advanced"]]);
+    return html;
+  }
+  function compRowHTML(s) {
+    var st = s.synthetic ? null : S2.getSetting(s.id);
+    var chip = "";
+    if (s.synthetic) chip = '<span class="pm-badge pm-badge-muted">Synthetic</span>';
+    else if (st && st.source !== "default") chip = M2.sourceChip(st.source);
+    var p = s.synthetic ? { cat: "Synthetic stress", sub: "generated" } : subTitle(s.id);
+    var val = s.synthetic ? "" : esc(S2.humanValue(st, D.byId(s.id)));
+    var route = s.synthetic ? null : '#/cat/' + catOf(s.id) + "/" + (s.id.split(".")[1] || "") + "?row=" + encodeURIComponent(s.id);
+    return '<button class="cw-allrow" data-row="' + esc(s.id) + '"' + (route ? ' data-goroute="' + route + '"' : ' data-synthrow="1" title="Synthetic stress row — not a real setting"') + ' tabindex="-1">' +
+      '<span style="min-width:0"><span class="t">' + esc(s.label) + " " + chip + '</span><span class="p" style="display:block">' + esc(p.cat) + " › " + esc(p.sub) + "</span></span>" +
+      '<span style="min-width:0"><span class="ty" style="display:block;text-align:right">' + esc(s.type) + " · " + esc(s.tier) + '</span><span class="v" style="display:block">' + val + "</span></span></button>";
+  }
+  function viewAll(r) {
+    if (r.q.cat) { UI.facets.cat = r.q.cat; UI.facets.q = ""; }
+    var data = allData();
+    var activeFacets = ["cat", "type", "status", "tier"].filter(function (d) { return UI.facets[d] !== "all"; }).length + (UI.facets.q ? 1 : 0);
+    var html = '<div data-test="all" style="display:flex;flex-direction:column;min-height:0;height:100%">';
+    html += '<h1 class="cw-h1">All Settings</h1>';
+    html += '<p class="cw-sub">A complete, searchable compendium of every Project setting — ' + D.count + " real settings, faceted and virtualized so the long tail stays readable.</p>";
+    if (S2.state.scenario === "refreshing") html += '<div class="cw-refresh-chip"><span class="pm-spinner"></span> Refreshing catalog — showing cached values until the refresh completes.</div>';
+    html += '<div class="cw-all" style="flex:1;min-height:0"><aside class="cw-facets' + (UI.facetOpen ? " open" : "") + '" data-facets>' + facetsHTML() + "</aside>";
+    html += '<div style="min-width:0;display:flex;flex-direction:column;min-height:0">';
+    html += '<div class="cw-all-head"><span class="cw-all-count"><strong>' + data.length + "</strong> settings" + (UI.facets.synth ? " (incl. 2000 synthetic)" : "") + "</span>" +
+      '<button class="pm-btn pm-btn-sm cw-facet-open" data-facetopen style="display:none">' + ico("filter", 12) + " Filters" + (activeFacets ? " (" + activeFacets + ")" : "") + "</button>" +
+      '<span class="pm-spacer" style="flex:1"></span>' +
+      '<label class="pm-note" style="display:inline-flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" data-synthctl' + (UI.facets.synth ? " checked" : "") + "> Synthetic stress +2000</label>" +
+      '<input class="pm-input" style="width:180px" placeholder="Filter within results" data-facetq value="' + esc(UI.facets.q) + '">' +
+      '<select class="pm-select pm-select-sm" data-sort><option value="az"' + (UI.facets.sort === "az" ? " selected" : "") + '>Sort: A–Z</option><option value="cat"' + (UI.facets.sort === "cat" ? " selected" : "") + ">Sort: by path</option></select></div>";
+    html += '<div class="cw-vlist" data-test="vlist" data-window="0:0:' + data.length + '"></div>';
+    html += "</div></div></div>";
+    return html;
+  }
+  function mountVlist(root) {
+    var host = root.querySelector("[data-test='vlist']");
+    if (!host) return;
+    var data = allData();
+    if (!data.length) {
+      host.innerHTML = '<div class="pm2-empty" style="margin:18px">No settings match these facets. Clear a filter or two to widen the net.</div>';
+      host.setAttribute("data-window", "0:0:0");
+      return;
+    }
+    vlist = M2.virtualList({
+      host: host, rowHeight: 64, data: data,
+      render: compRowHTML,
+      onWindow: function (s, e, t) { host.setAttribute("data-window", s + ":" + e + ":" + t); }
+    });
+    // rAF/scroll events can be throttled in background tabs; keep data-window truthful.
+    var vlT = 0, lastTop = -1;
+    function vlRefresh() { if (vlist) vlist.refresh(); }
+    host.addEventListener("scroll", function () {
+      if (vlT) return;
+      vlT = setTimeout(function () { vlT = 0; vlRefresh(); }, 30);
+    });
+    var vlPoll = setInterval(function () {
+      if (!host.isConnected) { clearInterval(vlPoll); return; }
+      if (host.scrollTop !== lastTop) { lastTop = host.scrollTop; vlRefresh(); }
+    }, 120);
+  }
+
+  /* ---------- managers ---------- */
+  function rowHTML(r) {
+    if (r.kind === "setting" && D.byId(r.id)) return M2.row(D.byId(r.id), S2.getSetting(r.id));
+    var right = "";
+    if (r.kind === "action") right = '<button class="pm-btn pm-btn-sm" data-ctl="action" data-setting="' + esc(r.id) + '">' + esc(r.value || "Run") + "</button>";
+    else if (r.kind === "diagnostic") right = '<span class="pm-note">' + esc(r.value || "") + "</span>";
+    else if (r.kind === "status") right = '<span class="pm2-health' + (r.value === "warn" ? " warn" : r.value === "err" ? " err" : r.value === "muted" ? " muted" : "") + '"><i></i>' + esc(r.value || "ok") + "</span>";
+    else right = '<span class="pm-textval">' + esc(r.value || "") + "</span>";
+    return '<div class="pm2-row" data-row="' + esc(r.id) + '"><div class="pm2-row-main"><div class="pm2-row-title">' + esc(r.label) +
+      (r.kind === "status" && r.value === "muted" ? ' <span class="pm-badge pm-badge-muted">manual-only</span>' : "") +
+      '</div><div class="pm2-row-desc">' + esc(r.desc || "") + '</div></div><div class="pm2-row-ctl">' + right + "</div></div>";
+  }
+  function famSections(f, sec) {
+    var rows = f.rows || [];
+    var groups = [["setting", "Settings"], ["action", "Actions"], ["status", "Status"], ["diagnostic", "Diagnostics"]];
+    var html = "";
+    groups.forEach(function (g) {
+      var rs = rows.filter(function (r) { return (r.kind || "setting") === g[0]; });
+      if (!rs.length) return;
+      html += '<div class="cw-cap" data-sec="' + g[0] + '">' + g[1] + '</div><div class="cw-card" style="padding:4px 14px" data-bindrows>';
+      rs.forEach(function (r) { html += rowHTML(r); });
+      html += "</div>";
+    });
+    return html;
+  }
+  function usedPct(l) {
+    if (!l || typeof l.used !== "string") return null;
+    var m = l.used.match(/^(\d{1,3})%$/);
+    return m ? Math.min(100, +m[1]) : null;
+  }
+  function providerDetail(p, sec) {
+    var sc = S2.state.scenario;
+    var SEC = { accounts: "credentials", logs: "diagnostics", catalog: "models", setup: "overview", integrity: "diagnostics" };
+    sec = SEC[sec] || sec;
+    var tabs = [["overview", "Overview"], ["models", "Models"], ["settings", "Settings"], ["credentials", "Credentials"], ["limits", "Limits"], ["diagnostics", "Diagnostics"], ["install", "Install"]];
+    var cur = sec || "overview";
+    var html = '<div class="cw-tabs" role="tablist">';
+    tabs.forEach(function (t) { html += '<button role="tab" class="' + (cur === t[0] ? "active" : "") + '" data-ptab="' + t[0] + '">' + t[1] + "</button>"; });
+    html += "</div>";
+    if (cur === "overview") {
+      var pref = null; (p.accounts || []).forEach(function (a) { if (a.preferred) pref = a; });
+      html += '<div class="cw-kv">' +
+        kv("Connected?", p.state || "unknown") +
+        kv("Account", pref ? pref.label + (pref.enabled ? "" : " (disabled)") : "none selected") +
+        kv("Usage end", p.limits ? (usedPct(p.limits) !== null ? usedPct(p.limits) + "% of daily budget used" : "usage " + esc(p.limits.used)) : "n/a") +
+        kv("Routing", (p.readiness || []).indexOf("fallback") >= 0 ? "Fallback enabled" : "Primary only") +
+        kv("Setup", (p.readiness || []).length ? "Ready" : "Needs setup") + "</div>";
+      html += '<div class="cw-cap">Readiness</div><div class="cw-subchips">';
+      (p.readiness || []).forEach(function (fl) { html += '<span class="pm-badge pm-badge-ok">' + esc(fl) + "</span>"; });
+      if (!(p.readiness || []).length) html += '<span class="pm-badge pm-badge-warn">needs sign-in</span>';
+      html += '</div><div class="pm-mgr-actions"><button class="pm-btn pm-btn-sm" data-pact="setup" data-pid="' + esc(p.id) + '">Continue setup</button>' +
+        '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-pact="diag" data-pid="' + esc(p.id) + '">View diagnostics</button></div>';
+    } else if (cur === "models") {
+      (p.models || []).forEach(function (m) {
+        html += '<div class="pm2-row" data-row="' + esc(m.id) + '"><div class="pm2-row-main"><div class="pm2-row-title">' + esc(m.label) +
+          (m.free ? ' <span class="pm-badge pm-badge-ok">included</span>' : "") + '</div><div class="pm2-row-desc">Context ' + esc(m.context || "—") + " · effort " + esc(m.effort || "—") + '</div></div></div>';
+      });
+      if (!(p.models || []).length) html += '<div class="pm2-empty">No models catalogued for this provider' + (sc === "offline" ? " (offline — last-known catalog hidden)" : "") + ".</div>";
+    } else if (cur === "settings") {
+      var f = famById("providers");
+      html += '<div class="cw-card" style="padding:4px 14px" data-bindrows>';
+      ((f && f.rows) || []).filter(function (r) { return r.kind === "setting"; }).forEach(function (r) { html += rowHTML(r); });
+      html += "</div>";
+    } else if (cur === "credentials") {
+      (p.accounts || []).forEach(function (a) {
+        html += '<div class="cw-card"><div class="pm2-row-title" style="margin-bottom:6px">' + esc(a.label) + " " +
+          '<span class="pm-badge ' + (a.health === "ok" ? "pm-badge-ok" : a.health === "warn" ? "pm-badge-warn" : "pm-badge-danger") + '">' + esc(a.health || "unknown") + "</span></div>" +
+          '<div class="pm-secret"><span class="pm-secret-label">Credential</span><span class="pm-secret-kind">' + esc(p.authKind || "PM secret") + '</span> — stored as ' + esc(p.authKind === "cli-oauth" ? "CLI-owned OAuth" : "PM secret / vault-ref") + "; raw value is never rendered or exported.</div>" +
+          '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-sm" data-pact="rotate" data-pid="' + esc(p.id) + '">Rotate (simulated)</button></div></div>';
+      });
+      if (!(p.accounts || []).length) html += '<div class="pm2-empty">No accounts connected.</div>';
+    } else if (cur === "limits") {
+      if (sc === "offline" || sc === "exhausted") html += '<div class="pm2-empty">Usage unavailable' + (sc === "offline" ? " while offline — last-known values withheld rather than guessed." : " — provider reports quota exhaustion.") + "</div>";
+      else if (p.limits) {
+        html += '<div class="cw-kv">' + kv("Requests / min", p.limits.rpm) + kv("Tokens / min", p.limits.tpm) + kv("Requests / day", p.limits.rpd) + kv("Used today", p.limits.used) + "</div>";
+        var pct = usedPct(p.limits);
+        if (pct !== null) html += '<div class="cw-op" style="margin-top:10px"><span class="bar"><i style="width:' + pct + '%"></i></span><span class="pm-note">' + pct + "% of daily requests used</span></div>";
+        else html += '<div class="pm-note" style="margin-top:8px">Usage metering: ' + esc(p.limits.used) + " — no bar is drawn without a numeric reading.</div>";
+      } else html += '<div class="pm2-empty">This provider reports no limits.</div>';
+    } else if (cur === "diagnostics") {
+      html += '<details class="cw-drawer" open><summary>Recent log</summary><div class="body">';
+      (p.logs || []).forEach(function (l) { html += '<div class="cw-logline">' + esc(l) + "</div>"; });
+      if (!(p.logs || []).length) html += '<div class="pm-note">No log entries.</div>';
+      html += "</div></details>";
+    } else if (cur === "install") {
+      (p.installations || []).forEach(function (ins) {
+        html += '<div class="cw-card"><div class="pm2-row-title">' + esc(ins.label) + " " +
+          (ins.selected ? '<span class="pm-badge pm-badge-ok">selected</span>' : "") +
+          (ins.shadowed ? '<span class="pm-badge pm-badge-warn">shadowed</span>' : "") + "</div>" +
+          '<div class="cw-kv" style="margin-top:6px">' + kv("Owner", ins.owner) + kv("Confidence", ins.confidence) + kv("Host", ins.host) + "</div></div>";
+      });
+      html += '<div class="cw-cap">Updates</div><div class="cw-card">Policy: <strong>' + esc(p.updatePolicy || "ask first") + "</strong> — updates never install silently.";
+      if (sc === "update-available" || sc === "rollback") {
+        html += '<div class="pm-update-block" style="margin-top:8px"><div class="pm-update-row">' + ico("download", 13) +
+          '<span class="pm-update-label">' + (sc === "rollback" ? "Previous update failed verification and was rolled back." : "A newer compatible version is available.") + "</span></div>" +
+          (sc === "update-available" ? '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-pact="update" data-pid="' + esc(p.id) + '">Review & install</button><button class="pm-btn pm-btn-sm" data-pact="defer" data-pid="' + esc(p.id) + '">Defer</button></div>' : "") +
+          "</div>";
+      }
+      html += "</div>";
+      html += '<div class="cw-cap">Add installation</div><div class="cw-card"><div class="pm-note">Official sources only; pick a Host and Environment first.</div>' +
+        '<div class="pm-mgr-actions"><select class="pm-select pm-select-sm" data-hostsel><option>Host: this machine</option><option>Host: dev container</option></select>' +
+        '<select class="pm-select pm-select-sm" data-envsel><option>Environment: PATH</option><option>Environment: project-local</option></select>' +
+        '<button class="pm-btn pm-btn-sm" data-pact="addinstall" data-pid="' + esc(p.id) + '">' + ico("download", 12) + " Install from vendor site (official)</button></div></div>";
+      html += '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-quiet pm-btn-sm" data-pact="runtimedemand" data-pid="' + esc(p.id) + '">Open runtime-demand deep link</button></div>';
+    }
+    return html;
+  }
+  function kv(k, v) { return '<div><div class="k">' + esc(k) + '</div><div class="v">' + esc(v == null ? "—" : v) + "</div></div>"; }
+
+  function viewMgr(r) {
+    var fid = r.parts[1], oid = r.parts[2];
+    var f = famById(fid);
+    if (!f && isDeferred(fid)) return viewDeferred(r);
+    if (!f) return '<div class="pm2-empty">Unknown manager.</div>';
+    var html = '<div data-manager="' + esc(f.id) + '">';
+    html += '<h1 class="cw-h1">' + ico(f.icon || "gear", 18) + esc(f.title) +
+      ' <span class="pm-badge pm-badge-info">' + esc(f.archetype || "preference") + "</span>" +
+      (famDomain(f) ? '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-goroute="#/cat/' + famDomain(f) + '">' + ico("chevronRight", 11) + " " + esc(catTitle(famDomain(f))) + "</button>" : "") + "</h1>";
+    html += '<p class="cw-sub">' + esc(f.summary || "") + "</p>";
+
+    if (f.id === "providers") {
+      var provs = MD.providers || [];
+      var sel = null; provs.forEach(function (p) { if (p.id === (oid || UI.roster.providers || provs[0].id)) sel = p; });
+      if (!sel) sel = provs[0];
+      html += '<div class="cw-mgrws has-obj" style="min-height:0"><aside class="cw-roster">';
+      provs.forEach(function (p) {
+        html += '<button class="cw-roster-item' + (sel && p.id === sel.id ? " active" : "") + '" data-object="' + esc(p.id) + '" data-goroute="#/mgr/providers/' + esc(p.id) + (r.q.sec ? "?sec=" + esc(r.q.sec) : "") + '">' +
+          ico("plug", 13) + '<span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + esc(p.name) + "</span>" +
+          '<span class="pm2-health' + (p.state === "connected" ? "" : p.state === "warn" ? " warn" : " muted") + '"><i></i></span></button>';
+      });
+      html += '</aside><div class="cw-detail" style="min-width:0">' + (sel ? providerDetail(sel, r.q.sec) : "") + "</div></div>";
+      return html + "</div>";
+    }
+
+    if (f.archetype === "roster" && (f.objects || []).length) {
+      var objs = f.objects || [];
+      var osel = null; objs.forEach(function (o) { if (o.id === (oid || UI.roster[f.id] || objs[0].id)) osel = o; });
+      if (!osel && oid) objs.forEach(function (o) { if (o.id === oid) osel = o; });
+      html += '<div class="cw-mgrws' + (oid ? " has-obj" : " roster-only") + '"><aside class="cw-roster">';
+      objs.forEach(function (o) {
+        html += '<button class="cw-roster-item' + (osel && o.id === osel.id ? " active" : "") + '" data-object="' + esc(o.id) + '" data-goroute="#/mgr/' + f.id + "/" + esc(o.id) + '">' +
+          '<span style="flex:1;min-width:0">' + esc(o.label) + '<span class="pm-note" style="display:block">' + esc(o.note || "") + "</span></span>" +
+          '<span class="pm2-health' + (o.health === "warn" ? " warn" : o.health === "err" ? " err" : o.health === "muted" ? " muted" : "") + '"><i></i>' + esc(o.health || "ok") + "</span></button>";
+      });
+      html += "</aside>";
+      html += '<div class="cw-detail" style="min-width:0">';
+      if (osel) {
+        html += '<div class="cw-card"><div class="cw-kv">' + kv("Object", osel.label) + kv("Health", osel.health || "ok") + kv("Note", osel.note || "—") + "</div></div>";
+        if (oid) html += '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-goroute="#/mgr/' + f.id + '" style="margin-bottom:8px">' + ico("arrowLeft", 12) + " Back to " + esc(f.title) + " list</button>";
+      }
+      html += famSections(f, r.q.sec);
+      html += "</div></div>";
+      return html + "</div>";
+    }
+
+    if (f.archetype === "setup") {
+      html += '<div class="cw-card"><div class="pm-setup-cap">Setup sequence</div><ol style="margin:4px 0 8px 18px;color:var(--text-1);font-size:12.5px">';
+      (f.objects || []).forEach(function (o) { html += "<li>" + esc(o.label) + ' — <span class="pm-note">' + esc(o.note || "") + "</span></li>"; });
+      if (!(f.objects || []).length) html += "<li>Follow the guided steps when invoked from setup search results.</li>";
+      html += "</ol></div>";
+      html += famSections(f, r.q.sec);
+      return html + "</div>";
+    }
+    if (f.archetype === "health") {
+      html += '<div class="cw-overview">';
+      (f.objects || []).forEach(function (o) {
+        html += '<div class="cw-stat"><div class="k">' + esc(o.label) + '</div><div class="v" style="font-size:12.5px">' + esc(o.health || "ok") + '</div><div class="s">' + esc(o.note || "") + "</div></div>";
+      });
+      html += '</div><div class="pm-note" style="margin-bottom:10px">Read-only projection — nothing here mutates state.</div>';
+      html += famSections(f, r.q.sec);
+      return html + "</div>";
+    }
+    if (f.archetype === "diagnostic") {
+      html += '<details class="cw-drawer" open><summary>Diagnostic drawer</summary><div class="body">';
+      (f.objects || []).forEach(function (o) { html += '<div class="cw-logline">' + esc(o.label) + " — " + esc(o.note || o.health || "") + "</div>"; });
+      html += "</div></details>";
+      html += famSections(f, r.q.sec);
+      return html + "</div>";
+    }
+    if (f.archetype === "transaction") {
+      html += '<div class="cw-card"><div class="pm-note">Preview/confirmation transaction — actions here create a restore point first.</div>' +
+        '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-sm" data-famact="rp" data-fam="' + esc(f.id) + '">Create restore point</button>' +
+        '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-goroute="#/lifecycle">Open lifecycle</button></div></div>';
+      html += famSections(f, r.q.sec);
+      return html + "</div>";
+    }
+    if (f.archetype === "catalog") {
+      html += '<div class="cw-card" style="padding:4px 14px" data-bindrows>';
+      (f.objects || []).forEach(function (o) {
+        html += '<div class="pm2-row" data-row="' + esc(o.id) + '"><div class="pm2-row-main"><div class="pm2-row-title">' + esc(o.label) +
+          ' <span class="pm2-health' + (o.health === "warn" ? " warn" : o.health === "err" ? " err" : "") + '"><i></i>' + esc(o.health || "ok") + "</span></div>" +
+          '<div class="pm2-row-desc">' + esc(o.note || "") + "</div></div></div>";
+      });
+      html += "</div>";
+      html += famSections(f, r.q.sec);
+      return html + "</div>";
+    }
+    // preference document (default)
+    html += famSections(f, r.q.sec);
+    if (!(f.rows || []).length) html += '<div class="pm2-empty">This manager exposes no rows in the demo fixture.</div>';
+    return html + "</div>";
+  }
+  function viewDeferred(r) {
+    var d = deferredById(r.parts[1]);
+    var html = '<div data-manager="' + esc(d.id) + '"><div class="cw-deferred">';
+    html += '<h1 class="cw-h1">' + ico("inbox", 17) + esc(d.title) + ' <span class="pm-badge pm-badge-managed">named-owner shell</span></h1>';
+    html += '<p class="cw-sub">This family is owned outside the Settings surface. The shell below is a reachable insertion destination only — no backend state is fabricated here.</p>';
+    html += '<div class="cw-kv">' + kv("Canonical owner", d.owner) + kv("Insertion destination", d.insertion) + kv("Return / deep-link contract", d.returnContract) + "</div>";
+    html += '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-sm" data-ownerjump="' + esc(d.id) + '">Open owner surface (simulated)</button>' +
+      '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-goroute="#/home">Return to Settings Home</button></div>';
+    html += "</div></div>";
+    return html;
+  }
+
+  /* ---------- copy ---------- */
+  function viewCopy(r) {
+    var c = UI.copy;
+    var steps = [["1", "Select source"], ["2", "Review & preview"], ["3", "Confirm"]];
+    var html = '<div data-test="copy"><h1 class="cw-h1">' + ico("layers", 17) + " Copy Settings From Another Project</h1>";
+    html += '<p class="cw-sub">A one-time transactional copy. Source and destination stay independent afterwards.</p>';
+    html += '<div class="cw-steps">';
+    steps.forEach(function (s, i) {
+      html += '<span class="cw-step' + (c.step === i + 1 ? " active" : c.step > i + 1 ? " done" : "") + '"><span class="bub">' + (c.step > i + 1 ? "✓" : s[0]) + "</span>" + s[1] + "</span>";
+      if (i < 2) html += '<span class="cw-step-line"></span>';
+    });
+    html += "</div>";
+    if (c.step === 1) {
+      html += '<div class="cw-cap">Source project</div>';
+      (MD.sourceProjects || []).forEach(function (p) {
+        html += '<button class="cw-src' + (c.source === p.id ? " active" : "") + '" data-src="' + esc(p.id) + '"><span style="min-width:0;flex:1"><strong>' + esc(p.name) + '</strong> <span class="pm-note">updated ' + esc(p.updated || "—") + "</span><span class=\"pm-note\" style=\"display:block\">" + esc(p.summary || "") + "</span></span>" + ico("chevronRight", 13) + "</button>";
+      });
+      html += '<div class="cw-cap">Categories to copy</div><div class="cw-cats">';
+      D.categories.forEach(function (cat) {
+        var on = c.cats.indexOf(cat.id) >= 0;
+        html += '<label class="cw-catchk"><input type="checkbox" data-cat="' + cat.id + '"' + (on ? " checked" : "") + "> " + esc(cat.title) + ' <span class="ct">' + (D.byCategory(cat.id) || { settings: [] }).settings.length + "</span></label>";
+      });
+      html += '</div><div class="pm-mgr-actions"><button class="pm-btn pm-btn-primary" data-copystep="2"' + (c.source ? "" : " disabled") + ">Review & preview</button></div>";
+    } else if (c.step === 2) {
+      var pv = c.preview;
+      if (!pv) return html + '<div class="pm2-empty">Pick a source first.</div></div>';
+      html += '<div class="cw-card"><div class="cw-kv">' + kv("Source project", srcName(pv.sourceId)) + kv("Categories", pv.categories.length) + kv("Restore point", "created on apply") + "</div></div>";
+      html += '<div class="cw-counts">' +
+        countCard("Total settings", pv.total, "") + countCard("Will be added", pv.counts.add, "cw-diff-add") +
+        countCard("Will replace", pv.counts.replace, "cw-diff-rep") + countCard("Already the same", pv.counts.same, "") +
+        countCard("Unavailable", pv.counts.unavailable, "cw-diff-una") + countCard("Conflicts", pv.counts.conflict, "cw-diff-con") + "</div>";
+      html += '<div class="pm-note" style="margin-bottom:8px">Credential rows copy an account reference per Project-copy policy; raw secrets never travel.</div>';
+      var rows = pv.rows.slice(0, c.expanded ? pv.rows.length : 8);
+      html += '<div class="cw-card" style="padding:6px 14px"><table class="pm-table"><tr><th>Setting</th><th>Current</th><th></th><th>Incoming</th><th>Status</th></tr>';
+      rows.forEach(function (row) {
+        html += "<tr><td>" + esc(row.label) + '</td><td><code>' + esc(fmtVal(row.current)) + '</code></td><td>' + ico("arrowRight", 12) + '</td><td><code>' + esc(fmtVal(row.incoming)) + "</code></td>" +
+          '<td><span class="' + (row.status === "add" ? "cw-diff-add" : row.status === "replace" ? "cw-diff-rep" : row.status === "conflict" ? "cw-diff-con" : "cw-diff-una") + '">' + esc(row.status) + "</span></td></tr>";
+      });
+      html += "</table>";
+      if (pv.rows.length > 8) html += '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-expanddiff>' + (c.expanded ? "Show fewer" : "View all " + pv.rows.length + " changes") + "</button>";
+      html += "</div>";
+      html += '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-quiet" data-copystep="1">Back to source</button><button class="pm-btn pm-btn-primary" data-copystep="3">Continue to confirm</button></div>';
+    } else {
+      html += '<div class="cw-card">Apply <strong>' + (c.preview ? c.preview.counts.add + c.preview.counts.replace + c.preview.counts.conflict : 0) + "</strong> changes from <strong>" + esc(srcName(c.source)) + "</strong>? A restore point is created first; verification runs after apply.</div>";
+      if (c.applied) {
+        html += '<div class="cw-card"><div class="pm2-health' + (c.applied.verify.ok ? "" : " warn") + '"><i></i>' + (c.applied.verify.ok ? "Verified — every copied value re-read correctly." : "Verification gaps: " + c.applied.verify.mismatched.join(", ")) + "</div>" +
+          '<div class="pm-mgr-actions" style="margin-top:8px"><button class="pm-btn pm-btn-sm" data-copyrollback>' + ico("history", 12) + " Roll back this copy</button></div></div>";
+      }
+      html += '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-quiet" data-copystep="2">Back</button>' +
+        (c.applied ? "" : '<button class="pm-btn pm-btn-primary" data-copyapply>Create restore point & apply</button>') + "</div>";
+    }
+    return html + "</div>";
+  }
+  function countCard(k, v, cls) { return '<div class="cw-stat"><div class="k">' + k + '</div><div class="v ' + cls + '">' + v + "</div></div>"; }
+  function srcName(id) { var n = id; (MD.sourceProjects || []).forEach(function (p) { if (p.id === id) n = p.name; }); return n; }
+  function fmtVal(v) { return v === undefined || v === null ? "—" : (typeof v === "object" ? JSON.stringify(v) : String(v)); }
+
+  /* ---------- lifecycle ---------- */
+  function viewLifecycle() {
+    var html = '<div data-manager="lifecycle"><h1 class="cw-h1">' + ico("history", 17) + " Settings Lifecycle</h1>";
+    html += '<p class="cw-sub">Import, export, reset, migration, and rollback for this Project’s settings.</p>';
+    html += '<div class="cw-cap">Restore points</div>';
+    var rps = S2.state.restorePoints || [];
+    if (!rps.length) html += '<div class="pm2-empty">No restore points yet. Copies and transactions create them automatically.</div>';
+    rps.slice().reverse().forEach(function (rp) {
+      html += '<div class="cw-card"><div class="pm2-row-title">' + esc(rp.label) + ' <span class="pm-note">' + timeAgo(new Date(rp.at).getTime()) + "</span></div>" +
+        '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-sm" data-rollback="' + esc(rp.id) + '">Roll back to here</button></div></div>';
+    });
+    html += '<div class="cw-cap">Export</div><div class="cw-card"><div class="pm-note">Export this Project’s settings as JSON (read-only preview).</div>' +
+      '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-sm" data-export>Preview export</button></div></div>';
+    html += '<div class="cw-cap">Import</div><div class="cw-card"><div class="pm-note">Incoming values are diffed before anything changes; conflicts are reviewed row by row.</div>' +
+      '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-sm" data-import>Review an import</button></div></div>';
+    html += '<div class="cw-cap">Migration</div><div class="cw-card"><div class="pm-note">Legacy inventory rows carried a <code>global</code> scope marker. In this concept every editable value applies to the current Project only; the marker is preserved for provenance and presented as read-only history (see plan-owner-delta.md).</div></div>';
+    html += '<div class="cw-cap">Reset</div><div class="cw-card"><div class="pm-note">Reset demo data for this concept only.</div><div class="pm-mgr-actions"><button class="pm-btn pm-btn-danger pm-btn-sm" data-resetdemo>Reset demo data</button></div></div>';
+    return html + "</div>";
+  }
+
+  /* ---------- render ---------- */
+  function render() {
+    var r = parseRoute();
+    var depth = routeDepth(r);
+    UI.anim = depth >= UI.depth ? "fwd" : "back";
+    UI.depth = depth;
+    if (r.name === "q") { UI.q = decodeURIComponent(r.parts.slice(1).join("/") || ""); }
+    var back = backLabel(r);
+    var html = '<div class="cw" data-route="' + esc(r.raw) + '">';
+    html += '<div class="cw-top">';
+    html += '<button class="pm-btn pm-btn-quiet pm-btn-sm cw-browse-btn" data-navopen>' + ico("menu", 13) + " Browse</button>";
+    html += back ? '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-test="back" data-back>' + ico("arrowLeft", 13) + " " + esc(back) + "</button>" : '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-test="back" disabled>' + ico("arrowLeft", 13) + " Back</button>";
+    html += crumbHTML(r);
+    html += '<span class="pm-spacer"></span>';
+    if (r.name !== "home" && r.name !== "q") html += searchBox(false);
+    html += '<button class="pm-btn pm-btn-sm" data-test="close" data-close>' + ico("x", 12) + " Close Settings</button>";
+    html += "</div>";
+    html += '<div class="cw-body"><nav class="cw-nav' + (UI.navOpen ? " open" : "") + '" aria-label="Settings navigation">' + navHTML(r) + "</nav>";
+    html += '<main class="cw-pane" data-anim="' + UI.anim + '"><div class="cw-pane-inner">';
+    html += opsStrip();
+    if (r.name === "cat") html += viewCat(r);
+    else if (r.name === "mgr") html += viewMgr(r);
+    else if (r.name === "all") html += viewAll(r);
+    else if (r.name === "copy") html += viewCopy(r);
+    else if (r.name === "lifecycle") html += viewLifecycle();
+    else html += viewHome(r);
+    html += "</div></main></div></div>";
+    shell.content.innerHTML = html;
+    var root = shell.content;
+    bindSearch(root);
+    postBind(root);
+    if (r.name === "all") {
+      if (!UI.allWarmed) { // loading-with-cache: skeleton first, cached content appears on warm-up
+        UI.allWarmed = true;
+        var sk = root.querySelector("[data-test='vlist']");
+        if (sk) sk.innerHTML = M2.skeleton("Loading compendium");
+        setTimeout(function () { if (parseRoute().name === "all") mountVlist(shell.content); }, 420);
+      } else mountVlist(root);
+    }
+    root.querySelectorAll("[data-bindrows]").forEach(function (c) { M2.bindRows(c); });
+    // restore scroll per route
+    var pane = root.querySelector(".cw-pane");
+    var saved = UI.scroll[r.raw];
+    if (saved) pane.scrollTop = saved;
+    pane.addEventListener("scroll", function () { UI.scroll[r.raw] = pane.scrollTop; });
+    if (r.name === "q") { // Back restored the query: re-open results
+      var input = root.querySelector("[data-test='search-input']");
+      if (input) { input.value = UI.q; Q.searchAsync(UI.q, renderDrop); input.focus(); }
+    }
+    applyPending(root);
+    UI.lastRoute = r.raw;
+  }
+
+  /* One-time global delegation: shell.content persists across renders, so
+     root-level listeners must be attached exactly once (never per render). */
+  function bindGlobal() {
+    var root = shell.content;
+    root.addEventListener("click", function (e) {
+      var t = e.target;
+      function closest(sel) { return t.closest ? t.closest(sel) : null; }
+      var r = parseRoute();
+      var navclose = closest("[data-navclose]"); if (navclose) { UI.navOpen = false; root.querySelector(".cw-nav").classList.remove("open"); return; }
+      var navopen = closest("[data-navopen]"); if (navopen) { UI.navOpen = true; root.querySelector(".cw-nav").classList.add("open"); return; }
+      var facetclose = closest("[data-facetclose]"); if (facetclose) { UI.facetOpen = false; root.querySelector(".cw-facets").classList.remove("open"); return; }
+      var facetopen = closest("[data-facetopen]"); if (facetopen) { UI.facetOpen = true; root.querySelector(".cw-facets").classList.add("open"); return; }
+      var syn = closest("[data-synthrow]"); if (syn) { S2.receipt("Synthetic row", "Stress rows prove virtualization; they are not real settings and do not navigate.", "info"); return; }
+      var back = closest("[data-back]"); if (back) { if (history.length > 1) history.back(); else location.hash = "#/home"; return; }
+      var close = closest("[data-close]"); if (close) { S2.receipt("Settings closed", "Returning to the Puppet Master surface that opened Settings (simulated in this concept).", "info"); return; }
+      var nav = closest("[data-nav]"); if (nav) {
+        var v = nav.getAttribute("data-nav");
+        UI.navOpen = false;
+        if (v === "home") location.hash = "#/home";
+        else if (v === "all") location.hash = "#/all";
+        else if (v === "copy") location.hash = "#/copy";
+        else if (v === "lifecycle") location.hash = "#/lifecycle";
+        else if (v.indexOf("cat:") === 0) location.hash = "#/cat/" + v.slice(4);
+        return;
+      }
+      var gr = closest("[data-goroute]"); if (gr) { location.hash = gr.getAttribute("data-goroute"); return; }
+      var destBtn = closest("[data-dest]"); if (destBtn) {
+        var d = JSON.parse(destBtn.getAttribute("data-dest"));
+        if (d && d.kind) { UI.pending = d; location.hash = destHash(d); }
+        return;
+      }
+      var facet = closest("[data-facet]"); if (facet) {
+        UI.facets[facet.getAttribute("data-facet")] = facet.getAttribute("data-val");
+        rerenderAll(root); return;
+      }
+      var synth = closest("[data-synthctl]"); if (synth) { UI.facets.synth = synth.checked; rerenderAll(root); return; }
+      var expand = closest("[data-expanddiff]"); if (expand) { UI.copy.expanded = !UI.copy.expanded; render(); return; }
+      var src = closest("[data-src]"); if (src) { UI.copy.source = src.getAttribute("data-src"); render(); return; }
+      var cstep = closest("[data-copystep]"); if (cstep) {
+        var s = +cstep.getAttribute("data-copystep");
+        if (s === 2 && UI.copy.source) UI.copy.preview = C2.preview(UI.copy.source, UI.copy.cats.length ? UI.copy.cats : D.categories.map(function (c) { return c.id; }));
+        UI.copy.step = s; render(); return;
+      }
+      var caply = closest("[data-copyapply]"); if (caply) { runCopyApply(root); return; }
+      var crb = closest("[data-copyrollback]"); if (crb) { C2.rollbackLast(); UI.copy.applied = null; render(); return; }
+      var rb = closest("[data-rollback]"); if (rb) { S2.rollbackTo(rb.getAttribute("data-rollback")); render(); return; }
+      var exp = closest("[data-export]"); if (exp) { showExport(root); return; }
+      var imp = closest("[data-import]"); if (imp) { showImport(root); return; }
+      var rst = closest("[data-resetdemo]"); if (rst) { S2.resetDemo(); return; }
+      var opc = closest("[data-opcancel]"); if (opc) { var op = S2.state.ops[opc.getAttribute("data-opcancel")]; if (op) S2.finishOp(op, "cancelled", "Cancelled"); render(); return; }
+      var ptab = closest("[data-ptab]"); if (ptab) { location.hash = "#/mgr/providers/" + (r.parts[2] || "") + "?sec=" + ptab.getAttribute("data-ptab"); return; }
+      var pact = closest("[data-pact]"); if (pact) { providerAction(pact); return; }
+      var fact = closest("[data-famact]"); if (fact) { S2.createRestorePoint("Manual restore point (" + fact.getAttribute("data-fam") + ")"); S2.receipt("Restore point created", "You can roll back to it from Lifecycle.", "ok"); render(); return; }
+      var oj = closest("[data-ownerjump]"); if (oj) { S2.receipt("Owner surface", "The canonical owner module opens outside Settings; the return deep-link is " + location.hash + " (simulated).", "info"); return; }
+      if (UI.sOpen && !t.closest(".cw-hero-search") && !t.closest(".cw-compact-search")) closeDrop();
+    });
+    root.addEventListener("change", function (e) {
+      var t = e.target;
+      if (t.hasAttribute && t.hasAttribute("data-cat")) {
+        var id = t.getAttribute("data-cat");
+        if (t.checked) { if (UI.copy.cats.indexOf(id) < 0) UI.copy.cats.push(id); }
+        else UI.copy.cats = UI.copy.cats.filter(function (c) { return c !== id; });
+        return;
+      }
+      if (t.hasAttribute && t.hasAttribute("data-sort")) { UI.facets.sort = t.value; rerenderAll(root); return; }
+      if (t.hasAttribute && t.hasAttribute("data-synthctl")) { UI.facets.synth = t.checked; rerenderAll(root); return; }
+      if (t.hasAttribute && t.hasAttribute("data-facetq")) { UI.facets.q = t.value; rerenderAll(root); return; }
+    });
+  }
+  function postBind(root) {
+    // narrow: show filter open button only at narrow/squeezed tiers
+    var fob = root.querySelector(".cw-facet-open");
+    if (fob) { var tier0 = shell.app.getAttribute("data-wtier"); fob.style.display = (tier0 === "narrow" || tier0 === "squeezed") ? "" : "none"; }
+    // validation error demonstration on number controls
+    root.querySelectorAll("input[data-ctl='number']").forEach(function (inp) {
+      if (inp.__cwBound) return; inp.__cwBound = true;
+      inp.addEventListener("change", function () {
+        var v = +inp.value;
+        if (isNaN(v) || v < -1e6 || v > 1e6) {
+          var row = inp.closest(".pm2-row");
+          var er = row.querySelector(".cw-valerr");
+          if (!er) { er = document.createElement("div"); er.className = "pm-set-error cw-valerr"; er.style.gridColumn = "1 / -1"; row.appendChild(er); }
+          er.textContent = "Value out of range (−1,000,000 … 1,000,000). The change was not saved.";
+          var st = S2.getSetting(inp.getAttribute("data-setting"));
+          inp.value = st ? st.value : "";
+        }
+      });
+    });
+  }
+  function rerenderAll(root) {
+    var host = root.querySelector("[data-test='vlist']");
+    var data = allData();
+    var count = root.querySelector(".cw-all-count");
+    if (count) count.innerHTML = "<strong>" + data.length + "</strong> settings" + (UI.facets.synth ? " (incl. 2000 synthetic)" : "");
+    var facets = root.querySelector("[data-facets]");
+    if (facets) facets.innerHTML = facetsHTML();
+    if (vlist) vlist.set(data);
+    else if (host) { host.innerHTML = '<div class="pm2-empty" style="margin:18px">No settings match these facets.</div>'; host.setAttribute("data-window", "0:0:0"); }
+  }
+  function runCopyApply(root) {
+    var pv = UI.copy.preview; if (!pv) return;
+    var op = S2.beginOp({ title: "Copy settings from " + srcName(pv.sourceId), phase: "Creating restore point", determinate: true, total: pv.rows.length + 2 });
+    S2.advanceOp(op, { completed: 1, human_phase: "Restore point created" });
+    var i = 0;
+    var timer = setInterval(function () {
+      i += Math.max(1, Math.round(pv.rows.length / 6));
+      if (i < pv.rows.length) { S2.advanceOp(op, { completed: i + 2, human_phase: "Applying values" }); return; }
+      clearInterval(timer);
+      S2.advanceOp(op, { completed: pv.rows.length + 1, human_phase: "Verifying" , wait_reason: "re-reading copied values"});
+      setTimeout(function () {
+        var res = C2.apply(pv);
+        S2.finishOp(op, "completed", "Verified");
+        UI.copy.applied = res; UI.copy.step = 3;
+        render();
+      }, 500);
+    }, 120);
+  }
+  function providerAction(btn) {
+    var act = btn.getAttribute("data-pact"), pid = btn.getAttribute("data-pid");
+    var p = null; (MD.providers || []).forEach(function (x) { if (x.id === pid) p = x; });
+    if (act === "setup") {
+      var op = S2.beginOp({ title: "Provider setup: " + (p ? p.name : pid), phase: "Waiting for sign-in", wait_reason: "browser sign-in window", determinate: false });
+      setTimeout(function () { S2.finishOp(op, "completed", "Setup complete"); S2.receipt("Setup complete", (p ? p.name : pid) + " is connected for this Project.", "ok"); }, 900);
+    } else if (act === "rotate") S2.receipt("Rotation simulated", "A new " + (p ? p.authKind || "secret" : "secret") + " reference was stored; raw value never rendered.", "ok");
+    else if (act === "diag") location.hash = "#/mgr/providers/" + pid + "?sec=diagnostics";
+    else if (act === "defer") S2.receipt("Update deferred", "Ask-first policy respected; you will be asked again later.", "info");
+    else if (act === "update") {
+      var op2 = S2.beginOp({ title: "Update " + (p ? p.name : pid), phase: "Downloading", determinate: true, total: 3 });
+      setTimeout(function () { S2.advanceOp(op2, { completed: 2, human_phase: "Verifying" }); }, 400);
+      setTimeout(function () {
+        if (S2.state.scenario === "rollback") { S2.finishOp(op2, "failed", "Verification failed"); S2.receipt("Update rolled back", "Verification failed after updating; the previous generation was restored.", "warn"); }
+        else { S2.finishOp(op2, "completed", "Installed"); S2.receipt("Update applied", "Verified after install; ask-first policy respected.", "ok"); }
+        render();
+      }, 900);
+    } else if (act === "addinstall") {
+      S2.receipt("Installation queued", "Official vendor source only, Host/Environment selected explicitly.", "ok");
+    } else if (act === "runtimedemand") {
+      S2.receipt("Runtime demand", "Deep link: a runtime requested this provider; returning here after repair (fixture).", "info");
+    }
+  }
+  function showExport(root) {
+    var overlay = document.createElement("div");
+    overlay.className = "pm-dialog-overlay";
+    var data = {};
+    D.settings.slice(0, 40).forEach(function (s) { var st = S2.getSetting(s.id); data[s.id] = st ? st.value : null; });
+    overlay.innerHTML = '<div class="pm-dialog pm-dialog-wide"><div class="pm-dialog-title">Export preview (first 40 of ' + D.count + ')</div>' +
+      '<textarea class="pm-input" readonly rows="14" style="width:100%;font-family:var(--font-mono);font-size:11px">' + esc(JSON.stringify(data, null, 2)) + "</textarea>" +
+      '<div class="pm-dialog-actions"><button class="pm-btn pm-btn-sm" data-dlgclose>Close</button></div></div>';
+    document.body.appendChild(overlay);
+    overlay.addEventListener("click", function (e) { if (e.target === overlay || e.target.closest("[data-dlgclose]")) overlay.remove(); });
+  }
+  function showImport(root) {
+    var pv = C2.preview((MD.sourceProjects || [])[0] ? MD.sourceProjects[0].id : "customer-support", ["ai", "general", "safety"]);
+    var conflicts = pv.rows.filter(function (r) { return r.status === "replace" || r.status === "conflict"; }).slice(0, 3);
+    var overlay = document.createElement("div");
+    overlay.className = "pm-dialog-overlay";
+    var html = '<div class="pm-dialog pm-dialog-wide"><div class="pm-dialog-title">Import review — ' + conflicts.length + " conflicting values</div>";
+    html += '<table class="pm-table"><tr><th>Setting</th><th>Current</th><th>Incoming</th><th></th></tr>';
+    conflicts.forEach(function (c) {
+      html += '<tr><td>' + esc(c.label) + '</td><td><code>' + esc(fmtVal(c.current)) + '</code></td><td><code>' + esc(fmtVal(c.incoming)) + "</code></td>" +
+        '<td><button class="pm-btn pm-btn-sm" data-impkeep="' + esc(c.id) + '">Keep current</button> <button class="pm-btn pm-btn-sm" data-imptake="' + esc(c.id) + '">Take incoming</button></td></tr>';
+    });
+    html += '</table><div class="pm-dialog-actions"><button class="pm-btn pm-btn-sm" data-dlgclose>Done</button></div></div>';
+    overlay.innerHTML = html;
+    document.body.appendChild(overlay);
+    overlay.addEventListener("click", function (e) {
+      if (e.target === overlay || e.target.closest("[data-dlgclose]")) { overlay.remove(); return; }
+      var keep = e.target.closest("[data-impkeep]"); if (keep) { S2.receipt("Kept current value", keep.getAttribute("data-impkeep") + " unchanged.", "info"); keep.closest("tr").remove(); return; }
+      var take = e.target.closest("[data-imptake]"); if (take) { var id = take.getAttribute("data-imptake"); var row = null; conflicts.forEach(function (c) { if (c.id === id) row = c; }); if (row) S2.setSetting(id, row.incoming); take.closest("tr").remove(); }
+    });
+  }
+
+  /* ---------- global keys ---------- */
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Escape") return;
+    var pop = document.querySelector(".pm-pop-menu"); if (pop) { pop.remove(); return; }
+    var overlay = document.querySelector(".pm-dialog-overlay"); if (overlay) { overlay.remove(); return; }
+    if (UI.sOpen) { closeDrop(); return; }
+    if (UI.facetOpen) { UI.facetOpen = false; var fc = shell.content.querySelector(".cw-facets"); if (fc) fc.classList.remove("open"); return; }
+    if (UI.navOpen) { UI.navOpen = false; var nv = shell.content.querySelector(".cw-nav"); if (nv) nv.classList.remove("open"); return; }
+    var r = parseRoute();
+    if (r.name !== "home") { if (history.length > 1) history.back(); else location.hash = "#/home"; }
+  });
+
+  // The shared scenario marks a few legacy ids absent from the current inventory;
+  // mirror their intent onto real rows so the states stay visible and truthful.
+  S2.subscribe(function (kind) {
+    if (kind !== "scenario") return;
+    var sc = S2.state.scenario;
+    function mark(id, src) { var st = S2.state.settings[id]; if (st) st.source = src; }
+    if (sc === "unavailable") mark("web.providers.web-search-enable", "unavailable");
+    if (sc === "restart-required") mark("general.startup.window-state", "restart");
+    if (sc === "changed-elsewhere") mark("general.visual.theme", "changed-elsewhere");
+  });
+  window.addEventListener("hashchange", render);
+  bindGlobal();
+  // ResizeObserver can be throttled in background tabs; mirror the shell's tier logic on a timer.
+  setInterval(function () {
+    var w = shell.app.clientWidth;
+    var tier = w < 860 ? "squeezed" : w < 1150 ? "narrow" : w < 1600 ? "mid" : "wide";
+    if (shell.app.getAttribute("data-wtier") !== tier) shell.app.setAttribute("data-wtier", tier);
+  }, 250);
+  render();
+  S2.subscribe(function (kind) {
+    if (kind === "receipt") return; // toasts handled by shell
+    if (kind === "op") { // update ops strip in place when possible
+      var strip = shell.content.querySelector(".cw-ops");
+      if (strip) { var tmp = document.createElement("div"); tmp.innerHTML = opsStrip(); if (tmp.firstElementChild) strip.replaceWith(tmp.firstElementChild); else strip.remove(); }
+      else render();
+      return;
+    }
+    render();
+  });
+})();
+</script>
+</body>
+</html>

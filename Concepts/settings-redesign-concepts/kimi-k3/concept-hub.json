@@ -12,7 +12,14 @@
     "max": 2500,
     "step": 10,
     "default": 1280,
-    "presets": [760, 900, 1280, 1700, 2200, 2500],
+    "presets": [
+      760,
+      900,
+      1280,
+      1700,
+      2200,
+      2500
+    ],
     "previewWidth": "test"
   },
   "entries": [
@@ -23,7 +30,11 @@
       "openPath": "index.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["settings", "bakeoff", "gallery"],
+      "tags": [
+        "settings",
+        "bakeoff",
+        "gallery"
+      ],
       "order": 0
     },
     {
@@ -33,7 +44,14 @@
       "openPath": "concept-01-concord.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["settings", "editorial", "dossier", "context", "memory", "permissions"],
+      "tags": [
+        "settings",
+        "editorial",
+        "dossier",
+        "context",
+        "memory",
+        "permissions"
+      ],
       "order": 10
     },
     {
@@ -43,7 +61,14 @@
       "openPath": "concept-02-resonance.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["settings", "studio", "console", "notifications", "sounds", "appearance"],
+      "tags": [
+        "settings",
+        "studio",
+        "console",
+        "notifications",
+        "sounds",
+        "appearance"
+      ],
       "order": 20
     },
     {
@@ -53,7 +78,14 @@
       "openPath": "concept-03-foundry.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["settings", "engineering", "bench", "developer", "terminal", "lsp"],
+      "tags": [
+        "settings",
+        "engineering",
+        "bench",
+        "developer",
+        "terminal",
+        "lsp"
+      ],
       "order": 30
     },
     {
@@ -63,8 +95,127 @@
       "openPath": "concept-04-vault.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["settings", "ledger", "timeline", "storage", "backup", "lifecycle"],
+      "tags": [
+        "settings",
+        "ledger",
+        "timeline",
+        "storage",
+        "backup",
+        "lifecycle"
+      ],
       "order": 40
+    },
+    {
+      "id": "concept-05-directory-take-1",
+      "title": "Concept 05 — A1 Directory / Take 1 (kimi-k3)",
+      "path": "concept-05-directory-take-1.html",
+      "openPath": "concept-05-directory-take-1.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "directory",
+        "cards",
+        "search",
+        "providers"
+      ],
+      "order": 50
+    },
+    {
+      "id": "concept-06-directory-take-2",
+      "title": "Concept 06 — A1 Directory / Take 2 (kimi-k3)",
+      "path": "concept-06-directory-take-2.html",
+      "openPath": "concept-06-directory-take-2.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "directory",
+        "editorial",
+        "list",
+        "rail"
+      ],
+      "order": 60
+    },
+    {
+      "id": "concept-07-compendium-workspace",
+      "title": "Concept 07 — A2 Compendium Workspace / Take 1 (kimi-k3)",
+      "path": "concept-07-compendium-workspace.html",
+      "openPath": "concept-07-compendium-workspace.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "compendium",
+        "facets",
+        "all-settings",
+        "virtualized"
+      ],
+      "order": 70
+    },
+    {
+      "id": "concept-08-directory-take-3",
+      "title": "Concept 08 — A1 Directory / Take 3 (kimi-k3)",
+      "path": "concept-08-directory-take-3.html",
+      "openPath": "concept-08-directory-take-3.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "directory",
+        "spacious",
+        "cards",
+        "quick-actions"
+      ],
+      "order": 80
+    },
+    {
+      "id": "concept-09-tome-tabs",
+      "title": "Concept 09 — Rethemed Tome Tabs (kimi-k3)",
+      "path": "concept-09-tome-tabs.html",
+      "openPath": "concept-09-tome-tabs.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "edge-tabs",
+        "chapters",
+        "layered",
+        "rethemed"
+      ],
+      "order": 90
+    },
+    {
+      "id": "concept-10-command-suite",
+      "title": "Concept 10 — Rethemed Command Suite (kimi-k3)",
+      "path": "concept-10-command-suite.html",
+      "openPath": "concept-10-command-suite.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "command-index",
+        "keyboard",
+        "multi-pane",
+        "rethemed"
+      ],
+      "order": 100
+    },
+    {
+      "id": "concept-11-tabbed-organizer",
+      "title": "Concept 11 — Rethemed Tabbed Organizer (kimi-k3)",
+      "path": "concept-11-tabbed-organizer.html",
+      "openPath": "concept-11-tabbed-organizer.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "tabs",
+        "sheets",
+        "organizer",
+        "rethemed"
+      ],
+      "order": 110
     }
   ]
 }

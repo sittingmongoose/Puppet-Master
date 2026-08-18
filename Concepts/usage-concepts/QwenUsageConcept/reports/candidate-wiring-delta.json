@@ -1,7 +1,15 @@
 {
+  "schema_id": "pm.usage_candidate_wiring_delta.v1",
+  "schema_id_provenance": "Locally minted 2026-08-18 in the family of the one schema id the packet does declare (pm.usage_candidate_command_delta.v1, PM_Usage_Concept_Update_Final_Cumulative_2026-08-08/CANDIDATE_COMMAND_ID_REGISTER.json:2). Neither packet declares a schema id for this output, so this id is not canonical and the packet owner should ratify or replace it. It is recorded rather than omitted so that the file is at least self-identifying.",
   "concept": "QwenUsageConcept/u11-prism",
   "packet": "PM_Usage_Concept_Update_Final_Cumulative_2026-08-08 §06 wiring",
-  "date": "2026-08-11",
+  "date": "2026-08-18",
+  "revision_history": [
+    "2026-08-11 - first issue.",
+    "2026-08-13 - NOT UPDATED. The correction packet added a wiring path (runtime demand -> Provider Setup Required -> deep link -> continuation token -> resume) and CORRECTION_GOAL_PROMPT.md:22 required this register to record it. It did not (audit A11-13 sub-item 9).",
+    "2026-08-18 - the local-policy retraction landed; then the audit repair: the missing correction chain is added, and the terminal Settings stage is restated on the canonical command.",
+    "2026-08-18 (second pass) - the production Event Authority boundary is recorded. Audit A11-22 had been carried as not-fixed because no required output said anywhere that the Usage command family declares no domain events in production wiring."
+  ],
   "chain": [
     {
       "stage": "Provider/CLI/raw receipt",
@@ -15,7 +23,8 @@
     },
     {
       "stage": "Immutable usage event",
-      "u11_structure": "attempts[] — append-only; failed/interrupted/queued attempts retained (ue-510, ue-520, ue-574, ue-583); final route never overwrites earlier attempts; removed accounts keep identity (ue-091/ue-092)"
+      "u11_structure": "attempts[] — append-only; failed/interrupted/queued attempts retained (ue-510, ue-520, ue-574, ue-583); final route never overwrites earlier attempts; removed accounts keep identity (ue-091/ue-092)",
+      "caveat": "Added 2026-08-18. 'Append-only' and 'immutable usage event' describe the model, not this concept's dataset history: event-schema-delta.json id_renumbers renumbers three demo ids (ue-600 to ue-650, ue-601 to ue-651, ue-610 to ue-652) so the packet fixtures could take the freed ids. That is disclosed prototype bookkeeping with no external references, not a production identity migration - but this stage as shipped read as a flat denial that any identity had ever changed (audit A11-14)."
     },
     {
       "stage": "Logical-turn grouping",
@@ -31,11 +40,102 @@
     },
     {
       "stage": "Semantic deep link to Settings/owner",
-      "u11_structure": "U11.deepLink() — settings/providers (routing, reconnect), settings/usage (usage_and_extra_usage), orchestrator/goals/crew run inspectors; Usage never mutates policy locally"
+      "u11_structure": "U11.openSettings(category, focusSettingId) at u11-data.js, U11.openSettings dispatching cmd.settings.bloom.open with { category, focus_setting_id } (u11-data.js, the U11.dispatch call inside U11.openSettings); plus in-concept semantic routes to the orchestrator, Goals and Crew run inspectors",
+      "retraction": {
+        "retracted_on": "2026-08-18",
+        "retracted_text": "; Usage never mutates policy locally — the closing clause of this stage's u11_structure as shipped 2026-08-11",
+        "true_status": "False when shipped. The Usage quick-controls sheet persisted five Settings-owned policies to localStorage (warn before running low, automatic account/provider switching, continuation product, continuation 'then' action, extra paid usage, spending limit) and dispatched zero commands and zero deep links. The deep-link machinery described above exists, but the policy controls did not use it.",
+        "measured_evidence": "PM_Usage_Independent_Audit_2026-08-17/audit-evidence/probes/axis1-ownership-probe-results.json — five persisted 'u11:settings' writes with a cmdLog delta of 0; U11.deepLink pushes a semantic.deep link entry into that same log (u11-data.js:1410), so an empty log proves no deep link occurred. 27 of the 30 settings-directed controls in the UI never reach U11.deepLink at all (A10-08).",
+        "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ findings A01-01 (blocker), A01-03 (blocker), A10-08 (minor)",
+        "scope": "The clause is retracted, not re-asserted in weaker words. Repair of the sheet is a separate change; no claim about local policy mutation belongs in this register until a harness measures the repaired sheet."
+      },
+      "canonical_binding": {
+        "command": "cmd.settings.bloom.open",
+        "owner": "F3-434 - Category Chips, Attention Dots, And Bloom Modal (Plans/FinalGUISpec.md:30614)",
+        "contract": "open(category, focusSettingId)",
+        "certified_at": "Plans/Wiring_Matrix.production.json row catalog.settings_bloom_open (:30116)",
+        "category_domain": "the 12 categories in Plans/settings_inventory.json: general, ai, safety, code, memory, planning, branching, media, web, personas, extensions, system (verified 2026-08-18)",
+        "example": "open('ai', 'ai.usage.usage-windows')"
+      },
+      "vocabulary_correction": {
+        "corrected_on": "2026-08-18",
+        "retracted_text": "Semantic deep link to Settings/owner - U11.deepLink() - settings/providers (routing, reconnect), settings/usage (usage_and_extra_usage)",
+        "why_the_claim_was_false": "The stage named a destination vocabulary that does not exist. Plans/settings_inventory.json has 12 categories and neither 'providers' nor 'usage' is one of them - 'providers' is a subgroup of web meaning web-search providers, and 'usage' is a subgroup of ai. The tokens focus_reason, usage_and_extra_usage, usage_quick_controls and see_all have zero occurrences anywhere under Plans/ (measured 2026-08-18). A wiring chain that terminates in a destination canon does not define is not wired.",
+        "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ findings A01-06, A01-07, A10-01, A11-09"
+      }
     }
   ],
+  "production_event_types_2026_08_18": {
+    "finding": "A11-22 (info) - closed as recorded, not as repaired.",
+    "measured_on": "2026-08-18",
+    "measured_from": "Plans/Wiring_Matrix.production.json",
+    "what_was_measured": "Every production wiring row whose key or ui_command_id contains 'usage' carries expected_event_types []. There are five of them, one more than the four the audit named, because catalog.usage_forecast_request has been added since.",
+    "rows": [
+      {
+        "row": "catalog.usage_refresh",
+        "ui_command_id": "cmd.usage.refresh",
+        "expected_event_types": [],
+        "effect_contract": "effect_kind 'receipt' - 'cmd.usage.refresh has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.' receipt_or_event_refs ['cmd.usage.refresh.dispatch_receipt']"
+      },
+      {
+        "row": "catalog.usage_export",
+        "ui_command_id": "cmd.usage.export",
+        "expected_event_types": []
+      },
+      {
+        "row": "catalog.usage_forecast_request",
+        "ui_command_id": "cmd.usage.forecast.request",
+        "expected_event_types": []
+      },
+      {
+        "row": "catalog.nav_open_usage_subject",
+        "ui_command_id": "cmd.nav.open_usage_subject",
+        "expected_event_types": []
+      },
+      {
+        "row": "catalog.artifacts_show_in_usage",
+        "ui_command_id": "cmd.artifacts.show_in_usage",
+        "expected_event_types": []
+      }
+    ],
+    "the_one_exception": "Of the canonical commands this concept reuses, exactly one declares a domain event: catalog.account_select_profile (cmd.account.select_profile) with ['account_switch_event'] and effect_kind 'event'. That is the one the concept previously misbound to a view filter, which audit A11-02 scored; the scope picker now dispatches nothing at all, and the harness case 'closure changing the page scope dispatches no command' holds it there.",
+    "denominator": "Plans/DRY_Rules.md, section 'Unresolved schema and Event Authority boundary' (:2132-2143), states at :2139 that 'The Event Authority denominator remains UNKNOWN_OPEN. No event family is inferred, registered, or declared emitted from a service name in this registry.' Admission of a new event family is an Event Authority adjudication, not something a concept register can perform.",
+    "consequence_for_this_concept": "The extended attempt schema, the meter schema, the four new collections and the renumbered ids proposed in event-schema-delta.json have no production wiring row that would carry them as events. They are receipt-and-projection shapes, which is what the existing wiring rows actually declare (effect_kind 'receipt'), and they must be read that way until an Event Authority adjudication says otherwise.",
+    "what_this_register_does_not_do": "It does not name, invent or propose an event family for the Usage surface, and it does not treat the receipt contracts above as evidence that one exists. The honest state is: zero usage event families admitted, denominator UNKNOWN_OPEN, and the proposals stand as unattached until an owner adjudicates.",
+    "scope_note": "Plans/** is read-only to this concept. Nothing in Plans was edited to record this.",
+    "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A11-22 (info)"
+  },
+  "correction_chain_2026_08_13": {
+    "added_on": "2026-08-18",
+    "why_it_is_here": "The 2026-08-13 correction packet created this wiring path and PM_Usage_Dependency_and_Work_Correction_2026-08-13/CORRECTION_GOAL_PROMPT.md:22 requires candidate registers to be updated where a correction changes a contract. This file was never touched at the time (audit A11-13 sub-item 9).",
+    "source_of_record": "PM_Usage_Dependency_and_Work_Correction_2026-08-13 / PROVIDER_CLI_FINAL_ADJUDICATION.md",
+    "chain": [
+      {
+        "stage": "Runtime demand meets a missing provider CLI",
+        "u11_structure": "operational[] ops-8, kind 'setup_required', providerUsage 'none', no validationEventId - the concept never represents a silent install"
+      },
+      {
+        "stage": "Provider Setup Required is surfaced, not resolved",
+        "u11_structure": "Maintenance and operations widget renders the ops-8 card with an 'Open provider setup' CTA (data-u11-act=\"setuplink\")"
+      },
+      {
+        "stage": "Canonical Settings deep link",
+        "u11_structure": "U11.openSettings -> cmd.settings.bloom.open { category, focus_setting_id } (u11-data.js, U11.openSettings, :1438)"
+      },
+      {
+        "stage": "Continuation token preserved",
+        "u11_structure": "ops-8.setupLink.continuation 'cont-8841' - the originating operation survives the trip to Settings so it can resume"
+      },
+      {
+        "stage": "Post-consent lifecycle is a different path",
+        "u11_structure": "ops-1 carries acquisition{ consent: 'explicit_user_setup', source, acquiredAt, installation{ version, targetVersion, provenance, arch } }; Auto and On maintain already-approved installations only"
+      }
+    ],
+    "verification_basis": "The harness case 'correction setup_required -> provider setup deep-link, no silent install' waits for the rendered string 'Provider Setup Required', clicks the rendered CTA, then asserts the resulting cmdLog entry is cmd.settings.bloom.open with category 'ai' and an ai.* focus_setting_id, and that the continuation token survived (u11-verify.mjs). Render and click are DOM-verified; the payload assertion is in-memory."
+  },
   "out_of_usage": [
     "Route resolution and scheduling remain outside Usage (packet §06) — U11 shows measured admission state; Goal Runtime/Orchestrator decides",
     "Purchase/pack/reset/auto-reload execution requires real typed commands + confirmation + receipt; U11's 'Open provider console' is an open action only"
-  ]
+  ],
+  "source_citation_policy": "Source citations into u11-prism.html, u11-data.js, u11-widgets.js, u11-rundetail.js and u11-context.js name a symbol, identifier or exact string rather than a line number. Those five files were under concurrent edit on 2026-08-18 - u11-data.js moved twice while this repair was being written - so a line number here would be wrong by the time it was read. Line numbers are retained only for files that are stable in this pass: everything under Plans/ and under _shared/. Text preserved inside a `retraction` or `retracted_claim` object is left exactly as it was written, line numbers included, because its purpose is to record what a document said on a past date."
 }

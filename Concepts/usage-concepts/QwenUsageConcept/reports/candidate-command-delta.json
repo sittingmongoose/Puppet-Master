@@ -1,106 +1,356 @@
 {
-  "concept": "QwenUsageConcept/u11-prism",
-  "packet": "PM_Usage_Concept_Update_Final_Cumulative_2026-08-08 §06",
-  "date": "2026-08-11",
-  "census_method": "grep over Plans/** (canonical families) + grep over QwenUsageConcept/u11-* (in-concept dispatch sites)",
-  "existing_canonical_families": {
-    "cmd.usage.refresh": {
-      "plans_hits": 32,
-      "u11_use": "page head refresh button"
+ "schema_id": "pm.usage_candidate_command_delta.v1",
+ "schema_id_provenance": "Declared by the packet at PM_Usage_Concept_Update_Final_Cumulative_2026-08-08/CANDIDATE_COMMAND_ID_REGISTER.json:2. Added here 2026-08-18; this file shipped without it (audit A11-13 sub-item 6).",
+ "concept": "QwenUsageConcept/u11-prism",
+ "packet": "PM_Usage_Concept_Update_Final_Cumulative_2026-08-08 §06",
+ "date": "2026-08-18",
+ "revision_history": [
+  "2026-08-11 - first issue.",
+  "2026-08-13 - correction-packet content added while the file kept its 2026-08-11 date.",
+  "2026-08-18 - audit repair: dispatch list re-measured from source, census re-derived at a pinned commit with a stated method, three verdicts corrected, and the invented deep-link vocabulary replaced with the canonical command."
+ ],
+ "in_concept_dispatches": {
+  "measured_on": "2026-08-18",
+  "method": "grep -rn \"\\.dispatch(\" over u11-prism.html, u11-widgets.js, u11-context.js, u11-rundetail.js, u11-data.js, u11-time.js and _shared/*.js, then reading each hit. Call sites only - the toast table is not a dispatch site.",
+  "call_sites": 12,
+  "distinct_ids": 11,
+  "dispatched": [
+   {
+    "command": "cmd.usage.refresh",
+    "sites": [
+     "u11-prism.html, the cmd.usage.refresh dispatch"
+    ],
+    "affordance": "page head refresh button"
+   },
+   {
+    "command": "cmd.usage.export",
+    "sites": [
+     "u11-prism.html, the cmd.usage.export dispatch"
+    ],
+    "affordance": "export intent flow (view / records / bundle)"
+   },
+   {
+    "command": "cmd.account.select_profile",
+    "sites": [
+     "u11-prism.html, the cmd.account.select_profile dispatch"
+    ],
+    "affordance": "scope picker selection"
+   },
+   {
+    "command": "cmd.provider.switch_route",
+    "sites": [
+     "u11-widgets.js, the cmd.provider.switch_route dispatch in the 'usenext' branch"
+    ],
+    "affordance": "account row 'Use next'",
+    "payload": "{ accountId }"
+   },
+   {
+    "command": "cmd.provider.usage.open_management",
+    "sites": [
+     "u11-widgets.js, the cmd.provider.usage.open_management dispatch"
+    ],
+    "affordance": "account row 'Open provider console'",
+    "payload": "{ familyId }"
+   },
+   {
+    "command": "cmd.usage.forecast.request",
+    "sites": [
+     "u11-widgets.js, the cmd.usage.forecast.request dispatch"
+    ],
+    "affordance": "capacity widget 'Refresh forecast'",
+    "payload": "{ runId }"
+   },
+   {
+    "command": "cmd.widget.add",
+    "sites": [
+     "u11-widgets.js, the cmd.widget.add dispatch inside U11W.duplicate"
+    ],
+    "affordance": "widget kebab 'Duplicate' only",
+    "payload": "{ type, via: 'duplicate' }",
+    "caveat": "The real 'Add widget' control is _shared/usage-widgets.js:899 (data-pmw-add) and dispatches nothing."
+   },
+   {
+    "command": "cmd.chat.open_thread_context_details",
+    "sites": [
+     "u11-context.js, the cmd.chat.open_thread_context_details dispatch",
+     "u11-rundetail.js, the cmd.chat.open_thread_context_details dispatch in open(runId)"
+    ],
+    "affordance": "context ring 'More details'; Usage run inspector",
+    "payload": "{ thread_id } at u11-context.js, the cmd.chat.open_thread_context_details dispatch (canonical); { surface: 'run_detail', id: runId } at u11-rundetail.js, the cmd.chat.open_thread_context_details dispatch in open(runId) (not canonical - see the cmd.usage.detail.open verdict)"
+   },
+   {
+    "command": "cmd.chat.compact_context",
+    "sites": [
+     "u11-context.js, the cmd.chat.compact_context dispatch"
+    ],
+    "affordance": "context ring compaction control",
+    "payload": "{ thread_id, scenario }"
+   },
+   {
+    "command": "cmd.chat.close_thread_context_details",
+    "sites": [
+     "u11-context.js, the cmd.chat.close_thread_context_details dispatch"
+    ],
+    "affordance": "context details close",
+    "payload": "{ thread_id }"
+   },
+   {
+    "command": "cmd.settings.bloom.open",
+    "sites": [
+     "u11-data.js, the U11.dispatch call inside U11.openSettings (inside U11.openSettings, u11-data.js, U11.openSettings)"
+    ],
+    "affordance": "every Settings-directed route in the concept",
+    "payload": "{ category, focus_setting_id }"
+   }
+  ],
+  "never_dispatched": [
+   {
+    "command": "cmd.widget.remove",
+    "why": "the shared engine owns removeWidget (_shared/usage-widgets.js:600) and contains no dispatch code"
+   },
+   {
+    "command": "cmd.widget.resize",
+    "why": "the shared engine owns setSize (:609) and contains no dispatch code; the id appears only in that file's header comment at :8"
+   },
+   {
+    "command": "cmd.widget.configure",
+    "why": "the shared engine owns the configure path and contains no dispatch code"
+   },
+   {
+    "command": "cmd.widget.move",
+    "why": "the shared engine owns the drag lifecycle and contains no dispatch code"
+   },
+   {
+    "command": "cmd.widget.reset_layout",
+    "why": "the shared engine owns resetCanvas (:616) and contains no dispatch code; the id appears only in that file's header comment at :14"
+   },
+   {
+    "command": "cmd.chat.focus_thread_context_details",
+    "why": "no call site anywhere in the concept"
+   },
+   {
+    "command": "cmd.usage.detail.open",
+    "why": "never minted; see verdict below"
+   },
+   {
+    "command": "cmd.nav.open_usage_subject",
+    "why": "the canonical Usage open command. It appears in this concept only in the shared U1-U9 table at _shared/usage-data.js:551 and is dispatched by no u11 file - which is the substance of the cmd.usage.detail.open verdict below."
+   }
+  ],
+  "structural_note": "Measured 2026-08-18: `grep -c 'dispatch\\|U11\\.\\|cmdLog' _shared/usage-widgets.js` returns 0. The shared widget engine that owns add, remove, resize, configure, move and reset contains no dispatch code at all, so five of the six shared widget commands can have no dispatcher fixture in this concept - each of which has a production wiring row in Plans/Wiring_Matrix.production.json (catalog.widget_add / remove / resize / configure / move / reset_layout) carrying a dispatcher-fixture evidence requirement."
+ },
+ "in_concept_dispatches_retraction": {
+  "retracted_on": "2026-08-18",
+  "retracted_claim": [
+   "cmd.usage.refresh",
+   "cmd.usage.export",
+   "cmd.account.select_profile",
+   "cmd.provider.switch_route",
+   "cmd.chat.compact_context",
+   "cmd.chat.open_thread_context_details",
+   "cmd.chat.close_thread_context_details",
+   "cmd.chat.focus_thread_context_details",
+   "cmd.widget.add",
+   "cmd.widget.remove",
+   "cmd.widget.resize",
+   "cmd.widget.configure",
+   "cmd.widget.move",
+   "cmd.widget.reset_layout",
+   "cmd.usage.forecast.request",
+   "cmd.provider.usage.open_management"
+  ],
+  "why_the_claim_was_false": "6 of the 16 ids are never dispatched: cmd.widget.remove, cmd.widget.resize, cmd.widget.configure, cmd.widget.move, cmd.widget.reset_layout and cmd.chat.focus_thread_context_details. The 16-item array matches, key for key, the toast table at u11-data.js:1385-1402 - it was transcribed from the label map rather than from dispatch sites. A command with no dispatch path is not wired, and this register presented six such commands as wired.",
+  "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A11-07 (major)"
+ },
+ "verdicts": [
+  {
+   "command": "cmd.usage.detail.open",
+   "verdict": "declined - the canonical Usage open command is cmd.nav.open_usage_subject",
+   "rationale": "Packet section 06 lists this as a candidate to adjudicate. It is declined, and the concept's current aliasing is the direction canon forbids. Plans/UI_Command_Catalog.md:8159 states verbatim: 'cmd.chat.open_thread_context_details, cmd.chat.focus_thread_context_details, and cmd.chat.close_thread_context_details remain the thread Context Detail Pane commands; they are not aliases for app-wide Usage.' :777 fixes that command's payload at { thread_id }, layout and UI state only, for the Chat context hover module and artifact deep-links. :8163 adds that run-only, thread-only or timestamp-only payloads cannot satisfy the primary Usage route identity when usage_event_ref is available, and :8150 designates cmd.nav.open_usage_subject as the Usage route and open command with route_target.object_kind 'usage_event'. Plans/usage-feature.md:67 independently retires run_id, thread_id and timestamp as canonical navigation. The concept nevertheless dispatches cmd.chat.open_thread_context_details from the Usage run inspector at u11-rundetail.js, the cmd.chat.open_thread_context_details dispatch in open(runId) with { surface: 'run_detail', id: runId } - a Usage surface, a run-only payload, no thread_id. cmd.nav.open_usage_subject is now dispatched by the run inspector at u11-rundetail.js, the cmd.nav.open_usage_subject call (corrected 2026-08-18: this register previously said it was dispatched nowhere, which was true when written and false after the remediation landed the dispatch) (68 occurrences under Plans/ excluding _shards, measured 2026-08-18).",
+   "correct_disposition": "No new id is minted. The Usage run inspector's open must move to cmd.nav.open_usage_subject with a usage-subject payload. cmd.chat.open_thread_context_details stays in place for its legitimate use at u11-context.js, the cmd.chat.open_thread_context_details dispatch, which does pass { thread_id }. This is a concept-side change and has not been made; the register records the ruling, not a repair.",
+   "retraction": {
+    "retracted_on": "2026-08-18",
+    "retracted_claim": {
+     "command": "cmd.usage.detail.open",
+     "verdict": "reuse-alias",
+     "rationale": "Packet §06 lists it as a candidate to adjudicate. U11 already opens the identical surface via cmd.chat.open_thread_context_details (context ring More details, run inspector). U11 reuses the existing command rather than minting a second ID. CONFLICT FLAG: two candidate families point at one affordance — the canonical command owner should adjudicate which ID survives; recommend keeping cmd.chat.open_thread_context_details (already wired in three concepts) and retiring the alias."
     },
-    "cmd.usage.export": {
-      "plans_hits": 32,
-      "u11_use": "export intent flow (view/records/bundle)"
-    },
-    "cmd.account.select_profile": {
-      "plans_hits": 25,
-      "u11_use": "scope picker selection"
-    },
-    "cmd.provider.switch_route": {
-      "plans_hits": 20,
-      "u11_use": "account row 'Use next'"
-    },
-    "cmd.usage.view_budget": {
-      "plans_hits": 2,
-      "u11_use": "not dispatched in U11 (costs widget links instead)"
-    },
-    "cmd.provider.retry_after": {
-      "plans_hits": 2,
-      "u11_use": "not dispatched in U11 (no rate-limit fixture in this concept)"
-    }
+    "why_the_claim_was_false": "It recommended keeping exactly the aliasing UI_Command_Catalog.md:8159 prohibits, and cited no canon clause at all - so a reader had no way to see that the recommendation contradicted active canon, and the correct third option (cmd.nav.open_usage_subject) was invisible.",
+    "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A11-05 (major)"
+   }
   },
-  "in_concept_dispatches": [
-    "cmd.usage.refresh",
-    "cmd.usage.export",
-    "cmd.account.select_profile",
-    "cmd.provider.switch_route",
-    "cmd.chat.compact_context",
-    "cmd.chat.open_thread_context_details",
-    "cmd.chat.close_thread_context_details",
-    "cmd.chat.focus_thread_context_details",
-    "cmd.widget.add",
-    "cmd.widget.remove",
-    "cmd.widget.resize",
-    "cmd.widget.configure",
-    "cmd.widget.move",
-    "cmd.widget.reset_layout",
-    "cmd.usage.forecast.request",
-    "cmd.provider.usage.open_management"
+  {
+   "command": "cmd.usage.forecast.request",
+   "verdict": "provisional-candidate - admissible id, unregistered",
+   "rationale": "New, backing the capacity widget's 'Refresh forecast' button (u11-widgets.js, the cmd.usage.forecast.request dispatch). Concept-only; no production handler; 0 occurrences under Plans/ excluding _shards, measured 2026-08-18. Needs a typed payload ({ runId }) and a receipt contract before registration.",
+   "segment_count_ruling": {
+    "ruling": "The id is legal. There is no segment cap in canon.",
+    "recorded_on": "2026-08-18",
+    "why_this_ruling_exists": "A rule was asserted during the port handoff that 'Plans/DRY_Rules.md normalizes command ids to two segments', which would have made cmd.usage.forecast.request inadmissible. No such rule exists.",
+    "evidence": [
+     "Plans/DRY_Rules.md:2109 is the heading 'Shared-runtime command-name normalization boundary'. The block at :2109-2130 is a dedup and owner-routing table - a two-column mapping of packet candidate names onto canonical dispositions - and it says of itself at :2111 that 'DRY normalization does not register commands or aliases.' It normalizes toward three-segment ids in several rows (cmd.worktree.provision to cmd.git.worktree.create). It is not a segment-count rule.",
+     "Plans/UI_Command_Catalog.md:1450 UCC-006 'Command Id Naming Rules' is the real rule. Its canonical_text reads in full: 'UI command IDs must be lowercase, dot-separated, and prefixed with cmd.' No segment cap.",
+     "Plans/Wiring_Matrix.schema.json:75 pattern is ^cmd\\\\.[a-z][a-z0-9_]*(\\\\.[a-z][a-z0-9_]*)*$ - unbounded in segment count.",
+     "Measured 2026-08-18 over Plans/Wiring_Matrix.production.json: 668 distinct ui_command_id values, of which 245 carry three or more segments after the cmd. prefix (230 with three, 15 with four)."
+    ]
+   }
+  },
+  {
+   "command": "cmd.provider.usage.open_management",
+   "verdict": "blocked - cmd.nav.open_usage_subject already owns usage-subject opens",
+   "rationale": "New, backing the account row's 'Open provider console' (u11-widgets.js, the cmd.provider.usage.open_management dispatch). It is an open and route action, not a purchase command: packet section 06 requires real typed commands with confirmation and a receipt for purchase, pack, reset and reload execution, and opening a provider page is explicitly not that. But the id is blocked on genuine DRY grounds rather than on segment count: cmd.nav.open_usage_subject already owns usage-subject opens (68 occurrences under Plans/ excluding _shards, measured 2026-08-18), and Plans/DRY_Rules.md:2123 routes cmd.context.receipt.open by subject kind to cmd.nav.open_subject or cmd.nav.open_usage_subject. Minting a second family for the same job is the duplication that table exists to prevent.",
+   "correct_disposition": "Re-express the affordance on cmd.nav.open_usage_subject, or obtain a documented exception from the command owner. Not done; this register records the ruling only."
+  },
+  {
+   "command": "cmd.provider.switch_route",
+   "verdict": "reused-canonical with a divergent payload",
+   "rationale": "Reused for the account row's 'Use next', with U11's semantics toast: future work only, in-flight requests never moved (packet section 01, Multi-account). The command choice is defensible for the at-limit fallback case. The payload is not canonical: u11-widgets.js, the cmd.provider.switch_route dispatch in the 'usenext' branch dispatches { accountId: acctId }.",
+   "canonical_contract": "Plans/UI_Command_Catalog.md:8304 - 'cmd.provider.switch_route is adopted verbatim from the FinalGUISpec.md CTA Card Contracts rate_limit row (provider_id, retry_after_ms)'. :8309 defines it as accepting a provider re-route, preferring an alternate provider or plan until the quota window resets, carrying provider_id and retry_after_ms, behind the availability guard alternate_route_available. Plans/FinalGUISpec.md:28909 is the source row.",
+   "divergence": "No provider_id, no retry_after_ms, an account identity instead, and no representation of the alternate_route_available guard or its disabled reasons.",
+   "retraction": {
+    "retracted_on": "2026-08-18",
+    "retracted_claim": {
+     "command": "cmd.provider.switch_route",
+     "verdict": "reused-canonical",
+     "rationale": "Reused verbatim for 'Use next' with U11's semantics toast: future work only, in-flight requests never moved (packet §01 Multi-account)."
+    },
+    "why_the_claim_was_false": "The word 'verbatim' is false. The payload contract that Plans adopted verbatim is provider_id plus retry_after_ms; the payload the concept sends is { accountId }. The register asserted equivalence with the canonical contract and did not note the divergence.",
+    "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A11-08 (minor)"
+   }
+  },
+  {
+   "command": "cmd.settings.bloom.open",
+   "verdict": "reused-canonical",
+   "rationale": "The single Settings destination for the whole concept. Owner F3-434 'Category Chips, Attention Dots, And Bloom Modal' (Plans/FinalGUISpec.md:30614), whose canonical_text specifies the deep-link contract open(category, focusSettingId): opening with a focus target scrolls the target row into view and flash-highlights it. Certified at Plans/Wiring_Matrix.production.json row catalog.settings_bloom_open (:30116), whose acceptance checks name the same contract. category must be one of the 12 categories in Plans/settings_inventory.json (general, ai, safety, code, memory, planning, branching, media, web, personas, extensions, system - verified 2026-08-18). A correct call is shaped open('ai', 'ai.usage.usage-windows'). Concept entry point: U11.openSettings at u11-data.js, U11.openSettings, dispatching at :1438.",
+   "retraction": {
+    "retracted_on": "2026-08-18",
+    "retracted_claim": {
+     "command": "provider setup (first acquisition)",
+     "verdict": "no-command",
+     "rationale": "Correction packet: initial acquisition is an explicit user-triggered setup action in Provider Settings, not a dispatched command; U11 deep-links semantically (semantic.deep_link with focus_reason setup_required + continuation token). Auto/On maintain already-approved installations only."
+    },
+    "why_the_claim_was_false": "The first half stands and is retained below as its own verdict: initial acquisition is an explicit user-triggered setup action, not a dispatched command. The second half was false. 'semantic.deep_link' was not a command - it was a locally invented pseudo-command, and its payload { surface, manager, section, focus_reason } named destinations that do not exist. Plans/settings_inventory.json has 12 categories and neither 'providers' nor 'usage' is one of them: 'providers' exists only as a subgroup of web, meaning web-search providers, and 'usage' only as a subgroup of ai. The tokens focus_reason, usage_and_extra_usage, usage_quick_controls and see_all have zero occurrences anywhere under Plans/ (measured 2026-08-18). Naming an invented envelope in a register of canonical command dispositions documented nothing.",
+    "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ findings A01-06, A01-07, A10-01, A11-09; corrected identity in AUDIT_REPORT.md section 9"
+   }
+  },
+  {
+   "command": "provider setup (first acquisition)",
+   "verdict": "no-command",
+   "rationale": "Correction packet: initial acquisition is an explicit user-triggered setup action in Provider Settings, not a dispatched command. Auto and On maintain already-approved installations only. What the concept does dispatch when runtime demand meets a missing CLI is cmd.settings.bloom.open - the canonical Settings open - while ops-8.setupLink.continuation preserves the originating operation so it can resume. Preserving the continuation is the part of the adjudication this fixture exists to prove."
+  },
+  {
+   "command": "cmd.usage.range.set",
+   "verdict": "local-view-state",
+   "rationale": "Packet §06 allows date-range changes to remain local view state when no canonical side effect exists. U11 keeps window selection (5h/24h/7d) local to the analytics widget config."
+  },
+  {
+   "command": "cmd.usage.filter.set",
+   "verdict": "local-view-state",
+   "rationale": "Same as range: bucket/scope filtering stays local widget config; page scope changes already reuse cmd.account.select_profile. Caveat added 2026-08-18: the Ledger widget's bucket filter also gates the 'Historical - removed sources' group (u11-widgets.js, renderLedger's bucketFilter gate on the 'Historical - removed sources' group), so this local view state can hide removed-account history. Whether that stays local view state is unsettled."
+  }
+ ],
+ "census": {
+  "status": "re-derived 2026-08-18",
+  "method": {
+   "tree": "git commit b550dd68da649bcdcdcc2f2a05dded71de4a3cb2, with `git status --porcelain -- Plans/` empty, so the working tree and that commit are byte-identical under Plans/.",
+   "scope": "every file under Plans/ recursively (6067 files), and separately the same walk excluding Plans/_shards/** (2135 of those files are shards, leaving 3932).",
+   "counting_unit": "literal substring occurrences via Python str.count, NOT matching lines. A line containing an id twice counts twice.",
+   "reproduce": "python3 - <<'PY'\\nimport os\\ncmds=['cmd.usage.refresh','cmd.usage.export','cmd.account.select_profile','cmd.provider.switch_route','cmd.usage.view_budget','cmd.provider.retry_after']\\ntot={c:[0,0] for c in cmds}\\nfor root,dirs,files in os.walk('Plans'):\\n    for f in files:\\n        p=os.path.join(root,f)\\n        t=open(p,encoding='utf-8',errors='replace').read()\\n        for c in cmds:\\n            n=t.count(c)\\n            tot[c][0]+=n\\n            if not p.startswith('Plans/_shards'): tot[c][1]+=n\\nfor c in cmds: print(c, tot[c])\\nPY"
+  },
+  "counts": {
+   "cmd.usage.refresh": {
+    "all_of_plans": 50,
+    "excluding_shards": 42,
+    "files_excluding_shards": 15
+   },
+   "cmd.usage.export": {
+    "all_of_plans": 50,
+    "excluding_shards": 42,
+    "files_excluding_shards": 15
+   },
+   "cmd.account.select_profile": {
+    "all_of_plans": 39,
+    "excluding_shards": 33,
+    "files_excluding_shards": 9
+   },
+   "cmd.provider.switch_route": {
+    "all_of_plans": 45,
+    "excluding_shards": 40,
+    "files_excluding_shards": 14
+   },
+   "cmd.usage.view_budget": {
+    "all_of_plans": 5,
+    "excluding_shards": 4,
+    "files_excluding_shards": 4
+   },
+   "cmd.provider.retry_after": {
+    "all_of_plans": 5,
+    "excluding_shards": 4,
+    "files_excluding_shards": 4
+   },
+   "cmd.settings.bloom.open": {
+    "excluding_shards": 32
+   },
+   "cmd.nav.open_usage_subject": {
+    "excluding_shards": 68
+   },
+   "cmd.usage.forecast.request": {
+    "excluding_shards": 0
+   },
+   "cmd.provider.usage.open_management": {
+    "excluding_shards": 0
+   },
+   "cmd.usage.detail.open": {
+    "excluding_shards": 0
+   },
+   "cmd.usage.range.set": {
+    "excluding_shards": 0
+   },
+   "cmd.usage.filter.set": {
+    "excluding_shards": 0
+   }
+  },
+  "u11_use": {
+   "cmd.usage.refresh": "page head refresh button",
+   "cmd.usage.export": "export intent flow (view / records / bundle)",
+   "cmd.account.select_profile": "scope picker selection",
+   "cmd.provider.switch_route": "account row 'Use next'",
+   "cmd.usage.view_budget": "not dispatched in U11 (the costs widget links instead)",
+   "cmd.provider.retry_after": "not dispatched in U11 - no rate-limit fixture exists in this concept; the only rate-limit string in the dataset is a work label at u11-data.js, the work-3 label 'Redirect: rewrite rate limiter'"
+  },
+  "owners": [
+   "Plans/UI_Command_Catalog.md (UCC-116 registration table + canonical_text + preserved_exact_tokens)",
+   "Plans/Wiring_Matrix.production.json (catalog.usage_refresh / catalog.usage_export / catalog.account_select_profile / catalog.provider_switch_route)",
+   "Plans/usage-feature.md (presentation units)",
+   "Plans/Multi-Account.md (:5088 adoption source)",
+   "Plans/FinalGUISpec.md (CTA Card Contracts rate_limit row: cmd.provider.retry_after primary, cmd.provider.switch_route + cmd.usage.view_budget secondary)",
+   "Plans/_shards/** mirrors of the above"
   ],
-  "verdicts": [
-    {
-      "command": "cmd.usage.detail.open",
-      "verdict": "reuse-alias",
-      "rationale": "Packet §06 lists it as a candidate to adjudicate. U11 already opens the identical surface via cmd.chat.open_thread_context_details (context ring More details, run inspector). U11 reuses the existing command rather than minting a second ID. CONFLICT FLAG: two candidate families point at one affordance — the canonical command owner should adjudicate which ID survives; recommend keeping cmd.chat.open_thread_context_details (already wired in three concepts) and retiring the alias."
-    },
-    {
-      "command": "cmd.usage.forecast.request",
-      "verdict": "provisional-candidate",
-      "rationale": "New — capacity widget 'Refresh forecast' button. Concept-only; no production handler. Needs a typed payload ({runId}) and receipt contract before registration."
-    },
-    {
-      "command": "cmd.provider.usage.open_management",
-      "verdict": "provisional-candidate",
-      "rationale": "New — account row 'Open provider console'. This is an OPEN/route action, NOT a purchase command: packet §06 requires real typed commands + confirmation + receipt for purchase/pack/reset/reload execution; opening a provider page is explicitly not that."
-    },
-    {
-      "command": "cmd.usage.range.set",
-      "verdict": "local-view-state",
-      "rationale": "Packet §06 allows date-range changes to remain local view state when no canonical side effect exists. U11 keeps window selection (5h/24h/7d) local to the analytics widget config."
-    },
-    {
-      "command": "cmd.usage.filter.set",
-      "verdict": "local-view-state",
-      "rationale": "Same as range: bucket/scope filtering stays local widget config; page scope changes already reuse cmd.account.select_profile."
-    },
-    {
-      "command": "cmd.provider.switch_route",
-      "verdict": "reused-canonical",
-      "rationale": "Reused verbatim for 'Use next' with U11's semantics toast: future work only, in-flight requests never moved (packet §01 Multi-account)."
-    },
-    {
-      "command": "provider setup (first acquisition)",
-      "verdict": "no-command",
-      "rationale": "Correction packet: initial acquisition is an explicit user-triggered setup action in Provider Settings, not a dispatched command; U11 deep-links semantically (semantic.deep_link with focus_reason setup_required + continuation token). Auto/On maintain already-approved installations only."
-    }
-  ],
-  "census": {
+  "retraction": {
+   "retracted_on": "2026-08-18",
+   "retracted_claim": {
     "method": "grep over Plans/** (canonical owners + _shards), as verified in the approving plan",
     "counts": {
-      "cmd.usage.refresh": 32,
-      "cmd.usage.export": 32,
-      "cmd.account.select_profile": 25,
-      "cmd.provider.switch_route": 20,
-      "cmd.usage.view_budget": 2,
-      "cmd.provider.retry_after": 2
+     "cmd.usage.refresh": 32,
+     "cmd.usage.export": 32,
+     "cmd.account.select_profile": 25,
+     "cmd.provider.switch_route": 20,
+     "cmd.usage.view_budget": 2,
+     "cmd.provider.retry_after": 2
     },
-    "owners": [
-      "Plans/UI_Command_Catalog.md (UCC-116 registration table + canonical_text + preserved_exact_tokens)",
-      "Plans/Wiring_Matrix.production.json (catalog.usage_refresh / catalog.usage_export / catalog.account_select_profile / catalog.provider_switch_route)",
-      "Plans/usage-feature.md (presentation units)",
-      "Plans/Multi-Account.md (:5088 adoption source)",
-      "Plans/FinalGUISpec.md (CTA Card Contracts rate_limit row: cmd.provider.retry_after primary, cmd.provider.switch_route + cmd.usage.view_budget secondary)",
-      "Plans/_shards/** mirrors of the above"
-    ]
+    "census_method_field": "grep over Plans/** (canonical families) + grep over QwenUsageConcept/u11-* (in-concept dispatch sites)"
+   },
+   "why_the_claim_was_false": "The counts were not reproducible to the stated figures and the method string did not pin enough to make them reproducible. It named neither the tree state, nor whether occurrences or matching lines were being counted, nor whether _shards were included - and _shards changes four of the six figures. The independent audit measured 29 / 29 / 24 / 21 / 2 / 2 at the closest 2026-08-11 commit and 43 or 35 / 43 or 35 / 31 or 25 / 39 or 34 / 5 or 4 / 5 or 4 on the working tree, against the published 32 / 32 / 25 / 20 / 2 / 2. Four of the six reproduce only approximately under any reading. Numbers presented as measurements must be re-derivable by a third party from the stated method alone.",
+   "what_is_unchanged": "The census conclusion and every owner attribution in it verified exactly, both in the audit and again on 2026-08-18: UCC-116 exists at Plans/UI_Command_Catalog.md:8838; catalog.usage_refresh, catalog.usage_export, catalog.account_select_profile and catalog.provider_switch_route all exist in Plans/Wiring_Matrix.production.json; the FinalGUISpec rate_limit CTA row is at FinalGUISpec.md:28909 as described. Only the numbers were unsound.",
+   "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A11-17 (minor)"
   }
+ },
+ "source_citation_policy": "Source citations into u11-prism.html, u11-data.js, u11-widgets.js, u11-rundetail.js and u11-context.js name a symbol, identifier or exact string rather than a line number. Those five files were under concurrent edit on 2026-08-18 - u11-data.js moved twice while this repair was being written - so a line number here would be wrong by the time it was read. Line numbers are retained only for files that are stable in this pass: everything under Plans/ and under _shared/. Text preserved inside a `retraction` or `retracted_claim` object is left exactly as it was written, line numbers included, because its purpose is to record what a document said on a past date.",
+ "corrections_2026_08_18": [
+  {
+   "what": "'cmd.nav.open_usage_subject is dispatched nowhere in u11' was left standing after the remediation made it false",
+   "measured": "u11-rundetail.js dispatches cmd.nav.open_usage_subject from the attempt inspector; the dispatch was observed firing during the wave-11 verification pass.",
+   "why_it_mattered": "A register asserting the opposite of measured behaviour is the same defect class this audit raised as blocker B2. It was logged during verification and is corrected here rather than left as a known-false statement."
+  }
+ ]
 }

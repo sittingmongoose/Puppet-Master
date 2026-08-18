@@ -1,0 +1,133 @@
+--- /mnt/Cursor/PuppetMaster/Concepts/usage-concepts/QwenUsageConcept/u11-verify.mjs	2026-08-13 22:39:07.794911113 +0000
++++ /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/replay-sandbox/u11-verify.mjs	2026-08-17 17:48:20.595709150 +0000
+@@ -25,9 +25,12 @@
+ const WIDTHS = [900, 1280, 1700, 2200, 2500];
+ const THEMES = ['friendly-dark', 'friendly-light', 'glass-dark', 'glass-light',
+   'retro-dark', 'retro-light', 'basic-dark', 'basic-light'];
+-const SHOTS = path.join(__dirname, 'verify-shots');
++/* AUDIT REPLAY (2026-08-17): outputs redirected out of the concept tree. */
++const AUDIT = '/mnt/Cursor/PuppetMaster/Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/audit-evidence';
++const SHOTS = path.join(AUDIT, 'screenshots');
++const REPORT_OUT = path.join(AUDIT, 'probes', 'replay-u11-verify-report.json');
+ fs.mkdirSync(SHOTS, { recursive: true });
+-fs.mkdirSync(path.join(__dirname, 'reports'), { recursive: true });
++fs.mkdirSync(path.join(AUDIT, 'probes'), { recursive: true });
+ 
+ /* ---------- playwright-core resolution (NAS install, then temp fallback) ---------- */
+ function loadPlaywright() {
+@@ -46,9 +49,14 @@
+ }
+ const { chromium } = loadPlaywright();
+ 
++/* AUDIT REPLAY: Windows-pinned Chrome/Edge replaced by the local Playwright
++   Chromium. Nothing else about browser handling is changed. */
+ const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
+ const EDGE = 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe';
+-const executablePath = fs.existsSync(CHROME) ? CHROME : EDGE;
++const LINUX_CHROMIUM = '/home/sittingmongoose/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome';
++const executablePath = fs.existsSync(CHROME) ? CHROME
++  : (fs.existsSync(EDGE) ? EDGE : LINUX_CHROMIUM);
++if (!fs.existsSync(executablePath)) throw new Error('no browser binary at ' + executablePath);
+ 
+ /* ---------- results ---------- */
+ const cases = [];
+@@ -58,10 +66,13 @@
+   console.log((ok ? 'PASS ' : 'FAIL ') + name + (detail ? ' — ' + detail : ''));
+ }
+ function shot(name) {
+-  const p = path.join(SHOTS, name + '.png');
+-  screenshots.push('verify-shots/' + name + '.png');
++  const p = path.join(SHOTS, 'replay-' + name + '.png');
++  screenshots.push('audit-evidence/screenshots/replay-' + name + '.png');
+   return p;
+ }
++/* AUDIT REPLAY: keep a ledger of every console error the harness chose to
++   ignore, so the font-CDN suppression can be audited after the fact. */
++const suppressed = [];
+ 
+ /* ---------- tiny static server rooted at the concept dir ---------- */
+ const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8',
+@@ -95,8 +106,13 @@
+   /* offline boxes fail only on remote fonts; everything else counts */
+   const loc = (msg.location() && msg.location().url) || '';
+   const txt = msg.text();
+-  return /fonts\.g(oogleapis|static)\.com/.test(loc) || /fonts\.g(oogleapis|static)\.com/.test(txt);
+-}
++  const hit = /fonts\.g(oogleapis|static)\.com/.test(loc) || /fonts\.g(oogleapis|static)\.com/.test(txt);
++  if (hit) suppressed.push({ loc, txt });          /* AUDIT REPLAY ledger only */
++  return hit;
++}
++/* AUDIT REPLAY: origin is chosen at runtime — http first, file:// fallback,
++   because headless Chromium in this sandbox hangs on http:// requests. */
++let ORIGIN = null;
+ async function bootPage(ctx, port, opts) {
+   const o = opts || {};
+   const page = await ctx.newPage();
+@@ -110,7 +126,7 @@
+   const errors = [];
+   page.on('console', (m) => { if (m.type() === 'error' && !ignoreConsoleError(m)) errors.push(m.text()); });
+   page.on('pageerror', (e) => errors.push(String(e)));
+-  await page.goto(`http://127.0.0.1:${port}/u11-prism.html`, { waitUntil: 'load', timeout: 30000 });
++  await page.goto(ORIGIN + 'u11-prism.html', { waitUntil: 'load', timeout: 30000 });
+   await page.waitForSelector('.us-page.u11', { timeout: 15000 });
+   await page.waitForTimeout(650); /* boot animations + deferred renders */
+   return { page, errors };
+@@ -557,9 +573,30 @@
+    newPage(), and its isolated userDataDir keeps 4 concurrent harnesses
+    from ever sharing profile state */
+ const ctx = await chromium.launchPersistentContext(userDataDir, {
+-  headless: true, executablePath, args: ['--disable-gpu', '--no-first-run', '--no-default-browser-check']
++  headless: true, executablePath,
++  args: ['--headless', '--disable-gpu', '--no-sandbox', '--no-first-run', '--no-default-browser-check']
+ });
+ 
++/* AUDIT REPLAY: probe the harness's own http origin with a bounded timeout;
++   fall back to file:// if it hangs or fails. */
++let originMode = 'http';
++{
++  const probe = await ctx.newPage();
++  const httpOrigin = `http://127.0.0.1:${port}/`;
++  try {
++    await probe.goto(httpOrigin + 'u11-prism.html', { waitUntil: 'load', timeout: 20000 });
++    await probe.waitForSelector('.us-page.u11', { timeout: 10000 });
++    ORIGIN = httpOrigin;
++    console.log('ORIGIN-PROBE: http reachable — using ' + ORIGIN);
++  } catch (e) {
++    ORIGIN = 'file://' + __dirname + '/';
++    originMode = 'file';
++    console.log('ORIGIN-PROBE: http FAILED (' + String(e).split('\n')[0].slice(0, 160) + ')');
++    console.log('ORIGIN-PROBE: falling back to ' + ORIGIN);
++  }
++  try { await probe.close(); } catch {}
++}
++
+ try {
+   await runMatrix(ctx, port);
+   await runInteractions(ctx, port);
+@@ -574,13 +611,24 @@
+ const pass = cases.filter((c) => c.status === 'pass').length;
+ const fail = cases.filter((c) => c.status === 'fail').length;
+ const report = {
+-  harness: 'playwright-core + system Chrome (' + path.basename(executablePath) + ')',
++  harness: 'playwright-core + local Playwright Chromium (' + path.basename(executablePath) + ')',
++  audit_replay: {
++    of: 'Concepts/usage-concepts/QwenUsageConcept/u11-verify.mjs',
++    run_from: __dirname,
++    executablePath,
++    origin_mode: originMode,
++    origin: ORIGIN,
++    suppressed_console_errors: suppressed.length,
++    suppressed_sample: suppressed.slice(0, 12)
++  },
+   concept: 'QwenUsageConcept/u11-prism',
+   packet: 'PM_Usage_Concept_Update_Final_Cumulative_2026-08-08',
+   ran_at: new Date().toISOString(),
+   duration_ms: Date.now() - t0,
+   cases, pass, fail, screenshots
+ };
+-fs.writeFileSync(path.join(__dirname, 'reports', 'visual-interaction-test-report.json'), JSON.stringify(report, null, 2));
++fs.writeFileSync(REPORT_OUT, JSON.stringify(report, null, 2));
++console.log('SUPPRESSED-CONSOLE-ERRORS: ' + suppressed.length);
++[...new Set(suppressed.map((s) => s.txt.slice(0, 120)))].slice(0, 10).forEach((t) => console.log('  suppressed :: ' + t));
+ console.log(`\n${pass} pass · ${fail} fail · ${cases.length} cases · ${((Date.now() - t0) / 1000).toFixed(1)}s`);
+ process.exit(fail ? 1 : 0);

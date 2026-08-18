@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.settings_bakeoff.candidate_wiring_delta.v1",
+  "concept": "concept-05-directory-take-1",
+  "provisional": true,
+  "canon_mutated": false,
+  "routes": [
+    {
+      "surface": "settings.search.result",
+      "destination_object": {
+        "domain": "*",
+        "page": "*",
+        "manager": "*",
+        "object": "*",
+        "section": "*",
+        "row": "*"
+      },
+      "opens": "destination resolved only via PM_V2_SEARCH.resolve(immutableResultId); exact row/object located with .pmv2-locate",
+      "emits": [
+        "store.saveSearchState(query,resultId)"
+      ],
+      "listens": [
+        "store searchState for Back-restore"
+      ],
+      "notes": "Back from the landing restores the query dropdown with the result selected"
+    },
+    {
+      "surface": "settings.deeplink.manager",
+      "destination_object": {
+        "domain": "*",
+        "manager": "*"
+      },
+      "opens": "manager view inside the concept shell",
+      "emits": [
+        "navigation"
+      ],
+      "listens": [],
+      "notes": null
+    },
+    {
+      "surface": "settings.copy.apply",
+      "destination_object": {
+        "domain": "system",
+        "manager": "lifecycle",
+        "section": "copy"
+      },
+      "opens": "centered copy review flow",
+      "emits": [
+        "receipt",
+        "restore point"
+      ],
+      "listens": [
+        "ObservableWork op"
+      ],
+      "notes": null
+    },
+    {
+      "surface": "settings.manager.open",
+      "destination_object": {
+        "domain": "*",
+        "manager": "*"
+      },
+      "opens": "lazy-rendered manager per archetype",
+      "emits": [],
+      "listens": [
+        "store scenario/setting events"
+      ],
+      "notes": null
+    },
+    {
+      "surface": "settings.back",
+      "destination_object": {
+        "domain": null
+      },
+      "opens": "previous route with reverse (left) motion; button names the target",
+      "emits": [],
+      "listens": [
+        "Escape stack"
+      ],
+      "notes": null
+    },
+    {
+      "surface": "settings.close",
+      "destination_object": {
+        "domain": null
+      },
+      "opens": "Settings Home",
+      "emits": [
+        "toast"
+      ],
+      "listens": [],
+      "notes": null
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "id": "notifications:notify-protos",
+  "topic": "notifications",
+  "model": "Unknown — notify-protos",
+  "unknownModel": true,
+  "presentation": "hybrid",
+  "order": 10,
+  "widthControl": {
+    "enabled": true,
+    "label": "App width",
+    "role": "page",
+    "min": 520,
+    "max": 1920,
+    "step": 1,
+    "default": 1280,
+    "presets": [
+      520,
+      768,
+      1280,
+      1600,
+      1920
+    ],
+    "previewWidth": "test"
+  },
+  "workspace": {
+    "path": "index.html",
+    "title": "Notification Prototype Workspace",
+    "openActions": "both",
+    "controlMode": "internal",
+    "tags": [
+      "dashboard",
+      "configurator"
+    ],
+    "order": 5,
+    "id": "workspace",
+    "openPath": "index.html"
+  },
+  "entries": [
+    {
+      "id": "rightward-stack",
+      "title": "01 Rightward Stack",
+      "path": "01-rightward-stack.html",
+      "tags": [
+        "stack",
+        "inbox"
+      ],
+      "order": 10,
+      "openPath": "01-rightward-stack.html",
+      "controlMode": "internal"
+    },
+    {
+      "id": "bell-accordion",
+      "title": "02 Bell Accordion",
+      "path": "02-bell-accordion.html",
+      "tags": [
+        "bell",
+        "accordion"
+      ],
+      "order": 20,
+      "openPath": "02-bell-accordion.html",
+      "controlMode": "internal"
+    },
+    {
+      "id": "chip-rail",
+      "title": "03 Chip Rail",
+      "path": "03-chip-rail.html",
+      "tags": [
+        "chips",
+        "rail"
+      ],
+      "order": 30,
+      "openPath": "03-chip-rail.html",
+      "controlMode": "internal"
+    },
+    {
+      "id": "latest-morph",
+      "title": "04 Latest Morph",
+      "path": "04-latest-morph.html",
+      "tags": [
+        "morph",
+        "latest"
+      ],
+      "order": 40,
+      "openPath": "04-latest-morph.html",
+      "controlMode": "internal"
+    },
+    {
+      "id": "drop-then-dock",
+      "title": "05 Drop Then Dock",
+      "path": "05-drop-then-dock.html",
+      "tags": [
+        "dock",
+        "motion"
+      ],
+      "order": 50,
+      "openPath": "05-drop-then-dock.html",
+      "controlMode": "internal"
+    },
+    {
+      "id": "fan-deck",
+      "title": "06 Fan Deck",
+      "path": "06-fan-deck.html",
+      "tags": [
+        "deck",
+        "motion"
+      ],
+      "order": 60,
+      "openPath": "06-fan-deck.html",
+      "controlMode": "internal"
+    }
+  ]
+}

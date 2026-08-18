@@ -1,0 +1,587 @@
+{
+ "schema_id": "pm.settings_bakeoff.manager_coverage.v2",
+ "concept": "concept-11-tabbed-organizer",
+ "coverage_scope": "this concept individually",
+ "families": [
+  {
+   "family": "Settings Home",
+   "status": "demonstrated",
+   "entry": "Settings shell",
+   "route": "#/settings-home",
+   "archetype": "core",
+   "notes": "The concept's own Home composition."
+  },
+  {
+   "family": "Settings Search",
+   "status": "demonstrated",
+   "entry": "Settings shell",
+   "route": "#/settings-search",
+   "archetype": "core",
+   "notes": "The concept's universal search field + dropdown."
+  },
+  {
+   "family": "Settings Workspace",
+   "status": "demonstrated",
+   "entry": "Settings shell",
+   "route": "#/settings-workspace",
+   "archetype": "core",
+   "notes": "The concept's domain/workspace shell hosting pages and managers."
+  },
+  {
+   "family": "Ordinary setting grammar",
+   "status": "demonstrated",
+   "entry": "Settings shell",
+   "route": "#/ordinary-setting-grammar",
+   "archetype": "core",
+   "notes": "Row grammar rendered from the inventory projection."
+  },
+  {
+   "family": "Provider / Account / Model / Installation",
+   "status": "demonstrated",
+   "entry": "AI Brains & Providers → Providers",
+   "route": "#/ai/providers",
+   "archetype": "resource-roster",
+   "subpages": [
+    "Overview",
+    "Models",
+    "Credentials",
+    "Rate Limits",
+    "Usage",
+    "Installation",
+    "Logs"
+   ]
+  },
+  {
+   "family": "Provider / Account / Model / Installation",
+   "status": "demonstrated",
+   "entry": "AI Brains & Providers → Model Defaults & Routing",
+   "route": "#/ai/model-defaults",
+   "archetype": "preference-document",
+   "subpages": [
+    "Defaults",
+    "Routing & Fallbacks",
+    "Usage-End Behavior"
+   ]
+  },
+  {
+   "family": "Context & Instructions",
+   "status": "demonstrated",
+   "entry": "Memory & Context → Context & Instructions",
+   "route": "#/memory/context",
+   "archetype": "preference-document",
+   "subpages": [
+    "Instructions",
+    "Assembly",
+    "Includes"
+   ]
+  },
+  {
+   "family": "Memory",
+   "status": "demonstrated",
+   "entry": "Memory & Context → Memory",
+   "route": "#/memory/memory",
+   "archetype": "resource-roster",
+   "subpages": [
+    "Stored Memories",
+    "Retention",
+    "Recall Behavior"
+   ]
+  },
+  {
+   "family": "Personas",
+   "status": "demonstrated",
+   "entry": "Personas → Personas",
+   "route": "#/personas/personas",
+   "archetype": "resource-roster",
+   "subpages": [
+    "Library",
+    "Behavior Tuning",
+    "Tools & Support"
+   ]
+  },
+  {
+   "family": "Crew",
+   "status": "demonstrated",
+   "entry": "Branching & Collaboration → Crew",
+   "route": "#/branching/crew",
+   "archetype": "resource-roster",
+   "subpages": [
+    "Members",
+    "Roles",
+    "Consensus"
+   ]
+  },
+  {
+   "family": "Goal & Automation",
+   "status": "demonstrated",
+   "entry": "Planning & Verification → Goal & Automation",
+   "route": "#/planning/goal",
+   "archetype": "preference-document",
+   "subpages": [
+    "Goal Mode",
+    "Automation Rules",
+    "Schedulers"
+   ]
+  },
+  {
+   "family": "Back Seat Driver",
+   "status": "demonstrated",
+   "entry": "Planning & Verification → Back Seat Driver",
+   "route": "#/planning/backseat",
+   "archetype": "preference-document",
+   "subpages": [
+    "Nudges",
+    "Thresholds",
+    "Quiet Hours"
+   ]
+  },
+  {
+   "family": "Permissions & FileSafe",
+   "status": "demonstrated",
+   "entry": "Permissions & Safety → Permissions & FileSafe",
+   "route": "#/safety/permissions",
+   "archetype": "preference-document",
+   "subpages": [
+    "Rules & Presets",
+    "Approvals & Gates",
+    "FileSafe Protection"
+   ]
+  },
+  {
+   "family": "Appearance / themes / fonts / motion",
+   "status": "demonstrated",
+   "entry": "General & Appearance → Appearance",
+   "route": "#/general/appearance",
+   "archetype": "preference-document",
+   "subpages": [
+    "Theme",
+    "Typography",
+    "Motion"
+   ]
+  },
+  {
+   "family": "Notifications & Sounds",
+   "status": "demonstrated",
+   "entry": "General & Appearance → Notifications & Sounds",
+   "route": "#/general/notifications",
+   "archetype": "preference-document",
+   "subpages": [
+    "Channels",
+    "Quiet Hours",
+    "Alert Sounds"
+   ]
+  },
+  {
+   "family": "Sound Library / Uploads / Packs",
+   "status": "demonstrated",
+   "entry": "General & Appearance → Sound Library",
+   "route": "#/general/sounds",
+   "archetype": "inventory-catalog",
+   "subpages": [
+    "Packs",
+    "Uploads",
+    "Assignments"
+   ]
+  },
+  {
+   "family": "Spellcheck & Dictionaries",
+   "status": "demonstrated",
+   "entry": "General & Appearance → Spellcheck & Dictionaries",
+   "route": "#/general/spellcheck",
+   "archetype": "inventory-catalog",
+   "subpages": [
+    "Languages",
+    "Personal Dictionary",
+    "Ignore List"
+   ]
+  },
+  {
+   "family": "Desktop / Tray / Window",
+   "status": "demonstrated",
+   "entry": "General & Appearance → Desktop, Tray & Window",
+   "route": "#/general/desktop",
+   "archetype": "preference-document",
+   "subpages": [
+    "Tray",
+    "Window",
+    "Launch"
+   ]
+  },
+  {
+   "family": "File Manager / Editor",
+   "status": "demonstrated",
+   "entry": "Code & Execution → File Manager & Editor",
+   "route": "#/code/files",
+   "archetype": "preference-document",
+   "subpages": [
+    "Editor",
+    "File Tree",
+    "Autosave"
+   ]
+  },
+  {
+   "family": "Terminal",
+   "status": "demonstrated",
+   "entry": "Code & Execution → Terminal",
+   "route": "#/code/terminal",
+   "archetype": "preference-document",
+   "subpages": [
+    "Profiles",
+    "Rendering",
+    "Scrollback"
+   ]
+  },
+  {
+   "family": "LSP",
+   "status": "demonstrated",
+   "entry": "Code & Execution → Language Servers",
+   "route": "#/code/lsp",
+   "archetype": "resource-roster",
+   "subpages": [
+    "Servers",
+    "Overrides",
+    "Diagnostics"
+   ]
+  },
+  {
+   "family": "Formatters",
+   "status": "demonstrated",
+   "entry": "Code & Execution → Formatters",
+   "route": "#/code/formatters",
+   "archetype": "resource-roster",
+   "subpages": [
+    "Formatters",
+    "Per-Language",
+    "On Save"
+   ]
+  },
+  {
+   "family": "Tools",
+   "status": "demonstrated",
+   "entry": "Skills, Plugins & Commands → Tools",
+   "route": "#/extensions/tools",
+   "archetype": "inventory-catalog",
+   "subpages": [
+    "Catalog",
+    "Policy",
+    "Availability"
+   ]
+  },
+  {
+   "family": "Testing & Debug",
+   "status": "demonstrated",
+   "entry": "Code & Execution → Testing & Debug",
+   "route": "#/code/testing",
+   "archetype": "preference-document",
+   "subpages": [
+    "Runners",
+    "Debug Adapters",
+    "Watch Mode"
+   ]
+  },
+  {
+   "family": "Containers & Registries",
+   "status": "demonstrated",
+   "entry": "Code & Execution → Containers & Registries",
+   "route": "#/code/containers",
+   "archetype": "resource-roster",
+   "subpages": [
+    "Runtimes",
+    "Images",
+    "Registries"
+   ]
+  },
+  {
+   "family": "Commands & Shortcuts",
+   "status": "demonstrated",
+   "entry": "Skills, Plugins & Commands → Commands & Shortcuts",
+   "route": "#/extensions/commands",
+   "archetype": "inventory-catalog",
+   "subpages": [
+    "Commands",
+    "Shortcuts",
+    "Conflicts"
+   ]
+  },
+  {
+   "family": "Skills",
+   "status": "demonstrated",
+   "entry": "Skills, Plugins & Commands → Skills",
+   "route": "#/extensions/skills",
+   "archetype": "inventory-catalog",
+   "subpages": [
+    "Installed",
+    "Sources",
+    "Updates"
+   ]
+  },
+  {
+   "family": "Plugins",
+   "status": "demonstrated",
+   "entry": "Skills, Plugins & Commands → Plugins",
+   "route": "#/extensions/plugins",
+   "archetype": "inventory-catalog",
+   "subpages": [
+    "Installed",
+    "Permissions",
+    "Updates"
+   ]
+  },
+  {
+   "family": "MCP",
+   "status": "demonstrated",
+   "entry": "System & Advanced → MCP Servers",
+   "route": "#/system/mcp",
+   "archetype": "resource-roster",
+   "subpages": [
+    "Servers",
+    "Tools",
+    "Health"
+   ]
+  },
+  {
+   "family": "Teacher / Help",
+   "status": "demonstrated",
+   "entry": "System & Advanced → Teacher & Help",
+   "route": "#/system/teacher",
+   "archetype": "preference-document",
+   "subpages": [
+    "Teaching Moments",
+    "Overlays",
+    "Documentation"
+   ]
+  },
+  {
+   "family": "Doctor",
+   "status": "demonstrated",
+   "entry": "System & Advanced → Doctor",
+   "route": "#/system/doctor",
+   "archetype": "health-projection",
+   "subpages": [
+    "Checks",
+    "Diagnostics",
+    "Repairs"
+   ]
+  },
+  {
+   "family": "Storage & Retention",
+   "status": "demonstrated",
+   "entry": "System & Advanced → Storage & Retention",
+   "route": "#/system/storage",
+   "archetype": "preference-document",
+   "subpages": [
+    "Usage",
+    "Caches",
+    "Retention"
+   ]
+  },
+  {
+   "family": "Backup & Restore",
+   "status": "demonstrated",
+   "entry": "System & Advanced → Backup & Restore",
+   "route": "#/system/backup",
+   "archetype": "transaction",
+   "subpages": [
+    "Backups",
+    "Restore Points",
+    "Verify"
+   ]
+  },
+  {
+   "family": "Settings Lifecycle",
+   "status": "demonstrated",
+   "entry": "System & Advanced → Settings Lifecycle",
+   "route": "#/system/lifecycle",
+   "archetype": "transaction",
+   "subpages": [
+    "Import",
+    "Export",
+    "Reset",
+    "Migration",
+    "Rollback"
+   ]
+  },
+  {
+   "family": "History & Sessions",
+   "status": "demonstrated",
+   "entry": "System & Advanced → History & Sessions",
+   "route": "#/system/history",
+   "archetype": "inventory-catalog",
+   "subpages": [
+    "Sessions",
+    "Runs",
+    "Restore"
+   ]
+  },
+  {
+   "family": "Runtime Artifacts / Project Outputs",
+   "status": "demonstrated",
+   "entry": "System & Advanced → Runtime Artifacts & Outputs",
+   "route": "#/system/artifacts",
+   "archetype": "inventory-catalog",
+   "subpages": [
+    "Outputs",
+    "Artifacts",
+    "Cleanup"
+   ]
+  },
+  {
+   "family": "Workspace Cleanup",
+   "status": "demonstrated",
+   "entry": "System & Advanced → Workspace Cleanup",
+   "route": "#/system/cleanup",
+   "archetype": "transaction",
+   "subpages": [
+    "Rules",
+    "Dry Run",
+    "Schedule"
+   ]
+  },
+  {
+   "family": "DRY Method visible state where exposed",
+   "status": "demonstrated",
+   "entry": "System & Advanced → DRY Method",
+   "route": "#/system/dry-method",
+   "archetype": "health-projection",
+   "subpages": [
+    "Owners",
+    "Shared Components",
+    "State"
+   ]
+  },
+  {
+   "family": "Source Control / Worktrees",
+   "status": "demonstrated",
+   "entry": "Branching & Collaboration → Source Control & Worktrees",
+   "route": "#/branching/source-control",
+   "archetype": "preference-document",
+   "subpages": [
+    "Git",
+    "Worktrees",
+    "Protection"
+   ]
+  },
+  {
+   "family": "GitHub Actions",
+   "status": "demonstrated",
+   "entry": "Branching & Collaboration → GitHub Actions",
+   "route": "#/branching/github-actions",
+   "archetype": "resource-roster",
+   "subpages": [
+    "Workflows",
+    "Runners",
+    "Secrets Policy"
+   ]
+  },
+  {
+   "family": "Web / Search / Fetch / Crawl",
+   "status": "demonstrated",
+   "entry": "Web & Search → Web, Fetch & Crawl",
+   "route": "#/web/web",
+   "archetype": "preference-document",
+   "subpages": [
+    "Providers",
+    "Fetch Policy",
+    "Crawl Limits"
+   ]
+  },
+  {
+   "family": "Project Search Index",
+   "status": "demonstrated",
+   "entry": "Web & Search → Project Search Index",
+   "route": "#/web/search-index",
+   "archetype": "health-projection",
+   "subpages": [
+    "Status",
+    "Refresh",
+    "Inclusions"
+   ]
+  },
+  {
+   "family": "Media & Output",
+   "status": "demonstrated",
+   "entry": "Media & Output → Media & Output",
+   "route": "#/media/media",
+   "archetype": "preference-document",
+   "subpages": [
+    "Generation",
+    "Handling",
+    "Formats"
+   ]
+  }
+ ],
+ "deferred": [
+  {
+   "family": "Product Onboarding",
+   "status": "deferred_named_owner",
+   "owner": "Onboarding owner module",
+   "insertion": "System & Advanced → Getting Started",
+   "return_contract": "Return to System & Advanced overview",
+   "route": "#/system/owner-onboarding"
+  },
+  {
+   "family": "Installation / Deployment",
+   "status": "deferred_named_owner",
+   "owner": "Installation/Deployment owner",
+   "insertion": "System & Advanced → Installation",
+   "return_contract": "Return to System & Advanced overview",
+   "route": "#/system/owner-install-deploy"
+  },
+  {
+   "family": "Server Claim / Bootstrap",
+   "status": "deferred_named_owner",
+   "owner": "Server Claim owner module",
+   "insertion": "System & Advanced → Servers → Claim",
+   "return_contract": "Return to Servers shell",
+   "route": "#/system/owner-server-claim"
+  },
+  {
+   "family": "Servers / Execution Hosts / Clients",
+   "status": "deferred_named_owner",
+   "owner": "Servers owner module",
+   "insertion": "System & Advanced → Servers",
+   "return_contract": "Return to System & Advanced overview",
+   "route": "#/system/owner-servers"
+  },
+  {
+   "family": "Project Hosting & Files",
+   "status": "deferred_named_owner",
+   "owner": "Project Hosting owner module",
+   "insertion": "System & Advanced → Hosting",
+   "return_contract": "Return to System & Advanced overview",
+   "route": "#/system/owner-hosting"
+  },
+  {
+   "family": "Remote Access",
+   "status": "deferred_named_owner",
+   "owner": "Remote Access owner module",
+   "insertion": "System & Advanced → Remote Access",
+   "return_contract": "Return to System & Advanced overview",
+   "route": "#/system/owner-remote-access"
+  },
+  {
+   "family": "Project Sync / Move",
+   "status": "deferred_named_owner",
+   "owner": "Project Sync/Move owner module",
+   "insertion": "System & Advanced → Sync & Move",
+   "return_contract": "Return to System & Advanced overview",
+   "route": "#/system/owner-project-sync"
+  },
+  {
+   "family": "Puppet Master application/content updates",
+   "status": "deferred_named_owner",
+   "owner": "App Updates owner module",
+   "insertion": "System & Advanced → App Updates",
+   "return_contract": "Return to System & Advanced overview",
+   "route": "#/system/owner-app-updates"
+  },
+  {
+   "family": "Full Server backup owner flow",
+   "status": "deferred_named_owner",
+   "owner": "Server Backup owner module",
+   "insertion": "System & Advanced → Servers → Backup",
+   "return_contract": "Return to Servers shell",
+   "route": "#/system/owner-server-backup"
+  }
+ ]
+}

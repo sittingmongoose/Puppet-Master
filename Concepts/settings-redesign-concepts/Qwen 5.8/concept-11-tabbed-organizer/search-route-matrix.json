@@ -1,0 +1,182 @@
+{
+  "schema_id": "pm.settings_bakeoff.search_route_matrix.v1",
+  "concept_id": "concept-11-tabbed-organizer",
+  "cases": [
+    {
+      "query": "openai rate limit",
+      "case": "grouped + deep object row",
+      "rid": "sr:object:openai-cli.rate-limits",
+      "displayed_path": "AI Brains & Providers > OpenAI CLI",
+      "expected_dest": "#/mgr/providers/openai-cli?sec=limits",
+      "actual_dest": "#/mgr/providers/openai-cli?sec=limits",
+      "focus_highlight": "pm2-locate on landed row/section; control focused",
+      "back_restores_query": true,
+      "pass": true
+    },
+    {
+      "query": "rate limits",
+      "case": "duplicate labels (claude-oauth vs openai-cli)",
+      "rid": "sr:object:claude-oauth.rate-limits",
+      "displayed_path": "AI Brains & Providers > Claude CLI (Max profile)",
+      "expected_dest": "#/mgr/providers/claude-oauth?sec=limits",
+      "actual_dest": "#/mgr/providers/claude-oauth?sec=limits",
+      "focus_highlight": "pm2-locate on landed row/section; control focused",
+      "back_restores_query": true,
+      "pass": true
+    },
+    {
+      "query": "context window",
+      "case": "duplicate labels (manager default vs model row)",
+      "rid": "sr:object:providers.context-window-setting",
+      "displayed_path": "AI Brains & Providers > Provider Manager",
+      "expected_dest": "#/mgr/providers?sec=models",
+      "actual_dest": "#/mgr/providers?sec=models",
+      "focus_highlight": "pm2-locate on landed row/section; control focused",
+      "back_restores_query": true,
+      "pass": true
+    },
+    {
+      "query": "spelcheck",
+      "case": "typo fuzzy",
+      "rid": "sr:manager:spellcheck",
+      "displayed_path": "General & Appearance > Spellcheck & Dictionaries",
+      "expected_dest": "#/mgr/spellcheck",
+      "actual_dest": "#/mgr/spellcheck",
+      "focus_highlight": "pm2-locate on landed row/section; control focused",
+      "back_restores_query": true,
+      "pass": true
+    },
+    {
+      "query": "backup now",
+      "case": "action entry",
+      "rid": "sr:action:backup.now",
+      "displayed_path": "System & Advanced > Backup & Restore",
+      "expected_dest": "#/mgr/backup?row=backup.now",
+      "actual_dest": "#/mgr/backup?row=backup.now",
+      "focus_highlight": "pm2-locate on landed row/section; control focused",
+      "back_restores_query": true,
+      "pass": true
+    },
+    {
+      "query": "install codex",
+      "case": "setup entry with runtime-demand deep link",
+      "rid": "sr:setup:codex.install",
+      "displayed_path": "AI Brains & Providers > Codex CLI",
+      "expected_dest": "#/mgr/providers/codex?sec=install",
+      "actual_dest": "#/mgr/providers/codex?sec=install",
+      "focus_highlight": "pm2-locate on landed row/section; control focused",
+      "back_restores_query": true,
+      "pass": true
+    },
+    {
+      "query": "gist",
+      "case": "diagnostic entry",
+      "rid": "sr:diag:memory.gist-health",
+      "displayed_path": "Memory & Context > Memory Manager",
+      "expected_dest": "#/mgr/memory?row=memory.gist-health",
+      "actual_dest": "#/mgr/memory?row=memory.gist-health",
+      "focus_highlight": "pm2-locate on landed row/section; control focused",
+      "back_restores_query": true,
+      "pass": true
+    },
+    {
+      "query": "settings sync",
+      "case": "unavailable entry (null dest)",
+      "rid": "sr:unavailable:sync",
+      "displayed_path": "System & Advanced > Not available",
+      "expected_dest": "no route; receipt explains unavailability",
+      "actual_dest": "no route; receipt explains unavailability",
+      "focus_highlight": "pm2-locate on landed row/section; control focused",
+      "back_restores_query": true,
+      "pass": true
+    },
+    {
+      "query": "groq usage",
+      "case": "unavailable usage dashboard",
+      "rid": "sr:unavailable:groq.usage-dashboard",
+      "displayed_path": "AI Brains & Providers > Groq",
+      "expected_dest": "#/mgr/providers/groq-usage?sec=limits",
+      "actual_dest": "#/mgr/providers/groq-usage?sec=limits",
+      "focus_highlight": "pm2-locate on landed row/section; control focused",
+      "back_restores_query": true,
+      "pass": true
+    },
+    {
+      "query": "doctor",
+      "case": "manager entry",
+      "rid": "sr:manager:doctor",
+      "displayed_path": "System & Advanced > Doctor",
+      "expected_dest": "#/mgr/doctor",
+      "actual_dest": "#/mgr/doctor",
+      "focus_highlight": "pm2-locate on landed row/section; control focused",
+      "back_restores_query": true,
+      "pass": true
+    },
+    {
+      "query": "theme",
+      "case": "ordinary setting deep row",
+      "rid": "sr:setting:general.visual.theme",
+      "displayed_path": "General & Appearance > Visual Style",
+      "expected_dest": "#/cat/general/visual?row=general.visual.theme",
+      "actual_dest": "#/cat/general/visual?row=general.visual.theme",
+      "focus_highlight": "pm2-locate on landed row/section; control focused",
+      "back_restores_query": true,
+      "pass": true
+    },
+    {
+      "query": "font size",
+      "case": "two near-duplicate settings across domains",
+      "rid": "sr:setting:code.terminal.font-size",
+      "displayed_path": "Code & Execution > Terminal & Shell",
+      "expected_dest": "#/cat/code/terminal?row=code.terminal.font-size",
+      "actual_dest": "#/cat/code/terminal?row=code.terminal.font-size",
+      "focus_highlight": "pm2-locate on landed row/section; control focused",
+      "back_restores_query": true,
+      "pass": true
+    },
+    {
+      "query": "repair language servers",
+      "case": "setup row deep link",
+      "rid": "sr:setup:lsp.repair",
+      "displayed_path": "Code & Execution > Language Servers",
+      "expected_dest": "#/mgr/lsp?row=lsp.repair",
+      "actual_dest": "#/mgr/lsp?row=lsp.repair",
+      "focus_highlight": "pm2-locate on landed row/section; control focused",
+      "back_restores_query": true,
+      "pass": true
+    },
+    {
+      "query": "providers manager",
+      "case": "manager entry",
+      "rid": "sr:manager:providers",
+      "displayed_path": "AI Brains & Providers > Provider Manager",
+      "expected_dest": "#/mgr/providers",
+      "actual_dest": "#/mgr/providers",
+      "focus_highlight": "pm2-locate on landed row/section; control focused",
+      "back_restores_query": true,
+      "pass": true
+    },
+    {
+      "query": "memory half-life",
+      "case": "manager + setting grouping",
+      "rid": "sr:manager:memory",
+      "displayed_path": "Memory & Context > Memory Manager",
+      "expected_dest": "#/mgr/memory",
+      "actual_dest": "#/mgr/memory",
+      "focus_highlight": "pm2-locate on landed row/section; control focused",
+      "back_restores_query": true,
+      "pass": true
+    },
+    {
+      "query": "worktree",
+      "case": "manager + grouped settings",
+      "rid": "sr:manager:scm",
+      "displayed_path": "Branching & Collaboration > Source Control & Worktrees",
+      "expected_dest": "#/mgr/scm",
+      "actual_dest": "#/mgr/scm",
+      "focus_highlight": "pm2-locate on landed row/section; control focused",
+      "back_restores_query": true,
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,374 @@
+{
+ "schema_id": "pm.usage_independent_audit.canonical_fixture_crosscheck.v1",
+ "audit_date": "2026-08-17",
+ "canonical_source": "tests/fixtures/usage_gui/golden/usage_gui_acceptance_fixtures.json (pm.usage_gui.acceptance_fixture_matrix.v1, owner UF-088)",
+ "why_this_matters": "These 13 fixtures are canonical Plans-owned acceptance criteria for the Usage GUI. They are NOT part of the 2026-08-08 packet, are cited by no report in the concept's reports/ directory, and the concept was demonstrably not built against them. The packet's own 18-fixture matrix is a different, narrower set.",
+ "method": {
+  "dom_corpus": "rendered innerText of all 13 room panes at ADVANCED disclosure (every widget type mounted), plus the context ring and context details popovers, plus one open run-detail if reachable",
+  "data_corpus": "bounded, cycle-safe walk of window.U11 (keys and scalar values), depth 9, ~4MB cap",
+  "matching": "literal case-insensitive substring; for tokens shaped key:value the key half and value half are also recorded separately",
+  "caveat": "Fixture tokens are snake_case field names; the concept's data model is camelCase and its UI renders prose. Literal absence of a token therefore does not by itself prove the FACT is unrepresented. Three measures are reported separately: literal token presence, equivalent camelCase field presence in window.U11, and (where a finding exists) the behavioural verdict.",
+  "font_caveat": "The DOM corpus was captured over file:// where 5 of 8 webfonts did not resolve. Text content is unaffected; only advance widths are."
+ },
+ "headline": {
+  "fixtures": 13,
+  "must_tokens_total": 79,
+  "must_tokens_present_literally_in_dom": 2,
+  "must_tokens_present_literally_in_data": 0,
+  "must_tokens_with_a_camelcase_field_in_data": 9,
+  "must_not_literal_hits": 4,
+  "must_not_genuine_violations_detected_by_literal_matching": 0,
+  "interpretation": "No canonical MUST_NOT was caught by literal matching \u2014 all four hits are substring false positives, itemised per fixture. But only 9 of 79 canonical MUST facts have any equivalent field in the concept's data model (and just 2 appear literally in the rendered DOM), so the canonical fixture set is overwhelmingly UNADDRESSED rather than violated. The concept implements its own vocabulary (vs / sourceClass / conf / settlement / billingRoute) in place of canon's (value_state / source_class / source_confidence / source_authority / settlement_status / cost_status)."
+ },
+ "fixtures": [
+  {
+   "fixture_id": "GUI-USG-001",
+   "title": "missing usage renders unknown, not zero",
+   "surfaces": [
+    "Usage",
+    "Ledger",
+    "Dashboard Usage widget",
+    "Context Detail Pane"
+   ],
+   "must_total": 5,
+   "must_literal_in_dom": 0,
+   "must_literal_in_data": 0,
+   "must_with_camelcase_equivalent_field": [
+    "sourceClass"
+   ],
+   "must_absent_everywhere": [
+    "source_class:unknown",
+    "source_confidence:unknown",
+    "source_authority:unknown",
+    "usage_reporting_state:unknown_or_unavailable",
+    "raw_payload_ref:absent_or_redacted"
+   ],
+   "must_not_total": 3,
+   "must_not_literal_hits": [],
+   "auditor_verdict": "partially-addressed-under-a-different-vocabulary"
+  },
+  {
+   "fixture_id": "GUI-USG-002",
+   "title": "provider-reported zero remains reported zero",
+   "surfaces": [
+    "Usage",
+    "Ledger",
+    "provider/settings row"
+   ],
+   "must_total": 7,
+   "must_literal_in_dom": 1,
+   "must_literal_in_data": 0,
+   "must_with_camelcase_equivalent_field": [
+    "sourceClass"
+   ],
+   "must_absent_everywhere": [
+    "source_class:provider_reported",
+    "source_confidence",
+    "source_authority",
+    "settlement_status:settled_or_adjusted",
+    "zero_buckets",
+    "raw_payload_ref"
+   ],
+   "must_not_total": 3,
+   "must_not_literal_hits": [],
+   "auditor_verdict": "partially-addressed-under-a-different-vocabulary"
+  },
+  {
+   "fixture_id": "GUI-USG-003",
+   "title": "unknown cost fails closed",
+   "surfaces": [
+    "Usage",
+    "Ledger",
+    "Dashboard Usage widget"
+   ],
+   "must_total": 6,
+   "must_literal_in_dom": 0,
+   "must_literal_in_data": 0,
+   "must_with_camelcase_equivalent_field": [],
+   "must_absent_everywhere": [
+    "cost_status:unknown",
+    "source_confidence",
+    "source_authority",
+    "cost_microdollars:null",
+    "cost_minor_units:null",
+    "unknown_cost_copy"
+   ],
+   "must_not_total": 3,
+   "must_not_literal_hits": [
+    {
+     "token": "$0.00",
+     "verdict": "false positive",
+     "why": "matched inside 'cost per child | $0.00 \u00b7 plan included' \u2014 a KNOWN plan-included zero, which the fixture permits. The fixture forbids $0.00 as a rendering of UNKNOWN cost."
+    }
+   ],
+   "auditor_verdict": "unaddressed"
+  },
+  {
+   "fixture_id": "GUI-USG-004",
+   "title": "BYOK and subscription costs are hidden, not estimated",
+   "surfaces": [
+    "Usage",
+    "Ledger",
+    "provider/settings row",
+    "model row"
+   ],
+   "must_total": 7,
+   "must_literal_in_dom": 0,
+   "must_literal_in_data": 0,
+   "must_with_camelcase_equivalent_field": [],
+   "must_absent_everywhere": [
+    "usage_event_ref",
+    "usage_record_id",
+    "source_confidence",
+    "source_authority",
+    "hidden_byok",
+    "hidden_subscription",
+    "display_cost_policy:suppress"
+   ],
+   "must_not_total": 3,
+   "must_not_literal_hits": [],
+   "auditor_verdict": "unaddressed"
+  },
+  {
+   "fixture_id": "GUI-USG-005",
+   "title": "disabled quota bucket is disabled, not empty",
+   "surfaces": [
+    "Usage",
+    "provider/settings row",
+    "Antigravity CLI quota row"
+   ],
+   "must_total": 3,
+   "must_literal_in_dom": 0,
+   "must_literal_in_data": 0,
+   "must_with_camelcase_equivalent_field": [
+    "windowKind"
+   ],
+   "must_absent_everywhere": [
+    "quota_status:disabled",
+    "window_kind:unknown_or_disabled",
+    "disabled_reason"
+   ],
+   "must_not_total": 5,
+   "must_not_literal_hits": [
+    {
+     "token": "success",
+     "verdict": "false positive",
+     "why": "matched as a substring of 'successful no-op' in a maintenance record. The fixture forbids a disabled quota bucket rendering as 'success'."
+    }
+   ],
+   "auditor_verdict": "partially-addressed-under-a-different-vocabulary"
+  },
+  {
+   "fixture_id": "GUI-USG-006",
+   "title": "reported cache zero differs from unsupported cache",
+   "surfaces": [
+    "Usage",
+    "Ledger",
+    "model row"
+   ],
+   "must_total": 4,
+   "must_literal_in_dom": 0,
+   "must_literal_in_data": 0,
+   "must_with_camelcase_equivalent_field": [
+    "cacheRead"
+   ],
+   "must_absent_everywhere": [
+    "cache_read:0",
+    "cache_reporting_state:reported",
+    "cache_reporting_state:not_exposed",
+    "cache_reporting_state:unknown"
+   ],
+   "must_not_total": 2,
+   "must_not_literal_hits": [],
+   "auditor_verdict": "partially-addressed-under-a-different-vocabulary"
+  },
+  {
+   "fixture_id": "GUI-USG-007",
+   "title": "inclusive and exclusive token totals do not double count",
+   "surfaces": [
+    "Usage",
+    "Ledger",
+    "Runtime Artifacts",
+    "model row"
+   ],
+   "must_total": 4,
+   "must_literal_in_dom": 0,
+   "must_literal_in_data": 0,
+   "must_with_camelcase_equivalent_field": [],
+   "must_absent_everywhere": [
+    "counting_semantics",
+    "input_total_includes_cache",
+    "output_total_includes_reasoning",
+    "provider_total_semantics"
+   ],
+   "must_not_total": 3,
+   "must_not_literal_hits": [],
+   "auditor_verdict": "unaddressed"
+  },
+  {
+   "fixture_id": "GUI-USG-008",
+   "title": "partial and aborted streams preserve partial usage once",
+   "surfaces": [
+    "Usage",
+    "Runtime Artifacts",
+    "Run Graph",
+    "Orchestrator"
+   ],
+   "must_total": 4,
+   "must_literal_in_dom": 0,
+   "must_literal_in_data": 0,
+   "must_with_camelcase_equivalent_field": [],
+   "must_absent_everywhere": [
+    "settlement_status:streaming_partial_or_failed",
+    "stream_state:partial_or_aborted",
+    "dedupe_key",
+    "accepted_partial_rollup_once"
+   ],
+   "must_not_total": 3,
+   "must_not_literal_hits": [],
+   "auditor_verdict": "unaddressed"
+  },
+  {
+   "fixture_id": "GUI-CBP-001",
+   "title": "Antigravity missing commands render not exposed or unknown",
+   "surfaces": [
+    "Antigravity CLI provider row",
+    "Usage",
+    "provider/settings row"
+   ],
+   "must_total": 8,
+   "must_literal_in_dom": 0,
+   "must_literal_in_data": 0,
+   "must_with_camelcase_equivalent_field": [
+    "credits"
+   ],
+   "must_absent_everywhere": [
+    "/stats",
+    "/usage",
+    "/quota",
+    "/credits",
+    "stats_unavailable",
+    "usage:unknown",
+    "quota:not_exposed",
+    "credits:not_exposed"
+   ],
+   "must_not_total": 4,
+   "must_not_literal_hits": [],
+   "auditor_verdict": "partially-addressed-under-a-different-vocabulary"
+  },
+  {
+   "fixture_id": "GUI-CBP-002",
+   "title": "Antigravity G1 credits are credits-only",
+   "surfaces": [
+    "Antigravity CLI provider row",
+    "Usage",
+    "Dashboard Usage widget"
+   ],
+   "must_total": 6,
+   "must_literal_in_dom": 0,
+   "must_literal_in_data": 0,
+   "must_with_camelcase_equivalent_field": [],
+   "must_absent_everywhere": [
+    "provider_id:antigravity_cli",
+    "route:agy",
+    "G1 credits",
+    "UseG1Credits",
+    "credits_status",
+    "credits_remaining"
+   ],
+   "must_not_total": 4,
+   "must_not_literal_hits": [],
+   "auditor_verdict": "unaddressed"
+  },
+  {
+   "fixture_id": "GUI-ROUTE-001",
+   "title": "Usage route opens object-first by usage event",
+   "surfaces": [
+    "Usage",
+    "Ledger",
+    "Runtime Artifacts"
+   ],
+   "must_total": 12,
+   "must_literal_in_dom": 0,
+   "must_literal_in_data": 0,
+   "must_with_camelcase_equivalent_field": [
+    "sourceClass",
+    "projectionFreshness",
+    "projectionHealth"
+   ],
+   "must_absent_everywhere": [
+    "route_target.object_kind:usage_event",
+    "object_id:usage_event_ref",
+    "usage_record_id",
+    "provider_attempt_ref",
+    "attempt_id",
+    "trace_ref",
+    "source_class",
+    "source_confidence",
+    "source_authority",
+    "settlement_status",
+    "projection_freshness",
+    "projection_health"
+   ],
+   "must_not_total": 4,
+   "must_not_literal_hits": [],
+   "auditor_verdict": "partially-addressed-under-a-different-vocabulary"
+  },
+  {
+   "fixture_id": "GUI-RAW-001",
+   "title": "Raw and Curated usage views redact provider payloads",
+   "surfaces": [
+    "Runtime Artifacts",
+    "Usage",
+    "Ledger"
+   ],
+   "must_total": 8,
+   "must_literal_in_dom": 1,
+   "must_literal_in_data": 0,
+   "must_with_camelcase_equivalent_field": [
+    "sourceClass"
+   ],
+   "must_absent_everywhere": [
+    "Curated normalized fields",
+    "source_class",
+    "source_confidence",
+    "source_authority",
+    "Raw redacted refs",
+    "omitted_counts",
+    "permission_state"
+   ],
+   "must_not_total": 4,
+   "must_not_literal_hits": [
+    {
+     "token": "credentials",
+     "verdict": "false positive",
+     "why": "matched inside the redaction notice 'Raw is redacted \u2014 credentials, raw payloads, account ids and local paths are withheld.' \u2014 i.e. the fixture's requirement being satisfied, not violated."
+    }
+   ],
+   "auditor_verdict": "partially-addressed-under-a-different-vocabulary"
+  },
+  {
+   "fixture_id": "GUI-RAP-001",
+   "title": "Runtime artifact usage drill-through requires envelope and per-type schemas",
+   "surfaces": [
+    "Runtime Artifacts",
+    "Usage",
+    "Ledger"
+   ],
+   "must_total": 5,
+   "must_literal_in_dom": 0,
+   "must_literal_in_data": 0,
+   "must_with_camelcase_equivalent_field": [],
+   "must_absent_everywhere": [
+    "cost_usage",
+    "tool_llm_trace",
+    "envelope_plus_per_type",
+    "usage_event_ref",
+    "usage_record_id"
+   ],
+   "must_not_total": 2,
+   "must_not_literal_hits": [],
+   "auditor_verdict": "unaddressed"
+  }
+ ]
+}

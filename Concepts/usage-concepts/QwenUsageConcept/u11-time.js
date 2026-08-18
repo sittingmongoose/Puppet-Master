@@ -2,8 +2,13 @@
    U11 — shared time & date contract (packet §14)
    ---------------------------------------------------------------------
    - Demo instants are canonical UTC timestamps (ISO 8601 / epoch ms).
-   - The system IANA zone is resolved once at the UI boundary; if it
-   - cannot be determined we fall back to America/New_York.
+   - The system IANA zone is resolved once at the UI boundary and is
+   - accepted because it WORKS, never because of the shape of its name:
+   - whatever Intl resolves is validated by building a formatter with it.
+   - UTC, GMT, Zulu, CET, Japan and Singapore are real zones and are
+   - honoured like any other. Only a host where no zone resolves at all
+   - falls back to America/New York, and the label then says so — a
+   - fallback is never shown as if it were the reader's own zone.
    - Display uses the correct event-date abbreviation (EST vs EDT) for
    - the instant being rendered — never hard-coded year-round.
    - 24-hour time everywhere; no AM/PM.
@@ -13,20 +18,71 @@
 (function () {
   'use strict';
 
-  /* ---------- zone resolution (once) ---------- */
+  /* ---------- zone resolution (once) ----------
+     A zone is validated by USE, not by inspecting its name: if a formatter can
+     be built with it and format an instant, it is the reader's real zone. The
+     fallback is reserved for the genuine failure case (no zone resolves at all)
+     and is disclosed in the label whenever it is used. */
   var FALLBACK_ZONE = 'America/New_York';
-  var ZONE = (function () {
+  var FALLBACK_NOTE = 'fallback — system zone unavailable';
+  /* one winter and one summer instant: a zone claim has to hold in both */
+  var ZONE_PROBES = [Date.UTC(2026, 0, 15, 12, 0, 0), Date.UTC(2026, 6, 15, 12, 0, 0)];
+  /* tzdb renames that some ICU builds still report under the retired name;
+     the current name is used only after it is proved equivalent below. */
+  var RENAMED_ZONE = {
+    'Asia/Calcutta': 'Asia/Kolkata',
+    'Asia/Rangoon': 'Asia/Yangon',
+    'Asia/Saigon': 'Asia/Ho_Chi_Minh',
+    'Asia/Katmandu': 'Asia/Kathmandu',
+    'Asia/Thimbu': 'Asia/Thimphu',
+    'Europe/Kiev': 'Europe/Kyiv',
+    'America/Godthab': 'America/Nuuk',
+    'Atlantic/Faeroe': 'Atlantic/Faroe',
+    'Pacific/Ponape': 'Pacific/Pohnpei',
+    'Pacific/Truk': 'Pacific/Chuuk'
+  };
+
+  /* does this zone actually work in this runtime? */
+  function zoneWorks(z) {
+    if (!z || typeof z !== 'string') return false;
     try {
-      var z = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      if (z && typeof z === 'string' && z.indexOf('/') !== -1) return z;
-      return FALLBACK_ZONE;
-    } catch (e) { return FALLBACK_ZONE; }
+      new Intl.DateTimeFormat('en-US', { timeZone: z, hourCycle: 'h23', hour: '2-digit', minute: '2-digit' })
+        .format(new Date(ZONE_PROBES[0]));
+      return true;
+    } catch (e) { return false; }
+  }
+  /* do two zone names render the same instant identically, winter and summer? */
+  function sameZone(a, b) {
+    try {
+      var o = {
+        hourCycle: 'h23', year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
+      };
+      for (var i = 0; i < ZONE_PROBES.length; i++) {
+        var d = new Date(ZONE_PROBES[i]);
+        o.timeZone = a; var sa = new Intl.DateTimeFormat('en-US', o).format(d);
+        o.timeZone = b; var sb = new Intl.DateTimeFormat('en-US', o).format(d);
+        if (sa !== sb) return false;
+      }
+      return true;
+    } catch (e) { return false; }
+  }
+  /* prefer the platform's current name for the same zone (Asia/Kolkata, not
+     the retired Asia/Calcutta alias) — proved equivalent before it is used */
+  function preferredZone(z) {
+    var current = Object.prototype.hasOwnProperty.call(RENAMED_ZONE, z) ? RENAMED_ZONE[z] : null;
+    if (current && zoneWorks(current) && sameZone(z, current)) return current;
+    return z;
+  }
+
+  var SYSTEM_ZONE = (function () {
+    try { return Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (e) { return null; }
   })();
-  var ZONE_IS_FALLBACK = false;
-  try {
-    var sysz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    ZONE_IS_FALLBACK = !(sysz && sysz.indexOf('/') !== -1);
-  } catch (e) { ZONE_IS_FALLBACK = true; }
+  var ZONE_IS_FALLBACK = !zoneWorks(SYSTEM_ZONE);
+  var ZONE = ZONE_IS_FALLBACK ? FALLBACK_ZONE : preferredZone(SYSTEM_ZONE);
+  /* what the reader sees: no identifier underscores, and never a silent guess */
+  var ZONE_NAME = ZONE.replace(/_/g, ' ');
+  var ZONE_LABEL = ZONE_IS_FALLBACK ? ZONE_NAME + ' (' + FALLBACK_NOTE + ')' : ZONE_NAME;
 
   function toMs(v) {
     if (v == null) return null;
@@ -136,14 +192,16 @@
   }
 
   /* ---------- detail tooltip / expanded row ----------
-     "Fri Aug 7, 2026 00:00:00 EDT · America/New_York" */
+     "Fri Aug 7, 2026 00:00:00 UTC · UTC"
+     On a host whose zone could not be resolved the trailing name discloses the
+     fallback: "… EDT · America/New York (fallback — system zone unavailable)" */
   function full(target) {
     var t = toMs(target);
     if (t == null) return 'Time unavailable';
     var d = new Date(t);
     var wd = fmt({ weekday: 'short' }).format(d);
     var md = fmt({ month: 'short', day: 'numeric', year: 'numeric' }).format(d);
-    return wd + ' ' + md + ' ' + clockSec(t) + ' ' + zoneAbbr(t) + ' · ' + ZONE;
+    return wd + ' ' + md + ' ' + clockSec(t) + ' ' + zoneAbbr(t) + ' · ' + ZONE_LABEL;
   }
 
   /* ---------- plain local renderers (no relative) ---------- */
@@ -175,7 +233,9 @@
   }
 
   window.U11time = {
-    zone: ZONE,
+    zone: ZONE_LABEL,            /* display name; says so when it is a fallback */
+    zoneId: ZONE,                /* the IANA id the formatters actually use */
+    zoneResolved: SYSTEM_ZONE,   /* what the platform resolved, unmodified */
     zoneIsFallback: ZONE_IS_FALLBACK,
     when: when,
     full: full,

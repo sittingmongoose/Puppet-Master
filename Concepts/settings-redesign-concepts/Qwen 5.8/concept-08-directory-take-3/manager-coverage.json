@@ -1,0 +1,395 @@
+{
+  "schema_id": "pm.settings_bakeoff.manager_coverage.v2.concept",
+  "concept_id": "concept-08-directory-take-3",
+  "model": "Qwen 5.8",
+  "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+  "required_demonstrated": [
+    {
+      "name": "Settings Home",
+      "status": "demonstrated",
+      "family_id": "home",
+      "route": "#/home",
+      "note": "Concept-native surface at #/home composed by concept-08-directory-take-3.html; reachable from Home, domain overview, and universal search."
+    },
+    {
+      "name": "Settings Search",
+      "status": "demonstrated",
+      "family_id": "search",
+      "route": "universal search field on every view; #/q/<query> landing entries",
+      "note": "Concept-native surface at universal search field on every view; #/q/<query> landing entries composed by concept-08-directory-take-3.html; reachable from Home, domain overview, and universal search."
+    },
+    {
+      "name": "Settings Workspace",
+      "status": "demonstrated",
+      "family_id": "workspace",
+      "route": "#/cat/<catId> domain overview + #/cat/<catId>/<subId> pages",
+      "note": "Concept-native surface at #/cat/<catId> domain overview + #/cat/<catId>/<subId> pages composed by concept-08-directory-take-3.html; reachable from Home, domain overview, and universal search."
+    },
+    {
+      "name": "Ordinary setting grammar",
+      "status": "demonstrated",
+      "family_id": "grammar",
+      "route": "PMManagers2.row atoms on #/cat/<cat>/<sub> and #/all",
+      "note": "Concept-native surface at PMManagers2.row atoms on #/cat/<cat>/<sub> and #/all composed by concept-08-directory-take-3.html; reachable from Home, domain overview, and universal search."
+    },
+    {
+      "name": "Provider / Account / Model / Installation",
+      "status": "demonstrated",
+      "family_id": "providers",
+      "route": "#/mgr/providers and #/mgr/providers/<objectId>",
+      "note": "Concept-native catalog composition at #/mgr/providers and #/mgr/providers/<objectId> inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:providers)."
+    },
+    {
+      "name": "Context & Instructions",
+      "status": "demonstrated",
+      "family_id": "context",
+      "route": "#/mgr/context",
+      "note": "Concept-native catalog composition at #/mgr/context inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:context)."
+    },
+    {
+      "name": "Memory",
+      "status": "demonstrated",
+      "family_id": "memory",
+      "route": "#/mgr/memory",
+      "note": "Concept-native catalog composition at #/mgr/memory inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:memory)."
+    },
+    {
+      "name": "Personas",
+      "status": "demonstrated",
+      "family_id": "personas",
+      "route": "#/mgr/personas (+/<objectId>)",
+      "note": "Concept-native roster composition at #/mgr/personas (+/<objectId>) inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:personas)."
+    },
+    {
+      "name": "Goal & Automation",
+      "status": "demonstrated",
+      "family_id": "goal",
+      "route": "#/mgr/goal (+/<objectId>)",
+      "note": "Concept-native roster composition at #/mgr/goal (+/<objectId>) inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:goal)."
+    },
+    {
+      "name": "Crew",
+      "status": "demonstrated",
+      "family_id": "crew",
+      "route": "#/mgr/crew (+/<objectId>)",
+      "note": "Concept-native roster composition at #/mgr/crew (+/<objectId>) inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:crew)."
+    },
+    {
+      "name": "Permissions & FileSafe",
+      "status": "demonstrated",
+      "family_id": "permissions",
+      "route": "#/mgr/permissions (+/<objectId>)",
+      "note": "Concept-native roster composition at #/mgr/permissions (+/<objectId>) inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:permissions)."
+    },
+    {
+      "name": "Back Seat Driver",
+      "status": "demonstrated",
+      "family_id": "bsd",
+      "route": "#/mgr/bsd",
+      "note": "Concept-native preference composition at #/mgr/bsd inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:bsd)."
+    },
+    {
+      "name": "Notifications & Sounds",
+      "status": "demonstrated",
+      "family_id": "notifications",
+      "route": "#/mgr/notifications",
+      "note": "Concept-native preference composition at #/mgr/notifications inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:notifications)."
+    },
+    {
+      "name": "Sound Library / Uploads / Packs",
+      "status": "demonstrated",
+      "family_id": "sounds",
+      "route": "#/mgr/sounds",
+      "note": "Concept-native catalog composition at #/mgr/sounds inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:sounds)."
+    },
+    {
+      "name": "Appearance / themes / fonts / motion",
+      "status": "demonstrated",
+      "family_id": "appearance",
+      "route": "#/mgr/appearance",
+      "note": "Concept-native catalog composition at #/mgr/appearance inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:appearance)."
+    },
+    {
+      "name": "Spellcheck & Dictionaries",
+      "status": "demonstrated",
+      "family_id": "spellcheck",
+      "route": "#/mgr/spellcheck",
+      "note": "Concept-native catalog composition at #/mgr/spellcheck inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:spellcheck)."
+    },
+    {
+      "name": "Desktop / Tray / Window",
+      "status": "demonstrated",
+      "family_id": "desktop",
+      "route": "#/mgr/desktop",
+      "note": "Concept-native preference composition at #/mgr/desktop inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:desktop)."
+    },
+    {
+      "name": "Teacher / Help",
+      "status": "demonstrated",
+      "family_id": "teacher",
+      "route": "#/mgr/teacher",
+      "note": "Concept-native preference composition at #/mgr/teacher inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:teacher)."
+    },
+    {
+      "name": "Doctor",
+      "status": "demonstrated",
+      "family_id": "doctor",
+      "route": "#/mgr/doctor",
+      "note": "Concept-native diagnostic composition at #/mgr/doctor inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:doctor)."
+    },
+    {
+      "name": "File Manager / Editor",
+      "status": "demonstrated",
+      "family_id": "files",
+      "route": "#/mgr/files",
+      "note": "Concept-native catalog composition at #/mgr/files inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:files)."
+    },
+    {
+      "name": "Terminal",
+      "status": "demonstrated",
+      "family_id": "terminal",
+      "route": "#/mgr/terminal",
+      "note": "Concept-native preference composition at #/mgr/terminal inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:terminal)."
+    },
+    {
+      "name": "LSP",
+      "status": "demonstrated",
+      "family_id": "lsp",
+      "route": "#/mgr/lsp (+/<objectId>)",
+      "note": "Concept-native roster composition at #/mgr/lsp (+/<objectId>) inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:lsp)."
+    },
+    {
+      "name": "Formatters",
+      "status": "demonstrated",
+      "family_id": "formatters",
+      "route": "#/mgr/formatters (+/<objectId>)",
+      "note": "Concept-native roster composition at #/mgr/formatters (+/<objectId>) inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:formatters)."
+    },
+    {
+      "name": "Commands & Shortcuts",
+      "status": "demonstrated",
+      "family_id": "commands",
+      "route": "#/mgr/commands (+/<objectId>)",
+      "note": "Concept-native roster composition at #/mgr/commands (+/<objectId>) inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:commands)."
+    },
+    {
+      "name": "MCP",
+      "status": "demonstrated",
+      "family_id": "mcp",
+      "route": "#/mgr/mcp (+/<objectId>)",
+      "note": "Concept-native roster composition at #/mgr/mcp (+/<objectId>) inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:mcp)."
+    },
+    {
+      "name": "Skills",
+      "status": "demonstrated",
+      "family_id": "skills",
+      "route": "#/mgr/skills (+/<objectId>)",
+      "note": "Concept-native roster composition at #/mgr/skills (+/<objectId>) inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:skills)."
+    },
+    {
+      "name": "Plugins",
+      "status": "demonstrated",
+      "family_id": "plugins",
+      "route": "#/mgr/plugins (+/<objectId>)",
+      "note": "Concept-native roster composition at #/mgr/plugins (+/<objectId>) inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:plugins)."
+    },
+    {
+      "name": "Tools",
+      "status": "demonstrated",
+      "family_id": "tools",
+      "route": "#/mgr/tools (+/<objectId>)",
+      "note": "Concept-native roster composition at #/mgr/tools (+/<objectId>) inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:tools)."
+    },
+    {
+      "name": "Testing & Debug",
+      "status": "demonstrated",
+      "family_id": "testing",
+      "route": "#/mgr/testing",
+      "note": "Concept-native preference composition at #/mgr/testing inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:testing)."
+    },
+    {
+      "name": "Storage & Retention",
+      "status": "demonstrated",
+      "family_id": "storage",
+      "route": "#/mgr/storage",
+      "note": "Concept-native catalog composition at #/mgr/storage inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:storage)."
+    },
+    {
+      "name": "Backup & Restore",
+      "status": "demonstrated",
+      "family_id": "backup",
+      "route": "#/mgr/backup",
+      "note": "Concept-native catalog composition at #/mgr/backup inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:backup)."
+    },
+    {
+      "name": "Settings Lifecycle",
+      "status": "demonstrated",
+      "family_id": "lifecycle",
+      "route": "#/mgr/lifecycle (also #/lifecycle alias)",
+      "note": "Concept-native transaction composition at #/mgr/lifecycle (also #/lifecycle alias) inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:lifecycle)."
+    },
+    {
+      "name": "History & Sessions",
+      "status": "demonstrated",
+      "family_id": "history",
+      "route": "#/mgr/history",
+      "note": "Concept-native catalog composition at #/mgr/history inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:history)."
+    },
+    {
+      "name": "Runtime Artifacts / Project Outputs",
+      "status": "demonstrated",
+      "family_id": "artifacts",
+      "route": "#/mgr/artifacts",
+      "note": "Concept-native catalog composition at #/mgr/artifacts inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:artifacts)."
+    },
+    {
+      "name": "Source Control / Worktrees",
+      "status": "demonstrated",
+      "family_id": "scm",
+      "route": "#/mgr/scm",
+      "note": "Concept-native catalog composition at #/mgr/scm inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:scm)."
+    },
+    {
+      "name": "GitHub Actions",
+      "status": "demonstrated",
+      "family_id": "gha",
+      "route": "#/mgr/gha",
+      "note": "Concept-native catalog composition at #/mgr/gha inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:gha)."
+    },
+    {
+      "name": "Containers & Registries",
+      "status": "demonstrated",
+      "family_id": "containers",
+      "route": "#/mgr/containers (+/<objectId>)",
+      "note": "Concept-native roster composition at #/mgr/containers (+/<objectId>) inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:containers)."
+    },
+    {
+      "name": "Web / Search / Fetch / Crawl",
+      "status": "demonstrated",
+      "family_id": "web",
+      "route": "#/mgr/web",
+      "note": "Concept-native preference composition at #/mgr/web inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:web)."
+    },
+    {
+      "name": "Project Search Index",
+      "status": "demonstrated",
+      "family_id": "searchindex",
+      "route": "#/mgr/searchindex",
+      "note": "Concept-native health composition at #/mgr/searchindex inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:searchindex)."
+    },
+    {
+      "name": "Workspace Cleanup",
+      "status": "demonstrated",
+      "family_id": "cleanup",
+      "route": "#/mgr/cleanup",
+      "note": "Concept-native transaction composition at #/mgr/cleanup inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:cleanup)."
+    },
+    {
+      "name": "Media & Output",
+      "status": "demonstrated",
+      "family_id": "media",
+      "route": "#/mgr/media",
+      "note": "Concept-native preference composition at #/mgr/media inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:media)."
+    },
+    {
+      "name": "DRY Method visible state where exposed",
+      "status": "demonstrated",
+      "family_id": "dry",
+      "route": "#/mgr/dry",
+      "note": "Concept-native catalog composition at #/mgr/dry inside the Take 3 directory shell; reachable from Home domain card, domain overview destination row, and universal search (rid sr:manager:dry)."
+    }
+  ],
+  "allowed_deferred_named_owner": [
+    {
+      "name": "Product Onboarding",
+      "status": "deferred_named_owner",
+      "family_id": "onboarding",
+      "owner": "Product Onboarding plan owner",
+      "insertion": "First-run flow uses the same provider, account, connection, and installation records as Settings; no duplicate secret store; no SQLite.",
+      "return_contract": "Completed setup returns to the Providers manager with the new connection selected and a continuation receipt for any interrupted step.",
+      "route": "#/mgr/onboarding and #/deferred/onboarding",
+      "note": "Reachable insertion shell rendered concept-natively; no backend state fabricated."
+    },
+    {
+      "name": "Provider CLI Installation",
+      "status": "deferred_named_owner",
+      "family_id": "installation",
+      "owner": "Provider Lifecycle owner",
+      "insertion": "Explicit user-triggered install from the official source for the exact Host/Environment, with verification and rollback inside the provider card.",
+      "return_contract": "Install receipts deep-link back to the provider's installation section; a failed verification returns with the previous generation restored.",
+      "route": "#/mgr/installation and #/deferred/installation",
+      "note": "Reachable insertion shell rendered concept-natively; no backend state fabricated."
+    },
+    {
+      "name": "Server Claim",
+      "status": "deferred_named_owner",
+      "family_id": "server-claim",
+      "owner": "Server Backbone",
+      "insertion": "Claim handshake that binds a server record to this Puppet Master install before any hosted work is offered.",
+      "return_contract": "A successful claim returns to the Servers card with the claimed server marked connected and a claim receipt.",
+      "route": "#/mgr/server-claim and #/deferred/server-claim",
+      "note": "Reachable insertion shell rendered concept-natively; no backend state fabricated."
+    },
+    {
+      "name": "Servers",
+      "status": "deferred_named_owner",
+      "family_id": "servers",
+      "owner": "Server Backbone",
+      "insertion": "Manager grammar reserved under System & Advanced; human-language cards only; deep-link slot reserved for the server shell.",
+      "return_contract": "Server cards deep-link back into Settings at the matching storage or hosting row with full capability state.",
+      "route": "#/mgr/servers and #/deferred/servers",
+      "note": "Reachable insertion shell rendered concept-natively; no backend state fabricated."
+    },
+    {
+      "name": "Project Hosting & Files",
+      "status": "deferred_named_owner",
+      "family_id": "hosting",
+      "owner": "Project Syncing and Updates",
+      "insertion": "Source Location card (Hosted On, Project Files, Run Work) plus Project Sync status slots.",
+      "return_contract": "Hosting changes return to the Project Hosting card with sync status and a move receipt.",
+      "route": "#/mgr/hosting and #/deferred/hosting",
+      "note": "Reachable insertion shell rendered concept-natively; no backend state fabricated."
+    },
+    {
+      "name": "Remote Access",
+      "status": "deferred_named_owner",
+      "family_id": "remote-access",
+      "owner": "Server Backbone",
+      "insertion": "Pairing and session approvals; protected auth browsing sessions remain human-only.",
+      "return_contract": "Approvals return to the Remote Access card with the session list updated; no Settings state is invented here.",
+      "route": "#/mgr/remote-access and #/deferred/remote-access",
+      "note": "Reachable insertion shell rendered concept-natively; no backend state fabricated."
+    },
+    {
+      "name": "Sync & Move",
+      "status": "deferred_named_owner",
+      "family_id": "sync-move",
+      "owner": "Project Syncing and Updates",
+      "insertion": "Project relocation and sync bundles owned by the sync pipeline; Settings only surfaces status and entry points.",
+      "return_contract": "A finished move returns to Settings Lifecycle with the relocated project's settings re-verified and conflicts, if any, queued for review.",
+      "route": "#/mgr/sync-move and #/deferred/sync-move",
+      "note": "Reachable insertion shell rendered concept-natively; no backend state fabricated."
+    },
+    {
+      "name": "App & Content Updates",
+      "status": "deferred_named_owner",
+      "family_id": "updates",
+      "owner": "Project Syncing and Updates",
+      "insertion": "Host-scoped signed Puppet Master updates, separate from provider, source-control, language-server, and container tool updates.",
+      "return_contract": "Update status cards deep-link into the Updates manager with signed-build receipts.",
+      "route": "#/mgr/updates and #/deferred/updates",
+      "note": "Reachable insertion shell rendered concept-natively; no backend state fabricated."
+    },
+    {
+      "name": "Full Server Backup",
+      "status": "deferred_named_owner",
+      "family_id": "server-backup",
+      "owner": "Server Backbone",
+      "insertion": "Full Server backup class alongside settings backup and project backup, with its own schedule and verification.",
+      "return_contract": "Backup runs return to the Backup manager's server class with verification receipts and the last-run state.",
+      "route": "#/mgr/server-backup and #/deferred/server-backup",
+      "note": "Reachable insertion shell rendered concept-natively; no backend state fabricated."
+    }
+  ],
+  "classification_rule": "Every required family is classified as demonstrated or deferred_named_owner; zero unclassified families; forbidden statuses are never used."
+}

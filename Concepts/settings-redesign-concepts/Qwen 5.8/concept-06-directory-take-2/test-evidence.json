@@ -1,0 +1,76 @@
+{
+  "schema_id": "pm.settings_bakeoff.test_evidence.v1",
+  "concept": "concept-06-directory-take-2",
+  "static_checks": [
+    {
+      "check": "no iframe",
+      "pass": true,
+      "evidence": "read full HTML: zero <iframe occurrences"
+    },
+    {
+      "check": "no cross-concept refs",
+      "pass": true,
+      "evidence": "no href/src to concept-01..04; only _shared modules"
+    },
+    {
+      "check": "routes list",
+      "pass": true,
+      "routes": [
+        "#/home",
+        "#/q/<query>",
+        "#/cat/<id>",
+        "#/cat/<id>/<sub>",
+        "#/mgr/<family>",
+        "#/mgr/<family>/<object>",
+        "#/all",
+        "#/copy",
+        "#/lifecycle",
+        "#/closed"
+      ]
+    },
+    {
+      "check": "virtualization present",
+      "pass": true,
+      "evidence": "PMManagers2.virtualList on #/all with data-window updates; 15 rendered rows of 828; +2000 synthetic only when toggled"
+    },
+    {
+      "check": "harness hooks",
+      "pass": true,
+      "hooks": [
+        "data-test=search-input",
+        "data-test=search-results",
+        "data-rid rows with .pm2-r-title",
+        "data-route root",
+        "data-test=back",
+        "data-test=close",
+        "data-test=breadcrumb",
+        "data-test=home",
+        "data-test=all",
+        "data-test=copy",
+        "data-manager on all 42 manager routes",
+        "data-test=vlist + data-window",
+        "pm2-locate highlight"
+      ]
+    },
+    {
+      "check": "search back-restore",
+      "pass": true,
+      "evidence": "#/q/<query> pushed before navigate; goBack restored query text and dropdown results (observed in browser)"
+    },
+    {
+      "check": "manager crawl",
+      "pass": true,
+      "evidence": "42/42 routes render data-manager + breadcrumb + back + close + search with non-empty rows (observed)"
+    },
+    {
+      "check": "narrow transform",
+      "pass": true,
+      "evidence": "squeezed tier hides domain rail and pushes roster->sheet with Back-to-list (observed)"
+    },
+    {
+      "check": "reduced motion",
+      "pass": true,
+      "evidence": "concept animations gated by [data-reduced-motion]; shell CSS kills animations globally"
+    }
+  ]
+}

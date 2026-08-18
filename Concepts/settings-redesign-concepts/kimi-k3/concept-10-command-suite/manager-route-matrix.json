@@ -1,0 +1,873 @@
+{
+ "schema_id": "pm.settings_bakeoff.manager_route_matrix.v1",
+ "concept": "concept-10-command-suite",
+ "routes": [
+  {
+   "manager": "providers",
+   "family": "Provider / Account / Model / Installation",
+   "entry_point": "AI Brains & Providers domain page + universal search",
+   "route": "#/ai/providers",
+   "shell_retained": true,
+   "back_target": "AI Brains & Providers",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "model-defaults",
+   "family": "Provider / Account / Model / Installation",
+   "entry_point": "AI Brains & Providers domain page + universal search",
+   "route": "#/ai/model-defaults",
+   "shell_retained": true,
+   "back_target": "AI Brains & Providers",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "context",
+   "family": "Context & Instructions",
+   "entry_point": "Memory & Context domain page + universal search",
+   "route": "#/memory/context",
+   "shell_retained": true,
+   "back_target": "Memory & Context",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "memory",
+   "family": "Memory",
+   "entry_point": "Memory & Context domain page + universal search",
+   "route": "#/memory/memory",
+   "shell_retained": true,
+   "back_target": "Memory & Context",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "personas",
+   "family": "Personas",
+   "entry_point": "Personas domain page + universal search",
+   "route": "#/personas/personas",
+   "shell_retained": true,
+   "back_target": "Personas",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "crew",
+   "family": "Crew",
+   "entry_point": "Branching & Collaboration domain page + universal search",
+   "route": "#/branching/crew",
+   "shell_retained": true,
+   "back_target": "Branching & Collaboration",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "goal",
+   "family": "Goal & Automation",
+   "entry_point": "Planning & Verification domain page + universal search",
+   "route": "#/planning/goal",
+   "shell_retained": true,
+   "back_target": "Planning & Verification",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "backseat",
+   "family": "Back Seat Driver",
+   "entry_point": "Planning & Verification domain page + universal search",
+   "route": "#/planning/backseat",
+   "shell_retained": true,
+   "back_target": "Planning & Verification",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "permissions",
+   "family": "Permissions & FileSafe",
+   "entry_point": "Permissions & Safety domain page + universal search",
+   "route": "#/safety/permissions",
+   "shell_retained": true,
+   "back_target": "Permissions & Safety",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "appearance",
+   "family": "Appearance / themes / fonts / motion",
+   "entry_point": "General & Appearance domain page + universal search",
+   "route": "#/general/appearance",
+   "shell_retained": true,
+   "back_target": "General & Appearance",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "notifications",
+   "family": "Notifications & Sounds",
+   "entry_point": "General & Appearance domain page + universal search",
+   "route": "#/general/notifications",
+   "shell_retained": true,
+   "back_target": "General & Appearance",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "sounds",
+   "family": "Sound Library / Uploads / Packs",
+   "entry_point": "General & Appearance domain page + universal search",
+   "route": "#/general/sounds",
+   "shell_retained": true,
+   "back_target": "General & Appearance",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "spellcheck",
+   "family": "Spellcheck & Dictionaries",
+   "entry_point": "General & Appearance domain page + universal search",
+   "route": "#/general/spellcheck",
+   "shell_retained": true,
+   "back_target": "General & Appearance",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "desktop",
+   "family": "Desktop / Tray / Window",
+   "entry_point": "General & Appearance domain page + universal search",
+   "route": "#/general/desktop",
+   "shell_retained": true,
+   "back_target": "General & Appearance",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "files",
+   "family": "File Manager / Editor",
+   "entry_point": "Code & Execution domain page + universal search",
+   "route": "#/code/files",
+   "shell_retained": true,
+   "back_target": "Code & Execution",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "terminal",
+   "family": "Terminal",
+   "entry_point": "Code & Execution domain page + universal search",
+   "route": "#/code/terminal",
+   "shell_retained": true,
+   "back_target": "Code & Execution",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "lsp",
+   "family": "LSP",
+   "entry_point": "Code & Execution domain page + universal search",
+   "route": "#/code/lsp",
+   "shell_retained": true,
+   "back_target": "Code & Execution",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "formatters",
+   "family": "Formatters",
+   "entry_point": "Code & Execution domain page + universal search",
+   "route": "#/code/formatters",
+   "shell_retained": true,
+   "back_target": "Code & Execution",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "tools",
+   "family": "Tools",
+   "entry_point": "Skills, Plugins & Commands domain page + universal search",
+   "route": "#/extensions/tools",
+   "shell_retained": true,
+   "back_target": "Skills, Plugins & Commands",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "testing",
+   "family": "Testing & Debug",
+   "entry_point": "Code & Execution domain page + universal search",
+   "route": "#/code/testing",
+   "shell_retained": true,
+   "back_target": "Code & Execution",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "containers",
+   "family": "Containers & Registries",
+   "entry_point": "Code & Execution domain page + universal search",
+   "route": "#/code/containers",
+   "shell_retained": true,
+   "back_target": "Code & Execution",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "commands",
+   "family": "Commands & Shortcuts",
+   "entry_point": "Skills, Plugins & Commands domain page + universal search",
+   "route": "#/extensions/commands",
+   "shell_retained": true,
+   "back_target": "Skills, Plugins & Commands",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "skills",
+   "family": "Skills",
+   "entry_point": "Skills, Plugins & Commands domain page + universal search",
+   "route": "#/extensions/skills",
+   "shell_retained": true,
+   "back_target": "Skills, Plugins & Commands",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "plugins",
+   "family": "Plugins",
+   "entry_point": "Skills, Plugins & Commands domain page + universal search",
+   "route": "#/extensions/plugins",
+   "shell_retained": true,
+   "back_target": "Skills, Plugins & Commands",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "mcp",
+   "family": "MCP",
+   "entry_point": "System & Advanced domain page + universal search",
+   "route": "#/system/mcp",
+   "shell_retained": true,
+   "back_target": "System & Advanced",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "teacher",
+   "family": "Teacher / Help",
+   "entry_point": "System & Advanced domain page + universal search",
+   "route": "#/system/teacher",
+   "shell_retained": true,
+   "back_target": "System & Advanced",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "doctor",
+   "family": "Doctor",
+   "entry_point": "System & Advanced domain page + universal search",
+   "route": "#/system/doctor",
+   "shell_retained": true,
+   "back_target": "System & Advanced",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "storage",
+   "family": "Storage & Retention",
+   "entry_point": "System & Advanced domain page + universal search",
+   "route": "#/system/storage",
+   "shell_retained": true,
+   "back_target": "System & Advanced",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "backup",
+   "family": "Backup & Restore",
+   "entry_point": "System & Advanced domain page + universal search",
+   "route": "#/system/backup",
+   "shell_retained": true,
+   "back_target": "System & Advanced",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "lifecycle",
+   "family": "Settings Lifecycle",
+   "entry_point": "System & Advanced domain page + universal search",
+   "route": "#/system/lifecycle",
+   "shell_retained": true,
+   "back_target": "System & Advanced",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "history",
+   "family": "History & Sessions",
+   "entry_point": "System & Advanced domain page + universal search",
+   "route": "#/system/history",
+   "shell_retained": true,
+   "back_target": "System & Advanced",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "artifacts",
+   "family": "Runtime Artifacts / Project Outputs",
+   "entry_point": "System & Advanced domain page + universal search",
+   "route": "#/system/artifacts",
+   "shell_retained": true,
+   "back_target": "System & Advanced",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "cleanup",
+   "family": "Workspace Cleanup",
+   "entry_point": "System & Advanced domain page + universal search",
+   "route": "#/system/cleanup",
+   "shell_retained": true,
+   "back_target": "System & Advanced",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "dry-method",
+   "family": "DRY Method visible state where exposed",
+   "entry_point": "System & Advanced domain page + universal search",
+   "route": "#/system/dry-method",
+   "shell_retained": true,
+   "back_target": "System & Advanced",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "source-control",
+   "family": "Source Control / Worktrees",
+   "entry_point": "Branching & Collaboration domain page + universal search",
+   "route": "#/branching/source-control",
+   "shell_retained": true,
+   "back_target": "Branching & Collaboration",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "github-actions",
+   "family": "GitHub Actions",
+   "entry_point": "Branching & Collaboration domain page + universal search",
+   "route": "#/branching/github-actions",
+   "shell_retained": true,
+   "back_target": "Branching & Collaboration",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "web",
+   "family": "Web / Search / Fetch / Crawl",
+   "entry_point": "Web & Search domain page + universal search",
+   "route": "#/web/web",
+   "shell_retained": true,
+   "back_target": "Web & Search",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "search-index",
+   "family": "Project Search Index",
+   "entry_point": "Web & Search domain page + universal search",
+   "route": "#/web/search-index",
+   "shell_retained": true,
+   "back_target": "Web & Search",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "media",
+   "family": "Media & Output",
+   "entry_point": "Media & Output domain page + universal search",
+   "route": "#/media/media",
+   "shell_retained": true,
+   "back_target": "Media & Output",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "ready",
+    "loading-cached",
+    "empty",
+    "offline",
+    "managed",
+    "unavailable"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "owner-onboarding",
+   "family": "Product Onboarding",
+   "entry_point": "System & Advanced → Getting Started",
+   "route": "#/system/owner-onboarding",
+   "shell_retained": true,
+   "back_target": "System & Advanced",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "owner-shell"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "owner-install-deploy",
+   "family": "Installation / Deployment",
+   "entry_point": "System & Advanced → Installation",
+   "route": "#/system/owner-install-deploy",
+   "shell_retained": true,
+   "back_target": "System & Advanced",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "owner-shell"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "owner-server-claim",
+   "family": "Server Claim / Bootstrap",
+   "entry_point": "System & Advanced → Servers → Claim",
+   "route": "#/system/owner-server-claim",
+   "shell_retained": true,
+   "back_target": "System & Advanced",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "owner-shell"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "owner-servers",
+   "family": "Servers / Execution Hosts / Clients",
+   "entry_point": "System & Advanced → Servers",
+   "route": "#/system/owner-servers",
+   "shell_retained": true,
+   "back_target": "System & Advanced",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "owner-shell"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "owner-hosting",
+   "family": "Project Hosting & Files",
+   "entry_point": "System & Advanced → Hosting",
+   "route": "#/system/owner-hosting",
+   "shell_retained": true,
+   "back_target": "System & Advanced",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "owner-shell"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "owner-remote-access",
+   "family": "Remote Access",
+   "entry_point": "System & Advanced → Remote Access",
+   "route": "#/system/owner-remote-access",
+   "shell_retained": true,
+   "back_target": "System & Advanced",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "owner-shell"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "owner-project-sync",
+   "family": "Project Sync / Move",
+   "entry_point": "System & Advanced → Sync & Move",
+   "route": "#/system/owner-project-sync",
+   "shell_retained": true,
+   "back_target": "System & Advanced",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "owner-shell"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "owner-app-updates",
+   "family": "Puppet Master application/content updates",
+   "entry_point": "System & Advanced → App Updates",
+   "route": "#/system/owner-app-updates",
+   "shell_retained": true,
+   "back_target": "System & Advanced",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "owner-shell"
+   ],
+   "pass": "pending-verification-phase"
+  },
+  {
+   "manager": "owner-server-backup",
+   "family": "Full Server backup owner flow",
+   "entry_point": "System & Advanced → Servers → Backup",
+   "route": "#/system/owner-server-backup",
+   "shell_retained": true,
+   "back_target": "System & Advanced",
+   "close_target": "originating surface (Settings Home fallback)",
+   "narrow_behavior": "one-pane push navigation with named Back",
+   "key_states": [
+    "owner-shell"
+   ],
+   "pass": "pending-verification-phase"
+  }
+ ]
+}

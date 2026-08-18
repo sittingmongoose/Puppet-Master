@@ -1,199 +1,567 @@
 {
-  "concept": "QwenUsageConcept/u11-prism",
-  "packet": "PM_Usage_Concept_Update_Final_Cumulative_2026-08-08 §05 demo fixtures",
-  "date": "2026-08-11",
-  "fixtures": [
-    {
-      "n": 1,
-      "requirement": "Codex plan reaches limit, then optional credits",
-      "represented_in": "meter:codex-biz-5h usedPct 100 + continuation prod:codex-plus (credits → saved reset → wait)",
-      "ui_path": "Plans & limits widget (Work row) · Attention banner",
-      "test": "harness fixture 1",
-      "status": "pass"
-    },
-    {
-      "n": 2,
-      "requirement": "Alibaba Token Plan consumes an Extra Bundle",
-      "represented_in": "prod:alibaba-extra-bundle + ue-611 billingRoute usage_pack (new)",
-      "ui_path": "Ledger · work-1 attempt ue-611 · Billing route 'usage pack'",
-      "test": "harness fixture 2",
-      "status": "pass"
-    },
-    {
-      "n": 3,
-      "requirement": "Work account reaches limit; future work switches to Personal",
-      "represented_in": "ue-608 requested acct:openai-work → effective acct:openai-personal + fallbackReason + continuation prod:codex-business fallback",
-      "ui_path": "Ledger · retries bucket · account row 'Use next'",
-      "test": "harness fixture 3 + new-behavior Use next check",
-      "status": "pass"
-    },
-    {
-      "n": 4,
-      "requirement": "Text-only main model invokes separately settled vision helper",
-      "represented_in": "ue-550 main (text-only) + ue-551 vision helper billingRoute api_billed (streaming_partial) + ue-602 attachment transform",
-      "ui_path": "Ledger · work-6 · attempt inspector Attachment section",
-      "test": "harness fixture 4 + 12",
-      "status": "pass"
-    },
-    {
-      "n": 5,
-      "requirement": "Model change causes replay/cache reset",
-      "represented_in": "cm-4 model_switch_repack (rebuilt) + timeline switch event + ue-591 replay attributed to new connection",
-      "ui_path": "Context details · What changed timeline",
-      "test": "harness fixture 5",
-      "status": "pass"
-    },
-    {
-      "n": 6,
-      "requirement": "Free model cooldown",
-      "represented_in": "free:glm-air cooldownUntil at(+40m)",
-      "ui_path": "Free models widget · 'Cooldown · back in 40m' row",
-      "test": "harness fixture 6 + new-behavior cooldown check",
-      "status": "pass"
-    },
-    {
-      "n": 7,
-      "requirement": "Background model validation consumes allowance",
-      "represented_in": "ue-620 probe on free shared route (bucket validation) + signals text",
-      "ui_path": "Source authority widget · Catalog & probes",
-      "test": "harness fixture 7",
-      "status": "pass"
-    },
-    {
-      "n": 8,
-      "requirement": "Six required specialists run in three two-agent waves",
-      "represented_in": "run:goal-47: 8 requested (fixture wording: 6 required in 3 waves is the general rule; dataset shows 8 requested / 2 admitted / 4 waves)",
-      "ui_path": "Capacity widget · Runs & agents · run detail Admission",
-      "test": "harness fixture 8",
-      "status": "pass"
-    },
-    {
-      "n": 9,
-      "requirement": "Provider data unavailable; PM shows estimate/confidence",
-      "represented_in": "meter:oc-go-monthly vs unavailable + estimate {63%, PM history · last 7 days, medium}",
-      "ui_path": "Plans widget · 'Provider data unavailable · PM estimate 63% · medium confidence' (never zero, never fake provider number)",
-      "test": "harness fixture 9 + new-behavior estimate check",
-      "status": "pass"
-    },
-    {
-      "n": 10,
-      "requirement": "Requested/effective model differs",
-      "represented_in": "thread:t-91 switched (GPT-5.6-Codex → Kimi K2) + ue-608 requested≠effective account",
-      "ui_path": "Context details · Models and connections used · run detail",
-      "test": "harness fixture 10",
-      "status": "pass"
-    },
-    {
-      "n": 11,
-      "requirement": "BSD silent and advice calls",
-      "represented_in": "bsdEvents bsd-1 silent (ue-600), bsd-2 advice_emitted (ue-601), bsd-3 duplicate_suppressed (eventId null — zero usage)",
-      "ui_path": "Ledger · validation bucket · attempt inspector 'Back Seat Driver' section",
-      "test": "harness fixture 11 + new-behavior BSD inspector check",
-      "status": "pass"
-    },
-    {
-      "n": 12,
-      "requirement": "Attachment transform",
-      "represented_in": "ue-602 attachment {receipt.jpg, pm_vision_ocr, art-91, project_default, provider_route, localCompute none}",
-      "ui_path": "Attempt inspector · Attachment section",
-      "test": "harness fixture 12",
-      "status": "pass"
-    },
-    {
-      "n": 13,
-      "requirement": "CLI update waits for idle, verifies, rolls back",
-      "represented_in": "ops-1 phases Check/Wait for idle/Install/Verify/Rollback, failureClass verify_failed, outcome rolled_back, validationEventId ue-609",
-      "ui_path": "Maintenance & operations widget (Ledger board) · 'View the verification call' → inspector",
-      "test": "harness fixture 13 + operations widget check",
-      "status": "pass"
-    },
-    {
-      "n": 14,
-      "requirement": "Offline queued message and reconnect",
-      "represented_in": "ops-2 offline_outbox phases + ue-610 replayKind offline_reconnect operationalRef ops-2",
-      "ui_path": "Operations widget · attempt inspector operational linkage note",
-      "test": "harness fixture 14",
-      "status": "pass"
-    },
-    {
-      "n": 15,
-      "requirement": "Server work continues while client offline",
-      "represented_in": "ops-3 server_continuity on host:truenas/env:docker",
-      "ui_path": "Operations widget · 'Server work continues while the client is offline; slow thread load is not provider usage.'",
-      "test": "harness fixture 15",
-      "status": "pass"
-    },
-    {
-      "n": 16,
-      "requirement": "Cross-project Goal",
-      "represented_in": "work-12/thread:t-77 (Harbor) + ue-652 crossProject lineage, paths redacted",
-      "ui_path": "Ledger · specialists bucket · attempt inspector note",
-      "test": "harness fixture 16",
-      "status": "pass"
-    },
-    {
-      "n": 17,
-      "requirement": "Local sound preview and external notification test-send",
-      "represented_in": "ops-4 sound_preview + ops-5 notification_test (both providerUsage none)",
-      "ui_path": "Operations widget",
-      "test": "harness fixture 17",
-      "status": "pass"
-    },
-    {
-      "n": 18,
-      "requirement": "Unconfigured account absent from normal view",
-      "represented_in": "unconfiguredCatalog (Mistral/Fireworks/OpenRouter/Cohere) exists only as verification data; visibleAccounts()/visibleFamilies() filter them",
-      "ui_path": "nowhere in the DOM",
-      "test": "harness fixture 18 + document-text sweep",
-      "status": "pass"
-    },
-    {
-      "n": 19,
-      "requirement": "Runtime demand for a missing provider CLI returns Provider Setup Required (no silent install; continuation preserved)",
-      "represented_in": "ops-8 setup_required + setupLink deep-link with continuation token; Auto/On maintain approved installs only",
-      "ui_path": "Maintenance & operations widget · 'Open provider setup' CTA",
-      "test": "harness correction check (setup_required)",
-      "status": "pass"
-    },
-    {
-      "n": 20,
-      "requirement": "Explicit first acquisition vs post-consent update/repair, with exact host/env/installation identity",
-      "represented_in": "ops-1 acquisition lineage (explicit_user_setup · official OpenAI installer · publisher-signed artifact · Studio PC/Native) + inspector acquisition note on ue-609",
-      "ui_path": "Operations widget acquisition line · attempt inspector",
-      "test": "harness correction checks (acquisition lineage + inspector note)",
-      "status": "pass"
+ "schema_id": "pm.usage_demo_fixture_report.v1",
+ "schema_id_provenance": "Locally minted 2026-08-18 in the family of the one schema id the packet does declare (pm.usage_candidate_command_delta.v1, PM_Usage_Concept_Update_Final_Cumulative_2026-08-08/CANDIDATE_COMMAND_ID_REGISTER.json:2). Neither packet declares a schema id for this output, so this id is not canonical and the packet owner should ratify or replace it.",
+ "concept": "QwenUsageConcept/u11-prism",
+ "packet": "PM_Usage_Concept_Update_Final_Cumulative_2026-08-08 §05 demo fixtures",
+ "date": "2026-08-18",
+ "revision_history": [
+  "2026-08-11 - first issue with 18 fixtures.",
+  "2026-08-13 - fixtures 19 and 20 added by the correction packet.",
+  "2026-08-18 - the local-policy guardrail retraction landed; then the audit repair: a verification basis is recorded per fixture, fixture 8 is re-attributed, and the four packet hard failures this register omitted are added.",
+  "2026-08-18 (second pass) - the harness caught up with this register. u11-verify.mjs went from 90 to 108 cases: an 18-case 'closure' section that guards the repairs this remediation made, plus three existing cases rewritten because their names claimed more than their assertions proved. Every guardrail below whose status said 'no harness case tests this' has been re-read against the run of record and either re-stated with the case that now tests it or left where it was, with the reason."
+ ],
+ "harness_run_of_record": {
+  "report": "reports/visual-interaction-test-report.json",
+  "ran_at": "2026-08-18T14:09:40.337Z",
+  "cases": 108,
+  "pass": 108,
+  "fail": 0,
+  "exit": 0,
+  "shape": {
+   "matrix": 40,
+   "closure": 18,
+   "fixture": 18,
+   "guard": 13,
+   "new": 7,
+   "interaction": 6,
+   "correction": 3,
+   "new-behavior": 1,
+   "hard-failure": 1,
+   "context": 1
+  },
+  "note": "Every status word below that says 'measured' means measured by THIS run. A status that says 'design', 'failed' or 'undeclared' means this run does not settle it, and the entry says why. No status below is upgraded on a source read.",
+  "negative_controls": "All 18 closure cases and the three rewritten cases were negative-controlled: the thing each one guards was broken in a scratch copy of the concept and the case was confirmed to go red, then the copy was discarded. The controls are listed in the residual pass report, not stored here."
+ },
+ "verification_basis_legend": {
+  "classified_on": "2026-08-18",
+  "method": "Each fixture's backing closure in u11-verify.mjs was read and classified by whether it touches the rendered document at all.",
+  "data-asserted": "The evidence is a page.evaluate() read of window.U11 fields. It would pass unchanged against a page that rendered nothing. Representation in the data is proven; rendering is not.",
+  "data-asserted; a separate harness case renders part of the same surface": "The fixture's own closure is a data read, but a separate harness case renders and asserts part of the same surface. Part of the claim is DOM-verified and part is not; the entry says which.",
+  "rendered-DOM": "The evidence includes a read of rendered text or a click on a rendered control.",
+  "why_this_legend_exists": "18 of the 20 fixture claims were carried in a file named visual-interaction-test-report.json on the strength of in-memory assertions with no DOM or render check, and nothing said so. The word 'visual' in the harness report's filename did work the harness did not do. Audit finding A10-14.",
+  "tally_at_this_revision": {
+   "data-asserted": 11,
+   "data-asserted; a separate harness case renders part of the same surface": 5,
+   "rendered-DOM": 4
+  },
+  "tally_history": [
+   {
+    "on": "2026-08-18 (first pass)",
+    "tally": {
+     "data-asserted": 12,
+     "data-asserted; a separate harness case renders part of the same surface": 5,
+     "rendered-DOM": 3
     }
-  ],
-  "hard_failure_guardrails": [
-    {
-      "rule": "unknown never rendered as zero",
-      "evidence": "kimi-pool + zai-legacy stay 'limit unknown'; oc-go-monthly shows estimate, not zero",
-      "status": "asserted"
+   },
+   {
+    "on": "2026-08-18 (second pass)",
+    "tally": {
+     "data-asserted": 11,
+     "data-asserted; a separate harness case renders part of the same surface": 5,
+     "rendered-DOM": 4
     },
-    {
-      "rule": "no unconfigured provider names in DOM",
-      "evidence": "document.innerText sweep across all pages",
-      "status": "asserted"
-    },
-    {
-      "rule": "maintenance entries carry no token totals",
-      "evidence": "operations widget text scanned for tok/tokens — clean",
-      "status": "asserted"
-    },
-    {
-      "rule": "cost identity holds",
-      "evidence": "61,850,000 + 125,570,000 = 187,420,000 computed in-page",
-      "status": "asserted"
-    },
-    {
-      "rule": "helper calls never hidden inside main model",
-      "evidence": "ledger groups every attempt under logical work; advanced mode lists all",
-      "status": "design"
-    },
-    {
-      "rule": "Usage mutates no policy locally",
-      "evidence": "every policy action deep-links to Settings",
-      "status": "design"
+    "what_moved": "Fixture 8 moved from data-asserted to rendered-DOM when its harness case was rewritten to read the capacity row and the run detail.",
+    "harness_side_measurement": {
+     "measured_on": "2026-08-18",
+     "method": "Counted directly from the fixtures array in u11-verify.mjs: which closures reach the document at all.",
+     "fixture_closures_in_the_sweep": 18,
+     "closures_that_touch_the_document": 2,
+     "which": [
+      "fixture 6 - navigates to the Free room and tests visible text",
+      "fixture 8 - reads the capacity row and the run detail, and clicks"
+     ],
+     "closures_that_read_only_window_U11": 16,
+     "note": "This is the harness-side figure the audit asked for and it is deliberately reported next to the register-side tally, because they count different things and disagreeing with each other is how the original claim went unnoticed. Register-side, 9 of the 20 fixture entries have some rendered evidence (4 rendered-DOM plus 5 whose surface a separate case renders). Harness-side, 2 of the 18 automated fixture closures render anything themselves. Both are true; neither on its own is the whole answer. At the 2026-08-17 audit the harness-side figure was 1 of 18.",
+     "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A10-14 (minor), residual pass"
     }
+   }
   ]
+ },
+ "fixtures": [
+  {
+   "n": 1,
+   "requirement": "Codex plan reaches limit, then optional credits",
+   "represented_in": "meter:codex-biz-5h usedPct 100 + continuation prod:codex-plus (credits → saved reset → wait)",
+   "ui_path": "Plans & limits widget (Work row) · Attention banner",
+   "test": "harness fixture 1",
+   "status": "pass",
+   "verification_basis": "data-asserted",
+   "verification_detail": "The harness fixture reads window.U11.meterById['meter:codex-biz-5h'].usedPct and the continuation order array. No DOM read anywhere."
+  },
+  {
+   "n": 2,
+   "requirement": "Alibaba Token Plan consumes an Extra Bundle",
+   "represented_in": "prod:alibaba-extra-bundle + ue-611 billingRoute usage_pack (new)",
+   "ui_path": "Ledger · work-1 attempt ue-611 · Billing route 'usage pack'",
+   "test": "harness fixture 2",
+   "status": "pass",
+   "verification_basis": "data-asserted",
+   "verification_detail": "Reads window.U11.attemptById['ue-611'].productId and .billingRoute. No DOM read."
+  },
+  {
+   "n": 3,
+   "requirement": "Work account reaches limit; future work switches to Personal",
+   "represented_in": "ue-608 requested acct:openai-work → effective acct:openai-personal + fallbackReason + continuation prod:codex-business fallback",
+   "ui_path": "Ledger · retries bucket · account row 'Use next'",
+   "test": "harness fixture 3 + new-behavior Use next check",
+   "status": "pass",
+   "verification_basis": "data-asserted; a separate harness case renders part of the same surface",
+   "verification_detail": "The fixture reads ue-608's requested and effective account ids and the continuation order - data only. The separate case 'new account row Use next' clicks the rendered control, reads the rendered toast and reads the rendered .u11w-acctmeta text, so the affordance is DOM-verified even though the fallback fact is not."
+  },
+  {
+   "n": 4,
+   "requirement": "Text-only main model invokes separately settled vision helper",
+   "represented_in": "ue-550 main (text-only) + ue-551 vision helper billingRoute api_billed (streaming_partial) + ue-602 attachment transform",
+   "ui_path": "Ledger · work-6 · attempt inspector Attachment section",
+   "test": "harness fixture 4 + 12",
+   "status": "pass",
+   "verification_basis": "data-asserted",
+   "verification_detail": "Reads ue-551.billingRoute and ue-602.attachment.transform. No DOM read."
+  },
+  {
+   "n": 5,
+   "requirement": "Model change causes replay/cache reset",
+   "represented_in": "cm-4 model_switch_repack (rebuilt) + timeline switch event + ue-591 replay attributed to new connection",
+   "ui_path": "Context details · What changed timeline",
+   "test": "harness fixture 5",
+   "status": "pass",
+   "verification_basis": "data-asserted",
+   "verification_detail": "Reads the cm-4 maintenance record's cacheEffect and the timeline switch event's replayEventId. No DOM read."
+  },
+  {
+   "n": 6,
+   "requirement": "Free model cooldown",
+   "represented_in": "free:glm-air cooldownUntil at(+40m)",
+   "ui_path": "Free models widget · 'Cooldown · back in 40m' row",
+   "test": "harness fixture 6 + new-behavior cooldown check",
+   "status": "pass",
+   "verification_basis": "rendered-DOM",
+   "verification_detail": "Navigates to the Free room and matches /Cooldown · back/ against the page's visible text. This is the only one of the eighteen fixture closures that touches the DOM. The separate case 'new free model cooldown row' waits for the same string in document.body.innerText."
+  },
+  {
+   "n": 7,
+   "requirement": "Background model validation consumes allowance",
+   "represented_in": "ue-620 probe on free shared route (bucket validation) + signals text",
+   "ui_path": "Source authority widget · Catalog & probes",
+   "test": "harness fixture 7",
+   "status": "pass",
+   "verification_basis": "data-asserted",
+   "verification_detail": "Filters window.U11.attempts for a validation-bucket probe on a free route. No DOM read."
+  },
+  {
+   "n": 8,
+   "requirement": "Six required specialists run in three two-agent waves",
+   "represented_in": "run:plan-12 - requested.children 6, requested.specialistsRequired 6, admitted.now 2, queued.children 4, queued.waves 3. That is literally six required specialists admitted two at a time across three waves, and it renders on the default landing page at the default Essentials disclosure.",
+   "ui_path": "Overview room capacity widget, run row 'Spec: U11 usage concept ... Requested 6 ... 2 at a time · 3 waves'; run detail Admission block '6 required specialists / 2 admitted now · effective concurrency 2 / 4 queued · 3 waves'",
+   "test": "harness fixture 8 - 'six required specialists in three two-agent waves, rendered'. It selects the run BY THE FIXTURE'S SHAPE (specialistsRequired 6, admitted.now 2, queued.waves 3) rather than by id, so a dataset change moves the fixture with it instead of past it, and it reads both surfaces this entry cites from the rendered document.",
+   "status": "pass, on run:plan-12",
+   "verification_basis": "rendered-DOM",
+   "verification_detail": "Reads the capacity widget's own run row (located through that run's 'Open run detail' control, so the row is the run's and not a neighbour's) and asserts the rendered 'Requested 6' and '2 at a time / 3 waves' wave plan; then clicks that control and asserts the run detail renders 6 required, 2 admitted, 4 queued and 3 waves. Every number in the assertion comes from the run record at run time; none is a literal in the harness. Measured green in the run of record with run:plan-12 'Spec: U11 usage concept'.",
+   "retraction": {
+    "retracted_on": "2026-08-18",
+    "retracted_claim": {
+     "represented_in": "run:goal-47: 8 requested (fixture wording: 6 required in 3 waves is the general rule; dataset shows 8 requested / 2 admitted / 4 waves)",
+     "ui_path": "Capacity widget · Runs & agents · run detail Admission",
+     "status": "pass"
+    },
+    "why_the_claim_was_false": "Two defects in one entry. It was attributed to the wrong run: run:goal-47 carries 8 requested, 2 admitted, 6 queued and 4 waves - not six specialists and not three waves. And rather than look for a run that matched, the entry rewrote the packet requirement as a 'general rule' and recorded the mismatch as an accepted deviation. The deviation was unnecessary: run:plan-12 satisfies the requirement exactly and renders on first load. The register therefore told a reader the packet fixture had been compromised when the concept in fact satisfied it, and pointed downstream consumers at the wrong run.",
+    "what_run_goal_47_is_actually_for": "run:goal-47 is the legitimate fixture for the separate state 'Goal admits 2 of 8 children'. It is not deleted, only detached from this requirement.",
+    "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ findings A10-07 and A06-11"
+   },
+   "corrections_2026_08_18": {
+    "corrected_on": "2026-08-18",
+    "retracted_claim": {
+     "test": "harness fixture 8 - which still asserts run:goal-47 with `queued.waves >= 3`, so the harness does NOT test this fixture as re-attributed and cannot detect the misattribution. Fixing the harness case is a separate change.",
+     "verification_basis": "data-asserted",
+     "verification_detail": "Reads window.U11.runById counters. No DOM read - and see the attribution correction below."
+    },
+    "why_the_claim_was_false": "The attribution had already been corrected to run:plan-12, but the harness case behind it still asserted run:goal-47 with `queued.waves >= 3` - a run that carries 8 requested and 4 waves. So the register named one run, its own cited test proved a different one, and `>= 3` could not have told three waves from four in either case. The entry disclosed this rather than hiding it, which was the right call, but a disclosed untested fixture is still an untested fixture. The case is now rewritten and this entry's 'test' and 'verification_basis' are the rewritten case, measured.",
+    "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ findings A06-11 and A10-07 (minor), residual pass"
+   }
+  },
+  {
+   "n": 9,
+   "requirement": "Provider data unavailable; PM shows estimate/confidence",
+   "represented_in": "meter:oc-go-monthly vs unavailable + estimate {63%, PM history · last 7 days, medium}",
+   "ui_path": "Plans widget · 'Provider data unavailable · PM estimate 63% · medium confidence' (never zero, never fake provider number)",
+   "test": "harness fixture 9 + new-behavior estimate check",
+   "status": "pass",
+   "verification_basis": "data-asserted; a separate harness case renders part of the same surface",
+   "verification_detail": "The fixture reads meter:oc-go-monthly's vs, estimate.usedPct and estimate.conf - data only. The separate case 'new plans estimate' waits for the exact string 'Provider data unavailable · PM estimate 63% · medium confidence' in document.body.innerText, so the rendered copy is DOM-verified."
+  },
+  {
+   "n": 10,
+   "requirement": "Requested/effective model differs",
+   "represented_in": "thread:t-91 switched (GPT-5.6-Codex → Kimi K2) + ue-608 requested≠effective account",
+   "ui_path": "Context details · Models and connections used · run detail",
+   "test": "harness fixture 10",
+   "status": "pass",
+   "verification_basis": "data-asserted",
+   "verification_detail": "Reads thread:t-91's switched flag and mainModelIds length. No DOM read."
+  },
+  {
+   "n": 11,
+   "requirement": "BSD silent and advice calls",
+   "represented_in": "bsdEvents bsd-1 silent (ue-600), bsd-2 advice_emitted (ue-601), bsd-3 duplicate_suppressed (eventId null — zero usage)",
+   "ui_path": "Ledger · validation bucket · attempt inspector 'Back Seat Driver' section",
+   "test": "harness fixture 11 + new-behavior BSD inspector check",
+   "status": "pass",
+   "verification_basis": "data-asserted; a separate harness case renders part of the same surface",
+   "verification_detail": "The fixture reads the three bsdEvents result values - data only. The separate case 'new BSD section in attempt inspector (ue-600)' clicks the rendered ledger row, waits for the inspector and matches five phrases against its rendered innerText."
+  },
+  {
+   "n": 12,
+   "requirement": "Attachment transform",
+   "represented_in": "ue-602 attachment {receipt.jpg, pm_vision_ocr, art-91, project_default, provider_route, localCompute none}",
+   "ui_path": "Attempt inspector · Attachment section",
+   "test": "harness fixture 12",
+   "status": "pass",
+   "verification_basis": "data-asserted",
+   "verification_detail": "Reads ue-602.attachment fields. No DOM read."
+  },
+  {
+   "n": 13,
+   "requirement": "CLI update waits for idle, verifies, rolls back",
+   "represented_in": "ops-1 phases Check/Wait for idle/Install/Verify/Rollback, failureClass verify_failed, outcome rolled_back, validationEventId ue-609",
+   "ui_path": "Maintenance & operations widget (Ledger board) · 'View the verification call' → inspector",
+   "test": "harness fixture 13 + operations widget check",
+   "status": "pass",
+   "verification_basis": "data-asserted; a separate harness case renders part of the same surface",
+   "verification_detail": "The fixture reads ops-1's phase count, outcome and validationEventId - data only. The separate case 'new operations widget' reads the rendered .u11w-opcard text and counts rendered .u11w-ophase elements."
+  },
+  {
+   "n": 14,
+   "requirement": "Offline queued message and reconnect",
+   "represented_in": "ops-2 offline_outbox phases + ue-610 replayKind offline_reconnect operationalRef ops-2",
+   "ui_path": "Operations widget · attempt inspector operational linkage note",
+   "test": "harness fixture 14",
+   "status": "pass",
+   "verification_basis": "data-asserted",
+   "verification_detail": "Reads ops-2.kind and ue-610's operationalRef and replayKind. No DOM read."
+  },
+  {
+   "n": 15,
+   "requirement": "Server work continues while client offline",
+   "represented_in": "ops-3 server_continuity on host:truenas/env:docker",
+   "ui_path": "Operations widget · 'Server work continues while the client is offline; slow thread load is not provider usage.'",
+   "test": "harness fixture 15",
+   "status": "pass",
+   "verification_basis": "data-asserted",
+   "verification_detail": "Reads ops-3.hostId and the host's kind. No DOM read."
+  },
+  {
+   "n": 16,
+   "requirement": "Cross-project Goal",
+   "represented_in": "work-12/thread:t-77 (Harbor) + ue-652 crossProject lineage, paths redacted",
+   "ui_path": "Ledger · specialists bucket · attempt inspector note",
+   "test": "harness fixture 16",
+   "status": "pass",
+   "verification_basis": "data-asserted",
+   "verification_detail": "Reads thread:t-77.project and ue-652.crossProject.sourceProject. No DOM read."
+  },
+  {
+   "n": 17,
+   "requirement": "Local sound preview and external notification test-send",
+   "represented_in": "ops-4 sound_preview + ops-5 notification_test (both providerUsage none)",
+   "ui_path": "Operations widget",
+   "test": "harness fixture 17",
+   "status": "pass",
+   "verification_basis": "data-asserted",
+   "verification_detail": "Reads the operational kind list for sound_preview and notification_test. No DOM read."
+  },
+  {
+   "n": 18,
+   "requirement": "Unconfigured account absent from normal view",
+   "represented_in": "unconfiguredCatalog (Mistral/Fireworks/OpenRouter/Cohere) exists only as verification data; visibleAccounts()/visibleFamilies() filter them",
+   "ui_path": "nowhere in the DOM",
+   "test": "harness fixture 18 + document-text sweep",
+   "status": "pass",
+   "verification_basis": "data-asserted; a separate harness case renders part of the same surface",
+   "verification_detail": "The fixture reads visibleAccounts().length, unconfiguredCatalog.length and visibleFamilies() labels - data only. The separate guard case 'unconfigured providers absent from DOM' reads the page's visible text and asserts four provider names are absent. That guard runs on one room with the Free tab active, so it samples a fraction of the document; the independent audit re-checked documentElement.outerHTML across all 13 rooms and both popovers and confirmed the four names are genuinely absent, so the conclusion holds on stronger evidence than the concept's own."
+  },
+  {
+   "n": 19,
+   "requirement": "Runtime demand for a missing provider CLI returns Provider Setup Required (no silent install; continuation preserved)",
+   "represented_in": "ops-8 setup_required + setupLink deep-link with continuation token; Auto/On maintain approved installs only",
+   "ui_path": "Maintenance & operations widget · 'Open provider setup' CTA",
+   "test": "harness correction check (setup_required)",
+   "status": "pass",
+   "verification_basis": "rendered-DOM",
+   "verification_detail": "The case 'correction setup_required' waits for the rendered string 'Provider Setup Required', clicks the rendered CTA, then asserts the resulting cmdLog entry and the surviving continuation token. Render and click are DOM-verified; the payload assertion is in-memory."
+  },
+  {
+   "n": 20,
+   "requirement": "Explicit first acquisition vs post-consent update/repair, with exact host/env/installation identity",
+   "represented_in": "ops-1 acquisition lineage (explicit_user_setup · official OpenAI installer · publisher-signed artifact · Studio PC/Native) + inspector acquisition note on ue-609",
+   "ui_path": "Operations widget acquisition line · attempt inspector",
+   "test": "harness correction checks (acquisition lineage + inspector note)",
+   "status": "pass",
+   "verification_basis": "rendered-DOM",
+   "verification_detail": "Two cases. 'correction acquisition lineage on cli_update' reads the rendered .u11w-opcard innerText for four phrases. 'correction inspector acquisition note' clicks through to the ue-609 inspector and reads its rendered innerText."
+  }
+ ],
+ "fixture_count_note": {
+  "packet_required": 18,
+  "packet_source": "PM_Usage_Concept_Update_Final_Cumulative_2026-08-08/05_GUI_CONTEXT_RING_DEMO_AND_TESTS.md, 'Demo fixtures - At minimum:' list, 18 numbered items",
+  "correction_packet_added": 2,
+  "total": 20,
+  "note": "impact-register.json shipped saying 'All 18 packet fixtures represented' and was never corrected when the correction packet took this file to 20. The 18 is the right packet count; the register's error was leaving it uncorrected and presenting representation as verification. Both are fixed in that file."
+ },
+ "hard_failure_guardrails_status_legend": {
+  "measured": "machine verified against rendered state in the harness run of record, and the guardrail held. The entry names the case or cases, with the numbers that case reported.",
+  "partially measured": "part of the rule is machine verified against rendered state and part of it is not. The entry says which half is which under 'what_is_still_not_proved' or an equivalent key. It is not a softer word for 'measured'.",
+  "asserted": "machine verified - the evidence names a check that was run against the rendered page",
+  "design": "NOT machine verified - an author's design intention that no harness ever exercised",
+  "failed": "machine verified, and the guardrail did not hold",
+  "undeclared-until-2026-08-18": "this concept never declared the rule at all; it is listed here for completeness and carries whatever evidence exists, which for some rules is none",
+  "retired_status_words": "'design', 'failed' and 'undeclared-until-2026-08-18' no longer appear on any live entry as of 2026-08-18 (second pass). They are kept in this legend because every entry that carried one preserves it verbatim in its own status_change_2026_08_18 block, and a reader following that history needs the definitions.",
+  "reader_warning": "As shipped on 2026-08-11 this list held 6 entries against the packet's 9 hard failures, and two of the 6 carried status 'design', meaning they were never tested and nothing in the file said so. One of those two ('Usage mutates no policy locally') was measured by the independent audit on 2026-08-17, found false, and is retracted below. The other ('helper calls never hidden inside main model') remains untested. On 2026-08-18 the four packet hard failures this list omitted were added - and two of those four omissions are exactly where the audit found failures, so the list was not merely incomplete: its omissions were where the defects were. Audit findings A07-12 and A05-17.",
+  "reader_warning_update_2026_08_18": "Second pass. The paragraph above is left standing because it is the accurate history. What has changed since: 'helper calls never hidden inside main model' is no longer untested - three cases exercise it. 'Usage mutates no policy locally' has been re-measured after the repair and holds. The two guardrails the audit measured failed - free-model routes and clipped labels - have both been re-measured green, the second only for the two halves rendered geometry can settle. No status below was upgraded on a source read; every one names the run and the case."
+ },
+ "hard_failure_guardrails": [
+  {
+   "packet_rule": "unknown displayed as zero",
+   "rule": "unknown never rendered as zero",
+   "evidence": "Measured from rendered state in the run of record. Every meter row the scope picker draws is read: the 7 meters that publish no figure render no percentage at all, the 26 that do render their own, and no percentage anywhere in the 13 rail rooms is negative. The older in-memory check (three vs field reads plus one text regex) still runs alongside it.",
+   "status": "measured",
+   "coverage_caveat": "The quota meter surface is asserted from 33 rendered meter rows across 13 rooms. The cache surface, which owns the same rule through GUI-USG-002 and GUI-USG-006, is separately covered by two guards named in coverage_caveat_superseded_2026_08_18. What remains genuinely unasserted is named in the guardrail entries themselves, not here.",
+   "status_change_2026_08_18": {
+    "changed_on": "2026-08-18",
+    "prior": {
+     "status": "asserted",
+     "evidence": "kimi-pool and zai-legacy stay 'limit unknown'; oc-go-monthly shows an estimate, not zero. The harness case reads three window.U11 meter vs values and matches one regex (/Limit not exposed|limit unknown/i) against visible text."
+    },
+    "why_it_changed": "The entry was marked 'asserted' on the strength of three window.U11 field reads and one text regex, and audit A03-22 showed both arms passing while the scope picker simultaneously rendered 'Shared membership pool -1%' and 'Legacy plan -1%' - the two meters this guardrail names as its proof. A check that cannot see the defect it certifies against is not evidence. The new case reads the surface where that defect lived, and it was negative-controlled by reintroducing the -1% render, which turned it red.",
+    "measured_by": "reports/visual-interaction-test-report.json, run 2026-08-18T14:09:40.337Z (108 cases, 108 pass, 0 fail)"
+   },
+   "harness_backing": [
+    "closure a meter with no published figure renders no percentage, and no percentage is negative - 33 meter rows, 26 with a figure, 7 without, 0 problems, 0 negative percentages across 13 rooms",
+    "guard unknown≠zero (kimi pool / zai limit unknown; estimate distinct) - the original in-memory check, unchanged",
+    "new plans estimate (unavailable → PM estimate 63%) - the estimate arm, rendered"
+   ],
+   "still_not_covered": "The cache surface is now covered. GUI-USG-002 and GUI-USG-006 each have a fixture row and a harness guard; see still_not_covered_retracted_2026_08_18 for the claim this replaces. What remains genuinely untested is named in the guardrail entries themselves, not here.",
+   "still_not_covered_retracted_2026_08_18": {
+    "previous_text": "The cache surface. GUI-USG-002 (a provider-reported zero remains zero) and GUI-USG-006 (a reported cache zero differs from an unsupported cache) own the same rule and still have no fixture entry and no harness case; they appear only in research/. The coverage_caveat below is retained unchanged for that reason - the quota surface is now measured, the cache surface is not.",
+    "why_it_changed": "The cache surface now has a fixture. cacheStats gained a row on conn:opencode-shared-gw that is cacheReportingState \"reported\" with genuine zeros, alongside the existing not-exposed route, so a measured zero and an unreadable cache are now distinguishable in the rendered DOM and both facts are assertable.",
+    "guards_added": [
+     "closure a reported cache zero is distinguishable from a cache that is not exposed",
+     "closure a provider-reported zero stays a reported zero and is never relabelled unknown"
+    ],
+    "retracted_on": "2026-08-18"
+   },
+   "coverage_caveat_superseded_2026_08_18": {
+    "previous_text": "Added 2026-08-18. The check covers the quota meter surface only - three in-memory field reads plus one text match. It says nothing about the cache surface, which owns the same rule through two packet fixtures that appear nowhere in reports/: GUI-USG-002 (a provider-reported zero remains zero) and GUI-USG-006 (a reported cache zero differs from an unsupported cache). Both were identified during research (research/plans-source-ledger.json, research/plans-usage-synthesis.md) and dropped from the evidence. The underlying claim did survive independent testing - the audit swept all 13 rooms with every More group expanded and found 8 zero renderings, all genuine, and no '$0.00' anywhere - but the register's own evidence does not establish it. Audit finding A05-17.",
+    "why": "The cache surface is now covered. u11-data.js carries a cacheStats row on conn:opencode-shared-gw that is cacheReportingState \"reported\" with genuine zeros, alongside the not-exposed route, and two harness guards assert the distinction from rendered state: \"closure a reported cache zero is distinguishable from a cache that is not exposed\" and \"closure a provider-reported zero stays a reported zero and is never relabelled unknown\".",
+    "superseded_on": "2026-08-18"
+   }
+  },
+  {
+   "packet_rule": "plan-included work shown as API-billed without evidence",
+   "rule": "plan-included work is never shown as API-billed without evidence",
+   "evidence": "The run of record opens one ledger attempt per distinct billing route present in the data - 7 routes - and asserts that each renders its OWN label (7 distinct labels, so no two routes can read as the same thing) alongside the Connection, Account, Expected product and Settlement that substantiate it, with none reading 'not recorded'.",
+   "status": "partially measured",
+   "note": "Added 2026-08-18. The concept does hold the structure the rule needs - billingRoute (what paid) is orthogonal to settlement (source quality) and the attempt inspector renders both - but holding the structure is not the same as testing the rule, and nothing tests it. Audit finding A07-12.",
+   "status_change_2026_08_18": {
+    "changed_on": "2026-08-18",
+    "prior": {
+     "status": "undeclared-until-2026-08-18",
+     "evidence": "None. No harness case tests this and no probe in this concept measures it."
+    },
+    "why_it_changed": "The entry read 'None. No harness case tests this and no probe in this concept measures it.' That is no longer true: a case now proves the rendering half of the rule.",
+    "measured_by": "reports/visual-interaction-test-report.json, run 2026-08-18T14:09:40.337Z (108 cases, 108 pass, 0 fail)"
+   },
+   "harness_backing": [
+    "guard every billing route renders its own label plus connection, account and product evidence - routes=7 distinctLabels=7 problems=0"
+   ],
+   "what_is_still_not_proved": "The rule has two halves and only one is measured. Measured: plan-included and API-billed can never render as the same thing, and every route renders the evidence that substantiates it. Not measured: that an attempt classified plan_included in the data was correctly classified in the first place. Nothing in this concept re-derives a billing route from a receipt, so nothing can check the classification - only its presentation. Status stays short of 'measured' for that reason."
+  },
+  {
+   "packet_rule": "Free Models without underlying route",
+   "rule": "every Free Models row renders its underlying route",
+   "evidence": "Measured green in the run of record, by the two cases the previous status_note asked for. The first walks every free route in the data and asserts the rendered row names the provider family, the account and the connection underneath it, with no 'not identified' fallback anywhere: 9 rows for 9 routes, 0 gaps. The second isolates the ineligible routes - the ones that rendered bare at the audit - so a regression there cannot hide behind the eligible rows: free:ds-ended and free:glm-unverified, both complete.",
+   "status": "measured",
+   "status_note": "Stays 'failed' until a harness case reads the rendered ineligible rows and asserts the identity line. A source read is not a measurement.",
+   "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A07-01 (blocker); omission recorded as A07-12",
+   "status_change_2026_08_18": {
+    "changed_on": "2026-08-18",
+    "prior": {
+     "status": "failed",
+     "evidence": "MEASURED FAILED 2026-08-17, then changed in source 2026-08-18 and not re-measured. At the audit, the ineligible-route branch of the free renderer emitted only the model label plus a detail string, dropping the provider, account, connection and product identity that the eligible branch emitted - so two of the nine rows told a user free access had ended or could not be verified without saying which provider or account it belonged to. Both rows did carry a route in the data (free:ds-ended and free:glm-unverified both point at conn:zai-credits), so it was purely a rendering omission. On 2026-08-18 the ineligible branch in u11-widgets.js calls the same freeIdentity() helper as the eligible branch, which reads as a repair - but no harness case exercises it and this register has not rendered the page, so no measurement supports calling it fixed.",
+     "status_note": "Stays 'failed' until a harness case reads the rendered ineligible rows and asserts the identity line. A source read is not a measurement."
+    },
+    "why_it_changed": "The status_note set the exact bar - 'Stays failed until a harness case reads the rendered ineligible rows and asserts the identity line. A source read is not a measurement.' - and the run of record clears it. The MEASURED FAILED history below is retained: this is a repair that has now been measured, not a claim that the audit was wrong.",
+    "measured_by": "reports/visual-interaction-test-report.json, run 2026-08-18T14:09:40.337Z (108 cases, 108 pass, 0 fail)"
+   },
+   "harness_backing": [
+    "guard free models every rendered row names family, account and connection - rows=9/9 gaps=0 unidentifiedFallback=false",
+    "guard free models ineligible rows keep their underlying route - ineligible=2 [free:ds-ended, free:glm-unverified] incomplete=0"
+   ]
+  },
+  {
+   "packet_rule": "helper calls hidden inside main model",
+   "rule": "helper calls never hidden inside main model",
+   "evidence": "Measured green in the run of record. The first case picks the work item carrying the most helper attempts on a model other than its main model and asserts the inspector renders one row per attempt of that work, each helper showing its OWN model: work-1, 9 attempts, 9 rendered, 7 helpers, 0 missing, 0 folded. The second holds the counting honest at the card level - a user_work primary is never counted as a helper, and the rendered roster line's attempt, primary and helper numbers match the roster: 12 cards, 6 of them with more than one primary, 0 problems.",
+   "status": "measured",
+   "status_note": "design = not machine verified; no harness check exercises this rule, so it is an intention and not a result.",
+   "status_change_2026_08_18": {
+    "changed_on": "2026-08-18",
+    "prior": {
+     "status": "design",
+     "evidence": "ledger groups every attempt under its logical work; advanced mode lists all",
+     "status_note": "design = not machine verified; no harness check exercises this rule, so it is an intention and not a result."
+    },
+    "why_it_changed": "The entry was 'design', which its own status_note defined as 'not machine verified; no harness check exercises this rule, so it is an intention and not a result'. Three cases now exercise it, and the second was negative-controlled by making attemptRole file user_work calls as helpers, which turned it red.",
+    "measured_by": "reports/visual-interaction-test-report.json, run 2026-08-18T14:09:40.337Z (108 cases, 108 pass, 0 fail)"
+   },
+   "harness_backing": [
+    "guard helper calls render as their own attempts, never folded into the main model - work=work-1 attempts=9 rendered=9 helpers=7 missing=0 folded=0",
+    "closure user_work primaries are never counted as helper calls - cards=12 workItemsWithMoreThanOnePrimary=6 problems=0",
+    "closure turn card figures are the work item total, never the headline attempt - cards=12 bucketFigures=45 problems=0"
+   ]
+  },
+  {
+   "packet_rule": "maintenance counted as model tokens",
+   "rule": "maintenance entries carry no token totals",
+   "evidence": "operations widget text scanned for 'tok' and 'tokens' - clean",
+   "status": "asserted",
+   "harness_backing": [
+    "guard maintenance entries carry no token totals - scans every rendered maintenance card for token vocabulary, green in the run of record"
+   ]
+  },
+  {
+   "packet_rule": "account rows shown before setup",
+   "rule": "no unconfigured provider names in the DOM",
+   "evidence": "a visible-text sweep asserts Mistral, Fireworks, OpenRouter and Cohere are absent. The sweep runs on one room with the Free tab active, so it samples a fraction of the document; the independent audit re-checked documentElement.outerHTML across all 13 rooms and both popovers and confirmed all four genuinely absent.",
+   "status": "asserted",
+   "harness_backing": [
+    "guard unconfigured providers absent from DOM - the original four-name text sweep",
+    "guard account rows are exactly the configured accounts, none shown before setup - rows=12 configured=12 stray=0 removedLeak=0 unconfiguredLeak=0; asserts the rendered row set IS the configured non-removed set rather than only that four names are missing"
+   ]
+  },
+  {
+   "packet_rule": "Usage mutates policy locally instead of deep-linking to Settings",
+   "rule": "Usage mutates no policy locally",
+   "evidence": "Measured green in the run of record, which is the bar the repair_note set. Three cases: the sheet itself carries zero policy inputs and writes no u11:settings key, and its change route dispatches cmd.settings.bloom.open with a category and a settings row id; that row id is checked against the 828 rows in Plans/settings_inventory.json, so an invented destination fails; and after real use - room changes, both disclosure levels, the scope picker and the sheet - the only persisted keys are pm.theme, u11:disclosure, u11:scope and u11:seeded, none of them policy-shaped. That last case is asserted structurally rather than against a name list, so a policy blob under a new name is still caught.",
+   "status": "measured",
+   "retraction": {
+    "retracted_on": "2026-08-18",
+    "retracted_claim": {
+     "rule": "Usage mutates no policy locally",
+     "evidence": "every policy action deep-links to Settings",
+     "status": "design"
+    },
+    "why_the_claim_was_false": "It certified compliance with the one behaviour core packet 05 names a Hard failure, while the shipped sheet did the opposite. It also carried status design, meaning it had never been machine verified, so no measurement ever backed it.",
+    "measured_evidence": "PM_Usage_Independent_Audit_2026-08-17/audit-evidence/probes/axis1-ownership-probe-results.json — steps after-autoSwitch-off, after-then-change, after-limit-20, after-extra-enable each record a new persisted 'u11:settings' value with cmdLogLen 0; U11.deepLink pushes a semantic.deep link entry into that same log (u11-data.js:1410), so an empty log proves no deep link occurred. A10-08 adds that 27 of the 30 settings-directed controls in the UI ('Open Usage settings' in every widget footer) reach no deep link at all.",
+    "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ findings A01-01 (blocker), A01-03 (blocker), A10-08 (minor)",
+    "scope": "This retraction corrects the register only. The repair of the sheet itself is a separate change; this guardrail stays 'failed' until a harness measures the repaired sheet and the evidence line names that check."
+   },
+   "status_change_2026_08_18": {
+    "changed_on": "2026-08-18",
+    "prior": {
+     "status": "failed",
+     "evidence": "NOT MET as shipped. Measured 2026-08-17: the Usage quick-controls sheet persisted five Settings-owned policies to localStorage (warn before running low, automatic account and provider switching, continuation product, continuation 'then' action, extra paid usage, spending limit) with a command-log delta of 0 - zero commands dispatched and zero deep links taken. The two deep-link buttons in the sheet footer are optional and need never be pressed."
+    },
+    "why_it_changed": "The repair_note set the bar - 'stays failed until a harness run measures the repaired sheet and the evidence line names that run' - and the run of record clears it. The MEASURED FAILED history and the retraction below are retained in full; this is a measured repair, not a withdrawal of the finding.",
+    "measured_by": "reports/visual-interaction-test-report.json, run 2026-08-18T14:09:40.337Z (108 cases, 108 pass, 0 fail)"
+   },
+   "harness_backing": [
+    "interaction settings sheet routes to canonical Settings and writes no policy - policyInputs=0 u11:settings=null dispatch={cat:ai, id:ai.usage.pressure-visibility}",
+    "guard Usage persists only view and layout state, never a Settings-owned policy - keys=4 [pm.theme, u11:disclosure, u11:scope, u11:seeded] policyShaped=0",
+    "closure Settings sheet routes to a settings row that exists in canon - inCanon=true against 828 inventory rows"
+   ],
+   "what_is_still_not_proved": "A10-08's separate count. The audit found 27 of the 30 settings-directed controls in the UI ('Open Usage settings' in every widget footer) reaching no deep link at all. No case above sweeps those 30 controls, so the rule is measured for the quick-controls sheet and the persistence surface, and not for every settings-directed affordance on the page.",
+   "repair_note_superseded_2026_08_18": {
+    "superseded_on": "2026-08-18 (second pass)",
+    "superseded_text": "Added 2026-08-18. The concept has changed since the measurement: the localStorage key u11:settings is gone, replaced by u11:settingsView, and the change route now dispatches cmd.settings.bloom.open. The harness case that covered this surface was renamed from 'interaction settings sheet deep link toast' to 'interaction settings sheet routes to canonical Settings and writes no policy'. None of that is a measurement: the harness has not been re-run since those edits. This guardrail stays 'failed' until a harness run measures the repaired sheet and the evidence line names that run.",
+    "why": "The note set the bar and the bar has now been cleared: the harness was re-run in place at 2026-08-18T14:09:40.337Z and the evidence line above names the three cases that measure the repaired sheet. The text is preserved rather than deleted because it is the record of what this guardrail refused to claim while it was unmeasured, and that refusal was correct at the time. It is marked superseded rather than left standing because it now contradicts the status above."
+   }
+  },
+  {
+   "packet_rule": "route/settlement history rewritten by current aliases/settings",
+   "rule": "route and settlement history is never rewritten by current aliases or settings",
+   "evidence": "Measured green in the run of record. Every attempt in the data that carries a historicalIdentity is opened: its ledger row must still carry the historical label, its inspector must name the PRESERVED connection and product rather than any current one, and two attempts that settled differently must still render differently. 2 historical attempts, 2 distinct settlement labels, 0 problems.",
+   "status": "measured",
+   "note": "Added 2026-08-18. The dataset does carry the structures the rule needs - removed accounts keep historicalIdentity, historical attempts keep their receipt refs and route - but nothing asserts that a later alias or settings change leaves them alone, because nothing in the concept changes an alias. Audit finding A07-12.",
+   "status_change_2026_08_18": {
+    "changed_on": "2026-08-18",
+    "prior": {
+     "status": "undeclared-until-2026-08-18",
+     "evidence": "None. No harness case tests this and no probe in this concept measures it."
+    },
+    "why_it_changed": "The entry read 'None. No harness case tests this and no probe in this concept measures it.' A case now does.",
+    "measured_by": "reports/visual-interaction-test-report.json, run 2026-08-18T14:09:40.337Z (108 cases, 108 pass, 0 fail)"
+   },
+   "harness_backing": [
+    "guard historical attempts keep their own route and settlement, not the current alias - historical=2 settlements=2 distinct=true problems=0",
+    "closure removed-source history survives a bucket filter set to its own bucket - the same rows, held against a view filter"
+   ],
+   "what_is_still_not_proved": "Resilience to an actual alias change. Nothing in this concept renames an account or edits a setting at run time, so the case proves that preserved identity is what renders - not that a later rename would leave it alone. That would need a fixture that performs the rename, which the dataset does not have."
+  },
+  {
+   "packet_rule": "clipped labels, misaligned tracks, or dead controls",
+   "rule": "no clipped labels, misaligned tracks or dead controls",
+   "evidence": "Two of the three halves are measured green in the run of record and one is not. Clipped labels: swept at 360, 520, 900 and 1700 across 8 rooms and again at 360 and 520 across all 13 rail rooms - 0 leaves at zero width and 0 leaves truncated without an ellipsis or a title to recover them. Misaligned tracks: 212 meter tracks measured, 0 fills escaping their track. Dead controls: not measured, and deliberately not claimed.",
+   "status": "partially measured",
+   "status_note": "Added 2026-08-18. Not re-measured after the 2026-08-18 concept edits. Stays 'failed' until a harness run measures it.",
+   "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A07-12 and audit-evidence/probes/independent-probe-summary.md",
+   "status_change_2026_08_18": {
+    "changed_on": "2026-08-18",
+    "prior": {
+     "status": "failed",
+     "evidence": "MEASURED FAILED 2026-08-17 by the independent audit, not by this concept. Its probe found 42 leaf elements with clientWidth 0 in the Ledger at 360px, and 10 of 290 click-tested controls inert - all of them 'Open Usage settings' buttons, of which 27 exist. The concept's own harness cannot see either: it tests widths 900 and above only, and it never click-tests controls for effect.",
+     "status_note": "Added 2026-08-18. Not re-measured after the 2026-08-18 concept edits. Stays 'failed' until a harness run measures it."
+    },
+    "why_it_changed": "The status was 'failed' on the audit's measurement - 42 leaf elements with clientWidth 0 in the Ledger at 360px - and the concept's own harness could not see it because it tested 900px and above only. It now tests 360 and 520, which is the width band that broke, across every room the rail exposes. The new case was negative-controlled twice: once by collapsing a leaf to 0px at narrow widths, once by removing its ellipsis and title, and it went red both times.",
+    "measured_by": "reports/visual-interaction-test-report.json, run 2026-08-18T14:09:40.337Z (108 cases, 108 pass, 0 fail)"
+   },
+   "harness_backing": [
+    "guard no label is cut off without an ellipsis or a title to recover it - clipped=154 withoutAffordance=0 zeroWidth=0 at 360/520/900/1700",
+    "closure no leaf collapses to zero width or is cut off without recovery at 360 and 520 - 13 rooms, zeroWidth=0 withoutAffordance=0 at both widths",
+    "guard every meter fill stays inside its track - tracks=212 escaped=0"
+   ],
+   "dead_controls_half": "Still unmeasured and still failed. The audit click-tested 290 controls and found 10 inert, all of them 'Open Usage settings' buttons. Proving a control does something needs a click sweep with a per-control expectation; the harness deliberately does not assert this half, because a passing case over a sweep that has no expectations would be false. u11-verify.mjs states that omission in the hard-failure guard section header rather than leaving it silent."
+  },
+  {
+   "packet_rule": "not a packet hard failure - a local guard this concept added",
+   "rule": "cost identity holds",
+   "evidence": "61,850,000 + 125,570,000 = 187,420,000 computed in-page",
+   "status": "asserted",
+   "note": "Retained and relabelled 2026-08-18. This is a useful local guard but it is not one of the packet's nine hard failures, and listing it alongside them helped the list read as complete when it was missing four real ones.",
+   "harness_backing": [
+    "guard cost identity 61.85M + 125.57M = 187.42M - computed in-page, green in the run of record"
+   ]
+  }
+ ],
+ "hard_failure_guardrails_completeness": {
+  "reconciled_on": "2026-08-18",
+  "packet_hard_failures": 9,
+  "packet_source": "PM_Usage_Concept_Update_Final_Cumulative_2026-08-08/05_GUI_CONTEXT_RING_DEMO_AND_TESTS.md, 'Hard failures' section, 9 bullets",
+  "declared_here": 9,
+  "plus_local_guards": 1,
+  "previously_declared": 6,
+  "added_2026_08_18": [
+   "plan-included work shown as API-billed without evidence",
+   "Free Models without underlying route",
+   "route/settlement history rewritten by current aliases/settings",
+   "clipped labels, misaligned tracks, or dead controls"
+  ],
+  "why_this_matters": "Two of the four omissions are where the audit found failures. 'Free Models without underlying route' is audit blocker A07-01, an omission the UI actually violated. 'Clipped labels, misaligned tracks, or dead controls' is confirmed by the audit's independent probe. A guardrail register that omits the rules the product breaks is not an incomplete register - it is a register that has selected against its own failures.",
+  "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ findings A07-12 and A05-17",
+  "status_reconciliation_2026_08_18": {
+   "reconciled_on": "2026-08-18 (second pass)",
+   "against": "reports/visual-interaction-test-report.json, run 2026-08-18T14:09:40.337Z (108 cases, 108 pass, 0 fail)",
+   "measured": 6,
+   "partially_measured": 2,
+   "unmeasured": 0,
+   "note": "Before this pass the ten entries read: 4 asserted, 3 failed, 2 undeclared, 1 design - and four of those nine words were set by an audit measurement rather than by anything this concept ran. After it: 6 measured, 2 partially measured, 2 asserted-with-harness-backing named. The two partials are the two rules with a half nobody has tested - whether a billing route was classified correctly in the first place, and whether every control does something. Those halves are named in the entries rather than rounded up."
+  }
+ },
+ "source_citation_policy": "Source citations into u11-prism.html, u11-data.js, u11-widgets.js, u11-rundetail.js and u11-context.js name a symbol, identifier or exact string rather than a line number. Those five files were under concurrent edit on 2026-08-18 - u11-data.js moved twice while this repair was being written - so a line number here would be wrong by the time it was read. Line numbers are retained only for files that are stable in this pass: everything under Plans/ and under _shared/. Text preserved inside a `retraction` or `retracted_claim` object is left exactly as it was written, line numbers included, because its purpose is to record what a document said on a past date.",
+ "verification_basis_tally_2026_08_18": {
+  "rendered_dom": 4,
+  "data_asserted_with_adjacent_render": 5,
+  "data_asserted_only": 11,
+  "note": "Measured, not estimated. The audit found 18 of 20 fixture claims backed only by in-memory window.U11 reads; it is now 11. The 11 remaining are honest about it: each says data-asserted rather than implying a render check. Raising them further means a per-fixture DOM assertion, which is real work and is named here rather than quietly counted as done.",
+  "harness_run_of_record": "reports/visual-interaction-test-report.json"
+ }
 }

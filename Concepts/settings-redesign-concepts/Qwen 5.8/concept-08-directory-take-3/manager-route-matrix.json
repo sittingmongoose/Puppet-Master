@@ -1,0 +1,935 @@
+{
+  "schema_id": "pm.settings_bakeoff.manager_route_matrix.v1.concept",
+  "concept_id": "concept-08-directory-take-3",
+  "model": "Qwen 5.8",
+  "families": [
+    {
+      "family": "providers",
+      "title": "Providers",
+      "archetype": "catalog",
+      "entry_points": [
+        "Home domain card #/cat/ai",
+        "Domain overview destination row #/cat/ai",
+        "Universal search rid sr:manager:providers",
+        "Roster object rows #/mgr/providers/<objectId>"
+      ],
+      "route": "#/mgr/providers(/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/providers (from object) then #/cat/ai",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "push navigation: roster alone, Back names the list; object view hides roster",
+      "key_states": [
+        "connected/not-signed-in",
+        "shadowed installation",
+        "unknown-owner manual-only",
+        "update available/scheduled/rolled-back",
+        "usage unavailable",
+        "last-known-good catalog",
+        "near-limit usage"
+      ],
+      "pass": true
+    },
+    {
+      "family": "context",
+      "title": "Context & Instructions",
+      "archetype": "catalog",
+      "entry_points": [
+        "Home domain card #/cat/memory",
+        "Domain overview destination row #/cat/memory",
+        "Universal search rid sr:manager:context",
+        "Direct manager route #/mgr/context"
+      ],
+      "route": "#/mgr/context",
+      "shell_retained": true,
+      "back_target": "#/cat/memory",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "memory",
+      "title": "Memory",
+      "archetype": "catalog",
+      "entry_points": [
+        "Home domain card #/cat/memory",
+        "Domain overview destination row #/cat/memory",
+        "Universal search rid sr:manager:memory",
+        "Direct manager route #/mgr/memory"
+      ],
+      "route": "#/mgr/memory",
+      "shell_retained": true,
+      "back_target": "#/cat/memory",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "personas",
+      "title": "Personas",
+      "archetype": "roster",
+      "entry_points": [
+        "Home domain card #/cat/personas",
+        "Domain overview destination row #/cat/personas",
+        "Universal search rid sr:manager:personas",
+        "Roster object rows #/mgr/personas/<objectId>"
+      ],
+      "route": "#/mgr/personas(/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/personas (from object) then #/cat/personas",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "push navigation: roster alone, Back names the list; object view hides roster",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "goal",
+      "title": "Goal & Automation",
+      "archetype": "roster",
+      "entry_points": [
+        "Home domain card #/cat/planning",
+        "Domain overview destination row #/cat/planning",
+        "Universal search rid sr:manager:goal",
+        "Roster object rows #/mgr/goal/<objectId>"
+      ],
+      "route": "#/mgr/goal(/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/goal (from object) then #/cat/planning",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "push navigation: roster alone, Back names the list; object view hides roster",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "crew",
+      "title": "Crew",
+      "archetype": "roster",
+      "entry_points": [
+        "Home domain card #/cat/branching",
+        "Domain overview destination row #/cat/branching",
+        "Universal search rid sr:manager:crew",
+        "Roster object rows #/mgr/crew/<objectId>"
+      ],
+      "route": "#/mgr/crew(/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/crew (from object) then #/cat/branching",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "push navigation: roster alone, Back names the list; object view hides roster",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "permissions",
+      "title": "Permissions & FileSafe",
+      "archetype": "roster",
+      "entry_points": [
+        "Home domain card #/cat/safety",
+        "Domain overview destination row #/cat/safety",
+        "Universal search rid sr:manager:permissions",
+        "Roster object rows #/mgr/permissions/<objectId>"
+      ],
+      "route": "#/mgr/permissions(/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/permissions (from object) then #/cat/safety",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "push navigation: roster alone, Back names the list; object view hides roster",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "bsd",
+      "title": "Back Seat Driver",
+      "archetype": "preference",
+      "entry_points": [
+        "Home domain card #/cat/safety",
+        "Domain overview destination row #/cat/safety",
+        "Universal search rid sr:manager:bsd",
+        "Direct manager route #/mgr/bsd"
+      ],
+      "route": "#/mgr/bsd",
+      "shell_retained": true,
+      "back_target": "#/cat/safety",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "notifications",
+      "title": "Notifications",
+      "archetype": "preference",
+      "entry_points": [
+        "Home domain card #/cat/general",
+        "Domain overview destination row #/cat/general",
+        "Universal search rid sr:manager:notifications",
+        "Direct manager route #/mgr/notifications"
+      ],
+      "route": "#/mgr/notifications",
+      "shell_retained": true,
+      "back_target": "#/cat/general",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "sounds",
+      "title": "Sounds",
+      "archetype": "catalog",
+      "entry_points": [
+        "Home domain card #/cat/general",
+        "Domain overview destination row #/cat/general",
+        "Universal search rid sr:manager:sounds",
+        "Direct manager route #/mgr/sounds"
+      ],
+      "route": "#/mgr/sounds",
+      "shell_retained": true,
+      "back_target": "#/cat/general",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "appearance",
+      "title": "Appearance",
+      "archetype": "catalog",
+      "entry_points": [
+        "Home domain card #/cat/general",
+        "Domain overview destination row #/cat/general",
+        "Universal search rid sr:manager:appearance",
+        "Direct manager route #/mgr/appearance"
+      ],
+      "route": "#/mgr/appearance",
+      "shell_retained": true,
+      "back_target": "#/cat/general",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "spellcheck",
+      "title": "Spellcheck & Dictionaries",
+      "archetype": "catalog",
+      "entry_points": [
+        "Home domain card #/cat/general",
+        "Domain overview destination row #/cat/general",
+        "Universal search rid sr:manager:spellcheck",
+        "Direct manager route #/mgr/spellcheck"
+      ],
+      "route": "#/mgr/spellcheck",
+      "shell_retained": true,
+      "back_target": "#/cat/general",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "desktop",
+      "title": "Desktop, Tray & Window",
+      "archetype": "preference",
+      "entry_points": [
+        "Home domain card #/cat/system",
+        "Domain overview destination row #/cat/system",
+        "Universal search rid sr:manager:desktop",
+        "Direct manager route #/mgr/desktop"
+      ],
+      "route": "#/mgr/desktop",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "teacher",
+      "title": "Teacher",
+      "archetype": "preference",
+      "entry_points": [
+        "Home domain card #/cat/general",
+        "Domain overview destination row #/cat/general",
+        "Universal search rid sr:manager:teacher",
+        "Direct manager route #/mgr/teacher"
+      ],
+      "route": "#/mgr/teacher",
+      "shell_retained": true,
+      "back_target": "#/cat/general",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "doctor",
+      "title": "Doctor",
+      "archetype": "diagnostic",
+      "entry_points": [
+        "Home domain card #/cat/system",
+        "Domain overview destination row #/cat/system",
+        "Universal search rid sr:manager:doctor",
+        "Direct manager route #/mgr/doctor"
+      ],
+      "route": "#/mgr/doctor",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "files",
+      "title": "File Manager & Editor",
+      "archetype": "catalog",
+      "entry_points": [
+        "Home domain card #/cat/code",
+        "Domain overview destination row #/cat/code",
+        "Universal search rid sr:manager:files",
+        "Direct manager route #/mgr/files"
+      ],
+      "route": "#/mgr/files",
+      "shell_retained": true,
+      "back_target": "#/cat/code",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "terminal",
+      "title": "Terminal",
+      "archetype": "preference",
+      "entry_points": [
+        "Home domain card #/cat/code",
+        "Domain overview destination row #/cat/code",
+        "Universal search rid sr:manager:terminal",
+        "Direct manager route #/mgr/terminal"
+      ],
+      "route": "#/mgr/terminal",
+      "shell_retained": true,
+      "back_target": "#/cat/code",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "lsp",
+      "title": "Language Servers",
+      "archetype": "roster",
+      "entry_points": [
+        "Home domain card #/cat/code",
+        "Domain overview destination row #/cat/code",
+        "Universal search rid sr:manager:lsp",
+        "Roster object rows #/mgr/lsp/<objectId>"
+      ],
+      "route": "#/mgr/lsp(/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/lsp (from object) then #/cat/code",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "push navigation: roster alone, Back names the list; object view hides roster",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "formatters",
+      "title": "Formatters",
+      "archetype": "roster",
+      "entry_points": [
+        "Home domain card #/cat/code",
+        "Domain overview destination row #/cat/code",
+        "Universal search rid sr:manager:formatters",
+        "Roster object rows #/mgr/formatters/<objectId>"
+      ],
+      "route": "#/mgr/formatters(/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/formatters (from object) then #/cat/code",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "push navigation: roster alone, Back names the list; object view hides roster",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "commands",
+      "title": "Commands & Shortcuts",
+      "archetype": "roster",
+      "entry_points": [
+        "Home domain card #/cat/extensions",
+        "Domain overview destination row #/cat/extensions",
+        "Universal search rid sr:manager:commands",
+        "Roster object rows #/mgr/commands/<objectId>"
+      ],
+      "route": "#/mgr/commands(/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/commands (from object) then #/cat/extensions",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "push navigation: roster alone, Back names the list; object view hides roster",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "mcp",
+      "title": "MCP Servers",
+      "archetype": "roster",
+      "entry_points": [
+        "Home domain card #/cat/extensions",
+        "Domain overview destination row #/cat/extensions",
+        "Universal search rid sr:manager:mcp",
+        "Roster object rows #/mgr/mcp/<objectId>"
+      ],
+      "route": "#/mgr/mcp(/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/mcp (from object) then #/cat/extensions",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "push navigation: roster alone, Back names the list; object view hides roster",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "skills",
+      "title": "Skills",
+      "archetype": "roster",
+      "entry_points": [
+        "Home domain card #/cat/extensions",
+        "Domain overview destination row #/cat/extensions",
+        "Universal search rid sr:manager:skills",
+        "Roster object rows #/mgr/skills/<objectId>"
+      ],
+      "route": "#/mgr/skills(/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/skills (from object) then #/cat/extensions",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "push navigation: roster alone, Back names the list; object view hides roster",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "plugins",
+      "title": "Plugins",
+      "archetype": "roster",
+      "entry_points": [
+        "Home domain card #/cat/extensions",
+        "Domain overview destination row #/cat/extensions",
+        "Universal search rid sr:manager:plugins",
+        "Roster object rows #/mgr/plugins/<objectId>"
+      ],
+      "route": "#/mgr/plugins(/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/plugins (from object) then #/cat/extensions",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "push navigation: roster alone, Back names the list; object view hides roster",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "tools",
+      "title": "Tools",
+      "archetype": "roster",
+      "entry_points": [
+        "Home domain card #/cat/extensions",
+        "Domain overview destination row #/cat/extensions",
+        "Universal search rid sr:manager:tools",
+        "Roster object rows #/mgr/tools/<objectId>"
+      ],
+      "route": "#/mgr/tools(/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/tools (from object) then #/cat/extensions",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "push navigation: roster alone, Back names the list; object view hides roster",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "testing",
+      "title": "Testing & Debug",
+      "archetype": "preference",
+      "entry_points": [
+        "Home domain card #/cat/planning",
+        "Domain overview destination row #/cat/planning",
+        "Universal search rid sr:manager:testing",
+        "Direct manager route #/mgr/testing"
+      ],
+      "route": "#/mgr/testing",
+      "shell_retained": true,
+      "back_target": "#/cat/planning",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "storage",
+      "title": "Storage & Retention",
+      "archetype": "catalog",
+      "entry_points": [
+        "Home domain card #/cat/system",
+        "Domain overview destination row #/cat/system",
+        "Universal search rid sr:manager:storage",
+        "Direct manager route #/mgr/storage"
+      ],
+      "route": "#/mgr/storage",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "backup",
+      "title": "Backup & Restore",
+      "archetype": "catalog",
+      "entry_points": [
+        "Home domain card #/cat/system",
+        "Domain overview destination row #/cat/system",
+        "Universal search rid sr:manager:backup",
+        "Direct manager route #/mgr/backup"
+      ],
+      "route": "#/mgr/backup",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "lifecycle",
+      "title": "Settings Lifecycle",
+      "archetype": "transaction",
+      "entry_points": [
+        "Home domain card #/cat/system",
+        "Domain overview destination row #/cat/system",
+        "Universal search rid sr:manager:lifecycle",
+        "Direct manager route #/mgr/lifecycle"
+      ],
+      "route": "#/mgr/lifecycle",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "history",
+      "title": "History & Sessions",
+      "archetype": "catalog",
+      "entry_points": [
+        "Home domain card #/cat/system",
+        "Domain overview destination row #/cat/system",
+        "Universal search rid sr:manager:history",
+        "Direct manager route #/mgr/history"
+      ],
+      "route": "#/mgr/history",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "artifacts",
+      "title": "Runtime Artifacts",
+      "archetype": "catalog",
+      "entry_points": [
+        "Home domain card #/cat/system",
+        "Domain overview destination row #/cat/system",
+        "Universal search rid sr:manager:artifacts",
+        "Direct manager route #/mgr/artifacts"
+      ],
+      "route": "#/mgr/artifacts",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "scm",
+      "title": "Source Control & Worktrees",
+      "archetype": "catalog",
+      "entry_points": [
+        "Home domain card #/cat/branching",
+        "Domain overview destination row #/cat/branching",
+        "Universal search rid sr:manager:scm",
+        "Direct manager route #/mgr/scm"
+      ],
+      "route": "#/mgr/scm",
+      "shell_retained": true,
+      "back_target": "#/cat/branching",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "gha",
+      "title": "GitHub Actions",
+      "archetype": "catalog",
+      "entry_points": [
+        "Home domain card #/cat/extensions",
+        "Domain overview destination row #/cat/extensions",
+        "Universal search rid sr:manager:gha",
+        "Direct manager route #/mgr/gha"
+      ],
+      "route": "#/mgr/gha",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "containers",
+      "title": "Containers & Registries",
+      "archetype": "roster",
+      "entry_points": [
+        "Home domain card #/cat/system",
+        "Domain overview destination row #/cat/system",
+        "Universal search rid sr:manager:containers",
+        "Roster object rows #/mgr/containers/<objectId>"
+      ],
+      "route": "#/mgr/containers(/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/containers (from object) then #/cat/system",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "push navigation: roster alone, Back names the list; object view hides roster",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "web",
+      "title": "Web, Search & Fetch",
+      "archetype": "preference",
+      "entry_points": [
+        "Home domain card #/cat/web",
+        "Domain overview destination row #/cat/web",
+        "Universal search rid sr:manager:web",
+        "Direct manager route #/mgr/web"
+      ],
+      "route": "#/mgr/web",
+      "shell_retained": true,
+      "back_target": "#/cat/web",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "searchindex",
+      "title": "Project Search Index",
+      "archetype": "health",
+      "entry_points": [
+        "Home domain card #/cat/system",
+        "Domain overview destination row #/cat/system",
+        "Universal search rid sr:manager:searchindex",
+        "Direct manager route #/mgr/searchindex"
+      ],
+      "route": "#/mgr/searchindex",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "cleanup",
+      "title": "Workspace Cleanup",
+      "archetype": "transaction",
+      "entry_points": [
+        "Home domain card #/cat/system",
+        "Domain overview destination row #/cat/system",
+        "Universal search rid sr:manager:cleanup",
+        "Direct manager route #/mgr/cleanup"
+      ],
+      "route": "#/mgr/cleanup",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "media",
+      "title": "Media & Output",
+      "archetype": "preference",
+      "entry_points": [
+        "Home domain card #/cat/media",
+        "Domain overview destination row #/cat/media",
+        "Universal search rid sr:manager:media",
+        "Direct manager route #/mgr/media"
+      ],
+      "route": "#/mgr/media",
+      "shell_retained": true,
+      "back_target": "#/cat/media",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "dry",
+      "title": "DRY Method",
+      "archetype": "catalog",
+      "entry_points": [
+        "Home domain card #/cat/extensions",
+        "Domain overview destination row #/cat/extensions",
+        "Universal search rid sr:manager:dry",
+        "Direct manager route #/mgr/dry"
+      ],
+      "route": "#/mgr/dry",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "onboarding",
+      "title": "Product Onboarding",
+      "archetype": "setup",
+      "entry_points": [
+        "Home domain card #/cat/general",
+        "Domain overview destination row #/cat/general",
+        "Universal search rid sr:manager:onboarding",
+        "Direct manager route #/mgr/onboarding"
+      ],
+      "route": "#/mgr/onboarding",
+      "shell_retained": true,
+      "back_target": "#/cat/general",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "updates",
+      "title": "App & Content Updates",
+      "archetype": "setup",
+      "entry_points": [
+        "Home domain card #/cat/system",
+        "Domain overview destination row #/cat/system",
+        "Universal search rid sr:manager:updates",
+        "Direct manager route #/mgr/updates"
+      ],
+      "route": "#/mgr/updates",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "servers",
+      "title": "Servers",
+      "archetype": "setup",
+      "entry_points": [
+        "Home domain card #/cat/system",
+        "Domain overview destination row #/cat/system",
+        "Universal search rid sr:manager:servers",
+        "Direct manager route #/mgr/servers"
+      ],
+      "route": "#/mgr/servers",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    },
+    {
+      "family": "hosting",
+      "title": "Project Hosting & Files",
+      "archetype": "setup",
+      "entry_points": [
+        "Home domain card #/cat/system",
+        "Domain overview destination row #/cat/system",
+        "Universal search rid sr:manager:hosting",
+        "Direct manager route #/mgr/hosting"
+      ],
+      "route": "#/mgr/hosting",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "#/home with Close Settings receipt",
+      "narrow_behavior": "single column; domain cards stack; dropdown within viewport",
+      "key_states": [
+        "setting rows with custom/managed/unavailable chips",
+        "action rows with ObservableWork receipt",
+        "roster health dots"
+      ],
+      "pass": true
+    }
+  ]
+}

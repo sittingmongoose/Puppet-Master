@@ -1,0 +1,27 @@
+{
+  "schema_id": "pm.settings_bakeoff.candidate_wiring_delta.v1",
+  "concept": "concept-06-directory-take-2",
+  "provisional": true,
+  "entries": [
+    {
+      "surface": "search result row",
+      "effect": "route by rid: load domain, open manager, select object/section, scroll+focus row, pm2-locate; push #/q/<query> before navigate",
+      "owner": "settings navigation"
+    },
+    {
+      "surface": "needs-attention row",
+      "effect": "deep-link to manager object/section (dest object from PMState2.notices)",
+      "owner": "notifications"
+    },
+    {
+      "surface": "recent list",
+      "effect": "route to last-touched setting row",
+      "owner": "settings home"
+    },
+    {
+      "surface": "deferred shell",
+      "effect": "insertion destination + return deep-link contract; no state invented",
+      "owner": "named owner modules"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "schema_id": "pm.settings_bakeoff.model_folder_map.v2",
+  "folders": [
+    {"folder": "5.6 Sol", "model_label": "5.6 Sol"},
+    {"folder": "CursorAuto", "model_label": "CursorAuto"},
+    {"folder": "fable", "model_label": "fable"},
+    {"folder": "glm-5-2", "model_label": "GLM-5.2"},
+    {"folder": "kimi", "model_label": "Kimi"},
+    {"folder": "kimi-k3", "model_label": "kimi-k3"},
+    {"folder": "Opus 5", "model_label": "Opus 5"},
+    {"folder": "Qwen 5.8", "model_label": "Qwen 5.8"}
+  ],
+  "write_scope": "Concepts/settings-redesign-concepts/<assigned-model-folder>/",
+  "frozen_concepts": [1, 2, 3, 4],
+  "new_concepts": [5, 6, 7, 8, 9, 10, 11]
+}

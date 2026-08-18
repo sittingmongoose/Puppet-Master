@@ -1,0 +1,334 @@
+{
+  "schema_id": "pm.settings_bakeoff.manager_coverage.v2.concept",
+  "concept_id": "concept-10-command-suite",
+  "model": "Qwen 5.8",
+  "note": "All 42 families demonstrated concept-natively in concept-10-command-suite.html: command index home, Ctrl+K palette, left-to-right drill panes, compact tables, exact editor beside context. No cross-concept routes, no iframe, no scope selectors, no cross-concept shared renderer.",
+  "required_demonstrated": [
+    {
+      "name": "Settings Home",
+      "status": "demonstrated",
+      "route": "#/home",
+      "note": "Command-index home: project identity, large search, status line, <=1 critical banner, Needs attention table, 12-domain command index with counts, secondary utilities."
+    },
+    {
+      "name": "Settings Search",
+      "status": "demonstrated",
+      "route": "#/home and topbar field on every view; #/q/<query> pushed before target",
+      "note": "Dropdown grouped by type with data-rid rows and .pm2-r-title labels; routing by PMSearch2.byRid only; Back restores query and reopens dropdown."
+    },
+    {
+      "name": "Settings Workspace",
+      "status": "demonstrated",
+      "route": "all routes",
+      "note": "PMShell2 shell retained; breadcrumb, Back to named location, Close Settings, search, project chip on every view; drill panes keep selection and scroll per route."
+    },
+    {
+      "name": "Ordinary setting grammar",
+      "status": "demonstrated",
+      "route": "#/cat/<cat>/<sub> and Related product settings in managers",
+      "note": "PMManagers2.row + bindRows atoms (human title, one explanation, control, Details evidence) on every page pane and manager; staged exact editor beside context."
+    },
+    {
+      "name": "Provider / Account / Model / Installation",
+      "status": "demonstrated",
+      "route": "#/mgr/providers and #/mgr/providers/<objectId>?sec=overview|accounts|install|models|catalog|limits|logs|settings",
+      "note": "Roster of 17 fixtures + tabbed detail: connected state, account, models, limits tables with meters, logs; credentials masked (PM secret/vault-ref/CLI-owned OAuth); explicit official-source install with Host/Environment; shadowed/selected installations; ask-first update; verification-failed rollback."
+    },
+    {
+      "name": "Context & Instructions",
+      "status": "demonstrated",
+      "route": "#/mgr/context",
+      "note": "Catalog: instruction chain, auto-admission toggle, budget, excluded paths."
+    },
+    {
+      "name": "Memory",
+      "status": "demonstrated",
+      "route": "#/mgr/memory",
+      "note": "Half-life, verification, pinning, restore action, gist-health diagnostic with rebuild."
+    },
+    {
+      "name": "Personas",
+      "status": "demonstrated",
+      "route": "#/mgr/personas and #/mgr/personas/<objectId>",
+      "note": "Roster of 4 capsules + detail; authority status row."
+    },
+    {
+      "name": "Goal & Automation",
+      "status": "demonstrated",
+      "route": "#/mgr/goal and #/mgr/goal/<objectId>",
+      "note": "Roster of Goals; concurrency, autonomy, evidence rows."
+    },
+    {
+      "name": "Crew",
+      "status": "demonstrated",
+      "route": "#/mgr/crew and #/mgr/crew/<objectId>",
+      "note": "Roster of crew templates; route policy, isolation."
+    },
+    {
+      "name": "Permissions & FileSafe",
+      "status": "demonstrated",
+      "route": "#/mgr/permissions and #/mgr/permissions/<profileId>",
+      "note": "Roster of profiles; rule order, FileSafe floor, trace action."
+    },
+    {
+      "name": "Back Seat Driver",
+      "status": "demonstrated",
+      "route": "#/mgr/bsd",
+      "note": "Preference: mode, quota, authority, triggers."
+    },
+    {
+      "name": "Notifications & Sounds",
+      "status": "demonstrated",
+      "route": "#/mgr/notifications and #/mgr/sounds",
+      "note": "Surface policy rows; sound master/volume/pairing; rate-limited receipted test send."
+    },
+    {
+      "name": "Sound Library / Uploads / Packs",
+      "status": "demonstrated",
+      "route": "#/mgr/sounds",
+      "note": "Pack import status, preview policy, test send."
+    },
+    {
+      "name": "Appearance / themes / fonts / motion",
+      "status": "demonstrated",
+      "route": "#/mgr/appearance",
+      "note": "Eight themes, custom TOML validation, reduced motion."
+    },
+    {
+      "name": "Spellcheck & Dictionaries",
+      "status": "demonstrated",
+      "route": "#/mgr/spellcheck",
+      "note": "Underline-only checking, dictionaries, personal dictionary action."
+    },
+    {
+      "name": "Desktop / Tray / Window",
+      "status": "demonstrated",
+      "route": "#/mgr/desktop",
+      "note": "Tray, close behavior, quit confirmation, startup."
+    },
+    {
+      "name": "Teacher / Help",
+      "status": "demonstrated",
+      "route": "#/mgr/teacher",
+      "note": "Level, receipts, ask action."
+    },
+    {
+      "name": "Doctor",
+      "status": "demonstrated",
+      "route": "#/mgr/doctor",
+      "note": "Diagnostic manager with phased ObservableWork run; offline shows last-known health."
+    },
+    {
+      "name": "File Manager / Editor",
+      "status": "demonstrated",
+      "route": "#/mgr/files",
+      "note": "Changed-on-disk, autosave, encoding, line endings."
+    },
+    {
+      "name": "Terminal",
+      "status": "demonstrated",
+      "route": "#/mgr/terminal",
+      "note": "Shell, integration, scrollback, bell."
+    },
+    {
+      "name": "LSP",
+      "status": "demonstrated",
+      "route": "#/mgr/lsp and #/mgr/lsp/<serverId>",
+      "note": "Roster; diagnostics, format owner, repair."
+    },
+    {
+      "name": "Formatters",
+      "status": "demonstrated",
+      "route": "#/mgr/formatters and #/mgr/formatters/<fmtId>",
+      "note": "Roster; enable, on-save, scope, test."
+    },
+    {
+      "name": "Commands & Shortcuts",
+      "status": "demonstrated",
+      "route": "#/mgr/commands and #/mgr/commands/<cmdId>",
+      "note": "Roster; palette scope, conflicts diagnostic, dry-run."
+    },
+    {
+      "name": "MCP",
+      "status": "demonstrated",
+      "route": "#/mgr/mcp and #/mgr/mcp/<serverId>",
+      "note": "Roster; exposure, approvals, repair."
+    },
+    {
+      "name": "Skills",
+      "status": "demonstrated",
+      "route": "#/mgr/skills and #/mgr/skills/<skillId>",
+      "note": "Roster; trust, eager load, manage."
+    },
+    {
+      "name": "Plugins",
+      "status": "demonstrated",
+      "route": "#/mgr/plugins and #/mgr/plugins/<pluginId>",
+      "note": "Roster; channel, auto-update, manage."
+    },
+    {
+      "name": "Tools",
+      "status": "demonstrated",
+      "route": "#/mgr/tools and #/mgr/tools/<toolId>",
+      "note": "Roster; children, schemas, inventory."
+    },
+    {
+      "name": "Testing & Debug",
+      "status": "demonstrated",
+      "route": "#/mgr/testing",
+      "note": "Strength, autotest, debug visibility, matrix."
+    },
+    {
+      "name": "Storage & Retention",
+      "status": "demonstrated",
+      "route": "#/mgr/storage",
+      "note": "Mode, classes, snapshots, cleanup link, telemetry."
+    },
+    {
+      "name": "Backup & Restore",
+      "status": "demonstrated",
+      "route": "#/mgr/backup",
+      "note": "Back up now phased op, schedule, verify, test restore; restore points."
+    },
+    {
+      "name": "Settings Lifecycle",
+      "status": "demonstrated",
+      "route": "#/lifecycle and #/mgr/lifecycle",
+      "note": "Transaction: export, import, conflicts, legacy, reset, rollback with restore points table."
+    },
+    {
+      "name": "History & Sessions",
+      "status": "demonstrated",
+      "route": "#/mgr/history",
+      "note": "Threads, transcripts, redaction, export."
+    },
+    {
+      "name": "Runtime Artifacts / Project Outputs",
+      "status": "demonstrated",
+      "route": "#/mgr/artifacts",
+      "note": "Location, identity, retention, browse."
+    },
+    {
+      "name": "Source Control / Worktrees",
+      "status": "demonstrated",
+      "route": "#/mgr/scm",
+      "note": "Provision, cleanup, ports, status."
+    },
+    {
+      "name": "GitHub Actions",
+      "status": "demonstrated",
+      "route": "#/mgr/gha",
+      "note": "Watch, notify, approvals, recent runs."
+    },
+    {
+      "name": "Containers & Registries",
+      "status": "demonstrated",
+      "route": "#/mgr/containers and #/mgr/containers/<toolId>",
+      "note": "Roster; default, registry auth, probe."
+    },
+    {
+      "name": "Web / Search / Fetch / Crawl",
+      "status": "demonstrated",
+      "route": "#/mgr/web",
+      "note": "Provider, timeout, readability, auth browsing."
+    },
+    {
+      "name": "Project Search Index",
+      "status": "demonstrated",
+      "route": "#/mgr/searchindex",
+      "note": "Enabled, status, phased rebuild, excluded."
+    },
+    {
+      "name": "Workspace Cleanup",
+      "status": "demonstrated",
+      "route": "#/mgr/cleanup",
+      "note": "Dry-run first, protected paths, reclaimable, run."
+    },
+    {
+      "name": "Media & Output",
+      "status": "demonstrated",
+      "route": "#/mgr/media",
+      "note": "Location, naming, export."
+    },
+    {
+      "name": "DRY Method visible state where exposed",
+      "status": "demonstrated",
+      "route": "#/mgr/dry",
+      "note": "Enabled, detections, savings, opt-outs, review."
+    }
+  ],
+  "allowed_deferred_named_owner": [
+    {
+      "name": "Product Onboarding",
+      "status": "deferred_named_owner",
+      "owner": "Product Onboarding plan owner",
+      "route": "#/mgr/onboarding",
+      "insertion": "First-run flow uses the same provider, account, connection, and installation records as Settings; no duplicate secret store; no SQLite.",
+      "returnContract": "Completed setup returns to the Providers manager with the new connection selected and a continuation receipt for any interrupted step."
+    },
+    {
+      "name": "Installation / Deployment",
+      "status": "deferred_named_owner",
+      "owner": "Provider Lifecycle owner",
+      "route": "#/mgr/installation",
+      "insertion": "Explicit user-triggered install from the official source for the exact Host/Environment, with verification and rollback inside the provider card.",
+      "returnContract": "Install receipts deep-link back to the provider's installation section; a failed verification returns with the previous generation restored."
+    },
+    {
+      "name": "Server Claim / Bootstrap",
+      "status": "deferred_named_owner",
+      "owner": "Server Backbone",
+      "route": "#/mgr/server-claim",
+      "insertion": "Claim handshake that binds a server record to this Puppet Master install before any hosted work is offered.",
+      "returnContract": "A successful claim returns to the Servers card with the claimed server marked connected and a claim receipt."
+    },
+    {
+      "name": "Servers / Execution Hosts / Clients",
+      "status": "deferred_named_owner",
+      "owner": "Server Backbone",
+      "route": "#/mgr/servers",
+      "insertion": "Manager grammar reserved under System & Advanced; human-language cards only; deep-link slot reserved for the server shell.",
+      "returnContract": "Server cards deep-link back into Settings at the matching storage or hosting row with full capability state."
+    },
+    {
+      "name": "Project Hosting & Files",
+      "status": "deferred_named_owner",
+      "owner": "Project Syncing and Updates",
+      "route": "#/mgr/hosting",
+      "insertion": "Source Location card (Hosted On, Project Files, Run Work) plus Project Sync status slots.",
+      "returnContract": "Hosting changes return to the Project Hosting card with sync status and a move receipt."
+    },
+    {
+      "name": "Remote Access",
+      "status": "deferred_named_owner",
+      "owner": "Server Backbone",
+      "route": "#/mgr/remote-access",
+      "insertion": "Pairing and session approvals; protected auth browsing sessions remain human-only.",
+      "returnContract": "Approvals return to the Remote Access card with the session list updated; no Settings state is invented here."
+    },
+    {
+      "name": "Project Sync / Move",
+      "status": "deferred_named_owner",
+      "owner": "Project Syncing and Updates",
+      "route": "#/mgr/sync-move",
+      "insertion": "Project relocation and sync bundles owned by the sync pipeline; Settings only surfaces status and entry points.",
+      "returnContract": "A finished move returns to Settings Lifecycle with the relocated project's settings re-verified and conflicts, if any, queued for review."
+    },
+    {
+      "name": "Puppet Master application/content updates",
+      "status": "deferred_named_owner",
+      "owner": "Project Syncing and Updates",
+      "route": "#/mgr/updates",
+      "insertion": "Host-scoped signed Puppet Master updates, separate from provider, source-control, language-server, and container tool updates.",
+      "returnContract": "Update status cards deep-link into the Updates manager with signed-build receipts."
+    },
+    {
+      "name": "Full Server backup owner flow",
+      "status": "deferred_named_owner",
+      "owner": "Server Backbone",
+      "route": "#/mgr/server-backup",
+      "insertion": "Full Server backup class alongside settings backup and project backup, with its own schedule and verification.",
+      "returnContract": "Backup runs return to the Backup manager's server class with verification receipts and the last-run state."
+    }
+  ]
+}

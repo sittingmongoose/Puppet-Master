@@ -97,6 +97,45 @@
   --tone-purple: var(--accent-magenta);
 }
 
+/* ---------- 3b. PORTABILITY FALLBACKS (payload self-sufficiency) ----------
+   Every token below has its real, per-theme value in _shared/themes.css.
+   themes.css is host chrome: it is NOT part of the portable usage payload, so
+   once these stylesheets are embedded in a host that ships its own theme sheet
+   each var() below would resolve to nothing. This layer supplies one honest
+   default for each. :where() holds the whole block at ZERO specificity, so any
+   real [data-theme] / html[data-theme^=] definition still wins and nothing
+   changes while themes.css is present. Values are expressed through tokens or
+   plain lengths only — never colour literals — so the block stays inside the
+   pm6 "no raw hex outside a [data-theme] scope" rule.
+   The one token deliberately NOT declared here is --wf: the payload defines it
+   itself, inline, on every meter fill it renders (u11-widgets.js and the u11
+   boot script write style="--wf:<pct>%"), which is what makes it resolve. Keep
+   it that way — a refactor that drops those inline writes turns --wf into an
+   undefined-var gate failure. */
+:where(:root) {
+  --pm-motion-k: 1;                        /* per-theme motion intensity (P12) */
+  --num-font: 'Inter', system-ui, sans-serif;   /* tabular-figure face */
+  --text-tertiary: var(--text-secondary);  /* matches every in-place fallback */
+  /* contrast-deepened ink variants of the --tone-* set above */
+  --tone-ok-text: var(--tone-ok);
+  --tone-warn-text: var(--tone-warn);
+  --tone-err-text: var(--tone-err);
+  --tone-info-text: var(--tone-info);
+  --tone-purple-text: var(--tone-purple);
+  --tone-mute-text: var(--tone-mute);
+  /* meter-fill variants of the same set (WCAG 1.4.11) */
+  --us-fill-ok: var(--tone-ok);
+  --us-fill-warn: var(--tone-warn);
+  --us-fill-hot: var(--tone-err);
+  --us-fill-info: var(--tone-info);
+  --us-fill-purple: var(--tone-purple);
+  --us-fill-mute: var(--tone-mute);
+  /* meter / window-row grid columns (same widths the in-place fallbacks use) */
+  --us-mlb: 30px;
+  --us-mpc: 40px;
+  --us-wlb: 96px;
+}
+
 /* value-state chip — one encoding across all concepts (UF-074/087/088) */
 .vs {
   display: inline-flex; align-items: center; gap: 4px; padding: 1px 7px; border-radius: var(--radius-pill);
@@ -158,7 +197,7 @@
 
 /* donut strokes ARE fills (WCAG 1.4.11): route raw-tone presentation-attribute
    strokes (shared .wd-donut AND the concept donuts, which use the identical
-   'var(--tone-*)' attribute strings) onto the same >=3:1 --us-fill-* tokens the
+   raw-tone attribute strings) onto the same >=3:1 --us-fill-* tokens the
    meters use; themes without an override keep the vivid raw tone (already
    passing there). Any CSS rule out-ranks a presentation attribute — no JS
    change needed; inline style: strokes (u2) are untouched by design. */
@@ -299,8 +338,8 @@ html[data-reduced-motion="1"] .pm-sprout.is-open { opacity: 1; visibility: visib
    research/motion-synthesis.md (P1-P12). Naming: --mo-<token>-dur/-ease.
    Durations are the map's nominal values, scaled per theme by --pm-motion-k
    (P12 intensity, set next to --motion-med in themes.css: retro .58 / basic
-   .83 / friendly 1.08 / glass 1.33). The instant tier (hover, pickup) and the
-   data tier (refresh, flash) are perceptually anchored (NN/g) and never scale.
+   .83 / friendly 1.08 / glass 1.33). The instant band (hover, pickup) and the
+   data band (refresh, flash) are perceptually anchored (NN/g) and never scale.
    The blanket reduced-motion kill-switch lives in themes.css (single copy);
    the -dur-r variants below are for targeted reduced rules that must drop the
    transform/position channel while keeping state visible (P10). */
@@ -329,7 +368,7 @@ html[data-reduced-motion="1"] .pm-sprout.is-open { opacity: 1; visibility: visib
   --mo-tab-out-ease: var(--pm-ease-in);
 
   /* widgets — drag is 1:1; only lift/settle/reflow animate */
-  --mo-widget-pickup-dur: 120ms;                   /* instant tier: never scaled */
+  --mo-widget-pickup-dur: 120ms;                   /* instant band: never scaled */
   --mo-widget-pickup-ease: var(--pm-ease-out);
   --mo-widget-drop-dur: calc(220ms * var(--pm-motion-k, 1));
   --mo-widget-drop-ease: cubic-bezier(0.2, 0, 0, 1); /* decelerate, NO overshoot */
@@ -346,21 +385,21 @@ html[data-reduced-motion="1"] .pm-sprout.is-open { opacity: 1; visibility: visib
   --mo-focus-exit-dur: calc(300ms * var(--pm-motion-k, 1));
   --mo-focus-exit-ease: var(--pm-ease-smooth);
 
-  /* data + charts — data tier: never scaled (keep <1s flow limit) */
+  /* data + charts — data band: never scaled (keep <1s flow limit) */
   --mo-data-refresh-dur: 800ms;                    /* counters / meter+donut fills */
   --mo-data-refresh-ease: var(--pm-ease-smooth);
   --mo-data-flash-dur: 1100ms;                     /* new-row highlight, one-shot */
   --mo-chart-transition-dur: calc(400ms * var(--pm-motion-k, 1)); /* unified curve, no per-series stagger */
   --mo-chart-transition-ease: var(--pm-ease-smooth);
 
-  /* hover/micro feedback — instant tier: never scaled */
+  /* hover/micro feedback — instant band: never scaled */
   --mo-hover-dur: 120ms;
   --mo-hover-ease: var(--pm-ease-out);
 
-  /* personality/spring vocabulary — expert-tier primitives: real overshoot
+  /* personality/spring vocabulary — expert-grade primitives: real overshoot
      (spring), wind-up (antic), secondary motion (follow), squash (press),
      stagger steps and one-shot reveals. Portable cubic-beziers only (no JS
-     springs). Durations scale with --pm-motion-k like the tiers above; the
+     springs). Durations scale with --pm-motion-k like the bands above; the
      stagger step is flat per item (like --mo-reflow-stagger). */
   --mo-spring-dur: calc(420ms * var(--pm-motion-k, 1));  /* generic springy arrival with overshoot */
   --mo-spring-ease: var(--pm-ease-spring);           /* cubic-bezier(0.34, 1.56, 0.64, 1) — aligned with --ease-spring, single source */

@@ -1,0 +1,678 @@
+{
+  "schema_id": "pm.settings_bakeoff.manager_route_matrix.v2.concept",
+  "concept_id": "concept-05-directory-take-1",
+  "rows": [
+    {
+      "family_id": "providers",
+      "title": "Providers",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:providers)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/providers",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "push navigation: manager list pane first; selecting an object pushes detail; Back names the manager list",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "context",
+      "title": "Context & Instructions",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:context)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/context",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "memory",
+      "title": "Memory",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:memory)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/memory",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "personas",
+      "title": "Personas",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:personas)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/personas",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "goal",
+      "title": "Goal & Automation",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:goal)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/goal",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "crew",
+      "title": "Crew",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:crew)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/crew",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "permissions",
+      "title": "Permissions & FileSafe",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:permissions)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/permissions",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "bsd",
+      "title": "Back Seat Driver",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:bsd)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/bsd",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "notifications",
+      "title": "Notifications",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:notifications)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/notifications",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "sounds",
+      "title": "Sounds",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:sounds)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/sounds",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "appearance",
+      "title": "Appearance",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:appearance)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/appearance",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "spellcheck",
+      "title": "Spellcheck & Dictionaries",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:spellcheck)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/spellcheck",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "desktop",
+      "title": "Desktop, Tray & Window",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:desktop)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/desktop",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "teacher",
+      "title": "Teacher",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:teacher)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/teacher",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "doctor",
+      "title": "Doctor",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:doctor)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/doctor",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "files",
+      "title": "File Manager & Editor",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:files)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/files",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "terminal",
+      "title": "Terminal",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:terminal)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/terminal",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "lsp",
+      "title": "Language Servers",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:lsp)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/lsp",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "formatters",
+      "title": "Formatters",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:formatters)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/formatters",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "commands",
+      "title": "Commands & Shortcuts",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:commands)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/commands",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "mcp",
+      "title": "MCP Servers",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:mcp)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/mcp",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "skills",
+      "title": "Skills",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:skills)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/skills",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "plugins",
+      "title": "Plugins",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:plugins)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/plugins",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "tools",
+      "title": "Tools",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:tools)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/tools",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "testing",
+      "title": "Testing & Debug",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:testing)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/testing",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "storage",
+      "title": "Storage & Retention",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:storage)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/storage",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "backup",
+      "title": "Backup & Restore",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:backup)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/backup",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "lifecycle",
+      "title": "Settings Lifecycle",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:lifecycle)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/lifecycle",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "history",
+      "title": "History & Sessions",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:history)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/history",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "artifacts",
+      "title": "Runtime Artifacts",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:artifacts)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/artifacts",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "scm",
+      "title": "Source Control & Worktrees",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:scm)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/scm",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "gha",
+      "title": "GitHub Actions",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:gha)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/gha",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "containers",
+      "title": "Containers & Registries",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:containers)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/containers",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "web",
+      "title": "Web, Search & Fetch",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:web)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/web",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "searchindex",
+      "title": "Project Search Index",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:searchindex)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/searchindex",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "cleanup",
+      "title": "Workspace Cleanup",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:cleanup)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/cleanup",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "media",
+      "title": "Media & Output",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:media)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/media",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "dry",
+      "title": "DRY Method",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:dry)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/dry",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "onboarding",
+      "title": "Product Onboarding",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:onboarding)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/onboarding",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "updates",
+      "title": "App & Content Updates",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:updates)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/updates",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "servers",
+      "title": "Servers",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:servers)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/servers",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    },
+    {
+      "family_id": "hosting",
+      "title": "Project Hosting & Files",
+      "entry_points": [
+        "domain page destination row (#/cat/<domain>)",
+        "universal search (sr:manager:hosting)",
+        "manager left-nav inside #/mgr/<domain>"
+      ],
+      "route": "#/mgr/hosting",
+      "shell_retained": true,
+      "back_target": "domain page (#/cat/<domain>)",
+      "close_target": "closed card with receipt + reopen",
+      "narrow_behavior": "single column; manager nav collapses above content; Back names the domain",
+      "key_states": "loading-with-cache via skeletons on refresh; empty (no accounts/models); managed/unavailable chips; restart/reconnect via scenario badges",
+      "pass": true
+    }
+  ]
+}

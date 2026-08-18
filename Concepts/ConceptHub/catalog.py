@@ -90,8 +90,11 @@ def _manifest_models() -> Tuple[List[Dict[str, Any]], List[str]]:
             if presentation not in PRESENTATIONS:
                 raise ValueError(f"presentation must be one of {sorted(PRESENTATIONS)}")
             if normalize_name(model) not in normalize_name(folder.name):
-                raise ValueError(f"folder name '{folder.name}' must include model '{model}'")
-            model_id = f"{topic}:{folder_rel}"
+                if not bool(manifest.get("unknownModel", False)):
+                    raise ValueError(f"folder name '{folder.name}' must include model '{model}'")
+            model_id = str(manifest.get("id") or f"{topic}:{folder_rel}").strip()
+            if not model_id:
+                raise ValueError("id must be a non-empty string when provided")
             models.append({
                 "id": model_id,
                 "topic": topic,
@@ -102,6 +105,7 @@ def _manifest_models() -> Tuple[List[Dict[str, Any]], List[str]]:
                 "entries": copy.deepcopy(manifest.get("entries", [])),
                 "workspace": copy.deepcopy(manifest.get("workspace")),
                 "widthControl": copy.deepcopy(manifest.get("widthControl")),
+                "unknownModel": bool(manifest.get("unknownModel", False)),
                 "source": "manifest",
             })
         except (OSError, ValueError, TypeError, json.JSONDecodeError) as exc:

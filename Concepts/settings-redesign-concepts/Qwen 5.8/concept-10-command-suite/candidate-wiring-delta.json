@@ -1,0 +1,115 @@
+{
+  "schema_id": "pm.settings_candidate_wiring_delta.v1",
+  "concept_id": "concept-10-command-suite",
+  "note": "Every user action traces UI source → command candidate → canonical owner → validation/permission → mutation/operation → event/receipt/ObservableWork → UI projection → attribution → recovery/deep link. Concept-local simulation only; no production wiring claimed.",
+  "traces": [
+    {
+      "action": "Change a setting row control",
+      "ui_source": "pm2-row control (toggle/select/number/text) in any pane or editor",
+      "command": "cmd.settings.value.set",
+      "owner": "PMState2 (settings store; production owner: settings schema runtime)",
+      "validation": "managed/unavailable sources blocked with warn receipt",
+      "mutation": "state.settings[id].value + source=custom",
+      "event": "receipt(ok) + emit(setting)",
+      "projection": "row control re-render, editor staged-state cleared, Recent updated",
+      "attribution": "touchRecent(kind=setting)",
+      "recovery": "row Details → Reset to default (cmd.settings.default.restore)"
+    },
+    {
+      "action": "Ctrl+K palette open/execute",
+      "ui_source": "global keydown while Settings focused",
+      "command": "cmd.settings.palette.open / cmd.settings.palette.execute",
+      "owner": "concept UI (candidate); execution delegates to canonical dest objects (PMSearch2.byRid / route)",
+      "validation": "entries limited to registered destinations",
+      "mutation": "none on open; navigation on execute",
+      "event": "none on open; route change + focus/highlight on execute",
+      "projection": "overlay list with arrow selection; Enter routes by rid/route",
+      "attribution": "recent destination touched on landing",
+      "recovery": "Esc closes overlay; Back restores prior route and query"
+    },
+    {
+      "action": "Drill right/left between panes",
+      "ui_source": "ArrowRight/ArrowLeft in Index/Pages/Detail panes",
+      "command": "cmd.settings.drill.right / cmd.settings.drill.left",
+      "owner": "concept UI navigation state",
+      "validation": "pane bounds; left at Index = Back one level",
+      "mutation": "route hash push/replace",
+      "event": "hashchange",
+      "projection": "horizontal slide of panes; selection preserved per route",
+      "attribution": "n/a",
+      "recovery": "Back button restores named location; scroll + selection kept"
+    },
+    {
+      "action": "Universal search select",
+      "ui_source": "search dropdown row (data-rid)",
+      "command": "cmd.settings.search.select_result",
+      "owner": "PMSearch2.byRid → canonical dest",
+      "validation": "rid must resolve; unavailable results route with reason visible",
+      "mutation": "route + #/q/<query> history entry",
+      "event": "route change; pm2-locate highlight",
+      "projection": "domain→page→manager→object→section→row scroll+focus",
+      "attribution": "touchRecent",
+      "recovery": "Back restores query text and dropdown results"
+    },
+    {
+      "action": "Provider test connection",
+      "ui_source": "Providers detail Overview action",
+      "command": "cmd.provider.connection.reconnect (alias for probe)",
+      "owner": "provider readiness owner (simulated ObservableWork)",
+      "validation": "offline scenario → degraded terminal with wait reason",
+      "mutation": "none",
+      "event": "op phases starting→running→completed/failed; receipt",
+      "projection": "status table cell + last-probe line; no permanent spinner",
+      "attribution": "diagnostic attribution in logs table",
+      "recovery": "retry offered on failed terminal"
+    },
+    {
+      "action": "Rotate/show credential reference",
+      "ui_source": "Credentials section buttons",
+      "command": "reuse provider owner secret reference actions",
+      "owner": "secret store owner (PM secret / vault-ref / CLI-owned OAuth)",
+      "validation": "raw value never rendered; Show reveals masked reference only",
+      "mutation": "none in concept",
+      "event": "receipt(info)",
+      "projection": "masked field with kind note",
+      "attribution": "n/a",
+      "recovery": "n/a (no raw secret in surface)"
+    },
+    {
+      "action": "Copy Settings apply",
+      "ui_source": "Copy flow Confirm panel (typed COPY)",
+      "command": "cmd.settings.copy_from_project.apply",
+      "owner": "PMCopy2 (restore point + atomic apply + verify)",
+      "validation": "type-to-confirm; conflicts listed; credentials excluded",
+      "mutation": "settings updated for changed rows; restore point kept",
+      "event": "receipt(ok|warn) with verify summary; emit(setting) per row",
+      "projection": "receipt panel + rollback action",
+      "attribution": "state.copiedFrom",
+      "recovery": "rollbackLast() to restore point"
+    },
+    {
+      "action": "Provider update ask-first",
+      "ui_source": "install section update row",
+      "command": "cmd.provider.installation.update",
+      "owner": "Binary Locator / release owner",
+      "validation": "policy ask-first; explicit consent dialog",
+      "mutation": "op with verification; failure → rollback terminal",
+      "event": "ObservableWork phases; receipt ok or rolled-back",
+      "projection": "install card state; scenario rollback shows restored generation",
+      "attribution": "install receipts list",
+      "recovery": "cmd.provider.installation.rollback"
+    },
+    {
+      "action": "Close Settings",
+      "ui_source": "Close button (data-test=close)",
+      "command": "cmd.settings.open (inverse projection)",
+      "owner": "shell",
+      "validation": "none",
+      "mutation": "none",
+      "event": "receipt(info) with return note",
+      "projection": "return-to-origin note",
+      "attribution": "n/a",
+      "recovery": "n/a"
+    }
+  ]
+}

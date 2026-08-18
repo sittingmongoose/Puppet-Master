@@ -1,0 +1,3867 @@
+{
+  "meta": {
+    "probe": "gap3-timezone-and-time-partition",
+    "generated": "2026-08-17T20:56:57.013Z",
+    "url": "file:///mnt/Cursor/PuppetMaster/Concepts/usage-concepts/QwenUsageConcept/u11-prism.html",
+    "pinnedInstant": "2026-08-04T18:42:00Z",
+    "method": "three separate browser processes, each with its own isolated profile and its own process env TZ; every number below is scraped from RENDERED text or computed geometry, never from the fixture source",
+    "fixtureFacts": {
+      "u11-data.js:27 NOW_ISO": "2026-08-04T18:42:00Z",
+      "u11-time.js:17 FALLBACK_ZONE": "America/New_York",
+      "u11-time.js:20 zone accept test": "z.indexOf('/') !== -1  — so any IANA id without a slash (UTC, GMT, EST5EDT-style, Zulu) is REJECTED and silently replaced by America/New_York",
+      "run:goal-47 timing.elapsedMs": "124 min",
+      "run:goal-47 timing.rows (9)": "12 + 47 + 31 + 9 + 6 + 0 + 19 + 0 + 4 = 128 min",
+      "run:goal-47 startedAt": "NOW - 130 min"
+    },
+    "runIdsOpened": [
+      "run:goal-47",
+      "run:plan-12",
+      "run:crew-3"
+    ]
+  },
+  "runs": {
+    "default": {
+      "label": "1-TZ-unset-default",
+      "processEnvTZ": "(unset — sandbox default)",
+      "port": 9491,
+      "timeApi": {
+        "zone": "America/New_York",
+        "zoneIsFallback": true,
+        "intlResolvedTimeZone": "UTC",
+        "intlResolvedHourCycle": "h12",
+        "intlResolvedLocale": "en-US",
+        "jsDateGetTimezoneOffsetMin": 0,
+        "jsDateToString": "Tue Aug 04 2026 18:42:00 GMT+0000 (Coordinated Universal Time)",
+        "jsToLocaleTimeString": "6:42:00 PM",
+        "pinnedInstant": "2026-08-04T18:42:00Z",
+        "renderers": {
+          "clock": "14:42",
+          "clockSec": "14:42:00",
+          "zoneAbbr": "EDT",
+          "atClock": "14:42 EDT",
+          "atDayClock": "Tue 14:42 EDT",
+          "atMonthDayClock": "Aug 4 14:42 EDT",
+          "stamp": "Aug 4 · 14:42 EDT",
+          "full": "Tue Aug 4, 2026 14:42:00 EDT · America/New_York",
+          "when(+4h, reset)": "resets in 4h 00m · 18:42 EDT",
+          "when(+5d, reset)": "resets in 5d 9h · Sun 23:42 EDT",
+          "when(+28d, expiry)": "expires in 28d · Sep 1 14:42 EDT",
+          "dur(124min)": "2h 04m",
+          "dur(128min)": "2h 08m"
+        },
+        "correctForSystemZone": "Aug 4, 2026, 18:42 UTC",
+        "renderedByU11": "14:42 EDT",
+        "systemZoneUsed": "UTC"
+      },
+      "fixtureNowFromData": "2026-08-04T18:42:00Z",
+      "perRoom": {
+        "overview": {
+          "zoneLabelCounts": {
+            "EDT": 13
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT",
+            "as of 14:42 EDT · next 14:47 EDT",
+            "Reasonable forecast · based on 12 similar runs · generated 14:14 EDT",
+            "Limited history · may change after a route switch · generated 14:20 EDT",
+            "OpenAI · Work · Codex · Business plan · resets in 3h 05m · 17:47 EDT",
+            "Alibaba · Personal · Coding Plan connection · expires in 42d · Sep 15 00:00 EDT",
+            "Claude · Work · Claude CLI profile · resets in 2h 14m · 16:56 EDT",
+            "OpenCode · Personal · OpenCode Go · resets in 55m · 15:37 EDT",
+            "14:40 EDT",
+            "14:20 EDT",
+            "13:55 EDT"
+          ]
+        },
+        "plans": {
+          "zoneLabelCounts": {
+            "EDT": 13
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT",
+            "OpenAI · Work · Codex · Business plan · resets in 3h 05m · 17:47 EDT",
+            "Alibaba · Personal · Coding Plan connection · expires in 42d · Sep 15 00:00 EDT",
+            "Claude · Work · Claude CLI profile · resets in 2h 14m · 16:56 EDT",
+            "OpenCode · Personal · OpenCode Go · resets in 55m · 15:37 EDT",
+            "Reasonable forecast · based on 12 similar runs · generated 14:14 EDT",
+            "Limited history · may change after a route switch · generated 14:20 EDT",
+            "14:47 EDT",
+            "Background refresh succeeded · no provider usage · free coding models · stale se",
+            "Last known good used · no provider usage unless probed · models dev · backoff · ",
+            "1.2k input · 60 output · attributed to validation, never user work · 13:57 EDT",
+            "1.5k input · 210 output · attributed to validation, never user work · 13:50 EDT"
+          ]
+        },
+        "costs": {
+          "zoneLabelCounts": {
+            "EDT": 2
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT"
+          ]
+        },
+        "accounts": {
+          "zoneLabelCounts": {
+            "EDT": 7
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT",
+            "14:47 EDT",
+            "Background refresh succeeded · no provider usage · free coding models · stale se",
+            "Last known good used · no provider usage unless probed · models dev · backoff · ",
+            "1.2k input · 60 output · attributed to validation, never user work · 13:57 EDT",
+            "1.5k input · 210 output · attributed to validation, never user work · 13:50 EDT"
+          ]
+        },
+        "free": {
+          "zoneLabelCounts": {
+            "EDT": 7
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 1,
+          "ambiguousSamples": [
+            {
+              "text": "Trial ends Aug 16 00:00",
+              "host": "free :: div.u11w-sub",
+              "hasDate": true,
+              "hasZone": false
+            }
+          ],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT",
+            "Trial ends Aug 16 00:00",
+            "14:47 EDT",
+            "Background refresh succeeded · no provider usage · free coding models · stale se",
+            "Last known good used · no provider usage unless probed · models dev · backoff · ",
+            "1.2k input · 60 output · attributed to validation, never user work · 13:57 EDT",
+            "1.5k input · 210 output · attributed to validation, never user work · 13:50 EDT"
+          ]
+        },
+        "context": {
+          "zoneLabelCounts": {
+            "EDT": 3
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT",
+            "14:40 EDT"
+          ]
+        },
+        "analytics": {
+          "zoneLabelCounts": {
+            "EDT": 2
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT"
+          ]
+        },
+        "ledger": {
+          "zoneLabelCounts": {
+            "EDT": 11
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT",
+            "14:34 EDT",
+            "14:16 EDT",
+            "14:40 EDT",
+            "14:01 EDT",
+            "13:44 EDT",
+            "13:31 EDT",
+            "11:42 EDT",
+            "Jul 28 · 14:40 EDT",
+            "Jul 28 · 13:55 EDT"
+          ]
+        },
+        "attention": {
+          "zoneLabelCounts": {
+            "EDT": 4
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT",
+            "14:20 EDT",
+            "13:55 EDT"
+          ]
+        },
+        "cache": {
+          "zoneLabelCounts": {
+            "EDT": 2
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT"
+          ]
+        },
+        "tools": {
+          "zoneLabelCounts": {
+            "EDT": 2
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT"
+          ]
+        },
+        "signals": {
+          "zoneLabelCounts": {
+            "EDT": 2
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT"
+          ]
+        },
+        "authority": {
+          "zoneLabelCounts": {
+            "EDT": 7
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT",
+            "14:47 EDT",
+            "Background refresh succeeded · no provider usage · free coding models · stale se",
+            "Last known good used · no provider usage unless probed · models dev · backoff · ",
+            "1.2k input · 60 output · attributed to validation, never user work · 13:57 EDT",
+            "1.5k input · 210 output · attributed to validation, never user work · 13:50 EDT"
+          ]
+        }
+      },
+      "aggregate": {
+        "zoneLabelCountsAllRooms": {
+          "EDT": 75
+        },
+        "distinctZoneLabels": [
+          "EDT"
+        ],
+        "twelveHourHitsAllRooms": 0,
+        "twelveHourSamples": [],
+        "ambiguousClockStringsAllRooms": 1,
+        "ambiguousSamples": [
+          {
+            "room": "free",
+            "text": "Trial ends Aug 16 00:00",
+            "host": "free :: div.u11w-sub",
+            "hasDate": true,
+            "hasZone": false
+          }
+        ],
+        "renderedHourHistogram": {
+          "0": 3,
+          "11": 1,
+          "13": 13,
+          "14": 53,
+          "15": 2,
+          "16": 2,
+          "17": 2
+        },
+        "anyHourAbove12": true,
+        "clockSamples": [
+          {
+            "room": "overview",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "overview",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "overview",
+            "text": "as of 14:42 EDT · next 14:47 EDT",
+            "host": "overview :: span.u11-km"
+          },
+          {
+            "room": "overview",
+            "text": "Reasonable forecast · based on 12 similar runs · generated 14:14 EDT",
+            "host": "overview :: div.u11w-sub"
+          },
+          {
+            "room": "plans",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "plans",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "plans",
+            "text": "OpenAI · Work · Codex · Business plan · resets in 3h 05m · 17:47 EDT",
+            "host": "plans :: div.u11w-sub"
+          },
+          {
+            "room": "plans",
+            "text": "Alibaba · Personal · Coding Plan connection · expires in 42d · Sep 15 00:00 EDT",
+            "host": "plans :: div.u11w-sub"
+          },
+          {
+            "room": "costs",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "costs",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "accounts",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "accounts",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "accounts",
+            "text": "14:47 EDT",
+            "host": "accounts :: b.u11w-num.static"
+          },
+          {
+            "room": "accounts",
+            "text": "Background refresh succeeded · no provider usage · free coding models · stale se",
+            "host": "accounts :: span"
+          },
+          {
+            "room": "free",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "free",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "free",
+            "text": "Trial ends Aug 16 00:00",
+            "host": "free :: div.u11w-sub"
+          },
+          {
+            "room": "free",
+            "text": "14:47 EDT",
+            "host": "free :: b.u11w-num.static"
+          },
+          {
+            "room": "context",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "context",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "context",
+            "text": "14:40 EDT",
+            "host": "context :: b.u11w-num.static"
+          },
+          {
+            "room": "analytics",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "analytics",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "ledger",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "ledger",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "ledger",
+            "text": "14:34 EDT",
+            "host": "ledger :: span.u11w-turntime"
+          },
+          {
+            "room": "ledger",
+            "text": "14:16 EDT",
+            "host": "ledger :: span.u11w-turntime"
+          },
+          {
+            "room": "attention",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "attention",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "attention",
+            "text": "14:20 EDT",
+            "host": "attention :: span.u11w-gtime"
+          },
+          {
+            "room": "attention",
+            "text": "13:55 EDT",
+            "host": "attention :: span.u11w-gtime"
+          },
+          {
+            "room": "cache",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "cache",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "tools",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "tools",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "signals",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "signals",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "authority",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "authority",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "authority",
+            "text": "14:47 EDT",
+            "host": "authority :: b.u11w-num.static"
+          }
+        ]
+      },
+      "headerAsOf": [
+        {
+          "sel": "us-head",
+          "text": "Usage AI cost & usage for Tastebook — one room at a time. Refreshes every 5 min · history kept 90 days current · as of 1"
+        },
+        {
+          "sel": "us-head-sub",
+          "text": "AI cost & usage for Tastebook — one room at a time. Refreshes every 5 min · history kept 90 days"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "as of 14:42 EDT"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "all current usage"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "27 products · 2 hot"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "$187.42 this month"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "12 accounts · 3 attention"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "7 eligible routes"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "42.2k/128.0k"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "stacked · 3 windows"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "45 immutable events"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "guard · cache · tools · signals"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "1 blocked"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "−$5.67 today"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "6 tools · 24h"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "B · 84"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "provenance · settlement"
+        },
+        {
+          "sel": "u11-km",
+          "text": "as of 14:42 EDT · next 14:47 EDT"
+        },
+        {
+          "sel": "u11-km",
+          "text": "27 products · continuation each"
+        },
+        {
+          "sel": "u11-km",
+          "text": "limit $300.00 · warn at 80%"
+        },
+        {
+          "sel": "u11-km",
+          "text": "12 accounts · requested vs used"
+        },
+        {
+          "sel": "u11-km",
+          "text": "7 eligible · 2 flagged"
+        },
+        {
+          "sel": "u11-km",
+          "text": "42.2k / 128.0k · 33%"
+        },
+        {
+          "sel": "u11-km",
+          "text": "stacked shares · mute via legend"
+        },
+        {
+          "sel": "u11-km",
+          "text": "45 events · 13 work items"
+        },
+        {
+          "sel": "u11-km",
+          "text": "4 decisions"
+        },
+        {
+          "sel": "u11-km",
+          "text": "8 connections"
+        },
+        {
+          "sel": "u11-km",
+          "text": "6 tools · last 24h"
+        },
+        {
+          "sel": "u11-km",
+          "text": "B · 84"
+        },
+        {
+          "sel": "u11-km",
+          "text": "source class · settlement · freshness"
+        }
+      ],
+      "runDetail": {
+        "run:goal-47": {
+          "opened": {
+            "ok": true
+          },
+          "timing": {
+            "panelOpen": true,
+            "titleText": null,
+            "idLine": "Goalrunning",
+            "sectionHeaders": [
+              {
+                "rawTextContent": "AdmissionUsage forecasts · Goal Runtime decides",
+                "renderedInnerText": "ADMISSION USAGE FORECASTS · GOAL RUNTIME DECIDES",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Members8",
+                "renderedInnerText": "MEMBERS 8",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Timingelapsed 2h 04m",
+                "renderedInnerText": "TIMING ELAPSED 2H 04M",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Capacity forecast",
+                "renderedInnerText": "CAPACITY FORECAST",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Activity2 attempts",
+                "renderedInnerText": "ACTIVITY 2 ATTEMPTS",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              }
+            ],
+            "timingSectionHeader": {
+              "rawTextContent": "Timingelapsed 2h 04m",
+              "renderedInnerText": "TIMING ELAPSED 2H 04M",
+              "textTransform": "uppercase",
+              "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+            },
+            "keyValueRows": [
+              {
+                "key": "Owning surface",
+                "value": "Assistant Chat · Goal Mode"
+              },
+              {
+                "key": "Visibility",
+                "value": "visible"
+              },
+              {
+                "key": "Project",
+                "value": "Tastebook"
+              },
+              {
+                "key": "Phase",
+                "value": "Specialist reviews"
+              },
+              {
+                "key": "Started",
+                "value": "12:32 EDT"
+              },
+              {
+                "key": "Hard max",
+                "value": "8"
+              },
+              {
+                "key": "Configured preferred",
+                "value": "4"
+              },
+              {
+                "key": "Provider advertised",
+                "value": "2"
+              },
+              {
+                "key": "Effective now",
+                "value": "2"
+              },
+              {
+                "key": "Predicted sustainable",
+                "value": "2"
+              },
+              {
+                "key": "Execution host",
+                "value": "Studio PC"
+              },
+              {
+                "key": "Environment",
+                "value": "Native"
+              },
+              {
+                "key": "Usage per child",
+                "value": "18–26K tokens"
+              },
+              {
+                "key": "Cost per child",
+                "value": "$0.00 · plan included"
+              },
+              {
+                "key": "Elapsed per child",
+                "value": "6–9m"
+              },
+              {
+                "key": "Reset inputs",
+                "value": "Codex 5-hour window · Claude 5-hour window"
+              }
+            ],
+            "startedRow": {
+              "key": "Started",
+              "value": "12:32 EDT"
+            },
+            "partitionRows": [
+              {
+                "label": "Provider/model active",
+                "dataFill": "10",
+                "inlineWf": "--wf: 10%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1); width: 10%;",
+                "computedFillWidthPx": 20.69,
+                "computedBarWidthPx": 207,
+                "computedFillPctOfBar": 10,
+                "valueText": "12m",
+                "classes": "u11rd-trow active"
+              },
+              {
+                "label": "Waiting for test device",
+                "dataFill": "38",
+                "inlineWf": "--wf: 38%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 24ms; width: 38%;",
+                "computedFillWidthPx": 78.66,
+                "computedBarWidthPx": 207,
+                "computedFillPctOfBar": 38,
+                "valueText": "47m",
+                "classes": "u11rd-trow"
+              },
+              {
+                "label": "Waiting for worktree",
+                "dataFill": "25",
+                "inlineWf": "--wf: 25%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 48ms; width: 25%;",
+                "computedFillWidthPx": 51.75,
+                "computedBarWidthPx": 207,
+                "computedFillPctOfBar": 25,
+                "valueText": "31m",
+                "classes": "u11rd-trow"
+              },
+              {
+                "label": "Waiting for provider capacity",
+                "dataFill": "7",
+                "inlineWf": "--wf: 7%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 72ms; width: 7%;",
+                "computedFillWidthPx": 14.91,
+                "computedBarWidthPx": 213,
+                "computedFillPctOfBar": 7,
+                "valueText": "9m",
+                "classes": "u11rd-trow"
+              },
+              {
+                "label": "Waiting for approval",
+                "dataFill": "5",
+                "inlineWf": "--wf: 5%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 96ms; width: 5%;",
+                "computedFillWidthPx": 10.64,
+                "computedBarWidthPx": 213,
+                "computedFillPctOfBar": 5,
+                "valueText": "6m",
+                "classes": "u11rd-trow"
+              },
+              {
+                "label": "Waiting for reset/cooldown",
+                "dataFill": "0",
+                "inlineWf": "--wf: 0%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 120ms; width: 0%;",
+                "computedFillWidthPx": 0,
+                "computedBarWidthPx": 213,
+                "computedFillPctOfBar": 0,
+                "valueText": "0m",
+                "classes": "u11rd-trow zero"
+              },
+              {
+                "label": "Local tool/runtime time",
+                "dataFill": "15",
+                "inlineWf": "--wf: 15%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 144ms; width: 15%;",
+                "computedFillWidthPx": 31.05,
+                "computedBarWidthPx": 207,
+                "computedFillPctOfBar": 15,
+                "valueText": "19m",
+                "classes": "u11rd-trow"
+              },
+              {
+                "label": "Outbox/offline wait",
+                "dataFill": "0",
+                "inlineWf": "--wf: 0%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 168ms; width: 0%;",
+                "computedFillWidthPx": 0,
+                "computedBarWidthPx": 213,
+                "computedFillPctOfBar": 0,
+                "valueText": "0m",
+                "classes": "u11rd-trow zero"
+              },
+              {
+                "label": "Reconnect / sync / replay",
+                "dataFill": "3",
+                "inlineWf": "--wf: 3%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 192ms; width: 3%;",
+                "computedFillWidthPx": 6.38,
+                "computedBarWidthPx": 213,
+                "computedFillPctOfBar": 3,
+                "valueText": "4m",
+                "classes": "u11rd-trow"
+              }
+            ],
+            "partitionCount": 9,
+            "barPercentSum": 103,
+            "partitionMinutes": [
+              12,
+              47,
+              31,
+              9,
+              6,
+              0,
+              19,
+              0,
+              4
+            ],
+            "partitionMinuteSum": 128,
+            "elapsedHeaderMinutes": 124,
+            "noteText": "Queue and local-resource time never inflate provider tokens, cost, or allowance."
+          },
+          "panelScan": {
+            "zones": {
+              "counts": {
+                "EDT": 2
+              },
+              "samples": {
+                "EDT": {
+                  "text": "12:32 EDT",
+                  "host": "b"
+                }
+              }
+            },
+            "twelve": [],
+            "amb": [],
+            "fullText": "Refactor pricing pipeline GOAL running Owning surface Assistant Chat · Goal Mode Visibility visible Project Tastebook Phase Specialist reviews Started 12:32 EDT ADMISSION USAGE FORECASTS · GOAL RUNTIME DECIDES 8 required specialists 2 admitted now · effective concurrency 2 6 queued · 4 waves Sustainable concurrency 2 · reserved for synthesis, testing, verification, repair Hard max 8 Configured preferred 4 Provider advertised 2 Effective now 2 Predicted sustainable 2 Execution host Studio PC Environment Native MEMBERS 8 Pricing specialist Domain analyst requested Alibaba · Coding Plan running attempt Migration specialist Domain analyst requested Alibaba · Coding Plan running attempt Schema specialist Domain analyst requested Qwen · planned · queued by pm policy queued Backfill specialist Domain analyst requested Qwen · planned queued API specialist Domain analyst requested Kimi · planned · queued by provider limit queued Test strategist Test skeptic requested Kimi · planned queued Docs specialist Editor requested Qwen · planned · queued by runtime capacity queued Risk reviewer Skeptical reviewer requested Kimi · planned queued TIMING ELAPSED 2H 04M Provider/model active 12m Waiting for test device 47m Waiting for worktree 31m Waiting for provider capacity 9m Waiting for approval 6m Waiting for reset/cooldown 0m Local tool/runtime time 19m Outbox/offline wait 0m Reconnect / sync "
+          }
+        },
+        "run:plan-12": {
+          "opened": {
+            "ok": true
+          },
+          "timing": {
+            "panelOpen": true,
+            "titleText": null,
+            "idLine": "Planning runrunning",
+            "sectionHeaders": [
+              {
+                "rawTextContent": "AdmissionUsage forecasts · Goal Runtime decides",
+                "renderedInnerText": "ADMISSION USAGE FORECASTS · GOAL RUNTIME DECIDES",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Route plan",
+                "renderedInnerText": "ROUTE PLAN",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Capacity forecast",
+                "renderedInnerText": "CAPACITY FORECAST",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Activity7 attempts",
+                "renderedInnerText": "ACTIVITY 7 ATTEMPTS",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              }
+            ],
+            "timingSectionHeader": null,
+            "keyValueRows": [
+              {
+                "key": "Owning surface",
+                "value": "Planning Wizard / PRD Builder"
+              },
+              {
+                "key": "Visibility",
+                "value": "internal"
+              },
+              {
+                "key": "Project",
+                "value": "Puppet Master"
+              },
+              {
+                "key": "Phase",
+                "value": "Source extraction"
+              },
+              {
+                "key": "Started",
+                "value": "13:02 EDT"
+              },
+              {
+                "key": "Hard max",
+                "value": "8"
+              },
+              {
+                "key": "Configured preferred",
+                "value": "4"
+              },
+              {
+                "key": "Provider advertised",
+                "value": "2"
+              },
+              {
+                "key": "Effective now",
+                "value": "2"
+              },
+              {
+                "key": "Predicted sustainable",
+                "value": "2"
+              },
+              {
+                "key": "Execution host",
+                "value": "TrueNAS Home Server"
+              },
+              {
+                "key": "Environment",
+                "value": "Docker · pm-server"
+              },
+              {
+                "key": "Conversation",
+                "value": "Claude · Work CLI profile · high-quality route"
+              },
+              {
+                "key": "Research & extraction",
+                "value": "4 children across Qwen and Kimi · background route"
+              },
+              {
+                "key": "Synthesis & audit",
+                "value": "reserved · reserved capacity"
+              },
+              {
+                "key": "Extraction per child",
+                "value": "20–30K tokens"
+              },
+              {
+                "key": "Conversation",
+                "value": "Claude · high-quality route"
+              },
+              {
+                "key": "Reset inputs",
+                "value": "Kimi rolling week · Alibaba weekly window"
+              }
+            ],
+            "startedRow": {
+              "key": "Started",
+              "value": "13:02 EDT"
+            },
+            "partitionRows": [],
+            "partitionCount": 0,
+            "barPercentSum": 0,
+            "partitionMinutes": [],
+            "partitionMinuteSum": 0,
+            "elapsedHeaderMinutes": null,
+            "noteText": "Usage reports state and forecasts. Admission, scheduling, waves, and dispatch belong to the Goal Runtime / Orchestrator."
+          },
+          "panelScan": {
+            "zones": {
+              "counts": {
+                "EDT": 2
+              },
+              "samples": {
+                "EDT": {
+                  "text": "13:02 EDT",
+                  "host": "b"
+                }
+              }
+            },
+            "twelve": [],
+            "amb": [],
+            "fullText": "Spec: U11 usage concept PLANNING RUN running Owning surface Planning Wizard / PRD Builder Visibility internal Project Puppet Master Phase Source extraction Started 13:02 EDT ADMISSION USAGE FORECASTS · GOAL RUNTIME DECIDES 6 required specialists 2 admitted now · effective concurrency 2 4 queued · 3 waves Sustainable concurrency 2 · reserved for synthesis, testing, audit, repair Hard max 8 Configured preferred 4 Provider advertised 2 Effective now 2 Predicted sustainable 2 Execution host TrueNAS Home Server Environment Docker · pm-server ROUTE PLAN Conversation Claude · Work CLI profile · high-quality route Research & extraction 4 children across Qwen and Kimi · background route Synthesis & audit reserved · reserved capacity CAPACITY FORECAST Enough for two complete extraction children at a time, with synthesis and audit reserved. Limited history · may change after a route switch · generated 14:20 EDT Extraction per child 20–30K tokens Conversation Claude · high-quality route Reset inputs Kimi rolling week · Alibaba weekly window The forecast reserves capacity for synthesis, testing, audit, and likely repair rather than spending everything on early extraction children. ACTIVITY 7 ATTEMPTS Main work 1 · 85.4k tokens Research, attachments & media 5 · 71.4k tokens Synthesis & verification 1 · 8.9k tokens Open in Goals Usage reports state and forecasts. Admission, scheduling, waves,"
+          }
+        },
+        "run:crew-3": {
+          "opened": {
+            "ok": true
+          },
+          "timing": {
+            "panelOpen": true,
+            "titleText": null,
+            "idLine": "Crewrunning",
+            "sectionHeaders": [
+              {
+                "rawTextContent": "AdmissionUsage forecasts · Goal Runtime decides",
+                "renderedInnerText": "ADMISSION USAGE FORECASTS · GOAL RUNTIME DECIDES",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Members5",
+                "renderedInnerText": "MEMBERS 5",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Activity5 attempts",
+                "renderedInnerText": "ACTIVITY 5 ATTEMPTS",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              }
+            ],
+            "timingSectionHeader": null,
+            "keyValueRows": [
+              {
+                "key": "Owning surface",
+                "value": "Orchestrator · GoalRun"
+              },
+              {
+                "key": "Visibility",
+                "value": "orchestrator"
+              },
+              {
+                "key": "Project",
+                "value": "Puppet Master"
+              },
+              {
+                "key": "Phase",
+                "value": "Critique round 1"
+              },
+              {
+                "key": "Started",
+                "value": "13:47 EDT"
+              },
+              {
+                "key": "Hard max",
+                "value": "8"
+              },
+              {
+                "key": "Configured preferred",
+                "value": "6"
+              },
+              {
+                "key": "Provider advertised",
+                "value": "3"
+              },
+              {
+                "key": "Effective now",
+                "value": "3"
+              },
+              {
+                "key": "Predicted sustainable",
+                "value": "3"
+              },
+              {
+                "key": "Execution host",
+                "value": "Jared’s MacBook Air"
+              },
+              {
+                "key": "Environment",
+                "value": "Native"
+              }
+            ],
+            "startedRow": {
+              "key": "Started",
+              "value": "13:47 EDT"
+            },
+            "partitionRows": [],
+            "partitionCount": 0,
+            "barPercentSum": 0,
+            "partitionMinutes": [],
+            "partitionMinuteSum": 0,
+            "elapsedHeaderMinutes": null,
+            "noteText": "Usage reports state and forecasts. Admission, scheduling, waves, and dispatch belong to the Goal Runtime / Orchestrator."
+          },
+          "panelScan": {
+            "zones": {
+              "counts": {
+                "EDT": 1
+              },
+              "samples": {
+                "EDT": {
+                  "text": "13:47 EDT",
+                  "host": "b"
+                }
+              }
+            },
+            "twelve": [],
+            "amb": [],
+            "fullText": "Design critique crew CREW running Owning surface Orchestrator · GoalRun Visibility orchestrator Project Puppet Master Phase Critique round 1 Started 13:47 EDT ADMISSION USAGE FORECASTS · GOAL RUNTIME DECIDES 5 required specialists 3 admitted now · effective concurrency 3 2 queued · 2 waves Sustainable concurrency 3 · reserved for reducer Hard max 8 Configured preferred 6 Provider advertised 3 Effective now 3 Predicted sustainable 3 Execution host Jared’s MacBook Air Environment Native MEMBERS 5 Critique · layout Senior design critic used Claude · Work CLI profile completed attempt Critique · data Data skeptic used Qwen · Coding Plan completed attempt Critique · motion Motion reviewer used Kimi Code running attempt Critique · copy Copy editor requested Codex · ChatGPT plan · queued by provider limit queued attempt Reducer Synthesizer requested Claude · Work CLI profile · queued by pm policy queued attempt ACTIVITY 5 ATTEMPTS Specialists & subagents 4 · 38.5k tokens Synthesis & verification 1 · 0 tokens Open in Crew Usage reports state and forecasts. Admission, scheduling, waves, and dispatch belong to the Goal Runtime / Orchestrator."
+          }
+        }
+      },
+      "a06_05_verdict": {
+        "partitionCount": 9,
+        "partitionValueStrings": [
+          "Provider/model active = 12m (10%)",
+          "Waiting for test device = 47m (38%)",
+          "Waiting for worktree = 31m (25%)",
+          "Waiting for provider capacity = 9m (7%)",
+          "Waiting for approval = 6m (5%)",
+          "Waiting for reset/cooldown = 0m (0%)",
+          "Local tool/runtime time = 19m (15%)",
+          "Outbox/offline wait = 0m (0%)",
+          "Reconnect / sync / replay = 4m (3%)"
+        ],
+        "partitionMinuteSum": 128,
+        "elapsedHeaderText": "TIMING ELAPSED 2H 04M",
+        "elapsedHeaderMinutes": 124,
+        "barPercentSum": 103,
+        "startedRowRendered": {
+          "key": "Started",
+          "value": "12:32 EDT"
+        },
+        "partitionSumVsElapsed": 4,
+        "barSumOver100": 3
+      },
+      "pageErrors": []
+    },
+    "utc": {
+      "label": "2-TZ-UTC",
+      "processEnvTZ": "UTC",
+      "port": 9492,
+      "timeApi": {
+        "zone": "America/New_York",
+        "zoneIsFallback": true,
+        "intlResolvedTimeZone": "UTC",
+        "intlResolvedHourCycle": "h12",
+        "intlResolvedLocale": "en-US",
+        "jsDateGetTimezoneOffsetMin": 0,
+        "jsDateToString": "Tue Aug 04 2026 18:42:00 GMT+0000 (Coordinated Universal Time)",
+        "jsToLocaleTimeString": "6:42:00 PM",
+        "pinnedInstant": "2026-08-04T18:42:00Z",
+        "renderers": {
+          "clock": "14:42",
+          "clockSec": "14:42:00",
+          "zoneAbbr": "EDT",
+          "atClock": "14:42 EDT",
+          "atDayClock": "Tue 14:42 EDT",
+          "atMonthDayClock": "Aug 4 14:42 EDT",
+          "stamp": "Aug 4 · 14:42 EDT",
+          "full": "Tue Aug 4, 2026 14:42:00 EDT · America/New_York",
+          "when(+4h, reset)": "resets in 4h 00m · 18:42 EDT",
+          "when(+5d, reset)": "resets in 5d 9h · Sun 23:42 EDT",
+          "when(+28d, expiry)": "expires in 28d · Sep 1 14:42 EDT",
+          "dur(124min)": "2h 04m",
+          "dur(128min)": "2h 08m"
+        },
+        "correctForSystemZone": "Aug 4, 2026, 18:42 UTC",
+        "renderedByU11": "14:42 EDT",
+        "systemZoneUsed": "UTC"
+      },
+      "fixtureNowFromData": "2026-08-04T18:42:00Z",
+      "perRoom": {
+        "overview": {
+          "zoneLabelCounts": {
+            "EDT": 13
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT",
+            "as of 14:42 EDT · next 14:47 EDT",
+            "Reasonable forecast · based on 12 similar runs · generated 14:14 EDT",
+            "Limited history · may change after a route switch · generated 14:20 EDT",
+            "OpenAI · Work · Codex · Business plan · resets in 3h 05m · 17:47 EDT",
+            "Alibaba · Personal · Coding Plan connection · expires in 42d · Sep 15 00:00 EDT",
+            "Claude · Work · Claude CLI profile · resets in 2h 14m · 16:56 EDT",
+            "OpenCode · Personal · OpenCode Go · resets in 55m · 15:37 EDT",
+            "14:40 EDT",
+            "14:20 EDT",
+            "13:55 EDT"
+          ]
+        },
+        "plans": {
+          "zoneLabelCounts": {
+            "EDT": 13
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT",
+            "OpenAI · Work · Codex · Business plan · resets in 3h 05m · 17:47 EDT",
+            "Alibaba · Personal · Coding Plan connection · expires in 42d · Sep 15 00:00 EDT",
+            "Claude · Work · Claude CLI profile · resets in 2h 14m · 16:56 EDT",
+            "OpenCode · Personal · OpenCode Go · resets in 55m · 15:37 EDT",
+            "Reasonable forecast · based on 12 similar runs · generated 14:14 EDT",
+            "Limited history · may change after a route switch · generated 14:20 EDT",
+            "14:47 EDT",
+            "Background refresh succeeded · no provider usage · free coding models · stale se",
+            "Last known good used · no provider usage unless probed · models dev · backoff · ",
+            "1.2k input · 60 output · attributed to validation, never user work · 13:57 EDT",
+            "1.5k input · 210 output · attributed to validation, never user work · 13:50 EDT"
+          ]
+        },
+        "costs": {
+          "zoneLabelCounts": {
+            "EDT": 2
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT"
+          ]
+        },
+        "accounts": {
+          "zoneLabelCounts": {
+            "EDT": 7
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT",
+            "14:47 EDT",
+            "Background refresh succeeded · no provider usage · free coding models · stale se",
+            "Last known good used · no provider usage unless probed · models dev · backoff · ",
+            "1.2k input · 60 output · attributed to validation, never user work · 13:57 EDT",
+            "1.5k input · 210 output · attributed to validation, never user work · 13:50 EDT"
+          ]
+        },
+        "free": {
+          "zoneLabelCounts": {
+            "EDT": 7
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 1,
+          "ambiguousSamples": [
+            {
+              "text": "Trial ends Aug 16 00:00",
+              "host": "free :: div.u11w-sub",
+              "hasDate": true,
+              "hasZone": false
+            }
+          ],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT",
+            "Trial ends Aug 16 00:00",
+            "14:47 EDT",
+            "Background refresh succeeded · no provider usage · free coding models · stale se",
+            "Last known good used · no provider usage unless probed · models dev · backoff · ",
+            "1.2k input · 60 output · attributed to validation, never user work · 13:57 EDT",
+            "1.5k input · 210 output · attributed to validation, never user work · 13:50 EDT"
+          ]
+        },
+        "context": {
+          "zoneLabelCounts": {
+            "EDT": 3
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT",
+            "14:40 EDT"
+          ]
+        },
+        "analytics": {
+          "zoneLabelCounts": {
+            "EDT": 2
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT"
+          ]
+        },
+        "ledger": {
+          "zoneLabelCounts": {
+            "EDT": 11
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT",
+            "14:34 EDT",
+            "14:16 EDT",
+            "14:40 EDT",
+            "14:01 EDT",
+            "13:44 EDT",
+            "13:31 EDT",
+            "11:42 EDT",
+            "Jul 28 · 14:40 EDT",
+            "Jul 28 · 13:55 EDT"
+          ]
+        },
+        "attention": {
+          "zoneLabelCounts": {
+            "EDT": 4
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT",
+            "14:20 EDT",
+            "13:55 EDT"
+          ]
+        },
+        "cache": {
+          "zoneLabelCounts": {
+            "EDT": 2
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT"
+          ]
+        },
+        "tools": {
+          "zoneLabelCounts": {
+            "EDT": 2
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT"
+          ]
+        },
+        "signals": {
+          "zoneLabelCounts": {
+            "EDT": 2
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT"
+          ]
+        },
+        "authority": {
+          "zoneLabelCounts": {
+            "EDT": 7
+          },
+          "zoneLabelSamples": {
+            "EDT": {
+              "text": "current · as of 14:42 EDT",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 14:42 EDT",
+            "as of 14:42 EDT",
+            "14:47 EDT",
+            "Background refresh succeeded · no provider usage · free coding models · stale se",
+            "Last known good used · no provider usage unless probed · models dev · backoff · ",
+            "1.2k input · 60 output · attributed to validation, never user work · 13:57 EDT",
+            "1.5k input · 210 output · attributed to validation, never user work · 13:50 EDT"
+          ]
+        }
+      },
+      "aggregate": {
+        "zoneLabelCountsAllRooms": {
+          "EDT": 75
+        },
+        "distinctZoneLabels": [
+          "EDT"
+        ],
+        "twelveHourHitsAllRooms": 0,
+        "twelveHourSamples": [],
+        "ambiguousClockStringsAllRooms": 1,
+        "ambiguousSamples": [
+          {
+            "room": "free",
+            "text": "Trial ends Aug 16 00:00",
+            "host": "free :: div.u11w-sub",
+            "hasDate": true,
+            "hasZone": false
+          }
+        ],
+        "renderedHourHistogram": {
+          "0": 3,
+          "11": 1,
+          "13": 13,
+          "14": 53,
+          "15": 2,
+          "16": 2,
+          "17": 2
+        },
+        "anyHourAbove12": true,
+        "clockSamples": [
+          {
+            "room": "overview",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "overview",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "overview",
+            "text": "as of 14:42 EDT · next 14:47 EDT",
+            "host": "overview :: span.u11-km"
+          },
+          {
+            "room": "overview",
+            "text": "Reasonable forecast · based on 12 similar runs · generated 14:14 EDT",
+            "host": "overview :: div.u11w-sub"
+          },
+          {
+            "room": "plans",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "plans",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "plans",
+            "text": "OpenAI · Work · Codex · Business plan · resets in 3h 05m · 17:47 EDT",
+            "host": "plans :: div.u11w-sub"
+          },
+          {
+            "room": "plans",
+            "text": "Alibaba · Personal · Coding Plan connection · expires in 42d · Sep 15 00:00 EDT",
+            "host": "plans :: div.u11w-sub"
+          },
+          {
+            "room": "costs",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "costs",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "accounts",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "accounts",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "accounts",
+            "text": "14:47 EDT",
+            "host": "accounts :: b.u11w-num.static"
+          },
+          {
+            "room": "accounts",
+            "text": "Background refresh succeeded · no provider usage · free coding models · stale se",
+            "host": "accounts :: span"
+          },
+          {
+            "room": "free",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "free",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "free",
+            "text": "Trial ends Aug 16 00:00",
+            "host": "free :: div.u11w-sub"
+          },
+          {
+            "room": "free",
+            "text": "14:47 EDT",
+            "host": "free :: b.u11w-num.static"
+          },
+          {
+            "room": "context",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "context",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "context",
+            "text": "14:40 EDT",
+            "host": "context :: b.u11w-num.static"
+          },
+          {
+            "room": "analytics",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "analytics",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "ledger",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "ledger",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "ledger",
+            "text": "14:34 EDT",
+            "host": "ledger :: span.u11w-turntime"
+          },
+          {
+            "room": "ledger",
+            "text": "14:16 EDT",
+            "host": "ledger :: span.u11w-turntime"
+          },
+          {
+            "room": "attention",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "attention",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "attention",
+            "text": "14:20 EDT",
+            "host": "attention :: span.u11w-gtime"
+          },
+          {
+            "room": "attention",
+            "text": "13:55 EDT",
+            "host": "attention :: span.u11w-gtime"
+          },
+          {
+            "room": "cache",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "cache",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "tools",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "tools",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "signals",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "signals",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "authority",
+            "text": "current · as of 14:42 EDT",
+            "host": "span"
+          },
+          {
+            "room": "authority",
+            "text": "as of 14:42 EDT",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "authority",
+            "text": "14:47 EDT",
+            "host": "authority :: b.u11w-num.static"
+          }
+        ]
+      },
+      "headerAsOf": [
+        {
+          "sel": "us-head",
+          "text": "Usage AI cost & usage for Tastebook — one room at a time. Refreshes every 5 min · history kept 90 days current · as of 1"
+        },
+        {
+          "sel": "us-head-sub",
+          "text": "AI cost & usage for Tastebook — one room at a time. Refreshes every 5 min · history kept 90 days"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "as of 14:42 EDT"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "all current usage"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "27 products · 2 hot"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "$187.42 this month"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "12 accounts · 3 attention"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "7 eligible routes"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "42.2k/128.0k"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "stacked · 3 windows"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "45 immutable events"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "guard · cache · tools · signals"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "1 blocked"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "−$5.67 today"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "6 tools · 24h"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "B · 84"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "provenance · settlement"
+        },
+        {
+          "sel": "u11-km",
+          "text": "as of 14:42 EDT · next 14:47 EDT"
+        },
+        {
+          "sel": "u11-km",
+          "text": "27 products · continuation each"
+        },
+        {
+          "sel": "u11-km",
+          "text": "limit $300.00 · warn at 80%"
+        },
+        {
+          "sel": "u11-km",
+          "text": "12 accounts · requested vs used"
+        },
+        {
+          "sel": "u11-km",
+          "text": "7 eligible · 2 flagged"
+        },
+        {
+          "sel": "u11-km",
+          "text": "42.2k / 128.0k · 33%"
+        },
+        {
+          "sel": "u11-km",
+          "text": "stacked shares · mute via legend"
+        },
+        {
+          "sel": "u11-km",
+          "text": "45 events · 13 work items"
+        },
+        {
+          "sel": "u11-km",
+          "text": "4 decisions"
+        },
+        {
+          "sel": "u11-km",
+          "text": "8 connections"
+        },
+        {
+          "sel": "u11-km",
+          "text": "6 tools · last 24h"
+        },
+        {
+          "sel": "u11-km",
+          "text": "B · 84"
+        },
+        {
+          "sel": "u11-km",
+          "text": "source class · settlement · freshness"
+        }
+      ],
+      "runDetail": {
+        "run:goal-47": {
+          "opened": {
+            "ok": true
+          },
+          "timing": {
+            "panelOpen": true,
+            "titleText": null,
+            "idLine": "Goalrunning",
+            "sectionHeaders": [
+              {
+                "rawTextContent": "AdmissionUsage forecasts · Goal Runtime decides",
+                "renderedInnerText": "ADMISSION USAGE FORECASTS · GOAL RUNTIME DECIDES",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Members8",
+                "renderedInnerText": "MEMBERS 8",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Timingelapsed 2h 04m",
+                "renderedInnerText": "TIMING ELAPSED 2H 04M",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Capacity forecast",
+                "renderedInnerText": "CAPACITY FORECAST",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Activity2 attempts",
+                "renderedInnerText": "ACTIVITY 2 ATTEMPTS",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              }
+            ],
+            "timingSectionHeader": {
+              "rawTextContent": "Timingelapsed 2h 04m",
+              "renderedInnerText": "TIMING ELAPSED 2H 04M",
+              "textTransform": "uppercase",
+              "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+            },
+            "keyValueRows": [
+              {
+                "key": "Owning surface",
+                "value": "Assistant Chat · Goal Mode"
+              },
+              {
+                "key": "Visibility",
+                "value": "visible"
+              },
+              {
+                "key": "Project",
+                "value": "Tastebook"
+              },
+              {
+                "key": "Phase",
+                "value": "Specialist reviews"
+              },
+              {
+                "key": "Started",
+                "value": "12:32 EDT"
+              },
+              {
+                "key": "Hard max",
+                "value": "8"
+              },
+              {
+                "key": "Configured preferred",
+                "value": "4"
+              },
+              {
+                "key": "Provider advertised",
+                "value": "2"
+              },
+              {
+                "key": "Effective now",
+                "value": "2"
+              },
+              {
+                "key": "Predicted sustainable",
+                "value": "2"
+              },
+              {
+                "key": "Execution host",
+                "value": "Studio PC"
+              },
+              {
+                "key": "Environment",
+                "value": "Native"
+              },
+              {
+                "key": "Usage per child",
+                "value": "18–26K tokens"
+              },
+              {
+                "key": "Cost per child",
+                "value": "$0.00 · plan included"
+              },
+              {
+                "key": "Elapsed per child",
+                "value": "6–9m"
+              },
+              {
+                "key": "Reset inputs",
+                "value": "Codex 5-hour window · Claude 5-hour window"
+              }
+            ],
+            "startedRow": {
+              "key": "Started",
+              "value": "12:32 EDT"
+            },
+            "partitionRows": [
+              {
+                "label": "Provider/model active",
+                "dataFill": "10",
+                "inlineWf": "--wf: 10%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1); width: 10%;",
+                "computedFillWidthPx": 20.69,
+                "computedBarWidthPx": 207,
+                "computedFillPctOfBar": 10,
+                "valueText": "12m",
+                "classes": "u11rd-trow active"
+              },
+              {
+                "label": "Waiting for test device",
+                "dataFill": "38",
+                "inlineWf": "--wf: 38%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 24ms; width: 38%;",
+                "computedFillWidthPx": 78.66,
+                "computedBarWidthPx": 207,
+                "computedFillPctOfBar": 38,
+                "valueText": "47m",
+                "classes": "u11rd-trow"
+              },
+              {
+                "label": "Waiting for worktree",
+                "dataFill": "25",
+                "inlineWf": "--wf: 25%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 48ms; width: 25%;",
+                "computedFillWidthPx": 51.75,
+                "computedBarWidthPx": 207,
+                "computedFillPctOfBar": 25,
+                "valueText": "31m",
+                "classes": "u11rd-trow"
+              },
+              {
+                "label": "Waiting for provider capacity",
+                "dataFill": "7",
+                "inlineWf": "--wf: 7%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 72ms; width: 7%;",
+                "computedFillWidthPx": 14.91,
+                "computedBarWidthPx": 213,
+                "computedFillPctOfBar": 7,
+                "valueText": "9m",
+                "classes": "u11rd-trow"
+              },
+              {
+                "label": "Waiting for approval",
+                "dataFill": "5",
+                "inlineWf": "--wf: 5%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 96ms; width: 5%;",
+                "computedFillWidthPx": 10.64,
+                "computedBarWidthPx": 213,
+                "computedFillPctOfBar": 5,
+                "valueText": "6m",
+                "classes": "u11rd-trow"
+              },
+              {
+                "label": "Waiting for reset/cooldown",
+                "dataFill": "0",
+                "inlineWf": "--wf: 0%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 120ms; width: 0%;",
+                "computedFillWidthPx": 0,
+                "computedBarWidthPx": 213,
+                "computedFillPctOfBar": 0,
+                "valueText": "0m",
+                "classes": "u11rd-trow zero"
+              },
+              {
+                "label": "Local tool/runtime time",
+                "dataFill": "15",
+                "inlineWf": "--wf: 15%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 144ms; width: 15%;",
+                "computedFillWidthPx": 31.05,
+                "computedBarWidthPx": 207,
+                "computedFillPctOfBar": 15,
+                "valueText": "19m",
+                "classes": "u11rd-trow"
+              },
+              {
+                "label": "Outbox/offline wait",
+                "dataFill": "0",
+                "inlineWf": "--wf: 0%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 168ms; width: 0%;",
+                "computedFillWidthPx": 0,
+                "computedBarWidthPx": 213,
+                "computedFillPctOfBar": 0,
+                "valueText": "0m",
+                "classes": "u11rd-trow zero"
+              },
+              {
+                "label": "Reconnect / sync / replay",
+                "dataFill": "3",
+                "inlineWf": "--wf: 3%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 192ms; width: 3%;",
+                "computedFillWidthPx": 6.38,
+                "computedBarWidthPx": 213,
+                "computedFillPctOfBar": 3,
+                "valueText": "4m",
+                "classes": "u11rd-trow"
+              }
+            ],
+            "partitionCount": 9,
+            "barPercentSum": 103,
+            "partitionMinutes": [
+              12,
+              47,
+              31,
+              9,
+              6,
+              0,
+              19,
+              0,
+              4
+            ],
+            "partitionMinuteSum": 128,
+            "elapsedHeaderMinutes": 124,
+            "noteText": "Queue and local-resource time never inflate provider tokens, cost, or allowance."
+          },
+          "panelScan": {
+            "zones": {
+              "counts": {
+                "EDT": 2
+              },
+              "samples": {
+                "EDT": {
+                  "text": "12:32 EDT",
+                  "host": "b"
+                }
+              }
+            },
+            "twelve": [],
+            "amb": [],
+            "fullText": "Refactor pricing pipeline GOAL running Owning surface Assistant Chat · Goal Mode Visibility visible Project Tastebook Phase Specialist reviews Started 12:32 EDT ADMISSION USAGE FORECASTS · GOAL RUNTIME DECIDES 8 required specialists 2 admitted now · effective concurrency 2 6 queued · 4 waves Sustainable concurrency 2 · reserved for synthesis, testing, verification, repair Hard max 8 Configured preferred 4 Provider advertised 2 Effective now 2 Predicted sustainable 2 Execution host Studio PC Environment Native MEMBERS 8 Pricing specialist Domain analyst requested Alibaba · Coding Plan running attempt Migration specialist Domain analyst requested Alibaba · Coding Plan running attempt Schema specialist Domain analyst requested Qwen · planned · queued by pm policy queued Backfill specialist Domain analyst requested Qwen · planned queued API specialist Domain analyst requested Kimi · planned · queued by provider limit queued Test strategist Test skeptic requested Kimi · planned queued Docs specialist Editor requested Qwen · planned · queued by runtime capacity queued Risk reviewer Skeptical reviewer requested Kimi · planned queued TIMING ELAPSED 2H 04M Provider/model active 12m Waiting for test device 47m Waiting for worktree 31m Waiting for provider capacity 9m Waiting for approval 6m Waiting for reset/cooldown 0m Local tool/runtime time 19m Outbox/offline wait 0m Reconnect / sync "
+          }
+        },
+        "run:plan-12": {
+          "opened": {
+            "ok": true
+          },
+          "timing": {
+            "panelOpen": true,
+            "titleText": null,
+            "idLine": "Planning runrunning",
+            "sectionHeaders": [
+              {
+                "rawTextContent": "AdmissionUsage forecasts · Goal Runtime decides",
+                "renderedInnerText": "ADMISSION USAGE FORECASTS · GOAL RUNTIME DECIDES",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Route plan",
+                "renderedInnerText": "ROUTE PLAN",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Capacity forecast",
+                "renderedInnerText": "CAPACITY FORECAST",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Activity7 attempts",
+                "renderedInnerText": "ACTIVITY 7 ATTEMPTS",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              }
+            ],
+            "timingSectionHeader": null,
+            "keyValueRows": [
+              {
+                "key": "Owning surface",
+                "value": "Planning Wizard / PRD Builder"
+              },
+              {
+                "key": "Visibility",
+                "value": "internal"
+              },
+              {
+                "key": "Project",
+                "value": "Puppet Master"
+              },
+              {
+                "key": "Phase",
+                "value": "Source extraction"
+              },
+              {
+                "key": "Started",
+                "value": "13:02 EDT"
+              },
+              {
+                "key": "Hard max",
+                "value": "8"
+              },
+              {
+                "key": "Configured preferred",
+                "value": "4"
+              },
+              {
+                "key": "Provider advertised",
+                "value": "2"
+              },
+              {
+                "key": "Effective now",
+                "value": "2"
+              },
+              {
+                "key": "Predicted sustainable",
+                "value": "2"
+              },
+              {
+                "key": "Execution host",
+                "value": "TrueNAS Home Server"
+              },
+              {
+                "key": "Environment",
+                "value": "Docker · pm-server"
+              },
+              {
+                "key": "Conversation",
+                "value": "Claude · Work CLI profile · high-quality route"
+              },
+              {
+                "key": "Research & extraction",
+                "value": "4 children across Qwen and Kimi · background route"
+              },
+              {
+                "key": "Synthesis & audit",
+                "value": "reserved · reserved capacity"
+              },
+              {
+                "key": "Extraction per child",
+                "value": "20–30K tokens"
+              },
+              {
+                "key": "Conversation",
+                "value": "Claude · high-quality route"
+              },
+              {
+                "key": "Reset inputs",
+                "value": "Kimi rolling week · Alibaba weekly window"
+              }
+            ],
+            "startedRow": {
+              "key": "Started",
+              "value": "13:02 EDT"
+            },
+            "partitionRows": [],
+            "partitionCount": 0,
+            "barPercentSum": 0,
+            "partitionMinutes": [],
+            "partitionMinuteSum": 0,
+            "elapsedHeaderMinutes": null,
+            "noteText": "Usage reports state and forecasts. Admission, scheduling, waves, and dispatch belong to the Goal Runtime / Orchestrator."
+          },
+          "panelScan": {
+            "zones": {
+              "counts": {
+                "EDT": 2
+              },
+              "samples": {
+                "EDT": {
+                  "text": "13:02 EDT",
+                  "host": "b"
+                }
+              }
+            },
+            "twelve": [],
+            "amb": [],
+            "fullText": "Spec: U11 usage concept PLANNING RUN running Owning surface Planning Wizard / PRD Builder Visibility internal Project Puppet Master Phase Source extraction Started 13:02 EDT ADMISSION USAGE FORECASTS · GOAL RUNTIME DECIDES 6 required specialists 2 admitted now · effective concurrency 2 4 queued · 3 waves Sustainable concurrency 2 · reserved for synthesis, testing, audit, repair Hard max 8 Configured preferred 4 Provider advertised 2 Effective now 2 Predicted sustainable 2 Execution host TrueNAS Home Server Environment Docker · pm-server ROUTE PLAN Conversation Claude · Work CLI profile · high-quality route Research & extraction 4 children across Qwen and Kimi · background route Synthesis & audit reserved · reserved capacity CAPACITY FORECAST Enough for two complete extraction children at a time, with synthesis and audit reserved. Limited history · may change after a route switch · generated 14:20 EDT Extraction per child 20–30K tokens Conversation Claude · high-quality route Reset inputs Kimi rolling week · Alibaba weekly window The forecast reserves capacity for synthesis, testing, audit, and likely repair rather than spending everything on early extraction children. ACTIVITY 7 ATTEMPTS Main work 1 · 85.4k tokens Research, attachments & media 5 · 71.4k tokens Synthesis & verification 1 · 8.9k tokens Open in Goals Usage reports state and forecasts. Admission, scheduling, waves,"
+          }
+        },
+        "run:crew-3": {
+          "opened": {
+            "ok": true
+          },
+          "timing": {
+            "panelOpen": true,
+            "titleText": null,
+            "idLine": "Crewrunning",
+            "sectionHeaders": [
+              {
+                "rawTextContent": "AdmissionUsage forecasts · Goal Runtime decides",
+                "renderedInnerText": "ADMISSION USAGE FORECASTS · GOAL RUNTIME DECIDES",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Members5",
+                "renderedInnerText": "MEMBERS 5",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Activity5 attempts",
+                "renderedInnerText": "ACTIVITY 5 ATTEMPTS",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              }
+            ],
+            "timingSectionHeader": null,
+            "keyValueRows": [
+              {
+                "key": "Owning surface",
+                "value": "Orchestrator · GoalRun"
+              },
+              {
+                "key": "Visibility",
+                "value": "orchestrator"
+              },
+              {
+                "key": "Project",
+                "value": "Puppet Master"
+              },
+              {
+                "key": "Phase",
+                "value": "Critique round 1"
+              },
+              {
+                "key": "Started",
+                "value": "13:47 EDT"
+              },
+              {
+                "key": "Hard max",
+                "value": "8"
+              },
+              {
+                "key": "Configured preferred",
+                "value": "6"
+              },
+              {
+                "key": "Provider advertised",
+                "value": "3"
+              },
+              {
+                "key": "Effective now",
+                "value": "3"
+              },
+              {
+                "key": "Predicted sustainable",
+                "value": "3"
+              },
+              {
+                "key": "Execution host",
+                "value": "Jared’s MacBook Air"
+              },
+              {
+                "key": "Environment",
+                "value": "Native"
+              }
+            ],
+            "startedRow": {
+              "key": "Started",
+              "value": "13:47 EDT"
+            },
+            "partitionRows": [],
+            "partitionCount": 0,
+            "barPercentSum": 0,
+            "partitionMinutes": [],
+            "partitionMinuteSum": 0,
+            "elapsedHeaderMinutes": null,
+            "noteText": "Usage reports state and forecasts. Admission, scheduling, waves, and dispatch belong to the Goal Runtime / Orchestrator."
+          },
+          "panelScan": {
+            "zones": {
+              "counts": {
+                "EDT": 1
+              },
+              "samples": {
+                "EDT": {
+                  "text": "13:47 EDT",
+                  "host": "b"
+                }
+              }
+            },
+            "twelve": [],
+            "amb": [],
+            "fullText": "Design critique crew CREW running Owning surface Orchestrator · GoalRun Visibility orchestrator Project Puppet Master Phase Critique round 1 Started 13:47 EDT ADMISSION USAGE FORECASTS · GOAL RUNTIME DECIDES 5 required specialists 3 admitted now · effective concurrency 3 2 queued · 2 waves Sustainable concurrency 3 · reserved for reducer Hard max 8 Configured preferred 6 Provider advertised 3 Effective now 3 Predicted sustainable 3 Execution host Jared’s MacBook Air Environment Native MEMBERS 5 Critique · layout Senior design critic used Claude · Work CLI profile completed attempt Critique · data Data skeptic used Qwen · Coding Plan completed attempt Critique · motion Motion reviewer used Kimi Code running attempt Critique · copy Copy editor requested Codex · ChatGPT plan · queued by provider limit queued attempt Reducer Synthesizer requested Claude · Work CLI profile · queued by pm policy queued attempt ACTIVITY 5 ATTEMPTS Specialists & subagents 4 · 38.5k tokens Synthesis & verification 1 · 0 tokens Open in Crew Usage reports state and forecasts. Admission, scheduling, waves, and dispatch belong to the Goal Runtime / Orchestrator."
+          }
+        }
+      },
+      "a06_05_verdict": {
+        "partitionCount": 9,
+        "partitionValueStrings": [
+          "Provider/model active = 12m (10%)",
+          "Waiting for test device = 47m (38%)",
+          "Waiting for worktree = 31m (25%)",
+          "Waiting for provider capacity = 9m (7%)",
+          "Waiting for approval = 6m (5%)",
+          "Waiting for reset/cooldown = 0m (0%)",
+          "Local tool/runtime time = 19m (15%)",
+          "Outbox/offline wait = 0m (0%)",
+          "Reconnect / sync / replay = 4m (3%)"
+        ],
+        "partitionMinuteSum": 128,
+        "elapsedHeaderText": "TIMING ELAPSED 2H 04M",
+        "elapsedHeaderMinutes": 124,
+        "barPercentSum": 103,
+        "startedRowRendered": {
+          "key": "Started",
+          "value": "12:32 EDT"
+        },
+        "partitionSumVsElapsed": 4,
+        "barSumOver100": 3
+      },
+      "pageErrors": []
+    },
+    "kolkata": {
+      "label": "3-TZ-Asia-Kolkata",
+      "processEnvTZ": "Asia/Kolkata",
+      "port": 9493,
+      "timeApi": {
+        "zone": "Asia/Calcutta",
+        "zoneIsFallback": false,
+        "intlResolvedTimeZone": "Asia/Calcutta",
+        "intlResolvedHourCycle": "h12",
+        "intlResolvedLocale": "en-US",
+        "jsDateGetTimezoneOffsetMin": -330,
+        "jsDateToString": "Wed Aug 05 2026 00:12:00 GMT+0530 (India Standard Time)",
+        "jsToLocaleTimeString": "12:12:00 AM",
+        "pinnedInstant": "2026-08-04T18:42:00Z",
+        "renderers": {
+          "clock": "00:12",
+          "clockSec": "00:12:00",
+          "zoneAbbr": "GMT+5:30",
+          "atClock": "00:12 GMT+5:30",
+          "atDayClock": "Wed 00:12 GMT+5:30",
+          "atMonthDayClock": "Aug 5 00:12 GMT+5:30",
+          "stamp": "Aug 5 · 00:12 GMT+5:30",
+          "full": "Wed Aug 5, 2026 00:12:00 GMT+5:30 · Asia/Calcutta",
+          "when(+4h, reset)": "resets in 4h 00m · 04:12 GMT+5:30",
+          "when(+5d, reset)": "resets in 5d 9h · Mon 09:12 GMT+5:30",
+          "when(+28d, expiry)": "expires in 28d · Sep 2 00:12 GMT+5:30",
+          "dur(124min)": "2h 04m",
+          "dur(128min)": "2h 08m"
+        },
+        "correctForSystemZone": "Aug 5, 2026, 00:12 GMT+5:30",
+        "renderedByU11": "00:12 GMT+5:30",
+        "systemZoneUsed": "Asia/Calcutta"
+      },
+      "fixtureNowFromData": "2026-08-04T18:42:00Z",
+      "perRoom": {
+        "overview": {
+          "zoneLabelCounts": {
+            "GMT": 13
+          },
+          "zoneLabelSamples": {
+            "GMT": {
+              "text": "current · as of 00:12 GMT+5:30",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 00:12 GMT+5:30",
+            "as of 00:12 GMT+5:30",
+            "as of 00:12 GMT+5:30 · next 00:17 GMT+5:30",
+            "Reasonable forecast · based on 12 similar runs · generated 23:44 GMT+5:30",
+            "Limited history · may change after a route switch · generated 23:50 GMT+5:30",
+            "OpenAI · Work · Codex · Business plan · resets in 3h 05m · 03:17 GMT+5:30",
+            "Alibaba · Personal · Coding Plan connection · expires in 42d · Sep 15 09:30 GMT+",
+            "Claude · Work · Claude CLI profile · resets in 2h 14m · 02:26 GMT+5:30",
+            "OpenCode · Personal · OpenCode Go · resets in 55m · 01:07 GMT+5:30",
+            "00:10 GMT+5:30",
+            "23:50 GMT+5:30",
+            "23:25 GMT+5:30"
+          ]
+        },
+        "plans": {
+          "zoneLabelCounts": {
+            "GMT": 13
+          },
+          "zoneLabelSamples": {
+            "GMT": {
+              "text": "current · as of 00:12 GMT+5:30",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 00:12 GMT+5:30",
+            "as of 00:12 GMT+5:30",
+            "OpenAI · Work · Codex · Business plan · resets in 3h 05m · 03:17 GMT+5:30",
+            "Alibaba · Personal · Coding Plan connection · expires in 42d · Sep 15 09:30 GMT+",
+            "Claude · Work · Claude CLI profile · resets in 2h 14m · 02:26 GMT+5:30",
+            "OpenCode · Personal · OpenCode Go · resets in 55m · 01:07 GMT+5:30",
+            "Reasonable forecast · based on 12 similar runs · generated 23:44 GMT+5:30",
+            "Limited history · may change after a route switch · generated 23:50 GMT+5:30",
+            "00:17 GMT+5:30",
+            "Background refresh succeeded · no provider usage · free coding models · stale se",
+            "Last known good used · no provider usage unless probed · models dev · backoff · ",
+            "1.2k input · 60 output · attributed to validation, never user work · 23:27 GMT+5",
+            "1.5k input · 210 output · attributed to validation, never user work · 23:20 GMT+"
+          ]
+        },
+        "costs": {
+          "zoneLabelCounts": {
+            "GMT": 2
+          },
+          "zoneLabelSamples": {
+            "GMT": {
+              "text": "current · as of 00:12 GMT+5:30",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 00:12 GMT+5:30",
+            "as of 00:12 GMT+5:30"
+          ]
+        },
+        "accounts": {
+          "zoneLabelCounts": {
+            "GMT": 7
+          },
+          "zoneLabelSamples": {
+            "GMT": {
+              "text": "current · as of 00:12 GMT+5:30",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 00:12 GMT+5:30",
+            "as of 00:12 GMT+5:30",
+            "00:17 GMT+5:30",
+            "Background refresh succeeded · no provider usage · free coding models · stale se",
+            "Last known good used · no provider usage unless probed · models dev · backoff · ",
+            "1.2k input · 60 output · attributed to validation, never user work · 23:27 GMT+5",
+            "1.5k input · 210 output · attributed to validation, never user work · 23:20 GMT+"
+          ]
+        },
+        "free": {
+          "zoneLabelCounts": {
+            "GMT": 7
+          },
+          "zoneLabelSamples": {
+            "GMT": {
+              "text": "current · as of 00:12 GMT+5:30",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 1,
+          "ambiguousSamples": [
+            {
+              "text": "Trial ends Aug 16 00:00",
+              "host": "free :: div.u11w-sub",
+              "hasDate": true,
+              "hasZone": false
+            }
+          ],
+          "clockStringSamples": [
+            "current · as of 00:12 GMT+5:30",
+            "as of 00:12 GMT+5:30",
+            "Trial ends Aug 16 00:00",
+            "00:17 GMT+5:30",
+            "Background refresh succeeded · no provider usage · free coding models · stale se",
+            "Last known good used · no provider usage unless probed · models dev · backoff · ",
+            "1.2k input · 60 output · attributed to validation, never user work · 23:27 GMT+5",
+            "1.5k input · 210 output · attributed to validation, never user work · 23:20 GMT+"
+          ]
+        },
+        "context": {
+          "zoneLabelCounts": {
+            "GMT": 3
+          },
+          "zoneLabelSamples": {
+            "GMT": {
+              "text": "current · as of 00:12 GMT+5:30",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 00:12 GMT+5:30",
+            "as of 00:12 GMT+5:30",
+            "00:10 GMT+5:30"
+          ]
+        },
+        "analytics": {
+          "zoneLabelCounts": {
+            "GMT": 2
+          },
+          "zoneLabelSamples": {
+            "GMT": {
+              "text": "current · as of 00:12 GMT+5:30",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 00:12 GMT+5:30",
+            "as of 00:12 GMT+5:30"
+          ]
+        },
+        "ledger": {
+          "zoneLabelCounts": {
+            "GMT": 11
+          },
+          "zoneLabelSamples": {
+            "GMT": {
+              "text": "current · as of 00:12 GMT+5:30",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 00:12 GMT+5:30",
+            "as of 00:12 GMT+5:30",
+            "00:04 GMT+5:30",
+            "23:46 GMT+5:30",
+            "00:10 GMT+5:30",
+            "23:31 GMT+5:30",
+            "23:14 GMT+5:30",
+            "23:01 GMT+5:30",
+            "21:12 GMT+5:30",
+            "Jul 29 · 00:10 GMT+5:30",
+            "Jul 28 · 23:25 GMT+5:30"
+          ]
+        },
+        "attention": {
+          "zoneLabelCounts": {
+            "GMT": 4
+          },
+          "zoneLabelSamples": {
+            "GMT": {
+              "text": "current · as of 00:12 GMT+5:30",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 00:12 GMT+5:30",
+            "as of 00:12 GMT+5:30",
+            "23:50 GMT+5:30",
+            "23:25 GMT+5:30"
+          ]
+        },
+        "cache": {
+          "zoneLabelCounts": {
+            "GMT": 2
+          },
+          "zoneLabelSamples": {
+            "GMT": {
+              "text": "current · as of 00:12 GMT+5:30",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 00:12 GMT+5:30",
+            "as of 00:12 GMT+5:30"
+          ]
+        },
+        "tools": {
+          "zoneLabelCounts": {
+            "GMT": 2
+          },
+          "zoneLabelSamples": {
+            "GMT": {
+              "text": "current · as of 00:12 GMT+5:30",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 00:12 GMT+5:30",
+            "as of 00:12 GMT+5:30"
+          ]
+        },
+        "signals": {
+          "zoneLabelCounts": {
+            "GMT": 2
+          },
+          "zoneLabelSamples": {
+            "GMT": {
+              "text": "current · as of 00:12 GMT+5:30",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 00:12 GMT+5:30",
+            "as of 00:12 GMT+5:30"
+          ]
+        },
+        "authority": {
+          "zoneLabelCounts": {
+            "GMT": 7
+          },
+          "zoneLabelSamples": {
+            "GMT": {
+              "text": "current · as of 00:12 GMT+5:30",
+              "host": "span"
+            }
+          },
+          "twelveHourHits": 0,
+          "twelveHourSamples": [],
+          "ambiguousClockCount": 0,
+          "ambiguousSamples": [],
+          "clockStringSamples": [
+            "current · as of 00:12 GMT+5:30",
+            "as of 00:12 GMT+5:30",
+            "00:17 GMT+5:30",
+            "Background refresh succeeded · no provider usage · free coding models · stale se",
+            "Last known good used · no provider usage unless probed · models dev · backoff · ",
+            "1.2k input · 60 output · attributed to validation, never user work · 23:27 GMT+5",
+            "1.5k input · 210 output · attributed to validation, never user work · 23:20 GMT+"
+          ]
+        }
+      },
+      "aggregate": {
+        "zoneLabelCountsAllRooms": {
+          "GMT": 75
+        },
+        "distinctZoneLabels": [
+          "GMT"
+        ],
+        "twelveHourHitsAllRooms": 0,
+        "twelveHourSamples": [],
+        "ambiguousClockStringsAllRooms": 1,
+        "ambiguousSamples": [
+          {
+            "room": "free",
+            "text": "Trial ends Aug 16 00:00",
+            "host": "free :: div.u11w-sub",
+            "hasDate": true,
+            "hasZone": false
+          }
+        ],
+        "renderedHourHistogram": {
+          "0": 38,
+          "1": 2,
+          "2": 2,
+          "3": 2,
+          "5": 75,
+          "9": 2,
+          "21": 1,
+          "23": 29
+        },
+        "anyHourAbove12": true,
+        "clockSamples": [
+          {
+            "room": "overview",
+            "text": "current · as of 00:12 GMT+5:30",
+            "host": "span"
+          },
+          {
+            "room": "overview",
+            "text": "as of 00:12 GMT+5:30",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "overview",
+            "text": "as of 00:12 GMT+5:30 · next 00:17 GMT+5:30",
+            "host": "overview :: span.u11-km"
+          },
+          {
+            "room": "overview",
+            "text": "Reasonable forecast · based on 12 similar runs · generated 23:44 GMT+5:30",
+            "host": "overview :: div.u11w-sub"
+          },
+          {
+            "room": "plans",
+            "text": "current · as of 00:12 GMT+5:30",
+            "host": "span"
+          },
+          {
+            "room": "plans",
+            "text": "as of 00:12 GMT+5:30",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "plans",
+            "text": "OpenAI · Work · Codex · Business plan · resets in 3h 05m · 03:17 GMT+5:30",
+            "host": "plans :: div.u11w-sub"
+          },
+          {
+            "room": "plans",
+            "text": "Alibaba · Personal · Coding Plan connection · expires in 42d · Sep 15 09:30 GMT+",
+            "host": "plans :: div.u11w-sub"
+          },
+          {
+            "room": "costs",
+            "text": "current · as of 00:12 GMT+5:30",
+            "host": "span"
+          },
+          {
+            "room": "costs",
+            "text": "as of 00:12 GMT+5:30",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "accounts",
+            "text": "current · as of 00:12 GMT+5:30",
+            "host": "span"
+          },
+          {
+            "room": "accounts",
+            "text": "as of 00:12 GMT+5:30",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "accounts",
+            "text": "00:17 GMT+5:30",
+            "host": "accounts :: b.u11w-num.static"
+          },
+          {
+            "room": "accounts",
+            "text": "Background refresh succeeded · no provider usage · free coding models · stale se",
+            "host": "accounts :: span"
+          },
+          {
+            "room": "free",
+            "text": "current · as of 00:12 GMT+5:30",
+            "host": "span"
+          },
+          {
+            "room": "free",
+            "text": "as of 00:12 GMT+5:30",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "free",
+            "text": "Trial ends Aug 16 00:00",
+            "host": "free :: div.u11w-sub"
+          },
+          {
+            "room": "free",
+            "text": "00:17 GMT+5:30",
+            "host": "free :: b.u11w-num.static"
+          },
+          {
+            "room": "context",
+            "text": "current · as of 00:12 GMT+5:30",
+            "host": "span"
+          },
+          {
+            "room": "context",
+            "text": "as of 00:12 GMT+5:30",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "context",
+            "text": "00:10 GMT+5:30",
+            "host": "context :: b.u11w-num.static"
+          },
+          {
+            "room": "analytics",
+            "text": "current · as of 00:12 GMT+5:30",
+            "host": "span"
+          },
+          {
+            "room": "analytics",
+            "text": "as of 00:12 GMT+5:30",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "ledger",
+            "text": "current · as of 00:12 GMT+5:30",
+            "host": "span"
+          },
+          {
+            "room": "ledger",
+            "text": "as of 00:12 GMT+5:30",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "ledger",
+            "text": "00:04 GMT+5:30",
+            "host": "ledger :: span.u11w-turntime"
+          },
+          {
+            "room": "ledger",
+            "text": "23:46 GMT+5:30",
+            "host": "ledger :: span.u11w-turntime"
+          },
+          {
+            "room": "attention",
+            "text": "current · as of 00:12 GMT+5:30",
+            "host": "span"
+          },
+          {
+            "room": "attention",
+            "text": "as of 00:12 GMT+5:30",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "attention",
+            "text": "23:50 GMT+5:30",
+            "host": "attention :: span.u11w-gtime"
+          },
+          {
+            "room": "attention",
+            "text": "23:25 GMT+5:30",
+            "host": "attention :: span.u11w-gtime"
+          },
+          {
+            "room": "cache",
+            "text": "current · as of 00:12 GMT+5:30",
+            "host": "span"
+          },
+          {
+            "room": "cache",
+            "text": "as of 00:12 GMT+5:30",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "tools",
+            "text": "current · as of 00:12 GMT+5:30",
+            "host": "span"
+          },
+          {
+            "room": "tools",
+            "text": "as of 00:12 GMT+5:30",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "signals",
+            "text": "current · as of 00:12 GMT+5:30",
+            "host": "span"
+          },
+          {
+            "room": "signals",
+            "text": "as of 00:12 GMT+5:30",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "authority",
+            "text": "current · as of 00:12 GMT+5:30",
+            "host": "span"
+          },
+          {
+            "room": "authority",
+            "text": "as of 00:12 GMT+5:30",
+            "host": "span.u11-imeta"
+          },
+          {
+            "room": "authority",
+            "text": "00:17 GMT+5:30",
+            "host": "authority :: b.u11w-num.static"
+          }
+        ]
+      },
+      "headerAsOf": [
+        {
+          "sel": "us-head",
+          "text": "Usage AI cost & usage for Tastebook — one room at a time. Refreshes every 5 min · history kept 90 days current · as of 0"
+        },
+        {
+          "sel": "us-head-sub",
+          "text": "AI cost & usage for Tastebook — one room at a time. Refreshes every 5 min · history kept 90 days"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "as of 00:12 GMT+5:30"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "all current usage"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "27 products · 2 hot"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "$187.42 this month"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "12 accounts · 3 attention"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "7 eligible routes"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "42.2k/128.0k"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "stacked · 3 windows"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "45 immutable events"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "guard · cache · tools · signals"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "1 blocked"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "−$5.67 today"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "6 tools · 24h"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "B · 84"
+        },
+        {
+          "sel": "u11-imeta",
+          "text": "provenance · settlement"
+        },
+        {
+          "sel": "u11-km",
+          "text": "as of 00:12 GMT+5:30 · next 00:17 GMT+5:30"
+        },
+        {
+          "sel": "u11-km",
+          "text": "27 products · continuation each"
+        },
+        {
+          "sel": "u11-km",
+          "text": "limit $300.00 · warn at 80%"
+        },
+        {
+          "sel": "u11-km",
+          "text": "12 accounts · requested vs used"
+        },
+        {
+          "sel": "u11-km",
+          "text": "7 eligible · 2 flagged"
+        },
+        {
+          "sel": "u11-km",
+          "text": "42.2k / 128.0k · 33%"
+        },
+        {
+          "sel": "u11-km",
+          "text": "stacked shares · mute via legend"
+        },
+        {
+          "sel": "u11-km",
+          "text": "45 events · 13 work items"
+        },
+        {
+          "sel": "u11-km",
+          "text": "4 decisions"
+        },
+        {
+          "sel": "u11-km",
+          "text": "8 connections"
+        },
+        {
+          "sel": "u11-km",
+          "text": "6 tools · last 24h"
+        },
+        {
+          "sel": "u11-km",
+          "text": "B · 84"
+        },
+        {
+          "sel": "u11-km",
+          "text": "source class · settlement · freshness"
+        }
+      ],
+      "runDetail": {
+        "run:goal-47": {
+          "opened": {
+            "ok": true
+          },
+          "timing": {
+            "panelOpen": true,
+            "titleText": null,
+            "idLine": "Goalrunning",
+            "sectionHeaders": [
+              {
+                "rawTextContent": "AdmissionUsage forecasts · Goal Runtime decides",
+                "renderedInnerText": "ADMISSION USAGE FORECASTS · GOAL RUNTIME DECIDES",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Members8",
+                "renderedInnerText": "MEMBERS 8",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Timingelapsed 2h 04m",
+                "renderedInnerText": "TIMING ELAPSED 2H 04M",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Capacity forecast",
+                "renderedInnerText": "CAPACITY FORECAST",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Activity2 attempts",
+                "renderedInnerText": "ACTIVITY 2 ATTEMPTS",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              }
+            ],
+            "timingSectionHeader": {
+              "rawTextContent": "Timingelapsed 2h 04m",
+              "renderedInnerText": "TIMING ELAPSED 2H 04M",
+              "textTransform": "uppercase",
+              "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+            },
+            "keyValueRows": [
+              {
+                "key": "Owning surface",
+                "value": "Assistant Chat · Goal Mode"
+              },
+              {
+                "key": "Visibility",
+                "value": "visible"
+              },
+              {
+                "key": "Project",
+                "value": "Tastebook"
+              },
+              {
+                "key": "Phase",
+                "value": "Specialist reviews"
+              },
+              {
+                "key": "Started",
+                "value": "22:02 GMT+5:30"
+              },
+              {
+                "key": "Hard max",
+                "value": "8"
+              },
+              {
+                "key": "Configured preferred",
+                "value": "4"
+              },
+              {
+                "key": "Provider advertised",
+                "value": "2"
+              },
+              {
+                "key": "Effective now",
+                "value": "2"
+              },
+              {
+                "key": "Predicted sustainable",
+                "value": "2"
+              },
+              {
+                "key": "Execution host",
+                "value": "Studio PC"
+              },
+              {
+                "key": "Environment",
+                "value": "Native"
+              },
+              {
+                "key": "Usage per child",
+                "value": "18–26K tokens"
+              },
+              {
+                "key": "Cost per child",
+                "value": "$0.00 · plan included"
+              },
+              {
+                "key": "Elapsed per child",
+                "value": "6–9m"
+              },
+              {
+                "key": "Reset inputs",
+                "value": "Codex 5-hour window · Claude 5-hour window"
+              }
+            ],
+            "startedRow": {
+              "key": "Started",
+              "value": "22:02 GMT+5:30"
+            },
+            "partitionRows": [
+              {
+                "label": "Provider/model active",
+                "dataFill": "10",
+                "inlineWf": "--wf: 10%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1); width: 10%;",
+                "computedFillWidthPx": 20.69,
+                "computedBarWidthPx": 207,
+                "computedFillPctOfBar": 10,
+                "valueText": "12m",
+                "classes": "u11rd-trow active"
+              },
+              {
+                "label": "Waiting for test device",
+                "dataFill": "38",
+                "inlineWf": "--wf: 38%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 24ms; width: 38%;",
+                "computedFillWidthPx": 78.66,
+                "computedBarWidthPx": 207,
+                "computedFillPctOfBar": 38,
+                "valueText": "47m",
+                "classes": "u11rd-trow"
+              },
+              {
+                "label": "Waiting for worktree",
+                "dataFill": "25",
+                "inlineWf": "--wf: 25%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 48ms; width: 25%;",
+                "computedFillWidthPx": 51.75,
+                "computedBarWidthPx": 207,
+                "computedFillPctOfBar": 25,
+                "valueText": "31m",
+                "classes": "u11rd-trow"
+              },
+              {
+                "label": "Waiting for provider capacity",
+                "dataFill": "7",
+                "inlineWf": "--wf: 7%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 72ms; width: 7%;",
+                "computedFillWidthPx": 14.91,
+                "computedBarWidthPx": 213,
+                "computedFillPctOfBar": 7,
+                "valueText": "9m",
+                "classes": "u11rd-trow"
+              },
+              {
+                "label": "Waiting for approval",
+                "dataFill": "5",
+                "inlineWf": "--wf: 5%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 96ms; width: 5%;",
+                "computedFillWidthPx": 10.64,
+                "computedBarWidthPx": 213,
+                "computedFillPctOfBar": 5,
+                "valueText": "6m",
+                "classes": "u11rd-trow"
+              },
+              {
+                "label": "Waiting for reset/cooldown",
+                "dataFill": "0",
+                "inlineWf": "--wf: 0%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 120ms; width: 0%;",
+                "computedFillWidthPx": 0,
+                "computedBarWidthPx": 213,
+                "computedFillPctOfBar": 0,
+                "valueText": "0m",
+                "classes": "u11rd-trow zero"
+              },
+              {
+                "label": "Local tool/runtime time",
+                "dataFill": "15",
+                "inlineWf": "--wf: 15%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 144ms; width: 15%;",
+                "computedFillWidthPx": 31.05,
+                "computedBarWidthPx": 207,
+                "computedFillPctOfBar": 15,
+                "valueText": "19m",
+                "classes": "u11rd-trow"
+              },
+              {
+                "label": "Outbox/offline wait",
+                "dataFill": "0",
+                "inlineWf": "--wf: 0%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 168ms; width: 0%;",
+                "computedFillWidthPx": 0,
+                "computedBarWidthPx": 213,
+                "computedFillPctOfBar": 0,
+                "valueText": "0m",
+                "classes": "u11rd-trow zero"
+              },
+              {
+                "label": "Reconnect / sync / replay",
+                "dataFill": "3",
+                "inlineWf": "--wf: 3%; transition: width 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 192ms; width: 3%;",
+                "computedFillWidthPx": 6.38,
+                "computedBarWidthPx": 213,
+                "computedFillPctOfBar": 3,
+                "valueText": "4m",
+                "classes": "u11rd-trow"
+              }
+            ],
+            "partitionCount": 9,
+            "barPercentSum": 103,
+            "partitionMinutes": [
+              12,
+              47,
+              31,
+              9,
+              6,
+              0,
+              19,
+              0,
+              4
+            ],
+            "partitionMinuteSum": 128,
+            "elapsedHeaderMinutes": 124,
+            "noteText": "Queue and local-resource time never inflate provider tokens, cost, or allowance."
+          },
+          "panelScan": {
+            "zones": {
+              "counts": {
+                "GMT": 2
+              },
+              "samples": {
+                "GMT": {
+                  "text": "22:02 GMT+5:30",
+                  "host": "b"
+                }
+              }
+            },
+            "twelve": [],
+            "amb": [],
+            "fullText": "Refactor pricing pipeline GOAL running Owning surface Assistant Chat · Goal Mode Visibility visible Project Tastebook Phase Specialist reviews Started 22:02 GMT+5:30 ADMISSION USAGE FORECASTS · GOAL RUNTIME DECIDES 8 required specialists 2 admitted now · effective concurrency 2 6 queued · 4 waves Sustainable concurrency 2 · reserved for synthesis, testing, verification, repair Hard max 8 Configured preferred 4 Provider advertised 2 Effective now 2 Predicted sustainable 2 Execution host Studio PC Environment Native MEMBERS 8 Pricing specialist Domain analyst requested Alibaba · Coding Plan running attempt Migration specialist Domain analyst requested Alibaba · Coding Plan running attempt Schema specialist Domain analyst requested Qwen · planned · queued by pm policy queued Backfill specialist Domain analyst requested Qwen · planned queued API specialist Domain analyst requested Kimi · planned · queued by provider limit queued Test strategist Test skeptic requested Kimi · planned queued Docs specialist Editor requested Qwen · planned · queued by runtime capacity queued Risk reviewer Skeptical reviewer requested Kimi · planned queued TIMING ELAPSED 2H 04M Provider/model active 12m Waiting for test device 47m Waiting for worktree 31m Waiting for provider capacity 9m Waiting for approval 6m Waiting for reset/cooldown 0m Local tool/runtime time 19m Outbox/offline wait 0m Reconnect / "
+          }
+        },
+        "run:plan-12": {
+          "opened": {
+            "ok": true
+          },
+          "timing": {
+            "panelOpen": true,
+            "titleText": null,
+            "idLine": "Planning runrunning",
+            "sectionHeaders": [
+              {
+                "rawTextContent": "AdmissionUsage forecasts · Goal Runtime decides",
+                "renderedInnerText": "ADMISSION USAGE FORECASTS · GOAL RUNTIME DECIDES",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Route plan",
+                "renderedInnerText": "ROUTE PLAN",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Capacity forecast",
+                "renderedInnerText": "CAPACITY FORECAST",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Activity7 attempts",
+                "renderedInnerText": "ACTIVITY 7 ATTEMPTS",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              }
+            ],
+            "timingSectionHeader": null,
+            "keyValueRows": [
+              {
+                "key": "Owning surface",
+                "value": "Planning Wizard / PRD Builder"
+              },
+              {
+                "key": "Visibility",
+                "value": "internal"
+              },
+              {
+                "key": "Project",
+                "value": "Puppet Master"
+              },
+              {
+                "key": "Phase",
+                "value": "Source extraction"
+              },
+              {
+                "key": "Started",
+                "value": "22:32 GMT+5:30"
+              },
+              {
+                "key": "Hard max",
+                "value": "8"
+              },
+              {
+                "key": "Configured preferred",
+                "value": "4"
+              },
+              {
+                "key": "Provider advertised",
+                "value": "2"
+              },
+              {
+                "key": "Effective now",
+                "value": "2"
+              },
+              {
+                "key": "Predicted sustainable",
+                "value": "2"
+              },
+              {
+                "key": "Execution host",
+                "value": "TrueNAS Home Server"
+              },
+              {
+                "key": "Environment",
+                "value": "Docker · pm-server"
+              },
+              {
+                "key": "Conversation",
+                "value": "Claude · Work CLI profile · high-quality route"
+              },
+              {
+                "key": "Research & extraction",
+                "value": "4 children across Qwen and Kimi · background route"
+              },
+              {
+                "key": "Synthesis & audit",
+                "value": "reserved · reserved capacity"
+              },
+              {
+                "key": "Extraction per child",
+                "value": "20–30K tokens"
+              },
+              {
+                "key": "Conversation",
+                "value": "Claude · high-quality route"
+              },
+              {
+                "key": "Reset inputs",
+                "value": "Kimi rolling week · Alibaba weekly window"
+              }
+            ],
+            "startedRow": {
+              "key": "Started",
+              "value": "22:32 GMT+5:30"
+            },
+            "partitionRows": [],
+            "partitionCount": 0,
+            "barPercentSum": 0,
+            "partitionMinutes": [],
+            "partitionMinuteSum": 0,
+            "elapsedHeaderMinutes": null,
+            "noteText": "Usage reports state and forecasts. Admission, scheduling, waves, and dispatch belong to the Goal Runtime / Orchestrator."
+          },
+          "panelScan": {
+            "zones": {
+              "counts": {
+                "GMT": 2
+              },
+              "samples": {
+                "GMT": {
+                  "text": "22:32 GMT+5:30",
+                  "host": "b"
+                }
+              }
+            },
+            "twelve": [],
+            "amb": [],
+            "fullText": "Spec: U11 usage concept PLANNING RUN running Owning surface Planning Wizard / PRD Builder Visibility internal Project Puppet Master Phase Source extraction Started 22:32 GMT+5:30 ADMISSION USAGE FORECASTS · GOAL RUNTIME DECIDES 6 required specialists 2 admitted now · effective concurrency 2 4 queued · 3 waves Sustainable concurrency 2 · reserved for synthesis, testing, audit, repair Hard max 8 Configured preferred 4 Provider advertised 2 Effective now 2 Predicted sustainable 2 Execution host TrueNAS Home Server Environment Docker · pm-server ROUTE PLAN Conversation Claude · Work CLI profile · high-quality route Research & extraction 4 children across Qwen and Kimi · background route Synthesis & audit reserved · reserved capacity CAPACITY FORECAST Enough for two complete extraction children at a time, with synthesis and audit reserved. Limited history · may change after a route switch · generated 23:50 GMT+5:30 Extraction per child 20–30K tokens Conversation Claude · high-quality route Reset inputs Kimi rolling week · Alibaba weekly window The forecast reserves capacity for synthesis, testing, audit, and likely repair rather than spending everything on early extraction children. ACTIVITY 7 ATTEMPTS Main work 1 · 85.4k tokens Research, attachments & media 5 · 71.4k tokens Synthesis & verification 1 · 8.9k tokens Open in Goals Usage reports state and forecasts. Admission, scheduli"
+          }
+        },
+        "run:crew-3": {
+          "opened": {
+            "ok": true
+          },
+          "timing": {
+            "panelOpen": true,
+            "titleText": null,
+            "idLine": "Crewrunning",
+            "sectionHeaders": [
+              {
+                "rawTextContent": "AdmissionUsage forecasts · Goal Runtime decides",
+                "renderedInnerText": "ADMISSION USAGE FORECASTS · GOAL RUNTIME DECIDES",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Members5",
+                "renderedInnerText": "MEMBERS 5",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              },
+              {
+                "rawTextContent": "Activity5 attempts",
+                "renderedInnerText": "ACTIVITY 5 ATTEMPTS",
+                "textTransform": "uppercase",
+                "fontFamily": "\"Cal Sans\", Nunito, system-ui, sans-serif"
+              }
+            ],
+            "timingSectionHeader": null,
+            "keyValueRows": [
+              {
+                "key": "Owning surface",
+                "value": "Orchestrator · GoalRun"
+              },
+              {
+                "key": "Visibility",
+                "value": "orchestrator"
+              },
+              {
+                "key": "Project",
+                "value": "Puppet Master"
+              },
+              {
+                "key": "Phase",
+                "value": "Critique round 1"
+              },
+              {
+                "key": "Started",
+                "value": "23:17 GMT+5:30"
+              },
+              {
+                "key": "Hard max",
+                "value": "8"
+              },
+              {
+                "key": "Configured preferred",
+                "value": "6"
+              },
+              {
+                "key": "Provider advertised",
+                "value": "3"
+              },
+              {
+                "key": "Effective now",
+                "value": "3"
+              },
+              {
+                "key": "Predicted sustainable",
+                "value": "3"
+              },
+              {
+                "key": "Execution host",
+                "value": "Jared’s MacBook Air"
+              },
+              {
+                "key": "Environment",
+                "value": "Native"
+              }
+            ],
+            "startedRow": {
+              "key": "Started",
+              "value": "23:17 GMT+5:30"
+            },
+            "partitionRows": [],
+            "partitionCount": 0,
+            "barPercentSum": 0,
+            "partitionMinutes": [],
+            "partitionMinuteSum": 0,
+            "elapsedHeaderMinutes": null,
+            "noteText": "Usage reports state and forecasts. Admission, scheduling, waves, and dispatch belong to the Goal Runtime / Orchestrator."
+          },
+          "panelScan": {
+            "zones": {
+              "counts": {
+                "GMT": 1
+              },
+              "samples": {
+                "GMT": {
+                  "text": "23:17 GMT+5:30",
+                  "host": "b"
+                }
+              }
+            },
+            "twelve": [],
+            "amb": [],
+            "fullText": "Design critique crew CREW running Owning surface Orchestrator · GoalRun Visibility orchestrator Project Puppet Master Phase Critique round 1 Started 23:17 GMT+5:30 ADMISSION USAGE FORECASTS · GOAL RUNTIME DECIDES 5 required specialists 3 admitted now · effective concurrency 3 2 queued · 2 waves Sustainable concurrency 3 · reserved for reducer Hard max 8 Configured preferred 6 Provider advertised 3 Effective now 3 Predicted sustainable 3 Execution host Jared’s MacBook Air Environment Native MEMBERS 5 Critique · layout Senior design critic used Claude · Work CLI profile completed attempt Critique · data Data skeptic used Qwen · Coding Plan completed attempt Critique · motion Motion reviewer used Kimi Code running attempt Critique · copy Copy editor requested Codex · ChatGPT plan · queued by provider limit queued attempt Reducer Synthesizer requested Claude · Work CLI profile · queued by pm policy queued attempt ACTIVITY 5 ATTEMPTS Specialists & subagents 4 · 38.5k tokens Synthesis & verification 1 · 0 tokens Open in Crew Usage reports state and forecasts. Admission, scheduling, waves, and dispatch belong to the Goal Runtime / Orchestrator."
+          }
+        }
+      },
+      "a06_05_verdict": {
+        "partitionCount": 9,
+        "partitionValueStrings": [
+          "Provider/model active = 12m (10%)",
+          "Waiting for test device = 47m (38%)",
+          "Waiting for worktree = 31m (25%)",
+          "Waiting for provider capacity = 9m (7%)",
+          "Waiting for approval = 6m (5%)",
+          "Waiting for reset/cooldown = 0m (0%)",
+          "Local tool/runtime time = 19m (15%)",
+          "Outbox/offline wait = 0m (0%)",
+          "Reconnect / sync / replay = 4m (3%)"
+        ],
+        "partitionMinuteSum": 128,
+        "elapsedHeaderText": "TIMING ELAPSED 2H 04M",
+        "elapsedHeaderMinutes": 124,
+        "barPercentSum": 103,
+        "startedRowRendered": {
+          "key": "Started",
+          "value": "22:02 GMT+5:30"
+        },
+        "partitionSumVsElapsed": 4,
+        "barSumOver100": 3
+      },
+      "pageErrors": []
+    }
+  },
+  "verdicts": {
+    "a06_06_timezoneFallback": {
+      "claim": "u11-time.js has a timezone fallback defect and the pinned instant renders as \"14:42 EDT\"",
+      "perLaunch": {
+        "default": {
+          "processEnvTZ": "(unset — sandbox default)",
+          "intlResolvedTimeZone": "UTC",
+          "U11time_zone": "America/New_York",
+          "U11time_zoneIsFallback": true,
+          "renderedAtClock": "14:42 EDT",
+          "renderedFull": "Tue Aug 4, 2026 14:42:00 EDT · America/New_York",
+          "whatTheSystemZoneWouldSay": "Aug 4, 2026, 18:42 UTC",
+          "zoneLabelsActuallyOnScreen": [
+            "EDT"
+          ]
+        },
+        "utc": {
+          "processEnvTZ": "UTC",
+          "intlResolvedTimeZone": "UTC",
+          "U11time_zone": "America/New_York",
+          "U11time_zoneIsFallback": true,
+          "renderedAtClock": "14:42 EDT",
+          "renderedFull": "Tue Aug 4, 2026 14:42:00 EDT · America/New_York",
+          "whatTheSystemZoneWouldSay": "Aug 4, 2026, 18:42 UTC",
+          "zoneLabelsActuallyOnScreen": [
+            "EDT"
+          ]
+        },
+        "kolkata": {
+          "processEnvTZ": "Asia/Kolkata",
+          "intlResolvedTimeZone": "Asia/Calcutta",
+          "U11time_zone": "Asia/Calcutta",
+          "U11time_zoneIsFallback": false,
+          "renderedAtClock": "00:12 GMT+5:30",
+          "renderedFull": "Wed Aug 5, 2026 00:12:00 GMT+5:30 · Asia/Calcutta",
+          "whatTheSystemZoneWouldSay": "Aug 5, 2026, 00:12 GMT+5:30",
+          "zoneLabelsActuallyOnScreen": [
+            "GMT"
+          ]
+        }
+      },
+      "fallbackTriggered": {
+        "default": true,
+        "utc": true,
+        "kolkata": false
+      },
+      "rendersEDTDespiteSystemZone": {
+        "default": true,
+        "utc": true,
+        "kolkata": false
+      },
+      "pinnedRendersAs1442EDT": {
+        "default": "14:42 EDT",
+        "utc": "14:42 EDT",
+        "kolkata": "00:12 GMT+5:30"
+      }
+    },
+    "twelveHour": {
+      "default": {
+        "hits": 0,
+        "samples": [],
+        "anyRenderedHourAbove12": true,
+        "hourHistogram": {
+          "0": 3,
+          "11": 1,
+          "13": 13,
+          "14": 53,
+          "15": 2,
+          "16": 2,
+          "17": 2
+        }
+      },
+      "utc": {
+        "hits": 0,
+        "samples": [],
+        "anyRenderedHourAbove12": true,
+        "hourHistogram": {
+          "0": 3,
+          "11": 1,
+          "13": 13,
+          "14": 53,
+          "15": 2,
+          "16": 2,
+          "17": 2
+        }
+      },
+      "kolkata": {
+        "hits": 0,
+        "samples": [],
+        "anyRenderedHourAbove12": true,
+        "hourHistogram": {
+          "0": 38,
+          "1": 2,
+          "2": 2,
+          "3": 2,
+          "5": 75,
+          "9": 2,
+          "21": 1,
+          "23": 29
+        }
+      }
+    },
+    "ambiguity": {
+      "default": {
+        "clockStringsWithNoZoneLabel": 1,
+        "samples": [
+          {
+            "room": "free",
+            "text": "Trial ends Aug 16 00:00",
+            "host": "free :: div.u11w-sub",
+            "hasDate": true,
+            "hasZone": false
+          }
+        ]
+      },
+      "utc": {
+        "clockStringsWithNoZoneLabel": 1,
+        "samples": [
+          {
+            "room": "free",
+            "text": "Trial ends Aug 16 00:00",
+            "host": "free :: div.u11w-sub",
+            "hasDate": true,
+            "hasZone": false
+          }
+        ]
+      },
+      "kolkata": {
+        "clockStringsWithNoZoneLabel": 1,
+        "samples": [
+          {
+            "room": "free",
+            "text": "Trial ends Aug 16 00:00",
+            "host": "free :: div.u11w-sub",
+            "hasDate": true,
+            "hasZone": false
+          }
+        ]
+      }
+    },
+    "a06_05_timePartitions": {
+      "default": {
+        "partitionCount": 9,
+        "partitionValueStrings": [
+          "Provider/model active = 12m (10%)",
+          "Waiting for test device = 47m (38%)",
+          "Waiting for worktree = 31m (25%)",
+          "Waiting for provider capacity = 9m (7%)",
+          "Waiting for approval = 6m (5%)",
+          "Waiting for reset/cooldown = 0m (0%)",
+          "Local tool/runtime time = 19m (15%)",
+          "Outbox/offline wait = 0m (0%)",
+          "Reconnect / sync / replay = 4m (3%)"
+        ],
+        "partitionMinuteSum": 128,
+        "elapsedHeaderText": "TIMING ELAPSED 2H 04M",
+        "elapsedHeaderMinutes": 124,
+        "barPercentSum": 103,
+        "startedRowRendered": {
+          "key": "Started",
+          "value": "12:32 EDT"
+        },
+        "partitionSumVsElapsed": 4,
+        "barSumOver100": 3
+      },
+      "utc": {
+        "partitionCount": 9,
+        "partitionValueStrings": [
+          "Provider/model active = 12m (10%)",
+          "Waiting for test device = 47m (38%)",
+          "Waiting for worktree = 31m (25%)",
+          "Waiting for provider capacity = 9m (7%)",
+          "Waiting for approval = 6m (5%)",
+          "Waiting for reset/cooldown = 0m (0%)",
+          "Local tool/runtime time = 19m (15%)",
+          "Outbox/offline wait = 0m (0%)",
+          "Reconnect / sync / replay = 4m (3%)"
+        ],
+        "partitionMinuteSum": 128,
+        "elapsedHeaderText": "TIMING ELAPSED 2H 04M",
+        "elapsedHeaderMinutes": 124,
+        "barPercentSum": 103,
+        "startedRowRendered": {
+          "key": "Started",
+          "value": "12:32 EDT"
+        },
+        "partitionSumVsElapsed": 4,
+        "barSumOver100": 3
+      },
+      "kolkata": {
+        "partitionCount": 9,
+        "partitionValueStrings": [
+          "Provider/model active = 12m (10%)",
+          "Waiting for test device = 47m (38%)",
+          "Waiting for worktree = 31m (25%)",
+          "Waiting for provider capacity = 9m (7%)",
+          "Waiting for approval = 6m (5%)",
+          "Waiting for reset/cooldown = 0m (0%)",
+          "Local tool/runtime time = 19m (15%)",
+          "Outbox/offline wait = 0m (0%)",
+          "Reconnect / sync / replay = 4m (3%)"
+        ],
+        "partitionMinuteSum": 128,
+        "elapsedHeaderText": "TIMING ELAPSED 2H 04M",
+        "elapsedHeaderMinutes": 124,
+        "barPercentSum": 103,
+        "startedRowRendered": {
+          "key": "Started",
+          "value": "22:02 GMT+5:30"
+        },
+        "partitionSumVsElapsed": 4,
+        "barSumOver100": 3
+      }
+    }
+  }
+}

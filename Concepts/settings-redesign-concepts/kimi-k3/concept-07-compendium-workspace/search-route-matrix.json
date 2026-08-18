@@ -1,0 +1,357 @@
+{
+ "schema_id": "pm.settings_bakeoff.search_route_matrix.v1",
+ "concept": "concept-07-compendium-workspace",
+ "routing": "immutable_result_id_only",
+ "cases": [
+  {
+   "query": "openai api key",
+   "result_id": "r_f856cec318d91697",
+   "result_type": "setting",
+   "displayed_path": "Settings / AI Brains & Providers / Accounts & Sign-in / OpenAI API Key",
+   "expected_destination": {
+    "domain": "ai",
+    "page": "accounts",
+    "manager": null,
+    "object": null,
+    "section": "accounts",
+    "row": "ai.accounts.openai-api-key"
+   },
+   "actual_destination": {
+    "domain": "ai",
+    "page": "accounts",
+    "manager": null,
+    "object": null,
+    "section": "accounts",
+    "row": "ai.accounts.openai-api-key"
+   },
+   "focus_highlight": "pending-verification-phase",
+   "back_restores": "pending-verification-phase",
+   "case": "deep setting row into provider credentials",
+   "pass": "pending-verification-phase"
+  },
+  {
+   "query": "openai api key",
+   "result_id": "r_51b49747eae5c2a3",
+   "result_type": "managed_object",
+   "displayed_path": "Settings / AI Brains & Providers / Providers / OpenAI",
+   "expected_destination": {
+    "domain": "ai",
+    "page": null,
+    "manager": "providers",
+    "object": "openai",
+    "section": "overview",
+    "row": null
+   },
+   "actual_destination": {
+    "domain": "ai",
+    "page": null,
+    "manager": "providers",
+    "object": "openai",
+    "section": "overview",
+    "row": null
+   },
+   "focus_highlight": "pending-verification-phase",
+   "back_restores": "pending-verification-phase",
+   "case": "manager object (provider)",
+   "pass": "pending-verification-phase"
+  },
+  {
+   "query": "theem",
+   "result_id": "r_0fb731e11753ac25",
+   "result_type": "setting",
+   "displayed_path": "Settings / General & Appearance / Visual Style / Theme",
+   "expected_destination": {
+    "domain": "general",
+    "page": "visual",
+    "manager": null,
+    "object": null,
+    "section": "visual",
+    "row": "general.visual.theme"
+   },
+   "actual_destination": {
+    "domain": "general",
+    "page": "visual",
+    "manager": null,
+    "object": null,
+    "section": "visual",
+    "row": "general.visual.theme"
+   },
+   "focus_highlight": "pending-verification-phase",
+   "back_restores": "pending-verification-phase",
+   "case": "typo tolerance (theem → Theme)",
+   "pass": "pending-verification-phase"
+  },
+  {
+   "query": "rate limit",
+   "result_id": "r_ccd4d91a6b4dc100",
+   "result_type": "setting",
+   "displayed_path": "Settings / AI Brains & Providers / Accounts & Sign-in / Rate-Limit Rest Period",
+   "expected_destination": {
+    "domain": "ai",
+    "page": "accounts",
+    "manager": null,
+    "object": null,
+    "section": "accounts",
+    "row": "ai.accounts.cooldown-policy"
+   },
+   "actual_destination": {
+    "domain": "ai",
+    "page": "accounts",
+    "manager": null,
+    "object": null,
+    "section": "accounts",
+    "row": "ai.accounts.cooldown-policy"
+   },
+   "focus_highlight": "pending-verification-phase",
+   "back_restores": "pending-verification-phase",
+   "case": "grouped results case",
+   "pass": "pending-verification-phase"
+  },
+  {
+   "query": "rate limit",
+   "result_id": "r_6bfe03cb909de537",
+   "result_type": "manager",
+   "displayed_path": "Settings / AI Brains & Providers / Providers / Rate Limits",
+   "expected_destination": {
+    "domain": "ai",
+    "page": "rate-limits",
+    "manager": "providers",
+    "object": null,
+    "section": null,
+    "row": null
+   },
+   "actual_destination": {
+    "domain": "ai",
+    "page": "rate-limits",
+    "manager": "providers",
+    "object": null,
+    "section": null,
+    "row": null
+   },
+   "focus_highlight": "pending-verification-phase",
+   "back_restores": "pending-verification-phase",
+   "case": "duplicate/similar label lands on a different destination",
+   "pass": "pending-verification-phase"
+  },
+  {
+   "query": "copy settings",
+   "result_id": "r_8b0c67409da5d3a8",
+   "result_type": "action",
+   "displayed_path": "Settings / System & Advanced / Settings Lifecycle / Copy Settings From Another Project",
+   "expected_destination": {
+    "domain": "system",
+    "page": "copy",
+    "manager": "lifecycle",
+    "object": null,
+    "section": "copy",
+    "row": null
+   },
+   "actual_destination": {
+    "domain": "system",
+    "page": "copy",
+    "manager": "lifecycle",
+    "object": null,
+    "section": "copy",
+    "row": null
+   },
+   "focus_highlight": "pending-verification-phase",
+   "back_restores": "pending-verification-phase",
+   "case": "action result",
+   "pass": "pending-verification-phase"
+  },
+  {
+   "query": "copy settings",
+   "result_id": "r_773d3ba5904888a1",
+   "result_type": "intentional_help_result",
+   "displayed_path": "Settings / System & Advanced / Settings Lifecycle — Help",
+   "expected_destination": {
+    "domain": "system",
+    "page": null,
+    "manager": "lifecycle",
+    "object": null,
+    "section": "help",
+    "row": null
+   },
+   "actual_destination": {
+    "domain": "system",
+    "page": null,
+    "manager": "lifecycle",
+    "object": null,
+    "section": "help",
+    "row": null
+   },
+   "focus_highlight": "pending-verification-phase",
+   "back_restores": "pending-verification-phase",
+   "case": "intentional help result",
+   "pass": "pending-verification-phase"
+  },
+  {
+   "query": "doctor",
+   "result_id": "r_f4803ff143073acd",
+   "result_type": "manager",
+   "displayed_path": "Settings / System & Advanced / Doctor",
+   "expected_destination": {
+    "domain": "system",
+    "page": null,
+    "manager": "doctor",
+    "object": null,
+    "section": null,
+    "row": null
+   },
+   "actual_destination": {
+    "domain": "system",
+    "page": null,
+    "manager": "doctor",
+    "object": null,
+    "section": null,
+    "row": null
+   },
+   "focus_highlight": "pending-verification-phase",
+   "back_restores": "pending-verification-phase",
+   "case": "diagnostic / read-only status",
+   "pass": "pending-verification-phase"
+  },
+  {
+   "query": "install claude",
+   "result_id": "r_1b23d491f0558d39",
+   "result_type": "setting",
+   "displayed_path": "Settings / System & Advanced / Advanced & Debug / Claude Code App Location",
+   "expected_destination": {
+    "domain": "system",
+    "page": "advanced",
+    "manager": null,
+    "object": null,
+    "section": "advanced",
+    "row": "system.advanced.cli-path-claude"
+   },
+   "actual_destination": {
+    "domain": "system",
+    "page": "advanced",
+    "manager": null,
+    "object": null,
+    "section": "advanced",
+    "row": "system.advanced.cli-path-claude"
+   },
+   "focus_highlight": "pending-verification-phase",
+   "back_restores": "pending-verification-phase",
+   "case": "setup/repair workflow (explicit official-source CLI setup)",
+   "pass": "pending-verification-phase"
+  },
+  {
+   "query": "theme",
+   "result_id": "r_0fb731e11753ac25",
+   "result_type": "setting",
+   "displayed_path": "Settings / General & Appearance / Visual Style / Theme",
+   "expected_destination": {
+    "domain": "general",
+    "page": "visual",
+    "manager": null,
+    "object": null,
+    "section": "visual",
+    "row": "general.visual.theme"
+   },
+   "actual_destination": {
+    "domain": "general",
+    "page": "visual",
+    "manager": null,
+    "object": null,
+    "section": "visual",
+    "row": "general.visual.theme"
+   },
+   "focus_highlight": "pending-verification-phase",
+   "back_restores": "pending-verification-phase",
+   "case": "ordinary setting row",
+   "pass": "pending-verification-phase"
+  },
+  {
+   "query": "memory retention",
+   "result_id": "r_5a0b8b4fda639a03",
+   "result_type": "manager",
+   "displayed_path": "Settings / Memory & Context / Memory / Retention",
+   "expected_destination": {
+    "domain": "memory",
+    "page": "retention",
+    "manager": "memory",
+    "object": null,
+    "section": null,
+    "row": null
+   },
+   "actual_destination": {
+    "domain": "memory",
+    "page": "retention",
+    "manager": "memory",
+    "object": null,
+    "section": null,
+    "row": null
+   },
+   "focus_highlight": "pending-verification-phase",
+   "back_restores": "pending-verification-phase",
+   "case": "memory domain deep row",
+   "pass": "pending-verification-phase"
+  },
+  {
+   "query": "worktree",
+   "result_id": "r_0c414eed895de3f1",
+   "result_type": "manager",
+   "displayed_path": "Settings / Branching & Collaboration / Source Control & Worktrees",
+   "expected_destination": {
+    "domain": "branching",
+    "page": null,
+    "manager": "source-control",
+    "object": null,
+    "section": null,
+    "row": null
+   },
+   "actual_destination": {
+    "domain": "branching",
+    "page": null,
+    "manager": "source-control",
+    "object": null,
+    "section": null,
+    "row": null
+   },
+   "focus_highlight": "pending-verification-phase",
+   "back_restores": "pending-verification-phase",
+   "case": "branching domain result",
+   "pass": "pending-verification-phase"
+  },
+  {
+   "query": "shortcut",
+   "result_id": "r_4820b11e43a4d7e6",
+   "result_type": "setting",
+   "displayed_path": "Settings / Skills, Plugins & Commands / Commands & Shortcuts / Shortcut Hints & Cheat Sheet",
+   "expected_destination": {
+    "domain": "extensions",
+    "page": "commands",
+    "manager": null,
+    "object": null,
+    "section": "commands",
+    "row": "extensions.commands.shortcut-hints"
+   },
+   "actual_destination": {
+    "domain": "extensions",
+    "page": "commands",
+    "manager": null,
+    "object": null,
+    "section": "commands",
+    "row": "extensions.commands.shortcut-hints"
+   },
+   "focus_highlight": "pending-verification-phase",
+   "back_restores": "pending-verification-phase",
+   "case": "extensions domain result",
+   "pass": "pending-verification-phase"
+  },
+  {
+   "query": "theem",
+   "result_id": null,
+   "result_type": "session",
+   "displayed_path": null,
+   "expected_destination": null,
+   "actual_destination": null,
+   "focus_highlight": "n/a",
+   "back_restores": "pending-verification-phase",
+   "case": "Back restores the query and the selected result in the dropdown",
+   "pass": "pending-verification-phase"
+  }
+ ]
+}

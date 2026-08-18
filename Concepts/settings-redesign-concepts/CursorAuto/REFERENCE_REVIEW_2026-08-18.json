@@ -1,0 +1,323 @@
+{
+  "schema_id": "pm.settings.reference_review_snapshot.v1",
+  "model": "CursorAuto",
+  "folder": "Concepts/settings-redesign-concepts/CursorAuto",
+  "generated": "2026-08-18T13:04:00Z",
+  "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+  "winner_selected": false,
+  "winner_selection_statement": "No winner is claimed or selected among concepts 05–11 or the frozen 01–04 set.",
+  "references_opened": [
+    {
+      "path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/00_START_HERE.md",
+      "opened": true,
+      "purpose": "Assignment, supersessions, read order"
+    },
+    {
+      "path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/01_ASSIGNMENT_AND_PRECEDENCE.md",
+      "opened": true,
+      "purpose": "Frozen 01–04; additive-only shared code"
+    },
+    {
+      "path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/02_SEVEN_CONCEPT_BLUEPRINTS.md",
+      "opened": true,
+      "purpose": "Layout/hierarchy/navigation intent per concept"
+    },
+    {
+      "path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/03_HOME_SEARCH_AND_NAVIGATION.md",
+      "opened": true,
+      "purpose": "Home, search dropdown, Back/Close/Escape"
+    },
+    {
+      "path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/04_PROJECT_ONLY_SETTINGS_AND_COPY.md",
+      "opened": true,
+      "purpose": "Project-only + one-time copy contract"
+    },
+    {
+      "path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/05_COMPLETE_MANAGER_INTEGRATION.md",
+      "opened": true,
+      "purpose": "Required demonstrated + deferred named owners"
+    },
+    {
+      "path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/06_INFORMATION_ARCHITECTURE_AND_DENSITY.md",
+      "opened": true,
+      "purpose": "IA and density"
+    },
+    {
+      "path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/07_THEME_MOTION_RESPONSIVE_AND_SLINT.md",
+      "opened": true,
+      "purpose": "8 themes, 6 widths, reduced motion, Slint 1.17.1"
+    },
+    {
+      "path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/08_DATA_PERFORMANCE_AND_TRUTHFUL_STATE.md",
+      "opened": true,
+      "purpose": "828 inventory, lazy hydration, ObservableWork"
+    },
+    {
+      "path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/09_COMMAND_WIRING_DRY_AND_PLAN_IMPACT.md",
+      "opened": true,
+      "purpose": "Candidate-only impact; no canon edits"
+    },
+    {
+      "path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/10_TESTING_EVIDENCE_AND_ACCEPTANCE.md",
+      "opened": true,
+      "purpose": "Test families and completion gate"
+    },
+    {
+      "path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/11_REQUIRED_FILES_AND_REPORTS.md",
+      "opened": true,
+      "purpose": "Stems, evidence files, reports"
+    },
+    {
+      "path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/12_REPO_BASELINE_AND_KNOWN_FAILURES.md",
+      "opened": true,
+      "purpose": "Repo baseline"
+    },
+    {
+      "path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/GOAL_PROMPT.md",
+      "opened": true,
+      "purpose": "Goal prompt / bakeoff assignment"
+    },
+    {
+      "path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/machine_readable/manager_coverage_required.json",
+      "opened": true,
+      "purpose": "Required manager name strings"
+    },
+    {
+      "path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/machine_readable/search_contract.json",
+      "opened": true,
+      "purpose": "Immutable result-id routing"
+    },
+    {
+      "path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/machine_readable/test_matrix.json",
+      "opened": true,
+      "purpose": "Theme × width × concept matrix"
+    },
+    {
+      "path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/tools/validate_seven_new_concepts.py",
+      "opened": true,
+      "purpose": "Structural validator"
+    },
+    {
+      "path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/authority/base_packet",
+      "opened": true,
+      "purpose": "August 8 cumulative Settings packet (unmodified copy)"
+    },
+    {
+      "path": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/authority/correction_packet",
+      "opened": true,
+      "purpose": "August 13 dependency/work correction (unmodified copy)"
+    },
+    {
+      "path": "Concepts/CONCEPT_RULES.md",
+      "opened": true,
+      "purpose": "ConceptHub / concept folder rules"
+    },
+    {
+      "path": "Concepts/pm7-tools/base/PM7-base.html",
+      "opened": true,
+      "purpose": "Current PMConcept7 Settings chrome (s4-*); stale Global inheritance copy not reused"
+    },
+    {
+      "path": "Plans/settings_inventory.json",
+      "opened": true,
+      "purpose": "828 settings / 12 categories snapshot source"
+    },
+    {
+      "path": "Concepts/settings-redesign-concepts/CursorAuto",
+      "opened": true,
+      "purpose": "Assigned model folder; frozen 01–04 left intact"
+    }
+  ],
+  "images_interpreted": [
+    {
+      "concept_id": "concept-05-directory-take-1",
+      "image": "reference/selected_concepts/01_A1_Directory_Take_1_LAYOUT_RECONSTRUCTION.png",
+      "used_for": "layout, hierarchy, navigation, density — not pixel copy, not data authority",
+      "retheme_required": false,
+      "implementation": "A1 Directory / Take 1"
+    },
+    {
+      "concept_id": "concept-06-directory-take-2",
+      "image": "reference/selected_concepts/02_A1_Directory_Take_2.png",
+      "used_for": "layout, hierarchy, navigation, density — not pixel copy, not data authority",
+      "retheme_required": false,
+      "implementation": "A1 Directory / Take 2"
+    },
+    {
+      "concept_id": "concept-07-compendium-workspace",
+      "image": "reference/selected_concepts/03_A2_Compendium_Workspace_Take_1.png",
+      "used_for": "layout, hierarchy, navigation, density — not pixel copy, not data authority",
+      "retheme_required": false,
+      "implementation": "A2 Compendium Workspace / Take 1"
+    },
+    {
+      "concept_id": "concept-08-directory-take-3",
+      "image": "reference/selected_concepts/04_A1_Directory_Take_3.png",
+      "used_for": "layout, hierarchy, navigation, density — not pixel copy, not data authority",
+      "retheme_required": false,
+      "implementation": "A1 Directory / Take 3"
+    },
+    {
+      "concept_id": "concept-09-tome-tabs",
+      "image": "reference/selected_concepts/05_Tome_Tabs_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+      "used_for": "layout, hierarchy, navigation, density — not pixel copy, not data authority",
+      "retheme_required": true,
+      "implementation": "Rethemed Tome Tabs (Chapter Tabs)"
+    },
+    {
+      "concept_id": "concept-10-command-suite",
+      "image": "reference/selected_concepts/06_Command_Suite_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+      "used_for": "layout, hierarchy, navigation, density — not pixel copy, not data authority",
+      "retheme_required": true,
+      "implementation": "Rethemed Command Suite"
+    },
+    {
+      "concept_id": "concept-11-tabbed-organizer",
+      "image": "reference/selected_concepts/07_Tabbed_Organizer_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+      "used_for": "layout, hierarchy, navigation, density — not pixel copy, not data authority",
+      "retheme_required": true,
+      "implementation": "Rethemed Tabbed Organizer"
+    }
+  ],
+  "legacy_assumptions_superseded": [
+    "Collective manager coverage / shared_grammar as a substitute for visible implementation",
+    "Four-concept bakeoff as the only Settings work in this folder",
+    "Global / Project / Goal / Host editing scopes and inheritance controls",
+    "Steampunk, parchment, terminal-green, CRT, paper/binder skins on 09–11",
+    "Routing search results by visual array index, group position, or label",
+    "Evidence directories of the form concepts/harbor/ for new stems (validator requires {stem}/ beside {stem}.html)"
+  ],
+  "isolation_evidence": {
+    "no_iframe": true,
+    "no_href_src_to_concept_01_04": true,
+    "shared_headless_only": "shared/v2/pmv2.js + inventory snapshot; visible Home, managers, search dropdown, reveal, narrow, and motion are concept-native CSS/JS",
+    "frozen_01_04_hash_check": "54 files SHA-256 match shared/v2/frozen-baseline.json",
+    "live_manager_crawl": "47 manager+deferred routes per concept stayed inside the same page; Back/Close/search retained",
+    "hub_port_01_04": 55939,
+    "hub_port_05_11": 52958
+  },
+  "affected_concepts": [
+    "concept-05-directory-take-1",
+    "concept-06-directory-take-2",
+    "concept-07-compendium-workspace",
+    "concept-08-directory-take-3",
+    "concept-09-tome-tabs",
+    "concept-10-command-suite",
+    "concept-11-tabbed-organizer"
+  ],
+  "tests": [
+    {
+      "name": "packet_validator",
+      "result": "pass",
+      "failures": []
+    },
+    {
+      "name": "ConceptHub validate.py",
+      "command": "python Concepts/ConceptHub/validate.py Concepts/settings-redesign-concepts/CursorAuto",
+      "result": "pass"
+    },
+    {
+      "name": "node --check",
+      "result": "pass",
+      "files": [
+        "shared/v2/pmv2.js",
+        "concept-05-directory-take-1/concept-05-directory-take-1.js",
+        "concept-06-directory-take-2/concept-06-directory-take-2.js",
+        "concept-07-compendium-workspace/concept-07-compendium-workspace.js",
+        "concept-08-directory-take-3/concept-08-directory-take-3.js",
+        "concept-09-tome-tabs/concept-09-tome-tabs.js",
+        "concept-10-command-suite/concept-10-command-suite.js",
+        "concept-11-tabbed-organizer/concept-11-tabbed-organizer.js"
+      ]
+    },
+    {
+      "name": "frozen SHA-256",
+      "result": "pass",
+      "files_matched": 54,
+      "baseline": "shared/v2/frozen-baseline.json"
+    },
+    {
+      "name": "unmodified scripts/ca-interactive-qa.py (01-04)",
+      "ok": true,
+      "failures": [],
+      "hub_port": 55939,
+      "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca-qa-40700",
+      "output": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca-01-04-qa.json",
+      "output_shipped": false,
+      "concepts_01_04": "unmodified"
+    },
+    {
+      "name": "scripts/seven-new-concepts-qa.py (05-11)",
+      "status": "pass",
+      "failures": [],
+      "hub_port": 52958,
+      "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-40584",
+      "report": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-seven-qa.json",
+      "theme_width_cells_pass": 336,
+      "per_concept": {
+        "search": "8/8",
+        "managers": "47/47",
+        "copy": true
+      }
+    }
+  ],
+  "concepts_01_04": "unmodified",
+  "live_verification": {
+    "inventory": {
+      "settings": 828,
+      "categories": 12,
+      "snapshot": "shared/v2"
+    },
+    "search_index": {
+      "product": 1007,
+      "synthetic_labeled": 2000,
+      "synthetic_in_default_search": false,
+      "default_cap": 24
+    },
+    "coverage_per_concept": {
+      "demonstrated": 42,
+      "deferred_named_owner": 9,
+      "shared_grammar": 0,
+      "missing": 0
+    },
+    "retheme_09_11": {
+      "parchment": false,
+      "brass": false,
+      "steampunk": false,
+      "CRT": false,
+      "terminal_green": false,
+      "binder": false
+    },
+    "known_limitations": [
+      "Copy/CLI/receipts simulated via sessionStorage, not live ResourceGovernor",
+      "ObservableWork is a truthful projection only",
+      "Inventory still carries legacy scope:global metadata; UI projects project-only",
+      "Search default cap 24 results",
+      "Some All Settings row handlers previously split dotted ids; 07 patched to dest lookup; remaining split('.') may be display path only"
+    ],
+    "candidate_impact_not_minted": {
+      "preserve_or_reuse": [
+        "cmd.settings.open",
+        "cmd.account.select_profile",
+        "cmd.provider.switch_route",
+        "cmd.usage.refresh"
+      ],
+      "new_candidates": [
+        "cmd.settings.search.submit",
+        "cmd.settings.copy_from_project.preview",
+        "cmd.settings.copy_from_project.apply",
+        "cmd.settings.copy_from_project.rollback",
+        "cmd.provider.cli.install_official"
+      ],
+      "retire_or_alias": [
+        "cmd.settings.bloom.open"
+      ],
+      "dry": {
+        "no_second_ResourceGovernor": true,
+        "no_universal_visible_manager_renderer": true,
+        "shared_v2_headless_only": true
+      },
+      "note": "Candidate IDs only. Do not mint canon."
+    }
+  }
+}

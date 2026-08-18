@@ -1,0 +1,124 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "concept_id": "concept-11-tabbed-organizer",
+  "model": "Qwen 5.8",
+  "title": "Tabbed Organizer — Settings as a layered, tabbed file system — Qwen 5.8",
+  "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+  "plan_owner_impacts": [
+    {
+      "owner": "FinalGUISpec",
+      "impact": "Tabbed Organizer keeps the left-shell canon and replaces the settings interior with a layered-sheet + domain-tab stack; category tabs, edge tabs, and roster+detail sheets are concept-native compositions, not canon changes."
+    },
+    {
+      "owner": "settings inventory and schema",
+      "impact": "No taxonomy change; the 12 inventory categories render as domain tabs and edge tabs with stable ids for deep links. Legacy global-scope metadata stays provenance-only (see plan-owner-delta.md)."
+    },
+    {
+      "owner": "Models System",
+      "impact": "Providers roster + detail tabs answer the six default questions first (connected, account, models, usage-end, routing, setup); credentials never raw; installations show selected/shadowed; update ask-first and rollback states demonstrated."
+    },
+    {
+      "owner": "Server Backbone",
+      "impact": "Servers / Server Claim / Remote Access / Full Server backup remain deferred named-owner shells rendered as setup cards with insertion + return contracts; no backend state machine invented."
+    },
+    {
+      "owner": "Project Syncing and Updates",
+      "impact": "Hosting, Sync/Move, and App & Content Updates deferred shells shown; Copy Settings remains one-time transactional with restore point and rollback."
+    },
+    {
+      "owner": "Product Onboarding plan owner",
+      "impact": "Onboarding shell card links first-run flow; return contract selects the new provider connection and issues a continuation receipt."
+    },
+    {
+      "owner": "ObservableWork / ResourceGovernor",
+      "impact": "All long actions (install, update, probe, cleanup, index rebuild) run through PMState2 beginOp/advanceOp/finishOp; determinate only with denominators; no permanent spinners."
+    }
+  ],
+  "settings_inventory_impacts": [
+    "No id changes; concept routes use inventory category/subgroup ids verbatim (#/cat/<cat>/<sub>?row=<id>).",
+    "All 828 rows reachable via subgroup tabs and the virtualized #/all compendium with faceted filters."
+  ],
+  "settings_schema_impacts": [
+    "Row value-state vocabulary reused from shared atoms (default/custom/managed/unavailable/restart/reconnect/changed-elsewhere); concept adds no new schema fields.",
+    "Search result types (setting/manager/managed_object/action/setup/diagnostic/unavailable) rendered as chips; routing strictly by rid."
+  ],
+  "command_id_impacts": [
+    "See candidate-command-delta.json (census against Plans/UI_Command_Catalog.md; reuse/alias/candidate only, provisional)."
+  ],
+  "wiring_impacts": [
+    "See candidate-wiring-delta.json; every control traces UI→command-candidate→owner→validation→mutation→receipt→projection→recovery; demo state marked simulated."
+  ],
+  "dry_component_impacts": [
+    "See candidate-dry-delta.json; headless data/search/state/copy/row atoms reused from _shared; presentation is concept-native; DRY Method family demonstrated with visible reuse state."
+  ],
+  "schema_event_storage_impacts": [
+    "Receipts, restore points, and recent-changes persist per concept via PMState2; no new storage schema proposed.",
+    "Family-local manager row edits are demo-local (famState) and receipted; they do not touch the 828-row inventory."
+  ],
+  "migration_supersession_impacts": [
+    "Supersedes legacy collective-coverage rule: this concept individually demonstrates all 42 required families.",
+    "Supersedes scope-selector legacy: no Global/Project/Goal/Host selector, no inheritance, no profiles/sync UI anywhere.",
+    "Retheme supersedes paper/binder/folder skeuomorphism of the Tabbed Organizer reference: layout kept, visuals PM tokens only."
+  ],
+  "slint_port_impacts": [
+    "Theme via data-theme on <html> across 8 themes; reduced motion via data-reduced-motion kills all concept animations (sheet slide, tab underline).",
+    "Width tiers via #app[data-wtier]; squeezed/narrow collapse to one-pane push stack with horizontal roster strip; wide adds bounded context pane (max 75ch text)."
+  ],
+  "test_fixtures": [
+    "search-route-matrix.json (16 cases incl. duplicate labels, typo, unavailable, deep rows, back-restores-query)",
+    "manager-route-matrix.json (42 families with entry points, back/close targets, narrow behavior)",
+    "test-evidence.json (static + browser smoke assertions incl. data-test hooks, data-route, data-window, pm2-locate)"
+  ],
+  "deferred_named_owners": [
+    {
+      "module": "Product Onboarding",
+      "owner": "Product Onboarding plan owner",
+      "insertion_contract": "First-run flow reuses provider/account/installation records; no duplicate secret store."
+    },
+    {
+      "module": "Provider CLI Installation",
+      "owner": "Provider Lifecycle owner",
+      "insertion_contract": "Explicit install from official source per Host/Environment inside provider Installations tab."
+    },
+    {
+      "module": "Server Claim",
+      "owner": "Server Backbone",
+      "insertion_contract": "Claim handshake binds server record before hosted work is offered."
+    },
+    {
+      "module": "Servers / Execution Hosts / Clients",
+      "owner": "Server Backbone",
+      "insertion_contract": "Human-language cards under System & Advanced; deep-link slot reserved for server shell."
+    },
+    {
+      "module": "Project Hosting & Files",
+      "owner": "Project Syncing and Updates",
+      "insertion_contract": "Source Location card (Hosted On, Project Files, Run Work) plus sync status slots."
+    },
+    {
+      "module": "Remote Access",
+      "owner": "Server Backbone",
+      "insertion_contract": "Pairing/session approvals; auth browsing stays human-only."
+    },
+    {
+      "module": "Sync & Move",
+      "owner": "Project Syncing and Updates",
+      "insertion_contract": "Relocation/sync bundles owned by sync pipeline; Settings surfaces status + entry points."
+    },
+    {
+      "module": "App & Content Updates",
+      "owner": "Project Syncing and Updates",
+      "insertion_contract": "Host-scoped signed PM updates separate from provider/LSP/container updates."
+    },
+    {
+      "module": "Full Server Backup",
+      "owner": "Server Backbone",
+      "insertion_contract": "Server backup class beside settings/project backup with own schedule + verification."
+    }
+  ],
+  "unresolved_questions": [
+    "Whether edge tabs (home right rail) should persist into domain views in a production port.",
+    "Canonical tab order for provider detail tabs versus the six-question overview default."
+  ],
+  "demonstrated_families": "All 42 required families demonstrated concept-natively; 9 deferred named-owner shells rendered with insertion + return contracts."
+}

@@ -96,8 +96,9 @@ html[data-reduced-motion="1"] .uw.uw-enter { animation-delay: 0ms !important; }
 }
 
 /* ---------- drag reorder: lifted clone + landing ghost ----------
-   The held widget is a fixed clone (.uw-lifted) on <body> above the focus
-   scrim (z:500) and sprouts (z:530); left/top are JS-driven with NO
+   The held widget is a fixed clone (.uw-lifted) parked on the document
+   body element, above the focus scrim (z:500) and sprouts (z:530);
+   left/top are JS-driven with NO
    transition (1:1 pointer tracking) — only the lift (widget-pickup token)
    and the drop settle (widget-drop token, set inline by JS) animate. The
    vacated slot becomes .uw.is-placeholder: same spans, dashed accent ring,
@@ -116,7 +117,8 @@ html.pmw-drag { -webkit-user-select: none; user-select: none; }
 }
 
 /* ---------- focus mode: scrim + one focused widget ----------
-   The focused card is parked on <body> by usage-widgets.js (host chrome wraps
+   The focused card is parked on the document body element by
+   usage-widgets.js (host chrome wraps
    the page in a lower stacking context, e.g. .us-center z:1, which would keep
    it under the scrim). As body siblings the z-index order holds: the card
    (510) renders above the scrim (500), fully bright; everything else dims. */

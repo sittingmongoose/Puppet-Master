@@ -1,0 +1,23 @@
+{
+ "ue610": {
+  "found": true,
+  "text": "Checkout service audit THREAD REQUEST running Checkout service audit One immutable usage event per real provider attempt. The final route never overwrites earlier attempts. ATTEMPTS IN THIS WORK 5 MAIN WORK user work completed GPT-5.6-Codex · OpenAI · Personal · Codex · ChatGPT plan 61.0k in · 4.8k out · 40.2k cache read · 1.8k cache write · $0.00 Aug 4 · 12:02 EDT · settlement observed · source cli reported · rcpt-590 RETRIES & ROUTE CHANGES conversation replay completed Kimi K2 · Kimi · Personal · Kimi Code subscription 48.9k in · 200 out · $0.00 Replay after model switch — old cache did not carry over Aug 4 · 12:24 EDT · settlement observed · source provider reported · rcpt-591 MAIN WORK user work completed Kimi K2 · Kimi · Personal · Kimi Code subscription 33.7k in · 2.6k out · 24.8k cache read · $0.00 Aug 4 · 12:27 EDT · settlement observed · source provider reported · rcpt-592 RETRIES & ROUTE CHANGES fallback attempt completed GPT-5.6-Codex · OpenAI · Personal · Codex · ChatGPT plan 5.2k in · 640 out · 1.7k cache read · $0.00 Aug 4 · 12:44 EDT · settlement observed · source cli reported · rcpt-638 RETRIES & ROUTE CHANGES conversation replay completed Kimi K2 · Kimi · Personal · Kimi Code subscription 4.8k in · 150 out · $0.00 Aug 4 · 12:57 EDT · settlement observed · source provider reported · rcpt-640 Replay triggered by “Client offline · outbox” — attributed to the reconnect, not new user work. CONNECTION USED ROUTE EVIDENCE Connection Kimi Code subscription Authentication Puppet Master OAuth Auth owned by Puppet Master Account Kimi · Personal Expected product Kimi Code plan Billing route plan included Settlement observed Cache write not exposed"
+ },
+ "contextDetails": {
+  "clicked": true,
+  "hasReclaimed": true,
+  "reclaimLines": [
+   "18.2K tokens reclaimed · Cache restarted · 1 helper call · automatic compaction · cache rebuilt · invalidation: compaction changed prefix",
+   "6.1K tokens reclaimed · zero provider usage · proactive prune · cache preserved"
+  ],
+  "dollarNearMaint": [
+   "Compaction timed out",
+   "Helper call may have usage, but no context mutation was committed. · manual compaction · cache unknown",
+   "Context compacted",
+   "18.2K tokens reclaimed · Cache restarted · 1 helper call · automatic compaction · cache rebuilt · invalidation: compaction changed prefix",
+   "Local prune",
+   "6.1K tokens reclaimed · zero provider usage · proactive prune · cache preserved"
+  ],
+  "panelSample": "Context details Pricing migration fixes Checkout service audit CURRENT CONTEXT Provider Claude Account Claude · Work Connection used Claude CLI profile · CLI profile Model Claude Opus 4.6 Context used 42.2k / 128k · 33% Context cache hit 96.8% Current window since 11:42 EDT Last activity 14:40 EDT Stable prefix sp-88 Cache epoch e-12 Tool schema overhead (PM-derived) 5.9k · 5% of window · pm derived WHAT IS IN CONTEXT Messages 46% 19.4k System & instructions 18% 7.6k Tools 14% 5.9k Skills & MCP 9% 3.8k Memory / pinned 5% 2.1k All sources (3 more) Summaries 4% 1.7k Attachments / media 3% 1.3k Other 1% 400 WHAT CHANGED 12:32 EDT RUN Goal started · Refactor pricing pipeline 13:02 EDT MAINTENANCE Compaction timed out Helper call may have usage, but no context mutation was committed. · manual compaction · cache unknown 13:44 EDT MAINTENANCE Context compacted 18.2K tokens reclaimed · Cache restarted · 1 helper call · automatic compaction · cache rebuilt · invalidation: compaction changed prefix 14:09 EDT MAINTENANCE Local prune 6.1K tokens reclaimed · zero provider usage · proactive prune · cache preserved 14:35 EDT REDIRECT Mid-turn redirect Interrupted attempt retained · resumed underneath MESSAGES AND ATTEMPTS Show 6 turns Fix pricing migration 14:34 EDT GPT-5.6-Codex · OpenAI · Personal · ChatGPT plan Main work · user work 42.1k in · 3.2k out · 18k cache completed Context & compression · compression 2.4k in · 310 out completed Specialists & subagents · subagent 8.9k in · 1.1k o"
+ }
+}

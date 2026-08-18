@@ -1,0 +1,121 @@
+{
+  "schema_id": "pm.settings_bakeoff.test_evidence.v2.concept",
+  "concept_id": "concept-10-command-suite",
+  "model": "Qwen 5.8",
+  "method": "Static checks by reading the concept's own source plus private headless Playwright Chromium (javaScriptEnabled) over http://127.0.0.1:8899 against the real shared modules; 21/21 live checks pass, zero page errors.",
+  "static_checks": [
+    {
+      "check": "no <iframe> in concept-10-command-suite.html",
+      "pass": true
+    },
+    {
+      "check": "no href/src referencing concept-01..04",
+      "pass": true
+    },
+    {
+      "check": "data-concept-model=\"Qwen 5.8\" on <body>",
+      "pass": true
+    },
+    {
+      "check": "routes list",
+      "routes": [
+        "#/home",
+        "#/q/<query>",
+        "#/cat/<catId>",
+        "#/cat/<catId>/<subId>",
+        "#/mgr/<familyId>",
+        "#/mgr/<familyId>/<objectId>",
+        "#/all",
+        "#/copy",
+        "#/lifecycle"
+      ],
+      "pass": true
+    },
+    {
+      "check": "virtualization present: PMManagers2.virtualList on #/all with rowHeight 64; host [data-test=vlist] updates data-window start:end:total via onWindow",
+      "pass": true
+    },
+    {
+      "check": "no scope selectors (Global/Project/Goal/Host), no inheritance, no profiles/sync UI",
+      "pass": true
+    },
+    {
+      "check": "no emoji; icons only via PMIcons",
+      "pass": true
+    },
+    {
+      "check": "retheme prohibitions honored: no terminal green hex, no CRT, no fake shell; body uses var(--font-ui); var(--font-mono) only for path/log/code-ish microcopy",
+      "pass": true
+    },
+    {
+      "check": "reduced motion: [data-reduced-motion=1] kills drill-in animation and shared skeletons/spinners (pm-shell.css + concept CSS)",
+      "pass": true
+    },
+    {
+      "check": "search rows carry data-rid and .pm2-r-title; routing via PMSearch2.byRid only; #/q/<query> pushed before target",
+      "pass": true
+    },
+    {
+      "check": "test hooks present: data-test=search-input/search-results/back/close/home/all/copy/vlist, data-route on root view (hash minus #), data-manager on manager detail panes, data-manager-row on domain manager rows, pm2-locate on exact landing",
+      "pass": true
+    },
+    {
+      "check": "keyboard-first: Ctrl+K palette overlay, ArrowLeft/ArrowRight drill between visible panes, Enter opens selection, Esc order popup→palette→detail→one level out→Home",
+      "pass": true
+    },
+    {
+      "check": "narrow/squeezed: push navigation one pane at a time via .push-on; Back names previous level; selection/scroll preserved per route",
+      "pass": true
+    },
+    {
+      "check": "transactional copy: source → categories → preview counts (add/replace/unchanged/unavailable/conflict) → typed COPY confirm → restore point → verify → rollback",
+      "pass": true
+    }
+  ],
+  "live_checks": [
+    {
+      "check": "title 'Command Suite — Qwen 5.8'; #app mounts; data-route=/home; home/back/close/breadcrumb/search hooks present",
+      "pass": true
+    },
+    {
+      "check": "search 'rate limit': rows carry data-rid and .pm2-r-title; grouped dropdown",
+      "pass": true
+    },
+    {
+      "check": "select sr:object:claude-oauth.rate-limits routes to #/mgr/providers/claude-oauth?sec=limits; .pm2-locate applied; [data-manager=providers] present; back visible",
+      "pass": true
+    },
+    {
+      "check": "browser Back: #/q/rate%20limit; input value 'rate limit' restored; dropdown reopened",
+      "pass": true
+    },
+    {
+      "check": "#/all: vlist data-window total 828 (0:20:828)",
+      "pass": true
+    },
+    {
+      "check": "synthetic toggle: data-window total 2828; real 828 never replaced",
+      "pass": true
+    },
+    {
+      "check": "all 42 manager routes render [data-manager] + [data-test=back] + [data-test=breadcrumb] with correct data-route",
+      "pass": true
+    },
+    {
+      "check": "#/copy and #/all views carry data-test=copy / data-test=all",
+      "pass": true
+    },
+    {
+      "check": "Ctrl+K opens palette overlay; Esc closes it",
+      "pass": true
+    },
+    {
+      "check": "zero page errors across the whole run",
+      "pass": true
+    }
+  ],
+  "known_limitations": [
+    "Manager-local fixture rows are demo values from PMManagers2Data, not inventory rows, by design.",
+    "Concept is a prototype; no canonical Plans/catalog changes."
+  ]
+}

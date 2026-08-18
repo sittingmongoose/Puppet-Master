@@ -1,0 +1,762 @@
+{
+  "schema_id": "pm.settings_bakeoff.manager_route_matrix.v1",
+  "concept_id": "concept-11-tabbed-organizer",
+  "routes": [
+    {
+      "family": "providers",
+      "title": "Providers",
+      "archetype": "catalog",
+      "entry_points": [
+        "#/cat/ai Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:providers)",
+        "#/cat/ai overview strip"
+      ],
+      "route": "#/mgr/providers",
+      "shell_retained": true,
+      "back_target": "#/cat/ai",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "not-installed, sign-in-required, shadowed-installation, update-available, scheduled, rolled-back, usage-unavailable, last-known-good catalog, owner-unknown manual-only",
+      "pass": true
+    },
+    {
+      "family": "context",
+      "title": "Context & Instructions",
+      "archetype": "catalog",
+      "entry_points": [
+        "#/cat/memory Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:context)",
+        "#/cat/memory overview strip"
+      ],
+      "route": "#/mgr/context",
+      "shell_retained": true,
+      "back_target": "#/cat/memory",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "memory",
+      "title": "Memory",
+      "archetype": "catalog",
+      "entry_points": [
+        "#/cat/memory Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:memory)",
+        "#/cat/memory overview strip"
+      ],
+      "route": "#/mgr/memory",
+      "shell_retained": true,
+      "back_target": "#/cat/memory",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "personas",
+      "title": "Personas",
+      "archetype": "roster",
+      "entry_points": [
+        "#/cat/personas Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:personas)",
+        "#/cat/personas overview strip"
+      ],
+      "route": "#/mgr/personas/<objectId>",
+      "shell_retained": true,
+      "back_target": "#/cat/personas",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "goal",
+      "title": "Goal & Automation",
+      "archetype": "roster",
+      "entry_points": [
+        "#/cat/planning Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:goal)",
+        "#/cat/planning overview strip"
+      ],
+      "route": "#/mgr/goal/<objectId>",
+      "shell_retained": true,
+      "back_target": "#/cat/planning",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "crew",
+      "title": "Crew",
+      "archetype": "roster",
+      "entry_points": [
+        "#/cat/branching Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:crew)",
+        "#/cat/branching overview strip"
+      ],
+      "route": "#/mgr/crew/<objectId>",
+      "shell_retained": true,
+      "back_target": "#/cat/branching",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "permissions",
+      "title": "Permissions & FileSafe",
+      "archetype": "roster",
+      "entry_points": [
+        "#/cat/safety Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:permissions)",
+        "#/cat/safety overview strip"
+      ],
+      "route": "#/mgr/permissions/<objectId>",
+      "shell_retained": true,
+      "back_target": "#/cat/safety",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "bsd",
+      "title": "Back Seat Driver",
+      "archetype": "preference",
+      "entry_points": [
+        "#/cat/safety Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:bsd)",
+        "#/cat/safety overview strip"
+      ],
+      "route": "#/mgr/bsd",
+      "shell_retained": true,
+      "back_target": "#/cat/safety",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "notifications",
+      "title": "Notifications",
+      "archetype": "preference",
+      "entry_points": [
+        "#/cat/general Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:notifications)",
+        "#/cat/general overview strip"
+      ],
+      "route": "#/mgr/notifications",
+      "shell_retained": true,
+      "back_target": "#/cat/general",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "sounds",
+      "title": "Sounds",
+      "archetype": "catalog",
+      "entry_points": [
+        "#/cat/general Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:sounds)",
+        "#/cat/general overview strip"
+      ],
+      "route": "#/mgr/sounds",
+      "shell_retained": true,
+      "back_target": "#/cat/general",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "appearance",
+      "title": "Appearance",
+      "archetype": "catalog",
+      "entry_points": [
+        "#/cat/general Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:appearance)",
+        "#/cat/general overview strip"
+      ],
+      "route": "#/mgr/appearance",
+      "shell_retained": true,
+      "back_target": "#/cat/general",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "spellcheck",
+      "title": "Spellcheck & Dictionaries",
+      "archetype": "catalog",
+      "entry_points": [
+        "#/cat/general Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:spellcheck)",
+        "#/cat/general overview strip"
+      ],
+      "route": "#/mgr/spellcheck",
+      "shell_retained": true,
+      "back_target": "#/cat/general",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "desktop",
+      "title": "Desktop, Tray & Window",
+      "archetype": "preference",
+      "entry_points": [
+        "#/cat/system Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:desktop)",
+        "#/cat/system overview strip"
+      ],
+      "route": "#/mgr/desktop",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "teacher",
+      "title": "Teacher",
+      "archetype": "preference",
+      "entry_points": [
+        "#/cat/general Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:teacher)",
+        "#/cat/general overview strip"
+      ],
+      "route": "#/mgr/teacher",
+      "shell_retained": true,
+      "back_target": "#/cat/general",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "doctor",
+      "title": "Doctor",
+      "archetype": "diagnostic",
+      "entry_points": [
+        "#/cat/system Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:doctor)",
+        "#/cat/system overview strip"
+      ],
+      "route": "#/mgr/doctor",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "healthy-with-advisories, diagnostic drawer",
+      "pass": true
+    },
+    {
+      "family": "files",
+      "title": "File Manager & Editor",
+      "archetype": "catalog",
+      "entry_points": [
+        "#/cat/code Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:files)",
+        "#/cat/code overview strip"
+      ],
+      "route": "#/mgr/files",
+      "shell_retained": true,
+      "back_target": "#/cat/code",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "terminal",
+      "title": "Terminal",
+      "archetype": "preference",
+      "entry_points": [
+        "#/cat/code Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:terminal)",
+        "#/cat/code overview strip"
+      ],
+      "route": "#/mgr/terminal",
+      "shell_retained": true,
+      "back_target": "#/cat/code",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "lsp",
+      "title": "Language Servers",
+      "archetype": "roster",
+      "entry_points": [
+        "#/cat/code Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:lsp)",
+        "#/cat/code overview strip"
+      ],
+      "route": "#/mgr/lsp/<objectId>",
+      "shell_retained": true,
+      "back_target": "#/cat/code",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "formatters",
+      "title": "Formatters",
+      "archetype": "roster",
+      "entry_points": [
+        "#/cat/code Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:formatters)",
+        "#/cat/code overview strip"
+      ],
+      "route": "#/mgr/formatters/<objectId>",
+      "shell_retained": true,
+      "back_target": "#/cat/code",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "commands",
+      "title": "Commands & Shortcuts",
+      "archetype": "roster",
+      "entry_points": [
+        "#/cat/extensions Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:commands)",
+        "#/cat/extensions overview strip"
+      ],
+      "route": "#/mgr/commands/<objectId>",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "mcp",
+      "title": "MCP Servers",
+      "archetype": "roster",
+      "entry_points": [
+        "#/cat/extensions Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:mcp)",
+        "#/cat/extensions overview strip"
+      ],
+      "route": "#/mgr/mcp/<objectId>",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "skills",
+      "title": "Skills",
+      "archetype": "roster",
+      "entry_points": [
+        "#/cat/extensions Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:skills)",
+        "#/cat/extensions overview strip"
+      ],
+      "route": "#/mgr/skills/<objectId>",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "plugins",
+      "title": "Plugins",
+      "archetype": "roster",
+      "entry_points": [
+        "#/cat/extensions Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:plugins)",
+        "#/cat/extensions overview strip"
+      ],
+      "route": "#/mgr/plugins/<objectId>",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "tools",
+      "title": "Tools",
+      "archetype": "roster",
+      "entry_points": [
+        "#/cat/extensions Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:tools)",
+        "#/cat/extensions overview strip"
+      ],
+      "route": "#/mgr/tools/<objectId>",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "testing",
+      "title": "Testing & Debug",
+      "archetype": "preference",
+      "entry_points": [
+        "#/cat/planning Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:testing)",
+        "#/cat/planning overview strip"
+      ],
+      "route": "#/mgr/testing",
+      "shell_retained": true,
+      "back_target": "#/cat/planning",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "storage",
+      "title": "Storage & Retention",
+      "archetype": "catalog",
+      "entry_points": [
+        "#/cat/system Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:storage)",
+        "#/cat/system overview strip"
+      ],
+      "route": "#/mgr/storage",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "backup",
+      "title": "Backup & Restore",
+      "archetype": "catalog",
+      "entry_points": [
+        "#/cat/system Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:backup)",
+        "#/cat/system overview strip"
+      ],
+      "route": "#/mgr/backup",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "lifecycle",
+      "title": "Settings Lifecycle",
+      "archetype": "transaction",
+      "entry_points": [
+        "#/cat/system Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:lifecycle)",
+        "#/cat/system overview strip"
+      ],
+      "route": "#/mgr/lifecycle",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "import-conflict, validation-failure, rollback-complete",
+      "pass": true
+    },
+    {
+      "family": "history",
+      "title": "History & Sessions",
+      "archetype": "catalog",
+      "entry_points": [
+        "#/cat/system Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:history)",
+        "#/cat/system overview strip"
+      ],
+      "route": "#/mgr/history",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "artifacts",
+      "title": "Runtime Artifacts",
+      "archetype": "catalog",
+      "entry_points": [
+        "#/cat/system Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:artifacts)",
+        "#/cat/system overview strip"
+      ],
+      "route": "#/mgr/artifacts",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "scm",
+      "title": "Source Control & Worktrees",
+      "archetype": "catalog",
+      "entry_points": [
+        "#/cat/branching Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:scm)",
+        "#/cat/branching overview strip"
+      ],
+      "route": "#/mgr/scm",
+      "shell_retained": true,
+      "back_target": "#/cat/branching",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "gha",
+      "title": "GitHub Actions",
+      "archetype": "catalog",
+      "entry_points": [
+        "#/cat/extensions Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:gha)",
+        "#/cat/extensions overview strip"
+      ],
+      "route": "#/mgr/gha",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "containers",
+      "title": "Containers & Registries",
+      "archetype": "roster",
+      "entry_points": [
+        "#/cat/system Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:containers)",
+        "#/cat/system overview strip"
+      ],
+      "route": "#/mgr/containers/<objectId>",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "web",
+      "title": "Web, Search & Fetch",
+      "archetype": "preference",
+      "entry_points": [
+        "#/cat/web Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:web)",
+        "#/cat/web overview strip"
+      ],
+      "route": "#/mgr/web",
+      "shell_retained": true,
+      "back_target": "#/cat/web",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "searchindex",
+      "title": "Project Search Index",
+      "archetype": "health",
+      "entry_points": [
+        "#/cat/system Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:searchindex)",
+        "#/cat/system overview strip"
+      ],
+      "route": "#/mgr/searchindex",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "health projection, rebuild phases",
+      "pass": true
+    },
+    {
+      "family": "cleanup",
+      "title": "Workspace Cleanup",
+      "archetype": "transaction",
+      "entry_points": [
+        "#/cat/system Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:cleanup)",
+        "#/cat/system overview strip"
+      ],
+      "route": "#/mgr/cleanup",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "media",
+      "title": "Media & Output",
+      "archetype": "preference",
+      "entry_points": [
+        "#/cat/media Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:media)",
+        "#/cat/media overview strip"
+      ],
+      "route": "#/mgr/media",
+      "shell_retained": true,
+      "back_target": "#/cat/media",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "dry",
+      "title": "DRY Method",
+      "archetype": "catalog",
+      "entry_points": [
+        "#/cat/extensions Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:dry)",
+        "#/cat/extensions overview strip"
+      ],
+      "route": "#/mgr/dry",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "onboarding",
+      "title": "Product Onboarding",
+      "archetype": "setup",
+      "entry_points": [
+        "#/cat/general Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:onboarding)",
+        "#/cat/general overview strip"
+      ],
+      "route": "#/mgr/onboarding",
+      "shell_retained": true,
+      "back_target": "#/cat/general",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "updates",
+      "title": "App & Content Updates",
+      "archetype": "setup",
+      "entry_points": [
+        "#/cat/system Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:updates)",
+        "#/cat/system overview strip"
+      ],
+      "route": "#/mgr/updates",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "servers",
+      "title": "Servers",
+      "archetype": "setup",
+      "entry_points": [
+        "#/cat/system Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:servers)",
+        "#/cat/system overview strip"
+      ],
+      "route": "#/mgr/servers",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    },
+    {
+      "family": "hosting",
+      "title": "Project Hosting & Files",
+      "archetype": "setup",
+      "entry_points": [
+        "#/cat/system Managers tab",
+        "related-manager strip",
+        "universal search (sr:manager:hosting)",
+        "#/cat/system overview strip"
+      ],
+      "route": "#/mgr/hosting",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "receipt + return to workspace (Home)",
+      "narrow_behavior": "roster collapses to horizontal chip strip; single pane push stack; Back names location",
+      "key_states": "preference rows with changed/default badges; action rows run ObservableWork; status/diagnostic rows read-only",
+      "pass": true
+    }
+  ]
+}

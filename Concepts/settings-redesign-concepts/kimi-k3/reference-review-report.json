@@ -7,92 +7,359 @@
     "correction": "PM_Settings_Dependency_and_Work_Correction_2026-08-13.zip"
   },
   "correction_references_opened": [
-    { "ref": "correction/00_READ_ME_FIRST.md", "when": "2026-08-13 correction pass", "use": "Declared the two dependency defects: missing Performance register, mispathed provider adjudication" },
-    { "ref": "correction/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md", "when": "2026-08-13 correction pass", "use": "Read §§1-3, 7, 8, 10-13, 18, 20, 23-25 in full; controlling decisions extracted for the audit (truthful progress §11, lazy hydration §20.2, no startup storms §13, byte contracts §8, older-CPU targets §3.1, sole governor §2.3, benchmark matrix §23, supersessions §24)" },
-    { "ref": "correction/PROVIDER_CLI_FINAL_ADJUDICATION.md", "when": "2026-08-13 correction pass", "use": "Byte-diffed against original reference/ copy: identical; the defect was pathing only" },
-    { "ref": "correction/REFERENCE_REVIEW_AND_REPAIR_REQUIREMENTS.md", "when": "2026-08-13 correction pass", "use": "Defined the seven implementation-level review classes" },
-    { "ref": "correction/CORRECTION_PACKET_MANIFEST.json", "when": "2026-08-13 correction pass", "use": "Packet inventory and hashes" },
-    { "ref": "correction/CORRECTION_GOAL_PROMPT.md", "when": "2026-08-13 correction pass", "use": "Matches the received goal text" }
+    {
+      "ref": "correction/00_READ_ME_FIRST.md",
+      "when": "2026-08-13 correction pass",
+      "use": "Declared the two dependency defects: missing Performance register, mispathed provider adjudication"
+    },
+    {
+      "ref": "correction/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md",
+      "when": "2026-08-13 correction pass",
+      "use": "Read \u00a7\u00a71-3, 7, 8, 10-13, 18, 20, 23-25 in full; controlling decisions extracted for the audit (truthful progress \u00a711, lazy hydration \u00a720.2, no startup storms \u00a713, byte contracts \u00a78, older-CPU targets \u00a73.1, sole governor \u00a72.3, benchmark matrix \u00a723, supersessions \u00a724)"
+    },
+    {
+      "ref": "correction/PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "when": "2026-08-13 correction pass",
+      "use": "Byte-diffed against original reference/ copy: identical; the defect was pathing only"
+    },
+    {
+      "ref": "correction/REFERENCE_REVIEW_AND_REPAIR_REQUIREMENTS.md",
+      "when": "2026-08-13 correction pass",
+      "use": "Defined the seven implementation-level review classes"
+    },
+    {
+      "ref": "correction/CORRECTION_PACKET_MANIFEST.json",
+      "when": "2026-08-13 correction pass",
+      "use": "Packet inventory and hashes"
+    },
+    {
+      "ref": "correction/CORRECTION_GOAL_PROMPT.md",
+      "when": "2026-08-13 correction pass",
+      "use": "Matches the received goal text"
+    }
   ],
   "original_packet_references": [
-    { "ref": "00_START_HERE.md", "opened_before": "unprovable (build-session history archived)", "opened_now": true, "note": "Scope, deferred owners, read order" },
-    { "ref": "IMPLEMENTATION_PROMPT.md", "opened_before": "unprovable", "opened_now": true, "note": "Build mandates; plan-then-approve flow" },
-    { "ref": "01_CORE_ARCHITECTURE.md", "opened_before": "unprovable; build complies with its mandates (destinations, notices groups, workspace behaviors 1-8)", "opened_now": true },
-    { "ref": "02_MANAGER_GRAMMAR_AND_SETTING_MODEL.md", "opened_before": "unprovable; build complies (row grammar, exposure levels, secret typing, lifecycle flows)", "opened_now": true },
-    { "ref": "03_PROVIDER_AGENT_MODEL_AND_INSTALLATION.md", "opened_before": "unprovable; build complies (object model, confidence vocabulary, update states, auth boundary)", "opened_now": true, "note": "Contains the operative provider-CLI acquisition policy inline" },
-    { "ref": "04_CONTEXT_MEMORY_PERSONAS_GOAL_CREW_PERMISSIONS.md", "opened_before": "unprovable; Concord implements its families", "opened_now": true },
-    { "ref": "05_DESKTOP_DEVELOPER_AND_SYSTEM_MANAGERS.md", "opened_before": "unprovable; Foundry/Vault implement its families and deferred-module list", "opened_now": true },
-    { "ref": "06_NOTIFICATIONS_SOUNDS_APPEARANCE_AND_INPUT.md", "opened_before": "unprovable; Resonance implements its families", "opened_now": true },
-    { "ref": "07_SERVER_HOST_AND_OWNER_BOUNDARIES.md", "opened_before": "unprovable", "opened_now": true, "note": "§Performance states the principles the missing register details: lazy hydration, bounded probes, ObservableWork" },
-    { "ref": "08_CONCEPT_COVERAGE_AND_FIXTURES.md", "opened_before": "yes — verified 2026-08-12 audit round", "opened_now": true, "note": "Coverage assignments and fixtures" },
-    { "ref": "09_GUI_MOTION_THEME_SLINT_AND_TESTS.md", "opened_before": "unprovable; motion/theme rules implemented", "opened_now": true, "note": "Test matrix includes 'Manager lazy hydration' — no such state existed before this correction" },
-    { "ref": "10_PLAN_COMMAND_WIRING_DRY_IMPACT.md", "opened_before": "unprovable; register formats followed", "opened_now": true },
-    { "ref": "AUDIT_PROMPT.md", "opened_before": "yes — verified 2026-08-12", "opened_now": true },
-    { "ref": "DECISION_COVERAGE.json", "opened_before": "yes — 2026-08-12 (129 topics enumerated)", "opened_now": true },
-    { "ref": "MANAGER_COVERAGE_MATRIX.json", "opened_before": "yes — 2026-08-12 (diffed against all four concepts)", "opened_now": true },
-    { "ref": "CANDIDATE_COMMAND_ID_REGISTER.json", "opened_before": "unprovable", "opened_now": true, "note": "Candidate families match the concepts' command deltas" },
-    { "ref": "IMPACT_REGISTER.template.json", "opened_before": "unprovable; registers follow its schema", "opened_now": true },
-    { "ref": "PACKET_MANIFEST.json", "opened_before": "unprovable", "opened_now": true },
-    { "ref": "PROMPT_USAGE.md", "opened_before": "unprovable", "opened_now": true },
-    { "ref": "REFERENCE_SUPERSESSIONS.md", "opened_before": "unprovable", "opened_now": true, "note": "Names the adjudication as precedence #1 without a path — the path defect" },
-    { "ref": "SHARED_PROCESS_RULES.md", "opened_before": "unprovable", "opened_now": true, "note": "Contains governor/ObservableWork/SQLite/provisioning non-negotiables inline" },
-    { "ref": "SOURCE_AND_PRECEDENCE_MAP.md", "opened_before": "unprovable", "opened_now": true, "note": "Inlines the five provider-CLI bullets and the performance principles" },
-    { "ref": "reference/CONCEPT_RULES.md", "opened_before": "unprovable; rules followed (folder naming, data-concept-model, hub manifest, validator)", "opened_now": true },
-    { "ref": "reference/EGOLITE_SETTINGS_RETURN.md", "opened_before": "unprovable", "opened_now": true, "note": "Install-vs-Connect verbs; SCM card grammar; WSL-optional copy" },
-    { "ref": "reference/OMP_PROVIDER_CATALOG_REFERENCE.json", "opened_before": "unprovable", "opened_now": true, "note": "Catalog reference; provider data aligns" },
-    { "ref": "reference/PERFORMANCE_SETTINGS_RETURN.md", "opened_before": "unprovable — and its fingerprints are absent from the build (see gaps)", "opened_now": true, "note": "§4 Home performance model, §12 ObservableWork component, §16 perf tests — the build gaps matched these unabsorbed sections" },
-    { "ref": "reference/PM_CROSS_SYSTEM_COMPLETENESS_AUDIT.md", "opened_before": "unprovable", "opened_now": true, "note": "Section map reviewed; §5 deltas overlap the main docs" },
-    { "ref": "reference/PROVIDER_CLI_FINAL_ADJUDICATION.md", "opened_before": "unprovable — mispathed; content identical to corrected copy", "opened_now": true },
-    { "ref": "reference/PROVIDER_IDENTIFICATION_INSTALLATION_AUTH_UPDATE_HANDOFF.md", "opened_before": "unprovable", "opened_now": true, "note": "§7 readiness states and §13 presentation reviewed; build matches" },
-    { "ref": "reference/SERVER_BACKBONE_SETTINGS_RETURN.md", "opened_before": "unprovable", "opened_now": true, "note": "Insertion contract; copy-settings model matches" },
-    { "ref": "reference/SETTINGS_NAVIGATION_VIDEO_DESCRIPTION.md", "opened_before": "unprovable; workspace scroll model matches", "opened_now": true },
-    { "ref": "reference/T3_MODEL_PICKER_REFERENCE.png / current_model_picker_reference.png / settings_navigation_contact_sheet.jpg", "opened_before": "unprovable", "opened_now": false, "note": "Binary images; navigation behavior covered via the text description" }
+    {
+      "ref": "00_START_HERE.md",
+      "opened_before": "unprovable (build-session history archived)",
+      "opened_now": true,
+      "note": "Scope, deferred owners, read order"
+    },
+    {
+      "ref": "IMPLEMENTATION_PROMPT.md",
+      "opened_before": "unprovable",
+      "opened_now": true,
+      "note": "Build mandates; plan-then-approve flow"
+    },
+    {
+      "ref": "01_CORE_ARCHITECTURE.md",
+      "opened_before": "unprovable; build complies with its mandates (destinations, notices groups, workspace behaviors 1-8)",
+      "opened_now": true
+    },
+    {
+      "ref": "02_MANAGER_GRAMMAR_AND_SETTING_MODEL.md",
+      "opened_before": "unprovable; build complies (row grammar, exposure levels, secret typing, lifecycle flows)",
+      "opened_now": true
+    },
+    {
+      "ref": "03_PROVIDER_AGENT_MODEL_AND_INSTALLATION.md",
+      "opened_before": "unprovable; build complies (object model, confidence vocabulary, update states, auth boundary)",
+      "opened_now": true,
+      "note": "Contains the operative provider-CLI acquisition policy inline"
+    },
+    {
+      "ref": "04_CONTEXT_MEMORY_PERSONAS_GOAL_CREW_PERMISSIONS.md",
+      "opened_before": "unprovable; Concord implements its families",
+      "opened_now": true
+    },
+    {
+      "ref": "05_DESKTOP_DEVELOPER_AND_SYSTEM_MANAGERS.md",
+      "opened_before": "unprovable; Foundry/Vault implement its families and deferred-module list",
+      "opened_now": true
+    },
+    {
+      "ref": "06_NOTIFICATIONS_SOUNDS_APPEARANCE_AND_INPUT.md",
+      "opened_before": "unprovable; Resonance implements its families",
+      "opened_now": true
+    },
+    {
+      "ref": "07_SERVER_HOST_AND_OWNER_BOUNDARIES.md",
+      "opened_before": "unprovable",
+      "opened_now": true,
+      "note": "\u00a7Performance states the principles the missing register details: lazy hydration, bounded probes, ObservableWork"
+    },
+    {
+      "ref": "08_CONCEPT_COVERAGE_AND_FIXTURES.md",
+      "opened_before": "yes \u2014 verified 2026-08-12 audit round",
+      "opened_now": true,
+      "note": "Coverage assignments and fixtures"
+    },
+    {
+      "ref": "09_GUI_MOTION_THEME_SLINT_AND_TESTS.md",
+      "opened_before": "unprovable; motion/theme rules implemented",
+      "opened_now": true,
+      "note": "Test matrix includes 'Manager lazy hydration' \u2014 no such state existed before this correction"
+    },
+    {
+      "ref": "10_PLAN_COMMAND_WIRING_DRY_IMPACT.md",
+      "opened_before": "unprovable; register formats followed",
+      "opened_now": true
+    },
+    {
+      "ref": "AUDIT_PROMPT.md",
+      "opened_before": "yes \u2014 verified 2026-08-12",
+      "opened_now": true
+    },
+    {
+      "ref": "DECISION_COVERAGE.json",
+      "opened_before": "yes \u2014 2026-08-12 (129 topics enumerated)",
+      "opened_now": true
+    },
+    {
+      "ref": "MANAGER_COVERAGE_MATRIX.json",
+      "opened_before": "yes \u2014 2026-08-12 (diffed against all four concepts)",
+      "opened_now": true
+    },
+    {
+      "ref": "CANDIDATE_COMMAND_ID_REGISTER.json",
+      "opened_before": "unprovable",
+      "opened_now": true,
+      "note": "Candidate families match the concepts' command deltas"
+    },
+    {
+      "ref": "IMPACT_REGISTER.template.json",
+      "opened_before": "unprovable; registers follow its schema",
+      "opened_now": true
+    },
+    {
+      "ref": "PACKET_MANIFEST.json",
+      "opened_before": "unprovable",
+      "opened_now": true
+    },
+    {
+      "ref": "PROMPT_USAGE.md",
+      "opened_before": "unprovable",
+      "opened_now": true
+    },
+    {
+      "ref": "REFERENCE_SUPERSESSIONS.md",
+      "opened_before": "unprovable",
+      "opened_now": true,
+      "note": "Names the adjudication as precedence #1 without a path \u2014 the path defect"
+    },
+    {
+      "ref": "SHARED_PROCESS_RULES.md",
+      "opened_before": "unprovable",
+      "opened_now": true,
+      "note": "Contains governor/ObservableWork/SQLite/provisioning non-negotiables inline"
+    },
+    {
+      "ref": "SOURCE_AND_PRECEDENCE_MAP.md",
+      "opened_before": "unprovable",
+      "opened_now": true,
+      "note": "Inlines the five provider-CLI bullets and the performance principles"
+    },
+    {
+      "ref": "reference/CONCEPT_RULES.md",
+      "opened_before": "unprovable; rules followed (folder naming, data-concept-model, hub manifest, validator)",
+      "opened_now": true
+    },
+    {
+      "ref": "reference/EGOLITE_SETTINGS_RETURN.md",
+      "opened_before": "unprovable",
+      "opened_now": true,
+      "note": "Install-vs-Connect verbs; SCM card grammar; WSL-optional copy"
+    },
+    {
+      "ref": "reference/OMP_PROVIDER_CATALOG_REFERENCE.json",
+      "opened_before": "unprovable",
+      "opened_now": true,
+      "note": "Catalog reference; provider data aligns"
+    },
+    {
+      "ref": "reference/PERFORMANCE_SETTINGS_RETURN.md",
+      "opened_before": "unprovable \u2014 and its fingerprints are absent from the build (see gaps)",
+      "opened_now": true,
+      "note": "\u00a74 Home performance model, \u00a712 ObservableWork component, \u00a716 perf tests \u2014 the build gaps matched these unabsorbed sections"
+    },
+    {
+      "ref": "reference/PM_CROSS_SYSTEM_COMPLETENESS_AUDIT.md",
+      "opened_before": "unprovable",
+      "opened_now": true,
+      "note": "Section map reviewed; \u00a75 deltas overlap the main docs"
+    },
+    {
+      "ref": "reference/PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "opened_before": "unprovable \u2014 mispathed; content identical to corrected copy",
+      "opened_now": true
+    },
+    {
+      "ref": "reference/PROVIDER_IDENTIFICATION_INSTALLATION_AUTH_UPDATE_HANDOFF.md",
+      "opened_before": "unprovable",
+      "opened_now": true,
+      "note": "\u00a77 readiness states and \u00a713 presentation reviewed; build matches"
+    },
+    {
+      "ref": "reference/SERVER_BACKBONE_SETTINGS_RETURN.md",
+      "opened_before": "unprovable",
+      "opened_now": true,
+      "note": "Insertion contract; copy-settings model matches"
+    },
+    {
+      "ref": "reference/SETTINGS_NAVIGATION_VIDEO_DESCRIPTION.md",
+      "opened_before": "unprovable; workspace scroll model matches",
+      "opened_now": true
+    },
+    {
+      "ref": "reference/T3_MODEL_PICKER_REFERENCE.png / current_model_picker_reference.png / settings_navigation_contact_sheet.jpg",
+      "opened_before": "unprovable",
+      "opened_now": false,
+      "note": "Binary images; navigation behavior covered via the text description"
+    }
   ],
   "prior_omissions": [
-    { "id": "OM-1", "omission": "Performance decision register was absent from the original packet; its principle-level summaries (07 §Performance, SOURCE_AND_PRECEDENCE_MAP #4) were present, but the operational grammar was not absorbed: no progress-source labeling, no lazy-hydration state, no offline/last-known-good state, no domain-local refresh, no collapsed-installations fixture, no resource-policy rows", "evidence_that_unreviewed": "build contained 2 'loading' hits total, 0 progress-source labels, whole-view repaint on every store change, no offline state, no behavior-profile rows" },
-    { "id": "OM-2", "omission": "Provider adjudication mispathed (referenced nowhere from SOURCE_AND_PRECEDENCE_MAP); operative bullets were inline in three other files, so build copy was nonetheless compliant", "evidence": "install sourceNote 'official … for This PC · Windows native … never bundled', pm-views install sub copy, Connect-vs-Install verbs correct" }
+    {
+      "id": "OM-1",
+      "omission": "Performance decision register was absent from the original packet; its principle-level summaries (07 \u00a7Performance, SOURCE_AND_PRECEDENCE_MAP #4) were present, but the operational grammar was not absorbed: no progress-source labeling, no lazy-hydration state, no offline/last-known-good state, no domain-local refresh, no collapsed-installations fixture, no resource-policy rows",
+      "evidence_that_unreviewed": "build contained 2 'loading' hits total, 0 progress-source labels, whole-view repaint on every store change, no offline state, no behavior-profile rows"
+    },
+    {
+      "id": "OM-2",
+      "omission": "Provider adjudication mispathed (referenced nowhere from SOURCE_AND_PRECEDENCE_MAP); operative bullets were inline in three other files, so build copy was nonetheless compliant",
+      "evidence": "install sourceNote 'official \u2026 for This PC \u00b7 Windows native \u2026 never bundled', pm-views install sub copy, Connect-vs-Install verbs correct"
+    }
   ],
   "gaps_found_and_corrected": [
-    { "gap": "Fake progress without source/denominator (register §11)", "files": ["shared/lib/pm-views.js", "shared/css/pm-components.css", "concepts/vault/vault.js"], "change": "Shared operationHtml projection (phase, wait reason, determinate bar only with real completed/total, progress source label, optional Cancel); provider update flow (updating/verifying) and Vault index rebuild (12,204-file denominator, cancellable) run through it", "concepts": ["all four"] },
-    { "gap": "No reachable loading/hydration state (§20.2, 09 test matrix)", "files": ["concepts/*/concord.js,resonance.js,foundry.js,vault.js", "concepts/*/data.js"], "change": "slow-hydration demo scenario: next manager entry shows a truthful Loading-domain-state projection, content follows; compact summaries stay usable", "concepts": ["all four"] },
-    { "gap": "No offline/poor-network state (§13)", "files": ["shared/lib/pm-views.js", "concepts/*/[concept].js (banner mount)"], "change": "offline scenario: banner keeps last-known-good catalog/connection state visible, states zero probing; reset clears", "concepts": ["all four"] },
-    { "gap": "Whole-view re-render on any store change (§7.3, §20.2)", "files": ["concepts/*/[concept].js", "shared/lib/pm-views.js (SHARED_KEY_DOMAINS)"], "change": "key-domain classification; repaint only the owning surface; notices repaint Home only; reset/patch still full-repaints", "concepts": ["all four"] },
-    { "gap": "No 100-installation collapse fixture (PERFORMANCE_SETTINGS_RETURN §16)", "files": ["shared/lib/pm-views.js"], "change": "many-installs scenario renders the collapsed human summary banner (94 ready · 4 shadowed · 2 unknown manual-only)", "concepts": ["all four"] },
-    { "gap": "No resource/performance policy rows (PERFORMANCE_SETTINGS_RETURN §9, register §3.1)", "files": ["shared/data/pm-core-data.js"], "change": "General → Performance and resources: behavior-profile (Auto/Performance/Efficiency/Legacy), background-work, metered-connection, cache-ceiling", "concepts": ["all four (shared dataset)"] },
-    { "gap": "SCM tools lacked install flows (EGOLITE §§2-3)", "files": ["concepts/vault/vault.js"], "change": "Jujutsu/Git LFS Install buttons with exact host/environment copy; state transition retires the button", "concepts": ["vault"] },
-    { "gap": "Deferred insertion cards incomplete (07, 00_START_HERE, register §20.3)", "files": ["concepts/vault/data.js"], "change": "added Project Defaults & Templates, Integrations & Tools, Product Onboarding, Doctor — named owners, Deferred state", "concepts": ["vault"] }
+    {
+      "gap": "Fake progress without source/denominator (register \u00a711)",
+      "files": [
+        "shared/lib/pm-views.js",
+        "shared/css/pm-components.css",
+        "concepts/vault/vault.js"
+      ],
+      "change": "Shared operationHtml projection (phase, wait reason, determinate bar only with real completed/total, progress source label, optional Cancel); provider update flow (updating/verifying) and Vault index rebuild (12,204-file denominator, cancellable) run through it",
+      "concepts": [
+        "all four"
+      ]
+    },
+    {
+      "gap": "No reachable loading/hydration state (\u00a720.2, 09 test matrix)",
+      "files": [
+        "concepts/*/concord.js,resonance.js,foundry.js,vault.js",
+        "concepts/*/data.js"
+      ],
+      "change": "slow-hydration demo scenario: next manager entry shows a truthful Loading-domain-state projection, content follows; compact summaries stay usable",
+      "concepts": [
+        "all four"
+      ]
+    },
+    {
+      "gap": "No offline/poor-network state (\u00a713)",
+      "files": [
+        "shared/lib/pm-views.js",
+        "concepts/*/[concept].js (banner mount)"
+      ],
+      "change": "offline scenario: banner keeps last-known-good catalog/connection state visible, states zero probing; reset clears",
+      "concepts": [
+        "all four"
+      ]
+    },
+    {
+      "gap": "Whole-view re-render on any store change (\u00a77.3, \u00a720.2)",
+      "files": [
+        "concepts/*/[concept].js",
+        "shared/lib/pm-views.js (SHARED_KEY_DOMAINS)"
+      ],
+      "change": "key-domain classification; repaint only the owning surface; notices repaint Home only; reset/patch still full-repaints",
+      "concepts": [
+        "all four"
+      ]
+    },
+    {
+      "gap": "No 100-installation collapse fixture (PERFORMANCE_SETTINGS_RETURN \u00a716)",
+      "files": [
+        "shared/lib/pm-views.js"
+      ],
+      "change": "many-installs scenario renders the collapsed human summary banner (94 ready \u00b7 4 shadowed \u00b7 2 unknown manual-only)",
+      "concepts": [
+        "all four"
+      ]
+    },
+    {
+      "gap": "No resource/performance policy rows (PERFORMANCE_SETTINGS_RETURN \u00a79, register \u00a73.1)",
+      "files": [
+        "shared/data/pm-core-data.js"
+      ],
+      "change": "General \u2192 Performance and resources: behavior-profile (Auto/Performance/Efficiency/Legacy), background-work, metered-connection, cache-ceiling",
+      "concepts": [
+        "all four (shared dataset)"
+      ]
+    },
+    {
+      "gap": "SCM tools lacked install flows (EGOLITE \u00a7\u00a72-3)",
+      "files": [
+        "concepts/vault/vault.js"
+      ],
+      "change": "Jujutsu/Git LFS Install buttons with exact host/environment copy; state transition retires the button",
+      "concepts": [
+        "vault"
+      ]
+    },
+    {
+      "gap": "Deferred insertion cards incomplete (07, 00_START_HERE, register \u00a720.3)",
+      "files": [
+        "concepts/vault/data.js"
+      ],
+      "change": "added Project Defaults & Templates, Integrations & Tools, Product Onboarding, Doctor \u2014 named owners, Deferred state",
+      "concepts": [
+        "vault"
+      ]
+    }
   ],
   "verified_compliant_no_change": [
     "Provider-CLI acquisition copy: explicit, official-source, exact Host/Environment, auth separate, never bundled (pm-core-data sourceNote, pm-views install sub)",
-    "Humanized installation identity: zero raw internal identifiers in GUI copy (scanned BinaryLocator/RuntimeResourceGovernor/ObservableWork tokens — 0 hits in UI strings)",
+    "Humanized installation identity: zero raw internal identifiers in GUI copy (scanned BinaryLocator/RuntimeResourceGovernor/ObservableWork tokens \u2014 0 hits in UI strings)",
     "Connect-vs-Install verbs: 'Connect GitHub' for the hosted forge; Install only for real tools",
     "WSL optional and native-Windows-complete copy on the deferred Servers shell",
     "No SQLite references anywhere; no GitHub Actions presented as an installable binary",
-    "'Ships with Puppet Master' provenance is on bundled personas — legitimate product content, not provider CLIs",
+    "'Ships with Puppet Master' provenance is on bundled personas \u2014 legitimate product content, not provider CLIs",
     "Catalog refresh already kept last-known-good visible (stale-while-revalidate) before this pass",
-    "Background rebuild continues truthfully when the user navigates away and receipts on completion — no hidden animation clocks introduced; CSS kill switch covers reduced motion"
+    "Background rebuild continues truthfully when the user navigates away and receipts on completion \u2014 no hidden animation clocks introduced; CSS kill switch covers reduced motion"
   ],
   "tests_rerun": [
-    "node --check on all changed JS (4 concept scripts, 4 data files, pm-views.js, pm-core-data.js) — pass",
+    "node --check on all changed JS (4 concept scripts, 4 data files, pm-views.js, pm-core-data.js) \u2014 pass",
     "Hydration probe (Vault Storage, Concord Memory): projection visible with phase+source, resolves to content ~900ms",
-    "Rebuild probe: '3,051 of 12,204 files · 25%', source label, Cancel → cancelled receipt, state cleared",
+    "Rebuild probe: '3,051 of 12,204 files \u00b7 25%', source label, Cancel \u2192 cancelled receipt, state cleared",
     "Domain-local refresh probes: unrelated notice dismiss leaves manager DOM untouched (marker survives); owned key repaints (Vault backups, Concord memory)",
     "Offline + many-installs banners render on providers manager; copy verified; reset clears",
-    "Update flow probe: Updating phase with wait reason + source → Verifying → Ready",
-    "SCM install probe: Jujutsu install → ready state, button retires; exact-host copy",
+    "Update flow probe: Updating phase with wait reason + source \u2192 Verifying \u2192 Ready",
+    "SCM install probe: Jujutsu install \u2192 ready state, button retires; exact-host copy",
     "Deferred shell: 10 cards including Product Onboarding and Doctor",
-    "Performance rows render under General → Performance and resources; Legacy option present",
-    "Matrix spot check (900/1280/2500 × 3 themes) on providers banner + operation card — 0 overflow issues"
+    "Performance rows render under General \u2192 Performance and resources; Legacy option present",
+    "Matrix spot check (900/1280/2500 \u00d7 3 themes) on providers banner + operation card \u2014 0 overflow issues"
   ],
   "registers_updated": [
-    "concepts/*/candidate-dry-delta.json — ObservableOperation extends + shared projection grammar; ManagerShell lazy-hydration note; Vault InstallationCard SCM/container install note",
-    "concepts/*/candidate-wiring-delta.json — new 'settings shell performance' family with domain-local refresh trace; RuntimeResourceGovernor/ObservableWork ownership preserved",
-    "concepts/*/impact-register.json — three new test fixtures; candidate inventory additions for the four performance rows",
-    "concepts/vault/manager-coverage.json — Search Index, Source Control/Worktrees, Future Server Module Shell notes"
+    "concepts/*/candidate-dry-delta.json \u2014 ObservableOperation extends + shared projection grammar; ManagerShell lazy-hydration note; Vault InstallationCard SCM/container install note",
+    "concepts/*/candidate-wiring-delta.json \u2014 new 'settings shell performance' family with domain-local refresh trace; RuntimeResourceGovernor/ObservableWork ownership preserved",
+    "concepts/*/impact-register.json \u2014 three new test fixtures; candidate inventory additions for the four performance rows",
+    "concepts/vault/manager-coverage.json \u2014 Search Index, Source Control/Worktrees, Future Server Module Shell notes"
   ],
   "unresolved_defects": [],
   "materiality": {
     "verdict": "Material but bounded",
-    "reasoning": "The missing Performance register caused grammar-level omissions (progress truth, hydration/loading states, offline state, refresh discipline, scale fixtures, resource-policy rows) in all four concepts — corrected in this pass with browser-verified evidence. It did not cause conceptual redesign: the build already followed the principle-level performance rules inlined in 07 and the precedence map, and the mispathed adjudication's operative content was available inline elsewhere, so provider-CLI behavior was already compliant. No winner implications."
+    "reasoning": "The missing Performance register caused grammar-level omissions (progress truth, hydration/loading states, offline state, refresh discipline, scale fixtures, resource-policy rows) in all four concepts \u2014 corrected in this pass with browser-verified evidence. It did not cause conceptual redesign: the build already followed the principle-level performance rules inlined in 07 and the precedence map, and the mispathed adjudication's operative content was available inline elsewhere, so provider-CLI behavior was already compliant. No winner implications."
+  },
+  "review_2026_08_18": {
+    "pass": "seven-new-concepts",
+    "snapshot": "REFERENCE_REVIEW_2026-08-18.json",
+    "prior_passes_preserved": [
+      "2026-08-13 dependency/correction review (all original keys retained in this file)"
+    ],
+    "summary": "All packet top-level files, machine-readable contracts, validator, base+correction packets, and all seven reference images opened and applied. Supersessions recorded in the snapshot. No canon edited.",
+    "packets": {
+      "seven_concepts": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18.zip",
+      "base": "PM_Settings_Bakeoff_Final_Cumulative_2026-08-08.zip (included copy)",
+      "correction": "PM_Settings_Dependency_and_Work_Correction_2026-08-13.zip (included copy)"
+    }
   }
 }

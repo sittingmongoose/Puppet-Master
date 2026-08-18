@@ -1,0 +1,182 @@
+{
+  "schema_id": "pm.settings_bakeoff.search_route_matrix.v2.concept",
+  "concept_id": "concept-05-directory-take-1",
+  "cases": [
+    {
+      "query": "rate limits",
+      "rid": "sr:object:claude-oauth.rate-limits",
+      "displayed_path": "AI Brains & Providers \u203a Claude CLI (Max profile)",
+      "expected_dest": "#/mgr/providers/claude-oauth?sec=limits",
+      "actual_dest": "#/mgr/providers/claude-oauth?sec=limits",
+      "focus_highlight": "pm2-locate on fleet row; limits tab",
+      "pass": true,
+      "verified": "browser",
+      "case": "grouped + duplicate label"
+    },
+    {
+      "query": "rate limits",
+      "rid": "sr:object:openai-cli.rate-limits",
+      "displayed_path": "AI Brains & Providers \u203a OpenAI CLI",
+      "expected_dest": "#/mgr/providers/openai-cli?sec=limits",
+      "actual_dest": "#/mgr/providers/openai-cli?sec=limits",
+      "focus_highlight": "pm2-locate",
+      "pass": true,
+      "verified": "browser",
+      "case": "duplicate label second row"
+    },
+    {
+      "query": "context window",
+      "rid": "sr:object:openai-cli.gpt-5-2",
+      "displayed_path": "AI Brains & Providers \u203a OpenAI CLI",
+      "expected_dest": "#/mgr/providers/openai-cli?sec=models&row=gpt-5-2",
+      "actual_dest": "#/mgr/providers/openai-cli?sec=models&row=gpt-5-2",
+      "focus_highlight": "model row",
+      "pass": true,
+      "verified": "code-path",
+      "case": "setting vs model row duplicate label"
+    },
+    {
+      "query": "context window",
+      "rid": "sr:object:providers.context-window-setting",
+      "displayed_path": "AI Brains & Providers \u203a Provider Manager",
+      "expected_dest": "#/mgr/providers?sec=models",
+      "actual_dest": "#/mgr/providers?sec=models",
+      "focus_highlight": "models section",
+      "pass": true,
+      "verified": "code-path",
+      "case": "duplicate label pair"
+    },
+    {
+      "query": "formater",
+      "rid": "sr:setting:code.editing.formatter-custom",
+      "displayed_path": "Code & Execution \u203a Editing",
+      "expected_dest": "#/cat/code/editing?row=code.editing.formatter-custom",
+      "actual_dest": "#/cat/code/editing?row=code.editing.formatter-custom",
+      "focus_highlight": "pm2-locate + control focus",
+      "pass": true,
+      "verified": "browser",
+      "case": "typo fuzzy"
+    },
+    {
+      "query": "memry",
+      "rid": "sr:manager:memory",
+      "displayed_path": "Memory & Context \u203a Memory Manager",
+      "expected_dest": "#/mgr/memory",
+      "actual_dest": "#/mgr/memory",
+      "focus_highlight": "manager section",
+      "pass": true,
+      "verified": "code-path",
+      "case": "typo fuzzy manager"
+    },
+    {
+      "query": "settings sync",
+      "rid": "sr:unavailable:sync",
+      "displayed_path": "System & Advanced \u203a Not available",
+      "expected_dest": "receipt (no destination) then #/home",
+      "actual_dest": "receipt + #/home",
+      "focus_highlight": "n/a",
+      "pass": true,
+      "verified": "browser",
+      "case": "unavailable result"
+    },
+    {
+      "query": "anthropic sign-in",
+      "rid": "sr:object:anthropic-cli.sign-in",
+      "displayed_path": "AI Brains & Providers \u203a Anthropic CLI",
+      "expected_dest": "#/mgr/providers/anthropic-cli?sec=accounts",
+      "actual_dest": "#/mgr/providers/anthropic-cli?sec=accounts",
+      "focus_highlight": "accounts section",
+      "pass": true,
+      "verified": "code-path",
+      "case": "manager object"
+    },
+    {
+      "query": "rebuild index",
+      "rid": "sr:action:searchindex.rebuild",
+      "displayed_path": "System & Advanced \u203a Project Search Index",
+      "expected_dest": "#/mgr/searchindex?row=searchindex.rebuild",
+      "actual_dest": "#/mgr/searchindex?row=searchindex.rebuild",
+      "focus_highlight": "pm2-locate row",
+      "pass": true,
+      "verified": "code-path",
+      "case": "deep setting row via action"
+    },
+    {
+      "query": "rate limits",
+      "rid": "(back)",
+      "displayed_path": "n/a",
+      "expected_dest": "#/q/rate%20limits restores input value and reopens dropdown with same 5 results",
+      "actual_dest": "#/q/rate%20limits; both inputs 'rate limits'; dropdowns open with 5 rows",
+      "focus_highlight": "search input focused",
+      "pass": true,
+      "verified": "browser",
+      "case": "back_restores_query"
+    },
+    {
+      "query": "groq usage dashboard",
+      "rid": "sr:unavailable:groq.usage-dashboard",
+      "displayed_path": "AI Brains & Providers \u203a Groq",
+      "expected_dest": "#/mgr/providers/groq-usage?sec=limits",
+      "actual_dest": "#/mgr/providers/groq-usage?sec=limits",
+      "focus_highlight": "usage-unavailable note",
+      "pass": true,
+      "verified": "code-path",
+      "case": "unavailable with destination"
+    },
+    {
+      "query": "back up now",
+      "rid": "sr:action:backup.now",
+      "displayed_path": "System & Advanced \u203a Backup & Restore",
+      "expected_dest": "#/mgr/backup?row=backup.now",
+      "actual_dest": "#/mgr/backup?row=backup.now",
+      "focus_highlight": "action row",
+      "pass": true,
+      "verified": "code-path",
+      "case": "action entry"
+    },
+    {
+      "query": "theme",
+      "rid": "sr:setting:general.visual.theme",
+      "displayed_path": "General & Appearance \u203a Visual Style",
+      "expected_dest": "#/cat/general/visual?row=general.visual.theme",
+      "actual_dest": "#/cat/general/visual?row=general.visual.theme",
+      "focus_highlight": "pm2-locate",
+      "pass": true,
+      "verified": "code-path",
+      "case": "plain setting"
+    },
+    {
+      "query": "shortcut conflicts",
+      "rid": "sr:diag:commands.conflicts",
+      "displayed_path": "Skills, Plugins & Commands \u203a Commands & Shortcuts",
+      "expected_dest": "#/mgr/commands?row=commands.conflicts",
+      "actual_dest": "#/mgr/commands?row=commands.conflicts",
+      "focus_highlight": "diagnostic row",
+      "pass": true,
+      "verified": "code-path",
+      "case": "diagnostic"
+    },
+    {
+      "query": "install codex cli",
+      "rid": "sr:setup:codex.install",
+      "displayed_path": "AI Brains & Providers \u203a Codex CLI",
+      "expected_dest": "#/mgr/providers/codex?sec=install",
+      "actual_dest": "#/mgr/providers/codex?sec=install",
+      "focus_highlight": "install section",
+      "pass": true,
+      "verified": "code-path",
+      "case": "setup workflow"
+    },
+    {
+      "query": "local docs",
+      "rid": "sr:setup:mcp.repair-local-docs",
+      "displayed_path": "Skills, Plugins & Commands \u203a MCP Servers",
+      "expected_dest": "#/mgr/mcp object mcp-local-docs",
+      "actual_dest": "#/mgr/mcp (object selected)",
+      "focus_highlight": "object card",
+      "pass": true,
+      "verified": "code-path",
+      "case": "repair workflow"
+    }
+  ]
+}

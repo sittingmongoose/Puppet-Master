@@ -720,13 +720,21 @@
   function A(label,act,kind,icon){ return {label:label, act:act, kind:kind||"ghost", icon:icon||""}; }
 
   /* C1 — Context / Memory / Personas / Goal / Crew / Permissions / BSD */
-  D.goalRows = [
-    R("Goal worker route","ok",[C("Requested Opus 5"),C("Effective Opus 5","ok")],"High-quality conversational planning route.","",[A("Edit","edit"),A("History","logs")]),
+  D.goalRows = [    R("Goal worker route","ok",[C("Requested Opus 5"),C("Effective Opus 5","ok")],"High-quality conversational planning route.","",[A("Edit","edit"),A("History","logs")]),
     R("Reviewer route","warn",[C("Requested GPT-5"),C("Effective GPT-5 (4o fallback)","warn")],"Fallback applied — OpenAI — Personal rate window.","",[A("Why","details"),A("Edit","edit")]),
     R("Sustainable fan-out","info",[C("Ceiling 8"),C("Effective 2 now","warn")],"Three waves recommended before provider reset.","",[A("Plan","details")]),
     R("Capacity reserve","ok",[C("On")],"Keep budget for synthesis and verification.","",[A("Adjust","edit")]),
     R("Checkpoint + compact","ok",[C("Auto")],"Checkpoint long Goals; compact context safely.","",[A("Policy","edit")]),
     R("Cross-project policy","neutral",[C("Off")],"Children may not read other projects by default.","",[A("Edit","edit")])
+  ];
+  /* RuntimeResourceGovernor admission preview (correction 2026-08-13, register §2):
+     Settings owns defaults + ceilings; the governor is the SOLE admission owner and
+     ObservableWork the sole progress projection — this surface never re-implements either. */
+  D.goalAdmissions = [
+    { route: "Opus 5 · worker ×2", requested: 2, outcome: "admitted", note: "Within ceiling; provider healthy." },
+    { route: "GPT-5 · reviewer ×1", requested: 1, outcome: "queued", waitReason: "resource", note: "Rate window shared with fallback route; admitted when the window resets." },
+    { route: "Local solver ×1", requested: 1, outcome: "blocked", waitReason: "permission", note: "Sandbox approval missing — Settings cannot admit around FileSafe." },
+    { route: "Qwen · worker ×1", requested: 1, outcome: "cancelled", waitReason: "user", note: "Cancelled from Usage; no partial state kept." }
   ];
   D.permissionRows = [
     R("Global wildcard default","ok",[C("Ask")],"Default approval before any consequential act.","",[A("Edit","edit")]),
@@ -1046,11 +1054,14 @@
     { id:"p2", name:"Puppet-Master (archive)", categories:10, note:"About ten broad categories; preview, restore point, atomic apply, receipt." }
   ];
 
-  /* general fixtures (packet 08) surfaced as deterministic demo rows */
+  /* general fixtures (packet 08) surfaced as deterministic demo rows —
+     all nine row states present: default, custom, inherited, managed, unavailable,
+     validation error, restart, reconnect, changed-elsewhere + auto */
   D.generalFixtures = [
     { id:"gf-default", label:"Theme family", state:"default", expl:"Default — Friendly.", value:"Friendly" },
     { id:"gf-custom", label:"UI scale", state:"custom", expl:"Custom — you set 110%.", value:"110%" },
     { id:"gf-inherited", label:"Log retention", state:"inherited", expl:"Inherited from System.", value:"14 days" },
+    { id:"gf-auto", label:"Window decoration", state:"auto", expl:"Auto — follows the OS setting; effective value shown live.", value:"Auto (follows OS)" },
     { id:"gf-managed", label:"Telemetry", state:"managed", expl:"Managed by administrator.", value:"Off", managed:true },
     { id:"gf-unavailable", label:"Container driver", state:"unavailable", expl:"Unavailable on this platform.", value:"—", unavailable:true, reason:"No supported container driver detected." },
     { id:"gf-validation", label:"Custom theme draft", state:"custom", expl:"Validation error — bad color token.", value:"#zzz", error:"Invalid color token 'zzz' at line 4." },

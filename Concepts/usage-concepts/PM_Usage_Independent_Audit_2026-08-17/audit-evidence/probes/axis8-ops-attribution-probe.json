@@ -1,0 +1,511 @@
+{
+ "opsCards": {
+  "essentials": {
+   "opsWidgetPresent": false,
+   "mountedTypes": [],
+   "cardCount": 8,
+   "cards": [
+    {
+     "text": "Codex CLI update ROLLED BACK Update verified, then rolled back Check 2m Wait for idle 9m Install 3m Verify 4m Rollback 1m Studio PC · Native Explicit user setup · official OpenAI installer · bound to Studio PC / Native · v0.42.0 · updates/repair post-consent only Installer time is maintenance, not model usage. The verify step made one real model call (recorded separately). View the verification call",
+     "badge": "rolled back",
+     "badgeClass": "u11w-kind warn",
+     "ctas": [
+      "View the verification call"
+     ],
+     "tokenLike": [],
+     "moneyLike": [],
+     "digits": [
+      "2m",
+      "9m",
+      "3m",
+      "4m",
+      "1m",
+      "0.42.0 "
+     ]
+    },
+    {
+     "text": "Client offline · outbox COMPLETED Queued while offline · replayed on reconnect Offline 22m Outbox wait 22m Reconnect + replay 3m Jared’s MacBook Air · Native The reconnect replay is a real provider attempt — see ue-610. Queue time itself is never model usage.",
+     "badge": "completed",
+     "badgeClass": "u11w-kind ok",
+     "ctas": [],
+     "tokenLike": [],
+     "moneyLike": [],
+     "digits": [
+      "22m",
+      "22m",
+      "3m",
+      "610. Queue"
+     ]
+    },
+    {
+     "text": "Home Server kept working COMPLETED Server work continued TrueNAS Home Server · Docker · pm-server Server work continues while the client is offline; slow thread load is not provider usage.",
+     "badge": "completed",
+     "badgeClass": "u11w-kind ok",
+     "ctas": [],
+     "tokenLike": [],
+     "moneyLike": [],
+     "digits": []
+    },
+    {
+     "text": "Notification sound preview COMPLETED Local sound preview — not usage Studio PC · Native A local sound preview is not provider usage.",
+     "badge": "completed",
+     "badgeClass": "u11w-kind ok",
+     "ctas": [],
+     "tokenLike": [],
+     "moneyLike": [],
+     "digits": []
+    },
+    {
+     "text": "Notification test-send COMPLETED Test notification sent Studio PC · Native Operational receipt, not model usage.",
+     "badge": "completed",
+     "badgeClass": "u11w-kind ok",
+     "ctas": [],
+     "tokenLike": [],
+     "moneyLike": [],
+     "digits": []
+    },
+    {
+     "text": "Project Vault backup COMPLETED Vault backup completed TrueNAS Home Server · Docker · pm-server Backup is maintenance, never model usage.",
+     "badge": "completed",
+     "badgeClass": "u11w-kind ok",
+     "ctas": [],
+     "tokenLike": [],
+     "moneyLike": [],
+     "digits": []
+    },
+    {
+     "text": "Project Move: Tastebook → Vault COMPLETED Project moved to Vault TrueNAS Home Server · Docker · pm-server Moving a project between storage locations is not provider usage.",
+     "badge": "completed",
+     "badgeClass": "u11w-kind ok",
+     "ctas": [],
+     "tokenLike": [],
+     "moneyLike": [],
+     "digits": []
+    },
+    {
+     "text": "Codex CLI requested on Home Server · not installed COMPLETED Provider Setup Required — no compatible installation on this host/environment TrueNAS Home Server · Docker · pm-server The Studio PC installation is not assumed here: installations bind to the exact host and environment. Originating operation and continuation token preserved; Auto/On may maintain an approved installation but never perform first acquisition. Resume only after explicit Install from the official source and separate authentication. Open provider setup",
+     "badge": "completed",
+     "badgeClass": "u11w-kind ok",
+     "ctas": [
+      "Open provider setup"
+     ],
+     "tokenLike": [],
+     "moneyLike": [],
+     "digits": []
+    }
+   ],
+   "widgetNote": null
+  },
+  "standard": {
+   "opsWidgetPresent": false,
+   "mountedTypes": [],
+   "cardCount": 8,
+   "cards": [
+    {
+     "text": "Codex CLI update ROLLED BACK Update verified, then rolled back Check 2m Wait for idle 9m Install 3m Verify 4m Rollback 1m Studio PC · Native Explicit user setup · official OpenAI installer · bound to Studio PC / Native · v0.42.0 · updates/repair post-consent only Installer time is maintenance, not model usage. The verify step made one real model call (recorded separately). View the verification call",
+     "badge": "rolled back",
+     "badgeClass": "u11w-kind warn",
+     "ctas": [
+      "View the verification call"
+     ],
+     "tokenLike": [],
+     "moneyLike": [],
+     "digits": [
+      "2m",
+      "9m",
+      "3m",
+      "4m",
+      "1m",
+      "0.42.0 "
+     ]
+    },
+    {
+     "text": "Client offline · outbox COMPLETED Queued while offline · replayed on reconnect Offline 22m Outbox wait 22m Reconnect + replay 3m Jared’s MacBook Air · Native The reconnect replay is a real provider attempt — see ue-610. Queue time itself is never model usage.",
+     "badge": "completed",
+     "badgeClass": "u11w-kind ok",
+     "ctas": [],
+     "tokenLike": [],
+     "moneyLike": [],
+     "digits": [
+      "22m",
+      "22m",
+      "3m",
+      "610. Queue"
+     ]
+    },
+    {
+     "text": "Home Server kept working COMPLETED Server work continued TrueNAS Home Server · Docker · pm-server Server work continues while the client is offline; slow thread load is not provider usage.",
+     "badge": "completed",
+     "badgeClass": "u11w-kind ok",
+     "ctas": [],
+     "tokenLike": [],
+     "moneyLike": [],
+     "digits": []
+    },
+    {
+     "text": "Notification sound preview COMPLETED Local sound preview — not usage Studio PC · Native A local sound preview is not provider usage.",
+     "badge": "completed",
+     "badgeClass": "u11w-kind ok",
+     "ctas": [],
+     "tokenLike": [],
+     "moneyLike": [],
+     "digits": []
+    },
+    {
+     "text": "Notification test-send COMPLETED Test notification sent Studio PC · Native Operational receipt, not model usage.",
+     "badge": "completed",
+     "badgeClass": "u11w-kind ok",
+     "ctas": [],
+     "tokenLike": [],
+     "moneyLike": [],
+     "digits": []
+    },
+    {
+     "text": "Project Vault backup COMPLETED Vault backup completed TrueNAS Home Server · Docker · pm-server Backup is maintenance, never model usage.",
+     "badge": "completed",
+     "badgeClass": "u11w-kind ok",
+     "ctas": [],
+     "tokenLike": [],
+     "moneyLike": [],
+     "digits": []
+    },
+    {
+     "text": "Project Move: Tastebook → Vault COMPLETED Project moved to Vault TrueNAS Home Server · Docker · pm-server Moving a project between storage locations is not provider usage.",
+     "badge": "completed",
+     "badgeClass": "u11w-kind ok",
+     "ctas": [],
+     "tokenLike": [],
+     "moneyLike": [],
+     "digits": []
+    },
+    {
+     "text": "Codex CLI requested on Home Server · not installed COMPLETED Provider Setup Required — no compatible installation on this host/environment TrueNAS Home Server · Docker · pm-server The Studio PC installation is not assumed here: installations bind to the exact host and environment. Originating operation and continuation token preserved; Auto/On may maintain an approved installation but never perform first acquisition. Resume only after explicit Install from the official source and separate authentication. Open provider setup",
+     "badge": "completed",
+     "badgeClass": "u11w-kind ok",
+     "ctas": [
+      "Open provider setup"
+     ],
+     "tokenLike": [],
+     "moneyLike": [],
+     "digits": []
+    }
+   ],
+   "widgetNote": null
+  },
+  "advanced": {
+   "opsWidgetPresent": false,
+   "mountedTypes": [],
+   "cardCount": 8,
+   "cards": [
+    {
+     "text": "Codex CLI update ROLLED BACK Update verified, then rolled back Check 2m Wait for idle 9m Install 3m Verify 4m Rollback 1m Studio PC · Native Explicit user setup · official OpenAI installer · bound to Studio PC / Native · v0.42.0 · updates/repair post-consent only Installer time is maintenance, not model usage. The verify step made one real model call (recorded separately). View the verification call",
+     "badge": "rolled back",
+     "badgeClass": "u11w-kind warn",
+     "ctas": [
+      "View the verification call"
+     ],
+     "tokenLike": [],
+     "moneyLike": [],
+     "digits": [
+      "2m",
+      "9m",
+      "3m",
+      "4m",
+      "1m",
+      "0.42.0 "
+     ]
+    },
+    {
+     "text": "Client offline · outbox COMPLETED Queued while offline · replayed on reconnect Offline 22m Outbox wait 22m Reconnect + replay 3m Jared’s MacBook Air · Native The reconnect replay is a real provider attempt — see ue-610. Queue time itself is never model usage.",
+     "badge": "completed",
+     "badgeClass": "u11w-kind ok",
+     "ctas": [],
+     "tokenLike": [],
+     "moneyLike": [],
+     "digits": [
+      "22m",
+      "22m",
+      "3m",
+      "610. Queue"
+     ]
+    },
+    {
+     "text": "Home Server kept working COMPLETED Server work continued TrueNAS Home Server · Docker · pm-server Server work continues while the client is offline; slow thread load is not provider usage.",
+     "badge": "completed",
+     "badgeClass": "u11w-kind ok",
+     "ctas": [],
+     "tokenLike": [],
+     "moneyLike": [],
+     "digits": []
+    },
+    {
+     "text": "Notification sound preview COMPLETED Local sound preview — not usage Studio PC · Native A local sound preview is not provider usage.",
+     "badge": "completed",
+     "badgeClass": "u11w-kind ok",
+     "ctas": [],
+     "tokenLike": [],
+     "moneyLike": [],
+     "digits": []
+    },
+    {
+     "text": "Notification test-send COMPLETED Test notification sent Studio PC · Native Operational receipt, not model usage.",
+     "badge": "completed",
+     "badgeClass": "u11w-kind ok",
+     "ctas": [],
+     "tokenLike": [],
+     "moneyLike": [],
+     "digits": []
+    },
+    {
+     "text": "Project Vault backup COMPLETED Vault backup completed TrueNAS Home Server · Docker · pm-server Backup is maintenance, never model usage.",
+     "badge": "completed",
+     "badgeClass": "u11w-kind ok",
+     "ctas": [],
+     "tokenLike": [],
+     "moneyLike": [],
+     "digits": []
+    },
+    {
+     "text": "Project Move: Tastebook → Vault COMPLETED Project moved to Vault TrueNAS Home Server · Docker · pm-server Moving a project between storage locations is not provider usage.",
+     "badge": "completed",
+     "badgeClass": "u11w-kind ok",
+     "ctas": [],
+     "tokenLike": [],
+     "moneyLike": [],
+     "digits": []
+    },
+    {
+     "text": "Codex CLI requested on Home Server · not installed COMPLETED Provider Setup Required — no compatible installation on this host/environment TrueNAS Home Server · Docker · pm-server The Studio PC installation is not assumed here: installations bind to the exact host and environment. Originating operation and continuation token preserved; Auto/On may maintain an approved installation but never perform first acquisition. Resume only after explicit Install from the official source and separate authentication. Open provider setup",
+     "badge": "completed",
+     "badgeClass": "u11w-kind ok",
+     "ctas": [
+      "Open provider setup"
+     ],
+     "tokenLike": [],
+     "moneyLike": [],
+     "digits": []
+    }
+   ],
+   "widgetNote": null
+  }
+ },
+ "docSearch": {
+  "essentials": {
+   "verify_failed": [],
+   "Verify failed": [],
+   "Failure class": [],
+   "failure class": [],
+   "0.43.1": [],
+   "Target version": [],
+   "target version": [],
+   "Outcome": [],
+   "outcome": [],
+   "Affected connection": [],
+   "affected connection": [],
+   "cont-8841": [],
+   "continuation token": [
+    "ledger:text"
+   ],
+   "Schedule": [],
+   "schedule": [],
+   "publisher-signed": [],
+   "x64": [],
+   "setup_required": [],
+   "Setup Required": [
+    "ledger:text"
+   ],
+   "ue-610": [
+    "ledger:text"
+   ],
+   "ue-609": [
+    "ledger:htmlOnly"
+   ],
+   "validation_only": [],
+   "validation only": []
+  },
+  "advanced": {
+   "verify_failed": [],
+   "Verify failed": [],
+   "Failure class": [],
+   "failure class": [],
+   "0.43.1": [],
+   "Target version": [],
+   "target version": [],
+   "Outcome": [],
+   "outcome": [],
+   "Affected connection": [],
+   "affected connection": [],
+   "cont-8841": [],
+   "continuation token": [
+    "ledger:text"
+   ],
+   "Schedule": [],
+   "schedule": [],
+   "publisher-signed": [],
+   "x64": [],
+   "setup_required": [],
+   "Setup Required": [
+    "ledger:text"
+   ],
+   "ue-610": [
+    "ledger:text"
+   ],
+   "ue-609": [
+    "ledger:htmlOnly"
+   ],
+   "validation_only": [],
+   "validation only": []
+  }
+ },
+ "verificationLink": {
+  "found": true,
+  "att": "ue-609",
+  "panelPresent": true,
+  "panelVisible": true,
+  "panelText": "Run integration tests TURN completed Run integration tests One immutable usage event per real provider attempt. The final route never overwrites earlier attempts. ATTEMPTS IN THIS WORK 2 MAIN WORK user work completed Kimi K2 · Kimi · Personal · Kimi Code subscription 15.3k in · 900 out · 7.7k cache read · $0.00 Full Access was limited by Review mode; safe browser/test tools still worked. Reasoning effort: Medium · Speed: Fast · Mode: Review Requested full access · effective review limited — mode ceiling applied. Aug 4 · 13:53 EDT · settlement observed · source provider reported · rcpt-530 VALIDATION & PROBES probe completed Qwen3 Coder Plus · OpenCode · Personal · OpenCode Go 1.5k in · 210 out · $0.00 Aug 4 · 13:50 EDT · settlement observed · source provider reported · rcpt-639 Verification call for maintenance “Codex CLI update” — the installer time is not usage; this call is. Installation v0.42.0 · publisher-signed release artifact · explicit user setup · official OpenAI installer · bound to Studio PC / Native · authentication separate · updates/repair post-consent only CONNECTION USED ROUTE EVIDENCE Connection OpenCode Go Authentication Puppet Master OAuth Auth owned by Puppet Master Account OpenCode · Personal Expected product OpenCode Go plan Billing route plan included Settlement observed Cache write not exposed"
+ },
+ "setupLink": {
+  "found": true,
+  "toasts": [
+   "Opening settings · providers (demo deep link)"
+  ],
+  "newLog": [
+   {
+    "cmd": "semantic.deep_link",
+    "payload": {
+     "surface": "settings",
+     "manager": "providers",
+     "section": "setup",
+     "focus_reason": "setup_required",
+     "continuation": "cont-8841"
+    },
+    "at": "2026-08-17T19:40:36.799Z"
+   }
+  ]
+ },
+ "work4": {
+  "essentials": "TURN Run integration tests 14:01 EDT Kimi K2 · Kimi · Personal · Kimi Code plan 15.3k input · 900 output · 7.7k cache read · 1 helper call Open attempt detail",
+  "standard": "TURN Run integration tests 14:01 EDT Kimi K2 · Kimi · Personal · Kimi Code plan 15.3k input · 900 output · 7.7k cache read · 1 helper call Open attempt detail",
+  "advanced": "TURN Run integration tests 14:01 EDT Kimi K2 · Kimi · Personal · Kimi Code plan 15.3k input · 900 output · 7.7k cache read · 1 helper call Main work user work completed 15.3k input · 900 output · 7.7k cache read inspect Validation & probes probe completed 1.5k input · 210 output inspect"
+ },
+ "authority": {
+  "paneText": "13 Source authority The advanced layer — provenance, settlement, freshness and route evidence. Raw IDs and receipts live here, never in Essentials. all current usage source class · settlement · freshness Add widget Drag the grip to move, drag the corner to resize, open a widget menu for focus, size, config and remove. Source authority cli reported 18 events pm observed 1 events provider reported 23 events unknown 3 events Settlement & freshness Projection freshness current Projection health current Next auto-refresh 14:47 EDT Retention 90 days Catalog & probes Stale catalog served immediately Background refresh succeeded · no provider usage · free coding models · stale served then refreshed · 14:02 EDT Catalog refresh in backoff Last known good used · no provider usage unless probed · models dev · backoff · 14:27 EDT Active probe · GLM-4.7 1.2k input · 60 output · attributed to validation, never user work · 13:57 EDT Active probe · Qwen3 Coder Plus 1.5k input · 210 output · attributed to validation, never user work · 13:50 EDT Route snapshots, receipt refs, pricing versions and source authority live here — never in the Essentials view. Absent is not zero; unknown is not unavailable. Duplicate Open Usage settings",
+  "groups": [
+   "Settlement & freshness Projection freshness current Projection health current Next auto-refresh 14:47 EDT Retention 90 days",
+   "Catalog & probes Stale catalog served immediately Background refresh succeeded · no provider usage · free coding models · stale served then refreshed · 14:02 EDT Catalog refresh in backoff Last known good used · no provider usage unless probed · models dev · backoff · 14:27 EDT Active probe · GLM-4.7 1.2k input · 60 output · attributed to validation, never user work · 13:57 EDT Active probe · Qwen3 Coder Plus 1.5k input · 210 output · attributed to validation, never user work · 13:50 EDT"
+  ],
+  "toolops": [
+   "Stale catalog served immediately Background refresh succeeded · no provider usage · free coding models · stale served then refreshed · 14:02 EDT",
+   "Catalog refresh in backoff Last known good used · no provider usage unless probed · models dev · backoff · 14:27 EDT",
+   "Active probe · GLM-4.7 1.2k input · 60 output · attributed to validation, never user work · 13:57 EDT",
+   "Active probe · Qwen3 Coder Plus 1.5k input · 210 output · attributed to validation, never user work · 13:50 EDT"
+  ]
+ },
+ "scopeFoot": {
+  "found": true,
+  "foot": "45 usage events · $0.7000 measured cost for All current usage. Removed accounts keep their history but never appear here.",
+  "totalAttempts": 45,
+  "inScope": 45,
+  "validationInScope": [
+   "ue-620",
+   "ue-600",
+   "ue-601",
+   "ue-609"
+  ]
+ },
+ "localOps": {
+  "labels": [
+   "Persona selection",
+   "Memory fade",
+   "Local history search",
+   "Context Lens inspection",
+   "ZIP extraction",
+   "Local context prune",
+   "Local spellcheck",
+   "Background indexer"
+  ],
+  "found": {
+   "Persona selection": [],
+   "Memory fade": [],
+   "Local history search": [],
+   "Context Lens inspection": [],
+   "ZIP extraction": [],
+   "Local context prune": [],
+   "Local spellcheck": [],
+   "Background indexer": []
+  }
+ },
+ "catalogFields": [
+  {
+   "id": "cat-1",
+   "source": "free_coding_models",
+   "status": "stale_served_then_refreshed",
+   "modelsChangedInDom": true,
+   "modelsChangedLabelInDom": false,
+   "freeStateChangesLabelInDom": false,
+   "backoffUntilInDom": null,
+   "probeJoinField": []
+  },
+  {
+   "id": "cat-2",
+   "source": "models_dev",
+   "status": "backoff",
+   "modelsChangedInDom": null,
+   "modelsChangedLabelInDom": false,
+   "freeStateChangesLabelInDom": false,
+   "backoffUntilInDom": false,
+   "probeJoinField": []
+  }
+ ],
+ "opTitleProximity": [
+  {
+   "title": "Codex CLI update",
+   "hasDollar": false,
+   "hasTokenWord": false,
+   "hasTokWord": false
+  },
+  {
+   "title": "Client offline · outbox",
+   "hasDollar": false,
+   "hasTokenWord": false,
+   "hasTokWord": false
+  },
+  {
+   "title": "Home Server kept working",
+   "hasDollar": false,
+   "hasTokenWord": false,
+   "hasTokWord": false
+  },
+  {
+   "title": "Notification sound preview",
+   "hasDollar": false,
+   "hasTokenWord": false,
+   "hasTokWord": false
+  },
+  {
+   "title": "Notification test-send",
+   "hasDollar": false,
+   "hasTokenWord": false,
+   "hasTokWord": false
+  },
+  {
+   "title": "Project Vault backup",
+   "hasDollar": false,
+   "hasTokenWord": false,
+   "hasTokWord": false
+  },
+  {
+   "title": "Project Move: Tastebook → Vault",
+   "hasDollar": false,
+   "hasTokenWord": false,
+   "hasTokWord": false
+  },
+  {
+   "title": "Codex CLI requested on Home Server · not installed",
+   "hasDollar": false,
+   "hasTokenWord": true,
+   "hasTokWord": false
+  }
+ ],
+ "console": []
+}

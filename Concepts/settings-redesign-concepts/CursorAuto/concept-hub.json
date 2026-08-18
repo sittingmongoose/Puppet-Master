@@ -12,53 +12,170 @@
     "max": 2500,
     "step": 10,
     "default": 1280,
-    "presets": [760, 900, 1280, 1700, 2200, 2500],
+    "presets": [
+      760,
+      900,
+      1280,
+      1700,
+      2200,
+      2500
+    ],
     "previewWidth": "test"
   },
   "entries": [
     {
       "id": "concept-01-harbor",
-      "title": "CursorAuto · Harbor",
+      "title": "CursorAuto \u00b7 Harbor",
       "path": "concept-01-harbor.html",
       "openPath": "concept-01-harbor.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["settings", "harbor", "berthing"],
+      "tags": [
+        "settings",
+        "harbor",
+        "berthing"
+      ],
       "order": 10
     },
     {
       "id": "concept-02-score",
-      "title": "CursorAuto · Score",
+      "title": "CursorAuto \u00b7 Score",
       "path": "concept-02-score.html",
       "openPath": "concept-02-score.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["settings", "score", "editorial"],
+      "tags": [
+        "settings",
+        "score",
+        "editorial"
+      ],
       "order": 20
     },
     {
       "id": "concept-03-switchboard",
-      "title": "CursorAuto · Switchboard",
+      "title": "CursorAuto \u00b7 Switchboard",
       "path": "concept-03-switchboard.html",
       "openPath": "concept-03-switchboard.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["settings", "switchboard", "routing"],
+      "tags": [
+        "settings",
+        "switchboard",
+        "routing"
+      ],
       "order": 30
     },
     {
       "id": "concept-04-archive",
-      "title": "CursorAuto · Archive",
+      "title": "CursorAuto \u00b7 Archive",
       "path": "concept-04-archive.html",
       "openPath": "concept-04-archive.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["settings", "archive", "retrieval"],
+      "tags": [
+        "settings",
+        "archive",
+        "retrieval"
+      ],
       "order": 40
+    },
+    {
+      "id": "concept-05-directory-take-1",
+      "title": "CursorAuto \u00b7 Directory / Take 1",
+      "path": "concept-05-directory-take-1.html",
+      "openPath": "concept-05-directory-take-1.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "directory",
+        "take-1"
+      ],
+      "order": 50
+    },
+    {
+      "id": "concept-06-directory-take-2",
+      "title": "CursorAuto \u00b7 Directory / Take 2",
+      "path": "concept-06-directory-take-2.html",
+      "openPath": "concept-06-directory-take-2.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "directory",
+        "take-2"
+      ],
+      "order": 60
+    },
+    {
+      "id": "concept-07-compendium-workspace",
+      "title": "CursorAuto \u00b7 Compendium Workspace",
+      "path": "concept-07-compendium-workspace.html",
+      "openPath": "concept-07-compendium-workspace.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "compendium"
+      ],
+      "order": 70
+    },
+    {
+      "id": "concept-08-directory-take-3",
+      "title": "CursorAuto \u00b7 Directory / Take 3",
+      "path": "concept-08-directory-take-3.html",
+      "openPath": "concept-08-directory-take-3.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "directory",
+        "take-3"
+      ],
+      "order": 80
+    },
+    {
+      "id": "concept-09-tome-tabs",
+      "title": "CursorAuto \u00b7 Chapter Tabs",
+      "path": "concept-09-tome-tabs.html",
+      "openPath": "concept-09-tome-tabs.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "chapter-tabs"
+      ],
+      "order": 90
+    },
+    {
+      "id": "concept-10-command-suite",
+      "title": "CursorAuto \u00b7 Command Suite",
+      "path": "concept-10-command-suite.html",
+      "openPath": "concept-10-command-suite.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "command-suite"
+      ],
+      "order": 100
+    },
+    {
+      "id": "concept-11-tabbed-organizer",
+      "title": "CursorAuto \u00b7 Tabbed Organizer",
+      "path": "concept-11-tabbed-organizer.html",
+      "openPath": "concept-11-tabbed-organizer.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "tabbed-organizer"
+      ],
+      "order": 110
     }
   ],
   "workspace": {
-    "title": "CursorAuto · Settings Bakeoff Gallery",
+    "title": "CursorAuto \u00b7 Settings Bakeoff Gallery",
     "path": "index.html",
     "controlMode": "internal"
   }

@@ -1,0 +1,779 @@
+{
+  "schema_id": "pm.settings_bakeoff.manager_route_matrix.v2.concept",
+  "concept_id": "concept-09-tome-tabs",
+  "model": "Qwen 5.8",
+  "note": "Every row verified in headless browser: [data-manager], [data-test=back], [data-test=breadcrumb] present on all 42 routes; shell retained; no route leaves the concept.",
+  "families": [
+    {
+      "family": "providers",
+      "title": "Providers",
+      "entry_points": [
+        "Home chapter card for AI Brains & Providers",
+        "universal search (sr:manager:providers)",
+        "chapter page manager list #/cat/ai"
+      ],
+      "route": "#/mgr/providers",
+      "shell_retained": true,
+      "back_target": "#/cat/ai (AI Brains & Providers); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "not-installed explicit official-source install",
+        "shadowed installations",
+        "ask-first update",
+        "scheduled update",
+        "rollback after failed verification",
+        "usage-unavailable",
+        "last-known-good catalog",
+        "CLI-owned vs PM OAuth notes"
+      ],
+      "pass": true
+    },
+    {
+      "family": "context",
+      "title": "Context & Instructions",
+      "entry_points": [
+        "Home chapter card for Memory & Context",
+        "universal search (sr:manager:context)",
+        "chapter page manager list #/cat/memory"
+      ],
+      "route": "#/mgr/context",
+      "shell_retained": true,
+      "back_target": "#/cat/memory (Memory & Context); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "setting/status/action rows with receipts; scenario banners where applicable (managed/unavailable/restart/changed-elsewhere)"
+      ],
+      "pass": true
+    },
+    {
+      "family": "memory",
+      "title": "Memory",
+      "entry_points": [
+        "Home chapter card for Memory & Context",
+        "universal search (sr:manager:memory)",
+        "chapter page manager list #/cat/memory"
+      ],
+      "route": "#/mgr/memory",
+      "shell_retained": true,
+      "back_target": "#/cat/memory (Memory & Context); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "setting/status/action rows with receipts; scenario banners where applicable (managed/unavailable/restart/changed-elsewhere)"
+      ],
+      "pass": true
+    },
+    {
+      "family": "personas",
+      "title": "Personas",
+      "entry_points": [
+        "Home chapter card for Personas",
+        "universal search (sr:manager:personas)",
+        "chapter page manager list #/cat/personas"
+      ],
+      "route": "#/mgr/personas and #/mgr/personas/<objectId>",
+      "shell_retained": true,
+      "back_target": "#/cat/personas (Personas); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; roster pushes to full pane; selecting an object hides roster (push); Back names the roster level",
+      "key_states": [
+        "object attention health states"
+      ],
+      "pass": true
+    },
+    {
+      "family": "goal",
+      "title": "Goal & Automation",
+      "entry_points": [
+        "Home chapter card for Planning & Verification",
+        "universal search (sr:manager:goal)",
+        "chapter page manager list #/cat/planning"
+      ],
+      "route": "#/mgr/goal and #/mgr/goal/<objectId>",
+      "shell_retained": true,
+      "back_target": "#/cat/planning (Planning & Verification); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; roster pushes to full pane; selecting an object hides roster (push); Back names the roster level",
+      "key_states": [
+        "object attention health states"
+      ],
+      "pass": true
+    },
+    {
+      "family": "crew",
+      "title": "Crew",
+      "entry_points": [
+        "Home chapter card for Branching & Collaboration",
+        "universal search (sr:manager:crew)",
+        "chapter page manager list #/cat/branching"
+      ],
+      "route": "#/mgr/crew and #/mgr/crew/<objectId>",
+      "shell_retained": true,
+      "back_target": "#/cat/branching (Branching & Collaboration); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; roster pushes to full pane; selecting an object hides roster (push); Back names the roster level",
+      "key_states": [
+        "object attention health states"
+      ],
+      "pass": true
+    },
+    {
+      "family": "permissions",
+      "title": "Permissions & FileSafe",
+      "entry_points": [
+        "Home chapter card for Permissions & Safety",
+        "universal search (sr:manager:permissions)",
+        "chapter page manager list #/cat/safety"
+      ],
+      "route": "#/mgr/permissions and #/mgr/permissions/<objectId>",
+      "shell_retained": true,
+      "back_target": "#/cat/safety (Permissions & Safety); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; roster pushes to full pane; selecting an object hides roster (push); Back names the roster level",
+      "key_states": [
+        "object attention health states"
+      ],
+      "pass": true
+    },
+    {
+      "family": "bsd",
+      "title": "Back Seat Driver",
+      "entry_points": [
+        "Home chapter card for Permissions & Safety",
+        "universal search (sr:manager:bsd)",
+        "chapter page manager list #/cat/safety"
+      ],
+      "route": "#/mgr/bsd",
+      "shell_retained": true,
+      "back_target": "#/cat/safety (Permissions & Safety); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "setting/status/action rows with receipts; scenario banners where applicable (managed/unavailable/restart/changed-elsewhere)"
+      ],
+      "pass": true
+    },
+    {
+      "family": "notifications",
+      "title": "Notifications",
+      "entry_points": [
+        "Home chapter card for General & Appearance",
+        "universal search (sr:manager:notifications)",
+        "chapter page manager list #/cat/general"
+      ],
+      "route": "#/mgr/notifications",
+      "shell_retained": true,
+      "back_target": "#/cat/general (General & Appearance); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "setting/status/action rows with receipts; scenario banners where applicable (managed/unavailable/restart/changed-elsewhere)"
+      ],
+      "pass": true
+    },
+    {
+      "family": "sounds",
+      "title": "Sounds",
+      "entry_points": [
+        "Home chapter card for General & Appearance",
+        "universal search (sr:manager:sounds)",
+        "chapter page manager list #/cat/general"
+      ],
+      "route": "#/mgr/sounds",
+      "shell_retained": true,
+      "back_target": "#/cat/general (General & Appearance); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "setting/status/action rows with receipts; scenario banners where applicable (managed/unavailable/restart/changed-elsewhere)"
+      ],
+      "pass": true
+    },
+    {
+      "family": "appearance",
+      "title": "Appearance",
+      "entry_points": [
+        "Home chapter card for General & Appearance",
+        "universal search (sr:manager:appearance)",
+        "chapter page manager list #/cat/general"
+      ],
+      "route": "#/mgr/appearance",
+      "shell_retained": true,
+      "back_target": "#/cat/general (General & Appearance); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "setting/status/action rows with receipts; scenario banners where applicable (managed/unavailable/restart/changed-elsewhere)"
+      ],
+      "pass": true
+    },
+    {
+      "family": "spellcheck",
+      "title": "Spellcheck & Dictionaries",
+      "entry_points": [
+        "Home chapter card for General & Appearance",
+        "universal search (sr:manager:spellcheck)",
+        "chapter page manager list #/cat/general"
+      ],
+      "route": "#/mgr/spellcheck",
+      "shell_retained": true,
+      "back_target": "#/cat/general (General & Appearance); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "setting/status/action rows with receipts; scenario banners where applicable (managed/unavailable/restart/changed-elsewhere)"
+      ],
+      "pass": true
+    },
+    {
+      "family": "desktop",
+      "title": "Desktop, Tray & Window",
+      "entry_points": [
+        "Home chapter card for System & Advanced",
+        "universal search (sr:manager:desktop)",
+        "chapter page manager list #/cat/system"
+      ],
+      "route": "#/mgr/desktop",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "setting/status/action rows with receipts; scenario banners where applicable (managed/unavailable/restart/changed-elsewhere)"
+      ],
+      "pass": true
+    },
+    {
+      "family": "teacher",
+      "title": "Teacher",
+      "entry_points": [
+        "Home chapter card for General & Appearance",
+        "universal search (sr:manager:teacher)",
+        "chapter page manager list #/cat/general"
+      ],
+      "route": "#/mgr/teacher",
+      "shell_retained": true,
+      "back_target": "#/cat/general (General & Appearance); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "setting/status/action rows with receipts; scenario banners where applicable (managed/unavailable/restart/changed-elsewhere)"
+      ],
+      "pass": true
+    },
+    {
+      "family": "doctor",
+      "title": "Doctor",
+      "entry_points": [
+        "Home chapter card for System & Advanced",
+        "universal search (sr:manager:doctor)",
+        "chapter page manager list #/cat/system"
+      ],
+      "route": "#/mgr/doctor",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "offline last-known health",
+        "phased determinate run"
+      ],
+      "pass": true
+    },
+    {
+      "family": "files",
+      "title": "File Manager & Editor",
+      "entry_points": [
+        "Home chapter card for Code & Execution",
+        "universal search (sr:manager:files)",
+        "chapter page manager list #/cat/code"
+      ],
+      "route": "#/mgr/files",
+      "shell_retained": true,
+      "back_target": "#/cat/code (Code & Execution); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "setting/status/action rows with receipts; scenario banners where applicable (managed/unavailable/restart/changed-elsewhere)"
+      ],
+      "pass": true
+    },
+    {
+      "family": "terminal",
+      "title": "Terminal",
+      "entry_points": [
+        "Home chapter card for Code & Execution",
+        "universal search (sr:manager:terminal)",
+        "chapter page manager list #/cat/code"
+      ],
+      "route": "#/mgr/terminal",
+      "shell_retained": true,
+      "back_target": "#/cat/code (Code & Execution); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "setting/status/action rows with receipts; scenario banners where applicable (managed/unavailable/restart/changed-elsewhere)"
+      ],
+      "pass": true
+    },
+    {
+      "family": "lsp",
+      "title": "Language Servers",
+      "entry_points": [
+        "Home chapter card for Code & Execution",
+        "universal search (sr:manager:lsp)",
+        "chapter page manager list #/cat/code"
+      ],
+      "route": "#/mgr/lsp and #/mgr/lsp/<objectId>",
+      "shell_retained": true,
+      "back_target": "#/cat/code (Code & Execution); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; roster pushes to full pane; selecting an object hides roster (push); Back names the roster level",
+      "key_states": [
+        "crashed server attention + repair",
+        "object attention health states"
+      ],
+      "pass": true
+    },
+    {
+      "family": "formatters",
+      "title": "Formatters",
+      "entry_points": [
+        "Home chapter card for Code & Execution",
+        "universal search (sr:manager:formatters)",
+        "chapter page manager list #/cat/code"
+      ],
+      "route": "#/mgr/formatters and #/mgr/formatters/<objectId>",
+      "shell_retained": true,
+      "back_target": "#/cat/code (Code & Execution); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; roster pushes to full pane; selecting an object hides roster (push); Back names the roster level",
+      "key_states": [
+        "object attention health states"
+      ],
+      "pass": true
+    },
+    {
+      "family": "commands",
+      "title": "Commands & Shortcuts",
+      "entry_points": [
+        "Home chapter card for Skills, Plugins & Commands",
+        "universal search (sr:manager:commands)",
+        "chapter page manager list #/cat/extensions"
+      ],
+      "route": "#/mgr/commands and #/mgr/commands/<objectId>",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions (Skills, Plugins & Commands); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; roster pushes to full pane; selecting an object hides roster (push); Back names the roster level",
+      "key_states": [
+        "shortcut conflict diagnostic + dry-run",
+        "object attention health states"
+      ],
+      "pass": true
+    },
+    {
+      "family": "mcp",
+      "title": "MCP Servers",
+      "entry_points": [
+        "Home chapter card for Skills, Plugins & Commands",
+        "universal search (sr:manager:mcp)",
+        "chapter page manager list #/cat/extensions"
+      ],
+      "route": "#/mgr/mcp and #/mgr/mcp/<objectId>",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions (Skills, Plugins & Commands); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; roster pushes to full pane; selecting an object hides roster (push); Back names the roster level",
+      "key_states": [
+        "failed-start disabled server + repair",
+        "object attention health states"
+      ],
+      "pass": true
+    },
+    {
+      "family": "skills",
+      "title": "Skills",
+      "entry_points": [
+        "Home chapter card for Skills, Plugins & Commands",
+        "universal search (sr:manager:skills)",
+        "chapter page manager list #/cat/extensions"
+      ],
+      "route": "#/mgr/skills and #/mgr/skills/<objectId>",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions (Skills, Plugins & Commands); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; roster pushes to full pane; selecting an object hides roster (push); Back names the roster level",
+      "key_states": [
+        "object attention health states"
+      ],
+      "pass": true
+    },
+    {
+      "family": "plugins",
+      "title": "Plugins",
+      "entry_points": [
+        "Home chapter card for Skills, Plugins & Commands",
+        "universal search (sr:manager:plugins)",
+        "chapter page manager list #/cat/extensions"
+      ],
+      "route": "#/mgr/plugins and #/mgr/plugins/<objectId>",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions (Skills, Plugins & Commands); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; roster pushes to full pane; selecting an object hides roster (push); Back names the roster level",
+      "key_states": [
+        "object attention health states"
+      ],
+      "pass": true
+    },
+    {
+      "family": "tools",
+      "title": "Tools",
+      "entry_points": [
+        "Home chapter card for Skills, Plugins & Commands",
+        "universal search (sr:manager:tools)",
+        "chapter page manager list #/cat/extensions"
+      ],
+      "route": "#/mgr/tools and #/mgr/tools/<objectId>",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions (Skills, Plugins & Commands); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; roster pushes to full pane; selecting an object hides roster (push); Back names the roster level",
+      "key_states": [
+        "object attention health states"
+      ],
+      "pass": true
+    },
+    {
+      "family": "testing",
+      "title": "Testing & Debug",
+      "entry_points": [
+        "Home chapter card for Planning & Verification",
+        "universal search (sr:manager:testing)",
+        "chapter page manager list #/cat/planning"
+      ],
+      "route": "#/mgr/testing",
+      "shell_retained": true,
+      "back_target": "#/cat/planning (Planning & Verification); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "setting/status/action rows with receipts; scenario banners where applicable (managed/unavailable/restart/changed-elsewhere)"
+      ],
+      "pass": true
+    },
+    {
+      "family": "storage",
+      "title": "Storage & Retention",
+      "entry_points": [
+        "Home chapter card for System & Advanced",
+        "universal search (sr:manager:storage)",
+        "chapter page manager list #/cat/system"
+      ],
+      "route": "#/mgr/storage",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "setting/status/action rows with receipts; scenario banners where applicable (managed/unavailable/restart/changed-elsewhere)"
+      ],
+      "pass": true
+    },
+    {
+      "family": "backup",
+      "title": "Backup & Restore",
+      "entry_points": [
+        "Home chapter card for System & Advanced",
+        "universal search (sr:manager:backup)",
+        "chapter page manager list #/cat/system"
+      ],
+      "route": "#/mgr/backup",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "phased backup op",
+        "restore points",
+        "server-backup deferred shell"
+      ],
+      "pass": true
+    },
+    {
+      "family": "lifecycle",
+      "title": "Settings Lifecycle",
+      "entry_points": [
+        "Home chapter card for System & Advanced",
+        "universal search (sr:manager:lifecycle)",
+        "chapter page manager list #/cat/system"
+      ],
+      "route": "#/mgr/lifecycle",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "import conflict keep-or-take dialog",
+        "reset preview separate step",
+        "rollback tab with restore points"
+      ],
+      "pass": true
+    },
+    {
+      "family": "history",
+      "title": "History & Sessions",
+      "entry_points": [
+        "Home chapter card for System & Advanced",
+        "universal search (sr:manager:history)",
+        "chapter page manager list #/cat/system"
+      ],
+      "route": "#/mgr/history",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "setting/status/action rows with receipts; scenario banners where applicable (managed/unavailable/restart/changed-elsewhere)"
+      ],
+      "pass": true
+    },
+    {
+      "family": "artifacts",
+      "title": "Runtime Artifacts",
+      "entry_points": [
+        "Home chapter card for System & Advanced",
+        "universal search (sr:manager:artifacts)",
+        "chapter page manager list #/cat/system"
+      ],
+      "route": "#/mgr/artifacts",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "setting/status/action rows with receipts; scenario banners where applicable (managed/unavailable/restart/changed-elsewhere)"
+      ],
+      "pass": true
+    },
+    {
+      "family": "scm",
+      "title": "Source Control & Worktrees",
+      "entry_points": [
+        "Home chapter card for Branching & Collaboration",
+        "universal search (sr:manager:scm)",
+        "chapter page manager list #/cat/branching"
+      ],
+      "route": "#/mgr/scm",
+      "shell_retained": true,
+      "back_target": "#/cat/branching (Branching & Collaboration); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "setting/status/action rows with receipts; scenario banners where applicable (managed/unavailable/restart/changed-elsewhere)"
+      ],
+      "pass": true
+    },
+    {
+      "family": "gha",
+      "title": "GitHub Actions",
+      "entry_points": [
+        "Home chapter card for Skills, Plugins & Commands",
+        "universal search (sr:manager:gha)",
+        "chapter page manager list #/cat/extensions"
+      ],
+      "route": "#/mgr/gha",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions (Skills, Plugins & Commands); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "setting/status/action rows with receipts; scenario banners where applicable (managed/unavailable/restart/changed-elsewhere)"
+      ],
+      "pass": true
+    },
+    {
+      "family": "containers",
+      "title": "Containers & Registries",
+      "entry_points": [
+        "Home chapter card for System & Advanced",
+        "universal search (sr:manager:containers)",
+        "chapter page manager list #/cat/system"
+      ],
+      "route": "#/mgr/containers and #/mgr/containers/<objectId>",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; roster pushes to full pane; selecting an object hides roster (push); Back names the roster level",
+      "key_states": [
+        "object attention health states"
+      ],
+      "pass": true
+    },
+    {
+      "family": "web",
+      "title": "Web, Search & Fetch",
+      "entry_points": [
+        "Home chapter card for Web & Search",
+        "universal search (sr:manager:web)",
+        "chapter page manager list #/cat/web"
+      ],
+      "route": "#/mgr/web",
+      "shell_retained": true,
+      "back_target": "#/cat/web (Web & Search); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "setting/status/action rows with receipts; scenario banners where applicable (managed/unavailable/restart/changed-elsewhere)"
+      ],
+      "pass": true
+    },
+    {
+      "family": "searchindex",
+      "title": "Project Search Index",
+      "entry_points": [
+        "Home chapter card for System & Advanced",
+        "universal search (sr:manager:searchindex)",
+        "chapter page manager list #/cat/system"
+      ],
+      "route": "#/mgr/searchindex",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "setting/status/action rows with receipts; scenario banners where applicable (managed/unavailable/restart/changed-elsewhere)"
+      ],
+      "pass": true
+    },
+    {
+      "family": "cleanup",
+      "title": "Workspace Cleanup",
+      "entry_points": [
+        "Home chapter card for System & Advanced",
+        "universal search (sr:manager:cleanup)",
+        "chapter page manager list #/cat/system"
+      ],
+      "route": "#/mgr/cleanup",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "dry-run-first preview dialog, protected paths"
+      ],
+      "pass": true
+    },
+    {
+      "family": "media",
+      "title": "Media & Output",
+      "entry_points": [
+        "Home chapter card for Media & Output",
+        "universal search (sr:manager:media)",
+        "chapter page manager list #/cat/media"
+      ],
+      "route": "#/mgr/media",
+      "shell_retained": true,
+      "back_target": "#/cat/media (Media & Output); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "setting/status/action rows with receipts; scenario banners where applicable (managed/unavailable/restart/changed-elsewhere)"
+      ],
+      "pass": true
+    },
+    {
+      "family": "dry",
+      "title": "DRY Method",
+      "entry_points": [
+        "Home chapter card for Skills, Plugins & Commands",
+        "universal search (sr:manager:dry)",
+        "chapter page manager list #/cat/extensions"
+      ],
+      "route": "#/mgr/dry",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions (Skills, Plugins & Commands); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "setting/status/action rows with receipts; scenario banners where applicable (managed/unavailable/restart/changed-elsewhere)"
+      ],
+      "pass": true
+    },
+    {
+      "family": "onboarding",
+      "title": "Product Onboarding",
+      "entry_points": [
+        "Home chapter card for General & Appearance",
+        "universal search (sr:manager:onboarding)",
+        "chapter page manager list #/cat/general"
+      ],
+      "route": "#/mgr/onboarding",
+      "shell_retained": true,
+      "back_target": "#/cat/general (General & Appearance); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "deferred named-owner insertion shell with return contract"
+      ],
+      "pass": true
+    },
+    {
+      "family": "updates",
+      "title": "App & Content Updates",
+      "entry_points": [
+        "Home chapter card for System & Advanced",
+        "universal search (sr:manager:updates)",
+        "chapter page manager list #/cat/system"
+      ],
+      "route": "#/mgr/updates",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "deferred named-owner insertion shell with return contract"
+      ],
+      "pass": true
+    },
+    {
+      "family": "servers",
+      "title": "Servers",
+      "entry_points": [
+        "Home chapter card for System & Advanced",
+        "universal search (sr:manager:servers)",
+        "chapter page manager list #/cat/system"
+      ],
+      "route": "#/mgr/servers",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "deferred named-owner insertion shell with return contract"
+      ],
+      "pass": true
+    },
+    {
+      "family": "hosting",
+      "title": "Project Hosting & Files",
+      "entry_points": [
+        "Home chapter card for System & Advanced",
+        "universal search (sr:manager:hosting)",
+        "chapter page manager list #/cat/system"
+      ],
+      "route": "#/mgr/hosting",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell bottom bar)",
+      "narrow_behavior": "tab rail hidden; single reading pane; Back names the chapter",
+      "key_states": [
+        "deferred named-owner insertion shell with return contract"
+      ],
+      "pass": true
+    }
+  ]
+}

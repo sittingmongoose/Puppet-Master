@@ -1,0 +1,334 @@
+{
+  "schema_id": "pm.settings_bakeoff.manager_coverage.v2.concept",
+  "concept_id": "concept-07-compendium-workspace",
+  "model": "Qwen 5.8",
+  "note": "Every family demonstrated concept-natively in concept-07-compendium-workspace.html: faceted virtualized All Settings compendium + domain pages (overview/key settings/related managers) + integrated list/detail managers. No cross-concept routes, no iframe, no scope selectors.",
+  "required_demonstrated": [
+    {
+      "name": "Settings Home",
+      "status": "demonstrated",
+      "route": "#/home and all routes",
+      "note": "#/home: project identity, large search, <=1 critical banner, Needs attention, 12 browse-by-area destinations with counts, secondary utilities, recently changed."
+    },
+    {
+      "name": "Settings Search",
+      "status": "demonstrated",
+      "route": "#/home and all routes",
+      "note": "Hero + topbar fields; grouped dropdown with data-rid rows and .pm2-r-title; routing via PMSearch2.byRid only; #/q/<query> pushed before target so Back restores query + results."
+    },
+    {
+      "name": "Settings Workspace",
+      "status": "demonstrated",
+      "route": "#/home and all routes",
+      "note": "PMShell2 shell retained on every route; breadcrumb/back/close/search present; two-pane workspace (nav + pane) with pane-transfer motion."
+    },
+    {
+      "name": "Ordinary setting grammar",
+      "status": "demonstrated",
+      "route": "#/home and all routes",
+      "note": "PMManagers2.row + bindRows on domain pages, sub pages, manager settings sections; Details evidence drawer; reset action."
+    },
+    {
+      "name": "Provider / Account / Model / Installation",
+      "status": "demonstrated",
+      "route": "#/mgr/providers",
+      "note": "catalog composition; reachable from domain #/cat/ai and search. Provider CLIs, accounts, models, limits, and installation lifecycle. Every CLI is acquired explicitly from its official "
+    },
+    {
+      "name": "Context & Instructions",
+      "status": "demonstrated",
+      "route": "#/mgr/context",
+      "note": "catalog composition; reachable from domain #/cat/memory and search. What reaches the assistant each turn: instruction files, project context, and the per-turn context budget."
+    },
+    {
+      "name": "Memory",
+      "status": "demonstrated",
+      "route": "#/mgr/memory",
+      "note": "catalog composition; reachable from domain #/cat/memory and search. Assistant memories degrade by retrieval activation, never by deletion. Half-life equals activation: fading changes what "
+    },
+    {
+      "name": "Personas",
+      "status": "demonstrated",
+      "route": "#/mgr/personas and #/mgr/personas/<objectId>",
+      "note": "roster composition; reachable from domain #/cat/personas and search. Behavior capsules chosen per thread or Goal. A Persona changes how the assistant works, never what it may do."
+    },
+    {
+      "name": "Goal & Automation",
+      "status": "demonstrated",
+      "route": "#/mgr/goal and #/mgr/goal/<objectId>",
+      "note": "roster composition; reachable from domain #/cat/planning and search. Long-running Goals, their phase plans, and how much may run without asking."
+    },
+    {
+      "name": "Crew",
+      "status": "demonstrated",
+      "route": "#/mgr/crew and #/mgr/crew/<objectId>",
+      "note": "roster composition; reachable from domain #/cat/branching and search. Named teams of roles and routes for parallel work. Crew choices apply to the current thread or Goal."
+    },
+    {
+      "name": "Permissions & FileSafe",
+      "status": "demonstrated",
+      "route": "#/mgr/permissions and #/mgr/permissions/<objectId>",
+      "note": "roster composition; reachable from domain #/cat/safety and search. Ordered rules decide what agents may do; the last matching rule wins. The FileSafe floor underneath can never be bypasse"
+    },
+    {
+      "name": "Back Seat Driver",
+      "status": "demonstrated",
+      "route": "#/mgr/bsd",
+      "note": "preference composition; reachable from domain #/cat/safety and search. A read-only advisor that reviews work as it happens. It can warn and suggest; it can never widen authority or block the "
+    },
+    {
+      "name": "Notifications & Sounds",
+      "status": "demonstrated",
+      "route": "#/mgr/notifications",
+      "note": "preference composition; reachable from domain #/cat/general and search. Where work reaches you. The title-bar stack is the only in-app surface: no status-bar bell, no permanent corner stack."
+    },
+    {
+      "name": "Sound Library / Uploads / Packs",
+      "status": "demonstrated",
+      "route": "#/mgr/sounds",
+      "note": "catalog composition; reachable from domain #/cat/general and search. Notification sounds and packs. PeonPing and OpenPeon-compatible packs import with format and license checks; previews st"
+    },
+    {
+      "name": "Appearance / themes / fonts / motion",
+      "status": "demonstrated",
+      "route": "#/mgr/appearance",
+      "note": "catalog composition; reachable from domain #/cat/general and search. Eight built-in themes — Friendly, Glass, Retro, and Basic in dark and light — plus custom TOML themes validated on load,"
+    },
+    {
+      "name": "Spellcheck & Dictionaries",
+      "status": "demonstrated",
+      "route": "#/mgr/spellcheck",
+      "note": "catalog composition; reachable from domain #/cat/general and search. Spellcheck underlines only — suggestions appear on click or Enter, never automatic replacement. Code, paths, and identif"
+    },
+    {
+      "name": "Desktop / Tray / Window",
+      "status": "demonstrated",
+      "route": "#/mgr/desktop",
+      "note": "preference composition; reachable from domain #/cat/system and search. Window behavior, the system tray, and quit confirmation."
+    },
+    {
+      "name": "Teacher / Help",
+      "status": "demonstrated",
+      "route": "#/mgr/teacher",
+      "note": "preference composition; reachable from domain #/cat/general and search. Plain-language explanations for receipts, settings, and decisions — on demand, never forced."
+    },
+    {
+      "name": "Doctor",
+      "status": "demonstrated",
+      "route": "#/mgr/doctor",
+      "note": "diagnostic composition; reachable from domain #/cat/system and search. Health checks across providers, language servers, storage, and backup. Each check produces a receipt; nothing is repaire"
+    },
+    {
+      "name": "File Manager / Editor",
+      "status": "demonstrated",
+      "route": "#/mgr/files",
+      "note": "catalog composition; reachable from domain #/cat/code and search. How files open, reload, and save when things change underneath you."
+    },
+    {
+      "name": "Terminal",
+      "status": "demonstrated",
+      "route": "#/mgr/terminal",
+      "note": "preference composition; reachable from domain #/cat/code and search. The built-in terminal: shell, integration, and output behavior."
+    },
+    {
+      "name": "LSP",
+      "status": "demonstrated",
+      "route": "#/mgr/lsp and #/mgr/lsp/<objectId>",
+      "note": "roster composition; reachable from domain #/cat/code and search. Language servers detected, started, and repaired per project."
+    },
+    {
+      "name": "Formatters",
+      "status": "demonstrated",
+      "route": "#/mgr/formatters and #/mgr/formatters/<objectId>",
+      "note": "roster composition; reachable from domain #/cat/code and search. Format-on-save and format commands, with per-language ownership."
+    },
+    {
+      "name": "Commands & Shortcuts",
+      "status": "demonstrated",
+      "route": "#/mgr/commands and #/mgr/commands/<objectId>",
+      "note": "roster composition; reachable from domain #/cat/extensions and search. The command palette, custom commands, and keyboard shortcuts. Dry-run never sends work to an agent."
+    },
+    {
+      "name": "MCP",
+      "status": "demonstrated",
+      "route": "#/mgr/mcp and #/mgr/mcp/<objectId>",
+      "note": "roster composition; reachable from domain #/cat/extensions and search. Model Context Protocol servers: connection, approval defaults, and progressive tool exposure."
+    },
+    {
+      "name": "Skills",
+      "status": "demonstrated",
+      "route": "#/mgr/skills and #/mgr/skills/<objectId>",
+      "note": "roster composition; reachable from domain #/cat/extensions and search. Skill packs available to agents. New skills start untrusted and stay opt-in."
+    },
+    {
+      "name": "Plugins",
+      "status": "demonstrated",
+      "route": "#/mgr/plugins and #/mgr/plugins/<objectId>",
+      "note": "roster composition; reachable from domain #/cat/extensions and search. Installed plugins, their update channel, and restart requirements."
+    },
+    {
+      "name": "Tools",
+      "status": "demonstrated",
+      "route": "#/mgr/tools and #/mgr/tools/<objectId>",
+      "note": "roster composition; reachable from domain #/cat/extensions and search. The tool inventory: installed, enabled, selected, and invoked — with scoped sets for child agents."
+    },
+    {
+      "name": "Testing & Debug",
+      "status": "demonstrated",
+      "route": "#/mgr/testing",
+      "note": "preference composition; reachable from domain #/cat/planning and search. Evidence strength, automatic test runs, and debug visibility for finished work."
+    },
+    {
+      "name": "Storage & Retention",
+      "status": "demonstrated",
+      "route": "#/mgr/storage",
+      "note": "catalog composition; reachable from domain #/cat/system and search. Where durable data lives, split honestly into internal snapshots, settings backup, project backup, full Server backup, a"
+    },
+    {
+      "name": "Backup & Restore",
+      "status": "demonstrated",
+      "route": "#/mgr/backup",
+      "note": "catalog composition; reachable from domain #/cat/system and search. Settings backup, project backup, and full Server backup with schedules, verification, and test restores."
+    },
+    {
+      "name": "Settings Lifecycle",
+      "status": "demonstrated",
+      "route": "#/mgr/lifecycle",
+      "note": "transaction composition; reachable from domain #/cat/system and search. Export, import, merge with conflict preview, legacy migration, reset, and rollback — every step receipted."
+    },
+    {
+      "name": "History & Sessions",
+      "status": "demonstrated",
+      "route": "#/mgr/history",
+      "note": "catalog composition; reachable from domain #/cat/system and search. Thread and session retention with honest redaction."
+    },
+    {
+      "name": "Runtime Artifacts / Project Outputs",
+      "status": "demonstrated",
+      "route": "#/mgr/artifacts",
+      "note": "catalog composition; reachable from domain #/cat/system and search. Where agent-produced artifacts land, how long they stay, and who they belong to."
+    },
+    {
+      "name": "Source Control / Worktrees",
+      "status": "demonstrated",
+      "route": "#/mgr/scm",
+      "note": "catalog composition; reachable from domain #/cat/branching and search. Worktree provisioning, cleanup after merge, and port collision behavior."
+    },
+    {
+      "name": "GitHub Actions",
+      "status": "demonstrated",
+      "route": "#/mgr/gha",
+      "note": "catalog composition; reachable from domain #/cat/extensions and search. Workflow runs observed for this project: approvals, logs, and re-runs stay on GitHub."
+    },
+    {
+      "name": "Containers & Registries",
+      "status": "demonstrated",
+      "route": "#/mgr/containers and #/mgr/containers/<objectId>",
+      "note": "roster composition; reachable from domain #/cat/system and search. Container tools share the installation lifecycle but keep their own capability probes."
+    },
+    {
+      "name": "Web / Search / Fetch / Crawl",
+      "status": "demonstrated",
+      "route": "#/mgr/web",
+      "note": "preference composition; reachable from domain #/cat/web and search. Web search and page fetching with timeouts, extraction, and human-only auth browsing."
+    },
+    {
+      "name": "Project Search Index",
+      "status": "demonstrated",
+      "route": "#/mgr/searchindex",
+      "note": "health composition; reachable from domain #/cat/system and search. The local index that keeps code search fast. Rebuilds run in phases and never block editing."
+    },
+    {
+      "name": "Workspace Cleanup",
+      "status": "demonstrated",
+      "route": "#/mgr/cleanup",
+      "note": "transaction composition; reachable from domain #/cat/system and search. Reclaim space with a dry-run first. Worktrees and protected paths are never touched without an explicit choice."
+    },
+    {
+      "name": "Media & Output",
+      "status": "demonstrated",
+      "route": "#/mgr/media",
+      "note": "preference composition; reachable from domain #/cat/media and search. How generated media is stored, named, and exported."
+    },
+    {
+      "name": "DRY Method visible state where exposed",
+      "status": "demonstrated",
+      "route": "#/mgr/dry",
+      "note": "catalog composition; reachable from domain #/cat/extensions and search. Visible reuse state: where work was reused, what it saved, and the opt-outs you chose."
+    }
+  ],
+  "allowed_deferred_named_owner": [
+    {
+      "name": "Product Onboarding",
+      "status": "deferred_named_owner",
+      "owner": "Product Onboarding plan owner",
+      "route": "#/mgr/onboarding (named-owner shell); insertion listed on its domain page",
+      "insertion": "First-run flow uses the same provider, account, connection, and installation records as Settings; no duplicate secret store; no SQLite.",
+      "returnContract": "Completed setup returns to the Providers manager with the new connection selected and a continuation receipt for any interrupted step."
+    },
+    {
+      "name": "Installation / Deployment",
+      "status": "deferred_named_owner",
+      "owner": "Provider Lifecycle owner",
+      "route": "#/mgr/installation (named-owner shell); insertion listed on its domain page",
+      "insertion": "Explicit user-triggered install from the official source for the exact Host/Environment, with verification and rollback inside the provider card.",
+      "returnContract": "Install receipts deep-link back to the provider's installation section; a failed verification returns with the previous generation restored."
+    },
+    {
+      "name": "Server Claim / Bootstrap",
+      "status": "deferred_named_owner",
+      "owner": "Server Backbone",
+      "route": "#/mgr/server-claim (named-owner shell); insertion listed on its domain page",
+      "insertion": "Claim handshake that binds a server record to this Puppet Master install before any hosted work is offered.",
+      "returnContract": "A successful claim returns to the Servers card with the claimed server marked connected and a claim receipt."
+    },
+    {
+      "name": "Servers / Execution Hosts / Clients",
+      "status": "deferred_named_owner",
+      "owner": "Server Backbone",
+      "route": "#/mgr/servers (named-owner shell); insertion listed on its domain page",
+      "insertion": "Manager grammar reserved under System & Advanced; human-language cards only; deep-link slot reserved for the server shell.",
+      "returnContract": "Server cards deep-link back into Settings at the matching storage or hosting row with full capability state."
+    },
+    {
+      "name": "Project Hosting & Files",
+      "status": "deferred_named_owner",
+      "owner": "Project Syncing and Updates",
+      "route": "#/mgr/hosting (named-owner shell); insertion listed on its domain page",
+      "insertion": "Source Location card (Hosted On, Project Files, Run Work) plus Project Sync status slots.",
+      "returnContract": "Hosting changes return to the Project Hosting card with sync status and a move receipt."
+    },
+    {
+      "name": "Remote Access",
+      "status": "deferred_named_owner",
+      "owner": "Server Backbone",
+      "route": "#/mgr/remote-access (named-owner shell); insertion listed on its domain page",
+      "insertion": "Pairing and session approvals; protected auth browsing sessions remain human-only.",
+      "returnContract": "Approvals return to the Remote Access card with the session list updated; no Settings state is invented here."
+    },
+    {
+      "name": "Project Sync / Move",
+      "status": "deferred_named_owner",
+      "owner": "Project Syncing and Updates",
+      "route": "#/mgr/sync-move (named-owner shell); insertion listed on its domain page",
+      "insertion": "Project relocation and sync bundles owned by the sync pipeline; Settings only surfaces status and entry points.",
+      "returnContract": "A finished move returns to Settings Lifecycle with the relocated project's settings re-verified and conflicts, if any, queued for review."
+    },
+    {
+      "name": "Puppet Master application/content updates",
+      "status": "deferred_named_owner",
+      "owner": "Project Syncing and Updates",
+      "route": "#/mgr/updates (named-owner shell); insertion listed on its domain page",
+      "insertion": "Host-scoped signed Puppet Master updates, separate from provider, source-control, language-server, and container tool updates.",
+      "returnContract": "Update status cards deep-link into the Updates manager with signed-build receipts."
+    },
+    {
+      "name": "Full Server backup owner flow",
+      "status": "deferred_named_owner",
+      "owner": "Server Backbone",
+      "route": "#/mgr/server-backup (named-owner shell); insertion listed on its domain page",
+      "insertion": "Full Server backup class alongside settings backup and project backup, with its own schedule and verification.",
+      "returnContract": "Backup runs return to the Backup manager's server class with verification receipts and the last-run state."
+    }
+  ]
+}

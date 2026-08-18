@@ -7,21 +7,42 @@
   "plan_owner_impacts": [
     {
       "owner_doc": "Plans/FinalGUISpec.md",
-      "plan_units": ["F3-432", "F3-433", "F3-434", "F3-435", "F3-436", "F3-437", "F3-438", "F3-439", "F3-440", "F3-441", "F3-442", "F3-443", "F3-444", "F3-445", "F3-446", "F3-447"],
+      "plan_units": [
+        "F3-432",
+        "F3-433",
+        "F3-434",
+        "F3-435",
+        "F3-436",
+        "F3-437",
+        "F3-438",
+        "F3-439",
+        "F3-440",
+        "F3-441",
+        "F3-442",
+        "F3-443",
+        "F3-444",
+        "F3-445",
+        "F3-446",
+        "F3-447"
+      ],
       "impact": "Atlas demonstrates the search-first Settings surface (F3-432) as a cartographic atlas rather than bloom chips, and the setting-row grammar (F3-438) across all six C2 regions. The category-bloom modal model behind cmd.settings.bloom.open (F3-434 deep-link) is superseded in this concept by region/minimap navigation that preserves the same deep-link + focus-highlight semantics without the bloom silhouette. The notification-surface rule (title-bar stack is the sole in-app affordance; no bottom-right stack, status-bar bell, Activity Bar shortcut, or dedicated side panel) must be reflected in F3-432/F3-433 attention notices. Theme family/mode model (Friendly/Glass/Retro/Basic × Light/Dark/Auto with OS prefers-color-scheme live following) supersedes any 8-flat-enum rendering of general.visual.theme.",
       "gui_related": true,
       "action": "record + adjudicate during compile; do not edit canon from this concept"
     },
     {
       "owner_doc": "Plans/settings_inventory.json",
-      "plan_units": ["F3-441"],
+      "plan_units": [
+        "F3-441"
+      ],
       "impact": "Atlas exercises the inventory rows for notifications, sound, theme/appearance, tray, window-restore, crash-recovery, and teacher/help. Census gap: there are no inventory rows for spellcheck on/off, dictionary source, personal dictionary, or project dictionary — these must be added (see settings_inventory_impacts). general.visual.theme is an 8-value select; Atlas renders the family/mode model and flags the 8-enum as inventory lineage to reconcile. general.interaction.notification-method/notification-destinations/notification-mapping describe a multi-destination router (8 destinations) that the inventory does not yet model as a structured object.",
       "gui_related": true,
       "action": "add missing spellcheck rows; model notification destination as structured object; reconcile theme 8-enum with family/mode"
     },
     {
       "owner_doc": "Plans/settings_inventory.schema.json",
-      "plan_units": ["F3-441"],
+      "plan_units": [
+        "F3-441"
+      ],
       "impact": "Schema needs extension for: (a) notification destination objects (kind, channel/thread, headers, template, success_predicate, priority, parse_mode, retry, device_selection), (b) sound asset metadata (source, license, version, duration_seconds, sha256, default_mapping, pack_ref, verification_state), (c) custom theme TOML descriptor (base_theme, family, mode, tokens, schema_validation_result, fallback_theme), (d) dictionary source descriptor (source_kind, language, path_or_ref). The nine-state value model (Default/Recommended/Inherited/Auto/Not configured/Managed/Custom/Unavailable/Effective differs) must be representable per setting row.",
       "gui_related": false,
       "action": "extend schema; preserve v1 backward compatibility"
@@ -35,7 +56,10 @@
     },
     {
       "owner_doc": "Plans/UI_Command_Catalog.md",
-      "plan_units": ["UCC-103", "UCC-108"],
+      "plan_units": [
+        "UCC-103",
+        "UCC-108"
+      ],
       "impact": "Atlas reuses the existing notifications/sound/theme/model command families (UCC-103, UCC-108) verbatim and flags cmd.settings.bloom.open for alias/supersession by atlas region navigation. New candidate families not in canon: theme create/import/export (custom TOML), spellcheck dictionary management, settings manager open navigation, provider installation scan/verify/reconnect, app tray/quit/window-restore, teacher explain-screen. cmd.alert.* (UCC-108: acknowledge/snooze/dismiss/open_source/mute_rule) is a DIFFERENT system (attention alerts/concerns) from cmd.notifications.* (delivery routing) and must not be conflated or aliased.",
       "gui_related": true,
       "action": "adjudicate new candidate IDs; retire/alias bloom; record alert vs notification boundary"
@@ -145,39 +169,99 @@
   "command_id_impacts": [
     {
       "family": "theme",
-      "existing_canon": ["cmd.theme.set_mode", "cmd.theme.set_accent", "cmd.theme.set_density", "cmd.theme.preview", "cmd.theme.reset"],
+      "existing_canon": [
+        "cmd.theme.set_mode",
+        "cmd.theme.set_accent",
+        "cmd.theme.set_density",
+        "cmd.theme.preview",
+        "cmd.theme.reset"
+      ],
       "reuse_or_new": {
-        "reuse_existing": ["cmd.theme.set_mode (family/mode + Auto OS-follow)", "cmd.theme.set_accent", "cmd.theme.set_density", "cmd.theme.preview (live hover preview)", "cmd.theme.reset"],
-        "new_candidate": ["cmd.theme.create", "cmd.theme.import", "cmd.theme.export", "cmd.theme.open_folder", "cmd.theme.validate"]
+        "reuse_existing": [
+          "cmd.theme.set_mode (family/mode + Auto OS-follow)",
+          "cmd.theme.set_accent",
+          "cmd.theme.set_density",
+          "cmd.theme.preview (live hover preview)",
+          "cmd.theme.reset"
+        ],
+        "new_candidate": [
+          "cmd.theme.create",
+          "cmd.theme.import",
+          "cmd.theme.export",
+          "cmd.theme.open_folder",
+          "cmd.theme.validate"
+        ]
       },
       "conflict": "none — existing cmd.theme.* covers mutation/preview/reset; create/import/export/open-folder are genuinely absent",
       "distinguishes": "set_mode/set_accent/set_density = persistent setting mutation; preview = one-shot action with ttl; create/import/export = resource lifecycle; open_folder = route/open navigation"
     },
     {
       "family": "notifications_delivery",
-      "existing_canon": ["cmd.notifications.destination.create", "cmd.notifications.destination.update", "cmd.notifications.destination.delete", "cmd.notifications.destination.toggle", "cmd.notifications.destination.test", "cmd.notifications.mapping.update", "cmd.notifications.override.set"],
+      "existing_canon": [
+        "cmd.notifications.destination.create",
+        "cmd.notifications.destination.update",
+        "cmd.notifications.destination.delete",
+        "cmd.notifications.destination.toggle",
+        "cmd.notifications.destination.test",
+        "cmd.notifications.mapping.update",
+        "cmd.notifications.override.set"
+      ],
       "reuse_or_new": {
-        "reuse_existing": ["cmd.notifications.destination.test (masked + rate-limited + receipted test-send)", "cmd.notifications.destination.create/update/delete/toggle", "cmd.notifications.mapping.update", "cmd.notifications.override.set (quiet/focus)"]
+        "reuse_existing": [
+          "cmd.notifications.destination.test (masked + rate-limited + receipted test-send)",
+          "cmd.notifications.destination.create/update/delete/toggle",
+          "cmd.notifications.mapping.update",
+          "cmd.notifications.override.set (quiet/focus)"
+        ]
       },
       "conflict": "none; do NOT alias cmd.alert.* (acknowledge/snooze/dismiss/mute_rule) — that is the attention-alerts/concerns system, a different domain",
       "distinguishes": "destination.test = one-shot action (rate-limited, masked secrets, returns receipt); create/update/delete/toggle = resource lifecycle; mapping.update = persistent setting mutation"
     },
     {
       "family": "sound_library",
-      "existing_canon": ["cmd.sound.preview", "cmd.sound.upload", "cmd.sound.pack.import", "cmd.sound.asset.delete", "cmd.sound.asset.restore", "cmd.sound.asset.export", "cmd.sound.mapping.set"],
+      "existing_canon": [
+        "cmd.sound.preview",
+        "cmd.sound.upload",
+        "cmd.sound.pack.import",
+        "cmd.sound.asset.delete",
+        "cmd.sound.asset.restore",
+        "cmd.sound.asset.export",
+        "cmd.sound.mapping.set"
+      ],
       "reuse_or_new": {
-        "reuse_existing": ["cmd.sound.preview (local-only, never external)", "cmd.sound.upload", "cmd.sound.pack.import (PeonPing/OpenPeon; format + license check; unverified never bundled)", "cmd.sound.asset.delete/restore/export", "cmd.sound.mapping.set"],
-        "new_candidate": ["cmd.sound.asset.replace", "cmd.sound.master_volume.set"]
+        "reuse_existing": [
+          "cmd.sound.preview (local-only, never external)",
+          "cmd.sound.upload",
+          "cmd.sound.pack.import (PeonPing/OpenPeon; format + license check; unverified never bundled)",
+          "cmd.sound.asset.delete/restore/export",
+          "cmd.sound.mapping.set"
+        ],
+        "new_candidate": [
+          "cmd.sound.asset.replace",
+          "cmd.sound.master_volume.set"
+        ]
       },
       "conflict": "none",
       "distinguishes": "preview = local-only one-shot; upload/pack.import = resource ingest with verification gate; delete/restore/export = lifecycle; mapping.set = persistent; master_volume = persistent scalar"
     },
     {
       "family": "settings_navigation",
-      "existing_canon": ["cmd.settings.bloom.open", "cmd.settings.open_notifications", "cmd.settings.open_storage_retention", "cmd.settings.category.reset", "cmd.settings.suggestion.dismiss"],
+      "existing_canon": [
+        "cmd.settings.bloom.open",
+        "cmd.settings.open_notifications",
+        "cmd.settings.open_storage_retention",
+        "cmd.settings.category.reset",
+        "cmd.settings.suggestion.dismiss"
+      ],
       "reuse_or_new": {
-        "alias_or_supersede": ["cmd.settings.bloom.open → atlas region/minimap navigation (preserve deep-link + focus-highlight semantics; keep as compatibility alias only if needed)"],
-        "new_candidate": ["cmd.settings.manager.open (generic open-a-manager wrapper over route/open)", "cmd.settings.region.select (atlas-specific region nav, normalizes to route/open)", "cmd.settings.scrollspy.jump"]
+        "alias_or_supersede": [
+          "cmd.settings.bloom.open → atlas region/minimap navigation (preserve deep-link + focus-highlight semantics; keep as compatibility alias only if needed)"
+        ],
+        "new_candidate": [
+          "cmd.settings.manager.open (generic open-a-manager wrapper over route/open)",
+          "cmd.settings.region.select (atlas-specific region nav, normalizes to route/open)",
+          "cmd.settings.scrollspy.jump"
+        ]
       },
       "conflict": "cmd.settings.bloom.open describes a bloom modal that Atlas deliberately replaces; supersession, not conflict — semantics (deep-link + focus) are preserved",
       "distinguishes": "all navigation/route-open; never setting mutation. open_notifications/open_storage_retention are existing manager-open wrappers to reuse as the pattern for cmd.settings.manager.open"
@@ -187,27 +271,68 @@
       "existing_canon": [],
       "evidence": "none found — grep of Plans/UI_Command_Catalog.md and Plans/Wiring_Matrix.production.json for spell/dictionary yields no cmd.spellcheck.* or cmd.dictionary.* IDs",
       "reuse_or_new": {
-        "new_candidate": ["cmd.spellcheck.dictionary.add", "cmd.spellcheck.dictionary.remove", "cmd.spellcheck.dictionary.import", "cmd.spellcheck.dictionary.personal.manage", "cmd.spellcheck.dictionary.project.manage", "cmd.spellcheck.source.set"]
+        "new_candidate": [
+          "cmd.spellcheck.dictionary.add",
+          "cmd.spellcheck.dictionary.remove",
+          "cmd.spellcheck.dictionary.import",
+          "cmd.spellcheck.dictionary.personal.manage",
+          "cmd.spellcheck.dictionary.project.manage",
+          "cmd.spellcheck.source.set"
+        ]
       },
       "conflict": "none (greenfield); NO autocorrect command — grammar/style is a separate opt-in provider-backed feature requiring privacy/route/cost disclosure",
       "distinguishes": "add/remove/import = resource lifecycle; personal.manage/project.manage = persistent scope mutation; source.set = persistent setting"
     },
     {
       "family": "provider_installation_and_connection",
-      "existing_canon": ["cmd.model.refresh", "cmd.model.list", "cmd.account.select_profile", "cmd.provider.switch_route", "cmd.usage.refresh", "cmd.usage.export", "cmd.onboarding.free_models.refresh", "cmd.onboarding.free_models.retry", "cmd.onboarding.free_models.setup"],
+      "existing_canon": [
+        "cmd.model.refresh",
+        "cmd.model.list",
+        "cmd.account.select_profile",
+        "cmd.provider.switch_route",
+        "cmd.usage.refresh",
+        "cmd.usage.export",
+        "cmd.onboarding.free_models.refresh",
+        "cmd.onboarding.free_models.retry",
+        "cmd.onboarding.free_models.setup"
+      ],
       "reuse_or_new": {
-        "reuse_existing": ["cmd.model.refresh (catalog refresh with last-known-good)", "cmd.model.list", "cmd.account.select_profile", "cmd.provider.switch_route (requested/effective route)", "cmd.onboarding.free_models.refresh/retry/setup (Free Models wrapper)"],
-        "new_candidate": ["cmd.provider.installation.scan", "cmd.provider.installation.install (explicit, official source)", "cmd.provider.installation.update (Ask first / when idle)", "cmd.provider.installation.verify", "cmd.provider.installation.rollback", "cmd.provider.connection.reconnect"]
+        "reuse_existing": [
+          "cmd.model.refresh (catalog refresh with last-known-good)",
+          "cmd.model.list",
+          "cmd.account.select_profile",
+          "cmd.provider.switch_route (requested/effective route)",
+          "cmd.onboarding.free_models.refresh/retry/setup (Free Models wrapper)"
+        ],
+        "new_candidate": [
+          "cmd.provider.installation.scan",
+          "cmd.provider.installation.install (explicit, official source)",
+          "cmd.provider.installation.update (Ask first / when idle)",
+          "cmd.provider.installation.verify",
+          "cmd.provider.installation.rollback",
+          "cmd.provider.connection.reconnect"
+        ]
       },
       "conflict": "none; CLI-owned OAuth boundary respected — Claude/Antigravity OAuth stay CLI-owned; PM-direct OAuth only for supported routes (OpenAI/Codex, GitHub, Copilot)",
       "distinguishes": "scan/verify = read diagnostic; install/update/rollback = lifecycle action (explicit consent); reconnect = one-shot; refresh/list = read"
     },
     {
       "family": "app_tray_window_lifecycle",
-      "existing_canon": ["cmd.orchestrator.pause", "cmd.orchestrator.resume"],
+      "existing_canon": [
+        "cmd.orchestrator.pause",
+        "cmd.orchestrator.resume"
+      ],
       "reuse_or_new": {
-        "distinct_from_existing": ["cmd.orchestrator.pause/resume are RUN-scoped (goal/scheduler), NOT app tray lifecycle — do not alias"],
-        "new_candidate": ["cmd.app.tray.minimize", "cmd.app.tray.restore", "cmd.app.quit", "cmd.app.window.state.restore", "cmd.app.activity_bar.configure"]
+        "distinct_from_existing": [
+          "cmd.orchestrator.pause/resume are RUN-scoped (goal/scheduler), NOT app tray lifecycle — do not alias"
+        ],
+        "new_candidate": [
+          "cmd.app.tray.minimize",
+          "cmd.app.tray.restore",
+          "cmd.app.quit",
+          "cmd.app.window.state.restore",
+          "cmd.app.activity_bar.configure"
+        ]
       },
       "conflict": "naming hazard only: tray Pause/Resume must not be confused with cmd.orchestrator.pause/resume (different scope)",
       "distinguishes": "tray minimize/restore/quit = one-shot app actions; window.state.restore = lifecycle on launch; activity_bar.configure = persistent"
@@ -217,7 +342,11 @@
       "existing_canon": [],
       "evidence": "none found — no cmd.teacher.* or cmd.help.* in catalog",
       "reuse_or_new": {
-        "new_candidate": ["cmd.teacher.explain_screen", "cmd.teacher.transition_guide", "cmd.help.open_for_setting"]
+        "new_candidate": [
+          "cmd.teacher.explain_screen",
+          "cmd.teacher.transition_guide",
+          "cmd.help.open_for_setting"
+        ]
       },
       "conflict": "none (greenfield); must not duplicate cmd.alert.open_source (route to alert source) — different intent",
       "distinguishes": "explain_screen/transition_guide = one-shot assistant action; help.open_for_setting = route/open navigation"
@@ -481,5 +610,22 @@
       "blocks": "settings_inventory_impacts (missing)",
       "owner_hint": "Plans/settings_inventory.json + Plans/FinalGUISpec.md F3-441"
     }
-  ]
+  ],
+  "correction_2026_08_13": {
+    "packet": "PM_Settings_Dependency_and_Work_Correction_2026-08-13",
+    "processed": "2026-08-15 (repair pass; original build never processed this packet)",
+    "report": "../../reference-review-report.json",
+    "changes": [
+      "ObservableWork projection + skeleton hydration on manager open (truthful wait; no fabricated progress)",
+      "RuntimeResourceGovernor admission outcomes demonstrated in the Goal manager (admitted/queued/blocked/cancelled + sole-owner note; register §2)",
+      "Honest reconnect/refresh outcomes; offline state block with last-known-good + held refresh",
+      "Provider Setup Required runtime-demand flow with continuation token (final adjudication)",
+      "Virtualized 100-installation scale proof with bounded DOM",
+      "wireShell duplicate-listener leak fixed; theme crossfade; switch/toast/modal motion springs",
+      "Traveling you-are-here pin eases between regions (persists the last visited region via PM._atlasLastRegion); region clicks move the pin before zooming in",
+      "Viewport rail is now a draggable/clickable seek affordance (pointer capture) over the reading position",
+      "Cartographic zoom settle on region→focus transitions (transitionView zoom variant replaces the static CSS entrance); search gains keyboard nav, typo tolerance, highlighting, empty state"
+    ],
+    "note": "Candidate command/wiring/DRY deltas unchanged: the correction adds no new semantic actions beyond the runtime-demand receipt, whose candidate command lives in the existing pam.* census (flagged reuse)."
+  }
 }

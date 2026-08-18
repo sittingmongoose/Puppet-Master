@@ -1,0 +1,31 @@
+{
+  "schema_id": "pm.settings_bakeoff.candidate_dry_delta.v2.concept",
+  "concept_id": "concept-09-tome-tabs",
+  "model": "Qwen 5.8",
+  "provisional": true,
+  "note": "Distinguishes data/semantic reuse (headless, shared) from concept-native presentation (never shared). No second state owner and no universal visible renderer introduced.",
+  "data_semantic_reuse": [
+    { "component": "PMState2", "owner": "settings demo store (concepts 05-11)", "reuse": "settings values, receipts, restore points, scenarios, ObservableWork" },
+    { "component": "PMSearch2", "owner": "universal search index", "reuse": "828 inventory + manager/object/action entries; rid routing" },
+    { "component": "PMCopy2", "owner": "copy transaction engine", "reuse": "preview/apply/rollback semantics" },
+    { "component": "PMManagers2", "owner": "product grammar atoms", "reuse": "row renderer, bindRows, popupMenu, virtualList, skeleton" },
+    { "component": "PMManagers2Data", "owner": "manager fixture data", "reuse": "42 families, 17 providers, 9 deferred, 6 sources, search entries" },
+    { "component": "PMShell2 / pm-shell.css", "owner": "surrounding shell + tokens", "reuse": "themes, tray, toasts, width tiers" }
+  ],
+  "singular_owners_preserved": [
+    "ObservableWork (operation phases, wait reasons, determinate denominators)",
+    "BinaryLocator (installation discovery, host/environment)",
+    "provider readiness/usage probing",
+    "Project identity (shell chip; no profiles/sync)",
+    "ResourceGovernor-style rate limiting for test sends (rate-limited, receipted)",
+    "restore point store (single owner inside PMState2)"
+  ],
+  "concept_native_presentation_only": [
+    "right-edge persistent chapter tab rail and layered page stack",
+    "page-turn translateX motion and scroll-memory page stability",
+    "manager-local tab bars and roster+detail composition",
+    "wide-tier context margin pane",
+    "narrow-tier push navigation transformation"
+  ],
+  "dry_method_visible_state": "DRY Method manager (#/mgr/dry) exposes detections, savings, opt-outs, and review action; concept never auto-applies reuse."
+}

@@ -1,0 +1,101 @@
+{
+ "schema_id": "pm.settings_bakeoff.candidate_wiring_delta.v1",
+ "concept": "concept-11-tabbed-organizer",
+ "provisional": true,
+ "canon_mutated": false,
+ "routes": [
+  {
+   "surface": "settings.search.result",
+   "destination_object": {
+    "domain": "<from immutableResultId>",
+    "page": null,
+    "manager": null,
+    "object": null,
+    "section": null,
+    "row": null
+   },
+   "opens": "exact destination via PM_V2_SEARCH.resolve",
+   "emits": [
+    "settings.search.selected"
+   ],
+   "listens": [
+    "settings.navigate"
+   ],
+   "notes": "routing by immutable result ID only"
+  },
+  {
+   "surface": "settings.deep_link",
+   "destination_object": {
+    "domain": "any",
+    "page": "any",
+    "manager": "any",
+    "object": "any",
+    "section": "any",
+    "row": "any"
+   },
+   "opens": "full route restore incl. focus + calm highlight",
+   "emits": [
+    "settings.route.changed"
+   ],
+   "listens": [
+    "settings.back"
+   ],
+   "notes": null
+  },
+  {
+   "surface": "settings.copy.apply",
+   "destination_object": {
+    "domain": "system",
+    "manager": "lifecycle",
+    "page": "copy",
+    "section": "receipt",
+    "object": null,
+    "row": null
+   },
+   "opens": "receipt with rollback action",
+   "emits": [
+    "settings.copy.applied"
+   ],
+   "listens": [
+    "op.finished"
+   ],
+   "notes": null
+  },
+  {
+   "surface": "settings.manager.open",
+   "destination_object": {
+    "domain": "<owning domain>",
+    "page": null,
+    "manager": "<manager id>",
+    "object": null,
+    "section": null,
+    "row": null
+   },
+   "opens": "concept-native manager inside the same shell",
+   "emits": [
+    "settings.manager.opened"
+   ],
+   "listens": [
+    "settings.close"
+   ],
+   "notes": null
+  },
+  {
+   "surface": "settings.back",
+   "destination_object": {
+    "domain": null,
+    "page": null,
+    "manager": null,
+    "object": null,
+    "section": null,
+    "row": null
+   },
+   "opens": "one Settings level outward; restores search query/result when returning from a search landing",
+   "emits": [
+    "settings.route.changed"
+   ],
+   "listens": [],
+   "notes": null
+  }
+ ]
+}

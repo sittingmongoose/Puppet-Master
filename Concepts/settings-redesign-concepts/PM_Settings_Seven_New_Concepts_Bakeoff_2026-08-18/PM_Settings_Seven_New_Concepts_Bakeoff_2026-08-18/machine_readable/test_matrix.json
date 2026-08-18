@@ -1,0 +1,33 @@
+{
+  "schema_id": "pm.settings_bakeoff.test_matrix.v2",
+  "concepts": [5, 6, 7, 8, 9, 10, 11],
+  "themes": [
+    "Friendly Dark",
+    "Friendly Light",
+    "Glass Dark",
+    "Glass Light",
+    "Retro Dark",
+    "Retro Light",
+    "Basic Dark",
+    "Basic Light"
+  ],
+  "widths": [760, 900, 1280, 1700, 2200, 2500],
+  "required_test_families": [
+    "static_code",
+    "concept_hub_validation",
+    "interaction_smoke",
+    "search_route_exactness",
+    "manager_route_isolation",
+    "state_persistence",
+    "responsive_theme_matrix",
+    "performance_hydration",
+    "independent_visual_audit",
+    "original_concept_regression"
+  ],
+  "scale": {
+    "actual_inventory_required": true,
+    "actual_inventory_expected_at_packet_creation": 828,
+    "synthetic_stress_minimum": 2000,
+    "synthetic_must_not_replace_actual": true
+  }
+}

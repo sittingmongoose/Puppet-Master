@@ -1,0 +1,451 @@
+{
+  "rows": [
+    {
+      "productId": "prod:alibaba-coding-plan",
+      "productLabel": "Coding Plan",
+      "productKind": "subscription",
+      "dataOrder": [
+        "included",
+        "prod:alibaba-ptp",
+        "prod:alibaba-extra-bundle",
+        "wait_reset"
+      ],
+      "orderSteps": 4,
+      "whatHappensNext": "When included usage runs out, draw on the Personal Token Plan, then the Extra Bundle. Otherwise wait for the window reset.",
+      "renderedOptions": [
+        {
+          "value": "included",
+          "text": "included",
+          "selected": true
+        },
+        {
+          "value": "prod",
+          "text": "Draw on the balance/pack",
+          "selected": false
+        },
+        {
+          "value": "wait_reset",
+          "text": "Wait for the reset",
+          "selected": false
+        }
+      ],
+      "renderedOptionCount": 3,
+      "droppedSteps": 1,
+      "shownSelectedText": "included",
+      "shownSelectedValue": "included",
+      "storedPreference": null,
+      "storedPreferenceIsAnOption": false,
+      "productSelectHonoured": true,
+      "rawTokenOptionTexts": [
+        "included"
+      ]
+    },
+    {
+      "productId": "prod:alibaba-team-seats",
+      "productLabel": "Team seat credits",
+      "productKind": "subscription",
+      "dataOrder": [
+        "included",
+        "prod:alibaba-shared-pack",
+        "wait_reset"
+      ],
+      "orderSteps": 3,
+      "whatHappensNext": "When seat credits run out, draw on the Shared Usage Pack. Otherwise wait for the monthly refresh.",
+      "renderedOptions": [
+        {
+          "value": "included",
+          "text": "included",
+          "selected": true
+        },
+        {
+          "value": "prod",
+          "text": "Draw on the balance/pack",
+          "selected": false
+        },
+        {
+          "value": "wait_reset",
+          "text": "Wait for the reset",
+          "selected": false
+        }
+      ],
+      "renderedOptionCount": 3,
+      "droppedSteps": 0,
+      "shownSelectedText": "included",
+      "shownSelectedValue": "included",
+      "storedPreference": null,
+      "storedPreferenceIsAnOption": false,
+      "productSelectHonoured": true,
+      "rawTokenOptionTexts": [
+        "included"
+      ]
+    },
+    {
+      "productId": "prod:codex-plus",
+      "productLabel": "ChatGPT plan",
+      "productKind": "subscription",
+      "dataOrder": [
+        "included",
+        "prod:codex-credits",
+        "prod:codex-saved-reset",
+        "wait_reset"
+      ],
+      "orderSteps": 4,
+      "whatHappensNext": "When included usage runs out, use credits up to $20 this month. One saved reset is banked. Otherwise wait for the window reset.",
+      "renderedOptions": [
+        {
+          "value": "included",
+          "text": "included",
+          "selected": true
+        },
+        {
+          "value": "prod",
+          "text": "Draw on the balance/pack",
+          "selected": false
+        },
+        {
+          "value": "wait_reset",
+          "text": "Wait for the reset",
+          "selected": false
+        }
+      ],
+      "renderedOptionCount": 3,
+      "droppedSteps": 1,
+      "shownSelectedText": "included",
+      "shownSelectedValue": "included",
+      "storedPreference": "credits",
+      "storedPreferenceIsAnOption": false,
+      "productSelectHonoured": true,
+      "rawTokenOptionTexts": [
+        "included"
+      ]
+    },
+    {
+      "productId": "prod:codex-business",
+      "productLabel": "ChatGPT Business plan",
+      "productKind": "subscription",
+      "dataOrder": [
+        "included",
+        "fallback:acct:openai-personal",
+        "hard_stop"
+      ],
+      "orderSteps": 3,
+      "whatHappensNext": "When this plan reaches its limit, fall back to Personal OpenAI. No extra usage is enabled on the Work account.",
+      "renderedOptions": [
+        {
+          "value": "included",
+          "text": "included",
+          "selected": true
+        },
+        {
+          "value": "fallback",
+          "text": "Fall back to another account",
+          "selected": false
+        },
+        {
+          "value": "hard_stop",
+          "text": "Stop",
+          "selected": false
+        }
+      ],
+      "renderedOptionCount": 3,
+      "droppedSteps": 0,
+      "shownSelectedText": "included",
+      "shownSelectedValue": "included",
+      "storedPreference": null,
+      "storedPreferenceIsAnOption": false,
+      "productSelectHonoured": true,
+      "rawTokenOptionTexts": [
+        "included"
+      ]
+    },
+    {
+      "productId": "prod:claude-max",
+      "productLabel": "Claude Max plan",
+      "productKind": "subscription",
+      "dataOrder": [
+        "included",
+        "prod:claude-extra",
+        "hard_stop"
+      ],
+      "orderSteps": 3,
+      "whatHappensNext": "When included usage runs out, continue with extra usage up to the $100 spending limit. Then stop.",
+      "renderedOptions": [
+        {
+          "value": "included",
+          "text": "included",
+          "selected": true
+        },
+        {
+          "value": "prod",
+          "text": "Draw on the balance/pack",
+          "selected": false
+        },
+        {
+          "value": "hard_stop",
+          "text": "Stop",
+          "selected": false
+        }
+      ],
+      "renderedOptionCount": 3,
+      "droppedSteps": 0,
+      "shownSelectedText": "included",
+      "shownSelectedValue": "included",
+      "storedPreference": "extra_usage",
+      "storedPreferenceIsAnOption": false,
+      "productSelectHonoured": true,
+      "rawTokenOptionTexts": [
+        "included"
+      ]
+    },
+    {
+      "productId": "prod:claude-api-payg",
+      "productLabel": "Claude API · PAYG",
+      "productKind": "payg_route",
+      "dataOrder": [
+        "metered",
+        "spending_limit"
+      ],
+      "orderSteps": 2,
+      "whatHappensNext": "API use is metered. The org spending limit of $150 bounds this month.",
+      "renderedOptions": [
+        {
+          "value": "metered",
+          "text": "Continue metered",
+          "selected": true
+        },
+        {
+          "value": "spending_limit",
+          "text": "Bound by spending limit",
+          "selected": false
+        }
+      ],
+      "renderedOptionCount": 2,
+      "droppedSteps": 0,
+      "shownSelectedText": "Continue metered",
+      "shownSelectedValue": "metered",
+      "storedPreference": null,
+      "storedPreferenceIsAnOption": false,
+      "productSelectHonoured": true,
+      "rawTokenOptionTexts": []
+    },
+    {
+      "productId": "prod:kimi-code-plan",
+      "productLabel": "Kimi Code plan",
+      "productKind": "subscription",
+      "dataOrder": [
+        "included",
+        "prod:kimi-pool",
+        "wait_reset"
+      ],
+      "orderSteps": 3,
+      "whatHappensNext": "When this plan reaches its limit, draw on the shared membership pool. Otherwise wait for the rolling week.",
+      "renderedOptions": [
+        {
+          "value": "included",
+          "text": "included",
+          "selected": true
+        },
+        {
+          "value": "prod",
+          "text": "Draw on the balance/pack",
+          "selected": false
+        },
+        {
+          "value": "wait_reset",
+          "text": "Wait for the reset",
+          "selected": false
+        }
+      ],
+      "renderedOptionCount": 3,
+      "droppedSteps": 0,
+      "shownSelectedText": "included",
+      "shownSelectedValue": "included",
+      "storedPreference": null,
+      "storedPreferenceIsAnOption": false,
+      "productSelectHonoured": true,
+      "rawTokenOptionTexts": [
+        "included"
+      ]
+    },
+    {
+      "productId": "prod:oc-go-plan",
+      "productLabel": "OpenCode Go plan",
+      "productKind": "subscription",
+      "dataOrder": [
+        "included",
+        "free_fallback",
+        "wait_reset"
+      ],
+      "orderSteps": 3,
+      "whatHappensNext": "When OpenCode Go reaches its limit, continue with configured free models. Zen balance is off.",
+      "renderedOptions": [
+        {
+          "value": "included",
+          "text": "included",
+          "selected": false
+        },
+        {
+          "value": "free_fallback",
+          "text": "Continue with free models",
+          "selected": true
+        },
+        {
+          "value": "wait_reset",
+          "text": "Wait for the reset",
+          "selected": false
+        }
+      ],
+      "renderedOptionCount": 3,
+      "droppedSteps": 0,
+      "shownSelectedText": "Continue with free models",
+      "shownSelectedValue": "free_fallback",
+      "storedPreference": "free_fallback",
+      "storedPreferenceIsAnOption": true,
+      "productSelectHonoured": true,
+      "rawTokenOptionTexts": [
+        "included"
+      ]
+    },
+    {
+      "productId": "prod:oc-zen-balance",
+      "productLabel": "Zen balance",
+      "productKind": "prepaid_balance",
+      "dataOrder": [
+        "balance",
+        "hard_stop"
+      ],
+      "orderSteps": 2,
+      "whatHappensNext": "Spend draws the Zen balance. Auto-reload is off, so at zero it stops.",
+      "renderedOptions": [
+        {
+          "value": "balance",
+          "text": "balance",
+          "selected": true
+        },
+        {
+          "value": "hard_stop",
+          "text": "Stop",
+          "selected": false
+        }
+      ],
+      "renderedOptionCount": 2,
+      "droppedSteps": 0,
+      "shownSelectedText": "balance",
+      "shownSelectedValue": "balance",
+      "storedPreference": null,
+      "storedPreferenceIsAnOption": false,
+      "productSelectHonoured": true,
+      "rawTokenOptionTexts": [
+        "balance"
+      ]
+    },
+    {
+      "productId": "prod:zai-legacy-plan",
+      "productLabel": "Legacy plan",
+      "productKind": "subscription",
+      "dataOrder": [
+        "included",
+        "hard_stop"
+      ],
+      "orderSteps": 2,
+      "whatHappensNext": "When this plan reaches its limit, wait for the reset. Your general Z.AI balance will not be used.",
+      "renderedOptions": [
+        {
+          "value": "included",
+          "text": "included",
+          "selected": true
+        },
+        {
+          "value": "hard_stop",
+          "text": "Stop",
+          "selected": false
+        }
+      ],
+      "renderedOptionCount": 2,
+      "droppedSteps": 0,
+      "shownSelectedText": "included",
+      "shownSelectedValue": "included",
+      "storedPreference": null,
+      "storedPreferenceIsAnOption": false,
+      "productSelectHonoured": true,
+      "rawTokenOptionTexts": [
+        "included"
+      ]
+    },
+    {
+      "productId": "prod:zai-credit-plan",
+      "productLabel": "Credit plan",
+      "productKind": "subscription",
+      "dataOrder": [
+        "included",
+        "metered",
+        "hard_stop"
+      ],
+      "orderSteps": 3,
+      "whatHappensNext": "When credits run out, metered continuation applies at list price. Otherwise stop.",
+      "renderedOptions": [
+        {
+          "value": "included",
+          "text": "included",
+          "selected": true
+        },
+        {
+          "value": "metered",
+          "text": "Continue metered",
+          "selected": false
+        },
+        {
+          "value": "hard_stop",
+          "text": "Stop",
+          "selected": false
+        }
+      ],
+      "renderedOptionCount": 3,
+      "droppedSteps": 0,
+      "shownSelectedText": "included",
+      "shownSelectedValue": "included",
+      "storedPreference": null,
+      "storedPreferenceIsAnOption": false,
+      "productSelectHonoured": true,
+      "rawTokenOptionTexts": [
+        "included"
+      ]
+    },
+    {
+      "productId": "prod:antigravity-baseline",
+      "productLabel": "Baseline plan",
+      "productKind": "subscription",
+      "dataOrder": [
+        "included",
+        "wait_reset"
+      ],
+      "orderSteps": 2,
+      "whatHappensNext": "When included usage runs out, wait for the window reset. AI Credit Overages are off.",
+      "renderedOptions": [
+        {
+          "value": "included",
+          "text": "included",
+          "selected": true
+        },
+        {
+          "value": "wait_reset",
+          "text": "Wait for the reset",
+          "selected": false
+        }
+      ],
+      "renderedOptionCount": 2,
+      "droppedSteps": 0,
+      "shownSelectedText": "included",
+      "shownSelectedValue": "included",
+      "storedPreference": null,
+      "storedPreferenceIsAnOption": false,
+      "productSelectHonoured": true,
+      "rawTokenOptionTexts": [
+        "included"
+      ]
+    }
+  ],
+  "sheetText": "Usage settings\nCompact quick controls — a consumer of the shared Settings registry, never a second settings system.\nPREFERENCES\nWarn me before I run low\nAutomatic account/provider switching\nAFTER INCLUDED USAGE\nProduct\nCoding Plan\nTeam seat credits\nChatGPT plan\nChatGPT Business plan\nClaude Max plan\nClaude API · PAYG\nKimi Code plan\nOpenCode Go plan\nZen balance\nLegacy plan\nCredit plan\nBaseline plan\nThen\nincluded\nWait for the reset\nEXTRA PAID USAGE\nExtra usage\nSpending limit\n$ / month\nAI Credit Overages\nCURRENT ALLOWANCE (READ-ONLY)\nChatGPT Business plan · 5-hour window\n100%\nChatGPT Business plan · Weekly window\n96%\nExtra Bundle · Bundle requests\n80%\nSaved resets\n1 banked · expires Sep 1 00:00 EDT\nPersonal Token Plan\n3.8M left\nExtra Bundle\n40 left\nOpen provider settings\nSee all usage settings\nRaw meter policies, source authority, route epochs, probe cadence and price versions live in Advanced/support views. Widget settings never change these policies.",
+  "roBlock": "ChatGPT Business plan · 5-hour window\n100%\nChatGPT Business plan · Weekly window\n96%\nExtra Bundle · Bundle requests\n80%\nSaved resets\n1 banked · expires Sep 1 00:00 EDT\nPersonal Token Plan\n3.8M left\nExtra Bundle\n40 left",
+  "pageErrors": []
+}

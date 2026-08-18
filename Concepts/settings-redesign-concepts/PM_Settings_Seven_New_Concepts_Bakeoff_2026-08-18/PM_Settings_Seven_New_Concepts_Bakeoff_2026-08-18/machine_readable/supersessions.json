@@ -1,0 +1,29 @@
+{
+  "schema_id": "pm.settings_bakeoff.supersessions.v2",
+  "supersedes": [
+    {
+      "old_rule": "build four concepts",
+      "new_rule": "add seven new concepts numbered 05 through 11"
+    },
+    {
+      "old_rule": "repair or refine existing concepts when omissions are found",
+      "new_rule": "concepts 01 through 04 are frozen; omissions are corrected only in new concepts and their new reports"
+    },
+    {
+      "old_rule": "manager coverage may be collective across concepts and shared_grammar may count",
+      "new_rule": "every new concept individually demonstrates every non-deferred manager; shared_grammar is forbidden as coverage"
+    },
+    {
+      "old_rule": "editable global/project/goal/host scope or general project inheritance may be shown",
+      "new_rule": "all editable settings apply to the current Project; no general scope selector, inheritance, linked settings, or profiles"
+    },
+    {
+      "old_rule": "reference visual materials may be copied",
+      "new_rule": "Tome Tabs, Command Suite, and Tabbed Organizer are layout-only and must be rethemed to Puppet Master"
+    },
+    {
+      "old_rule": "search may route through a grouped list using visual position",
+      "new_rule": "search routes only by immutable result ID and exact destination object"
+    }
+  ]
+}

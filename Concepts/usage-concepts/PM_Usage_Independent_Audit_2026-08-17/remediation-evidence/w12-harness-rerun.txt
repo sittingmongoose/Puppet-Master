@@ -1,0 +1,113 @@
+u11-verify: static server on http://127.0.0.1:8097/ (root: /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/hcopy)
+PASS matrix friendly-dark @ 900px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix friendly-dark @ 1280px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix friendly-dark @ 1700px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix friendly-dark @ 2200px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix friendly-dark @ 2500px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix friendly-light @ 900px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix friendly-light @ 1280px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix friendly-light @ 1700px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix friendly-light @ 2200px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix friendly-light @ 2500px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix glass-dark @ 900px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix glass-dark @ 1280px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix glass-dark @ 1700px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix glass-dark @ 2200px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix glass-dark @ 2500px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix glass-light @ 900px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix glass-light @ 1280px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix glass-light @ 1700px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix glass-light @ 2200px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix glass-light @ 2500px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix retro-dark @ 900px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix retro-dark @ 1280px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix retro-dark @ 1700px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix retro-dark @ 2200px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix retro-dark @ 2500px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix retro-light @ 900px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix retro-light @ 1280px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix retro-light @ 1700px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix retro-light @ 2200px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix retro-light @ 2500px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix basic-dark @ 900px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix basic-dark @ 1280px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix basic-dark @ 1700px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix basic-dark @ 2200px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix basic-dark @ 2500px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix basic-light @ 900px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix basic-light @ 1280px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix basic-light @ 1700px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix basic-light @ 2200px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix basic-light @ 2500px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS interaction scope picker → OpenAI chip
+PASS interaction disclosure Std→Adv toggles authority rail — hidden@std=true visible@adv=true
+PASS interaction settings sheet routes to canonical Settings and writes no policy — policyInputs=0 u11:settings=null dispatch={"cat":"ai","id":"ai.usage.pressure-visibility"}
+PASS interaction export records → JSONL → cmd.usage.export
+PASS interaction refresh toasts — Usage projections refreshed (demo)
+PASS interaction zero console errors
+PASS new BSD section in attempt inspector (ue-600)
+PASS correction inspector acquisition note on verification call (ue-609)
+PASS new operations widget (CLI update · rolled back · 5 stages) — stages=5
+PASS correction acquisition lineage on cli_update (explicit setup · official source · bound host/env)
+PASS correction setup_required → provider setup deep-link, no silent install
+PASS guard maintenance entries carry no token totals
+PASS new capacity envelope renders every ceiling the run record carries — runs=3 ceilings=15 problems=0
+PASS new forecast refresh dispatches cmd.usage.forecast.request and recomputes the projection — Forecast recomputed (demo) · reading 2 · renderedForecastChanged=true
+PASS new account row Use next → switch_route + toast — Future work will prefer Alibaba · Personal. In-flight requests are never moved. | Priority 1last used 13m agoUse nextOpen provider console
+PASS new plans estimate (unavailable → PM estimate 63%)
+PASS guard unknown≠zero (kimi pool / zai limit unknown; estimate distinct)
+PASS new free model cooldown row
+PASS guard unconfigured providers absent from DOM
+PASS guard cost identity 61.85M + 125.57M = 187.42M
+PASS new-behavior zero console errors
+PASS guard free models every rendered row names family, account and connection — rows=9/9 gaps=0 unidentifiedFallback=false
+PASS guard free models ineligible rows keep their underlying route — ineligible=2 [free:ds-ended, free:glm-unverified] incomplete=0
+PASS guard every billing route renders its own label plus connection, account and product evidence — routes=7 distinctLabels=7 problems=0
+PASS guard helper calls render as their own attempts, never folded into the main model — work=work-1 attempts=9 rendered=9 helpers=7 missing=0 folded=0
+PASS guard historical attempts keep their own route and settlement, not the current alias — historical=2 settlements=2 distinct=true problems=0
+PASS guard account rows are exactly the configured accounts, none shown before setup — rows=12 configured=12 stray=0 removedLeak=0 unconfiguredLeak=0
+PASS guard Usage persists only view and layout state, never a Settings-owned policy — keys=4 [pm.theme, u11:disclosure, u11:scope, u11:seeded] roomCanvases=13 policyShaped=0
+PASS guard no label is cut off without an ellipsis or a title to recover it — clipped=156 withoutAffordance=0 zeroWidth=0
+PASS guard every meter fill stays inside its track — tracks=216 escaped=0
+PASS hard-failure guards zero console errors
+PASS closure turn card figures are the work item total, never the headline attempt — cards=12 bucketFigures=45 workItemsLargerThanTheirHeadline=11 problems=0
+PASS closure user_work primaries are never counted as helper calls — cards=12 workItemsWithMoreThanOnePrimary=6 problems=0
+PASS closure a work item spanning several provider families names every one of them — multiFamilyWorkItems=7 problems=0
+PASS closure scope footer counts current usage without removed accounts and the arithmetic closes — scopes=scope:all:52+2=54 fam:openai:8+2=10 attempts=54 problems=0
+PASS closure provider-setup deep link carries provider, account, connection, CLI, host, environment and its continuation — ops=ops-8 category=ai focus_setting_id=ai.accounts.provider-connections inCanon=true continuation=cont-8841 reachedDOM=true absentIdentity=none rewritten=none inventory=828 rows
+PASS closure Settings sheet routes to a settings row that exists in canon — dispatch={"cat":"ai","id":"ai.usage.pressure-visibility"} inCanon=true inventory=828 rows
+PASS closure the model level is a navigable scope, not "Unknown scope" — pickerRows=116 modelRows=16 unknownRows=0 picked=model:qwen3-coder-plus kind=model narrowsTo=11/54 chip="Qwen3 Coder Plus" ledgerCards=5 outOfScopeCards=0 kinds={"all":1,"comparison":1,"family":10,"account":12,"connection":16,"product":27,"meter":33,"model":16}
+PASS closure CBP-027 probe states render in the record’s own words for every installation — installations=3/3 probeRows=24/24 vocabulary=11 unrendered=0 fabricated=0
+PASS closure CBP-027 credits never become a token bucket, a cost, a quota or a provider total — creditRecords=3 tokenBucketsHeldUnknown=33 problems=0
+PASS closure the rendered time-kind coverage matches U11.timeKindCoverage for every run — runs=run:goal-47 11/11 · run:plan-12 9/11 missing:reset_wait+maintenance · run:crew-3 9/11 missing:resource_wait+maintenance problems=0
+PASS closure changing the page scope dispatches no command — target=cmp:coding-sprint scopeApplied=true dispatched=[] pickerRows=116
+PASS closure the run inspector opens on cmd.nav.open_subject and the attempt inspector on cmd.nav.open_usage_subject — run=run:goal-47 [cmd.nav.open_subject] {"kind":"run","obj":"run:goal-47","run":"run:goal-47"} · attempt=ue-501 [cmd.nav.open_usage_subject] {"kind":"usage_event","obj":"ue-501","ref":"ue-501"}
+PASS closure removed-source history survives a bucket filter set to its own bucket — historicalAttempts=2 configSheetDrivable=true main→2 rows specialists→0 rows · all→2 rows
+PASS closure no leaf collapses to zero width or is cut off without recovery at 360 and 520 — rooms=13 360px zeroWidth=0 withoutAffordance=0 · 520px zeroWidth=0 withoutAffordance=0 clipped=71
+PASS closure no element id is used twice, in any room or overlay — surfacesScanned=16 idsAtMost=68 duplicates=0
+PASS closure no title or aria-label carries a raw enum token — scans=14 underscoreTooltips=0 machineReadableDataAttributes=267
+PASS closure a meter with no published figure renders no percentage, and no percentage is negative — meterRows=33 withFigure=26 unknown=7 problems=0 negativePercentagesInRooms=0
+PASS closure a reported cache zero is distinguishable from a cache that is not exposed — reportedZeroRows=1 notExposedRows=1 saysMeasuredZero=true saysNothingToRead=true zeroShownAsUnknown=false cacheRoomOpen=true
+PASS closure a provider-reported zero stays a reported zero and is never relabelled unknown — reportedRows=7 rowsThatLoseTheirZero=0
+PASS closure guards zero console errors
+PASS fixture 1 Codex limit → credits continuation
+PASS fixture 2 Alibaba Extra Bundle consumption (ue-611 usage_pack)
+PASS fixture 3 Work→Personal fallback (ue-608 requested≠effective)
+PASS fixture 4 separately settled vision helper + attachment transform
+PASS fixture 5 model change replay/cache reset (cm-4 + replay ue-591)
+PASS fixture 6 free model cooldown rendered
+PASS fixture 7 background validation consumes allowance (probe attribution)
+PASS fixture 8 six required specialists in three two-agent waves, rendered — run:plan-12 "Spec: U11 usage concept" 6 required / 2 admitted / 4 queued / 3 waves · capacityRow={"names":true,"waveplan":true,"requested":true} runDetail={"required":true,"admitted":true,"queued":true,"waves":true}
+PASS fixture 9 provider unavailable → PM estimate (meter:oc-go-monthly)
+PASS fixture 10 requested vs effective model (thread:t-91 switch)
+PASS fixture 11 BSD silent + advice + duplicate suppressed
+PASS fixture 12 attachment transform event fields (ue-602)
+PASS fixture 13 CLI update idle/verify/rollback (ops-1)
+PASS fixture 14 offline outbox + reconnect replay (ops-2 + ue-610)
+PASS fixture 15 server work continues offline (ops-3 on TrueNAS)
+PASS fixture 16 cross-project child (work-12 · Harbor)
+PASS fixture 17 sound preview + notification test-send (ops-4/ops-5)
+PASS fixture 18 unconfigured account absent from normal view
+PASS context details show stable prefix / cache epoch / tool schema overhead
+
+110 pass · 0 fail · 110 cases · 176.7s

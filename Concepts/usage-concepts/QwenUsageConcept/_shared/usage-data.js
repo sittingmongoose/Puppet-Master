@@ -440,7 +440,7 @@
       { prov: 'GitHub Copilot', state: 'included_premium_approaching', status: '9 of 100 premium requests left',
         sub: 'Approaching the monthly cap \u2014 premium-request-backed features remain available until the allotment is exhausted', extra: 'Included models remain available after exhaustion' },
       { prov: 'Codex \u00b7 ChatGPT plan', state: 'ok', status: 'Included usage active', sub: '5h window 34% used' },
-      { prov: 'Gemini Direct', state: 'rate_limited', status: 'Pay-as-you-go rate limit', sub: 'tier-based RPM/TPM, not a fixed counter' },
+      { prov: 'Gemini Direct', state: 'rate_limited', status: 'Pay-as-you-go rate limit', sub: 'rate-class RPM/TPM, not a fixed counter' },
       { prov: 'Kimi For Coding', state: 'unverified', status: 'Capability-gated', sub: 'not directly proven \u2014 shown as unverified, not a purchase blocker' },
       { prov: 'Z.AI Coding Plan', state: 'plan_not_included', status: 'glm-5v-turbo not in plan', sub: 'plan-dependent quota/reset' }
     ],

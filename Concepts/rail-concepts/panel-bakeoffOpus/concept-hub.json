@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "id": "rail:opus",
+  "topic": "rail",
+  "model": "Opus",
+  "presentation": "hybrid",
+  "order": 20,
+  "widthControl": {
+    "enabled": true,
+    "label": "Panel width",
+    "role": "panel",
+    "min": 220,
+    "max": 560,
+    "step": 1,
+    "default": 280,
+    "presets": [
+      220,
+      280,
+      420,
+      560
+    ],
+    "previewWidth": 1200
+  },
+  "workspace": {
+    "path": "index.html",
+    "title": "Opus Panel Bakeoff Index",
+    "openActions": "both",
+    "controlMode": "internal",
+    "tags": [
+      "index",
+      "matrix",
+      "panels"
+    ],
+    "order": 5,
+    "id": "workspace",
+    "openPath": "index.html"
+  },
+  "entries": [
+    {
+      "id": "gallery",
+      "title": "Opus Panel Gallery",
+      "path": "gallery.html",
+      "openActions": "both",
+      "controlMode": "internal",
+      "tags": [
+        "matrix",
+        "panels"
+      ],
+      "order": 10,
+      "openPath": "gallery.html"
+    }
+  ]
+}

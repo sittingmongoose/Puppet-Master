@@ -1,0 +1,1808 @@
+[pm-plans-verify] start json_syntax
+[pm-plans-verify] done json_syntax status=fail elapsed_ms=27365
+[pm-plans-verify] start verify_spec_lock
+[pm-plans-verify] done verify_spec_lock status=fail elapsed_ms=320
+[pm-plans-verify] start validate_plan_graph
+[pm-plans-verify] done validate_plan_graph status=fail elapsed_ms=11506
+[pm-plans-verify] start validate_auto_decisions
+[pm-plans-verify] done validate_auto_decisions status=pass elapsed_ms=201
+[pm-plans-verify] start validate_evidence
+[pm-plans-verify] done validate_evidence status=fail elapsed_ms=9545
+[pm-plans-verify] start lint_contractrefs
+[pm-plans-verify] done lint_contractrefs status=pass elapsed_ms=33951
+[pm-plans-verify] start lint_banned_phrases
+[pm-plans-verify] done lint_banned_phrases status=pass elapsed_ms=217
+[pm-plans-verify] start lint_path_refs
+[pm-plans-verify] done lint_path_refs status=pass elapsed_ms=958
+[pm-plans-verify] start check_project_artifact_requirements
+[pm-plans-verify] done check_project_artifact_requirements status=pass elapsed_ms=184
+[pm-plans-verify] start validate_plans_to_code_handoff_schema
+[pm-plans-verify] done validate_plans_to_code_handoff_schema status=pass elapsed_ms=186
+[pm-plans-verify] start validate_prd_planning_runtime_contracts
+[pm-plans-verify] done validate_prd_planning_runtime_contracts status=pass elapsed_ms=385
+[pm-plans-verify] start validate_case_l_non_event_materialization
+[pm-plans-verify] done validate_case_l_non_event_materialization status=fail elapsed_ms=628
+[pm-plans-verify] start validate_implementation_readiness
+[pm-plans-verify] done validate_implementation_readiness status=fail elapsed_ms=3031
+[pm-plans-verify] start validate_plan_migration
+[pm-plans-verify] done validate_plan_migration status=fail elapsed_ms=20071
+[pm-plans-verify] start validate_runtime_artifact_schemas
+[pm-plans-verify] done validate_runtime_artifact_schemas status=pass elapsed_ms=211
+[pm-plans-verify] start validate_goal_runtime_event_fixtures
+[pm-plans-verify] done validate_goal_runtime_event_fixtures status=pass elapsed_ms=181
+[pm-plans-verify] start validate_project_output_fixtures
+[pm-plans-verify] done validate_project_output_fixtures status=pass elapsed_ms=190
+[pm-plans-verify] start validate_usage_gui_fixtures
+[pm-plans-verify] done validate_usage_gui_fixtures status=pass elapsed_ms=182
+[pm-plans-verify] start validate_usage_contract_drift
+[pm-plans-verify] done validate_usage_contract_drift status=pass elapsed_ms=2434
+[pm-plans-verify] start validate_gui_asset_policy
+[pm-plans-verify] done validate_gui_asset_policy status=pass elapsed_ms=64710
+[pm-plans-verify] start validate_web_capability_contracts
+[pm-plans-verify] done validate_web_capability_contracts status=pass elapsed_ms=4560
+[pm-plans-verify] start validate_filesafe_security_policy
+[pm-plans-verify] done validate_filesafe_security_policy status=pass elapsed_ms=214
+[pm-plans-verify] start validate_wiring_matrix
+[pm-plans-verify] done validate_wiring_matrix status=pass elapsed_ms=325
+[pm-plans-verify] start validate_audit_closure
+[pm-plans-verify] done validate_audit_closure status=fail elapsed_ms=15393
+[pm-plans-verify] start validate_audit_status_index
+[pm-plans-verify] done validate_audit_status_index status=pass elapsed_ms=388
+[pm-plans-verify] start check_shards
+[pm-plans-verify] done check_shards status=pass elapsed_ms=11436
+{
+  "check": "run-gates",
+  "failures": [
+    {
+      "check": "json_syntax",
+      "failures": [
+        {
+          "error": "Expecting value: line 2 column 1 (char 1)",
+          "path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v9_run_01/direct_appserver_receipts/slot-bravo_S10A_DECISION_A14.json"
+        },
+        {
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-001/fault_evidence/fault-019-forced-loss-instead-of-drain/cells/slot-alpha/000_S10A_DECISION_A01/attempt.json"
+        },
+        {
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-001/fault_evidence/fault-024-loss-after-raw/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json"
+        },
+        {
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-002/fault_evidence/024-loss-after-raw/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json"
+        },
+        {
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-002/fault_evidence/026-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/attempt.json"
+        },
+        {
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-003-final-self-test-001/fault_evidence/019-forced-loss-instead-of-drain/run/cells/slot-alpha/000_S10A_DECISION_A01/attempt.json"
+        },
+        {
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-004-final-self-test-001/fault_evidence/025-loss-after-completion/run/cells/slot-alpha/000_S10A_DECISION_A01/completion.json"
+        },
+        {
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-004-final-self-test-001/fault_evidence/026-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/attempt.json"
+        },
+        {
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-005-final-self-test-001/fault_evidence/024-loss-after-raw/run/cells/slot-alpha/000_S10A_DECISION_A01/completion.json"
+        },
+        {
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-005-final-self-test-001/fault_evidence/026-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json"
+        },
+        {
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-008-final-self-test-002/fault_evidence/019-forced-loss-instead-of-drain/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json"
+        },
+        {
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-008-final-self-test-002/fault_evidence/027-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json"
+        },
+        {
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-002/fault_evidence/024-loss-after-raw/run/cells/slot-alpha/000_S10A_DECISION_A01/completion.json"
+        },
+        {
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-002/fault_evidence/027-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json"
+        }
+      ],
+      "status": "fail"
+    },
+    {
+      "check": "verify_spec_lock",
+      "failures": [
+        {
+          "actual": "5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb",
+          "error": "stale_hash",
+          "expected": "db49393309255f4564a11e51ef07cd0d0831631da8354872e1e05674d3a4931d",
+          "path": "Plans/00-plans-index.md"
+        },
+        {
+          "actual": "975472ff73c949fea277805b1317b1f67f56972bbfe401c73c3f38267edac4b3",
+          "error": "stale_hash",
+          "expected": "d24307d69857bf939e2d9e3514d15fa7a4af41e225633e2f19eb40aeba10012c",
+          "path": "Plans/Automated_Testing_System.md"
+        },
+        {
+          "actual": "09408a3e335023db2cf93ebf921993c37ed9166827985d47eeef27ba02b99dbd",
+          "error": "stale_hash",
+          "expected": "9f09a8ab2bed0549cd7c4954ecf837b31885e7dd3804026dc938334e4974dd04",
+          "path": "Plans/Contracts_V0.md"
+        },
+        {
+          "actual": "0d92075a16671df62644b7d33250c46612e21b63fd2ca60f83c26ca72054b6be",
+          "error": "stale_hash",
+          "expected": "bb7f0b4926c02076c8cf9533a63992240935bfd24bd10f290bbb2ff1dfcf410f",
+          "path": "Plans/DRY_Rules.md"
+        },
+        {
+          "actual": "9a1b15ff570170004e106ad168572e399378dfbe596bbd6d66b10f9e5437e899",
+          "error": "stale_hash",
+          "expected": "bb36d0e03f358c2b87d6c8b91d33f7da5f62c36c45524c34dedaff8146caffd4",
+          "path": "Plans/GitHub_API_Auth_and_Flows.md"
+        },
+        {
+          "actual": "98f20b0efd0e4aa31dfe1f040025015df74c9bc088f94bf014e9a5615214ae8e",
+          "error": "stale_hash",
+          "expected": "19b669a1c0c1e827d0b2cc40fa4c9c138032a10212259096201ba08d070a74f3",
+          "path": "Plans/Goal_Runtime_System.md"
+        },
+        {
+          "actual": "805ea39b2533cb50a07eddfdefa950c470e3126f4dddb09cdad8ef1c3aec814d",
+          "error": "stale_hash",
+          "expected": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c",
+          "path": "Plans/gui_automation_manifest.schema.json"
+        },
+        {
+          "actual": "36eec1750405a528e563326af1b4b751fba863cf823ee12780f0416e633a4498",
+          "error": "stale_hash",
+          "expected": "d4691388bb5c1f972f3841a2bd86eb6be915692095d9d8c07d7dba78d9cfe2b7",
+          "path": "Plans/orchestrator-subagent-integration.md"
+        },
+        {
+          "actual": "698cd77082376d7520f087a9c0041b597f50f4e81142ab68a2a0abee476a156c",
+          "error": "stale_hash",
+          "expected": "532f9612496515eb4ff1931e0d2baef2a9c57741db89e0bd70f4ab87b1439d65",
+          "path": "Plans/sharding_config.json"
+        },
+        {
+          "actual": "d3de1b7e49a2d74fdd891868bddb92276ec2c61e9a5c079acc6bcc4c67a94961",
+          "error": "stale_hash",
+          "expected": "013f1bc60b079da5946a981f2b9d7fe43d3eb1d14c36633974c9a1de5d66486d",
+          "path": "Plans/UI_Command_Catalog.md"
+        },
+        {
+          "actual": "e106d8df8dd65cd99f76ce7ca2e0c9d6ad87f80df439f2ef97c6c1e195169c09",
+          "error": "stale_hash",
+          "expected": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f",
+          "path": "Plans/Wiring_Matrix.schema.json"
+        },
+        {
+          "actual": "88f0e18387d8d4e81e856d024391faa56264a3d61a7945b0f1c2d294258a3e65",
+          "error": "stale_hash",
+          "expected": "e5baa8b91a726f3a43087ed4d082fcf11c8ddd21a3b7a5f536acea247dbe4ba6",
+          "path": "scripts/pm-plans-verify.py"
+        },
+        {
+          "actual": "ac1b5d4e14ca7f69b72f955f18e9dd90a8c469aa93212dffc5a524dfaade9523",
+          "error": "stale_hash",
+          "expected": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "path": "Plans/FinalGUISpec.md"
+        },
+        {
+          "actual": "fb10700922c0e0320613b1bfabc05fc1b63bbf142db41fe88df84c5700522805",
+          "error": "stale_hash",
+          "expected": "f5098861c5cd12d3908e8fdd2bdecd3d4da92ba1157851b3fae1f4284f006de1",
+          "path": "Plans/Models_System.md"
+        },
+        {
+          "actual": "a2589377dc51f33ab43491aa30435c44a29276532ef7618254678e5ebef803e1",
+          "error": "stale_hash",
+          "expected": "9aa20976fe9552e2139001788ea0f51ba1442027f272b75e255b5f41c97bb40c",
+          "path": "Plans/Multi-Account.md"
+        },
+        {
+          "actual": "8d6dfb862784206b0c4db9ebe7d0e7b149723161aecbbb7282c750a86eddf7b9",
+          "error": "stale_hash",
+          "expected": "78559cba7f65191775f78a5486fe67b910942780eec61eb9aa98641b82b5a959",
+          "path": "Plans/assistant-chat-design.md"
+        },
+        {
+          "actual": "24853014907c12d1eab1df3d6958ff58907a01d12f326eac8598b514530bf944",
+          "error": "stale_hash",
+          "expected": "adffa65bcc7e38865d077b5ad538a6bf94c19117a46bece38d8e73c7a359aae0",
+          "path": "Plans/Wiring_Matrix.md"
+        },
+        {
+          "actual": "cceff122a79a89afe52631580df3de0a5913aea95a20d2bfe113e9ce88933a9a",
+          "error": "stale_hash",
+          "expected": "44aca063fd66ac1037d0d5868a5e6b1cb77469a7eb09c23016e9b52ebe06472e",
+          "path": "Plans/Release_Supply_Chain.md"
+        },
+        {
+          "actual": "8b5eff704c74b426c9ad5e2e6669513c027a9a9d4af982df050959dd91386b89",
+          "error": "stale_hash",
+          "expected": "a8af164fb673737569bb42ac519d9a6c0c9fa40e4985e7508664cd0285dae58a",
+          "path": "scripts/pm-implementation-readiness.py"
+        },
+        {
+          "actual": "a1c8ab728639f3c8c79e9fae50cc48ca2928051c0ee26e5df08541090e2c709b",
+          "error": "stale_hash",
+          "expected": "cfbd927fcc66ebac99ef931a16d0b25ca386996e1295d9b0c4f6207d0bf12216",
+          "path": "Plans/.implementation_readiness/buildability_gate_report.json"
+        },
+        {
+          "actual": "bdf79ed1b43bc32e49a8d56ffdf2d8adc1f244aaf820a5f853ef3993d30cc9e3",
+          "error": "stale_hash",
+          "expected": "336d453ed7174a0d6415f4ede388cc09a8512206a0e8e64c7bc627c230de4c6a",
+          "path": "Plans/storage_value_registry.json"
+        },
+        {
+          "actual": "058df7a41aafe00fdb6cddb17b04b5116288868d996a90b7ec106c2d4114693b",
+          "error": "stale_hash",
+          "expected": "07818eee0bcc1f3d92a00de0d073ee842c5cbe9a6b7b5257b8e4fe7d29434d39",
+          "path": "Plans/web_agent_policy_fixtures.json"
+        },
+        {
+          "actual": "494e7ea76445be07454297548038f6de97200a6d098d5727d3aa5f578229980b",
+          "error": "stale_hash",
+          "expected": "2bfb45758f60fc2ca373c935f88648f1b08901f1744a11e3792d6308af81773e",
+          "path": "Plans/web_operation_contracts.schema.json"
+        },
+        {
+          "actual": "ae4e0619dcd2a7fc4c0c5a92ae3f285600900371c9069fef19831cd83a1aa5ab",
+          "error": "stale_hash",
+          "expected": "cdc3bc5fbef3ffc20a6e3c83d441549621da5d0d291b7a79524d9129aa2ab385",
+          "path": "Plans/web_provider_adapter_registry.seed.json"
+        },
+        {
+          "actual": "b00d0e8cbf50b322f9502cb7fadc65dc390390b2cbb917033a24fc373fa485cd",
+          "error": "stale_hash",
+          "expected": "66cb1b8bacd9e9179cbc7ef4b961686a87ea95733298408daf06ca25a0fe1814",
+          "path": "Plans/storage_recovery_contracts.schema.json"
+        },
+        {
+          "actual": "3ec270220e09f61e7e122a294ddf7ddad007905f28f95416c13860700dc3b15c",
+          "error": "stale_hash",
+          "expected": "b4c6bf9b28330db29931153e7e8620602748865c6ed0745bedde1bc505696f9b",
+          "path": "scripts/pm_pnc019_currentness.py"
+        }
+      ],
+      "status": "fail"
+    },
+    {
+      "check": "validate_plan_graph",
+      "failures": [
+        {
+          "actual": "e7a328263745deb4385ac812d6e686b0e5520b8e2bb8d2fff07cc792215cf18b",
+          "artifact": "Plans/Spec_Lock.json",
+          "error": "artifact_hash_stale",
+          "expected": "e1b80af829b37152b9b39b343f807f7c15389fa7a0df1edab422eabb21e543e5",
+          "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "826c018bdb30c93c19af56ce58d301a6eaa99f79de8d41defc97a7231966eec4",
+          "artifact": "Plans/auto_decisions.jsonl",
+          "error": "artifact_hash_stale",
+          "expected": "aaa7b7f506da0be4bf4c4d9b7d42a72890e0260635192481405150a027733280",
+          "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "698cd77082376d7520f087a9c0041b597f50f4e81142ab68a2a0abee476a156c",
+          "artifact": "Plans/sharding_config.json",
+          "error": "artifact_hash_stale",
+          "expected": "532f9612496515eb4ff1931e0d2baef2a9c57741db89e0bd70f4ab87b1439d65",
+          "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "88f0e18387d8d4e81e856d024391faa56264a3d61a7945b0f1c2d294258a3e65",
+          "artifact": "scripts/pm-plans-verify.py",
+          "error": "artifact_hash_stale",
+          "expected": "e5baa8b91a726f3a43087ed4d082fcf11c8ddd21a3b7a5f536acea247dbe4ba6",
+          "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "e106d8df8dd65cd99f76ce7ca2e0c9d6ad87f80df439f2ef97c6c1e195169c09",
+          "artifact": "Plans/Wiring_Matrix.schema.json",
+          "error": "artifact_hash_stale",
+          "expected": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f",
+          "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "805ea39b2533cb50a07eddfdefa950c470e3126f4dddb09cdad8ef1c3aec814d",
+          "artifact": "Plans/gui_automation_manifest.schema.json",
+          "error": "artifact_hash_stale",
+          "expected": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c",
+          "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "36eec1750405a528e563326af1b4b751fba863cf823ee12780f0416e633a4498",
+          "artifact": "Plans/orchestrator-subagent-integration.md",
+          "error": "artifact_hash_stale",
+          "expected": "8078b6464132748058490281b8578ef42f68f91c5700444901114e4d9286a10c",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "2e53711bbdeb1a429ac8450b673798913411fdbd74d1fce42e5604dbf3509737",
+          "artifact": "Plans/_shards/orchestrator-subagent-integration/00-index.md",
+          "error": "artifact_hash_stale",
+          "expected": "e5a7d9ed55d042d3652b1fd956837ebdc9a8eadcf0378e5fec32aa912a5383ba",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "8c0b1f4a516060e0e45be827039d901e8826efe2f33ebac072f8028678d80594",
+          "artifact": "Plans/_shards/orchestrator-subagent-integration/manifest.json",
+          "error": "artifact_hash_stale",
+          "expected": "c8e3feb8ce844e74a249e459af3ec1e53322d503d194e501438fb235f007cc70",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "779afd747d87d0466470bd5e70b08162f054fd3291dce1e670e192a511117ea3",
+          "artifact": "Plans/_shards/orchestrator-subagent-integration/001-preamble.md",
+          "error": "artifact_hash_stale",
+          "expected": "0320a48c73ada64563a26b4b0874517a8067473651f7fb51512219d926504417",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "cbf56f308e37a69200d659895233617df4b7eec7e03c71b7a6df184bb7a35ccf",
+          "artifact": "Plans/_shards/orchestrator-subagent-integration/002-canonical-owner-section-requirements.md",
+          "error": "artifact_hash_stale",
+          "expected": "7ea7a786aa4d9972c74f578941bcc2cf9139bdf8e731a17b3bd4dc52450978e0",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "cb214faac95f8b1ffdc30d54b180163c2ada58c73e2669cc7cdb6bceae47cda0",
+          "artifact": "Plans/_shards/orchestrator-subagent-integration/003-plan-document-status.md",
+          "error": "artifact_hash_stale",
+          "expected": "9b263176c46f2fd82bba30f13452579498c0ac1a1be71dfc84150eff516dd8a8",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "6ab950dea9992367f4fbf388510283380f03e9ba652bf39cc1cc56c048ac8b31",
+          "artifact": "Plans/_shards/orchestrator-subagent-integration/004-executive-summary.md",
+          "error": "artifact_hash_stale",
+          "expected": "4bbc9369efe9290ffc8f63f52556ce56ab3f8cf8a352ab610524fef404cacaff",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "14cb6ffbca702423f45b2459c01d25b34d025ce510fd5a713fdae468f2f6937c",
+          "artifact": "Plans/_shards/orchestrator-subagent-integration/005-runtime-scheduler-identity-and-worktree-reconciliation.md",
+          "error": "artifact_hash_stale",
+          "expected": "97f7a26d25f562beb49f74896e4aa712035cd3df3d61c9e9e1bac9f914753313",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "6c3160be3324d94d2eb232b4504ff82113afd8111af5d6bbb1bed9744af587b4",
+          "artifact": "Plans/_shards/orchestrator-subagent-integration/006-rewrite-alignment-2026-02-21.md",
+          "error": "artifact_hash_stale",
+          "expected": "ec8a807ec173f3bfb963f311471377c1ef50a689c24546964c72d3931968304e",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "73638460739f423c8cf7b43d64082467d92f22b31341371e074ce43f1a890dc0",
+          "artifact": "Plans/_shards/orchestrator-subagent-integration/007-relationship-between-the-two-plans.md",
+          "error": "artifact_hash_stale",
+          "expected": "d94e01f7fe45a129373e4b96e164999049962444bc547fa0634d6d6a9c9c1fbc",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "1456da4b83accb9322d01885868cd8ccea46de7a9c4310c7d56b1ac7326cdc16",
+          "artifact": "Plans/_shards/orchestrator-subagent-integration/008-compatibility-tier-level-subagent-strategy.md",
+          "error": "artifact_hash_stale",
+          "expected": "1921b82bcd60233e4ccb553745e0afa86c8cfc8120fde8ded97fa1dc5a5dadc4",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "2ddc3c991febef2967984962afa31f49a71d0623d4677094b9ab5493d9ccdc32",
+          "artifact": "Plans/_shards/orchestrator-subagent-integration/009-debug-capable-investigation-orchestration.md",
+          "error": "artifact_hash_stale",
+          "expected": "99f39fdc7cf65ece7834d1a4dfdf5a34f237f3b41ef99648cf077f02e0ebb3a7",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "bd37d33bf70f987e15e1d529c76b9f37dd39236172e5b40b0f9bfde135428e7b",
+          "artifact": "Plans/_shards/orchestrator-subagent-integration/010-dynamic-subagent-selection-architecture.md",
+          "error": "artifact_hash_stale",
+          "expected": "613af543fbc295005a86f04fde3f16a36d89c0a4bafd3f94c39749ec3cc84118",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "21137377736d2c9a934a918524f781522659aa4eaefa8a3e9a5ffa3628df6f19",
+          "artifact": "Plans/_shards/orchestrator-subagent-integration/011-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+          "error": "artifact_hash_stale",
+          "expected": "d47a37ff4b61f19e9a953380e5f45e41f2f3cb84cdc08890a598258be53d3101",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "892501ee7f7c439d154c25b0090d33e48f976405bd5d55a1942b34865b1a0737",
+          "artifact": "Plans/_shards/orchestrator-subagent-integration/012-integration-with-orchestrator.md",
+          "error": "artifact_hash_stale",
+          "expected": "fe61234e80f70e927fa08f923d2dcb02d9e83c10ee86e2ff0b31df2b456a0f90",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "ac1b5d4e14ca7f69b72f955f18e9dd90a8c469aa93212dffc5a524dfaade9523",
+          "artifact": "Plans/FinalGUISpec.md",
+          "error": "artifact_hash_stale",
+          "expected": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "fcb1ab81ce735a9b22c51e2ee8d1feee70daa9955eb2f4d828eac56bd11990d5",
+          "artifact": "Plans/_shards/finalguispec/00-index.md",
+          "error": "artifact_hash_stale",
+          "expected": "d8a3701db02cbc7be23e2cb401ccb4e40327eb4e8b3417026a95206c89b521b7",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "7af4f1cac9af26c06f391a33344bd86c8c0c3df19a4bade210a1f9b22f80fa89",
+          "artifact": "Plans/_shards/finalguispec/manifest.json",
+          "error": "artifact_hash_stale",
+          "expected": "7835d3986d6fed4463fbb299c7deadcedb5d1c43939caaa3051b42f562d8f40c",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "99504a1dbb854004fbe3b131cb1393d84e1c2666585c3b573502104e14fb1e97",
+          "artifact": "Plans/_shards/finalguispec/001-preamble.md",
+          "error": "artifact_hash_stale",
+          "expected": "8a5dede0b89026532febf907d8c6e22545cc11ee42f2d0c4940da2d62e7f0df3",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "d89c8d5c5bc976f26affbff474119970d8ff481d9b106f0f74572667a03ae6f9",
+          "artifact": "Plans/_shards/finalguispec/002-canonical-owner-section-requirements.md",
+          "error": "artifact_hash_stale",
+          "expected": "2dce6fb778e3d6ea4fa986f64b1e4cbb28200f8b3d855b9077cfae1843b64fd2",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "ecc64bdad40189295be0399d871b7171c8243e81e17a901bc655cdc4eb3df3ab",
+          "artifact": "Plans/_shards/finalguispec/003-table-of-contents.md",
+          "error": "artifact_hash_stale",
+          "expected": "a5cf488756a776b10018eace79d66feb6c7b3b17c809e839a1e1ec7f36f8c63f",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "a770925d1030bb4dfbc6f2116c7b7d84e5fe162b2a5cb1a042904f567aab728f",
+          "artifact": "Plans/_shards/finalguispec/004-1.-executive-summary.md",
+          "error": "artifact_hash_stale",
+          "expected": "b30bfdc1374da09cc8d9c7c14836ce4d5c55c95e54cc2aaae726adc63ac3a658",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "c5932d67753a45adfe5401dad5c3ed32fe0da236efbc1a1045419539217f054e",
+          "artifact": "Plans/_shards/finalguispec/005-2.-tech-stack-and-renderer.md",
+          "error": "artifact_hash_stale",
+          "expected": "d2be76c0407c396e89e2e9f9302a15c726137a58d532d3570dd8541ffe4e6704",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "ddcec6407646328db57e1c0e0aab55bf3e488675c805fc491777f94deb8917ec",
+          "artifact": "Plans/_shards/finalguispec/006-pmconcept7-home-workspace-control-reconciliation-2026-08-04.md",
+          "error": "artifact_hash_stale",
+          "expected": "5305317461303987bcd421513f8dc776c4b8fcf834f67ba7e6be0b9572b7674d",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "94012141edb15a654db0fafcc660eb25ebccfa43b684a830f0dbcb645ab1e993",
+          "artifact": "Plans/_shards/finalguispec/007-known-37-recovery-unavailable-gui-projection-2026-07-18.md",
+          "error": "artifact_hash_stale",
+          "expected": "e44315d7596d1c2476fe57c83423193dbac7c478d58d706c0372c46e47222eeb",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "270fcb6175cc3bd5c0fe50258c399d05b477885f892a3807d434d6dfc6accdd9",
+          "artifact": "Plans/_shards/finalguispec/008-gui-pmconcept-implementation-readiness-repair-addendum-2026-07-0.md",
+          "error": "artifact_hash_stale",
+          "expected": "1630dc436f885b04820f5177fba5474c64dac85317b79cca9b33e852952a5bba",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "763abf0c117cb56d65299af5708b45a96c412347bc0f69461f370f2d6df0ef61",
+          "artifact": "Plans/_shards/finalguispec/009-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+          "error": "artifact_hash_stale",
+          "expected": "4a7ff4f23e8e59197f1ee344ff6395f74dd442b2c5eb7f127a6a5c0badeb5daa",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "2f9eb6fc43b7a4d9325c57dfddc2cd1a5a194aaf841046e98241ecd3cce47cfb",
+          "artifact": "Plans/_shards/finalguispec/010-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+          "error": "artifact_hash_stale",
+          "expected": "c4c630228097a345fe2d59843b97df64db5fc6ee74b3d6f96bb5f97725076c75",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "f18bef4d676fae317ce5abb4ae8f197986d3fa76162c8a389ac05e6b28461314",
+          "artifact": "Plans/_shards/finalguispec/011-3.-master-layout.md",
+          "error": "artifact_hash_stale",
+          "expected": "7db98189d782e29b8ddaf9f3a9afed59af556240046d2186a686b4fc3f85c2b8",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "917f47cd588f204b59ec1686bf8226dd5f17f60a3c5298810e69ab9d27e1c9be",
+          "artifact": "Plans/_shards/finalguispec/012-4.-navigation-architecture.md",
+          "error": "artifact_hash_stale",
+          "expected": "c2f27c8854847f9a937e9467dd514fac41ebaed78bb0330a5f846ed9788e2ecd",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "d31ed7b30e66f7c6a63a8c46673245854f6919b70fbab16193808bfec18158f6",
+          "artifact": "Plans/_shards/finalguispec/013-5.-panel-system.md",
+          "error": "artifact_hash_stale",
+          "expected": "292c1f8a935237342c9151f234d3cfbd8503e1f0275dc254f22f7d12df30d433",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "913a20cfe451712baa8a230fe9ce6d0aead1c818280a511e4f690f4cbda001bb",
+          "artifact": "Plans/_shards/finalguispec/014-6.-theme-system.md",
+          "error": "artifact_hash_stale",
+          "expected": "c88d2f45589fbdb52491f30ebca2eadb9df6f727f6263450b4e94c82fcba929c",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "9bad869c966cb81fd871f919a63070b65b9feeb711fea73b673dbc276231b211",
+          "artifact": "Plans/_shards/finalguispec/015-7.-views-specification.md",
+          "error": "artifact_hash_stale",
+          "expected": "d3f1ce701ca6cfa5ec419ab2ee4211a11ce2e14fe8b67b25fcc9f91397d5db51",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "1cfe98dc43ede67dd9c73ba0d508f72cac4f3e252537c702ac081edaacbc838d",
+          "artifact": "Plans/_shards/finalguispec/016-8.-widget-catalog.md",
+          "error": "artifact_hash_stale",
+          "expected": "f78cdff5908696c3568d4d269e9d59f252e5987b32f450b1e2f18085506d2c11",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "974b8007e81eb2faf31fd3ebdd930125708474b4b4c052872f59fef1662ad492",
+          "artifact": "Plans/_shards/finalguispec/017-9.-state-management.md",
+          "error": "artifact_hash_stale",
+          "expected": "317ec67466c38962362b9df64ae71372296de1c63c613f7a5c4eedcbea6965ff",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "6419a6d5dff725c49c5694787f44975144cd65d001cdf2b337baafb051b8e80a",
+          "artifact": "Plans/_shards/finalguispec/018-10.-ux-patterns.md",
+          "error": "artifact_hash_stale",
+          "expected": "1daa02897fa635915b13a80d56e588d5f7ab8f77c1e7175bcb070e654adb8f24",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "c28e167b0f0804436eff1ea8c8d2e1725821c4a36843e94ebe45ea1d97bf8d68",
+          "artifact": "Plans/_shards/finalguispec/019-11.-anti-flickering-and-scroll-preservation.md",
+          "error": "artifact_hash_stale",
+          "expected": "162c8b34457285242cec8f5b100b0950f44d2ce2e064fcbc99968b67e5e7ad92",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "0a534f4f257b4fd3d486eb8689da9db7f498eb26e1c289968d03390a3a8211cf",
+          "artifact": "Plans/_shards/finalguispec/020-12.-responsive-design.md",
+          "error": "artifact_hash_stale",
+          "expected": "8f699c336fdc43fae6340a9e682c819112a097800b831543be7e8d46b6709ee4",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "5a88a1e08fc72693f60727abfc23cb1b26193483428928f97e5ef096b468b1cc",
+          "artifact": "Plans/_shards/finalguispec/021-13.-accessibility.md",
+          "error": "artifact_hash_stale",
+          "expected": "2bda7bd89a4fb60f0cbf598d705f6af48ac9cfa4c87d37694e016cbe76d64faf",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "9a78c930881f9dea2571d6b3f710b719acb228a28256fa7dcc527e7fa79c037b",
+          "artifact": "Plans/_shards/finalguispec/022-14.-slint-file-organization.md",
+          "error": "artifact_hash_stale",
+          "expected": "6fcd3486e2d0c1e4f1707b876381fea05fda6cfb9e3f39dc55036324cbdcaf53",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "3e8ec984c0a6a39fc0f1ea43173673452ff3ee12fc4a26da874426856202b191",
+          "artifact": "Plans/_shards/finalguispec/023-15.-persistence.md",
+          "error": "artifact_hash_stale",
+          "expected": "148632458e6ae12e30ad2f6d297d6dcf2a84686d3ecda79ddaa34809967cd530",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "e247c10086f2570c8e96cc2d5a5dfa173f8aec7e493521bda753465b1b53b2ff",
+          "artifact": "Plans/_shards/finalguispec/024-16.-migration-mapping.md",
+          "error": "artifact_hash_stale",
+          "expected": "51bed037a791e9348c9bf89e40f0fdaa7e3ee908a492126e8a2848fb1d7039f3",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "3b669a2cc3c50f3ce1877f22c891d9d06a2808d9fc8d6420a3083d8b672321a6",
+          "artifact": "Plans/_shards/finalguispec/025-17.-risks-and-mitigations.md",
+          "error": "artifact_hash_stale",
+          "expected": "ac1f91de26cf3a198575688c61e7497aea3177db6650d24aa3cb24872acff3ca",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "3c2e8d923532dfc94d14315ed41558b9c95d813ac80f160d51e4e5a6b7a34827",
+          "artifact": "Plans/_shards/finalguispec/026-18.-promoted-features-formerly-future-considerations.md",
+          "error": "artifact_hash_stale",
+          "expected": "c3ee2949f12fa43385dea09b3cadd13acb67dd5df2a7928b5e3f174b2e997231",
+          "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json"
+        }
+      ],
+      "status": "fail"
+    },
+    {
+      "check": "validate_evidence",
+      "failures": [
+        {
+          "actual": "88f0e18387d8d4e81e856d024391faa56264a3d61a7945b0f1c2d294258a3e65",
+          "artifact": "scripts/pm-plans-verify.py",
+          "error": "artifact_hash_stale",
+          "expected": "e5baa8b91a726f3a43087ed4d082fcf11c8ddd21a3b7a5f536acea247dbe4ba6",
+          "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json"
+        },
+        {
+          "actual": "e7a328263745deb4385ac812d6e686b0e5520b8e2bb8d2fff07cc792215cf18b",
+          "artifact": "Plans/Spec_Lock.json",
+          "error": "artifact_hash_stale",
+          "expected": "e1b80af829b37152b9b39b343f807f7c15389fa7a0df1edab422eabb21e543e5",
+          "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json"
+        },
+        {
+          "actual": "826c018bdb30c93c19af56ce58d301a6eaa99f79de8d41defc97a7231966eec4",
+          "artifact": "Plans/auto_decisions.jsonl",
+          "error": "artifact_hash_stale",
+          "expected": "aaa7b7f506da0be4bf4c4d9b7d42a72890e0260635192481405150a027733280",
+          "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json"
+        },
+        {
+          "actual": "e7a328263745deb4385ac812d6e686b0e5520b8e2bb8d2fff07cc792215cf18b",
+          "artifact": "Plans/Spec_Lock.json",
+          "error": "artifact_hash_stale",
+          "expected": "e1b80af829b37152b9b39b343f807f7c15389fa7a0df1edab422eabb21e543e5",
+          "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "826c018bdb30c93c19af56ce58d301a6eaa99f79de8d41defc97a7231966eec4",
+          "artifact": "Plans/auto_decisions.jsonl",
+          "error": "artifact_hash_stale",
+          "expected": "aaa7b7f506da0be4bf4c4d9b7d42a72890e0260635192481405150a027733280",
+          "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "698cd77082376d7520f087a9c0041b597f50f4e81142ab68a2a0abee476a156c",
+          "artifact": "Plans/sharding_config.json",
+          "error": "artifact_hash_stale",
+          "expected": "532f9612496515eb4ff1931e0d2baef2a9c57741db89e0bd70f4ab87b1439d65",
+          "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "88f0e18387d8d4e81e856d024391faa56264a3d61a7945b0f1c2d294258a3e65",
+          "artifact": "scripts/pm-plans-verify.py",
+          "error": "artifact_hash_stale",
+          "expected": "e5baa8b91a726f3a43087ed4d082fcf11c8ddd21a3b7a5f536acea247dbe4ba6",
+          "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "cbc2133cc4c142a306c5dd7d43b74e43a9dd2a6688cbf4662d4665de642a7415",
+          "artifact": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
+          "error": "artifact_hash_stale",
+          "expected": "e762d5f1cf54040d459042eb24eeeb9adae26e4b57ebce6c77e65346e618f9c2",
+          "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "9fce4e4646e6ba34452f3746f0c100a1ff5242dacf2a34dce3de3f5277d42f1a",
+          "artifact": "Plans/.plan_index/plan_units.jsonl",
+          "error": "artifact_hash_stale",
+          "expected": "e69fabcfd6fcd8c056bc25c77d1458332530d0db5c454eb7805875e7327c8626",
+          "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "c7d6f46b6740d66208d62d1466b17928c9ef721c540af83a4be1079fbf8f286b",
+          "artifact": "Plans/.plan_index/doc_cards.json",
+          "error": "artifact_hash_stale",
+          "expected": "f4f42697b50158067662d9155b5bf6baf13a2aae2cd79b0f5de4cbf05ca9c18f",
+          "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "faf658761c269800913b9c32061e48a346557bfbdf5a07aab7ac2fd8de49b40a",
+          "artifact": "Plans/.plan_index/dependencies.json",
+          "error": "artifact_hash_stale",
+          "expected": "ddece5dbbbd978d21944440717f7935b8cd7af71966acad5349c682fcd3b787f",
+          "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "0333ef55596a0909d1ba43cf54443fe89d85512728be8e0ed057ad1f0af1208b",
+          "artifact": "Plans/.plan_index/acceptance_units.jsonl",
+          "error": "artifact_hash_stale",
+          "expected": "e06eda94eaadfcfa26db77e01dcbc4d2d49a02ceb409c7b8094990e78e3a5a96",
+          "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "6055d631a9407a6d20ddddd0fcdf671f2606915fe85afa15e2440f6b24248edb",
+          "artifact": "Plans/.plan_index/coverage_report.json",
+          "error": "artifact_hash_stale",
+          "expected": "fb8106346122eb34191c9be2ae0c96b73766f3bb52336ef47aa175253d71b4de",
+          "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "8c0eb2bf524e7bd198f8f90d82100b7e92fd7ac9506ee8760ec15c184f8e3601",
+          "artifact": "Plans/.plan_index/node_readiness_report.json",
+          "error": "artifact_hash_stale",
+          "expected": "220bdc78209c09ee58ced088b596404ec722d725d3548794eb683e14f6a254fc",
+          "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json"
+        },
+        {
+          "actual": "98f20b0efd0e4aa31dfe1f040025015df74c9bc088f94bf014e9a5615214ae8e",
+          "artifact": "Plans/Goal_Runtime_System.md",
+          "error": "artifact_hash_stale",
+          "expected": "19b669a1c0c1e827d0b2cc40fa4c9c138032a10212259096201ba08d070a74f3",
+          "path": "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb",
+          "artifact": "Plans/00-plans-index.md",
+          "error": "artifact_hash_stale",
+          "expected": "d1d659cd51ca674c1e34c953ae8080b399b7d61ffed7f802998596f738d85c78",
+          "path": "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "ac1b5d4e14ca7f69b72f955f18e9dd90a8c469aa93212dffc5a524dfaade9523",
+          "artifact": "Plans/FinalGUISpec.md",
+          "error": "artifact_hash_stale",
+          "expected": "b4ba9c4395d25651bfdd6e0a0258ad6f4f830247dbe4af008acbde9348d09684",
+          "path": "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "8d6dfb862784206b0c4db9ebe7d0e7b149723161aecbbb7282c750a86eddf7b9",
+          "artifact": "Plans/assistant-chat-design.md",
+          "error": "artifact_hash_stale",
+          "expected": "f6a8832882653a084a44b1c308200fd931bbced88a0184ceb6cae381ab0e578a",
+          "path": "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "9fce4e4646e6ba34452f3746f0c100a1ff5242dacf2a34dce3de3f5277d42f1a",
+          "artifact": "Plans/.plan_index/plan_units.jsonl",
+          "error": "artifact_hash_stale",
+          "expected": "e69fabcfd6fcd8c056bc25c77d1458332530d0db5c454eb7805875e7327c8626",
+          "path": "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "c7d6f46b6740d66208d62d1466b17928c9ef721c540af83a4be1079fbf8f286b",
+          "artifact": "Plans/.plan_index/doc_cards.json",
+          "error": "artifact_hash_stale",
+          "expected": "f4f42697b50158067662d9155b5bf6baf13a2aae2cd79b0f5de4cbf05ca9c18f",
+          "path": "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "faf658761c269800913b9c32061e48a346557bfbdf5a07aab7ac2fd8de49b40a",
+          "artifact": "Plans/.plan_index/dependencies.json",
+          "error": "artifact_hash_stale",
+          "expected": "ddece5dbbbd978d21944440717f7935b8cd7af71966acad5349c682fcd3b787f",
+          "path": "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "0333ef55596a0909d1ba43cf54443fe89d85512728be8e0ed057ad1f0af1208b",
+          "artifact": "Plans/.plan_index/acceptance_units.jsonl",
+          "error": "artifact_hash_stale",
+          "expected": "e06eda94eaadfcfa26db77e01dcbc4d2d49a02ceb409c7b8094990e78e3a5a96",
+          "path": "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "6055d631a9407a6d20ddddd0fcdf671f2606915fe85afa15e2440f6b24248edb",
+          "artifact": "Plans/.plan_index/coverage_report.json",
+          "error": "artifact_hash_stale",
+          "expected": "fb8106346122eb34191c9be2ae0c96b73766f3bb52336ef47aa175253d71b4de",
+          "path": "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "8c0eb2bf524e7bd198f8f90d82100b7e92fd7ac9506ee8760ec15c184f8e3601",
+          "artifact": "Plans/.plan_index/node_readiness_report.json",
+          "error": "artifact_hash_stale",
+          "expected": "220bdc78209c09ee58ced088b596404ec722d725d3548794eb683e14f6a254fc",
+          "path": "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "5f7441bf99e4df1535f16d4ba0aa36d9e71f07616deca387c95d7df12c2dba9d",
+          "artifact": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "error": "artifact_hash_stale",
+          "expected": "99c465699c64559fc2cb6577f1934274ba898e1d674510c886cff9699d0e1a42",
+          "path": "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "698cd77082376d7520f087a9c0041b597f50f4e81142ab68a2a0abee476a156c",
+          "artifact": "Plans/sharding_config.json",
+          "error": "artifact_hash_stale",
+          "expected": "532f9612496515eb4ff1931e0d2baef2a9c57741db89e0bd70f4ab87b1439d65",
+          "path": "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "e7a328263745deb4385ac812d6e686b0e5520b8e2bb8d2fff07cc792215cf18b",
+          "artifact": "Plans/Spec_Lock.json",
+          "error": "artifact_hash_stale",
+          "expected": "e1b80af829b37152b9b39b343f807f7c15389fa7a0df1edab422eabb21e543e5",
+          "path": "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "826c018bdb30c93c19af56ce58d301a6eaa99f79de8d41defc97a7231966eec4",
+          "artifact": "Plans/auto_decisions.jsonl",
+          "error": "artifact_hash_stale",
+          "expected": "aaa7b7f506da0be4bf4c4d9b7d42a72890e0260635192481405150a027733280",
+          "path": "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "650a592ed2a6adea0839b6e82847654dc968d4c208b51370633dac9df0ef6a98",
+          "artifact": "Plans/ledgers/v2/ledger_registry.json",
+          "error": "artifact_hash_stale",
+          "expected": "23d36152dd8d14de849d1d22ba0df5ca0a6864f8f0331efb3446e1d4c498e988",
+          "path": "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb",
+          "artifact": "Plans/00-plans-index.md",
+          "error": "artifact_hash_stale",
+          "expected": "d1d659cd51ca674c1e34c953ae8080b399b7d61ffed7f802998596f738d85c78",
+          "path": "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "09408a3e335023db2cf93ebf921993c37ed9166827985d47eeef27ba02b99dbd",
+          "artifact": "Plans/Contracts_V0.md",
+          "error": "artifact_hash_stale",
+          "expected": "9f09a8ab2bed0549cd7c4954ecf837b31885e7dd3804026dc938334e4974dd04",
+          "path": "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "ac1b5d4e14ca7f69b72f955f18e9dd90a8c469aa93212dffc5a524dfaade9523",
+          "artifact": "Plans/FinalGUISpec.md",
+          "error": "artifact_hash_stale",
+          "expected": "b4ba9c4395d25651bfdd6e0a0258ad6f4f830247dbe4af008acbde9348d09684",
+          "path": "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "98f20b0efd0e4aa31dfe1f040025015df74c9bc088f94bf014e9a5615214ae8e",
+          "artifact": "Plans/Goal_Runtime_System.md",
+          "error": "artifact_hash_stale",
+          "expected": "19b669a1c0c1e827d0b2cc40fa4c9c138032a10212259096201ba08d070a74f3",
+          "path": "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "fb10700922c0e0320613b1bfabc05fc1b63bbf142db41fe88df84c5700522805",
+          "artifact": "Plans/Models_System.md",
+          "error": "artifact_hash_stale",
+          "expected": "f5098861c5cd12d3908e8fdd2bdecd3d4da92ba1157851b3fae1f4284f006de1",
+          "path": "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "b12f3a9c23ddf5697455b4575a1ae8192c0b81515ae83f1e8622f82618f1fbb9",
+          "artifact": "Plans/Permissions_System.md",
+          "error": "artifact_hash_stale",
+          "expected": "248ce6522a6c7ce3405184c54b408f4454330ab5c1c078e73e5e09b99320201e",
+          "path": "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "7c0bb4c9b7a914ee98c6e8185dd2c7612033369b55b4a3024c95f070e6b49286",
+          "artifact": "Plans/Runtime_Artifacts_Panel.md",
+          "error": "artifact_hash_stale",
+          "expected": "66bf820da0ae10afb746ab56ec9aef68ec4b6ac29197f804a6c6daf14049c3d5",
+          "path": "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "a91952094251ba92ee185e07d897f219d7f8a47942834c70e88d45e77fe6a5fb",
+          "artifact": "Plans/WorktreeGitImprovement.md",
+          "error": "artifact_hash_stale",
+          "expected": "d0c5c212ad352b3f7763219ac37082a82e9e415e8db56ba3f04ac7a1c6f050e4",
+          "path": "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "36eec1750405a528e563326af1b4b751fba863cf823ee12780f0416e633a4498",
+          "artifact": "Plans/orchestrator-subagent-integration.md",
+          "error": "artifact_hash_stale",
+          "expected": "d4691388bb5c1f972f3841a2bd86eb6be915692095d9d8c07d7dba78d9cfe2b7",
+          "path": "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "1c1b7e810d66f2f0f8bf0586b50814ff54c1aba3fb57075838b8746096f8f50a",
+          "artifact": "Plans/storage-plan.md",
+          "error": "artifact_hash_stale",
+          "expected": "21bd16a8872bfbd2f641dac39e4b02bb8f311eb5f90d27fbb3c5de62157c5706",
+          "path": "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "9fce4e4646e6ba34452f3746f0c100a1ff5242dacf2a34dce3de3f5277d42f1a",
+          "artifact": "Plans/.plan_index/plan_units.jsonl",
+          "error": "artifact_hash_stale",
+          "expected": "e69fabcfd6fcd8c056bc25c77d1458332530d0db5c454eb7805875e7327c8626",
+          "path": "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "c7d6f46b6740d66208d62d1466b17928c9ef721c540af83a4be1079fbf8f286b",
+          "artifact": "Plans/.plan_index/doc_cards.json",
+          "error": "artifact_hash_stale",
+          "expected": "f4f42697b50158067662d9155b5bf6baf13a2aae2cd79b0f5de4cbf05ca9c18f",
+          "path": "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "faf658761c269800913b9c32061e48a346557bfbdf5a07aab7ac2fd8de49b40a",
+          "artifact": "Plans/.plan_index/dependencies.json",
+          "error": "artifact_hash_stale",
+          "expected": "ddece5dbbbd978d21944440717f7935b8cd7af71966acad5349c682fcd3b787f",
+          "path": "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "0333ef55596a0909d1ba43cf54443fe89d85512728be8e0ed057ad1f0af1208b",
+          "artifact": "Plans/.plan_index/acceptance_units.jsonl",
+          "error": "artifact_hash_stale",
+          "expected": "e06eda94eaadfcfa26db77e01dcbc4d2d49a02ceb409c7b8094990e78e3a5a96",
+          "path": "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "6055d631a9407a6d20ddddd0fcdf671f2606915fe85afa15e2440f6b24248edb",
+          "artifact": "Plans/.plan_index/coverage_report.json",
+          "error": "artifact_hash_stale",
+          "expected": "fb8106346122eb34191c9be2ae0c96b73766f3bb52336ef47aa175253d71b4de",
+          "path": "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "8c0eb2bf524e7bd198f8f90d82100b7e92fd7ac9506ee8760ec15c184f8e3601",
+          "artifact": "Plans/.plan_index/node_readiness_report.json",
+          "error": "artifact_hash_stale",
+          "expected": "220bdc78209c09ee58ced088b596404ec722d725d3548794eb683e14f6a254fc",
+          "path": "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "5f7441bf99e4df1535f16d4ba0aa36d9e71f07616deca387c95d7df12c2dba9d",
+          "artifact": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "error": "artifact_hash_stale",
+          "expected": "99c465699c64559fc2cb6577f1934274ba898e1d674510c886cff9699d0e1a42",
+          "path": "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "cbc2133cc4c142a306c5dd7d43b74e43a9dd2a6688cbf4662d4665de642a7415",
+          "artifact": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
+          "error": "artifact_hash_stale",
+          "expected": "e762d5f1cf54040d459042eb24eeeb9adae26e4b57ebce6c77e65346e618f9c2",
+          "path": "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "e7a328263745deb4385ac812d6e686b0e5520b8e2bb8d2fff07cc792215cf18b",
+          "artifact": "Plans/Spec_Lock.json",
+          "error": "artifact_hash_stale",
+          "expected": "e1b80af829b37152b9b39b343f807f7c15389fa7a0df1edab422eabb21e543e5",
+          "path": "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "826c018bdb30c93c19af56ce58d301a6eaa99f79de8d41defc97a7231966eec4",
+          "artifact": "Plans/auto_decisions.jsonl",
+          "error": "artifact_hash_stale",
+          "expected": "aaa7b7f506da0be4bf4c4d9b7d42a72890e0260635192481405150a027733280",
+          "path": "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json"
+        },
+        {
+          "actual": "b76f40683ba6ccd6e1ae7eff6159141670a38c56b3f0de300690d3612c3c2687",
+          "artifact": "Plans/Personas.md",
+          "error": "artifact_hash_stale",
+          "expected": "69cb4ea1040f565b0af80a5cf9309c3bc2bbdfb90db5548097dee4bfae128155",
+          "path": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json"
+        }
+      ],
+      "status": "fail"
+    },
+    {
+      "check": "validate_case_l_non_event_materialization",
+      "failures": [
+        {
+          "actual": [
+            "data_loss_risk",
+            "migration_applied_step",
+            "migration_preflight_result",
+            "migration_progress_snapshot",
+            "migration_receipt",
+            "migration_rollback_result",
+            "migration_transition",
+            "migration_verification_result",
+            "non_secret_ref",
+            "nullable_non_secret_ref"
+          ],
+          "error": "storage_recovery_definition_set_mismatch",
+          "expected": [
+            "migration_preflight_result",
+            "migration_progress_snapshot"
+          ],
+          "path": "Plans/storage_recovery_contracts.schema.json"
+        },
+        {
+          "error": "storage_recovery_definition_dispatch_mismatch",
+          "path": "Plans/storage_recovery_contracts.schema.json"
+        },
+        {
+          "case_id": "preflight_ready_boundary",
+          "error": "case_l_positive_fixture_rejected",
+          "failures": [
+            {
+              "detail": "'#/$defs/non_secret_ref'",
+              "error": "draft_2020_12_schema_validation_failed",
+              "keyword": "$ref",
+              "path": "self-test:preflight_ready_boundary",
+              "pointer": "$/filesystem_ref",
+              "ref": "#/$defs/non_secret_ref"
+            }
+          ],
+          "path": "Plans/storage_recovery_contracts.schema.json"
+        },
+        {
+          "case_id": "preflight_blocked_insufficient_space",
+          "error": "case_l_positive_fixture_rejected",
+          "failures": [
+            {
+              "detail": "'#/$defs/non_secret_ref'",
+              "error": "draft_2020_12_schema_validation_failed",
+              "keyword": "$ref",
+              "path": "self-test:preflight_blocked_insufficient_space",
+              "pointer": "$/filesystem_ref",
+              "ref": "#/$defs/non_secret_ref"
+            }
+          ],
+          "path": "Plans/storage_recovery_contracts.schema.json"
+        },
+        {
+          "case_id": "preflight_percentage_reserve_branch",
+          "error": "case_l_positive_fixture_rejected",
+          "failures": [
+            {
+              "detail": "'#/$defs/non_secret_ref'",
+              "error": "draft_2020_12_schema_validation_failed",
+              "keyword": "$ref",
+              "path": "self-test:preflight_percentage_reserve_branch",
+              "pointer": "$/filesystem_ref",
+              "ref": "#/$defs/non_secret_ref"
+            }
+          ],
+          "path": "Plans/storage_recovery_contracts.schema.json"
+        },
+        {
+          "error": "migration_receipt_preflight_projection_semantic_mismatch",
+          "ignored_keys": [
+            "$comment"
+          ],
+          "path": "Plans/storage_value_registry.json"
+        },
+        {
+          "error": "migration_receipt_preflight_projection_contains_external_or_local_ref",
+          "path": "Plans/storage_value_registry.json"
+        },
+        {
+          "error": "migration_receipt_authority_marker_missing",
+          "marker": "derived only from the durable migration journal",
+          "path": "Plans/storage_value_registry.json"
+        },
+        {
+          "error": "migration_receipt_authority_marker_missing",
+          "marker": "neither a receipt nor a storage family",
+          "path": "Plans/storage_value_registry.json"
+        }
+      ],
+      "status": "fail"
+    },
+    {
+      "check": "validate_implementation_readiness",
+      "failures": [
+        {
+          "error": "validator_no_output",
+          "path": "scripts/pm-implementation-readiness.py",
+          "returncode": 1,
+          "stderr_excerpt": "Traceback (most recent call last):\n  File \"/mnt/Cursor/PuppetMaster/scripts/pm-implementation-readiness.py\", line 8002, in <module>\n    sys.exit(main())\n             ~~~~^^\n  File \"/mnt/Cursor/PuppetMaster/scripts/pm-implementation-readiness.py\", line 7998, in main\n    return args.func(args)\n           ~~~~~~~~~^^^^^^\n  File \"/mnt/Cursor/PuppetMaster/scripts/pm-implementation-readiness.py\", line 7947, in cmd_validate\n    report = validate()\n  File \"/mnt/Cursor/PuppetMaster/scripts/pm-implementation-readiness.py\", line 7905, in validate\n    self_test_report = run_self_tests()\n  File \"/mnt/Cursor/PuppetMaster/scripts/pm-implementation-readiness.py\", line 7767, in run_self_tests\n    case_l_verification_checks = case_l_verification_self_test_checks()\n  File \"/mnt/Cursor/PuppetMaster/scripts/pm-implementation-readiness.py\", line 5452, in case_l_verification_self_test_checks\n    checks.update(case_l_non_event_materialization_self_test_checks())\n                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/mnt/Cursor/PuppetMaster/scripts/pm-implementation-readiness.py\", line 4655, in case_l_non_event_materialization_self_test_checks\n    migration_row[\"value_schema\"][\"properties\"][\"preflight_result\"][\"properties\"][\"free_bytes\"][\"minimum\"] = 1\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^\nKeyError: 'properties'\n",
+          "stdout_excerpt": ""
+        }
+      ],
+      "status": "fail"
+    },
+    {
+      "check": "validate_plan_migration",
+      "failures": [
+        {
+          "actual": 72,
+          "error": "doc_count_mismatch",
+          "expected": 74,
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json"
+        },
+        {
+          "error": "inventory_doc_set_mismatch",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json"
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "8d6dfb862784206b0c4db9ebe7d0e7b149723161aecbbb7282c750a86eddf7b9",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 1
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "8d6dfb862784206b0c4db9ebe7d0e7b149723161aecbbb7282c750a86eddf7b9",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 2
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "8d6dfb862784206b0c4db9ebe7d0e7b149723161aecbbb7282c750a86eddf7b9",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 3
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "8d6dfb862784206b0c4db9ebe7d0e7b149723161aecbbb7282c750a86eddf7b9",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 4
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "8d6dfb862784206b0c4db9ebe7d0e7b149723161aecbbb7282c750a86eddf7b9",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 5
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "8d6dfb862784206b0c4db9ebe7d0e7b149723161aecbbb7282c750a86eddf7b9",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 6
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "8d6dfb862784206b0c4db9ebe7d0e7b149723161aecbbb7282c750a86eddf7b9",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 7
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "8d6dfb862784206b0c4db9ebe7d0e7b149723161aecbbb7282c750a86eddf7b9",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 8
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "8d6dfb862784206b0c4db9ebe7d0e7b149723161aecbbb7282c750a86eddf7b9",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 9
+        },
+        {
+          "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+          "doc_index": 1,
+          "doc_path": "Plans/assistant-chat-design.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "8d6dfb862784206b0c4db9ebe7d0e7b149723161aecbbb7282c750a86eddf7b9",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 10
+        },
+        {
+          "actual": "14ca33f9b339388e3a16fb29e2029affe98df43af5d9f086d740b51782064655",
+          "doc_index": 1,
+          "doc_path": "Plans/BinaryLocator_Spec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "68378275f233e682c37ebbeb405a91ea064046815bf2454781f7589caba3304b",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 13
+        },
+        {
+          "actual": "14ca33f9b339388e3a16fb29e2029affe98df43af5d9f086d740b51782064655",
+          "doc_index": 1,
+          "doc_path": "Plans/BinaryLocator_Spec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "68378275f233e682c37ebbeb405a91ea064046815bf2454781f7589caba3304b",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 14
+        },
+        {
+          "actual": "3d71c3787470639735ec333df9de0c01b2f0ba0c90101a322077f6f1b62425db",
+          "doc_index": 1,
+          "doc_path": "Plans/CLI_Bridged_Providers.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "2e2169e29bbc60c977d161be0f7d05b1458c6c690dbf079f10e3d47fcee61870",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 24
+        },
+        {
+          "actual": "472a8f694af537a55f9da0a4b8b7b9b67a4020090940d8bc509274c9aa25798e",
+          "doc_index": 1,
+          "doc_path": "Plans/Commands_System.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "af17557e7089aa0224394a5d063da4af28bbc3bbba2a703ab91100ff84d78f70",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 25
+        },
+        {
+          "actual": "472a8f694af537a55f9da0a4b8b7b9b67a4020090940d8bc509274c9aa25798e",
+          "doc_index": 1,
+          "doc_path": "Plans/Commands_System.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "af17557e7089aa0224394a5d063da4af28bbc3bbba2a703ab91100ff84d78f70",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 26
+        },
+        {
+          "actual": "472a8f694af537a55f9da0a4b8b7b9b67a4020090940d8bc509274c9aa25798e",
+          "doc_index": 1,
+          "doc_path": "Plans/Commands_System.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "af17557e7089aa0224394a5d063da4af28bbc3bbba2a703ab91100ff84d78f70",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 27
+        },
+        {
+          "actual": "fe1cdf73d2dc9fbf49c5c3407509ca7aec8f646cd20a1bf5616647784e873117",
+          "doc_index": 1,
+          "doc_path": "Plans/Containers_Registry_and_Unraid.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3ca157a3ab590fb8caab62539b9ff912052fa91b20cfc3309e6e48738f7d698b",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 28
+        },
+        {
+          "actual": "fe1cdf73d2dc9fbf49c5c3407509ca7aec8f646cd20a1bf5616647784e873117",
+          "doc_index": 1,
+          "doc_path": "Plans/Containers_Registry_and_Unraid.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3ca157a3ab590fb8caab62539b9ff912052fa91b20cfc3309e6e48738f7d698b",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 29
+        },
+        {
+          "actual": "fe1cdf73d2dc9fbf49c5c3407509ca7aec8f646cd20a1bf5616647784e873117",
+          "doc_index": 1,
+          "doc_path": "Plans/Containers_Registry_and_Unraid.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3ca157a3ab590fb8caab62539b9ff912052fa91b20cfc3309e6e48738f7d698b",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 30
+        },
+        {
+          "actual": "fe1cdf73d2dc9fbf49c5c3407509ca7aec8f646cd20a1bf5616647784e873117",
+          "doc_index": 1,
+          "doc_path": "Plans/Containers_Registry_and_Unraid.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "3ca157a3ab590fb8caab62539b9ff912052fa91b20cfc3309e6e48738f7d698b",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 31
+        },
+        {
+          "actual": "f39cd56d27a27c8bc55166b154e5924151b38f1d4e674aa413a1f2b14ae5c99b",
+          "doc_index": 1,
+          "doc_path": "Plans/DRY_Rules.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "0d92075a16671df62644b7d33250c46612e21b63fd2ca60f83c26ca72054b6be",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 49
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "6f8c0184cdefccfaa9c955baf7cb1f1bf7b433ccf7cfdcb7f1608d506597d94a",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 56
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "6f8c0184cdefccfaa9c955baf7cb1f1bf7b433ccf7cfdcb7f1608d506597d94a",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 57
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "6f8c0184cdefccfaa9c955baf7cb1f1bf7b433ccf7cfdcb7f1608d506597d94a",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 58
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "6f8c0184cdefccfaa9c955baf7cb1f1bf7b433ccf7cfdcb7f1608d506597d94a",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 59
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "6f8c0184cdefccfaa9c955baf7cb1f1bf7b433ccf7cfdcb7f1608d506597d94a",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 60
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "6f8c0184cdefccfaa9c955baf7cb1f1bf7b433ccf7cfdcb7f1608d506597d94a",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 61
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "6f8c0184cdefccfaa9c955baf7cb1f1bf7b433ccf7cfdcb7f1608d506597d94a",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 62
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "6f8c0184cdefccfaa9c955baf7cb1f1bf7b433ccf7cfdcb7f1608d506597d94a",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 63
+        },
+        {
+          "actual": "230e8dfe9096d81a57140b10258695b09c536cd087786b039ef1e0487d1ccfa3",
+          "doc_index": 1,
+          "doc_path": "Plans/FileSafe.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "6f8c0184cdefccfaa9c955baf7cb1f1bf7b433ccf7cfdcb7f1608d506597d94a",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 64
+        },
+        {
+          "actual": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "doc_index": 1,
+          "doc_path": "Plans/FinalGUISpec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "ac1b5d4e14ca7f69b72f955f18e9dd90a8c469aa93212dffc5a524dfaade9523",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 65
+        },
+        {
+          "actual": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "doc_index": 1,
+          "doc_path": "Plans/FinalGUISpec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "ac1b5d4e14ca7f69b72f955f18e9dd90a8c469aa93212dffc5a524dfaade9523",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 66
+        },
+        {
+          "actual": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "doc_index": 1,
+          "doc_path": "Plans/FinalGUISpec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "ac1b5d4e14ca7f69b72f955f18e9dd90a8c469aa93212dffc5a524dfaade9523",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 67
+        },
+        {
+          "actual": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "doc_index": 1,
+          "doc_path": "Plans/FinalGUISpec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "ac1b5d4e14ca7f69b72f955f18e9dd90a8c469aa93212dffc5a524dfaade9523",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 68
+        },
+        {
+          "actual": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "doc_index": 1,
+          "doc_path": "Plans/FinalGUISpec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "ac1b5d4e14ca7f69b72f955f18e9dd90a8c469aa93212dffc5a524dfaade9523",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 69
+        },
+        {
+          "actual": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "doc_index": 1,
+          "doc_path": "Plans/FinalGUISpec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "ac1b5d4e14ca7f69b72f955f18e9dd90a8c469aa93212dffc5a524dfaade9523",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 70
+        },
+        {
+          "actual": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "doc_index": 1,
+          "doc_path": "Plans/FinalGUISpec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "ac1b5d4e14ca7f69b72f955f18e9dd90a8c469aa93212dffc5a524dfaade9523",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 71
+        },
+        {
+          "actual": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "doc_index": 1,
+          "doc_path": "Plans/FinalGUISpec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "ac1b5d4e14ca7f69b72f955f18e9dd90a8c469aa93212dffc5a524dfaade9523",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 72
+        },
+        {
+          "actual": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "doc_index": 1,
+          "doc_path": "Plans/FinalGUISpec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "ac1b5d4e14ca7f69b72f955f18e9dd90a8c469aa93212dffc5a524dfaade9523",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 73
+        },
+        {
+          "actual": "163ef271e5c00a70ef1439362b3fbb834d904f2d96ea572200b1d5e28ec9f60a",
+          "doc_index": 1,
+          "doc_path": "Plans/FinalGUISpec.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "ac1b5d4e14ca7f69b72f955f18e9dd90a8c469aa93212dffc5a524dfaade9523",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 74
+        },
+        {
+          "actual": "bb36d0e03f358c2b87d6c8b91d33f7da5f62c36c45524c34dedaff8146caffd4",
+          "doc_index": 1,
+          "doc_path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "9a1b15ff570170004e106ad168572e399378dfbe596bbd6d66b10f9e5437e899",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 76
+        },
+        {
+          "actual": "53a8ed2454cf3d4c560b50218533c9ddfc5491176e044ec90803e36f162acd10",
+          "doc_index": 1,
+          "doc_path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "fcc18e1b56d09fb73d8a582cc332eeb8a36c7423ad59f62fa160390b9e5d1f91",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 80
+        },
+        {
+          "actual": "137af191479bdbcc0be1842b821a31f22424163f8d17596740a9c891b279ca15",
+          "doc_index": 1,
+          "doc_path": "Plans/MCP_Integration.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "207e8320910fd5d969dcb0c794981247d4b9d40a091019c193a6a1b57bdce257",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 87
+        },
+        {
+          "actual": "d6df972ed7015b1942e58814db32c487fa2c65a26341c2d814e0d08b0f0707a6",
+          "doc_index": 1,
+          "doc_path": "Plans/MiscPlan.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "beb6fc1a5577ad84a061ff2803887816b569a9d4415ab37005d1ad0f9ef72ab0",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 92
+        },
+        {
+          "actual": "d6df972ed7015b1942e58814db32c487fa2c65a26341c2d814e0d08b0f0707a6",
+          "doc_index": 1,
+          "doc_path": "Plans/MiscPlan.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "beb6fc1a5577ad84a061ff2803887816b569a9d4415ab37005d1ad0f9ef72ab0",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 93
+        },
+        {
+          "actual": "d6df972ed7015b1942e58814db32c487fa2c65a26341c2d814e0d08b0f0707a6",
+          "doc_index": 1,
+          "doc_path": "Plans/MiscPlan.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "beb6fc1a5577ad84a061ff2803887816b569a9d4415ab37005d1ad0f9ef72ab0",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 94
+        },
+        {
+          "actual": "d6df972ed7015b1942e58814db32c487fa2c65a26341c2d814e0d08b0f0707a6",
+          "doc_index": 1,
+          "doc_path": "Plans/MiscPlan.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "beb6fc1a5577ad84a061ff2803887816b569a9d4415ab37005d1ad0f9ef72ab0",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 95
+        },
+        {
+          "actual": "f5098861c5cd12d3908e8fdd2bdecd3d4da92ba1157851b3fae1f4284f006de1",
+          "doc_index": 1,
+          "doc_path": "Plans/Models_System.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "fb10700922c0e0320613b1bfabc05fc1b63bbf142db41fe88df84c5700522805",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 96
+        }
+      ],
+      "status": "fail"
+    },
+    {
+      "check": "validate_audit_closure",
+      "failures": [
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:7: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:7: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:17: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:17: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:25: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:26: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:27: owner_evidence_hashes for Plans/ledgers/v2/ledger_registry.json is stale (stored 547bb03a21a43b3f448c4c091e208a855c771fb85382ff27a9fbba4e81a37301, current 650a592ed2a6adea0839b6e82847654dc968d4c208b51370633dac9df0ef6a98)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:28: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:29: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 95b810e6eae46e3d2524f30e3945bd75ad2c1536477f935c3e5ce11e51622cc9, current 9fce4e4646e6ba34452f3746f0c100a1ff5242dacf2a34dce3de3f5277d42f1a)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:30: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 95b810e6eae46e3d2524f30e3945bd75ad2c1536477f935c3e5ce11e51622cc9, current 9fce4e4646e6ba34452f3746f0c100a1ff5242dacf2a34dce3de3f5277d42f1a)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:31: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:31: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 95b810e6eae46e3d2524f30e3945bd75ad2c1536477f935c3e5ce11e51622cc9, current 9fce4e4646e6ba34452f3746f0c100a1ff5242dacf2a34dce3de3f5277d42f1a)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:31: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:32: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 95b810e6eae46e3d2524f30e3945bd75ad2c1536477f935c3e5ce11e51622cc9, current 9fce4e4646e6ba34452f3746f0c100a1ff5242dacf2a34dce3de3f5277d42f1a)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:33: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 95b810e6eae46e3d2524f30e3945bd75ad2c1536477f935c3e5ce11e51622cc9, current 9fce4e4646e6ba34452f3746f0c100a1ff5242dacf2a34dce3de3f5277d42f1a)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:34: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:34: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 95b810e6eae46e3d2524f30e3945bd75ad2c1536477f935c3e5ce11e51622cc9, current 9fce4e4646e6ba34452f3746f0c100a1ff5242dacf2a34dce3de3f5277d42f1a)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:34: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:35: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:36: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:37: closure_evidence_hashes for Plans/ledgers/v2/ledger_registry.json is stale (stored 547bb03a21a43b3f448c4c091e208a855c771fb85382ff27a9fbba4e81a37301, current 650a592ed2a6adea0839b6e82847654dc968d4c208b51370633dac9df0ef6a98)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:38: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:38: owner_evidence_hashes for Plans/orchestrator-subagent-integration.md is stale (stored d4691388bb5c1f972f3841a2bd86eb6be915692095d9d8c07d7dba78d9cfe2b7, current 36eec1750405a528e563326af1b4b751fba863cf823ee12780f0416e633a4498)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:38: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:38: closure_evidence_hashes for Plans/orchestrator-subagent-integration.md is stale (stored d4691388bb5c1f972f3841a2bd86eb6be915692095d9d8c07d7dba78d9cfe2b7, current 36eec1750405a528e563326af1b4b751fba863cf823ee12780f0416e633a4498)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:39: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:39: owner_evidence_hashes for Plans/orchestrator-subagent-integration.md is stale (stored d4691388bb5c1f972f3841a2bd86eb6be915692095d9d8c07d7dba78d9cfe2b7, current 36eec1750405a528e563326af1b4b751fba863cf823ee12780f0416e633a4498)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:39: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:39: closure_evidence_hashes for Plans/orchestrator-subagent-integration.md is stale (stored d4691388bb5c1f972f3841a2bd86eb6be915692095d9d8c07d7dba78d9cfe2b7, current 36eec1750405a528e563326af1b4b751fba863cf823ee12780f0416e633a4498)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:40: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:40: owner_evidence_hashes for Plans/orchestrator-subagent-integration.md is stale (stored d4691388bb5c1f972f3841a2bd86eb6be915692095d9d8c07d7dba78d9cfe2b7, current 36eec1750405a528e563326af1b4b751fba863cf823ee12780f0416e633a4498)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:40: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:40: closure_evidence_hashes for Plans/orchestrator-subagent-integration.md is stale (stored d4691388bb5c1f972f3841a2bd86eb6be915692095d9d8c07d7dba78d9cfe2b7, current 36eec1750405a528e563326af1b4b751fba863cf823ee12780f0416e633a4498)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:41: owner_evidence_hashes for Plans/ledgers/v2/ledger_registry.json is stale (stored 547bb03a21a43b3f448c4c091e208a855c771fb85382ff27a9fbba4e81a37301, current 650a592ed2a6adea0839b6e82847654dc968d4c208b51370633dac9df0ef6a98)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:42: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:43: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 95b810e6eae46e3d2524f30e3945bd75ad2c1536477f935c3e5ce11e51622cc9, current 9fce4e4646e6ba34452f3746f0c100a1ff5242dacf2a34dce3de3f5277d42f1a)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:44: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 95b810e6eae46e3d2524f30e3945bd75ad2c1536477f935c3e5ce11e51622cc9, current 9fce4e4646e6ba34452f3746f0c100a1ff5242dacf2a34dce3de3f5277d42f1a)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:45: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:45: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 95b810e6eae46e3d2524f30e3945bd75ad2c1536477f935c3e5ce11e51622cc9, current 9fce4e4646e6ba34452f3746f0c100a1ff5242dacf2a34dce3de3f5277d42f1a)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:45: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:46: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 95b810e6eae46e3d2524f30e3945bd75ad2c1536477f935c3e5ce11e51622cc9, current 9fce4e4646e6ba34452f3746f0c100a1ff5242dacf2a34dce3de3f5277d42f1a)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:47: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 95b810e6eae46e3d2524f30e3945bd75ad2c1536477f935c3e5ce11e51622cc9, current 9fce4e4646e6ba34452f3746f0c100a1ff5242dacf2a34dce3de3f5277d42f1a)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:48: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:48: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 95b810e6eae46e3d2524f30e3945bd75ad2c1536477f935c3e5ce11e51622cc9, current 9fce4e4646e6ba34452f3746f0c100a1ff5242dacf2a34dce3de3f5277d42f1a)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:48: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:49: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:50: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored ec69685c8f1c769879100ef8c305c390184659630b1a4bcab0b7fb941d9ba06e, current 5a0bedbcdd1158194f4f4b46c5450699a86f3558f3bc8f679044f3460c6e59eb)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:51: closure_evidence_hashes for Plans/ledgers/v2/ledger_registry.json is stale (stored 547bb03a21a43b3f448c4c091e208a855c771fb85382ff27a9fbba4e81a37301, current 650a592ed2a6adea0839b6e82847654dc968d4c208b51370633dac9df0ef6a98)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:55: owner_evidence_hashes for Plans/Goal_Runtime_System.md is stale (stored 19b669a1c0c1e827d0b2cc40fa4c9c138032a10212259096201ba08d070a74f3, current 98f20b0efd0e4aa31dfe1f040025015df74c9bc088f94bf014e9a5615214ae8e)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:55: closure_evidence_hashes for Plans/Goal_Runtime_System.md is stale (stored 19b669a1c0c1e827d0b2cc40fa4c9c138032a10212259096201ba08d070a74f3, current 98f20b0efd0e4aa31dfe1f040025015df74c9bc088f94bf014e9a5615214ae8e)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        }
+      ],
+      "status": "fail"
+    }
+  ],
+  "generated_at_utc": "2026-08-18T00:09:13Z",
+  "status": "fail"
+}

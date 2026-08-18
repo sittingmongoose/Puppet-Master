@@ -1,0 +1,268 @@
+{
+ "schema_id": "pm.settings_bakeoff.impact_register.v1",
+ "concept": "concept-11-tabbed-organizer",
+ "generated": "2026-08-18",
+ "canon_mutated": false,
+ "rows": [
+  {
+   "area": "navigation",
+   "interaction": "Open Settings / navigate domain / Back / Close",
+   "canon_checked": true,
+   "disposition": "reuse-candidate",
+   "candidate_id": "cmd.settings.navigate",
+   "owner": null,
+   "closure_needed": [
+    "canonical command ID and owner",
+    "typed payload/result/error",
+    "availability/disabled reason",
+    "idempotency/fencing/stale-result handling",
+    "persistence/event/receipt effect",
+    "ObservableWork operation link",
+    "route/deep-link/focus effect",
+    "GUI/NL/palette/automation equivalence",
+    "production wiring evidence and regression fixture"
+   ],
+   "notes": null
+  },
+  {
+   "area": "navigation",
+   "interaction": "Universal search focus + select result by immutable ID",
+   "canon_checked": true,
+   "disposition": "new-candidate",
+   "candidate_id": "cmd.settings.search.select_result",
+   "owner": null,
+   "closure_needed": [
+    "canonical command ID and owner",
+    "typed payload/result/error",
+    "availability/disabled reason",
+    "idempotency/fencing/stale-result handling",
+    "persistence/event/receipt effect",
+    "ObservableWork operation link",
+    "route/deep-link/focus effect",
+    "GUI/NL/palette/automation equivalence",
+    "production wiring evidence and regression fixture"
+   ],
+   "notes": "packet supersedes index-based routing"
+  },
+  {
+   "area": "values",
+   "interaction": "Set / reset setting value in current Project",
+   "canon_checked": true,
+   "disposition": "reuse-candidate",
+   "candidate_id": "cmd.settings.value.set",
+   "owner": null,
+   "closure_needed": [
+    "canonical command ID and owner",
+    "typed payload/result/error",
+    "availability/disabled reason",
+    "idempotency/fencing/stale-result handling",
+    "persistence/event/receipt effect",
+    "ObservableWork operation link",
+    "route/deep-link/focus effect",
+    "GUI/NL/palette/automation equivalence",
+    "production wiring evidence and regression fixture"
+   ],
+   "notes": null
+  },
+  {
+   "area": "values",
+   "interaction": "Restore default",
+   "canon_checked": true,
+   "disposition": "reuse-candidate",
+   "candidate_id": "cmd.settings.default.restore",
+   "owner": null,
+   "closure_needed": [
+    "canonical command ID and owner",
+    "typed payload/result/error",
+    "availability/disabled reason",
+    "idempotency/fencing/stale-result handling",
+    "persistence/event/receipt effect",
+    "ObservableWork operation link",
+    "route/deep-link/focus effect",
+    "GUI/NL/palette/automation equivalence",
+    "production wiring evidence and regression fixture"
+   ],
+   "notes": null
+  },
+  {
+   "area": "lifecycle",
+   "interaction": "Copy from another project: preview",
+   "canon_checked": true,
+   "disposition": "reuse-candidate",
+   "candidate_id": "cmd.settings.copy_from_project.preview",
+   "owner": null,
+   "closure_needed": [
+    "canonical command ID and owner",
+    "typed payload/result/error",
+    "availability/disabled reason",
+    "idempotency/fencing/stale-result handling",
+    "persistence/event/receipt effect",
+    "ObservableWork operation link",
+    "route/deep-link/focus effect",
+    "GUI/NL/palette/automation equivalence",
+    "production wiring evidence and regression fixture"
+   ],
+   "notes": null
+  },
+  {
+   "area": "lifecycle",
+   "interaction": "Copy from another project: apply (atomic, restore-pointed, verified, receipted)",
+   "canon_checked": true,
+   "disposition": "reuse-candidate",
+   "candidate_id": "cmd.settings.copy_from_project.apply",
+   "owner": null,
+   "closure_needed": [
+    "canonical command ID and owner",
+    "typed payload/result/error",
+    "availability/disabled reason",
+    "idempotency/fencing/stale-result handling",
+    "persistence/event/receipt effect",
+    "ObservableWork operation link",
+    "route/deep-link/focus effect",
+    "GUI/NL/palette/automation equivalence",
+    "production wiring evidence and regression fixture"
+   ],
+   "notes": null
+  },
+  {
+   "area": "lifecycle",
+   "interaction": "Copy rollback",
+   "canon_checked": true,
+   "disposition": "new-candidate",
+   "candidate_id": "cmd.settings.copy_from_project.rollback",
+   "owner": null,
+   "closure_needed": [
+    "canonical command ID and owner",
+    "typed payload/result/error",
+    "availability/disabled reason",
+    "idempotency/fencing/stale-result handling",
+    "persistence/event/receipt effect",
+    "ObservableWork operation link",
+    "route/deep-link/focus effect",
+    "GUI/NL/palette/automation equivalence",
+    "production wiring evidence and regression fixture"
+   ],
+   "notes": null
+  },
+  {
+   "area": "lifecycle",
+   "interaction": "Import preview/apply/rollback; reset preview/apply; export",
+   "canon_checked": true,
+   "disposition": "reuse-candidate",
+   "candidate_id": "cmd.settings.import.preview",
+   "owner": null,
+   "closure_needed": [
+    "canonical command ID and owner",
+    "typed payload/result/error",
+    "availability/disabled reason",
+    "idempotency/fencing/stale-result handling",
+    "persistence/event/receipt effect",
+    "ObservableWork operation link",
+    "route/deep-link/focus effect",
+    "GUI/NL/palette/automation equivalence",
+    "production wiring evidence and regression fixture"
+   ],
+   "notes": null
+  },
+  {
+   "area": "providers",
+   "interaction": "Explicit provider CLI install from official source",
+   "canon_checked": true,
+   "disposition": "new-candidate",
+   "candidate_id": "cmd.provider.install.begin",
+   "owner": null,
+   "closure_needed": [
+    "canonical command ID and owner",
+    "typed payload/result/error",
+    "availability/disabled reason",
+    "idempotency/fencing/stale-result handling",
+    "persistence/event/receipt effect",
+    "ObservableWork operation link",
+    "route/deep-link/focus effect",
+    "GUI/NL/palette/automation equivalence",
+    "production wiring evidence and regression fixture"
+   ],
+   "notes": "Aug-13 adjudication: never bundled/pre-seeded/silent"
+  },
+  {
+   "area": "providers",
+   "interaction": "Repair / test connection / auth begin",
+   "canon_checked": true,
+   "disposition": "new-candidate",
+   "candidate_id": "cmd.provider.repair",
+   "owner": null,
+   "closure_needed": [
+    "canonical command ID and owner",
+    "typed payload/result/error",
+    "availability/disabled reason",
+    "idempotency/fencing/stale-result handling",
+    "persistence/event/receipt effect",
+    "ObservableWork operation link",
+    "route/deep-link/focus effect",
+    "GUI/NL/palette/automation equivalence",
+    "production wiring evidence and regression fixture"
+   ],
+   "notes": null
+  },
+  {
+   "area": "providers",
+   "interaction": "Select account / default model / routing",
+   "canon_checked": true,
+   "disposition": "alias-of cmd.account.select_profile",
+   "candidate_id": "cmd.provider.account.select",
+   "owner": null,
+   "closure_needed": [
+    "canonical command ID and owner",
+    "typed payload/result/error",
+    "availability/disabled reason",
+    "idempotency/fencing/stale-result handling",
+    "persistence/event/receipt effect",
+    "ObservableWork operation link",
+    "route/deep-link/focus effect",
+    "GUI/NL/palette/automation equivalence",
+    "production wiring evidence and regression fixture"
+   ],
+   "notes": null
+  },
+  {
+   "area": "managers",
+   "interaction": "Lazy manager hydration + object select + save",
+   "canon_checked": true,
+   "disposition": "new-candidate",
+   "candidate_id": "cmd.manager.hydrate",
+   "owner": null,
+   "closure_needed": [
+    "canonical command ID and owner",
+    "typed payload/result/error",
+    "availability/disabled reason",
+    "idempotency/fencing/stale-result handling",
+    "persistence/event/receipt effect",
+    "ObservableWork operation link",
+    "route/deep-link/focus effect",
+    "GUI/NL/palette/automation equivalence",
+    "production wiring evidence and regression fixture"
+   ],
+   "notes": null
+  },
+  {
+   "area": "operations",
+   "interaction": "Cancel / retry / rollback ObservableWork operation",
+   "canon_checked": true,
+   "disposition": "new-candidate",
+   "candidate_id": "cmd.op.cancel",
+   "owner": null,
+   "closure_needed": [
+    "canonical command ID and owner",
+    "typed payload/result/error",
+    "availability/disabled reason",
+    "idempotency/fencing/stale-result handling",
+    "persistence/event/receipt effect",
+    "ObservableWork operation link",
+    "route/deep-link/focus effect",
+    "GUI/NL/palette/automation equivalence",
+    "production wiring evidence and regression fixture"
+   ],
+   "notes": null
+  }
+ ]
+}

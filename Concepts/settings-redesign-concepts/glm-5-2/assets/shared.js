@@ -70,6 +70,7 @@
   /* wire shell toggles */
   S.wireShell = function () {
     document.querySelectorAll('[data-shell-toggle]').forEach(function (btn) {
+      if (btn.dataset.wired) return; btn.dataset.wired = "1";
       btn.addEventListener("click", function () {
         var part = this.getAttribute("data-shell-toggle");
         var cur = PM.state[part];
@@ -288,7 +289,13 @@
     var row = ctl.closest(".set-row");
     if (!row) return;
     var chip = row.querySelector(".chip");
-    // lightweight: pulse the row to confirm
+    // showcase: one-shot settle scale on the chip, then the row pulse confirms
+    if (chip && PM.motion && !PM.state.reducedMotion) {
+      chip.classList.remove("pm-chip-settle");
+      void chip.offsetWidth;
+      chip.classList.add("pm-chip-settle");
+      setTimeout(function () { chip.classList.remove("pm-chip-settle"); }, 400);
+    }
     PM.motion && PM.motion.pulseOnce(row, { duration: 500 });
   };
 
@@ -401,10 +408,13 @@
       });
     }
     p.querySelectorAll("[data-theme-pick]").forEach(function (sw) {
+      if (sw.dataset.wired) return; sw.dataset.wired = "1";
       sw.addEventListener("click", function () {
-        PM.applyTheme(this.getAttribute("data-theme-pick"));
+        var next = this.getAttribute("data-theme-pick");
+        S.applyThemeSoft(next);
         PM.persist();
-        refreshSwatches();
+        // refresh swatch selection after the soft apply settles
+        setTimeout(refreshSwatches, PM.state.reducedMotion ? 0 : 170);
       });
     });
     var rm = document.getElementById("rmToggle");
@@ -429,6 +439,16 @@
   S.wireNoticeSprout = function () {
     var btn = document.querySelector("[data-sprout]");
     if (!btn || btn.dataset.wired) return; btn.dataset.wired = "1";
+    // showcase: one-shot badge pop when the unread count changes (incl. first render)
+    var count = btn.querySelector(".pm-sprout-count");
+    var n = (PM_DEMO.inbox || []).length;
+    if (count && !S._lastSproutCount) S._lastSproutCount = -1;
+    if (count && n !== S._lastSproutCount && !PM.state.reducedMotion) {
+      S._lastSproutCount = n;
+      count.classList.remove("pm-pop");
+      void count.offsetWidth;
+      count.classList.add("pm-pop");
+    }
     btn.addEventListener("click", function (e) {
       e.stopPropagation();
       var old = document.querySelector("[data-popover].pm-inbox");
@@ -459,15 +479,172 @@
     });
   };
 
-  /* ---------- STATE BLOCKS (loading/empty/error/managed/unavailable, packet 08) ---------- */
+  /* ---------- STATE BLOCKS (loading/empty/error/offline/managed/unavailable, packet 08 + correction 08-13) ---------- */
   S.stateBlock = function (kind, title, msg) {
-    var icon = ({ loading: "refresh", empty: "search", error: "bad", managed: "lock", unavailable: "warn" })[kind] || "info";
-    var cls = ({ loading: "info", empty: "neutral", error: "bad", managed: "warn", unavailable: "bad" })[kind] || "neutral";
+    var icon = ({ loading: "refresh", empty: "search", error: "bad", managed: "lock", unavailable: "warn", offline: "plug" })[kind] || "info";
+    var cls = ({ loading: "info", empty: "neutral", error: "bad", managed: "warn", unavailable: "bad", offline: "warn" })[kind] || "neutral";
     var ic = kind === "loading"
       ? '<span class="state-spin">' + PM.svg("refresh", 18) + "</span>"
       : '<span class="state-ic ' + cls + '">' + PM.svg(icon, 18) + "</span>";
-    return '<div class="state-block ' + cls + '">' + ic +
+    return '<div class="state-block ' + cls + '" data-state-kind="' + kind + '">' + ic +
       '<div class="col gap-xs"><strong>' + title + "</strong>" + (msg ? '<span class="muted small">' + msg + "</span>" : "") + "</div></div>";
+  };
+
+  /* ---------- OBSERVABLEWORK PROJECTION (correction 2026-08-13) ----------
+     Truthful wait/progress: determinate progress ONLY when a real denominator exists;
+     otherwise an indeterminate phase + waitReason. Never a fabricated percentage. */
+  S.workBlock = function (op) {
+    /* op: { phase, waitReason, done, total, unit, note, onCancel } — total present ⇒ determinate */
+    var determinate = op.total != null && op.total > 0;
+    var bar = determinate
+      ? '<div class="ow-bar" role="progressbar" aria-valuemin="0" aria-valuemax="' + op.total + '" aria-valuenow="' + (op.done || 0) + '">' +
+          '<div class="ow-bar-fill" style="width:' + Math.round(100 * (op.done || 0) / op.total) + '%"></div></div>' +
+          '<span class="muted small mono">' + (op.done || 0) + ' / ' + op.total + (op.unit ? " " + op.unit : "") + '</span>'
+      : '<div class="ow-bar indeterminate" role="progressbar" aria-valuetext="' + (op.waitReason || op.phase || "working") + '">' +
+          '<div class="ow-bar-slide"></div></div>';
+    var reason = op.waitReason ? '<span class="mgr-note warn small">Waiting on: ' + op.waitReason + "</span>" : "";
+    var note = op.note ? '<span class="muted small">' + op.note + "</span>" : "";
+    var cancel = op.onCancel === false ? "" : '<button class="btn sm ghost" data-ow-cancel>Cancel</button>';
+    return '<div class="ow-block" data-ow-block>' +
+      '<div class="row center gap-sm"><span class="state-spin">' + PM.svg("refresh", 15) + "</span>" +
+      '<strong class="small">' + (op.phase || "Working") + "</strong>" + cancel + "</div>" +
+      bar + reason + note + "</div>";
+  };
+  S.wireWorkBlocks = function (root) {
+    (root || document).querySelectorAll("[data-ow-block]").forEach(function (b) {
+      var c = b.querySelector("[data-ow-cancel]");
+      if (c && !c.dataset.wired) {
+        c.dataset.wired = "1";
+        c.addEventListener("click", function () { b.remove(); PM.toast("Cancelled — no partial state kept"); });
+      }
+    });
+  };
+
+  /* ---------- SKELETON ROWS (real wait affordance, replaces fake spinner-only) ---------- */
+  S.skeletonRows = function (n, label) {
+    var rows = "";
+    for (var i = 0; i < (n || 3); i++) rows += '<div class="skel-row"><span class="skel-dot"></span><div class="col gap-xs grow"><span class="skel-line" style="width:' + (62 + (i % 3) * 12) + '%"></span><span class="skel-line thin" style="width:' + (38 + (i % 4) * 9) + '%"></span></div></div>';
+    return '<div class="skel-list" data-skel aria-label="' + (label || "Loading") + '">' + rows + "</div>";
+  };
+
+  /* ---------- FOCUS TRAP (modals: import + setup) ---------- */
+  S.trapFocus = function (modal) {
+    if (!modal) return function () {};
+    var sel = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    var prev = document.activeElement;
+    function focusables() { return Array.prototype.filter.call(modal.querySelectorAll(sel), function (el) { return !el.disabled && el.offsetParent !== null; }); }
+    var first = focusables()[0]; if (first) first.focus();
+    function onKey(e) {
+      if (e.key !== "Tab") return;
+      var f = focusables(); if (!f.length) return;
+      var firstEl = f[0], lastEl = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === firstEl) { e.preventDefault(); lastEl.focus(); }
+      else if (!e.shiftKey && document.activeElement === lastEl) { e.preventDefault(); firstEl.focus(); }
+    }
+    function onClose(e) { if (e.key === "Escape") { modal.remove(); release(); } }
+    modal.addEventListener("keydown", onKey);
+    modal.addEventListener("keydown", onClose);
+    function release() {
+      modal.removeEventListener("keydown", onKey);
+      modal.removeEventListener("keydown", onClose);
+      if (prev && prev.focus) try { prev.focus(); } catch (err) {}
+    }
+    return release;
+  };
+
+  /* ---------- SEARCH RESULT RENDER AIDS (shared by all concepts) ---------- */
+  /* Highlight the matched range (from PM.runSearch) inside a label. */
+  S.hl = function (label, range) {
+    if (!range || range[0] == null || range[0] < 0) return label;
+    return label.slice(0, range[0]) + '<mark class="hl">' + label.slice(range[0], range[1]) + "</mark>" + label.slice(range[1]);
+  };
+  /* Keyboard navigation + empty state for a search dropdown.
+     cfg: { input, resultsHost, itemSelector, render(results), onPick(result, el), emptyMsg } */
+  S.wireSearchDropdown = function (cfg) {
+    var input = cfg.input, host = cfg.resultsHost;
+    var items = function () { return Array.prototype.slice.call(host.querySelectorAll(cfg.itemSelector)); };
+    var active = -1;
+    function setActive(i, scroll) {
+      var list = items(); if (!list.length) return;
+      active = (i + list.length) % list.length;
+      list.forEach(function (el, j) { el.classList.toggle("kb-focus", j === active); el.setAttribute("aria-selected", String(j === active)); });
+      if (scroll !== false) list[active].scrollIntoView({ block: "nearest" });
+    }
+    function close() { host.classList.add("hidden"); host.innerHTML = ""; active = -1; }
+    input.addEventListener("input", function () {
+      var q = this.value;
+      var results = PM.runSearch(q);
+      host._results = results;
+      if (!q.trim()) { close(); return; }
+      host.classList.remove("hidden");
+      if (!results.length) {
+        host.innerHTML = '<div class="sr-empty">' + PM.shared.stateBlock("empty", "No results",
+          (cfg.emptyMsg || "No matches.") + " Close typos are matched — try \u201cprovider\u201d.") + "</div>";
+        return;
+      }
+      host.innerHTML = cfg.render(results);
+      active = -1;
+      var first = host.querySelector(cfg.itemSelector);
+      if (first) { first.classList.add("kb-focus"); first.setAttribute("aria-selected", "true"); active = 0; }
+      if (PM.motion) PM.motion.staggerIn(host, cfg.itemSelector, { step: 16, duration: 200, axis: "y" });
+    });
+    input.addEventListener("keydown", function (e) {
+      var list = items();
+      if (e.key === "ArrowDown") { e.preventDefault(); host.classList.remove("hidden"); setActive(active + 1); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); setActive(active - 1); }
+      else if (e.key === "Enter") {
+        var el = list[active > -1 ? active : 0];
+        if (el) { e.preventDefault(); el.click(); }
+      } else if (e.key === "Escape") { close(); }
+    });
+    host.addEventListener("click", function (e) {
+      var el = e.target.closest(cfg.itemSelector); if (!el) return;
+      var idx = items().indexOf(el);
+      cfg.onPick((host._results && host._results[idx]) || null, el);
+    });
+  };
+
+  /* ---------- DIRECTED STAGE SWAP (view transitions; used by every concept) ----------
+     Origin-aware: when a concept called PM.motion.captureOrigin(control) before
+     navigating, the entrance radiates from that control (packet 09). */
+  S.swapStage = function (renderView, opts) {
+    opts = opts || {};
+    var stage = document.querySelector("[data-stage]");
+    if (!stage) { renderView(); return; }
+    var old = stage.firstElementChild;
+    var token = (S._swapToken = (S._swapToken || 0) + 1);
+    var origin = null;
+    if (stage.dataset.pmOrigin === "1") {
+      var ox = parseFloat(stage.style.getPropertyValue("--pm-origin-x"));
+      var oy = parseFloat(stage.style.getPropertyValue("--pm-origin-y"));
+      if (!isNaN(ox) && !isNaN(oy)) origin = { x: ox, y: oy };
+    }
+    if (!old || !PM.motion || PM.state.reducedMotion) { renderView(); PM.motion && PM.motion.clearOrigin(); return; }
+    var outDir = opts.outDir || "left", inDir = opts.inDir || "right";
+    PM.motion.transitionView(old, null, { outDir: outDir, duration: 150, zoom: !!opts.zoom });
+    setTimeout(function () {
+      if (token !== S._swapToken) return; // a newer swap superseded this one
+      renderView();
+      var cur = stage.firstElementChild;
+      if (cur) {
+        if (origin) PM.motion.transitionView(null, cur, { duration: 240, origin: origin, zoom: !!opts.zoom || !!origin });
+        else PM.motion.transitionView(null, cur, { inDir: inDir, duration: 230, zoom: !!opts.zoom });
+      }
+      PM.motion.clearOrigin();
+    }, 140);
+  };
+
+  /* ---------- THEME CROSSFADE (theme change is never an instant flip) ---------- */
+  S.applyThemeSoft = function (theme) {
+    var shell = document.querySelector(".pm-shell");
+    if (!shell || !PM.motion || PM.state.reducedMotion) { PM.applyTheme(theme); return; }
+    shell.style.transition = "opacity 150ms var(--ease)";
+    shell.style.opacity = "0.55";
+    setTimeout(function () {
+      PM.applyTheme(theme);
+      shell.style.opacity = "1";
+      setTimeout(function () { shell.style.transition = ""; shell.style.opacity = ""; }, 190);
+    }, 150);
   };
 
   /* ---------- RESUME RECENT (Home 4th job, packet 01) ---------- */

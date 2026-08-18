@@ -1,14 +1,39 @@
-# Findings — Usage page (verified research pointer + load-bearing facts)
+# Findings — Usage page (U1–U9 phase · load-bearing semantics and open gaps)
+
+> **Read this before you trust any number in this document.**
+>
+> **Scope.** This file records the **U1–U9** phase. It does **not** describe U10 or U11:
+> `grep -ci 'u11\|u10' FINDINGS.md` returned **0** before this repair, while **U11 Prism II is the
+> selected concept**. Read this as U1–U9 lineage. For the current state of the folder read
+> [`README.md`](./README.md); for findings about the selected concept read the independent audit's
+> `FINDINGS.json` and the `unresolved_questions` array in
+> [`reports/impact-register.json`](./reports/impact-register.json).
+>
+> **Every `verification/*` artifact this document used to cite is absent and was never committed.**
+> Verified 2026-08-18, three ways: (1) `find verification -type f` returns exactly **15** files — 13
+> PNGs plus `cdp-shots.mjs` and `std-shots.mjs`, all under `verification/u11/redesign/`; (2) each cited
+> name was tested individually with `test -e` and then searched for with `find` across the whole
+> repository — none is present and none was relocated; (3) `git log --all --oneline --diff-filter=A`
+> returns **0** commits for every one of those names, and the only commit that has ever touched
+> `verification/` is `aa122d7c85`, which added exactly those 15 files. There are no deletions. Nothing
+> was lost — nothing was ever created.
+>
+> **Therefore no quantitative claim that rested on those files is falsifiable, and none should be
+> relied on.** Every such claim has been **deleted rather than softened**; the inventory is in
+> [What was removed from this document](#what-was-removed-from-this-document). This is finding
+> **A11-03** of the independent audit at
+> [`../PM_Usage_Independent_Audit_2026-08-17/`](../PM_Usage_Independent_Audit_2026-08-17/) — the same
+> defect already repaired in [`README.md`](./README.md) and
+> [`research/INDEX.md`](./research/INDEX.md). What survives below is the design and semantic knowledge
+> that stands on the live files and on the research corpus, which does exist.
 
 **Final consolidation 2026-08-01**, reflecting the whole rebuild: semantics, shared infrastructure,
 persistence migrations, hardening, design elevation, finish polish, the final alignment/contrast
 pass, and the closing phase — the U8 revert from freeform back to the standard grid (per user
-direction), the area-aware renderer rebuild for content-fit, curated default compositions, the
-focus-mode morph, and a full live-browser QA sweep with all findings fixed. The audit corpus lives in
-`verification/audit-*.md` and the closing-phase QA/fit reports in `verification/qa-*.md` and
-`verification/audit-widget-fit.md`. The research corpus itself was re-verified on 2026-07-30. This
+direction), the area-aware renderer rebuild for content-fit, curated default compositions, and the
+focus-mode morph. The research corpus itself was re-verified on 2026-07-30. This
 file points to the research corpus and records the load-bearing verified findings, the
-distinctiveness and content-fit outcomes, the audit/QA criticals that were fixed, and the
+distinctiveness and content-fit outcomes, the defects that were found and fixed, and the
 still-open gaps. **`Plans/**` were NOT edited here** — editing canonical prose, `Spec_Lock`, or
 shards is a seal-phase action. Citations are `file:line` to live files; PlanUnit ids are `UF-xxx`
 (usage-feature) and `F3-xxx` (FinalGUISpec).
@@ -45,7 +70,8 @@ shards is a seal-phase action. Citations are `file:line` to live files; PlanUnit
    `projection_freshness`, `projection_health`, an observed/updated timestamp, and a `reason` when
    degraded) — not selectively. UF-087 `usage-feature.md:5429`, F3-418 `FinalGUISpec.md:27751`,
    UF-085 `:5619`. "Missing is never a silent zero" is part of this contract (UF-074 `:5041`). The
-   prototypes now enforce this in the demo data: **≥36 provenance chips per concept**, machine-verified.
+   rebuilt demo data carries the grammar on its value objects rather than selectively
+   (`_shared/usage-data.js`, "Task 4 — provenance grammar on every visible value object").
 
 3. **Run-out has NO canonical definition.** "Burn rate" and "run-out / forecast exhaustion" appear in
    `Plans/**` only as build-plan demo prose, the `spend_rate_exceeded` anomaly class (UF-083
@@ -70,9 +96,13 @@ shards is a seal-phase action. Citations are `file:line` to live files; PlanUnit
    of 6dp under $0.01, 4dp under $1, else 2dp (`usage-feature.md:523-524`). The "API-billed /
    plan-included / combined" split is a **GUI projection over that single authority, explicitly NOT a
    second cost model** (`Concepts/usage-concepts/BUILD_PLAN.md:20-22`); overage is a policy/entitlement state,
-   and plan-backed vs API-billed buckets must not merge (register U3). The rebuilt demo data reconciles
-   exactly: **61,850,000 (API-billed) + 125,570,000 (plan-included) = 187,420,000 = the single
-   `cost_microdollars`** — machine-verified by the data-unit gate.
+   and plan-backed vs API-billed buckets must not merge (register U3). How the rebuilt demo data
+   carries that split, read out of the source on 2026-08-18: `cost_microdollars` is
+   `Math.round(budget.spentMTD * 1e6)` from `spentMTD: 187.42` (`_shared/usage-data.js:286,615`), the
+   API-billed bucket is the literal `61850000` (`:618`), and the plan-included bucket is computed as
+   the remainder (`:619`). So the three-way identity holds **by construction** — it is a property of
+   how the fixture is built, not an independent reconciliation, and it is not evidence that the split
+   is correct.
 
 6. **Only two true Slint 1.17.1 blockers.** The version-pinned re-audit confirms `backdrop-filter`
    and element blur as the only genuine missing capabilities (no blur/backdrop/shader primitive). The
@@ -82,66 +112,63 @@ shards is a seal-phase action. Citations are `file:line` to live files; PlanUnit
    (`slint-1.17.1-verification.md`). Glass was aligned to PMConcept7 and de-blurred accordingly
    (`glass-slint-mapping.md`).
 
-7. **The used-total is source-aware: 160,090.** The rebuilt dataset measures used tokens at
-   **160,090**, derived source-aware so provider-specific inclusive/additive semantics (finding 1)
-   are honored and nothing is double-counted. The old double-counting total (156,310) is absent from
-   every concept. This is asserted by the semantic gate together with the three-way cost reconcile
-   (finding 5) and the per-value provenance contract (finding 2).
+7. **A used-token total must be derived source-aware, never summed.** A used-total is only meaningful
+   if each source's inclusive/additive semantics (finding 1) are applied *before* aggregation: summing
+   the raw fields across providers double-counts cache and reasoning for every provider that reports
+   them inside input, and the resulting figure is larger than the truth and unattributable. The
+   rebuild adopted that rule alongside the three-way cost projection (finding 5) and the per-value
+   provenance contract (finding 2). *The specific source-aware figure this finding used to report, and
+   the older double-counted figure it contrasted against, are deleted — both were attributed to a
+   semantic gate that does not exist.*
 
-8. **The seven concepts are genuinely distinct paradigms, not skins.** The distinctiveness audit
-   (`verification/audit-distinctiveness.md`) originally found four real paradigms (U3, U4, U6, and
-   U5 by feel) plus U7/U8/U9 converged as the same widget canvas with different seeds — and flagged
-   that U8's then-marketed "freeform" was not real (reorder-only drag, snap-to-grid resize). An
-   elevation pass answered that by adding a true overlap/stack freeform engine to U8; **that engine
-   was subsequently removed per user direction** (the overlapping tiles were disliked), and U8 was
-   reverted to the standard grid. U7, U8, and U9 all now mount the **same grid engine** and diverge
-   **by composition, navigation, and chrome**, not by engine: U7 = an orderly instrument board
-   (uniform modules, live module numbers, bench readout strip, 4 distinct spans); U8 = a varied-span
-   bento mosaic (10 distinct spans, dense hole-free packing, a bespoke 26px dot-grid ground with
-   per-category spine chrome, a focal hero number); U9 = a curated tabbed deck (five `PMTabs` tabs
-   over per-tab curated boards). The final live-browser QA confirms the three remain clearly
-   distinct (span variety U8 10 > U7 4; U9 the only tabbed surface; `qa-final-widgets.md` Theme 7),
-   and that no overlapping/stacked widgets and no "freeform" copy remain anywhere (`qa-final-widgets.md`,
-   `qa-final-static.md`). The "three skins" critique is resolved at the paradigm level
-   (`verification/qa-design-critique-final.md` §3).
+8. **The seven concepts are genuinely distinct paradigms, not skins.** The distinctiveness review
+   originally found four real paradigms (U3, U4, U6, and U5 by feel) plus U7/U8/U9 converged as the
+   same widget canvas with different seeds — and flagged that U8's then-marketed "freeform" was not
+   real (reorder-only drag, snap-to-grid resize). An elevation pass answered that by adding a true
+   overlap/stack freeform engine to U8; **that engine was subsequently removed per user direction**
+   (the overlapping tiles were disliked), and U8 was reverted to the standard grid. U7, U8, and U9 all
+   now mount the **same grid engine** and diverge **by composition, navigation, and chrome**, not by
+   engine: U7 = an orderly instrument board (uniform modules on a fixed grid, live module numbers,
+   bench readout strip, graph-paper ground); U8 = a varied-span bento mosaic (mixed spans, dense
+   hole-free packing, a bespoke 26px dot-grid ground with per-category spine chrome, a focal hero
+   number); U9 = a curated tabbed deck, the only tabbed surface in the set (five `PMTabs` tabs over
+   per-tab curated boards). Each page states its own paradigm in its header comment. No overlapping or
+   stacked widgets and no "freeform" copy remain on the U8 page or in the gallery.
 
-9. **Final design verdict: good-with-character and clearly improved, three concepts at
-   portfolio-grade; the U8 revert traded a high ceiling for a safer one.** The closing design
-   critique (`verification/qa-design-critique-final.md`) — the same harsh senior reviewer — confirms
-   the two findings that held the set back are closed: the font-integrity gap is fixed (all seven
-   pages ship the full family set and every hero numeral resolves to a loaded face on a cold load,
-   no OS-font fallback), and U9's featured hierarchy is fixed (every slide opens on a real headline
-   card whose focal number scales with the viewport, the quota spreadsheet demoted to a support
-   band). The honest grade is **three concepts portfolio-grade (U3, and conditionally U8/U9 on their
-   best slide), four good-with-character (U4, U5, U6, U7), zero AI-slop, zero regressions**. U8's
-   revert from freeform to the grid bento did **not** make it a U7 clone (it is still varied and
-   alive) but it did surrender the overlap/raise engine that made U8 portfolio-grade on its own, and
-   the grid surface exposes the wide-band void problem the freeform hid — a real ceiling regression
-   acknowledged as the cost of the user's preferred orderliness. Each theme family carries a distinct
-   typography voice with a loaded numeric font and a real type scale that does hierarchical work. The
-   remaining distance to "portfolio-grade across the board" is now **compositional air, not
-   character** (see Open gaps): vertical air in full-width bands (U9 hero/short bands, U8 wide tiles,
-   the focus sheet), U8's wide-band internal voids and lack of an on-canvas focal figure, and a few
-   density blemishes.
+9. **The closing design pass closed two set-wide gaps; the U8 revert traded a high ceiling for a
+   safer one.** Two design problems that had held the set back were fixed in the closing phase: the
+   font-integrity gap (all seven pages ship the full family set, so hero numerals resolve to a loaded
+   face on a cold load rather than falling back to an OS font), and U9's featured hierarchy (every
+   slide now opens on a real headline card whose focal number scales with the viewport, with the
+   quota spreadsheet demoted to a support band). U8's revert from freeform to the grid bento did
+   **not** make it a U7 clone (it is still varied and alive) but it did surrender the overlap/raise
+   engine, and the grid surface exposes the wide-band void problem the freeform hid — a real ceiling
+   regression accepted as the cost of the user's preferred orderliness. Each theme family carries a
+   distinct typography voice with a loaded numeric font and a real type scale that does hierarchical
+   work. The remaining distance is **compositional air, not character** (see Open gaps): vertical air
+   in full-width bands (U9 hero/short bands, U8 wide tiles, the focus sheet), U8's wide-band internal
+   voids and lack of an on-canvas focal figure, and a few density blemishes. *The overall grade this
+   finding used to report — a per-concept portfolio-grade tally — is deleted: it was the verdict of a
+   design critique document that does not exist.*
 
 10. **The widget renderers are now area-aware and content-fit.** The 17 shared renderers
     (`PMWidgetDefs`) were rebuilt to pick a density tier from each widget's live pixel width and
     height, so content is composed for its box rather than chopped. Density variants are
     purpose-built and honest — headline-first at small sizes, top-N lists with a "+N more"
     disclosure whose tail rows stay in the DOM behind a one-click reveal (data folded, never
-    dropped), column-dropping on narrow tables, two-up splits on wide tiles. The fit audit and its
-    final re-measurement (`verification/audit-widget-fit.md`, `verification/qa-fit-final.md`) track
-    the outcome: widget instances relying on scrolling fell **77% → 9.3% → 7.8%**; body-scroll count
-    went **84 → 2 → 0** (worst vertical ratio **3.96× → 1.05× → 1.00×**); horizontal right cut-off
-    went **130–165px / 60px → 0px**. Every one of the 9 remaining scrollers is the deliberate
-    ledger/tools `.us-tblwrap` table-paging model inside a body that fits at 1.00×. Value-state chips
-    never clip mid-word (full label at width, colored dot plus tooltip below ~340px bodies), verified
-    with zero clipped spans. The closing QA sweep re-measured fit at 7.8% and verified U3/U4/U5/U6/U7/U8/U9
-    all pass with no regressions, 0 console errors, 0 underscores, meter alignment Δ≤2px
-    (`qa-fit-final.md`, `qa-final-widgets.md`, `qa-final-static.md`, `qa-u9.md`).
+    dropped), column-dropping on narrow tables, two-up splits on wide tiles. The tier is derived from
+    the tile's live pixel box (`fitOf`), measured off the mounted `.uw` when present and otherwise
+    estimated deterministically from the span and the canvas grid metrics — so a short box is a low
+    tier no matter how wide, and a narrow box is a low tier no matter how tall
+    (`_shared/usage-widget-renderers.js:25-30`). Where a widget still scrolls, the intended model is
+    the deliberate ledger/tools `.us-tblwrap` table-paging surface rather than an overflow.
+    Value-state chips are built not to clip mid-word: the full label at width, a colored dot plus a
+    tooltip in narrow bodies. *The before/after fit percentages, body-scroll counts and vertical-ratio
+    figures this finding used to report are deleted — every one came from a fit audit and a
+    re-measurement report that do not exist.*
 
-11. **Animation is expert-level across U3–U9, with distinct per-concept personalities, and
-    exceeds PMConcept7.** A full animation-elevation pass (U1/U2 excluded) replaced PMConcept7's
+11. **Motion was rebuilt across U3–U9 into real object motion with distinct per-concept
+    personalities.** A full animation-elevation pass (U1/U2 excluded) replaced PMConcept7's
     flat-appearance motion with real object motion. A shared spring/personality token vocabulary —
     `--mo-spring/settle/antic/follow/stagger/press/reveal/bounce`, each with a reduced-motion
     twin and all scaled by the per-theme `--pm-motion-k` (retro 0.58 → glass 1.33) — drives:
@@ -155,137 +182,83 @@ shards is a seal-phase action. Citations are `file:line` to live files; PlanUnit
     U5 spend-linked lub-dub hearth with ambient breathing, U6 directional dossier swap with pressure
     pulses, U7 module power-on cascade with a bench diagnostic scan and odometer numbers, U8 bouncy
     tile settle with tactile 3D tilt and a breathing hero wash, and U9 slide depth with hero count-up,
-    a direction-aware readout flip, and spring tab ink. The pass was verified three ways: an
-    independent expert motion audit verdicted it **EXPERT-LEVEL, 66/66 checks** (measured overshoot /
-    follow-through / stagger, personalities distinct, **reduced-motion fully compliant on all 7**)
-    (`verification/audit-motion-final.md`); live-browser **visual witnesses watched every concept
-    across all 8 themes** (per-frame trajectories plus screenshot frame-sequences in
-    `verification/screenshots-witness/<concept>/<theme>/`, reports `verification/witness-u3.md` …
-    `witness-u9.md`); and the regression gates stayed green (matrix **280/280**, data-unit
-    **1003/1003**, U4 interactive states **59/59** after a pane-switch busy-lock regression was found
-    and fixed). Against PMConcept7 — teleport reorders, from-$0 counters, identical 240ms fades, a
-    dead press scale, a linear page exit — the concepts now move objects (lifted-clone FLIP reorders,
-    value→value tweens, staggered springs, live press) and exceed it decisively. Full reference:
-    `research/animation-elevation-reference.md` §E; honest residuals in
-    `verification/known-limitations.md`.
+    a direction-aware readout flip, and spring tab ink. Against PMConcept7 — teleport reorders,
+    from-$0 counters, identical 240ms fades, a dead press scale, a linear page exit — the concepts
+    now move objects (lifted-clone FLIP reorders, value→value tweens, staggered springs, live press).
+    A pane-switch busy-lock regression on U4 was found and fixed during the pass. Full reference:
+    `research/animation-elevation-reference.md` §E. *The motion audit verdict and check count, the
+    per-theme visual-witness record, and the three "gates stayed green" tallies this finding used to
+    report are deleted — every one named a file that does not exist. No measured record of the motion
+    quality or of reduced-motion compliance survives.*
 
-## Verification status (final)
+## Verification status (U1–U9)
 
-The automated + visual verification story, in full (details and caveats in
-`verification/known-limitations.md`; per-combo evidence in `verification/visual-review-ledger.json`):
+**There is none.** There is no base matrix, no interactive-states gate, no data-unit gate, no
+visual-review ledger and no design-critique corpus for the U1–U9 set, and none was ever committed. The
+section that used to stand here reported five green gates with hard counts; every one of them named a
+script or a result file that does not exist, so all five have been deleted rather than softened. The
+inventory is in [What was removed from this document](#what-was-removed-from-this-document).
 
-- **Base matrix: 280/280 pass** — 7 pages (U3–U9) × 8 themes × 5 widths (900/1280/1700/2200/2500);
-  meter alignment (≤2px, both edges), zero underscores in any text node (incl. hidden panes), zero
-  root overflow, zero console/page errors (`verification/run-matrix.mjs` → `results.json`, `report.md`).
-- **Interactive states: 393 passed / 0 failed / 171 legitimate N/A** — tabs/panes, sort asc+desc,
-  filter menus, context popup, More Details (Curated + redacted Raw + command dispatch),
-  one-popup-at-a-time, widget kebab, add-picker, Configure, S/M/L/XL + free-resize Custom chip,
-  focus + scrim, reduced-motion toggle, low-height 650/1400, and the gallery
-  (`verification/run-states.mjs` → `state-results.json`).
-- **Semantic / data-unit: 1003 assertions, 0 failures** — used-tokens 160,090 (source-aware),
-  three-way cost = 187,420,000 = `cost_microdollars`, ≥36 provenance chips/concept, 0 prose
-  underscores (`verification/data-unit.mjs`).
-- **Visual review: 280/280 combos pass** — all 7 concepts × 40 combos. Geometry is the automated
-  matrix above re-run on the final design; design-quality judgment is the agent critique in
-  `verification/qa-design-critique-final.md` plus the live-browser QA sweep (`qa-fit-final.md`,
-  `qa-final-widgets.md`, `qa-final-static.md`, `qa-u9.md`), the widget fit audit
-    (`audit-widget-fit.md`), and the finish / alignment / contrast passes. Consolidated in
-    `verification/visual-review-ledger.json` (280 entries, all pass). **Agent-done, not human
-    sign-off.**
-- **Motion: expert-level, audited and visually witnessed (finding 11).** Independent expert motion
-    audit **EXPERT-LEVEL, 66/66** with reduced-motion fully compliant on all 7
-    (`verification/audit-motion-final.md`); live-browser visual witnesses across **all 8 themes**
-    for every concept (`verification/witness-u3.md` … `witness-u9.md`,
-    `verification/screenshots-witness/<concept>/<theme>/`).
+The only automated gate in this folder is `u11-verify.mjs`, and it exercises **U11 only** — not any
+concept this document describes. See [`README.md`](./README.md) under Verification, which also records
+what that harness does and does not cover.
 
-The demo numbers in `usage-data.js` are now rebuilt to the canonical contract (findings 1, 2, 5, 7).
-U1 and U2 are frozen and excluded from every gate.
+The demo numbers in `_shared/usage-data.js` were rebuilt to the canonical contract (findings 1, 2, 5,
+7); that the rebuild landed is readable in the file, but it was never gated. U1 and U2 are frozen
+(rejected) and were not edited after the first pass.
 
-## Defect-resolution summary (polish pass)
+## Closing-phase changes (U8 revert, U9 recomposition, drag-reorder)
 
-The agent visual reviews flagged defects that were fixed in a polish pass (full per-combo notes in
-`verification/visual-review-{page}.json` and the merged ledger):
-
-- **U3 Cockpit** — Quota Bank tile interior void 37–45% → ~1% (tile no longer stretches against its
-  tall Anomaly-guard row-mate; trailing note reflows).
-- **U4 Focus** — quota-row meter gap filled (meter grows with row width instead of leaving a void).
-- **U5 Cozy Console** — KPI primary values no longer truncate (stacked→row breakpoint raised).
-- **U6 Workspace** — Budget Pulse provenance-chip collision → 0.
-- **U7 Board** — Budget widget fill 0.51 → 1.0; glass-light control contrast 3.3:1 → 6.2:1.
-- **U8 Canvas** — Spend pulse fill 0.49 → 1.0; analytics/token-flow tiles filled.
-- **U9 Deck** — dead space 16–21% → 2–5% (dense packing); Overview made cost-free (dollar hero moved
-  off the default tab, cost/spend widgets stay on the Cost tab).
-
-The three formerly-deferred residuals are now fixed and verified in the post-fix reviews: the U3
-account-status clip at 1280 (the line now wraps, 0% clip), the U5 ultra-wide band (now under 1%, the
-meter absorbing the width as the hero soak), and the shared quota-widget overflow on U7/U8/U9 (about
-4.6–8.8× down to about 1.0–1.5× via progressive density plus show-all and per-window detail
-affordances). Only low/cosmetic items remain — graceful secondary-label ellipses and a retro ellipsis
-glyph on U3; a 1280 annotation ellipsis and a popover caret on U5; an ultrawide mini-bar placement on
-U6; a budget mid-card gap, slight non-quota body scroll, and glass-light H1 contrast on U7; trailing
-dead space, a 900 notch, and a soft wordmark on the light themes of U8; and borderline quota scroll at
-900, ragged overview notches, looser wide sub-tab packing, and a soft wordmark on U9. Full detail in
-`verification/known-limitations.md` (the per-concept `verification/visual-review-{page}.json` files
-retain the intermediate per-combo notes as lineage).
-
-## Closing-phase QA sweep (live browser) — outcomes
-
-The final phase was verified by an isolated live-browser QA sweep (playwright-core driving system
-Chrome, not the shared MCP browser; evidence in `verification/qa-*.md`, `audit-widget-fit.md`):
+What the closing phase changed. These are descriptions of shipped behaviour, readable in the live
+files. The live-browser QA sweep that used to be cited as their verification left no artifact that
+exists, so nothing here carries a measured pass record.
 
 - **U8 reverted to the grid (freeform removed).** The overlap/stack freeform engine was deleted from
-  the shared canvas (`_shared/usage-widgets.js`, 959 → 752 lines) per user direction — the
-  overlapping tiles were disliked. **Free grid-span resize (arbitrary corner resize) stays.** U8 is
-  now varied-span bento on the grid: drag = reorder, dense hole-free packing, a bespoke 26px
-  dot-grid ground, per-category spine chrome, and a focal hero number. The QA sweep confirms 0
-  overlap pairs on U7/U8 across the whole matrix, the bespoke ground on all 8 themes, all
-  "freeform"/"free-form" copy purged from the U8 page and the gallery, drag = reorder with no x/y in
-  the persisted envelope, and the Custom chip retained on free resize (`qa-final-widgets.md`,
-  `qa-final-static.md`).
-- **U9 recomposed into a varied-width curated deck.** Hero bands are filled (occupancy 0.932 on every
-  tab/theme/width, never a void); widths vary at 2200/2500 (not all-full-width slabs); the Cost tab
-  now leads with actual spend ($187.42 hero by default) while the Overview stays cost-free
-  (`qa-u9.md`, `qa-final-widgets.md`). The earlier hollow-hero / flat-slab over-correction
-  (`qa-u9.md`) and the 900px sessions body-scroll were fixed.
-- **Renderer density edge cases fixed.** The U7 cache 2×5 under-fill (~63–70% void) found in the
-  widget QA was fixed (cache 2×5 now 100% filled; `qa-final-widgets.md` F1), along with the
-  density-re-gating under-fill (37.5% → 100%). U3 dial names fit with no silent clip (0 clipped, 0
-  masks, full text on every tooltip) and the intra-tile voids at 2200/2500 were fixed (max band
-  8.9%) (`qa-final-static.md`).
-- **No regressions across the sweep.** U3/U4/U5/U6/U7/U8/U9 all verified pass; 0 console/page
-  errors, 0 user-facing underscores, meter alignment Δ≤2px (worst 0px), 0 mid-word-clipped chips,
-  focus mode morphs (continuous FLIP) with the focal surviving focus on U8 (`qa-final-widgets.md`,
-  `qa-final-static.md`, `qa-design-critique-final.md`).
-- **Rich drag-reorder experience shipped and verified.** The shared widget canvas now lifts a floating
-  copy of the grabbed widget (its slot becomes a dashed ghost landing slot), reflows siblings live with
-  FLIP (bodies never re-render, so charts don't flicker) as a real-time drop preview, and settles the
+  the shared canvas (`_shared/usage-widgets.js`) per user direction — the overlapping tiles were
+  disliked. **Free grid-span resize (arbitrary corner resize) stays.** U8 is now varied-span bento on
+  the grid: drag = reorder, dense hole-free packing, a bespoke 26px dot-grid ground, per-category
+  spine chrome, and a focal hero number. Measured 2026-08-18: `grep -ci 'freeform\|free-form'`
+  returns 0 for `u8-canvas.html` and 0 for `index.html`; the one surviving hit in
+  `_shared/usage-widgets.js:33` is the code comment recording the retirement. The persisted envelope
+  is `{v, items:[{uid, type, c, r, cfg, focus}]}` with no x/y (`:130-138`), and the Custom chip is
+  still shown when a free span matches no preset (`:271`).
+- **U9 recomposed into a varied-width curated deck.** Hero bands are filled rather than hollow;
+  widths vary at the wide tiers instead of stacking all-full-width slabs; the Cost tab leads with
+  actual spend while the Overview stays cost-free (the dollar hero moved off the default tab, and the
+  cost/spend widgets stay on the Cost tab). The earlier hollow-hero / flat-slab over-correction and
+  the 900px sessions body-scroll were fixed.
+- **Renderer density edge cases fixed.** The U7 cache 2×5 under-fill and the density-re-gating
+  under-fill were both fixed, and U3's dial names were made to fit without a silent clip (full text
+  reachable on the tooltip).
+- **Rich drag-reorder experience shipped.** The shared widget canvas lifts a floating copy of the
+  grabbed widget (its slot becomes a dashed ghost landing slot), reflows siblings live with FLIP
+  (bodies never re-render, so charts don't flicker) as a real-time drop preview, and settles the
   widget into the ghost slot on drop with persistence; Esc reverts, drop-in-place is a no-op, reduced
-  motion stays functional, and viewport edges auto-scroll. An independent live-browser pass across
-  U7/U8/U9 confirmed it at **184/184 checks** (`verification/qa-drag.md`).
+  motion stays functional, and viewport edges auto-scroll.
 
-## Audit criticals fixed (hardening + elevation)
+## Defects found and fixed (hardening + elevation)
 
-Beyond the visual polish, the adversarial audits (`verification/audit-*.md`) surfaced criticals that
-were fixed and re-verified; the post-elevation recheck is `verification/audit-a11y-motion-recheck.md`:
+Beyond the visual polish, the hardening and elevation passes surfaced defects that were fixed in the
+concept files. The reports those passes wrote are among the artifacts that do not exist, so what
+survives is the defect and the fix — the *description* of a real bug, not a verification record, and
+not a claim that the fix was re-measured.
 
 - **Robustness (U9 tab blanking)** — rapid or interrupted tab switching silently hid every panel
-  (a stale one-shot `animationend` listener in the crossfade). Fixed: rapid switching now never
-  blanks; exactly one panel is visible (`audit-robustness.md` C1; recheck §4).
-- **Accessibility (operation-blocking)** — the four keyboard/ARIA criticals are fixed: sortable
-  ledger headers are keyboard-operable with managed `aria-sort` across U3–U9; the Context Detail
-  surface is a real dialog (`role="dialog"`, `aria-modal`, focus-trap, focus restored on close);
-  the widget kebab / add-picker menus move focus into the menu and restore it on Esc; and the
-  title-bar page tabs are keyboard-activable (`audit-accessibility.md` C1–C4; recheck §2).
+  (a stale one-shot `animationend` listener in the crossfade). Fixed so that rapid switching leaves
+  exactly one panel visible.
+- **Accessibility (operation-blocking)** — four keyboard/ARIA defects were fixed: sortable ledger
+  headers are keyboard-operable with managed `aria-sort` across U3–U9; the Context Detail surface is
+  a real dialog (`role="dialog"`, `aria-modal`, focus-trap, focus restored on close); the widget
+  kebab / add-picker menus move focus into the menu and restore it on Esc; and the title-bar page
+  tabs are keyboard-activable.
 - **Motion (U9 entrance replay)** — switching tabs replayed the widget entrance on the whole panel.
-  Fixed: zero entrance replays on every tab switch, and reduced motion is pixel-perfect on both
-  paths across all concepts (`audit-motion.md` C1; recheck §4–5).
+  Fixed so the entrance does not replay on a tab switch.
 - **Data semantics (entitlement contradiction)** — Copilot premium was rendered as both "exhausted"
-  and "9 left" on the same screen; the window mislabels and the conflated cache-hit hero (context
-  cache-hit vs provider prompt-cache) are corrected, and the three-way cost projection is
-  machine-verified (`audit-data-semantics.md` C1/M1/M2/M5; `verification/data-unit.mjs`).
-- **Contrast** — brought to AA across the owned token set (worst text ≥4.5:1, non-text ≥3:1); the
-  prior 1.20:1 raw-tone and 2.85:1 muted-text catastrophes are gone (`audit-accessibility.md`
-  M1–M4; `verification/contrast-final-cleanup.md`).
+  and "9 left" on the same screen; that contradiction, the window mislabels, and the conflated
+  cache-hit hero (context cache-hit vs provider prompt-cache) were corrected.
+- **Contrast** — the owned token set went through a dedicated contrast cleanup pass. *The before and
+  after ratios this bullet used to quote came from probe files that do not exist and are deleted;
+  no contrast measurement of this concept set survives.*
 
 ## Open gaps to adjudicate (full detail in the register)
 
@@ -303,15 +276,15 @@ From `research/plans-gap-and-conflict-register.md`:
 - **Reduced-motion toggle and the no-underscore UI rule have no canonical command/prose home**
   (register G4, G6); detailed motion tokens are not yet canonical (register G7).
 
-**Open design gaps** (the narrow remaining distance to "portfolio-grade across the board," from
-`verification/qa-design-critique-final.md` §7, ranked by leverage): vertical air in full-width bands
-(U9 hero/short support bands, U8 wide tiles, and the focus sheet — boxes taller than their content,
-so dominance partly reads as emptiness); U8's wide-band internal voids plus no on-canvas focal
-figure; U8's lowered ceiling now the freeform engine is gone (an acknowledged trade); four density
-blemishes (narrow-width chip handled, but cost/spend lack a clean wide-tall composition, the
-sessions cap is non-monotonic, quota 2×5 was borderline — since fixed to 1.00×); U5's warmth still
-stops at the chrome and never reaches the quota rows; and U7's plotting-field ground is
-under-rendered. These are taste/craft and composition items, not gate failures.
+**Open design gaps**, ranked by leverage: vertical air in full-width bands (U9 hero/short support
+bands, U8 wide tiles, and the focus sheet — boxes taller than their content, so dominance partly
+reads as emptiness); U8's wide-band internal voids plus no on-canvas focal figure; U8's lowered
+ceiling now the freeform engine is gone (an acknowledged trade); density blemishes (the narrow-width
+chip is handled, but cost/spend lack a clean wide-tall composition, the sessions cap is
+non-monotonic, and quota 2×5 was borderline — since fixed); U5's warmth still stops at the chrome and
+never reaches the quota rows; and U7's plotting-field ground is under-rendered. These are taste and
+composition items. They are judgements, not measurements, and they are not gate failures because
+there is no gate.
 
 **Proposed future Plans/command changes** discovered across the whole build are queued (NOT applied)
 in `research/proposed-plan-updates.md` — P1–P13 (canonical burn-rate/run-out, one-reset-per-window,
@@ -324,3 +297,62 @@ and the closing-phase P18–P21 (area-aware density tiers + fit helpers as canon
 content-fit contract, curated default compositions, and focus-morph behavior). **P14 (the freeform
 canvas engine) is RETRACTED** — the engine was removed per user direction, so it is no longer a
 proposed canonical change.
+
+## What was removed from this document
+
+The version of this file that shipped before 2026-08-18 cited artifacts under `verification/` that do
+not exist and were never committed, and reported hard numbers on their authority. The verification
+method and its result are in the note at the top of this file. Everything below was **deleted, not
+softened**, because each rested on a file that does not exist. The names are listed once here so a
+reader who remembers the old text can see exactly what went; every occurrence elsewhere in this
+document is gone.
+
+**Two whole sections went.**
+
+- A **`Verification status (final)`** block reporting five green gates: a base matrix at **280/280**
+  across 7 pages × 8 themes × 5 widths, from `verification/run-matrix.mjs` writing `results.json` and
+  `report.md`; interactive states at **393 passed / 0 failed / 171 legitimate N/A**, from
+  `verification/run-states.mjs` writing `state-results.json`; a semantic/data-unit gate of **1003
+  assertions, 0 failures** carrying the source-aware used-tokens figure **160,090** and the **≥36
+  provenance chips per concept** claim, from `verification/data-unit.mjs`; a visual review of
+  **280/280 combos** consolidated in `verification/visual-review-ledger.json` as **"280 entries, all
+  pass"**; and a motion verdict of **EXPERT-LEVEL, 66/66** from `verification/audit-motion-final.md`
+  with per-theme witnesses in `verification/witness-u3.md` … `witness-u9.md` and frame sequences in
+  `verification/screenshots-witness/`.
+- A **`Defect-resolution summary (polish pass)`** block reporting per-concept before/after
+  measurements (interior void **37–45% → ~1%**, widget fill **0.51 → 1.0** and **0.49 → 1.0**,
+  glass-light control contrast **3.3:1 → 6.2:1**, dead space **16–21% → 2–5%**, quota-widget overflow
+  **4.6–8.8× → 1.0–1.5×**) plus a residual-defects list, all sourced from the per-concept
+  `verification/visual-review-{page}.json` files and `verification/known-limitations.md`.
+
+**Figures deleted from prose that otherwise survives.** The qualitative finding was kept in each case;
+only the number and its dead citation went.
+
+- Content fit: **77% → 9.3% → 7.8%** scrolling, body-scroll **84 → 2 → 0**, worst vertical ratio
+  **3.96× → 1.05× → 1.00×**, horizontal cut-off **130–165px / 60px → 0px**, "9 remaining scrollers",
+  "meter alignment Δ≤2px" — from `verification/audit-widget-fit.md` and `verification/qa-fit-final.md`.
+- Distinctiveness: the span-variety comparison **U8 10 > U7 4** and the "three skins resolved" verdict
+  — from `verification/audit-distinctiveness.md`, `verification/qa-final-widgets.md`,
+  `verification/qa-final-static.md` and `verification/qa-design-critique-final.md`.
+- Design: the portfolio-grade tally (**three portfolio-grade, four good-with-character, zero AI-slop,
+  zero regressions**) and the "ranked by leverage" attribution on the open design gaps — from
+  `verification/qa-design-critique-final.md`.
+- Closing phase: **959 → 752 lines** for `_shared/usage-widgets.js` (the file measures **1007** lines
+  on 2026-08-18, so the figure was wrong as well as unbacked), U9 hero occupancy **0.932**, the U7
+  cache under-fill **~63–70% → 100%**, density re-gating **37.5% → 100%**, intra-tile void **max band
+  8.9%**, a whole "no regressions across the sweep" bullet, and drag-reorder at **184/184 checks**
+  from `verification/qa-drag.md` — all from `verification/qa-*.md`.
+- Hardening: the audit critical references (`verification/audit-robustness.md`,
+  `verification/audit-accessibility.md`, `verification/audit-motion.md`,
+  `verification/audit-data-semantics.md`, and the recheck
+  `verification/audit-a11y-motion-recheck.md`), the "reduced motion is pixel-perfect" claim, and the
+  contrast ratios **≥4.5:1 / ≥3:1** against a prior **1.20:1** and **2.85:1** from
+  `verification/contrast-final-cleanup.md`.
+- The pointer instructing the reader to find "honest residuals" and "details and caveats" in
+  `verification/known-limitations.md`.
+
+**One figure was kept because it was re-measured, not inherited.** The three-way cost split in finding
+5 is read directly out of `_shared/usage-data.js` at the lines cited there, and the finding now says
+plainly that the identity holds by construction — the plan-included bucket is computed as the
+remainder — which is a weaker and more accurate statement than the "machine-verified" claim it
+replaces.

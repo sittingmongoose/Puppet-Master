@@ -1,0 +1,375 @@
+{
+  "schema_id": "pm.settings_bakeoff.manager_coverage.v2.concept",
+  "concept_id": "concept-05-directory-take-1",
+  "model": "Qwen 5.8",
+  "demonstrated": [
+    {
+      "name": "Settings Home",
+      "status": "demonstrated",
+      "family_id": "home",
+      "route": "#/home",
+      "note": "Directory Home: large search, compact attention block, two-column destination cards."
+    },
+    {
+      "name": "Settings Search",
+      "status": "demonstrated",
+      "family_id": "search",
+      "route": "#/q/<query>",
+      "note": "Universal search on every view; grouped dropdown; rid-only routing; Back restores query+results."
+    },
+    {
+      "name": "Settings Workspace",
+      "status": "demonstrated",
+      "family_id": "workspace",
+      "route": "#/cat/<catId> and #/mgr/<familyId>",
+      "note": "Domain pages of destination rows plus manager workspace with left manager nav."
+    },
+    {
+      "name": "Ordinary setting grammar",
+      "status": "demonstrated",
+      "family_id": "rows",
+      "route": "every #/cat and #/mgr section",
+      "note": "PMManagers2.row atoms (title/desc/control/source chip/Details) bound to PMState2."
+    },
+    {
+      "name": "Provider / Account / Model / Installation",
+      "status": "demonstrated",
+      "family_id": "providers",
+      "route": "#/mgr/providers and #/mgr/providers/<objectId>?sec=overview|accounts|models|limits|install|logs",
+      "note": "Integrated provider list/detail workspace over the 17 fixtures."
+    },
+    {
+      "name": "Context & Instructions",
+      "status": "demonstrated",
+      "family_id": "context",
+      "route": "#/mgr/context",
+      "note": "Concept-native Context & Instructions section inside the directory workspace."
+    },
+    {
+      "name": "Memory",
+      "status": "demonstrated",
+      "family_id": "memory",
+      "route": "#/mgr/memory",
+      "note": "Concept-native Memory section inside the directory workspace."
+    },
+    {
+      "name": "Personas",
+      "status": "demonstrated",
+      "family_id": "personas",
+      "route": "#/mgr/personas",
+      "note": "Concept-native Personas section inside the directory workspace."
+    },
+    {
+      "name": "Goal & Automation",
+      "status": "demonstrated",
+      "family_id": "goal",
+      "route": "#/mgr/goal",
+      "note": "Concept-native Goal & Automation section inside the directory workspace."
+    },
+    {
+      "name": "Crew",
+      "status": "demonstrated",
+      "family_id": "crew",
+      "route": "#/mgr/crew",
+      "note": "Concept-native Crew section inside the directory workspace."
+    },
+    {
+      "name": "Permissions & FileSafe",
+      "status": "demonstrated",
+      "family_id": "permissions",
+      "route": "#/mgr/permissions",
+      "note": "Concept-native Permissions & FileSafe section inside the directory workspace."
+    },
+    {
+      "name": "Back Seat Driver",
+      "status": "demonstrated",
+      "family_id": "bsd",
+      "route": "#/mgr/bsd",
+      "note": "Concept-native Back Seat Driver section inside the directory workspace."
+    },
+    {
+      "name": "Notifications & Sounds",
+      "status": "demonstrated",
+      "family_id": "notifications",
+      "route": "#/mgr/notifications",
+      "note": "Concept-native Notifications section inside the directory workspace."
+    },
+    {
+      "name": "Sound Library / Uploads / Packs",
+      "status": "demonstrated",
+      "family_id": "sounds",
+      "route": "#/mgr/sounds",
+      "note": "Concept-native Sounds section inside the directory workspace."
+    },
+    {
+      "name": "Appearance / themes / fonts / motion",
+      "status": "demonstrated",
+      "family_id": "appearance",
+      "route": "#/mgr/appearance",
+      "note": "Concept-native Appearance section inside the directory workspace."
+    },
+    {
+      "name": "Spellcheck & Dictionaries",
+      "status": "demonstrated",
+      "family_id": "spellcheck",
+      "route": "#/mgr/spellcheck",
+      "note": "Concept-native Spellcheck & Dictionaries section inside the directory workspace."
+    },
+    {
+      "name": "Desktop / Tray / Window",
+      "status": "demonstrated",
+      "family_id": "desktop",
+      "route": "#/mgr/desktop",
+      "note": "Concept-native Desktop, Tray & Window section inside the directory workspace."
+    },
+    {
+      "name": "Teacher / Help",
+      "status": "demonstrated",
+      "family_id": "teacher",
+      "route": "#/mgr/teacher",
+      "note": "Concept-native Teacher section inside the directory workspace."
+    },
+    {
+      "name": "Doctor",
+      "status": "demonstrated",
+      "family_id": "doctor",
+      "route": "#/mgr/doctor",
+      "note": "Concept-native Doctor section inside the directory workspace."
+    },
+    {
+      "name": "File Manager / Editor",
+      "status": "demonstrated",
+      "family_id": "files",
+      "route": "#/mgr/files",
+      "note": "Concept-native File Manager & Editor section inside the directory workspace."
+    },
+    {
+      "name": "Terminal",
+      "status": "demonstrated",
+      "family_id": "terminal",
+      "route": "#/mgr/terminal",
+      "note": "Concept-native Terminal section inside the directory workspace."
+    },
+    {
+      "name": "LSP",
+      "status": "demonstrated",
+      "family_id": "lsp",
+      "route": "#/mgr/lsp",
+      "note": "Concept-native Language Servers section inside the directory workspace."
+    },
+    {
+      "name": "Formatters",
+      "status": "demonstrated",
+      "family_id": "formatters",
+      "route": "#/mgr/formatters",
+      "note": "Concept-native Formatters section inside the directory workspace."
+    },
+    {
+      "name": "Commands & Shortcuts",
+      "status": "demonstrated",
+      "family_id": "commands",
+      "route": "#/mgr/commands",
+      "note": "Concept-native Commands & Shortcuts section inside the directory workspace."
+    },
+    {
+      "name": "MCP",
+      "status": "demonstrated",
+      "family_id": "mcp",
+      "route": "#/mgr/mcp",
+      "note": "Concept-native MCP Servers section inside the directory workspace."
+    },
+    {
+      "name": "Skills",
+      "status": "demonstrated",
+      "family_id": "skills",
+      "route": "#/mgr/skills",
+      "note": "Concept-native Skills section inside the directory workspace."
+    },
+    {
+      "name": "Plugins",
+      "status": "demonstrated",
+      "family_id": "plugins",
+      "route": "#/mgr/plugins",
+      "note": "Concept-native Plugins section inside the directory workspace."
+    },
+    {
+      "name": "Tools",
+      "status": "demonstrated",
+      "family_id": "tools",
+      "route": "#/mgr/tools",
+      "note": "Concept-native Tools section inside the directory workspace."
+    },
+    {
+      "name": "Testing & Debug",
+      "status": "demonstrated",
+      "family_id": "testing",
+      "route": "#/mgr/testing",
+      "note": "Concept-native Testing & Debug section inside the directory workspace."
+    },
+    {
+      "name": "Storage & Retention",
+      "status": "demonstrated",
+      "family_id": "storage",
+      "route": "#/mgr/storage",
+      "note": "Concept-native Storage & Retention section inside the directory workspace."
+    },
+    {
+      "name": "Backup & Restore",
+      "status": "demonstrated",
+      "family_id": "backup",
+      "route": "#/mgr/backup",
+      "note": "Concept-native Backup & Restore section inside the directory workspace."
+    },
+    {
+      "name": "Settings Lifecycle",
+      "status": "demonstrated",
+      "family_id": "lifecycle",
+      "route": "#/mgr/lifecycle",
+      "note": "Concept-native Settings Lifecycle section inside the directory workspace."
+    },
+    {
+      "name": "History & Sessions",
+      "status": "demonstrated",
+      "family_id": "history",
+      "route": "#/mgr/history",
+      "note": "Concept-native History & Sessions section inside the directory workspace."
+    },
+    {
+      "name": "Runtime Artifacts / Project Outputs",
+      "status": "demonstrated",
+      "family_id": "artifacts",
+      "route": "#/mgr/artifacts",
+      "note": "Concept-native Runtime Artifacts section inside the directory workspace."
+    },
+    {
+      "name": "Source Control / Worktrees",
+      "status": "demonstrated",
+      "family_id": "scm",
+      "route": "#/mgr/scm",
+      "note": "Concept-native Source Control & Worktrees section inside the directory workspace."
+    },
+    {
+      "name": "GitHub Actions",
+      "status": "demonstrated",
+      "family_id": "gha",
+      "route": "#/mgr/gha",
+      "note": "Concept-native GitHub Actions section inside the directory workspace."
+    },
+    {
+      "name": "Containers & Registries",
+      "status": "demonstrated",
+      "family_id": "containers",
+      "route": "#/mgr/containers",
+      "note": "Concept-native Containers & Registries section inside the directory workspace."
+    },
+    {
+      "name": "Web / Search / Fetch / Crawl",
+      "status": "demonstrated",
+      "family_id": "web",
+      "route": "#/mgr/web",
+      "note": "Concept-native Web, Search & Fetch section inside the directory workspace."
+    },
+    {
+      "name": "Project Search Index",
+      "status": "demonstrated",
+      "family_id": "searchindex",
+      "route": "#/mgr/searchindex",
+      "note": "Concept-native Project Search Index section inside the directory workspace."
+    },
+    {
+      "name": "Workspace Cleanup",
+      "status": "demonstrated",
+      "family_id": "cleanup",
+      "route": "#/mgr/cleanup",
+      "note": "Concept-native Workspace Cleanup section inside the directory workspace."
+    },
+    {
+      "name": "Media & Output",
+      "status": "demonstrated",
+      "family_id": "media",
+      "route": "#/mgr/media",
+      "note": "Concept-native Media & Output section inside the directory workspace."
+    },
+    {
+      "name": "DRY Method visible state where exposed",
+      "status": "demonstrated",
+      "family_id": "dry",
+      "route": "#/mgr/dry",
+      "note": "Concept-native DRY Method section inside the directory workspace."
+    }
+  ],
+  "deferred": [
+    {
+      "name": "Product Onboarding",
+      "status": "deferred_named_owner",
+      "family_or_module_id": "onboarding",
+      "owner": "Product Onboarding plan owner",
+      "insertion": "First-run flow reuses provider/account/installation records; no duplicate secret store.",
+      "return_contract": "Completed setup returns to the Providers manager with the new connection selected and a continuation receipt."
+    },
+    {
+      "name": "Installation / Deployment",
+      "status": "deferred_named_owner",
+      "family_or_module_id": "installation",
+      "owner": "Provider Lifecycle owner",
+      "insertion": "Explicit user-triggered install from the official source for the exact Host/Environment.",
+      "return_contract": "Install receipts deep-link back to the provider installation section; failed verification returns with previous generation restored."
+    },
+    {
+      "name": "Server Claim / Bootstrap",
+      "status": "deferred_named_owner",
+      "family_or_module_id": "server-claim",
+      "owner": "Server Backbone",
+      "insertion": "Claim handshake binds a server record to this install before hosted work is offered.",
+      "return_contract": "Successful claim returns to the Servers card with the server marked connected and a claim receipt."
+    },
+    {
+      "name": "Servers / Execution Hosts / Clients",
+      "status": "deferred_named_owner",
+      "family_or_module_id": "servers",
+      "owner": "Server Backbone",
+      "insertion": "Manager grammar reserved under System & Advanced; human-language cards only.",
+      "return_contract": "Server cards deep-link back into Settings at the matching storage or hosting row."
+    },
+    {
+      "name": "Project Hosting & Files",
+      "status": "deferred_named_owner",
+      "family_or_module_id": "hosting",
+      "owner": "Project Syncing and Updates",
+      "insertion": "Source Location card (Hosted On, Project Files, Run Work) plus sync status slots.",
+      "return_contract": "Hosting changes return to the Project Hosting card with sync status and a move receipt."
+    },
+    {
+      "name": "Remote Access",
+      "status": "deferred_named_owner",
+      "family_or_module_id": "remote-access",
+      "owner": "Server Backbone",
+      "insertion": "Pairing and session approvals; protected auth browsing stays human-only.",
+      "return_contract": "Approvals return to the Remote Access card with the session list updated."
+    },
+    {
+      "name": "Project Sync / Move",
+      "status": "deferred_named_owner",
+      "family_or_module_id": "sync-move",
+      "owner": "Project Syncing and Updates",
+      "insertion": "Project relocation and sync bundles owned by the sync pipeline.",
+      "return_contract": "A finished move returns to Settings Lifecycle with settings re-verified and conflicts queued."
+    },
+    {
+      "name": "Puppet Master application/content updates",
+      "status": "deferred_named_owner",
+      "family_or_module_id": "updates",
+      "owner": "Project Syncing and Updates",
+      "insertion": "Host-scoped signed Puppet Master updates, separate from provider/LSP/container updates.",
+      "return_contract": "Update status cards deep-link into the Updates manager with signed-build receipts."
+    },
+    {
+      "name": "Full Server backup owner flow",
+      "status": "deferred_named_owner",
+      "family_or_module_id": "server-backup",
+      "owner": "Server Backbone",
+      "insertion": "Full Server backup class with its own schedule and verification.",
+      "return_contract": "Backup runs return to the Backup manager's server class with verification receipts."
+    }
+  ]
+}

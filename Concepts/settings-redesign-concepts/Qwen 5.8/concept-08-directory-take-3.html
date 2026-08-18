@@ -1,0 +1,970 @@
+<!doctype html>
+<html lang="en" data-theme="friendly-dark" data-reduced-motion="0" data-concept-id="concept-08-directory-take-3">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Directory Take 3 — Qwen 5.8</title>
+<link rel="stylesheet" href="_shared/pm-shell.css">
+<link rel="stylesheet" href="_shared/pm-managers2.css">
+<style>
+/* scroll containment: #d3-view is the scrollport; nothing paints over the status bar */
+/* concept-08-directory-take-3 — bright, spacious directory.
+   Low density, big type, soft scale/transfer motion. Colors only via tokens. */
+#content { background: var(--bg); }
+#d3-view { max-width: 1240px; margin: 0 auto; padding: 26px 30px 90px; font-size: 14.5px; flex: 1 1 0; min-height: 0; overflow-y: auto; }
+[data-wtier="squeezed"] #d3-view { padding: 16px 14px 90px; }
+
+/* view transfer: soft scale + rise */
+[data-reduced-motion="0"] #d3-view { animation: d3In .22s ease-out; }
+@keyframes d3In { from { opacity: 0; transform: translateY(6px) scale(.992); } to { opacity: 1; transform: none; } }
+
+/* header strip */
+.d3-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+.d3-crumb { display: flex; align-items: center; gap: 7px; color: var(--text-2); font-size: 12.5px; flex-wrap: wrap; min-width: 0; }
+.d3-crumb b { color: var(--text-1); font-weight: 600; }
+.d3-crumb .sep { color: var(--text-3); }
+.d3-top .pm-spacer { flex: 1; }
+.d3-top-home .pm-spacer { flex: 0 0 auto; }
+.d3-top-home .d3-searchwrap { flex: 1 1 420px; }
+
+/* search */
+.d3-searchwrap { position: relative; }
+.d3-search { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-l); padding: 10px 14px; color: var(--text-3); }
+.d3-search input { flex: 1; border: none; outline: none; background: transparent; color: var(--text-1); font: inherit; font-size: 14.5px; min-width: 0; }
+.d3-search:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.d3-search.big { padding: 15px 18px; }
+.d3-search.big input { font-size: 17px; }
+.d3-results { position: absolute; left: 0; right: 0; top: calc(100% + 6px); background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-m); box-shadow: var(--shadow); z-index: 60; max-height: min(430px, 60vh); overflow: auto; }
+.d3-results .grp { padding: 8px 12px 3px; font-size: 10.5px; letter-spacing: .09em; text-transform: uppercase; color: var(--text-3); }
+.d3-res { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 2px 10px; width: 100%; text-align: left; padding: 9px 12px; border: none; background: transparent; color: var(--text-1); font: inherit; cursor: pointer; border-bottom: 1px solid var(--border); }
+.d3-res:last-child { border-bottom: none; }
+.d3-res:hover, .d3-res.sel { background: var(--accent-soft); }
+.d3-res .lab { font-weight: 600; font-size: 13.5px; display: flex; gap: 8px; align-items: center; min-width: 0; }
+.d3-res .pth { grid-column: 1; color: var(--text-2); font-size: 11.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.d3-res .note { grid-column: 1 / -1; color: var(--text-3); font-size: 11.5px; }
+.d3-resfoot { padding: 8px 12px; color: var(--text-3); font-size: 11.5px; border-top: 1px solid var(--border); }
+
+/* attention */
+.d3-attention { display: flex; flex-direction: column; gap: 8px; margin: 0 0 22px; }
+.d3-att { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-m); padding: 10px 14px; }
+.d3-att .t { font-weight: 600; color: var(--text-1); font-size: 13.5px; }
+.d3-att .r { color: var(--text-2); font-size: 12px; flex: 1; min-width: 0; }
+.d3-att .pm-ico { color: var(--warn); flex: none; }
+
+/* home directory cards */
+.d3-h1 { font-size: 26px; font-weight: 700; color: var(--text-1); letter-spacing: -.01em; margin: 4px 0 2px; }
+.d3-sub { color: var(--text-2); font-size: 13.5px; margin-bottom: 20px; max-width: 75ch; }
+.d3-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.d3-card { display: flex; flex-direction: column; gap: 10px; text-align: left; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-l); padding: 20px; cursor: pointer; font: inherit; color: var(--text-1); }
+[data-reduced-motion="0"] .d3-card { transition: transform .16s ease-out, box-shadow .16s ease-out, border-color .16s ease-out; }
+[data-reduced-motion="0"] .d3-card:hover { transform: translateY(-2px) scale(1.008); box-shadow: var(--shadow); border-color: var(--border-strong); }
+.d3-card .ic { width: 44px; height: 44px; border-radius: var(--radius-m); background: var(--accent-soft); color: var(--accent); display: flex; align-items: center; justify-content: center; }
+.d3-card h3 { font-size: 17px; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.d3-card p { margin: 0; color: var(--text-2); font-size: 12.5px; line-height: 1.5; max-width: 46ch; }
+.d3-card .meta { display: flex; align-items: center; gap: 10px; color: var(--text-3); font-size: 11.5px; margin-top: auto; }
+.d3-card .go { margin-left: auto; color: var(--accent); display: inline-flex; align-items: center; gap: 4px; font-weight: 600; }
+.d3-utils { display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0 26px; }
+.d3-recent { margin-top: 26px; }
+.d3-recent h4, .d3-sect-h { font-size: 12px; text-transform: uppercase; letter-spacing: .09em; color: var(--text-3); margin: 0 0 10px; }
+.d3-recent .item { display: inline-flex; align-items: center; gap: 7px; margin: 0 8px 8px 0; }
+
+/* domain overview */
+.d3-domhead { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+.d3-domhead .ic { width: 52px; height: 52px; border-radius: var(--radius-m); background: var(--accent-soft); color: var(--accent); display: flex; align-items: center; justify-content: center; flex: none; }
+.d3-domhead h2 { margin: 0 0 4px; font-size: 23px; color: var(--text-1); }
+.d3-domhead p { margin: 0; color: var(--text-2); font-size: 13px; max-width: 75ch; }
+.d3-dest { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 6px 14px; width: 100%; text-align: left; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-l); padding: 18px 20px; margin-bottom: 12px; cursor: pointer; font: inherit; color: var(--text-1); }
+[data-reduced-motion="0"] .d3-dest { transition: transform .16s ease-out, box-shadow .16s ease-out; }
+[data-reduced-motion="0"] .d3-dest:hover { transform: translateY(-1px) scale(1.004); box-shadow: var(--shadow); }
+.d3-dest .l { display: flex; gap: 14px; align-items: flex-start; min-width: 0; }
+.d3-dest .ic { width: 38px; height: 38px; border-radius: var(--radius-s); background: var(--surface-2); color: var(--accent); display: flex; align-items: center; justify-content: center; flex: none; }
+.d3-dest h3 { margin: 0 0 3px; font-size: 15.5px; font-weight: 700; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.d3-dest p { margin: 0; color: var(--text-2); font-size: 12.5px; max-width: 70ch; }
+.d3-dest .go { color: var(--accent); }
+.d3-subnav { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 18px; }
+.d3-subnav button { font: inherit; font-size: 12.5px; padding: 7px 13px; border-radius: 999px; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text-2); cursor: pointer; }
+.d3-subnav button.active { background: var(--accent); border-color: var(--accent); color: var(--accent-contrast); font-weight: 600; }
+.d3-defshell { border: 1px dashed var(--border-strong); border-radius: var(--radius-m); background: var(--surface-3); padding: 14px 16px; margin-bottom: 10px; }
+.d3-defshell h4 { margin: 0 0 4px; font-size: 13.5px; color: var(--text-1); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.d3-defshell p { margin: 2px 0; font-size: 12px; color: var(--text-2); max-width: 75ch; }
+
+/* manager view */
+.d3-mgrhead { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.d3-mgrhead .ic { width: 46px; height: 46px; border-radius: var(--radius-m); background: var(--accent-soft); color: var(--accent); display: flex; align-items: center; justify-content: center; flex: none; }
+.d3-mgrhead h2 { margin: 0 0 3px; font-size: 21px; color: var(--text-1); }
+.d3-mgrhead p { margin: 0; color: var(--text-2); font-size: 12.5px; max-width: 75ch; }
+.d3-mgr { display: grid; grid-template-columns: 300px minmax(0,1fr); gap: 18px; align-items: start; }
+.d3-roster { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-l); padding: 10px; position: sticky; top: 12px; max-height: calc(100vh - 140px); overflow: auto; }
+.d3-roster button { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; padding: 10px 12px; border: none; background: transparent; border-radius: var(--radius-s); color: var(--text-1); font: inherit; font-size: 13px; cursor: pointer; }
+.d3-roster button:hover { background: var(--surface-2); }
+.d3-roster button.active { background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); font-weight: 600; }
+.d3-detail { min-width: 0; }
+.d3-seccard { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-l); padding: 18px 20px; margin-bottom: 14px; scroll-margin-top: 12px; }
+.d3-seccard h3 { margin: 0 0 12px; font-size: 14px; color: var(--text-1); display: flex; align-items: center; gap: 8px; }
+.d3-statgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; }
+.d3-stat { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-m); padding: 12px 14px; }
+.d3-stat dt { font-size: 10.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--text-3); margin-bottom: 4px; }
+.d3-stat dd { margin: 0; font-size: 13.5px; font-weight: 600; color: var(--text-1); word-break: break-word; }
+.d3-stat dd small { display: block; font-weight: 400; color: var(--text-2); font-size: 11.5px; margin-top: 2px; }
+.d3-qa { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+.d3-kv { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 4px 14px; padding: 9px 2px; border-bottom: 1px solid var(--border); align-items: center; }
+.d3-kv:last-child { border-bottom: none; }
+.d3-kv .k { font-size: 13px; color: var(--text-1); font-weight: 600; }
+.d3-kv .k small { display: block; font-weight: 400; color: var(--text-2); font-size: 11.5px; }
+.d3-secret { display: flex; align-items: center; gap: 10px; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-s); padding: 9px 12px; font-family: var(--font-mono); font-size: 12px; color: var(--text-2); margin: 8px 0; }
+.d3-log { display: flex; gap: 8px; align-items: flex-start; padding: 6px 0; color: var(--text-2); font-size: 12.5px; }
+.d3-log .pm-ico { color: var(--ok); flex: none; margin-top: 1px; }
+
+/* all settings */
+.d3-facets { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
+.d3-vlist { height: min(62vh, 640px); overflow: auto; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-m); padding: 4px 14px; }
+.d3-vlist .pm2-row { min-height: 64px; box-sizing: border-box; }
+.d3-count { color: var(--text-3); font-size: 12px; margin: 0 0 10px; }
+
+/* copy flow */
+.d3-copy { max-width: 980px; margin: 0 auto; }
+.d3-steps { display: flex; align-items: center; gap: 10px; margin: 6px 0 22px; flex-wrap: wrap; }
+.d3-step { display: flex; align-items: center; gap: 8px; color: var(--text-3); font-size: 12.5px; font-weight: 600; }
+.d3-step .n { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--border-strong); display: flex; align-items: center; justify-content: center; font-size: 11.5px; }
+.d3-step.active { color: var(--text-1); }
+.d3-step.active .n { background: var(--accent); border-color: var(--accent); color: var(--accent-contrast); }
+.d3-step.done .n { background: var(--ok); border-color: var(--ok); color: var(--bg); }
+.d3-step .bar { width: 26px; height: 1px; background: var(--border-strong); }
+.d3-src { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 4px 14px; width: 100%; text-align: left; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-m); padding: 14px 16px; margin-bottom: 10px; cursor: pointer; font: inherit; color: var(--text-1); }
+.d3-src.active { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.d3-src h4 { margin: 0; font-size: 14px; }
+.d3-src p { margin: 2px 0 0; color: var(--text-2); font-size: 12px; max-width: 70ch; }
+.d3-catrow { display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: 12px; align-items: center; padding: 10px 4px; border-bottom: 1px solid var(--border); }
+.d3-catrow label { display: flex; gap: 12px; align-items: center; font-size: 13.5px; color: var(--text-1); font-weight: 600; cursor: pointer; flex-wrap: wrap; }
+.d3-catrow .d { color: var(--text-2); font-size: 12px; font-weight: 400; }
+.d3-catrow .c { color: var(--text-3); font-size: 12px; }
+.d3-sum { display: flex; gap: 10px; flex-wrap: wrap; margin: 14px 0; }
+.d3-sum .pm-badge { font-size: 12px; padding: 6px 10px; }
+.d3-diff { max-height: 300px; overflow: auto; border: 1px solid var(--border); border-radius: var(--radius-m); padding: 4px 12px; background: var(--surface); }
+.d3-diffrow { display: flex; align-items: center; gap: 10px; padding: 7px 2px; border-bottom: 1px solid var(--border); font-size: 12.5px; color: var(--text-1); flex-wrap: wrap; }
+.d3-diffrow:last-child { border-bottom: none; }
+.d3-diffrow .id { margin-left: auto; color: var(--text-3); font-family: var(--font-mono); font-size: 10.5px; }
+
+/* narrow / squeezed: push navigation, single column */
+[data-wtier="narrow"] .d3-grid, [data-wtier="squeezed"] .d3-grid { grid-template-columns: 1fr; }
+[data-wtier="narrow"] .d3-mgr, [data-wtier="squeezed"] .d3-mgr { grid-template-columns: 1fr; }
+[data-wtier="narrow"] .d3-roster, [data-wtier="squeezed"] .d3-roster { position: static; max-height: none; }
+[data-wtier="narrow"] #d3-view[data-roster="1"][data-hasobject="0"] .d3-detail, [data-wtier="squeezed"] #d3-view[data-roster="1"][data-hasobject="0"] .d3-detail { display: none; }
+[data-wtier="narrow"] #d3-view[data-roster="1"][data-hasobject="1"] .d3-roster, [data-wtier="squeezed"] #d3-view[data-roster="1"][data-hasobject="1"] .d3-roster { display: none; }
+[data-wtier="mid"] .d3-mgr { grid-template-columns: 250px minmax(0,1fr); }
+
+/* reduced motion kills all concept animation */
+[data-reduced-motion="1"] #d3-view, [data-reduced-motion="1"] .d3-card, [data-reduced-motion="1"] .d3-dest { animation: none; transition: none; }
+</style>
+</head>
+<body data-concept-model="Qwen 5.8" data-concept="concept-08-directory-take-3">
+<div id="app"></div>
+<script src="_shared/pm-icons.js"></script>
+<script src="_shared/pm-inventory-data.js"></script>
+<script src="_shared/pm-managers2-data.js"></script>
+<script src="_shared/pm-state2.js"></script>
+<script src="_shared/pm-search2.js"></script>
+<script src="_shared/pm-managers2.js"></script>
+<script src="_shared/pm-copy2.js"></script>
+<script src="_shared/pm-shell2.js"></script>
+<script src="_shared/concept-hub-bridge.js"></script>
+<script>
+(function () {
+  "use strict";
+  var D = window.PMInventoryData, MD = window.PMManagers2Data, S2 = window.PMState2, SR = window.PMSearch2, M2 = window.PMManagers2, C2 = window.PMCopy2;
+  var esc = M2.esc, ico = M2.ico;
+  var ICON_ALIAS = { palette: "sun", clipboard: "list", film: "image", masks: "persona", toolbox: "grid", bell: "inbox", heart: "activity", cpu: "code", copy: "layers", link: "server", upload: "download", users: "persona", database: "layers", box: "puzzle" };
+  function ic(n, s) { return ico(ICON_ALIAS[n] || n, s); }
+
+  S2.init("concept-08-directory-take-3");
+  SR.register(MD.searchEntries());
+
+  var shell = PMShell2.mount({
+    conceptName: "Directory Take 3", model: "Qwen 5.8",
+    onHome: function () { go("#/home"); },
+    onTier: function () { render(currentRoute(), true); }
+  });
+  var content = shell.content;
+  // tier fallback: ResizeObserver delivery is frame-gated in hidden headless tabs
+  window.addEventListener("resize", function () {
+    var app = shell.app, w = app.clientWidth;
+    var tier = w < 860 ? "squeezed" : w < 1150 ? "narrow" : w < 1600 ? "mid" : "wide";
+    if (app.getAttribute("data-wtier") !== tier) {
+      app.setAttribute("data-wtier", tier);
+      render(currentRoute(), true);
+    }
+  });
+  // ---------------------------------------------------------------- routing
+  var scrollMem = {};
+  var searchOrigin = null;      // route object where the open search began
+  var pendingFocus = null;      // {row, sec, object}
+  var synState = {};            // concept-local values for family fixture rows
+  var viewCache = {};           // routeKey -> html (loading-with-cache)
+
+  function go(h) { if (location.hash === h) render(currentRoute(), true); else location.hash = h; }
+
+  function currentRoute() {
+    var h = location.hash || "#/home";
+    var qIdx = h.indexOf("?");
+    var qs = qIdx >= 0 ? h.slice(qIdx + 1) : "";
+    var path = (qIdx >= 0 ? h.slice(0, qIdx) : h).replace(/^#\/?/, "");
+    var parts = path.split("/").filter(Boolean);
+    var params = {};
+    qs.split("&").forEach(function (kv) { if (!kv) return; var p = kv.split("="); params[decodeURIComponent(p[0])] = decodeURIComponent(p[1] || ""); });
+    var r = { raw: h, routeAttr: h.replace(/^#/, ""), path: path, params: params, name: parts[0] || "home" };
+    if (!parts[0]) r.name = "home";
+    if (parts[0] === "cat") { r.cat = parts[1] || "general"; r.sub = parts[2] || null; }
+    if (parts[0] === "mgr") { r.mgr = parts[1] || "providers"; r.object = parts[2] || null; }
+    if (parts[0] === "deferred") { r.deferred = parts[1] || "servers"; }
+    if (parts[0] === "q") { r.query = decodeURIComponent(parts.slice(1).join("/")); }
+    if (parts[0] === "lifecycle") { r.name = "mgr"; r.mgr = "lifecycle"; }
+    return r;
+  }
+
+  function family(id) { for (var i = 0; i < MD.families.length; i++) if (MD.families[i].id === id) return MD.families[i]; return null; }
+  function provider(id) { for (var i = 0; i < MD.providers.length; i++) if (MD.providers[i].id === id) return MD.providers[i]; return null; }
+  function deferredById(id) { for (var i = 0; i < MD.deferred.length; i++) if (MD.deferred[i].id === id) return MD.deferred[i]; return null; }
+  function catOf(id) { return D.byCategory(id) ? D.byCategory(id).category : null; }
+  var DEF_DOMAIN = { onboarding: "general", installation: "ai", "server-claim": "system", servers: "system", hosting: "system", "remote-access": "system", "sync-move": "system", updates: "system", "server-backup": "system" };
+
+  // ---------------------------------------------------------------- chrome
+  function chrome(route, opts) {
+    var o = opts || {};
+    var back = o.back || { hash: "#/home", label: "Back to Settings Home" };
+    var crumb = ['<span class="d3-crumb" data-test="breadcrumb"><b>Settings</b>'];
+    (o.crumbs || []).forEach(function (c) { crumb.push('<span class="sep">/</span>' + (c.hash ? '<a href="' + c.hash + '" style="color:inherit;text-decoration:none">' + esc(c.label) + "</a>" : "<b>" + esc(c.label) + "</b>")); });
+    crumb.push("</span>");
+    var search = o.bigSearch
+      ? '<div class="d3-searchwrap">' + searchBox(true) + "</div>"
+      : '<div class="d3-searchwrap" style="width:min(340px,46vw)">' + searchBox(false) + "</div>";
+    return '<div class="d3-top' + (o.bigSearch ? " d3-top-home" : "") + '"><button class="pm-btn pm-btn-quiet pm-btn-sm" data-test="back" data-go="' + esc(back.hash) + '">' + ic("arrowLeft", 13) + " " + esc(back.label) + "</button>" + crumb.join("") + '<span class="pm-spacer"></span>' +
+      '<span class="pm-chip">' + ic("fileText", 12) + " " + esc(projectName()) + "</span>" + search +
+      '<button class="pm-btn pm-btn-sm" data-test="close" data-act="close">' + ic("x", 12) + " Close Settings</button></div>";
+  }
+  function projectName() { var el = document.querySelector("[data-shell-project]"); return el ? el.textContent : "Orion Data Pipeline"; }
+  function searchBox(big) {
+    return '<div class="d3-search' + (big ? " big" : "") + '">' + ic("search", big ? 18 : 15) +
+      '<input data-test="search-input" type="text" placeholder="' + (big ? "Search settings, managers, providers, actions" : "Search settings") + '" autocomplete="off" aria-label="Search settings">' +
+      '<span class="pm-kbd">/</span></div><div class="d3-results" data-test="search-results" hidden></div>';
+  }
+
+  // ---------------------------------------------------------------- search dropdown
+  var TYPE_LABEL = { setting: "Setting", manager: "Manager", managed_object: "Provider object", action: "Action", setup: "Setup", diagnostic: "Diagnostic", unavailable: "Not available" };
+  function bindSearch(root) {
+    var input = root.querySelector("[data-test='search-input']");
+    var box = root.querySelector("[data-test='search-results']");
+    if (!input) return;
+    var sel = -1, results = [];
+    function close() { box.hidden = true; sel = -1; }
+    function open(q) {
+      results = SR.search(q);
+      if (!q.trim()) { close(); return; }
+      if (!results.length) {
+        box.innerHTML = '<div class="pm-empty" style="margin:8px">No results for “' + esc(q) + '”. Try a shorter fragment — fuzzy matching tolerates small typos.</div>';
+        box.hidden = false;
+        return;
+      }
+      var html = "", last = null;
+      results.forEach(function (r) {
+        if (r.type !== last) { html += '<div class="grp">' + (TYPE_LABEL[r.type] || r.type) + "</div>"; last = r.type; }
+        html += '<button class="d3-res" data-rid="' + esc(r.rid) + '" role="option"><span class="lab pm2-r-title">' + esc(r.label) +
+          ' <span class="pm-badge pm-badge-' + (r.type === "unavailable" ? "muted" : r.type === "setting" ? "info" : "effect") + '">' + (TYPE_LABEL[r.type] || r.type) + "</span></span>" +
+          '<span class="pth">' + esc((r.path || []).join("  ›  ")) + "</span>" +
+          (r.note ? '<span class="note">' + esc(r.note) + "</span>" : "") + "</button>";
+      });
+      html += '<div class="d3-resfoot">' + results.length + " of " + SR.cap + " max results · grouped by type · Enter opens the highlighted row</div>";
+      box.innerHTML = html; box.hidden = false; sel = -1;
+    }
+    input.addEventListener("input", function () { open(input.value); });
+    input.addEventListener("focus", function () { if (input.value.trim()) open(input.value); });
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { close(); e.stopPropagation(); return; }
+      var rows = Array.prototype.slice.call(box.querySelectorAll(".d3-res"));
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        if (!rows.length) return;
+        e.preventDefault();
+        sel = e.key === "ArrowDown" ? Math.min(rows.length - 1, sel + 1) : Math.max(0, sel - 1);
+        rows.forEach(function (r, i) { r.classList.toggle("sel", i === sel); });
+        rows[sel].scrollIntoView({ block: "nearest" });
+      } else if (e.key === "Enter") {
+        var rid = sel >= 0 && rows[sel] ? rows[sel].getAttribute("data-rid") : (rows[0] ? rows[0].getAttribute("data-rid") : null);
+        if (rid) { e.preventDefault(); selectResult(rid, input.value); }
+      }
+    });
+    box.addEventListener("mousedown", function (e) {
+      var b = e.target.closest ? e.target.closest(".d3-res") : null;
+      if (b) { e.preventDefault(); selectResult(b.getAttribute("data-rid"), input.value); }
+    });
+    box.addEventListener("click", function (e) {
+      if (e.detail !== 0) return; // real pointer selections handled on mousedown
+      var b = e.target.closest ? e.target.closest(".d3-res") : null;
+      if (b) selectResult(b.getAttribute("data-rid"), input.value);
+    });
+    document.addEventListener("click", function (e) { if (!box.contains(e.target) && e.target !== input) close(); });
+    root._d3search = { open: open, close: close, set: function (q) { input.value = q; open(q); input.focus(); } };
+  }
+  function selectResult(rid, query) {
+    var entry = SR.byRid(rid); // route by rid ONLY, never by index
+    if (!entry) return;
+    if (!entry.dest) { // unavailable capability: calm in-place notice, no fabricated route
+      S2.receipt("Not available in this product", entry.label + ": " + (entry.note || "no alternative surface."), "info");
+      return;
+    }
+    searchOrigin = currentRoute();
+    var landing = destHash(entry.dest);
+    pendingFocus = (entry.dest.row || entry.dest.section || entry.dest.settingId) ? { row: entry.dest.row || (entry.dest.kind === "setting" ? entry.dest.settingId : null), sec: entry.dest.section || null, object: entry.dest.object || null, routeRaw: landing.replace(/^#/, "") } : null;
+    location.hash = "#/q/" + encodeURIComponent(query || entry.label); // history entry FIRST so Back restores query + results
+    location.hash = landing;
+  }
+  function destHash(dest) {
+    if (dest.kind === "setting") return "#/cat/" + dest.category + "/" + dest.subgroup + "?row=" + encodeURIComponent(dest.settingId);
+    if (dest.kind === "manager") {
+      var h = "#/mgr/" + dest.manager;
+      if (dest.object) h += "/" + dest.object;
+      var q = [];
+      if (dest.section) q.push("sec=" + encodeURIComponent(dest.section));
+      if (dest.row) q.push("row=" + encodeURIComponent(dest.row));
+      return h + (q.length ? "?" + q.join("&") : "");
+    }
+    return "#/home";
+  }
+
+  // ---------------------------------------------------------------- synthetic family rows
+  var SYN_OPTS = {
+    "providers.update-policy": ["Ask first", "Schedule when idle", "Install automatically"],
+    "context.budget": ["Lean", "Balanced", "Generous"], "memory.half-life": ["Short", "Balanced", "Long"],
+    "personas.default": ["Assistant", "Collaborator", "Overseer", "Planning Lead"], "personas.selection-scope": ["This thread", "This Goal"],
+    "goal.autonomy": ["Ask at phase boundaries", "Ask every step", "Proceed autonomously"],
+    "crew.default": ["Solo", "Standard Pair", "Swarm"], "crew.route-policy": ["Fixed", "Adaptive"],
+    "permissions.default-profile": ["Ask for approval", "Auto accept edits", "Auto", "Full Access"],
+    "bsd.mode": ["Off", "Auto", "On"], "notifications.quiet-hours": ["Off", "Evenings", "Weekends", "Custom"],
+    "appearance.theme": ["Friendly Dark", "Friendly Light", "Glass Dark", "Glass Light", "Retro Dark", "Retro Light", "Basic Dark", "Basic Light"],
+    "appearance.theme-mode": ["Light", "Dark", "Auto"],
+    "spellcheck.language": ["Automatic", "English", "German", "Spanish"], "spellcheck.source": ["Automatic", "System dictionaries", "Bundled dictionaries"],
+    "desktop.close-behavior": ["Minimize to tray", "Quit", "Ask"], "teacher.level": ["Concise", "Balanced", "Thorough"],
+    "files.changed-on-disk": ["Ask before reloading", "Reload automatically", "Keep mine"], "files.encoding": ["UTF-8", "UTF-8 with BOM", "Latin-1"], "files.line-endings": ["Keep existing", "LF", "CRLF"],
+    "terminal.shell": ["PowerShell 7", "Command Prompt", "Git Bash", "WSL"],
+    "lsp.diagnostics": ["Inline only", "Panel only", "Inline and panel"], "lsp.format-owner": ["Language server", "Formatter"],
+    "formatters.scope": ["Global", "Project when defined"], "commands.palette-scope": ["Enabled for this project", "Disabled for this project"],
+    "mcp.exposure": ["Progressive", "All tools at once"], "mcp.approvals": ["Ask once per session", "Ask every time", "Auto-approve trusted"],
+    "skills.trust": ["Ask per skill", "Trust verified publishers"], "plugins.channel": ["Stable", "Beta"],
+    "tools.children": ["Scoped by role", "Full inventory"], "testing.strength": ["Light", "Standard", "Exhaustive"],
+    "testing.debug-visibility": ["Hidden", "Visible when active", "Always visible"],
+    "storage.mode": ["This machine", "Home server"], "backup.schedule": ["Daily", "Weekly", "Monthly"],
+    "history.threads": ["30 days", "90 days", "Forever"], "artifacts.location": ["Project artifacts folder", "System temp"],
+    "artifacts.retention": ["7 days", "30 days", "90 days", "Forever"],
+    "scm.provision": ["Auto", "Manual"], "scm.cleanup": ["After merge", "Weekly", "Never"], "scm.ports": ["Auto-shift to a free port", "Fail on collision"],
+    "containers.default": ["Docker Desktop", "Podman", "None"], "web.provider": ["Built-in", "Disabled"], "web.timeout": ["15 seconds", "30 seconds", "60 seconds"],
+    "media.location": ["Project media folder", "System pictures"], "media.naming": ["Date plus topic", "Topic plus counter"],
+    "updates.channel": ["Stable", "Beta"]
+  };
+  function synVal(id, dflt) { if (!(id in synState)) synState[id] = dflt; return synState[id]; }
+  function famRow(r) {
+    var v = synVal(r.id, r.value), ctl = "";
+    if (r.kind === "setting") {
+      if (r.type === "toggle") ctl = '<button class="pm-toggle" role="switch" aria-checked="' + (v ? "true" : "false") + '" data-syn="' + esc(r.id) + '" data-synt="toggle"><span class="pm-toggle-knob"></span></button>';
+      else if (r.type === "select") ctl = '<select class="pm-select" data-syn="' + esc(r.id) + '" data-synt="select">' + (SYN_OPTS[r.id] || [v]).map(function (o) { return '<option' + (o === v ? " selected" : "") + ">" + esc(o) + "</option>"; }).join("") + "</select>";
+      else if (r.type === "number") ctl = '<input class="pm-input" type="number" style="width:96px" data-syn="' + esc(r.id) + '" data-synt="number" value="' + esc(v) + '">';
+      else ctl = '<input class="pm-input" data-syn="' + esc(r.id) + '" data-synt="text" value="' + esc(v) + '">';
+    } else if (r.kind === "action") {
+      ctl = '<button class="pm-btn pm-btn-sm" data-synact="' + esc(r.id) + '">' + esc(r.value || r.label) + "</button>";
+    } else if (r.kind === "diagnostic") {
+      ctl = '<span class="pm-badge pm-badge-warn">' + esc(r.value) + "</span>";
+    } else {
+      ctl = '<span class="pm-badge pm-badge-muted">' + esc(r.value) + "</span>";
+    }
+    return '<div class="pm2-row" data-row="' + esc(r.id) + '"><div class="pm2-row-main"><div class="pm2-row-title">' + esc(r.label) + "</div>" +
+      '<div class="pm2-row-desc">' + esc(r.desc) + "</div></div>" +
+      '<div class="pm2-row-ctl">' + ctl + "</div></div>";
+  }
+  function bindSyn(root) {
+    root.addEventListener("change", function (e) {
+      var el = e.target.closest ? e.target.closest("[data-syn]") : null;
+      if (!el) return;
+      var id = el.getAttribute("data-syn"), t = el.getAttribute("data-synt");
+      synState[id] = t === "number" ? +el.value : el.value;
+      S2.receipt("Setting changed", id + " → " + el.value + " (this Project only).", "ok");
+    });
+    root.addEventListener("click", function (e) {
+      var tog = e.target.closest ? e.target.closest("[data-syn][data-synt='toggle']") : null;
+      if (tog) { var id = tog.getAttribute("data-syn"); synState[id] = !synState[id]; tog.setAttribute("aria-checked", synState[id] ? "true" : "false"); S2.receipt("Setting changed", id + " → " + (synState[id] ? "On" : "Off") + " (this Project only).", "ok"); return; }
+      var act = e.target.closest ? e.target.closest("[data-synact]") : null;
+      if (act) {
+        var aid = act.getAttribute("data-synact");
+        var op = S2.beginOp({ title: aid, phase: "Running", determinate: false });
+        setTimeout(function () { S2.finishOp(op, "completed", "Done"); S2.receipt("Action complete", aid + " finished for this Project.", "ok"); }, 700);
+      }
+    });
+  }
+
+  // ---------------------------------------------------------------- HOME
+  function homeView() {
+    var notices = S2.notices();
+    var att = "";
+    if (notices.length) {
+      att = '<div class="d3-attention">' + notices.map(function (n) {
+        var act = n.action ? '<button class="pm-btn pm-btn-sm" data-dest="' + esc(JSON.stringify(n.dest || {})) + '">' + esc(n.action) + "</button>" : "";
+        return '<div class="d3-att">' + ic("alertCircle", 16) + '<span class="t">' + esc(n.title) + '</span><span class="r">' + esc(n.reason) + "</span>" + act + "</div>";
+      }).join("") + "</div>";
+    }
+    var SCEN_STATE = {
+      "validation-failure": ["Update verification failed", "The OpenAI 0.9.5 update failed verification and the previous generation was restored; the receipt is kept.", "#/mgr/providers/openai-rollback"],
+      "refreshing": ["Catalog refresh in flight", "models.dev refresh is running; last-known-good values stay active until it completes.", "#/mgr/providers"],
+      "lkg-active": ["Serving last-known-good catalog", "The Ollama catalog refresh failed offline; the last-known-good catalog remains active and labeled.", "#/mgr/providers/ollama-catalog"],
+      "low-resource": ["Low-resource mode", "Eager loading and concurrency degrade gracefully; queues and ceilings stay honest.", "#/mgr/goal"],
+      "poor-network": ["Poor network", "Probes and refreshes lengthen their timeouts; last-known values are labeled, never guessed.", "#/mgr/doctor"],
+      "exhausted": ["Usage near cap", "Claude Max included usage is 96% used; the limit resets at 5:00 PM.", "#/mgr/providers/claude-oauth"],
+      "restart-required": ["Restart required", "A startup setting changed and applies after the next app restart.", "#/mgr/desktop"],
+      "reconnect-required": ["Reconnect required", "Provider connections need re-authentication before they can carry work.", "#/mgr/providers"],
+      "changed-elsewhere": ["Changed elsewhere", "The theme family changed outside this view; review to keep or adopt the new value.", "#/mgr/appearance"],
+      "managed": ["Managed values", "Theme and permission preset are managed outside this Project; controls are locked and attempts receipt.", "#/cat/general/visual"],
+      "unavailable": ["Capability unavailable", "The web search provider is unavailable in this scenario; the row is locked with a reason.", "#/mgr/web"]
+    };
+    var sc = S2.state.scenario;
+    if (SCEN_STATE[sc]) {
+      att += '<div class="d3-attention"><div class="d3-att">' + ic("info", 16) + '<span class="t">' + SCEN_STATE[sc][0] + '</span><span class="r">' + SCEN_STATE[sc][1] + '</span><button class="pm-btn pm-btn-sm" data-go="' + SCEN_STATE[sc][2] + '">Open</button></div></div>';
+    }
+    var cards = D.categories.map(function (c) {
+      var mgrs = MD.families.filter(function (f) { return f.domain === c.id; }).length;
+      var count = D.byCategory(c.id).settings.length;
+      var attn = notices.some(function (n) { return n.dest && n.dest.manager && (family(n.dest.manager) || {}).domain === c.id; });
+      return '<button class="d3-card" data-go="#/cat/' + c.id + '"><span class="ic">' + ic(c.icon, 22) + "</span><h3>" + esc(c.title) +
+        (attn ? ' <span class="pm-badge pm-badge-warn">Needs attention</span>' : "") + "</h3><p>" + esc(c.description) + "</p>" +
+        '<span class="meta">' + mgrs + " manager" + (mgrs === 1 ? "" : "s") + " · " + count + " settings" + '<span class="go">Open ' + ic("chevronRight", 13) + "</span></span></button>";
+    }).join("");
+    var recent = (S2.state.recent || []).map(function (r) {
+      var h = r.kind === "setting" && D.byId(r.id) ? "#/cat/" + r.id.split(".")[0] + "/" + r.id.split(".")[1] + "?row=" + encodeURIComponent(r.id) : (r.kind === "manager" ? "#/mgr/" + r.id : "");
+      return h ? '<button class="pm-btn pm-btn-quiet pm-btn-sm item" data-go="' + esc(h) + '">' + ic("history", 12) + " " + esc(r.label) + "</button>" : "";
+    }).join("");
+    return chrome(currentRoute(), { bigSearch: true, crumbs: [], back: { hash: "#/home", label: "Back to Settings Home" } }) +
+      '<div data-test="home">' +
+      '<h1 class="d3-h1">Settings</h1><div class="d3-sub">Everything Puppet Master does for this Project, organized as a bright directory. Search anything, open a domain, or jump straight into a manager.</div>' +
+      att +
+      '<div class="d3-grid">' + cards + "</div>" +
+      '<div class="d3-utils">' +
+      '<button class="pm-btn pm-btn-sm" data-go="#/all">' + ic("list", 13) + " All Settings</button>" +
+      '<button class="pm-btn pm-btn-sm" data-go="#/copy">' + ic("layers", 13) + " Copy Settings From Another Project</button>" +
+      '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-go="#/lifecycle">' + ic("refresh", 13) + " Settings Lifecycle</button></div>" +
+      (recent ? '<div class="d3-recent"><h4>Recent</h4>' + recent + "</div>" : "") +
+      "</div>";
+  }
+
+  // ---------------------------------------------------------------- CATEGORY
+  function catView(route) {
+    var c = catOf(route.cat);
+    if (!c) return homeView();
+    var mgrs = MD.families.filter(function (f) { return f.domain === c.id; });
+    var defs = MD.deferred.filter(function (d) { return DEF_DOMAIN[d.id] === c.id; });
+    var dests = mgrs.map(function (f) {
+      return '<button class="d3-dest" data-go="#/mgr/' + f.id + '"><span class="l"><span class="ic">' + ic(f.icon, 20) + "</span><span><h3>" + esc(f.title) +
+        ' <span class="pm-badge pm-badge-effect">' + esc(f.archetype) + "</span></h3><p>" + esc(f.summary) + "</p></span></span>" +
+        '<span class="go">' + (f.objects ? f.objects.length + " objects · " : "") + f.rows.length + " controls " + ic("chevronRight", 14) + "</span></button>";
+    }).join("");
+    var defshells = defs.length ? '<div class="d3-sect-h" style="margin-top:22px">Reserved insertion destinations</div>' + defs.map(function (d) {
+      return '<div class="d3-defshell"><h4>' + ic("lock", 13) + " " + esc(d.title) + ' <span class="pm-badge pm-badge-managed">Named owner</span></h4>' +
+        "<p><strong>Owner:</strong> " + esc(d.owner) + "</p><p><strong>Insertion:</strong> " + esc(d.insertion) + "</p><p><strong>Return contract:</strong> " + esc(d.returnContract) + "</p>" +
+        '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-go="#/deferred/' + d.id + '">Open insertion shell</button></div>';
+    }).join("") : "";
+    var subs = c.subgroups.map(function (s) {
+      return '<button class="' + (route.sub === s.id ? "active" : "") + '" data-go="#/cat/' + c.id + "/" + s.id + '">' + esc(s.title) + "</button>";
+    }).join("");
+    var body;
+    if (route.sub) {
+      var sub = null; c.subgroups.forEach(function (s) { if (s.id === route.sub) sub = s; });
+      var rows = D.settings.filter(function (s) { return s.id.indexOf(c.id + "." + route.sub + ".") === 0; })
+        .map(function (s) { return M2.row(s, S2.getSetting(s.id)); }).join("");
+      body = '<div class="d3-sect-h">' + esc(sub ? sub.title : route.sub) + " — " + esc(sub ? sub.description : "") + "</div>" +
+        '<div class="d3-seccard">' + (rows || '<div class="pm2-empty">No settings in this subgroup.</div>') + "</div>";
+    } else {
+      body = '<div class="d3-sect-h">Managers in this domain</div>' + (dests || '<div class="pm2-empty">No managers in this domain.</div>') + defshells +
+        '<div class="d3-sect-h" style="margin-top:22px">Browse settings</div><div class="d3-subnav">' + subs + "</div>";
+    }
+    return chrome(route, {
+      crumbs: [{ label: c.title, hash: "#/cat/" + c.id }].concat(route.sub ? [{ label: route.sub }] : []),
+      back: route.sub ? { hash: "#/cat/" + c.id, label: "Back to " + c.title } : { hash: "#/home", label: "Back to Settings Home" }
+    }) + '<div data-manager-scope="' + c.id + '"><div class="d3-domhead"><span class="ic">' + ic(c.icon, 26) + "</span><div><h2>" + esc(c.title) + "</h2><p>" + esc(c.description) + "</p></div></div>" + body + "</div>";
+  }
+
+  // ---------------------------------------------------------------- MANAGERS
+  function mgrView(route) {
+    var f = family(route.mgr);
+    if (!f) return homeView();
+    var hasObject = route.object ? "1" : "0";
+    var hasRoster = (f.archetype === "roster" || f.id === "providers") ? "1" : "0";
+    var inner;
+    if (f.id === "providers") inner = providersMgr(route);
+    else if (f.archetype === "roster") inner = rosterMgr(f, route);
+    else if (f.archetype === "setup") inner = deferredShellMgr(f);
+    else inner = '<div class="d3-detail">' + seccard(f.title + " controls", f.rows.map(famRow).join("")) + "</div>";
+    var head = '<div class="d3-mgrhead"><span class="ic">' + ic(f.icon, 24) + '</span><div><h2>' + esc(f.title) +
+      ' <span class="pm-badge pm-badge-effect">' + esc(f.archetype) + "</span></h2><p>" + esc(f.summary) + "</p></div></div>";
+    return chrome(route, {
+      crumbs: [{ label: catOf(f.domain).title, hash: "#/cat/" + f.domain }, { label: f.title }],
+      back: route.object ? { hash: "#/mgr/" + f.id, label: "Back to " + f.title + " list" } : { hash: "#/cat/" + f.domain, label: "Back to " + catOf(f.domain).title }
+    }) + '<div data-manager="' + f.id + '" data-hasobject="' + hasObject + '" data-roster="' + hasRoster + '">' + head + '<div class="d3-mgr">' + inner + "</div></div>";
+  }
+  function seccard(title, html, id) {
+    return '<section class="d3-seccard"' + (id ? ' id="sec-' + id + '"' : "") + "><h3>" + esc(title) + "</h3>" + html + "</section>";
+  }
+  function rosterMgr(f, route) {
+    var roster = '<div class="d3-roster">' + f.objects.map(function (o) {
+      return '<button class="' + (route.object === o.id ? "active" : "") + '" data-go="#/mgr/' + f.id + "/" + o.id + '"><span class="pm2-health ' + (o.health === "ok" ? "" : o.health === "attention" ? "warn" : "muted") + '"><i></i></span>' + esc(o.label) + "</button>";
+    }).join("") + "</div>";
+    var detail;
+    if (route.object) {
+      var obj = null; f.objects.forEach(function (o) { if (o.id === route.object) obj = o; });
+      detail = '<div class="d3-detail">' + seccard(obj ? obj.label : route.object, '<p class="pm-note" style="margin:0 0 10px">' + esc(obj ? obj.note : "") + "</p>" + f.rows.map(famRow).join("")) + "</div>";
+    } else {
+      detail = '<div class="d3-detail">' + seccard(f.title + " defaults", f.rows.map(famRow).join("")) +
+        '<div class="pm2-empty" style="margin-top:12px">Select an item on the left to see its note. At narrow widths this becomes push navigation.</div></div>';
+    }
+    return roster + detail;
+  }
+  function deferredShellMgr(f) {
+    var d = deferredById(f.id) || { owner: "Named owner (see Plans)", insertion: f.summary, returnContract: "Return contract documented in manager-coverage.json." };
+    return '<div class="d3-detail" style="grid-column:1/-1">' + seccard("Reserved insertion shell",
+      '<div class="d3-defshell" style="margin:0"><h4>' + ic("lock", 13) + " " + esc(f.title) + ' <span class="pm-badge pm-badge-managed">Deferred · named owner</span></h4>' +
+      "<p><strong>Owner:</strong> " + esc(d.owner) + "</p><p><strong>Insertion destination:</strong> " + esc(d.insertion) + "</p><p><strong>Return / deep-link contract:</strong> " + esc(d.returnContract) + "</p>" +
+      '<p class="pm-note">No backend state is fabricated here. The real module owns this surface when it lands.</p></div>' +
+      f.rows.map(famRow).join("")) + "</div>";
+  }
+
+  // providers manager: roster + high-value status cards + quick actions
+  function providersMgr(route) {
+    var roster = '<div class="d3-roster">' + MD.providers.map(function (p) {
+      var warn = /not signed in|unknown|Not installed|update available|rollback|last-known|incomplete|exhausted|two installations/i.test(p.state);
+      return '<button class="' + (route.object === p.id ? "active" : "") + '" data-go="#/mgr/providers/' + p.id + '"><span class="pm2-health ' + (warn ? "warn" : "") + '"><i></i></span>' + esc(p.name) + "</button>";
+    }).join("") + '<div class="pm-note" style="padding:10px 12px 4px">17 fixtures · readiness probes are simulated demo evidence</div></div>';
+    if (!route.object) {
+      return roster + '<div class="d3-detail">' + seccard("Provider overview", '<div class="pm2-empty">Select a provider to see its status cards and quick actions.</div>') + "</div>";
+    }
+    var p = provider(route.object);
+    var authLabel = { "pm-direct-oauth": "Puppet Master OAuth", "cli-owned-oauth": "CLI-owned OAuth", "api-key": "API key (OS keychain)", "external-server": "External server", manual: "Manual", none: "No auth" }[p.authKind] || p.authKind;
+    var sel = p.installations.filter(function (i) { return i.selected; })[0];
+    var status = '<dl class="d3-statgrid">' +
+      stat("Status", p.state) + stat("Auth", authLabel) +
+      stat("Accounts", p.accounts.length ? p.accounts.filter(function (a) { return a.preferred; })[0].label : "None connected", p.accounts.length + " account" + (p.accounts.length === 1 ? "" : "s")) +
+      stat("Installation", sel ? sel.label : "Not installed", sel ? sel.confidence + " confidence · " + sel.host : "explicit install required") +
+      stat("Models", p.models.length + " available", p.models.slice(0, 2).map(function (m) { return m.label; }).join(", ")) +
+      stat("Usage", p.limits.used === "unavailable" ? "Unavailable" : p.limits.used + " of plan", p.limits.rpm ? p.limits.rpm + " rpm · " + (p.limits.tpm / 1e6).toFixed(0) + "M tpm" : "provider exposes no meters") +
+      stat("Update policy", p.updatePolicy) + "</dl>";
+    var qa = '<div class="d3-qa">' +
+      '<button class="pm-btn pm-btn-sm" data-sec="models">' + ic("grid", 12) + " View models</button>" +
+      '<button class="pm-btn pm-btn-sm" data-sec="credentials">' + ic("key", 12) + " Manage credentials</button>" +
+      '<button class="pm-btn pm-btn-sm" data-sec="limits">' + ic("gauge", 12) + " View usage</button>" +
+      '<button class="pm-btn pm-btn-sm" data-act="catalog-refresh">' + ic("refresh", 12) + " Refresh catalog</button>" +
+      (p.readiness.indexOf("not-installed") >= 0 ? '<button class="pm-btn pm-btn-primary pm-btn-sm" data-sec="install">' + ic("download", 12) + " Install from official source</button>" : "") +
+      (p.readiness.indexOf("update-available") >= 0 ? '<button class="pm-btn pm-btn-primary pm-btn-sm" data-act="update-now">' + ic("download", 12) + " Review update</button>" : "") +
+      "</div>";
+    var accounts = p.accounts.length ? p.accounts.map(function (a) {
+      return '<div class="d3-kv"><span class="k">' + esc(a.label) + " " +
+        (a.preferred ? '<span class="pm-badge pm-badge-info">Preferred</span>' : "") + (a.sticky ? '<span class="pm-badge pm-badge-effect">Sticky</span>' : "") + (a.enabled ? "" : '<span class="pm-badge pm-badge-muted">Disabled</span>') +
+        '<small>health: ' + esc(a.health) + "</small></span>" + '<span class="pm2-health ' + (a.health === "ok" ? "" : "warn") + '"><i></i>' + esc(a.health) + "</span></div>";
+    }).join("") : '<div class="pm2-empty">No account connected yet.</div>';
+    var installs = p.installations.length ? p.installations.map(function (i) {
+      return '<div class="d3-kv"><span class="k">' + esc(i.label) + " " +
+        (i.selected ? '<span class="pm-badge pm-badge-ok">Selected</span>' : "") + (i.shadowed ? '<span class="pm-badge pm-badge-warn">Shadowed</span>' : "") +
+        (i.owner === "unknown" ? '<span class="pm-badge pm-badge-danger">Unknown owner · manual only</span>' : "") +
+        "<small>owner " + esc(i.owner) + " · " + esc(i.confidence) + " confidence · " + esc(i.host) + "</small></span>" +
+        (i.owner === "unknown" ? '<span class="pm-note">updates manual-only</span>' : '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-act="install-select" data-id="' + esc(i.id) + '">Select</button>') + "</div>";
+    }).join("") : '<div class="pm2-empty">Nothing installed on this host.</div>';
+    var models = p.models.map(function (m) {
+      return '<div class="d3-kv" data-row="' + esc(m.id) + '"><span class="k">' + esc(m.label) + (m.free ? ' <span class="pm-badge pm-badge-ok">Free tier</span>' : "") + "<small>effort " + esc(m.effort) + " · context " + esc(m.context) + "</small></span>" +
+        '<span class="pm-btn pm-btn-quiet pm-btn-sm" data-act="model-default" data-id="' + esc(m.id) + '">Make default</span></div>';
+    }).join("") || '<div class="pm2-empty">No models exposed.</div>';
+    var limits = '<div class="d3-kv"><span class="k">Requests / day<small>' + esc(String(p.limits.rpd || "n/a")) + "</small></span><span class=\"pm-note\">rpm " + esc(String(p.limits.rpm || "n/a")) + " · tpm " + esc(String(p.limits.tpm || "n/a")) + "</span></div>" +
+      '<div class="d3-kv"><span class="k">Usage this period</span><span>' + (p.limits.used === "unavailable" ? '<span class="pm-badge pm-badge-muted">Usage unavailable</span>' : '<span class="pm-badge ' + (parseInt(p.limits.used) >= 85 ? "pm-badge-warn" : "pm-badge-ok") + '">' + esc(p.limits.used) + " used</span>") + "</span></div>" +
+      (p.readiness.indexOf("usage-near-limit") >= 0 ? '<div class="pm-note">Max included usage nearly exhausted; resets at 5:00 PM.</div>' : "") +
+      (p.readiness.indexOf("usage-unavailable") >= 0 ? '<div class="pm-note">This provider does not expose usage meters; limits show as unavailable rather than guessed.</div>' : "");
+    var cred = credSection(p);
+    var install = installSection(p);
+    var logs = p.logs.map(function (l) { return '<div class="d3-log">' + ic("check", 13) + esc(l) + "</div>"; }).join("");
+    var detail = '<div class="d3-detail">' +
+      seccard("Overview — " + p.name, status + qa, "overview") +
+      seccard("Accounts", accounts, "accounts") +
+      seccard("Installations", installs, "installations") +
+      seccard("Models", models, "models") +
+      seccard("Usage & Limits", limits, "limits") +
+      seccard("Credentials", cred, "credentials") +
+      seccard("Installation & updates", install, "install") +
+      (p.id === "ollama-catalog" ? seccard("Catalog", '<div class="pm-note">Refresh failed offline; serving the last-known-good catalog until a refresh succeeds.</div><div class="d3-qa"><button class="pm-btn pm-btn-sm" data-act="catalog-refresh">' + ic("refresh", 12) + " Retry refresh</button></div>", "catalog") : "") +
+      (p.id === "free-models" ? seccard("Underlying setup", '<div class="pm-note">Free model rows need an underlying provider connection before they can carry work.</div><div class="d3-qa"><button class="pm-btn pm-btn-sm" data-go="#/mgr/providers/openai-cli">Open OpenAI CLI</button><button class="pm-btn pm-btn-sm" data-go="#/mgr/providers/ollama-catalog">Open Ollama</button></div>', "setup") : "") +
+      seccard("Readiness log", logs, "logs") +
+      "</div>";
+    return roster + detail;
+  }
+  function stat(t, v, small) { return '<div class="d3-stat"><dt>' + esc(t) + "</dt><dd>" + esc(v) + (small ? "<small>" + esc(small) + "</small>" : "") + "</dd></div>"; }
+  function credSection(p) {
+    if (p.authKind === "cli-owned-oauth") return '<div class="pm-note">Sign-in lives inside the ' + esc(p.name) + " flow. Puppet Master never sees or stores that token.</div>" +
+      '<div class="d3-secret">••••••••••••••••  <span class="pm-badge pm-badge-managed">CLI-owned OAuth</span></div>' +
+      '<div class="d3-qa"><button class="pm-btn pm-btn-sm" data-act="cli-signin">' + ic("open", 12) + " Open CLI sign-in</button></div>";
+    if (p.authKind === "api-key") return '<div class="pm-note">Key material is a vault reference in the OS keychain; the raw secret never renders or exports.</div>' +
+      '<div class="d3-secret">sk-••••••••••••••••••••  <span class="pm-badge pm-badge-managed">vault-ref</span></div>' +
+      '<div class="d3-qa"><button class="pm-btn pm-btn-sm" data-act="cred-rotate">Rotate key</button><button class="pm-btn pm-btn-quiet pm-btn-sm" disabled>Reveal (never raw)</button></div>';
+    if (p.authKind === "pm-direct-oauth") return '<div class="pm-note">Tokens are held in the Puppet Master secret store and refresh automatically.</div>' +
+      '<div class="d3-secret">pm-secret ••••••••••••  <span class="pm-badge pm-badge-managed">PM secret store</span></div>' +
+      '<div class="d3-qa"><button class="pm-btn pm-btn-sm" data-act="cred-rotate">Rotate</button><button class="pm-btn pm-btn-sm" data-act="cli-signin">Re-authenticate</button></div>';
+    return '<div class="pm-note">' + esc(p.name) + " carries no Puppet Master credential; " + esc(authNote(p.authKind)) + "</div>";
+  }
+  function authNote(k) { return { "external-server": "the session is owned outside Puppet Master.", manual: "management is manual-only.", none: "no account is required." }[k] || "no credential is stored."; }
+  function installSection(p) {
+    var host = "Desktop — Windows 11";
+    if (p.readiness.indexOf("not-installed") >= 0)
+      return '<div class="pm-note">Not installed. Installation is explicit, user-triggered, from the official source, for the exact Host/Environment.</div>' +
+        '<div class="d3-kv"><span class="k">Target host<small>' + host + "</small></span><span class=\"pm-badge pm-badge-info\">official source only</span></div>" +
+        '<div class="d3-qa"><button class="pm-btn pm-btn-primary pm-btn-sm" data-act="install-official">' + ic("download", 12) + " Install from official source</button></div>";
+    var line = "";
+    if (p.readiness.indexOf("update-available") >= 0) line = '<div class="d3-kv"><span class="k">Update available<small>policy: ask first — nothing happens until you approve</small></span><button class="pm-btn pm-btn-primary pm-btn-sm" data-act="update-now">Update now</button></div>';
+    if (p.readiness.indexOf("update-scheduled") >= 0) line = '<div class="d3-kv"><span class="k">Update scheduled<small>applies in the next idle window</small></span><span class="pm-badge pm-badge-info">scheduled-when-idle</span></div>';
+    if (p.readiness.indexOf("rolled-back") >= 0) line = '<div class="d3-kv"><span class="k">Rolled back<small>verification failed after update; previous generation restored, receipt kept</small></span><span class="pm-badge pm-badge-warn">verification-failed → rolled-back</span></div>';
+    var pol = synVal("providers.update-policy", "Ask first");
+    return '<div class="d3-kv"><span class="k">Update policy<small>' + esc(p.updatePolicy) + "</small></span><select class=\"pm-select\" data-syn=\"providers.update-policy\" data-synt=\"select\">" + ["Ask first", "Schedule when idle", "Install automatically"].map(function (o) { return "<option" + (pol === o ? " selected" : "") + ">" + o + "</option>"; }).join("") + "</select></div>" + line;
+  }
+
+  // ---------------------------------------------------------------- deferred shell page
+  function deferredView(route) {
+    var d = deferredById(route.deferred);
+    if (!d) return homeView();
+    return chrome(route, {
+      crumbs: [{ label: catOf(DEF_DOMAIN[d.id]).title, hash: "#/cat/" + DEF_DOMAIN[d.id] }, { label: d.title }],
+      back: { hash: "#/cat/" + DEF_DOMAIN[d.id], label: "Back to " + catOf(DEF_DOMAIN[d.id]).title }
+    }) + '<div data-deferred="' + d.id + '"><div class="d3-domhead"><span class="ic">' + ic("lock", 24) + '</span><div><h2>' + esc(d.title) +
+      ' <span class="pm-badge pm-badge-managed">Deferred · named owner</span></h2><p>Reserved insertion destination. No backend state is fabricated.</p></div></div>' +
+      '<div class="d3-seccard" style="max-width:760px"><h3>Insertion contract</h3><div class="d3-kv"><span class="k">Canonical owner</span><span>' + esc(d.owner) + "</span></div>" +
+      '<div class="d3-kv"><span class="k">Insertion destination</span><span style="color:var(--text-2);font-size:12.5px">' + esc(d.insertion) + "</span></div>" +
+      '<div class="d3-kv"><span class="k">Return / deep-link contract</span><span style="color:var(--text-2);font-size:12.5px">' + esc(d.returnContract) + "</span></div></div></div>";
+  }
+
+  // ---------------------------------------------------------------- ALL SETTINGS
+  var allState = { cat: "all", type: "all", tier: "all", changed: false, managed: false, stress: false, vlist: null };
+  function allView() {
+    return chrome(currentRoute(), { crumbs: [{ label: "All Settings" }], back: { hash: "#/home", label: "Back to Settings Home" } }) +
+      '<div data-test="all"><h2 style="font-size:21px;margin:2px 0 12px;color:var(--text-1)">All Settings</h2>' +
+      '<div class="d3-facets">' +
+      '<select class="pm-select" data-facet="cat"><option value="all">All categories</option>' + D.categories.map(function (c) { return '<option value="' + c.id + '">' + esc(c.title) + "</option>"; }).join("") + "</select>" +
+      '<select class="pm-select" data-facet="type"><option value="all">All types</option>' + ["toggle", "select", "number", "text", "action", "slider", "radio", "list", "multiselect", "keyvalue", "path"].map(function (t) { return "<option>" + t + "</option>"; }).join("") + "</select>" +
+      '<select class="pm-select" data-facet="tier"><option value="all">All tiers</option><option>simple</option><option>advanced</option></select>' +
+      '<label class="pm-note" style="display:flex;gap:6px;align-items:center"><input type="checkbox" data-facet="changed"> changed from default</label>' +
+      '<label class="pm-note" style="display:flex;gap:6px;align-items:center"><input type="checkbox" data-facet="managed"> managed / unavailable</label>' +
+      '<label class="pm-note" style="display:flex;gap:6px;align-items:center"><input type="checkbox" data-facet="stress"> Synthetic stress +2000</label>' +
+      "</div><div class=\"d3-count\" data-count></div><div class=\"d3-vlist\" data-test=\"vlist\"></div></div>";
+  }
+  function synthRow(i) {
+    return { id: "synthetic.stress.row-" + i, label: "Synthetic stress row " + i, desc: "Generated row for virtualization evidence; marked synthetic, never replaces real data.", type: "toggle", tier: "advanced", synthetic: true };
+  }
+  function mountAll(root) {
+    var host = root.querySelector("[data-test='vlist']");
+    allState.vlist = null; // fresh host per mount; old list references a detached node
+    var count = root.querySelector("[data-count]");
+    function data() {
+      var list = D.settings.filter(function (s) {
+        if (allState.cat !== "all" && s.id.indexOf(allState.cat + ".") !== 0) return false;
+        if (allState.type !== "all" && s.type !== allState.type) return false;
+        if (allState.tier !== "all" && s.tier !== allState.tier) return false;
+        var st = S2.getSetting(s.id);
+        if (allState.changed && !(st && st.source === "custom")) return false;
+        if (allState.managed && !(st && (st.source === "managed" || st.source === "unavailable"))) return false;
+        return true;
+      });
+      if (allState.stress) for (var i = 1; i <= 2000; i++) list.push(synthRow(i));
+      return list;
+    }
+    function renderRow(s) {
+      if (s.synthetic) return '<div class="pm2-row" data-row="' + s.id + '"><div class="pm2-row-main"><div class="pm2-row-title">' + esc(s.label) + ' <span class="pm-badge pm-badge-muted">Synthetic</span></div><div class="pm2-row-desc">' + esc(s.desc) + '</div></div><div class="pm2-row-ctl"><span class="pm-toggle" aria-disabled="true"><span class="pm-toggle-knob"></span></span></div></div>';
+      return M2.row(s, S2.getSetting(s.id));
+    }
+    var token = 0;
+    function rebuild() {
+      var my = ++token; // latest-request-wins
+      setTimeout(function () {
+        if (my !== token) return;
+        var list = data();
+        totalNow = list.length;
+        count.textContent = "Showing " + list.length + " row" + (list.length === 1 ? "" : "s") + " · " + D.settings.length + " real settings" + (allState.stress ? " + 2000 synthetic" : "") + " · windowed rendering";
+        if (allState.vlist) allState.vlist.set(list);
+        else allState.vlist = M2.virtualList({
+          host: host, rowHeight: 64, render: renderRow, data: list,
+          onWindow: function (s, e, t) { host.setAttribute("data-window", s + ":" + e + ":" + t); }
+        });
+      }, 30);
+    }
+    root.querySelectorAll("[data-facet]").forEach(function (el) {
+      el.addEventListener("change", function () {
+        var k = el.getAttribute("data-facet");
+        allState[k] = el.type === "checkbox" ? el.checked : el.value;
+        rebuild();
+      });
+    });
+    var totalNow = 0;
+    host.addEventListener("scroll", function () {
+      var rowH = 64, vh = host.clientHeight;
+      var s = Math.max(0, Math.floor(host.scrollTop / rowH) - 6);
+      var e = Math.min(totalNow, Math.ceil((host.scrollTop + vh) / rowH) + 6);
+      host.setAttribute("data-window", s + ":" + e + ":" + totalNow);
+    });
+    rebuild();
+    M2.bindRows(host);
+  }
+
+  // ---------------------------------------------------------------- COPY
+  var copyState = { step: 1, source: null, cats: D.categories.map(function (c) { return c.id; }), preview: null, applied: null };
+  function copyView() {
+    var steps = [1, 2, 3].map(function (n) {
+      var label = ["Select Source", "Choose Categories", "Review & Confirm"][n - 1];
+      return '<span class="d3-step ' + (copyState.step === n ? "active" : copyState.step > n ? "done" : "") + '"><span class="n">' + (copyState.step > n ? ic("check", 11) : n) + "</span>" + label + (n < 3 ? '<span class="bar"></span>' : "") + "</span>";
+    }).join("");
+    var body = "";
+    if (copyState.step === 1) {
+      body = MD.sourceProjects.map(function (s) {
+        return '<button class="d3-src' + (copyState.source === s.id ? " active" : "") + '" data-copysrc="' + s.id + '"><span><h4>' + esc(s.name) + ' <span class="pm-note">updated ' + esc(s.updated) + "</span></h4><p>" + esc(s.summary) + "</p></span>" + ic("chevronRight", 14) + "</button>";
+      }).join("") + '<div class="d3-qa"><button class="pm-btn pm-btn-primary" data-copynext' + (copyState.source ? "" : " disabled") + ">Continue</button></div>";
+    } else if (copyState.step === 2) {
+      var src = null; MD.sourceProjects.forEach(function (s) { if (s.id === copyState.source) src = s; });
+      body = D.categories.map(function (c) {
+        var on = copyState.cats.indexOf(c.id) >= 0;
+        return '<div class="d3-catrow"><label><input type="checkbox" data-copycat="' + c.id + '"' + (on ? " checked" : "") + "> " + esc(c.title) + ' <span class="d">' + esc(c.description) + "</span></label>" +
+          '<span class="c">' + (src ? src.counts[c.id] : 0) + " items</span></div>";
+      }).join("") + '<div class="d3-qa"><button class="pm-btn pm-btn-quiet" data-copystep="1">Back</button><button class="pm-btn pm-btn-primary" data-copypreview>Preview copy</button></div>';
+    } else {
+      var pv = copyState.preview;
+      body = '<div class="d3-sum">' +
+        '<span class="pm-badge pm-badge-ok">Add ' + pv.counts.add + "</span>" +
+        '<span class="pm-badge pm-badge-info">Replace ' + pv.counts.replace + "</span>" +
+        '<span class="pm-badge pm-badge-muted">Unchanged ' + pv.counts.same + "</span>" +
+        '<span class="pm-badge pm-badge-warn">Unavailable ' + pv.counts.unavailable + "</span>" +
+        '<span class="pm-badge pm-badge-danger">Conflicts ' + pv.counts.conflict + "</span></div>" +
+        '<div class="pm-note" style="margin-bottom:10px">Credential rows are copied as account references per Project-copy policy; raw secrets never render or export. A restore point is created before apply; source and destination stay independent.</div>' +
+        '<div class="d3-diff">' + (pv.rows.length ? pv.rows.map(function (r) {
+          return '<div class="d3-diffrow"><span class="pm-badge pm-badge-' + (r.status === "add" ? "ok" : r.status === "replace" ? "info" : r.status === "conflict" ? "danger" : r.status === "credential" ? "managed" : "muted") + '">' + esc(r.status) + "</span> " + esc(r.label) +
+            (r.status === "replace" || r.status === "conflict" ? ' <span class="pm-note">' + esc(String(r.current)) + " → " + esc(String(r.incoming)) + "</span>" : "") +
+            (r.note ? ' <span class="pm-note">' + esc(r.note) + "</span>" : "") + '<span class="id">' + esc(r.id) + "</span></div>";
+        }).join("") : '<div class="pm2-empty">Nothing to copy for the selected categories.</div>') + "</div>" +
+        '<div class="d3-qa" style="margin-top:14px"><button class="pm-btn pm-btn-quiet" data-copystep="2">Back</button>' +
+        (copyState.applied
+          ? '<button class="pm-btn pm-btn-primary" data-copyrollback>' + ic("history", 12) + " Roll back this copy</button>"
+          : '<button class="pm-btn pm-btn-primary" data-copyapply>' + ic("check", 12) + " Create restore point & apply</button>") +
+        "</div>";
+      if (copyState.applied) body += '<div class="pm-note" style="margin-top:10px">Applied: ' + copyState.applied.changed + " settings changed · restore point " + copyState.applied.restorePoint.id + " · verification " + (copyState.applied.verify.ok ? "passed" : "gaps: " + copyState.applied.verify.mismatched.join(", ")) + "</div>";
+    }
+    return chrome(currentRoute(), { crumbs: [{ label: "Copy Settings" }], back: { hash: "#/home", label: "Back to Settings Home" } }) +
+      '<div data-test="copy" class="d3-copy"><h2 style="font-size:21px;margin:2px 0 6px;color:var(--text-1)">Copy Settings From Another Project</h2>' +
+      '<div class="pm-note" style="margin-bottom:14px">One-time transactional copy into ' + esc(projectName()) + ". Source and destination remain independent afterward.</div>" +
+      '<div class="d3-steps">' + steps + "</div>" + body + "</div>";
+  }
+  function bindCopy(root) {
+    root.addEventListener("click", function (e) {
+      var src = e.target.closest ? e.target.closest("[data-copysrc]") : null;
+      if (src) { copyState.source = src.getAttribute("data-copysrc"); render(currentRoute(), true); return; }
+      if (e.target.closest("[data-copynext]")) { if (copyState.source) { copyState.step = 2; render(currentRoute(), true); } return; }
+      var st = e.target.closest("[data-copystep]");
+      if (st) { copyState.step = +st.getAttribute("data-copystep"); render(currentRoute(), true); return; }
+      if (e.target.closest("[data-copypreview]")) { copyState.preview = C2.preview(copyState.source, copyState.cats); copyState.step = 3; render(currentRoute(), true); return; }
+      if (e.target.closest("[data-copyapply]")) {
+        var op = S2.beginOp({ title: "Copy settings", phase: "Creating restore point", determinate: true, total: Math.max(1, copyState.preview.rows.length) });
+        setTimeout(function () {
+          S2.advanceOp(op, { phase: "Applying values", completed: Math.ceil(Math.max(1, copyState.preview.rows.length) / 2) });
+          setTimeout(function () {
+            var res = C2.apply(copyState.preview);
+            S2.advanceOp(op, { phase: "Verifying", completed: Math.max(1, copyState.preview.rows.length) });
+            S2.finishOp(op, "completed", res.verify.ok ? "Verified" : "Verified with gaps");
+            copyState.applied = res;
+            viewCache = {};
+            render(currentRoute(), true);
+          }, 500);
+        }, 400);
+        return;
+      }
+      if (e.target.closest("[data-copyrollback]")) { C2.rollbackLast(); copyState.applied = null; copyState.preview = null; copyState.step = 1; viewCache = {}; render(currentRoute(), true); }
+    });
+    root.addEventListener("change", function (e) {
+      var c = e.target.closest ? e.target.closest("[data-copycat]") : null;
+      if (!c) return;
+      var id = c.getAttribute("data-copycat");
+      if (c.checked) { if (copyState.cats.indexOf(id) < 0) copyState.cats.push(id); }
+      else copyState.cats = copyState.cats.filter(function (x) { return x !== id; });
+      render(currentRoute(), true);
+    });
+  }
+
+  // ---------------------------------------------------------------- render
+  function wrap(route, html) {
+    var attrs = ' id="d3-view" data-route="' + esc(route.routeAttr) + '"';
+    if (route.name === "mgr") {
+      var f = family(route.mgr);
+      attrs += ' data-hasobject="' + (route.object ? "1" : "0") + '" data-roster="' + ((f && (f.archetype === "roster" || f.id === "providers")) ? "1" : "0") + '"';
+    }
+    return "<div" + attrs + ">" + html + "</div>";
+  }
+  function viewHtml(route) {
+    switch (route.name) {
+      case "cat": return catView(route);
+      case "mgr": return mgrView(route);
+      case "deferred": return deferredView(route);
+      case "all": return allView();
+      case "copy": return copyView();
+      case "q": {
+        var base = searchOrigin ? Object.assign({}, searchOrigin) : { name: "home" };
+        if (base.name === "q") base = { name: "home" };
+        return viewHtml(base);
+      }
+      default: return homeView();
+    }
+  }
+
+  function render(route, force) {
+    var key = route.raw;
+    var cached = viewCache[key];
+    if (cached && !force) {
+      content.innerHTML = wrap(route, cached);
+      afterRender(route);
+      return;
+    }
+    if (!cached) {
+      // loading-with-cache: skeleton first, cached content stays available elsewhere
+      content.innerHTML = wrap(route, chrome(route, { crumbs: [] }) + M2.skeleton("Loading " + route.name));
+      setTimeout(function () {
+        if ((location.hash || "#/home") !== route.raw) return; // superseded
+        var html = viewHtml(route);
+        viewCache[key] = html;
+        content.innerHTML = wrap(route, html);
+        afterRender(route);
+      }, 160);
+      return;
+    }
+    var html2 = viewHtml(route);
+    viewCache[key] = html2;
+    content.innerHTML = wrap(route, html2);
+    afterRender(route);
+  }
+
+  function afterRender(route) {
+    var root = content.querySelector("#d3-view");
+    bindSearch(root);
+    bindSyn(root);
+    M2.bindRows(root);
+    if (route.name === "all") mountAll(root);
+    if (route.name === "copy") bindCopy(root);
+
+    root.addEventListener("click", function (e) {
+      var g = e.target.closest ? e.target.closest("[data-go]") : null;
+      if (g) { go(g.getAttribute("data-go")); return; }
+      var d = e.target.closest ? e.target.closest("[data-dest]") : null;
+      if (d) {
+        var dest = JSON.parse(d.getAttribute("data-dest"));
+        if (dest && dest.hash) go(dest.hash); else if (dest && dest.manager) go(destHash(dest));
+        return;
+      }
+      var sec = e.target.closest ? e.target.closest("[data-sec]") : null;
+      if (sec) { var el = root.querySelector("#sec-" + sec.getAttribute("data-sec")); if (el) el.scrollIntoView({ block: "start" }); return; }
+      var a = e.target.closest ? e.target.closest("[data-act]") : null;
+      if (a) handleAct(a);
+    });
+
+    var mem = scrollMem[route.raw];
+    if (mem !== undefined) root.scrollTop = mem;
+
+    if (route.name === "q" && root._d3search) root._d3search.set(route.query || "");
+
+    if (pendingFocus && route.routeAttr === pendingFocus.routeRaw) {
+      var pf = pendingFocus, tries = 0;
+      var applyFocus = function () {
+        var live = content.querySelector("#d3-view");
+        if (!live || live.getAttribute("data-route") !== pf.routeRaw) return; // navigated away: abort
+        var target = null;
+        if (pf.row) target = live.querySelector('[data-row="' + (window.CSS && CSS.escape ? CSS.escape(pf.row) : pf.row) + '"]');
+        if (!target && pf.row) {
+          var ctl0 = live.querySelector('[data-setting="' + (window.CSS && CSS.escape ? CSS.escape(pf.row) : pf.row) + '"]');
+          if (ctl0) target = ctl0.closest(".pm2-row") || ctl0;
+        }
+        if (!target && pf.sec) target = live.querySelector("#sec-" + pf.sec);
+        if (!target && pf.sec) target = live.querySelector('[data-sec="' + pf.sec + '"].active') || live.querySelector('[data-sec="' + pf.sec + '"]');
+        if (!target && pf.object) target = live.querySelector('[data-object="' + pf.object + '"]');
+        if (!target) target = live.querySelector("[data-manager]");
+        if (target && target.isConnected) {
+          pendingFocus = null;
+          target.scrollIntoView({ block: "center" });
+          target.classList.add("pm2-locate");
+          var ctl = target.querySelector("button,select,input");
+          if (ctl) ctl.focus({ preventScroll: true });
+          else { target.setAttribute("tabindex", "-1"); target.focus({ preventScroll: true }); }
+        } else if (tries++ < 15) {
+          setTimeout(applyFocus, 60);
+        } else pendingFocus = null;
+      };
+      setTimeout(applyFocus, 30);
+    } else if (pendingFocus && route.name !== "q") {
+      pendingFocus = null; // stale focus from an abandoned landing
+    }
+    if (route.params.row) {
+      setTimeout(function () {
+        var t = root.querySelector('[data-row="' + (window.CSS && CSS.escape ? CSS.escape(route.params.row) : route.params.row) + '"]');
+        if (t) { t.scrollIntoView({ block: "center" }); t.classList.add("pm2-locate"); }
+      });
+    }
+    if (route.params.sec) {
+      setTimeout(function () {
+        var t = root.querySelector("#sec-" + route.params.sec);
+        if (t) { t.scrollIntoView({ block: "start" }); t.classList.add("pm2-locate"); }
+      });
+    }
+  }
+
+  function handleAct(btn) {
+    var act = btn.getAttribute("data-act");
+    if (act === "close") { S2.receipt("Settings closed", "Return to the Dashboard; every change here was receipted for this Project.", "info"); return; }
+    if (act === "catalog-refresh") {
+      var op = S2.beginOp({ title: "Catalog refresh", phase: "Contacting models.dev", determinate: false, wait: "network round-trip" });
+      setTimeout(function () { S2.finishOp(op, "completed", "Catalog current"); S2.receipt("Catalog refreshed", "models.dev and Free Coding Models catalogs are current; last-known-good stayed active during the refresh.", "ok"); }, 900);
+      return;
+    }
+    if (act === "update-now") {
+      var u = S2.beginOp({ title: "Provider update", phase: "Downloading signed update", determinate: true, total: 3 });
+      setTimeout(function () { S2.advanceOp(u, { phase: "Verifying", completed: 2 }); }, 500);
+      setTimeout(function () { S2.advanceOp(u, { phase: "Activating", completed: 3 }); }, 1000);
+      setTimeout(function () { S2.finishOp(u, "completed", "Update ready"); S2.receipt("Update applied", "Verification passed; the new generation is active. Ask-first policy honored.", "ok"); }, 1500);
+      return;
+    }
+    if (act === "install-official" || act === "install-select" || act === "cli-signin" || act === "cred-rotate" || act === "model-default") {
+      S2.receipt("Demo action", act + " is a simulated, receipted demo action in this concept; production wiring is described in candidate-wiring-delta.json.", "sim");
+    }
+  }
+
+  // ---------------------------------------------------------------- events
+  var prevRaw = location.hash || "#/home";
+  window.addEventListener("hashchange", function () {
+    var r = currentRoute();
+    if (r.raw === prevRaw) return; // duplicate event from consecutive hash writes
+    var cur = content.querySelector("#d3-view");
+    scrollMem[prevRaw] = cur ? cur.scrollTop : 0;
+    render(r, false);
+    prevRaw = r.raw;
+  });
+
+  S2.subscribe(function (kind) {
+    if (kind === "setting" || kind === "scenario" || kind === "rollback") {
+      viewCache = {}; // truth over cache
+      render(currentRoute(), true);
+    }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      M2.closePopupMenu();
+      var r = currentRoute();
+      if (r.name === "mgr" && r.object) { go("#/mgr/" + r.mgr); return; }
+      if (r.name !== "home") go("#/home");
+      return;
+    }
+    if (e.key === "/" && !/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)) {
+      e.preventDefault();
+      var inp = content.querySelector("[data-test='search-input']");
+      if (inp) inp.focus();
+    }
+  });
+  if (!location.hash) { history.replaceState(null, "", "#/home"); prevRaw = "#/home"; }
+
+  render(currentRoute(), true);
+})();
+</script>
+</body>
+</html>

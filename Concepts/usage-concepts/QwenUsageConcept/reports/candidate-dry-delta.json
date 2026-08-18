@@ -1,18 +1,39 @@
 {
+  "schema_id": "pm.usage_candidate_dry_delta.v1",
+  "schema_id_provenance": "Locally minted 2026-08-18 in the family of the one schema id the packet does declare (pm.usage_candidate_command_delta.v1, PM_Usage_Concept_Update_Final_Cumulative_2026-08-08/CANDIDATE_COMMAND_ID_REGISTER.json:2). Neither packet declares a schema id for this output, so this id is not canonical and the packet owner should ratify or replace it. It is recorded rather than omitted so that the file is at least self-identifying.",
   "concept": "QwenUsageConcept/u11-prism",
   "packet": "PM_Usage_Concept_Update_Final_Cumulative_2026-08-08 §06 DRY roles",
-  "date": "2026-08-11",
+  "date": "2026-08-18",
+  "revision_history": [
+    "2026-08-11 - first issue.",
+    "2026-08-13 - MaintenanceActivity note added while the file kept its 2026-08-11 date.",
+    "2026-08-18 - audit repair: all 18 role attributions re-checked against source; four corrected, one count dropped."
+  ],
   "note": "Packet names are candidate roles. Mapped to the u11 modules that already implement each responsibility; gaps flagged.",
+  "verification_note": "Every u11_owner string below was re-checked against the actual source on 2026-08-18 by opening the file and line it names. Four were wrong and are corrected in place with the original text preserved in a retraction. The remaining fourteen were confirmed. Audit findings A11-18 (two of the four) and A05-17 (the CacheReceipt enum); the UsageDataQuality omission was measured during this repair.",
   "roles": [
     {
       "role": "UsageEventStore",
-      "u11_owner": "u11-data.js — attempts[] + attemptById/attemptByEventId index",
-      "status": "present"
+      "u11_owner": "u11-data.js - attempts[] (45 records) plus one index, U11.attemptById (:1195)",
+      "status": "present",
+      "retraction": {
+        "retracted_on": "2026-08-18",
+        "retracted_claim": "u11-data.js - attempts[] + attemptById/attemptByEventId index",
+        "why_the_claim_was_false": "The slashed pair implied two indexes. u11-data.js:1200 is `U11.attemptByEventId = U11.attemptById;` - one index under two names, so the store has a single lookup path, not two.",
+        "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A11-18 (minor)"
+      }
     },
     {
       "role": "UsageNormalizer",
-      "u11_owner": "u11-data.js — sourceClass + settlement fields on every attempt and meter; R().human/deText keep UI copy clean",
-      "status": "present"
+      "u11_owner": "u11-data.js - sourceClass and settlement fields on every attempt and meter",
+      "status": "present",
+      "retraction": {
+        "retracted_on": "2026-08-18",
+        "retracted_claim": "u11-data.js - sourceClass + settlement fields on every attempt and meter; R().human/deText keep UI copy clean",
+        "why_the_claim_was_false": "Both misattributed and mischaracterized. R.human and R.deText are not in u11-data.js - `grep -n deText u11-data.js` returns no hits. They live in _shared/usage-data.js:921 and :927 and are reached through u11-widgets.js:24 `function R() { return window.USrender; }`. And R.human is `String(s).replace(/_/g, ' ')` - a render-time underscore-to-space substitution on the raw token, not normalization. This file's sibling concedes the point: event-schema-delta.json purpose_taxonomy.rendering says 'No renderer label map exists; purposes render via R().human()', which is why renaming the purpose taxonomy required zero renderer edits.",
+        "consequence": "Because R.human strips underscores at render time, the harness's 'underscores === 0' assertion in all 40 matrix cases cannot detect raw enum leakage into user-visible copy - a de-underscored raw token passes that check.",
+        "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A11-18 (minor)"
+      }
     },
     {
       "role": "SettlementResolver",
@@ -21,8 +42,14 @@
     },
     {
       "role": "UsageDataQuality",
-      "u11_owner": "meter vs values (provider_reported | measured | estimated | stale | unknown | unavailable | disabled) + conf + note; telemetry-unavailable estimate (meter:oc-go-monthly)",
-      "status": "present"
+      "u11_owner": "meter vs values plus conf and note; telemetry-unavailable estimate (meter:oc-go-monthly). Eight values occur in the data, measured 2026-08-18 by `grep -o \"vs: '[a-z_]*'\" u11-data.js | sort | uniq -c`: provider_reported 22, measured 3, stale 2, unknown 2, disabled 1, estimated 1, not_exposed 1, unavailable 1",
+      "status": "present",
+      "retraction": {
+        "retracted_on": "2026-08-18",
+        "retracted_claim": "meter vs values (provider_reported | measured | estimated | stale | unknown | unavailable | disabled) + conf + note; telemetry-unavailable estimate (meter:oc-go-monthly)",
+        "why_the_claim_was_false": "The seven-value set omitted not_exposed, which the data uses at u11-data.js:195 (meter:local-ollama). This role string was the only place in any required output where the value-state domain was declared at all, so the omission left a rendered value state undeclared everywhere. The domain is now also declared properly in event-schema-delta.json under meter_schema.",
+        "source": "measured during the 2026-08-18 repair; the omission is noted in Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A11-15"
+      }
     },
     {
       "role": "UsageForecast",
@@ -41,8 +68,14 @@
     },
     {
       "role": "CacheReceipt",
-      "u11_owner": "tokens.cacheRead/cacheWrite + thread.context.cacheEpoch/stablePrefixId + cacheStats[] (provider-reported vs derived vs not exposed)",
-      "status": "present"
+      "u11_owner": "tokens.cacheRead / cacheWrite, thread.context.cacheEpoch and stablePrefixId, and cacheStats[] (8 rows at u11-data.js, the cacheStats[] block) whose state enum is measured | estimated | unsupported - 5 measured, 1 estimated, 2 unsupported, measured 2026-08-18",
+      "status": "present",
+      "retraction": {
+        "retracted_on": "2026-08-18",
+        "retracted_claim": "tokens.cacheRead/cacheWrite + thread.context.cacheEpoch/stablePrefixId + cacheStats[] (provider-reported vs derived vs not exposed)",
+        "why_the_claim_was_false": "The parenthetical named an enum the code does not use. cacheStats rows carry state 'measured', 'estimated' or 'unsupported' (u11-data.js:1078-1085). 'provider-reported', 'derived' and 'not exposed' are the meter vs vocabulary, borrowed onto a different structure. A DRY register whose role description does not match the shipped shape cannot be used to check for duplication.",
+        "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A05-17 (minor)"
+      }
     },
     {
       "role": "TimeBreakdown",
@@ -56,13 +89,19 @@
     },
     {
       "role": "AccountConnectionUsage",
-      "u11_owner": "accounts[] + connections[] + accountsOfFamily/connectionsOfAccount helpers; priority/lastUsedAt",
+      "u11_owner": "accounts[] (13 records: 12 visible, 1 removed) plus connections[] (16) with the accountsOfFamily and connectionsOfAccount helpers (u11-data.js, U11.accountsOfFamily and U11.connectionsOfAccount, :1206); priority and lastUsedAt. visibleAccounts() filters on `a.configured && !a.removed` (:1297).",
       "status": "present"
     },
     {
       "role": "HelperPurposeGroup",
-      "u11_owner": "buckets{} + full packet purpose taxonomy (17 values) rendered via R().human",
-      "status": "present"
+      "u11_owner": "buckets{} plus the packet purpose taxonomy, rendered via R().human from _shared/usage-data.js:921",
+      "status": "present",
+      "retraction": {
+        "retracted_on": "2026-08-18",
+        "retracted_claim": "buckets{} + full packet purpose taxonomy (17 values) rendered via R().human",
+        "why_the_claim_was_false": "'(17 values)' contradicted the two documents that declare the taxonomy: event-schema-delta.json purpose_taxonomy.canonical_values lists 18, and packet section 02 declares 18. The count 17 was the number of purpose values that actually occur on an attempt - `grep -o \"purpose: '[a-z_]*'\" u11-data.js | sort -u | wc -l` returns 17 - so the register silently reported usage as if it were the declared domain. The count is dropped from this role string; the 18-declared-versus-17-used gap is now disclosed where it belongs, in event-schema-delta.json.",
+        "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A11-15 (minor)"
+      }
     },
     {
       "role": "Goal/CrewUsage",
@@ -71,9 +110,9 @@
     },
     {
       "role": "MaintenanceActivity",
-      "u11_owner": "operational[] (NEW) — 7 kinds, phases, host/env lineage, validationEventId join; operations widget",
+      "u11_owner": "operational[] (NEW) - 8 entries with 8 distinct kinds (cli_update, offline_outbox, server_continuity, sound_preview, notification_test, backup, project_move, setup_required), phases, host and environment lineage, validationEventId join; operations widget",
       "status": "present-new",
-      "note": " 2026-08-13: extended with acquisition lineage + setup_required per PROVIDER_CLI_FINAL_ADJUDICATION.md."
+      "note": " 2026-08-13: extended with acquisition lineage + setup_required per PROVIDER_CLI_FINAL_ADJUDICATION.md. 2026-08-18: the kind count was stated as 7 and is 8, counted from the operational[] block on that date."
     },
     {
       "role": "ContextUsageDetail",
@@ -93,8 +132,9 @@
     },
     {
       "role": "UsageWidgetHost",
-      "u11_owner": "shared PMWidgets engine (public register API) + u11-widgets.js TYPES registry + instance contract (layout/presentation/scope/time/content)",
-      "status": "present"
+      "u11_owner": "shared PMWidgets engine (_shared/usage-widgets.js, public register API) plus the u11-widgets.js TYPES registry (:1145, 15 types: plans, costs, accounts, attention, context, capacity, runs, free, analytics, ledger, operations, tools, cache, signals, authority) and the instance contract (layout / presentation / scope / time / content)",
+      "status": "present",
+      "note": "Added 2026-08-18: the shared engine owns the widget lifecycle (addWidget :589, removeWidget :600, setSize :609, resetCanvas :616, the data-pmw-add control :899) and contains no command dispatch - `grep -c 'dispatch\\|U11\\.\\|cmdLog' _shared/usage-widgets.js` returns 0. Five of the six shared widget commands therefore have no dispatcher in this concept (audit A11-07)."
     }
   ],
   "gaps": [
@@ -102,5 +142,6 @@
       "role": "RunOutProjection",
       "action": "flag for canonical ownership — FINDINGS U1"
     }
-  ]
+  ],
+  "source_citation_policy": "Source citations into u11-prism.html, u11-data.js, u11-widgets.js, u11-rundetail.js and u11-context.js name a symbol, identifier or exact string rather than a line number. Those five files were under concurrent edit on 2026-08-18 - u11-data.js moved twice while this repair was being written - so a line number here would be wrong by the time it was read. Line numbers are retained only for files that are stable in this pass: everything under Plans/ and under _shared/. Text preserved inside a `retraction` or `retracted_claim` object is left exactly as it was written, line numbers included, because its purpose is to record what a document said on a past date."
 }

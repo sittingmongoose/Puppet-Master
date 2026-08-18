@@ -322,15 +322,15 @@
     if (!d || typeof d.render !== 'function') return '';
     try { return d.render(item, sizeKeyOf(item)) || ''; } catch (err) { return ''; }
   }
-  /* a focused card is parked on <body> (see hoistFocus), so lookups that only
-     scan the canvas miss it — resolve through the parked element first. */
+  /* a focused card is parked on the document body element (see hoistFocus),
+     so lookups that only scan the canvas miss it — resolve through the parked element first. */
   function uwEl(canvas, uidv) {
     var p = canvas._pmw && canvas._pmw.parked;
     if (p && p.getAttribute('data-uid') === uidv) return p;
     return canvas.querySelector('.uw[data-uid="' + uidv + '"]');
   }
   /* effective span = min(stored c, live track count). Stored item.c is NEVER
-     mutated here, so wide tiers restore the full span; narrow tiers stop
+     mutated here, so wide grids restore the full span; narrow grids stop
      forcing implicit ghost columns and the responsive breakpoints take effect. */
   function canvasCols(canvas) {
     var t = getComputedStyle(canvas).gridTemplateColumns;
@@ -339,7 +339,7 @@
        gridTemplateColumns lists them too (while their content-width shrinks the
        1fr tracks), so naive counting/probing is self-defeating. Force every
        card to span 1 for one synchronous read: a span-1 grid can never outrun
-       the explicit template, so the list we count IS the explicit tier. */
+       the explicit template, so the list we count IS the explicit track set. */
     var kids = canvas.querySelectorAll('.uw');
     var saved = [];
     kids.forEach(function (el, i) { saved[i] = el.style.gridColumn; el.style.gridColumn = 'span 1'; });
@@ -483,8 +483,8 @@
   /* Stacking escape: host chrome wraps the page in an ancestor stacking context
      (e.g. .us-center at z-index:1), so a focused card can never out-z the
      body-level .uw-scrim (z:500) from inside it and gets dimmed by its own
-     scrim. The card is position:fixed, so we park it on <body> beside the scrim
-     (z:510 > z:500, fully bright) and return it to the canvas on every rebuild. */
+     scrim. The card is position:fixed, so we park it on the document body
+     element beside the scrim (z:510 > z:500, fully bright) and return it to the canvas on every rebuild. */
   function unhoistFocus(canvas) {
     var pmw = canvas._pmw;
     if (!pmw) return;

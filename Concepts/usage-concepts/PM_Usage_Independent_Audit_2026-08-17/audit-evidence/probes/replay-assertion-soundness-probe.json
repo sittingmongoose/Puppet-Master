@@ -1,0 +1,279 @@
+{
+  "origin": "http://127.0.0.1:8117/",
+  "requests": [
+    {
+      "url": "http://127.0.0.1:8117/u11-prism.html",
+      "type": "document"
+    },
+    {
+      "url": "https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&family=Nu",
+      "type": "stylesheet"
+    },
+    {
+      "url": "http://127.0.0.1:8117/_shared/themes.css",
+      "type": "stylesheet"
+    },
+    {
+      "url": "http://127.0.0.1:8117/_shared/base.css",
+      "type": "stylesheet"
+    },
+    {
+      "url": "http://127.0.0.1:8117/_shared/usage-shared.css",
+      "type": "stylesheet"
+    },
+    {
+      "url": "http://127.0.0.1:8117/_shared/usage-widgets.css",
+      "type": "stylesheet"
+    },
+    {
+      "url": "http://127.0.0.1:8117/u11-widgets.css?v=20260813a",
+      "type": "stylesheet"
+    },
+    {
+      "url": "http://127.0.0.1:8117/u11-rundetail.css?v=20260813a",
+      "type": "stylesheet"
+    },
+    {
+      "url": "http://127.0.0.1:8117/u11-context.css?v=20260813a",
+      "type": "stylesheet"
+    },
+    {
+      "url": "http://127.0.0.1:8117/_shared/icons.js",
+      "type": "script"
+    },
+    {
+      "url": "http://127.0.0.1:8117/_shared/usage-icons.js",
+      "type": "script"
+    },
+    {
+      "url": "http://127.0.0.1:8117/u11-icons.js?v=20260813a",
+      "type": "script"
+    },
+    {
+      "url": "http://127.0.0.1:8117/_shared/menu.js",
+      "type": "script"
+    },
+    {
+      "url": "http://127.0.0.1:8117/_shared/usage-data.js",
+      "type": "script"
+    },
+    {
+      "url": "http://127.0.0.1:8117/u11-time.js?v=20260813a",
+      "type": "script"
+    },
+    {
+      "url": "http://127.0.0.1:8117/u11-data.js?v=20260813a",
+      "type": "script"
+    },
+    {
+      "url": "http://127.0.0.1:8117/_shared/usage-chrome.js",
+      "type": "script"
+    },
+    {
+      "url": "http://127.0.0.1:8117/_shared/usage-widgets.js",
+      "type": "script"
+    },
+    {
+      "url": "http://127.0.0.1:8117/u11-widgets.js?v=20260813a",
+      "type": "script"
+    },
+    {
+      "url": "http://127.0.0.1:8117/u11-rundetail.js?v=20260813a",
+      "type": "script"
+    },
+    {
+      "url": "http://127.0.0.1:8117/u11-context.js?v=20260813a",
+      "type": "script"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/calsans/v2/fdN99sWUv3gWqXxqqRBctFs.woff2",
+      "type": "font"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/quicksand/v37/6xKtdSZaM9iE8KbpRA_hK1QN.woff2",
+      "type": "font"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2",
+      "type": "font"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/nunito/v32/XRXV3I6Li01BKofINeaB.woff2",
+      "type": "font"
+    }
+  ],
+  "requestfailed": [],
+  "console_all": [],
+  "request_census": {
+    "total": 25,
+    "external": [
+      "https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&family=Nu [stylesheet]",
+      "https://fonts.gstatic.com/s/calsans/v2/fdN99sWUv3gWqXxqqRBctFs.woff2 [font]",
+      "https://fonts.gstatic.com/s/quicksand/v37/6xKtdSZaM9iE8KbpRA_hK1QN.woff2 [font]",
+      "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2 [font]",
+      "https://fonts.gstatic.com/s/nunito/v32/XRXV3I6Li01BKofINeaB.woff2 [font]"
+    ],
+    "failed": [],
+    "console_count_by_type": {}
+  },
+  "fonts_loaded": {
+    "links": [
+      {
+        "rel": "icon",
+        "href": "data:,"
+      },
+      {
+        "rel": "preconnect",
+        "href": "https://fonts.googleapis.com/"
+      },
+      {
+        "rel": "preconnect",
+        "href": "https://fonts.gstatic.com/"
+      },
+      {
+        "rel": "stylesheet",
+        "href": "https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700;800&fa"
+      },
+      {
+        "rel": "stylesheet",
+        "href": "http://127.0.0.1:8117/_shared/themes.css"
+      },
+      {
+        "rel": "stylesheet",
+        "href": "http://127.0.0.1:8117/_shared/base.css"
+      },
+      {
+        "rel": "stylesheet",
+        "href": "http://127.0.0.1:8117/_shared/usage-shared.css"
+      },
+      {
+        "rel": "stylesheet",
+        "href": "http://127.0.0.1:8117/_shared/usage-widgets.css"
+      },
+      {
+        "rel": "stylesheet",
+        "href": "http://127.0.0.1:8117/u11-widgets.css?v=20260813a"
+      },
+      {
+        "rel": "stylesheet",
+        "href": "http://127.0.0.1:8117/u11-rundetail.css?v=20260813a"
+      },
+      {
+        "rel": "stylesheet",
+        "href": "http://127.0.0.1:8117/u11-context.css?v=20260813a"
+      }
+    ],
+    "fontFaceCount": 122
+  },
+  "advonly_advanced": {
+    "present": true,
+    "harness_assertion_inline_style_has_no_display_none": true,
+    "computedDisplay": "none",
+    "offsetHeight": 0,
+    "clientRects": 0,
+    "userVisible": false,
+    "text": "Source authorityprovenance · settlement",
+    "ancestor_chain": [
+      {
+        "tag": "BUTTON",
+        "cls": "u11-item u11-sub u11-advonly",
+        "inlineStyle": "--u11-ri: 14;",
+        "display": "none",
+        "visibility": "visible",
+        "height": 0,
+        "hiddenAttr": false
+      },
+      {
+        "tag": "DIV",
+        "cls": "u11-moregrp closed",
+        "inlineStyle": "",
+        "display": "flex",
+        "visibility": "visible",
+        "height": 52,
+        "hiddenAttr": false
+      },
+      {
+        "tag": "NAV",
+        "cls": "u11-rail",
+        "inlineStyle": "",
+        "display": "flex",
+        "visibility": "visible",
+        "height": 649,
+        "hiddenAttr": false
+      },
+      {
+        "tag": "DIV",
+        "cls": "us-pane-scope u11-body",
+        "inlineStyle": "",
+        "display": "flex",
+        "visibility": "visible",
+        "height": 825,
+        "hiddenAttr": false
+      },
+      {
+        "tag": "DIV",
+        "cls": "us-page u11",
+        "inlineStyle": "",
+        "display": "flex",
+        "visibility": "visible",
+        "height": 926,
+        "hiddenAttr": false
+      },
+      {
+        "tag": "DIV",
+        "cls": "us-center-inner",
+        "inlineStyle": "",
+        "display": "flex",
+        "visibility": "visible",
+        "height": 926,
+        "hiddenAttr": false
+      }
+    ]
+  },
+  "token_guard_on_ledger": {
+    "cardCount": 8,
+    "renderedCount": 8,
+    "innerTextLens": [
+      402,
+      259,
+      188,
+      132,
+      112,
+      136,
+      171,
+      529
+    ],
+    "emptyInnerTextCards": 0,
+    "codexPhaseCount": 5,
+    "harness_clean_verdict": true
+  },
+  "unconfigured_guard_on_free": {
+    "visibleTextLen": 3437,
+    "serializedDomLen": 420596,
+    "coverage_ratio": 0.0082,
+    "per_name": [
+      {
+        "n": "Mistral",
+        "visible": false,
+        "dom": false
+      },
+      {
+        "n": "Fireworks",
+        "visible": false,
+        "dom": false
+      },
+      {
+        "n": "OpenRouter",
+        "visible": false,
+        "dom": false
+      },
+      {
+        "n": "Cohere",
+        "visible": false,
+        "dom": false
+      }
+    ],
+    "harness_absent_verdict": true,
+    "dom_level_verdict": true
+  }
+}

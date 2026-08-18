@@ -1,0 +1,47 @@
+{
+  "schema_id": "pm.settings_bakeoff.candidate_command_delta.v1",
+  "concept": "concept-06-directory-take-2",
+  "provisional": true,
+  "entries": [
+    {
+      "id": "settings.open",
+      "reuse": true,
+      "note": "Close/Reopen Settings maps to existing open/close settings command."
+    },
+    {
+      "id": "settings.search.focus",
+      "reuse": true,
+      "note": "Universal search field focus."
+    },
+    {
+      "id": "settings.navigate.back",
+      "alias": "settings.back",
+      "note": "One-level Back with named target."
+    },
+    {
+      "id": "settings.copy.preview",
+      "candidate": true,
+      "note": "Transactional copy preview; needs typed payload/result, permission/FileSafe, ObservableWork link."
+    },
+    {
+      "id": "settings.copy.apply",
+      "candidate": true,
+      "note": "Atomic apply with restore point + verify; rollback command candidate."
+    },
+    {
+      "id": "settings.rollback.last-copy",
+      "candidate": true,
+      "note": "Rollback to restore point created by copy."
+    },
+    {
+      "id": "provider.update.approve",
+      "candidate": true,
+      "note": "Ask-first update approval with receipt and rollback-on-verification-failure."
+    },
+    {
+      "id": "provider.cli.install",
+      "candidate": true,
+      "note": "Explicit official-source install for exact Host/Environment; determinate 3-step op."
+    }
+  ]
+}

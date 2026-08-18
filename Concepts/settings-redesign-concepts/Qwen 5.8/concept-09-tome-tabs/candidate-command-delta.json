@@ -1,0 +1,42 @@
+{
+  "schema_id": "pm.settings_bakeoff.candidate_command_delta.v2.concept",
+  "concept_id": "concept-09-tome-tabs",
+  "model": "Qwen 5.8",
+  "provisional": true,
+  "note": "Census against authority/base_packet/CANDIDATE_COMMAND_ID_REGISTER.json. No canonical IDs assigned here; every entry awaits owner adjudication with typed payload, identity, availability, revision, permission, persistence, ObservableWork link, cancellation/rollback, route effect, and GUI/NL/palette equivalence.",
+  "reuse": [
+    { "id": "cmd.settings.open", "concept_use": "shell Settings rail item and Close Settings return" },
+    { "id": "cmd.settings.navigate", "concept_use": "chapter tab and breadcrumb navigation (payload gains chapter/object level for tab geometry)" },
+    { "id": "cmd.settings.search.focus", "concept_use": "'/' key focuses topbar search; Home large field" },
+    { "id": "cmd.settings.search.select_result", "concept_use": "Enter/click on data-rid row; routes via immutable rid only" },
+    { "id": "cmd.settings.category.select", "concept_use": "edge chapter tab activation" },
+    { "id": "cmd.settings.subcategory.select", "concept_use": "chapter-local tab (subgroup) selection" },
+    { "id": "cmd.settings.setting.focus", "concept_use": "?row= deep link with scroll+focus+.pm2-locate" },
+    { "id": "cmd.settings.manager.open", "concept_use": "chapter manager list and search manager entries" },
+    { "id": "cmd.settings.value.set", "concept_use": "all row controls (inventory + fixture rows)" },
+    { "id": "cmd.settings.default.restore", "concept_use": "row Details reset action" },
+    { "id": "cmd.settings.copy_from_project.preview", "concept_use": "copy step 3 preview via PMCopy2.preview" },
+    { "id": "cmd.settings.copy_from_project.apply", "concept_use": "copy step 3 apply with restore point" },
+    { "id": "cmd.settings.import.rollback", "concept_use": "lifecycle rollback tab and copy rollback" },
+    { "id": "cmd.provider.connection.reconnect", "concept_use": "anthropic sign-in continuation notice" },
+    { "id": "cmd.provider.installation.install", "concept_use": "codex explicit official-source install" },
+    { "id": "cmd.provider.installation.update", "concept_use": "ask-first update review" },
+    { "id": "cmd.provider.installation.rollback", "concept_use": "rollback provider card state" },
+    { "id": "cmd.usage.refresh", "concept_use": "limits tab refresh semantics (usage-unavailable stays honest)" },
+    { "id": "cmd.notifications.sound.preview", "concept_use": "sounds preview policy (local only)" },
+    { "id": "cmd.notifications.destination.test", "concept_use": "test send (rate-limited, receipted)" },
+    { "id": "cmd.storage.backup.open", "concept_use": "backup manager entry" },
+    { "id": "cmd.artifact.manager.open", "concept_use": "artifacts browse action" }
+  ],
+  "alias": [
+    { "id": "cmd.settings.scope.inspect", "reason": "scope is provenance-only in this product; keep as read-only inspect, never editable scope" }
+  ],
+  "candidates": [
+    { "id": "cmd.settings.chapter.push", "reason": "narrow-tier push navigation (chapter -> roster -> object) is a distinct navigation semantic from wide-tier tab activation; needs route/focus equivalence", "owner": "Settings IA owner" },
+    { "id": "cmd.settings.scrollstate.restore", "reason": "stable page location per route (scroll memory) needs a typed view-state contract", "owner": "Settings IA owner" },
+    { "id": "cmd.settings.manager.tab.select", "reason": "manager-local tab selection (overview/accounts/... ) as addressable state (?sec=)", "owner": "Provider Lifecycle owner" }
+  ],
+  "retire_or_alias_from_register": [
+    { "id": "cmd.settings.bloom.open", "disposition": "retire; no bloom/chip geometry in this concept" }
+  ]
+}
