@@ -559,42 +559,34 @@
 
   function copyPreviewCommands(p) {
     if (!p) return "";
-    var blocks = [];
+    var counts = p.counts || {};
+    var trunc = p.truncated || {};
     function itemCmd(item, showChange) {
       var change = showChange
         ? esc(fmtCopyVal(item.from)) + " → " + esc(fmtCopyVal(item.to))
         : esc(fmtCopyVal(item.to != null ? item.to : item.from));
       var extra = item.reason ? " · " + esc(item.reason) : "";
       return '<div class="' + PX + '-cmd ' + PX + '-copy-cmd" data-kind="' + esc(item.kind || "") + '">' +
-        esc(item.label) + "<small>" + esc(item.path) + " · " + change + extra + "</small></div>";
+        esc(item.label || item.id) + "<small>" + esc(item.path || "") + " · " + change + extra + "</small></div>";
     }
-    function section(title, countKey, items, truncKey, showChange) {
-      if (!items || !items.length) return "";
-      var more = "";
-      if (truncKey && p.truncated && p.truncated[truncKey] > 0) {
-        more = '<p class="' + PX + '-copy-more ' + PX + '-muted">' + p.truncated[truncKey] + " more not shown</p>";
-      }
-      return '<div class="' + PX + '-group-label">' + esc(title) + " (" + (p.counts[countKey] || items.length) + ")</div>" +
-        items.map(function (item) { return itemCmd(item, showChange); }).join("") + more;
+    function noteCmd(item, kind) {
+      return '<div class="' + PX + '-cmd ' + PX + '-copy-cmd" data-kind="' + esc(kind) + '">' +
+        esc(item.label || item.id) + "<small>" + esc(item.reason || "") + "</small></div>";
     }
-    blocks.push(section("Replacements", "replacements", p.replacementItems, "replacements", true));
-    blocks.push(section("Additions", "additions", p.additionItems, "additions", true));
-    blocks.push(section("Unchanged", "unchanged", p.unchangedItems, "unchanged", false));
-    if (p.unavailable && p.unavailable.length) {
-      blocks.push('<div class="' + PX + '-group-label">Unavailable (' + p.counts.unavailable + ")</div>" +
-        p.unavailable.map(function (u) {
-          return '<div class="' + PX + '-cmd ' + PX + '-copy-cmd" data-kind="unavailable">' +
-            esc(u.label || u.id) + "<small>" + esc(u.reason || "") + "</small></div>";
-        }).join(""));
+    function section(title, kind, items, moreCount, rowFn) {
+      items = items || [];
+      var count = counts[kind] != null ? counts[kind] : items.length;
+      var body = items.length ? items.map(rowFn).join("") : '<p class="' + PX + '-muted">None</p>';
+      var more = moreCount > 0 ? '<p class="' + PX + '-copy-more ' + PX + '-muted">' + moreCount + " more not shown</p>" : "";
+      return '<div class="' + PX + '-copy-block" data-kind="' + esc(kind) + '">' +
+        '<div class="' + PX + '-group-label">' + esc(title) + " (" + count + ")</div>" +
+        body + more + "</div>";
     }
-    if (p.conflicts && p.conflicts.length) {
-      blocks.push('<div class="' + PX + '-group-label">Conflicts (' + p.counts.conflicts + ")</div>" +
-        p.conflicts.map(function (c) {
-          return '<div class="' + PX + '-cmd ' + PX + '-copy-cmd" data-kind="conflict">' +
-            esc(c.label || c.id) + "<small>" + esc(c.reason || "") + "</small></div>";
-        }).join(""));
-    }
-    return blocks.filter(Boolean).join("");
+    return section("Replacements", "replacements", p.replacementItems, trunc.replacements, function (item) { return itemCmd(item, true); }) +
+      section("Additions", "additions", p.additionItems, trunc.additions, function (item) { return itemCmd(item, true); }) +
+      section("Unchanged", "unchanged", p.unchangedItems, trunc.unchanged, function (item) { return itemCmd(item, false); }) +
+      section("Unavailable", "unavailable", p.unavailable, 0, function (item) { return noteCmd(item, "unavailable"); }) +
+      section("Conflicts", "conflicts", p.conflicts, 0, function (item) { return noteCmd(item, "conflict"); });
   }
 
   function copyReceiptFacts(r) {
@@ -646,7 +638,7 @@
     if (p) {
       prev = "<p>Additions " + p.counts.additions + " · Replacements " + p.counts.replacements + " · Unchanged " + p.counts.unchanged + " · Unavailable " + p.counts.unavailable + " · Conflicts " + p.counts.conflicts + "</p>" +
         '<p class="' + PX + '-muted">Account and credential references copy. Secrets never copy. Projects stay independent. This is a one-time copy, not a profile or inheritance link.</p>' +
-        '<p class="' + PX + '-muted">' + (p.simulated ? "Simulated · " : "") + esc(p.backend || "sessionStorage") + "</p>" +
+        '<p class="' + PX + '-muted">' + (p.simulated ? "Simulated · " : "") + esc(p.backend || "sessionStorage") + ". Copy, receipts, and rollback are not live ResourceGovernor.</p>" +
         copyPreviewCommands(p);
     }
     var actions = "";

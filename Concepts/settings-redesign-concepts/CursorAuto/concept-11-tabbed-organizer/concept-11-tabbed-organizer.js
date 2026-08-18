@@ -377,44 +377,36 @@
 
   function copyPreviewLists(p) {
     if (!p) return "";
-    var blocks = [];
+    var counts = p.counts || {};
+    var trunc = p.truncated || {};
     function itemRow(item, showChange) {
       var change = showChange
         ? '<span class="' + PX + '-copy-from">' + esc(fmtCopyVal(item.from)) + '</span><span class="' + PX + '-copy-arrow" aria-hidden="true">→</span><span class="' + PX + '-copy-to">' + esc(fmtCopyVal(item.to)) + "</span>"
         : '<span class="' + PX + '-copy-same">' + esc(fmtCopyVal(item.to != null ? item.to : item.from)) + "</span>";
-      return '<div class="' + PX + '-copy-row" data-kind="' + esc(item.kind) + '">' +
-        "<div><strong>" + esc(item.label) + '</strong><span class="' + PX + '-muted">' + esc(item.path) + "</span></div>" +
+      return '<div class="' + PX + '-copy-row" data-kind="' + esc(item.kind || "") + '">' +
+        "<div><strong>" + esc(item.label || item.id) + '</strong><span class="' + PX + '-muted">' + esc(item.path || "") + "</span></div>" +
         change +
         (item.reason ? '<span class="' + PX + '-muted">' + esc(item.reason) + "</span>" : "") +
         "</div>";
     }
-    function section(title, countKey, items, truncKey, showChange) {
-      if (!items || !items.length) return "";
-      var more = "";
-      if (truncKey && p.truncated && p.truncated[truncKey] > 0) {
-        more = '<p class="' + PX + '-copy-more ' + PX + '-muted">' + p.truncated[truncKey] + " more not shown</p>";
-      }
-      return '<section class="' + PX + '-copy-block" data-kind="' + esc(countKey) + '">' +
-        "<h3>" + esc(title) + ' <span class="' + PX + '-muted">(' + (p.counts[countKey] || items.length) + ")</span></h3>" +
-        '<div class="' + PX + '-copy-rows">' + items.map(function (item) { return itemRow(item, showChange); }).join("") + "</div>" +
-        more + "</section>";
+    function noteRow(item, kind) {
+      return '<div class="' + PX + '-copy-row" data-kind="' + esc(kind) + '"><div><strong>' + esc(item.label || item.id) + "</strong></div>" +
+        '<span class="' + PX + '-muted">' + esc(item.reason || "") + "</span></div>";
     }
-    blocks.push(section("Replacements", "replacements", p.replacementItems, "replacements", true));
-    blocks.push(section("Additions", "additions", p.additionItems, "additions", true));
-    blocks.push(section("Unchanged", "unchanged", p.unchangedItems, "unchanged", false));
-    if (p.unavailable && p.unavailable.length) {
-      blocks.push('<section class="' + PX + '-copy-block" data-kind="unavailable"><h3>Unavailable <span class="' + PX + '-muted">(' + p.counts.unavailable + ")</span></h3>" +
-        '<div class="' + PX + '-copy-rows">' + p.unavailable.map(function (u) {
-          return '<div class="' + PX + '-copy-row" data-kind="unavailable"><div><strong>' + esc(u.label || u.id) + "</strong></div>" + '<span class="' + PX + '-muted">' + esc(u.reason || "") + "</span></div>";
-        }).join("") + "</div></section>");
+    function block(title, kind, items, moreCount, rowFn) {
+      items = items || [];
+      var count = counts[kind] != null ? counts[kind] : items.length;
+      var body = items.length ? items.map(rowFn).join("") : '<p class="' + PX + '-muted">None</p>';
+      var more = moreCount > 0 ? '<p class="' + PX + '-copy-more ' + PX + '-muted">' + moreCount + " more not shown</p>" : "";
+      return '<section class="' + PX + '-copy-block" data-kind="' + esc(kind) + '">' +
+        "<h3>" + esc(title) + ' <span class="' + PX + '-muted">(' + count + ")</span></h3>" +
+        '<div class="' + PX + '-copy-rows">' + body + "</div>" + more + "</section>";
     }
-    if (p.conflicts && p.conflicts.length) {
-      blocks.push('<section class="' + PX + '-copy-block" data-kind="conflicts"><h3>Conflicts <span class="' + PX + '-muted">(' + p.counts.conflicts + ")</span></h3>" +
-        '<div class="' + PX + '-copy-rows">' + p.conflicts.map(function (c) {
-          return '<div class="' + PX + '-copy-row" data-kind="conflict"><div><strong>' + esc(c.label || c.id) + "</strong></div>" + '<span class="' + PX + '-muted">' + esc(c.reason || "") + "</span></div>";
-        }).join("") + "</div></section>");
-    }
-    return blocks.filter(Boolean).join("");
+    return block("Replacements", "replacements", p.replacementItems, trunc.replacements, function (item) { return itemRow(item, true); }) +
+      block("Additions", "additions", p.additionItems, trunc.additions, function (item) { return itemRow(item, true); }) +
+      block("Unchanged", "unchanged", p.unchangedItems, trunc.unchanged, function (item) { return itemRow(item, false); }) +
+      block("Unavailable", "unavailable", p.unavailable, 0, function (item) { return noteRow(item, "unavailable"); }) +
+      block("Conflicts", "conflicts", p.conflicts, 0, function (item) { return noteRow(item, "conflict"); });
   }
 
   function copyReceiptFacts(r) {
@@ -553,7 +545,7 @@
     if (p) {
       prev = "<p>Additions " + p.counts.additions + " · Replacements " + p.counts.replacements + " · Unchanged " + p.counts.unchanged + " · Unavailable " + p.counts.unavailable + " · Conflicts " + p.counts.conflicts + "</p>" +
         '<p class="' + PX + '-muted">Account and credential references copy. Secrets never copy. Projects stay independent. No ongoing sync.</p>' +
-        '<p class="' + PX + '-muted">' + (p.simulated ? "Simulated · " : "") + esc(p.backend || "sessionStorage") + "</p>" +
+        '<p class="' + PX + '-muted">' + (p.simulated ? "Simulated · " : "") + esc(p.backend || "sessionStorage") + ". Copy, receipts, and rollback are not live ResourceGovernor.</p>" +
         copyPreviewLists(p);
     }
     var actions = "";
