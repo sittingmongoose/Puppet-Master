@@ -1,0 +1,168 @@
+{
+  "schema_id": "pm.settings_bakeoff.search_route_matrix.v1.concept",
+  "concept_id": "concept-08-directory-take-3",
+  "model": "Qwen 5.8",
+  "note": "Actual destinations computed live from PMSearch2.search + the concept's destHash router; every row is routed by rid only. Browser-verified 2026-08-18 (headless Chromium): landing hash, data-route, pm2-locate, and Back-restores-query observed.",
+  "cases": [
+    {
+      "query": "rate limits",
+      "rid": "sr:object:claude-oauth.rate-limits",
+      "displayed_path": "AI Brains & Providers › Claude CLI (Max profile)",
+      "expected_dest": "#/mgr/providers/claude-oauth?sec=limits",
+      "actual_dest": "#/mgr/providers/claude-oauth?sec=limits",
+      "focus_highlight": "pm2-locate on #sec-limits; Usage & Limits card scrolled to center",
+      "pass": true,
+      "case": "duplicate label A"
+    },
+    {
+      "query": "rate limits",
+      "rid": "sr:object:openai-cli.rate-limits",
+      "displayed_path": "AI Brains & Providers › OpenAI CLI",
+      "expected_dest": "#/mgr/providers/openai-cli?sec=limits",
+      "actual_dest": "#/mgr/providers/openai-cli?sec=limits",
+      "focus_highlight": "pm2-locate on #sec-limits of the OpenAI CLI object view",
+      "pass": true,
+      "case": "duplicate label B (same label, different object)"
+    },
+    {
+      "query": "context window",
+      "rid": "sr:object:providers.context-window-setting",
+      "displayed_path": "AI Brains & Providers › Provider Manager",
+      "expected_dest": "#/mgr/providers?sec=models",
+      "actual_dest": "#/mgr/providers?sec=models",
+      "focus_highlight": "pm2-locate on #sec-models (provider roster default object view)",
+      "pass": true,
+      "case": "grouped duplicate label A (setting-ish object)"
+    },
+    {
+      "query": "context window",
+      "rid": "sr:object:openai-cli.gpt-5-2",
+      "displayed_path": "AI Brains & Providers › OpenAI CLI",
+      "expected_dest": "#/mgr/providers/openai-cli?sec=models&row=gpt-5-2",
+      "actual_dest": "#/mgr/providers/openai-cli?sec=models&row=gpt-5-2",
+      "focus_highlight": "pm2-locate on model row [data-row=gpt-5-2]",
+      "pass": true,
+      "case": "grouped duplicate label B (manager object row)"
+    },
+    {
+      "query": "spellechck",
+      "rid": "sr:manager:spellcheck",
+      "displayed_path": "General & Appearance › Spellcheck & Dictionaries",
+      "expected_dest": "#/mgr/spellcheck",
+      "actual_dest": "#/mgr/spellcheck",
+      "focus_highlight": "manager view; no row target (manager landing)",
+      "pass": true,
+      "case": "typo fuzzy"
+    },
+    {
+      "query": "settings sync",
+      "rid": "sr:unavailable:sync",
+      "displayed_path": "System & Advanced › Not available",
+      "expected_dest": "no route; in-place receipt with availability note",
+      "actual_dest": "hash unchanged (#/home); receipt toast shown",
+      "focus_highlight": "n/a — unavailable capability never fabricates a destination",
+      "pass": true,
+      "case": "unavailable capability"
+    },
+    {
+      "query": "back up now",
+      "rid": "sr:action:backup.now",
+      "displayed_path": "System & Advanced › Backup & Restore",
+      "expected_dest": "#/mgr/backup?row=backup.now",
+      "actual_dest": "#/mgr/backup?row=backup.now",
+      "focus_highlight": "pm2-locate on [data-row=backup.now] action row",
+      "pass": true,
+      "case": "action entry"
+    },
+    {
+      "query": "install codex",
+      "rid": "sr:setup:codex.install",
+      "displayed_path": "AI Brains & Providers › Codex CLI",
+      "expected_dest": "#/mgr/providers/codex?sec=install",
+      "actual_dest": "#/mgr/providers/codex?sec=install",
+      "focus_highlight": "pm2-locate on #sec-install; official-source install card visible",
+      "pass": true,
+      "case": "setup sequence deep link"
+    },
+    {
+      "query": "overall health",
+      "rid": "sr:diag:doctor.health",
+      "displayed_path": "System & Advanced › Doctor",
+      "expected_dest": "#/mgr/doctor?row=doctor.overall",
+      "actual_dest": "#/mgr/doctor?row=doctor.overall",
+      "focus_highlight": "pm2-locate on [data-row=doctor.overall]",
+      "pass": true,
+      "case": "diagnostic entry"
+    },
+    {
+      "query": "scrollback",
+      "rid": "sr:setting:code.terminal.scrollback-limit",
+      "displayed_path": "Code & Execution › Terminal & Shell",
+      "expected_dest": "#/cat/code/terminal?row=code.terminal.scrollback-limit",
+      "actual_dest": "#/cat/code/terminal?row=code.terminal.scrollback-limit",
+      "focus_highlight": "pm2-locate on exact inventory row; control focused",
+      "pass": true,
+      "case": "deep inventory row"
+    },
+    {
+      "query": "theme",
+      "rid": "sr:setting:general.visual.theme",
+      "displayed_path": "General & Appearance › Visual Style",
+      "expected_dest": "#/cat/general/visual?row=general.visual.theme",
+      "actual_dest": "#/cat/general/visual?row=general.visual.theme",
+      "focus_highlight": "pm2-locate on exact row",
+      "pass": true,
+      "case": "ordinary setting"
+    },
+    {
+      "query": "memory half-life",
+      "rid": "sr:manager:memory",
+      "displayed_path": "Memory & Context › Memory Manager",
+      "expected_dest": "#/mgr/memory",
+      "actual_dest": "#/mgr/memory",
+      "focus_highlight": "manager landing (grouped Manager type header)",
+      "pass": true,
+      "case": "manager entry"
+    },
+    {
+      "query": "crew",
+      "rid": "sr:manager:crew",
+      "displayed_path": "Branching & Collaboration › Crew Manager",
+      "expected_dest": "#/mgr/crew",
+      "actual_dest": "#/mgr/crew",
+      "focus_highlight": "roster manager landing; roster + defaults card",
+      "pass": true,
+      "case": "roster manager"
+    },
+    {
+      "query": "repair language",
+      "rid": "sr:setup:lsp.repair",
+      "displayed_path": "Code & Execution › Language Servers",
+      "expected_dest": "#/mgr/lsp?row=lsp.repair",
+      "actual_dest": "#/mgr/lsp?row=lsp.repair",
+      "focus_highlight": "pm2-locate on [data-row=lsp.repair]",
+      "pass": true,
+      "case": "setup row deep link"
+    },
+    {
+      "query": "underlying setup",
+      "rid": "sr:object:free-models.underlying",
+      "displayed_path": "AI Brains & Providers › Free Coding Models",
+      "expected_dest": "#/mgr/providers/free-models?sec=setup",
+      "actual_dest": "#/mgr/providers/free-models?sec=setup",
+      "focus_highlight": "pm2-locate on #sec-setup (underlying provider guidance)",
+      "pass": true,
+      "case": "runtime-demand deep link fixture"
+    },
+    {
+      "query": "rate limits",
+      "rid": "sr:object:claude-oauth.rate-limits",
+      "displayed_path": "AI Brains & Providers › Claude CLI (Max profile)",
+      "expected_dest": "Back from landing restores #/q/rate%20limits with input value and same 5 grouped results",
+      "actual_dest": "history.back() → #/q/rate%20limits; input 'rate limits'; dropdown open with 5 rows",
+      "focus_highlight": "search field refocused with query; results identical",
+      "pass": true,
+      "case": "back-restores-query"
+    }
+  ]
+}

@@ -41,12 +41,56 @@
 .u11ctx-segbar { display: flex; width: 100%; height: 8px; border-radius: var(--radius-pill); overflow: hidden;
   background: rgba(128,128,128,.10); background: color-mix(in srgb, var(--text-primary) 7%, transparent); }
 .u11ctx-segbar i { display: block; height: 100%; }
-.seg-a { background: var(--accent-blue); } .seg-b { background: var(--accent-magenta); }
-.seg-c { background: var(--accent-orange); } .seg-d { background: var(--accent-lime); }
-.seg-e { background: var(--tone-purple, var(--accent-magenta)); } .seg-f { background: var(--accent-cyan, var(--accent-blue)); }
-.seg-g { background: var(--accent-primary); } .seg-h { background: var(--tone-mute); }
+/* ---------- eight source families, eight distinct colours ----------
+   The eight slots used to be drawn from four theme accents plus three
+   aliases of them, so three families always shared a sibling's colour and
+   the ring read as five or six sources instead of eight. Each slot is now
+   its own token, defined for every theme, and the roll-up swatch is a
+   neutral outline that belongs to no family. Slint-portable: flat colours,
+   no blur/filter/:has/container queries. */
+/* no-theme default == friendly-dark, which is what the boot script falls back
+   to; declared as one rule so the literals stay inside a [data-theme] scope. */
+:root, [data-theme="friendly-dark"] {
+  --u11seg-1: #6FC6E8; --u11seg-2: #C3B1E4; --u11seg-3: #FFAD93; --u11seg-4: #6FDABC;
+  --u11seg-5: #F48FB1; --u11seg-6: #FFD97F; --u11seg-7: #B6CE6A; --u11seg-8: #9B96A4;
+}
+[data-theme="friendly-light"] {
+  --u11seg-1: #2F7FA6; --u11seg-2: #7B5BB5; --u11seg-3: #D65F35; --u11seg-4: #1E8A6E;
+  --u11seg-5: #B33A72; --u11seg-6: #8E6A12; --u11seg-7: #5A7A1B; --u11seg-8: #6E6774;
+}
+[data-theme="retro-dark"] {
+  --u11seg-1: #00B4FF; --u11seg-2: #B44BFF; --u11seg-3: #FF7F27; --u11seg-4: #00FF41;
+  --u11seg-5: #FF1493; --u11seg-6: #FFD400; --u11seg-7: #9CE800; --u11seg-8: #A0A0A0;
+}
+[data-theme="retro-light"] {
+  --u11seg-1: #0047AB; --u11seg-2: #7B1FA2; --u11seg-3: #C2521A; --u11seg-4: #0B7A2E;
+  --u11seg-5: #C2185B; --u11seg-6: #8A6D00; --u11seg-7: #4F7A00; --u11seg-8: #524F49;
+}
+[data-theme="basic-light"] {
+  --u11seg-1: #0056B3; --u11seg-2: #6A3AB2; --u11seg-3: #D2540A; --u11seg-4: #0B8043;
+  --u11seg-5: #C2185B; --u11seg-6: #8A6900; --u11seg-7: #4C7A16; --u11seg-8: #535964;
+}
+[data-theme="basic-dark"] {
+  --u11seg-1: #64B5F6; --u11seg-2: #B388FF; --u11seg-3: #FFA347; --u11seg-4: #3DD68C;
+  --u11seg-5: #FF69B4; --u11seg-6: #F2DE55; --u11seg-7: #A3D95C; --u11seg-8: #8F95A2;
+}
+[data-theme="glass-dark"] {
+  --u11seg-1: #93C9F2; --u11seg-2: #B79CFF; --u11seg-3: #F3B266; --u11seg-4: #8FD9A5;
+  --u11seg-5: #E58BC8; --u11seg-6: #F6DC8B; --u11seg-7: #BBD870; --u11seg-8: #A79FC0;
+}
+[data-theme="glass-light"] {
+  --u11seg-1: #2F6FA8; --u11seg-2: #6643C3; --u11seg-3: #B26A2A; --u11seg-4: #2F6F45;
+  --u11seg-5: #B4407F; --u11seg-6: #85650F; --u11seg-7: #56761C; --u11seg-8: #6E6483;
+}
+.seg-a { background: var(--u11seg-1); } .seg-b { background: var(--u11seg-2); }
+.seg-c { background: var(--u11seg-3); } .seg-d { background: var(--u11seg-4); }
+.seg-e { background: var(--u11seg-5); } .seg-f { background: var(--u11seg-6); }
+.seg-g { background: var(--u11seg-7); } .seg-h { background: var(--u11seg-8); }
+/* the roll-up entry is not a source family and never borrows a family colour */
+.seg-rest { background: transparent; border: 1px solid var(--text-muted); }
 .u11ctx-srcdot.seg-a, .u11ctx-srcdot.seg-b, .u11ctx-srcdot.seg-c, .u11ctx-srcdot.seg-d,
 .u11ctx-srcdot.seg-e, .u11ctx-srcdot.seg-f, .u11ctx-srcdot.seg-g, .u11ctx-srcdot.seg-h { width: 8px; height: 8px; border-radius: 2px; flex: none; }
+.u11ctx-segbase { font-size: 10px; color: var(--text-muted); line-height: 1.5; }
 .u11ctx-legend { display: flex; flex-wrap: wrap; gap: 4px 10px; }
 .u11ctx-leg { display: inline-flex; align-items: center; gap: 5px; font-size: 10.5px; color: var(--text-muted); white-space: nowrap; }
 .u11ctx-leg i { width: 7px; height: 7px; border-radius: 2px; flex: none; }
@@ -65,6 +109,10 @@
   overflow: hidden; text-overflow: ellipsis; }
 .u11ctx-morelim { margin-top: 2px; }
 .u11ctx-morelim-b { display: flex; flex-direction: column; gap: 5px; margin-top: 5px; }
+/* [hidden] must win over the display this rule sets, or the collapse is a
+   label change with no effect: every "more" block rendered permanently open,
+   including the tucked redacted Raw view. */
+.u11ctx-morelim-b[hidden] { display: none; }
 
 /* bottom action row — cache value + both actions on ONE line */
 .u11ctx-acts { display: flex; align-items: center; gap: 6px; padding-top: 8px; border-top: 1px solid var(--border-light); min-width: 0; flex-wrap: nowrap; }
@@ -148,6 +196,7 @@
 .u11ctx-srctok { font-family: var(--mono-font); color: var(--text-muted); font-variant-numeric: tabular-nums; }
 .u11ctx-more { margin-top: 4px; }
 .u11ctx-more-b { display: flex; flex-direction: column; gap: 3px; margin-top: 6px; }
+.u11ctx-more-b[hidden] { display: none; }
 
 /* timeline */
 .u11ctx-timeline { display: flex; flex-direction: column; gap: 8px; }

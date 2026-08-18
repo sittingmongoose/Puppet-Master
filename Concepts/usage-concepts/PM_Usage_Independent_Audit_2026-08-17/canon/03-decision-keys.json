@@ -1,0 +1,1654 @@
+{
+  "schema_id": "pm.usage_audit.decision_keys.v1",
+  "coverage_register_defect": "DECISION_COVERAGE.json (schema_id pm.packet_decision_coverage.v1, packet \"usage\") asserts exactly six fields per topic: id, title, requirement (prose), packets (the list of topic packets that carry the decision - all 107 include \"usage\"; runtime 84, chat 68, settings 60, prompt 43, onboarding 29), category, and status. status is the literal string \"fixed\" on all 107 topics with zero exceptions, zero \"open\"/\"partial\" values, and no per-topic history. What it therefore ASSERTS: that the packet author considers each decision adjudicated and settled in this cumulative packet, and which sibling packets must carry it. What it does NOT assert, and cannot be read as asserting: any evidence field, artifact path, file, DOM selector, field name, enum value, fixture id, test id, screenshot, commit, verification date, verifier, owner, or acceptance criterion; any statement that a Usage concept (QwenUsageConcept or any other) implements or demonstrates the decision; any distinction between \"the packet states the decision\" and \"an artifact satisfies the decision\"; any severity, priority, or hard-failure marking; and any per-surface scope (the packets field is a routing hint, not a claim that a Usage surface exists for the topic - e.g. PRM-010 DAP DebugSession and PROC-001/002 prompt structure list \"usage\" yet have no Usage-reportable surface). Consequence for audit: status:\"fixed\" is packet-side adjudication state, not coverage or implementation evidence; it can neither pass nor fail a concept, and it supplies no machine-checkable key - which is why this file exists. A conformance run must therefore treat every topic as UNVERIFIED until the search_keys below are resolved against concrete concept artifacts.",
+  "topics": [
+    {
+      "id": "VIS-001",
+      "title": "No AI-design tells",
+      "category": "visual",
+      "requirement_summary": "Usage surfaces must show no AI-design tells: no left color accent bars, no emoji glyphs, no cutoff/uneven text, no decorative filler, no pill controls implying the wrong affordance.",
+      "search_keys": [
+        "ABSENT: emoji codepoints in u11-prism.html / u11-widgets.js / u11-data.js (grep -P '[\\x{1F300}-\\x{1FAFF}\\x{2190}-\\x{27BF}\\x{FE0F}]')",
+        "inline <svg> icon source: u11-icons.js, _shared/usage-icons.js, USrender.ic(",
+        "ABSENT: 'border-left:' accent-bar rules on rows/cards in u11-widgets.css / u11-context.css / _shared/usage-widgets.css",
+        "ABSENT: 'border-radius: 999px' / '.pill' on non-interactive status labels (pill shape reserved for real controls)",
+        "text-overflow: ellipsis + title= on truncatable label cells (no clipped labels)",
+        "reports/visual-interaction-test-report.json: check ids covering clipping / alignment / dead-control"
+      ],
+      "surface": "u11-prism.html",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "VIS-002",
+      "title": "Eight themes",
+      "category": "visual",
+      "requirement_summary": "Friendly, Glass, Retro, Basic in light and dark (eight themes) with identical information architecture and semantics.",
+      "search_keys": [
+        "data-theme=\"friendly|glass|retro|basic\" (and light/dark pairing attribute) in u11-prism.html",
+        "_shared/themes.css: eight [data-theme=...] / .light/.dark token blocks",
+        "verify-shots/theme-{friendly,glass,retro,basic}-{light,dark}-1700.png (8 files)",
+        "same widget/tab id set rendered under every theme (data-tab values unchanged per theme)",
+        "reports/visual-interaction-test-report.json: per-theme result rows x8"
+      ],
+      "surface": "u11-prism.html",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "VIS-003",
+      "title": "Film-level motion",
+      "category": "visual",
+      "requirement_summary": "Motion clarifies spatial continuity and state change; no clipping, uncontrolled jumps, indefinite pulsing, or layout before content is stable; reduced motion has a complete static/opacity alternative.",
+      "search_keys": [
+        "@media (prefers-reduced-motion: reduce) blocks in u11-widgets.css / u11-context.css / _shared/*.css",
+        "data-reduced-motion attribute handling in u11-prism.html / u11-widgets.js",
+        "named duration/easing tokens (--mo-*, transition: ... cubic-bezier) rather than ad-hoc inline durations",
+        "ABSENT: 'animation:' rules with 'infinite' on status/progress elements",
+        "ABSENT: layout-affecting animation of width/height/top/left on widget move-resize (transform-only)",
+        "reports/visual-interaction-test-report.json: motion / no-flash / settle checks"
+      ],
+      "surface": "u11-prism.html",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "VIS-004",
+      "title": "Slint 1.17.1 portability",
+      "category": "visual",
+      "requirement_summary": "Slint 1.17.1 portability: no dependence on browser-only filters, arbitrary DOM measurement, unbounded nested scrolling, or nonportable physics; long lists map to virtualized/segmented Slint models.",
+      "search_keys": [
+        "ABSENT: backdrop-filter / filter: blur() without a documented Slint fallback",
+        "ABSENT: getBoundingClientRect / offsetWidth-driven layout decisions in u11-widgets.js, u11-context.js",
+        "ABSENT: overflow:auto nested inside overflow:auto (unbounded nested scroll)",
+        "research/slint-portability-audit.md, research/slint-1.17.1-verification.md, research/glass-slint-mapping.md, research/motion-to-slint-map.md",
+        "ledger/list rendering capped or segmented (row cap / 'show more' / paging in renderLedger)"
+      ],
+      "surface": "reports/*",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "VIS-005",
+      "title": "Deterministic demo triggers",
+      "category": "visual",
+      "requirement_summary": "Every major state has a deterministic trigger/reset path for automated visual and interaction testing without production toolbar clutter.",
+      "search_keys": [
+        "fixture/scenario id registry in u11-data.js (e.g. FIXTURES / scenarios / demo ids)",
+        "trigger path that is not production chrome: query param (?fixture=/?state=), data-goto, or window.U11.setFixture(",
+        "reset path back to default state (reset/clear/restore fixture)",
+        "reports/demo-fixture-report.json: fixture id -> trigger -> observed state rows",
+        "verification/u11/redesign/cdp-shots.mjs: scripted state list"
+      ],
+      "surface": "reports/*",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PROV-001",
+      "title": "Canonical provider hierarchy",
+      "category": "providers",
+      "requirement_summary": "Canonical hierarchy Provider family -> Account/Profile -> Connection -> Product/Entitlement -> Models/Capabilities, with provider installation modeled as a separate host/environment resource.",
+      "search_keys": [
+        "u11-data.js: families[], accounts[], connections[], products[]/productIds, models[] with parent keys (familyId/accountId/connectionId/productId)",
+        "installation modeled apart from account: hosts[], environments[], installations/installationId",
+        "rendered labels 'Provider', 'Account', 'Connection', 'Product'/'Plan' in renderAccounts / accountRowHTML",
+        "ABSENT: model rows attached directly to a provider family with no account/connection key"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PROV-009",
+      "title": "Post-consent lifecycle management",
+      "category": "providers",
+      "requirement_summary": "After explicit acquisition PM may manage the exact installation (update, repair, verify, rollback, profiles, generations) under policy; Usage records that lifecycle as maintenance, never as first acquisition.",
+      "search_keys": [
+        "u11-data.js maintenance kind: 'cli_update' records with repair / rollback / verify stages",
+        "installationId + host/environment on each maintenance record",
+        "post-consent wording ('after setup', 'approved installation', 'policy update')",
+        "ABSENT: 'bundled' / 'pre-seeded' / 'preinstalled' / 'Included with this Server' applied to a provider CLI",
+        "ABSENT: silent/demand acquisition wording ('auto-installed', 'installed on demand') for a provider CLI"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PROV-010",
+      "title": "Transactional provider updates",
+      "category": "providers",
+      "requirement_summary": "Provider updates are transactional: discover/identify -> preflight -> wait for idle/authority -> stage -> verify exact executable/auth/models/adapter -> activate or rollback; exit code and version string alone are insufficient.",
+      "search_keys": [
+        "u11-data.js cli_update stage fields: preflight, waitForIdle/idleWait, stage/download, verify, activate, rollback",
+        "verification evidence beyond version: executable path/hash, auth check, model list check, adapterHandshake",
+        "targetVersion + fromVersion + outcome fields",
+        "affectedConnections list on the update record",
+        "ABSENT: an update record whose only verification field is exitCode or version"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PROV-012",
+      "title": "Failure-loop suppression",
+      "category": "providers",
+      "requirement_summary": "Repeated provider-update failures are fingerprinted, identical retry/toast loops suppressed, and the user is offered Retry, Repair, Manual, Snooze, Stop checking, Keep current, Pin, logs, or installation selection.",
+      "search_keys": [
+        "(would be) failure fingerprint + suppressed-retry counter + the Retry/Repair/Snooze/Stop/Keep/Pin action set",
+        "Usage-visible remnant only: failureClass on cli_update records (already keyed by PROV-010 and USE-015)"
+      ],
+      "surface": "out-of-scope",
+      "decidable": false,
+      "why_not_decidable": "Retry-loop fingerprinting and the remediation action set are provider-manager/runtime behaviours with no Usage reporting surface; a Usage concept can only carry the failure class of an update record. Owner that would evidence it: the Settings provider manager concept plus Plans/CLI_Bridged_Providers.md (provider installation lifecycle)."
+    },
+    {
+      "id": "PROV-013",
+      "title": "Installation and authentication are separate",
+      "category": "providers",
+      "requirement_summary": "Installed, executable healthy, auth known, authenticated, account identity, product/plan, models, adapter handshake, generation readiness, and Usage availability are tracked independently.",
+      "search_keys": [
+        "u11-data.js independent boolean/enum fields: installed, executableHealthy, authKnown, authenticated, accountIdentity, product/plan, models, adapterHandshake, usageAvailable/telemetryAvailable",
+        "kind: 'setup_required' / reason: 'setup_required' distinct from an auth failure",
+        "a row that is authenticated:true with usageAvailable:false (independence proof)",
+        "ABSENT: a single collapsed 'connected' boolean standing in for install+auth+telemetry"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PROV-014",
+      "title": "Claude and Antigravity auth boundary",
+      "category": "providers",
+      "requirement_summary": "Claude CLI and Antigravity CLI OAuth are CLI-owned profile routes; PM may isolate profiles and launch native login but must not present PM-direct OAuth. Direct API connections stay separate.",
+      "search_keys": [
+        "u11-data.js authOwner/ownership value 'cli_owned' (or 'CLI-owned' label) on claude / antigravity connections",
+        "separate direct-API connection entries for Claude API (settlement api_billed) distinct from the CLI route",
+        "ABSENT: 'PM-direct OAuth' / oauthOwner:'pm_direct' on any claude or antigravity connection",
+        "profile isolation field (profile/isolatedHome) on the CLI-owned route"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PROV-015",
+      "title": "PM-direct OAuth allowlist",
+      "category": "providers",
+      "requirement_summary": "PM-direct OAuth is limited to OpenAI/Codex, GitHub, and GitHub Copilot; adapters must truthfully name the owning product/billing route.",
+      "search_keys": [
+        "u11-data.js oauthOwner/authOwner: 'pm_direct' present only on openai/codex, github, copilot connections",
+        "billingRoute / settlement owner named per connection (e.g. copilot subscription vs openai api)",
+        "ABSENT: 'pm_direct' on any provider outside the allowlist",
+        "product/plan string that names the owning product rather than the provider family alone"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PROV-016",
+      "title": "Multi-account isolation strategies",
+      "category": "providers",
+      "requirement_summary": "Support native profiles, isolated homes, auth-only profiles, credential pools, PM-managed connections, and single-active-login limits; never fake concurrency a CLI cannot provide.",
+      "search_keys": [
+        "u11-data.js isolation/strategy enum: native_profile, isolated_home, auth_only, credential_pool, pm_managed, single_active_login",
+        "limitation surfaced on the account row (e.g. 'one active login', serialized switching note)",
+        "switch record (kind: 'switch') showing sequential, not concurrent, use for single_active_login families",
+        "ABSENT: two simultaneous in-flight attempts on a connection marked single_active_login"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PROV-017",
+      "title": "Requested/effective route",
+      "category": "providers",
+      "requirement_summary": "Every request retains requested provider/account/connection/model and effective provider/account/connection/model plus reason, product/plan, and settlement route.",
+      "search_keys": [
+        "u11-data.js paired fields: requestedAccount/effectiveAccount, requestedConnection/effectiveConnection, requestedModel/effectiveModel, requestedFamily/effectiveFamily",
+        "reason string on every divergence (e.g. 'You chose Work OpenAI, but Puppet Master used Personal OpenAI ...')",
+        "settlement field co-located with the effective route",
+        "u11-widgets.js attemptRouteLabel / vsChipIf rendering the requested-vs-effective difference",
+        "ABSENT: an attempt with an effective route but no requested route recorded"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PROV-018",
+      "title": "OpenCode server distinction",
+      "category": "providers",
+      "requirement_summary": "Distinguish PM-managed vs external OpenCode servers, server health, auth realm, catalog refresh, reflected MCP/skills, and effective route.",
+      "search_keys": [
+        "u11-data.js opencode entries with managed:'pm_managed'|'external' (or serverOwner) flag",
+        "serverHealth / status field on the OpenCode server record",
+        "authRealm field",
+        "reflected MCP / skills counts or list attributable to the OpenCode server",
+        "effective route naming the OpenCode server as connection, not as a provider family"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PROV-019",
+      "title": "Free Models wrapper",
+      "category": "providers",
+      "requirement_summary": "Free Models is a catalog/routing grouping; setup, quotas, switching, Usage and history stay keyed to the underlying provider/account/model.",
+      "search_keys": [
+        "u11-data.js freeModels[] rows each carrying underlyingProvider/underlyingFamily, underlyingAccount, underlyingModel",
+        "selectedThroughFreeModels / via:'free_models' marker on the attempt",
+        "free/cooldown/removed state per row",
+        "ABSENT: a Free Models quota, allowance, or balance ledger of its own (no freeModels.included/remaining budget)",
+        "ABSENT: 'Free Models' as a provider family in families[]"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PROV-020",
+      "title": "Continuous catalogs",
+      "category": "providers",
+      "requirement_summary": "Models.dev and Free Coding Models are continuously refreshed inputs with source version, check/import/activation times, validation, last-known-good fallback, change history, and no arbitrary credential/runtime import.",
+      "search_keys": [
+        "u11-data.js source: 'models_dev' and source: 'free_coding_models'",
+        "sourceVersion / catalogVersion plus checkedAt, importedAt, activatedAt timestamps",
+        "validation result + lastKnownGood fallback field",
+        "catalogEvents[] change history entries",
+        "ABSENT: credentials, endpoints, or runtime settings imported from the catalog record"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PROV-022",
+      "title": "Capability evidence layers",
+      "category": "providers",
+      "requirement_summary": "Merge catalog declaration, provider discovery, authenticated-account discovery, safe probe, observed use, and admin/user override into capability states: supported, unsupported, likely, unverified, temporarily unavailable, PM transformed, alternate route.",
+      "search_keys": [
+        "u11-data.js capability state enum: supported, unsupported, likely, unverified, temporarily_unavailable, pm_transformed, alternate_route",
+        "evidence-layer field naming which layer produced the state: catalog, provider_discovery, account_discovery, probe, observed, override",
+        "capability record showing two layers disagreeing with the merge result retained",
+        "ABSENT: a capability shown as supported with no evidence layer recorded"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PROV-025",
+      "title": "Search provider onboarding",
+      "category": "providers",
+      "requirement_summary": "First-run and Settings share one search-provider service; Automatic picks the first ready route by priority and separates API, subscription-backed, browser-backed, and credential-free routes.",
+      "search_keys": [
+        "(would be) one shared search-provider service identity plus Automatic priority ordering across first-run and Settings",
+        "Usage-visible remnant only: the class of a search route that already ran (keyed under MGR-015)"
+      ],
+      "surface": "out-of-scope",
+      "decidable": false,
+      "why_not_decidable": "Onboarding/Settings share of a single search-provider service and the Automatic priority selection are configuration decisions with no measured Usage surface; Usage can only report which search route ran. Owner that would evidence it: the Settings Web/Search/Fetch manager concept plus the Onboarding concept (MGR-015 register topic)."
+    },
+    {
+      "id": "PROV-026",
+      "title": "Provider plan clarity",
+      "category": "providers",
+      "requirement_summary": "Separate reference API price, active plan/product, included usage, extra balance/packs, actual settlement, connection used, freshness, and confidence; never imply a plan-included call was billed at catalog API price.",
+      "search_keys": [
+        "u11-data.js distinct fields: referenceApiPriceMicro/catalogPrice, product/plan, planIncludedMicro, extraUsage, packs/purchased_pack, apiBilledMicro",
+        "settlement enum: included, extra_balance, usage_pack, api_billed, free_allowance, no_charge_observed, unknown",
+        "sourceClass + confidence/freshness alongside every money value",
+        "user-facing string 'Included with your plan' for included settlement",
+        "ABSENT: reference API price rendered as the cost of an attempt whose settlement is 'included'"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PROV-027",
+      "title": "Usage telemetry is optional readiness",
+      "category": "providers",
+      "requirement_summary": "A provider can be ready while usage telemetry is unavailable; prefer official APIs/CLI/headers/receipts, and cookie telemetry stays optional, experimental, scoped, revocable, never required.",
+      "search_keys": [
+        "u11-data.js row with ready/available provider state and usageAvailable/telemetryAvailable false",
+        "user-facing string 'Provider ready' + 'Usage details unavailable'",
+        "telemetry source ranking fields (official api / cli / header / receipt) with cookie source flagged optional/experimental",
+        "ABSENT: provider readiness computed from telemetry availability (readiness gated on usage data)",
+        "ABSENT: cookie telemetry as the only source for a displayed allowance without an experimental/optional marker"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "CTX-003",
+      "title": "Explainable Context Lens",
+      "category": "context",
+      "requirement_summary": "Context Lens shows included and omitted sources with reasons, sizes, provenance, cache state, and removable retrieved excerpts, without exposing raw secrets or full system prompts.",
+      "search_keys": [
+        "u11-context.js / _shared/usage-context.js: admitted (included) source list AND omitted source list",
+        "omission reason per omitted source",
+        "size (tokens/bytes) + provenance/sourceClass per source",
+        "cache state shown per source or per prefix segment",
+        "remove/exclude control on retrieved excerpts (data-* handler in u11-context.js)",
+        "ABSENT: verbatim system prompt / credential text rendered in the lens"
+      ],
+      "surface": "u11-prism.html",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "CTX-004",
+      "title": "Compact Now",
+      "category": "context",
+      "requirement_summary": "Compact Now is an explicit context operation that preserves canonical history and emits a receipt; it is not history deletion nor a Usage rewrite.",
+      "search_keys": [
+        "'Compact Now' control in u11-context.js / u11-prism.html",
+        "compaction receipt record (receiptId / eventId + before/after tokens + gain)",
+        "canonical history preserved marker (history unchanged / restore point / kind: 'compaction' event appended)",
+        "ABSENT: 'delete'/'remove history' wording on the Compact Now path",
+        "ABSENT: mutation of prior usage attempt totals by a compaction event"
+      ],
+      "surface": "u11-prism.html",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "CTX-016",
+      "title": "Instruction-load metrics",
+      "category": "context",
+      "requirement_summary": "Instruction load is measured as objective count, obligation/constraint families, output contracts, semantic domains, ambiguity/adjudication, selected tools, sources, instruction tokens, schema tokens, and non-task ratio, not total tokens alone.",
+      "search_keys": [
+        "u11-data.js context/instruction metric fields: objectives/objectiveCount, obligations/constraintFamilies, outputContracts, semanticDomains, ambiguity/adjudication",
+        "selectedTools count, sources count",
+        "instructionTokens and schemaTokens as separate values",
+        "nonTaskRatio / non-task share",
+        "ABSENT: context widget whose only load metric is total tokens or percent of window"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "CTX-018",
+      "title": "Compaction mechanics",
+      "category": "context",
+      "requirement_summary": "Compaction mechanics: bounded summarizer input, head/tail retention, actionable-user-turn tail, transaction/lease commit fence, redaction, minimum gain, ghost-skill markers, soft defer, provider-aware optional micro-compaction.",
+      "search_keys": [
+        "u11-data.js compaction op fields: summarizerInputBound/inputCap, headRetained/tailRetained, actionableTail",
+        "minimum-gain / no_gain outcome (kind or reason 'no_gain')",
+        "micro_compaction operation kind, marked optional/provider-aware",
+        "commit fence / lease / transaction guard field on the compaction record",
+        "redaction flag and ghost-skill marker on retained summary",
+        "soft defer / deferred compaction state"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "CTX-019",
+      "title": "Stable prefix and append-only provider context",
+      "category": "context",
+      "requirement_summary": "Fingerprint the stable system/Persona/rules/tool prefix, keep normalized append-only message digests, detect the longest unchanged prefix, and resend only from divergence where supported.",
+      "search_keys": [
+        "u11-data.js stable prefix identity field: stablePrefixId / prefixFingerprint / prefixHash",
+        "contextEpoch / ContextEpoch field",
+        "divergence index / longestUnchangedPrefix / resendFrom field",
+        "append-only message digest list",
+        "cache invalidation reason naming what broke the prefix (persona, rules, tools, mcp, model)"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "CTX-020",
+      "title": "Time-Traveling conditional rules",
+      "category": "context",
+      "requirement_summary": "Dormant scoped rules may trigger on streaming text/tool/path/AST conditions and inject one bounded correction/steer; deterministic safety stays outside the engine.",
+      "search_keys": [
+        "(would be) a conditional-rule trigger record with condition type, one bounded steer injection, retry bound",
+        "Usage-visible remnant only: an extra attempt plus a cache-invalidation reason naming a rules change (keyed by USE-002 / USE-008 / CTX-019)"
+      ],
+      "surface": "out-of-scope",
+      "decidable": false,
+      "why_not_decidable": "The conditional-rule engine has no Usage purpose or event of its own in the packet taxonomy; a Usage report can only show the resulting attempt and cache invalidation. Owner that would evidence it: Plans/agent-rules-context.md with the Assistant Chat and Prompt-Pipeline concepts."
+    },
+    {
+      "id": "AGT-001",
+      "title": "Shared Goal Runtime",
+      "category": "agents",
+      "requirement_summary": "Visible Goal Mode, internal PRD/Planning goals, and Orchestrator GoalRuns share one durable objective, phase, cursor, child lineage, checkpoints, evidence, replan, and certification.",
+      "search_keys": [
+        "u11-data.js kinds: 'goal', 'goal_phase', 'planning_run', 'planning_topic' sharing one id namespace",
+        "goalId + phase + cursor fields on child attempts",
+        "checkpoint / evidence / replan / certification fields on the goal record",
+        "one lineage shape used for visible Goal Mode and internal planning runs (same field names)",
+        "ABSENT: a separate parallel goal id scheme for planning vs assistant goals"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "AGT-002",
+      "title": "Goal survives context and client loss",
+      "category": "agents",
+      "requirement_summary": "Compaction, thread death, server restart, client disconnect, and UI close never erase Goal state or stop approved host-owned work.",
+      "search_keys": [
+        "u11-data.js kind: 'server_continuity' (server work continuing while client offline)",
+        "goal record surviving events: clientDisconnected / serverRestart / threadClosed markers with goal still running",
+        "host-owned work attribution (executionHost) on the continuing work rows",
+        "reports/demo-fixture-report.json fixture 'server work continues while client offline'",
+        "ABSENT: goal rows whose totals reset or disappear after an offline/reconnect event"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "AGT-003",
+      "title": "Goal route is frozen",
+      "category": "agents",
+      "requirement_summary": "Changing parent-thread model/Persona/access does not silently retarget an active Goal; explicit update creates a revisioned replan or applies at a validated safe boundary.",
+      "search_keys": [
+        "u11-data.js frozen-route evidence on goal children: routeSnapshot / routeFrozen / frozenAt",
+        "goal revision field (revision / replanId) when the route is explicitly changed",
+        "boundary marker (appliedAtBoundary / safe boundary phase) on the retarget event",
+        "ABSENT: goal children whose effectiveModel equals the current thread model while the goal snapshot says otherwise"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "AGT-006",
+      "title": "Sustainable concurrency",
+      "category": "agents",
+      "requirement_summary": "Distinguish hard max, configured max, provider/account max, current effective max, and predicted sustainable max; prefer complete smaller waves over starved children.",
+      "search_keys": [
+        "u11-data.js capacity fields: hardMax, configuredMax, providerMax/accountMax, effectiveMax, predictedSustainable",
+        "requestedWorkers, admitted, queued",
+        "reduction reason string explaining effectiveMax < requested",
+        "u11-widgets.js renderCapacity showing the five distinct maxima",
+        "ABSENT: a single 'maxConcurrency' value standing in for all five"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "AGT-007",
+      "title": "Required specialists remain required",
+      "category": "agents",
+      "requirement_summary": "Capacity may serialize six independent specialists into smaller waves; it may not silently replace them with one broad agent or omit them.",
+      "search_keys": [
+        "u11-data.js wave plan with 6 required roles across 3 waves of 2 (waves[], members per wave)",
+        "roleRequired / required:true on each specialist role",
+        "wave index + serialized-not-dropped evidence (all six role ids appear across waves)",
+        "reports/demo-fixture-report.json fixture 'six required specialists run in three two-agent waves'",
+        "ABSENT: a substitution/merge marker replacing required roles with one broad agent"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "AGT-008",
+      "title": "Reserve capacity",
+      "category": "agents",
+      "requirement_summary": "Forecast and reserve capacity for user discussion, parent synthesis, testing, final audit, likely repair, and re-audit.",
+      "search_keys": [
+        "u11-data.js reserve fields: reserved / reservedSynthesis / reservedTesting / reservedRepair / reservedAudit",
+        "reserve subtracted from the sustainable/effective max (arithmetic visible in the record)",
+        "quality: 'reserved capacity' or equivalent label in u11-widgets.js renderCapacity",
+        "forecast record naming reserved portions separately from projected work"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "AGT-009",
+      "title": "Any agent may request another",
+      "category": "agents",
+      "requirement_summary": "Any running agent may request an eligible agent from any available provider; Orchestrator admits and launches it under route, budget, permission, nesting, and resource ceilings.",
+      "search_keys": [
+        "u11-data.js parentEventId / parent_event_id chain on child agent attempts",
+        "requestedBy / requestingAgent field on a child run",
+        "admission record with ceiling fields: budget, permission, nestingDepth/maxDepth, resource",
+        "child run whose provider family differs from the parent (cross-provider request)",
+        "ABSENT: child agent rows with no parent lineage"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "AGT-010",
+      "title": "Thread search/read/request/spawn",
+      "category": "threads",
+      "requirement_summary": "Assistant agents can list/search/read project threads, send typed requests, await replies, resume inactive threads, and spawn related threads while preserving lineage without copying transcripts.",
+      "search_keys": [
+        "u11-data.js kind: 'thread_request'",
+        "sourceThreadId + targetThreadId fields",
+        "resume / spawn marker on inactive-thread work",
+        "selected refs list (ref ids) rather than embedded transcript text",
+        "ABSENT: full transcript text copied into the request record"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "AGT-011",
+      "title": "Thread request durability",
+      "category": "threads",
+      "requirement_summary": "Cross-thread requests carry source/target thread, sender, bounded task, selected refs, scope, budget, status, result refs, timestamps, and cycle/fanout limits.",
+      "search_keys": [
+        "u11-data.js thread_request fields: sender, task/bounded task, refs/selectedRefs, scope, budget, status, resultRefs",
+        "createdAt/updatedAt/completedAt timestamps",
+        "cycle or fanout limit field (maxFanout / cycleGuard / depth)",
+        "ABSENT: a thread_request without budget or status"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "AGT-012",
+      "title": "Branch/rewind/restore",
+      "category": "threads",
+      "requirement_summary": "Branch from here, model/Persona branch, rewind, immutable restore points, and sibling re-answering are supported without mutating the source thread.",
+      "search_keys": [
+        "u11-data.js kinds: 'branch', 'model_branch'",
+        "restore point / rewind record with immutability marker",
+        "cache-reset / replay consequence attached to the branch event",
+        "source thread totals unchanged after branch (sourceThreadId retained, no mutation field)",
+        "reports/demo-fixture-report.json fixture 'model change causes replay/cache reset'"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "AGT-013",
+      "title": "Cross-project grants",
+      "category": "threads",
+      "requirement_summary": "Cross-project access is off by default; grants distinguish read/write and Once/Thread/Goal/persistent project pair, and one-time grants never silently persist.",
+      "search_keys": [
+        "u11-data.js kind: 'cross_project_child' with sourceProject and destination project",
+        "grantScope enum: once, thread, goal, persistent",
+        "readWrite / boundary field (read vs write)",
+        "receipt id on the cross-project event",
+        "ABSENT: a 'once' grant reused by a later event (same grantId on two events)"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "AGT-014",
+      "title": "Operational Awareness Service",
+      "category": "agents",
+      "requirement_summary": "Agents get a compact task-relevant operational projection plus on-demand detail for work, worktrees, ports, processes, services, tests, debug, browsers, devices, logs, backups, snapshots, and Usage.",
+      "search_keys": [
+        "u11-widgets.js renderOperations covering worktrees, ports, processes/services, tests, debug, browsers, devices, logs, backups, snapshots",
+        "u11-data.js operational{} / localOps{} projection object feeding that widget",
+        "compact summary + expandable detail (moreBlock / data-more-toggle) rather than a full dump",
+        "Usage itself present in the projection (usage/allowance entry)",
+        "verify-shots/operations-widget.png"
+      ],
+      "surface": "u11-widgets.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "AGT-015",
+      "title": "Worktree mediation",
+      "category": "agents",
+      "requirement_summary": "Agents may request worktree provisioning; Worktree Manager performs it under policy and records ownership, lease, base, cleanup, and preserved patches after failed integration.",
+      "search_keys": [
+        "u11-data.js worktree records with owner, leaseId/lease state, base branch/commit, cleanup state",
+        "requestedBy agent on the worktree provisioning record",
+        "preserved patch / retained diff marker on a failed integration",
+        "ABSENT: worktree rows with no owner or lease"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "AGT-016",
+      "title": "Port/resource leases",
+      "category": "agents",
+      "requirement_summary": "Ports, browser pages, test runners, devices, worktrees, file scopes, and provider permits are typed leases with owner, host/environment, state, TTL/heartbeat, and cleanup.",
+      "search_keys": [
+        "u11-data.js lease type values: port, browser_page, test_runner, device, worktree, file_scope, provider_permit",
+        "lease fields: owner, host, environment, state, ttl/expiresAt, heartbeatAt, cleanup",
+        "conflict record referencing a held lease (e.g. 'Port conflict' admission reason)",
+        "ABSENT: an untyped generic 'resource' lock with no owner/TTL"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "AGT-017",
+      "title": "Testing and debug awareness",
+      "category": "agents",
+      "requirement_summary": "Agents can inspect and, under policy, use browser, LSP, DAP, eval, simulators/emulators/devices, logs, traces, screenshots, console, and network evidence.",
+      "search_keys": [
+        "u11-data.js toolOps/localOps entries for browser, lsp, dap, eval, device/simulator, logs, traces, screenshot, console, network",
+        "policy/permission field on each such op (allowed/blocked state)",
+        "evidence artifact ids produced by those ops",
+        "ABSENT: model tokens attributed to a pure LSP/DAP/eval inspection op"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "AGT-018",
+      "title": "Crew as execution strategy",
+      "category": "agents",
+      "requirement_summary": "Crew is an Orchestrator-owned composition of child runs with explicit board, roles, routes, budgets, worktrees, and reducer, not a Persona, mode, provider, permission grant, or hidden memory.",
+      "search_keys": [
+        "u11-data.js kinds: 'crew', 'crew_step'/crew_member with board, roles, routes, budgets, worktrees, reducer fields",
+        "crew children attributed as ordinary attempts with purpose: 'crew_member'",
+        "reducer/synthesis step recorded as its own attempt",
+        "ABSENT: crew presented as a persona, mode, provider family, or permission grant",
+        "ABSENT: crew-private memory store field"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "AGT-019",
+      "title": "Adaptive Crew composition",
+      "category": "agents",
+      "requirement_summary": "Crew member count and waves adapt to provider, Usage, host resources, and isolation while preserving required roles and independent evidence.",
+      "search_keys": [
+        "u11-data.js crew sizing fields: memberRange/min-max, waves[], adaptedReason (provider|usage|host|isolation)",
+        "required role ids preserved across the adapted plan",
+        "independent evidence/artifact id per crew member",
+        "ABSENT: adaptation that drops a required role id"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "AGT-020",
+      "title": "Back Seat Driver",
+      "category": "agents",
+      "requirement_summary": "BSD is a bounded delta-only advisor with Off, Auto (default), and On; Auto is risk/phase-triggered, On may evaluate every turn, and it cannot widen authority or block primary work.",
+      "search_keys": [
+        "u11-data.js bsdEvents with requestedState: off|auto|on and default auto",
+        "triggerReason (risk/phase) on Auto invocations",
+        "delta-only marker (delta/diff scope) on advice",
+        "unavailable/timeout event where the primary turn still completed",
+        "ABSENT: BSD event granting or widening permissions/authority"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "AGT-021",
+      "title": "BSD UI override",
+      "category": "agents",
+      "requirement_summary": "BSD override is scoped to one turn or the current thread, with Auto-active and manual-On distinguished (chat selector/monogram glow is a Chat surface).",
+      "search_keys": [
+        "u11-data.js bsdEvents overrideScope: 'turn' | 'thread'",
+        "distinction field between auto-triggered and manual-on invocation (mode/source)",
+        "override expiry/end evidence (scope ends with turn or thread)",
+        "ABSENT: an override with no scope, or a persistent global override"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "AGT-022",
+      "title": "Active-turn redirect",
+      "category": "threads",
+      "requirement_summary": "User correction can steer an active turn while preserving the original attempt, partial output, interruption/redirect state, and the replacement/resumed attempt.",
+      "search_keys": [
+        "u11-data.js kind: 'redirect' with original attemptId retained",
+        "partial output / partialTokens on the interrupted attempt",
+        "interruption state (interrupted/redirected) distinct from failure",
+        "replacement or resumed attempt linked to the original (replacesAttemptId)",
+        "ABSENT: an interrupted attempt deleted or merged into its replacement"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "CHAT-006",
+      "title": "Material route warnings",
+      "category": "chat",
+      "requirement_summary": "Warn only for material cache/context/cost/privacy/capability/tool/attachment consequences, offering Continue here, Branch, Start new chat, or Cancel.",
+      "search_keys": [
+        "(would be) the pre-send warning dialog and the Continue here / Branch / Start new chat / Cancel action set",
+        "Usage-visible remnant only: the consequence receipts themselves (cache reset, settlement change, privacy boundary) keyed by USE-008, USE-013, PROV-026"
+      ],
+      "surface": "out-of-scope",
+      "decidable": false,
+      "why_not_decidable": "The warning trigger and its four-way action set live in the composer/send path, which a Usage report does not own; Usage can only show the after-the-fact consequence. Owner that would evidence it: the Assistant Chat concept (Plans/assistant-chat-design.md)."
+    },
+    {
+      "id": "CHAT-007",
+      "title": "Attachment resolver",
+      "category": "chat",
+      "requirement_summary": "Attachments are classified Native, PM transformed, Alternate model, or Unsupported; ZIPs are unpacked by PM and media may be transcribed/sampled/routed with consent and lineage.",
+      "search_keys": [
+        "u11-data.js attachment classification enum: native, pm_transformed, alternate_model, unsupported",
+        "transformation type field (transcribe, sample, convert, unpack/zip)",
+        "consent field + policy reference on transformed/alternate routes",
+        "lineage: parentTurn + derivedArtifactIds",
+        "ABSENT: an attachment cost row with no classification"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "CHAT-016",
+      "title": "Offline/outbox state",
+      "category": "chat",
+      "requirement_summary": "Show cached, synchronizing, live, offline, queued, reconnecting, replay, snapshot, and server-owned-work-continuing states, with commands in a durable outbox.",
+      "search_keys": [
+        "u11-data.js connectivity state values: cached, synchronizing, live, offline, queued, reconnecting, replay, snapshot, server_owned/server_continuity",
+        "kind: 'offline_outbox' records with queued command ids",
+        "outbox wait duration separate from provider-active time",
+        "ABSENT: offline/queued wait rendered as provider or model time"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "USE-001",
+      "title": "Usage reports; Settings configures",
+      "category": "usage",
+      "requirement_summary": "Usage is the measured/history/forecast domain and deep-links to canonical Settings; it does not create a second provider, account, model, or policy system.",
+      "search_keys": [
+        "u11-prism.html #u11Settings / data-goto deep-link targets naming a Settings destination",
+        "semantic deep-link command id (cmd.provider.usage.open_management / settings deep-link) in reports/candidate-command-delta.json",
+        "read-only projection object (settingsDefaults) consumed, not edited",
+        "ABSENT: policy-writing controls in Usage (save/apply threshold, limit, policy toggles that persist)",
+        "ABSENT: account creation / connection editing UI inside Usage"
+      ],
+      "surface": "u11-prism.html",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "USE-002",
+      "title": "One real attempt per event",
+      "category": "usage",
+      "requirement_summary": "Every provider/helper/child/replay/probe attempt is separately attributable and grouped under the logical user turn.",
+      "search_keys": [
+        "u11-data.js attempts[] with attemptId + logicalTurnId + parentEventId",
+        "kind: 'turn' grouping row whose children are individual attempts",
+        "helper attempts present as siblings with their own tokens/cost",
+        "u11-widgets.js renderLedger showing per-attempt rows under one turn",
+        "ABSENT: helper/child tokens summed into the main attempt with no separate row"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "USE-003",
+      "title": "Complete route snapshot",
+      "category": "usage",
+      "requirement_summary": "Record requested/effective provider, account, connection, product, model, effort, speed, mode, access profile, fallback/switch reason, and route policy at execution time.",
+      "search_keys": [
+        "u11-data.js per-attempt: reasoningEffort, speed/Normal-Fast, conversationMode, requestedAccessProfile/effectiveAccessProfile",
+        "product/plan id on the attempt (productIds)",
+        "fallbackReason / switchReason",
+        "routePolicy / policySnapshot captured at execution time",
+        "ABSENT: an attempt missing effort or access profile while the route is otherwise complete"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "USE-004",
+      "title": "Immutable historical interpretation",
+      "category": "usage",
+      "requirement_summary": "Historical events keep execution-time route, catalog, policy, pricing, and capability snapshots; changing aliases or current Settings must not rewrite history.",
+      "search_keys": [
+        "u11-data.js snapshot fields on events: catalogVersion/catalogSource, pricingSnapshot, policySnapshot, capabilitySnapshot, aliasAtTime/displayNameAtTime",
+        "historical row rendered from its own snapshot (renderer reads event snapshot, not current family/model tables)",
+        "an event whose recorded model alias differs from the current alias and still renders the old alias",
+        "ABSENT: renderer resolving historical rows through current families/models lookup only"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "USE-005",
+      "title": "Provider-native units",
+      "category": "usage",
+      "requirement_summary": "Track provider-native units, actual/estimated cost, included allowance, extra balance, packs, resets, cooldown, and settlement route without forcing everything into tokens.",
+      "search_keys": [
+        "u11-data.js non-token unit fields (requests, credits, seconds, messages) with a unit label per meter",
+        "meters[] with unit + kind (subscription, prepaid_balance, purchased_pack, saved_reset, free_allowance, metered_continuation)",
+        "reset / cooldown timestamps per meter",
+        "estimated vs actual cost fields distinguished (sourceClass on cost)",
+        "ABSENT: a non-token provider unit converted to tokens for display without a labeled conversion"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "USE-006",
+      "title": "Data quality states",
+      "category": "usage",
+      "requirement_summary": "Every value is Provider reported, CLI reported, PM observed, Derived, Estimated, Unknown, Partial, or Stale; missing is never displayed as zero.",
+      "search_keys": [
+        "u11-data.js sourceClass enum: provider_reported, cli_reported, pm_observed, derived, estimated, unknown, partial, stale",
+        "data-quality attribute in rendered DOM (u11-prism.html / u11-widgets.js)",
+        "unknown rendered as an explicit dash/'Unknown' token in u11-widgets.js numHTML/valHTML path",
+        "ABSENT: a value with sourceClass unknown/partial/stale rendered as 0",
+        "verify-shots/plans-estimate.png"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "USE-007",
+      "title": "Auxiliary purpose taxonomy",
+      "category": "usage",
+      "requirement_summary": "Attribute subagent, vision, compression, web extraction, approval review, MCP routing, skill search, title, probe, attachment transform, fallback, replay, BSD, MoA and crew helper calls.",
+      "search_keys": [
+        "u11-data.js purpose values: user_work, subagent, crew_member, moa_reference, moa_aggregator, vision, compression, web_extract, approval_review, mcp_router, skill_search, title_generation, probe, catalog_validation, attachment_transform, fallback_attempt, conversation_replay, bsd",
+        "helper grouping in u11-widgets.js (HelperPurposeGroup / purpose group labels) with expandable individual calls",
+        "ABSENT: a purpose value outside the taxonomy used as a catch-all ('other', 'misc')",
+        "ABSENT: helper purposes missing from the data set (check each of the 18 values is present at least once)"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "USE-008",
+      "title": "Cache attribution",
+      "category": "usage",
+      "requirement_summary": "Record predicted cache impact, actual read/write tokens, hit rate, invalidation/reduced-reuse reason, ContextEpoch, and source quality.",
+      "search_keys": [
+        "u11-data.js cacheStats fields: predictedImpact, cacheReadTokens, cacheWriteTokens, hitRate/reuseRate",
+        "invalidationReason / reducedReuseReason naming a material cause (provider, account, connection, model, effort, speed, persona, rules, tools, mcp, skills, memory, compression, branch, replay, failover)",
+        "contextEpoch on cache records",
+        "sourceClass on cache values (provider_reported vs derived vs estimated)",
+        "u11-widgets.js renderCache surfacing predicted vs actual"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "USE-009",
+      "title": "Context operations",
+      "category": "usage",
+      "requirement_summary": "Compact Now, automatic compaction, pruning, discarded stale compactions, branch/replay, and context helper calls are separate attributable operations.",
+      "search_keys": [
+        "u11-data.js context operation kinds: compact_now, auto_compaction, tool_result_pruning, micro_compaction, discarded_stale, no_gain, branch_build, conversation_replay, prior_thread_retrieval",
+        "helper attempt attached to a compaction op even when its result was discarded",
+        "separation of context mutation from provider settlement (two records, one op + one attempt)",
+        "ABSENT: all context work collapsed into a single 'compaction' bucket"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "USE-010",
+      "title": "Sustainable concurrency receipts",
+      "category": "usage",
+      "requirement_summary": "Record requested, configured, provider, effective, predicted sustainable, admitted, queued, and reduction reason, and reserve parent/testing/repair capacity.",
+      "search_keys": [
+        "u11-data.js capacity record with requestedWorkers, configuredMax, providerMax, effectiveMax, predictedSustainable, admitted, queued, reductionReason",
+        "reserve fields for parent synthesis / testing / repair",
+        "u11-widgets.js renderCapacity + verify-shots/capacity-envelope.png",
+        "ABSENT: admitted count equal to requested with no admission record when a reduction occurred"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "USE-011",
+      "title": "Goal/Planning/PRD forecasts",
+      "category": "usage",
+      "requirement_summary": "Forecasts show likelihood-to-finish, confidence, reset/cooldown timing, estimated ranges, and recommended wave size without claiming certainty.",
+      "search_keys": [
+        "u11-data.js forecasts[] with likelihood: likely|uncertain|unlikely",
+        "confidence field + data source/freshness on the forecast",
+        "estimated usage range and estimated elapsed range (min/max, not point values)",
+        "recommendedWaveSize",
+        "ABSENT: certainty wording ('will finish', 'guaranteed') in forecast copy"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "USE-012",
+      "title": "Time attribution",
+      "category": "usage",
+      "requirement_summary": "Separate provider-active, local compute, resource wait, approval wait, offline/outbox wait, reconnect/sync/replay/snapshot, maintenance, and total elapsed time with timestamps.",
+      "search_keys": [
+        "u11-data.js time buckets: providerActive, localCompute, toolRuntime, resourceWait, permitWait, approvalWait, outboxWait, reconnect/replay/snapshot, waitingForReset, maintenance, totalElapsed",
+        "u11-time.js formatting of those buckets (TimeBreakdown)",
+        "timestamps (startedAt/finishedAt, UTC persisted) per attempt",
+        "ABSENT: wait or maintenance duration included in providerActive"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "USE-013",
+      "title": "Attachment transformations",
+      "category": "usage",
+      "requirement_summary": "Meter the original attachment, transformation type, derived artifact IDs, alternate route, consent/policy, local resources, tokens/cost, privacy boundary, and parent turn.",
+      "search_keys": [
+        "u11-data.js attachment records: originalAttachment/original id + bytes/type",
+        "transformation type + derivedArtifactIds",
+        "alternateRoute + consent/policy fields",
+        "localCompute resources for the transform",
+        "privacyBoundary field",
+        "parentTurn / logicalTurnId link"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "USE-014",
+      "title": "Free Models underlying identity",
+      "category": "usage",
+      "requirement_summary": "Never aggregate Free Models without underlying provider/account/model; preserve historical models as no longer free or no longer available.",
+      "search_keys": [
+        "u11-data.js freeModels rows: underlyingProvider, underlyingAccount, underlyingModel on every row",
+        "state values covering free, cooldown, no_longer_free, removed/unavailable",
+        "historical event retaining the underlying identity after the model stopped being free",
+        "ABSENT: a 'Free Models' aggregate total row with no underlying identity",
+        "verify-shots/free-cooldown.png"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "USE-015",
+      "title": "Provider maintenance is not model usage",
+      "category": "usage",
+      "requirement_summary": "CLI checks/install/update/repair/rollback, app/content updates, backups, moves, sync, notifications, and local sound previews are maintenance, not token usage; model-backed validation is separate validation usage.",
+      "search_keys": [
+        "u11-data.js maintenance kinds: cli_update, app/content update, catalog_refresh, backup, project_move, server_connection, sound_preview, notification_test, search index, storage compaction",
+        "maintenance records carry duration/bytes but no token or cost fields",
+        "separate validation attempt (purpose: 'probe' / 'catalog_validation') linked from the maintenance flow",
+        "ABSENT: installer bytes or install seconds added to token/cost totals",
+        "ABSENT: a model-backed verification hidden inside a maintenance record"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "USE-016",
+      "title": "BSD attribution",
+      "category": "usage",
+      "requirement_summary": "Silent BSD calls still count; record trigger, route, cost, latency, advice emitted/suppressed, failure/timeout, and override scope.",
+      "search_keys": [
+        "u11-data.js bsdEvents: trigger, route (family/account/model), tokens/cost, latency",
+        "silentResult flag on calls with no visible advice",
+        "adviceEmitted + duplicateSuppressed fields",
+        "timeout/failure state",
+        "overrideScope",
+        "ABSENT: a BSD event with silent result and zero/no cost attribution",
+        "verify-shots/bsd-inspector.png"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "USE-017",
+      "title": "Tool/context overhead",
+      "category": "usage",
+      "requirement_summary": "Where observable, attribute selected tool schema, MCP, skill, memory/context, and prompt overhead without presenting estimates as provider-reported facts.",
+      "search_keys": [
+        "u11-data.js toolOps / overhead fields: toolSchemaTokens, mcpTokens, skillTokens, memoryTokens, promptOverheadTokens",
+        "sourceClass 'derived' or 'estimated' on each overhead value",
+        "u11-widgets.js renderTools labeling estimates distinctly from provider-reported values",
+        "ABSENT: an estimated overhead value carrying sourceClass provider_reported"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "USE-018",
+      "title": "Server/host/environment lineage",
+      "category": "usage",
+      "requirement_summary": "Detailed Usage carries Project, Home Server, Execution Host, Environment, and thread/Goal/Plan/agent/Crew lineage while the default view stays compact and human.",
+      "search_keys": [
+        "u11-data.js detail fields: project, homeServer, executionHost, environment (hosts[], environments[])",
+        "thread/goal/plan/agent/crew ids on detail records",
+        "u11-rundetail.js rendering that lineage in the expanded view only",
+        "default widget summary free of host/environment identifiers (compact top strip)",
+        "ABSENT: host/environment ids in the default summary rows"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "USE-019",
+      "title": "Accounts shown only when configured",
+      "category": "usage",
+      "requirement_summary": "Unconfigured accounts and free-provider routes do not appear as normal Usage rows; setup-needed state belongs to Settings/Free Models manager.",
+      "search_keys": [
+        "u11-data.js unconfiguredCatalog / kind: 'setup_required' held separately from accounts[]",
+        "u11-widgets.js renderAccounts filtering out unconfigured entries from the ordinary list",
+        "deep link to Settings / Free Models manager for setup state",
+        "ABSENT: an unconfigured account rendered in the normal accounts widget list",
+        "verify-shots/setup-required.png"
+      ],
+      "surface": "u11-widgets.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "USE-020",
+      "title": "Time display",
+      "category": "usage",
+      "requirement_summary": "Use user/system timezone with 24-hour time by default and a clear fallback; retain UTC in durable records.",
+      "search_keys": [
+        "u11-time.js 24-hour formatting (HH:mm, no am/pm) as default",
+        "timezone label / system timezone resolution with fallback path",
+        "utc/iso timestamp fields retained in u11-data.js records",
+        "ABSENT: 'AM'/'PM' or hour12: true in default rendering",
+        "ABSENT: durable records storing only local-formatted time"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "USE-021",
+      "title": "Context Ring updates",
+      "category": "usage",
+      "requirement_summary": "Context detail uses a compact top bar with correct source colors, inline cache info, concise human wording, and no misleading provider-reported/high/medium labels.",
+      "search_keys": [
+        "u11-context.css source color tokens applied per admitted source in the top bar",
+        "cache information rendered inline next to Compact Now / More Details",
+        "ABSENT: 'provider-reported', 'high', 'medium' strings in ordinary context UI (u11-context.js render path)",
+        "ABSENT: a wide multi-line explanatory sentence in the compact context bar",
+        "detail view separating admitted sources, cache, and compaction",
+        "verify-shots/context-details.png"
+      ],
+      "surface": "u11-prism.html",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "USE-022",
+      "title": "Provider-plan nuance",
+      "category": "usage",
+      "requirement_summary": "Represent Codex overage/saved resets, Alibaba Coding/Token plans and packs, Claude API continuation, free quota vs PAYG, and other provider-specific next-action choices through adapter schemas.",
+      "search_keys": [
+        "u11-data.js meter kinds: saved_reset, purchased_pack, prepaid_balance, metered_continuation, payg_route, free_allowance, trial, shared_pool",
+        "afterIncludedByProduct / continuation choice list keyed per product (stop_and_wait, extra_balance, usage_pack, paid_after_plan, saved_reset, switch_account, switch_provider, free_models, api_billing, ask_each_time)",
+        "product ids for codex, alibaba coding/token plan, claude api, z.ai, opencode, kimi, free models",
+        "ABSENT: one universal continuation choice list applied to all products"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "USE-023",
+      "title": "No universal budget control",
+      "category": "usage",
+      "requirement_summary": "Separate provider allowance, optional extra usage, API spend, and PM spending/token/run safety guards; automation limits belong to Goal/Run/Orchestrator owners.",
+      "search_keys": [
+        "u11-data.js separate objects: allowance/planIncludedMicro, extraUsage, apiBilledMicro/spendingLimitMicro, guards{} (token/run/spend safety)",
+        "warningThresholdPct / warnLow as PM-side guard distinct from provider allowance",
+        "automation limit deep-linked to Goal/Run/Orchestrator owner rather than set in Usage",
+        "ABSENT: a single universal 'budget' control governing all four"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "USE-024",
+      "title": "Usage demo fixtures",
+      "category": "usage",
+      "requirement_summary": "Demo fixtures cover included plan, extra pack, account switch, vision helper, cache reset, free-model cooldown, validation probe, capacity wave, estimated data, effective model substitution, CLI update, offline wait, BSD, and cross-project work (packet lists 18).",
+      "search_keys": [
+        "reports/demo-fixture-report.json: 18 fixture entries matching packet 05 list 1-18",
+        "each fixture entry names the observed surface/state and a trigger",
+        "fixture ids present in u11-data.js (the data actually contains the scenario, not just the report)",
+        "ABSENT: a fixture reported as covered with no corresponding data/state in u11-data.js",
+        "missing-fixture check: sound preview + notification test-send, unconfigured account absent, server work continues while client offline"
+      ],
+      "surface": "reports/*",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PRM-003",
+      "title": "Per-model prompt profiles",
+      "category": "prompt",
+      "requirement_summary": "Calibrate reliable instruction, source, tool, schema, ambiguity, and slice ranges per effective model/adapter/task family rather than marketing context windows.",
+      "search_keys": [
+        "(would be) per-model reliable-range calibration tables keyed by effective model/adapter/task family",
+        "Usage-visible remnant only: observed per-model context/overhead figures (keyed by USE-017 and CTX-016)"
+      ],
+      "surface": "out-of-scope",
+      "decidable": false,
+      "why_not_decidable": "Calibration ranges are prompt-assembly policy; a Usage report can echo observed per-model overhead but cannot evidence the calibration decision. Owner that would evidence it: Plans/Prompt_Pipeline.md with the Prompt/Chat concept."
+    },
+    {
+      "id": "PRM-008",
+      "title": "Self-recovering tool envelope",
+      "category": "prompt",
+      "requirement_summary": "Tools return typed failure class, retryability, truncation/spill, CWD change, already-applied, ambiguity locations, verification, hints, retries, and final outcome.",
+      "search_keys": [
+        "u11-data.js toolOps fields: failureClass, retryable, truncated/spillArtifactId, cwdChanged, alreadyApplied, ambiguityLocations, verification, retries, finalOutcome",
+        "tool-result compaction/recovery marker linked to the spill artifact",
+        "ABSENT: tool failures represented only as a boolean error flag"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PRM-010",
+      "title": "DAP DebugSession",
+      "category": "runtime",
+      "requirement_summary": "Typed durable DAP DebugSession with launch/attach, breakpoints, stepping, threads, stack, scopes, variables, evaluate, modules/sources/disassembly/memory/output/termination.",
+      "search_keys": [
+        "(would be) the typed DebugSession contract and its request/event surface",
+        "Usage-visible remnant only: debug session time as local compute / tool runtime (keyed by USE-012 and AGT-017)"
+      ],
+      "surface": "out-of-scope",
+      "decidable": false,
+      "why_not_decidable": "The debug-protocol contract has no measured Usage projection beyond elapsed local time. Owner that would evidence it: the runtime Testing & Debug concept plus Plans/Automated_Testing_System.md (DAP specification)."
+    },
+    {
+      "id": "PRM-011",
+      "title": "Persistent EvalSession",
+      "category": "runtime",
+      "requirement_summary": "Sandboxed persistent EvalSession retains variables, streams output, spills artifacts, distinguishes local compute from external waits, and allows controlled nested calls.",
+      "search_keys": [
+        "(would be) session persistence, variable retention, streaming, and nested-call controls",
+        "Usage-visible remnant only: localCompute vs external wait separation and spill artifact ids (keyed by USE-012, PRM-015)"
+      ],
+      "surface": "out-of-scope",
+      "decidable": false,
+      "why_not_decidable": "Session semantics are a runtime execution contract; the only Usage-observable slice duplicates USE-012's local-compute bucket. Owner that would evidence it: the runtime concept owning EvalSession (Plans Tools/LSP/eval owners)."
+    },
+    {
+      "id": "PRM-012",
+      "title": "Provider request permits",
+      "category": "runtime",
+      "requirement_summary": "Provider-account permits are held only around actual provider calls/streams, never for whole parent-agent lifetimes, to avoid parent-child deadlock.",
+      "search_keys": [
+        "u11-data.js permit fields: permitWait/permitWaitMs, permitHeldMs, permitId",
+        "permit acquire/release timestamps bracketing only the provider call within a longer parent run",
+        "queue reason 'Provider capacity' / waiting-for-permit admission record",
+        "ABSENT: a parent run whose permitHeld duration spans its child runs"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PRM-013",
+      "title": "MCP lifecycle hardening",
+      "category": "runtime",
+      "requirement_summary": "MCP lifecycle hardening: stable tool order, parallel background connections, cached catalogs, deferred proxies, separated auth/transport/catalog/resource states, reconnect breakers, epoch guards, deterministic collision ownership, bounded retry.",
+      "search_keys": [
+        "(would be) tool ordering, epoch guards, collision ownership, breaker state machine",
+        "Usage-visible remnant only: mcp_router purpose attempts and MCP schema overhead (keyed by USE-007, USE-017)"
+      ],
+      "surface": "out-of-scope",
+      "decidable": false,
+      "why_not_decidable": "MCP connection-state machinery is not measurable from a Usage report; only the routed calls and their overhead are. Owner that would evidence it: Plans/MCP_Integration.md with the runtime concept."
+    },
+    {
+      "id": "PRM-015",
+      "title": "Artifact-reference compaction",
+      "category": "runtime",
+      "requirement_summary": "Large old tool results may compact to immutable bounded-readable artifact references with visible lineage and a recovery path.",
+      "search_keys": [
+        "u11-data.js artifactRef / spillArtifactId on compacted tool results",
+        "immutable + bounded-readable markers (size cap, readable range)",
+        "lineage back to the originating tool op and turn",
+        "recovery path field (restore/open full artifact)",
+        "ABSENT: a compacted tool result with no artifact id or recovery path"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PRM-016",
+      "title": "T3 environment supervisor",
+      "category": "runtime",
+      "requirement_summary": "One environment supervisor owns retries, transport replacement, authentication blocking, probes, and offline behaviour, with domain sync states independent.",
+      "search_keys": [
+        "(would be) the single-supervisor ownership boundary and transport replacement logic",
+        "Usage-visible remnant only: environment identity on records plus reconnect/sync timing (keyed by USE-012, USE-018, CHAT-016)"
+      ],
+      "surface": "out-of-scope",
+      "decidable": false,
+      "why_not_decidable": "Supervisor ownership is a runtime architecture decision with no Usage projection beyond the environment id and wait buckets. Owner that would evidence it: the runtime/Server-Project-Sync concept (Plans storage-plan.md / server sync owners)."
+    },
+    {
+      "id": "PRM-017",
+      "title": "Durable command outbox",
+      "category": "runtime",
+      "requirement_summary": "Messages, questionnaire answers, redirects, approvals, Goal controls, and linked-thread creation persist offline with exact route/attachments/IDs and replay safely.",
+      "search_keys": [
+        "u11-data.js kind: 'offline_outbox' entries with commandId, route, attachment ids, createdAt",
+        "replay-safety marker (idempotency key / dedupe / replayedAt)",
+        "outbox wait duration separate from provider-active time",
+        "queued command types covering message, approval, redirect, goal control",
+        "ABSENT: a replayed outbox command double-counted as two provider attempts"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PRM-018",
+      "title": "Replay/snapshot protocol",
+      "category": "runtime",
+      "requirement_summary": "Resume from a sequence cursor, attach/buffer live stream before replay, and choose adaptive replay vs snapshot on bytes/decode/network/device/tool payload, not fixed event counts.",
+      "search_keys": [
+        "u11-data.js replay/snapshot records with cursor/sequence value",
+        "replay bytes / decode cost / payload size fields feeding the choice",
+        "choiceReason distinguishing replay from snapshot catch-up",
+        "buffered-live-stream-before-replay marker",
+        "ABSENT: a replay decision recorded as an event-count threshold only"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PRM-019",
+      "title": "Streaming coalescing",
+      "category": "runtime",
+      "requirement_summary": "Durable events stay granular while UI updates coalesce tokens and intermediate progress to avoid relayout storms, preserving terminal ordering.",
+      "search_keys": [
+        "(would be) the streaming coalescing policy in the chat/stream renderer",
+        "Usage-visible remnant only: granular durable attempt/event rows (keyed by USE-002)"
+      ],
+      "surface": "out-of-scope",
+      "decidable": false,
+      "why_not_decidable": "Coalescing is a chat/stream rendering behaviour; the Usage side only shows that durable events remained granular, which USE-002 already keys. Owner that would evidence it: the Assistant Chat concept and the runtime streaming owner."
+    },
+    {
+      "id": "PRM-020",
+      "title": "ResourceGovernor and ObservableWork",
+      "category": "runtime",
+      "requirement_summary": "RuntimeResourceGovernor is the sole policy/admission owner with host-local enforcement; ObservableWork is the truthful shared phase/wait/progress projection.",
+      "search_keys": [
+        "u11-data.js admission records naming the governor as the admitting authority (admittedBy / governor)",
+        "admission reasons: provider capacity, worktree capacity, port conflict, file writer conflict, browser/test/device capacity, host cpu/memory/gpu/disk pressure, waiting for reset, waiting for update/repair",
+        "host-local enforcement evidence (host id on the admission decision)",
+        "phase/wait projection fields used by widgets (ObservableWork-shaped phase + waitReason)",
+        "ABSENT: wait or queue time presented as provider-active model work",
+        "ABSENT: a second admission/limit system inside Usage"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PRM-024",
+      "title": "Container server capability",
+      "category": "runtime",
+      "requirement_summary": "Docker/TrueNAS/Unraid/Kubernetes deployments are full Servers/Execution Hosts with signed immutable baseline and persistent Tool Store/profile volumes; no desktop worker required.",
+      "search_keys": [
+        "u11-data.js executionHost kind values: docker, truenas, unraid, kubernetes, home_server, desktop",
+        "a run whose executionHost is a container/K8s server with no desktop client involved",
+        "environment field distinguishing native windows, wsl (optional), macos, linux, container",
+        "persistent Tool Store / profile volume reference on the host record",
+        "ABSENT: work that requires a desktop worker to execute (desktop host on every run)"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PRM-025",
+      "title": "No Playwright facade",
+      "category": "runtime",
+      "requirement_summary": "PM uses its native Browser Program API; PM core has no Playwright runtime, facade, compatibility promise, package, port, MCP, command, or capture engine (user projects may run Playwright as an external test dependency).",
+      "search_keys": [
+        "ABSENT: 'playwright' in u11-*.js, u11-prism.html, _shared/*.js, u11-data.js labels/categories",
+        "ABSENT: 'playwright' in reports/*.json category, command, wiring, or DRY names",
+        "'PM Browser Program' / 'Browser Program' naming for PM-owned browser work",
+        "external project test command naming for user-project tests",
+        "harness caveat to record: .verify/node_modules/playwright-core and .verify/package.json exist as audit-harness tooling; the check is whether any Usage category, label, command, or contract references it"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "MGR-001",
+      "title": "Notifications & Sounds manager",
+      "category": "managers",
+      "requirement_summary": "Notifications & Sounds covers delivery, routing, quiet/focus, destinations, sound mappings, preview/import/export, explicit test-send, provenance, and non-audio equivalents; Usage must classify preview as local and test-send as operational.",
+      "search_keys": [
+        "u11-data.js kind: 'sound_preview' with local classification and no token/cost fields",
+        "kind: 'notification_test' as operational activity with a receipt id and destination",
+        "destination / routing identity on the test-send record",
+        "ABSENT: sound preview or notification test-send counted as model usage (tokens/cost present)"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "MGR-002",
+      "title": "PeonPing/OpenPeon packs",
+      "category": "managers",
+      "requirement_summary": "Compatible notification/voice pack import only after format/license checks; no bundled unverified packs; preview local; test-send explicit, masked, rate-limited, receipted.",
+      "search_keys": [
+        "(would be) pack import format/license verification and rate-limit/masking policy",
+        "Usage-visible remnant only: the receipted test-send record (keyed by MGR-001)"
+      ],
+      "surface": "out-of-scope",
+      "decidable": false,
+      "why_not_decidable": "Pack import verification and masking/rate-limit policy belong to the notifications manager; Usage can only carry the test-send receipt. Owner that would evidence it: the Settings Notifications & Sounds manager concept."
+    },
+    {
+      "id": "MGR-012",
+      "title": "Source Control/Worktree manager",
+      "category": "managers",
+      "requirement_summary": "Source Control/Worktree manager covers changes/history/graph/worktrees, lifecycle/recovery/cleanup, branch/push/force-push/test-before-merge, leases/write authority, and host/environment and tool readiness.",
+      "search_keys": [
+        "u11-data.js worktree records with lease, writeAuthority/file writer conflict, host, environment",
+        "test-before-merge / integration evidence rows attributable to a worktree",
+        "cleanup/recovery state and preserved patch on failure",
+        "tool readiness (git/jj) on the host record",
+        "ABSENT: worktree/branch work attributed as provider model usage"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "MGR-015",
+      "title": "Web/Search/Fetch manager",
+      "category": "managers",
+      "requirement_summary": "Web/Search/Fetch manager covers provider priority plus search/fetch/crawl/map/extract limits, credit guards, caches, browser sessions, proxies, certificates, and air-gap mode.",
+      "search_keys": [
+        "u11-data.js purpose: 'web_extract' attempts with the search/fetch provider and route class",
+        "credit guard / limit fields on the search provider meter",
+        "cache hit evidence for fetch/extract (cached vs fresh)",
+        "browser session identity for browser-backed search routes",
+        "ABSENT: web search/fetch cost folded into the main model attempt"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "MGR-017",
+      "title": "Testing & Debug manager",
+      "category": "managers",
+      "requirement_summary": "Testing & Debug manager covers Auto/On/Off per capability across browser/native/mobile/device/API/DB/security/performance with session controls, visible evidence, hot reload, DAP, and eval.",
+      "search_keys": [
+        "u11-data.js test/debug capacity admission reasons: browser capacity, test runner capacity, device capacity",
+        "test/debug session records with capability type and evidence artifact ids",
+        "validation probe attempts separated from local test runtime",
+        "'PM Browser Program' naming for PM-owned browser test work",
+        "ABSENT: test runtime seconds counted as provider-active model time"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "MGR-019",
+      "title": "Runtime artifacts/output manager",
+      "category": "managers",
+      "requirement_summary": "Runtime artifacts/output manager covers artifact identities/types, locations, retention, versions, logs, receipts, open/reveal/export/cleanup, redaction, and PM-owned vs provider-native.",
+      "search_keys": [
+        "u11-data.js artifact records: artifactId, type, location, retentionDays, version",
+        "receipt id + log reference per artifact",
+        "redaction flag",
+        "pm_owned vs provider_native classification",
+        "derived artifact ids linked from attachment/tool/compaction records"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "MGR-023",
+      "title": "Crew manager",
+      "category": "managers",
+      "requirement_summary": "Crew manager covers templates, roles, Persona/capability routes, diversity, member ranges, adaptive sizing, usage reserve, waves, write/worktree policy, board, reducer, and failure/stop.",
+      "search_keys": [
+        "u11-data.js crew records: template, roles, routes, memberRange, adaptiveSizing, reserve, waves",
+        "write/worktree policy per crew member",
+        "board + reducer references",
+        "failure/stop policy outcome on a crew run",
+        "ABSENT: crew usage aggregated without per-member route and cost"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "MGR-027",
+      "title": "Media manager",
+      "category": "managers",
+      "requirement_summary": "Media manager covers input modalities, screenshots/redaction, image/audio/video/TTS/music routes, requested/effective connection, output destination, retention, and alternate-route consent.",
+      "search_keys": [
+        "u11-data.js media records with modality: image, audio, video, tts, music",
+        "requested/effective connection on the media route",
+        "screenshot redaction flag",
+        "output destination + retention fields",
+        "alternate-route consent field",
+        "vision helper attempt (purpose: 'vision') settled separately from the main model"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "ONB-008",
+      "title": "Free Models setup",
+      "category": "onboarding",
+      "requirement_summary": "Free Models setup shows source freshness and ready/needs setup/limited/no longer free states, delegating setup to underlying providers.",
+      "search_keys": [
+        "u11-data.js free model state values: ready, needs_setup/setup_required, limited, no_longer_free",
+        "source freshness (checkedAt / asOfLabel) on the free catalog",
+        "deep link delegating setup to the underlying provider (settings/free models manager target)",
+        "ABSENT: needs_setup free routes listed among ordinary Usage rows",
+        "verify-shots/setup-required.png, verify-shots/free-cooldown.png"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "ONB-025",
+      "title": "Doctor probe discipline",
+      "category": "doctor",
+      "requirement_summary": "Doctor probes are bounded, cached, freshness-aware, ResourceGovernor-governed, ObservableWork-projected, and never an unbounded startup sweep.",
+      "search_keys": [
+        "u11-data.js probe records with bounded scope + cached/freshness fields (asOfLabel, refreshMin, nextAutoRefresh, projectionFreshness)",
+        "probe attempts attributed as validation usage (purpose: 'probe' / 'catalog_validation')",
+        "governor admission on probe scheduling (admission reason / governed flag)",
+        "ABSENT: a startup probe burst (many probes at load with identical timestamps)",
+        "ABSENT: probes issued per widget render"
+      ],
+      "surface": "u11-data.js",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PROC-001",
+      "title": "One implementation prompt per topic",
+      "category": "process",
+      "requirement_summary": "Each topic packet contains one cumulative implementation prompt that presents a platform plan first, waits for approval, then continues under the same prompt.",
+      "search_keys": [
+        "(evidenced by the packet, not the concept) PM_Usage_Concept_Update_Final_Cumulative_2026-08-08/IMPLEMENTATION_PROMPT.md exists and is singular"
+      ],
+      "surface": "out-of-scope",
+      "decidable": false,
+      "why_not_decidable": "This is a property of the packet's own prompt set, not of any Usage concept artifact. Owner that would evidence it: the packet author / packet manifest (IMPLEMENTATION_PROMPT.md, PACKET_MANIFEST.json direct_prompts)."
+    },
+    {
+      "id": "PROC-002",
+      "title": "One audit prompt per topic",
+      "category": "process",
+      "requirement_summary": "Each topic packet contains one audit-only prompt used after implementation; no separate Plan and Build prompts are supplied.",
+      "search_keys": [
+        "(evidenced by the packet, not the concept) PM_Usage_Concept_Update_Final_Cumulative_2026-08-08/AUDIT_PROMPT.md exists and is the only audit prompt"
+      ],
+      "surface": "out-of-scope",
+      "decidable": false,
+      "why_not_decidable": "Also a packet property rather than a concept surface. Owner that would evidence it: the packet author / PACKET_MANIFEST.json direct_prompts list."
+    },
+    {
+      "id": "PROC-003",
+      "title": "Concept scope",
+      "category": "process",
+      "requirement_summary": "Concept agents do not edit PMConcept7, Plans, command catalogs, wiring, or DRY owners unless separately authorized, and maintain traceable impact registers.",
+      "search_keys": [
+        "git status / git diff --stat shows no concept-session modification of Plans/**, Concepts/PMConcept7.html, command/wiring/DRY owner files",
+        "reports/impact-register.json present with schema_id 'pm.usage_concept_impact_register.v1' and non-empty impact arrays",
+        "impact entries name canonical owners instead of editing them",
+        "ABSENT: edits inside Plans/** or PMConcept7.html attributable to the Usage concept work"
+      ],
+      "surface": "reports/*",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PROC-005",
+      "title": "Command ID discipline",
+      "category": "process",
+      "requirement_summary": "Reuse canonical command IDs, provide alias/supersession for old IDs, mint no duplicates; packet candidate IDs stay provisional until catalog audit.",
+      "search_keys": [
+        "reports/candidate-command-delta.json: cmd.usage.refresh, cmd.usage.export, cmd.account.select_profile, cmd.provider.switch_route reused",
+        "candidate ids cmd.usage.detail.open, cmd.usage.forecast.request, cmd.usage.range.set, cmd.usage.filter.set, cmd.provider.usage.open_management marked provisional/candidate",
+        "alias / supersedes entries for retired ids",
+        "ABSENT: a newly minted id duplicating a canonical function (two ids for refresh/export/deep-link)",
+        "local view state (range/filter) explicitly noted as not requiring a canonical command"
+      ],
+      "surface": "reports/*",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PROC-006",
+      "title": "Wiring closure",
+      "category": "process",
+      "requirement_summary": "Every user action maps UI source -> command -> canonical owner -> payload/validation -> state/event/receipt -> UI projection -> Usage/diagnostics -> recovery.",
+      "search_keys": [
+        "reports/candidate-wiring-delta.json rows carrying all eight chain fields (ui_source, command, owner, payload/validation, state/event/receipt, projection, usage, recovery)",
+        "every interactive control in u11-prism.html / u11-widgets.js traceable to one wiring row",
+        "ABSENT: a wiring row missing owner, receipt, or recovery",
+        "ABSENT: a dead control in the concept with no wiring row"
+      ],
+      "surface": "reports/*",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PROC-007",
+      "title": "DRY closure",
+      "category": "process",
+      "requirement_summary": "Shared components/services are reused across Settings, Chat, Onboarding, Doctor, Usage, and runtime; no parallel manager, auth, Usage, notification, progress, or install systems.",
+      "search_keys": [
+        "reports/candidate-dry-delta.json naming the packet roles: UsageEventStore, UsageNormalizer, SettlementResolver, UsageDataQuality, UsageForecast, CapacityProjection, RouteReceipt, CacheReceipt, TimeBreakdown, ProviderFamilyUsage, AccountConnectionUsage, HelperPurposeGroup, MaintenanceActivity, ContextUsageDetail, RunOutProjection, SourceFreshness, UsageWidgetHost",
+        "_shared/* modules actually shared by u1..u11 pages (single usage-data.js / usage-widgets.js consumed by multiple prototypes)",
+        "ABSENT: a second usage/notification/progress/install system defined inside the Usage concept",
+        "ABSENT: duplicate copies of the same renderer/data logic across u11-*.js and _shared/*"
+      ],
+      "surface": "reports/*",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PROC-008",
+      "title": "Plan supersession",
+      "category": "process",
+      "requirement_summary": "Later work must identify and retire stale bloom/chip/right-panel/yolo/regular/Playwright/provider-bundling/local-first clauses rather than leaving contradictory canon.",
+      "search_keys": [
+        "ABSENT: 'bloom', 'chip rail', 'right panel'/'right side panel', 'yolo', access profile 'regular', 'playwright', bundled/pre-seeded provider CLI, 'local-first writable replica' in concept text and reports",
+        "research/plans-gap-and-conflict-register.md listing the superseded clauses",
+        "reports/reference-review-report.json naming which superseded clauses were checked",
+        "left Activity Bar / left side panel canon reflected in the concept chrome"
+      ],
+      "surface": "reports/*",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PROC-009",
+      "title": "Audit source completeness",
+      "category": "process",
+      "requirement_summary": "Audit must compare concepts/code against the decision register, source Plans, current PMConcept7, current commands/wiring/DRY, and latest owner handoffs; absence from demo is not proof of deferral.",
+      "search_keys": [
+        "research/plans-source-ledger.json, research/plans-coverage-map.md, research/pmconcept7-reference.md, research/plans-command-registry.md",
+        "reports/reference-review-report.json listing sources opened, including PROVIDER_CLI_FINAL_ADJUDICATION.md and DECISION_COVERAGE.json",
+        "per-topic traceability from register id to concept surface (research/reconciliation-traceability.md)",
+        "ABSENT: a coverage claim with no source path or selector cited"
+      ],
+      "surface": "reports/*",
+      "decidable": true,
+      "why_not_decidable": ""
+    },
+    {
+      "id": "PROC-010",
+      "title": "No silent packet drift",
+      "category": "process",
+      "requirement_summary": "The final cumulative packets supersede unused intermediate packets; agents must not merge old Plan/Build prompts or obsolete provider/browser/onboarding policies back in.",
+      "search_keys": [
+        "reports/reference-review-report.json: superseded-source list with the precedence order applied",
+        "ABSENT: references to intermediate/unused Usage delta or handoff packets as active requirements",
+        "ABSENT: reintroduced Plan/Build prompt split, permissive provider bundling, Playwright vocabulary, right-side panel, or pre-adjudication onboarding policy",
+        "REFERENCE_SUPERSESSIONS.md precedence order reflected in concept notes"
+      ],
+      "surface": "reports/*",
+      "decidable": true,
+      "why_not_decidable": ""
+    }
+  ]
+}

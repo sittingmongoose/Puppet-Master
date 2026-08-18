@@ -1,4 +1,7 @@
 {
+  "schema_id": "pm.usage_visual_interaction_test_report.v1",
+  "schema_id_added_2026_08_18": "Only the identifier was added. Every case, count, timestamp and screenshot path below is the 2026-08-11 run exactly as it was written by the harness; nothing was re-run and no result was touched. This file and its live sibling were the two of the nine report JSONs that carried no schema id, so neither was self-identifying (audit A11-13). The id is minted locally in the family of the one schema id the packet declares (pm.usage_candidate_command_delta.v1, PM_Usage_Concept_Update_Final_Cumulative_2026-08-08/CANDIDATE_COMMAND_ID_REGISTER.json:2); it is not canonical and the packet owner should ratify or replace it. The live sibling now carries the same id because u11-verify.mjs emits it.",
+  "superseded_by": "reports/visual-interaction-test-report.json. This is the pre-correction 77-case run, retained as the evidence behind impact-register.json's retracted '77/77 pass' claim. It is not the current state of the concept and must not be quoted as one.",
   "harness": "playwright-core + system Chrome (chrome.exe)",
   "concept": "QwenUsageConcept/u11-prism",
   "packet": "PM_Usage_Concept_Update_Final_Cumulative_2026-08-08",

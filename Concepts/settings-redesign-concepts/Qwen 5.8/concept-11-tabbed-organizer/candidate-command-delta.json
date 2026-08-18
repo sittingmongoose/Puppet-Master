@@ -1,0 +1,85 @@
+{
+  "schema_id": "pm.settings_bakeoff.candidate_command_delta.v1",
+  "concept_id": "concept-11-tabbed-organizer",
+  "provisional_only": true,
+  "census": [
+    {
+      "interaction": "Open Settings category tab",
+      "status": "reuse",
+      "canon": "route_target / cmd.nav.open_subject (navigation wrapper)",
+      "note": "tab click normalizes to route_target #/cat/<id>; no new id"
+    },
+    {
+      "interaction": "Universal search open result",
+      "status": "reuse",
+      "canon": "route_target + OpenSubject",
+      "note": "rid-only routing; #/q/<query> history entry for Back"
+    },
+    {
+      "interaction": "Close Settings",
+      "status": "reuse",
+      "canon": "cmd.panel.switch (shell view)",
+      "note": "receipt + return note; no domain mutation"
+    },
+    {
+      "interaction": "Back one level",
+      "status": "reuse",
+      "canon": "cmd.nav.focus_route / history.back",
+      "note": "named Back target per view"
+    },
+    {
+      "interaction": "Provider install (official source, Host/Environment)",
+      "status": "reuse",
+      "canon": "provider lifecycle owner command (explicit install)",
+      "note": "ObservableWork op; ask-first policy"
+    },
+    {
+      "interaction": "Approve / schedule / defer provider update",
+      "status": "reuse",
+      "canon": "update policy owner (ask-first)",
+      "note": "determinate download op with denominator"
+    },
+    {
+      "interaction": "Back up now / test restore",
+      "status": "reuse",
+      "canon": "backup owner commands",
+      "note": "restore point + verification receipt"
+    },
+    {
+      "interaction": "Export / import / reset settings",
+      "status": "reuse",
+      "canon": "settings lifecycle owner commands",
+      "note": "preview-then-apply; conflict queue"
+    },
+    {
+      "interaction": "Copy settings from another project",
+      "status": "reuse",
+      "canon": "project copy transaction owner",
+      "note": "atomic apply + verify + rollback"
+    },
+    {
+      "interaction": "Run Doctor / rebuild index / cleanup dry-run",
+      "status": "reuse",
+      "canon": "doctor / searchindex / cleanup owner commands",
+      "note": "diagnostic drawers; nothing repaired without go-ahead"
+    },
+    {
+      "interaction": "Toggle/select ordinary setting row",
+      "status": "reuse",
+      "canon": "settings.set / settings.reset",
+      "note": "Project-only receipt; managed/unavailable blocked with reason"
+    },
+    {
+      "interaction": "Tabbed Organizer: switch domain tab / edge tab",
+      "status": "candidate",
+      "candidate_id": "cmd.settings.tab.select",
+      "note": "provisional; may normalize to route_target; owner FinalGUISpec"
+    },
+    {
+      "interaction": "Tabbed Organizer: open related-manager strip chip",
+      "status": "alias",
+      "canon": "cmd.nav.open_subject",
+      "note": "wrapper over route_target #/mgr/<id>"
+    }
+  ]
+}

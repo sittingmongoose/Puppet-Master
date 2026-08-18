@@ -11,10 +11,20 @@
       "gui_related": true,
       "requirement": "Settings workspace is a single expandable stack, not a category modal/bloom; selecting a destination expands it in place with push/pop FLIP depth and a sticky in-row subnav.",
       "concept_behavior": "Destination rows (.st-item) expand to reveal body with subcategory pills (.st-subnav sticky) + setting sections + inline manager; only one destination expands its full manager at a time; collapse-all returns to stack top.",
-      "supersedes_or_conflicts_with": ["legacy one-category bloom modal", "category filter chips", "right-rail detail pane split"],
+      "supersedes_or_conflicts_with": [
+        "legacy one-category bloom modal",
+        "category filter chips",
+        "right-rail detail pane split"
+      ],
       "settings_ids": [],
-      "command_ids_existing": ["catalog.settings_bloom_open"],
-      "command_candidates_not_minted": ["cmd.settings.expand", "cmd.settings.collapse", "cmd.settings.collapse_all"],
+      "command_ids_existing": [
+        "catalog.settings_bloom_open"
+      ],
+      "command_candidates_not_minted": [
+        "cmd.settings.expand",
+        "cmd.settings.collapse",
+        "cmd.settings.collapse_all"
+      ],
       "uncertainty": "low"
     },
     {
@@ -24,9 +34,22 @@
       "requirement": "File Manager/Editor demonstrates tree (virtualized/lazy), workspace-only drag/drop with FileSafe enforcement, hidden/ignored (.gitignore + globs), large-file threshold hex preview, tabs/split groups, changed-on-disk (reload/keep/compare), recovery + transient/unavailable reasons.",
       "concept_behavior": "Inline file-manager surface inside the expanded 'Code & Execution' destination: virtualized tree, drag/drop constrained to workspace roots, .gitignore-aware ignore rows, large-file row flips to hex preview above code.editing.large-file-threshold, changed-on-disk badge offers reload/keep/compare, transient/unavailable shown via AvailabilityReason.",
       "supersedes_or_conflicts_with": [],
-      "settings_ids": ["code.editing.large-file-threshold", "code.editing.max-file-size-mb"],
-      "command_ids_existing": ["catalog.file_open", "catalog.file_new_file", "catalog.file_rename", "catalog.file_delete", "catalog.file_expand_capped", "catalog.editor_close_tab"],
-      "command_candidates_not_minted": ["cmd.file_manager.tree_reveal", "cmd.file_manager.changed_on_disk.resolve"],
+      "settings_ids": [
+        "code.editing.large-file-threshold",
+        "code.editing.max-file-size-mb"
+      ],
+      "command_ids_existing": [
+        "catalog.file_open",
+        "catalog.file_new_file",
+        "catalog.file_rename",
+        "catalog.file_delete",
+        "catalog.file_expand_capped",
+        "catalog.editor_close_tab"
+      ],
+      "command_candidates_not_minted": [
+        "cmd.file_manager.tree_reveal",
+        "cmd.file_manager.changed_on_disk.resolve"
+      ],
       "uncertainty": "medium"
     },
     {
@@ -36,9 +59,26 @@
       "requirement": "LSP manager: registry/catalog/provenance, startup mode, requested/effective attachment, formatting-ownership conflicts, restart/logs, remote degradation.",
       "concept_behavior": "LSP catalog rows show provenance (built-in/catalog/custom), startup mode, requested vs effective attachment (inspector), and a formatting-ownership conflict badge when a server claims formatDocument while a Formatter also owns the language; restart + open-logs actions; remote-LSP degraded state.",
       "supersedes_or_conflicts_with": [],
-      "settings_ids": ["code.editing.lsp-enabled", "code.editing.lsp-server-catalog", "code.editing.lsp-custom-servers", "code.editing.lsp-host-attachment", "code.editing.lsp-auto-restart", "code.editing.lsp-restart", "code.editing.lsp-max-memory", "code.editing.lsp-max-cpu"],
-      "command_ids_existing": ["catalog.lsp_restart_server", "catalog.lsp_format_document", "catalog.lsp_format_selection"],
-      "command_candidates_not_minted": ["cmd.lsp.server.add", "cmd.lsp.server.open_logs", "cmd.lsp.formatting_ownership.resolve"],
+      "settings_ids": [
+        "code.editing.lsp-enabled",
+        "code.editing.lsp-server-catalog",
+        "code.editing.lsp-custom-servers",
+        "code.editing.lsp-host-attachment",
+        "code.editing.lsp-auto-restart",
+        "code.editing.lsp-restart",
+        "code.editing.lsp-max-memory",
+        "code.editing.lsp-max-cpu"
+      ],
+      "command_ids_existing": [
+        "catalog.lsp_restart_server",
+        "catalog.lsp_format_document",
+        "catalog.lsp_format_selection"
+      ],
+      "command_candidates_not_minted": [
+        "cmd.lsp.server.add",
+        "cmd.lsp.server.open_logs",
+        "cmd.lsp.formatting_ownership.resolve"
+      ],
       "uncertainty": "low"
     },
     {
@@ -47,10 +87,23 @@
       "gui_related": true,
       "requirement": "Formatters: global enable, built-in/custom table, detected/not-found/disabled, command/env/ext, add/remove/reset, Global/Project scope, health+test, single-ownership-per-language conflict resolution.",
       "concept_behavior": "Formatter table with per-language owner, detected/not-found/disabled health, command/env/ext editor, Global/Project scope switch; when two formatters claim a language, a single-ownership resolve-conflict flow picks the effective owner and demotes the other (not a silent dual-run).",
-      "supersedes_or_conflicts_with": ["dual-formatter silent fallback"],
-      "settings_ids": ["code.editing.formatters-enabled", "code.editing.formatter-catalog", "code.editing.formatter-custom"],
+      "supersedes_or_conflicts_with": [
+        "dual-formatter silent fallback"
+      ],
+      "settings_ids": [
+        "code.editing.formatters-enabled",
+        "code.editing.formatter-catalog",
+        "code.editing.formatter-custom"
+      ],
       "command_ids_existing": [],
-      "command_candidates_not_minted": ["cmd.formatter.add", "cmd.formatter.test", "cmd.formatter.remove", "cmd.formatter.reset", "cmd.formatter.resolve_conflict", "cmd.formatter.scope.set"],
+      "command_candidates_not_minted": [
+        "cmd.formatter.add",
+        "cmd.formatter.test",
+        "cmd.formatter.remove",
+        "cmd.formatter.reset",
+        "cmd.formatter.resolve_conflict",
+        "cmd.formatter.scope.set"
+      ],
       "uncertainty": "low"
     },
     {
@@ -60,9 +113,33 @@
       "requirement": "Commands & Shortcuts dedicated manager: custom command lifecycle, parameters/includes, shell-safety, dry-run preview (NEVER sends to an agent), validation, shortcut search/conflicts/remap/reset/import/export/cheat-sheet.",
       "concept_behavior": "Dedicated Commands & Shortcuts destination: CommandEditor with parameters/includes/shell-safety gate; Dry-run button renders a preview receipt and is HARD-GATED so it can never dispatch to an agent; shortcut recorder + conflict detection + remap + reset + import/export + cheat-sheet.",
       "supersedes_or_conflicts_with": [],
-      "settings_ids": ["extensions.commands.custom-commands", "extensions.commands.command-mode", "extensions.commands.command-scope", "extensions.commands.command-permissions", "extensions.commands.override-builtin", "extensions.commands.keyboard-shortcuts", "extensions.commands.conflict-handling", "extensions.commands.reset-shortcuts", "extensions.commands.backup-shortcuts", "extensions.commands.search-shortcuts"],
-      "command_ids_existing": ["catalog.settings_agent_rules_dry_method_default_guard_set"],
-      "command_candidates_not_minted": ["cmd.commands.custom.create", "cmd.commands.custom.update", "cmd.commands.custom.delete", "cmd.commands.custom.dry_run", "cmd.shortcuts.bind", "cmd.shortcuts.remap", "cmd.shortcuts.reset", "cmd.shortcuts.import", "cmd.shortcuts.export", "cmd.shortcuts.conflict.resolve"],
+      "settings_ids": [
+        "extensions.commands.custom-commands",
+        "extensions.commands.command-mode",
+        "extensions.commands.command-scope",
+        "extensions.commands.command-permissions",
+        "extensions.commands.override-builtin",
+        "extensions.commands.keyboard-shortcuts",
+        "extensions.commands.conflict-handling",
+        "extensions.commands.reset-shortcuts",
+        "extensions.commands.backup-shortcuts",
+        "extensions.commands.search-shortcuts"
+      ],
+      "command_ids_existing": [
+        "catalog.settings_agent_rules_dry_method_default_guard_set"
+      ],
+      "command_candidates_not_minted": [
+        "cmd.commands.custom.create",
+        "cmd.commands.custom.update",
+        "cmd.commands.custom.delete",
+        "cmd.commands.custom.dry_run",
+        "cmd.shortcuts.bind",
+        "cmd.shortcuts.remap",
+        "cmd.shortcuts.reset",
+        "cmd.shortcuts.import",
+        "cmd.shortcuts.export",
+        "cmd.shortcuts.conflict.resolve"
+      ],
       "uncertainty": "low"
     },
     {
@@ -71,9 +148,20 @@
       "gui_related": false,
       "requirement": "Register provisional command families for C3 deep flows; reuse existing canonical IDs (lsp_restart_server, testing_capability_policy_set, catalog install/update/remove) and retire cmd.settings.bloom.open.",
       "concept_behavior": "Command-delta register flags reuse vs alias vs new_candidate per family; no concept-only local state may masquerade as production wiring.",
-      "supersedes_or_conflicts_with": ["catalog.settings_bloom_open (retire, alias-only)"],
+      "supersedes_or_conflicts_with": [
+        "catalog.settings_bloom_open (retire, alias-only)"
+      ],
       "settings_ids": [],
-      "command_ids_existing": ["catalog.lsp_restart_server", "catalog.testing_capability_policy_set", "catalog.testing_visibility_policy_set", "catalog.catalog_install_item", "catalog.catalog_update_item", "catalog.catalog_remove_item", "catalog.terminal_open", "catalog.file_open"],
+      "command_ids_existing": [
+        "catalog.lsp_restart_server",
+        "catalog.testing_capability_policy_set",
+        "catalog.testing_visibility_policy_set",
+        "catalog.catalog_install_item",
+        "catalog.catalog_update_item",
+        "catalog.catalog_remove_item",
+        "catalog.terminal_open",
+        "catalog.file_open"
+      ],
       "command_candidates_not_minted": [],
       "uncertainty": "low"
     },
@@ -84,9 +172,25 @@
       "requirement": "MCP manager: transport/scope/exposed-tools/approval/reconnect/logs.",
       "concept_behavior": "MCP resource rows expose transport (stdio/sse/remote-url), scope, exposed-tools-of-total, approval duration, last-contact, reconnect-on-failure with a visible result receipt, and a logs viewer; lazy-exposure loads tool detail only on expand.",
       "supersedes_or_conflicts_with": [],
-      "settings_ids": ["system.mcp.server-list", "system.mcp.transport", "system.mcp.server-scope", "system.mcp.lazy-exposure", "system.mcp.timeout", "system.mcp.health-status", "system.mcp.oauth-refresh"],
-      "command_ids_existing": ["catalog.remote_reconnect"],
-      "command_candidates_not_minted": ["cmd.mcp.server.add", "cmd.mcp.server.restart", "cmd.mcp.server.reconnect", "cmd.mcp.server.approve", "cmd.mcp.server.open_logs"],
+      "settings_ids": [
+        "system.mcp.server-list",
+        "system.mcp.transport",
+        "system.mcp.server-scope",
+        "system.mcp.lazy-exposure",
+        "system.mcp.timeout",
+        "system.mcp.health-status",
+        "system.mcp.oauth-refresh"
+      ],
+      "command_ids_existing": [
+        "catalog.remote_reconnect"
+      ],
+      "command_candidates_not_minted": [
+        "cmd.mcp.server.add",
+        "cmd.mcp.server.restart",
+        "cmd.mcp.server.reconnect",
+        "cmd.mcp.server.approve",
+        "cmd.mcp.server.open_logs"
+      ],
       "uncertainty": "low"
     },
     {
@@ -96,9 +200,27 @@
       "requirement": "Skills manager demonstrates catalog/provenance/trust, install/update/compatibility/unload, project-enablement, effective-availability, policy/risk — and HOSTS the distinct Plugins/Tools/Commands-as-kinds inside the same shared grammar.",
       "concept_behavior": "Shared Skills manager surface lists Skills and ALSO a distinct kind axis for Plugins/Tools/Commands-as-kinds: four distinct kinds, each with its own lifecycle and info badges, but identical row grammar (ResourceList/Card/Detail). Skills carry provenance/trust/compatibility, project enablement, auto-invocation policy.",
       "supersedes_or_conflicts_with": [],
-      "settings_ids": ["extensions.skills.your-skills", "extensions.skills.skill-on-off", "extensions.skills.discovery", "extensions.skills.auto-invocation", "extensions.skills.auto-enable-new", "extensions.skills.validate", "extensions.skills.permissions", "extensions.skills.projection"],
-      "command_ids_existing": ["catalog.catalog_install_item", "catalog.catalog_update_item", "catalog.catalog_remove_item"],
-      "command_candidates_not_minted": ["cmd.skill.enable", "cmd.skill.disable", "cmd.skill.update", "cmd.skill.validate"],
+      "settings_ids": [
+        "extensions.skills.your-skills",
+        "extensions.skills.skill-on-off",
+        "extensions.skills.discovery",
+        "extensions.skills.auto-invocation",
+        "extensions.skills.auto-enable-new",
+        "extensions.skills.validate",
+        "extensions.skills.permissions",
+        "extensions.skills.projection"
+      ],
+      "command_ids_existing": [
+        "catalog.catalog_install_item",
+        "catalog.catalog_update_item",
+        "catalog.catalog_remove_item"
+      ],
+      "command_candidates_not_minted": [
+        "cmd.skill.enable",
+        "cmd.skill.disable",
+        "cmd.skill.update",
+        "cmd.skill.validate"
+      ],
       "uncertainty": "low"
     },
     {
@@ -108,9 +230,25 @@
       "requirement": "Plugins demonstrated as a DISTINCT kind inside the Skills manager (distinct lifecycle: package install, hook-timeout, tool-override) — not flattened into Skills.",
       "concept_behavior": "Plugin kind rows surface package list, hook-timeout, tool-override (plugins may replace built-in tools), add-from-catalog vs add-local provenance, remove; lifecycle states distinct from skill enablement.",
       "supersedes_or_conflicts_with": [],
-      "settings_ids": ["extensions.plugins.plugin-on-off", "extensions.plugins.add-from-catalog", "extensions.plugins.add-local", "extensions.plugins.remove", "extensions.plugins.packages", "extensions.plugins.hook-timeout", "extensions.plugins.tool-override", "extensions.plugins.auto-enable-new"],
-      "command_ids_existing": ["catalog.catalog_install_item", "catalog.catalog_remove_item"],
-      "command_candidates_not_minted": ["cmd.plugin.enable", "cmd.plugin.disable", "cmd.plugin.update"],
+      "settings_ids": [
+        "extensions.plugins.plugin-on-off",
+        "extensions.plugins.add-from-catalog",
+        "extensions.plugins.add-local",
+        "extensions.plugins.remove",
+        "extensions.plugins.packages",
+        "extensions.plugins.hook-timeout",
+        "extensions.plugins.tool-override",
+        "extensions.plugins.auto-enable-new"
+      ],
+      "command_ids_existing": [
+        "catalog.catalog_install_item",
+        "catalog.catalog_remove_item"
+      ],
+      "command_candidates_not_minted": [
+        "cmd.plugin.enable",
+        "cmd.plugin.disable",
+        "cmd.plugin.update"
+      ],
       "uncertainty": "low"
     },
     {
@@ -119,10 +257,23 @@
       "gui_related": true,
       "requirement": "Tools carry the full 5 lifecycle states (installed / project-enabled / currently-available / selected-for-turn / actually-invoked) and are demonstrated as a DISTINCT kind inside the Skills manager.",
       "concept_behavior": "Tool kind rows render a 5-state ladder with requested/effective inspector: a tool can be installed but not project-enabled, enabled but currently-unavailable, available but not selected-for-turn, selected but not yet invoked; effective-availability is the projection.",
-      "supersedes_or_conflicts_with": ["single enabled/disabled boolean for tools"],
-      "settings_ids": ["system.mcp.tool-toggle", "safety.rules.per-tool-permissions", "safety.rules.default-tool-permission", "personas.tools.tool-posture", "ai.usage.max-tool-rounds"],
+      "supersedes_or_conflicts_with": [
+        "single enabled/disabled boolean for tools"
+      ],
+      "settings_ids": [
+        "system.mcp.tool-toggle",
+        "safety.rules.per-tool-permissions",
+        "safety.rules.default-tool-permission",
+        "personas.tools.tool-posture",
+        "ai.usage.max-tool-rounds"
+      ],
       "command_ids_existing": [],
-      "command_candidates_not_minted": ["cmd.tool.select_for_turn", "cmd.tool.enable", "cmd.tool.disable", "cmd.tool.invoke_preview"],
+      "command_candidates_not_minted": [
+        "cmd.tool.select_for_turn",
+        "cmd.tool.enable",
+        "cmd.tool.disable",
+        "cmd.tool.invoke_preview"
+      ],
       "uncertainty": "medium"
     },
     {
@@ -131,10 +282,32 @@
       "gui_related": true,
       "requirement": "Testing & Debug: per-capability Auto/On/Off grid; built-in browser is PM-native Browser Program (NO Playwright terminology); simulator/emulator/device may be unavailable; DAP debugger; capture/artifacts.",
       "concept_behavior": "Testing capability grid renders Auto/On/Off per capability (unit/integration, built-in browser [PM-native], desktop/native, hot-reload, simulator/emulator/device, API/database, console/network, perf/sec/a11y, DAP debugger, persistent eval, capture/artifacts); unavailable capabilities surface AvailabilityReason, not a hard error.",
-      "supersedes_or_conflicts_with": ["Playwright terminology / external browser-driver coupling"],
-      "settings_ids": ["planning.testing.capability-policy", "planning.testing.cap-built-in-browser", "planning.testing.cap-simulator", "planning.testing.cap-physical-device", "planning.testing.cap-desktop-gui", "planning.testing.cap-hot-reload", "planning.testing.cap-accessibility", "planning.testing.cap-api-contract", "planning.testing.cap-performance", "planning.testing.cap-security", "planning.testing.test-visibility"],
-      "command_ids_existing": ["catalog.testing_capability_policy_set", "catalog.testing_visibility_policy_set", "catalog.testing_open_panel", "catalog.testing_run", "catalog.testing_cancel_run"],
-      "command_candidates_not_minted": ["cmd.testing.capability.set"],
+      "supersedes_or_conflicts_with": [
+        "Playwright terminology / external browser-driver coupling"
+      ],
+      "settings_ids": [
+        "planning.testing.capability-policy",
+        "planning.testing.cap-built-in-browser",
+        "planning.testing.cap-simulator",
+        "planning.testing.cap-physical-device",
+        "planning.testing.cap-desktop-gui",
+        "planning.testing.cap-hot-reload",
+        "planning.testing.cap-accessibility",
+        "planning.testing.cap-api-contract",
+        "planning.testing.cap-performance",
+        "planning.testing.cap-security",
+        "planning.testing.test-visibility"
+      ],
+      "command_ids_existing": [
+        "catalog.testing_capability_policy_set",
+        "catalog.testing_visibility_policy_set",
+        "catalog.testing_open_panel",
+        "catalog.testing_run",
+        "catalog.testing_cancel_run"
+      ],
+      "command_candidates_not_minted": [
+        "cmd.testing.capability.set"
+      ],
       "uncertainty": "low"
     },
     {
@@ -145,8 +318,18 @@
       "concept_behavior": "Provider/Account/Model/Installation manager inside the expanded 'AI Brains' destination shows all 7 installation fixtures (found+ready, found+not-signed-in, multi-install shadowed, unknown-owner manual-only, explicit install, update-available-ask, update-scheduled-idle + verify-failed-rollback); OAuth boundary: CLI-owned OAuth profiles vs PM-direct OAuth vs API-key vs OpenCode-external are labeled distinctly.",
       "supersedes_or_conflicts_with": [],
       "settings_ids": [],
-      "command_ids_existing": ["catalog.provider_switch_route", "catalog.account_select_profile", "catalog.health_provider_setup_open", "catalog.onboarding_provider_setup_open"],
-      "command_candidates_not_minted": ["cmd.provider.installation.scan", "cmd.provider.installation.select", "cmd.provider.installation.verify", "cmd.provider.installation.rollback"],
+      "command_ids_existing": [
+        "catalog.provider_switch_route",
+        "catalog.account_select_profile",
+        "catalog.health_provider_setup_open",
+        "catalog.onboarding_provider_setup_open"
+      ],
+      "command_candidates_not_minted": [
+        "cmd.provider.installation.scan",
+        "cmd.provider.installation.select",
+        "cmd.provider.installation.verify",
+        "cmd.provider.installation.rollback"
+      ],
       "uncertainty": "low"
     },
     {
@@ -155,8 +338,17 @@
       "gui_related": false,
       "requirement": "Settings inventory must expose the C3 families under code/extensions/system categories with explicit state per row; inventory must not carry stale regular/yolo values or invalid values.",
       "concept_behavior": "Stack consumes the inventory category/subgroup model (code.terminal, code.editing, extensions.skills/plugins/commands, system.mcp, planning.testing); each row carries explicit Default/Recommended/Inherited/Auto/Not-configured/Managed/Custom/Unavailable/Effective-differs state — never blank-as-state.",
-      "supersedes_or_conflicts_with": ["stale regular/yolo mode coupling", "blank-field-as-state convention", "invalid inventory values"],
-      "settings_ids": ["code.editing.lsp-enabled", "code.editing.formatters-enabled", "extensions.commands.command-mode", "planning.testing.capability-policy"],
+      "supersedes_or_conflicts_with": [
+        "stale regular/yolo mode coupling",
+        "blank-field-as-state convention",
+        "invalid inventory values"
+      ],
+      "settings_ids": [
+        "code.editing.lsp-enabled",
+        "code.editing.formatters-enabled",
+        "extensions.commands.command-mode",
+        "planning.testing.capability-policy"
+      ],
       "command_ids_existing": [],
       "command_candidates_not_minted": [],
       "uncertainty": "low"
@@ -812,5 +1004,22 @@
       "gui_related": false,
       "uncertainty": "medium"
     }
-  ]
+  ],
+  "correction_2026_08_13": {
+    "packet": "PM_Settings_Dependency_and_Work_Correction_2026-08-13",
+    "processed": "2026-08-15 (repair pass; original build never processed this packet)",
+    "report": "../../reference-review-report.json",
+    "changes": [
+      "ObservableWork projection + skeleton hydration on manager open (truthful wait; no fabricated progress)",
+      "RuntimeResourceGovernor admission outcomes demonstrated in the Goal manager (admitted/queued/blocked/cancelled + sole-owner note; register §2)",
+      "Honest reconnect/refresh outcomes; offline state block with last-known-good + held refresh",
+      "Provider Setup Required runtime-demand flow with continuation token (final adjudication)",
+      "Virtualized 100-installation scale proof with bounded DOM",
+      "wireShell duplicate-listener leak fixed; theme crossfade; switch/toast/modal motion springs",
+      "Expand/collapse now runs M.growSettle (height settles, content fades in) with an animated height collapse — the advertised 'height-settles-then-content' is now real code",
+      "Real FLIP reorder: M.flipSiblings powers the attention-first ordering control (needs-attention rows glide to the top; default order restorable)",
+      "Push/pop depth: layered sheets render behind the expanded row; siblings recede while a row is open; search gains keyboard nav, typo tolerance, highlighting, empty state"
+    ],
+    "note": "Candidate command/wiring/DRY deltas unchanged: the correction adds no new semantic actions beyond the runtime-demand receipt, whose candidate command lives in the existing pam.* census (flagged reuse)."
+  }
 }

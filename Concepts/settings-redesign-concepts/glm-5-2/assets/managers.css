@@ -253,3 +253,127 @@
   .crew-stats { grid-template-columns: repeat(2,1fr); }
   .mgr-search.field.sm input { width: 90px; }
 }
+
+/* ===== CORRECTION 2026-08-13 ADDITIONS ===== */
+
+/* offline state block gets its own quiet material (distinct from error) */
+.state-block[data-state-kind="offline"] { border-style: solid; border-color: color-mix(in srgb, var(--warn) 45%, var(--line)); }
+.state-block[data-state-kind="offline"] .state-ic { background: var(--warn-soft); }
+
+/* ObservableWork projection block */
+.ow-block { display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface-2); margin: 8px 0; }
+.ow-bar { position: relative; height: 4px; border-radius: 99px; background: var(--surface-3); overflow: hidden; }
+.ow-bar-fill { height: 100%; border-radius: 99px; background: var(--accent); transition: width var(--t-mid) var(--ease); }
+.ow-bar.indeterminate { width: 100%; }
+.ow-bar-slide { position: absolute; top: 0; bottom: 0; width: 34%; border-radius: 99px; background: var(--accent); opacity: .85; }
+[data-reduced-motion="0"] .ow-bar-slide { animation: pm-ow-slide 1.15s var(--ease) infinite; }
+@keyframes pm-ow-slide { 0% { left: -36%; } 100% { left: 102%; } }
+[data-reduced-motion="1"] .ow-bar-slide { left: 0; width: 100%; opacity: .4; }
+
+/* skeleton rows (real wait affordance) */
+.skel-list { display: flex; flex-direction: column; gap: 8px; padding: 4px 0; }
+.skel-row { display: flex; align-items: center; gap: 10px; padding: 10px; border: 1px solid var(--line-2); border-radius: var(--r-sm); background: var(--surface); }
+.skel-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--surface-3); flex: none; }
+.skel-line { display: block; height: 11px; border-radius: var(--r-xs); background: linear-gradient(100deg, var(--surface-2) 40%, var(--surface-3) 50%, var(--surface-2) 60%); background-size: 220% 100%; }
+.skel-line.thin { height: 8px; }
+[data-reduced-motion="0"] .skel-line { animation: pm-skel-shimmer 1.4s linear infinite; }
+@keyframes pm-skel-shimmer { 0% { background-position: 120% 0; } 100% { background-position: -120% 0; } }
+
+/* virtualized scale-proof list */
+.virtual-scale summary { cursor: pointer; }
+.virtual-scale summary h3 { display: inline-block; margin: 0; font-size: 15px; }
+.vlist-shell { margin-top: 10px; }
+.vlist { position: relative; height: 320px; overflow: auto; border: 1px solid var(--line-2); border-radius: var(--r-sm); background: var(--surface); }
+.vlist-pad { position: relative; }
+.vlist-window { position: absolute; top: 0; left: 0; right: 0; will-change: transform; }
+.vlist-window .res-row { margin-bottom: 0; border-radius: 0; border-left: none; border-right: none; border-top: none; }
+.vlist-meta { margin-bottom: 6px; font-variant-numeric: tabular-nums; }
+
+/* search dropdown choreography (shared: origin-top scale+fade) */
+.cr-results:not(.hidden), .at-cmdk-results:not(.hidden) {
+  animation: pm-drop-in 200ms var(--ease-settle); transform-origin: top center;
+}
+[data-results]:not(.hidden) .st-results-inner, [data-results]:not(.hidden) .sr-results-inner {
+  animation: pm-drop-in 200ms var(--ease-settle); transform-origin: top center;
+}
+@keyframes pm-drop-in { from { opacity: 0; transform: translateY(-5px) scale(.985); } to { opacity: 1; transform: none; } }
+/* keyboard focus ring inside search dropdowns + highlighted match */
+.cr-result.kb-focus, .at-cmdk-result.kb-focus, .st-result.kb-focus, .sr-result.kb-focus { background: var(--surface-2); box-shadow: inset 0 0 0 1px var(--accent-line); }
+.cr-result:focus-visible, .at-cmdk-result:focus-visible, .st-result:focus-visible, .sr-result:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+mark.hl { background: var(--accent-soft); color: var(--accent); border-radius: 2px; padding: 0 1px; }
+.sr-empty { padding: 4px; }
+
+/* toast: spring entrance/exit */
+.pm-toast { transform: translate(-50%, 14px) scale(.97); transition: opacity 200ms var(--ease), transform 260ms var(--ease-pop); }
+.pm-toast.show { transform: translate(-50%, 0) scale(1); }
+.pm-menu { animation: pm-drop-in 160ms var(--ease-settle); transform-origin: top left; }
+.setup-modal, .import-modal { animation: pm-modal-in 240ms var(--ease-settle); }
+@keyframes pm-modal-in { from { opacity: 0; transform: translate(-50%,-49%) scale(.97); } to { opacity: 1; transform: translate(-50%,-50%) scale(1); } }
+.setup-required { width: min(480px, 92vw); }
+
+/* broader focus-visible coverage (keyboard parity) */
+.switch:focus-visible, .pm-act-btn:focus-visible, .btn:focus-visible,
+.exposure-control button:focus-visible, .theme-sw:focus-visible, .kind-tab:focus-visible,
+.pm-menu-item:focus-visible, .recent-item:focus-visible, .pm-sprout:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px;
+}
+.theme-row .theme-sw:focus-visible { outline-offset: 1px; }
+
+/* honest probe note inside connection rows */
+.probe-note { margin-top: 4px; }
+.mgr-loading-overlay, .mgr-offline-overlay { margin-bottom: 8px; }
+
+/* ===== SHOWCASE PASS (2026-08-15) — pointer-reactive surfaces + micro-choreography =====
+   Strict packet-calm: nothing here loops or runs when idle. Glow/tilt are var-driven
+   (written by PM.motion.pointerFX), transforms stay owned by these rules, and every
+   effect is gated on hover-capable pointers + full motion. */
+
+/* cursor-following light on destination/owned/recent cards */
+.cr-dest, .at-region, .owned-card, .recent-item { position: relative; }
+.cr-dest::after, .at-region::after, .owned-card::after, .recent-item::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), var(--accent-soft), transparent 62%);
+  opacity: 0; transition: opacity var(--t-fast) var(--ease); z-index: 0;
+}
+.cr-dest:hover::after, .at-region:hover::after, .owned-card:hover::after, .recent-item:hover::after { opacity: 1; }
+.cr-dest > *, .at-region > *, .owned-card > *, .recent-item > * { position: relative; z-index: 1; }
+
+/* composed hover transforms — tilt vars blend into the existing lift */
+[data-reduced-motion="0"] .owned-card:hover {
+  transform: translateY(-1px) perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+}
+[data-reduced-motion="0"] .recent-item:hover {
+  transform: translateY(-1px) perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+}
+
+/* toast: icon leads, label follows; exit slides down */
+.pm-toast { display: inline-flex; align-items: center; gap: 8px; }
+.pm-toast svg { flex: none; }
+[data-reduced-motion="0"] .pm-toast { animation: pm-toast-in 300ms var(--ease-pop); }
+@keyframes pm-toast-in {
+  0% { opacity: 0; transform: translate(-50%, 16px) scale(.94); }
+  60% { opacity: 1; transform: translate(-50%, -3px) scale(1.01); }
+  100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+.pm-toast.leaving { transition: opacity 220ms var(--ease), transform 260ms var(--ease); opacity: 0 !important; transform: translate(-50%, 10px) scale(.98) !important; }
+
+/* chip settle — one-shot confirmation scale when a value changes */
+[data-reduced-motion="0"] .chip.pm-chip-settle { animation: pm-chip-settle 340ms var(--ease-pop); }
+@keyframes pm-chip-settle { 0% { transform: scale(1); } 45% { transform: scale(1.06); } 100% { transform: scale(1); } }
+
+/* sprout badge pop — one-shot when the unread count changes */
+[data-reduced-motion="0"] .pm-sprout-count.pm-pop { animation: pm-badge-pop 360ms var(--ease-pop); }
+@keyframes pm-badge-pop { 0% { transform: scale(1); } 45% { transform: scale(1.35); } 100% { transform: scale(1); } }
+
+/* search focus breathe — one-shot ring on ⌘K focus */
+[data-reduced-motion="0"] .cr-search.pm-breathe, [data-reduced-motion="0"] .st-search.pm-breathe,
+[data-reduced-motion="0"] .sr-search.pm-breathe, [data-reduced-motion="0"] .at-cmdk-field.pm-breathe {
+  animation: pm-breathe 420ms var(--ease-settle);
+}
+@keyframes pm-breathe { 0% { box-shadow: 0 0 0 0 var(--accent-soft); } 55% { box-shadow: 0 0 0 5px var(--accent-soft); } 100% { box-shadow: 0 0 0 0 transparent; } }
+
+/* icon micro-motion on destination hover (chevron nudges toward the open verb) */
+[data-reduced-motion="0"] .cr-dest:hover .cr-dest-open svg,
+[data-reduced-motion="0"] .owned-card:hover .owned-open svg { transform: translateX(2px); }
+.cr-dest-open svg, .owned-open svg { transition: transform var(--t-fast) var(--ease); }
+

@@ -1,0 +1,871 @@
+{
+  "schema_id": "pm.settings_bakeoff.manager_route_matrix.v2.concept",
+  "concept_id": "concept-10-command-suite",
+  "model": "Qwen 5.8",
+  "note": "Left-to-right drill panes (cs-pane index/pages/detail); [data-manager=<familyId>] on every manager detail pane, [data-manager-row] on domain manager rows; shell (breadcrumb/back/close/search/project) retained on all routes; no route leaves the concept. Destinations derived from this page's router (backTarget/mgrHTML); headless-browser verification not claimed here.",
+  "families": [
+    {
+      "family": "providers",
+      "title": "Providers",
+      "entry_points": [
+        "Home command index → AI Brains & Providers domain pane manager list",
+        "universal search (sr:manager:providers)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/providers",
+      "shell_retained": true,
+      "back_target": "#/cat/ai (AI Brains & Providers)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "loading-with-cache skeleton under refreshing scenario",
+        "empty/no-results truthful states",
+        "action rows run phased ObservableWork",
+        "not-installed explicit official-source install with Host/Environment",
+        "shadowed vs selected installations",
+        "ask-first update and scheduled update",
+        "verification-failed rolled back",
+        "usage-unavailable meters note",
+        "last-known-good catalog offline",
+        "CLI-owned vs PM-direct OAuth notes"
+      ],
+      "pass": true
+    },
+    {
+      "family": "context",
+      "title": "Context & Instructions",
+      "entry_points": [
+        "Home command index → Memory & Context domain pane manager list",
+        "universal search (sr:manager:context)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/context",
+      "shell_retained": true,
+      "back_target": "#/cat/memory (Memory & Context)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "loading-with-cache skeleton under refreshing scenario",
+        "empty/no-results truthful states",
+        "action rows run phased ObservableWork"
+      ],
+      "pass": true
+    },
+    {
+      "family": "memory",
+      "title": "Memory",
+      "entry_points": [
+        "Home command index → Memory & Context domain pane manager list",
+        "universal search (sr:manager:memory)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/memory",
+      "shell_retained": true,
+      "back_target": "#/cat/memory (Memory & Context)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "loading-with-cache skeleton under refreshing scenario",
+        "empty/no-results truthful states",
+        "action rows run phased ObservableWork"
+      ],
+      "pass": true
+    },
+    {
+      "family": "personas",
+      "title": "Personas",
+      "entry_points": [
+        "Home command index → Personas domain pane manager list",
+        "universal search (sr:manager:personas)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/personas (+#/mgr/personas/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/personas from object; then #/cat/personas (Personas)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "roster + detail drill; object health badges",
+        "attention health states",
+        "roster row .pm2-locate on deep link"
+      ],
+      "pass": true
+    },
+    {
+      "family": "goal",
+      "title": "Goal & Automation",
+      "entry_points": [
+        "Home command index → Planning & Verification domain pane manager list",
+        "universal search (sr:manager:goal)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/goal (+#/mgr/goal/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/goal from object; then #/cat/planning (Planning & Verification)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "roster + detail drill; object health badges",
+        "attention health states",
+        "roster row .pm2-locate on deep link"
+      ],
+      "pass": true
+    },
+    {
+      "family": "crew",
+      "title": "Crew",
+      "entry_points": [
+        "Home command index → Branching & Collaboration domain pane manager list",
+        "universal search (sr:manager:crew)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/crew (+#/mgr/crew/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/crew from object; then #/cat/branching (Branching & Collaboration)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "roster + detail drill; object health badges",
+        "attention health states",
+        "roster row .pm2-locate on deep link"
+      ],
+      "pass": true
+    },
+    {
+      "family": "permissions",
+      "title": "Permissions & FileSafe",
+      "entry_points": [
+        "Home command index → Permissions & Safety domain pane manager list",
+        "universal search (sr:manager:permissions)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/permissions (+#/mgr/permissions/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/permissions from object; then #/cat/safety (Permissions & Safety)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "roster + detail drill; object health badges",
+        "attention health states",
+        "roster row .pm2-locate on deep link"
+      ],
+      "pass": true
+    },
+    {
+      "family": "bsd",
+      "title": "Back Seat Driver",
+      "entry_points": [
+        "Home command index → Permissions & Safety domain pane manager list",
+        "universal search (sr:manager:bsd)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/bsd",
+      "shell_retained": true,
+      "back_target": "#/cat/safety (Permissions & Safety)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "managed/unavailable rows disabled with source chips",
+        "restart/reconnect/changed-elsewhere banners under scenarios",
+        "staged editor save/discard"
+      ],
+      "pass": true
+    },
+    {
+      "family": "notifications",
+      "title": "Notifications",
+      "entry_points": [
+        "Home command index → General & Appearance domain pane manager list",
+        "universal search (sr:manager:notifications)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/notifications",
+      "shell_retained": true,
+      "back_target": "#/cat/general (General & Appearance)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "managed/unavailable rows disabled with source chips",
+        "restart/reconnect/changed-elsewhere banners under scenarios",
+        "staged editor save/discard"
+      ],
+      "pass": true
+    },
+    {
+      "family": "sounds",
+      "title": "Sounds",
+      "entry_points": [
+        "Home command index → General & Appearance domain pane manager list",
+        "universal search (sr:manager:sounds)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/sounds",
+      "shell_retained": true,
+      "back_target": "#/cat/general (General & Appearance)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "loading-with-cache skeleton under refreshing scenario",
+        "empty/no-results truthful states",
+        "action rows run phased ObservableWork"
+      ],
+      "pass": true
+    },
+    {
+      "family": "appearance",
+      "title": "Appearance",
+      "entry_points": [
+        "Home command index → General & Appearance domain pane manager list",
+        "universal search (sr:manager:appearance)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/appearance",
+      "shell_retained": true,
+      "back_target": "#/cat/general (General & Appearance)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "loading-with-cache skeleton under refreshing scenario",
+        "empty/no-results truthful states",
+        "action rows run phased ObservableWork"
+      ],
+      "pass": true
+    },
+    {
+      "family": "spellcheck",
+      "title": "Spellcheck & Dictionaries",
+      "entry_points": [
+        "Home command index → General & Appearance domain pane manager list",
+        "universal search (sr:manager:spellcheck)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/spellcheck",
+      "shell_retained": true,
+      "back_target": "#/cat/general (General & Appearance)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "loading-with-cache skeleton under refreshing scenario",
+        "empty/no-results truthful states",
+        "action rows run phased ObservableWork"
+      ],
+      "pass": true
+    },
+    {
+      "family": "desktop",
+      "title": "Desktop, Tray & Window",
+      "entry_points": [
+        "Home command index → System & Advanced domain pane manager list",
+        "universal search (sr:manager:desktop)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/desktop",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "managed/unavailable rows disabled with source chips",
+        "restart/reconnect/changed-elsewhere banners under scenarios",
+        "staged editor save/discard"
+      ],
+      "pass": true
+    },
+    {
+      "family": "teacher",
+      "title": "Teacher",
+      "entry_points": [
+        "Home command index → General & Appearance domain pane manager list",
+        "universal search (sr:manager:teacher)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/teacher",
+      "shell_retained": true,
+      "back_target": "#/cat/general (General & Appearance)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "managed/unavailable rows disabled with source chips",
+        "restart/reconnect/changed-elsewhere banners under scenarios",
+        "staged editor save/discard"
+      ],
+      "pass": true
+    },
+    {
+      "family": "doctor",
+      "title": "Doctor",
+      "entry_points": [
+        "Home command index → System & Advanced domain pane manager list",
+        "universal search (sr:manager:doctor)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/doctor",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "phased run with wait reasons",
+        "offline shows last-known health",
+        "no permanent spinner",
+        "overall health with advisories",
+        "offline last-known health"
+      ],
+      "pass": true
+    },
+    {
+      "family": "files",
+      "title": "File Manager & Editor",
+      "entry_points": [
+        "Home command index → Code & Execution domain pane manager list",
+        "universal search (sr:manager:files)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/files",
+      "shell_retained": true,
+      "back_target": "#/cat/code (Code & Execution)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "loading-with-cache skeleton under refreshing scenario",
+        "empty/no-results truthful states",
+        "action rows run phased ObservableWork"
+      ],
+      "pass": true
+    },
+    {
+      "family": "terminal",
+      "title": "Terminal",
+      "entry_points": [
+        "Home command index → Code & Execution domain pane manager list",
+        "universal search (sr:manager:terminal)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/terminal",
+      "shell_retained": true,
+      "back_target": "#/cat/code (Code & Execution)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "managed/unavailable rows disabled with source chips",
+        "restart/reconnect/changed-elsewhere banners under scenarios",
+        "staged editor save/discard"
+      ],
+      "pass": true
+    },
+    {
+      "family": "lsp",
+      "title": "Language Servers",
+      "entry_points": [
+        "Home command index → Code & Execution domain pane manager list",
+        "universal search (sr:manager:lsp)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/lsp (+#/mgr/lsp/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/lsp from object; then #/cat/code (Code & Execution)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "roster + detail drill; object health badges",
+        "attention health states",
+        "roster row .pm2-locate on deep link"
+      ],
+      "pass": true
+    },
+    {
+      "family": "formatters",
+      "title": "Formatters",
+      "entry_points": [
+        "Home command index → Code & Execution domain pane manager list",
+        "universal search (sr:manager:formatters)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/formatters (+#/mgr/formatters/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/formatters from object; then #/cat/code (Code & Execution)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "roster + detail drill; object health badges",
+        "attention health states",
+        "roster row .pm2-locate on deep link"
+      ],
+      "pass": true
+    },
+    {
+      "family": "commands",
+      "title": "Commands & Shortcuts",
+      "entry_points": [
+        "Home command index → Skills, Plugins & Commands domain pane manager list",
+        "universal search (sr:manager:commands)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/commands (+#/mgr/commands/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/commands from object; then #/cat/extensions (Skills, Plugins & Commands)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "roster + detail drill; object health badges",
+        "attention health states",
+        "roster row .pm2-locate on deep link"
+      ],
+      "pass": true
+    },
+    {
+      "family": "mcp",
+      "title": "MCP Servers",
+      "entry_points": [
+        "Home command index → Skills, Plugins & Commands domain pane manager list",
+        "universal search (sr:manager:mcp)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/mcp (+#/mgr/mcp/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/mcp from object; then #/cat/extensions (Skills, Plugins & Commands)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "roster + detail drill; object health badges",
+        "attention health states",
+        "roster row .pm2-locate on deep link"
+      ],
+      "pass": true
+    },
+    {
+      "family": "skills",
+      "title": "Skills",
+      "entry_points": [
+        "Home command index → Skills, Plugins & Commands domain pane manager list",
+        "universal search (sr:manager:skills)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/skills (+#/mgr/skills/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/skills from object; then #/cat/extensions (Skills, Plugins & Commands)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "roster + detail drill; object health badges",
+        "attention health states",
+        "roster row .pm2-locate on deep link"
+      ],
+      "pass": true
+    },
+    {
+      "family": "plugins",
+      "title": "Plugins",
+      "entry_points": [
+        "Home command index → Skills, Plugins & Commands domain pane manager list",
+        "universal search (sr:manager:plugins)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/plugins (+#/mgr/plugins/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/plugins from object; then #/cat/extensions (Skills, Plugins & Commands)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "roster + detail drill; object health badges",
+        "attention health states",
+        "roster row .pm2-locate on deep link"
+      ],
+      "pass": true
+    },
+    {
+      "family": "tools",
+      "title": "Tools",
+      "entry_points": [
+        "Home command index → Skills, Plugins & Commands domain pane manager list",
+        "universal search (sr:manager:tools)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/tools (+#/mgr/tools/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/tools from object; then #/cat/extensions (Skills, Plugins & Commands)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "roster + detail drill; object health badges",
+        "attention health states",
+        "roster row .pm2-locate on deep link"
+      ],
+      "pass": true
+    },
+    {
+      "family": "testing",
+      "title": "Testing & Debug",
+      "entry_points": [
+        "Home command index → Planning & Verification domain pane manager list",
+        "universal search (sr:manager:testing)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/testing",
+      "shell_retained": true,
+      "back_target": "#/cat/planning (Planning & Verification)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "managed/unavailable rows disabled with source chips",
+        "restart/reconnect/changed-elsewhere banners under scenarios",
+        "staged editor save/discard"
+      ],
+      "pass": true
+    },
+    {
+      "family": "storage",
+      "title": "Storage & Retention",
+      "entry_points": [
+        "Home command index → System & Advanced domain pane manager list",
+        "universal search (sr:manager:storage)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/storage",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "loading-with-cache skeleton under refreshing scenario",
+        "empty/no-results truthful states",
+        "action rows run phased ObservableWork"
+      ],
+      "pass": true
+    },
+    {
+      "family": "backup",
+      "title": "Backup & Restore",
+      "entry_points": [
+        "Home command index → System & Advanced domain pane manager list",
+        "universal search (sr:manager:backup)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/backup",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "loading-with-cache skeleton under refreshing scenario",
+        "empty/no-results truthful states",
+        "action rows run phased ObservableWork",
+        "back up now phased op",
+        "test restore",
+        "server-backup deferred shell"
+      ],
+      "pass": true
+    },
+    {
+      "family": "lifecycle",
+      "title": "Settings Lifecycle",
+      "entry_points": [
+        "Home command index → System & Advanced domain pane manager list",
+        "universal search (sr:manager:lifecycle)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/lifecycle",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "preview before apply",
+        "restore point + rollback",
+        "conflict review",
+        "export/import/reset transactions",
+        "import conflict review",
+        "restore points table with rollback"
+      ],
+      "pass": true
+    },
+    {
+      "family": "history",
+      "title": "History & Sessions",
+      "entry_points": [
+        "Home command index → System & Advanced domain pane manager list",
+        "universal search (sr:manager:history)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/history",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "loading-with-cache skeleton under refreshing scenario",
+        "empty/no-results truthful states",
+        "action rows run phased ObservableWork"
+      ],
+      "pass": true
+    },
+    {
+      "family": "artifacts",
+      "title": "Runtime Artifacts",
+      "entry_points": [
+        "Home command index → System & Advanced domain pane manager list",
+        "universal search (sr:manager:artifacts)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/artifacts",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "loading-with-cache skeleton under refreshing scenario",
+        "empty/no-results truthful states",
+        "action rows run phased ObservableWork"
+      ],
+      "pass": true
+    },
+    {
+      "family": "scm",
+      "title": "Source Control & Worktrees",
+      "entry_points": [
+        "Home command index → Branching & Collaboration domain pane manager list",
+        "universal search (sr:manager:scm)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/scm",
+      "shell_retained": true,
+      "back_target": "#/cat/branching (Branching & Collaboration)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "loading-with-cache skeleton under refreshing scenario",
+        "empty/no-results truthful states",
+        "action rows run phased ObservableWork"
+      ],
+      "pass": true
+    },
+    {
+      "family": "gha",
+      "title": "GitHub Actions",
+      "entry_points": [
+        "Home command index → Skills, Plugins & Commands domain pane manager list",
+        "universal search (sr:manager:gha)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/gha",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions (Skills, Plugins & Commands)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "loading-with-cache skeleton under refreshing scenario",
+        "empty/no-results truthful states",
+        "action rows run phased ObservableWork"
+      ],
+      "pass": true
+    },
+    {
+      "family": "containers",
+      "title": "Containers & Registries",
+      "entry_points": [
+        "Home command index → System & Advanced domain pane manager list",
+        "universal search (sr:manager:containers)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/containers (+#/mgr/containers/<objectId>)",
+      "shell_retained": true,
+      "back_target": "#/mgr/containers from object; then #/cat/system (System & Advanced)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "roster + detail drill; object health badges",
+        "attention health states",
+        "roster row .pm2-locate on deep link"
+      ],
+      "pass": true
+    },
+    {
+      "family": "web",
+      "title": "Web, Search & Fetch",
+      "entry_points": [
+        "Home command index → Web & Search domain pane manager list",
+        "universal search (sr:manager:web)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/web",
+      "shell_retained": true,
+      "back_target": "#/cat/web (Web & Search)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "managed/unavailable rows disabled with source chips",
+        "restart/reconnect/changed-elsewhere banners under scenarios",
+        "staged editor save/discard"
+      ],
+      "pass": true
+    },
+    {
+      "family": "searchindex",
+      "title": "Project Search Index",
+      "entry_points": [
+        "Home command index → System & Advanced domain pane manager list",
+        "universal search (sr:manager:searchindex)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/searchindex",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "status phases",
+        "phased rebuild op",
+        "editing never blocked",
+        "phase report",
+        "phased rebuild",
+        "excluded paths"
+      ],
+      "pass": true
+    },
+    {
+      "family": "cleanup",
+      "title": "Workspace Cleanup",
+      "entry_points": [
+        "Home command index → System & Advanced domain pane manager list",
+        "universal search (sr:manager:cleanup)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/cleanup",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "preview before apply",
+        "restore point + rollback",
+        "conflict review",
+        "dry-run first",
+        "protected paths",
+        "approved removal op"
+      ],
+      "pass": true
+    },
+    {
+      "family": "media",
+      "title": "Media & Output",
+      "entry_points": [
+        "Home command index → Media & Output domain pane manager list",
+        "universal search (sr:manager:media)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/media",
+      "shell_retained": true,
+      "back_target": "#/cat/media (Media & Output)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "managed/unavailable rows disabled with source chips",
+        "restart/reconnect/changed-elsewhere banners under scenarios",
+        "staged editor save/discard"
+      ],
+      "pass": true
+    },
+    {
+      "family": "dry",
+      "title": "DRY Method",
+      "entry_points": [
+        "Home command index → Skills, Plugins & Commands domain pane manager list",
+        "universal search (sr:manager:dry)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/dry",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions (Skills, Plugins & Commands)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "loading-with-cache skeleton under refreshing scenario",
+        "empty/no-results truthful states",
+        "action rows run phased ObservableWork",
+        "detections/savings/opt-outs visible state",
+        "review action"
+      ],
+      "pass": true
+    },
+    {
+      "family": "onboarding",
+      "title": "Product Onboarding",
+      "entry_points": [
+        "Home command index → General & Appearance domain pane manager list",
+        "universal search (sr:manager:onboarding)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/onboarding",
+      "shell_retained": true,
+      "back_target": "#/cat/general (General & Appearance)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "deferred owner shell",
+        "explicit install consent",
+        "no fabricated backend"
+      ],
+      "pass": true
+    },
+    {
+      "family": "updates",
+      "title": "App & Content Updates",
+      "entry_points": [
+        "Home command index → System & Advanced domain pane manager list",
+        "universal search (sr:manager:updates)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/updates",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "deferred owner shell",
+        "explicit install consent",
+        "no fabricated backend"
+      ],
+      "pass": true
+    },
+    {
+      "family": "servers",
+      "title": "Servers",
+      "entry_points": [
+        "Home command index → System & Advanced domain pane manager list",
+        "universal search (sr:manager:servers)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/servers",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "deferred owner shell",
+        "explicit install consent",
+        "no fabricated backend"
+      ],
+      "pass": true
+    },
+    {
+      "family": "hosting",
+      "title": "Project Hosting & Files",
+      "entry_points": [
+        "Home command index → System & Advanced domain pane manager list",
+        "universal search (sr:manager:hosting)",
+        "Ctrl+K palette manager entry"
+      ],
+      "route": "#/mgr/hosting",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced)",
+      "close_target": "Close Settings → receipt with return note (shell bottom bar)",
+      "narrow_behavior": "one pane at a time push navigation; detail pane pushed; Back names the previous level; roster hidden when object open",
+      "key_states": [
+        "deferred owner shell",
+        "explicit install consent",
+        "no fabricated backend"
+      ],
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "schema_id": "pm.settings_candidate_dry_delta.v1",
+  "concept_id": "concept-10-command-suite",
+  "note": "Distinguishes headless/semantic reuse (allowed) from concept-native presentation (required). No second state owner, no universal visible renderer.",
+  "headless_reuse": [
+    { "role": "SettingsDestination", "reuse": "PMSearch2 dest objects + routes", "concept_native": "drill pane targets" },
+    { "role": "SettingsNotice", "reuse": "PMState2.notices()", "concept_native": "attention table on Home index pane" },
+    { "role": "SettingsSearch", "reuse": "PMSearch2 index/fuzzy/latest-wins", "concept_native": "dropdown styling + palette overlay" },
+    { "role": "SettingRow", "reuse": "PMManagers2.row/bindRows atoms", "concept_native": "row placement inside tables/panes" },
+    { "role": "ValueSourceBadge", "reuse": "sourceChip via row atom", "concept_native": "badge placement in tables" },
+    { "role": "ObservableOperation", "reuse": "PMState2 beginOp/advanceOp/finishOp", "concept_native": "op strip rendering with phase + wait reason" },
+    { "role": "ReceiptLink", "reuse": "PMState2.receipt + toast host", "concept_native": "receipt panel in copy/lifecycle views" },
+    { "role": "SecretField/SecretReference", "reuse": "masked reference rendering rule", "concept_native": "credentials table cell" },
+    { "role": "ProviderFamilyCard/ModelRow/UsagePlanSummary", "reuse": "PMManagers2Data fixtures", "concept_native": "roster + detail tables" },
+    { "role": "VirtualList", "reuse": "PMManagers2.virtualList for #/all", "concept_native": "row renderer + window metadata" }
+  ],
+  "concept_native_only": [
+    "Command index home composition (index pane + context + attention tables)",
+    "Ctrl+K palette overlay and arrow-key drill bindings",
+    "Left→right multi-pane drill geometry and horizontal slide motion",
+    "Compact data tables for providers/limits/models/logs",
+    "Exact setting editor panel beside/beneath context with staged save",
+    "Transactional copy panels (source / categories / preview / confirm)",
+    "Narrow push transformation: one pane at a time with named Back"
+  ],
+  "new_shared_candidates": [
+    { "role": "CommandIndexList", "kind": "presentation-only", "note": "Keyboard-navigable index list with counts; no state ownership. Candidate for shared UI kit, not semantics." },
+    { "role": "DrillPaneShell", "kind": "presentation-only", "note": "Horizontal pane stack with push/slide behavior; state lives in routes." },
+    { "role": "StagedSettingEditor", "kind": "presentation-only", "note": "Stage→Save/Discard over cmd.settings.value.set; semantics stay in settings owner." }
+  ],
+  "forbidden": [
+    "second ResourceGovernor or progress owner",
+    "second settings state store",
+    "shared visible manager renderer across concepts"
+  ]
+}

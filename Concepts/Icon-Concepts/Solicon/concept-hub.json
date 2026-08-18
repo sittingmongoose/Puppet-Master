@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "icons:sol",
+  "topic": "icons",
+  "model": "Sol",
+  "presentation": "workspace",
+  "order": 70,
+  "widthControl": {
+    "enabled": false,
+    "label": "Workspace width",
+    "role": "none",
+    "default": 1440,
+    "previewWidth": 1440
+  },
+  "workspace": {
+    "path": "index.html",
+    "title": "Sol Identity and Loader Gallery",
+    "openActions": "none",
+    "controlMode": "internal",
+    "tags": [
+      "icons",
+      "loading"
+    ],
+    "id": "workspace",
+    "openPath": "index.html"
+  }
+}

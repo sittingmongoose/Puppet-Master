@@ -1,0 +1,110 @@
+{
+  "schema_id": "pm.settings_bakeoff.candidate_dry_delta.v1",
+  "concept": "concept-05-directory-take-1",
+  "provisional": true,
+  "canon_mutated": false,
+  "singular_owners_preserved": [
+    "ResourceGovernor",
+    "ObservableWork",
+    "BinaryLocator",
+    "shared integration lifecycle",
+    "provider readiness/usage",
+    "Project identity",
+    "browser sessions",
+    "Product Onboarding",
+    "Installation/Deployment",
+    "Server Claim/Bootstrap",
+    "Servers/Execution Hosts/Clients",
+    "Project Hosting & Files",
+    "Remote Access",
+    "Project Sync/Move",
+    "App/Content Updates",
+    "Full Server backup owner flow"
+  ],
+  "entries": [
+    {
+      "component": "Settings inventory projection (PM_V2_INVENTORY)",
+      "kind": "headless-data",
+      "shared": true,
+      "second_owner_created": false,
+      "notes": "All 828 rows projected; concept renders, never re-derives"
+    },
+    {
+      "component": "Universal search index + immutable-ID routing (PM_V2_SEARCH)",
+      "kind": "headless-semantics",
+      "shared": true,
+      "second_owner_created": false,
+      "notes": "resolve() is the only route in"
+    },
+    {
+      "component": "Project store, overrides, scenarios, ObservableWork (PM_V2_STORE)",
+      "kind": "headless-data",
+      "shared": true,
+      "second_owner_created": false,
+      "notes": "Per-concept namespace; shared mechanism"
+    },
+    {
+      "component": "Copy Settings engine (PM_V2_COPY)",
+      "kind": "headless-semantics",
+      "shared": true,
+      "second_owner_created": false,
+      "notes": "One transaction state machine; concept renders the review flow"
+    },
+    {
+      "component": "Object rosters / workflows / diagnostics / help (PM_V2_OBJECTS)",
+      "kind": "headless-data",
+      "shared": true,
+      "second_owner_created": false,
+      "notes": null
+    },
+    {
+      "component": "PM popup-menu standard (PMV2Menu)",
+      "kind": "headless-semantics",
+      "shared": true,
+      "second_owner_created": false,
+      "notes": "Overflow, directory, and recents menus"
+    },
+    {
+      "component": "Directory Home composition (identity, hero search, attention block, two-column cards)",
+      "kind": "presentation-native",
+      "shared": false,
+      "second_owner_created": false,
+      "notes": null
+    },
+    {
+      "component": "Domain pages + subgroup forms",
+      "kind": "presentation-native",
+      "shared": false,
+      "second_owner_created": false,
+      "notes": null
+    },
+    {
+      "component": "Roster workspace, catalog, health, transaction manager renderers",
+      "kind": "presentation-native",
+      "shared": false,
+      "second_owner_created": false,
+      "notes": null
+    },
+    {
+      "component": "Search dropdown + exact-result locate",
+      "kind": "presentation-native",
+      "shared": false,
+      "second_owner_created": false,
+      "notes": null
+    },
+    {
+      "component": "Centered copy review flow",
+      "kind": "presentation-native",
+      "shared": false,
+      "second_owner_created": false,
+      "notes": null
+    },
+    {
+      "component": "All Settings faceted virtualized compendium",
+      "kind": "presentation-native",
+      "shared": false,
+      "second_owner_created": false,
+      "notes": null
+    }
+  ]
+}

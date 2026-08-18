@@ -1,0 +1,113 @@
+{
+  "schema_id": "pm.settings_candidate_wiring_delta.v1",
+  "concept_id": "concept-08-directory-take-3",
+  "model": "Qwen 5.8",
+  "trace_rule": "UI source → command → canonical owner → validation/permission → mutation/operation → event/receipt/ObservableWork → UI projection → Usage/diagnostic attribution → recovery/deep link",
+  "note": "Every trace ends with demo_note: concept-local state is simulated and labeled; nothing masquerades as production wiring.",
+  "traces": [
+    {
+      "control_family": "inventory setting row mutation",
+      "ui_source": "PMManagers2.row control (toggle/select/number/text) on #/cat/<cat>/<sub> and #/all",
+      "command": "registry-owned non-command mutation",
+      "canonical_owner": "Settings registry (inventory/schema owner)",
+      "validation_permission": "managed/unavailable sources blocked with receipt; typed values",
+      "mutation_or_operation": "PMState2.setSetting → source custom",
+      "event_receipt": "emit('setting') + receipt toast 'this Project only'",
+      "ui_projection": "row re-render with Custom badge; view cache invalidated",
+      "usage_diagnostic_attribution": "n/a in demo; production attributes to schema revision",
+      "recovery_deep_link": "Reset to default in row Details; #/cat/<cat>/<sub>?row=<id> restores focus",
+      "demo_note": "Simulated end-to-end; labeled in receipts."
+    },
+    {
+      "control_family": "family fixture row mutation",
+      "ui_source": "Concept-local famRow controls (memory.half-life, bsd.mode, …)",
+      "command": "candidate cmd.settings.setting.set (provisional)",
+      "canonical_owner": "Each family's plan owner once ids land in inventory",
+      "validation_permission": "select options constrained per SYN_OPTS",
+      "mutation_or_operation": "synState[id] update + receipt",
+      "event_receipt": "receipt toast; no cross-concept state",
+      "ui_projection": "row control re-render",
+      "usage_diagnostic_attribution": "none (demo rows)",
+      "recovery_deep_link": "route re-render restores last value from synState",
+      "demo_note": "Fixture rows are explicitly not inventory ids; production wiring deferred to family owners."
+    },
+    {
+      "control_family": "provider installation select",
+      "ui_source": "Installations 'Select' button",
+      "command": "cmd.provider.installation.select (candidate)",
+      "canonical_owner": "Binary Locator / installation lifecycle",
+      "validation_permission": "unknown-owner installations manual-only (button replaced by note)",
+      "mutation_or_operation": "selected flag swap (demo receipt only)",
+      "event_receipt": "receipt sim",
+      "ui_projection": "Selected/Shadowed chips",
+      "usage_diagnostic_attribution": "confidence + host surfaced as diagnostic evidence",
+      "recovery_deep_link": "#/mgr/providers/<id>?sec=installations",
+      "demo_note": "Simulated; production resolver owns mutation."
+    },
+    {
+      "control_family": "provider update lifecycle",
+      "ui_source": "Update now / Review update buttons",
+      "command": "cmd.provider.installation.update (candidate)",
+      "canonical_owner": "Installation lifecycle owner",
+      "validation_permission": "ask-first policy honored; nothing proceeds without approval",
+      "mutation_or_operation": "ObservableWork phases downloading → verifying → activating",
+      "event_receipt": "phase receipts + completion receipt",
+      "ui_projection": "status card transitions; rolled-back badge fixture",
+      "usage_diagnostic_attribution": "verification receipt doubles as diagnostic evidence",
+      "recovery_deep_link": "rollback fixture restores previous generation with receipt kept",
+      "demo_note": "Simulated phases; determinate only with denominator (3)."
+    },
+    {
+      "control_family": "catalog refresh",
+      "ui_source": "Refresh catalog / Retry refresh",
+      "command": "cmd.provider.catalog.refresh (candidate)",
+      "canonical_owner": "Models System catalogs",
+      "validation_permission": "single refresh in flight",
+      "mutation_or_operation": "timed op; last-known-good stays active on failure (ollama fixture)",
+      "event_receipt": "completion receipt",
+      "ui_projection": "readiness log entry",
+      "usage_diagnostic_attribution": "catalog version + activation time",
+      "recovery_deep_link": "#/mgr/providers/ollama-catalog?sec=catalog",
+      "demo_note": "Simulated network round-trip with wait reason."
+    },
+    {
+      "control_family": "search deep link",
+      "ui_source": "Search result Enter/click (data-rid)",
+      "command": "cmd.settings.search.select_result (candidate)",
+      "canonical_owner": "Settings navigation owner",
+      "validation_permission": "entry resolved via PMSearch2.byRid only; unavailable entries never route",
+      "mutation_or_operation": "history push #/q/<query> then landing hash",
+      "event_receipt": "none on navigation; landing highlight pm2-locate",
+      "ui_projection": "domain/manager view with exact row/section highlighted and focused",
+      "usage_diagnostic_attribution": "n/a",
+      "recovery_deep_link": "browser Back restores #/q/<query> with query text and identical grouped results",
+      "demo_note": "Observed live in headless browser."
+    },
+    {
+      "control_family": "copy transaction",
+      "ui_source": "Copy flow step buttons (source, categories, preview, apply, rollback)",
+      "command": "cmd.settings.copy.preview/apply/rollback (candidates)",
+      "canonical_owner": "Project copy owner (PMCopy2 headless engine)",
+      "validation_permission": "credential rows copied as references only; unavailable rows skipped",
+      "mutation_or_operation": "restore point → atomic apply → verify",
+      "event_receipt": "apply receipt with counts; verify gaps surfaced",
+      "ui_projection": "step 3 badges add/replace/unchanged/unavailable/conflict + item diff",
+      "usage_diagnostic_attribution": "verification checked counts",
+      "recovery_deep_link": "Roll back this copy → restore point rollback receipt",
+      "demo_note": "Simulated but engine-verified (verify pass observed)."
+    },
+    {
+      "control_family": "action rows (backup now, rebuild gists, trace path)",
+      "ui_source": "PMManagers2 action controls and famRow actions",
+      "command": "owner-specific candidates (cmd.storage.*, cmd.memory.rebuild, cmd.permissions.trace)",
+      "canonical_owner": "Respective plan owners",
+      "validation_permission": "rate limits on test sends; dry-run first for cleanup",
+      "mutation_or_operation": "ObservableWork indeterminate with phase label",
+      "event_receipt": "completion receipt",
+      "ui_projection": "status chip update",
+      "usage_diagnostic_attribution": "receipt trail",
+      "recovery_deep_link": "manager route with ?row=",
+      "demo_note": "Simulated; labeled."
+    }
+  ]
+}

@@ -1,0 +1,863 @@
+{
+  "schema_id": "pm.settings_bakeoff.manager_route_matrix.v1",
+  "concept": "concept-05-directory-take-1",
+  "generated": "2026-08-18",
+  "managers": [
+    {
+      "manager": "Providers",
+      "family": "Provider / Account / Model / Installation",
+      "entry_point": "AI Brains & Providers destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / AI Brains & Providers / Providers",
+      "shell_retained": true,
+      "back_target": "Back to AI Brains & Providers",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "roster collapses above the detail sheet in one column; Back names the domain",
+      "key_states": [
+        "roster selection",
+        "detail subpages",
+        "health badges",
+        "empty scenario",
+        "remove/rename via project docs",
+        "installed-signed-in",
+        "installed-signed-out",
+        "not-installed with explicit official-source setup",
+        "update-available",
+        "shadowed installation"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Model Defaults & Routing",
+      "family": "Provider / Account / Model / Installation",
+      "entry_point": "AI Brains & Providers destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / AI Brains & Providers / Model Defaults & Routing",
+      "shell_retained": true,
+      "back_target": "Back to AI Brains & Providers",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "one-pane push navigation; Back names the domain; form goes single column",
+      "key_states": [
+        "default",
+        "custom",
+        "managed",
+        "unavailable",
+        "override reset",
+        "scenario strip"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Context & Instructions",
+      "family": "Context & Instructions",
+      "entry_point": "Memory & Context destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / Memory & Context / Context & Instructions",
+      "shell_retained": true,
+      "back_target": "Back to Memory & Context",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "one-pane push navigation; Back names the domain; form goes single column",
+      "key_states": [
+        "default",
+        "custom",
+        "managed",
+        "unavailable",
+        "override reset",
+        "scenario strip"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Memory",
+      "family": "Memory",
+      "entry_point": "Memory & Context destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / Memory & Context / Memory",
+      "shell_retained": true,
+      "back_target": "Back to Memory & Context",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "roster collapses above the detail sheet in one column; Back names the domain",
+      "key_states": [
+        "roster selection",
+        "detail subpages",
+        "health badges",
+        "empty scenario",
+        "remove/rename via project docs"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Personas",
+      "family": "Personas",
+      "entry_point": "Personas destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / Personas / Personas",
+      "shell_retained": true,
+      "back_target": "Back to Personas",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "roster collapses above the detail sheet in one column; Back names the domain",
+      "key_states": [
+        "roster selection",
+        "detail subpages",
+        "health badges",
+        "empty scenario",
+        "remove/rename via project docs"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Crew",
+      "family": "Crew",
+      "entry_point": "Branching & Collaboration destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / Branching & Collaboration / Crew",
+      "shell_retained": true,
+      "back_target": "Back to Branching & Collaboration",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "roster collapses above the detail sheet in one column; Back names the domain",
+      "key_states": [
+        "roster selection",
+        "detail subpages",
+        "health badges",
+        "empty scenario",
+        "remove/rename via project docs"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Goal & Automation",
+      "family": "Goal & Automation",
+      "entry_point": "Planning & Verification destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / Planning & Verification / Goal & Automation",
+      "shell_retained": true,
+      "back_target": "Back to Planning & Verification",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "one-pane push navigation; Back names the domain; form goes single column",
+      "key_states": [
+        "default",
+        "custom",
+        "managed",
+        "unavailable",
+        "override reset",
+        "scenario strip"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Back Seat Driver",
+      "family": "Back Seat Driver",
+      "entry_point": "Planning & Verification destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / Planning & Verification / Back Seat Driver",
+      "shell_retained": true,
+      "back_target": "Back to Planning & Verification",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "one-pane push navigation; Back names the domain; form goes single column",
+      "key_states": [
+        "default",
+        "custom",
+        "managed",
+        "unavailable",
+        "override reset",
+        "scenario strip"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Permissions & FileSafe",
+      "family": "Permissions & FileSafe",
+      "entry_point": "Permissions & Safety destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / Permissions & Safety / Permissions & FileSafe",
+      "shell_retained": true,
+      "back_target": "Back to Permissions & Safety",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "one-pane push navigation; Back names the domain; form goes single column",
+      "key_states": [
+        "default",
+        "custom",
+        "managed",
+        "unavailable",
+        "override reset",
+        "scenario strip"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Appearance",
+      "family": "Appearance / themes / fonts / motion",
+      "entry_point": "General & Appearance destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / General & Appearance / Appearance",
+      "shell_retained": true,
+      "back_target": "Back to General & Appearance",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "one-pane push navigation; Back names the domain; form goes single column",
+      "key_states": [
+        "default",
+        "custom",
+        "managed",
+        "unavailable",
+        "override reset",
+        "scenario strip"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Notifications & Sounds",
+      "family": "Notifications & Sounds",
+      "entry_point": "General & Appearance destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / General & Appearance / Notifications & Sounds",
+      "shell_retained": true,
+      "back_target": "Back to General & Appearance",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "one-pane push navigation; Back names the domain; form goes single column",
+      "key_states": [
+        "default",
+        "custom",
+        "managed",
+        "unavailable",
+        "override reset",
+        "scenario strip"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Sound Library",
+      "family": "Sound Library / Uploads / Packs",
+      "entry_point": "General & Appearance destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / General & Appearance / Sound Library",
+      "shell_retained": true,
+      "back_target": "Back to General & Appearance",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "single column list with facets wrapping; Back names the domain",
+      "key_states": [
+        "facet chips",
+        "windowed list over 60 rows",
+        "inline detail sheet",
+        "empty scenario"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Spellcheck & Dictionaries",
+      "family": "Spellcheck & Dictionaries",
+      "entry_point": "General & Appearance destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / General & Appearance / Spellcheck & Dictionaries",
+      "shell_retained": true,
+      "back_target": "Back to General & Appearance",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "single column list with facets wrapping; Back names the domain",
+      "key_states": [
+        "facet chips",
+        "windowed list over 60 rows",
+        "inline detail sheet",
+        "empty scenario"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Desktop, Tray & Window",
+      "family": "Desktop / Tray / Window",
+      "entry_point": "General & Appearance destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / General & Appearance / Desktop, Tray & Window",
+      "shell_retained": true,
+      "back_target": "Back to General & Appearance",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "one-pane push navigation; Back names the domain; form goes single column",
+      "key_states": [
+        "default",
+        "custom",
+        "managed",
+        "unavailable",
+        "override reset",
+        "scenario strip"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "File Manager & Editor",
+      "family": "File Manager / Editor",
+      "entry_point": "Code & Execution destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / Code & Execution / File Manager & Editor",
+      "shell_retained": true,
+      "back_target": "Back to Code & Execution",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "one-pane push navigation; Back names the domain; form goes single column",
+      "key_states": [
+        "default",
+        "custom",
+        "managed",
+        "unavailable",
+        "override reset",
+        "scenario strip"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Terminal",
+      "family": "Terminal",
+      "entry_point": "Code & Execution destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / Code & Execution / Terminal",
+      "shell_retained": true,
+      "back_target": "Back to Code & Execution",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "one-pane push navigation; Back names the domain; form goes single column",
+      "key_states": [
+        "default",
+        "custom",
+        "managed",
+        "unavailable",
+        "override reset",
+        "scenario strip"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Language Servers",
+      "family": "LSP",
+      "entry_point": "Code & Execution destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / Code & Execution / Language Servers",
+      "shell_retained": true,
+      "back_target": "Back to Code & Execution",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "roster collapses above the detail sheet in one column; Back names the domain",
+      "key_states": [
+        "roster selection",
+        "detail subpages",
+        "health badges",
+        "empty scenario",
+        "remove/rename via project docs"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Formatters",
+      "family": "Formatters",
+      "entry_point": "Code & Execution destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / Code & Execution / Formatters",
+      "shell_retained": true,
+      "back_target": "Back to Code & Execution",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "roster collapses above the detail sheet in one column; Back names the domain",
+      "key_states": [
+        "roster selection",
+        "detail subpages",
+        "health badges",
+        "empty scenario",
+        "remove/rename via project docs"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Tools",
+      "family": "Tools",
+      "entry_point": "Skills, Plugins & Commands destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / Skills, Plugins & Commands / Tools",
+      "shell_retained": true,
+      "back_target": "Back to Skills, Plugins & Commands",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "single column list with facets wrapping; Back names the domain",
+      "key_states": [
+        "facet chips",
+        "windowed list over 60 rows",
+        "inline detail sheet",
+        "empty scenario"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Testing & Debug",
+      "family": "Testing & Debug",
+      "entry_point": "Code & Execution destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / Code & Execution / Testing & Debug",
+      "shell_retained": true,
+      "back_target": "Back to Code & Execution",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "one-pane push navigation; Back names the domain; form goes single column",
+      "key_states": [
+        "default",
+        "custom",
+        "managed",
+        "unavailable",
+        "override reset",
+        "scenario strip"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Containers & Registries",
+      "family": "Containers & Registries",
+      "entry_point": "Code & Execution destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / Code & Execution / Containers & Registries",
+      "shell_retained": true,
+      "back_target": "Back to Code & Execution",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "roster collapses above the detail sheet in one column; Back names the domain",
+      "key_states": [
+        "roster selection",
+        "detail subpages",
+        "health badges",
+        "empty scenario",
+        "remove/rename via project docs"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Commands & Shortcuts",
+      "family": "Commands & Shortcuts",
+      "entry_point": "Skills, Plugins & Commands destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / Skills, Plugins & Commands / Commands & Shortcuts",
+      "shell_retained": true,
+      "back_target": "Back to Skills, Plugins & Commands",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "single column list with facets wrapping; Back names the domain",
+      "key_states": [
+        "facet chips",
+        "windowed list over 60 rows",
+        "inline detail sheet",
+        "empty scenario"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Skills",
+      "family": "Skills",
+      "entry_point": "Skills, Plugins & Commands destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / Skills, Plugins & Commands / Skills",
+      "shell_retained": true,
+      "back_target": "Back to Skills, Plugins & Commands",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "single column list with facets wrapping; Back names the domain",
+      "key_states": [
+        "facet chips",
+        "windowed list over 60 rows",
+        "inline detail sheet",
+        "empty scenario"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Plugins",
+      "family": "Plugins",
+      "entry_point": "Skills, Plugins & Commands destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / Skills, Plugins & Commands / Plugins",
+      "shell_retained": true,
+      "back_target": "Back to Skills, Plugins & Commands",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "single column list with facets wrapping; Back names the domain",
+      "key_states": [
+        "facet chips",
+        "windowed list over 60 rows",
+        "inline detail sheet",
+        "empty scenario"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "MCP Servers",
+      "family": "MCP",
+      "entry_point": "System & Advanced destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / System & Advanced / MCP Servers",
+      "shell_retained": true,
+      "back_target": "Back to System & Advanced",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "roster collapses above the detail sheet in one column; Back names the domain",
+      "key_states": [
+        "roster selection",
+        "detail subpages",
+        "health badges",
+        "empty scenario",
+        "remove/rename via project docs"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Teacher & Help",
+      "family": "Teacher / Help",
+      "entry_point": "System & Advanced destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / System & Advanced / Teacher & Help",
+      "shell_retained": true,
+      "back_target": "Back to System & Advanced",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "one-pane push navigation; Back names the domain; form goes single column",
+      "key_states": [
+        "default",
+        "custom",
+        "managed",
+        "unavailable",
+        "override reset",
+        "scenario strip"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Doctor",
+      "family": "Doctor",
+      "entry_point": "System & Advanced destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / System & Advanced / Doctor",
+      "shell_retained": true,
+      "back_target": "Back to System & Advanced",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "single column status panels; Back names the domain",
+      "key_states": [
+        "read-only projection",
+        "attention/degraded states",
+        "repair operations",
+        "diagnostic log"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Storage & Retention",
+      "family": "Storage & Retention",
+      "entry_point": "System & Advanced destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / System & Advanced / Storage & Retention",
+      "shell_retained": true,
+      "back_target": "Back to System & Advanced",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "one-pane push navigation; Back names the domain; form goes single column",
+      "key_states": [
+        "default",
+        "custom",
+        "managed",
+        "unavailable",
+        "override reset",
+        "scenario strip"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Backup & Restore",
+      "family": "Backup & Restore",
+      "entry_point": "System & Advanced destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / System & Advanced / Backup & Restore",
+      "shell_retained": true,
+      "back_target": "Back to System & Advanced",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "single column steps; Back names the domain",
+      "key_states": [
+        "preview",
+        "confirm",
+        "receipt",
+        "rollback",
+        "restore points"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Settings Lifecycle",
+      "family": "Settings Lifecycle",
+      "entry_point": "System & Advanced destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / System & Advanced / Settings Lifecycle",
+      "shell_retained": true,
+      "back_target": "Back to System & Advanced",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "single column steps; Back names the domain",
+      "key_states": [
+        "preview",
+        "confirm",
+        "receipt",
+        "rollback",
+        "restore points"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "History & Sessions",
+      "family": "History & Sessions",
+      "entry_point": "System & Advanced destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / System & Advanced / History & Sessions",
+      "shell_retained": true,
+      "back_target": "Back to System & Advanced",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "single column list with facets wrapping; Back names the domain",
+      "key_states": [
+        "facet chips",
+        "windowed list over 60 rows",
+        "inline detail sheet",
+        "empty scenario"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Runtime Artifacts & Outputs",
+      "family": "Runtime Artifacts / Project Outputs",
+      "entry_point": "System & Advanced destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / System & Advanced / Runtime Artifacts & Outputs",
+      "shell_retained": true,
+      "back_target": "Back to System & Advanced",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "single column list with facets wrapping; Back names the domain",
+      "key_states": [
+        "facet chips",
+        "windowed list over 60 rows",
+        "inline detail sheet",
+        "empty scenario"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Workspace Cleanup",
+      "family": "Workspace Cleanup",
+      "entry_point": "System & Advanced destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / System & Advanced / Workspace Cleanup",
+      "shell_retained": true,
+      "back_target": "Back to System & Advanced",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "single column steps; Back names the domain",
+      "key_states": [
+        "preview",
+        "confirm",
+        "receipt",
+        "rollback",
+        "restore points"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "DRY Method",
+      "family": "DRY Method visible state where exposed",
+      "entry_point": "System & Advanced destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / System & Advanced / DRY Method",
+      "shell_retained": true,
+      "back_target": "Back to System & Advanced",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "single column status panels; Back names the domain",
+      "key_states": [
+        "read-only projection",
+        "attention/degraded states",
+        "repair operations",
+        "diagnostic log"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Source Control & Worktrees",
+      "family": "Source Control / Worktrees",
+      "entry_point": "Branching & Collaboration destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / Branching & Collaboration / Source Control & Worktrees",
+      "shell_retained": true,
+      "back_target": "Back to Branching & Collaboration",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "one-pane push navigation; Back names the domain; form goes single column",
+      "key_states": [
+        "default",
+        "custom",
+        "managed",
+        "unavailable",
+        "override reset",
+        "scenario strip"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "GitHub Actions",
+      "family": "GitHub Actions",
+      "entry_point": "Branching & Collaboration destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / Branching & Collaboration / GitHub Actions",
+      "shell_retained": true,
+      "back_target": "Back to Branching & Collaboration",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "roster collapses above the detail sheet in one column; Back names the domain",
+      "key_states": [
+        "roster selection",
+        "detail subpages",
+        "health badges",
+        "empty scenario",
+        "remove/rename via project docs"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Web, Fetch & Crawl",
+      "family": "Web / Search / Fetch / Crawl",
+      "entry_point": "Web & Search destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / Web & Search / Web, Fetch & Crawl",
+      "shell_retained": true,
+      "back_target": "Back to Web & Search",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "one-pane push navigation; Back names the domain; form goes single column",
+      "key_states": [
+        "default",
+        "custom",
+        "managed",
+        "unavailable",
+        "override reset",
+        "scenario strip"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Project Search Index",
+      "family": "Project Search Index",
+      "entry_point": "Web & Search destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / Web & Search / Project Search Index",
+      "shell_retained": true,
+      "back_target": "Back to Web & Search",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "single column status panels; Back names the domain",
+      "key_states": [
+        "read-only projection",
+        "attention/degraded states",
+        "repair operations",
+        "diagnostic log"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Media & Output",
+      "family": "Media & Output",
+      "entry_point": "Media & Output destination row (also reachable via universal search by immutable result ID)",
+      "route": "Settings / Media & Output / Media & Output",
+      "shell_retained": true,
+      "back_target": "Back to Media & Output",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "one-pane push navigation; Back names the domain; form goes single column",
+      "key_states": [
+        "default",
+        "custom",
+        "managed",
+        "unavailable",
+        "override reset",
+        "scenario strip"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Product Onboarding (deferred shell)",
+      "family": "Product Onboarding",
+      "entry_point": "System & Advanced → Owned by other teams destination row (also a search destination)",
+      "route": "Settings / System & Advanced / Product Onboarding",
+      "shell_retained": true,
+      "back_target": "Back to System & Advanced",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "single column insertion-point panel; Back names System & Advanced",
+      "key_states": [
+        "insertion point only",
+        "truthful named-owner note",
+        "return contract shown"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Installation / Deployment (deferred shell)",
+      "family": "Installation / Deployment",
+      "entry_point": "System & Advanced → Owned by other teams destination row (also a search destination)",
+      "route": "Settings / System & Advanced / Installation / Deployment",
+      "shell_retained": true,
+      "back_target": "Back to System & Advanced",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "single column insertion-point panel; Back names System & Advanced",
+      "key_states": [
+        "insertion point only",
+        "truthful named-owner note",
+        "return contract shown"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Server Claim / Bootstrap (deferred shell)",
+      "family": "Server Claim / Bootstrap",
+      "entry_point": "System & Advanced → Owned by other teams destination row (also a search destination)",
+      "route": "Settings / System & Advanced / Server Claim / Bootstrap",
+      "shell_retained": true,
+      "back_target": "Back to System & Advanced",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "single column insertion-point panel; Back names System & Advanced",
+      "key_states": [
+        "insertion point only",
+        "truthful named-owner note",
+        "return contract shown"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Servers / Execution Hosts / Clients (deferred shell)",
+      "family": "Servers / Execution Hosts / Clients",
+      "entry_point": "System & Advanced → Owned by other teams destination row (also a search destination)",
+      "route": "Settings / System & Advanced / Servers / Execution Hosts / Clients",
+      "shell_retained": true,
+      "back_target": "Back to System & Advanced",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "single column insertion-point panel; Back names System & Advanced",
+      "key_states": [
+        "insertion point only",
+        "truthful named-owner note",
+        "return contract shown"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Project Hosting & Files (deferred shell)",
+      "family": "Project Hosting & Files",
+      "entry_point": "System & Advanced → Owned by other teams destination row (also a search destination)",
+      "route": "Settings / System & Advanced / Project Hosting & Files",
+      "shell_retained": true,
+      "back_target": "Back to System & Advanced",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "single column insertion-point panel; Back names System & Advanced",
+      "key_states": [
+        "insertion point only",
+        "truthful named-owner note",
+        "return contract shown"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Remote Access (deferred shell)",
+      "family": "Remote Access",
+      "entry_point": "System & Advanced → Owned by other teams destination row (also a search destination)",
+      "route": "Settings / System & Advanced / Remote Access",
+      "shell_retained": true,
+      "back_target": "Back to System & Advanced",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "single column insertion-point panel; Back names System & Advanced",
+      "key_states": [
+        "insertion point only",
+        "truthful named-owner note",
+        "return contract shown"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Project Sync / Move (deferred shell)",
+      "family": "Project Sync / Move",
+      "entry_point": "System & Advanced → Owned by other teams destination row (also a search destination)",
+      "route": "Settings / System & Advanced / Project Sync / Move",
+      "shell_retained": true,
+      "back_target": "Back to System & Advanced",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "single column insertion-point panel; Back names System & Advanced",
+      "key_states": [
+        "insertion point only",
+        "truthful named-owner note",
+        "return contract shown"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Puppet Master application/content updates (deferred shell)",
+      "family": "Puppet Master application/content updates",
+      "entry_point": "System & Advanced → Owned by other teams destination row (also a search destination)",
+      "route": "Settings / System & Advanced / Puppet Master application/content updates",
+      "shell_retained": true,
+      "back_target": "Back to System & Advanced",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "single column insertion-point panel; Back names System & Advanced",
+      "key_states": [
+        "insertion point only",
+        "truthful named-owner note",
+        "return contract shown"
+      ],
+      "pass": true
+    },
+    {
+      "manager": "Full Server backup owner flow (deferred shell)",
+      "family": "Full Server backup owner flow",
+      "entry_point": "System & Advanced → Owned by other teams destination row (also a search destination)",
+      "route": "Settings / System & Advanced / Full Server backup owner flow",
+      "shell_retained": true,
+      "back_target": "Back to System & Advanced",
+      "close_target": "Close Settings → Settings Home",
+      "narrow_behavior": "single column insertion-point panel; Back names System & Advanced",
+      "key_states": [
+        "insertion point only",
+        "truthful named-owner note",
+        "return contract shown"
+      ],
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "schema_id": "pm.settings_candidate_command_delta.v1",
+  "concept_id": "concept-05-directory-take-1",
+  "model": "Qwen 5.8",
+  "source_register": "CANDIDATE_COMMAND_ID_REGISTER.json (packet 2026-08-08)",
+  "census_source": "Plans/UI_Command_Catalog.md (census carried from concept-04 sibling read 2026-08-11; reused, not re-grepped)",
+  "note": "Provisional. No canon minted; reuse/alias/candidate flags only.",
+  "entries": [
+    {
+      "candidate_id": "cmd.settings.open",
+      "census": "reuse",
+      "note": "Shell Settings rail item routes to #/home.",
+      "family": "navigation"
+    },
+    {
+      "candidate_id": "cmd.settings.navigate",
+      "census": "candidate",
+      "note": "Home\u2192domain\u2192manager push navigation wrapper.",
+      "family": "navigation"
+    },
+    {
+      "candidate_id": "cmd.settings.search.focus",
+      "census": "candidate",
+      "note": "Large Home search and band search focus.",
+      "family": "search"
+    },
+    {
+      "candidate_id": "cmd.settings.search.select_result",
+      "census": "candidate",
+      "note": "rid-only selection; pushes #/q/<query> before routing.",
+      "family": "search"
+    },
+    {
+      "candidate_id": "cmd.settings.back",
+      "census": "candidate",
+      "note": "One-level Back with named location; Escape order popup\u2192dropdown\u2192out.",
+      "family": "navigation"
+    },
+    {
+      "candidate_id": "cmd.settings.close",
+      "census": "candidate",
+      "note": "Close Settings with receipt + reopen card.",
+      "family": "navigation"
+    },
+    {
+      "candidate_id": "cmd.account.select_profile",
+      "census": "reuse",
+      "note": "Preferred account chip in provider Accounts tab.",
+      "family": "providers"
+    },
+    {
+      "candidate_id": "cmd.provider.switch_route",
+      "census": "reuse",
+      "note": "Effort route display (OpenRouter) \u2014 read-only here.",
+      "family": "providers"
+    },
+    {
+      "candidate_id": "cmd.provider.installation.select",
+      "census": "candidate",
+      "note": "Selected vs shadowed installation rows.",
+      "family": "providers"
+    },
+    {
+      "candidate_id": "cmd.provider.installation.update",
+      "census": "candidate",
+      "note": "ask-first update, scheduled, rollback lifecycle.",
+      "family": "providers"
+    },
+    {
+      "candidate_id": "cmd.usage.refresh",
+      "census": "reuse",
+      "note": "Usage tab refresh with last-known-good on failure.",
+      "family": "usage"
+    },
+    {
+      "candidate_id": "cmd.theme.set",
+      "census": "reuse",
+      "note": "Appearance manager theme select bound to inventory row.",
+      "family": "appearance"
+    },
+    {
+      "candidate_id": "cmd.sound.test",
+      "census": "reuse",
+      "note": "Rate-limited receipted test send.",
+      "family": "sounds"
+    },
+    {
+      "candidate_id": "cmd.storage.compaction.request",
+      "census": "reuse",
+      "note": "Storage manager links cleanup; compaction request-only.",
+      "family": "storage"
+    },
+    {
+      "candidate_id": "cmd.settings.open_storage_retention",
+      "census": "reuse",
+      "note": "Domain destination row.",
+      "family": "navigation"
+    },
+    {
+      "candidate_id": "cmd.project.delete_data",
+      "census": "reuse",
+      "note": "Cleanup transaction preview; protected paths honored.",
+      "family": "cleanup"
+    },
+    {
+      "candidate_id": "cmd.settings.bloom.open",
+      "census": "retire-or-alias",
+      "note": "Superseded by directory Home; alias only if legacy callers exist.",
+      "family": "navigation"
+    },
+    {
+      "candidate_id": "cmd.settings.copy.preview",
+      "census": "candidate",
+      "note": "Copy flow preview with counts/diff.",
+      "family": "copy"
+    },
+    {
+      "candidate_id": "cmd.settings.copy.apply",
+      "census": "candidate",
+      "note": "Restore point \u2192 atomic apply \u2192 verify \u2192 receipt.",
+      "family": "copy"
+    },
+    {
+      "candidate_id": "cmd.settings.copy.rollback",
+      "census": "candidate",
+      "note": "Rollback to pre-copy restore point.",
+      "family": "copy"
+    }
+  ],
+  "observable_work_note": "Every semantic action carries ObservableWork phase + wait reason; determinate only with denominator; RuntimeResourceGovernor remains admission owner."
+}

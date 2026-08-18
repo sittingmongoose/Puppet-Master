@@ -1,0 +1,328 @@
+{
+  "schema_id": "pm.settings_bakeoff.impact_register.v1",
+  "concept": "concept-05-directory-take-1",
+  "generated": "2026-08-18",
+  "canon_mutated": false,
+  "rows": [
+    {
+      "area": "Navigation",
+      "interaction": "Open Settings, domain/manager/section navigation, Back with named location, Close Settings",
+      "canon_checked": true,
+      "disposition": "new-candidate",
+      "candidate_id": "cmd.settings.navigate",
+      "owner": "concept-05 shell",
+      "closure_needed": [
+        "canonical command ID and owner",
+        "typed payload/result/error",
+        "availability/disabled reason",
+        "idempotency/fencing/stale-result handling",
+        "persistence/event/receipt effect",
+        "ObservableWork operation link",
+        "route/deep-link/focus effect",
+        "GUI/NL/palette/automation equivalence",
+        "production wiring evidence and regression fixture"
+      ],
+      "notes": null
+    },
+    {
+      "area": "Navigation",
+      "interaction": "Universal search focus, grouped dropdown, result selection routed only by immutable result ID via PM_V2_SEARCH.resolve",
+      "canon_checked": true,
+      "disposition": "new-candidate",
+      "candidate_id": "cmd.settings.search.select_result",
+      "owner": "concept-05 search chrome",
+      "closure_needed": [
+        "canonical command ID and owner",
+        "typed payload/result/error",
+        "availability/disabled reason",
+        "idempotency/fencing/stale-result handling",
+        "persistence/event/receipt effect",
+        "ObservableWork operation link",
+        "route/deep-link/focus effect",
+        "GUI/NL/palette/automation equivalence",
+        "production wiring evidence and regression fixture"
+      ],
+      "notes": null
+    },
+    {
+      "area": "Values",
+      "interaction": "Set a setting value (toggle/select/radio/slider/number/text/list/multiselect/keyvalue/path controls) for the current Project",
+      "canon_checked": true,
+      "disposition": "new-candidate",
+      "candidate_id": "cmd.settings.value.set",
+      "owner": "shared store, concept rows",
+      "closure_needed": [
+        "canonical command ID and owner",
+        "typed payload/result/error",
+        "availability/disabled reason",
+        "idempotency/fencing/stale-result handling",
+        "persistence/event/receipt effect",
+        "ObservableWork operation link",
+        "route/deep-link/focus effect",
+        "GUI/NL/palette/automation equivalence",
+        "production wiring evidence and regression fixture"
+      ],
+      "notes": null
+    },
+    {
+      "area": "Values",
+      "interaction": "Reset a customized setting to its default from the Why-this-value disclosure",
+      "canon_checked": true,
+      "disposition": "new-candidate",
+      "candidate_id": "cmd.settings.default.restore",
+      "owner": "shared store, concept rows",
+      "closure_needed": [
+        "canonical command ID and owner",
+        "typed payload/result/error",
+        "availability/disabled reason",
+        "idempotency/fencing/stale-result handling",
+        "persistence/event/receipt effect",
+        "ObservableWork operation link",
+        "route/deep-link/focus effect",
+        "GUI/NL/palette/automation equivalence",
+        "production wiring evidence and regression fixture"
+      ],
+      "notes": null
+    },
+    {
+      "area": "Copy transaction",
+      "interaction": "Preview copy from another project (deterministic diff, exact totals, capped item lists)",
+      "canon_checked": true,
+      "disposition": "new-candidate",
+      "candidate_id": "cmd.settings.copy_from_project.preview",
+      "owner": "shared copy engine",
+      "closure_needed": [
+        "canonical command ID and owner",
+        "typed payload/result/error",
+        "availability/disabled reason",
+        "idempotency/fencing/stale-result handling",
+        "persistence/event/receipt effect",
+        "ObservableWork operation link",
+        "route/deep-link/focus effect",
+        "GUI/NL/palette/automation equivalence",
+        "production wiring evidence and regression fixture"
+      ],
+      "notes": null
+    },
+    {
+      "area": "Copy transaction",
+      "interaction": "Restore point → atomic apply → verify → receipt",
+      "canon_checked": true,
+      "disposition": "new-candidate",
+      "candidate_id": "cmd.settings.copy_from_project.apply",
+      "owner": "shared copy engine",
+      "closure_needed": [
+        "canonical command ID and owner",
+        "typed payload/result/error",
+        "availability/disabled reason",
+        "idempotency/fencing/stale-result handling",
+        "persistence/event/receipt effect",
+        "ObservableWork operation link",
+        "route/deep-link/focus effect",
+        "GUI/NL/palette/automation equivalence",
+        "production wiring evidence and regression fixture"
+      ],
+      "notes": null
+    },
+    {
+      "area": "Copy transaction",
+      "interaction": "Rollback an applied copy from its receipt",
+      "canon_checked": true,
+      "disposition": "new-candidate",
+      "candidate_id": "cmd.settings.copy_from_project.rollback",
+      "owner": "shared copy engine",
+      "closure_needed": [
+        "canonical command ID and owner",
+        "typed payload/result/error",
+        "availability/disabled reason",
+        "idempotency/fencing/stale-result handling",
+        "persistence/event/receipt effect",
+        "ObservableWork operation link",
+        "route/deep-link/focus effect",
+        "GUI/NL/palette/automation equivalence",
+        "production wiring evidence and regression fixture"
+      ],
+      "notes": null
+    },
+    {
+      "area": "Providers",
+      "interaction": "Install / set up a provider CLI from the explicit official source, then verify",
+      "canon_checked": true,
+      "disposition": "new-candidate",
+      "candidate_id": "cmd.provider.install.begin",
+      "owner": "concept-05 providers workspace",
+      "closure_needed": [
+        "canonical command ID and owner",
+        "typed payload/result/error",
+        "availability/disabled reason",
+        "idempotency/fencing/stale-result handling",
+        "persistence/event/receipt effect",
+        "ObservableWork operation link",
+        "route/deep-link/focus effect",
+        "GUI/NL/palette/automation equivalence",
+        "production wiring evidence and regression fixture"
+      ],
+      "notes": null
+    },
+    {
+      "area": "Providers",
+      "interaction": "Repair an installation or connection",
+      "canon_checked": true,
+      "disposition": "new-candidate",
+      "candidate_id": "cmd.provider.repair",
+      "owner": "concept-05 providers workspace",
+      "closure_needed": [
+        "canonical command ID and owner",
+        "typed payload/result/error",
+        "availability/disabled reason",
+        "idempotency/fencing/stale-result handling",
+        "persistence/event/receipt effect",
+        "ObservableWork operation link",
+        "route/deep-link/focus effect",
+        "GUI/NL/palette/automation equivalence",
+        "production wiring evidence and regression fixture"
+      ],
+      "notes": null
+    },
+    {
+      "area": "Providers",
+      "interaction": "Begin provider sign-in through the provider-owned flow; select/enable accounts",
+      "canon_checked": true,
+      "disposition": "new-candidate",
+      "candidate_id": "cmd.provider.auth.begin",
+      "owner": "concept-05 providers workspace",
+      "closure_needed": [
+        "canonical command ID and owner",
+        "typed payload/result/error",
+        "availability/disabled reason",
+        "idempotency/fencing/stale-result handling",
+        "persistence/event/receipt effect",
+        "ObservableWork operation link",
+        "route/deep-link/focus effect",
+        "GUI/NL/palette/automation equivalence",
+        "production wiring evidence and regression fixture"
+      ],
+      "notes": null
+    },
+    {
+      "area": "Providers",
+      "interaction": "Test a provider connection; refresh usage; set default model",
+      "canon_checked": true,
+      "disposition": "new-candidate",
+      "candidate_id": "cmd.provider.test_connection",
+      "owner": "concept-05 providers workspace",
+      "closure_needed": [
+        "canonical command ID and owner",
+        "typed payload/result/error",
+        "availability/disabled reason",
+        "idempotency/fencing/stale-result handling",
+        "persistence/event/receipt effect",
+        "ObservableWork operation link",
+        "route/deep-link/focus effect",
+        "GUI/NL/palette/automation equivalence",
+        "production wiring evidence and regression fixture"
+      ],
+      "notes": null
+    },
+    {
+      "area": "Managers",
+      "interaction": "Lazy manager hydration on first open; roster object selection; subpage selection",
+      "canon_checked": true,
+      "disposition": "new-candidate",
+      "candidate_id": "cmd.manager.hydrate",
+      "owner": "concept-05 shell",
+      "closure_needed": [
+        "canonical command ID and owner",
+        "typed payload/result/error",
+        "availability/disabled reason",
+        "idempotency/fencing/stale-result handling",
+        "persistence/event/receipt effect",
+        "ObservableWork operation link",
+        "route/deep-link/focus effect",
+        "GUI/NL/palette/automation equivalence",
+        "production wiring evidence and regression fixture"
+      ],
+      "notes": null
+    },
+    {
+      "area": "Managers",
+      "interaction": "Object save (rename/remove recorded in project docs); object test",
+      "canon_checked": true,
+      "disposition": "new-candidate",
+      "candidate_id": "cmd.manager.object.save",
+      "owner": "concept-05 managers",
+      "closure_needed": [
+        "canonical command ID and owner",
+        "typed payload/result/error",
+        "availability/disabled reason",
+        "idempotency/fencing/stale-result handling",
+        "persistence/event/receipt effect",
+        "ObservableWork operation link",
+        "route/deep-link/focus effect",
+        "GUI/NL/palette/automation equivalence",
+        "production wiring evidence and regression fixture"
+      ],
+      "notes": null
+    },
+    {
+      "area": "Operations",
+      "interaction": "Retry an operation (re-run) and roll back via restore points",
+      "canon_checked": true,
+      "disposition": "new-candidate",
+      "candidate_id": "cmd.op.retry",
+      "owner": "shared ObservableWork",
+      "closure_needed": [
+        "canonical command ID and owner",
+        "typed payload/result/error",
+        "availability/disabled reason",
+        "idempotency/fencing/stale-result handling",
+        "persistence/event/receipt effect",
+        "ObservableWork operation link",
+        "route/deep-link/focus effect",
+        "GUI/NL/palette/automation equivalence",
+        "production wiring evidence and regression fixture"
+      ],
+      "notes": null
+    },
+    {
+      "area": "Lifecycle",
+      "interaction": "Export settings with receipt; import with preview/apply; reset with restore point",
+      "canon_checked": true,
+      "disposition": "new-candidate",
+      "candidate_id": "cmd.settings.export",
+      "owner": "concept-05 lifecycle manager",
+      "closure_needed": [
+        "canonical command ID and owner",
+        "typed payload/result/error",
+        "availability/disabled reason",
+        "idempotency/fencing/stale-result handling",
+        "persistence/event/receipt effect",
+        "ObservableWork operation link",
+        "route/deep-link/focus effect",
+        "GUI/NL/palette/automation equivalence",
+        "production wiring evidence and regression fixture"
+      ],
+      "notes": null
+    },
+    {
+      "area": "Scenarios",
+      "interaction": "Switch the 18 deterministic demo scenarios from the drawer (store.setScenario)",
+      "canon_checked": true,
+      "disposition": "new-candidate",
+      "candidate_id": "cmd.settings.scope.inspect",
+      "owner": "shared store",
+      "closure_needed": [
+        "canonical command ID and owner",
+        "typed payload/result/error",
+        "availability/disabled reason",
+        "idempotency/fencing/stale-result handling",
+        "persistence/event/receipt effect",
+        "ObservableWork operation link",
+        "route/deep-link/focus effect",
+        "GUI/NL/palette/automation equivalence",
+        "production wiring evidence and regression fixture"
+      ],
+      "notes": null
+    }
+  ]
+}

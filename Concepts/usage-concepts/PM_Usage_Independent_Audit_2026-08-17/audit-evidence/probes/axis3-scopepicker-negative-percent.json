@@ -1,0 +1,805 @@
+{
+  "open": true,
+  "rows": [
+    {
+      "id": "scope:all",
+      "name": "All current usage",
+      "val": null,
+      "meta": "the default view · every configured source",
+      "dotCls": "u11-pop-dot",
+      "level": "0"
+    },
+    {
+      "id": "cmp:coding-sprint",
+      "name": "Coding sprint set",
+      "val": "78%",
+      "meta": "comparison set · 3 products",
+      "dotCls": "u11-pop-dot warn",
+      "level": "0"
+    },
+    {
+      "id": "fam:alibaba",
+      "name": "Alibaba",
+      "val": "80%",
+      "meta": "2 accounts",
+      "dotCls": "u11-pop-dot warn",
+      "level": "0"
+    },
+    {
+      "id": "acct:alibaba-personal",
+      "name": "Personal",
+      "val": "80%",
+      "meta": "1 connection",
+      "dotCls": "u11-pop-dot warn",
+      "level": "1"
+    },
+    {
+      "id": "conn:alibaba-personal-coding",
+      "name": "Coding Plan connection",
+      "val": "80%",
+      "meta": "Alibaba · Personal",
+      "dotCls": "u11-pop-dot warn",
+      "level": "2"
+    },
+    {
+      "id": "prod:alibaba-coding-plan",
+      "name": "Coding Plan",
+      "val": "52%",
+      "meta": "3 meters · subscription",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "meter:alibaba-5h",
+      "name": "5-hour window",
+      "val": "34%",
+      "meta": "rolling · resets in 4h 00m · 18:42 EDT",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "meter:alibaba-weekly",
+      "name": "Weekly window",
+      "val": "52%",
+      "meta": "rolling · resets in 5d 9h · Mon 00:00 EDT",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "meter:alibaba-monthly",
+      "name": "Monthly window",
+      "val": "41%",
+      "meta": "billing cycle · resets in 28d · Sep 1 00:00 EDT",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "prod:alibaba-ptp",
+      "name": "Personal Token Plan",
+      "val": "24%",
+      "meta": "1 meter",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "meter:alibaba-ptp",
+      "name": "Token balance",
+      "val": "24%",
+      "meta": "balance",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "prod:alibaba-extra-bundle",
+      "name": "Extra Bundle",
+      "val": "80%",
+      "meta": "1 meter",
+      "dotCls": "u11-pop-dot warn",
+      "level": "3"
+    },
+    {
+      "id": "meter:alibaba-bundle",
+      "name": "Bundle requests",
+      "val": "80%",
+      "meta": "pack",
+      "dotCls": "u11-pop-dot warn",
+      "level": "3"
+    },
+    {
+      "id": "acct:alibaba-team",
+      "name": "Team",
+      "val": "70%",
+      "meta": "1 connection · needs attention",
+      "dotCls": "u11-pop-dot warn",
+      "level": "1"
+    },
+    {
+      "id": "conn:alibaba-team-coding",
+      "name": "Team connection",
+      "val": "70%",
+      "meta": "Alibaba · Team · reconnect needed",
+      "dotCls": "u11-pop-dot warn",
+      "level": "2"
+    },
+    {
+      "id": "prod:alibaba-team-seats",
+      "name": "Team seat credits",
+      "val": "70%",
+      "meta": "1 meter · subscription",
+      "dotCls": "u11-pop-dot warn",
+      "level": "3"
+    },
+    {
+      "id": "meter:alibaba-team-seats",
+      "name": "Seat credits",
+      "val": "70%",
+      "meta": "billing cycle · resets in 28d · Sep 1 00:00 EDT",
+      "dotCls": "u11-pop-dot warn",
+      "level": "3"
+    },
+    {
+      "id": "prod:alibaba-shared-pack",
+      "name": "Shared Usage Pack",
+      "val": "58%",
+      "meta": "1 meter",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "meter:alibaba-shared",
+      "name": "Shared pack balance",
+      "val": "58%",
+      "meta": "pack",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "fam:openai",
+      "name": "OpenAI",
+      "val": "100%",
+      "meta": "2 accounts",
+      "dotCls": "u11-pop-dot err",
+      "level": "0"
+    },
+    {
+      "id": "acct:openai-personal",
+      "name": "Personal",
+      "val": "46%",
+      "meta": "1 connection",
+      "dotCls": "u11-pop-dot ok",
+      "level": "1"
+    },
+    {
+      "id": "conn:openai-personal-codex",
+      "name": "Codex · ChatGPT plan",
+      "val": "46%",
+      "meta": "OpenAI · Personal",
+      "dotCls": "u11-pop-dot ok",
+      "level": "2"
+    },
+    {
+      "id": "prod:codex-plus",
+      "name": "ChatGPT plan",
+      "val": "46%",
+      "meta": "2 meters · subscription",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "meter:codex-5h",
+      "name": "5-hour window",
+      "val": "46%",
+      "meta": "rolling · resets in 8h 44m · 23:26 EDT",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "meter:codex-weekly",
+      "name": "Weekly window",
+      "val": "38%",
+      "meta": "rolling · resets in 3d 9h · Sat 00:00 EDT",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "prod:codex-credits",
+      "name": "Usage credits",
+      "val": "21%",
+      "meta": "1 meter",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "meter:codex-credits",
+      "name": "Credits used",
+      "val": "21%",
+      "meta": "balance",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "prod:codex-saved-reset",
+      "name": "Saved reset",
+      "val": "0%",
+      "meta": "1 meter",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "meter:codex-saved",
+      "name": "Saved resets",
+      "val": "0%",
+      "meta": "banked",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "acct:openai-work",
+      "name": "Work",
+      "val": "100%",
+      "meta": "1 connection",
+      "dotCls": "u11-pop-dot err",
+      "level": "1"
+    },
+    {
+      "id": "conn:openai-work-codex",
+      "name": "Codex · Business plan",
+      "val": "100%",
+      "meta": "OpenAI · Work",
+      "dotCls": "u11-pop-dot err",
+      "level": "2"
+    },
+    {
+      "id": "prod:codex-business",
+      "name": "ChatGPT Business plan",
+      "val": "100%",
+      "meta": "2 meters · subscription",
+      "dotCls": "u11-pop-dot err",
+      "level": "3"
+    },
+    {
+      "id": "meter:codex-biz-5h",
+      "name": "5-hour window",
+      "val": "100%",
+      "meta": "rolling · resets in 3h 05m · 17:47 EDT",
+      "dotCls": "u11-pop-dot err",
+      "level": "3"
+    },
+    {
+      "id": "meter:codex-biz-weekly",
+      "name": "Weekly window",
+      "val": "96%",
+      "meta": "rolling · resets in 3d 9h · Sat 00:00 EDT",
+      "dotCls": "u11-pop-dot err",
+      "level": "3"
+    },
+    {
+      "id": "fam:claude",
+      "name": "Claude",
+      "val": "78%",
+      "meta": "1 account",
+      "dotCls": "u11-pop-dot warn",
+      "level": "0"
+    },
+    {
+      "id": "acct:claude-work",
+      "name": "Work",
+      "val": "78%",
+      "meta": "2 connections",
+      "dotCls": "u11-pop-dot warn",
+      "level": "1"
+    },
+    {
+      "id": "conn:claude-work-cli",
+      "name": "Claude CLI profileCLI",
+      "val": "78%",
+      "meta": "Claude · Work",
+      "dotCls": "u11-pop-dot warn",
+      "level": "2"
+    },
+    {
+      "id": "prod:claude-max",
+      "name": "Claude Max plan",
+      "val": "78%",
+      "meta": "2 meters · subscription",
+      "dotCls": "u11-pop-dot warn",
+      "level": "3"
+    },
+    {
+      "id": "meter:claude-5h",
+      "name": "5-hour window",
+      "val": "78%",
+      "meta": "rolling · resets in 2h 14m · 16:56 EDT",
+      "dotCls": "u11-pop-dot warn",
+      "level": "3"
+    },
+    {
+      "id": "meter:claude-weekly",
+      "name": "Weekly window",
+      "val": "61%",
+      "meta": "rolling · resets in 2d 9h · Fri 00:00 EDT",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "prod:claude-extra",
+      "name": "Extra usage",
+      "val": "12%",
+      "meta": "1 meter",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "meter:claude-extra",
+      "name": "Extra usage",
+      "val": "12%",
+      "meta": "billing cycle · resets in 28d · Sep 1 00:00 EDT",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "conn:claude-work-api",
+      "name": "Claude API",
+      "val": "4%",
+      "meta": "Claude · Work",
+      "dotCls": "u11-pop-dot ok",
+      "level": "2"
+    },
+    {
+      "id": "prod:claude-api-payg",
+      "name": "Claude API · PAYG",
+      "val": "4%",
+      "meta": "1 meter · payg route",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "meter:claude-api",
+      "name": "API spend",
+      "val": "4%",
+      "meta": "billing cycle · resets in 28d · Sep 1 00:00 EDT",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "fam:kimi",
+      "name": "Kimi",
+      "val": "71%",
+      "meta": "1 account",
+      "dotCls": "u11-pop-dot warn",
+      "level": "0"
+    },
+    {
+      "id": "acct:kimi-personal",
+      "name": "Personal",
+      "val": "71%",
+      "meta": "1 connection",
+      "dotCls": "u11-pop-dot warn",
+      "level": "1"
+    },
+    {
+      "id": "conn:kimi-code",
+      "name": "Kimi Code subscription",
+      "val": "71%",
+      "meta": "Kimi · Personal",
+      "dotCls": "u11-pop-dot warn",
+      "level": "2"
+    },
+    {
+      "id": "prod:kimi-code-plan",
+      "name": "Kimi Code plan",
+      "val": "71%",
+      "meta": "1 meter · subscription",
+      "dotCls": "u11-pop-dot warn",
+      "level": "3"
+    },
+    {
+      "id": "meter:kimi-weekly",
+      "name": "Rolling week",
+      "val": "71%",
+      "meta": "rolling · resets in 1d 2h · Wed 16:42 EDT",
+      "dotCls": "u11-pop-dot warn",
+      "level": "3"
+    },
+    {
+      "id": "prod:kimi-pool",
+      "name": "Shared membership pool",
+      "val": "-1%",
+      "meta": "1 meter",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "meter:kimi-pool",
+      "name": "Extra Usage pool",
+      "val": null,
+      "meta": "pool",
+      "dotCls": "u11-pop-dot",
+      "level": "3"
+    },
+    {
+      "id": "prod:kimi-trial",
+      "name": "K2 trial",
+      "val": "21%",
+      "meta": "1 meter",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "meter:kimi-trial",
+      "name": "Trial allowance",
+      "val": "21%",
+      "meta": "trial",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "fam:opencode",
+      "name": "OpenCode",
+      "val": "72%",
+      "meta": "1 account",
+      "dotCls": "u11-pop-dot warn",
+      "level": "0"
+    },
+    {
+      "id": "acct:opencode-personal",
+      "name": "Personal",
+      "val": "72%",
+      "meta": "3 connections",
+      "dotCls": "u11-pop-dot warn",
+      "level": "1"
+    },
+    {
+      "id": "conn:opencode-go",
+      "name": "OpenCode Go",
+      "val": "72%",
+      "meta": "OpenCode · Personal",
+      "dotCls": "u11-pop-dot warn",
+      "level": "2"
+    },
+    {
+      "id": "prod:oc-go-plan",
+      "name": "OpenCode Go plan",
+      "val": "72%",
+      "meta": "2 meters · subscription",
+      "dotCls": "u11-pop-dot warn",
+      "level": "3"
+    },
+    {
+      "id": "meter:oc-go-5h",
+      "name": "5-hour credits",
+      "val": "72%",
+      "meta": "rolling · resets in 55m · 15:37 EDT",
+      "dotCls": "u11-pop-dot warn",
+      "level": "3"
+    },
+    {
+      "id": "meter:oc-go-monthly",
+      "name": "Monthly credits",
+      "val": null,
+      "meta": "billing cycle · resets in 28d · Sep 1 00:00 EDT",
+      "dotCls": "u11-pop-dot",
+      "level": "3"
+    },
+    {
+      "id": "prod:oc-go-free-models",
+      "name": "Included free models",
+      "val": "-1%",
+      "meta": "1 meter",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "meter:oc-go-free",
+      "name": "Free model use",
+      "val": null,
+      "meta": "none",
+      "dotCls": "u11-pop-dot",
+      "level": "3"
+    },
+    {
+      "id": "conn:opencode-zen",
+      "name": "OpenCode Zen",
+      "val": "0%",
+      "meta": "OpenCode · Personal",
+      "dotCls": "u11-pop-dot ok",
+      "level": "2"
+    },
+    {
+      "id": "prod:oc-zen-balance",
+      "name": "Zen balance",
+      "val": "0%",
+      "meta": "1 meter · prepaid balance",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "meter:oc-zen-bal",
+      "name": "Zen balance",
+      "val": "0%",
+      "meta": "balance",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "conn:opencode-shared-gw",
+      "name": "Shared gateway",
+      "val": "-1%",
+      "meta": "OpenCode · Personal",
+      "dotCls": "u11-pop-dot ok",
+      "level": "2"
+    },
+    {
+      "id": "prod:shared-gw-route",
+      "name": "Shared free route",
+      "val": "-1%",
+      "meta": "1 meter",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "meter:shared-gw",
+      "name": "Shared route use",
+      "val": null,
+      "meta": "none",
+      "dotCls": "u11-pop-dot",
+      "level": "3"
+    },
+    {
+      "id": "fam:zai",
+      "name": "Z.AI",
+      "val": "76%",
+      "meta": "1 account",
+      "dotCls": "u11-pop-dot warn",
+      "level": "0"
+    },
+    {
+      "id": "acct:zai-personal",
+      "name": "Personal",
+      "val": "76%",
+      "meta": "2 connections",
+      "dotCls": "u11-pop-dot warn",
+      "level": "1"
+    },
+    {
+      "id": "conn:zai-legacy",
+      "name": "Legacy plan connection",
+      "val": "60%",
+      "meta": "Z.AI · Personal",
+      "dotCls": "u11-pop-dot ok",
+      "level": "2"
+    },
+    {
+      "id": "prod:zai-legacy-plan",
+      "name": "Legacy plan",
+      "val": "-1%",
+      "meta": "1 meter · subscription",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "meter:zai-legacy-req",
+      "name": "Included requests",
+      "val": null,
+      "meta": "billing cycle · resets in 12d · Aug 16 00:00 EDT",
+      "dotCls": "u11-pop-dot",
+      "level": "3"
+    },
+    {
+      "id": "prod:zai-free-tier",
+      "name": "Z.AI free tier",
+      "val": "60%",
+      "meta": "1 meter",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "meter:zai-free-day",
+      "name": "Free tokens today",
+      "val": "60%",
+      "meta": "fixed reset · resets in 9h 18m · 00:00 EDT",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "conn:zai-credits",
+      "name": "Credit plan connection",
+      "val": "76%",
+      "meta": "Z.AI · Personal",
+      "dotCls": "u11-pop-dot warn",
+      "level": "2"
+    },
+    {
+      "id": "prod:zai-credit-plan",
+      "name": "Credit plan",
+      "val": "76%",
+      "meta": "1 meter · subscription",
+      "dotCls": "u11-pop-dot warn",
+      "level": "3"
+    },
+    {
+      "id": "meter:zai-credits",
+      "name": "Credits",
+      "val": "76%",
+      "meta": "balance",
+      "dotCls": "u11-pop-dot warn",
+      "level": "3"
+    },
+    {
+      "id": "fam:antigravity",
+      "name": "Antigravity",
+      "val": "64%",
+      "meta": "1 account",
+      "dotCls": "u11-pop-dot ok",
+      "level": "0"
+    },
+    {
+      "id": "acct:antigravity-personal",
+      "name": "Personal",
+      "val": "64%",
+      "meta": "1 connection",
+      "dotCls": "u11-pop-dot ok",
+      "level": "1"
+    },
+    {
+      "id": "conn:antigravity-cli",
+      "name": "Antigravity CLI profileCLI",
+      "val": "64%",
+      "meta": "Antigravity · Personal",
+      "dotCls": "u11-pop-dot ok",
+      "level": "2"
+    },
+    {
+      "id": "prod:antigravity-baseline",
+      "name": "Baseline plan",
+      "val": "64%",
+      "meta": "1 meter · subscription",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "meter:agi-baseline",
+      "name": "Included usage",
+      "val": "64%",
+      "meta": "rolling · resets in 9h 00m · 23:42 EDT",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "prod:antigravity-overage",
+      "name": "AI Credit Overages",
+      "val": "-1%",
+      "meta": "1 meter",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "meter:agi-overage",
+      "name": "AI credit overage",
+      "val": null,
+      "meta": "balance",
+      "dotCls": "u11-pop-dot",
+      "level": "3"
+    },
+    {
+      "id": "fam:google",
+      "name": "Google",
+      "val": "30%",
+      "meta": "1 account",
+      "dotCls": "u11-pop-dot ok",
+      "level": "0"
+    },
+    {
+      "id": "acct:google-personal",
+      "name": "Personal",
+      "val": "30%",
+      "meta": "1 connection",
+      "dotCls": "u11-pop-dot ok",
+      "level": "1"
+    },
+    {
+      "id": "conn:google-gemini-cli",
+      "name": "Gemini CLI profileCLI",
+      "val": "30%",
+      "meta": "Google · Personal",
+      "dotCls": "u11-pop-dot ok",
+      "level": "2"
+    },
+    {
+      "id": "prod:google-gemini-free",
+      "name": "Gemini free tier",
+      "val": "30%",
+      "meta": "1 meter",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "meter:google-free-day",
+      "name": "Free requests today",
+      "val": "30%",
+      "meta": "fixed reset · resets in 9h 18m · 00:00 EDT",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "fam:github",
+      "name": "GitHub",
+      "val": "64%",
+      "meta": "1 account",
+      "dotCls": "u11-pop-dot ok",
+      "level": "0"
+    },
+    {
+      "id": "acct:github-personal",
+      "name": "Personal",
+      "val": "64%",
+      "meta": "1 connection",
+      "dotCls": "u11-pop-dot ok",
+      "level": "1"
+    },
+    {
+      "id": "conn:github-copilot-free",
+      "name": "Copilot Free",
+      "val": "64%",
+      "meta": "GitHub · Personal",
+      "dotCls": "u11-pop-dot ok",
+      "level": "2"
+    },
+    {
+      "id": "prod:github-copilot-free",
+      "name": "Copilot Free",
+      "val": "64%",
+      "meta": "1 meter",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "meter:github-free-mo",
+      "name": "Premium requests",
+      "val": "64%",
+      "meta": "billing cycle · resets in 28d · Sep 1 00:00 EDT",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "fam:local",
+      "name": "Local",
+      "val": "-1%",
+      "meta": "1 account",
+      "dotCls": "u11-pop-dot ok",
+      "level": "0"
+    },
+    {
+      "id": "acct:local-runtime",
+      "name": "This Mac",
+      "val": "-1%",
+      "meta": "1 connection",
+      "dotCls": "u11-pop-dot ok",
+      "level": "1"
+    },
+    {
+      "id": "conn:local-ollama",
+      "name": "Ollama · local",
+      "val": "-1%",
+      "meta": "Local · This Mac",
+      "dotCls": "u11-pop-dot ok",
+      "level": "2"
+    },
+    {
+      "id": "prod:local-ollama",
+      "name": "Local models",
+      "val": "-1%",
+      "meta": "1 meter",
+      "dotCls": "u11-pop-dot ok",
+      "level": "3"
+    },
+    {
+      "id": "meter:local-ollama",
+      "name": "Local capacity",
+      "val": null,
+      "meta": "session only",
+      "dotCls": "u11-pop-dot",
+      "level": "3"
+    }
+  ]
+}

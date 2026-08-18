@@ -1,0 +1,57 @@
+{
+  "schema_id": "pm.settings_candidate_dry_delta.v1",
+  "concept_id": "concept-09-tome-tabs",
+  "model": "CursorAuto",
+  "concept_only": true,
+  "winner": null,
+  "note": "Data/semantic reuse of singular headless owners. Presentation is concept-native. Do not create a second ResourceGovernor or a universal visible renderer.",
+  "shared_families_consumed": [
+    "SettingsSearch",
+    "ManagerSemantics",
+    "ObservableWork",
+    "RuntimeResourceGovernor",
+    "Project identity"
+  ],
+  "data_semantic_reuse": [
+    {
+      "component": "SettingsSearch",
+      "reuse": "headless index 1007, cap 24, immutable result ids, Default excludes synthetic 2000"
+    },
+    {
+      "component": "ManagerSemantics",
+      "reuse": "row grammar, copy domains, controlModel disabled reasons"
+    },
+    {
+      "component": "ObservableWork",
+      "reuse": "truthful phase/wait projections via normalizeWork; singular owner"
+    },
+    {
+      "component": "RuntimeResourceGovernor",
+      "reuse": "consumed as the singular permit owner; demo does not implement a second one"
+    },
+    {
+      "component": "Project identity",
+      "reuse": "current Project only; copy source is another Project id, never Global"
+    }
+  ],
+  "concept_native_presentation": [
+    "persistent chapter/edge tabs",
+    "layered canvas",
+    "manager-local tabs",
+    "list/detail manager",
+    "stepwise copy",
+    "search dropdown",
+    "exact-result reveal",
+    "narrow transform",
+    "chapter-tab motion"
+  ],
+  "do_not_create": [
+    "second ResourceGovernor",
+    "universal visible manager renderer",
+    "second state owner",
+    "cross-concept iframe"
+  ],
+  "simulated_backend": "sessionStorage demo projection; do not create a second ResourceGovernor",
+  "headless_shared": "shared/v2/pmv2.js inventory/search/copy/details/escape",
+  "copy_cli_receipts": "simulated sessionStorage; deepen existing demo, do not invent a second ResourceGovernor"
+}

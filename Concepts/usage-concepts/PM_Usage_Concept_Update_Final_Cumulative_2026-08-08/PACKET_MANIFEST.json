@@ -1,0 +1,124 @@
+{
+  "schema_id": "pm.packet_manifest.v2",
+  "packet_key": "usage",
+  "packet_name": "PM_Usage_Concept_Update_Final_Cumulative_2026-08-08",
+  "title": "Puppet Master Usage Concepts \u2014 Final Cumulative Update",
+  "mode": "concept_update",
+  "decision_topics": 107,
+  "direct_prompts": [
+    "IMPLEMENTATION_PROMPT.md",
+    "AUDIT_PROMPT.md"
+  ],
+  "files": [
+    {
+      "path": "00_START_HERE.md",
+      "bytes": 1341,
+      "sha256": "53c9f63902af3132a3e6a0d7f6e062e72969785cbf97dd958b1222c6e7cdd206"
+    },
+    {
+      "path": "01_PROVIDER_ACCOUNT_PLAN_AND_SETTLEMENT.md",
+      "bytes": 2855,
+      "sha256": "e808b376baa8860f76b051ce100caf8d825265a13a585833ddff42b419d88e45"
+    },
+    {
+      "path": "02_EVENTS_ROUTES_HELPERS_CACHE_AND_CONTEXT.md",
+      "bytes": 2625,
+      "sha256": "a1b95f732cee73c41e67b2e6255d60c3b5c74e63ad44f4f72bef1ac0a161b16e"
+    },
+    {
+      "path": "03_GOAL_CAPACITY_TIME_AND_OPERATIONAL_STATE.md",
+      "bytes": 2345,
+      "sha256": "5406a11fc3e9edbe25565032b1f5b450533b5adfb26fedb9ef02f07848a9ad48"
+    },
+    {
+      "path": "04_SERVER_NETWORK_MAINTENANCE_AND_DATA_QUALITY.md",
+      "bytes": 2373,
+      "sha256": "93b418496a9ea85143e12f15372c74d99f0cfcf9d24dceab287277ba6a60ee62"
+    },
+    {
+      "path": "05_GUI_CONTEXT_RING_DEMO_AND_TESTS.md",
+      "bytes": 3051,
+      "sha256": "3f2092ec35ba55868357f69a9a0f67be94c8f39ba99d7bf78605e05bdb727276"
+    },
+    {
+      "path": "06_PLAN_COMMAND_WIRING_DRY_IMPACT.md",
+      "bytes": 2002,
+      "sha256": "fac167b0b381f563d1f9c098a19611a8b63f3cb137755bae937409acd7f47592"
+    },
+    {
+      "path": "AUDIT_PROMPT.md",
+      "bytes": 2377,
+      "sha256": "f36b8c5cbf25887ab1d4475af6c521da5385b28be24239f0ed59ddbc41b843fd"
+    },
+    {
+      "path": "CANDIDATE_COMMAND_ID_REGISTER.json",
+      "bytes": 643,
+      "sha256": "4d14c46a858a05ae7db62a98dd720223455cdeab33d12c540575e70dee2f4666"
+    },
+    {
+      "path": "DECISION_COVERAGE.json",
+      "bytes": 44989,
+      "sha256": "d9ee319ddb1c78f4e6eb1205a0866e7a68be486b9244226a2dd7fc1fe2d1e650"
+    },
+    {
+      "path": "IMPACT_REGISTER.template.json",
+      "bytes": 428,
+      "sha256": "8d2c4614f6522d22b1d56b53422f9077717f87fe165bdb3b63bf2c7883943231"
+    },
+    {
+      "path": "IMPLEMENTATION_PROMPT.md",
+      "bytes": 2467,
+      "sha256": "21c3ecb35af3ec4d5032ee26efad40c9d8b9947bb6977ece363015999dd76d64"
+    },
+    {
+      "path": "PROMPT_USAGE.md",
+      "bytes": 431,
+      "sha256": "cd9ca7e82d03ef364a7de01bbf2d7b83aae1b52e66a6a66bb2b4ea6169eaff8c"
+    },
+    {
+      "path": "REFERENCE_SUPERSESSIONS.md",
+      "bytes": 1254,
+      "sha256": "5f3f1c16ed2f41408503cf36ae60be597a5598833fae5d7fcc2fc5bc429ecdb2"
+    },
+    {
+      "path": "SHARED_PROCESS_RULES.md",
+      "bytes": 2216,
+      "sha256": "0ce29d11481ec4f6c9d15e3b69479d64359c017e6ba27226bc657579a8e82d0c"
+    },
+    {
+      "path": "SOURCE_AND_PRECEDENCE_MAP.md",
+      "bytes": 2846,
+      "sha256": "f8983850875fda4edbbefb38415465f87545ff1ad96e1457a6ff375b18cb98d4"
+    },
+    {
+      "path": "reference/CONCEPT_RULES.md",
+      "bytes": 1519,
+      "sha256": "e59011b56f3321462087cfaad8655a078b82621b7a10605256a5171f494721b1"
+    },
+    {
+      "path": "reference/EGOLITE_USAGE_CHAT_RETURN.md",
+      "bytes": 2779,
+      "sha256": "2b266ba97ce81e394277f4aacfcf5da20b67382352f5252f5404723251dc19cf"
+    },
+    {
+      "path": "reference/HERMES_USAGE_HANDOFF.md",
+      "bytes": 21504,
+      "sha256": "f4d7c88636304e0bb3211197c2b0ea0a9619401391e836e8f359c243e0144f15"
+    },
+    {
+      "path": "reference/ORIGINAL_SETTINGS_USAGE_HANDOFF.md",
+      "bytes": 14035,
+      "sha256": "24aebd89de4c527f39135771614551d48c50b349d954f20b22cb20a305d123ea"
+    },
+    {
+      "path": "reference/SECOND_USAGE_HANDOFF.md",
+      "bytes": 15100,
+      "sha256": "094b889f5483f030c804c3d17dd9da323b6c1fe0b674b0309f6260dd740ffddb"
+    },
+    {
+      "path": "reference/SERVER_BACKBONE_USAGE_RETURN.md",
+      "bytes": 2897,
+      "sha256": "9a93f6613cf772d5c889bf164092d29cd22ab65a7dd732b1c2f2e94302f28108"
+    }
+  ]
+}

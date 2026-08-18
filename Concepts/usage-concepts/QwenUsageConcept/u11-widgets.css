@@ -1,6 +1,6 @@
 /* =====================================================================
    U11 — PRISM II · widget layer styles (video-grammar rewrite)
-   Design language: three type tiers (bold tabular value / muted
+   Design language: three type levels (bold tabular value / muted
    sentence-case label / tiny unit), one row grammar (ring bullet +
    label left, value right), thin per-series bars, inset stat tiles,
    muted footnote last, one teal-tinted CTA. Color lives on data only.
@@ -9,8 +9,11 @@
    rgba/var fallbacks declared first.
    ===================================================================== */
 
-/* ---------- data hues (series colors; chrome stays neutral) ---------- */
-.u11 { --u11-pink: #ff4d6d; --u11-orange: #ff8c3a; --u11-lime: #a3e635;
+/* ---------- data hues (series colors; chrome stays neutral) ----------
+   One palette, identical under every theme on purpose: a series must keep its
+   colour when the theme changes. Written against [data-theme] so the literals
+   sit inside a theme scope; the values and the .u11 scoping are unchanged. */
+[data-theme] .u11 { --u11-pink: #ff4d6d; --u11-orange: #ff8c3a; --u11-lime: #a3e635;
   --u11-teal: #2dd4bf; --u11-blue: var(--accent-blue, #4c8dff);
   --u11-purple: #a78bfa; --u11-magenta: var(--accent-magenta, #ff7ac8); }
 
@@ -53,6 +56,14 @@
 .u11w-minibtn.dim { color: var(--text-muted); border-color: transparent; }
 .u11w-minibtn.dim:hover { border-color: var(--border-light); }
 
+/* an event id that appears inside a sentence opens that event — the copy used
+   to name an internal id and give the reader nothing to act on */
+.u11w-evlink { display: inline; padding: 0 1px; border: none; background: transparent; cursor: pointer;
+  font-family: var(--mono-font); font-size: inherit; color: var(--accent-primary);
+  text-decoration: underline; text-underline-offset: 2px; }
+.u11w-evlink:hover { color: var(--accent-primary); background: var(--accent-soft); border-radius: 4px; }
+.u11w-evlink:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 1px; border-radius: 4px; }
+
 /* quiet footer: actions exist but stay out of the data's way */
 .u11w-foot { display: flex; align-items: center; gap: 6px; margin-top: 10px; padding-top: 8px;
   border-top: 1px solid var(--border-light); flex-wrap: wrap; opacity: 0;
@@ -71,6 +82,9 @@
 .u11w-hot { color: var(--tone-err-text); }
 .u11w-more { margin-top: 4px; }
 .u11w-more-b { display: flex; flex-direction: column; gap: 2px; margin-top: 6px; }
+/* an author `display` rule beats the UA [hidden] rule, so a collapsed block
+   stayed on screen while its toggle still said "Show" (audit A07-03) */
+.u11w-more-b[hidden] { display: none; }
 
 /* ---------- row grammar: ring bullet + label left, value right ---------- */
 .u11w-rows { display: flex; flex-direction: column; gap: 1px; }
@@ -87,8 +101,23 @@
 .u11w-vdot.h-teal { border-color: var(--u11-teal); }
 .u11w-vdot.h-mute { border-color: var(--text-muted); }
 .u11w-vdot.pulse { animation: usPulse 1.8s var(--ease-out) infinite; }
-.u11w-vlab { flex: 1 1 auto; min-width: 0; font-size: 12.5px; line-height: 1.4; color: var(--text-secondary); }
+.u11w-vlab { flex: 1 1 auto; min-width: 0; font-size: 12.5px; line-height: 1.4; color: var(--text-secondary);
+  overflow-wrap: anywhere; }
 .u11w-vrow.sig .u11w-vlab { font-size: 12px; }
+/* Narrow, the value keeps its intrinsic width while the label is told to
+   shrink, so the label column collapsed to ~51px and leaves as short as
+   "Reserved spend" (55px) or "Monthly credits · billing cycle" (144px) spilled
+   out of a box with neither an ellipsis nor a title — truncated with no way to
+   recover the text. The row reflows instead of truncating: the value drops to
+   a line of its own and the label takes the full width, the window chip and
+   its state chips wrap with it, and any word longer than the box breaks rather
+   than overflowing. Nothing here needs :has(), a container query or a
+   backdrop filter. */
+@media (max-width: 560px) {
+  .u11w-vrow { flex-wrap: wrap; }
+  .u11w-vrow .u11w-vlab { flex: 1 1 100%; }
+  .u11w-vrow .u11w-vlab .u11w-win { white-space: normal; }
+}
 .u11w-vval { margin-left: auto; flex: none; display: inline-flex; align-items: baseline; gap: 3px; }
 .u11w-num { font-family: var(--num-font); font-size: 14.5px; font-weight: 700; line-height: 1.2;
   color: var(--text-primary); font-variant-numeric: tabular-nums; letter-spacing: .2px; }
@@ -130,6 +159,13 @@
 .u11w-next svg { width: 12px; height: 12px; flex: none; margin-top: 2px; color: var(--accent-primary); }
 .u11w-next.ok { background: rgba(80,200,120,.08); background: color-mix(in srgb, var(--tone-ok) 8%, transparent); color: var(--text-secondary); }
 .u11w-next.ok svg { color: var(--tone-ok-text); }
+/* a forecast whose own figures say the budget or the window is tight must not
+   wear the same green as one that says it fits (audit A06-12) */
+.u11w-next.warn { background: rgba(255,180,60,.09); background: color-mix(in srgb, var(--tone-warn) 9%, transparent); color: var(--text-secondary); }
+.u11w-next.warn svg { color: var(--tone-warn-text); }
+
+/* the derived projection rows under a forecast reading */
+.u11w-fcproj { border-left: 2px solid var(--border-light); padding-left: 9px; margin-top: 2px; }
 
 /* ---------- inset stat tiles (2x2, darker not bordered) ---------- */
 .u11w-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 4px 0 6px; }
@@ -192,6 +228,11 @@
 .u11w-spark { display: inline-flex; align-items: flex-end; gap: 3px; height: 26px; }
 .u11w-spark i { width: 6px; border-radius: 2px; background: var(--u11-purple); }
 .u11w-spark i.sp-teal { background: var(--u11-teal); }
+/* a bar with nothing reported is not a short bar: it paints no column, only
+   the baseline tick that says a slot exists here and carries no value */
+.u11w-spark i.nil { background: none; min-height: 2px;
+  border-bottom: 2px dotted rgba(128,128,128,.55);
+  border-bottom: 2px dotted color-mix(in srgb, var(--text-primary) 40%, transparent); }
 .u11w-ring { width: 34px; height: 34px; display: inline-flex; flex: none; }
 .u11w-ring svg { width: 100%; height: 100%; display: block; }
 .u11w-ring .dbg { fill: none; stroke: var(--border-light); stroke-width: 6; }
@@ -245,22 +286,61 @@
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .u11w-turntime { flex: none; font-family: var(--mono-font); font-size: 10px; color: var(--text-muted); }
 .u11w-turnroute { font-size: 11.5px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* work that ran on more than one provider family names all of them, so the
+   line is allowed the second row it needs instead of truncating */
+.u11w-turnroute.multi { white-space: normal; overflow: visible; text-overflow: clip; color: var(--text-primary); }
+.u11w-turnnote { font-size: 10.5px; line-height: 1.45; color: var(--text-muted); }
 .u11w-turntok { font-family: var(--mono-font); font-size: 10.5px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.u11w-turntok.dim { color: var(--text-muted); opacity: .85; }
+.u11w-turnroster { font-size: 10.5px; color: var(--text-secondary); }
+.u11w-histwork { margin-top: 8px; padding-top: 6px; border-top: 1px dashed var(--border-light); }
+.u11w-histwork:first-of-type { border-top: none; padding-top: 0; }
 .u11w-mismatch { display: flex; align-items: flex-start; gap: 6px; padding: 6px 10px; border-radius: 8px;
   font-size: 11.5px; line-height: 1.45; color: var(--tone-warn-text);
   background: rgba(255,180,60,.10); background: color-mix(in srgb, var(--tone-warn) 10%, transparent); }
 .u11w-mismatch.info { color: var(--tone-info-text); background: rgba(90,150,255,.10); background: color-mix(in srgb, var(--tone-info) 10%, transparent); }
 .u11w-mismatch svg { width: 12px; height: 12px; flex: none; margin-top: 1px; }
 .u11w-attempts { display: flex; flex-direction: column; gap: 3px; margin-top: 6px; padding-top: 7px; border-top: 1px dashed var(--border-light); }
-.u11w-attrow { display: grid; grid-template-columns: minmax(70px, 130px) minmax(60px, 110px) minmax(46px, 70px) minmax(0, 1fr) auto auto;
+.u11w-attrow { display: grid; grid-template-columns: minmax(70px, 130px) minmax(60px, 110px) minmax(46px, 70px) minmax(0, 1fr) minmax(0, 1fr) minmax(46px, 74px) auto;
   align-items: center; gap: 7px; font-size: 11px; padding: 2px 0; min-width: 0; }
 .u11w-attbucket { color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .u11w-attpurpose { color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .u11w-attstatus { font-family: var(--mono-font); font-size: 9.5px; color: var(--text-muted); }
 .u11w-atttok { font-family: var(--mono-font); font-size: 10px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-variant-numeric: tabular-nums; }
-.u11w-attcost { font-family: var(--mono-font); font-size: 10.5px; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+.u11w-attcost { font-family: var(--mono-font); font-size: 10.5px; color: var(--text-secondary); font-variant-numeric: tabular-nums;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+/* a suppressed or unknown price is real information, but it is not a figure —
+   it never gets the weight of one */
+.u11w-attcost.unk { color: var(--text-muted); font-style: italic; }
+.u11w-attid { font-family: var(--mono-font); font-size: 9.5px; color: var(--text-muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* each attempt's own route, on its own line under the row it belongs to:
+   mixed-route work was only recoverable by opening every attempt */
+.u11w-attroute { grid-column: 1 / -1; font-size: 10px; color: var(--text-muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .u11w-attrow.err .u11w-attstatus { color: var(--tone-err-text); }
 .u11w-attrow.dim { opacity: .7; }
+/* Seven tracks stop fitting below the rail's own reflow width, and two of
+   them (tokens and cost) are the collapsible ones — both resolved to 0px and
+   took the measurement and the cost-honesty copy with them. Narrow, the row
+   stops pretending to be a table row: identity and state wrap across the
+   first line, and the two measured facts each get a full-width line of their
+   own, where they wrap instead of truncating. Nothing here needs :has(),
+   a container query or a backdrop filter. */
+@media (max-width: 820px) {
+  .u11w-attrow { display: flex; flex-wrap: wrap; align-items: center;
+    column-gap: 7px; row-gap: 2px; padding: 4px 0; }
+  .u11w-attbucket, .u11w-attpurpose { flex: 0 1 auto; min-width: 44px; max-width: 100%; }
+  .u11w-attstatus { flex: 0 1 auto; min-width: 36px; }
+  .u11w-attid { order: 1; flex: 0 1 auto; min-width: 44px; max-width: 100%; }
+  .u11w-attrow .u11w-minibtn { order: 2; margin-left: auto; flex: none; }
+  .u11w-atttok { order: 3; }
+  .u11w-attcost { order: 4; }
+  .u11w-atttok, .u11w-attcost { flex: 1 0 100%; min-width: 100%;
+    white-space: normal; overflow: visible; text-overflow: clip; line-height: 1.35; }
+  .u11w-attroute { order: 5; flex: 1 0 100%; min-width: 100%;
+    white-space: normal; overflow: visible; text-overflow: clip; line-height: 1.35; }
+}
 
 /* ---------- tools ---------- */
 .u11w-rec { font-family: var(--mono-font); font-size: 9.5px; color: var(--tone-ok-text); margin-left: 4px; }
@@ -333,6 +413,11 @@
 
 /* ---------- operations (maintenance & operations, packet §04) ---------- */
 .u11w-opcard { padding: 8px 0 7px; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+/* the operational badge carries the outcome, which is a longer word than a
+   status: the title beside it has to be able to give ground rather than push
+   the row past its card */
+.u11w-opcard .u11w-atop, .u11w-cliinst .u11w-atop { flex-wrap: wrap; }
+.u11w-opcard .u11w-aname, .u11w-cliinst .u11w-aname { flex: 0 1 auto; min-width: 0; }
 .u11w-opcard + .u11w-opcard { border-top: 1px solid var(--border-light); }
 .u11w-opico { flex: none; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center;
   border-radius: 7px; background: rgba(128,128,128,.10); background: color-mix(in srgb, var(--text-primary) 7%, transparent); color: var(--text-muted); }
@@ -346,6 +431,24 @@
 .u11w-opacq { display: flex; align-items: flex-start; gap: 6px; font-size: 10.5px; line-height: 1.45; color: var(--text-secondary);
   padding: 5px 9px; border-radius: 8px; border: 1px dashed var(--border-light); }
 .u11w-opacq svg { width: 11px; height: 11px; flex: none; margin-top: 2px; color: var(--tone-info-text); }
+/* the failure class, as a labelled fact rather than a tail fragment (A08-01):
+   a reader told that an update rolled back is told in the same breath what
+   failed, so the class has the weight of the outcome and not of a footnote */
+.u11w-opfail { display: flex; align-items: flex-start; gap: 6px; padding: 6px 9px; border-radius: 8px;
+  font-size: 10.5px; line-height: 1.45; color: var(--text-secondary);
+  background: rgba(255,180,60,.09); background: color-mix(in srgb, var(--tone-warn) 9%, transparent); }
+.u11w-opfail svg { width: 11px; height: 11px; flex: none; margin-top: 2px; color: var(--tone-warn-text); }
+.u11w-opfail b { display: block; font-family: var(--display-font); font-size: 11px; font-weight: 600;
+  color: var(--tone-warn-text); }
+.u11w-opfail span { display: block; margin-top: 1px; color: var(--text-muted); }
+.u11w-ophase.bad b { color: var(--tone-warn-text); }
+.u11w-ophase.bad { color: var(--tone-warn-text); }
+
+/* a cache row whose provider reported zeros must not look like a row with
+   nothing to read (fixtures GUI-USG-002 / GUI-USG-006, audit A05-17): the
+   measured zero keeps a live left edge, the em-dash rows do not */
+.u11w-zerorow { border-left: 2px solid var(--tone-ok); border-left: 2px solid color-mix(in srgb, var(--tone-ok) 60%, transparent);
+  padding-left: 9px; }
 
 /* ---------- account row meta (priority / last used / actions) ---------- */
 .u11w-acctmeta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin-top: 4px;
@@ -360,6 +463,73 @@
 .u11w-sub.estimate { display: flex; align-items: flex-start; gap: 6px; color: var(--tone-info-text); }
 .u11w-sub.estimate svg { width: 11px; height: 11px; flex: none; margin-top: 2px; }
 .u11w-sub.warntxt { color: var(--tone-warn-text); font-weight: 600; }
+
+/* ---------- named windows, provenance chips and word-form states ---------- */
+.u11w-win { font-style: normal; font-size: 10px; font-weight: 600; letter-spacing: .01em;
+  color: var(--text-muted); margin-left: 5px; white-space: nowrap; }
+.u11w-mlab .vs, .u11w-vlab .vs, .u11w-atop .vs { margin-left: 5px; vertical-align: baseline; }
+.u11w-mlab .conf, .u11w-vlab .conf { margin-left: 5px; }
+.u11w-vval.u11w-dimtxt { font-size: 11px; line-height: 1.4; text-align: right; max-width: 26ch; }
+
+/* ---------- account row completeness ---------- */
+.u11w-acctusing { font-size: 11.5px; color: var(--text-secondary); }
+.u11w-acctpress { font-size: 11px; color: var(--text-muted); display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
+
+/* ---------- per model / provider / account breakdown ---------- */
+.u11w-bd { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border-light); }
+.u11w-bdtog svg { transition: transform var(--motion-fast) var(--ease-out); }
+.u11w-bdtog.on svg { transform: rotate(180deg); }
+.u11w-bdctl { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin-bottom: 4px; }
+.u11w-bdlab { font-size: 10.5px; color: var(--text-muted); margin-right: 2px; }
+.u11w-bdmini { font-style: normal; font-size: 9.5px; color: var(--text-muted); white-space: nowrap; }
+.u11w-sortb { border: none; background: transparent; cursor: pointer; padding: 0; font: inherit; color: inherit;
+  letter-spacing: inherit; text-transform: inherit; }
+.u11w-sortb:hover { color: var(--accent-primary); }
+.u11w-sortb.on { color: var(--accent-primary); text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- background / catalog evidence ---------- */
+.u11w-toolop.cat { background: rgba(90,150,255,.09); background: color-mix(in srgb, var(--tone-info) 9%, transparent); }
+.u11w-toolop.cat svg { color: var(--tone-info-text); }
+.u11w-catfields { display: block; font-family: var(--mono-font); font-size: 10px; color: var(--text-secondary); }
+.u11w-opline { display: block; margin-top: 3px; }
+.u11w-toolop .u11w-minibtn { margin-top: 6px; }
+.u11w-tbl .conf { margin-left: 6px; }
+.u11w-alw { display: flex; align-items: flex-start; gap: 5px; margin-top: 3px; font-size: 10.5px; line-height: 1.45;
+  color: var(--tone-warn-text); }
+.u11w-alw.dim { color: var(--text-muted); }
+.u11w-alw svg { width: 11px; height: 11px; flex: none; margin-top: 2px; }
+
+/* ---------- CLI-bridged routes (CBP-027) ----------
+   A probe row is three facts on one line: which command was run, what came
+   back in words, and the recorded state of the command itself. Nothing here
+   needs :has(), a container query or a backdrop filter. */
+.u11w-cliinst { margin-top: 8px; padding: 8px 10px; border-radius: 10px; border: 1px solid var(--border-light); }
+.u11w-cliacct { margin-top: 6px; padding: 7px 9px; border-radius: 9px;
+  background: rgba(128,128,128,.06); background: color-mix(in srgb, var(--text-primary) 5%, transparent); }
+.u11w-cliacct-h { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; font-size: 11px; }
+.u11w-cliacct-h b { font-weight: 600; color: var(--text-primary); }
+.u11w-cliacct-h span { color: var(--text-muted); font-size: 10px; }
+.u11w-cliacct-h svg { width: 12px; height: 12px; flex: none; color: var(--text-muted); }
+.u11w-cliprobes { display: flex; flex-direction: column; gap: 2px; margin-top: 5px; }
+.u11w-cliprobe { display: grid; grid-template-columns: minmax(78px, 130px) minmax(0, 1fr) auto;
+  align-items: baseline; gap: 8px; font-size: 10.5px; line-height: 1.4; }
+.u11w-cliprobe b { font-family: var(--mono-font); font-weight: 600; color: var(--text-secondary);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u11w-cliprobe span { color: var(--text-muted); min-width: 0; }
+.u11w-cliprobe em { font-style: normal; font-family: var(--mono-font); font-size: 9.5px; color: var(--text-muted);
+  white-space: nowrap; }
+.u11w-clibucket { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; margin-top: 4px; font-size: 10.5px; line-height: 1.45; }
+.u11w-clibucket b { font-weight: 600; color: var(--text-secondary); }
+.u11w-clibucket span { color: var(--text-muted); }
+.u11w-clinote { margin-top: 5px; font-size: 10.5px; line-height: 1.45; color: var(--text-muted); }
+.u11w-clicredit { display: flex; align-items: flex-start; gap: 6px; margin-top: 5px; padding: 5px 8px; border-radius: 8px;
+  font-size: 10.5px; line-height: 1.45; color: var(--text-secondary);
+  background: rgba(90,150,255,.09); background: color-mix(in srgb, var(--tone-info) 9%, transparent); }
+.u11w-clicredit svg { width: 12px; height: 12px; flex: none; margin-top: 1px; color: var(--tone-info-text); }
+@media (max-width: 820px) {
+  .u11w-cliprobe { grid-template-columns: minmax(70px, 1fr) auto; }
+  .u11w-cliprobe span { grid-column: 1 / -1; }
+}
 
 /* ---------- signals list spacing (lost in 08-12 rewrite) ---------- */
 .u11w-siglist { margin-bottom: 8px; }

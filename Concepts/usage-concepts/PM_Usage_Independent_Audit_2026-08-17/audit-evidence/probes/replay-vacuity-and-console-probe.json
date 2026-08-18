@@ -1,0 +1,89 @@
+{
+  "origin": "http://127.0.0.1:8107/",
+  "console_all": [],
+  "pageerrors": [],
+  "requestfailed": [],
+  "http_non2xx": [],
+  "console_error_classification": [],
+  "selector_census": {
+    ".us-page.u11": 1,
+    ".u11-rail .u11-item": 15,
+    ".u11-advonly": 1,
+    "#u11Disc button[data-disc=\"standard\"]": 1,
+    "#u11Disc button[data-disc=\"advanced\"]": 1,
+    "[data-scope-open]": 1,
+    "#u11Pop": 1,
+    "#u11PopList [data-scopeid=\"fam:openai\"]": 0,
+    "#u11ScopeChip": 1,
+    "#u11Settings": 1,
+    "#u11SheetSprout": 1,
+    "#u11SheetSprout [data-u11link=\"provider\"]": 0,
+    "#u11Export": 1,
+    "#u11ExportSprout": 1,
+    "#u11Refresh": 1,
+    ".rail-toast": 0,
+    ".u11w-opcard": 8,
+    ".u11w-opcard [data-att=\"ue-609\"]": 1,
+    ".u11w-opcard [data-u11-act=\"setuplink\"]": 1,
+    ".u11w-ophase": 8,
+    ".u11w-capenv": 6,
+    ".u11w-capline.dim": 0,
+    "[data-u11-act=\"reqforecast\"]": 4,
+    ".u11rd": 0,
+    ".u11-pane[data-pane=\"accounts\"] [data-u11-act=\"usenext\"]": 12,
+    ".u11-pane[data-pane=\"accounts\"] .u11w-acctmeta": 12,
+    ".u11ctx-det": 1,
+    ".u11-pane[data-pane=\"ledger\"] [data-att=\"ue-600\"]": 0
+  },
+  "advonly": {
+    "standard": {
+      "count": 1,
+      "firstInlineStyle": "display: none; --u11-ri: 14;",
+      "firstComputedDisplay": "none",
+      "firstOffsetHeight": 0,
+      "firstVisibleToUser": false
+    },
+    "advanced": {
+      "count": 1,
+      "firstInlineStyle": "--u11-ri: 14;",
+      "firstComputedDisplay": "none",
+      "firstOffsetHeight": 0,
+      "firstVisibleToUser": false
+    }
+  },
+  "unconfigured_guard": {
+    "Mistral": {
+      "in_visible_innerText": false,
+      "in_serialized_DOM": false,
+      "in_U11_data_json": true
+    },
+    "Fireworks": {
+      "in_visible_innerText": false,
+      "in_serialized_DOM": false,
+      "in_U11_data_json": true
+    },
+    "OpenRouter": {
+      "in_visible_innerText": false,
+      "in_serialized_DOM": false,
+      "in_U11_data_json": true
+    },
+    "Cohere": {
+      "in_visible_innerText": false,
+      "in_serialized_DOM": false,
+      "in_U11_data_json": true
+    },
+    "_activePane": "overview",
+    "_paneCount": 13,
+    "_hiddenPaneCount": 12,
+    "_bodyInnerTextLen": 7107
+  },
+  "underscore_guard": {
+    "harness_count_skipping_hidden": 0,
+    "count_including_hidden_attr": 0,
+    "hidden_attr_elements": 8
+  },
+  "opcard_token_guard": {
+    "cardCount": 8,
+    "anyRendered": false
+  }
+}

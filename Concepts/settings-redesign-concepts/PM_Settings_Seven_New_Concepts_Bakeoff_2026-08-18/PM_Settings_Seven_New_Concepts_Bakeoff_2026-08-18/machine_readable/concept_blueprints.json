@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.settings_bakeoff.seven_selected_concepts.v2",
+  "concepts": [
+    {
+      "number": 5,
+      "id": "concept-05-directory-take-1",
+      "source_family": "A1 Directory / Take 1",
+      "reference": "reference/selected_concepts/01_A1_Directory_Take_1_LAYOUT_RECONSTRUCTION.png",
+      "reference_authority": "layout_hierarchy_navigation_only",
+      "home_model": "search + compact attention + two-column destination directory",
+      "deep_model": "card-to-domain workspace",
+      "manager_model": "integrated roster plus detailed form",
+      "narrow_model": "push navigation and one-column directory"
+    },
+    {
+      "number": 6,
+      "id": "concept-06-directory-take-2",
+      "source_family": "A1 Directory / Take 2",
+      "reference": "reference/selected_concepts/02_A1_Directory_Take_2.png",
+      "reference_authority": "layout_hierarchy_navigation_only",
+      "home_model": "editorial single-column destination list",
+      "deep_model": "stable domain rail plus restrained content sheet",
+      "manager_model": "compact roster and detail sheet",
+      "narrow_model": "single-pane editorial push stack"
+    },
+    {
+      "number": 7,
+      "id": "concept-07-compendium-workspace",
+      "source_family": "A2 Compendium Workspace / Take 1",
+      "reference": "reference/selected_concepts/03_A2_Compendium_Workspace_Take_1.png",
+      "reference_authority": "layout_hierarchy_navigation_only",
+      "home_model": "search + browse-by-area + recent changes",
+      "deep_model": "domain overview plus All Settings faceted compendium",
+      "manager_model": "integrated list/detail with readable metadata",
+      "narrow_model": "facets collapse to drawer and detail pushes"
+    },
+    {
+      "number": 8,
+      "id": "concept-08-directory-take-3",
+      "source_family": "A1 Directory / Take 3",
+      "reference": "reference/selected_concepts/04_A1_Directory_Take_3.png",
+      "reference_authority": "layout_hierarchy_navigation_only",
+      "home_model": "spacious large-domain card directory",
+      "deep_model": "manager-destination overview",
+      "manager_model": "provider summary cards plus explicit quick actions",
+      "narrow_model": "large cards become a clear single column"
+    },
+    {
+      "number": 9,
+      "id": "concept-09-tome-tabs",
+      "source_family": "Rethemed Tome Tabs",
+      "reference": "reference/selected_concepts/05_Tome_Tabs_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+      "reference_authority": "layout_only_retheme_required",
+      "home_model": "broad central page with persistent chapter/edge tabs",
+      "deep_model": "layered page stack and stable category location",
+      "manager_model": "roster plus tabbed detail page",
+      "narrow_model": "tabs become controlled push navigation",
+      "forbidden_visuals": ["steampunk", "fantasy", "parchment", "brass", "gears", "book ornament", "sepia"]
+    },
+    {
+      "number": 10,
+      "id": "concept-10-command-suite",
+      "source_family": "Rethemed Command Suite",
+      "reference": "reference/selected_concepts/06_Command_Suite_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+      "reference_authority": "layout_only_retheme_required",
+      "home_model": "command index with context and attention",
+      "deep_model": "keyboard-first multi-pane drill-down",
+      "manager_model": "dense roster/details/limits/models/logs workspace",
+      "narrow_model": "one pane at a time with explicit left/right hierarchy",
+      "forbidden_visuals": ["terminal green", "CRT", "fake shell", "monospace body copy", "code-only labels"]
+    },
+    {
+      "number": 11,
+      "id": "concept-11-tabbed-organizer",
+      "source_family": "Rethemed Tabbed Organizer",
+      "reference": "reference/selected_concepts/07_Tabbed_Organizer_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+      "reference_authority": "layout_only_retheme_required",
+      "home_model": "compact categories plus recent changes with edge tabs",
+      "deep_model": "layered sheets and domain tabs",
+      "manager_model": "provider roster plus detailed tabbed page",
+      "narrow_model": "tabs and sheets become one-pane push stack",
+      "forbidden_visuals": ["paper", "binder", "folder skeuomorphism", "staples", "parchment", "office-supply decoration"]
+    }
+  ],
+  "differentiation_required": [
+    "home_composition",
+    "primary_navigation_geometry",
+    "deep_navigation_model",
+    "manager_composition",
+    "search_result_reveal",
+    "narrow_width_transformation",
+    "motion_metaphor",
+    "density_typography_rhythm"
+  ]
+}

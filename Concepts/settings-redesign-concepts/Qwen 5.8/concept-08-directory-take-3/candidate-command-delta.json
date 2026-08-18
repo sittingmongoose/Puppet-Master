@@ -1,0 +1,32 @@
+{
+  "schema_id": "pm.settings_candidate_command_delta.v1",
+  "concept_id": "concept-08-directory-take-3",
+  "model": "Qwen 5.8",
+  "census_source": "Plans/UI_Command_Catalog.md (read-only census; no canon minted)",
+  "note": "Provisional. Reuse/alias/retire/candidate census only; all ids here remain candidates until plan-owner closure.",
+  "entries": [
+    { "candidate_id": "cmd.settings.open", "census": "candidate", "family": "navigation", "note": "No exact canon match; wrapper for opening the Settings surface at #/home." },
+    { "candidate_id": "cmd.settings.navigate", "census": "candidate", "family": "navigation", "note": "Home→domain→subgroup→manager transitions; directory card and destination row activations." },
+    { "candidate_id": "cmd.settings.search.focus", "census": "candidate", "family": "navigation", "note": "'/' shortcut and header search focus; big search on Home." },
+    { "candidate_id": "cmd.settings.search.select_result", "census": "candidate", "family": "navigation", "note": "Routes strictly by rid via PMSearch2.byRid; pushes #/q/<query> before landing." },
+    { "candidate_id": "cmd.settings.category.select", "census": "candidate", "family": "navigation", "note": "Domain card open (#/cat/<catId>)." },
+    { "candidate_id": "cmd.settings.subcategory.select", "census": "candidate", "family": "navigation", "note": "Subgroup pill navigation (#/cat/<catId>/<subId>)." },
+    { "candidate_id": "cmd.settings.setting.focus", "census": "candidate", "family": "navigation", "note": "Deep row focus with pm2-locate." },
+    { "candidate_id": "cmd.settings.manager.open", "census": "candidate", "family": "navigation", "note": "Manager and manager-object deep links (#/mgr/<familyId>[/<objectId>])." },
+    { "candidate_id": "cmd.settings.bloom.open", "census": "retire", "family": "navigation", "note": "Canon exists for the old chip/bloom architecture; retire or alias to cmd.settings.open once destination IA lands." },
+    { "candidate_id": "cmd.settings.close", "census": "candidate", "family": "navigation", "note": "Close Settings with receipt and return note." },
+    { "candidate_id": "cmd.account.select_profile", "census": "reuse", "family": "providers", "note": "Account preferred/sticky selection in provider Accounts section reuses canon shape." },
+    { "candidate_id": "cmd.provider.switch_route", "census": "reuse", "family": "providers", "note": "Model default selection (Make default) maps to route switching canon." },
+    { "candidate_id": "cmd.provider.installation.select", "census": "candidate", "family": "providers", "note": "Select between shadowed/selected installations; confidence gating manual-only for unknown owner." },
+    { "candidate_id": "cmd.provider.installation.update", "census": "candidate", "family": "providers", "note": "Ask-first update lifecycle with ObservableWork phases; rollback on verification failure." },
+    { "candidate_id": "cmd.provider.catalog.refresh", "census": "candidate", "family": "providers", "note": "models.dev refresh; last-known-good retained on failure." },
+    { "candidate_id": "cmd.usage.refresh", "census": "reuse", "family": "providers", "note": "Usage & Limits refresh; usage-unavailable providers show honest unavailable." },
+    { "candidate_id": "cmd.theme.set", "census": "reuse", "family": "appearance", "note": "Appearance manager theme select reuses theme canon." },
+    { "candidate_id": "cmd.settings.open_storage_retention", "census": "reuse", "family": "storage", "note": "Storage manager deep link from domain overview." },
+    { "candidate_id": "cmd.storage.compaction.request", "census": "reuse", "family": "storage", "note": "Compaction only as owner-admitted request; never direct." },
+    { "candidate_id": "cmd.settings.copy.preview", "census": "candidate", "family": "copy", "note": "PMCopy2.preview over selected source + categories." },
+    { "candidate_id": "cmd.settings.copy.apply", "census": "candidate", "family": "copy", "note": "Restore point + atomic apply + verify; rollback via cmd.settings.copy.rollback candidate." },
+    { "candidate_id": "cmd.settings.copy.rollback", "census": "candidate", "family": "copy", "note": "Rollback to the copy restore point." },
+    { "candidate_id": "cmd.sound.test", "census": "reuse", "family": "sounds", "note": "Rate-limited, receipted test send in Sounds manager." }
+  ]
+}

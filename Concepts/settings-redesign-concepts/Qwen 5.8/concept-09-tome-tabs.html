@@ -1,0 +1,1312 @@
+<!doctype html>
+<html lang="en" data-theme="friendly-dark" data-reduced-motion="0" data-concept-id="concept-09-tome-tabs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tome Tabs — Qwen 5.8</title>
+<link rel="stylesheet" href="_shared/pm-shell.css">
+<link rel="stylesheet" href="_shared/pm-managers2.css">
+<style>
+/* concept-09-tome-tabs — layered reading canvas with persistent edge chapter tabs.
+   Layout borrowed from the Tome Tabs reference; rendered entirely in PM tokens.
+   Retheme prohibitions honored: zero forbidden ornament or skeuomorphism. */
+
+.tt-root { display: flex; flex-direction: column; min-height: 0; flex: 1; }
+
+/* --- concept topbar: back / breadcrumb / search / close ------------------- */
+.tt-topbar {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 14px; border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+.tt-crumb { display: flex; align-items: center; gap: 6px; min-width: 0; flex: 1; color: var(--text-2); font-size: 12px; flex-wrap: wrap; }
+.tt-crumb b { color: var(--text-1); font-weight: 600; }
+.tt-crumb .tt-sep { color: var(--text-3); }
+.tt-topbar .tt-searchbox { width: min(340px, 38vw); flex: none; }
+
+/* --- body: layered page + right edge chapter tabs -------------------------- */
+.tt-body { position: relative; display: grid; grid-template-columns: minmax(0,1fr) 74px; min-height: 0; flex: 1; }
+.tt-stage { position: relative; min-width: 0; min-height: 0; overflow: hidden; background: var(--bg-shell, var(--bg)); }
+
+/* the reading page: layered surface tones give depth without paper metaphor */
+.tt-page {
+  position: absolute; inset: 0 10px 0 0; overflow-y: auto; min-height: 0;
+  background: var(--surface);
+  border: 1px solid var(--border); border-right: none;
+  border-radius: var(--radius-l) 0 0 var(--radius-l);
+  box-shadow: var(--shadow);
+  padding: 18px clamp(16px, 4vw, 44px) 40px;
+}
+/* two receding under-pages on the right edge (stacked surfaces, not paper) */
+.tt-stage::before, .tt-stage::after {
+  content: ""; position: absolute; top: 10px; bottom: 10px; right: 4px; width: 8px;
+  border: 1px solid var(--border); border-left: none; border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  background: var(--surface-3); pointer-events: none;
+}
+.tt-stage::after { right: 0; top: 18px; bottom: 18px; background: var(--bg); }
+
+/* page-turn motion: quiet translate, skipped for search paint + reduced motion */
+@keyframes ttTurn { from { transform: translateX(18px); opacity: .35; } to { transform: none; opacity: 1; } }
+.tt-page.tt-turn { animation: ttTurn .18s ease-out 1; }
+[data-reduced-motion="1"] .tt-page.tt-turn { animation: none; }
+
+/* --- right edge chapter tabs ------------------------------------------------ */
+.tt-rail { display: flex; flex-direction: column; gap: 4px; padding: 14px 0 14px 0; min-height: 0; overflow-y: auto; scrollbar-width: none; }
+.tt-rail::-webkit-scrollbar { display: none; }
+.tt-tab {
+  position: relative; z-index: 1; flex: none;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  border: 1px solid var(--border); border-right: none;
+  border-radius: var(--radius-s) 0 0 var(--radius-s);
+  background: var(--surface-2); color: var(--text-2);
+  padding: 7px 4px 6px 6px; margin-right: 10px;
+  cursor: pointer; font-size: 10px; letter-spacing: .02em;
+  transition: transform .12s ease, background .12s ease, color .12s ease;
+}
+.tt-tab .pm-ico { color: var(--text-3); }
+.tt-tab:hover { background: var(--surface-3); color: var(--text-1); transform: translateX(-2px); }
+.tt-tab.active {
+  z-index: 3; margin-right: 10px; padding-right: 14px;
+  background: var(--surface); color: var(--accent);
+  border-color: var(--border); box-shadow: var(--shadow);
+  transform: translateX(-1px);
+}
+.tt-tab.active .pm-ico { color: var(--accent); }
+.tt-lbl-full { display: none; }
+.tt-tab .tt-lbl { line-height: 1.25; }
+
+/* hover/focus tooltip for abbreviated rail labels (non-wide tiers) */
+.tt-tip {
+  position: fixed; z-index: 95; transform: translate(-100%, -50%);
+  background: var(--surface-2); border: 1px solid var(--border-strong);
+  color: var(--text-1); border-radius: var(--radius-s); padding: 4px 9px;
+  font-size: 11px; white-space: nowrap; pointer-events: none; box-shadow: var(--shadow);
+}
+.tt-tip[hidden] { display: none; }
+
+/* --- reading rhythm ---------------------------------------------------------- */
+.tt-measure { max-width: 75ch; }
+.tt-cap { font-size: 11px; text-transform: uppercase; letter-spacing: .09em; color: var(--text-3); margin: 22px 0 8px; }
+.tt-cap:first-child { margin-top: 0; }
+.tt-h1 { display: flex; align-items: center; gap: 10px; color: var(--text-1); font-size: 19px; font-weight: 700; margin: 2px 0 4px; }
+.tt-h1 .pm-ico { color: var(--accent); }
+.tt-lede { color: var(--text-2); font-size: 12.5px; line-height: 1.55; max-width: 75ch; margin: 0 0 6px; }
+.tt-rule { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+.tt-note { color: var(--text-3); font-size: 11.5px; }
+
+/* --- home frontispiece -------------------------------------------------------- */
+.tt-front-head { text-align: left; }
+.tt-search-lg { position: relative; max-width: 640px; margin: 14px 0 6px; }
+.tt-search-lg .tt-field { display: flex; align-items: center; gap: 8px; border: 1px solid var(--border-strong); border-radius: var(--radius-m); background: var(--surface-2); padding: 10px 12px; }
+.tt-search-lg input { flex: 1; border: none; outline: none; background: none; color: var(--text-1); font-size: 13.5px; }
+.tt-banner { display: flex; align-items: flex-start; gap: 8px; border: 1px solid color-mix(in srgb, var(--warn) 45%, transparent); background: color-mix(in srgb, var(--warn) 10%, transparent); color: var(--text-1); border-radius: var(--radius-m); padding: 10px 12px; margin: 10px 0; max-width: 75ch; }
+.tt-banner .pm-ico { color: var(--warn); margin-top: 1px; }
+.tt-notice { display: flex; align-items: center; gap: 10px; border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface-2); padding: 8px 12px; margin-bottom: 6px; max-width: 75ch; }
+.tt-notice .pm-ico { color: var(--warn); flex: none; }
+.tt-notice .tt-notice-body { flex: 1; min-width: 0; }
+.tt-notice strong { display: block; color: var(--text-1); font-size: 12.5px; }
+.tt-notice span { color: var(--text-2); font-size: 11.5px; }
+
+.tt-chapters { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(430px, 100%), 1fr)); gap: 8px; }
+.tt-chapter {
+  display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: 12px; align-items: center;
+  border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface-2);
+  padding: 12px 14px; cursor: pointer; text-align: left; color: var(--text-1);
+  transition: border-color .12s ease, background .12s ease;
+}
+.tt-chapter:hover { border-color: var(--border-strong); background: var(--surface-3); }
+.tt-chapter .tt-ch-ico { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: var(--radius-s); background: var(--accent-soft); color: var(--accent); }
+.tt-chapter b { font-size: 13.5px; font-weight: 650; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.tt-chapter p { margin: 2px 0 0; color: var(--text-2); font-size: 12px; max-width: 75ch; }
+.tt-chapter .tt-ch-meta { color: var(--text-3); font-size: 11px; text-align: right; white-space: nowrap; }
+.tt-utilities { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+
+/* --- search dropdown ----------------------------------------------------------- */
+.tt-searchbox { position: relative; }
+.tt-field { display: flex; align-items: center; gap: 7px; border: 1px solid var(--border-strong); border-radius: var(--radius-s); background: var(--surface-2); padding: 6px 9px; }
+.tt-field .pm-ico { color: var(--text-3); flex: none; }
+.tt-field input { flex: 1; min-width: 0; border: none; outline: none; background: none; color: var(--text-1); font-size: 12.5px; }
+.tt-drop {
+  position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 60;
+  background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-m);
+  box-shadow: var(--shadow); max-height: min(430px, 60vh); overflow-y: auto; padding: 6px;
+}
+.tt-drop-group { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--text-3); padding: 7px 8px 3px; }
+.tt-drop-row { display: flex; flex-direction: column; gap: 2px; width: 100%; text-align: left; border: none; background: none; border-radius: var(--radius-s); padding: 7px 8px; cursor: pointer; }
+.tt-drop-row:hover, .tt-drop-row.active { background: var(--surface-2); }
+.tt-drop-row .tt-dr-top { display: flex; align-items: center; gap: 8px; color: var(--text-1); font-size: 12.5px; font-weight: 600; min-width: 0; }
+.tt-drop-row .tt-dr-top span.lbl { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tt-drop-row .tt-dr-path { color: var(--text-3); font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tt-drop-row .tt-dr-note { color: var(--warn); font-size: 11px; }
+.tt-drop-empty { padding: 14px 10px; color: var(--text-2); font-size: 12px; text-align: center; }
+.tt-drop-foot { padding: 6px 8px 2px; color: var(--text-3); font-size: 10.5px; border-top: 1px solid var(--border); margin-top: 4px; }
+
+/* --- manager-local tabs ---------------------------------------------------------- */
+.tt-tabs { display: flex; gap: 2px; flex-wrap: wrap; border-bottom: 1px solid var(--border); margin: 12px 0 14px; }
+.tt-tabs [role="tab"] { border: none; background: none; color: var(--text-2); padding: 6px 12px; cursor: pointer; font-size: 12px; border-radius: var(--radius-s) var(--radius-s) 0 0; border-bottom: 2px solid transparent; }
+.tt-tabs [role="tab"]:hover { background: var(--surface-2); color: var(--text-1); }
+.tt-tabs [role="tab"].active { color: var(--accent); font-weight: 600; border-bottom-color: var(--accent); background: var(--accent-soft); }
+
+/* --- roster + detail ---------------------------------------------------------------- */
+.tt-mgr-grid { display: grid; grid-template-columns: minmax(200px, 260px) minmax(0,1fr); gap: 16px; align-items: start; }
+.tt-roster { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface-2); overflow: hidden; }
+.tt-roster-cap { padding: 8px 12px; font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--text-3); border-bottom: 1px solid var(--border); }
+.tt-roster-item { display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; border: none; background: none; color: var(--text-1); padding: 9px 12px; cursor: pointer; border-bottom: 1px solid var(--border); font-size: 12.5px; }
+.tt-roster-item:last-child { border-bottom: none; }
+.tt-roster-item:hover { background: var(--surface-3); }
+.tt-roster-item.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.tt-roster-item .pm-ico { color: var(--text-3); flex: none; }
+.tt-roster-item.active .pm-ico { color: var(--accent); }
+.tt-roster-item .tt-ri-note { margin-left: auto; color: var(--text-3); font-size: 10.5px; white-space: nowrap; }
+.tt-health { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-2); }
+.tt-health i { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); flex: none; }
+.tt-health.warn i { background: var(--warn); } .tt-health.err i { background: var(--err); } .tt-health.muted i { background: var(--text-3); }
+
+.tt-detail { min-width: 0; }
+.tt-detail-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+.tt-detail-head b { font-size: 15px; color: var(--text-1); }
+.tt-kv { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 8px 18px; margin: 10px 0; }
+.tt-kv > div { border: 1px solid var(--border); border-radius: var(--radius-s); background: var(--surface-2); padding: 8px 10px; }
+.tt-kv dt { font-size: 10.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--text-3); }
+.tt-kv dd { margin: 3px 0 0; color: var(--text-1); font-size: 12.5px; }
+.tt-secret { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; border: 1px dashed var(--border-strong); border-radius: var(--radius-s); padding: 6px 10px; margin: 6px 0; color: var(--text-2); font-size: 11.5px; }
+.tt-log { font-size: 11.5px; color: var(--text-2); padding: 3px 0; border-bottom: 1px dashed var(--border); }
+.tt-log:last-child { border-bottom: none; }
+
+/* --- deferred insertion shell -------------------------------------------------------- */
+.tt-defer { border: 1px dashed var(--border-strong); border-radius: var(--radius-m); background: var(--surface-3); padding: 10px 12px; margin: 10px 0; }
+.tt-defer .tt-cap { margin: 0 0 6px; }
+.tt-defer p { margin: 3px 0; color: var(--text-2); font-size: 12px; max-width: 70ch; }
+.tt-defer p b { color: var(--text-1); }
+
+/* --- ops tray (ObservableWork) --------------------------------------------------------- */
+.tt-ops { position: sticky; bottom: 0; margin: 18px -8px -8px; display: flex; flex-direction: column; gap: 6px; }
+.tt-op { border: 1px solid var(--border-strong); border-radius: var(--radius-m); background: var(--surface-2); box-shadow: var(--shadow); padding: 8px 12px; }
+.tt-op-head { display: flex; align-items: center; gap: 8px; color: var(--text-1); font-size: 12px; font-weight: 600; }
+.tt-op-head .pm-ico { color: var(--accent); }
+.tt-op-phase { color: var(--text-2); font-weight: 400; font-size: 11.5px; }
+.tt-op-bar { height: 4px; border-radius: 2px; background: var(--surface-3); margin-top: 6px; overflow: hidden; }
+.tt-op-bar i { display: block; height: 100%; background: var(--accent); transition: width .25s ease; }
+.tt-op-wait { color: var(--warn); font-size: 11px; margin-top: 4px; }
+
+/* --- all settings ------------------------------------------------------------------------ */
+.tt-facets { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 10px 0 12px; }
+.tt-facets .pm-select { max-width: 190px; }
+.tt-vlist { height: min(560px, 62vh); overflow-y: auto; border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface-2); padding: 4px 10px; }
+.tt-vlist .pm2-row { grid-template-columns: minmax(0,1fr) auto; }
+.tt-vlist .pm2-row-desc { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 56ch; }
+.tt-count { color: var(--text-3); font-size: 11.5px; }
+
+/* --- copy flow ------------------------------------------------------------------------------ */
+.tt-steps { display: flex; gap: 0; align-items: center; margin: 12px 0 18px; max-width: 720px; }
+.tt-step { display: flex; align-items: center; gap: 8px; color: var(--text-3); font-size: 11.5px; }
+.tt-step i { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--border-strong); font-style: normal; font-size: 11px; flex: none; }
+.tt-step.active { color: var(--text-1); }
+.tt-step.active i { background: var(--accent); border-color: var(--accent); color: var(--accent-contrast); font-weight: 700; }
+.tt-step.done i { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+.tt-step-line { flex: 1; height: 1px; background: var(--border); margin: 0 10px; min-width: 16px; }
+.tt-src { display: flex; align-items: center; gap: 10px; border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface-2); padding: 10px 12px; margin-bottom: 6px; cursor: pointer; width: 100%; text-align: left; color: var(--text-1); }
+.tt-src:hover { border-color: var(--border-strong); }
+.tt-src.active { border-color: var(--accent); background: var(--accent-soft); }
+.tt-src b { font-size: 12.5px; }
+.tt-src .tt-note { display: block; }
+.tt-cats { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 6px; }
+.tt-catpick { display: flex; align-items: center; gap: 8px; border: 1px solid var(--border); border-radius: var(--radius-s); background: var(--surface-2); padding: 8px 10px; font-size: 12px; color: var(--text-1); cursor: pointer; }
+.tt-catpick input { accent-color: var(--accent); }
+.tt-diff { width: 100%; border-collapse: collapse; font-size: 12px; margin: 8px 0; }
+.tt-diff th { text-align: left; color: var(--text-3); font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; padding: 4px 8px; border-bottom: 1px solid var(--border-strong); }
+.tt-diff td { padding: 5px 8px; border-bottom: 1px solid var(--border); color: var(--text-1); }
+
+/* --- wide margin pane ----------------------------------------------------------------------- */
+.tt-margin { display: none; }
+#app[data-wtier="wide"] .tt-margin {
+  display: flex; flex-direction: column; gap: 10px;
+  width: 280px; flex: none; border-left: 1px solid var(--border);
+  padding: 14px 14px; background: var(--bg); overflow-y: auto;
+}
+.tt-margin .tt-cap { margin: 0 0 4px; }
+.tt-margin .tt-mcard { border: 1px solid var(--border); border-radius: var(--radius-s); background: var(--surface-2); padding: 8px 10px; font-size: 11.5px; color: var(--text-2); }
+.tt-margin .tt-mcard b { display: block; color: var(--text-1); font-size: 12px; margin-bottom: 2px; }
+
+.tt-cols { display: grid; grid-template-columns: minmax(0,1fr); min-height: 0; flex: 1; }
+#app[data-wtier="wide"] .tt-cols { grid-template-columns: minmax(0,1fr) 280px; }
+/* wide tier: rail shows full human chapter names; no truncated context labels */
+#app[data-wtier="wide"] .tt-body { grid-template-columns: minmax(0,1fr) auto; }
+#app[data-wtier="wide"] .tt-rail { width: 118px; }
+#app[data-wtier="wide"] .tt-tab { padding: 7px 8px 6px 8px; margin-right: 10px; }
+#app[data-wtier="wide"] .tt-tab .tt-lbl { display: none; }
+#app[data-wtier="wide"] .tt-tab .tt-lbl-full { display: inline; }
+/* wide tier: home copy keeps a comfortable measure while the canvas fills */
+#app[data-wtier="wide"] .tt-page .tt-lede { max-width: 88ch; }
+#app[data-wtier="wide"] .tt-page .tt-banner, #app[data-wtier="wide"] .tt-page .tt-notice { max-width: 92ch; }
+
+/* --- narrow / squeezed: tabs become controlled push navigation ------------------------------ */
+#app[data-wtier="squeezed"] .tt-body, #app[data-wtier="narrow"] .tt-body { grid-template-columns: minmax(0,1fr); }
+#app[data-wtier="squeezed"] .tt-rail, #app[data-wtier="narrow"] .tt-rail { display: none; }
+#app[data-wtier="squeezed"] .tt-page, #app[data-wtier="narrow"] .tt-page { inset: 0; border-radius: 0; border-left: none; }
+#app[data-wtier="squeezed"] .tt-stage::before, #app[data-wtier="squeezed"] .tt-stage::after,
+#app[data-wtier="narrow"] .tt-stage::before, #app[data-wtier="narrow"] .tt-stage::after { display: none; }
+#app[data-wtier="squeezed"] .tt-mgr-grid, #app[data-wtier="narrow"] .tt-mgr-grid { grid-template-columns: 1fr; }
+/* push: when an object is open, the roster yields the whole pane */
+#app[data-wtier="squeezed"] .tt-mgr-grid[data-hasobj="1"] .tt-roster,
+#app[data-wtier="narrow"] .tt-mgr-grid[data-hasobj="1"] .tt-roster { display: none; }
+#app[data-wtier="squeezed"] .tt-topbar, #app[data-wtier="narrow"] .tt-topbar { flex-wrap: wrap; }
+#app[data-wtier="squeezed"] .tt-topbar .tt-searchbox, #app[data-wtier="narrow"] .tt-topbar .tt-searchbox { width: 100%; order: 5; }
+#app[data-wtier="squeezed"] .tt-drop, #app[data-wtier="narrow"] .tt-drop { position: fixed; left: 10px; right: 10px; top: 96px; }
+</style>
+</head>
+<body data-concept-model="Qwen 5.8" data-concept="concept-09-tome-tabs">
+<div id="app"></div>
+<script src="_shared/pm-icons.js"></script>
+<script src="_shared/pm-inventory-data.js"></script>
+<script src="_shared/pm-managers2-data.js"></script>
+<script src="_shared/pm-state2.js"></script>
+<script src="_shared/pm-search2.js"></script>
+<script src="_shared/pm-managers2.js"></script>
+<script src="_shared/pm-copy2.js"></script>
+<script src="_shared/pm-shell2.js"></script>
+<script src="_shared/concept-hub-bridge.js"></script>
+<script>
+(function () {
+  "use strict";
+  var D = window.PMInventoryData, MD = window.PMManagers2Data, S2 = window.PMState2,
+      SR = window.PMSearch2, M2 = window.PMManagers2, CP = window.PMCopy2, esc = M2.esc;
+
+  S2.init("concept-09-tome-tabs");
+  SR.register(MD.searchEntries());
+
+  /* ---------- icon mapping (family/category icons onto PM icon set) ---------- */
+  var ICONMAP = { database: "server", users: "persona", cpu: "code", box: "puzzle", copy: "layers",
+    link: "external", heart: "activity", bell: "inbox", palette: "sun", upload: "refresh",
+    film: "image", masks: "persona", toolbox: "grid", clipboard: "list", check: "check" };
+  function ico(n, s) { return window.PMIcons.get(ICONMAP[n] || n, s || 15); }
+
+  var SHORT = { general: "General", ai: "AI", safety: "Safety", code: "Code", memory: "Memory",
+    planning: "Planning", branching: "Branch", media: "Media", web: "Web", personas: "Personas",
+    extensions: "Extend", system: "System" };
+  /* full human names for the rail; SHORT stays for the squeezed push-nav */
+  var FULL = { general: "General", ai: "AI & Providers", safety: "Safety", code: "Code", memory: "Memory",
+    planning: "Planning", branching: "Branching", media: "Media", web: "Web", personas: "Personas",
+    extensions: "Extensions", system: "System" };
+
+  /* ---------- shell ---------- */
+  var shell = window.PMShell2.mount({
+    conceptName: "Tome Tabs", model: "Qwen 5.8",
+    onHome: function () { go("#/home"); },
+    onTier: function () { /* CSS tiers handle geometry; nothing to re-render */ }
+  });
+  var content = shell.content;
+
+  /* ---------- concept-local fixture store (manager demo rows only) ---------- */
+  var FX = {};
+  try { FX = JSON.parse(window.localStorage.getItem("pm.tt9.fx") || "{}") || {}; } catch (e) { FX = {}; }
+  function fxSave() { try { window.localStorage.setItem("pm.tt9.fx", JSON.stringify(FX)); } catch (e) {} }
+  function fxVal(r) { return FX[r.id] !== undefined ? FX[r.id] : r.value; }
+
+  /* ---------- scroll memory: stable page location per route ---------- */
+  var scrollMem = {};
+  var pageEl = null;
+
+  /* ---------- routing ---------- */
+  function parseHash() {
+    var h = window.location.hash || "#/home";
+    if (h.indexOf("#/") !== 0) h = "#/home";
+    var qi = h.indexOf("?");
+    var path = qi >= 0 ? h.slice(2, qi) : h.slice(2);
+    var q = {};
+    if (qi >= 0) h.slice(qi + 1).split("&").forEach(function (kv) {
+      if (!kv) return; var p = kv.split("="); q[decodeURIComponent(p[0])] = decodeURIComponent(p[1] || "");
+    });
+    return { seg: path.split("/").filter(Boolean), q: q, raw: (qi >= 0 ? h.slice(1, qi) : h.slice(1)) + (qi >= 0 ? h.slice(qi) : "") };
+  }
+  function routeKey(r) { return r.raw; }
+
+  function catById(id) { for (var i = 0; i < D.categories.length; i++) if (D.categories[i].id === id) return D.categories[i]; return null; }
+  function famById(id) { for (var i = 0; i < MD.families.length; i++) if (MD.families[i].id === id) return MD.families[i]; return null; }
+  function subOf(cat, subId) { for (var i = 0; i < cat.subgroups.length; i++) if (cat.subgroups[i].id === subId) return cat.subgroups[i]; return null; }
+  function famsInDomain(catId) { return MD.families.filter(function (f) { return f.domain === catId; }); }
+
+  function routeTitle(r) {
+    var s = r.seg;
+    if (!s.length || s[0] === "home") return "Settings Home";
+    if (s[0] === "cat") { var c = catById(s[1]); if (!c) return "Chapter"; if (s[2]) { var sg = subOf(c, s[2]); return c.title + " / " + (sg ? sg.title : s[2]); } return c.title; }
+    if (s[0] === "mgr") { var f = famById(s[1]); return f ? f.title : "Manager"; }
+    if (s[0] === "all") return "All Settings";
+    if (s[0] === "copy") return "Copy Settings";
+    if (s[0] === "lifecycle") return "Settings Lifecycle";
+    if (s[0] === "q") return "Search";
+    return "Settings";
+  }
+  function backTarget(r) {
+    var s = r.seg;
+    if (s[0] === "mgr" && s[2]) { var f0 = famById(s[1]); return { hash: "#/mgr/" + s[1], label: f0 ? f0.title : "manager" }; }
+    if (s[0] === "cat" && s[2]) return { hash: "#/cat/" + s[1], label: (catById(s[1]) || {}).title || "chapter" };
+    if (s[0] === "cat") return { hash: "#/home", label: "Settings Home" };
+    if (s[0] === "mgr") { var f = famById(s[1]); var c = f ? catById(f.domain) : null; return { hash: c ? "#/cat/" + c.id : "#/home", label: c ? c.title : "Settings Home" }; }
+    if (s[0] === "q") return { hash: "#/home", label: "Settings Home" };
+    return { hash: "#/home", label: "Settings Home" };
+  }
+
+  var pendingLocate = null; // {row, sec, object}
+  var lastQuery = "";
+
+  function go(hash) { if (window.location.hash === hash) render({ noturn: false }); else window.location.hash = hash; }
+
+  /* ---------- mount static skeleton once ---------- */
+  content.innerHTML =
+    '<div class="tt-root">' +
+      '<div class="tt-topbar">' +
+        '<button class="pm-btn pm-btn-sm" data-test="back" id="ttBack"></button>' +
+        '<nav class="tt-crumb" data-test="breadcrumb" id="ttCrumb" aria-label="Breadcrumb"></nav>' +
+        '<div class="tt-searchbox" id="ttSearchBox"></div>' +
+        '<button class="pm-btn pm-btn-sm" data-test="close" id="ttClose">' + ico("x", 12) + ' Close Settings</button>' +
+      '</div>' +
+      '<div class="tt-cols">' +
+        '<div class="tt-body">' +
+          '<div class="tt-stage"><div class="tt-page" id="ttPage" tabindex="-1"></div></div>' +
+          '<nav class="tt-rail" id="ttRail" aria-label="Chapters"></nav><div class="tt-tip" id="ttTip" hidden></div>' +
+        '</div>' +
+        '<aside class="tt-margin" id="ttMargin" aria-label="Context margin"></aside>' +
+      '</div>' +
+    '</div>';
+  pageEl = content.querySelector("#ttPage");
+  var rootEl = content.querySelector(".tt-root");
+
+  /* ---------- chapter rail ---------- */
+  function renderRail(r) {
+    var cur = r.seg[0] === "cat" ? r.seg[1] : (r.seg[0] === "mgr" ? (famById(r.seg[1]) || {}).domain : null);
+    var html = '<button class="tt-tab' + ((!r.seg.length || r.seg[0] === "home" || r.seg[0] === "q") ? " active" : "") + '" data-go="#/home">' + ico("home", 15) + '<span class="tt-lbl">Home</span><span class="tt-lbl-full">Home</span></button>';
+    D.categories.forEach(function (c) {
+      html += '<button class="tt-tab' + (cur === c.id ? " active" : "") + '" data-go="#/cat/' + c.id + '" data-full="' + esc(FULL[c.id] || c.title) + '" aria-label="' + esc(c.title) + '">' + ico(c.icon, 15) + '<span class="tt-lbl">' + SHORT[c.id] + '</span><span class="tt-lbl-full">' + esc(FULL[c.id] || c.title) + "</span></button>";
+    });
+    html += '<button class="tt-tab' + (r.seg[0] === "all" ? " active" : "") + '" data-go="#/all" data-full="All Settings" aria-label="All Settings">' + ico("list", 15) + '<span class="tt-lbl">All</span><span class="tt-lbl-full">All Settings</span></button>';
+    var rail = content.querySelector("#ttRail");
+    rail.innerHTML = html;
+    if (!rail._ttTipBound) {
+      rail._ttTipBound = true;
+      var tip = content.querySelector("#ttTip");
+      function showTip(tab) {
+        if (document.getElementById("app").getAttribute("data-wtier") === "wide") return; // full name already visible
+        var label = tab.getAttribute("data-full");
+        if (!label) return;
+        var b = tab.getBoundingClientRect();
+        tip.textContent = label;
+        tip.hidden = false;
+        tip.style.left = (b.left - 8) + "px";
+        tip.style.top = (b.top + b.height / 2) + "px";
+      }
+      function hideTip() { tip.hidden = true; }
+      rail.addEventListener("mouseover", function (e) { var t = e.target.closest(".tt-tab"); if (t) showTip(t); });
+      rail.addEventListener("mouseout", hideTip);
+      rail.addEventListener("focusin", function (e) { var t = e.target.closest(".tt-tab"); if (t) showTip(t); });
+      rail.addEventListener("focusout", hideTip);
+      rail.addEventListener("scroll", hideTip);
+    }
+  }
+
+  /* ---------- topbar ---------- */
+  function renderTopbar(r) {
+    var bt = backTarget(r);
+    var back = content.querySelector("#ttBack");
+    back.innerHTML = ico("arrowLeft", 12) + " Back to " + esc(bt.label);
+    back.setAttribute("data-back-hash", bt.hash);
+    var parts = ["Settings"];
+    if (r.seg[0] === "cat") { var c = catById(r.seg[1]); parts.push(c ? c.title : r.seg[1]); if (r.seg[2]) { var sg = c && subOf(c, r.seg[2]); parts.push(sg ? sg.title : r.seg[2]); } }
+    else if (r.seg[0] === "mgr") { var f = famById(r.seg[1]); if (f) { var cc = catById(f.domain); parts.push(cc.title, f.title); if (r.seg[2]) parts.push(r.seg[2]); } }
+    else if (r.seg[0] === "all") parts.push("All Settings");
+    else if (r.seg[0] === "copy") parts.push("Copy Settings From Another Project");
+    else if (r.seg[0] === "q") parts.push("Search");
+    content.querySelector("#ttCrumb").innerHTML = parts.map(function (p, i) {
+      return (i ? '<span class="tt-sep">' + ico("chevronRight", 10) + '</span>' : '') + (i === parts.length - 1 ? "<b>" + esc(p) + "</b>" : "<span>" + esc(p) + "</span>");
+    }).join("");
+    rootEl.setAttribute("data-route", r.raw);
+  }
+
+  /* ---------- universal search (contract) ---------- */
+  var GROUPS = [["manager", "Managers"], ["setting", "Settings"], ["managed_object", "Objects"], ["action", "Actions"], ["setup", "Setup"], ["diagnostic", "Diagnostics"], ["unavailable", "Not available"]];
+  function mountSearch(host, large) {
+    host.innerHTML =
+      '<div class="' + (large ? "tt-search-lg" : "") + '">' +
+        '<div class="tt-field">' + ico("search", 14) +
+          '<input data-test="search-input" type="text" role="combobox" aria-expanded="false" aria-autocomplete="list" placeholder="Search settings, managers, actions…" autocomplete="off" spellcheck="false">' +
+          '<span class="pm-kbd">/</span>' +
+        '</div>' +
+        '<div class="tt-drop" data-test="search-results" hidden></div>' +
+      '</div>';
+    var input = host.querySelector("input");
+    var drop = host.querySelector(".tt-drop");
+    var activeIdx = -1, rows = [];
+
+    function close() { drop.hidden = true; input.setAttribute("aria-expanded", "false"); activeIdx = -1; rows = []; }
+    function open() { drop.hidden = false; input.setAttribute("aria-expanded", "true"); }
+
+    function paint(results, query) {
+      if (!query) { close(); return; }
+      var html = "";
+      GROUPS.forEach(function (g) {
+        var list = results.filter(function (x) { return x.type === g[0]; });
+        if (!list.length) return;
+        html += '<div class="tt-drop-group">' + g[1] + "</div>";
+        list.forEach(function (x) {
+          html += '<button class="tt-drop-row" data-rid="' + esc(x.rid) + '" role="option">' +
+            '<span class="tt-dr-top"><strong class="pm2-r-title">' + esc(x.label) + '</strong><span class="pm-search-type" data-rt="' + esc(x.type) + '">' + esc(x.type.replace("_", " ")) + "</span></span>" +
+            '<span class="tt-dr-path">' + esc((x.path || []).join("  ›  ")) + "</span>" +
+            (x.note ? '<span class="tt-dr-note">' + esc(x.note) + "</span>" : "") +
+          "</button>";
+        });
+      });
+      if (!html) html = '<div class="tt-drop-empty">No results for “' + esc(query) + '”. Check the spelling — fuzzy matching is on, but this term is too far from anything real.</div>';
+      html += '<div class="tt-drop-foot">Enter opens the highlighted result · Esc closes · routing by immutable result id</div>';
+      drop.innerHTML = html;
+      rows = Array.prototype.slice.call(drop.querySelectorAll(".tt-drop-row"));
+      open();
+    }
+
+    input.addEventListener("input", function () {
+      var q = input.value.trim();
+      lastQuery = q;
+      if (!q) { close(); return; }
+      SR.searchAsync(q, function (res) { if (input.value.trim() === q) paint(res, q); });
+    });
+    input.addEventListener("focus", function () { if (input.value.trim() && rows.length) open(); });
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { if (!drop.hidden) { e.stopPropagation(); close(); } return; }
+      if (drop.hidden) return;
+      if (e.key === "ArrowDown") { e.preventDefault(); activeIdx = Math.min(rows.length - 1, activeIdx + 1); mark(); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); activeIdx = Math.max(0, activeIdx - 1); mark(); }
+      else if (e.key === "Enter") { e.preventDefault(); if (rows[activeIdx] || rows[0]) select(SR.byRid((rows[activeIdx] || rows[0]).getAttribute("data-rid")), input.value.trim()); }
+    });
+    function mark() { rows.forEach(function (r, i) { r.classList.toggle("active", i === activeIdx); }); if (rows[activeIdx]) rows[activeIdx].scrollIntoView({ block: "nearest" }); }
+    drop.addEventListener("mousedown", function (e) {
+      var row = e.target.closest(".tt-drop-row");
+      if (row) { e.preventDefault(); select(SR.byRid(row.getAttribute("data-rid")), input.value.trim()); }
+    });
+    drop.addEventListener("click", function (e) {
+      if (e.detail !== 0) return; // real pointer clicks already handled on mousedown
+      var row = e.target.closest(".tt-drop-row");
+      if (row) select(SR.byRid(row.getAttribute("data-rid")), input.value.trim());
+    });
+    document.addEventListener("click", function (e) { if (!host.contains(e.target) && document.activeElement !== input) close(); });
+
+    function select(entry, query) {
+      if (!entry) return;
+      close();
+      if (!entry.dest) { // unavailable capability: truthful note, no route
+        drop.innerHTML = '<div class="tt-drop-empty"><b>' + esc(entry.label) + "</b><br>" + esc(entry.note || "Not available in this product.") + "</div>";
+        open();
+        return;
+      }
+      pendingLocate = entry.dest;
+      // push a #/q/<query> history entry FIRST (no render) so browser Back restores
+      // the query text and reopens the dropdown with the same results; then navigate.
+      window.history.pushState(null, "", "#/q/" + encodeURIComponent(query || ""));
+      window.location.hash = destHash(entry.dest);
+    }
+    host._ttOpenWith = function (q) { input.value = q; lastQuery = q; paint(SR.search(q), q); input.focus(); };
+    host._ttClose = close;
+    host._ttIsOpen = function () { return !drop.hidden; };
+  }
+
+  function destHash(d) {
+    if (d.kind === "setting") return "#/cat/" + d.category + "/" + d.subgroup + "?row=" + encodeURIComponent(d.settingId);
+    var h = "#/mgr/" + d.manager + (d.object ? "/" + d.object : "");
+    var p = [];
+    if (d.section) p.push("sec=" + encodeURIComponent(d.section));
+    if (d.row) p.push("row=" + encodeURIComponent(d.row));
+    return h + (p.length ? "?" + p.join("&") : "");
+  }
+
+  mountSearch(content.querySelector("#ttSearchBox"), false);
+
+  /* ---------- locate: scroll + focus + calm highlight ---------- */
+  function applyLocate() {
+    if (!pendingLocate) return;
+    var d = pendingLocate;
+    var sel = d.row ? '[data-row="' + d.row + '"]' : d.settingId ? '[data-row="' + d.settingId + '"]' : (d.object ? '[data-object="' + d.object + '"]' : null);
+    if (!sel) return;
+    var el = pageEl.querySelector(sel);
+    if (!el) return;
+    pendingLocate = null;
+    el.scrollIntoView({ block: "center" });
+    el.setAttribute("tabindex", "-1");
+    el.focus({ preventScroll: true });
+    el.classList.add("pm2-locate");
+    setTimeout(function () { el.classList.remove("pm2-locate"); }, 1700);
+  }
+
+  /* ---------- shared page furniture ---------- */
+  function pageHead(icon, title, lede) {
+    return '<h1 class="tt-h1">' + ico(icon, 18) + esc(title) + "</h1>" + (lede ? '<p class="tt-lede">' + esc(lede) + "</p>" : "");
+  }
+  function invRows(ids) {
+    return ids.map(function (id) { return M2.row(D.byId(id), S2.getSetting(id)); }).join("");
+  }
+  function chapterSettingsBlock(cat) {
+    var sg = cat.subgroups[0];
+    var ids = D.byCategory(cat.id).settings.slice(0, 5).map(function (s) { return s.id; });
+    return '<div class="tt-cap">Project settings in this chapter — ' + esc(sg.title) + '</div><div data-bindrows="1">' + invRows(ids) + "</div>" +
+      '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-go="#/cat/' + cat.id + '">Open the full chapter page</button>';
+  }
+
+  /* ---------- fixture row renderer (manager-local demo rows) ---------- */
+  function fxRow(r) {
+    var ctl = "";
+    var dis = "";
+    if (r.kind === "setting") {
+      var v = fxVal(r);
+      if (r.type === "toggle") ctl = '<button class="pm-toggle" role="switch" aria-checked="' + (v ? "true" : "false") + '" data-fxctl="toggle" data-fxrow="' + esc(r.id) + '"><span class="pm-toggle-knob"></span></button>';
+      else if (r.type === "select") ctl = '<select class="pm-select" data-fxctl="select" data-fxrow="' + esc(r.id) + '">' + (r.options || [v]).map(function (o) { return '<option' + (o === v ? " selected" : "") + ">" + esc(o) + "</option>"; }).join("") + "</select>";
+      else if (r.type === "number") ctl = '<input class="pm-input" type="number" style="width:90px" data-fxctl="number" data-fxrow="' + esc(r.id) + '" value="' + esc(v) + '">';
+      else ctl = '<span class="pm-note">' + esc(v) + "</span>";
+    } else if (r.kind === "action") {
+      ctl = '<button class="pm-btn pm-btn-sm" data-fxact="' + esc(r.id) + '">' + esc(r.value || "Run") + "</button>";
+    } else if (r.kind === "diagnostic") {
+      ctl = '<span class="pm-badge pm-badge-warn">' + esc(r.value) + "</span>";
+    } else {
+      ctl = '<span class="pm-note">' + esc(r.value) + "</span>";
+    }
+    return '<div class="pm2-row" data-row="' + esc(r.id) + '"><div class="pm2-row-main"><div class="pm2-row-title">' + esc(r.label) +
+      (r.kind === "status" ? ' <span class="pm-badge pm-badge-muted">Status</span>' : "") +
+      (r.kind === "diagnostic" ? ' <span class="pm-badge pm-badge-warn">Diagnostic</span>' : "") +
+      "</div><div class=\"pm2-row-desc\">" + esc(r.desc) + '</div></div><div class="pm2-row-ctl">' + ctl + "</div></div>";
+  }
+  function fxRows(rows, kindFilter) {
+    return rows.filter(function (r) { return !kindFilter || r.kind === kindFilter; }).map(fxRow).join("");
+  }
+
+  /* fixture + inventory control binding (delegated per page) */
+  function bindPage(el) {
+    el.querySelectorAll('[data-bindrows="1"]').forEach(function (c) { M2.bindRows(c); });
+    el.addEventListener("change", function (e) {
+      var id = e.target.getAttribute && e.target.getAttribute("data-fxrow");
+      if (!id) return;
+      var r = findFx(id); if (!r) return;
+      var v = e.target.getAttribute("data-fxctl") === "number" ? +e.target.value : e.target.value;
+      FX[id] = v; fxSave();
+      S2.receipt("Manager preference changed", r.label + " → " + v + " (manager demo value, this Project).", "ok");
+    });
+    el.addEventListener("click", function (e) {
+      var tog = e.target.closest("[data-fxctl='toggle']");
+      if (tog) { var r1 = findFx(tog.getAttribute("data-fxrow")); if (r1) { FX[r1.id] = !fxVal(r1); fxSave(); tog.setAttribute("aria-checked", FX[r1.id] ? "true" : "false"); S2.receipt("Manager preference changed", r1.label + " → " + (FX[r1.id] ? "On" : "Off") + " (manager demo value).", "ok"); } return; }
+      var act = e.target.closest("[data-fxact]");
+      if (act) { runAction(act.getAttribute("data-fxact")); return; }
+      var g = e.target.closest("[data-go]");
+      if (g) { go(g.getAttribute("data-go")); }
+    });
+  }
+  function findFx(id) {
+    for (var i = 0; i < MD.families.length; i++) {
+      var rows = MD.families[i].rows || [];
+      for (var j = 0; j < rows.length; j++) if (rows[j].id === id) return rows[j];
+    }
+    return null;
+  }
+
+  /* ---------- ObservableWork actions ---------- */
+  var ops = {};
+  function runAction(id) {
+    var r = findFx(id);
+    var label = r ? r.label : id;
+    if (id === "doctor.run") return phasedOp(id, "Doctor full run", ["Providers", "Language servers", "Storage", "Backup"], "Aggregating checks");
+    if (id === "backup.now") return phasedOp(id, "Settings backup", ["Snapshot", "Write", "Verify"], "Waiting for storage");
+    if (id === "searchindex.rebuild") return phasedOp(id, "Index rebuild", ["Scan", "Parse", "Merge", "Swap"], "Reading changed files");
+    if (id === "cleanup.run") return cleanupFlow();
+    if (id === "lifecycle.export") return phasedOp(id, "Export settings", ["Collect", "Write file"], "Serializing");
+    if (id === "lifecycle.import") return importFlow();
+    if (id === "lifecycle.reset") return resetFlow();
+    if (id === "sounds.test-send") {
+      var op = S2.beginOp({ title: "Test notification", phase: "Sending", determinate: false, wait: "Rate limiter" });
+      setTimeout(function () { S2.finishOp(op, "completed", "Sent"); S2.receipt("Test notification sent", "One receipted test notice; sends are rate-limited.", "ok"); }, 700);
+      return;
+    }
+    if (id === "memory.restore" || id === "memory.rebuild") {
+      var op2 = S2.beginOp({ title: label, phase: "Working", determinate: false });
+      setTimeout(function () { S2.finishOp(op2, "completed", "Done"); S2.receipt(label + " complete", "Faded memories stay recoverable at full fidelity.", "ok"); }, 800);
+      return;
+    }
+    var op3 = S2.beginOp({ title: label, phase: "Running", determinate: false });
+    setTimeout(function () { S2.finishOp(op3, "completed", "Done"); S2.receipt("Action complete", label + " finished for this Project.", "ok"); }, 700);
+  }
+  function phasedOp(id, title, phases, wait) {
+    var op = S2.beginOp({ title: title, phase: phases[0], determinate: true, total: phases.length, wait: wait });
+    var i = 0;
+    (function step() {
+      i++;
+      if (i >= phases.length) { S2.advanceOp(op, { completed: phases.length, human_phase: "Finishing" }); setTimeout(function () { S2.finishOp(op, "completed", "Done"); S2.receipt(title + " complete", phases.length + " phases finished; receipt kept.", "ok"); }, 250); return; }
+      S2.advanceOp(op, { completed: i, human_phase: phases[i] });
+      setTimeout(step, 380);
+    })();
+  }
+  function cleanupFlow() {
+    var ov = document.createElement("div");
+    ov.className = "pm-dialog-overlay";
+    ov.innerHTML = '<div class="pm-dialog pm-dialog-wide"><div class="pm-dialog-title">Workspace Cleanup — dry-run preview</div>' +
+      '<p class="pm-note">Dry-run first: nothing is removed until you approve. Worktrees and protected paths are never touched automatically.</p>' +
+      '<div class="pm-cleanup-row"><b>Caches</b><span class="pm-note">1.4 GB — stale build and fetch caches</span><button class="pm-btn pm-btn-sm" data-cl="caches">Include</button></div>' +
+      '<div class="pm-cleanup-row"><b>Stale artifacts</b><span class="pm-note">0.6 GB — unreferenced for 30+ days</span><button class="pm-btn pm-btn-sm" data-cl="artifacts">Include</button></div>' +
+      '<div class="pm-cleanup-row"><b>Old downloads</b><span class="pm-note">0.1 GB</span><button class="pm-btn pm-btn-sm" data-cl="downloads">Include</button></div>' +
+      '<div class="pm-cleanup-row"><b>Worktrees (protected)</b><span class="pm-note">2 active worktrees — never cleaned automatically</span><span class="pm-badge pm-badge-managed">Protected</span></div>' +
+      '<div class="pm-dialog-actions"><button class="pm-btn pm-btn-quiet" data-cl="cancel">Cancel</button><button class="pm-btn pm-btn-primary" data-cl="run">Remove approved</button></div></div>';
+    document.body.appendChild(ov);
+    var picked = {};
+    ov.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-cl]"); if (!b) return;
+      var k = b.getAttribute("data-cl");
+      if (k === "cancel") { ov.remove(); return; }
+      if (k === "run") {
+        ov.remove();
+        var n = Object.keys(picked).length;
+        if (!n) { S2.receipt("Cleanup skipped", "Nothing was approved in the dry-run preview.", "info"); return; }
+        phasedOp("cleanup.run", "Workspace cleanup", ["Remove", "Verify"], "Reclaiming space");
+        return;
+      }
+      picked[k] = !picked[k];
+      b.textContent = picked[k] ? "Included" : "Include";
+      b.classList.toggle("pm-btn-primary", picked[k]);
+    });
+  }
+  function importFlow() {
+    var conflicts = [
+      ["safety.rules.permission-preset", "Auto accept edits", "Auto"],
+      ["general.visual.theme", "Glass Dark", "Friendly Dark"],
+      ["code.terminal.scrollback", 8000, 5000]
+    ];
+    var ov = document.createElement("div");
+    ov.className = "pm-dialog-overlay";
+    ov.innerHTML = '<div class="pm-dialog pm-dialog-wide"><div class="pm-dialog-title">Import preview — nothing applied yet</div>' +
+      '<p class="pm-note">3 incoming values conflict with this Project. Choose keep-or-take per row; everything else imports unchanged.</p>' +
+      '<table class="pm-table"><tr><th>Setting</th><th>Current</th><th>Incoming</th><th>Choice</th></tr>' +
+      conflicts.map(function (c, i) {
+        return '<tr><td>' + esc(c[0]) + '</td><td>' + esc(c[1]) + '</td><td>' + esc(c[2]) + '</td><td><select class="pm-select pm-select-sm" data-cf="' + i + '"><option>keep current</option><option>take incoming</option></select></td></tr>';
+      }).join("") + "</table>" +
+      '<div class="pm-dialog-actions"><button class="pm-btn pm-btn-quiet" data-im="cancel">Cancel</button><button class="pm-btn pm-btn-primary" data-im="apply">Apply merge</button></div></div>';
+    document.body.appendChild(ov);
+    ov.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-im]"); if (!b) return;
+      if (b.getAttribute("data-im") === "cancel") { ov.remove(); return; }
+      ov.remove();
+      var rp = S2.createRestorePoint("Before import");
+      phasedOp("lifecycle.import", "Import merge", ["Preview", "Apply", "Verify"], "Writing values");
+      S2.receipt("Import applied", "Merge completed with explicit keep-or-take choices. Restore point " + rp.id + " kept.", "ok");
+    });
+  }
+  function resetFlow() {
+    var ov = document.createElement("div");
+    ov.className = "pm-dialog-overlay";
+    ov.innerHTML = '<div class="pm-dialog"><div class="pm-dialog-title">Reset all settings — preview</div>' +
+      '<p class="pm-note">Every value returns to its default for this Project. The reset itself is a separate confirmed step and creates a restore point first.</p>' +
+      '<div class="pm-dialog-actions"><button class="pm-btn pm-btn-quiet" data-rs="cancel">Cancel</button><button class="pm-btn pm-btn-danger" data-rs="go">Preview reset</button></div></div>';
+    document.body.appendChild(ov);
+    ov.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-rs]"); if (!b || b.getAttribute("data-rs") === "cancel") { ov.remove(); return; }
+      ov.remove();
+      S2.createRestorePoint("Before reset preview");
+      S2.receipt("Reset preview ready", "Review the listed values; applying is a separate confirmed step.", "info");
+    });
+  }
+
+  /* ops tray renderer */
+  function opsTrayHtml() {
+    var list = Object.keys(S2.state.ops).map(function (k) { return S2.state.ops[k]; }).filter(function (o) { return o.state !== "completed" || (Date.now() - o.started) < 6000; }).slice(-2);
+    if (!list.length) return "";
+    return '<div class="tt-ops">' + list.map(function (o) {
+      var bar = o.total ? '<div class="tt-op-bar"><i style="width:' + Math.round(100 * o.completed / o.total) + '%"></i></div>' : "";
+      return '<div class="tt-op" data-op="' + esc(o.operation_id) + '"><div class="tt-op-head">' + ico("activity", 13) + esc(o.title) +
+        '<span class="tt-op-phase">— ' + esc(o.human_phase) + (o.state === "completed" ? " · done" : "") + "</span></div>" + bar +
+        (o.wait_reason && o.state !== "completed" ? '<div class="tt-op-wait">Waiting: ' + esc(o.wait_reason) + "</div>" : "") + "</div>";
+    }).join("") + "</div>";
+  }
+
+  /* ---------- deferred insertion shells ---------- */
+  function deferShell(d) {
+    return '<div class="tt-defer"><div class="tt-cap">Reserved insertion — ' + esc(d.title) + '</div>' +
+      "<p><b>Owner:</b> " + esc(d.owner) + "</p><p><b>Insertion:</b> " + esc(d.insertion) + "</p><p><b>Return contract:</b> " + esc(d.returnContract) + "</p></div>";
+  }
+  var DEFER_IN = { providers: ["installation"], servers: ["server-claim", "remote-access"], backup: ["server-backup"], lifecycle: ["sync-move"], hosting: ["sync-move"] };
+  function deferBlock(famId) {
+    var ids = DEFER_IN[famId] || [];
+    var own = MD.deferred.filter(function (d) { return d.id === famId; });
+    var all = own.concat(ids.map(function (i) { return MD.deferred.filter(function (d) { return d.id === i; })[0]; }).filter(Boolean));
+    return all.map(deferShell).join("");
+  }
+
+  /* ---------- views ---------- */
+  function noticesFor(catId) {
+    var domOfMgr = { providers: "ai", backup: "system" };
+    return S2.notices().filter(function (n) {
+      if (!n.dest) return catId === "system";
+      if (n.dest.kind === "route") return catId === "system";
+      var f = famById(n.dest.manager);
+      return f && f.domain === catId;
+    });
+  }
+
+  function vHome() {
+    var sc = S2.state.scenario;
+    var critical = (sc === "offline" || sc === "import-conflict" || sc === "validation-failure");
+    var html = '<div data-test="home">';
+    html += '<div class="tt-front-head">' + pageHead("book", "Puppet Master Settings", "Project-only settings for Orion Data Pipeline. Changes here affect this project only. The tome reads as one layered canvas: chapters keep their place, pages turn quietly.") + "</div>";
+    html += '<div class="tt-search-lg" id="ttHomeSearch"></div>';
+    if (critical) {
+      var msg = sc === "offline" ? "Working offline — catalogs and usage show last-known values; changes still apply locally." : sc === "import-conflict" ? "Import needs review — 3 incoming values conflict with this Project's current settings." : "Verification failed after an update; the previous generation was restored.";
+      html += '<div class="tt-banner">' + ico("alertTriangle", 15) + "<div><b>" + esc(msg) + "</b></div></div>";
+    }
+    var notices = S2.notices();
+    if (notices.length) {
+      html += '<div class="tt-cap">Needs attention</div>';
+      notices.forEach(function (n) {
+        html += '<div class="tt-notice">' + ico(n.kind === "ok" ? "checkCircle" : n.kind === "setup" ? "download" : "alertCircle", 14) +
+          '<div class="tt-notice-body"><strong>' + esc(n.title) + "</strong><span>" + esc(n.reason) + "</span></div>" +
+          (n.action ? '<button class="pm-btn pm-btn-sm" data-notice="' + esc(n.id) + '">' + esc(n.action) + "</button>" : "") + "</div>";
+      });
+    }
+    html += '<div class="tt-cap">Chapters</div><div class="tt-chapters">';
+    D.categories.forEach(function (c) {
+      var count = D.byCategory(c.id).settings.length;
+      var changed = D.byCategory(c.id).settings.filter(function (s) { var st = S2.getSetting(s.id); return st && st.source === "custom"; }).length;
+      var att = noticesFor(c.id).length;
+      var mgrs = famsInDomain(c.id).length;
+      html += '<button class="tt-chapter" data-go="#/cat/' + c.id + '"><span class="tt-ch-ico">' + ico(c.icon, 17) + "</span><span><b>" + esc(c.title) +
+        (att ? ' <span class="pm-badge pm-badge-warn">' + att + " attention</span>" : "") + "</b><p>" + esc(c.description) + "</p></span>" +
+        '<span class="tt-ch-meta">' + count + " settings<br>" + mgrs + " managers" + (changed ? " · " + changed + " changed" : "") + "</span></button>";
+    });
+    html += "</div>";
+    html += '<div class="tt-cap">Utilities</div><div class="tt-utilities">' +
+      '<button class="pm-btn pm-btn-sm" data-go="#/all">' + ico("list", 12) + " All Settings</button>" +
+      '<button class="pm-btn pm-btn-sm" data-go="#/copy">' + ico("copy", 12) + " Copy Settings From Another Project</button>" +
+      '<button class="pm-btn pm-btn-sm" data-go="#/mgr/lifecycle">' + ico("refresh", 12) + " Settings Lifecycle</button>" +
+      '<button class="pm-btn pm-btn-sm" data-go="#/mgr/doctor">' + ico("activity", 12) + " Doctor</button></div>";
+    var rec = S2.state.recent;
+    if (rec.length) {
+      html += '<div class="tt-cap">Recent</div>';
+      rec.slice(0, 6).forEach(function (r) {
+        html += '<div class="tt-notice">' + ico(r.kind === "setting" ? "sliders" : "grid", 13) + '<div class="tt-notice-body"><strong>' + esc(r.label) + "</strong></div>" +
+          '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-recent="' + esc(r.kind) + ":" + esc(r.id) + '">Open</button></div>';
+      });
+    }
+    html += "</div>";
+    return html;
+  }
+
+  function vCat(catId, subId) {
+    var cat = catById(catId);
+    if (!cat) return '<div class="pm2-empty">Unknown chapter.</div>';
+    var subs = subId ? [subOf(cat, subId)].filter(Boolean) : cat.subgroups;
+    var html = '<div data-manager-scope="' + esc(cat.id) + '">';
+    html += pageHead(cat.icon, cat.title, cat.description);
+    if (!subId) html += '<div class="tt-tabs" role="tablist">' + cat.subgroups.map(function (s, i) {
+      return '<button role="tab" class="' + (i === 0 ? "active" : "") + '" data-go="#/cat/' + cat.id + "/" + s.id + '">' + esc(s.title) + "</button>";
+    }).join("") + "</div>";
+    else html += '<p class="tt-note">Reading: ' + esc(subs[0] && subs[0].title) + ' · the chapter keeps its place when you return.</p>';
+    subs.forEach(function (sg) {
+      html += '<div class="tt-cap">' + esc(sg.title) + '</div><p class="tt-lede">' + esc(sg.description) + "</p>";
+      var rows = D.byCategory(cat.id).settings.filter(function (s) { return s.id.split(".")[1] === sg.id; });
+      html += '<div data-bindrows="1">' + rows.map(function (s) { return M2.row(s, S2.getSetting(s.id)); }).join("") + "</div>";
+    });
+    var fams = famsInDomain(cat.id);
+    if (fams.length) {
+      html += '<div class="tt-cap">Managers in this chapter</div>';
+      fams.forEach(function (f) {
+        html += '<div class="tt-notice">' + ico(f.icon, 14) + '<div class="tt-notice-body"><strong>' + esc(f.title) + "</strong><span>" + esc(f.summary) + "</span></div>" +
+          '<button class="pm-btn pm-btn-sm" data-go="#/mgr/' + f.id + '">Open</button></div>';
+      });
+    }
+    html += deferBlockForDomain(cat.id);
+    html += "</div>";
+    return html;
+  }
+  function deferBlockForDomain(catId) {
+    var map = { general: ["onboarding"], system: ["updates", "servers", "hosting"] };
+    return (map[catId] || []).map(function (id) {
+      var d = MD.deferred.filter(function (x) { return x.id === id; })[0];
+      return d ? deferShell(d) : "";
+    }).join("");
+  }
+
+  /* ---------- managers ---------- */
+  function tabsHtml(fam, active, objectId) {
+    var tabs = mgrTabs(fam);
+    if (tabs.length < 2) return "";
+    return '<div class="tt-tabs" role="tablist">' + tabs.map(function (t) {
+      return '<button role="tab" class="' + (t === active ? "active" : "") + '" data-mgrtab="' + t + '">' + esc(t) + "</button>";
+    }).join("") + "</div>";
+  }
+  function mgrTabs(fam) {
+    if (!fam) return ["overview"];
+    if (fam.id === "providers") return ["overview", "accounts", "models", "install", "limits", "logs"];
+    if (fam.archetype === "roster") return ["overview", "settings", "actions"];
+    if (fam.id === "lifecycle") return ["transactions", "rollback"];
+    if (fam.id === "cleanup") return ["preview", "protected"];
+    var kinds = {}; (fam.rows || []).forEach(function (r) { kinds[r.kind] = 1; });
+    if (kinds.setting && (kinds.status || kinds.action)) return ["overview", "settings"];
+    return ["overview"];
+  }
+
+  function vMgr(famId, objectId, q) {
+    var fam = famById(famId);
+    if (!fam) return '<div class="pm2-empty">Unknown manager.</div>';
+    S2.touchRecent({ kind: "manager", id: fam.id, label: fam.title });
+    var sec = q.sec || mgrTabs(fam)[0];
+    if (mgrTabs(fam).indexOf(sec) < 0) sec = mgrTabs(fam)[0];
+    var html = '<section data-manager="' + esc(fam.id) + '">';
+    html += pageHead(fam.icon, fam.title, fam.summary);
+
+    if (fam.id === "providers") { html += providersView(objectId, sec, q); }
+    else if (fam.archetype === "roster") { html += rosterView(fam, objectId, sec); }
+    else { html += singleView(fam, sec); }
+
+    html += deferBlock(fam.id);
+    html += "</section>";
+    return html;
+  }
+
+  function providersView(objectId, sec, q) {
+    var html = '<div class="tt-mgr-grid" data-hasobj="' + (objectId ? "1" : "0") + '">';
+    html += '<div class="tt-roster"><div class="tt-roster-cap">Providers — 17 fixtures</div>';
+    MD.providers.forEach(function (p) {
+      var warn = /not signed|shadowed|unknown|update|rollback|incomplete|unavailable|last-known/i.test(p.state);
+      html += '<button class="tt-roster-item' + (p.id === objectId ? " active" : "") + '" data-object="' + esc(p.id) + '" data-go="#/mgr/providers/' + p.id + '">' + ico(p.icon, 14) +
+        "<span>" + esc(p.name) + '</span><span class="tt-ri-note"><span class="tt-health' + (warn ? " warn" : "") + '"><i></i></span></span></button>';
+    });
+    html += "</div><div class=" + '"tt-detail"' + ">";
+    var p = null; MD.providers.forEach(function (x) { if (x.id === objectId) p = x; });
+    if (!p) {
+      html += '<p class="tt-lede">Select a provider to answer: connected? which account? what models? usage end? routing? setup?</p>';
+      html += '<div class="tt-kv"><div><dt>Connections ready</dt><dd>' + MD.providers.filter(function (x) { return x.readiness.indexOf("probe-ok") >= 0; }).length + " of " + MD.providers.length + '</dd></div>' +
+        '<div><dt>Update policy default</dt><dd>Ask first</dd></div><div><dt>Credentials</dt><dd>Never rendered raw</dd></div></div>';
+      html += tabsHtml(famById("providers"), sec, null);
+      html += providerTabBody(null, sec, q);
+    } else {
+      html += '<div class="tt-detail-head">' + ico(p.icon, 16) + "<b>" + esc(p.name) + "</b>" +
+        '<span class="pm-badge ' + (/not installed/i.test(p.state) ? "pm-badge-muted" : /not signed|shadowed|unknown|update|rollback|incomplete|unavailable|last-known/i.test(p.state) ? "pm-badge-warn" : "pm-badge-ok") + '">' + esc(p.state) + "</span></div>";
+      html += tabsHtml(famById("providers"), sec, p.id);
+      html += providerTabBody(p, sec, q);
+    }
+    html += "</div></div>";
+    return html;
+  }
+
+  function authNote(kind) {
+    return {
+      "pm-direct-oauth": "PM secret vault reference — OAuth run by Puppet Master; raw token never rendered or exported.",
+      "cli-owned-oauth": "CLI-owned OAuth — sign-in completes inside the provider CLI; Puppet Master never sees the raw credential.",
+      "api-key": "Vault reference (API key) — stored as a PM secret; raw value never rendered.",
+      "manual": "Manual management — origin unknown; updates and repair stay with you.",
+      "external-server": "External server — owned outside Puppet Master; capability probes only.",
+      "none": "No credential — catalog rows need an underlying provider connection first."
+    }[kind] || kind;
+  }
+
+  function providerTabBody(p, sec, q) {
+    if (!p) {
+      if (sec === "models") return '<div class="tt-cap">Model summary across providers</div>' + MD.providers.slice(0, 6).map(function (x) {
+        return '<div class="pm2-row"><div class="pm2-row-main"><div class="pm2-row-title">' + esc(x.name) + '</div><div class="pm2-row-desc">' + x.models.length + " models</div></div></div>";
+      }).join("");
+      return '<div class="tt-cap">At a glance</div><p class="tt-lede">Every connection verifies three checks: CLI present, signed in, probe passed. Update policy is ask-first unless you schedule it.</p>';
+    }
+    var html = "";
+    if (sec === "overview") {
+      html += '<div class="tt-kv">' +
+        '<div><dt>Connected?</dt><dd>' + (p.readiness.indexOf("probe-ok") >= 0 ? "Yes — probe passed" : p.readiness.indexOf("not-installed") >= 0 ? "Not installed" : "Found, sign-in required") + "</dd></div>" +
+        '<div><dt>Account</dt><dd>' + (p.accounts.length ? esc(p.accounts[0].label) + (p.accounts[0].preferred ? " (preferred)" : "") : "None connected") + "</dd></div>" +
+        '<div><dt>Models</dt><dd>' + p.models.length + " available</dd></div>" +
+        '<div><dt>Usage</dt><dd>' + esc(p.limits.used) + "</dd></div>" +
+        '<div><dt>Routing</dt><dd>' + (p.readiness.indexOf("fallback-configured") >= 0 ? "Requested vs effective order shown in Accounts" : p.readiness.indexOf("effort-variation") >= 0 ? "Fast and Normal routes share one key" : "Preferred account first") + "</dd></div>" +
+        '<div><dt>Update policy</dt><dd>' + esc(p.updatePolicy) + "</dd></div></div>";
+      html += '<div class="tt-cap">Readiness checks</div>' + p.readiness.map(function (r) {
+        var bad = /required|unknown|shadowed|update|rolled|last-known|incomplete|unavailable/i.test(r);
+        return '<div class="tt-log">' + (bad ? ico("alertCircle", 12) : ico("checkCircle", 12)) + " " + esc(r.replace(/-/g, " ")) + "</div>";
+      }).join("");
+      html += '<div class="tt-secret">' + ico("lock", 13) + "<span><b>Credential:</b> " + esc(authNote(p.authKind)) + "</span></div>";
+    } else if (sec === "accounts") {
+      if (!p.accounts.length) html += '<div class="pm2-empty">No account connected yet.</div>';
+      p.accounts.forEach(function (a) {
+        html += '<div class="pm2-row" data-object="' + esc(a.id) + '"><div class="pm2-row-main"><div class="pm2-row-title">' + esc(a.label) +
+          (a.preferred ? ' <span class="pm-badge pm-badge-info">Preferred</span>' : "") + (a.sticky ? ' <span class="pm-badge pm-badge-muted">Sticky</span>' : "") +
+          '</div><div class="pm2-row-desc">Enabled: ' + (a.enabled ? "yes" : "no") + " · health: " + esc(a.health) + '</div></div><div class="pm2-row-ctl"><button class="pm-btn pm-btn-sm" data-fxact="provider.prio">Prioritize</button></div></div>';
+      });
+      if (p.id === "anthropic-cli") html += '<div class="tt-notice">' + ico("key", 14) + '<div class="tt-notice-body"><strong>Finish Anthropic sign-in</strong><span>Sign-in must complete inside the Claude CLI flow (CLI-owned OAuth).</span></div><button class="pm-btn pm-btn-sm" data-fxact="provider.signin">Continue setup</button></div>';
+    } else if (sec === "models") {
+      if (!p.models.length) html += '<div class="pm2-empty">Catalog available after the underlying provider setup completes.</div>';
+      p.models.forEach(function (m) {
+        html += '<div class="pm2-row" data-row="' + esc(m.id) + '"><div class="pm2-row-main"><div class="pm2-row-title">' + esc(m.label) +
+          (m.free ? ' <span class="pm-badge pm-badge-ok">Free tier</span>' : "") + '</div><div class="pm2-row-desc">Effort ' + esc(m.effort) + " · context " + esc(m.context) + '</div></div><div class="pm2-row-ctl"><span class="pm-note">favorite</span><button class="pm-btn pm-btn-ico pm-btn-sm" data-fxact="model.fav">' + ico("star", 12) + "</button></div></div>";
+      });
+    } else if (sec === "install") {
+      if (p.readiness.indexOf("not-installed") >= 0) {
+        html += '<div class="pm2-empty">Not installed.</div><div class="tt-notice">' + ico("download", 14) +
+          '<div class="tt-notice-body"><strong>Install ' + esc(p.name) + '</strong><span>Explicit install from the official source for the exact Host/Environment: Desktop — Windows 11. Puppet Master never installs on its own.</span></div>' +
+          '<button class="pm-btn pm-btn-primary pm-btn-sm" data-fxact="provider.install">Install…</button></div>';
+      } else {
+        p.installations.forEach(function (ins) {
+          html += '<div class="pm2-row"><div class="pm2-row-main"><div class="pm2-row-title">' + esc(ins.label) +
+            (ins.selected ? ' <span class="pm-badge pm-badge-ok">Selected</span>' : "") + (ins.shadowed ? ' <span class="pm-badge pm-badge-muted">Shadowed</span>' : "") +
+            (ins.owner === "unknown" ? ' <span class="pm-badge pm-badge-warn">Owner unknown</span>' : "") +
+            '</div><div class="pm2-row-desc">' + esc(ins.owner) + " · confidence " + esc(ins.confidence) + " · " + esc(ins.host) + "</div></div>" +
+            '<div class="pm2-row-ctl">' + (ins.owner === "unknown" ? '<span class="pm-note">manual only</span>' : '<button class="pm-btn pm-btn-sm" data-fxact="provider.select">Select</button>') + "</div></div>";
+        });
+        html += '<div class="tt-cap">Updates</div><div class="pm2-row"><div class="pm2-row-main"><div class="pm2-row-title">Update policy</div><div class="pm2-row-desc">Ask first, schedule when idle, or install automatically. Host-scoped and verified against the official source.</div></div><div class="pm2-row-ctl"><select class="pm-select" data-fxctl="select" data-fxrow="providers.update-policy"><option>Ask first</option><option>Schedule when idle</option><option>Install automatically</option></select></div></div>';
+        if (p.readiness.indexOf("update-available") >= 0) html += '<div class="tt-notice">' + ico("download", 14) + '<div class="tt-notice-body"><strong>Update 0.9.5 verified</strong><span>Nothing happens until you approve; verification runs after install and rolls back on failure.</span></div><button class="pm-btn pm-btn-primary pm-btn-sm" data-fxact="provider.update">Review update</button></div>';
+        if (p.readiness.indexOf("rolled-back") >= 0) html += '<div class="tt-banner">' + ico("history", 14) + "<div><b>Verification failed after update; previous generation restored.</b> Receipt kept; rollback complete.</div></div>";
+      }
+    } else if (sec === "limits") {
+      var un = p.limits.used === "unavailable" || p.limits.used === "n/a";
+      html += '<div class="tt-kv"><div><dt>Requests/min</dt><dd>' + (p.limits.rpm || "—") + '</dd></div><div><dt>Tokens/min</dt><dd>' + (p.limits.tpm ? p.limits.tpm.toLocaleString() : "—") + '</dd></div><div><dt>Requests/day</dt><dd>' + (p.limits.rpd || "—") + '</dd></div><div><dt>Usage</dt><dd>' + (un ? "Unavailable from provider" : esc(p.limits.used)) + "</dd></div></div>";
+      if (un) html += '<div class="tt-note">Provider does not expose usage meters; limits are shown as unavailable rather than guessed.</div>';
+      if (p.id === "claude-oauth") html += '<div class="tt-notice">' + ico("gauge", 14) + '<div class="tt-notice-body"><strong>Max included usage 96% used</strong><span>Resets at 5:00 PM.</span></div></div>';
+    } else if (sec === "logs") {
+      html += p.logs.map(function (l) { return '<div class="tt-log">' + esc(l) + "</div>"; }).join("");
+    }
+    return html;
+  }
+
+  function rosterView(fam, objectId, sec) {
+    var html = '<div class="tt-mgr-grid" data-hasobj="' + (objectId ? "1" : "0") + '">';
+    html += '<div class="tt-roster"><div class="tt-roster-cap">' + esc(fam.title) + "</div>";
+    (fam.objects || []).forEach(function (o) {
+      html += '<button class="tt-roster-item' + (o.id === objectId ? " active" : "") + '" data-object="' + esc(o.id) + '" data-go="#/mgr/' + fam.id + "/" + o.id + '">' + ico(fam.icon, 14) +
+        "<span>" + esc(o.label) + '</span><span class="tt-ri-note"><span class="tt-health' + (o.health === "attention" ? " warn" : o.health === "err" ? " err" : "") + '"><i></i></span></span></button>';
+    });
+    html += '</div><div class="tt-detail">';
+    var o = null; (fam.objects || []).forEach(function (x) { if (x.id === objectId) o = x; });
+    if (o) {
+      html += '<div class="tt-detail-head"><b>' + esc(o.label) + '</b><span class="tt-health' + (o.health === "attention" ? " warn" : "") + '"><i></i>' + esc(o.health) + "</span></div>";
+      html += '<p class="tt-lede">' + esc(o.note) + "</p>";
+    }
+    html += tabsHtml(fam, sec, objectId);
+    if (sec === "overview") {
+      html += '<div class="tt-cap">Status</div>' + fxRows(fam.rows, "status") + fxRows(fam.rows, "diagnostic");
+      if (o) html += '<div class="tt-cap">Selected object</div><div class="tt-kv"><div><dt>Object</dt><dd>' + esc(o.label) + '</dd></div><div><dt>Health</dt><dd>' + esc(o.health) + '</dd></div><div><dt>Note</dt><dd>' + esc(o.note) + "</dd></div></div>";
+    } else if (sec === "settings") {
+      html += '<div class="tt-cap">Preferences</div><div>' + fxRows(fam.rows, "setting") + "</div>";
+      var cat = catById(fam.domain);
+      if (cat) html += chapterSettingsBlock(cat);
+    } else {
+      html += '<div class="tt-cap">Actions</div>' + fxRows(fam.rows, "action");
+    }
+    html += "</div></div>";
+    return html;
+  }
+
+  function singleView(fam, sec) {
+    var html = tabsHtml(fam, sec, null);
+    if (fam.archetype === "setup") {
+      html += '<div class="tt-cap">Visible state</div>' + fxRows(fam.rows);
+      return html;
+    }
+    if (sec === "rollback" && fam.id === "lifecycle") {
+      var rps = S2.state.restorePoints;
+      html += '<div class="tt-cap">Restore points</div>';
+      if (!rps.length) html += '<div class="pm2-empty">No restore points yet — imports, copies, and resets create one automatically.</div>';
+      rps.slice().reverse().forEach(function (rp) {
+        html += '<div class="tt-notice">' + ico("history", 14) + '<div class="tt-notice-body"><strong>' + esc(rp.label) + '</strong><span>' + esc(rp.at) + "</span></div>" +
+          '<button class="pm-btn pm-btn-sm" data-rollback="' + esc(rp.id) + '">Roll back</button></div>';
+      });
+      return html;
+    }
+    if (sec === "protected" && fam.id === "cleanup") {
+      return '<div class="tt-cap">Protected paths</div>' + fxRow(findFx("cleanup.protected")) + fxRow(findFx("cleanup.dry-run")) +
+        '<div class="pm2-row"><div class="pm2-row-main"><div class="pm2-row-title">Active worktrees</div><div class="pm2-row-desc">2 worktrees — never cleaned automatically.</div></div><div class="pm2-row-ctl"><span class="pm-badge pm-badge-managed">Protected</span></div></div>';
+    }
+    if (sec === "preview" && fam.id === "cleanup") {
+      return '<div class="tt-cap">Last scan</div>' + fxRow(findFx("cleanup.reclaimable")) + '<div class="tt-cap">Run</div>' + fxRow(findFx("cleanup.run"));
+    }
+    if (sec === "transactions" && fam.id === "lifecycle") {
+      return '<div class="tt-cap">Transactions</div>' + fam.rows.map(fxRow).join("") +
+        '<div class="tt-cap">Project settings in this chapter</div>' + chapterSettingsBlock(catById("system"));
+    }
+    if (sec === "settings") {
+      return '<div class="tt-cap">Preferences</div>' + fxRows(fam.rows, "setting") + chapterSettingsBlock(catById(fam.domain));
+    }
+    var body = '<div class="tt-cap">Status & diagnostics</div>' + fxRows(fam.rows, "status") + fxRows(fam.rows, "diagnostic");
+    body += '<div class="tt-cap">Preferences & actions</div>' + fxRows(fam.rows, "setting") + fxRows(fam.rows, "action");
+    if (fam.id === "doctor" && S2.state.scenario === "offline") body += '<div class="tt-banner">' + ico("alertTriangle", 14) + "<div>Offline: Doctor reports last-known health; remote checks are skipped honestly.</div></div>";
+    if (fam.id === "web" && S2.state.scenario === "unavailable") body += '<div class="tt-banner">' + ico("alertCircle", 14) + "<div>Web search provider unavailable in this scenario; fetch policy still applies to cached pages.</div></div>";
+    if (fam.id === "appearance" && S2.state.scenario === "changed-elsewhere") body += '<div class="tt-banner">' + ico("alertCircle", 14) + "<div>Theme changed elsewhere — review the new value or keep this Project's choice.</div></div>";
+    if (fam.id === "desktop" && S2.state.scenario === "restart-required") body += '<div class="tt-banner">' + ico("refresh", 14) + "<div>A startup change is pending and needs an app restart to take effect.</div></div>";
+    return body;
+  }
+
+  /* ---------- all settings ---------- */
+  var allState = { cat: "all", type: "all", tier: "all", changed: false, managed: false, syn: false, seq: 0 };
+  var vlistCtl = null;
+  function synthRow(i) {
+    var types = ["toggle", "select", "number", "text"];
+    return { id: "synthetic-" + i, label: "Synthetic stress setting " + i, desc: "Generated row for virtualization evidence; never replaces the real 828.", type: types[i % 4], options: types[i % 4] === "select" ? ["A", "B"] : null, default: types[i % 4] === "toggle" ? false : types[i % 4] === "number" ? i % 10 : "x", tier: i % 3 === 0 ? "simple" : i % 3 === 1 ? "standard" : "advanced", synthetic: true };
+  }
+  function vAll() {
+    var html = '<div data-test="all">';
+    html += pageHead("list", "All Settings", "The full 828-row inventory in one virtualized compendium. Filters are faceted and bounded; the latest request wins.");
+    html += '<div class="tt-facets">' +
+      '<select class="pm-select" data-facet="cat"><option value="all">All categories</option>' + D.categories.map(function (c) { return '<option value="' + c.id + '">' + esc(c.title) + "</option>"; }).join("") + "</select>" +
+      '<select class="pm-select" data-facet="type"><option value="all">All types</option>' + ["toggle", "select", "number", "text", "action", "slider", "radio", "multiselect", "list", "keyvalue", "path"].map(function (t) { return "<option>" + t + "</option>"; }).join("") + "</select>" +
+      '<select class="pm-select" data-facet="tier"><option value="all">All tiers</option><option>simple</option><option>standard</option><option>advanced</option></select>' +
+      '<label class="pm-note" style="display:inline-flex;align-items:center;gap:6px"><input type="checkbox" data-facet="changed"> Changed from default</label>' +
+      '<label class="pm-note" style="display:inline-flex;align-items:center;gap:6px"><input type="checkbox" data-facet="managed"> Managed / unavailable</label>' +
+      '<label class="pm-note" style="display:inline-flex;align-items:center;gap:6px"><input type="checkbox" data-facet="syn"> Synthetic stress +2000</label>' +
+      '<span class="tt-count" id="ttAllCount"></span></div>';
+    html += '<div class="tt-vlist" data-test="vlist" data-window="0:0:0"></div>';
+    html += "</div>";
+    return html;
+  }
+  function buildAll() {
+    var host = pageEl.querySelector('[data-test="vlist"]');
+    if (!host) return;
+    var seq = ++allState.seq;
+    setTimeout(function () {
+      if (seq !== allState.seq) return; // latest-request-wins
+      var rows = D.settings.slice();
+      if (allState.syn) { for (var i = 1; i <= 2000; i++) rows.push(synthRow(i)); }
+      rows = rows.filter(function (s) {
+        if (allState.cat !== "all" && s.id.split(".")[0] !== allState.cat) return false;
+        if (allState.type !== "all" && s.type !== allState.type) return false;
+        if (allState.tier !== "all" && (s.tier || "standard") !== allState.tier) return false;
+        var st = S2.getSetting(s.id);
+        if (allState.changed && (!st || st.source !== "custom")) return false;
+        if (allState.managed && (!st || (st.source !== "managed" && st.source !== "unavailable"))) return false;
+        return true;
+      });
+      var count = pageEl.querySelector("#ttAllCount");
+      if (count) count.textContent = rows.length + " rows" + (allState.syn ? " (incl. 2000 synthetic)" : "");
+      vlistCtl = M2.virtualList({
+        host: host, rowHeight: 64,
+        data: rows,
+        onWindow: function (s, e, t) { host.setAttribute("data-window", s + ":" + e + ":" + t); },
+        render: function (s) {
+          var st = s.synthetic ? { id: s.id, value: s.default, source: "default" } : S2.getSetting(s.id);
+          var h = M2.row(s, st);
+          if (s.synthetic) h = h.replace('<div class="pm2-row-title">', '<div class="pm2-row-title"><span class="pm-badge pm-badge-muted">Synthetic</span> ');
+          return h;
+        }
+      });
+      if (!host._ttBound) {
+        host._ttBound = true;
+        M2.bindRows(host);
+        // details expansion would break the fixed virtual row height; suppress in the compendium
+        host.addEventListener("click", function (e) {
+          if (e.target.closest("[data-rowact='details']")) { e.stopImmediatePropagation(); }
+        }, true);
+      }
+    }, 30);
+  }
+
+  /* ---------- copy flow ---------- */
+  var copyState = { step: 1, source: null, cats: {}, preview: null, applied: null };
+  function vCopy() {
+    var s = copyState;
+    var html = '<div data-test="copy">';
+    html += pageHead("copy", "Copy Settings From Another Project", "A one-time transactional copy. Source and destination stay independent afterward.");
+    html += '<div class="tt-steps">' + [1, 2, 3, 4].map(function (n, i) {
+      var names = ["Select source", "Select categories", "Review & confirm", "Complete"];
+      return (i ? '<div class="tt-step-line"></div>' : "") + '<div class="tt-step' + (s.step === n ? " active" : s.step > n ? " done" : "") + '"><i>' + n + "</i>" + names[i] + "</div>";
+    }).join("") + "</div>";
+
+    if (s.step === 1) {
+      html += '<div class="tt-cap">Select source project</div>';
+      MD.sourceProjects.forEach(function (p) {
+        html += '<button class="tt-src' + (s.source === p.id ? " active" : "") + '" data-copysrc="' + p.id + '"><span><b>' + esc(p.name) + '</b> <span class="pm-badge pm-badge-muted">' + esc(p.updated) + '</span><span class="tt-note">' + esc(p.summary) + "</span></span></button>";
+      });
+      html += '<div class="pm-dialog-actions" style="justify-content:flex-start"><button class="pm-btn pm-btn-primary" data-copynext="2"' + (s.source ? "" : " disabled") + ">Next: Select Categories</button></div>";
+    } else if (s.step === 2) {
+      var src = MD.sourceProjects.filter(function (p) { return p.id === s.source; })[0];
+      html += '<div class="tt-cap">Choose categories from ' + esc(src ? src.name : "") + '</div><div class="tt-cats">';
+      D.categories.forEach(function (c) {
+        var on = s.cats[c.id] !== false;
+        html += '<label class="tt-catpick"><input type="checkbox" data-copycat="' + c.id + '"' + (on ? " checked" : "") + "> " + esc(c.title) + ' <span class="pm-badge pm-badge-muted">' + (src && src.counts[c.id] !== undefined ? src.counts[c.id] : 0) + "</span></label>";
+      });
+      html += '</div><div class="pm-dialog-actions" style="justify-content:flex-start"><button class="pm-btn pm-btn-quiet" data-copystep="1">Back</button><button class="pm-btn pm-btn-primary" data-copynext="3">Next: Review & Confirm</button></div>';
+    } else if (s.step === 3) {
+      if (!s.preview) s.preview = CP.preview(s.source, D.categories.filter(function (c) { return s.cats[c.id] !== false; }).map(function (c) { return c.id; }));
+      var pv = s.preview;
+      html += '<div class="tt-cap">Preview</div><div class="tt-kv">' +
+        '<div><dt>Add</dt><dd>' + pv.counts.add + '</dd></div><div><dt>Replace</dt><dd>' + pv.counts.replace + '</dd></div><div><dt>Unchanged</dt><dd>' + pv.counts.same + '</dd></div><div><dt>Unavailable</dt><dd>' + pv.counts.unavailable + '</dd></div><div><dt>Conflict</dt><dd>' + pv.counts.conflict + "</dd></div></div>";
+      html += '<table class="tt-diff"><tr><th>Setting</th><th>Category</th><th>Status</th><th>Note</th></tr>' +
+        pv.rows.slice(0, 40).map(function (r) {
+          return "<tr><td>" + esc(r.label) + "</td><td>" + esc(r.category) + '</td><td><span class="pm-badge ' + (r.status === "conflict" ? "pm-badge-warn" : r.status === "unavailable" ? "pm-badge-muted" : r.status === "credential" ? "pm-badge-managed" : "pm-badge-info") + '">' + esc(r.status) + "</span></td><td>" + esc(r.note || (r.status === "replace" ? String(r.current) + " → " + String(r.incoming) : "")) + "</td></tr>";
+        }).join("") + "</table>" +
+        (pv.rows.length > 40 ? '<p class="tt-note">…and ' + (pv.rows.length - 40) + " more rows in the apply set.</p>" : "");
+      html += '<div class="tt-secret">' + ico("lock", 13) + "<span>Credential handling: account references copy per policy; raw secrets are never rendered or exported.</span></div>";
+      html += '<div class="pm-dialog-actions" style="justify-content:flex-start"><button class="pm-btn pm-btn-quiet" data-copystep="2">Back</button><button class="pm-btn pm-btn-primary" data-copyapply="1">Create restore point & apply</button></div>';
+    } else {
+      var ap = s.applied;
+      html += '<div class="tt-cap">Complete</div>' +
+        '<div class="tt-notice">' + ico("checkCircle", 14) + '<div class="tt-notice-body"><strong>' + esc(ap ? ap.receipt.title : "Copy applied") + '</strong><span>' + esc(ap ? ap.receipt.detail : "") + "</span></div></div>" +
+        '<div class="tt-kv"><div><dt>Changed</dt><dd>' + (ap ? ap.changed : 0) + '</dd></div><div><dt>Verified</dt><dd>' + (ap && ap.verify.ok ? "Yes — " + ap.verify.checked + " checked" : "Gaps: " + (ap ? ap.verify.mismatched.length : 0)) + '</dd></div><div><dt>Restore point</dt><dd>' + esc(ap ? ap.restorePoint.id : "") + "</dd></div></div>" +
+        '<div class="pm-dialog-actions" style="justify-content:flex-start"><button class="pm-btn pm-btn-danger" data-copyrollback="1">Roll back this copy</button><button class="pm-btn pm-btn-quiet" data-go="#/home">Done</button></div>';
+    }
+    html += "</div>";
+    return html;
+  }
+
+  /* ---------- margin pane (wide only) ---------- */
+  function renderMargin(r) {
+    var m = content.querySelector("#ttMargin");
+    var rec = S2.state.receipts.slice(-3).reverse();
+    m.innerHTML = '<div><div class="tt-cap">You are here</div><div class="tt-mcard"><b>' + esc(routeTitle(r)) + '</b>' + esc((catById(r.seg[1]) || {}).description || "Layered reading canvas; chapters keep their place.") + "</div></div>" +
+      '<div><div class="tt-cap">Attention</div><div class="tt-mcard">' + (S2.notices().length ? S2.notices().map(function (n) { return esc(n.title); }).join("<br>") : "Nothing needs attention.") + "</div></div>" +
+      '<div><div class="tt-cap">Latest receipts</div><div class="tt-mcard">' + (rec.length ? rec.map(function (x) { return esc(x.title); }).join("<br>") : "No receipts yet.") + "</div></div>";
+  }
+
+  /* ---------- render ---------- */
+  var firstPaint = true;
+  function render(opts) {
+    opts = opts || {};
+    var r = parseHash();
+    var key = routeKey(r);
+    if (pageEl && scrollMem.__cur) scrollMem[scrollMem.__cur] = pageEl.scrollTop;
+    scrollMem.__cur = key;
+
+    renderTopbar(r);
+    renderRail(r);
+
+    var html = "", turn = !opts.noturn && !firstPaint;
+    var s = r.seg;
+    if (!s.length || s[0] === "home") html = vHome();
+    else if (s[0] === "cat") html = vCat(s[1], s[2]);
+    else if (s[0] === "mgr") html = vMgr(s[1], s[2], r.q);
+    else if (s[0] === "all") html = vAll();
+    else if (s[0] === "copy") html = vCopy();
+    else if (s[0] === "lifecycle") html = vMgr("lifecycle", null, r.q);
+    else if (s[0] === "q") { html = vHome(); }
+    else html = vHome();
+
+    pageEl.innerHTML = html + opsTrayHtml();
+    bindPage(pageEl);
+
+    if (s[0] === "all") buildAll();
+    if (s[0] === "home" || s[0] === "q") {
+      var hs = pageEl.querySelector("#ttHomeSearch");
+      if (hs) {
+        mountSearch(hs, true);
+        if (s[0] === "q") {
+          var qy = decodeURIComponent(s.slice(1).join("/") || "");
+          // search paint: no page-turn, restore query + results
+          turn = false;
+          hs._ttOpenWith(qy);
+        }
+      }
+    }
+    if (r.q.row && !pendingLocate) pendingLocate = { row: r.q.row };
+    if (r.q.sec && !pendingLocate) pendingLocate = { sec: r.q.sec };
+
+    renderMargin(r);
+
+    pageEl.classList.remove("tt-turn");
+    if (turn && document.documentElement.getAttribute("data-reduced-motion") !== "1") {
+      void pageEl.offsetWidth;
+      pageEl.classList.add("tt-turn");
+    }
+    pageEl.scrollTop = scrollMem[key] || 0;
+    firstPaint = false;
+
+    applyLocate();
+  }
+
+  /* ---------- global events ---------- */
+  window.addEventListener("hashchange", function () { render({}); });
+
+  content.addEventListener("click", function (e) {
+    var back = e.target.closest("#ttBack");
+    if (back) {
+      if (window.history.length > 2) window.history.back();
+      else go(back.getAttribute("data-back-hash"));
+      return;
+    }
+    if (e.target.closest("#ttClose")) {
+      S2.receipt("Settings closed", "Return to the workspace; this Project's settings stay applied.", "info");
+      return;
+    }
+    var g = e.target.closest("[data-go]");
+    if (g && !e.target.closest(".tt-page")) { go(g.getAttribute("data-go")); return; }
+    var tab = e.target.closest("[data-mgrtab]");
+    if (tab) {
+      var r = parseHash();
+      var base = "#/mgr/" + r.seg[1] + (r.seg[2] ? "/" + r.seg[2] : "");
+      go(base + "?sec=" + encodeURIComponent(tab.getAttribute("data-mgrtab")));
+      return;
+    }
+    var n = e.target.closest("[data-notice]");
+    if (n) {
+      var notice = S2.notices().filter(function (x) { return x.id === n.getAttribute("data-notice"); })[0];
+      if (notice && notice.dest) {
+        if (notice.dest.kind === "route") go(notice.dest.hash);
+        else { pendingLocate = notice.dest; go(destHash(notice.dest)); }
+      }
+      return;
+    }
+    var rec = e.target.closest("[data-recent]");
+    if (rec) {
+      var parts = rec.getAttribute("data-recent").split(":");
+      if (parts[0] === "setting") { var inv = D.byId(parts.slice(1).join(":")); if (inv) { pendingLocate = { row: inv.id }; go("#/cat/" + inv.id.split(".")[0] + "/" + inv.id.split(".")[1] + "?row=" + inv.id); } }
+      else go("#/mgr/" + parts.slice(1).join(":"));
+      return;
+    }
+    var rb = e.target.closest("[data-rollback]");
+    if (rb) { S2.rollbackTo(rb.getAttribute("data-rollback")); return; }
+    // copy flow
+    var cs = e.target.closest("[data-copysrc]");
+    if (cs) { copyState.source = cs.getAttribute("data-copysrc"); render({ noturn: true }); return; }
+    var cn = e.target.closest("[data-copynext]");
+    if (cn) { copyState.step = +cn.getAttribute("data-copynext"); copyState.preview = null; render({ noturn: true }); return; }
+    var cstep = e.target.closest("[data-copystep]");
+    if (cstep) { copyState.step = +cstep.getAttribute("data-copystep"); render({ noturn: true }); return; }
+    var capp = e.target.closest("[data-copyapply]");
+    if (capp) { copyState.applied = CP.apply(copyState.preview); copyState.step = 4; render({ noturn: true }); return; }
+    var crb = e.target.closest("[data-copyrollback]");
+    if (crb) { CP.rollbackLast(); copyState = { step: 1, source: null, cats: {}, preview: null, applied: null }; render({ noturn: true }); return; }
+  });
+  content.addEventListener("change", function (e) {
+    var f = e.target.getAttribute && e.target.getAttribute("data-facet");
+    if (!f) return;
+    if (f === "changed" || f === "managed" || f === "syn") allState[f] = e.target.checked;
+    else allState[f] = e.target.value;
+    buildAll();
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Escape") return;
+    if (document.querySelector(".pm-pop-menu")) { M2.closePopupMenu(); return; }
+    var box = content.querySelector("#ttSearchBox");
+    if (box && box._ttIsOpen && box._ttIsOpen()) { box._ttClose(); return; }
+    var ov = document.querySelector(".pm-dialog-overlay");
+    if (ov) { ov.remove(); return; }
+    var r = parseHash();
+    if (r.seg[0] !== "home") go("#/home");
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "/" && !/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName) && !document.activeElement.isContentEditable) {
+      e.preventDefault();
+      var inp = content.querySelector('#ttSearchBox input');
+      if (inp) inp.focus();
+    }
+  });
+
+  /* ---------- state subscriptions ---------- */
+  S2.subscribe(function (kind, payload) {
+    if (kind === "setting" && payload && payload.id) {
+      var el = pageEl.querySelector('[data-row="' + payload.id + '"]');
+      if (el) {
+        var inv = D.byId(payload.id);
+        if (inv) {
+          var tmp = document.createElement("div");
+          tmp.innerHTML = M2.row(inv, S2.getSetting(payload.id));
+          el.replaceWith(tmp.firstChild);
+        }
+      }
+      return;
+    }
+    if (kind === "scenario" || kind === "rollback") { render({ noturn: true }); return; }
+    if (kind === "op") {
+      var tray = pageEl.querySelector(".tt-ops");
+      var fresh = opsTrayHtml();
+      if (tray) { if (fresh) tray.outerHTML = fresh; else tray.remove(); }
+      else if (fresh) pageEl.insertAdjacentHTML("beforeend", fresh);
+      return;
+    }
+  });
+
+  render({});
+})();
+</script>
+</body>
+</html>

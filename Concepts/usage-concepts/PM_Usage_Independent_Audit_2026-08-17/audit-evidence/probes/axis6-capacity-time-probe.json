@@ -1,0 +1,1026 @@
+{
+ "started": "2026-08-17T19:39:07.367Z",
+ "groups": {
+  "G1_data": {
+   "now": "2026-08-04T18:42:00Z",
+   "runs": [
+    {
+     "id": "run:goal-47",
+     "kind": "goal",
+     "owningSurface": "assistant_chat_goal",
+     "status": "running",
+     "capacity": {
+      "hardMax": 8,
+      "configuredPreferred": 4,
+      "providerAdvertised": 2,
+      "effectiveNow": 2,
+      "predictedSustainable": 2
+     },
+     "requested": {
+      "children": 8,
+      "specialistsRequired": 8
+     },
+     "admitted": {
+      "now": 2,
+      "effectiveConcurrency": 2,
+      "sustainableConcurrency": 2
+     },
+     "queued": {
+      "children": 6,
+      "waves": 4
+     },
+     "reservedFor": [
+      "synthesis",
+      "testing",
+      "verification",
+      "repair"
+     ],
+     "forecastId": "fc-goal-47",
+     "startedAt": "2026-08-04T16:32:00.000Z",
+     "timing": {
+      "elapsedMs": 7440000,
+      "rows": [
+       {
+        "label": "Provider/model active",
+        "ms": 720000
+       },
+       {
+        "label": "Waiting for test device",
+        "ms": 2820000
+       },
+       {
+        "label": "Waiting for worktree",
+        "ms": 1860000
+       },
+       {
+        "label": "Waiting for provider capacity",
+        "ms": 540000
+       },
+       {
+        "label": "Waiting for approval",
+        "ms": 360000
+       },
+       {
+        "label": "Waiting for reset/cooldown",
+        "ms": 0
+       },
+       {
+        "label": "Local tool/runtime time",
+        "ms": 1140000
+       },
+       {
+        "label": "Outbox/offline wait",
+        "ms": 0
+       },
+       {
+        "label": "Reconnect / sync / replay",
+        "ms": 240000
+       }
+      ],
+      "rowSumMs": 7680000,
+      "pcts": [
+       10,
+       38,
+       25,
+       7,
+       5,
+       0,
+       15,
+       0,
+       3
+      ],
+      "pctSum": 103
+     },
+     "memberStates": [
+      "running",
+      "running",
+      "queued/pm_policy",
+      "queued",
+      "queued/provider_limit",
+      "queued",
+      "queued/runtime_capacity",
+      "queued"
+     ]
+    },
+    {
+     "id": "run:plan-12",
+     "kind": "planning_run",
+     "owningSurface": "planning_wizard",
+     "status": "running",
+     "capacity": {
+      "hardMax": 8,
+      "configuredPreferred": 4,
+      "providerAdvertised": 2,
+      "effectiveNow": 2,
+      "predictedSustainable": 2
+     },
+     "requested": {
+      "children": 6,
+      "specialistsRequired": 6
+     },
+     "admitted": {
+      "now": 2,
+      "effectiveConcurrency": 2,
+      "sustainableConcurrency": 2
+     },
+     "queued": {
+      "children": 4,
+      "waves": 3
+     },
+     "reservedFor": [
+      "synthesis",
+      "testing",
+      "audit",
+      "repair"
+     ],
+     "forecastId": "fc-plan-12",
+     "startedAt": "2026-08-04T17:02:00.000Z",
+     "timing": null,
+     "memberStates": []
+    },
+    {
+     "id": "run:crew-3",
+     "kind": "crew",
+     "owningSurface": "orchestrator",
+     "status": "running",
+     "capacity": {
+      "hardMax": 8,
+      "configuredPreferred": 6,
+      "providerAdvertised": 3,
+      "effectiveNow": 3,
+      "predictedSustainable": 3
+     },
+     "requested": {
+      "members": 5
+     },
+     "admitted": {
+      "now": 3,
+      "effectiveConcurrency": 3,
+      "sustainableConcurrency": 3
+     },
+     "queued": {
+      "members": 2,
+      "waves": 2
+     },
+     "reservedFor": [
+      "reducer"
+     ],
+     "forecastId": null,
+     "startedAt": "2026-08-04T17:47:00.000Z",
+     "timing": null,
+     "memberStates": [
+      "completed",
+      "completed",
+      "running",
+      "queued/provider_limit",
+      "queued/pm_policy"
+     ]
+    }
+   ],
+   "forecasts": [
+    {
+     "id": "fc-goal-47",
+     "runId": "run:goal-47",
+     "recommendation": "Likely enough capacity to finish before the next reset.",
+     "confidence": "Reasonable forecast · based on 12 similar runs",
+     "generatedAt": "2026-08-04T18:14:00.000Z",
+     "inputs": {
+      "providerRanges": [
+       {
+        "label": "Usage per child",
+        "value": "18–26K tokens"
+       },
+       {
+        "label": "Cost per child",
+        "value": "$0.00 · plan included"
+       },
+       {
+        "label": "Elapsed per child",
+        "value": "6–9m"
+       }
+      ],
+      "resetInputs": [
+       "Codex 5-hour window",
+       "Claude 5-hour window"
+      ],
+      "reservedNote": "Capacity is kept aside for synthesis, testing, and repair."
+     }
+    },
+    {
+     "id": "fc-plan-12",
+     "runId": "run:plan-12",
+     "recommendation": "Enough for two complete extraction children at a time, with synthesis and audit reserved.",
+     "confidence": "Limited history · may change after a route switch",
+     "generatedAt": "2026-08-04T18:20:00.000Z",
+     "inputs": {
+      "providerRanges": [
+       {
+        "label": "Extraction per child",
+        "value": "20–30K tokens"
+       },
+       {
+        "label": "Conversation",
+        "value": "Claude · high-quality route"
+       }
+      ],
+      "resetInputs": [
+       "Kimi rolling week",
+       "Alibaba weekly window"
+      ],
+      "reservedNote": "The forecast reserves capacity for synthesis, testing, audit, and likely repair rather than spending everything on early extraction children."
+     }
+    }
+   ],
+   "owningSurfaceValues": [
+    "assistant_chat_goal",
+    "planning_wizard",
+    "orchestrator"
+   ],
+   "queuedReasonValues": [
+    "pm_policy",
+    "provider_limit",
+    "runtime_capacity"
+   ],
+   "startedVsElapsed": [
+    {
+     "id": "run:goal-47",
+     "startedAt": "2026-08-04T16:32:00.000Z",
+     "nowMinusStartedMin": 130,
+     "elapsedMin": 124
+    },
+    {
+     "id": "run:plan-12",
+     "startedAt": "2026-08-04T17:02:00.000Z",
+     "nowMinusStartedMin": 100,
+     "elapsedMin": null
+    },
+    {
+     "id": "run:crew-3",
+     "startedAt": "2026-08-04T17:47:00.000Z",
+     "nowMinusStartedMin": 55,
+     "elapsedMin": null
+    }
+   ],
+   "operationalPhases": [
+    {
+     "id": "ops-1",
+     "kind": "cli_update",
+     "phases": [
+      {
+       "label": "Check",
+       "ms": 120000
+      },
+      {
+       "label": "Wait for idle",
+       "ms": 540000
+      },
+      {
+       "label": "Install",
+       "ms": 180000
+      },
+      {
+       "label": "Verify",
+       "ms": 240000
+      },
+      {
+       "label": "Rollback",
+       "ms": 60000
+      }
+     ],
+     "providerUsage": "validation_only"
+    },
+    {
+     "id": "ops-2",
+     "kind": "offline_outbox",
+     "phases": [
+      {
+       "label": "Offline",
+       "ms": 1320000
+      },
+      {
+       "label": "Outbox wait",
+       "ms": 1320000
+      },
+      {
+       "label": "Reconnect + replay",
+       "ms": 180000
+      }
+     ],
+     "providerUsage": "validation_only"
+    },
+    {
+     "id": "ops-3",
+     "kind": "server_continuity",
+     "phases": [],
+     "providerUsage": "none"
+    },
+    {
+     "id": "ops-4",
+     "kind": "sound_preview",
+     "phases": [],
+     "providerUsage": "none"
+    },
+    {
+     "id": "ops-5",
+     "kind": "notification_test",
+     "phases": [],
+     "providerUsage": "none"
+    },
+    {
+     "id": "ops-6",
+     "kind": "backup",
+     "phases": [],
+     "providerUsage": "none"
+    },
+    {
+     "id": "ops-7",
+     "kind": "project_move",
+     "phases": [],
+     "providerUsage": "none"
+    },
+    {
+     "id": "ops-8",
+     "kind": "setup_required",
+     "phases": [],
+     "providerUsage": "none"
+    }
+   ],
+   "hasPeakConcurrency": false,
+   "forecastKeys": [
+    [
+     "id",
+     "runId",
+     "recommendation",
+     "confidence",
+     "generatedAt",
+     "inputs",
+     "inputs.providerRanges",
+     "inputs.resetInputs",
+     "inputs.reservedNote"
+    ],
+    [
+     "id",
+     "runId",
+     "recommendation",
+     "confidence",
+     "generatedAt",
+     "inputs",
+     "inputs.providerRanges",
+     "inputs.resetInputs",
+     "inputs.reservedNote"
+    ]
+   ]
+  },
+  "G2_capacity_widget": {
+   "essentials/overview": {
+    "text": "Completion capacity\n19\nRequested\n7\nCan run now\n12\nQueued\n9\nWaves\nRefactor pricing pipeline\nGOAL\nRequested\n8\nCan run now\n2\nQueued\n6\n2 at a time · 4 waves · capacity kept aside for synthesis, testing, verification, repair\n8 hard max · 4 preferred · 2 advertised · 2 sustainable\nLikely enough capacity to finish before the next reset.\nReasonable forecast · based on 12 similar runs · generated 14:14 EDT\nRefresh forecast\nOpen run detail\nSpec: U11 usage concept\nPLANNING RUN\nRequested\n6\nCan run now\n2\nQueued\n4\n2 at a time · 3 waves · capacity kept aside for synthesis, testing, audit, repair\n8 hard max · 4 preferred · 2 advertised · 2 sustainable\nEnough for two complete extraction children at a time, with synthesis and audit reserved.\nLimited history · may change after a route switch · generated 14:20 EDT\nRefresh forecast\nOpen run detail\nDesign critique crew\nCREW\nRequested\n5\nCan run now\n3\nQueued\n2\n3 at a time · 2 waves · capacity kept aside for reducer\n8 hard max · 6 preferred · 3 advertised · 3 sustainable\nOpen run detail\nUsage supplies the forecast. Goal Runtime owns admission, scheduling, waves, and dispatch.\nDuplicate\nOpen Usage settings",
+    "visible": true,
+    "capenvText": "8 hard max · 4 preferred · 2 advertised · 2 sustainable",
+    "capenvVisible": true,
+    "capenvClientW": 1374,
+    "capenvScrollW": 1374,
+    "tiles": [
+     "19 | Requested",
+     "7 | Can run now",
+     "12 | Queued",
+     "9 | Waves"
+    ],
+    "ctas": [
+     "Refresh forecast",
+     "Open run detail",
+     "Refresh forecast",
+     "Open run detail",
+     "Open run detail",
+     "Duplicate",
+     "Open Usage settings"
+    ]
+   },
+   "essentials/plans": {
+    "text": "Completion capacity\n19\nRequested\n7\nCan run now\n12\nQueued\n9\nWaves\nRefactor pricing pipeline\nGOAL\nRequested\n8\nCan run now\n2\nQueued\n6\n2 at a time · 4 waves · capacity kept aside for synthesis, testing, verification, repair\n8 hard max · 4 preferred · 2 advertised · 2 sustainable\nLikely enough capacity to finish before the next reset.\nReasonable forecast · based on 12 similar runs · generated 14:14 EDT\nRefresh forecast\nOpen run detail\nSpec: U11 usage concept\nPLANNING RUN\nRequested\n6\nCan run now\n2\nQueued\n4\n2 at a time · 3 waves · capacity kept aside for synthesis, testing, audit, repair\n8 hard max · 4 preferred · 2 advertised · 2 sustainable\nEnough for two complete extraction children at a time, with synthesis and audit reserved.\nLimited history · may change after a route switch · generated 14:20 EDT\nRefresh forecast\nOpen run detail\nDesign critique crew\nCREW\nRequested\n5\nCan run now\n3\nQueued\n2\n3 at a time · 2 waves · capacity kept aside for reducer\n8 hard max · 6 preferred · 3 advertised · 3 sustainable\nOpen run detail\nUsage supplies the forecast. Goal Runtime owns admission, scheduling, waves, and dispatch.\nDuplicate\nOpen Usage settings",
+    "visible": true,
+    "capenvText": "8 hard max · 4 preferred · 2 advertised · 2 sustainable",
+    "capenvVisible": true,
+    "capenvClientW": 666,
+    "capenvScrollW": 666,
+    "tiles": [
+     "19 | Requested",
+     "7 | Can run now",
+     "12 | Queued",
+     "9 | Waves"
+    ],
+    "ctas": [
+     "Refresh forecast",
+     "Open run detail",
+     "Refresh forecast",
+     "Open run detail",
+     "Open run detail",
+     "Duplicate",
+     "Open Usage settings"
+    ]
+   },
+   "standard/overview": {
+    "text": "Completion capacity\n19\nRequested\n7\nCan run now\n12\nQueued\n9\nWaves\nRefactor pricing pipeline\nGOAL\nRequested\n8\nCan run now\n2\nQueued\n6\n2 at a time · 4 waves · capacity kept aside for synthesis, testing, verification, repair\n8 hard max · 4 preferred · 2 advertised · 2 sustainable\nLikely enough capacity to finish before the next reset.\nReasonable forecast · based on 12 similar runs · generated 14:14 EDT\nRefresh forecast\nOpen run detail\nSpec: U11 usage concept\nPLANNING RUN\nRequested\n6\nCan run now\n2\nQueued\n4\n2 at a time · 3 waves · capacity kept aside for synthesis, testing, audit, repair\n8 hard max · 4 preferred · 2 advertised · 2 sustainable\nEnough for two complete extraction children at a time, with synthesis and audit reserved.\nLimited history · may change after a route switch · generated 14:20 EDT\nRefresh forecast\nOpen run detail\nDesign critique crew\nCREW\nRequested\n5\nCan run now\n3\nQueued\n2\n3 at a time · 2 waves · capacity kept aside for reducer\n8 hard max · 6 preferred · 3 advertised · 3 sustainable\nOpen run detail\nUsage supplies the forecast. Goal Runtime owns admission, scheduling, waves, and dispatch.\nDuplicate\nOpen Usage settings",
+    "visible": true,
+    "capenvText": "8 hard max · 4 preferred · 2 advertised · 2 sustainable",
+    "capenvVisible": true,
+    "capenvClientW": 1374,
+    "capenvScrollW": 1374,
+    "tiles": [
+     "19 | Requested",
+     "7 | Can run now",
+     "12 | Queued",
+     "9 | Waves"
+    ],
+    "ctas": [
+     "Refresh forecast",
+     "Open run detail",
+     "Refresh forecast",
+     "Open run detail",
+     "Open run detail",
+     "Duplicate",
+     "Open Usage settings"
+    ]
+   },
+   "standard/plans": {
+    "text": "Completion capacity\n19\nRequested\n7\nCan run now\n12\nQueued\n9\nWaves\nRefactor pricing pipeline\nGOAL\nRequested\n8\nCan run now\n2\nQueued\n6\n2 at a time · 4 waves · capacity kept aside for synthesis, testing, verification, repair\n8 hard max · 4 preferred · 2 advertised · 2 sustainable\nLikely enough capacity to finish before the next reset.\nReasonable forecast · based on 12 similar runs · generated 14:14 EDT\nRefresh forecast\nOpen run detail\nSpec: U11 usage concept\nPLANNING RUN\nRequested\n6\nCan run now\n2\nQueued\n4\n2 at a time · 3 waves · capacity kept aside for synthesis, testing, audit, repair\n8 hard max · 4 preferred · 2 advertised · 2 sustainable\nEnough for two complete extraction children at a time, with synthesis and audit reserved.\nLimited history · may change after a route switch · generated 14:20 EDT\nRefresh forecast\nOpen run detail\nDesign critique crew\nCREW\nRequested\n5\nCan run now\n3\nQueued\n2\n3 at a time · 2 waves · capacity kept aside for reducer\n8 hard max · 6 preferred · 3 advertised · 3 sustainable\nOpen run detail\nUsage supplies the forecast. Goal Runtime owns admission, scheduling, waves, and dispatch.\nDuplicate\nOpen Usage settings",
+    "visible": true,
+    "capenvText": "8 hard max · 4 preferred · 2 advertised · 2 sustainable",
+    "capenvVisible": true,
+    "capenvClientW": 666,
+    "capenvScrollW": 666,
+    "tiles": [
+     "19 | Requested",
+     "7 | Can run now",
+     "12 | Queued",
+     "9 | Waves"
+    ],
+    "ctas": [
+     "Refresh forecast",
+     "Open run detail",
+     "Refresh forecast",
+     "Open run detail",
+     "Open run detail",
+     "Duplicate",
+     "Open Usage settings"
+    ]
+   },
+   "advanced/overview": {
+    "text": "Completion capacity\n19\nRequested\n7\nCan run now\n12\nQueued\n9\nWaves\nRefactor pricing pipeline\nGOAL\nRequested\n8\nCan run now\n2\nQueued\n6\n2 at a time · 4 waves · capacity kept aside for synthesis, testing, verification, repair\n8 hard max · 4 preferred · 2 advertised · 2 sustainable\nLikely enough capacity to finish before the next reset.\nReasonable forecast · based on 12 similar runs · generated 14:14 EDT\nRefresh forecast\nOpen run detail\nSpec: U11 usage concept\nPLANNING RUN\nRequested\n6\nCan run now\n2\nQueued\n4\n2 at a time · 3 waves · capacity kept aside for synthesis, testing, audit, repair\n8 hard max · 4 preferred · 2 advertised · 2 sustainable\nEnough for two complete extraction children at a time, with synthesis and audit reserved.\nLimited history · may change after a route switch · generated 14:20 EDT\nRefresh forecast\nOpen run detail\nDesign critique crew\nCREW\nRequested\n5\nCan run now\n3\nQueued\n2\n3 at a time · 2 waves · capacity kept aside for reducer\n8 hard max · 6 preferred · 3 advertised · 3 sustainable\nOpen run detail\nUsage supplies the forecast. Goal Runtime owns admission, scheduling, waves, and dispatch.\nDuplicate\nOpen Usage settings",
+    "visible": true,
+    "capenvText": "8 hard max · 4 preferred · 2 advertised · 2 sustainable",
+    "capenvVisible": true,
+    "capenvClientW": 1374,
+    "capenvScrollW": 1374,
+    "tiles": [
+     "19 | Requested",
+     "7 | Can run now",
+     "12 | Queued",
+     "9 | Waves"
+    ],
+    "ctas": [
+     "Refresh forecast",
+     "Open run detail",
+     "Refresh forecast",
+     "Open run detail",
+     "Open run detail",
+     "Duplicate",
+     "Open Usage settings"
+    ]
+   },
+   "advanced/plans": {
+    "text": "Completion capacity\n19\nRequested\n7\nCan run now\n12\nQueued\n9\nWaves\nRefactor pricing pipeline\nGOAL\nRequested\n8\nCan run now\n2\nQueued\n6\n2 at a time · 4 waves · capacity kept aside for synthesis, testing, verification, repair\n8 hard max · 4 preferred · 2 advertised · 2 sustainable\nLikely enough capacity to finish before the next reset.\nReasonable forecast · based on 12 similar runs · generated 14:14 EDT\nRefresh forecast\nOpen run detail\nSpec: U11 usage concept\nPLANNING RUN\nRequested\n6\nCan run now\n2\nQueued\n4\n2 at a time · 3 waves · capacity kept aside for synthesis, testing, audit, repair\n8 hard max · 4 preferred · 2 advertised · 2 sustainable\nEnough for two complete extraction children at a time, with synthesis and audit reserved.\nLimited history · may change after a route switch · generated 14:20 EDT\nRefresh forecast\nOpen run detail\nDesign critique crew\nCREW\nRequested\n5\nCan run now\n3\nQueued\n2\n3 at a time · 2 waves · capacity kept aside for reducer\n8 hard max · 6 preferred · 3 advertised · 3 sustainable\nOpen run detail\nUsage supplies the forecast. Goal Runtime owns admission, scheduling, waves, and dispatch.\nDuplicate\nOpen Usage settings",
+    "visible": true,
+    "capenvText": "8 hard max · 4 preferred · 2 advertised · 2 sustainable",
+    "capenvVisible": true,
+    "capenvClientW": 1374,
+    "capenvScrollW": 1374,
+    "tiles": [
+     "19 | Requested",
+     "7 | Can run now",
+     "12 | Queued",
+     "9 | Waves"
+    ],
+    "ctas": [
+     "Refresh forecast",
+     "Open run detail",
+     "Refresh forecast",
+     "Open run detail",
+     "Open run detail",
+     "Duplicate",
+     "Open Usage settings"
+    ]
+   }
+  },
+  "G3_runs_widget": {
+   "runsText": null,
+   "operationsText": null
+  },
+  "G4_run_detail": {
+   "run:goal-47": {
+    "present": true,
+    "visible": true,
+    "text": "Refactor pricing pipeline\nGOAL\nrunning\nOwning surface\nAssistant Chat · Goal Mode\nVisibility\nvisible\nProject\nTastebook\nPhase\nSpecialist reviews\nStarted\n12:32 EDT\nADMISSION\nUSAGE FORECASTS · GOAL RUNTIME DECIDES\n8 required specialists\n2 admitted now · effective concurrency 2\n6 queued · 4 waves\nSustainable concurrency 2 · reserved for synthesis, testing, verification, repair\nHard max\n8\nConfigured preferred\n4\nProvider advertised\n2\nEffective now\n2\nPredicted sustainable\n2\nExecution host\nStudio PC\nEnvironment\nNative\nMEMBERS\n8\nPricing specialist\nDomain analyst\nrequested Alibaba · Coding Plan\nrunning\nattempt\nMigration specialist\nDomain analyst\nrequested Alibaba · Coding Plan\nrunning\nattempt\nSchema specialist\nDomain analyst\nrequested Qwen · planned · queued by pm policy\nqueued\nBackfill specialist\nDomain analyst\nrequested Qwen · planned\nqueued\nAPI specialist\nDomain analyst\nrequested Kimi · planned · queued by provider limit\nqueued\nTest strategist\nTest skeptic\nrequested Kimi · planned\nqueued\nDocs specialist\nEditor\nrequested Qwen · planned · queued by runtime capacity\nqueued\nRisk reviewer\nSkeptical reviewer\nrequested Kimi · planned\nqueued\nTIMING\nELAPSED 2H 04M\nProvider/model active\n12m\nWaiting for test device\n47m\nWaiting for worktree\n31m\nWaiting for provider capacity\n9m\nWaiting for approval\n6m\nWaiting for reset/cooldown\n0m\nLocal tool/runtime time\n19m\nOutbox/offline wait\n0m\nReconnect / sync / replay\n4m\nQueue and local-resource time never inflate provider tokens, cost, or allowance.\nCAPACITY FORECAST\nLikely enough capacity to finish before the next reset.\nReasonable forecast · based on 12 similar runs · generated 14:14 EDT\nUsage per child\n18–26K tokens\nCost per child\n$0.00 · plan included\nElapsed per child\n6–9m\nReset inputs\nCodex 5-hour window · Claude 5-hour window\nCapacity is kept aside for synthesis, testing, and repair.\nACTIVITY\n2 ATTEMPTS\nSpecialists & subagents\n2 · 24.3k tokens\nOpen in Goals\nUsage reports state and forecasts. Admission, scheduling, waves, and dispatch belong to the Goal Runtime / Orchestrator.",
+    "kvs": [
+     "Owning surface = Assistant Chat · Goal Mode",
+     "Visibility = visible",
+     "Project = Tastebook",
+     "Phase = Specialist reviews",
+     "Started = 12:32 EDT",
+     "Hard max = 8",
+     "Configured preferred = 4",
+     "Provider advertised = 2",
+     "Effective now = 2",
+     "Predicted sustainable = 2",
+     "Execution host = Studio PC",
+     "Environment = Native",
+     "Usage per child = 18–26K tokens",
+     "Cost per child = $0.00 · plan included",
+     "Elapsed per child = 6–9m",
+     "Reset inputs = Codex 5-hour window · Claude 5-hour window"
+    ],
+    "admitLines": [
+     "8 required specialists",
+     "2 admitted now · effective concurrency 2",
+     "6 queued · 4 waves",
+     "Sustainable concurrency 2 · reserved for synthesis, testing, verification, repair"
+    ],
+    "timingRows": [
+     {
+      "text": "Provider/model active | 12m",
+      "fill": "10"
+     },
+     {
+      "text": "Waiting for test device | 47m",
+      "fill": "38"
+     },
+     {
+      "text": "Waiting for worktree | 31m",
+      "fill": "25"
+     },
+     {
+      "text": "Waiting for provider capacity | 9m",
+      "fill": "7"
+     },
+     {
+      "text": "Waiting for approval | 6m",
+      "fill": "5"
+     },
+     {
+      "text": "Waiting for reset/cooldown | 0m",
+      "fill": "0"
+     },
+     {
+      "text": "Local tool/runtime time | 19m",
+      "fill": "15"
+     },
+     {
+      "text": "Outbox/offline wait | 0m",
+      "fill": "0"
+     },
+     {
+      "text": "Reconnect / sync / replay | 4m",
+      "fill": "3"
+     }
+    ],
+    "timingFillSum": 103,
+    "sections": [
+     "ADMISSION · USAGE FORECASTS · GOAL RUNTIME DECIDES",
+     "MEMBERS · 8",
+     "TIMING · ELAPSED 2H 04M",
+     "CAPACITY FORECAST",
+     "ACTIVITY · 2 ATTEMPTS"
+    ],
+    "fc": "Likely enough capacity to finish before the next reset.\nReasonable forecast · based on 12 similar runs · generated 14:14 EDT\nUsage per child\n18–26K tokens\nCost per child\n$0.00 · plan included\nElapsed per child\n6–9m\nReset inputs\nCodex 5-hour window · Claude 5-hour window\nCapacity is kept aside for synthesis, testing, and repair.",
+    "openMode": "api"
+   },
+   "run:plan-12": {
+    "present": true,
+    "visible": true,
+    "text": "Spec: U11 usage concept\nPLANNING RUN\nrunning\nOwning surface\nPlanning Wizard / PRD Builder\nVisibility\ninternal\nProject\nPuppet Master\nPhase\nSource extraction\nStarted\n13:02 EDT\nADMISSION\nUSAGE FORECASTS · GOAL RUNTIME DECIDES\n6 required specialists\n2 admitted now · effective concurrency 2\n4 queued · 3 waves\nSustainable concurrency 2 · reserved for synthesis, testing, audit, repair\nHard max\n8\nConfigured preferred\n4\nProvider advertised\n2\nEffective now\n2\nPredicted sustainable\n2\nExecution host\nTrueNAS Home Server\nEnvironment\nDocker · pm-server\nROUTE PLAN\nConversation\nClaude · Work CLI profile · high-quality route\nResearch & extraction\n4 children across Qwen and Kimi · background route\nSynthesis & audit\nreserved · reserved capacity\nCAPACITY FORECAST\nEnough for two complete extraction children at a time, with synthesis and audit reserved.\nLimited history · may change after a route switch · generated 14:20 EDT\nExtraction per child\n20–30K tokens\nConversation\nClaude · high-quality route\nReset inputs\nKimi rolling week · Alibaba weekly window\nThe forecast reserves capacity for synthesis, testing, audit, and likely repair rather than spending everything on early extraction children.\nACTIVITY\n7 ATTEMPTS\nMain work\n1 · 85.4k tokens\nResearch, attachments & media\n5 · 71.4k tokens\nSynthesis & verification\n1 · 8.9k tokens\nOpen in Goals\nUsage reports state and forecasts. Admission, scheduling, waves, and dispatch belong to the Goal Runtime / Orchestrator.",
+    "kvs": [
+     "Owning surface = Planning Wizard / PRD Builder",
+     "Visibility = internal",
+     "Project = Puppet Master",
+     "Phase = Source extraction",
+     "Started = 13:02 EDT",
+     "Hard max = 8",
+     "Configured preferred = 4",
+     "Provider advertised = 2",
+     "Effective now = 2",
+     "Predicted sustainable = 2",
+     "Execution host = TrueNAS Home Server",
+     "Environment = Docker · pm-server",
+     "Conversation = Claude · Work CLI profile · high-quality route",
+     "Research & extraction = 4 children across Qwen and Kimi · background route",
+     "Synthesis & audit = reserved · reserved capacity",
+     "Extraction per child = 20–30K tokens",
+     "Conversation = Claude · high-quality route",
+     "Reset inputs = Kimi rolling week · Alibaba weekly window"
+    ],
+    "admitLines": [
+     "6 required specialists",
+     "2 admitted now · effective concurrency 2",
+     "4 queued · 3 waves",
+     "Sustainable concurrency 2 · reserved for synthesis, testing, audit, repair"
+    ],
+    "timingRows": [],
+    "timingFillSum": 0,
+    "sections": [
+     "ADMISSION · USAGE FORECASTS · GOAL RUNTIME DECIDES",
+     "ROUTE PLAN",
+     "CAPACITY FORECAST",
+     "ACTIVITY · 7 ATTEMPTS"
+    ],
+    "fc": "Enough for two complete extraction children at a time, with synthesis and audit reserved.\nLimited history · may change after a route switch · generated 14:20 EDT\nExtraction per child\n20–30K tokens\nConversation\nClaude · high-quality route\nReset inputs\nKimi rolling week · Alibaba weekly window\nThe forecast reserves capacity for synthesis, testing, audit, and likely repair rather than spending everything on early extraction children.",
+    "openMode": "api"
+   },
+   "run:crew-3": {
+    "present": true,
+    "visible": true,
+    "text": "Design critique crew\nCREW\nrunning\nOwning surface\nOrchestrator · GoalRun\nVisibility\norchestrator\nProject\nPuppet Master\nPhase\nCritique round 1\nStarted\n13:47 EDT\nADMISSION\nUSAGE FORECASTS · GOAL RUNTIME DECIDES\n5 required specialists\n3 admitted now · effective concurrency 3\n2 queued · 2 waves\nSustainable concurrency 3 · reserved for reducer\nHard max\n8\nConfigured preferred\n6\nProvider advertised\n3\nEffective now\n3\nPredicted sustainable\n3\nExecution host\nJared’s MacBook Air\nEnvironment\nNative\nMEMBERS\n5\nCritique · layout\nSenior design critic\nused Claude · Work CLI profile\ncompleted\nattempt\nCritique · data\nData skeptic\nused Qwen · Coding Plan\ncompleted\nattempt\nCritique · motion\nMotion reviewer\nused Kimi Code\nrunning\nattempt\nCritique · copy\nCopy editor\nrequested Codex · ChatGPT plan · queued by provider limit\nqueued\nattempt\nReducer\nSynthesizer\nrequested Claude · Work CLI profile · queued by pm policy\nqueued\nattempt\nACTIVITY\n5 ATTEMPTS\nSpecialists & subagents\n4 · 38.5k tokens\nSynthesis & verification\n1 · 0 tokens\nOpen in Crew\nUsage reports state and forecasts. Admission, scheduling, waves, and dispatch belong to the Goal Runtime / Orchestrator.",
+    "kvs": [
+     "Owning surface = Orchestrator · GoalRun",
+     "Visibility = orchestrator",
+     "Project = Puppet Master",
+     "Phase = Critique round 1",
+     "Started = 13:47 EDT",
+     "Hard max = 8",
+     "Configured preferred = 6",
+     "Provider advertised = 3",
+     "Effective now = 3",
+     "Predicted sustainable = 3",
+     "Execution host = Jared’s MacBook Air",
+     "Environment = Native"
+    ],
+    "admitLines": [
+     "5 required specialists",
+     "3 admitted now · effective concurrency 3",
+     "2 queued · 2 waves",
+     "Sustainable concurrency 3 · reserved for reducer"
+    ],
+    "timingRows": [],
+    "timingFillSum": 0,
+    "sections": [
+     "ADMISSION · USAGE FORECASTS · GOAL RUNTIME DECIDES",
+     "MEMBERS · 5",
+     "ACTIVITY · 5 ATTEMPTS"
+    ],
+    "fc": null,
+    "openMode": "api"
+   }
+  },
+  "G5_time_sweep": {
+   "rooms": {
+    "overview": {
+     "chars": 5999,
+     "ampm": [],
+     "clocks": [
+      "14:42",
+      "14:47",
+      "14:14",
+      "14:20",
+      "17:47",
+      "00:00",
+      "16:56",
+      "15:37",
+      "14:40",
+      "14:20",
+      "13:55"
+     ],
+     "clocksWithZone": [
+      "14:42 EDT",
+      "14:47 EDT",
+      "14:14 EDT",
+      "14:20 EDT",
+      "17:47 EDT",
+      "00:00 EDT",
+      "16:56 EDT",
+      "15:37 EDT",
+      "14:40 EDT",
+      "14:20 EDT",
+      "13:55 EDT"
+     ]
+    },
+    "plans": {
+     "chars": 5999,
+     "ampm": [],
+     "clocks": [
+      "14:42",
+      "14:47",
+      "14:14",
+      "14:20",
+      "17:47",
+      "00:00",
+      "16:56",
+      "15:37",
+      "14:40",
+      "14:20",
+      "13:55"
+     ],
+     "clocksWithZone": [
+      "14:42 EDT",
+      "14:47 EDT",
+      "14:14 EDT",
+      "14:20 EDT",
+      "17:47 EDT",
+      "00:00 EDT",
+      "16:56 EDT",
+      "15:37 EDT",
+      "14:40 EDT",
+      "14:20 EDT",
+      "13:55 EDT"
+     ]
+    },
+    "costs": {
+     "chars": 3872,
+     "ampm": [],
+     "clocks": [
+      "17:47",
+      "00:00",
+      "16:56",
+      "15:37",
+      "14:14",
+      "14:20",
+      "14:47",
+      "14:02",
+      "14:27",
+      "13:57",
+      "13:50"
+     ],
+     "clocksWithZone": [
+      "17:47 EDT",
+      "00:00 EDT",
+      "16:56 EDT",
+      "15:37 EDT",
+      "14:14 EDT",
+      "14:20 EDT",
+      "14:47 EDT",
+      "14:02 EDT",
+      "14:27 EDT",
+      "13:57 EDT",
+      "13:50 EDT"
+     ]
+    },
+    "accounts": {
+     "chars": 894,
+     "ampm": [],
+     "clocks": [],
+     "clocksWithZone": []
+    },
+    "free": {
+     "chars": 2988,
+     "ampm": [],
+     "clocks": [
+      "14:47",
+      "14:02",
+      "14:27",
+      "13:57",
+      "13:50"
+     ],
+     "clocksWithZone": [
+      "14:47 EDT",
+      "14:02 EDT",
+      "14:27 EDT",
+      "13:57 EDT",
+      "13:50 EDT"
+     ]
+    },
+    "context": {
+     "chars": 2430,
+     "ampm": [],
+     "clocks": [
+      "00:00",
+      "14:47",
+      "14:02",
+      "14:27",
+      "13:57",
+      "13:50"
+     ],
+     "clocksWithZone": [
+      "14:47 EDT",
+      "14:02 EDT",
+      "14:27 EDT",
+      "13:57 EDT",
+      "13:50 EDT"
+     ]
+    },
+    "analytics": {
+     "chars": 870,
+     "ampm": [],
+     "clocks": [],
+     "clocksWithZone": []
+    },
+    "ledger": {
+     "chars": 870,
+     "ampm": [],
+     "clocks": [],
+     "clocksWithZone": []
+    },
+    "attention": {
+     "chars": 8570,
+     "ampm": [],
+     "clocks": [
+      "14:34",
+      "14:16",
+      "14:40",
+      "14:01",
+      "13:44",
+      "13:31",
+      "11:42",
+      "14:40",
+      "13:55"
+     ],
+     "clocksWithZone": [
+      "14:34 EDT",
+      "14:16 EDT",
+      "14:40 EDT",
+      "14:01 EDT",
+      "13:44 EDT",
+      "13:31 EDT",
+      "11:42 EDT",
+      "14:40 EDT",
+      "13:55 EDT"
+     ]
+    },
+    "cache": {
+     "chars": 601,
+     "ampm": [],
+     "clocks": [
+      "14:20",
+      "13:55"
+     ],
+     "clocksWithZone": [
+      "14:20 EDT",
+      "13:55 EDT"
+     ]
+    },
+    "tools": {
+     "chars": 1202,
+     "ampm": [],
+     "clocks": [],
+     "clocksWithZone": []
+    },
+    "signals": {
+     "chars": 796,
+     "ampm": [],
+     "clocks": [],
+     "clocksWithZone": []
+    },
+    "authority": {
+     "chars": 766,
+     "ampm": [],
+     "clocks": [],
+     "clocksWithZone": []
+    }
+   },
+   "zone": {
+    "zone": "America/New_York",
+    "isFallback": true,
+    "resolved": "UTC",
+    "sampleWhen": "reset passed · verifying…",
+    "sampleFull": "Tue Aug 4, 2026 14:42:00 EDT · America/New_York",
+    "sampleClock": "14:42",
+    "sampleStamp": "Aug 4 · 14:42 EDT"
+   }
+  },
+  "G6_wait_hygiene": {
+   "latencySumMs": 0,
+   "attemptsWithLatency": 0,
+   "mentionsProviderActive": true,
+   "queueNoteRendered": false
+  },
+  "G7_forecast_copy": {
+   "advicePhrase": false,
+   "wordAdvice": 0,
+   "likelihoodWords": {
+    "likely": 2,
+    "uncertain": 0,
+    "unlikely": 0
+   },
+   "forecastRecommendations": [
+    "Likely enough capacity to finish before the next reset.",
+    "Enough for two complete extraction children at a time, with synthesis and audit reserved."
+   ],
+   "forecastConfidence": [
+    "Reasonable forecast · based on 12 similar runs",
+    "Limited history · may change after a route switch"
+   ],
+   "hasLikelihoodField": [
+    {
+     "id": "fc-goal-47",
+     "keys": [
+      "id",
+      "runId",
+      "recommendation",
+      "confidence",
+      "generatedAt",
+      "inputs"
+     ]
+    },
+    {
+     "id": "fc-plan-12",
+     "keys": [
+      "id",
+      "runId",
+      "recommendation",
+      "confidence",
+      "generatedAt",
+      "inputs"
+     ]
+    }
+   ],
+   "reservedNumeric": [
+    {
+     "id": "run:goal-47",
+     "reservedFor": [
+      "synthesis",
+      "testing",
+      "verification",
+      "repair"
+     ],
+     "reservedQty": "ABSENT"
+    },
+    {
+     "id": "run:plan-12",
+     "reservedFor": [
+      "synthesis",
+      "testing",
+      "audit",
+      "repair"
+     ],
+     "reservedQty": "ABSENT"
+    },
+    {
+     "id": "run:crew-3",
+     "reservedFor": [
+      "reducer"
+     ],
+     "reservedQty": "ABSENT"
+    }
+   ]
+  },
+  "G8_envelope_distinct": [
+   {
+    "id": "run:goal-47",
+    "hardMax": 8,
+    "configuredPreferred": 4,
+    "providerAdvertised": 2,
+    "effectiveNow": 2,
+    "predictedSustainable": 2,
+    "admittedNow": 2,
+    "effEqAdvertised": true,
+    "sustEqEffective": true,
+    "admittedEqSustainable": true,
+    "distinctValues": 3
+   },
+   {
+    "id": "run:plan-12",
+    "hardMax": 8,
+    "configuredPreferred": 4,
+    "providerAdvertised": 2,
+    "effectiveNow": 2,
+    "predictedSustainable": 2,
+    "admittedNow": 2,
+    "effEqAdvertised": true,
+    "sustEqEffective": true,
+    "admittedEqSustainable": true,
+    "distinctValues": 3
+   },
+   {
+    "id": "run:crew-3",
+    "hardMax": 8,
+    "configuredPreferred": 6,
+    "providerAdvertised": 3,
+    "effectiveNow": 3,
+    "predictedSustainable": 3,
+    "admittedNow": 3,
+    "effEqAdvertised": true,
+    "sustEqEffective": true,
+    "admittedEqSustainable": true,
+    "distinctValues": 3
+   }
+  ],
+  "G9_aggregate": {
+   "runningCount": 3,
+   "sumRequested": 19,
+   "sumAdmitted": 7,
+   "sumQueued": 12,
+   "sumWaves": 9,
+   "maxWaves": 4,
+   "perRunHardMax": [
+    8,
+    8,
+    8
+   ],
+   "renderedTiles": [
+    "19 Requested",
+    "7 Can run now",
+    "12 Queued",
+    "9 Waves"
+   ],
+   "capTextHead": "Completion capacity\n19\nRequested\n7\nCan run now\n12\nQueued\n9\nWaves\nRefactor pricing pipeline\nGOAL\nRequested\n8\nCan run now\n2\nQueued\n6\n2 at a time · 4 waves · capacity kept aside for synthesis, testing, verification, repair\n8 hard max · 4 preferred · 2 advertised · 2 sustainable\nLikely enough capacity to finish before the next reset.\nReasonable forecast · based on 12 similar runs · generated 14:14 EDT\nRefresh forecast\nOpen run detail\nSpec: U11 usage concept\nPLANNING RUN\nRequested\n6\nCan run now\n2\nQueued\n4\n2 at a time · 3 waves · capacity kept aside for synthesis, testing, audit, repair\n8 hard max · 4 preferred · 2 advertised · 2 sustainable\nEnough for two complete extraction children at a time, w"
+  }
+ },
+ "console": [],
+ "finished": "2026-08-17T19:39:36.086Z"
+}

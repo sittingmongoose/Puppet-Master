@@ -1,0 +1,86 @@
+u11-verify: static server on http://127.0.0.1:8097/ (root: /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/replay-sandbox)
+ORIGIN-PROBE: http reachable — using http://127.0.0.1:8097/
+PASS matrix friendly-dark @ 900px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix friendly-dark @ 1280px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix friendly-dark @ 1700px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix friendly-dark @ 2200px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix friendly-dark @ 2500px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix friendly-light @ 900px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix friendly-light @ 1280px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix friendly-light @ 1700px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix friendly-light @ 2200px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix friendly-light @ 2500px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix glass-dark @ 900px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix glass-dark @ 1280px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix glass-dark @ 1700px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix glass-dark @ 2200px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix glass-dark @ 2500px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix glass-light @ 900px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix glass-light @ 1280px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix glass-light @ 1700px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix glass-light @ 2200px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix glass-light @ 2500px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix retro-dark @ 900px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix retro-dark @ 1280px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix retro-dark @ 1700px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix retro-dark @ 2200px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix retro-dark @ 2500px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix retro-light @ 900px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix retro-light @ 1280px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix retro-light @ 1700px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix retro-light @ 2200px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix retro-light @ 2500px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix basic-dark @ 900px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix basic-dark @ 1280px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix basic-dark @ 1700px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix basic-dark @ 2200px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix basic-dark @ 2500px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix basic-light @ 900px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix basic-light @ 1280px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix basic-light @ 1700px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix basic-light @ 2200px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS matrix basic-light @ 2500px — page=1 rail=15 underscores=0 consoleErrors=0
+PASS interaction scope picker → OpenAI chip
+PASS interaction disclosure Std→Adv toggles authority rail — hidden@std=true visible@adv=true
+PASS interaction settings sheet deep link toast — Opening settings · providers (demo deep link)
+PASS interaction export records → JSONL → cmd.usage.export
+PASS interaction refresh toasts — Usage projections refreshed (demo)
+PASS interaction zero console errors
+PASS new BSD section in attempt inspector (ue-600)
+PASS correction inspector acquisition note on verification call (ue-609)
+PASS new operations widget (CLI update · rolled back · 5 phases) — phases=5
+PASS correction acquisition lineage on cli_update (explicit setup · official source · bound host/env)
+PASS correction setup_required → provider setup deep-link, no silent install
+PASS guard maintenance entries carry no token totals
+PASS new capacity envelope line (sustainable)
+PASS new forecast refresh dispatches cmd.usage.forecast.request — Forecast refreshed (demo)
+PASS new account row Use next → switch_route + toast — Future work will prefer Alibaba · Personal. In-flight requests are never moved. | Priority 1last used 13m agoUse nextOpen provider console
+PASS new plans estimate (unavailable → PM estimate 63%)
+PASS guard unknown≠zero (kimi pool / zai limit unknown; estimate distinct)
+PASS new free model cooldown row
+PASS guard unconfigured providers absent from DOM
+PASS guard cost identity 61.85M + 125.57M = 187.42M
+PASS new-behavior zero console errors
+PASS fixture 1 Codex limit → credits continuation
+PASS fixture 2 Alibaba Extra Bundle consumption (ue-611 usage_pack)
+PASS fixture 3 Work→Personal fallback (ue-608 requested≠effective)
+PASS fixture 4 separately settled vision helper + attachment transform
+PASS fixture 5 model change replay/cache reset (cm-4 + replay ue-591)
+PASS fixture 6 free model cooldown rendered
+PASS fixture 7 background validation consumes allowance (probe attribution)
+PASS fixture 8 specialists admitted in waves (run:goal-47)
+PASS fixture 9 provider unavailable → PM estimate (meter:oc-go-monthly)
+PASS fixture 10 requested vs effective model (thread:t-91 switch)
+PASS fixture 11 BSD silent + advice + duplicate suppressed
+PASS fixture 12 attachment transform event fields (ue-602)
+PASS fixture 13 CLI update idle/verify/rollback (ops-1)
+PASS fixture 14 offline outbox + reconnect replay (ops-2 + ue-610)
+PASS fixture 15 server work continues offline (ops-3 on TrueNAS)
+PASS fixture 16 cross-project child (work-12 · Harbor)
+PASS fixture 17 sound preview + notification test-send (ops-4/ops-5)
+PASS fixture 18 unconfigured account absent from normal view
+PASS context details show stable prefix / cache epoch / tool schema overhead
+SUPPRESSED-CONSOLE-ERRORS: 0
+
+80 pass · 0 fail · 80 cases · 78.7s
+EXIT_CODE=0

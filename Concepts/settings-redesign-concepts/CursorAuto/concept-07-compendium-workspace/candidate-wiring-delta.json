@@ -1,0 +1,330 @@
+{
+  "schema_id": "pm.settings_candidate_wiring_delta.v1",
+  "concept_id": "concept-07-compendium-workspace",
+  "model": "CursorAuto",
+  "layout_family": "A2 Compendium Workspace",
+  "concept_only": true,
+  "winner": null,
+  "trace_rule": "GUI/NL/palette → candidate command → handler → RuntimeResourceGovernor permit (consumed, not duplicated) → ObservableWork projection → receipt",
+  "note": "Traces required by packet §09: search pick by immutable id, copy preview/apply/rollback, official CLI install, details drawer, provider routing/fallback, Escape peel, All Settings row via setting:id. Production wiring is not claimed.",
+  "traces": [
+    {
+      "project_identity": "Current Project only (demo project id bound in sessionStorage ns for concept-07-compendium-workspace). No Global/Project/Goal/Host editing selector. Inventory still carries legacy scope:global metadata; the UI projects those rows into this Project and does not expose global as an editable scope.",
+      "production_wiring_claimed": false,
+      "demo_backend": "sessionStorage simulated; RuntimeResourceGovernor not duplicated",
+      "control_family": "search pick by immutable id",
+      "ui_source": "Home/compendium search; pick routes into the faceted index",
+      "command": "cmd.settings.search.pick_result",
+      "census": "new-candidate",
+      "canonical_owner": "SettingsSearch",
+      "payload": {
+        "result_id": "immutable setting:|manager:|action:|object:|workflow:|unavailable:"
+      },
+      "result": {
+        "focused": true,
+        "highlight": "data-id"
+      },
+      "error": {
+        "code": "unknown_id"
+      },
+      "mutation_or_operation": "route by immutable result id; never by label/index",
+      "availability": "Default hits from product index 1007; cap 24; synthetic 2000 excluded",
+      "revision_idempotency_fencing_stale": "latest-request-wins submit; pick keyed by id",
+      "permission_filesafe_confirm": "n/a (navigation)",
+      "persistence_event_receipt": "push #/q/<query> then dest; no inventory write",
+      "observable_work": "none (locate)",
+      "cancel_rollback_recovery_reconnect": "Back restores query; Escape peels search first",
+      "route_deeplink_focus": "setting:{id} → #/all?row=setting:{id} or owning manager; scroll+focus",
+      "gui_nl_palette_automation": "GUI hit row = palette Open result <id> = NL open setting <id>",
+      "regression_fixture": "concept-07-compendium-workspace/search-route-matrix.json",
+      "demo_note": "SettingsSearch consumed headlessly; dropdown chrome is concept-native."
+    },
+    {
+      "project_identity": "Current Project only (demo project id bound in sessionStorage ns for concept-07-compendium-workspace). No Global/Project/Goal/Host editing selector. Inventory still carries legacy scope:global metadata; the UI projects those rows into this Project and does not expose global as an editable scope.",
+      "production_wiring_claimed": false,
+      "demo_backend": "sessionStorage simulated; RuntimeResourceGovernor not duplicated",
+      "control_family": "copy preview",
+      "ui_source": "copy review from Home destination / lifecycle landing",
+      "command": "cmd.settings.copy_from_project.preview",
+      "census": "new-candidate",
+      "canonical_owner": "Settings lifecycle",
+      "payload": {
+        "sourceId": "project",
+        "categories": "~10 domains"
+      },
+      "result": {
+        "additionItems": true,
+        "replacementItems": true,
+        "secrets_excluded": true
+      },
+      "error": {
+        "code": "no_source"
+      },
+      "mutation_or_operation": "compute preview; no inventory write",
+      "availability": "source Project selected",
+      "revision_idempotency_fencing_stale": "stale preview discarded on source change",
+      "permission_filesafe_confirm": "secrets never copy; preview is not confirm",
+      "persistence_event_receipt": "no receipt yet; sessionStorage preview only",
+      "observable_work": "optional short waiting projection",
+      "cancel_rollback_recovery_reconnect": "discard/Escape peels preview without apply",
+      "route_deeplink_focus": "remains on copy review; focus preview list",
+      "gui_nl_palette_automation": "GUI preview = palette Preview copy from project",
+      "regression_fixture": "concept-07-compendium-workspace copy preview lists",
+      "demo_note": "Simulated copy engine. Projects stay independent."
+    },
+    {
+      "project_identity": "Current Project only (demo project id bound in sessionStorage ns for concept-07-compendium-workspace). No Global/Project/Goal/Host editing selector. Inventory still carries legacy scope:global metadata; the UI projects those rows into this Project and does not expose global as an editable scope.",
+      "production_wiring_claimed": false,
+      "demo_backend": "sessionStorage simulated; RuntimeResourceGovernor not duplicated",
+      "control_family": "copy apply",
+      "ui_source": "copy review from Home destination / lifecycle landing",
+      "command": "cmd.settings.copy_from_project.apply",
+      "census": "new-candidate",
+      "canonical_owner": "Settings lifecycle",
+      "payload": {
+        "confirm": true,
+        "preview_revision": "fence"
+      },
+      "result": {
+        "receipt": true,
+        "verified": true,
+        "restorePointAt": "iso"
+      },
+      "error": {
+        "code": "verification-failure"
+      },
+      "mutation_or_operation": "restore point + atomic apply + verify (current Project only)",
+      "availability": "explicit confirm + non-stale preview",
+      "revision_idempotency_fencing_stale": "atomic fence; stale_preview aborts",
+      "permission_filesafe_confirm": "explicit confirm; secrets never copy; FileSafe N/A demo",
+      "persistence_event_receipt": "copy receipt + restorePointAt in sessionStorage",
+      "observable_work": "determinate apply projection via existing ObservableWork",
+      "cancel_rollback_recovery_reconnect": "rollback candidate after receipt",
+      "route_deeplink_focus": "receipt surface; focus Rollback",
+      "gui_nl_palette_automation": "GUI Apply = palette Apply copy from project",
+      "regression_fixture": "concept-07-compendium-workspace copy + copy_depth probes",
+      "demo_note": "Not live RuntimeResourceGovernor."
+    },
+    {
+      "project_identity": "Current Project only (demo project id bound in sessionStorage ns for concept-07-compendium-workspace). No Global/Project/Goal/Host editing selector. Inventory still carries legacy scope:global metadata; the UI projects those rows into this Project and does not expose global as an editable scope.",
+      "production_wiring_claimed": false,
+      "demo_backend": "sessionStorage simulated; RuntimeResourceGovernor not duplicated",
+      "control_family": "copy rollback",
+      "ui_source": "copy review from Home destination / lifecycle landing",
+      "command": "cmd.settings.copy_from_project.rollback",
+      "census": "new-candidate",
+      "canonical_owner": "Settings lifecycle",
+      "payload": {
+        "restorePointAt": "iso"
+      },
+      "result": {
+        "restored": true
+      },
+      "error": {
+        "code": "no_restore_point"
+      },
+      "mutation_or_operation": "restore sessionStorage values from restore point",
+      "availability": "restore point exists",
+      "revision_idempotency_fencing_stale": "fenced to restorePointAt; repeat → no_restore_point",
+      "permission_filesafe_confirm": "explicit rollback action",
+      "persistence_event_receipt": "rollback receipt; restore point consumed",
+      "observable_work": "short restore projection",
+      "cancel_rollback_recovery_reconnect": "this is the recovery path",
+      "route_deeplink_focus": "copy review; focus source picker after restore",
+      "gui_nl_palette_automation": "GUI Rollback = palette Rollback copy from project",
+      "regression_fixture": "concept-07-compendium-workspace copy rollback probe",
+      "demo_note": "sessionStorage restore only."
+    },
+    {
+      "project_identity": "Current Project only (demo project id bound in sessionStorage ns for concept-07-compendium-workspace). No Global/Project/Goal/Host editing selector. Inventory still carries legacy scope:global metadata; the UI projects those rows into this Project and does not expose global as an editable scope.",
+      "production_wiring_claimed": false,
+      "demo_backend": "sessionStorage simulated; RuntimeResourceGovernor not duplicated",
+      "control_family": "official CLI install",
+      "ui_source": "provider landing Install from official source",
+      "command": "cmd.provider.cli.install_official",
+      "census": "new-candidate",
+      "canonical_owner": "Models System / BinaryLocator",
+      "payload": {
+        "source": "official",
+        "provider_id": "string"
+      },
+      "result": {
+        "work.state": "waiting_user"
+      },
+      "error": {
+        "code": "not_confirmed"
+      },
+      "mutation_or_operation": "explicit official-source install; auth is a later step",
+      "availability": "waiting_user until confirm; no silent first install",
+      "revision_idempotency_fencing_stale": "same waiting_user op until confirm/cancel",
+      "permission_filesafe_confirm": "explicit confirm; official source only",
+      "persistence_event_receipt": "simulated install flag + receipt",
+      "observable_work": "waiting_user → running → done/failed (existing owner)",
+      "cancel_rollback_recovery_reconnect": "cancel → not_confirmed; retry official source",
+      "route_deeplink_focus": "runtime demand deep-links to this control",
+      "gui_nl_palette_automation": "GUI Install from official source = palette same id",
+      "regression_fixture": "concept-07-compendium-workspace provider_density / official CLI",
+      "demo_note": "Models System candidate. No second ResourceGovernor."
+    },
+    {
+      "project_identity": "Current Project only (demo project id bound in sessionStorage ns for concept-07-compendium-workspace). No Global/Project/Goal/Host editing selector. Inventory still carries legacy scope:global metadata; the UI projects those rows into this Project and does not expose global as an editable scope.",
+      "production_wiring_claimed": false,
+      "demo_backend": "sessionStorage simulated; RuntimeResourceGovernor not duplicated",
+      "control_family": "details drawer",
+      "ui_source": "row Details drawer from compendium or manager row",
+      "command": "cmd.settings.details.open",
+      "census": "new-candidate",
+      "canonical_owner": "Settings workspace",
+      "payload": {
+        "id": "setting:{id}"
+      },
+      "result": {
+        "requested": true,
+        "effective": true,
+        "origin": true
+      },
+      "error": {
+        "code": "unknown_id"
+      },
+      "mutation_or_operation": "read-only settingDetails projection",
+      "availability": "always for indexed 828 settings",
+      "revision_idempotency_fencing_stale": "read-only snapshot of demo revision",
+      "permission_filesafe_confirm": "n/a; secrets stay masked",
+      "persistence_event_receipt": "none",
+      "observable_work": "none",
+      "cancel_rollback_recovery_reconnect": "Escape peels details first",
+      "route_deeplink_focus": "drawer over the originating row; return focus on peel",
+      "gui_nl_palette_automation": "GUI Why this value? = palette Open setting details",
+      "regression_fixture": "concept-07-compendium-workspace details_origin probe",
+      "demo_note": "sessionStorage origin disclosed in the drawer."
+    },
+    {
+      "project_identity": "Current Project only (demo project id bound in sessionStorage ns for concept-07-compendium-workspace). No Global/Project/Goal/Host editing selector. Inventory still carries legacy scope:global metadata; the UI projects those rows into this Project and does not expose global as an editable scope.",
+      "production_wiring_claimed": false,
+      "demo_backend": "sessionStorage simulated; RuntimeResourceGovernor not duplicated",
+      "control_family": "provider routing/fallback",
+      "ui_source": "provider landing Install from official source",
+      "command": "cmd.provider.switch_route",
+      "census": "reuse",
+      "canonical_owner": "Providers / Models System",
+      "payload": {
+        "route": "primary|fallback",
+        "provider_id": "string"
+      },
+      "result": {
+        "usage_end": true,
+        "route": "applied"
+      },
+      "error": {
+        "code": "no_provider"
+      },
+      "mutation_or_operation": "set route/fallback; usage-end is first-class on the same surface",
+      "availability": "ready provider exists; else named reason",
+      "revision_idempotency_fencing_stale": "idempotent per provider+route+project; stale probes dropped",
+      "permission_filesafe_confirm": "explicit route control; no FileSafe",
+      "persistence_event_receipt": "simulated route field + labeled receipt",
+      "observable_work": "optional health/refresh projection",
+      "cancel_rollback_recovery_reconnect": "re-select previous route; reconnect restores stored route",
+      "route_deeplink_focus": "focus fallback row; stay in provider workspace",
+      "gui_nl_palette_automation": "GUI Make default/fallback = palette Switch provider route",
+      "regression_fixture": "concept-07-compendium-workspace provider routing/fallback probes",
+      "demo_note": "Preserve cmd.provider.switch_route. Demo only."
+    },
+    {
+      "project_identity": "Current Project only (demo project id bound in sessionStorage ns for concept-07-compendium-workspace). No Global/Project/Goal/Host editing selector. Inventory still carries legacy scope:global metadata; the UI projects those rows into this Project and does not expose global as an editable scope.",
+      "production_wiring_claimed": false,
+      "demo_backend": "sessionStorage simulated; RuntimeResourceGovernor not duplicated",
+      "control_family": "Escape peel",
+      "ui_source": "document keydown Escape / Back / Close",
+      "command": "cmd.settings.escape",
+      "census": "reuse",
+      "canonical_owner": "PM shell / Settings workspace",
+      "payload": {
+        "key": "Escape"
+      },
+      "result": {
+        "peel": "popup > details > facet/outline > search > row > named Back"
+      },
+      "error": {
+        "code": null
+      },
+      "mutation_or_operation": "popup > details > facet/outline > search > row > named Back",
+      "availability": "always",
+      "revision_idempotency_fencing_stale": "one layer per keypress",
+      "permission_filesafe_confirm": "discards unconfirmed copy preview; does not apply",
+      "persistence_event_receipt": "none",
+      "observable_work": "none",
+      "cancel_rollback_recovery_reconnect": "Close Settings from empty Home returns to origin",
+      "route_deeplink_focus": "named Back after overlays; restore focus to opener",
+      "gui_nl_palette_automation": "GUI Escape = palette Back = NL go back in settings",
+      "regression_fixture": "concept-07-compendium-workspace escape_smoke + matrices",
+      "demo_note": "A2 Compendium Workspace peel order is concept-native; shared helper consumed."
+    },
+    {
+      "project_identity": "Current Project only (demo project id bound in sessionStorage ns for concept-07-compendium-workspace). No Global/Project/Goal/Host editing selector. Inventory still carries legacy scope:global metadata; the UI projects those rows into this Project and does not expose global as an editable scope.",
+      "production_wiring_claimed": false,
+      "demo_backend": "sessionStorage simulated; RuntimeResourceGovernor not duplicated",
+      "control_family": "All Settings row via setting:id",
+      "ui_source": "faceted All Settings vlist row [data-id='setting:{id}']",
+      "command": "registry-owned non-command mutation",
+      "census": "reuse",
+      "canonical_owner": "settings inventory/schema",
+      "payload": {
+        "id": "setting:{id}",
+        "value": "typed"
+      },
+      "result": {
+        "project_values": "updated",
+        "source": "custom"
+      },
+      "error": {
+        "code": "disabled_reason"
+      },
+      "mutation_or_operation": "project values[setting:{id}] — never by visible label",
+      "availability": "controlModel.disabled reason / deferred owner",
+      "revision_idempotency_fencing_stale": "last write wins in demo session revision",
+      "permission_filesafe_confirm": "ordinary control; secrets masked; FileSafe n/a",
+      "persistence_event_receipt": "sessionStorage values + labeled 'this Project only' receipt",
+      "observable_work": "none for ordinary typed writes",
+      "cancel_rollback_recovery_reconnect": "Details reset-to-default; reconnect reloads values",
+      "route_deeplink_focus": "#/all?row=setting:{id} locate+highlight data-id=setting:{id}",
+      "gui_nl_palette_automation": "GUI row control = palette Set setting {id} = NL set <id>",
+      "regression_fixture": "concept-07-compendium-workspace all-settings row + state_persistence probes",
+      "demo_note": "Legacy scope:global is projected into this Project; not an edit scope."
+    },
+    {
+      "project_identity": "Current Project only (demo project id bound in sessionStorage ns for concept-07-compendium-workspace). No Global/Project/Goal/Host editing selector. Inventory still carries legacy scope:global metadata; the UI projects those rows into this Project and does not expose global as an editable scope.",
+      "production_wiring_claimed": false,
+      "demo_backend": "sessionStorage simulated; RuntimeResourceGovernor not duplicated",
+      "control_family": "search submit",
+      "ui_source": "Home/compendium search; pick routes into the faceted index",
+      "command": "cmd.settings.search.submit",
+      "census": "new-candidate",
+      "canonical_owner": "SettingsSearch",
+      "payload": {
+        "query": "string",
+        "limit": 24,
+        "include_synthetic": false
+      },
+      "result": {
+        "hits": "<=24",
+        "ids": "immutable"
+      },
+      "error": {
+        "code": "no_match"
+      },
+      "mutation_or_operation": "headless SettingsSearch query; no navigation",
+      "availability": "Settings open; Default excludes synthetic 2000",
+      "revision_idempotency_fencing_stale": "latest-request-wins",
+      "permission_filesafe_confirm": "read-only",
+      "persistence_event_receipt": "query is view-state only",
+      "observable_work": "none (sync index)",
+      "cancel_rollback_recovery_reconnect": "Escape peels dropdown; reconnect re-submits query",
+      "route_deeplink_focus": "focus remains in the field",
+      "gui_nl_palette_automation": "GUI type/submit = palette Search Settings = NL search settings for <q>",
+      "regression_fixture": "concept-07-compendium-workspace/search-route-matrix.json + rendered Default results",
+      "demo_note": "Cap 24. Product index 1007."
+    }
+  ],
+  "production_wiring_claimed": false
+}

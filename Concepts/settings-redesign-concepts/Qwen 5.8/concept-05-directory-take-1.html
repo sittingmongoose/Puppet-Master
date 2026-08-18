@@ -1,0 +1,1133 @@
+<!doctype html>
+<html lang="en" data-theme="friendly-dark" data-reduced-motion="0" data-concept-id="concept-05-directory-take-1">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Directory — Take 1 — Qwen 5.8</title>
+<link rel="stylesheet" href="_shared/pm-shell.css">
+<link rel="stylesheet" href="_shared/pm-managers2.css">
+<style>
+/* Directory / Take 1 — crisp quiet directory-first. Medium density, quiet type.
+   Motion metaphor: confident spatial expand/contract (card grows into domain header; Back reverses). */
+.d5-stage { display: flex; min-height: 0; flex: 1; }
+.d5-nav { width: 196px; flex: none; border-right: 1px solid var(--border); padding: 14px 10px; overflow-y: auto; background: var(--bg-shell); }
+.d5-nav button { display: flex; align-items: center; gap: 8px; width: 100%; border: none; background: none; color: var(--text-2); padding: 6px 10px; border-radius: var(--radius-s); cursor: pointer; font-size: 12.5px; text-align: left; }
+.d5-nav button:hover { background: var(--surface-2); color: var(--text-1); }
+.d5-nav button.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.d5-nav .d5-nav-cap { font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-3); padding: 10px 10px 4px; }
+.d5-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.d5-scroll { overflow-y: auto; flex: 1; min-height: 0; }
+.d5-inner { max-width: 1060px; margin: 0 auto; padding: 18px 22px 48px; }
+#app[data-wtier="wide"] .d5-inner { max-width: 1240px; }
+#app[data-wtier="squeezed"] .d5-inner, #app[data-wtier="narrow"] .d5-inner { padding: 14px 14px 40px; }
+#app[data-wtier="squeezed"] .d5-nav, #app[data-wtier="narrow"] .d5-nav { display: none; }
+
+/* top band: breadcrumb / back / search / close */
+.d5-band { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--border); background: var(--bg-shell); flex-wrap: wrap; }
+.d5-crumb { display: flex; align-items: center; gap: 6px; color: var(--text-3); font-size: 11.5px; flex-wrap: wrap; min-width: 0; }
+.d5-crumb b { color: var(--text-2); font-weight: 600; }
+.d5-crumb .sep { color: var(--text-3); }
+.d5-band .d5-searchwrap { margin-left: auto; width: min(340px, 46vw); }
+#app[data-wtier="squeezed"] .d5-band .d5-searchwrap { width: 100%; margin-left: 0; order: 9; }
+
+/* universal search */
+.d5-searchwrap { position: relative; }
+.d5-search { width: 100%; display: flex; align-items: center; gap: 8px; border: 1px solid var(--border-strong); background: var(--surface-3); border-radius: var(--radius-s); padding: 6px 10px; color: var(--text-2); }
+.d5-search input { flex: 1; border: none; background: none; outline: none; color: var(--text-1); font-size: 12.5px; min-width: 0; }
+.d5-search.big { padding: 12px 14px; border-radius: var(--radius-m); font-size: 14px; box-shadow: var(--shadow); }
+.d5-search.big input { font-size: 14px; }
+.d5-search:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.d5-drop { position: absolute; left: 0; right: 0; top: calc(100% + 4px); background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-m); box-shadow: var(--shadow); z-index: 60; max-height: min(430px, 60vh); overflow-y: auto; }
+.d5-drop-cap { font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--text-3); padding: 8px 12px 3px; }
+.d5-res { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 2px 10px; width: 100%; text-align: left; border: none; background: none; padding: 7px 12px; cursor: pointer; color: var(--text-1); }
+.d5-res:hover, .d5-res.active { background: var(--accent-soft); }
+.d5-res .lab { font-size: 12.5px; font-weight: 600; display: flex; align-items: center; gap: 8px; min-width: 0; }
+.d5-res .lab .pm2-r-title { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.d5-res .path { grid-column: 1 / -1; font-size: 11px; color: var(--text-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.d5-res .note { grid-column: 1 / -1; font-size: 11px; color: var(--text-2); }
+.d5-nores { padding: 14px 12px; color: var(--text-2); font-size: 12.5px; }
+
+/* home */
+.d5-h1 { font-size: 21px; font-weight: 650; color: var(--text-1); margin: 4px 0 12px; letter-spacing: -0.01em; }
+.d5-proj { color: var(--text-3); font-size: 11.5px; margin-bottom: 2px; }
+.d5-attn { display: flex; align-items: center; gap: 10px; border: 1px solid color-mix(in srgb, var(--warn) 45%, transparent); background: color-mix(in srgb, var(--warn) 9%, transparent); border-radius: var(--radius-m); padding: 9px 12px; margin: 10px 0 4px; }
+.d5-attn.crit { border-color: color-mix(in srgb, var(--err) 50%, transparent); background: color-mix(in srgb, var(--err) 9%, transparent); }
+.d5-attn .t { flex: 1; min-width: 0; }
+.d5-attn .t b { display: block; color: var(--text-1); font-size: 12.5px; }
+.d5-attn .t em { font-style: normal; color: var(--text-2); font-size: 11.5px; }
+.d5-cap { font-size: 11px; text-transform: uppercase; letter-spacing: .09em; color: var(--text-3); margin: 20px 0 8px; }
+.d5-dests { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+#app[data-wtier="squeezed"] .d5-dests, #app[data-wtier="narrow"] .d5-dests { grid-template-columns: 1fr; }
+.d5-dest { display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: 4px 12px; align-items: center; text-align: left; border: 1px solid var(--border); background: var(--surface); border-radius: var(--radius-m); padding: 13px 14px; cursor: pointer; color: var(--text-1); transition: border-color .15s, transform .15s; }
+.d5-dest:hover { border-color: var(--border-strong); transform: translateY(-1px); }
+.d5-dest .ic { grid-column: 1; grid-row: 1 / span 2; color: var(--accent); display: flex; }
+.d5-dest b { grid-column: 2; grid-row: 1; font-size: 13.5px; font-weight: 650; }
+.d5-dest .d { grid-column: 2; grid-row: 2; color: var(--text-2); font-size: 12px; }
+.d5-dest .m { grid-column: 3; grid-row: 1 / span 2; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; color: var(--text-3); }
+.d5-dest .ct { font-size: 11px; white-space: nowrap; }
+
+/* domain page */
+.d5-domhead { display: grid; grid-template-columns: auto minmax(0,1fr); gap: 4px 14px; align-items: center; border: 1px solid var(--border); background: var(--surface); border-radius: var(--radius-l); padding: 16px 18px; margin-bottom: 14px; }
+.d5-domhead .ic { grid-row: 1 / span 2; color: var(--accent); display: flex; }
+.d5-domhead h2 { margin: 0; font-size: 17px; font-weight: 650; color: var(--text-1); }
+.d5-domhead p { margin: 2px 0 0; color: var(--text-2); font-size: 12.5px; max-width: 75ch; }
+.d5-domhead .meta { grid-column: 2; display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+.d5-rows { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); padding: 4px 14px; margin-bottom: 14px; }
+.d5-drow { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 2px 14px; align-items: center; width: 100%; text-align: left; border: none; border-bottom: 1px solid var(--border); background: none; padding: 10px 4px; cursor: pointer; color: var(--text-1); }
+.d5-drow:last-child { border-bottom: none; }
+.d5-drow:hover { background: var(--surface-2); }
+.d5-drow b { font-size: 13px; font-weight: 600; display: flex; gap: 8px; align-items: center; }
+.d5-drow .d { grid-column: 1; color: var(--text-2); font-size: 11.5px; }
+.d5-drow .ct { color: var(--text-3); font-size: 11px; white-space: nowrap; }
+.d5-drow .chev { color: var(--text-3); }
+
+/* manager workspace */
+.d5-mgr { display: grid; grid-template-columns: 232px minmax(0,1fr); gap: 16px; align-items: start; }
+#app[data-wtier="wide"] .d5-mgr { grid-template-columns: 250px minmax(0,1fr); }
+#app[data-wtier="squeezed"] .d5-mgr, #app[data-wtier="narrow"] .d5-mgr { grid-template-columns: 1fr; }
+.d5-mgrnav { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); padding: 8px; position: sticky; top: 10px; }
+.d5-mgrnav button { display: flex; align-items: center; gap: 8px; width: 100%; border: none; background: none; color: var(--text-2); padding: 7px 9px; border-radius: var(--radius-s); cursor: pointer; font-size: 12.5px; text-align: left; }
+.d5-mgrnav button:hover { background: var(--surface-2); color: var(--text-1); }
+.d5-mgrnav button.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+#app[data-wtier="squeezed"] .d5-mgrnav, #app[data-wtier="narrow"] .d5-mgrnav { position: static; }
+#app[data-wtier="squeezed"] .d5-mgr.has-obj .d5-mgrnav, #app[data-wtier="narrow"] .d5-mgr.has-obj .d5-mgrnav { display: none; }
+#app[data-wtier="squeezed"] .d5-mgr:not(.has-obj) .d5-mgrbody, #app[data-wtier="narrow"] .d5-mgr:not(.has-obj) .d5-mgrbody { display: none; }
+.d5-provwrap { display: grid; grid-template-columns: 220px minmax(0,1fr); gap: 14px; align-items: start; }
+#app[data-wtier="squeezed"] .d5-provwrap, #app[data-wtier="narrow"] .d5-provwrap { grid-template-columns: 1fr; }
+#app[data-wtier="squeezed"] .d5-provwrap.has-obj .d5-provnav, #app[data-wtier="narrow"] .d5-provwrap.has-obj .d5-provnav { display: none; }
+#app[data-wtier="squeezed"] .d5-provwrap:not(.has-obj) .d5-provbody, #app[data-wtier="narrow"] .d5-provwrap:not(.has-obj) .d5-provbody { display: none; }
+.d5-mgrbody { min-width: 0; }
+.d5-famhead { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+.d5-famhead h3 { margin: 0; font-size: 15.5px; font-weight: 650; color: var(--text-1); display: flex; align-items: center; gap: 8px; }
+.d5-famhead .arch { color: var(--text-3); font-size: 11px; }
+.d5-famsum { color: var(--text-2); font-size: 12.5px; max-width: 75ch; margin: 0 0 12px; }
+.d5-objlist { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; margin-bottom: 14px; }
+.d5-obj { border: 1px solid var(--border); background: var(--surface); border-radius: var(--radius-m); padding: 9px 11px; cursor: pointer; text-align: left; color: var(--text-1); }
+.d5-obj:hover { border-color: var(--border-strong); }
+.d5-obj.active { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+.d5-obj b { font-size: 12.5px; display: flex; align-items: center; gap: 7px; }
+.d5-obj .n { color: var(--text-3); font-size: 11px; margin-top: 3px; }
+.d5-sect { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); padding: 6px 14px 10px; margin-bottom: 12px; }
+.d5-sect > h4 { margin: 10px 0 2px; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--text-3); }
+.d5-tabs { display: flex; gap: 2px; flex-wrap: wrap; border-bottom: 1px solid var(--border); margin-bottom: 10px; }
+.d5-tabs button { border: none; background: none; color: var(--text-2); padding: 6px 11px; cursor: pointer; font-size: 12px; border-bottom: 2px solid transparent; }
+.d5-tabs button.active { color: var(--accent); font-weight: 600; border-bottom-color: var(--accent); }
+.d5-kv { display: grid; grid-template-columns: minmax(140px, 220px) 1fr; gap: 5px 14px; font-size: 12.5px; margin: 6px 0 10px; }
+.d5-kv dt { color: var(--text-3); } .d5-kv dd { margin: 0; color: var(--text-1); }
+#app[data-wtier="squeezed"] .d5-kv { grid-template-columns: 1fr; }
+.d5-defer { border: 1px dashed var(--border-strong); border-radius: var(--radius-m); padding: 10px 13px; color: var(--text-2); font-size: 12px; margin-bottom: 10px; background: var(--surface-3); }
+.d5-defer b { color: var(--text-1); }
+.d5-work { display: flex; align-items: center; gap: 10px; border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface-2); padding: 8px 12px; margin: 0 0 10px; font-size: 12px; color: var(--text-1); }
+.d5-work .ph { color: var(--text-2); flex: 1; }
+.d5-bar { height: 4px; border-radius: 2px; background: var(--surface-3); overflow: hidden; flex: 1; }
+.d5-bar i { display: block; height: 100%; background: var(--accent); }
+
+/* all settings */
+.d5-allbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 10px; }
+.d5-vlist { height: min(560px, 62vh); overflow-y: auto; border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); padding: 0 14px; }
+.d5-vrow { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 2px 12px; align-items: center; border-bottom: 1px solid var(--border); height: 64px; }
+.d5-vrow b { font-size: 12.5px; color: var(--text-1); display: flex; gap: 8px; align-items: center; }
+.d5-vrow .p { color: var(--text-3); font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.d5-syn { outline: 1px dashed var(--border-strong); outline-offset: -1px; }
+
+/* copy flow */
+.d5-copy { max-width: 720px; margin: 0 auto; border: 1px solid var(--border); border-radius: var(--radius-l); background: var(--surface); padding: 18px; }
+.d5-steps { display: flex; gap: 14px; margin-bottom: 14px; color: var(--text-3); font-size: 11.5px; flex-wrap: wrap; }
+.d5-steps b { color: var(--text-2); font-weight: 600; }
+.d5-steps .on b { color: var(--accent); }
+.d5-src { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+#app[data-wtier="squeezed"] .d5-src { grid-template-columns: 1fr; }
+.d5-src button { text-align: left; border: 1px solid var(--border); background: var(--surface-3); border-radius: var(--radius-m); padding: 10px 12px; cursor: pointer; color: var(--text-1); }
+.d5-src button.active { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+.d5-src .u { color: var(--text-3); font-size: 11px; }
+.d5-cats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 10px 0; }
+#app[data-wtier="squeezed"] .d5-cats { grid-template-columns: 1fr; }
+.d5-cats label { display: flex; gap: 8px; align-items: center; font-size: 12.5px; color: var(--text-1); border: 1px solid var(--border); border-radius: var(--radius-s); padding: 6px 10px; }
+.d5-counts { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0; }
+.d5-diff { max-height: 240px; overflow-y: auto; border: 1px solid var(--border); border-radius: var(--radius-s); }
+
+/* motion: confident spatial expand/contract */
+.d5-enter { animation: d5In .26s cubic-bezier(.2, .8, .2, 1) 1; }
+@keyframes d5In { from { opacity: .35; transform: scale(.965); } to { opacity: 1; transform: none; } }
+.d5-exit { animation: d5Out .16s ease-in 1 forwards; }
+@keyframes d5Out { to { opacity: .3; transform: scale(.97); } }
+</style>
+</head>
+<body data-concept-model="Qwen 5.8" data-concept="concept-05-directory-take-1">
+<div id="app"></div>
+<script src="_shared/pm-icons.js"></script>
+<script src="_shared/pm-inventory-data.js"></script>
+<script src="_shared/pm-managers2-data.js"></script>
+<script src="_shared/pm-state2.js"></script>
+<script src="_shared/pm-search2.js"></script>
+<script src="_shared/pm-managers2.js"></script>
+<script src="_shared/pm-copy2.js"></script>
+<script src="_shared/pm-shell2.js"></script>
+<script src="_shared/concept-hub-bridge.js"></script>
+<script>
+(function () {
+  "use strict";
+  var D = window.PMInventoryData, MD = window.PMManagers2Data, S2 = window.PMState2,
+      SR = window.PMSearch2, M2 = window.PMManagers2, C2 = window.PMCopy2;
+  var esc = M2.esc;
+  function ico(n, s) { return window.PMIcons.get(n, s || 14); }
+
+  S2.init("concept-05-directory-take-1");
+  SR.register(MD.searchEntries());
+
+  var shell = PMShell2.mount({
+    conceptName: "Directory — Take 1", model: "Qwen 5.8",
+    onHome: function () { go("home"); },
+    onTier: function () {}
+  });
+  var content = shell.content;
+
+  // ---------- indexes ----------
+  var FAM = {}, PROV = {}, DEF = {};
+  MD.families.forEach(function (f) { FAM[f.id] = f; });
+  MD.providers.forEach(function (p) { PROV[p.id] = p; });
+  MD.deferred.forEach(function (d) { DEF[d.id] = d; });
+  var DOMMGR = {};
+  MD.families.forEach(function (f) { (DOMMGR[f.domain] = DOMMGR[f.domain] || []).push(f.id); });
+
+  // Curated real inventory rows per family (ordinary setting grammar, wired to PMState2).
+  var CUR = {
+    providers: ["ai.accounts.provider-connections", "ai.models.default-model", "ai.usage.monthly-token-budget"],
+    context: ["memory.assembly.project-rules", "memory.assembly.instruction-budget-mode", "memory.limits.max-context-ktokens"],
+    memory: ["memory.retention.enabled", "memory.retention.pinned-unverified-injection", "memory.limits.auto-compress"],
+    personas: ["personas.library.default-persona", "personas.library.selection-mode", "personas.tuning.response-style"],
+    goal: ["safety.approvals.autonomy-mode", "safety.approvals.require-plan-first"],
+    crew: ["branching.crew.crew-enabled", "branching.crew.max-agents-per-crew"],
+    permissions: ["safety.rules.permission-preset", "safety.rules.default-tool-permission", "safety.protection.web-tool-permissions"],
+    bsd: ["planning.verification.back-seat-driver-mode"],
+    notifications: ["general.interaction.notifications-enabled", "general.interaction.notification-severity", "general.interaction.tray-notifications"],
+    sounds: ["general.interaction.sound-effects", "general.interaction.sound-catalog", "general.interaction.sound-mapping"],
+    appearance: ["general.visual.theme", "general.visual.theme-mode", "general.visual.font-size", "general.visual.reduce-animations"],
+    spellcheck: [],
+    desktop: ["general.interaction.minimize-to-tray", "general.startup.window-state", "general.startup.crash-restore"],
+    teacher: ["general.interaction.chat-eli5", "general.interaction.explain-disabled"],
+    doctor: ["system.health.run-doctor", "system.health.auto-run", "system.health.doctor-summary"],
+    files: ["general.interaction.hide-ignored-files", "general.interaction.max-editor-tabs", "general.interaction.expand-current-file"],
+    terminal: ["code.terminal.shell", "code.terminal.font-size", "code.terminal.transcript-retention"],
+    lsp: ["code.editing.lsp-enabled", "code.editing.lsp-server-catalog", "code.editing.lsp-auto-restart", "code.editing.diagnostics-visibility"],
+    formatters: ["code.editing.formatters-enabled", "code.editing.formatter-catalog", "code.editing.formatter-custom"],
+    commands: ["extensions.commands.keyboard-shortcuts", "extensions.commands.custom-commands", "extensions.commands.conflict-handling"],
+    mcp: ["system.mcp.server-list", "system.mcp.server-enabled", "system.mcp.health-status"],
+    skills: ["extensions.skills.your-skills", "extensions.skills.skill-on-off", "extensions.skills.discovery"],
+    plugins: ["extensions.plugins.plugin-on-off", "extensions.plugins.add-from-catalog", "extensions.plugins.auto-enable-new"],
+    tools: ["ai.usage.max-tool-rounds", "ai.usage.tool-usage-window"],
+    testing: ["planning.testing.capability-policy", "planning.testing.test-visibility"],
+    storage: ["system.advanced.request-storage-compaction", "ai.accounts.credential-storage"],
+    backup: [],
+    lifecycle: ["system.advanced.export-settings", "system.advanced.import-settings"],
+    history: ["general.interaction.thread-retention-days", "memory.retention.history-retention", "safety.protection.redaction-profile"],
+    artifacts: ["media.io.artifacts-location", "media.io.artifact-retention", "system.advanced.runtime-artifacts"],
+    scm: ["branching.worktrees.enable-git", "branching.worktrees.default-branch", "branching.worktrees.worktree-cleanup"],
+    gha: ["branching.worktrees.github-pinned-workflows", "planning.testing.github-actions-template"],
+    containers: ["code.execution.container-runtime", "code.execution.dockerhub-signin", "code.execution.enterprise-registries"],
+    searchindex: ["web.index.enable", "web.index.rebuild", "web.index.exclusion-patterns"],
+    cleanup: ["code.execution.cleanup-aggressiveness", "code.execution.cleanup-scan-cadence"],
+    media: ["media.image.provider", "media.io.media-output", "media.capabilities.tts-voice"],
+    dry: ["memory.assembly.dry-method-guard"],
+    onboarding: ["general.startup.onboarding", "planning.interview.wizard-first-run"],
+    updates: ["system.advanced.auto-update", "system.advanced.update-frequency"],
+    servers: ["ai.accounts.opencode-server-auth"],
+    hosting: []
+  };
+
+  // ---------- concept-local demo store for family-local rows ----------
+  var LV = {};
+  function lget(id, inv) {
+    if (!(id in LV)) LV[id] = inv.value !== undefined ? inv.value : (inv.type === "toggle" ? false : "");
+    return LV[id];
+  }
+  function lset(id, val, inv) {
+    LV[id] = val;
+    S2.receipt("Setting changed", inv.label + " → " + (inv.type === "toggle" ? (val ? "On" : "Off") : val) + " (concept demo row).", "ok");
+    var el = content.querySelector('[data-row="' + id + '"]');
+    if (el) el.outerHTML = famRow(inv);
+  }
+
+  // ---------- routing ----------
+  var route = { name: "home", a: null, b: null, query: {}, raw: "#/home" };
+  var scrollMem = {}, lastQuery = "", lastResults = [], pendingLocate = null, closed = false, lastValidation = null;
+  var copyState = { step: 1, source: null, cats: [], preview: null, applied: null };
+
+  function parseHash() {
+    var h = location.hash || "#/home";
+    var q = "";
+    var qi = h.indexOf("?");
+    if (qi >= 0) { q = h.slice(qi + 1); h = h.slice(0, qi); }
+    var query = {};
+    q.split("&").forEach(function (kv) { if (!kv) return; var p = kv.split("="); query[decodeURIComponent(p[0])] = decodeURIComponent(p[1] || ""); });
+    var parts = h.replace(/^#\//, "").split("/").filter(Boolean);
+    var r = { name: parts[0] || "home", a: parts[1] || null, b: parts[2] || null, query: query, raw: h + (q ? "?" + q : "") };
+    if (r.name === "cat" && !r.a) r.name = "home";
+    if (r.name === "mgr" && !r.a) r.name = "home";
+    if (r.name === "q") r.query.q = decodeURIComponent((parts.slice(1).join("/")) || "");
+    return r;
+  }
+  function go(name, a, b, query) {
+    var h = "#/" + name + (a ? "/" + a : "") + (b ? "/" + b : "");
+    var qs = [];
+    if (query) Object.keys(query).forEach(function (k) { if (query[k]) qs.push(k + "=" + encodeURIComponent(query[k])); });
+    location.hash = h + (qs.length ? "?" + qs.join("&") : "");
+  }
+
+  function motionOK() { return document.documentElement.getAttribute("data-reduced-motion") !== "1"; }
+
+  // ---------- search ----------
+  var TYPE_LABEL = { setting: "Setting", manager: "Manager", managed_object: "Object", action: "Action", setup: "Setup", diagnostic: "Diagnostic", unavailable: "Not available" };
+  var TYPE_ORDER = { manager: 0, managed_object: 1, setting: 2, action: 3, setup: 4, diagnostic: 5, unavailable: 6 };
+  function rtAttr(t) { return t === "action" ? "action" : t === "diagnostic" ? "diagnostic" : t === "setup" ? "setup" : t === "unavailable" ? "unavailable" : t === "manager" ? "manager" : t === "managed_object" ? "status" : "setting"; }
+
+  function searchBoxHTML(big, value) {
+    return '<div class="d5-searchwrap">' +
+      '<div class="d5-search' + (big ? " big" : "") + '">' + ico("search", big ? 16 : 13) +
+      '<input data-test="search-input" type="text" role="combobox" aria-expanded="false" aria-autocomplete="list" placeholder="Search settings, providers, models, tools…" value="' + esc(value || "") + '" aria-label="Search settings">' +
+      "</div>" +
+      '<div class="d5-drop" data-test="search-results" hidden></div></div>';
+  }
+
+  function renderResults(drop, results, q) {
+    if (!q || !q.trim()) { drop.hidden = true; drop.innerHTML = ""; return; }
+    if (!results.length) {
+      drop.hidden = false;
+      drop.innerHTML = '<div class="d5-nores">No results for “' + esc(q) + '”. Check the spelling or try a shorter term — fuzzy matching is on.</div>';
+      return;
+    }
+    var groups = {};
+    results.forEach(function (r) { (groups[r.type] = groups[r.type] || []).push(r); });
+    var html = "";
+    Object.keys(groups).sort(function (a, b) { return TYPE_ORDER[a] - TYPE_ORDER[b]; }).forEach(function (t) {
+      html += '<div class="d5-drop-cap">' + esc(TYPE_LABEL[t] || t) + "</div>";
+      groups[t].forEach(function (r) {
+        html += '<button class="d5-res" data-rid="' + esc(r.rid) + '" role="option">' +
+          '<span class="lab"><b class="pm2-r-title">' + esc(r.label) + '</b><span class="pm-search-type" data-rt="' + rtAttr(t) + '">' + esc(TYPE_LABEL[t] || t) + "</span></span>" +
+          '<span class="path">' + esc((r.path || []).join("  ›  ")) + "</span>" +
+          (r.note ? '<span class="note">' + esc(r.note) + "</span>" : "") +
+          "</button>";
+      });
+    });
+    drop.hidden = false;
+    drop.innerHTML = html;
+  }
+
+  function bindSearch(wrap, initialValue, forceOpen) {
+    var input = wrap.querySelector("[data-test='search-input']");
+    var drop = wrap.querySelector("[data-test='search-results']");
+    function run(v) {
+      lastQuery = v;
+      SR.searchAsync(v, function (res) {
+        if (input.value !== v) return;
+        lastResults = res;
+        renderResults(drop, res, v);
+        input.setAttribute("aria-expanded", drop.hidden ? "false" : "true");
+      });
+    }
+    input.addEventListener("input", function () { run(input.value); });
+    input.addEventListener("focus", function () { if (input.value.trim()) { if (lastQuery === input.value) renderResults(drop, lastResults, input.value); else run(input.value); } });
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        var items = Array.prototype.slice.call(drop.querySelectorAll(".d5-res"));
+        if (!items.length) return;
+        e.preventDefault();
+        var i = items.indexOf(document.activeElement);
+        var n = e.key === "ArrowDown" ? Math.min(items.length - 1, i + 1) : Math.max(0, i - 1);
+        items[n].focus();
+      } else if (e.key === "Enter") {
+        var act = (document.activeElement && document.activeElement.classList && document.activeElement.classList.contains("d5-res")) ? document.activeElement : (drop.querySelector(".d5-res.active") || drop.querySelector(".d5-res"));
+        if (act) { e.preventDefault(); pick(act.getAttribute("data-rid")); }
+      } else if (e.key === "Escape") {
+        if (!drop.hidden) { drop.hidden = true; e.stopPropagation(); }
+      }
+    });
+    drop.addEventListener("focusin", function (e) {
+      drop.querySelectorAll(".d5-res").forEach(function (b) { b.classList.toggle("active", b === e.target); });
+    });
+    drop.addEventListener("click", function (e) {
+      var b = e.target.closest(".d5-res");
+      if (b) pick(b.getAttribute("data-rid"));
+    });
+    document.addEventListener("click", function h(e) {
+      if (!wrap.isConnected) { document.removeEventListener("click", h); return; }
+      if (!wrap.contains(e.target)) drop.hidden = true;
+    });
+    if (forceOpen && initialValue) { lastQuery = initialValue; lastResults = SR.search(initialValue); renderResults(drop, lastResults, initialValue); input.setAttribute("aria-expanded", "true"); }
+    return input;
+  }
+
+  function pick(rid) {
+    var e = SR.byRid(rid);
+    if (!e) return;
+    // push a #/q/<query> history entry BEFORE navigating so Back restores query + results
+    try { history.pushState(null, "", "#/q/" + encodeURIComponent(lastQuery || "")); } catch (err) {}
+    if (!e.dest) {
+      S2.receipt("Not available in this product", e.label + ": " + (e.note || "no destination."), "info");
+      location.hash = "#/home";
+      return;
+    }
+    routeToDest(e.dest);
+  }
+
+  function routeToDest(dest) {
+    if (dest.kind === "setting") {
+      pendingLocate = { row: dest.settingId };
+      go("cat", dest.category, dest.subgroup, { row: dest.settingId });
+    } else if (dest.kind === "manager") {
+      pendingLocate = { object: dest.object || null, sec: dest.section || null, row: dest.row || null };
+      var q = {};
+      if (dest.section) q.sec = dest.section;
+      if (dest.row) q.row = dest.row;
+      go("mgr", dest.manager, dest.object || undefined, q);
+    }
+  }
+
+  // ---------- shared chrome ----------
+  function project() {
+    var chip = document.querySelector("[data-shell-project]");
+    return chip ? chip.textContent : "Puppet Master";
+  }
+  function crumbHTML(parts) {
+    var html = '<span data-test="breadcrumb" class="d5-crumb"><b>Settings</b>';
+    parts.forEach(function (p) { html += '<span class="sep">›</span><span>' + esc(p) + "</span>"; });
+    return html + "</span>";
+  }
+  function bandHTML(parts, backLabel) {
+    return '<div class="d5-band">' +
+      '<button class="pm-btn pm-btn-sm" data-test="back">' + ico("arrowLeft", 12) + " " + esc(backLabel) + "</button>" +
+      crumbHTML(parts) +
+      searchBoxHTML(false, "") +
+      '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-test="close">' + ico("open", 12) + " Close Settings</button>" +
+      "</div>";
+  }
+  function bindBand() {
+    var back = content.querySelector("[data-test='back']");
+    if (back) back.addEventListener("click", function () { doBack(back); });
+    var close = content.querySelector("[data-test='close']");
+    if (close) close.addEventListener("click", function () {
+      closed = true;
+      S2.receipt("Settings closed", "Changes stay saved for this Project. Return whenever you need to.", "info");
+      render();
+    });
+    var wrap = content.querySelector(".d5-band .d5-searchwrap");
+    if (wrap) bindSearch(wrap, "", false);
+  }
+  function doBack(anchor) {
+    M2.closePopupMenu();
+    var dlg = document.querySelector(".pm-dialog-overlay");
+    if (dlg) { dlg.remove(); return; }
+    var drop = content.querySelector(".d5-drop");
+    if (drop && !drop.hidden) { drop.hidden = true; return; }
+    var stage = content.querySelector(".d5-stage");
+    if (stage && motionOK() && anchor) {
+      var r = anchor.getBoundingClientRect();
+      stage.style.transformOrigin = (r.left + 10) + "px " + (r.top + 10) + "px";
+      stage.classList.add("d5-exit");
+      setTimeout(function () { history.back(); }, 120);
+      return;
+    }
+    history.back();
+  }
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Escape") return;
+    var dlg = document.querySelector(".pm-dialog-overlay");
+    if (dlg) { dlg.remove(); return; }
+    var drop = content.querySelector(".d5-drop");
+    if (drop && !drop.hidden) { drop.hidden = true; return; }
+    if (route.name !== "home") history.back();
+  });
+
+  // ---------- row builders ----------
+  function invRow(id) {
+    var inv = D.byId(id);
+    if (!inv) return "";
+    return M2.row(inv, S2.getSetting(id));
+  }
+  var FAMROW = {};
+  MD.families.forEach(function (f) { f.rows.forEach(function (r) { FAMROW[r.id] = r; }); });
+  function famRow(inv) {
+    var st = S2.getSetting(inv.id);
+    if (st) return M2.row(inv, st); // real inventory row
+    var html = M2.row(inv, null);
+    var v = lget(inv.id, inv);
+    var ctl = "";
+    if (inv.type === "toggle") ctl = '<button class="pm-toggle" role="switch" aria-checked="' + (v ? "true" : "false") + '" data-local="toggle" data-setting="' + esc(inv.id) + '"><span class="pm-toggle-knob"></span></button>';
+    else if (inv.type === "select") ctl = '<select class="pm-select" data-local="select" data-setting="' + esc(inv.id) + '">' + (inv.options || ["Off", "On"]).map(function (o) { return '<option' + (o === v ? " selected" : "") + ">" + esc(o) + "</option>"; }).join("") + "</select>";
+    else if (inv.type === "number") ctl = '<input class="pm-input" type="number" style="width:96px" data-local="number" data-setting="' + esc(inv.id) + '" value="' + esc(v) + '">';
+    else if (inv.type === "action") ctl = '<button class="pm-btn pm-btn-sm" data-local="action" data-setting="' + esc(inv.id) + '">' + esc(inv.value || "Run") + "</button>";
+    else ctl = '<span class="pm-note">' + esc(String(v)) + "</span>";
+    var infoBtn = '<button class="pm-btn pm-btn-quiet pm-btn-sm pm-btn-ico" data-rowact="details" aria-label="Details" aria-expanded="false">' + ico("info", 13) + "</button>";
+    return html.replace(/<div class="pm2-row-ctl">[\s\S]*?<\/div>(<div class="pm2-row-detail")/, '<div class="pm2-row-ctl">' + ctl + infoBtn + "</div>$1");
+  }
+  function bindLocal(container) {
+    container.addEventListener("click", function (e) {
+      var t = e.target.closest("[data-local='toggle'],[data-local='action']");
+      if (!t) return;
+      var id = t.getAttribute("data-setting");
+      var inv = FAMROW[id];
+      if (!inv) return;
+      if (t.getAttribute("data-local") === "toggle") { lset(id, !lget(id, inv), inv); }
+      else {
+        var op = S2.beginOp({ title: inv.label, phase: "Running", determinate: false });
+        setTimeout(function () { S2.finishOp(op, "completed", "Done"); S2.receipt("Action complete", inv.label + " finished (concept demo).", "ok"); }, 700);
+      }
+    });
+    container.addEventListener("change", function (e) {
+      var t = e.target.closest("[data-local='select'],[data-local='number']");
+      if (!t) return;
+      var id = t.getAttribute("data-setting");
+      var inv = FAMROW[id];
+      if (inv) lset(id, t.getAttribute("data-local") === "number" ? +t.value : t.value, inv);
+    });
+  }
+
+  // ---------- views ----------
+  function noticesBlock() {
+    var n = S2.notices();
+    var sc = S2.state.scenario;
+    var crit = ["offline", "import-conflict", "validation-failure", "unavailable"].indexOf(sc) >= 0;
+    var html = "";
+    if (crit && n.length) {
+      var c = n[0];
+      html += '<div class="d5-attn crit" role="alert">' + ico("alertTriangle", 15) + '<div class="t"><b>' + esc(c.title) + "</b><em>" + esc(c.reason) + "</em></div>" +
+        (c.action ? '<button class="pm-btn pm-btn-sm" data-notice="' + esc(c.id) + '">' + esc(c.action) + "</button>" : "") + "</div>";
+    } else if (n.length) {
+      n.slice(0, 3).forEach(function (c) {
+        html += '<div class="d5-attn">' + ico(c.kind === "ok" ? "check" : "alertTriangle", 14) + '<div class="t"><b>' + esc(c.title) + "</b><em>" + esc(c.reason) + "</em></div>" +
+          (c.action ? '<button class="pm-btn pm-btn-sm" data-notice="' + esc(c.id) + '">' + esc(c.action) + "</button>" : "") + "</div>";
+      });
+    }
+    return html;
+  }
+  function noticeDest(id) {
+    var n = S2.notices().filter(function (x) { return x.id === id; })[0];
+    if (!n || !n.dest) return;
+    if (n.dest.kind === "manager") { pendingLocate = { object: n.dest.object || null, sec: n.dest.section || null }; go("mgr", n.dest.manager, n.dest.object); }
+    else if (n.dest.kind === "route") location.hash = n.dest.hash;
+  }
+
+  function navHTML(active) {
+    var html = '<button data-nav="home" class="' + (active === "home" ? "active" : "") + '">' + ico("home", 14) + " Home</button>";
+    html += '<div class="d5-nav-cap">Domains</div>';
+    D.categories.forEach(function (c) {
+      html += '<button data-nav="cat:' + c.id + '" class="' + (active === c.id ? "active" : "") + '">' + ico(c.icon, 14) + " " + esc(c.title) + "</button>";
+    });
+    html += '<div class="d5-nav-cap">Utilities</div>' +
+      '<button data-nav="all" class="' + (active === "all" ? "active" : "") + '">' + ico("list", 14) + " All Settings</button>" +
+      '<button data-nav="copy" class="' + (active === "copy" ? "active" : "") + '">' + ico("copy", 14) + " Copy Settings</button>" +
+      '<button data-nav="lifecycle" class="' + (active === "lifecycle" ? "active" : "") + '">' + ico("refresh", 14) + " Lifecycle</button>";
+    return html;
+  }
+  function domainHealth(catId) {
+    var mgrs = DOMMGR[catId] || [];
+    return mgrs.some(function (m) { var f = FAM[m]; return f && f.objects && f.objects.some(function (o) { return o.health === "attention"; }); });
+  }
+  function recentHTML() {
+    var r = S2.state.recent || [];
+    if (!r.length) return "";
+    var html = '<span class="pm-note">Recent:</span>';
+    r.slice(0, 4).forEach(function (it) {
+      html += '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-recent="' + esc(it.id) + '" data-recentkind="' + esc(it.kind) + '">' + esc(it.label) + "</button>";
+    });
+    return html;
+  }
+
+  function homeView() {
+    var cats = D.categories;
+    var html = bandHTML([], "Back") +
+      '<div class="d5-scroll"><div class="d5-stage"><div class="d5-nav">' + navHTML("home") + '</div><div class="d5-main"><div class="d5-scroll"><div class="d5-inner" data-test="home">' +
+      '<div class="d5-proj">Project: ' + esc(project()) + "</div>" +
+      '<h1 class="d5-h1">Settings</h1>' +
+      searchBoxHTML(true, "") +
+      noticesBlock() +
+      '<div class="d5-cap">Browse settings</div><div class="d5-dests">';
+    cats.forEach(function (c) {
+      var count = D.byCategory(c.id).settings.length;
+      var mgrs = DOMMGR[c.id] || [];
+      html += '<button class="d5-dest" data-dest="' + c.id + '">' +
+        '<span class="ic">' + ico(c.icon, 18) + "</span><b>" + esc(c.title) + "</b>" +
+        '<span class="m"><span class="ct">' + count + " settings</span>" + ico("chevronRight", 14) + "</span>" +
+        '<span class="d">' + esc(c.description) + " · " + mgrs.length + " managers" + (domainHealth(c.id) ? " · needs attention" : "") + "</span></button>";
+    });
+    html += "</div>";
+    html += '<div class="d5-cap">Utilities</div><div class="d5-util">' +
+      '<button class="pm-btn pm-btn-sm" data-util="all">' + ico("list", 12) + " All Settings</button>" +
+      '<button class="pm-btn pm-btn-sm" data-util="copy">' + ico("copy", 12) + " Copy Settings From Another Project</button>" +
+      '<button class="pm-btn pm-btn-sm" data-util="lifecycle">' + ico("refresh", 12) + " Settings Lifecycle</button>" +
+      recentHTML() +
+      "</div></div></div></div></div>";
+    return html;
+  }
+
+  function catView(catId, subId) {
+    var c = D.byCategory(catId);
+    if (!c) return homeView();
+    var mgrs = DOMMGR[catId] || [];
+    var html = bandHTML([c.category.title], "Back to Settings Home") +
+      '<div class="d5-scroll"><div class="d5-stage"><div class="d5-nav">' + navHTML(catId) + '</div><div class="d5-main"><div class="d5-scroll"><div class="d5-inner">' +
+      '<div class="d5-domhead"><span class="ic">' + ico(c.category.icon, 22) + '</span><div><h2>' + esc(c.category.title) + "</h2><p>" + esc(c.category.description) + "</p></div>" +
+      '<div class="meta"><span class="pm-badge pm-badge-muted">' + c.settings.length + " settings</span><span class=\"pm-badge pm-badge-muted\">" + mgrs.length + " managers</span>" +
+      (domainHealth(catId) ? '<span class="pm-badge pm-badge-warn">Needs attention</span>' : '<span class="pm-badge pm-badge-ok">Healthy</span>') + "</div></div>";
+    c.category.subgroups.forEach(function (g) {
+      if (subId && subId !== g.id) return;
+      html += '<div class="d5-cap">' + esc(g.title) + "</div>";
+      html += '<div class="d5-rows">';
+      var rows = c.settings.filter(function (s) { return s.id.split(".")[1] === g.id; });
+      rows.slice(0, 6).forEach(function (s) { html += invRow(s.id); });
+      if (rows.length > 6) html += '<button class="d5-drow" data-subpage="' + c.category.id + "/" + g.id + '"><b>' + ico("list", 13) + " Open all " + rows.length + " " + esc(g.title) + ' settings</b><span class="d">Full page with every row in this group</span><span class="chev">' + ico("chevronRight", 14) + "</span></button>";
+      html += "</div>";
+    });
+    html += '<div class="d5-cap">Managers in this domain</div><div class="d5-rows">';
+    mgrs.forEach(function (mid) {
+      var f = FAM[mid];
+      var attn = f.objects ? f.objects.filter(function (o) { return o.health === "attention"; }).length : 0;
+      html += '<button class="d5-drow" data-mgrid="' + mid + '" data-mgrlink="1"><b>' + ico(f.icon, 14) + esc(f.title) + (attn ? ' <span class="pm-badge pm-badge-warn">' + attn + " needs attention</span>" : "") + "</b>" +
+        '<span class="d">' + esc(f.summary) + '</span><span class="ct">' + esc(f.archetype) + ' ' + ico("chevronRight", 14) + "</span></button>";
+    });
+    if (!mgrs.length) html += '<div class="pm2-empty">No managers in this domain.</div>';
+    html += "</div></div></div></div></div>";
+    return html;
+  }
+
+  function subView(catId, subId) {
+    var c = D.byCategory(catId);
+    var g = null;
+    c.category.subgroups.forEach(function (x) { if (x.id === subId) g = x; });
+    if (!g) return catView(catId);
+    var rows = c.settings.filter(function (s) { return s.id.split(".")[1] === subId; });
+    var html = bandHTML([c.category.title, g.title], "Back to " + c.category.title) +
+      '<div class="d5-scroll"><div class="d5-stage"><div class="d5-nav">' + navHTML(catId) + '</div><div class="d5-main"><div class="d5-scroll"><div class="d5-inner">' +
+      '<div class="d5-domhead"><span class="ic">' + ico(c.category.icon, 20) + '</span><div><h2>' + esc(g.title) + "</h2><p>" + esc(g.description) + "</p></div>" +
+      '<div class="meta"><span class="pm-badge pm-badge-muted">' + rows.length + " settings</span></div></div>" +
+      '<div class="d5-rows">';
+    rows.forEach(function (s) { html += invRow(s.id); });
+    html += "</div></div></div></div></div>";
+    return html;
+  }
+
+  // ---------- manager workspace ----------
+  function mgrView(famId, objId) {
+    var f = FAM[famId];
+    if (!f) return homeView();
+    var c = D.byCategory(f.domain);
+    var mgrs = DOMMGR[f.domain] || [];
+    var isProv = famId === "providers";
+    var crumbParts = [c ? c.category.title : f.domain, f.title];
+    if (objId && PROV[objId]) crumbParts.push(PROV[objId].name);
+    var html = bandHTML(crumbParts, "Back to " + (c ? c.category.title : "Settings")) +
+      '<div class="d5-scroll"><div class="d5-stage"><div class="d5-nav">' + navHTML(f.domain) + '</div><div class="d5-main"><div class="d5-scroll"><div class="d5-inner">' +
+      '<div class="d5-domhead"><span class="ic">' + ico(c ? c.category.icon : "gear", 20) + '</span><div><h2>' + esc(c ? c.category.title : f.domain) + "</h2><p>" + esc(c ? c.category.description : "") + "</p></div>" +
+      '<div class="meta"><span class="pm-badge pm-badge-muted">' + mgrs.length + " managers</span></div></div>";
+    html += '<div class="d5-mgr' + (objId ? " has-obj" : "") + '">';
+    html += '<div class="d5-mgrnav"><div class="d5-nav-cap">Managers</div>';
+    mgrs.forEach(function (mid) {
+      html += '<button data-mgrid="' + mid + '" data-mgrlink="1" class="' + (mid === famId ? "active" : "") + '">' + ico(FAM[mid].icon, 13) + " " + esc(FAM[mid].title) + "</button>";
+    });
+    html += "</div>";
+    html += '<div class="d5-mgrbody"><section data-manager="' + famId + '">';
+    html += '<div class="d5-famhead"><h3>' + ico(f.icon, 16) + " " + esc(f.title) + '</h3><span class="arch">' + esc(f.archetype) + (DEF[famId] ? " · reserved insertion: " + esc(DEF[famId].owner) : "") + "</span></div>";
+    html += '<p class="d5-famsum">' + esc(f.summary) + "</p>";
+    html += opsStrip();
+    if (DEF[famId]) html += deferredCard(DEF[famId]);
+    if (famId === "servers") html += deferredCard(DEF["server-claim"]) + deferredCard(DEF["remote-access"]);
+    if (famId === "hosting") html += deferredCard(DEF["sync-move"]);
+    if (famId === "backup") html += deferredCard(DEF["server-backup"]);
+    if (isProv) html += providersBody(objId);
+    else if (f.archetype === "roster") html += rosterBody(f, objId);
+    else html += famSections(f);
+    html += "</section></div></div></div></div></div></div>";
+    return html;
+  }
+  function deferredCard(d) {
+    if (!d) return "";
+    return '<div class="d5-defer" data-deferred="' + d.id + '"><b>' + esc(d.title) + "</b> — reserved module. Canonical owner: <b>" + esc(d.owner) + "</b>.<br>Insertion: " + esc(d.insertion) + "<br>Return contract: " + esc(d.returnContract) + "</div>";
+  }
+  function opsStrip() {
+    var ops = Object.keys(S2.state.ops).map(function (k) { return S2.state.ops[k]; }).filter(function (o) { return o.state !== "completed" && o.state !== "failed" && o.state !== "cancelled"; });
+    var html = "";
+    ops.forEach(function (o) {
+      html += '<div class="d5-work" data-op="' + o.operation_id + '"><span class="pm-spinner"></span><b>' + esc(o.title) + '</b><span class="ph">' + esc(o.human_phase) + (o.wait_reason ? " — " + esc(o.wait_reason) : "") + "</span>" +
+        (o.total ? '<span class="d5-bar"><i style="width:' + Math.round(100 * o.completed / o.total) + '%"></i></span><span class="pm-note">' + o.completed + "/" + o.total + "</span>" : "") +
+        (o.can_cancel ? '<button class="pm-btn pm-btn-sm" data-opcancel="' + o.operation_id + '">Cancel</button>' : "") + "</div>";
+    });
+    return html;
+  }
+  function famSections(f) {
+    var html = '<div class="d5-sect"><h4>State and controls</h4>';
+    f.rows.forEach(function (r) { html += famRow(r); });
+    html += "</div>";
+    var cur = CUR[f.id] || [];
+    if (cur.length) {
+      html += '<div class="d5-sect"><h4>Product settings in this family</h4>';
+      cur.forEach(function (id) { html += invRow(id); });
+      html += "</div>";
+    } else {
+      html += '<div class="pm-note" style="margin:4px 2px 10px">The 828-row inventory exposes no rows for this family; the product rows above carry this demo.</div>';
+    }
+    if (f.id === "lifecycle") html += lifecycleExtras();
+    return html;
+  }
+  function rosterBody(f, objId) {
+    var html = '<div class="d5-cap">Objects</div><div class="d5-objlist">';
+    (f.objects || []).forEach(function (o) {
+      html += '<button class="d5-obj' + (o.id === objId ? " active" : "") + '" data-obj="' + o.id + '"><b><span class="pm2-health' + (o.health === "attention" ? " warn" : "") + '"><i></i></span>' + esc(o.label) + "</b><div class=\"n\">" + esc(o.note) + "</div></button>";
+    });
+    html += "</div>";
+    var o = null;
+    (f.objects || []).forEach(function (x) { if (x.id === objId) o = x; });
+    if (o) {
+      html += '<div class="d5-sect"><h4>' + esc(o.label) + '</h4><div class="d5-kv"><dt>Status</dt><dd>' + esc(o.health === "ok" ? "Healthy" : o.health === "attention" ? "Needs attention" : o.health) + "</dd><dt>Note</dt><dd>" + esc(o.note) + "</dd></div></div>";
+    }
+    html += famSections(f);
+    return html;
+  }
+
+  // ---------- providers list/detail workspace ----------
+  function providersBody(objId) {
+    var p = objId ? PROV[objId] : null;
+    var html = '<div class="d5-provwrap' + (objId ? " has-obj" : "") + '"><div class="d5-mgrnav d5-provnav" style="position:static"><div class="d5-nav-cap">Connections (' + MD.providers.length + ")</div>";
+    MD.providers.forEach(function (x) {
+      html += '<button data-obj="' + x.id + '" class="' + (x.id === objId ? "active" : "") + '">' + ico(x.icon, 13) + " " + esc(x.name) + "</button>";
+    });
+    html += '</div><div class="d5-provbody" style="min-width:0">';
+    html += p ? providerDetail(p) : providerOverview();
+    html += "</div></div>";
+    return html;
+  }
+  function readinessChips(p) {
+    return p.readiness.map(function (r) {
+      var ok = ["probe-ok", "authenticated", "cli-found", "key-connected", "daemon-running", "server-reachable", "catalog-ok", "fallback-configured"].indexOf(r) >= 0;
+      var warn = ["not-installed", "owner-unknown", "sign-in-required", "setup-incomplete", "underlying-setup-required", "usage-unavailable", "update-available", "rolled-back", "explicit-install-required", "manual-only"].indexOf(r) >= 0;
+      return '<span class="pm-badge pm-badge-' + (ok ? "ok" : warn ? "warn" : "muted") + '">' + esc(r.replace(/-/g, " ")) + "</span>";
+    }).join(" ");
+  }
+  function providerOverview() {
+    var ready = MD.providers.filter(function (p) { return p.readiness.indexOf("probe-ok") >= 0 || p.readiness.indexOf("authenticated") >= 0; }).length;
+    var refreshing = Object.keys(S2.state.ops).some(function (k) { var o = S2.state.ops[k]; return o.title === "Refresh readiness" && o.state !== "completed" && o.state !== "failed" && o.state !== "cancelled"; });
+    var html = '<div class="d5-sect"><h4>Connected?</h4><div class="d5-kv">' +
+      "<dt>Ready connections</dt><dd>" + ready + " of " + MD.providers.length + "</dd>" +
+      "<dt>Needs sign-in</dt><dd>" + MD.providers.filter(function (p) { return p.readiness.indexOf("sign-in-required") >= 0; }).length + "</dd>" +
+      "<dt>Not installed</dt><dd>" + MD.providers.filter(function (p) { return p.readiness.indexOf("not-installed") >= 0; }).length + "</dd>" +
+      '<dt></dt><dd><button class="pm-btn pm-btn-sm" data-provrefresh="1">' + ico("refresh", 12) + " Refresh readiness</button></dd></div>" +
+      (refreshing ? '<div class="pm-note" style="margin:2px 0 6px">Last-known values stay visible while the refresh runs.</div>' + M2.skeleton("Refreshing readiness") : "") + "</div>";
+    html += '<div class="d5-sect"><h4>Fleet</h4>';
+    MD.providers.forEach(function (p) {
+      html += '<div class="pm2-row" data-row="prov-' + p.id + '"><div class="pm2-row-main"><div class="pm2-row-title">' + esc(p.name) + '</div><div class="pm2-row-desc">' + esc(p.state) + '</div></div><div class="pm2-row-ctl"><button class="pm-btn pm-btn-sm" data-obj="' + p.id + '">Open</button></div></div>';
+    });
+    html += "</div>";
+    return html;
+  }
+  function providerDetail(p) {
+    var sec = route.query.sec || "overview";
+    var tabs = [["overview", "Overview"], ["accounts", "Accounts"], ["models", "Models"], ["limits", "Usage & Limits"], ["install", "Installation"], ["logs", "Readiness"]];
+    var html = '<div class="d5-famhead"><h3>' + ico(p.icon, 15) + " " + esc(p.name) + '</h3><span class="arch">' + esc(p.state) + "</span></div>";
+    html += '<div class="d5-tabs" role="tablist">' + tabs.map(function (t) { return '<button role="tab" data-sec="' + t[0] + '" class="' + (sec === t[0] ? "active" : "") + '">' + t[1] + "</button>"; }).join("") + "</div>";
+    if (sec === "overview") {
+      html += '<div class="d5-kv">' +
+        "<dt>Connected?</dt><dd>" + esc(p.state) + "</dd>" +
+        "<dt>Account</dt><dd>" + esc(p.accounts.length ? p.accounts.map(function (a) { return a.label + (a.preferred ? " (preferred)" : ""); }).join(", ") : "None connected") + "</dd>" +
+        "<dt>Models</dt><dd>" + p.models.length + " — " + esc(p.models.map(function (m) { return m.label; }).slice(0, 3).join(", ")) + (p.models.length > 3 ? "…" : "") + "</dd>" +
+        "<dt>Usage</dt><dd>" + esc(String(p.limits.used)) + (p.limits.used === "unavailable" ? " (provider exposes no meters)" : " of plan") + "</dd>" +
+        "<dt>Routing</dt><dd>Update policy: " + esc(p.updatePolicy) + "; auth: " + esc(p.authKind) + "</dd>" +
+        "<dt>Setup</dt><dd>" + esc(p.readiness.join("; ")) + "</dd></div>" +
+        '<div class="pm-set-badges">' + readinessChips(p) + "</div>";
+      if (p.authKind === "cli-owned-oauth") html += '<div class="d5-defer">Sign-in is owned by the CLI. Puppet Master launches the native flow and never handles the credential directly.</div>';
+      html += '<div class="d5-sect"><h4>Provider settings</h4>' + CUR.providers.map(invRow).join("") + "</div>";
+    } else if (sec === "accounts") {
+      html += '<div class="d5-sect"><h4>Accounts</h4>';
+      if (!p.accounts.length) html += '<div class="pm2-empty">No account connected. Setup is required before this provider can carry work.</div>';
+      p.accounts.forEach(function (a) {
+        html += '<div class="pm2-row" data-row="acct-' + a.id + '"><div class="pm2-row-main"><div class="pm2-row-title">' + esc(a.label) +
+          (a.preferred ? ' <span class="pm-badge pm-badge-info">Preferred</span>' : "") + (a.sticky ? ' <span class="pm-badge pm-badge-muted">Sticky</span>' : "") + (a.enabled ? "" : ' <span class="pm-badge pm-badge-muted">Disabled</span>') +
+          '</div><div class="pm2-row-desc">Health: ' + esc(a.health) + "</div></div>" +
+          '<div class="pm2-row-ctl"><span class="pm-secret"><span class="pm-secret-label">Credential</span><span class="pm-secret-kind">' + esc(p.authKind) + "</span> — stored as PM secret / vault-ref; never rendered raw</span></div></div>";
+      });
+      html += "</div>";
+      if (p.id === "azure-openai") html += '<div class="d5-sect"><h4>Requested vs effective order</h4><div class="d5-kv"><dt>Requested</dt><dd>Production, then Development</dd><dt>Effective</dt><dd>Matches requested</dd></div></div>';
+    } else if (sec === "models") {
+      html += '<div class="d5-sect"><h4>Models</h4>';
+      p.models.forEach(function (m) {
+        html += '<div class="pm2-row" data-row="' + m.id + '"><div class="pm2-row-main"><div class="pm2-row-title">' + esc(m.label) + (m.free ? ' <span class="pm-badge pm-badge-ok">Free tier</span>' : "") + '</div><div class="pm2-row-desc">Effort ' + esc(m.effort) + " · context " + esc(m.context) + "</div></div>" +
+          '<div class="pm2-row-ctl"><span class="pm-badge pm-badge-muted">' + esc(m.context) + " ctx</span></div></div>";
+      });
+      if (!p.models.length) html += '<div class="pm2-empty">No models until the provider is installed.</div>';
+      html += "</div>";
+      if (p.id === "openrouter-effort") html += '<div class="pm-note">Fast and Normal routes share one API key; effort varies per route.</div>';
+    } else if (sec === "limits") {
+      if (p.limits.used === "unavailable") {
+        html += '<div class="d5-defer">Usage details unavailable: this provider does not expose usage meters. Limits are shown as unavailable, not guessed.</div>';
+      }
+      html += '<div class="d5-sect"><h4>Usage & limits</h4><div class="d5-kv">' +
+        "<dt>Requests / min</dt><dd>" + p.limits.rpm + "</dd><dt>Tokens / min</dt><dd>" + p.limits.tpm + "</dd><dt>Requests / day</dt><dd>" + p.limits.rpd + "</dd><dt>Used</dt><dd>" + esc(String(p.limits.used)) + "</dd></div>" +
+        '<div class="d5-bar" style="max-width:320px"><i style="width:' + (parseInt(p.limits.used, 10) || 0) + '%"></i></div></div>';
+    } else if (sec === "install") {
+      html += '<div class="d5-sect"><h4>Installations</h4>';
+      if (!p.installations.length) html += '<div class="pm2-empty">Not installed.</div>';
+      p.installations.forEach(function (ins) {
+        html += '<div class="pm2-row" data-row="ins-' + ins.id + '"><div class="pm2-row-main"><div class="pm2-row-title">' + esc(ins.label) +
+          (ins.selected ? ' <span class="pm-badge pm-badge-ok">Selected</span>' : "") + (ins.shadowed ? ' <span class="pm-badge pm-badge-muted">Shadowed</span>' : "") +
+          '</div><div class="pm2-row-desc">Owner ' + esc(ins.owner) + " · confidence " + esc(ins.confidence) + " · " + esc(ins.host) + "</div></div>" +
+          '<div class="pm2-row-ctl">' + (ins.owner === "unknown" ? '<span class="pm-badge pm-badge-warn">Manual only</span>' : "") + "</div></div>";
+      });
+      html += "</div>";
+      html += '<div class="d5-sect"><h4>Acquisition</h4><div class="pm2-row"><div class="pm2-row-main"><div class="pm2-row-title">Install from official source</div><div class="pm2-row-desc">Only when you choose Install, for the exact Host/Environment. Never automatic.</div></div><div class="pm2-row-ctl"><button class="pm-btn pm-btn-sm" data-provinstall="' + p.id + '">Install…</button></div></div>' +
+        '<div class="pm2-row"><div class="pm2-row-main"><div class="pm2-row-title">Validate connection</div><div class="pm2-row-desc">Runs the three readiness checks and reports honestly; failures never widen authority.</div></div><div class="pm2-row-ctl"><button class="pm-btn pm-btn-sm" data-validate="' + p.id + '">Validate</button></div></div>' +
+        (lastValidation && lastValidation.id === p.id ? '<div class="pm-set-error">' + ico("alertTriangle", 13) + "<span>" + esc(lastValidation.msg) + "</span></div>" : "") +
+        '<div class="pm-note" style="margin:6px 2px">Host: Desktop — Windows 11 · Environment: this Puppet Master install.</div></div>';
+      html += '<div class="d5-sect"><h4>Update lifecycle (policy: ' + esc(p.updatePolicy) + ")</h4>" + updateBlock(p) + "</div>";
+      html += deferredCard(DEF["installation"]);
+    } else if (sec === "logs") {
+      html += '<div class="d5-sect"><h4>Readiness evidence</h4>';
+      p.logs.forEach(function (l) { html += '<div class="pm-log">• ' + esc(l) + "</div>"; });
+      html += "</div>";
+    }
+    return html;
+  }
+  function updateBlock(p) {
+    var r = p.readiness;
+    if (r.indexOf("update-available") >= 0) return '<div class="pm2-row"><div class="pm2-row-main"><div class="pm2-row-title">Update 0.9.5 available</div><div class="pm2-row-desc">Verified against the official source. Policy is ask-first: nothing happens until you approve.</div></div><div class="pm2-row-ctl"><button class="pm-btn pm-btn-primary pm-btn-sm" data-upd="' + p.id + '">Review & update</button></div></div>';
+    if (r.indexOf("update-scheduled") >= 0) return '<div class="pm2-row"><div class="pm2-row-main"><div class="pm2-row-title">Update scheduled</div><div class="pm2-row-desc">Applies in the next idle window.</div></div><div class="pm2-row-ctl"><span class="pm-badge pm-badge-info">scheduled-when-idle</span></div></div>';
+    if (r.indexOf("rolled-back") >= 0) return '<div class="pm2-row"><div class="pm2-row-main"><div class="pm2-row-title">Rolled back after failed verification</div><div class="pm2-row-desc">0.9.5 failed verification; the previous generation was restored and receipted.</div></div><div class="pm2-row-ctl"><span class="pm-badge pm-badge-warn">verification-failed → rolled-back</span></div></div>';
+    return '<div class="pm-note">No update pending for this connection.</div>';
+  }
+  function lifecycleExtras() {
+    return '<div class="d5-sect"><h4>Transaction</h4>' +
+      '<div class="pm2-row"><div class="pm2-row-main"><div class="pm2-row-title">Export</div><div class="pm2-row-desc">Write current settings to a portable file.</div></div><div class="pm2-row-ctl"><button class="pm-btn pm-btn-sm" data-lc="export">Export</button></div></div>' +
+      '<div class="pm2-row"><div class="pm2-row-main"><div class="pm2-row-title">Import with conflict preview</div><div class="pm2-row-desc">Every incoming change is previewed; conflicts get an explicit keep-or-take choice.</div></div><div class="pm2-row-ctl"><button class="pm-btn pm-btn-sm" data-lc="import">Import…</button></div></div>' +
+      '<div class="pm2-row"><div class="pm2-row-main"><div class="pm2-row-title">Reset all</div><div class="pm2-row-desc">Full preview first; the reset itself is a separate confirmed step.</div></div><div class="pm2-row-ctl"><button class="pm-btn pm-btn-danger pm-btn-sm" data-lc="reset">Preview reset</button></div></div>' +
+      '<div class="pm2-row"><div class="pm2-row-main"><div class="pm2-row-title">Restore points</div><div class="pm2-row-desc">' + S2.state.restorePoints.length + " kept; rollback is one click.</div>" +
+      '<div class="pm2-row-ctl">' + S2.state.restorePoints.slice(-2).map(function (rp) { return '<button class="pm-btn pm-btn-sm" data-rp="' + rp.id + '" title="' + esc(rp.label) + '">Restore</button>'; }).join(" ") + "</div></div></div>";
+  }
+
+  // ---------- all settings ----------
+  var allState = { cat: "", type: "", tier: "", changed: false, managed: false, syn: false };
+  var vlist = null;
+  function allFiltered() {
+    var rows = D.settings.filter(function (s) {
+      if (allState.cat && s.id.split(".")[0] !== allState.cat) return false;
+      if (allState.type && s.type !== allState.type) return false;
+      if (allState.tier && (s.tier || "standard") !== allState.tier) return false;
+      var st = S2.getSetting(s.id);
+      if (allState.changed && (!st || st.source === "default")) return false;
+      if (allState.managed && (!st || (st.source !== "managed" && st.source !== "unavailable"))) return false;
+      return true;
+    });
+    if (allState.syn) {
+      for (var i = 0; i < 2000; i++) {
+        rows.push({ id: "synthetic.stress.row-" + i, label: "Synthetic stress row " + i, desc: "Generated for virtualization proof; not real inventory data.", type: "toggle", tier: "standard", synthetic: true });
+      }
+    }
+    return rows;
+  }
+  function allView() {
+    var types = {};
+    D.settings.forEach(function (s) { types[s.type] = 1; });
+    var html = bandHTML(["All Settings"], "Back to Settings Home") +
+      '<div class="d5-scroll"><div class="d5-stage"><div class="d5-nav">' + navHTML("all") + '</div><div class="d5-main"><div class="d5-scroll"><div class="d5-inner" data-test="all">' +
+      '<div class="d5-domhead"><span class="ic">' + ico("list", 20) + '</span><div><h2>All Settings</h2><p>Faceted compendium over the real 828-row inventory, virtualized.</p></div>' +
+      '<div class="meta"><span class="pm-badge pm-badge-muted" data-allcount></span></div></div>' +
+      '<div class="d5-allbar">' +
+      '<select class="pm-select" data-f="cat"><option value="">All categories</option>' + D.categories.map(function (c) { return '<option value="' + c.id + '">' + esc(c.title) + "</option>"; }).join("") + "</select>" +
+      '<select class="pm-select" data-f="type"><option value="">All types</option>' + Object.keys(types).map(function (t) { return "<option>" + t + "</option>"; }).join("") + "</select>" +
+      '<select class="pm-select" data-f="tier"><option value="">All tiers</option><option>simple</option><option>standard</option><option>advanced</option></select>' +
+      '<label class="pm-note" style="display:flex;gap:6px;align-items:center"><input type="checkbox" data-f="changed"> Changed from default</label>' +
+      '<label class="pm-note" style="display:flex;gap:6px;align-items:center"><input type="checkbox" data-f="managed"> Managed / unavailable</label>' +
+      '<label class="pm-note" style="display:flex;gap:6px;align-items:center"><input type="checkbox" data-f="syn"> Synthetic stress +2000</label>' +
+      "</div>" +
+      '<div class="d5-vlist" data-test="vlist" data-window="0:0:0"></div>' +
+      "</div></div></div></div>";
+    return html;
+  }
+  function bindAll() {
+    var host = content.querySelector("[data-test='vlist']");
+    if (!host) return;
+    function apply() {
+      var data = allFiltered();
+      content.querySelector("[data-allcount]").textContent = data.length + " rows" + (allState.syn ? " (incl. synthetic)" : "");
+      if (!vlist) {
+        vlist = M2.virtualList({
+          host: host, rowHeight: 64,
+          data: data,
+          render: function (s) {
+            var st = S2.getSetting(s.id);
+            var si = s.id.split(".");
+            var cat = D.byCategory(si[0]);
+            return '<div class="d5-vrow' + (s.synthetic ? " d5-syn" : "") + '" data-row="' + esc(s.id) + '"><div><b>' + esc(s.label) + (st && st.source !== "default" ? " " + M2.sourceChip(st.source) : "") + (s.synthetic ? ' <span class="pm-badge pm-badge-muted">synthetic</span>' : "") + '</b><div class="p">' + esc((cat ? cat.category.title : si[0]) + "  ›  " + si[1]) + "</div></div>" +
+              '<div><span class="pm-badge pm-badge-muted">' + esc(s.type) + "</span></div></div>";
+          },
+          onWindow: function (a, b, t) { host.setAttribute("data-window", a + ":" + b + ":" + t); }
+        });
+      } else vlist.set(data);
+      if (!host.__d5hook) { host.__d5hook = 1; host.addEventListener("scroll", function () { setTimeout(function () { if (vlist) vlist.refresh(); }, 0); }); }
+    }
+    content.querySelectorAll("[data-f]").forEach(function (el) {
+      el.addEventListener("change", function () {
+        var f = el.getAttribute("data-f");
+        if (f === "changed") allState.changed = el.checked;
+        else if (f === "managed") allState.managed = el.checked;
+        else if (f === "syn") allState.syn = el.checked;
+        else allState[f] = el.value;
+        apply();
+      });
+    });
+    apply();
+  }
+
+  // ---------- copy flow ----------
+  function srcName(id) {
+    var p = MD.sourceProjects.filter(function (x) { return x.id === id; })[0];
+    return p ? p.name : "—";
+  }
+  function copyView() {
+    var s = copyState;
+    var html = bandHTML(["Copy Settings"], "Back to Settings Home") +
+      '<div class="d5-scroll"><div class="d5-stage"><div class="d5-nav">' + navHTML("copy") + '</div><div class="d5-main"><div class="d5-scroll"><div class="d5-inner" data-test="copy">' +
+      '<div class="d5-copy"><div class="d5-famhead"><h3>Copy Settings From Another Project</h3></div>' +
+      '<div class="d5-steps"><span class="' + (s.step >= 1 ? "on" : "") + '"><b>1</b> Select project</span><span class="' + (s.step >= 2 ? "on" : "") + '"><b>2</b> Choose what to copy</span><span class="' + (s.step >= 3 ? "on" : "") + '"><b>3</b> Review & confirm</span></div>';
+    if (s.step === 1) {
+      html += '<div class="d5-src">' + MD.sourceProjects.map(function (p) {
+        return '<button data-src="' + p.id + '" class="' + (s.source === p.id ? "active" : "") + '"><b>' + esc(p.name) + '</b><div class="u">Updated ' + esc(p.updated) + " · " + esc(p.summary) + "</div></button>";
+      }).join("") + "</div>";
+      html += '<div class="pm-dialog-actions"><button class="pm-btn pm-btn-primary" data-copystep="2" ' + (s.source ? "" : "disabled") + ">Continue</button></div>";
+    } else if (s.step === 2) {
+      html += '<div class="pm-note">Source: <b>' + esc(srcName(s.source)) + '</b> → Destination: <b>' + esc(project()) + "</b></div>" +
+        '<div class="d5-cats">' + D.categories.map(function (c) {
+          return '<label><input type="checkbox" data-copycat="' + c.id + '"' + (s.cats.indexOf(c.id) >= 0 ? " checked" : "") + "> " + esc(c.title) + "</label>";
+        }).join("") + "</div>" +
+        '<div class="pm-dialog-actions"><button class="pm-btn" data-copystep="1">Back</button><button class="pm-btn pm-btn-primary" data-copystep="3" ' + (s.cats.length ? "" : "disabled") + ">Preview</button></div>";
+    } else {
+      var pv = s.preview;
+      html += '<div class="d5-kv"><dt>From</dt><dd>' + esc(srcName(s.source)) + "</dd><dt>To</dt><dd>" + esc(project()) + "</dd></div>" +
+        '<div class="d5-counts">' +
+        '<span class="pm-badge pm-badge-ok">Add ' + pv.counts.add + "</span>" +
+        '<span class="pm-badge pm-badge-info">Replace ' + pv.counts.replace + "</span>" +
+        '<span class="pm-badge pm-badge-muted">Unchanged ' + pv.counts.same + "</span>" +
+        '<span class="pm-badge pm-badge-warn">Conflict ' + pv.counts.conflict + "</span>" +
+        '<span class="pm-badge pm-badge-muted">Unavailable ' + pv.counts.unavailable + "</span></div>" +
+        '<div class="d5-diff"><table class="pm-table"><thead><tr><th>Setting</th><th>Status</th><th>Incoming</th></tr></thead><tbody>' +
+        pv.rows.slice(0, 80).map(function (r) {
+          return "<tr><td>" + esc(r.label) + (r.status === "credential" ? '<div class="pm-note">Account reference copied per policy; raw secret never rendered.</div>' : "") + '</td><td><span class="pm-badge pm-badge-' + (r.status === "conflict" ? "warn" : r.status === "add" ? "ok" : r.status === "unavailable" ? "muted" : "info") + '">' + r.status + "</span></td><td>" + esc(r.status === "credential" ? "vault-ref" : String(r.incoming)) + "</td></tr>";
+        }).join("") + "</tbody></table></div>" +
+        (pv.rows.length > 80 ? '<div class="pm-note">' + (pv.rows.length - 80) + " more rows in the full diff.</div>" : "") +
+        '<div class="pm-note" style="margin-top:8px">A restore point is created before apply; source and destination stay independent afterwards.</div>' +
+        '<div class="pm-dialog-actions"><button class="pm-btn" data-copystep="2">Back</button><button class="pm-btn pm-btn-primary" data-copyapply="1">Copy Settings</button>' +
+        (s.applied ? '<button class="pm-btn pm-btn-danger" data-copyrollback="1">Roll back copy</button>' : "") + "</div>";
+    }
+    html += "</div></div></div></div></div>";
+    return html;
+  }
+  function bindCopy() {
+    content.querySelectorAll("[data-src]").forEach(function (b) { b.addEventListener("click", function () { copyState.source = b.getAttribute("data-src"); render(); }); });
+    content.querySelectorAll("[data-copycat]").forEach(function (cb) { cb.addEventListener("change", function () {
+      var id = cb.getAttribute("data-copycat");
+      if (cb.checked) { if (copyState.cats.indexOf(id) < 0) copyState.cats.push(id); }
+      else copyState.cats = copyState.cats.filter(function (x) { return x !== id; });
+      var nxt = content.querySelector("[data-copystep='3']"); if (nxt) nxt.disabled = !copyState.cats.length;
+    }); });
+    content.querySelectorAll("[data-copystep]").forEach(function (b) { b.addEventListener("click", function () {
+      var st = +b.getAttribute("data-copystep");
+      if (st === 3) copyState.preview = C2.preview(copyState.source, copyState.cats);
+      copyState.step = st;
+      render();
+    }); });
+    var ap = content.querySelector("[data-copyapply]");
+    if (ap) ap.addEventListener("click", function () {
+      var total = copyState.preview.rows.length || 1;
+      var op = S2.beginOp({ title: "Copy settings", phase: "Applying", determinate: true, total: total });
+      setTimeout(function () {
+        S2.advanceOp(op, { completed: Math.ceil(total / 2), human_phase: "Verifying" });
+        setTimeout(function () {
+          var res = C2.apply(copyState.preview);
+          S2.finishOp(op, "completed", res.verify.ok ? "Verified" : "Verified with gaps");
+          copyState.applied = res;
+          render();
+        }, 350);
+      }, 350);
+    });
+    var rb = content.querySelector("[data-copyrollback]");
+    if (rb) rb.addEventListener("click", function () { C2.rollbackLast(); copyState.applied = null; render(); });
+  }
+
+  // ---------- closed card ----------
+  function closedView() {
+    return '<div class="d5-scroll"><div class="d5-stage"><div class="d5-main" style="flex:1"><div class="d5-inner" style="margin:auto"><div class="d5-copy" style="max-width:420px"><div class="d5-famhead"><h3>Settings closed</h3></div><p class="pm-note">Your changes are saved for this Project.</p><div class="pm-dialog-actions"><button class="pm-btn pm-btn-primary" data-reopen="1">Reopen Settings</button></div></div></div></div></div></div>';
+  }
+
+  // ---------- render + bind ----------
+  var renderQueued = false;
+  function scheduleRender() {
+    if (renderQueued) return;
+    renderQueued = true;
+    setTimeout(function () { renderQueued = false; render(); }, 16);
+  }
+  S2.subscribe(function (kind) {
+    if (kind === "receipt") return;
+    scheduleRender();
+  });
+
+  function render() {
+    var old = content.querySelector(".d5-main > .d5-scroll") || content.querySelector(".d5-scroll");
+    if (old) scrollMem[route.raw] = old.scrollTop;
+    route = parseHash();
+    var html;
+    if (closed) html = closedView();
+    else if (route.name === "home") html = homeView();
+    else if (route.name === "cat") html = route.b ? subView(route.a, route.b) : catView(route.a);
+    else if (route.name === "mgr") html = mgrView(route.a, route.b);
+    else if (route.name === "all") html = allView();
+    else if (route.name === "copy") html = copyView();
+    else if (route.name === "lifecycle") html = mgrView("lifecycle");
+    else html = homeView();
+    content.innerHTML = html;
+    var stage = content.querySelector(".d5-stage");
+    if (stage) stage.setAttribute("data-route", route.raw.replace(/^#/, ""));
+    bind();
+    var sc2 = content.querySelector(".d5-main > .d5-scroll") || content.querySelector(".d5-scroll");
+    if (sc2 && scrollMem[route.raw]) sc2.scrollTop = scrollMem[route.raw];
+    if (route.name === "q") {
+      var qv = route.query.q || "";
+      var wraps = content.querySelectorAll(".d5-searchwrap");
+      for (var wi = 0; wi < wraps.length; wi++) {
+        var wIn = wraps[wi].querySelector("[data-test='search-input']");
+        wIn.value = qv;
+        bindSearch(wraps[wi], qv, true);
+      }
+      if (wraps.length) wraps[wraps.length - 1].querySelector("[data-test='search-input']").focus();
+    }
+    applyLocate();
+  }
+
+  function applyLocate() {
+    if (!pendingLocate) return;
+    var loc = pendingLocate; pendingLocate = null;
+    var target = null;
+    if (loc.row) target = content.querySelector('[data-row="' + loc.row + '"]');
+    if (!target && loc.object) target = content.querySelector('[data-row="prov-' + loc.object + '"]') || content.querySelector('[data-obj="' + loc.object + '"]');
+    if (!target && loc.sec) target = content.querySelector('[data-sec="' + loc.sec + '"].active') || content.querySelector('[data-sec="' + loc.sec + '"]') || content.querySelector("[data-manager]");
+    if (target) {
+      target.scrollIntoView({ block: "center" });
+      target.classList.add("pm2-locate");
+      var ctl = target.hasAttribute("data-manager") ? null : target.querySelector("button,select,input");
+      if (ctl) ctl.focus({ preventScroll: true });
+      else { target.setAttribute("tabindex", "-1"); target.focus({ preventScroll: true }); }
+    }
+  }
+  function bindCopyTail() {}
+  function bind() {
+    bindBand();
+    if (route.name !== "q") {
+      var big = content.querySelector(".d5-inner .d5-searchwrap");
+      if (big) bindSearch(big, "", false);
+    }
+    content.querySelectorAll("[data-nav]").forEach(function (b) { b.addEventListener("click", function () {
+      var v = b.getAttribute("data-nav");
+      if (v === "home") go("home");
+      else if (v === "all") go("all");
+      else if (v === "copy") { copyState.step = 1; go("copy"); }
+      else if (v === "lifecycle") go("lifecycle");
+      else go("cat", v.slice(4));
+    }); });
+    content.querySelectorAll("[data-dest]").forEach(function (b) { b.addEventListener("click", function (e) {
+      spatialFrom(e.currentTarget, function () { go("cat", b.getAttribute("data-dest")); });
+    }); });
+    content.querySelectorAll("[data-util]").forEach(function (b) { b.addEventListener("click", function () {
+      var u = b.getAttribute("data-util");
+      if (u === "copy") copyState.step = 1;
+      go(u === "lifecycle" ? "lifecycle" : u);
+    }); });
+    content.querySelectorAll("[data-notice]").forEach(function (b) { b.addEventListener("click", function () { noticeDest(b.getAttribute("data-notice")); }); });
+    content.querySelectorAll("[data-recent]").forEach(function (b) { b.addEventListener("click", function () {
+      var id = b.getAttribute("data-recent"), kind = b.getAttribute("data-recentkind");
+      if (kind === "setting") { var inv = D.byId(id); if (inv) { pendingLocate = { row: id }; go("cat", id.split(".")[0], id.split(".")[1]); } }
+      else { pendingLocate = { object: id }; go("mgr", id); }
+    }); });
+    content.querySelectorAll("[data-subpage]").forEach(function (b) { b.addEventListener("click", function () {
+      var p = b.getAttribute("data-subpage").split("/");
+      go("cat", p[0], p[1]);
+    }); });
+    content.querySelectorAll("[data-mgrlink]").forEach(function (b) { b.addEventListener("click", function (e) {
+      spatialFrom(e.currentTarget, function () { go("mgr", b.getAttribute("data-mgrid")); });
+    }); });
+    content.querySelectorAll("[data-obj]").forEach(function (b) { b.addEventListener("click", function () {
+      go("mgr", route.a === "providers" ? "providers" : route.a, b.getAttribute("data-obj"));
+    }); });
+    content.querySelectorAll("[data-sec]").forEach(function (b) { b.addEventListener("click", function () {
+      go("mgr", route.a, route.b, { sec: b.getAttribute("data-sec") });
+    }); });
+    content.querySelectorAll("[data-reopen]").forEach(function (b) { b.addEventListener("click", function () { closed = false; render(); }); });
+    content.querySelectorAll("[data-opcancel]").forEach(function (b) { b.addEventListener("click", function () {
+      var op = S2.state.ops[b.getAttribute("data-opcancel")];
+      if (op) { S2.finishOp(op, "cancelled", "Cancelled"); S2.receipt("Cancelled", op.title + " was cancelled.", "info"); }
+    }); });
+    content.querySelectorAll("[data-provinstall]").forEach(function (b) { b.addEventListener("click", function () {
+      var p = PROV[b.getAttribute("data-provinstall")];
+      var op = S2.beginOp({ title: "Install " + p.name, phase: "Downloading from official source", determinate: true, total: 4, wait: "waiting for package signature check" });
+      setTimeout(function () { S2.advanceOp(op, { completed: 2, human_phase: "Verifying signature" }); }, 400);
+      setTimeout(function () { S2.advanceOp(op, { completed: 4, human_phase: "Probing" }); }, 800);
+      setTimeout(function () { S2.finishOp(op, "completed", "Installed"); S2.receipt("Install complete", p.name + " installed from the official source for Desktop — Windows 11.", "ok"); }, 1200);
+    }); });
+    content.querySelectorAll("[data-upd]").forEach(function (b) { b.addEventListener("click", function () {
+      var p = PROV[b.getAttribute("data-upd")];
+      var op = S2.beginOp({ title: "Update " + p.name, phase: "Updating", determinate: true, total: 3 });
+      setTimeout(function () { S2.advanceOp(op, { completed: 2, human_phase: "Verifying" }); }, 500);
+      setTimeout(function () { S2.finishOp(op, "completed", "Ready"); S2.receipt("Update applied", p.name + " updated and verified.", "ok"); }, 1100);
+    }); });
+    content.querySelectorAll("[data-lc]").forEach(function (b) { b.addEventListener("click", function () {
+      var a = b.getAttribute("data-lc");
+      if (a === "export") S2.receipt("Export ready", "Settings written to puppet-master-settings.json (portable file).", "ok");
+      else if (a === "import") S2.receipt("Import preview", "3 incoming values conflict with this Project. Keep-or-take choices required before merge.", "warn");
+      else S2.receipt("Reset preview", "828 rows would return to defaults. Apply is a separate confirmed step.", "warn");
+    }); });
+    content.querySelectorAll("[data-provrefresh]").forEach(function (b) { b.addEventListener("click", function () {
+      var op = S2.beginOp({ title: "Refresh readiness", phase: "Probing connections", determinate: true, total: MD.providers.length, wait: "last-known values stay visible" });
+      render();
+      var i = 0;
+      var t = setInterval(function () {
+        i += 4;
+        if (i >= MD.providers.length) { clearInterval(t); S2.finishOp(op, "completed", "Readiness refreshed"); S2.receipt("Readiness refreshed", "All connections re-probed; last-known values were shown during the refresh.", "ok"); }
+        else S2.advanceOp(op, { completed: i });
+      }, 250);
+    }); });
+    content.querySelectorAll("[data-validate]").forEach(function (b) { b.addEventListener("click", function () {
+      var id = b.getAttribute("data-validate");
+      var p = PROV[id];
+      var bad = p.readiness.indexOf("not-installed") >= 0 || p.readiness.indexOf("sign-in-required") >= 0 || p.readiness.indexOf("owner-unknown") >= 0 || p.readiness.indexOf("usage-unavailable") >= 0;
+      if (bad) {
+        lastValidation = { id: id, msg: "Validation failed: " + p.readiness.filter(function (r) { return ["not-installed", "sign-in-required", "owner-unknown", "usage-unavailable"].indexOf(r) >= 0; }).join(", ").replace(/-/g, " ") + ". No authority was widened; fix the readiness state and retry." };
+        S2.receipt("Validation failed", p.name + ": " + lastValidation.msg, "warn");
+      } else {
+        lastValidation = null;
+        S2.receipt("Validation passed", p.name + " passed CLI, sign-in, and probe checks.", "ok");
+      }
+      render();
+    }); });
+    M2.bindRows(content);
+    bindLocal(content);
+    if (route.name === "all") bindAll();
+    if (route.name === "copy") bindCopy();
+  }
+
+  function spatialFrom(el, fn) {
+    var stage = content.querySelector(".d5-stage");
+    if (stage && motionOK() && el) {
+      var r = el.getBoundingClientRect();
+      stage.style.transformOrigin = (r.left + r.width / 2) + "px " + (r.top + r.height / 2) + "px";
+      stage.classList.add("d5-exit");
+      setTimeout(function () {
+        fn();
+        requestAnimationFrame(function () {
+          var s2 = content.querySelector(".d5-stage");
+          if (s2) { s2.style.transformOrigin = (r.left + r.width / 2) + "px " + (r.top + r.height / 2) + "px"; s2.classList.add("d5-enter"); }
+        });
+      }, 120);
+    } else fn();
+  }
+
+  window.addEventListener("hashchange", render);
+  render();
+})();
+</script>
+</body>
+</html>

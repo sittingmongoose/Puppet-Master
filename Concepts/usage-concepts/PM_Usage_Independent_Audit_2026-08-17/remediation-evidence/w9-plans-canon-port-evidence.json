@@ -1,0 +1,292 @@
+{
+  "schema_id": "pm.usage_port.remediation_evidence.v1",
+  "evidence_bundle_id": "u11-usage-plans-canon-2026-08-18",
+  "generated_at_utc": "2026-08-18T03:45:40Z",
+  "purpose": "Evidence bundle for the Spec_Lock update protocol entry dec-2026-08-18-u11-usage-plans-canon (Plans/Decision_Policy.md#spec-lock-update-protocol step 4).",
+  "prompted_by": {
+    "audit": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/AUDIT_REPORT.md",
+    "handoff": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/handoff/PORT_HANDOFF_PLANS_ROUTE.md",
+    "handoff_corrections": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/handoff/HANDOFF_CORRECTIONS.md",
+    "concept": "Concepts/usage-concepts/QwenUsageConcept/u11-prism.html"
+  },
+  "plan_units_landed": [
+    {
+      "id": "UF-092",
+      "owner_doc": "Plans/usage-feature.md",
+      "lane": "green"
+    },
+    {
+      "id": "SP-248",
+      "owner_doc": "Plans/storage-plan.md",
+      "lane": "green"
+    },
+    {
+      "id": "WS-016",
+      "owner_doc": "Plans/Widget_System.md",
+      "lane": "green"
+    },
+    {
+      "id": "CS-067",
+      "owner_doc": "Plans/Commands_System.md",
+      "lane": "green"
+    },
+    {
+      "id": "SIR-014",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "lane": "green",
+      "form": "bare_yaml_no_heading"
+    },
+    {
+      "id": "PSB-004",
+      "owner_doc": "Plans/Project_Sync_and_Backbone.md",
+      "lane": "green",
+      "form": "bare_yaml_no_heading"
+    },
+    {
+      "id": "UCC-146",
+      "owner_doc": "Plans/UI_Command_Catalog.md",
+      "lane": "red_spec_lock_pinned"
+    },
+    {
+      "id": "WM-044",
+      "owner_doc": "Plans/Wiring_Matrix.md",
+      "lane": "red_spec_lock_pinned"
+    },
+    {
+      "id": "DR-038",
+      "owner_doc": "Plans/DRY_Rules.md",
+      "lane": "red_spec_lock_pinned"
+    }
+  ],
+  "registry_changes": [
+    {
+      "path": "Plans/Wiring_Matrix.production.json",
+      "change": "added entry catalog.usage_forecast_request (13 required fields, expected_event_types [])",
+      "entry_count_before": 725,
+      "entry_count_after": 726
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.exclusions.json",
+      "change": "added excluded token cmd.provider.usage.open_management (rejected candidate)",
+      "token_count_before": 68,
+      "token_count_after": 69
+    },
+    {
+      "path": "Plans/event_family_registry.json",
+      "change": "none; zero usage event families admitted, Event Authority denominator remains UNKNOWN_OPEN"
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "change": "none in this wave; the usage view-state family row is a separate change"
+    }
+  ],
+  "spec_lock": {
+    "before": {
+      "status": "fail",
+      "stale_pins": 26,
+      "total_pins": 83,
+      "stale_paths": [
+        "Plans/.implementation_readiness/buildability_gate_report.json",
+        "Plans/00-plans-index.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/DRY_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Release_Supply_Chain.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Wiring_Matrix.schema.json",
+        "Plans/assistant-chat-design.md",
+        "Plans/gui_automation_manifest.schema.json",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/sharding_config.json",
+        "Plans/storage_recovery_contracts.schema.json",
+        "Plans/storage_value_registry.json",
+        "Plans/web_agent_policy_fixtures.json",
+        "Plans/web_operation_contracts.schema.json",
+        "Plans/web_provider_adapter_registry.seed.json",
+        "scripts/pm-implementation-readiness.py",
+        "scripts/pm-plans-verify.py",
+        "scripts/pm_pnc019_currentness.py"
+      ]
+    },
+    "after": {
+      "status": "pass",
+      "stale_pins": 0,
+      "total_pins": 83
+    },
+    "pins_rehashed": 26,
+    "port_edited_pins_rehashed": [
+      "Plans/DRY_Rules.md",
+      "Plans/UI_Command_Catalog.md",
+      "Plans/Wiring_Matrix.md"
+    ],
+    "pre_existing_drift_absorbed": 23,
+    "disclosure": "23 of the 26 rehashed pins were already drifting before this change and were not edited by this port; the refresh tool rehashes the whole pin set and cannot rehash a subset. The absorbed set is enumerated in spec_lock.before.stale_paths minus port_edited_pins_rehashed."
+  },
+  "gates": {
+    "command": "python3 scripts/pm-plans-verify.py run-gates",
+    "gate_count": 26,
+    "before": {
+      "json_syntax": "fail",
+      "verify_spec_lock": "fail",
+      "validate_plan_graph": "fail",
+      "validate_auto_decisions": "pass",
+      "validate_evidence": "fail",
+      "lint_contractrefs": "pass",
+      "lint_banned_phrases": "pass",
+      "lint_path_refs": "pass",
+      "check_project_artifact_requirements": "pass",
+      "validate_plans_to_code_handoff_schema": "pass",
+      "validate_prd_planning_runtime_contracts": "pass",
+      "validate_case_l_non_event_materialization": "fail",
+      "validate_implementation_readiness": "fail",
+      "validate_plan_migration": "fail",
+      "validate_runtime_artifact_schemas": "pass",
+      "validate_goal_runtime_event_fixtures": "pass",
+      "validate_project_output_fixtures": "pass",
+      "validate_usage_gui_fixtures": "pass",
+      "validate_usage_contract_drift": "pass",
+      "validate_gui_asset_policy": "pass",
+      "validate_web_capability_contracts": "pass",
+      "validate_filesafe_security_policy": "pass",
+      "validate_wiring_matrix": "pass",
+      "validate_audit_closure": "fail",
+      "validate_audit_status_index": "pass",
+      "check_shards": "pass"
+    },
+    "after": {
+      "json_syntax": "fail",
+      "verify_spec_lock": "pass",
+      "validate_plan_graph": "fail",
+      "validate_auto_decisions": "pass",
+      "validate_evidence": "fail",
+      "lint_contractrefs": "pass",
+      "lint_banned_phrases": "pass",
+      "lint_path_refs": "pass",
+      "check_project_artifact_requirements": "pass",
+      "validate_plans_to_code_handoff_schema": "pass",
+      "validate_prd_planning_runtime_contracts": "pass",
+      "validate_case_l_non_event_materialization": "fail",
+      "validate_implementation_readiness": "fail",
+      "validate_plan_migration": "fail",
+      "validate_runtime_artifact_schemas": "pass",
+      "validate_goal_runtime_event_fixtures": "pass",
+      "validate_project_output_fixtures": "pass",
+      "validate_usage_gui_fixtures": "pass",
+      "validate_usage_contract_drift": "pass",
+      "validate_gui_asset_policy": "pass",
+      "validate_web_capability_contracts": "pass",
+      "validate_filesafe_security_policy": "pass",
+      "validate_wiring_matrix": "pass",
+      "validate_audit_closure": "fail",
+      "validate_audit_status_index": "pass",
+      "check_shards": "pass"
+    },
+    "before_fail_count": 8,
+    "after_fail_count": 7,
+    "must_stay_green": {
+      "check_shards": {
+        "before": "pass",
+        "after": "pass"
+      },
+      "validate_usage_gui_fixtures": {
+        "before": "pass",
+        "after": "pass"
+      },
+      "validate_usage_contract_drift": {
+        "before": "pass",
+        "after": "pass"
+      }
+    },
+    "changed": {
+      "verify_spec_lock": {
+        "before": "fail",
+        "after": "pass"
+      }
+    },
+    "note": "Final run recorded after the auto_decisions row was appended. Status is unchanged for all seven pre-existing failures; verify_spec_lock is the only transition.",
+    "already_failing_gate_failure_row_counts": {
+      "method": "Measured by git-stashing every Plans/** change, running each gate at HEAD, then restoring. All four were already failing before this change.",
+      "validate_evidence": {
+        "before": 1505,
+        "after": 1519
+      },
+      "validate_plan_graph": {
+        "before": 1402,
+        "after": 1415
+      },
+      "validate_plan_migration": {
+        "before": 128,
+        "after": 129
+      },
+      "validate_audit_closure": {
+        "before": 201,
+        "after": 201
+      },
+      "attribution": "These gates hash-check evidence bundles, plan-graph artifacts, migration batch reports, and audit closure rows against live files. pm-shard-plans.py --generate stamps a fresh generated_at_utc into every shard manifest and index, so all 405 shard files change on any mandated regeneration; the row sets churn heavily (+429/-415 for validate_evidence) while the net growth is small. No new failure class appears and no gate changed status."
+    }
+  },
+  "regeneration": [
+    {
+      "command": "python3 scripts/pm-shard-plans.py --generate",
+      "result": "pass",
+      "docs_generated": 97,
+      "shards_generated": 1948
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "result": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py generate",
+      "result": "pass",
+      "plan_unit_count_before": 5876,
+      "plan_unit_count_after": 5885
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "result": "pass",
+      "note": "one dependency cycle was introduced and removed during authoring (CS-067 depends_on UCC-146 dropped); final graph is acyclic"
+    }
+  ],
+  "not_landed": [
+    {
+      "item": "Plans/.evidence/** bundle",
+      "reason": "Plans/.evidence/** is a hand-edit-forbidden derived artifact under .claude/CLAUDE.md and the task authorization covered only Plans/Spec_Lock.json and Plans/auto_decisions.jsonl. This file is the evidence record instead."
+    },
+    {
+      "item": "storage_value_registry.json usage_view_state family",
+      "reason": "not in the authorized change list; the file is Spec_Lock-pinned and its family shape is a separate 26-key registry change."
+    },
+    {
+      "item": "MA-071, MS-138, CBP-030, CV-326/327, F3-513, GRS-047, UIW-012",
+      "reason": "allocated and verified as next-free but outside the authorized WHAT TO LAND list."
+    },
+    {
+      "item": "usage event family admission",
+      "reason": "forbidden: Event Authority denominator is UNKNOWN_OPEN and bulk registration is prohibited."
+    }
+  ],
+  "inputs_hash": "75ab1493b41d6a53aa793b68b825bb5f1f3f68ac185e54ea9b0e10dd54f6425e",
+  "inputs": [
+    "Plans/usage-feature.md:8d8c2355529ad6e6cc8e01415a8f5e4861f9c8df6b6ff295268f45b5ecbf1164",
+    "Plans/storage-plan.md:d18a405bd34411252183166a84ff12b48b6d9c9953cb37319a0503d39f60d506",
+    "Plans/Widget_System.md:7e7cc7c4a88a4fe7766f2f08e3cbec180ca48744d83610581004317f5f6052b7",
+    "Plans/Commands_System.md:f1c8531358918d5788c18d3a0f0c407701b78f97c679da3fbbaa5dbbf2cd9aa9",
+    "Plans/Shared_Integration_Runtime.md:2d570b175cfcc3b4720d9bcb4ec44a67a0f36384dbfd07ba8046c858de4ce332",
+    "Plans/Project_Sync_and_Backbone.md:9d07ee60e9c7c2e96b5d99f745b985e630609396312f16dda4cb48149b1a03ee",
+    "Plans/UI_Command_Catalog.md:f93f6e4068b3fbc187156116ccdcce168571267d7048d1a50ba2ce87d7de25a2",
+    "Plans/Wiring_Matrix.md:93f469ef5b7514766b8b3704d343c1eb2597132446fc0842f0f83624dd342163",
+    "Plans/DRY_Rules.md:91fc575972b2d5acdae089906cac29926df5ac7ee89aa70061e955e402038c1f",
+    "Plans/Wiring_Matrix.production.json:1825df3d8d673e2a3b74b17e6a0c925176edf61a61ab4c168aad4f56e00d498a",
+    "Plans/Wiring_Matrix.production.exclusions.json:59998e00d3ab79f93b3394da33899d3c110c509e318364df66c9b8a8a761df37",
+    "Concepts/usage-concepts/QwenUsageConcept/u11-prism.html:2b2dcf540866d323e7d4e1ad727f6cd1b8b323fbe5416105a8a5fe89ac2609ff",
+    "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/handoff/PORT_HANDOFF_PLANS_ROUTE.md:85ca3eecafbaa7c7c302b40a359a95e40ae33e328c94565e040a7319d1405c55",
+    "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/handoff/HANDOFF_CORRECTIONS.md:2377cfb44172b63d8b63ab4dc022963587bb1f47206125b3a80e77819ca81eee"
+  ]
+}

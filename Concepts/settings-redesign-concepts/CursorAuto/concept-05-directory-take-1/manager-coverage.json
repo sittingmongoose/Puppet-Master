@@ -1,0 +1,274 @@
+{
+  "schema_id": "pm.settings_concept_manager_coverage.v2",
+  "concept_id": "concept-05-directory-take-1",
+  "model": "CursorAuto",
+  "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+  "layout": "directory-take-1",
+  "groups": [
+    {
+      "id": "required_demonstrated",
+      "managers": [
+        {
+          "name": "Settings Home",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Settings Search",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Settings Workspace",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Ordinary setting grammar",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Provider / Account / Model / Installation",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Context & Instructions",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Memory",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Personas",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Goal & Automation",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Crew",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Permissions & FileSafe",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Back Seat Driver",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Notifications & Sounds",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Sound Library / Uploads / Packs",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Appearance / themes / fonts / motion",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Spellcheck & Dictionaries",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Desktop / Tray / Window",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Teacher / Help",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Doctor",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "File Manager / Editor",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Terminal",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "LSP",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Formatters",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Commands & Shortcuts",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "MCP",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Skills",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Plugins",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Tools",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Testing & Debug",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Storage & Retention",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Backup & Restore",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Settings Lifecycle",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "History & Sessions",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Runtime Artifacts / Project Outputs",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Source Control / Worktrees",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "GitHub Actions",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Containers & Registries",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Web / Search / Fetch / Crawl",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Project Search Index",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Workspace Cleanup",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "Media & Output",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        },
+        {
+          "name": "DRY Method visible state where exposed",
+          "classification": "demonstrated",
+          "note": "Concept-native two-column directory / destination-row workspace using PMv2 headless semantics. Visible renderer is d1-* only."
+        }
+      ]
+    },
+    {
+      "id": "deferred_named_owner",
+      "managers": [
+        {
+          "name": "Product Onboarding",
+          "classification": "deferred_named_owner",
+          "note": "Reachable insertion from System domain destination rows and search id unavailable:onboarding; owner Onboarding module; return via Back/Close; no fabricated backend."
+        },
+        {
+          "name": "Installation / Deployment",
+          "classification": "deferred_named_owner",
+          "note": "Reachable insertion from System domain destination rows and search id unavailable:installation; owner Installer / Deployment module; return via Back/Close; no fabricated backend."
+        },
+        {
+          "name": "Server Claim / Bootstrap",
+          "classification": "deferred_named_owner",
+          "note": "Reachable insertion from System domain destination rows and search id unavailable:serverClaim; owner Server backbone; return via Back/Close; no fabricated backend."
+        },
+        {
+          "name": "Servers / Execution Hosts / Clients",
+          "classification": "deferred_named_owner",
+          "note": "Reachable insertion from System domain destination rows and search id unavailable:servers; owner Server backbone; return via Back/Close; no fabricated backend."
+        },
+        {
+          "name": "Project Hosting & Files",
+          "classification": "deferred_named_owner",
+          "note": "Reachable insertion from System domain destination rows and search id unavailable:projectHosting; owner Project Hosting module; return via Back/Close; no fabricated backend."
+        },
+        {
+          "name": "Remote Access",
+          "classification": "deferred_named_owner",
+          "note": "Reachable insertion from System domain destination rows and search id unavailable:remoteAccess; owner Remote Access module; return via Back/Close; no fabricated backend."
+        },
+        {
+          "name": "Project Sync / Move",
+          "classification": "deferred_named_owner",
+          "note": "Reachable insertion from System domain destination rows and search id unavailable:projectSync; owner Project Sync module; return via Back/Close; no fabricated backend."
+        },
+        {
+          "name": "Puppet Master application/content updates",
+          "classification": "deferred_named_owner",
+          "note": "Reachable insertion from System domain destination rows and search id unavailable:appUpdates; owner Update owner; return via Back/Close; no fabricated backend."
+        },
+        {
+          "name": "Full Server backup owner flow",
+          "classification": "deferred_named_owner",
+          "note": "Reachable insertion from System domain destination rows and search id unavailable:fullServerBackup; owner Server backup owner; return via Back/Close; no fabricated backend."
+        }
+      ]
+    }
+  ]
+}

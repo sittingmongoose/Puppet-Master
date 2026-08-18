@@ -1,0 +1,341 @@
+{
+  "schema_id": "pm.settings_bakeoff.manager_coverage.v2.concept",
+  "concept": "concept-06-directory-take-2",
+  "entries": [
+    {
+      "name": "Settings Home",
+      "status": "demonstrated",
+      "route": "#/home",
+      "note": "Concept-06 editorial directory: list-led Home with 12 destination rows"
+    },
+    {
+      "name": "Settings Search",
+      "status": "demonstrated",
+      "route": "#/home",
+      "note": "Concept-06 editorial directory: anchored dropdown routing by rid with #/q/ back-restore"
+    },
+    {
+      "name": "Settings Workspace",
+      "status": "demonstrated",
+      "route": "#/home",
+      "note": "Concept-06 editorial directory: stable domain rail + restrained content sheet push stack"
+    },
+    {
+      "name": "Ordinary setting grammar",
+      "status": "demonstrated",
+      "route": "#/home",
+      "note": "Concept-06 editorial directory: PMManagers2.row atoms composed in c6-frow/c6-sect lists"
+    },
+    {
+      "name": "Provider / Account / Model / Installation",
+      "status": "demonstrated",
+      "route": "#/mgr/providers",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/providers"
+    },
+    {
+      "name": "Context & Instructions",
+      "status": "demonstrated",
+      "route": "#/mgr/context",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/context"
+    },
+    {
+      "name": "Memory",
+      "status": "demonstrated",
+      "route": "#/mgr/memory",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/memory"
+    },
+    {
+      "name": "Personas",
+      "status": "demonstrated",
+      "route": "#/mgr/personas",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/personas"
+    },
+    {
+      "name": "Goal & Automation",
+      "status": "demonstrated",
+      "route": "#/mgr/goal",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/goal"
+    },
+    {
+      "name": "Crew",
+      "status": "demonstrated",
+      "route": "#/mgr/crew",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/crew"
+    },
+    {
+      "name": "Permissions & FileSafe",
+      "status": "demonstrated",
+      "route": "#/mgr/permissions",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/permissions"
+    },
+    {
+      "name": "Back Seat Driver",
+      "status": "demonstrated",
+      "route": "#/mgr/bsd",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/bsd"
+    },
+    {
+      "name": "Notifications & Sounds",
+      "status": "demonstrated",
+      "route": "#/mgr/notifications + #/mgr/sounds",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/notifications"
+    },
+    {
+      "name": "Sound Library / Uploads / Packs",
+      "status": "demonstrated",
+      "route": "#/mgr/sounds",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/sounds"
+    },
+    {
+      "name": "Appearance / themes / fonts / motion",
+      "status": "demonstrated",
+      "route": "#/mgr/appearance",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/appearance"
+    },
+    {
+      "name": "Spellcheck & Dictionaries",
+      "status": "demonstrated",
+      "route": "#/mgr/spellcheck",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/spellcheck"
+    },
+    {
+      "name": "Desktop / Tray / Window",
+      "status": "demonstrated",
+      "route": "#/mgr/desktop",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/desktop"
+    },
+    {
+      "name": "Teacher / Help",
+      "status": "demonstrated",
+      "route": "#/mgr/teacher",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/teacher"
+    },
+    {
+      "name": "Doctor",
+      "status": "demonstrated",
+      "route": "#/mgr/doctor",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/doctor"
+    },
+    {
+      "name": "File Manager / Editor",
+      "status": "demonstrated",
+      "route": "#/mgr/files",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/files"
+    },
+    {
+      "name": "Terminal",
+      "status": "demonstrated",
+      "route": "#/mgr/terminal",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/terminal"
+    },
+    {
+      "name": "LSP",
+      "status": "demonstrated",
+      "route": "#/mgr/lsp",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/lsp"
+    },
+    {
+      "name": "Formatters",
+      "status": "demonstrated",
+      "route": "#/mgr/formatters",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/formatters"
+    },
+    {
+      "name": "Commands & Shortcuts",
+      "status": "demonstrated",
+      "route": "#/mgr/commands",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/commands"
+    },
+    {
+      "name": "MCP",
+      "status": "demonstrated",
+      "route": "#/mgr/mcp",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/mcp"
+    },
+    {
+      "name": "Skills",
+      "status": "demonstrated",
+      "route": "#/mgr/skills",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/skills"
+    },
+    {
+      "name": "Plugins",
+      "status": "demonstrated",
+      "route": "#/mgr/plugins",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/plugins"
+    },
+    {
+      "name": "Tools",
+      "status": "demonstrated",
+      "route": "#/mgr/tools",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/tools"
+    },
+    {
+      "name": "Testing & Debug",
+      "status": "demonstrated",
+      "route": "#/mgr/testing",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/testing"
+    },
+    {
+      "name": "Storage & Retention",
+      "status": "demonstrated",
+      "route": "#/mgr/storage",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/storage"
+    },
+    {
+      "name": "Backup & Restore",
+      "status": "demonstrated",
+      "route": "#/mgr/backup",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/backup"
+    },
+    {
+      "name": "Settings Lifecycle",
+      "status": "demonstrated",
+      "route": "#/mgr/lifecycle",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/lifecycle"
+    },
+    {
+      "name": "History & Sessions",
+      "status": "demonstrated",
+      "route": "#/mgr/history",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/history"
+    },
+    {
+      "name": "Runtime Artifacts / Project Outputs",
+      "status": "demonstrated",
+      "route": "#/mgr/artifacts",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/artifacts"
+    },
+    {
+      "name": "Source Control / Worktrees",
+      "status": "demonstrated",
+      "route": "#/mgr/scm",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/scm"
+    },
+    {
+      "name": "GitHub Actions",
+      "status": "demonstrated",
+      "route": "#/mgr/gha",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/gha"
+    },
+    {
+      "name": "Containers & Registries",
+      "status": "demonstrated",
+      "route": "#/mgr/containers",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/containers"
+    },
+    {
+      "name": "Web / Search / Fetch / Crawl",
+      "status": "demonstrated",
+      "route": "#/mgr/web",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/web"
+    },
+    {
+      "name": "Project Search Index",
+      "status": "demonstrated",
+      "route": "#/mgr/searchindex",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/searchindex"
+    },
+    {
+      "name": "Workspace Cleanup",
+      "status": "demonstrated",
+      "route": "#/mgr/cleanup",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/cleanup"
+    },
+    {
+      "name": "Media & Output",
+      "status": "demonstrated",
+      "route": "#/mgr/media",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/media"
+    },
+    {
+      "name": "DRY Method visible state where exposed",
+      "status": "demonstrated",
+      "route": "#/mgr/dry",
+      "note": "Concept-06 editorial directory: roster/detail-sheet or preference-document composition inside #/mgr/dry"
+    }
+  ],
+  "deferred": [
+    {
+      "name": "Product Onboarding",
+      "status": "deferred_named_owner",
+      "owner": "Product Onboarding plan owner",
+      "family": "onboarding",
+      "route": "#/mgr/onboarding",
+      "insertion": "Reachable insertion shell rendered inside the owning domain page and manager route; human-language card only, no fabricated backend.",
+      "returnContract": "Owner flow deep-links back into the same route with continuation receipt (per PMManagers2Data.deferred)."
+    },
+    {
+      "name": "Installation / Deployment",
+      "status": "deferred_named_owner",
+      "owner": "Provider Lifecycle owner",
+      "family": "installation",
+      "route": "#/mgr/installation",
+      "insertion": "Reachable insertion shell rendered inside the owning domain page and manager route; human-language card only, no fabricated backend.",
+      "returnContract": "Owner flow deep-links back into the same route with continuation receipt (per PMManagers2Data.deferred)."
+    },
+    {
+      "name": "Server Claim / Bootstrap",
+      "status": "deferred_named_owner",
+      "owner": "Server Backbone",
+      "family": "server-claim",
+      "route": "#/mgr/server-claim",
+      "insertion": "Reachable insertion shell rendered inside the owning domain page and manager route; human-language card only, no fabricated backend.",
+      "returnContract": "Owner flow deep-links back into the same route with continuation receipt (per PMManagers2Data.deferred)."
+    },
+    {
+      "name": "Servers / Execution Hosts / Clients",
+      "status": "deferred_named_owner",
+      "owner": "Server Backbone",
+      "family": "servers",
+      "route": "#/mgr/servers",
+      "insertion": "Reachable insertion shell rendered inside the owning domain page and manager route; human-language card only, no fabricated backend.",
+      "returnContract": "Owner flow deep-links back into the same route with continuation receipt (per PMManagers2Data.deferred)."
+    },
+    {
+      "name": "Project Hosting & Files",
+      "status": "deferred_named_owner",
+      "owner": "Project Syncing and Updates",
+      "family": "hosting",
+      "route": "#/mgr/hosting",
+      "insertion": "Reachable insertion shell rendered inside the owning domain page and manager route; human-language card only, no fabricated backend.",
+      "returnContract": "Owner flow deep-links back into the same route with continuation receipt (per PMManagers2Data.deferred)."
+    },
+    {
+      "name": "Remote Access",
+      "status": "deferred_named_owner",
+      "owner": "Server Backbone",
+      "family": "remote-access",
+      "route": "#/mgr/remote-access",
+      "insertion": "Reachable insertion shell rendered inside the owning domain page and manager route; human-language card only, no fabricated backend.",
+      "returnContract": "Owner flow deep-links back into the same route with continuation receipt (per PMManagers2Data.deferred)."
+    },
+    {
+      "name": "Project Sync / Move",
+      "status": "deferred_named_owner",
+      "owner": "Project Syncing and Updates",
+      "family": "sync-move",
+      "route": "#/mgr/sync-move",
+      "insertion": "Reachable insertion shell rendered inside the owning domain page and manager route; human-language card only, no fabricated backend.",
+      "returnContract": "Owner flow deep-links back into the same route with continuation receipt (per PMManagers2Data.deferred)."
+    },
+    {
+      "name": "Puppet Master application/content updates",
+      "status": "deferred_named_owner",
+      "owner": "Project Syncing and Updates",
+      "family": "updates",
+      "route": "#/mgr/updates",
+      "insertion": "Reachable insertion shell rendered inside the owning domain page and manager route; human-language card only, no fabricated backend.",
+      "returnContract": "Owner flow deep-links back into the same route with continuation receipt (per PMManagers2Data.deferred)."
+    },
+    {
+      "name": "Full Server backup owner flow",
+      "status": "deferred_named_owner",
+      "owner": "Server Backbone",
+      "family": "server-backup",
+      "route": "#/mgr/server-backup",
+      "insertion": "Reachable insertion shell rendered inside the owning domain page and manager route; human-language card only, no fabricated backend.",
+      "returnContract": "Owner flow deep-links back into the same route with continuation receipt (per PMManagers2Data.deferred)."
+    }
+  ]
+}

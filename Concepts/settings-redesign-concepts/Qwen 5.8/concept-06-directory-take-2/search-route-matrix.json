@@ -1,0 +1,188 @@
+{
+  "schema_id": "pm.settings_bakeoff.search_route_matrix.v1",
+  "concept": "concept-06-directory-take-2",
+  "cases": [
+    {
+      "query": "openai api key",
+      "rid": "sr:setting:ai.accounts.openai-api-key",
+      "displayed_path": "AI Brains & Providers › Accounts & Sign-in",
+      "expected_dest": "#/cat/ai/accounts row ai.accounts.openai-api-key",
+      "actual_dest": "#/cat/ai/accounts?row=ai.accounts.openai-api-key",
+      "focus_highlight": "INPUT focused + pm2-locate",
+      "pass": true
+    },
+    {
+      "query": "rate limits",
+      "rid": "sr:object:claude-oauth.rate-limits",
+      "displayed_path": "AI Brains & Providers › Claude CLI (Max profile)",
+      "expected_dest": "providers manager, object claude-oauth, section limits",
+      "actual_dest": "#/mgr/providers/claude-oauth?sec=limits",
+      "focus_highlight": "sheet pm2-locate",
+      "pass": true,
+      "note": "duplicate label case (two Rate Limits rows)"
+    },
+    {
+      "query": "rate limits",
+      "rid": "sr:object:openai-cli.rate-limits",
+      "displayed_path": "AI Brains & Providers › OpenAI CLI",
+      "expected_dest": "providers manager, object openai-cli, section limits",
+      "actual_dest": "#/mgr/providers/openai-cli?sec=limits",
+      "focus_highlight": "sheet pm2-locate",
+      "pass": true,
+      "note": "duplicate label case"
+    },
+    {
+      "query": "context window",
+      "rid": "sr:object:openai-cli.gpt-5-2",
+      "displayed_path": "AI Brains & Providers › OpenAI CLI",
+      "expected_dest": "providers models section, row gpt-5-2",
+      "actual_dest": "#/mgr/providers/openai-cli?sec=models&row=gpt-5-2",
+      "focus_highlight": "model row pm2-locate",
+      "pass": true,
+      "note": "manager object deep row"
+    },
+    {
+      "query": "opneai api key",
+      "rid": "sr:setting:ai.accounts.openai-api-key",
+      "displayed_path": "AI Brains & Providers › Accounts & Sign-in",
+      "expected_dest": "same as corrected query (fuzzy)",
+      "actual_dest": "#/cat/ai/accounts?row=ai.accounts.openai-api-key",
+      "focus_highlight": "INPUT focused + pm2-locate",
+      "pass": true,
+      "note": "typo fuzzy"
+    },
+    {
+      "query": "settings sync",
+      "rid": "sr:unavailable:sync",
+      "displayed_path": "System & Advanced › Not available",
+      "expected_dest": "no navigation; availability receipt",
+      "actual_dest": "receipt only (query route kept)",
+      "focus_highlight": "n/a",
+      "pass": true,
+      "note": "unavailable capability"
+    },
+    {
+      "query": "anthropic sign-in",
+      "rid": "sr:object:anthropic-cli.sign-in",
+      "displayed_path": "AI Brains & Providers › Anthropic CLI",
+      "expected_dest": "providers accounts section for anthropic-cli",
+      "actual_dest": "#/mgr/providers/anthropic-cli?sec=accounts",
+      "focus_highlight": "sheet pm2-locate",
+      "pass": true,
+      "note": "manager object"
+    },
+    {
+      "query": "reduce animations",
+      "rid": "sr:setting:general.visual.reduce-animations",
+      "displayed_path": "General & Appearance › Visual Style",
+      "expected_dest": "deep row in general/visual",
+      "actual_dest": "#/cat/general/visual?row=general.visual.reduce-animations",
+      "focus_highlight": "BUTTON focused + pm2-locate",
+      "pass": true,
+      "note": "deep setting row"
+    },
+    {
+      "query": "back up now",
+      "rid": "sr:action:backup.now",
+      "displayed_path": "System & Advanced › Backup & Restore",
+      "expected_dest": "backup manager row backup.now",
+      "actual_dest": "#/mgr/backup?row=backup.now",
+      "focus_highlight": "action button focused + pm2-locate",
+      "pass": true
+    },
+    {
+      "query": "install codex",
+      "rid": "sr:setup:codex.install",
+      "displayed_path": "AI Brains & Providers › Codex CLI",
+      "expected_dest": "providers install section for codex",
+      "actual_dest": "#/mgr/providers/codex?sec=install",
+      "focus_highlight": "sheet pm2-locate",
+      "pass": true,
+      "note": "setup workflow"
+    },
+    {
+      "query": "groq usage",
+      "rid": "sr:unavailable:groq.usage-dashboard",
+      "displayed_path": "AI Brains & Providers › Groq",
+      "expected_dest": "providers limits section with usage-unavailable state",
+      "actual_dest": "#/mgr/providers/groq-usage?sec=limits",
+      "focus_highlight": "sheet pm2-locate",
+      "pass": true,
+      "note": "unavailable meters"
+    },
+    {
+      "query": "spellcheck",
+      "rid": "sr:manager:spellcheck",
+      "displayed_path": "General & Appearance › Spellcheck & Dictionaries",
+      "expected_dest": "spellcheck manager",
+      "actual_dest": "#/mgr/spellcheck",
+      "focus_highlight": "manager view",
+      "pass": true
+    },
+    {
+      "query": "overall health",
+      "rid": "sr:diag:doctor.health",
+      "displayed_path": "System & Advanced › Doctor",
+      "expected_dest": "doctor manager row doctor.overall",
+      "actual_dest": "#/mgr/doctor?row=doctor.overall",
+      "focus_highlight": "pm2-locate",
+      "pass": true,
+      "note": "diagnostic"
+    },
+    {
+      "query": "storage integrity",
+      "rid": "sr:diag:storage.integrity",
+      "displayed_path": "System & Advanced › Storage & Retention",
+      "expected_dest": "storage manager integrity section",
+      "actual_dest": "#/mgr/storage?sec=integrity",
+      "focus_highlight": "sheet pm2-locate",
+      "pass": true
+    },
+    {
+      "query": "assistant gist health",
+      "rid": "sr:diag:memory.gist-health",
+      "displayed_path": "Memory & Context › Memory Manager",
+      "expected_dest": "memory manager row memory.gist-health",
+      "actual_dest": "#/mgr/memory?row=memory.gist-health",
+      "focus_highlight": "pm2-locate",
+      "pass": true
+    },
+    {
+      "query": "test restore",
+      "rid": "sr:setup:backup.test-restore",
+      "displayed_path": "System & Advanced › Backup & Restore",
+      "expected_dest": "backup manager row backup.test-restore",
+      "actual_dest": "#/mgr/backup?row=backup.test-restore",
+      "focus_highlight": "pm2-locate",
+      "pass": true
+    },
+    {
+      "query": "azure fallback",
+      "rid": "sr:object:azure-openai.fallback",
+      "displayed_path": "AI Brains & Providers › Azure OpenAI",
+      "expected_dest": "providers accounts section azure-openai",
+      "actual_dest": "#/mgr/providers/azure-openai?sec=accounts",
+      "focus_highlight": "sheet pm2-locate",
+      "pass": true
+    },
+    {
+      "query": "settings profiles",
+      "rid": "sr:unavailable:profiles",
+      "displayed_path": "System & Advanced › Not available",
+      "expected_dest": "receipt only",
+      "actual_dest": "receipt only",
+      "focus_highlight": "n/a",
+      "pass": true
+    },
+    {
+      "query": "rate limits (back restore)",
+      "rid": "sr:object:claude-oauth.rate-limits",
+      "displayed_path": "AI Brains & Providers › Claude CLI (Max profile)",
+      "expected_dest": "after Back: #/q/rate%20limits with query text and same results",
+      "actual_dest": "#/q/rate%20limits, input value 'rate limits', dropdown open with 5 rows",
+      "focus_highlight": "dropdown restored",
+      "pass": true,
+      "note": "back-restores-query"
+    }
+  ]
+}

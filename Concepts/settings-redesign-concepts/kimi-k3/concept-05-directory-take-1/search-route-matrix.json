@@ -1,0 +1,197 @@
+{
+  "schema_id": "pm.settings_bakeoff.search_route_matrix.v1",
+  "concept": "concept-05-directory-take-1",
+  "generated": "2026-08-18",
+  "index_entries": 1078,
+  "dropdown_limit": 12,
+  "routing_rule": "Every selection resolves through PM_V2_SEARCH.resolve(index, immutableResultId) only; never by rendered index, group position, or label.",
+  "cases": [
+    {
+      "name": "grouped results across types",
+      "query": "theme",
+      "result_id": "r_0fb731e11753ac25",
+      "displayed_path": "Settings / General & Appearance / Visual Style / Theme",
+      "expected_destination": { "domain": "general", "page": "visual", "section": "visual", "row": "general.visual.theme" },
+      "actual_destination": "Section form Settings / General & Appearance / Visual Style with the Theme row scrolled into view (dropdown grouped: Settings, Pages & managers)",
+      "focus_highlight": "pmv2-locate on [data-setting-id='general.visual.theme']",
+      "back_restores": true,
+      "pass": true
+    },
+    {
+      "name": "duplicate labels — domain landing (1 of 2)",
+      "query": "personas",
+      "result_id": "r_72fc2a147b151f34",
+      "displayed_path": "Settings / Personas",
+      "expected_destination": { "domain": "personas" },
+      "actual_destination": "Domain workspace Settings / Personas (destination rows for the Personas manager and Library subgroups)",
+      "focus_highlight": "pmv2-locate on [data-domain-id='personas']",
+      "back_restores": true,
+      "pass": true
+    },
+    {
+      "name": "duplicate labels — manager landing (2 of 2, same label, different destination)",
+      "query": "personas",
+      "result_id": "r_0b0d1a29101cd681",
+      "displayed_path": "Settings / Personas / Personas",
+      "expected_destination": { "domain": "personas", "manager": "personas" },
+      "actual_destination": "Personas roster workspace (Library list + detail sheet), not the domain page",
+      "focus_highlight": "pmv2-locate on [data-manager-id='personas']",
+      "back_restores": true,
+      "pass": true
+    },
+    {
+      "name": "duplicate labels — setting vs manager (1 of 2)",
+      "query": "project search index",
+      "result_id": "r_b6e4288f9054a81b",
+      "displayed_path": "Settings / Web & Search / Project Search Index / Project Search Index",
+      "expected_destination": { "domain": "web", "page": "index", "section": "index", "row": "web.index.enable" },
+      "actual_destination": "Section form Settings / Web & Search / Project Search Index with the enable row highlighted",
+      "focus_highlight": "pmv2-locate on [data-setting-id='web.index.enable']",
+      "back_restores": true,
+      "pass": true
+    },
+    {
+      "name": "duplicate labels — setting vs manager (2 of 2)",
+      "query": "project search index",
+      "result_id": "r_f12031f2ce93d488",
+      "displayed_path": "Settings / Web & Search / Project Search Index",
+      "expected_destination": { "domain": "web", "manager": "search-index" },
+      "actual_destination": "Project Search Index health-projection manager (Status tab), not the setting row",
+      "focus_highlight": "pmv2-locate on [data-manager-id='search-index']",
+      "back_restores": true,
+      "pass": true
+    },
+    {
+      "name": "typo tolerance — 'theem' lands on Theme",
+      "query": "theem",
+      "result_id": "r_0fb731e11753ac25",
+      "displayed_path": "Settings / General & Appearance / Visual Style / Theme",
+      "expected_destination": { "domain": "general", "page": "visual", "section": "visual", "row": "general.visual.theme" },
+      "actual_destination": "Section form Settings / General & Appearance / Visual Style; Theme row located inside the form (verified in the scripted smoke run)",
+      "focus_highlight": "pmv2-locate on [data-setting-id='general.visual.theme']",
+      "back_restores": true,
+      "pass": true
+    },
+    {
+      "name": "unavailable capability with reason",
+      "query": "cost export",
+      "result_id": "r_64f70f3752102afb",
+      "displayed_path": "Settings / AI Brains & Providers / Status, Usage & Costs / Cost Export Format — Unavailable: requires a connected provider",
+      "expected_destination": { "domain": "ai", "page": "usage", "section": "usage", "row": "ai.usage.ledger-export" },
+      "actual_destination": "Section form Settings / AI Brains & Providers / Status, Usage & Costs; row rendered dimmed with the unavailable reason line and control disabled",
+      "focus_highlight": "pmv2-locate on [data-setting-id='ai.usage.ledger-export']",
+      "back_restores": true,
+      "pass": true
+    },
+    {
+      "name": "managed object — provider",
+      "query": "anthropic",
+      "result_id": "r_bce0d67bff393687",
+      "displayed_path": "Settings / AI Brains & Providers / Providers / Anthropic",
+      "expected_destination": { "domain": "ai", "manager": "providers", "object": "anthropic", "section": "overview" },
+      "actual_destination": "Providers roster workspace with Anthropic selected in the list and its Overview detail sheet open (verified in the scripted smoke run)",
+      "focus_highlight": "pmv2-locate on [data-object-id='anthropic']",
+      "back_restores": true,
+      "pass": true
+    },
+    {
+      "name": "managed object — unavailable provider (explicit setup required)",
+      "query": "vllm",
+      "result_id": "r_ddf33ee87dad9b08",
+      "displayed_path": "Settings / AI Brains & Providers / Providers / vLLM tenant — Not installed — explicit setup required",
+      "expected_destination": { "domain": "ai", "manager": "providers", "object": "vllm-tenant", "section": "overview" },
+      "actual_destination": "Providers roster workspace with vLLM tenant selected; Installation subpage offers the explicit official-source Set up flow",
+      "focus_highlight": "pmv2-locate on [data-object-id='vllm-tenant']",
+      "back_restores": true,
+      "pass": true
+    },
+    {
+      "name": "deep setting row",
+      "query": "scrollback",
+      "result_id": "r_04837e222e292302",
+      "displayed_path": "Settings / Code & Execution / Terminal & Shell / Scrollback Lines",
+      "expected_destination": { "domain": "code", "page": "terminal", "section": "terminal", "row": "code.terminal.scrollback-limit" },
+      "actual_destination": "Section form Settings / Code & Execution / Terminal & Shell with the Scrollback Lines row scrolled into view",
+      "focus_highlight": "pmv2-locate on [data-setting-id='code.terminal.scrollback-limit']",
+      "back_restores": true,
+      "pass": true
+    },
+    {
+      "name": "action — Copy Settings From Another Project",
+      "query": "copy settings",
+      "result_id": "r_8b0c67409da5d3a8",
+      "displayed_path": "Settings / System & Advanced / Settings Lifecycle / Copy Settings From Another Project",
+      "expected_destination": { "domain": "system", "manager": "lifecycle", "page": "copy", "section": "copy" },
+      "actual_destination": "Centered copy review flow (source → categories → preview → confirm → apply → receipt), the transaction destination of the lifecycle manager",
+      "focus_highlight": "copy panel carries [data-section-id='copy']",
+      "back_restores": true,
+      "pass": true
+    },
+    {
+      "name": "setup/repair workflow",
+      "query": "repair openai",
+      "result_id": "r_44405055f8aad3e5",
+      "displayed_path": "Settings / AI Brains & Providers / Providers / OpenAI / Installation",
+      "expected_destination": { "domain": "ai", "manager": "providers", "object": "openai", "section": "installation" },
+      "actual_destination": "Providers workspace, OpenAI detail, Installation tab with repair and official-source reinstall actions",
+      "focus_highlight": "pmv2-locate on [data-object-id='openai']",
+      "back_restores": true,
+      "pass": true
+    },
+    {
+      "name": "setup workflow — local models",
+      "query": "ollama",
+      "result_id": "r_73f0b93f58506ba3",
+      "displayed_path": "Settings / AI Brains & Providers / Providers / Ollama / Installation",
+      "expected_destination": { "domain": "ai", "manager": "providers", "object": "ollama", "section": "installation" },
+      "actual_destination": "Providers workspace, Ollama detail, Installation tab with explicit official-source setup",
+      "focus_highlight": "pmv2-locate on [data-object-id='ollama']",
+      "back_restores": true,
+      "pass": true
+    },
+    {
+      "name": "diagnostic / read-only status",
+      "query": "doctor",
+      "result_id": "r_fccc31403884fa90",
+      "displayed_path": "Settings / System & Advanced / Doctor / Checks — Read-only projection",
+      "expected_destination": { "domain": "system", "manager": "doctor", "section": "checks" },
+      "actual_destination": "Doctor health-projection manager on the Checks tab (read-only status rows with health labels)",
+      "focus_highlight": "pmv2-locate on [data-section-id='checks']",
+      "back_restores": true,
+      "pass": true
+    },
+    {
+      "name": "intentional help result",
+      "query": "credentials",
+      "result_id": "r_969f27a944894885",
+      "displayed_path": "Settings / AI Brains & Providers / Providers — Help",
+      "expected_destination": { "domain": "ai", "manager": "providers", "section": "help" },
+      "actual_destination": "Providers workspace with the help panel explaining how provider credentials work",
+      "focus_highlight": "pmv2-locate on [data-section-id='help']",
+      "back_restores": true,
+      "pass": true
+    },
+    {
+      "name": "manager page landing",
+      "query": "sound",
+      "result_id": "r_dc403c7057449190",
+      "displayed_path": "Settings / General & Appearance / Sound Library",
+      "expected_destination": { "domain": "general", "manager": "sounds" },
+      "actual_destination": "Sound Library inventory-catalog manager (facet chips Packs/Uploads, catalog rows)",
+      "focus_highlight": "pmv2-locate on [data-manager-id='sounds']",
+      "back_restores": true,
+      "pass": true
+    },
+    {
+      "name": "back restores the query dropdown with the result selected",
+      "query": "theem",
+      "result_id": "r_0fb731e11753ac25",
+      "displayed_path": "Settings / General & Appearance / Visual Style / Theme",
+      "expected_destination": { "domain": "general", "page": "visual", "section": "visual", "row": "general.visual.theme" },
+      "actual_destination": "After landing, Back returns Home with 'theem' restored in #pmv2-search, the dropdown reopened, and r_0fb731e11753ac25 aria-selected (verified in the scripted smoke run)",
+      "focus_highlight": "dropdown selection restored via store.searchState",
+      "back_restores": true,
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "concept_id": "concept-07-compendium-workspace",
+  "model": "Qwen 5.8",
+  "plan_owner_impacts": [
+    {
+      "owner": "Settings IA owner",
+      "impact": "First-class All Settings compendium (faceted, virtualized index over the real 828) is a candidate primary long-tail surface; facet state (category/type/status/tier + within-filter + sort) implies a route-keyed view-state contract (#/all?cat=...)."
+    },
+    {
+      "owner": "Settings IA owner",
+      "impact": "Domain pages combining overview stats + key settings + related managers propose a canonical domain-page composition; manager list/detail workspace proposes roster+detail as the default manager geometry."
+    },
+    {
+      "owner": "Provider Lifecycle owner",
+      "impact": "Provider detail tabs (overview/models/settings/credentials/limits/diagnostics/install) with section aliases (accounts->credentials, logs->diagnostics, catalog->models, setup->overview) propose canonical ?sec= sectioning; Installation deferred insertion stays inside install tab."
+    }
+  ],
+  "settings_inventory_impacts": [
+    {
+      "impact": "No new inventory rows; renders the verbatim 828-row inventory (PMInventoryData). Synthetic stress +2000 rows are generated, marked Synthetic, never replace real data, and never navigate."
+    }
+  ],
+  "settings_schema_impacts": [
+    {
+      "impact": "Legacy scope metadata (scope: [global]) preserved for provenance but never rendered as an editable scope; project-only presentation (see plan-owner-delta.md). Facets expose category/type/tier/status as read dimensions, not scopes."
+    }
+  ],
+  "command_id_impacts": [
+    {
+      "impact": "See candidate-command-delta.json; all IDs provisional census reuse/alias/candidate."
+    }
+  ],
+  "wiring_impacts": [
+    {
+      "impact": "See candidate-wiring-delta.json."
+    }
+  ],
+  "dry_component_impacts": [
+    {
+      "impact": "See candidate-dry-delta.json; presentation-only reuse of headless modules (PMState2/PMSearch2/PMCopy2/PMManagers2/PMManagers2Data/PMShell2); no second state owner."
+    }
+  ],
+  "schema_event_storage_impacts": [
+    {
+      "impact": "Demo state persisted under PMState2 key pm.settings-demo2.concept-07-compendium-workspace; namespaced, no shared keys."
+    }
+  ],
+  "migration_supersession_impacts": [
+    {
+      "impact": "Honors machine_readable/supersessions.json (seven concepts; per-concept coverage; no editable scopes; rid-only search routing). Concepts 01-04 frozen, untouched."
+    }
+  ],
+  "slint_port_impacts": [],
+  "test_fixtures": [
+    {
+      "fixture": "search grouped + duplicate labels with #/q back-restore",
+      "status": "verified in headless browser"
+    },
+    {
+      "fixture": "47 manager routes with data-manager/back/breadcrumb/close",
+      "status": "verified in headless browser"
+    },
+    {
+      "fixture": "compendium virtualization data-window at 828 and 2828 rows with facet counts",
+      "status": "verified in headless browser"
+    },
+    {
+      "fixture": "copy flow: counts (total/add/replace/same/unavailable/conflict) + diff + restore point + verify + rollback",
+      "status": "verified in headless browser"
+    },
+    {
+      "fixture": "squeezed tier: nav + facets drawers, roster push, Escape order popup->drawer->out->home",
+      "status": "verified in headless browser"
+    },
+    {
+      "fixture": "scenario mirrors on real inventory ids (unavailable/restart/changed-elsewhere/managed/offline)",
+      "status": "verified in headless browser"
+    }
+  ],
+  "deferred_named_owners": [
+    "Product Onboarding plan owner",
+    "Provider Lifecycle owner",
+    "Server Backbone",
+    "Project Syncing and Updates"
+  ],
+  "unresolved_questions": [
+    "Whether the faceted compendium should become the product-wide long-tail surface or remain one of several concept options (bakeoff decision pending)."
+  ]
+}

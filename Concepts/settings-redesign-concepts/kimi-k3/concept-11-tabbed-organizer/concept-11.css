@@ -1,0 +1,668 @@
+/* ============================================================================
+   Concept 11 — Tabbed Organizer (kimi-k3)
+   ----------------------------------------------------------------------------
+   Organization model: a top tab bar of domains; every tab owns a persistent
+   surface ("sheet") that keeps its own navigation stack, selection, and
+   scroll while hidden. Re-themed to current Puppet Master: plain PM tabs,
+   panels, and tokens — a sliding tab indicator and sheet cross-fades supply
+   the motion. No skeuomorphism of any kind.
+   ========================================================================== */
+
+.tbo {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+  min-block-size: 0;
+  background: var(--pm-bg);
+  color: var(--pm-ink);
+  font-family: var(--pm-font);
+  font-size: 13px;
+}
+
+.tbo svg { inline-size: 15px; block-size: 15px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---------- workspace search bar (persistent, reachable everywhere) ------- */
+.tbo-searchbar {
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--pm-line);
+  background: var(--pm-bg-raised);
+}
+.tbo-searchbar .tbo-search-wrap { position: relative; flex: 1 1 auto; max-inline-size: 720px; }
+.tbo-searchbar .tbo-search-wrap > svg {
+  position: absolute; inset-inline-start: 11px; inset-block-start: 50%; translate: 0 -50%;
+  color: var(--pm-ink-faint); pointer-events: none;
+}
+.tbo-search-input {
+  inline-size: 100%;
+  padding: 9px 34px 9px 34px;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-m);
+  background: var(--pm-bg-sunken);
+  color: var(--pm-ink);
+  font: inherit;
+  font-size: 13.5px;
+}
+.tbo-search-input::placeholder { color: var(--pm-ink-faint); }
+.tbo-search-input:focus { outline: 2px solid var(--pm-focus); outline-offset: 1px; }
+.tbo-search-clear {
+  position: absolute; inset-inline-end: 6px; inset-block-start: 50%; translate: 0 -50%;
+  display: grid; place-items: center; inline-size: 22px; block-size: 22px;
+  border: 0; border-radius: 50%; background: transparent; color: var(--pm-ink-faint); cursor: pointer;
+}
+.tbo-search-clear:hover { color: var(--pm-ink); background: var(--pm-bg-sunken); }
+.tbo-project-chip {
+  flex: none;
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 5px 11px;
+  border: 1px solid var(--pm-line); border-radius: 999px;
+  background: var(--pm-bg-sunken);
+  color: var(--pm-ink-dim); font-size: 12px; white-space: nowrap;
+}
+.tbo-project-chip strong { color: var(--pm-ink); font-weight: 600; }
+
+/* scenario banner */
+.tbo-scenario {
+  flex: none;
+  display: none;
+  align-items: center; gap: 8px;
+  padding: 7px 16px;
+  border-bottom: 1px solid var(--pm-line);
+  background: color-mix(in srgb, var(--pm-info) 9%, var(--pm-bg-raised));
+  color: var(--pm-ink-dim); font-size: 12px;
+}
+.tbo-scenario[data-on="true"] { display: flex; }
+.tbo-scenario .pm-badge { flex: none; }
+.tbo-scenario button { margin-inline-start: auto; }
+
+/* ---------- search dropdown ---------------------------------------------- */
+.tbo-results {
+  position: absolute;
+  z-index: 60;
+  inset-inline-start: 0;
+  inset-block-start: calc(100% + 6px);
+  inline-size: min(640px, 100%);
+  max-block-size: min(480px, 70vh);
+  overflow: auto;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-m);
+  background: var(--pm-bg-raised);
+  box-shadow: var(--pm-shadow-2);
+}
+.tbo-results[hidden] { display: none; }
+.tbo-hits-group { padding: 6px 6px 2px; }
+.tbo-hits-group-h {
+  padding: 5px 8px 3px;
+  color: var(--pm-ink-faint);
+  font-size: 10.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+}
+.tbo-hit {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1px 10px;
+  inline-size: 100%;
+  padding: 7px 9px;
+  border: 0; border-radius: var(--pm-radius-s);
+  background: none; color: var(--pm-ink);
+  font: inherit; text-align: start; cursor: pointer;
+}
+.tbo-hit:hover, .tbo-hit[data-active="true"] { background: var(--pm-bg-sunken); }
+.tbo-hit-label { font-size: 13px; font-weight: 550; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tbo-hit-label mark { background: color-mix(in srgb, var(--pm-accent) 26%, transparent); color: inherit; border-radius: 2px; padding: 0 1px; }
+.tbo-hit-kind {
+  grid-row: span 2; align-self: center;
+  padding: 2px 8px; border: 1px solid var(--pm-line); border-radius: 999px;
+  color: var(--pm-ink-dim); font-size: 10.5px; white-space: nowrap;
+}
+.tbo-hit-path { grid-column: 1; color: var(--pm-ink-faint); font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tbo-hit-avail { grid-column: 1 / -1; color: var(--pm-warn); font-size: 11px; }
+.tbo-hits-more {
+  display: block; inline-size: 100%;
+  padding: 8px 10px; border: 0; border-top: 1px solid var(--pm-line);
+  background: none; color: var(--pm-accent); font: inherit; font-size: 12px; text-align: center; cursor: pointer;
+}
+.tbo-hits-more:hover { background: var(--pm-bg-sunken); }
+.tbo-hits-empty { padding: 18px 14px; color: var(--pm-ink-dim); font-size: 12.5px; text-align: center; }
+.tbo-hits-foot {
+  display: flex; gap: 14px; justify-content: center;
+  padding: 6px; border-top: 1px solid var(--pm-line);
+  color: var(--pm-ink-faint); font-size: 10.5px;
+}
+.tbo-hits-foot kbd {
+  padding: 1px 5px; border: 1px solid var(--pm-line); border-radius: 4px;
+  background: var(--pm-bg-sunken); font-family: var(--pm-font-mono); font-size: 10px;
+}
+
+/* ---------- domain tab bar ------------------------------------------------ */
+.tbo-tabbar {
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  padding: 0 8px;
+  border-bottom: 1px solid var(--pm-line);
+  background: var(--pm-bg-raised);
+  overflow: hidden;
+}
+.tbo-tabstrip {
+  display: flex; align-items: stretch; gap: 1px;
+  min-inline-size: 0; overflow: hidden;
+}
+.tbo-tab {
+  position: relative;
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 10px 13px 11px;
+  border: 0; background: none;
+  color: var(--pm-ink-dim);
+  font: inherit; font-size: 12.5px; white-space: nowrap; cursor: pointer;
+  border-radius: var(--pm-radius-s) var(--pm-radius-s) 0 0;
+}
+.tbo-tab:hover { color: var(--pm-ink); background: var(--pm-bg-sunken); }
+.tbo-tab[aria-selected="true"] { color: var(--pm-ink); font-weight: 620; }
+.tbo-tab .tbo-tab-count {
+  padding: 1px 6px; border-radius: 999px;
+  background: var(--pm-bg-sunken);
+  color: var(--pm-ink-faint); font-size: 10px; font-variant-numeric: tabular-nums;
+}
+.tbo-tab[aria-selected="true"] .tbo-tab-count { background: color-mix(in srgb, var(--pm-accent) 16%, transparent); color: var(--pm-accent); }
+.tbo-tab-indicator {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  block-size: 2px;
+  inline-size: 0;
+  background: var(--pm-accent);
+  border-radius: 2px 2px 0 0;
+  transition: transform calc(200ms * var(--pm-motion-scale, 1)) cubic-bezier(.3,.9,.3,1),
+              inline-size calc(200ms * var(--pm-motion-scale, 1)) cubic-bezier(.3,.9,.3,1);
+  pointer-events: none;
+}
+.tbo-tab-overflow {
+  flex: none;
+  display: inline-flex; align-items: center; gap: 5px;
+  margin-inline-start: auto;
+  padding: 0 10px;
+  border: 0; background: none; color: var(--pm-ink-dim);
+  font: inherit; font-size: 12px; cursor: pointer;
+}
+.tbo-tab-overflow:hover { color: var(--pm-ink); }
+.tbo-tab-overflow[hidden] { display: none; }
+
+/* narrow one-pane bar */
+.tbo-narrowbar {
+  flex: none;
+  display: none;
+  align-items: center; gap: 8px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--pm-line);
+  background: var(--pm-bg-raised);
+}
+.tbo-narrowbar .tbo-narrow-title { font-weight: 620; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tbo-narrowbar .tbo-narrow-menu { margin-inline-start: auto; }
+
+/* ---------- sheets (one persistent surface per tab) ----------------------- */
+.tbo-sheets {
+  position: relative;
+  flex: 1 1 auto;
+  min-block-size: 0;
+  min-inline-size: 0;
+}
+.tbo-sheet {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  min-block-size: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity calc(180ms * var(--pm-motion-scale, 1)) ease,
+              visibility 0s linear calc(180ms * var(--pm-motion-scale, 1));
+}
+.tbo-sheet.is-active {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity calc(180ms * var(--pm-motion-scale, 1)) ease;
+}
+
+/* layers inside a sheet (the location stack) */
+.tbo-layers { position: relative; flex: 1 1 auto; min-block-size: 0; }
+.tbo-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  min-block-size: 0;
+  background: var(--pm-bg);
+}
+.tbo-layer[hidden] { display: none; }
+.tbo-layer-scroll {
+  flex: 1 1 auto;
+  min-block-size: 0;
+  overflow: auto;
+  padding: 18px 22px 28px;
+}
+.tbo-layer-scroll > * { max-inline-size: 1060px; }
+@container pmx (min-width: 1700px) {
+  .tbo-layer-scroll > * { max-inline-size: 1240px; }
+}
+
+/* ---------- sheet header / breadcrumb ------------------------------------- */
+.tbo-crumb {
+  flex: none;
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 16px;
+  border-bottom: 1px solid var(--pm-line);
+  background: var(--pm-bg-raised);
+  font-size: 12px; color: var(--pm-ink-dim);
+  min-block-size: 40px;
+}
+.tbo-crumb .tbo-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px 4px 7px;
+  border: 1px solid var(--pm-line); border-radius: var(--pm-radius-s);
+  background: var(--pm-bg-raised); color: var(--pm-ink-dim);
+  font: inherit; font-size: 12px; cursor: pointer;
+}
+.tbo-crumb .tbo-back:hover { color: var(--pm-ink); border-color: var(--pm-ink-faint); }
+.tbo-crumb-path { display: flex; align-items: center; gap: 6px; min-inline-size: 0; overflow: hidden; white-space: nowrap; }
+.tbo-crumb-path .tbo-crumb-cur { color: var(--pm-ink); font-weight: 600; }
+.tbo-crumb-path svg { inline-size: 11px; block-size: 11px; color: var(--pm-ink-faint); }
+.tbo-crumb .tbo-close { margin-inline-start: auto; }
+
+/* ---------- home ----------------------------------------------------------- */
+.tbo-home-hero { margin-block-end: 14px; }
+.tbo-home-hero h1 { margin: 0 0 3px; font-size: 21px; font-weight: 680; letter-spacing: -.01em; }
+.tbo-home-hero p { margin: 0; color: var(--pm-ink-dim); font-size: 12.5px; }
+.tbo-section-h {
+  margin: 20px 0 9px;
+  display: flex; align-items: baseline; gap: 10px;
+  color: var(--pm-ink-dim);
+  font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+}
+.tbo-section-h .tbo-section-note { color: var(--pm-ink-faint); font-weight: 500; letter-spacing: 0; text-transform: none; }
+
+.tbo-domain-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+  gap: 10px;
+}
+.tbo-domain-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 3px 11px;
+  padding: 13px 14px;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-m);
+  background: var(--pm-bg-raised);
+  color: var(--pm-ink);
+  font: inherit; text-align: start; cursor: pointer;
+  transition: border-color calc(140ms * var(--pm-motion-scale, 1)) ease,
+              transform calc(140ms * var(--pm-motion-scale, 1)) ease;
+}
+.tbo-domain-card:hover { border-color: color-mix(in srgb, var(--pm-accent) 45%, var(--pm-line)); transform: translateY(-1px); }
+.tbo-domain-card svg { grid-row: span 2; inline-size: 19px; block-size: 19px; margin-block-start: 2px; color: var(--pm-accent); }
+.tbo-domain-card .tbo-domain-title { font-weight: 620; font-size: 13px; }
+.tbo-domain-card .tbo-domain-meta { color: var(--pm-ink-faint); font-size: 11px; }
+
+.tbo-attn-list { display: grid; gap: 7px; }
+.tbo-attn-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px;
+  border: 1px solid var(--pm-line); border-radius: var(--pm-radius-s);
+  background: var(--pm-bg-raised);
+}
+.tbo-attn-row .pm-healthdot { flex: none; }
+.tbo-attn-main { min-inline-size: 0; flex: 1 1 auto; }
+.tbo-attn-title { font-size: 12.5px; font-weight: 560; }
+.tbo-attn-sub { color: var(--pm-ink-faint); font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.tbo-util-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.tbo-recent { display: grid; gap: 4px; }
+.tbo-recent-row {
+  display: flex; align-items: baseline; gap: 9px;
+  padding: 6px 9px;
+  border: 0; border-radius: var(--pm-radius-s);
+  background: none; color: var(--pm-ink); font: inherit; font-size: 12.5px; text-align: start; cursor: pointer;
+}
+.tbo-recent-row:hover { background: var(--pm-bg-sunken); }
+.tbo-recent-row .tbo-recent-time { margin-inline-start: auto; color: var(--pm-ink-faint); font-size: 11px; white-space: nowrap; }
+
+/* ---------- domain sheet: subgroup tabs + related managers ----------------- */
+.tbo-subtabs {
+  flex: none;
+  display: flex; align-items: center; gap: 2px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--pm-line);
+  background: var(--pm-bg-raised);
+  position: relative;
+}
+.tbo-subtab {
+  position: relative;
+  padding: 9px 12px 10px;
+  border: 0; background: none;
+  color: var(--pm-ink-dim); font: inherit; font-size: 12.5px; white-space: nowrap; cursor: pointer;
+}
+.tbo-subtab:hover { color: var(--pm-ink); }
+.tbo-subtab[aria-selected="true"] { color: var(--pm-ink); font-weight: 620; }
+.tbo-subtab .tbo-tab-count { margin-inline-start: 6px; padding: 1px 6px; border-radius: 999px; background: var(--pm-bg-sunken); color: var(--pm-ink-faint); font-size: 10px; }
+.tbo-subtab-indicator {
+  position: absolute; inset-block-end: 0; block-size: 2px;
+  background: var(--pm-accent); border-radius: 2px 2px 0 0;
+  transition: transform calc(200ms * var(--pm-motion-scale, 1)) cubic-bezier(.3,.9,.3,1),
+              inline-size calc(200ms * var(--pm-motion-scale, 1)) cubic-bezier(.3,.9,.3,1);
+  pointer-events: none;
+}
+
+.tbo-domain-head { margin-block-end: 12px; }
+.tbo-domain-head h2 { margin: 0 0 3px; font-size: 18px; font-weight: 660; }
+.tbo-domain-head p { margin: 0; color: var(--pm-ink-dim); font-size: 12.5px; max-inline-size: 72ch; }
+
+.tbo-related {
+  margin-block-start: 22px;
+  display: grid; gap: 8px;
+}
+.tbo-related-strip {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.tbo-related-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 13px;
+  border: 1px solid var(--pm-line); border-radius: 999px;
+  background: var(--pm-bg-raised);
+  color: var(--pm-ink); font: inherit; font-size: 12.5px; cursor: pointer;
+  transition: border-color calc(140ms * var(--pm-motion-scale, 1)) ease;
+}
+.tbo-related-chip:hover { border-color: color-mix(in srgb, var(--pm-accent) 45%, var(--pm-line)); }
+.tbo-related-chip svg { color: var(--pm-accent); }
+.tbo-related-chip .tbo-related-sub { color: var(--pm-ink-faint); font-size: 11px; }
+
+/* ---------- setting rows (ordinary setting grammar) ------------------------ */
+.tbo-group { margin-block-end: 18px; }
+.tbo-group-h { margin: 0 0 7px; font-size: 12px; font-weight: 680; color: var(--pm-ink-dim); }
+.tbo-group-note { margin: -4px 0 8px; font-size: 11.5px; color: var(--pm-ink-faint); }
+.tbo-rows {
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-m);
+  background: var(--pm-bg-raised);
+  overflow: hidden;
+}
+.tbo-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 16px;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--pm-line);
+}
+.tbo-row:last-child { border-bottom: 0; }
+.tbo-row[data-state="managed"], .tbo-row[data-state="unavailable"] { background: color-mix(in srgb, var(--pm-ink) 2.5%, transparent); }
+.tbo-row-label { display: flex; align-items: center; gap: 8px; font-weight: 560; font-size: 13px; }
+.tbo-row-desc { grid-column: 1; color: var(--pm-ink-dim); font-size: 11.8px; line-height: 1.45; max-inline-size: 68ch; }
+.tbo-row-control { grid-column: 2; grid-row: 1 / span 2; align-self: center; display: flex; align-items: center; gap: 8px; }
+.tbo-row-details { grid-column: 1 / -1; }
+.tbo-row-details summary {
+  display: inline-flex; align-items: center; gap: 5px;
+  color: var(--pm-ink-faint); font-size: 11px; cursor: pointer; list-style: none;
+}
+.tbo-row-details summary::-webkit-details-marker { display: none; }
+.tbo-row-details summary:hover { color: var(--pm-ink-dim); }
+.tbo-row-details[open] summary { color: var(--pm-ink-dim); }
+.tbo-row-why {
+  margin-block-start: 8px;
+  display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center;
+  padding: 9px 11px;
+  border: 1px dashed var(--pm-line); border-radius: var(--pm-radius-s);
+  background: var(--pm-bg-sunken);
+  color: var(--pm-ink-dim); font-size: 11.5px;
+}
+.tbo-row-why .tbo-why-kv b { color: var(--pm-ink); font-weight: 600; }
+.tbo-row-reason { grid-column: 1 / -1; color: var(--pm-warn); font-size: 11.5px; }
+
+/* ---------- manager frame --------------------------------------------------- */
+.tbo-mgr-head { margin-block-end: 12px; }
+.tbo-mgr-head h2 { margin: 0 0 3px; font-size: 18px; font-weight: 660; display: flex; align-items: center; gap: 9px; }
+.tbo-mgr-head h2 svg { color: var(--pm-accent); inline-size: 19px; block-size: 19px; }
+.tbo-mgr-head p { margin: 0; color: var(--pm-ink-dim); font-size: 12.5px; max-inline-size: 76ch; }
+
+/* roster (resource-roster) */
+.tbo-roster { display: grid; gap: 7px; }
+.tbo-roster-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center; gap: 12px;
+  padding: 11px 14px;
+  border: 1px solid var(--pm-line); border-radius: var(--pm-radius-m);
+  background: var(--pm-bg-raised);
+  color: var(--pm-ink); font: inherit; text-align: start; cursor: pointer;
+  transition: border-color calc(140ms * var(--pm-motion-scale, 1)) ease;
+}
+.tbo-roster-row:hover { border-color: color-mix(in srgb, var(--pm-accent) 45%, var(--pm-line)); }
+.tbo-roster-row[data-selected="true"] { border-color: color-mix(in srgb, var(--pm-accent) 55%, var(--pm-line)); }
+.tbo-roster-ic {
+  display: grid; place-items: center;
+  inline-size: 32px; block-size: 32px;
+  border-radius: var(--pm-radius-s);
+  background: var(--pm-bg-sunken); color: var(--pm-accent);
+}
+.tbo-roster-title { font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 8px; }
+.tbo-roster-sub { color: var(--pm-ink-faint); font-size: 11.5px; margin-block-start: 1px; }
+.tbo-roster-row > svg.tbo-chev { color: var(--pm-ink-faint); }
+
+/* detail tabs inside an object layer */
+.tbo-detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.tbo-kv-card {
+  padding: 12px 14px;
+  border: 1px solid var(--pm-line); border-radius: var(--pm-radius-m);
+  background: var(--pm-bg-raised);
+}
+.tbo-kv-card h4 { margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--pm-ink-faint); }
+.tbo-kv { display: grid; grid-template-columns: auto minmax(0,1fr); gap: 4px 14px; font-size: 12px; }
+.tbo-kv dt { color: var(--pm-ink-faint); }
+.tbo-kv dd { margin: 0; color: var(--pm-ink); text-align: end; overflow-wrap: anywhere; }
+
+.tbo-table-card { border: 1px solid var(--pm-line); border-radius: var(--pm-radius-m); background: var(--pm-bg-raised); overflow: hidden; }
+
+/* catalog facets + virtualization */
+.tbo-facets { display: flex; flex-wrap: wrap; gap: 6px; margin-block-end: 12px; }
+.tbo-facet {
+  padding: 4px 11px;
+  border: 1px solid var(--pm-line); border-radius: 999px;
+  background: var(--pm-bg-raised); color: var(--pm-ink-dim);
+  font: inherit; font-size: 11.5px; cursor: pointer;
+}
+.tbo-facet:hover { color: var(--pm-ink); }
+.tbo-facet[aria-pressed="true"] { background: color-mix(in srgb, var(--pm-accent) 14%, transparent); border-color: color-mix(in srgb, var(--pm-accent) 45%, var(--pm-line)); color: var(--pm-accent); }
+.tbo-vlist { position: relative; border: 1px solid var(--pm-line); border-radius: var(--pm-radius-m); background: var(--pm-bg-raised); overflow: auto; }
+.tbo-vlist-spacer { position: relative; }
+.tbo-vrow {
+  position: absolute; inset-inline: 0;
+  display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 4px 12px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--pm-line);
+  background: var(--pm-bg-raised);
+  color: var(--pm-ink); font: inherit; text-align: start; cursor: pointer;
+}
+.tbo-vrow:hover { background: var(--pm-bg-sunken); }
+.tbo-vrow-label { font-weight: 560; font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tbo-vrow-sub { grid-column: 1; color: var(--pm-ink-faint); font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tbo-vrow-tag { grid-column: 2; grid-row: 1 / span 2; }
+
+/* health projection */
+.tbo-health-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; }
+
+/* logs / diagnostic drawer */
+.tbo-logs {
+  border: 1px solid var(--pm-line); border-radius: var(--pm-radius-m);
+  background: var(--pm-bg-sunken);
+  padding: 10px 12px;
+  font-family: var(--pm-font-mono); font-size: 11.5px; color: var(--pm-ink-dim);
+  max-block-size: 320px; overflow: auto;
+}
+.tbo-logs div { padding: 2px 0; border-bottom: 1px dashed color-mix(in srgb, var(--pm-line) 55%, transparent); }
+.tbo-logs div:last-child { border-bottom: 0; }
+
+/* setup sequence */
+.tbo-steps { display: grid; gap: 0; border: 1px solid var(--pm-line); border-radius: var(--pm-radius-m); background: var(--pm-bg-raised); overflow: hidden; }
+.tbo-step { display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: 4px 12px; align-items: center; padding: 12px 14px; border-bottom: 1px solid var(--pm-line); }
+.tbo-step:last-child { border-bottom: 0; }
+.tbo-step-num {
+  grid-row: span 2;
+  display: grid; place-items: center;
+  inline-size: 24px; block-size: 24px;
+  border-radius: 50%; border: 1px solid var(--pm-line);
+  color: var(--pm-ink-dim); font-size: 11px; font-weight: 650;
+}
+.tbo-step[data-state="done"] .tbo-step-num { background: var(--pm-ok); border-color: transparent; color: var(--pm-on-status); }
+.tbo-step[data-state="active"] .tbo-step-num { background: var(--pm-accent); border-color: transparent; color: var(--pm-accent-ink); }
+.tbo-step-title { font-weight: 600; font-size: 12.5px; }
+.tbo-step-sub { grid-column: 2; color: var(--pm-ink-faint); font-size: 11.5px; }
+.tbo-step-act { grid-column: 3; grid-row: 1 / span 2; }
+
+/* ---------- copy transaction: adjacent panes -------------------------------- */
+.tbo-copy-steps { display: flex; align-items: center; gap: 6px; margin-block-end: 16px; flex-wrap: wrap; }
+.tbo-copy-step {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 5px 12px 5px 6px;
+  border: 1px solid var(--pm-line); border-radius: 999px;
+  color: var(--pm-ink-dim); font-size: 11.5px;
+}
+.tbo-copy-step b {
+  display: grid; place-items: center; inline-size: 18px; block-size: 18px;
+  border-radius: 50%; background: var(--pm-bg-sunken); font-size: 10.5px;
+}
+.tbo-copy-step[aria-current="step"] { border-color: color-mix(in srgb, var(--pm-accent) 50%, var(--pm-line)); color: var(--pm-ink); }
+.tbo-copy-step[aria-current="step"] b { background: var(--pm-accent); color: var(--pm-accent-ink); }
+.tbo-copy-step[data-done="true"] b { background: var(--pm-ok); color: var(--pm-on-status); }
+.tbo-copy-step-sep { inline-size: 16px; block-size: 1px; background: var(--pm-line); }
+
+.tbo-copy-panes {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+.tbo-copy-pane {
+  border: 1px solid var(--pm-line); border-radius: var(--pm-radius-m);
+  background: var(--pm-bg-raised);
+  overflow: hidden;
+}
+.tbo-copy-pane-h {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--pm-line);
+  background: var(--pm-bg-sunken);
+  font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--pm-ink-dim);
+  display: flex; align-items: center; gap: 8px;
+}
+.tbo-copy-pane-h .tbo-copy-pane-note { margin-inline-start: auto; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--pm-ink-faint); }
+.tbo-copy-pane-body { padding: 10px; display: grid; gap: 6px; max-block-size: 420px; overflow: auto; }
+.tbo-src-row {
+  display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 2px 10px; align-items: center;
+  padding: 9px 12px;
+  border: 1px solid var(--pm-line); border-radius: var(--pm-radius-s);
+  background: var(--pm-bg-raised); color: var(--pm-ink);
+  font: inherit; text-align: start; cursor: pointer;
+}
+.tbo-src-row:hover { border-color: var(--pm-ink-faint); }
+.tbo-src-row[aria-pressed="true"] { border-color: color-mix(in srgb, var(--pm-accent) 55%, var(--pm-line)); background: color-mix(in srgb, var(--pm-accent) 7%, var(--pm-bg-raised)); }
+.tbo-src-row .tbo-src-name { font-weight: 600; font-size: 12.5px; }
+.tbo-src-row .tbo-src-meta { grid-column: 1; color: var(--pm-ink-faint); font-size: 11px; }
+.tbo-src-row .pm-badge { grid-column: 2; grid-row: 1 / span 2; }
+.tbo-cat-row {
+  display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: 2px 10px; align-items: center;
+  padding: 8px 12px;
+  border: 1px solid var(--pm-line); border-radius: var(--pm-radius-s);
+  background: var(--pm-bg-raised); color: var(--pm-ink);
+  font: inherit; text-align: start; cursor: pointer;
+}
+.tbo-cat-row:hover { border-color: var(--pm-ink-faint); }
+.tbo-cat-row[aria-pressed="true"] { border-color: color-mix(in srgb, var(--pm-accent) 55%, var(--pm-line)); }
+.tbo-cat-row .tbo-cat-title { font-weight: 600; font-size: 12.5px; }
+.tbo-cat-row .tbo-cat-note { grid-column: 2; color: var(--pm-ink-faint); font-size: 11px; }
+.tbo-cat-check {
+  grid-row: 1 / span 2;
+  display: grid; place-items: center;
+  inline-size: 18px; block-size: 18px;
+  border: 1px solid var(--pm-line); border-radius: 5px;
+  color: transparent;
+}
+.tbo-cat-row[aria-pressed="true"] .tbo-cat-check { background: var(--pm-accent); border-color: transparent; color: var(--pm-accent-ink); }
+.tbo-cat-check svg { inline-size: 12px; block-size: 12px; }
+.tbo-copy-actions { display: flex; align-items: center; gap: 10px; margin-block-start: 14px; }
+.tbo-copy-actions .tbo-copy-count { margin-inline-start: auto; color: var(--pm-ink-dim); font-size: 12px; }
+.tbo-copy-error { margin-block-start: 10px; color: var(--pm-danger); font-size: 12px; }
+
+.tbo-totals { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin-block-end: 14px; }
+.tbo-total {
+  padding: 10px 12px;
+  border: 1px solid var(--pm-line); border-radius: var(--pm-radius-s);
+  background: var(--pm-bg-raised); text-align: center;
+}
+.tbo-total b { display: block; font-size: 19px; font-variant-numeric: tabular-nums; }
+.tbo-total span { color: var(--pm-ink-faint); font-size: 11px; }
+.tbo-total[data-kind="add"] b { color: var(--pm-ok); }
+.tbo-total[data-kind="replace"] b { color: var(--pm-info); }
+.tbo-total[data-kind="conflict"] b { color: var(--pm-warn); }
+.tbo-total[data-kind="unavailable"] b { color: var(--pm-ink-faint); }
+
+.tbo-receipt {
+  padding: 16px;
+  border: 1px solid color-mix(in srgb, var(--pm-ok) 45%, var(--pm-line));
+  border-radius: var(--pm-radius-m);
+  background: color-mix(in srgb, var(--pm-ok) 7%, var(--pm-bg-raised));
+  display: grid; gap: 8px;
+}
+.tbo-receipt h3 { margin: 0; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+.tbo-receipt h3 svg { color: var(--pm-ok); }
+
+/* ---------- deferred owner shell -------------------------------------------- */
+.tbo-owner {
+  border: 1px dashed var(--pm-line);
+  border-radius: var(--pm-radius-m);
+  background: var(--pm-bg-raised);
+  padding: 22px;
+  display: grid; gap: 10px; max-inline-size: 640px;
+}
+.tbo-owner h3 { margin: 0; font-size: 15px; }
+
+/* ---------- compendium -------------------------------------------------------- */
+.tbo-comp-filter { display: flex; gap: 8px; align-items: center; margin-block-end: 10px; flex-wrap: wrap; }
+.tbo-comp-filter .pm-text { flex: 1 1 220px; max-inline-size: 340px; }
+
+/* ---------- toasts / ops ------------------------------------------------------ */
+.tbo-op-card { margin-block-start: 12px; }
+
+/* ---------- narrow transformation (one-pane push stack + tab menu) ----------- */
+.tbo-narrowback { display: none; }
+@container pmx (max-width: 900px) {
+  .tbo-tabbar { display: none; }
+  .tbo-narrowbar { display: flex; }
+  .tbo-layer-scroll { padding: 14px 14px 22px; }
+  .tbo-copy-panes { grid-template-columns: minmax(0, 1fr); }
+  .tbo-searchbar .tbo-project-chip { display: none; }
+  .tbo-results { inline-size: 100%; }
+}
+@container pmx (min-width: 2200px) {
+  .tbo-domain-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+  .tbo-copy-pane-body { max-block-size: 560px; }
+}
+
+/* wide: allow roster + detail to sit side by side inside a manager layer */
+@container pmx (min-width: 1700px) {
+  .tbo-split { display: grid; grid-template-columns: minmax(320px, 400px) minmax(0, 1fr); gap: 16px; align-items: start; }
+}
+
+/* ---------- reduced motion ---------------------------------------------------- */
+:root[data-motion="reduced"] .tbo-sheet,
+:root[data-motion="reduced"] .tbo-tab-indicator,
+:root[data-motion="reduced"] .tbo-subtab-indicator,
+:root[data-motion="reduced"] .tbo-domain-card,
+:root[data-motion="reduced"] .tbo-roster-row,
+:root[data-motion="reduced"] .tbo-related-chip {
+  transition: none !important;
+}

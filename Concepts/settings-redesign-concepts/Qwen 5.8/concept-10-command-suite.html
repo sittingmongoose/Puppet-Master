@@ -1,0 +1,1204 @@
+<!doctype html>
+<html lang="en" data-theme="friendly-dark" data-reduced-motion="0" data-concept-id="concept-10-command-suite">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Command Suite — Qwen 5.8</title>
+<link rel="stylesheet" href="_shared/pm-shell.css">
+<link rel="stylesheet" href="_shared/pm-managers2.css">
+<style>
+/* Concept 10 — Command Suite (retheme: layout borrowed, PM tokens only).
+   Keyboard-first command index, left-to-right drill panes, compact tables.
+   No terminal green, no CRT, no fake shell, no monospace body. */
+#content { overflow: hidden; width: 100%; height: 100%; }
+.cs-root { display: flex; flex-direction: column; min-height: 0; width: 100%; height: 100%; }
+.cs-top {
+  display: flex; align-items: center; gap: 10px; padding: 8px 14px;
+  border-bottom: 1px solid var(--border); background: var(--bg-shell); flex-wrap: wrap;
+}
+.cs-crumb { display: flex; align-items: center; gap: 6px; color: var(--text-2); font-size: 12px; min-width: 0; flex-wrap: wrap; }
+.cs-crumb b { color: var(--text-1); font-weight: 600; }
+.cs-crumb .sep { color: var(--text-3); }
+.cs-top .pm-spacer { flex: 1; }
+.cs-kbdhints { display: flex; gap: 8px; align-items: center; color: var(--text-3); font-size: 11px; }
+.cs-body { flex: 1; min-height: 0; position: relative; overflow: hidden; }
+.cs-view { position: absolute; inset: 0; display: flex; flex-direction: column; min-height: 0; }
+.cs-view.drill-in { animation: csDrillIn .22s var(--ease, cubic-bezier(.2,.8,.2,1)) both; }
+@keyframes csDrillIn { from { opacity: .4; transform: translateX(26px); } to { opacity: 1; transform: none; } }
+[data-reduced-motion="1"] .cs-view.drill-in { animation: none; }
+
+/* ---- search ---- */
+.cs-search { position: relative; flex: 1; min-width: 180px; max-width: 560px; }
+.cs-search .pm-input { width: 100%; padding-left: 30px; }
+.cs-search .lead { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); color: var(--text-3); display: flex; }
+.cs-search.big .pm-input { padding: 10px 12px 10px 36px; font-size: 14px; border-radius: var(--radius-m); }
+.cs-search.big .lead { left: 12px; }
+.cs-drop {
+  position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 80;
+  background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-m);
+  box-shadow: var(--shadow); max-height: min(430px, 60vh); overflow: auto; padding: 6px;
+}
+.cs-drop-cap { display: flex; align-items: center; gap: 8px; padding: 6px 8px 3px; color: var(--text-3); font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; }
+.cs-drop-row { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 2px 10px; padding: 7px 9px; border-radius: var(--radius-s); cursor: pointer; align-items: start; }
+.cs-drop-row:hover, .cs-drop-row.sel { background: var(--accent-soft); }
+.cs-drop-row.sel { box-shadow: inset 0 0 0 1px var(--accent); }
+.cs-drop-row .t1 { color: var(--text-1); font-size: 12.5px; font-weight: 600; display: flex; gap: 8px; align-items: center; min-width: 0; }
+.cs-drop-row .t2 { color: var(--text-3); font-size: 11px; grid-column: 1; }
+.cs-drop-row .note { color: var(--warn); font-size: 11px; grid-column: 1 / -1; }
+.cs-drop-empty { padding: 14px; color: var(--text-2); font-size: 12.5px; text-align: center; }
+
+/* ---- home ---- */
+.cs-home { flex: 1; min-height: 0; overflow: auto; padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 14px; }
+.cs-home-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.cs-home-head .proj { display: flex; align-items: center; gap: 8px; color: var(--text-1); font-weight: 650; font-size: 14px; }
+.cs-status { display: flex; gap: 14px; align-items: center; color: var(--text-2); font-size: 11.5px; flex-wrap: wrap;
+  border: 1px solid var(--border); background: var(--surface-3); border-radius: var(--radius-m); padding: 6px 12px; }
+.cs-status .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); display: inline-block; }
+.cs-status.warn .dot { background: var(--warn); } .cs-status.err .dot { background: var(--err); }
+.cs-banner { border: 1px solid color-mix(in srgb, var(--warn) 55%, transparent); background: color-mix(in srgb, var(--warn) 10%, transparent);
+  color: var(--text-1); border-radius: var(--radius-m); padding: 9px 12px; display: flex; gap: 10px; align-items: center; font-size: 12.5px; }
+.cs-home-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(300px, 380px); gap: 14px; align-items: stretch; }
+.cs-home-grid > .cs-panel, .cs-home-grid > .cs-home-right { max-height: calc(100vh - 210px); min-height: 0; }
+.cs-home-grid > .cs-panel { overflow: auto; }
+.cs-panel { border: 1px solid var(--border); border-radius: var(--radius-m); background: var(--surface); min-width: 0; }
+.cs-panel-cap { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--border);
+  color: var(--text-3); font-size: 10.5px; text-transform: uppercase; letter-spacing: .09em; }
+.cs-panel-cap .pm-spacer { flex: 1; }
+.cs-idx-row { display: grid; grid-template-columns: auto minmax(0,1fr) auto auto; gap: 10px; align-items: center;
+  padding: 8px 12px; border-bottom: 1px solid var(--border); cursor: pointer; background: none; border-left: none; border-right: none; border-top: none; width: 100%; text-align: left; color: inherit; font: inherit; }
+.cs-idx-row:last-child { border-bottom: none; }
+.cs-idx-row:hover, .cs-idx-row.sel { background: var(--accent-soft); }
+.cs-idx-row.sel { box-shadow: inset 2px 0 0 var(--accent); }
+.cs-idx-row .ic { color: var(--text-2); display: flex; }
+.cs-idx-row .tt { color: var(--text-1); font-weight: 600; font-size: 12.5px; display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.cs-idx-row .tt small { color: var(--text-3); font-weight: 400; font-size: 11px; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.cs-idx-row .ct { color: var(--text-3); font-size: 11px; font-variant-numeric: tabular-nums; }
+.cs-idx-row .go { color: var(--text-3); display: flex; }
+.cs-home-right { display: flex; flex-direction: column; gap: 14px; min-width: 0; min-height: 0; overflow: auto; }
+.cs-syspanel { display: flex; flex-direction: column; flex: 1; min-height: 120px; }
+.cs-sys { flex: 1; min-height: 0; overflow: auto; }
+.cs-sys .row { display: flex; justify-content: space-between; gap: 10px; padding: 7px 12px; border-bottom: 1px solid var(--border); font-size: 11.5px; color: var(--text-2); }
+.cs-sys .row:last-child { border-bottom: none; }
+.cs-sys .row b { color: var(--text-1); font-weight: 600; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ---- tables ---- */
+.cs-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.cs-table th { text-align: left; color: var(--text-3); font-size: 10.5px; text-transform: uppercase; letter-spacing: .07em; padding: 6px 10px; border-bottom: 1px solid var(--border-strong); background: var(--surface-3); }
+.cs-table td { padding: 6px 10px; border-bottom: 1px solid var(--border); color: var(--text-1); vertical-align: top; }
+.cs-table tr:last-child td { border-bottom: none; }
+.cs-table tr.sel td { background: var(--accent-soft); }
+.cs-table .num { font-variant-numeric: tabular-nums; }
+.cs-table .path { font-family: var(--font-mono); font-size: 11px; color: var(--text-2); word-break: break-all; }
+.cs-meter { display: inline-block; width: 74px; height: 6px; border-radius: 3px; background: var(--surface-3); overflow: hidden; vertical-align: middle; }
+.cs-meter i { display: block; height: 100%; background: var(--accent); }
+.cs-meter.warn i { background: var(--warn); } .cs-meter.err i { background: var(--err); }
+
+/* ---- drill panes ---- */
+.cs-drill { flex: 1; min-height: 0; display: grid; grid-template-columns: 232px 252px minmax(0,1fr); }
+.cs-drill.two { grid-template-columns: 252px minmax(0,1fr); }
+.cs-pane { min-width: 0; min-height: 0; display: flex; flex-direction: column; border-right: 1px solid var(--border); background: var(--bg); }
+.cs-pane:last-child { border-right: none; }
+.cs-pane-cap { display: flex; align-items: center; gap: 8px; padding: 7px 12px; border-bottom: 1px solid var(--border); background: var(--bg-shell);
+  color: var(--text-3); font-size: 10.5px; text-transform: uppercase; letter-spacing: .09em; }
+.cs-pane-cap .pm-spacer { flex: 1; }
+.cs-pane-body { flex: 1; min-height: 0; overflow: auto; padding: 8px 10px 16px; }
+.cs-pane.detail .cs-pane-body { padding: 12px 14px 20px; }
+.cs-subcap { margin: 12px 4px 6px; color: var(--text-3); font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; }
+.cs-rowline { display: flex; align-items: center; gap: 8px; padding: 7px 9px; border-radius: var(--radius-s); cursor: pointer; border: none; background: none; width: 100%; text-align: left; color: inherit; font: inherit; }
+.cs-rowline:hover, .cs-rowline.sel { background: var(--accent-soft); }
+.cs-rowline.sel { box-shadow: inset 2px 0 0 var(--accent); }
+.cs-rowline .tt { flex: 1; min-width: 0; color: var(--text-1); font-size: 12.5px; font-weight: 550; display: flex; flex-direction: column; gap: 1px; }
+.cs-rowline .tt small { color: var(--text-3); font-weight: 400; font-size: 11px; }
+.cs-rowline .ic, .cs-rowline .go { color: var(--text-3); display: flex; flex: none; }
+
+/* detail with editor beside */
+.cs-detailgrid { display: grid; grid-template-columns: minmax(0,1fr) 300px; gap: 14px; align-items: start; }
+.cs-detailgrid.noedit { grid-template-columns: minmax(0,1fr); }
+.cs-editor { border: 1px solid var(--border-strong); border-radius: var(--radius-m); background: var(--surface); position: sticky; top: 0; }
+.cs-editor .cap { display: flex; gap: 8px; align-items: center; padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-3); font-size: 10.5px; text-transform: uppercase; letter-spacing: .09em; }
+.cs-editor .body { padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.cs-editor .lbl { color: var(--text-1); font-weight: 650; font-size: 13px; }
+.cs-editor .dsc { color: var(--text-2); font-size: 12px; }
+.cs-editor .acts { display: flex; gap: 8px; flex-wrap: wrap; }
+.cs-stagewarn { color: var(--warn); font-size: 11.5px; display: flex; gap: 6px; align-items: center; }
+.cs-err { color: var(--err); font-size: 12px; display: flex; gap: 6px; align-items: flex-start; }
+
+/* provider detail */
+.cs-sectabs { display: flex; gap: 2px; flex-wrap: wrap; padding: 6px 10px; border-bottom: 1px solid var(--border); background: var(--bg-shell); }
+.cs-sectabs button { border: none; background: none; color: var(--text-2); padding: 5px 10px; border-radius: var(--radius-s); cursor: pointer; font-size: 12px; }
+.cs-sectabs button:hover { background: var(--surface-2); color: var(--text-1); }
+.cs-sectabs button.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.cs-kv { display: grid; grid-template-columns: minmax(140px, 220px) minmax(0,1fr); gap: 4px 14px; font-size: 12px; margin: 0; }
+.cs-kv dt { color: var(--text-3); } .cs-kv dd { margin: 0; color: var(--text-1); word-break: break-word; }
+.cs-log { padding: 3px 2px; color: var(--text-2); font-size: 11.5px; font-family: var(--font-mono); border-bottom: 1px dashed var(--border); }
+.cs-log:last-child { border-bottom: none; }
+
+/* palette */
+.cs-pal-ovl { position: fixed; inset: 0; z-index: 150; background: color-mix(in srgb, var(--bg) 62%, transparent); backdrop-filter: blur(2px); display: flex; justify-content: center; padding-top: 9vh; }
+.cs-pal { width: min(620px, 92vw); max-height: 62vh; display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-l); box-shadow: var(--shadow); overflow: hidden; }
+.cs-pal input { border: none; background: none; outline: none; padding: 13px 16px; font-size: 14px; color: var(--text-1); border-bottom: 1px solid var(--border); }
+.cs-pal-list { overflow: auto; padding: 6px; }
+.cs-pal-row { display: flex; gap: 10px; align-items: center; padding: 8px 10px; border-radius: var(--radius-s); cursor: pointer; }
+.cs-pal-row.sel { background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
+.cs-pal-row .k { color: var(--text-3); font-size: 11px; min-width: 74px; text-transform: uppercase; letter-spacing: .05em; }
+.cs-pal-row .l { color: var(--text-1); font-size: 12.5px; font-weight: 600; flex: 1; min-width: 0; }
+.cs-pal-row .p { color: var(--text-3); font-size: 11px; }
+
+/* ops strip */
+.cs-ops { border-top: 1px solid var(--border); background: var(--bg-shell); padding: 5px 14px; display: flex; gap: 12px; align-items: center; font-size: 11.5px; color: var(--text-2); flex-wrap: wrap; }
+.cs-ops .op { display: flex; gap: 8px; align-items: center; }
+.cs-ops .ph { color: var(--text-1); font-weight: 600; }
+
+/* copy flow */
+.cs-copy { flex: 1; min-height: 0; overflow: auto; padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+.cs-steps { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.cs-step { display: flex; gap: 8px; align-items: center; color: var(--text-3); font-size: 12px; padding: 5px 10px; border: 1px solid var(--border); border-radius: 999px; background: none; cursor: pointer; font-family: inherit; }
+.cs-step.active { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); font-weight: 600; }
+.cs-step.done { color: var(--text-2); }
+.cs-copygrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; align-items: start; }
+.cs-check { display: flex; gap: 8px; align-items: flex-start; padding: 7px 9px; border-radius: var(--radius-s); cursor: pointer; }
+.cs-check:hover { background: var(--accent-soft); }
+.cs-check .t { flex: 1; min-width: 0; color: var(--text-1); font-size: 12.5px; display: flex; flex-direction: column; }
+.cs-check .t small { color: var(--text-3); font-size: 11px; }
+.cs-count { color: var(--text-3); font-size: 11px; font-variant-numeric: tabular-nums; }
+
+/* all settings */
+.cs-all { flex: 1; min-height: 0; display: grid; grid-template-columns: 250px minmax(0,1fr); }
+.cs-facets { border-right: 1px solid var(--border); overflow: auto; padding: 10px 12px; background: var(--bg-shell); }
+.cs-facet-cap { color: var(--text-3); font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; margin: 10px 0 4px; }
+.cs-facet-cap:first-child { margin-top: 0; }
+.cs-vlist { flex: 1; min-height: 0; overflow: auto; padding: 6px 12px; }
+.cs-vrow { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 2px 12px; padding: 9px 6px; border-bottom: 1px solid var(--border); align-items: center; height: 64px; }
+.cs-vrow .a { min-width: 0; }
+.cs-vrow .a .l { color: var(--text-1); font-size: 12.5px; font-weight: 600; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.cs-vrow .a .p { color: var(--text-3); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cs-syn { outline: 1px dashed var(--border-strong); outline-offset: -1px; }
+
+/* deferred shell */
+.cs-shellnote { border: 1px dashed var(--border-strong); background: var(--surface-3); border-radius: var(--radius-m); padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; color: var(--text-2); margin-bottom: 12px; }
+.cs-shellnote b { color: var(--text-1); }
+
+/* narrow / squeezed: push navigation, one pane at a time */
+#app[data-wtier="squeezed"] .cs-drill, #app[data-wtier="narrow"] .cs-drill { grid-template-columns: minmax(0,1fr); }
+#app[data-wtier="squeezed"] .cs-drill > .cs-pane, #app[data-wtier="narrow"] .cs-drill > .cs-pane { display: none; }
+#app[data-wtier="squeezed"] .cs-drill > .cs-pane.push-on, #app[data-wtier="narrow"] .cs-drill > .cs-pane.push-on { display: flex; }
+#app[data-wtier="squeezed"] .cs-home-grid, #app[data-wtier="narrow"] .cs-home-grid { grid-template-columns: minmax(0,1fr); align-items: start; }
+#app[data-wtier="squeezed"] .cs-home-grid > .cs-panel, #app[data-wtier="narrow"] .cs-home-grid > .cs-panel,
+#app[data-wtier="squeezed"] .cs-home-grid > .cs-home-right, #app[data-wtier="narrow"] .cs-home-grid > .cs-home-right { max-height: none; overflow: visible; }
+#app[data-wtier="squeezed"] .cs-detailgrid, #app[data-wtier="narrow"] .cs-detailgrid { grid-template-columns: minmax(0,1fr); }
+#app[data-wtier="squeezed"] .cs-all, #app[data-wtier="narrow"] .cs-all { grid-template-columns: minmax(0,1fr); }
+#app[data-wtier="squeezed"] .cs-facets, #app[data-wtier="narrow"] .cs-facets { display: none; }
+#app[data-wtier="squeezed"] .cs-facets.push-on, #app[data-wtier="narrow"] .cs-facets.push-on { display: block; }
+#app[data-wtier="mid"] .cs-drill { grid-template-columns: 210px minmax(0,1fr); }
+#app[data-wtier="mid"] .cs-drill > .cs-pane.idx { display: none; }
+#app[data-wtier="mid"] .cs-drill > .cs-pane.idx.push-on { display: flex; }
+#app[data-wtier="squeezed"] .cs-kbdhints { display: none; }
+.cs-pushback { display: none; }
+#app[data-wtier="squeezed"] .cs-pushback, #app[data-wtier="narrow"] .cs-pushback { display: inline-flex; }
+</style>
+</head>
+<body data-concept-model="Qwen 5.8" data-concept="concept-10-command-suite">
+<div id="app"></div>
+<script src="_shared/pm-icons.js"></script>
+<script src="_shared/pm-inventory-data.js"></script>
+<script src="_shared/pm-managers2-data.js"></script>
+<script src="_shared/pm-state2.js"></script>
+<script src="_shared/pm-search2.js"></script>
+<script src="_shared/pm-managers2.js"></script>
+<script src="_shared/pm-copy2.js"></script>
+<script src="_shared/pm-shell2.js"></script>
+<script src="_shared/concept-hub-bridge.js"></script>
+<script>
+
+(function () {
+"use strict";
+var D = window.PMInventoryData, MD = window.PMManagers2Data, S2 = window.PMState2,
+    SR = window.PMSearch2, M2 = window.PMManagers2, CP = window.PMCopy2, SH = window.PMShell2;
+var esc = M2.esc, ico = M2.ico;
+
+S2.init("concept-10-command-suite");
+SR.register(MD.searchEntries());
+
+/* ---------- helpers ---------- */
+function catOf(id) { return D.byCategory(id); }
+function famById(id) { for (var i = 0; i < MD.families.length; i++) if (MD.families[i].id === id) return MD.families[i]; return null; }
+function provById(id) { for (var i = 0; i < MD.providers.length; i++) if (MD.providers[i].id === id) return MD.providers[i]; return null; }
+function deferredById(id) { for (var i = 0; i < MD.deferred.length; i++) if (MD.deferred[i].id === id) return MD.deferred[i]; return null; }
+var DEFERRED_ROUTE = { onboarding: "onboarding", installation: "providers", "server-claim": "servers", servers: "servers", hosting: "hosting", "remote-access": "servers", "sync-move": "lifecycle", updates: "updates", "server-backup": "backup" };
+function healthBadge(h) {
+  var map = { ok: ["pm-badge-ok", "Healthy"], warn: ["pm-badge-warn", "Attention"], err: ["pm-badge-danger", "Failing"], muted: ["pm-badge-muted", "Idle"] };
+  var m = map[h] || map.muted;
+  return '<span class="pm-badge ' + m[0] + '">' + m[1] + "</span>";
+}
+function readinessBadge(tag) {
+  var m = {
+    "cli-found": ["pm-badge-ok", "CLI found"], "authenticated": ["pm-badge-ok", "Authenticated"], "probe-ok": ["pm-badge-ok", "Probe passed"],
+    "sign-in-required": ["pm-badge-warn", "Sign-in required"], "not-installed": ["pm-badge-muted", "Not installed"],
+    "explicit-install-required": ["pm-badge-info", "Explicit install required"], "owner-unknown": ["pm-badge-warn", "Owner unknown"],
+    "manual-only": ["pm-badge-managed", "Manual only"], "shadowed-installation": ["pm-badge-warn", "Shadowed installation"],
+    "update-available": ["pm-badge-info", "Update available"], "update-scheduled": ["pm-badge-info", "Update scheduled"],
+    "rolled-back": ["pm-badge-warn", "Rolled back"], "usage-near-limit": ["pm-badge-warn", "Usage near limit"],
+    "key-connected": ["pm-badge-ok", "Key connected"], "setup-incomplete": ["pm-badge-warn", "Setup incomplete"],
+    "server-reachable": ["pm-badge-ok", "Server reachable"], "catalog-ok": ["pm-badge-ok", "Catalog available"],
+    "underlying-setup-required": ["pm-badge-warn", "Underlying setup required"], "usage-unavailable": ["pm-badge-muted", "Usage unavailable"],
+    "daemon-running": ["pm-badge-ok", "Daemon running"], "catalog-last-known-good": ["pm-badge-warn", "Last-known-good catalog"],
+    "fallback-configured": ["pm-badge-info", "Fallback configured"], "effort-variation": ["pm-badge-info", "Effort varies"]
+  };
+  var x = m[tag] || ["pm-badge-muted", tag];
+  return '<span class="pm-badge ' + x[0] + '">' + x[1] + "</span>";
+}
+function scenario() { return S2.state.scenario || "default"; }
+function isOffline() { return scenario() === "offline" || scenario() === "poor-network"; }
+
+/* ---------- router ---------- */
+var route = { view: "home", parts: [], q: new URLSearchParams() };
+var viewSeq = 0;
+function parseHash() {
+  var h = location.hash.replace(/^#\//, "");
+  var qi = h.indexOf("?");
+  var q = new URLSearchParams(qi >= 0 ? h.slice(qi + 1) : "");
+  if (qi >= 0) h = h.slice(0, qi);
+  var parts = h ? h.split("/") : [];
+  return { view: parts[0] || "home", parts: parts, q: q };
+}
+function nav(hash, replace) {
+  if (replace) history.replaceState(null, "", hash); else location.hash = hash;
+}
+function backTarget() {
+  var p = route.parts;
+  if (route.view === "home") return null;
+  if (route.view === "cat") {
+    if (p[2]) return { hash: "#/cat/" + p[1], label: catOf(p[1]) ? catOf(p[1]).category.title : p[1] };
+    return { hash: "#/home", label: "Settings Home" };
+  }
+  if (route.view === "mgr") {
+    var fam = famById(p[1]);
+    if (p[2]) return { hash: "#/mgr/" + p[1], label: fam ? fam.title : p[1] };
+    if (route.q.get("from")) return { hash: route.q.get("from"), label: "previous location" };
+    var dom = fam ? fam.domain : null;
+    return dom ? { hash: "#/cat/" + dom, label: catOf(dom) ? catOf(dom).category.title : dom } : { hash: "#/home", label: "Settings Home" };
+  }
+  return { hash: "#/home", label: "Settings Home" };
+}
+function goBack() {
+  var t = backTarget();
+  if (t) nav(t.hash); else nav("#/home");
+}
+
+/* ---------- shell mount ---------- */
+var shell = SH.mount({
+  conceptName: "Command Suite", model: "Qwen 5.8",
+  onHome: function () { nav("#/home"); },
+  onTier: function () { render(); }
+});
+var content = shell.content;
+
+/* ---------- search widget ---------- */
+var searchState = { query: "", results: [], sel: 0, open: false, restore: null };
+function searchHTML(big) {
+  return '<div class="cs-search' + (big ? " big" : "") + '" data-searchbox>' +
+    '<span class="lead">' + ico("search", big ? 16 : 13) + "</span>" +
+    '<input class="pm-input" data-test="search-input" role="combobox" aria-expanded="false" aria-autocomplete="list" placeholder="Search settings, managers, providers, actions" autocomplete="off" spellcheck="false">' +
+    '<div class="cs-drop" data-test="search-results" hidden></div></div>';
+}
+function dropRender() {
+  var box = content.querySelector("[data-searchbox]");
+  if (!box) return;
+  var drop = box.querySelector("[data-test='search-results']");
+  var input = box.querySelector("[data-test='search-input']");
+  if (!searchState.open || !searchState.query) { drop.hidden = true; input.setAttribute("aria-expanded", "false"); return; }
+  drop.hidden = false; input.setAttribute("aria-expanded", "true");
+  var rs = searchState.results;
+  if (!rs.length) {
+    drop.innerHTML = '<div class="cs-drop-empty">No matches for “' + esc(searchState.query) + '”. Try a shorter fragment — fuzzy matching tolerates small typos.</div>';
+    return;
+  }
+  var groups = {}, order = [];
+  rs.forEach(function (r) { if (!groups[r.type]) { groups[r.type] = []; order.push(r.type); } groups[r.type].push(r); });
+  var html = "";
+  order.forEach(function (t) {
+    html += '<div class="cs-drop-cap">' + esc(t.replace(/_/g, " ")) + " · " + groups[t].length + "</div>";
+    groups[t].forEach(function (r) {
+      var sel = rs[searchState.sel] === r ? " sel" : "";
+      html += '<div class="cs-drop-row' + sel + '" data-rid="' + esc(r.rid) + '" role="option" aria-selected="' + (sel ? "true" : "false") + '">' +
+        '<span class="t1"><strong class="pm2-r-title">' + esc(r.label) + '</strong> <span class="pm-search-type" data-rt="' + esc(r.type) + '">' + esc(r.type.replace(/_/g, " ")) + "</span></span>" +
+        '<span class="t2">' + esc((r.path || []).join(" / ")) + "</span>" +
+        (r.note ? '<span class="note">' + esc(r.note) + "</span>" : "") + "</div>";
+    });
+  });
+  drop.innerHTML = html;
+}
+function searchExec(rid) {
+  var r = SR.byRid(rid);
+  if (!r) return;
+  searchState.open = false;
+  var q = searchState.query;
+  S2.touchRecent({ kind: "search", id: rid, label: r.label });
+  if (q) history.pushState(null, "", "#/q/" + encodeURIComponent(q)); // Back restores query + results
+  routeToDest(r.dest, r);
+}
+function routeToDest(dest, r) {
+  if (!dest) { S2.receipt("Not available", r ? (r.label + ": " + (r.note || "This capability is not part of this product.")) : "Not available.", "warn"); return; }
+  if (dest.kind === "setting") {
+    nav("#/cat/" + dest.category + "/" + dest.subgroup + "?sec=" + encodeURIComponent(dest.subgroup) + "&row=" + encodeURIComponent(dest.settingId));
+    return;
+  }
+  if (dest.kind === "manager") {
+    var h = "#/mgr/" + dest.manager;
+    if (dest.object) h += "/" + dest.object;
+    var qs = [];
+    if (dest.section) qs.push("sec=" + encodeURIComponent(dest.section));
+    if (dest.row) qs.push("row=" + encodeURIComponent(dest.row));
+    nav(h + (qs.length ? "?" + qs.join("&") : ""));
+    return;
+  }
+  if (dest.kind === "route") nav(dest.hash);
+}
+function bindSearch(scope) {
+  var box = scope.querySelector("[data-searchbox]");
+  if (!box) return;
+  var input = box.querySelector("[data-test='search-input']");
+  var drop = box.querySelector("[data-test='search-results']");
+  input.addEventListener("input", function () {
+    searchState.query = input.value;
+    searchState.sel = 0;
+    if (!input.value) { searchState.results = []; searchState.open = false; dropRender(); return; }
+    searchState.open = true;
+    SR.searchAsync(input.value, function (rs) {
+      if (input.value !== searchState.query) return; // latest-request-wins
+      searchState.results = rs; searchState.sel = 0; dropRender();
+    });
+  });
+  input.addEventListener("focus", function () { if (input.value) { searchState.open = true; dropRender(); } });
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowDown") { e.preventDefault(); searchState.sel = Math.min(searchState.results.length - 1, searchState.sel + 1); dropRender(); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); searchState.sel = Math.max(0, searchState.sel - 1); dropRender(); }
+    else if (e.key === "Enter") { e.preventDefault(); var r = searchState.results[searchState.sel]; if (r) searchExec(r.rid); }
+    else if (e.key === "Escape") { if (searchState.open) { searchState.open = false; dropRender(); e.stopPropagation(); } }
+  });
+  drop.addEventListener("mousedown", function (e) { e.preventDefault(); });
+  drop.addEventListener("click", function (e) {
+    var row = e.target.closest("[data-rid]");
+    if (row) searchExec(row.getAttribute("data-rid"));
+  });
+  if (searchState.restore) {
+    var rq = searchState.restore.query || "";
+    searchState.restore = null;
+    if (rq) {
+      input.value = rq; searchState.query = rq; searchState.open = true;
+      SR.searchAsync(rq, function (rs) { if (input.value === rq) { searchState.results = rs; dropRender(); } });
+    }
+  }
+}
+
+/* ---------- command palette (Ctrl+K) ---------- */
+var pal = { open: false, q: "", sel: 0, items: [] };
+function palBuild() {
+  var items = [];
+  D.categories.forEach(function (c) { items.push({ k: "domain", l: c.title, p: "#/cat/" + c.id, hay: c.title.toLowerCase() }); });
+  MD.families.forEach(function (f) { items.push({ k: "manager", l: f.title, p: "#/mgr/" + f.id, hay: f.title.toLowerCase() }); });
+  items.push({ k: "view", l: "All Settings", p: "#/all", hay: "all settings compendium" });
+  items.push({ k: "view", l: "Copy Settings From Another Project", p: "#/copy", hay: "copy settings project" });
+  items.push({ k: "view", l: "Settings Lifecycle", p: "#/lifecycle", hay: "lifecycle import export reset rollback" });
+  items.push({ k: "action", l: "Back Up Now", p: "#/mgr/backup?row=backup.now", hay: "backup now" });
+  items.push({ k: "action", l: "Run Doctor", p: "#/mgr/doctor?row=doctor.run", hay: "doctor health" });
+  return items;
+}
+var PAL_ALL = palBuild();
+function palFilter() {
+  var q = pal.q.toLowerCase();
+  pal.items = !q ? PAL_ALL.slice(0, 12) : PAL_ALL.filter(function (it) { return it.hay.indexOf(q) >= 0 || it.l.toLowerCase().indexOf(q) >= 0; }).slice(0, 20);
+  pal.sel = 0;
+}
+function palRender() {
+  var ovl = document.querySelector(".cs-pal-ovl");
+  if (!pal.open) { if (ovl) ovl.remove(); return; }
+  if (!ovl) {
+    ovl = document.createElement("div");
+    ovl.className = "cs-pal-ovl";
+    ovl.innerHTML = '<div class="cs-pal" role="dialog" aria-label="Command palette"><input placeholder="Jump to a domain, manager, or action" aria-label="Command palette"><div class="cs-pal-list"></div></div>';
+    document.body.appendChild(ovl);
+    var inp = ovl.querySelector("input");
+    inp.addEventListener("input", function () { pal.q = inp.value; palFilter(); palRender(); });
+    inp.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowDown") { e.preventDefault(); pal.sel = Math.min(pal.items.length - 1, pal.sel + 1); palRender(); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); pal.sel = Math.max(0, pal.sel - 1); palRender(); }
+      else if (e.key === "Enter") { e.preventDefault(); var it = pal.items[pal.sel]; if (it) { pal.open = false; palRender(); nav(it.p); } }
+      else if (e.key === "Escape") { e.stopPropagation(); pal.open = false; palRender(); }
+    });
+    ovl.addEventListener("mousedown", function (e) { if (e.target === ovl) { pal.open = false; palRender(); } });
+    ovl.querySelector(".cs-pal-list").addEventListener("click", function (e) {
+      var row = e.target.closest("[data-pi]");
+      if (row) { var it = pal.items[+row.getAttribute("data-pi")]; if (it) { pal.open = false; palRender(); nav(it.p); } }
+    });
+    setTimeout(function () { ovl.querySelector("input").focus(); }, 0);
+  }
+  var list = ovl.querySelector(".cs-pal-list");
+  list.innerHTML = pal.items.map(function (it, i) {
+    return '<div class="cs-pal-row' + (i === pal.sel ? " sel" : "") + '" data-pi="' + i + '"><span class="k">' + esc(it.k) + '</span><span class="l">' + esc(it.l) + '</span><span class="pm-kbd">Enter</span></div>';
+  }).join("") || '<div class="cs-drop-empty">Nothing matches.</div>';
+}
+document.addEventListener("keydown", function (e) {
+  var tag = (e.target && e.target.tagName || "").toLowerCase();
+  var typing = tag === "input" || tag === "textarea" || tag === "select" || (e.target && e.target.isContentEditable);
+  if ((e.ctrlKey || e.metaKey) && (e.key === "k" || e.key === "K")) { e.preventDefault(); pal.open = !pal.open; pal.q = ""; palFilter(); palRender(); return; }
+  if (e.key === "Escape") {
+    if (pal.open) { pal.open = false; palRender(); return; }
+    var pop = document.querySelector(".pm-pop-menu");
+    if (pop) { M2.closePopupMenu(); return; }
+    var det = content.querySelector(".pm2-row-detail:not([hidden])");
+    if (det) { det.setAttribute("hidden", ""); return; }
+    if (route.view !== "home") { goBack(); return; }
+    return;
+  }
+  if (typing) return;
+  if (e.key === "/") { e.preventDefault(); var si = content.querySelector("[data-test='search-input']"); if (si) si.focus(); }
+  else if (e.key === "ArrowRight") { drillMove(1); }
+  else if (e.key === "ArrowLeft") { drillMove(-1); }
+  else if (e.key === "Enter") { drillEnter(); }
+});
+
+/* ---------- drill keyboard helpers ---------- */
+var focusPane = 2;
+function drillPanes() { return Array.prototype.slice.call(content.querySelectorAll(".cs-drill > .cs-pane")); }
+function drillMove(dir) {
+  var panes = drillPanes().filter(function (p) { return getComputedStyle(p).display !== "none"; });
+  if (!panes.length) return;
+  var idx = panes.indexOf(document.activeElement && document.activeElement.closest(".cs-pane"));
+  if (idx < 0) idx = dir > 0 ? 0 : panes.length - 1; else idx = Math.max(0, Math.min(panes.length - 1, idx + dir));
+  var pane = panes[idx];
+  var t = pane.querySelector(".sel") || pane.querySelector(".cs-rowline, .cs-idx-row, button, input, select");
+  if (t) t.focus();
+}
+function drillEnter() {
+  var a = document.activeElement;
+  if (a && a.closest && a.closest(".cs-drill") && (a.classList.contains("cs-rowline") || a.classList.contains("cs-idx-row"))) return; // native button Enter
+  var panes = drillPanes().filter(function (p) { return getComputedStyle(p).display !== "none"; });
+  var pane = panes[panes.length - 1];
+  if (pane) { var t = pane.querySelector(".sel") || pane.querySelector(".cs-rowline"); if (t) t.click(); }
+}
+
+/* ---------- topbar ---------- */
+function topbarHTML() {
+  var bt = backTarget();
+  var crumb = ['<span>Settings</span>'];
+  var p = route.parts;
+  if (route.view === "cat" && p[1]) {
+    crumb.push('<span class="sep">/</span><b>' + esc(catOf(p[1]) ? catOf(p[1]).category.title : p[1]) + "</b>");
+    if (p[2]) { var sg = subTitle(p[1], p[2]); crumb.push('<span class="sep">/</span><span>' + esc(sg) + "</span>"); }
+  } else if (route.view === "mgr" && p[1]) {
+    var fam = famById(p[1]);
+    crumb.push('<span class="sep">/</span><b>' + esc(catOf(fam ? fam.domain : "") ? catOf(fam.domain).category.title : "Managers") + "</b>");
+    crumb.push('<span class="sep">/</span><span>' + esc(fam ? fam.title : p[1]) + "</span>");
+    if (p[2]) { var ob = objectLabel(p[1], p[2]); if (ob) crumb.push('<span class="sep">/</span><span>' + esc(ob) + "</span>"); }
+  } else if (route.view === "all") crumb.push('<span class="sep">/</span><b>All Settings</b>');
+  else if (route.view === "copy") crumb.push('<span class="sep">/</span><b>Copy Settings</b>');
+  else if (route.view === "lifecycle") crumb.push('<span class="sep">/</span><b>Settings Lifecycle</b>');
+  else if (route.view === "q") crumb.push('<span class="sep">/</span><b>Search</b>');
+  var proj = document.querySelector("[data-shell-project]");
+  return '<div class="cs-top">' +
+    '<button class="pm-btn pm-btn-sm" data-test="back"' + (bt ? "" : " hidden") + ' data-act="back">' + ico("arrowLeft", 12) + " Back to " + esc(bt ? bt.label : "") + "</button>" +
+    '<nav class="cs-crumb" data-test="breadcrumb" aria-label="Breadcrumb">' + crumb.join("") + "</nav>" +
+    '<span class="pm-chip">' + ico("fileText", 12) + " " + esc(proj ? proj.textContent : "Project") + "</span>" +
+    '<span class="pm-spacer"></span>' +
+    (route.view !== "home" && route.view !== "q" ? searchHTML(false) : "") +
+    '<span class="cs-kbdhints"><span class="pm-kbd">Ctrl</span>+<span class="pm-kbd">K</span> palette · <span class="pm-kbd">←</span><span class="pm-kbd">→</span> drill · <span class="pm-kbd">Enter</span> open · <span class="pm-kbd">Esc</span> out</span>' +
+    '<button class="pm-btn pm-btn-sm" data-test="close" data-act="close">' + ico("x", 12) + " Close Settings</button>" +
+    "</div>";
+}
+function subTitle(catId, subId) {
+  var c = catOf(catId); if (!c) return subId;
+  for (var i = 0; i < c.category.subgroups.length; i++) if (c.category.subgroups[i].id === subId) return c.category.subgroups[i].title;
+  return subId;
+}
+function objectLabel(famId, objId) {
+  var f = famById(famId); if (!f || !f.objects) return null;
+  for (var i = 0; i < f.objects.length; i++) if (f.objects[i].id === objId) return f.objects[i].label;
+  return null;
+}
+
+/* ---------- ops strip ---------- */
+function opsHTML() {
+  var ops = Object.keys(S2.state.ops || {}).map(function (k) { return S2.state.ops[k]; })
+    .filter(function (o) { return o.state === "starting" || o.state === "running" || o.state === "waiting"; });
+  if (!ops.length) return "";
+  return '<div class="cs-ops" data-ops>' + ops.map(function (o) {
+    var det = o.total ? " (" + o.completed + "/" + o.total + ")" : "";
+    return '<span class="op"><span class="pm-spinner"></span><span class="ph">' + esc(o.title) + "</span> " + esc(o.human_phase) + det +
+      (o.wait_reason ? " — waiting: " + esc(o.wait_reason) : "") + "</span>";
+  }).join("") + "</div>";
+}
+function refreshOps() { var el = content.querySelector("[data-ops]"); var strip = opsHTML(); if (el) el.outerHTML = strip || '<span data-opsgone></span>'; else { var gone = content.querySelector("[data-opsgone]"); if (gone && strip) gone.outerHTML = strip; } }
+
+/* ---------- HOME ---------- */
+function homeHTML() {
+  var proj = document.querySelector("[data-shell-project]");
+  var notices = S2.notices();
+  var sc = scenario();
+  var banner = "";
+  if (sc === "offline") banner = '<div class="cs-banner" role="alert">' + ico("alertTriangle", 15) + " Working offline — catalogs and usage show last-known values; changes still apply locally.</div>";
+  else if (sc === "import-conflict") banner = '<div class="cs-banner" role="alert">' + ico("alertTriangle", 15) + ' Import needs review — 3 incoming values conflict with this Project. <button class="pm-btn pm-btn-sm" data-nav="#/lifecycle">Review conflicts</button></div>';
+  else if (sc === "validation-failure") banner = '<div class="cs-banner" role="alert">' + ico("alertTriangle", 15) + " A recent change failed validation and was rolled back. See the Providers install receipts.</div>";
+  var idxRowsRaw = D.categories.map(function (c) {
+    var n = 0; D.settings.forEach(function (s) { if (s.id.split(".")[0] === c.id) n++; });
+    var mgrs = MD.families.filter(function (f) { return f.domain === c.id; }).length;
+    return '<button class="cs-idx-row" data-nav="#/cat/' + c.id + '" data-idx="' + c.id + '"><span class="ic">' + ico(c.icon, 15) + "</span>" +
+      '<span class="tt">' + esc(c.title) + "<small>" + esc(c.description) + "</small></span>" +
+      '<span class="ct">' + n + " settings · " + mgrs + " managers</span>" +
+      '<span class="go">' + ico("chevronRight", 13) + "</span></button>";
+  }).join("");
+  var idxRows = scenario() === "refreshing" ? M2.skeleton("Refreshing domains — cached summary shown") : idxRowsRaw;
+  var attRows = notices.length ? notices.map(function (n) {
+    var h = n.dest ? (n.dest.kind === "manager" ? "#/mgr/" + n.dest.manager + (n.dest.object ? "/" + n.dest.object : "") + (n.dest.section ? "?sec=" + n.dest.section : "") : (n.dest.hash || "#/home")) : null;
+    return '<tr><td><span class="pm2-health ' + (n.kind === "warn" ? "warn" : n.kind === "ok" ? "" : "warn") + '"><i></i></span></td><td>' + esc(n.title) + '<div class="pm-note">' + esc(n.reason) + "</div></td>" +
+      '<td style="text-align:right">' + (n.action && h ? '<button class="pm-btn pm-btn-sm" data-nav="' + esc(h) + '">' + esc(n.action) + "</button>" : '<span class="pm-note">—</span>') + "</td></tr>";
+  }).join("") : '<tr><td colspan="3"><span class="pm-note">Nothing needs attention right now.</span></td></tr>';
+  var recent = (S2.state.recent || []).slice(0, 6).map(function (r) {
+    return '<tr><td>' + esc(r.label) + '</td><td class="num pm-note">' + (r.at ? new Date(r.at).toLocaleTimeString() : "") + "</td></tr>";
+  }).join("") || '<tr><td colspan="2"><span class="pm-note">No recent changes yet.</span></td></tr>';
+  var opsActive = Object.keys(S2.state.ops || {}).filter(function (k) { var o = S2.state.ops[k]; return o.state === "starting" || o.state === "running" || o.state === "waiting"; }).length;
+  var lastChange = (S2.state.recent || [])[0] || null;
+  return '<div class="cs-view" data-test="home">' + topbarHTML() +
+    '<div class="cs-home">' +
+      '<div class="cs-home-head"><span class="proj">' + ico("gear", 16) + " Settings — " + esc(proj ? proj.textContent : "Project") + '</span><span class="pm-badge pm-badge-info">Command Suite</span></div>' +
+      searchHTML(true) +
+      banner +
+      '<div class="cs-status' + (sc === "offline" ? " err" : (notices.length ? " warn" : "")) + '"><span class="dot"></span> ' +
+        (sc === "offline" ? "Working offline" : "All systems operational") +
+        " · <span>" + D.count + " settings indexed</span> · <span>" + MD.families.length + " managers</span> · <span>" + (S2.state.restorePoints.length) + " restore points</span></div>" +
+      '<div class="cs-home-grid">' +
+        '<div class="cs-panel"><div class="cs-panel-cap">Command index<span class="pm-spacer"></span><span class="pm-note">' + (scenario() === "refreshing" ? "refreshing — cached" : "12 domains") + "</span></div>" + idxRows + "</div>" +
+        '<div class="cs-home-right">' +
+          '<div class="cs-panel"><div class="cs-panel-cap">Needs attention<span class="pm-spacer"></span><span class="pm-note">' + notices.length + " open</span></div>" +
+            '<table class="cs-table"><tbody>' + attRows + "</tbody></table></div>" +
+          '<div class="cs-panel"><div class="cs-panel-cap">Recently accessed<span class="pm-spacer"></span></div>' +
+            '<table class="cs-table"><tbody>' + recent + "</tbody></table>" +
+            '<div style="display:flex;gap:8px;padding:8px 12px"><button class="pm-btn pm-btn-sm" data-nav="#/all">All Settings</button><button class="pm-btn pm-btn-sm" data-nav="#/copy">Copy Settings…</button><button class="pm-btn pm-btn-quiet pm-btn-sm" data-nav="#/lifecycle">Lifecycle</button></div></div>' +
+          '<div class="cs-panel cs-syspanel"><div class="cs-panel-cap">System status<span class="pm-spacer"></span><span class="pm-note">' + (sc === "offline" ? "offline" : "live") + "</span></div>" +
+            '<div class="cs-sys">' +
+            '<div class="row"><span>Scenario</span><b>' + esc(sc) + "</b></div>" +
+            '<div class="row"><span>Settings indexed</span><b>' + D.count + "</b></div>" +
+            '<div class="row"><span>Manager families</span><b>' + MD.families.length + "</b></div>" +
+            '<div class="row"><span>Restore points</span><b>' + S2.state.restorePoints.length + "</b></div>" +
+            '<div class="row"><span>Active ops</span><b>' + opsActive + "</b></div>" +
+            '<div class="row"><span>Last change</span><b>' + esc(lastChange ? lastChange.label : "—") + "</b></div>" +
+            "</div></div>" +
+        "</div>" +
+      "</div>" +
+    "</div>" + opsHTML() + "</div>";
+}
+
+/* ---------- staged exact-setting editor (beside context) ---------- */
+var editorState = { id: null, staged: null };
+function editorPanelHTML(rows) {
+  var inv = null;
+  if (editorState.id) inv = D.byId(editorState.id);
+  if (!inv) {
+    var rowId = route.q.get("row");
+    if (rowId) { rows.forEach(function (s) { if (s.id === rowId) inv = s; }); }
+  }
+  if (!inv) return '<div class="cs-editor"><div class="cap">Setting editor</div><div class="body"><div class="pm-note">Select any row to stage and edit its exact value here, beside its context.</div></div></div>';
+  editorState.id = inv.id;
+  var st = S2.getSetting(inv.id);
+  var cur = st ? st.value : (inv.default !== undefined ? inv.default : "");
+  var staged = editorState.staged;
+  var ctl = "";
+  if (inv.type === "toggle") ctl = '<button class="pm-toggle" role="switch" aria-checked="' + (staged != null ? staged : cur ? "true" : "false") + '" data-ectl="toggle">' + '<span class="pm-toggle-knob"></span></button>';
+  else if (inv.type === "select" || inv.type === "radio") ctl = '<select class="pm-select" data-ectl="select">' + (inv.options || []).map(function (o) { return '<option' + ((staged != null ? staged : cur) === o ? " selected" : "") + ">" + esc(o) + "</option>"; }).join("") + "</select>";
+  else if (inv.type === "number" || inv.type === "slider") ctl = '<input class="pm-input" type="number" data-ectl="number" value="' + esc(staged != null ? staged : cur) + '">';
+  else ctl = '<input class="pm-input" data-ectl="text" value="' + esc(staged != null ? staged : cur) + '">';
+  var dirty = staged != null && JSON.stringify(staged) !== JSON.stringify(cur);
+  return '<div class="cs-editor" data-editor="' + esc(inv.id) + '"><div class="cap">Exact setting editor<span class="pm-spacer" style="flex:1"></span>' + (st && st.source !== "default" ? M2.sourceChip(st.source) : "") + "</div>" +
+    '<div class="body"><div class="lbl">' + esc(inv.label) + '</div><div class="dsc">' + esc(inv.desc) + "</div>" +
+    '<div class="pm-note path" style="font-family:var(--font-mono);font-size:11px;color:var(--text-3)">' + esc(inv.id) + "</div>" +
+    "<div>" + ctl + "</div>" +
+    (dirty ? '<div class="cs-stagewarn">' + ico("alertTriangle", 13) + " Staged — not applied yet.</div>" : "") +
+    '<div class="acts"><button class="pm-btn pm-btn-primary pm-btn-sm" data-eact="save"' + (dirty ? "" : " disabled") + ">Save</button>" +
+    '<button class="pm-btn pm-btn-sm" data-eact="discard"' + (dirty ? "" : " disabled") + ">Discard</button>" +
+    '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-eact="reset">Reset to default</button></div>' +
+    "</div></div>";
+}
+function bindEditor() {
+  var ed = content.querySelector("[data-editor]");
+  if (!ed) return;
+  var id = ed.getAttribute("data-editor");
+  var inv = D.byId(id);
+  ed.querySelectorAll("[data-ectl]").forEach(function (c) {
+    var kind = c.getAttribute("data-ectl");
+    if (kind === "toggle") c.addEventListener("click", function () { editorState.staged = editorState.staged == null ? !(S2.getSetting(id) && S2.getSetting(id).value) : !editorState.staged; rerenderDetail(); });
+    else if (kind === "select" || kind === "number") c.addEventListener("change", function () { editorState.staged = kind === "number" ? +c.value : c.value; rerenderDetail(); });
+    else if (kind === "text") c.addEventListener("input", function () { editorState.staged = c.value; var sv = ed.querySelector("[data-eact='save']"); if (sv) sv.disabled = false; });
+  });
+  ed.querySelectorAll("[data-eact]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var a = b.getAttribute("data-eact");
+      if (a === "save") { if (editorState.staged != null) { S2.setSetting(id, editorState.staged); editorState.staged = null; editorState.id = null; rerenderDetail(); } }
+      else if (a === "discard") { editorState.staged = null; rerenderDetail(); }
+      else if (a === "reset") { S2.resetSetting(id); editorState.staged = null; editorState.id = null; rerenderDetail(); }
+    });
+  });
+}
+function rerenderDetail() {
+  var body = content.querySelector("[data-detailbody]");
+  if (!body) { render(); return; }
+  var catId = route.parts[1], subId = route.parts[2];
+  var rows = D.settings.filter(function (s) { return s.id.split(".")[0] === catId && s.id.split(".")[1] === subId; });
+  body.innerHTML = '<div class="cs-detailgrid"><div>' + rows.map(function (s) { return M2.row(s, S2.getSetting(s.id)); }).join("") + "</div>" + editorPanelHTML(rows) + "</div>";
+  M2.bindRows(body);
+  bindEditor();
+  if (editorState.id) { var r = body.querySelector("[data-row='" + editorState.id + "']"); if (r) r.classList.add("pm2-locate"); }
+}
+/* ---------- CATEGORY (drill) ---------- */
+function catHTML() {
+  var catId = route.parts[1] || null, subId = route.parts[2] || null;
+  var idxPane = '<div class="cs-pane idx' + (!catId ? " push-on" : "") + '"><div class="cs-pane-cap">Index<span class="pm-spacer"></span><button class="pm-btn pm-btn-quiet pm-btn-sm cs-pushback" data-act="back">' + ico("arrowLeft", 12) + ' Back</button></div><div class="cs-pane-body">' +
+    D.categories.map(function (c) {
+      return '<button class="cs-rowline' + (c.id === catId ? " sel" : "") + '" data-nav="#/cat/' + c.id + '"><span class="ic">' + ico(c.icon, 14) + '</span><span class="tt">' + esc(c.title) + "</span>" + (c.id === catId ? '<span class="go">' + ico("chevronRight", 13) + "</span>" : "") + "</button>";
+    }).join("") + "</div></div>";
+  var pagesPane = "";
+  if (catId) {
+    var c = catOf(catId);
+    var mgrs = MD.families.filter(function (f) { return f.domain === catId; });
+    pagesPane = '<div class="cs-pane pages' + (catId && !subId ? " push-on" : "") + '"><div class="cs-pane-cap">Pages — ' + esc(c ? c.category.title : catId) + '<span class="pm-spacer"></span><button class="pm-btn pm-btn-quiet pm-btn-sm cs-pushback" data-act="back">' + ico("arrowLeft", 12) + ' Back</button></div><div class="cs-pane-body">' +
+      '<div class="cs-subcap">Pages</div>' +
+      (c ? c.category.subgroups.map(function (s) {
+        return '<button class="cs-rowline' + (s.id === subId ? " sel" : "") + '" data-nav="#/cat/' + catId + "/" + s.id + '"><span class="tt">' + esc(s.title) + "<small>" + esc(s.description) + "</small></span>" + (s.id === subId ? '<span class="go">' + ico("chevronRight", 13) + "</span>" : "") + "</button>";
+      }).join("") : "") +
+      '<div class="cs-subcap">Managers in this domain</div>' +
+      (mgrs.length ? mgrs.map(function (f) {
+        return '<button class="cs-rowline" data-manager-row="' + f.id + '" data-nav="#/mgr/' + f.id + '?from=%23%2Fcat%2F' + catId + '"><span class="ic">' + ico(f.icon, 14) + '</span><span class="tt">' + esc(f.title) + "<small>" + esc(f.archetype) + "</small></span><span>" + healthBadge(famHealth(f)) + '</span><span class="go">' + ico("chevronRight", 13) + "</span></button>";
+      }).join("") : '<div class="pm-note" style="padding:6px 9px">No managers in this domain.</div>') +
+      "</div></div>";
+  }
+  var detailPane = "";
+  if (catId && subId) {
+    var rows = D.settings.filter(function (s) { return s.id.split(".")[0] === catId && s.id.split(".")[1] === subId; });
+    detailPane = '<div class="cs-pane detail push-on"><div class="cs-pane-cap">' + esc(subTitle(catId, subId)) + '<span class="pm-spacer"></span><span class="pm-note">' + rows.length + " settings</span></div>" + '<div class="cs-pane-body" data-detailbody>' +
+      '<div class="cs-detailgrid"><div>' + rows.map(function (s) { return M2.row(s, S2.getSetting(s.id)); }).join("") + "</div>" + editorPanelHTML(rows) + "</div>" +
+      "</div></div>";
+  } else if (catId && !subId) {
+    detailPane = '<div class="cs-pane detail"><div class="cs-pane-body"><div class="pm2-empty">Pick a page on the left to see its settings, or open a manager.</div></div></div>';
+  } else {
+    detailPane = '<div class="cs-pane detail"><div class="cs-pane-body"><div class="pm2-empty">Select a domain from the index to drill in.</div></div></div>';
+  }
+  return '<div class="cs-view">' + topbarHTML() + '<div class="cs-drill" data-drill>' + idxPane + pagesPane + detailPane + "</div>" + opsHTML() + "</div>";
+}
+function famHealth(f) {
+  var sc = scenario();
+  if (f.id === "providers" && (sc === "reconnect-required" || sc === "update-available" || sc === "rollback")) return "warn";
+  if (f.id === "searchindex" && sc === "offline") return "warn";
+  if (f.id === "backup" && sc === "attention") return "warn";
+  return "ok";
+}
+
+/* ---------- inventory rows per family (real 828) ---------- */
+var FAM_SUB = {
+  providers: [["ai", "models"], ["ai", "accounts"]], context: [["memory", "assembly"]], memory: [["memory", "retention"], ["memory", "limits"]],
+  personas: [["personas", ""]], goal: [["planning", "verification"]], crew: [["branching", "crew"]], permissions: [["safety", "rules"]],
+  bsd: [["safety", "approvals"]], notifications: [["general", "interaction"]], sounds: [["general", "interaction"]], appearance: [["general", "visual"]],
+  spellcheck: [["general", "interaction"]], desktop: [["general", "interaction"]], teacher: [["general", "interaction"]], doctor: [["system", "health"]],
+  files: [["code", "editing"]], terminal: [["code", "terminal"]], lsp: [["code", "editing"]], formatters: [["code", "editing"]],
+  commands: [["extensions", "commands"]], mcp: [["system", "mcp"]], skills: [["extensions", "skills"]], plugins: [["extensions", "plugins"]],
+  tools: [["extensions", ""]], testing: [["planning", "testing"]], storage: [["system", ""]], backup: [["system", ""]],
+  lifecycle: [["system", "advanced"]], history: [["system", "advanced"]], artifacts: [["system", "advanced"]], scm: [["branching", "worktrees"]],
+  gha: [["extensions", ""]], containers: [["code", "execution"]], web: [["web", "providers"]], searchindex: [["web", "index"]],
+  cleanup: [["system", "advanced"]], media: [["media", ""]], dry: [["extensions", ""]], onboarding: [["general", "startup"]],
+  updates: [["system", "advanced"]], servers: [["system", ""]], hosting: [["system", ""]]
+};
+function invRowsFor(fam) {
+  var prefs = FAM_SUB[fam.id] || [[fam.domain, ""]];
+  var out = [];
+  for (var i = 0; i < prefs.length && out.length < 4; i++) {
+    var cat = prefs[i][0], sub = prefs[i][1];
+    D.settings.forEach(function (s) {
+      if (out.length >= 4) return;
+      var p = s.id.split(".");
+      if (p[0] === cat && (!sub || p[1] === sub)) out.push(s);
+    });
+  }
+  if (!out.length) D.settings.forEach(function (s) { if (out.length < 4 && s.id.split(".")[0] === fam.domain) out.push(s); });
+  return out;
+}
+function fixtureRowHTML(f, r) {
+  var ctl = "";
+  if (r.kind === "action") ctl = '<button class="pm-btn pm-btn-sm" data-fact="' + esc(r.id) + '">' + esc(r.type === "action" ? (r.value || "Run") : "Run") + "</button>";
+  else if (r.kind === "setting") ctl = '<span class="pm-badge pm-badge-info">' + esc(r.value) + "</span>";
+  else if (r.kind === "status") ctl = '<span class="pm-badge">' + esc(r.value) + "</span>";
+  else if (r.kind === "diagnostic") ctl = '<span class="pm-badge pm-badge-warn">' + esc(r.value) + "</span>";
+  return '<div class="pm2-row" data-frow="' + esc(r.id) + '"><div class="pm2-row-main"><div class="pm2-row-title">' + esc(r.label) + '</div><div class="pm2-row-desc">' + esc(r.desc) + '</div></div><div class="pm2-row-ctl">' + ctl + "</div></div>";
+}
+function relatedSettingsHTML(fam) {
+  var rows = invRowsFor(fam);
+  if (!rows.length) return "";
+  return '<div class="cs-subcap">Related product settings</div>' + rows.map(function (s) { return M2.row(s, S2.getSetting(s.id)); }).join("");
+}
+function deferredNoteHTML(fam) {
+  var d = null;
+  MD.deferred.forEach(function (x) { if (x.id === fam.id) d = x; });
+  if (!d) return "";
+  return '<div class="cs-shellnote" data-deferred="' + esc(d.id) + '"><b>Owner module: ' + esc(d.owner) + "</b>" +
+    "<span>Insertion: " + esc(d.insertion) + "</span><span>Return contract: " + esc(d.returnContract) + "</span>" +
+    '<span class="pm-note">This pane is a reserved shell — the named owner renders the full flow; no backend state is invented here.</span></div>';
+}
+
+/* ---------- providers ---------- */
+var provState = { section: "overview" };
+function provSections(p) { var s = ["overview", "accounts", "install", "models"]; if ((p.readiness || []).indexOf("catalog-last-known-good") >= 0 || (p.readiness || []).indexOf("underlying-setup-required") >= 0) s.push("catalog"); return s.concat(["limits", "logs", "settings"]); }
+function providerDetailHTML(p) {
+  var sec = provState.section === "catalog" ? "models" : provState.section;
+  var body = "";
+  if (sec === "overview") {
+    body = '<table class="cs-table"><tbody>' +
+      "<tr><td>Status</td><td>" + esc(p.state) + "</td></tr>" +
+      "<tr><td>Authentication</td><td>" + esc(p.authKind.replace(/-/g, " ")) + (p.authKind === "cli-owned-oauth" ? ' <span class="pm-note">— sign-in completes inside the provider CLI; raw credentials never rendered</span>' : "") + "</td></tr>" +
+      "<tr><td>Readiness</td><td>" + p.readiness.map(readinessBadge).join(" ") + "</td></tr>" +
+      "<tr><td>Update policy</td><td>" + esc(p.updatePolicy.replace(/-/g, " ")) + "</td></tr>" +
+      "<tr><td>Models</td><td class='num'>" + p.models.length + "</td></tr>" +
+      "</tbody></table>" +
+      '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-sm" data-pact="test">Test Connection</button>' +
+      '<button class="pm-btn pm-btn-sm" data-pact="default">Set Default Account</button>' +
+      '<button class="pm-btn pm-btn-quiet pm-btn-sm" data-pact="usage">View Usage</button></div>';
+  } else if (sec === "accounts") {
+    body = '<table class="cs-table"><thead><tr><th>Account</th><th>Health</th><th>Preferred</th><th>Enabled</th><th></th></tr></thead><tbody>' +
+      p.accounts.map(function (a) {
+        return "<tr><td>" + esc(a.label) + "</td><td>" + healthBadge(a.health) + "</td><td>" + (a.preferred ? '<span class="pm-badge pm-badge-ok">Preferred</span>' : '<span class="pm-note">—</span>') + "</td><td>" + (a.enabled ? "Yes" : "No") + '</td><td style="text-align:right"><button class="pm-btn pm-btn-sm" data-pact="prefer" data-acc="' + esc(a.id) + '">Prefer</button></td></tr>';
+      }).join("") + "</tbody></table>" +
+      (p.readiness.indexOf("sign-in-required") >= 0 ? '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-primary pm-btn-sm" data-pact="signin">Finish Sign-in (CLI-owned OAuth)</button></div>' : "") +
+      (scenario() === "reconnect-required" ? '<div class="cs-banner">' + ico("alertTriangle", 14) + ' Connection needs re-authentication. <button class="pm-btn pm-btn-sm" data-pact="reconnect">Reconnect</button></div>' : "");
+  } else if (sec === "install") {
+    var insts = p.installations.length ? p.installations.map(function (it) {
+      return "<tr data-mrow='" + esc(it.id) + "'><td>" + esc(it.label) + "</td><td>" + esc(it.owner) + "</td><td>" + esc(it.confidence) + "</td><td>" + esc(it.host) + "</td><td>" +
+        (it.selected ? '<span class="pm-badge pm-badge-ok">Selected</span>' : "") + (it.shadowed ? '<span class="pm-badge pm-badge-warn">Shadowed</span>' : "") + "</td></tr>";
+    }).join("") : '<tr><td colspan="5"><span class="pm-note">Not installed.</span></td></tr>';
+    body = '<table class="cs-table"><thead><tr><th>Installation</th><th>Owner</th><th>Confidence</th><th>Host / Environment</th><th>Role</th></tr></thead><tbody>' + insts + "</tbody></table>";
+    if (!p.installations.length) {
+      body += '<div class="pm-mgr-actions"><label class="pm-note">Host / Environment <select class="pm-select pm-select-sm" data-hostsel><option>This desktop — Windows 11</option><option>Local server</option></select></label>' +
+        '<button class="pm-btn pm-btn-primary pm-btn-sm" data-pact="install">Install from official source</button></div>' +
+        '<div class="pm-note">Acquisition is explicit and user-triggered; Puppet Master never installs a provider CLI on its own.</div>';
+    }
+    if (p.readiness.indexOf("update-available") >= 0) {
+      body += '<div class="pm-update-block"><div class="pm-update-row"><span class="pm-update-label">A newer compatible version is available. Policy: ask first.</span>' +
+        '<button class="pm-btn pm-btn-sm" data-pact="update">Review update…</button></div></div>';
+    }
+    if (p.readiness.indexOf("update-scheduled") >= 0) body += '<div class="pm-note" style="margin-top:8px">Update scheduled for the next idle window.</div>';
+    if (p.readiness.indexOf("rolled-back") >= 0) body += '<div class="cs-banner" style="margin-top:8px">' + ico("checkCircle", 14) + " Verification failed after the last update; the previous generation was restored automatically.</div>";
+    if (p.readiness.indexOf("owner-unknown") >= 0) body += '<div class="cs-banner" style="margin-top:8px">' + ico("alertTriangle", 14) + " Installation owner unknown — updates and repairs are manual-only.</div>";
+  } else if (sec === "models") {
+    body = '<table class="cs-table"><thead><tr><th>Model</th><th>Free</th><th>Effort</th><th>Context</th></tr></thead><tbody>' +
+      p.models.map(function (m) {
+        return "<tr data-mrow='" + esc(m.id) + "'><td><b>" + esc(m.label) + "</b> <span class='pm-note'>" + esc(m.id) + "</span></td><td>" + (m.free ? "Yes" : "No") + "</td><td>" + esc(m.effort || "—") + "</td><td class='num'>" + esc(m.context || "—") + "</td></tr>";
+      }).join("") + "</tbody></table>" +
+      (p.readiness.indexOf("catalog-last-known-good") >= 0 ? '<div class="pm-mgr-actions"><span class="pm-note">Serving last-known-good catalog (offline).</span><button class="pm-btn pm-btn-sm" data-pact="refresh">Refresh catalog</button></div>' :
+       '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-sm" data-pact="refresh">Refresh models</button></div>');
+  } else if (sec === "limits") {
+    if (p.readiness.indexOf("usage-unavailable") >= 0) {
+      body = '<div class="pm2-empty">This provider does not expose usage meters. Limits below are the configured caps; usage stays unknown.</div>';
+    }
+    var usedPct = parseInt(p.limits.used, 10) || 0;
+    body += '<table class="cs-table" style="margin-top:8px"><thead><tr><th>Metric</th><th>Limit</th><th>Used</th><th style="width:120px">Share</th></tr></thead><tbody>' +
+      "<tr data-mrow='lim-rpm'><td>Requests / min</td><td class='num'>" + p.limits.rpm.toLocaleString() + "</td><td class='num'>" + Math.round(p.limits.rpm * usedPct / 100).toLocaleString() + "</td><td><span class='cs-meter" + (usedPct > 85 ? " err" : usedPct > 60 ? " warn" : "") + "'><i style='width:" + usedPct + "%'></i></span> " + usedPct + "%</td></tr>" +
+      "<tr data-mrow='lim-tpm'><td>Tokens / min</td><td class='num'>" + p.limits.tpm.toLocaleString() + "</td><td class='num'>" + Math.round(p.limits.tpm * usedPct / 100).toLocaleString() + "</td><td><span class='cs-meter" + (usedPct > 85 ? " err" : usedPct > 60 ? " warn" : "") + "'><i style='width:" + usedPct + "%'></i></span> " + usedPct + "%</td></tr>" +
+      "<tr data-mrow='lim-rpd'><td>Requests / day</td><td class='num'>" + p.limits.rpd.toLocaleString() + "</td><td class='num'>—</td><td><span class='pm-note'>meter on provider</span></td></tr>" +
+      "</tbody></table>";
+    if (isOffline()) body += '<div class="pm-note" style="margin-top:6px">Offline: showing last-known values.</div>';
+  } else if (sec === "logs") {
+    body = p.logs.map(function (l) { return '<div class="cs-log">' + esc(l) + "</div>"; }).join("") || '<div class="pm-note">No log entries.</div>';
+  } else {
+    var fam = famById("providers");
+    body = fam.rows.map(function (r) { return fixtureRowHTML(fam, r); }).join("");
+  }
+  return body;
+}
+function mgrProvidersHTML() {
+  var objId = route.parts[2] || "openai-cli";
+  var p = provById(objId) || MD.providers[0];
+  provState.section = route.q.get("sec") || provState.section || "overview";
+  if (!provById(objId)) provState.section = "overview";
+  var roster = '<div class="cs-pane' + (!route.parts[2] ? " push-on" : "") + '"><div class="cs-pane-cap">Providers<span class="pm-spacer"></span><span class="pm-note">' + MD.providers.length + "</span>" +
+    '<button class="pm-btn pm-btn-quiet pm-btn-sm cs-pushback" data-act="back">' + ico("arrowLeft", 12) + ' Back</button></div><div class="cs-pane-body" data-manager="providers-roster">' +
+    MD.providers.map(function (x) {
+      return '<button class="cs-rowline' + (x.id === p.id ? " sel" : "") + '" data-object="' + x.id + '" data-nav="#/mgr/providers/' + x.id + (route.q.get("sec") ? "?sec=" + route.q.get("sec") : "") + '"><span class="ic">' + ico(x.icon || "robot", 14) + '</span><span class="tt">' + esc(x.name) + "<small>" + esc(x.state) + "</small></span>" + (x.id === p.id ? '<span class="go">' + ico("chevronRight", 13) + "</span>" : "") + "</button>";
+    }).join("") + '<div style="padding:8px"><button class="pm-btn pm-btn-sm" data-pact="add">' + ico("plus", 12) + " Add Provider</button></div></div></div>";
+  var tabs = provSections(p).map(function (s) {
+    return '<button role="tab" class="' + (provState.section === s ? "active" : "") + '" data-psec="' + s + '">' + s[0].toUpperCase() + s.slice(1) + "</button>";
+  }).join("");
+  var detail = '<div class="cs-pane detail push-on" data-manager="providers"><div class="cs-pane-cap">' + ico(p.icon || "robot", 14) + " " + esc(p.name) + '<span class="pm-spacer"></span>' + p.readiness.slice(0, 2).map(readinessBadge).join(" ") + "</div>" +
+    '<div class="cs-sectabs" role="tablist">' + tabs + "</div>" +
+    '<div class="cs-pane-body" data-pbody>' + providerDetailHTML(p) + "</div></div>";
+  return '<div class="cs-drill two" data-drill>' + roster + detail + "</div>";
+}
+
+/* ---------- generic manager ---------- */
+function mgrGenericHTML(fam) {
+  var objId = route.parts[2] || null;
+  var left = "";
+  if (fam.archetype === "roster" && fam.objects) {
+    left = '<div class="cs-pane' + (!objId ? " push-on" : "") + '"><div class="cs-pane-cap">' + esc(fam.title) + '<span class="pm-spacer"></span><span class="pm-note">' + fam.objects.length + "</span>" +
+      '<button class="pm-btn pm-btn-quiet pm-btn-sm cs-pushback" data-act="back">' + ico("arrowLeft", 12) + ' Back</button></div><div class="cs-pane-body">' +
+      fam.objects.map(function (o) {
+        return '<button class="cs-rowline' + (o.id === objId ? " sel" : "") + '" data-nav="#/mgr/' + fam.id + "/" + o.id + '"><span class="tt">' + esc(o.label) + "<small>" + esc(o.note || "") + "</small></span>" + healthBadge(o.health) + (o.id === objId ? '<span class="go">' + ico("chevronRight", 13) + "</span>" : "") + "</button>";
+      }).join("") + "</div></div>";
+  }
+  var obj = null;
+  if (objId && fam.objects) fam.objects.forEach(function (o) { if (o.id === objId) obj = o; });
+  var detailBody = deferredNoteHTML(fam);
+  if (obj) detailBody += '<div class="cs-shellnote"><b>' + esc(obj.label) + "</b><span>" + esc(obj.note || "") + "</span></div>";
+  detailBody += fam.rows.map(function (r) { return fixtureRowHTML(fam, r); }).join("");
+  detailBody += relatedSettingsHTML(fam);
+  var detail = '<div class="cs-pane detail' + (fam.archetype === "roster" ? " push-on" : "") + '" data-manager="' + esc(fam.id) + '"><div class="cs-pane-cap">' + ico(fam.icon, 14) + " " + esc(fam.title) +
+    '<span class="pm-spacer"></span><span class="pm-badge">' + esc(fam.archetype) + "</span>" +
+    (fam.archetype === "roster" ? '<button class="pm-btn pm-btn-quiet pm-btn-sm cs-pushback" data-act="back">' + ico("arrowLeft", 12) + " Back</button>" : "") +
+    "</div>" + (fam.archetype === "roster" ? "" : '<div class="cs-pane-body" style="flex:0;padding:10px 14px 0"><div class="pm-note">' + esc(fam.summary) + "</div></div>") +
+    '<div class="cs-pane-body">' + detailBody + "</div></div>";
+  if (fam.archetype !== "roster") {
+    detail = '<div class="cs-pane detail push-on" data-manager="' + esc(fam.id) + '"><div class="cs-pane-cap">' + ico(fam.icon, 14) + " " + esc(fam.title) + '<span class="pm-spacer"></span><span class="pm-badge">' + esc(fam.archetype) + "</span></div>" +
+      '<div class="cs-pane-body"><div class="pm-note" style="margin-bottom:10px">' + esc(fam.summary) + "</div>" + detailBody + "</div></div>";
+  }
+  return '<div class="cs-drill' + (fam.archetype === "roster" ? " two" : "") + '" data-drill>' + left + detail + "</div>";
+}
+function mgrHTML() {
+  var fam = famById(route.parts[1]);
+  if (!fam) return '<div class="cs-view">' + topbarHTML() + '<div class="pm2-empty">Unknown manager.</div></div>';
+  if (fam.id === "providers") return '<div class="cs-view">' + topbarHTML() + mgrProvidersHTML() + opsHTML() + "</div>";
+  return '<div class="cs-view">' + topbarHTML() + mgrGenericHTML(fam) + opsHTML() + "</div>";
+}
+
+/* ---------- COPY ---------- */
+var copyState = { step: 1, source: null, cats: [] };
+function srcProject() { for (var i = 0; i < MD.sourceProjects.length; i++) if (MD.sourceProjects[i].id === copyState.source) return MD.sourceProjects[i]; return null; }
+function copyHTML() {
+  var s = copyState;
+  var steps = ["Select source", "Choose categories", "Preview changes", "Confirm"].map(function (t, i) {
+    var n = i + 1;
+    return '<button class="cs-step' + (s.step === n ? " active" : (s.step > n ? " done" : "")) + '" data-cstep="' + n + '">' + n + ". " + t + "</button>";
+  }).join('<span class="sep" style="color:var(--text-3)">→</span>');
+  var body = "";
+  if (s.step === 1) {
+    body = '<div class="cs-copygrid">' + MD.sourceProjects.map(function (p) {
+      return '<label class="cs-check"><input type="radio" name="cs-src" value="' + esc(p.id) + '"' + (s.source === p.id ? " checked" : "") + '><span class="t"><b>' + esc(p.name) + "</b><small>" + esc(p.summary) + " · updated " + esc(p.updated) + "</small></span></label>";
+    }).join("") + "</div>";
+  } else if (s.step === 2) {
+    var src = srcProject();
+    body = '<div class="cs-copygrid">' + D.categories.map(function (c) {
+      var on = s.cats.indexOf(c.id) >= 0;
+      var cnt = src && src.counts ? (src.counts[c.id] || 0) : 0;
+      return '<label class="cs-check"><input type="checkbox" data-ccat="' + c.id + '"' + (on ? " checked" : "") + '><span class="t">' + esc(c.title) + '<small>' + esc(c.description) + "</small></span><span class='cs-count'>" + cnt + " in source</span></label>";
+    }).join("") + "</div>" +
+    '<div style="display:flex;gap:8px"><button class="pm-btn pm-btn-sm" data-cact="all">Select all</button><button class="pm-btn pm-btn-quiet pm-btn-sm" data-cact="none">Clear all</button></div>';
+  } else if (s.step === 3) {
+    var pv = CP.preview(s.source, s.cats);
+    s.preview = pv;
+    body = '<table class="cs-table"><thead><tr><th>Outcome</th><th class="num">Count</th></tr></thead><tbody>' +
+      "<tr><td>Add</td><td class='num'>" + pv.counts.add + "</td></tr><tr><td>Replace</td><td class='num'>" + pv.counts.replace + "</td></tr>" +
+      "<tr><td>Unchanged</td><td class='num'>" + pv.counts.same + "</td></tr><tr><td>Unavailable here</td><td class='num'>" + pv.counts.unavailable + "</td></tr>" +
+      "<tr><td>Needs conflict review</td><td class='num'>" + pv.counts.conflict + "</td></tr></tbody></table>" +
+      '<div class="cs-subcap">Item diff (first 12)</div><table class="cs-table"><thead><tr><th>Setting</th><th>Status</th><th>Current → Incoming</th></tr></thead><tbody>' +
+      pv.rows.slice(0, 12).map(function (r) {
+        return "<tr><td>" + esc(r.label) + '</td><td><span class="pm-badge ' + (r.status === "conflict" ? "pm-badge-diff" : r.status === "unavailable" ? "pm-badge-muted" : r.status === "credential" ? "pm-badge-managed" : "pm-badge-info") + '">' + esc(r.status) + "</span></td><td>" +
+          (r.status === "credential" ? '<span class="pm-note">account reference only; raw secret never copied</span>' : esc(String(r.current)) + " → " + esc(String(r.incoming))) + "</td></tr>";
+      }).join("") + "</tbody></table>" +
+      '<div class="pm-note" style="margin-top:8px">Credentials are copied as account references per Project-copy policy; raw secrets never render or export. ' + (pv.rows.length > 12 ? "+" + (pv.rows.length - 12) + " more rows in the full diff." : "") + "</div>";
+  } else {
+    var pv2 = s.preview || CP.preview(s.source, s.cats);
+    s.preview = pv2;
+    body = '<div class="cs-copygrid" style="grid-template-columns:minmax(0,1fr) 300px">' +
+      '<div><table class="cs-table"><tbody><tr><td>Source</td><td>' + esc((srcProject() || {}).name || s.source) + "</td></tr>" +
+      "<tr><td>Categories</td><td class='num'>" + s.cats.length + "</td></tr><tr><td>Total changes</td><td class='num'>" + pv2.rows.length + "</td></tr>" +
+      "<tr><td>Conflicts to review</td><td class='num'>" + pv2.counts.conflict + "</td></tr></tbody></table>" +
+      '<div class="pm-note" style="margin-top:8px">A restore point is created before apply; source and destination stay independent afterward.</div></div>' +
+      '<div class="cs-editor"><div class="cap">Confirm copy</div><div class="body">' +
+      '<div class="cs-stagewarn">' + ico("alertTriangle", 14) + " This one-time action overwrites matching values for this Project.</div>" +
+      '<label class="pm-note">Type COPY to confirm<input class="pm-input" data-confirmtype placeholder="COPY"></label>' +
+      '<div class="acts"><button class="pm-btn pm-btn-primary" data-cact="apply" disabled>Copy Settings</button>' +
+      (S2.state.copiedFrom ? '<button class="pm-btn pm-btn-danger pm-btn-sm" data-cact="rollback">Undo last copy</button>' : "") +
+      "</div></div></div></div>";
+  }
+  return '<div class="cs-view" data-test="copy">' + topbarHTML() + '<div class="cs-copy"><div class="cs-steps">' + steps + "</div>" +
+    '<div class="cs-panel" style="padding:12px">' + body + "</div>" +
+    '<div style="display:flex;gap:8px;justify-content:flex-end">' +
+    (s.step > 1 ? '<button class="pm-btn pm-btn-sm" data-cstep="' + (s.step - 1) + '">Back</button>' : "") +
+    (s.step < 4 ? '<button class="pm-btn pm-btn-primary pm-btn-sm" data-cact="next"' + ((s.step === 1 && !s.source) || (s.step === 2 && !s.cats.length) ? " disabled" : "") + ">Continue</button>" : "") +
+    "</div></div>" + opsHTML() + "</div>";
+}
+
+/* ---------- ALL ---------- */
+var allState = { fCat: "", fType: "", fTier: "", fChanged: false, fManaged: false, syn: false };
+var SYN = null;
+function synRows() {
+  var out = [];
+  for (var i = 0; i < 2000; i++) {
+    var c = D.categories[i % 12];
+    out.push({ id: "syn." + i, label: "Synthetic stress setting " + (i + 1), desc: "Generated row for scale testing; never part of the product inventory.", type: "toggle", tier: "advanced", syn: true, cat: c.id, path: c.title + " / Synthetic" });
+  }
+  return out;
+}
+function allFiltered() {
+  var base = D.settings.map(function (s) {
+    var si = s.id.split(".");
+    var c = D.byCategory(si[0]);
+    var t = c ? c.category.title : si[0];
+    var sub = c ? ((c.category.subgroups.filter(function (g) { return g.id === si[1]; })[0] || {}).title || si[1]) : si[1];
+    return { id: s.id, label: s.label, desc: s.desc, type: s.type, tier: s.tier, syn: false, cat: si[0], path: t + " / " + sub };
+  });
+  if (allState.syn) { if (!SYN) SYN = synRows(); base = base.concat(SYN); }
+  return base.filter(function (s) {
+    if (allState.fCat && s.cat !== allState.fCat) return false;
+    if (allState.fType && s.type !== allState.fType) return false;
+    if (allState.fTier && s.tier !== allState.fTier) return false;
+    var st = s.syn ? null : S2.getSetting(s.id);
+    if (allState.fChanged && !(st && st.source === "custom")) return false;
+    if (allState.fManaged && !(st && (st.source === "managed" || st.source === "unavailable"))) return false;
+    return true;
+  });
+}
+var vlist = null;
+function allHTML() {
+  var types = {}, tiers = {};
+  D.settings.forEach(function (s) { types[s.type] = 1; tiers[s.tier] = 1; });
+  return '<div class="cs-view" data-test="all">' + topbarHTML() + '<div class="cs-all">' +
+    '<div class="cs-facets">' +
+      '<div class="cs-facet-cap">Category</div><select class="pm-select" data-facet="fCat"><option value="">All categories</option>' + D.categories.map(function (c) { return '<option value="' + c.id + '"' + (allState.fCat === c.id ? " selected" : "") + ">" + esc(c.title) + "</option>"; }).join("") + "</select>" +
+      '<div class="cs-facet-cap">Type</div><select class="pm-select" data-facet="fType"><option value="">All types</option>' + Object.keys(types).map(function (t) { return '<option' + (allState.fType === t ? " selected" : "") + ">" + t + "</option>"; }).join("") + "</select>" +
+      '<div class="cs-facet-cap">Exposure</div><select class="pm-select" data-facet="fTier"><option value="">All tiers</option>' + Object.keys(tiers).map(function (t) { return '<option' + (allState.fTier === t ? " selected" : "") + ">" + t + "</option>"; }).join("") + "</select>" +
+      '<div class="cs-facet-cap">State</div>' +
+      '<label class="cs-check"><input type="checkbox" data-facet="fChanged"' + (allState.fChanged ? " checked" : "") + '><span class="t">Changed from default</span></label>' +
+      '<label class="cs-check"><input type="checkbox" data-facet="fManaged"' + (allState.fManaged ? " checked" : "") + '><span class="t">Managed / unavailable</span></label>' +
+      '<div class="cs-facet-cap">Scale test</div>' +
+      '<label class="cs-check"><input type="checkbox" data-facet="syn"' + (allState.syn ? " checked" : "") + '><span class="t">Synthetic stress +2000<small>appends generated rows; the real 828 are never replaced</small></span></label>' +
+    "</div>" +
+    '<div style="display:flex;flex-direction:column;min-width:0">' +
+      '<div style="display:flex;gap:10px;align-items:center;padding:8px 12px;border-bottom:1px solid var(--border)"><span class="pm-note" data-allcount></span><button class="pm-btn pm-btn-quiet pm-btn-sm cs-pushback" data-act="facets">Filters</button></div>' +
+      '<div class="cs-vlist" data-test="vlist"></div>' +
+    "</div></div>" + opsHTML() + "</div>";
+}
+function allRowRender(s) {
+  var st = s.syn ? null : S2.getSetting(s.id);
+  var chip = st && st.source !== "default" ? M2.sourceChip(st.source) : "";
+  return '<div class="cs-vrow' + (s.syn ? " cs-syn" : "") + '" data-row="' + esc(s.id) + '"><div class="a"><div class="l"><strong class="pm2-r-title">' + esc(s.label) + "</strong> " + chip + (s.syn ? ' <span class="pm-badge pm-badge-muted">synthetic</span>' : "") + '</div><div class="p">' + esc(s.path) + " · " + esc(s.type) + " · " + esc(s.tier) + "</div></div>" +
+    '<div>' + (s.syn ? '<span class="pm-badge pm-badge-muted">generated</span>' : M2.controlFor(D.byId(s.id), st)) + "</div></div>";
+}
+
+/* ---------- LIFECYCLE ---------- */
+function lifecycleHTML() {
+  var fam = famById("lifecycle");
+  var rps = (S2.state.restorePoints || []).slice().reverse();
+  return '<div class="cs-view">' + topbarHTML() + '<div class="cs-copy"><div class="cs-panel" style="padding:12px" data-manager="lifecycle">' +
+    deferredNoteHTML(fam) +
+    '<div class="cs-subcap">Transactions</div>' +
+    fam.rows.map(function (r) { return fixtureRowHTML(fam, r); }).join("") +
+    '<div class="cs-subcap">Restore points</div>' +
+    (rps.length ? '<table class="cs-table"><thead><tr><th>Restore point</th><th>When</th><th></th></tr></thead><tbody>' + rps.map(function (rp) {
+      return "<tr><td>" + esc(rp.label) + "</td><td class='num'>" + new Date(rp.at).toLocaleString() + '</td><td style="text-align:right"><button class="pm-btn pm-btn-sm" data-rp="' + esc(rp.id) + '">Roll back</button></td></tr>';
+    }).join("") + "</tbody></table>" : '<div class="pm2-empty">No restore points yet — copies and resets create one automatically.</div>') +
+    relatedSettingsHTML(fam) +
+    "</div></div>" + opsHTML() + "</div>";
+}
+
+/* ---------- render ---------- */
+function render() {
+  route = parseHash();
+  if (route.view === "q") searchState.restore = { query: decodeURIComponent(route.parts.slice(1).join("/")) };
+  viewSeq++;
+  var html = "";
+  if (route.view === "home" || route.view === "q") html = homeHTML();
+  else if (route.view === "cat") html = catHTML();
+  else if (route.view === "mgr") html = mgrHTML();
+  else if (route.view === "all") html = allHTML();
+  else if (route.view === "copy") html = copyHTML();
+  else if (route.view === "lifecycle") html = lifecycleHTML();
+  else html = homeHTML();
+  var rawRoute = location.hash.replace(/^#/, "") || "/home";
+  content.innerHTML = '<div class="cs-root" data-route="' + esc(rawRoute) + '">' + html + "</div>";
+  var view = content.querySelector(".cs-view");
+  if (view) view.classList.add("drill-in");
+  bindSearch(content);
+  bindView();
+  if (route.view === "all") mountVList();
+  var rowId = route.q.get("row");
+  if (rowId) {
+    setTimeout(function () {
+      var sel = "[data-row='" + rowId.replace(/'/g, "\\'") + "'],[data-mrow='" + rowId.replace(/'/g, "\\'") + "'],[data-frow='" + rowId.replace(/'/g, "\\'") + "']";
+      var el = content.querySelector(sel);
+      if (el) { el.scrollIntoView({ block: "center" }); el.classList.add("pm2-locate"); var f = el.querySelector("button,input,select"); if (f) f.focus({ preventScroll: true }); }
+    }, 30);
+  }
+  // calm locator highlight on exact landing (roster object / section tab)
+  if (route.view === "mgr" && route.parts[2]) {
+    var rrow = content.querySelector(".cs-pane .cs-rowline.sel");
+    if (rrow) rrow.classList.add("pm2-locate");
+  }
+  if (route.view === "mgr" && route.q.get("sec")) {
+    var stab = content.querySelector("[data-psec].active");
+    if (stab) stab.classList.add("pm2-locate");
+  }
+  applyPush();
+}
+function applyPush() {
+  var tier = shell.app.getAttribute("data-wtier");
+  if (tier !== "squeezed" && tier !== "narrow") return;
+  var panes = content.querySelectorAll(".cs-drill > .cs-pane");
+  if (!panes.length) return;
+  panes.forEach(function (p) { p.classList.remove("push-on"); });
+  var last = null;
+  var depthOk = (route.view === "cat" && route.parts[2]) || (route.view === "mgr" && route.parts[2]);
+  if (depthOk) last = panes[panes.length - 1];
+  else {
+    panes.forEach(function (p) { if (p.querySelector(".sel")) last = p; });
+    if (!last) last = panes[0];
+  }
+  last.classList.add("push-on");
+}
+function mountVList() {
+  var host = content.querySelector("[data-test='vlist']");
+  if (!host) return;
+  vlist = M2.virtualList({
+    host: host, rowHeight: 64,
+    data: allFiltered(),
+    render: allRowRender,
+    onWindow: function (s, e, t) { host.setAttribute("data-window", s + ":" + e + ":" + t); var c = content.querySelector("[data-allcount]"); if (c) c.textContent = t.toLocaleString() + " rows · window " + s + "–" + e; }
+  });
+}
+
+/* ---------- view bindings ---------- */
+function bindView() {
+  content.querySelectorAll(".pm2-row").forEach(function (r) {
+    r.addEventListener("click", function (e) {
+      if (e.target.closest("button,input,select,a")) return;
+      var id = r.getAttribute("data-row");
+      if (id && content.querySelector("[data-detailbody]")) { editorState.id = id; editorState.staged = null; rerenderDetail(); }
+    });
+  });
+  content.querySelectorAll("[data-nav]").forEach(function (el) {
+    el.addEventListener("click", function (e) { e.preventDefault(); nav(el.getAttribute("data-nav")); });
+  });
+  content.querySelectorAll("[data-act='back']").forEach(function (b) { b.addEventListener("click", goBack); });
+  content.querySelectorAll("[data-act='facets']").forEach(function (b) { b.addEventListener("click", function () { var f = content.querySelector(".cs-facets"); if (f) f.classList.toggle("push-on"); }); });
+  var close = content.querySelector("[data-test='close']");
+  if (close) close.addEventListener("click", function () {
+    S2.receipt("Settings closed", "Return to the Puppet Master workspace. Your changes stay with this Project.", "info");
+  });
+  content.querySelectorAll("[data-fact]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var id = b.getAttribute("data-fact");
+      var fam = famById(route.parts[1]); var r = null;
+      if (fam) fam.rows.forEach(function (x) { if (x.id === id) r = x; });
+      var op = S2.beginOp({ title: r ? r.label : id, phase: "Running", determinate: false });
+      setTimeout(function () { S2.finishOp(op, "completed", "Done"); S2.receipt("Action complete", (r ? r.label : id) + " finished for this Project.", "ok"); }, 700);
+    });
+  });
+  bindProvider();
+  bindEditor();
+  bindCopy();
+  bindAll();
+  bindLifecycle();
+}
+function bindProvider() {
+  content.querySelectorAll("[data-psec]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      provState.section = b.getAttribute("data-psec");
+      var p = provById(route.parts[2] || "openai-cli") || MD.providers[0];
+      var body = content.querySelector("[data-pbody]");
+      if (body) body.innerHTML = providerDetailHTML(p);
+      content.querySelectorAll("[data-psec]").forEach(function (x) { x.classList.toggle("active", x.getAttribute("data-psec") === provState.section); });
+      bindProvider();
+    });
+  });
+  content.querySelectorAll("[data-pact]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var act = b.getAttribute("data-pact");
+      var p = provById(route.parts[2] || "openai-cli") || MD.providers[0];
+      if (act === "test" || act === "reconnect") {
+        var op = S2.beginOp({ title: "Test connection — " + p.name, phase: "Probing", determinate: false, wait: isOffline() ? "network unreachable" : null });
+        setTimeout(function () {
+          if (isOffline()) { S2.finishOp(op, "failed", "Network unreachable"); S2.receipt("Probe failed", p.name + " could not be reached while offline. Last-known values stay visible.", "warn"); }
+          else { S2.finishOp(op, "completed", "Probe passed"); S2.receipt("Connection verified", p.name + " passed readiness checks.", "ok"); }
+        }, 900);
+      } else if (act === "install") {
+        var host = content.querySelector("[data-hostsel]");
+        var op2 = S2.beginOp({ title: "Install " + p.name, phase: "Downloading from official source", determinate: true, total: 4 });
+        var n = 0;
+        var t = setInterval(function () {
+          n++; S2.advanceOp(op2, { completed: n, human_phase: n < 4 ? "Installing for " + (host ? host.value : "this host") : "Verifying signature" });
+          if (n >= 4) { clearInterval(t); S2.finishOp(op2, "completed", "Installed and verified"); S2.receipt("Provider installed", p.name + " installed from the official source for " + (host ? host.value : "this host") + ".", "ok"); }
+        }, 350);
+      } else if (act === "update") {
+        var op3 = S2.beginOp({ title: "Update " + p.name, phase: "Waiting for approval", determinate: false });
+        setTimeout(function () { S2.advanceOp(op3, { human_phase: "Verifying new generation" }); setTimeout(function () { S2.finishOp(op3, "failed", "Verification failed — rolled back"); S2.receipt("Update rolled back", "Verification failed after updating " + p.name + "; the previous generation was restored.", "warn"); }, 700); }, 700);
+      } else if (act === "refresh") {
+        var op4 = S2.beginOp({ title: "Refresh catalog", phase: "Contacting provider", determinate: false, wait: isOffline() ? "offline — last-known values" : null });
+        setTimeout(function () { if (isOffline()) { S2.finishOp(op4, "degraded", "Serving last-known-good catalog"); S2.receipt("Catalog refresh degraded", "Offline: the last-known-good catalog remains in use.", "warn"); } else { S2.finishOp(op4, "completed", "Catalog current"); S2.receipt("Catalog refreshed", p.name + " models and limits are current.", "ok"); } }, 800);
+      } else if (act === "signin") {
+        S2.receipt("Sign-in handed to CLI", "Anthropic sign-in completes inside the CLI-owned OAuth flow. Puppet Master never sees the raw credential.", "info");
+      } else if (act === "prefer") {
+        S2.receipt("Preferred account", "Account preference recorded for routing; fallback order updates accordingly.", "ok");
+      } else if (act === "default") {
+        S2.receipt("Default account", p.name + " set as the default route for this Project.", "ok");
+      } else if (act === "usage") {
+        nav("#/mgr/providers/" + p.id + "?sec=limits");
+      } else if (act === "add") {
+        S2.receipt("Add provider", "New providers start with an explicit Install from the official source for the exact Host/Environment.", "info");
+      }
+    });
+  });
+}
+function bindCopy() {
+  content.querySelectorAll("[data-cstep]").forEach(function (b) {
+    b.addEventListener("click", function () { var n = +b.getAttribute("data-cstep"); if (n >= 1 && n <= 4) { if ((n >= 3) && (!copyState.source || !copyState.cats.length)) return; copyState.step = n; render(); } });
+  });
+  content.querySelectorAll("input[name='cs-src']").forEach(function (r) {
+    r.addEventListener("change", function () { copyState.source = r.value; render(); });
+  });
+  content.querySelectorAll("[data-ccat]").forEach(function (c) {
+    c.addEventListener("change", function () { var id = c.getAttribute("data-ccat"); var i = copyState.cats.indexOf(id); if (c.checked && i < 0) copyState.cats.push(id); if (!c.checked && i >= 0) copyState.cats.splice(i, 1); var n = content.querySelector("[data-cact='next']"); if (n) n.disabled = !copyState.cats.length; });
+  });
+  var allb = content.querySelector("[data-cact='all']");
+  if (allb) allb.addEventListener("click", function () { copyState.cats = D.categories.map(function (c) { return c.id; }); render(); });
+  var noneb = content.querySelector("[data-cact='none']");
+  if (noneb) noneb.addEventListener("click", function () { copyState.cats = []; render(); });
+  var next = content.querySelector("[data-cact='next']");
+  if (next) next.addEventListener("click", function () { copyState.step = Math.min(4, copyState.step + 1); render(); });
+  var ct = content.querySelector("[data-confirmtype]");
+  if (ct) ct.addEventListener("input", function () { var ap = content.querySelector("[data-cact='apply']"); if (ap) ap.disabled = ct.value !== "COPY"; });
+  var ap2 = content.querySelector("[data-cact='apply']");
+  if (ap2) ap2.addEventListener("click", function () {
+    var res = CP.apply(copyState.preview || CP.preview(copyState.source, copyState.cats));
+    S2.receipt("Copy verified", res.changed + " settings copied; verification " + (res.verify.ok ? "passed" : "found gaps") + ".", res.verify.ok ? "ok" : "warn");
+    copyState.step = 1; copyState.preview = null;
+    render();
+  });
+  var rb = content.querySelector("[data-cact='rollback']");
+  if (rb) rb.addEventListener("click", function () { CP.rollbackLast(); render(); });
+}
+function bindAll() {
+  content.querySelectorAll("[data-facet]").forEach(function (el) {
+    el.addEventListener("change", function () {
+      var f = el.getAttribute("data-facet");
+      if (f === "syn") allState.syn = el.checked;
+      else if (f === "fChanged") allState.fChanged = el.checked;
+      else if (f === "fManaged") allState.fManaged = el.checked;
+      else allState[f] = el.value;
+      if (vlist) vlist.set(allFiltered());
+    });
+  });
+}
+function bindLifecycle() {
+  content.querySelectorAll("[data-rp]").forEach(function (b) {
+    b.addEventListener("click", function () { S2.rollbackTo(b.getAttribute("data-rp")); render(); });
+  });
+}
+
+/* ---------- boot ---------- */
+M2.bindRows(content); // once: content element persists; delegation survives re-renders
+document.addEventListener("click", function (e) {
+  var box = e.target.closest ? e.target.closest("[data-searchbox]") : null;
+  if (!box) { if (searchState.open) { searchState.open = false; dropRender(); } }
+});
+window.addEventListener("hashchange", render);
+S2.subscribe(function (kind) {
+  if (kind === "op") { refreshOps(); return; }
+  if (kind === "setting" || kind === "rollback" || kind === "scenario") { render(); }
+});
+if (!location.hash) history.replaceState(null, "", "#/home");
+render();
+})();
+</script></body></html>

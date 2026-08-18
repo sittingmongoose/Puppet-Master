@@ -1,0 +1,85 @@
+{
+ "ranAt": "2026-08-18T00:31:37.787Z",
+ "passed": 13,
+ "total": 13,
+ "results": [
+  {
+   "id": "B7",
+   "name": "timezone not silently relabelled on a UTC host",
+   "pass": true,
+   "detail": "resolved=UTC U11time.zone=UTC sample=18:42 bodyMentionsEDT=false"
+  },
+  {
+   "id": "B4",
+   "name": "no fabricated -1% percentage in the scope picker",
+   "pass": true,
+   "detail": "rows=100 negative=0 []"
+  },
+  {
+   "id": "B4b",
+   "name": "rows with no reading say so instead of showing a green all-clear",
+   "pass": true,
+   "detail": "labelled-unknown=17 sample=[\"Shared membership pool | limit not exposed | 1 meter\",\"Extra Usage pool | limit not exposed | pool\",\"Monthly credits | limit not exposed | billing cycle · resets in 28d · \"]"
+  },
+  {
+   "id": "B1",
+   "name": "settings sheet contains zero policy-writing inputs",
+   "pass": true,
+   "detail": "policy inputs=0  read-only change-links=6"
+  },
+  {
+   "id": "B1b",
+   "name": "no u11:settings policy key is written to localStorage",
+   "pass": true,
+   "detail": "u11:settings before=null after=null"
+  },
+  {
+   "id": "B1c",
+   "name": "change route dispatches the canonical cmd.settings.bloom.open with a real setting id",
+   "pass": true,
+   "detail": "target=ai.usage.pressure-visibility dispatched=[{\"cmd\":\"cmd.settings.bloom.open\",\"payload\":{\"category\":\"ai\",\"focus_setting_id\":\"ai.usage.pressure-visibility\",\"reason\":\"usage_sheet\"},\"at\":\"2026-08-18T00:31:34.606Z\"}]"
+  },
+  {
+   "id": "B5",
+   "name": "ladder shows every declared step for the selected product (no dedupe collapse)",
+   "pass": true,
+   "detail": "product=prod:codex-plus declared=4 shown=4 labels=[\"Use the usage included with your plan\",\"Draw on Usage credits\",\"Apply the saved reset · Saved reset\",\"Wait for the reset\"]"
+  },
+  {
+   "id": "B5b",
+   "name": "no raw enum token reaches a user-visible ladder label",
+   "pass": true,
+   "detail": "raw=[]"
+  },
+  {
+   "id": "B3",
+   "name": "token totals respect the published per-provider counting semantics",
+   "pass": true,
+   "detail": "inclusive route=1100 (expect 1100, cache NOT added) | additive route=1600 (expect 1600, cache added) | unknown semantics=1100 (expect 1100, never guessed)"
+  },
+  {
+   "id": "B3b",
+   "name": "a missing bucket renders as unknown, never as a fabricated zero",
+   "pass": true,
+   "detail": "empty tokens -> total=null (must be null, not 0)"
+  },
+  {
+   "id": "B3c",
+   "name": "run detail states the counting basis and shows no fabricated zero total",
+   "pass": true,
+   "detail": "basisStated=true fabricatedZero=false samples=[\"24.3k tokens\"]"
+  },
+  {
+   "id": "B6",
+   "name": "every Free Models row identifies its underlying provider",
+   "pass": true,
+   "detail": "rows=9 missingProvider=0 []"
+  },
+  {
+   "id": "CON",
+   "name": "zero console errors across the run",
+   "pass": true,
+   "detail": "errors=0 []"
+  }
+ ]
+}

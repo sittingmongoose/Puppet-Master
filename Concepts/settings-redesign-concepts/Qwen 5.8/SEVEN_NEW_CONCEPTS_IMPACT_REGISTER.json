@@ -1,0 +1,83 @@
+{
+ "schema_id": "pm.settings_seven_concepts_impact_register.v1",
+ "model": "Qwen 5.8",
+ "pass": "2026-08-18",
+ "concepts": {
+  "concept-05-directory-take-1": {
+   "command_candidates": 20,
+   "wiring_candidates": 0,
+   "dry_candidates": 0,
+   "plan_owner_impacts": 29,
+   "coverage_demonstrated": 43,
+   "coverage_deferred": 9,
+   "forbidden_shared_grammar_present": false,
+   "missing_present": false
+  },
+  "concept-06-directory-take-2": {
+   "command_candidates": 8,
+   "wiring_candidates": 4,
+   "dry_candidates": 3,
+   "plan_owner_impacts": 0,
+   "coverage_demonstrated": 42,
+   "coverage_deferred": 9,
+   "forbidden_shared_grammar_present": false,
+   "missing_present": false
+  },
+  "concept-07-compendium-workspace": {
+   "command_candidates": 3,
+   "wiring_candidates": 7,
+   "dry_candidates": 0,
+   "plan_owner_impacts": 3,
+   "coverage_demonstrated": 42,
+   "coverage_deferred": 9,
+   "forbidden_shared_grammar_present": false,
+   "missing_present": false
+  },
+  "concept-08-directory-take-3": {
+   "command_candidates": 23,
+   "wiring_candidates": 0,
+   "dry_candidates": 0,
+   "plan_owner_impacts": 29,
+   "coverage_demonstrated": 42,
+   "coverage_deferred": 9,
+   "forbidden_shared_grammar_present": false,
+   "missing_present": false
+  },
+  "concept-09-tome-tabs": {
+   "command_candidates": 3,
+   "wiring_candidates": 8,
+   "dry_candidates": 0,
+   "plan_owner_impacts": 2,
+   "coverage_demonstrated": 42,
+   "coverage_deferred": 9,
+   "forbidden_shared_grammar_present": false,
+   "missing_present": false
+  },
+  "concept-10-command-suite": {
+   "command_candidates": 7,
+   "wiring_candidates": 0,
+   "dry_candidates": 0,
+   "plan_owner_impacts": 7,
+   "coverage_demonstrated": 42,
+   "coverage_deferred": 9,
+   "forbidden_shared_grammar_present": false,
+   "missing_present": false
+  },
+  "concept-11-tabbed-organizer": {
+   "command_candidates": 0,
+   "wiring_candidates": 0,
+   "dry_candidates": 1,
+   "plan_owner_impacts": 7,
+   "coverage_demonstrated": 42,
+   "coverage_deferred": 9,
+   "forbidden_shared_grammar_present": false,
+   "missing_present": false
+  }
+ },
+ "totals": {
+  "command_candidates": 64,
+  "wiring_candidates": 19,
+  "dry_candidates": 4,
+  "plan_owner_impacts": 77
+ }
+}

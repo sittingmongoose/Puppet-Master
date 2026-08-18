@@ -1,0 +1,30 @@
+/* PMManagers2 atom styles — product grammar only; concepts compose their own layout. */
+.pm2-row { border-bottom: 1px solid var(--border); padding: 10px 2px; display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 4px 14px; align-items: center; }
+.pm2-row:last-child { border-bottom: none; }
+.pm2-row-title { color: var(--text-1); font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.pm2-row-desc { color: var(--text-2); font-size: 12px; margin-top: 2px; max-width: 62ch; }
+.pm2-row-ctl { display: flex; align-items: center; gap: 8px; justify-self: end; }
+.pm2-row-detail { grid-column: 1 / -1; border: 1px dashed var(--border-strong); border-radius: var(--radius-s); padding: 10px 12px; margin-top: 6px; background: var(--surface-3); }
+.pm2-row-detail dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 6px 16px; margin: 0 0 8px; }
+.pm2-row-detail dt { color: var(--text-3); font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; }
+.pm2-row-detail dd { margin: 1px 0 0; color: var(--text-1); font-size: 12px; word-break: break-word; }
+.pm2-row-actions { display: flex; gap: 8px; }
+.pm2-locate { animation: pm2Locate 1.6s ease-out 1; border-radius: var(--radius-s); }
+@keyframes pm2Locate { 0% { box-shadow: 0 0 0 3px var(--accent-soft); background: var(--accent-soft); } 100% { box-shadow: none; background: transparent; } }
+[data-reduced-motion="1"] .pm2-locate { animation: none; box-shadow: 0 0 0 2px var(--accent); }
+.pm2-skeleton { display: flex; flex-direction: column; gap: 8px; padding: 14px 2px; }
+.pm2-sk-bar { height: 12px; border-radius: 6px; background: var(--surface-3); width: 90%; }
+.pm2-sk-bar.w60 { width: 60%; } .pm2-sk-bar.w40 { width: 40%; }
+[data-reduced-motion="0"] .pm2-sk-bar { animation: pm2Sk 1.1s ease-in-out infinite alternate; }
+@keyframes pm2Sk { from { opacity: .55; } to { opacity: 1; } }
+.pm2-group-cap { font-size: 11px; text-transform: uppercase; letter-spacing: .09em; color: var(--text-3); margin: 14px 0 6px; }
+.pm2-empty { border: 1px dashed var(--border-strong); border-radius: var(--radius-m); padding: 22px; text-align: center; color: var(--text-2); font-size: 12.5px; }
+.pm2-health { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--text-2); }
+.pm2-health i { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); }
+.pm2-health.warn i { background: var(--warn); } .pm2-health.err i { background: var(--err); } .pm2-health.muted i { background: var(--text-3); }
+
+/* narrow/squeezed: single-column main so #content never collapses when the rail is display:none */
+.pm-app[data-wtier="squeezed"] .pm-main, .pm-app[data-wtier="narrow"] .pm-main { grid-template-columns: minmax(0, 1fr); }
+.pm-app .pm-content { min-width: 0; }
+/* demo tray clearance: content can scroll clear of the fixed tray button */
+.pm-app .pm-content { padding-bottom: 72px; }

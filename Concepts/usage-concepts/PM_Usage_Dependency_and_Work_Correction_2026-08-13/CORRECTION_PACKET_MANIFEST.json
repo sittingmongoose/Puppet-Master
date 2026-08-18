@@ -1,0 +1,32 @@
+{
+  "schema_id": "pm.packet_dependency_correction.v1",
+  "packet_name": "PM_Usage_Dependency_and_Work_Correction_2026-08-13",
+  "target_packet": "PM_Usage_Concept_Update_Final_Cumulative_2026-08-08",
+  "prompt_chars": 2372,
+  "corrections": [
+    "missing final provider adjudication",
+    "work reinspection requirement"
+  ],
+  "files": [
+    {
+      "path": "00_READ_ME_FIRST.md",
+      "bytes": 789,
+      "sha256": "ad632cb61060b9dbdc30f016be5ce1287c9ea15f2d1ddcc5d38e8f15ccb8d48b"
+    },
+    {
+      "path": "CORRECTION_GOAL_PROMPT.md",
+      "bytes": 2373,
+      "sha256": "8a37bb7acae1fc425b4bf6af957ac9157aaa3205841b2cd7b4ae881fe2ea3bb2"
+    },
+    {
+      "path": "PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "bytes": 4857,
+      "sha256": "9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1"
+    },
+    {
+      "path": "REFERENCE_REVIEW_AND_REPAIR_REQUIREMENTS.md",
+      "bytes": 498,
+      "sha256": "b981ceff7898c690ed1abec05d064c0049eef3a0000a0e3000c4e90d05c5ed41"
+    }
+  ]
+}

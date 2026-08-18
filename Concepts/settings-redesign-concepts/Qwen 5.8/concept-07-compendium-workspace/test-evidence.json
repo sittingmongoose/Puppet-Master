@@ -1,0 +1,114 @@
+{
+  "schema_id": "pm.settings_bakeoff.test_evidence.v2.concept",
+  "concept_id": "concept-07-compendium-workspace",
+  "model": "Qwen 5.8",
+  "method": "Static checks by reading the concept source plus live headless-browser verification against the real shared modules.",
+  "static_checks": [
+    {
+      "check": "no <iframe> in concept-07-compendium-workspace.html",
+      "pass": true
+    },
+    {
+      "check": "no href/src referencing concept-01..04 or sibling concepts",
+      "pass": true
+    },
+    {
+      "check": "data-concept-model=\"Qwen 5.8\" on <body>",
+      "pass": true
+    },
+    {
+      "check": "routes list",
+      "routes": [
+        "#/home",
+        "#/cat/<catId>",
+        "#/cat/<catId>/<subId>",
+        "#/mgr/<familyId>",
+        "#/mgr/<familyId>/<objectId>",
+        "#/all",
+        "#/copy",
+        "#/lifecycle",
+        "#/q/<query>"
+      ],
+      "pass": true
+    },
+    {
+      "check": "virtualization present: PMManagers2.virtualList on #/all with rowHeight 64 and data-window updates",
+      "pass": true
+    },
+    {
+      "check": "no scope selectors (Global/Project/Goal/Host), no inheritance, no profiles/sync UI",
+      "pass": true
+    },
+    {
+      "check": "no emoji; icons only via PMIcons",
+      "pass": true
+    },
+    {
+      "check": "no left accent bars; colors only via var(--token)",
+      "pass": true
+    },
+    {
+      "check": "reduced motion: [data-reduced-motion=1] kills pane-transfer and skeleton animations",
+      "pass": true
+    },
+    {
+      "check": "search rows carry data-rid and .pm2-r-title; routing via PMSearch2.byRid only",
+      "pass": true
+    },
+    {
+      "check": "test hooks present: data-test=search-input/search-results/back/close/home/all/copy/vlist; data-route on root view; data-manager on every manager section; data-window on vlist host",
+      "pass": true
+    }
+  ],
+  "live_checks": [
+    {
+      "check": "home renders: 12 browse-by-area destinations with counts, notices, utilities, recent",
+      "pass": true
+    },
+    {
+      "check": "search 'context window': grouped dropdown; duplicate Context Window rows with distinct paths",
+      "pass": true
+    },
+    {
+      "check": "select model row: #/mgr/providers/openai-cli?sec=models&row=gpt-5-2; [data-row=gpt-5-2] focused + .pm2-locate",
+      "pass": true
+    },
+    {
+      "check": "select setting row: About-this-setting card + row focused + .pm2-locate",
+      "pass": true
+    },
+    {
+      "check": "browser Back: #/q/<query> with input restored and dropdown reopened with same rows",
+      "pass": true
+    },
+    {
+      "check": "all 47 manager routes: [data-manager], [data-test=back], [data-test=breadcrumb], [data-test=close] present; data-route correct",
+      "pass": true
+    },
+    {
+      "check": "#/all: data-window 0:18:828 then 306:331:828 and 806:828:828 on scroll; synthetic toggle -> 2828; facet ai -> 112",
+      "pass": true
+    },
+    {
+      "check": "copy flow: counts (828/124/414/283/0/0) + diff + apply -> verified -> rollback available",
+      "pass": true
+    },
+    {
+      "check": "squeezed tier: nav drawer, facets drawer, roster push, Escape order verified",
+      "pass": true
+    },
+    {
+      "check": "scenarios: managed/unavailable/restart/changed-elsewhere badges on real rows; offline banner; usage-unavailable note without bar",
+      "pass": true
+    },
+    {
+      "check": "ops strip: determinate progress with counts and cancel during copy apply; removed on completion",
+      "pass": true
+    }
+  ],
+  "known_limitations": [
+    "Manager-local fixture rows are demo values from PMManagers2Data, not inventory rows by design.",
+    "Concept is a prototype; no canonical Plans/catalog changes.",
+    "Background-tab throttling of rAF/scroll/ResizeObserver is compensated with concept-level timers (scroll polling, tier polling); visible behavior in a foreground tab is identical."
+  ]
+}

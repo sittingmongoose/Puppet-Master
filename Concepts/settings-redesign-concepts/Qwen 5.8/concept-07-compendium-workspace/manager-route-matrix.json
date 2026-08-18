@@ -1,0 +1,965 @@
+{
+  "schema_id": "pm.settings_bakeoff.manager_route_matrix.v2.concept",
+  "concept_id": "concept-07-compendium-workspace",
+  "model": "Qwen 5.8",
+  "note": "All 47 routes (42 families + 5 concept-registered deferred shells; 4 deferred also in shared searchEntries) verified in headless browser: [data-manager], [data-test=back], [data-test=breadcrumb], [data-test=close] present; data-route equals hash minus #; shell retained; no route leaves the concept.",
+  "families": [
+    {
+      "family": "providers",
+      "title": "Providers",
+      "entry_points": [
+        "Home browse-by-area card for AI Brains & Providers",
+        "universal search (sr:manager:providers)",
+        "domain page related managers #/cat/ai"
+      ],
+      "route": "#/mgr/providers",
+      "shell_retained": true,
+      "back_target": "#/cat/ai (AI Brains & Providers)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "catalog rows single column",
+      "key_states": [
+        "catalog rows with status; last-known-good note under offline"
+      ],
+      "pass": true
+    },
+    {
+      "family": "context",
+      "title": "Context & Instructions",
+      "entry_points": [
+        "Home browse-by-area card for Memory & Context",
+        "universal search (sr:manager:context)",
+        "domain page related managers #/cat/memory"
+      ],
+      "route": "#/mgr/context",
+      "shell_retained": true,
+      "back_target": "#/cat/memory (Memory & Context)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "catalog rows single column",
+      "key_states": [
+        "catalog rows with status; last-known-good note under offline"
+      ],
+      "pass": true
+    },
+    {
+      "family": "memory",
+      "title": "Memory",
+      "entry_points": [
+        "Home browse-by-area card for Memory & Context",
+        "universal search (sr:manager:memory)",
+        "domain page related managers #/cat/memory"
+      ],
+      "route": "#/mgr/memory",
+      "shell_retained": true,
+      "back_target": "#/cat/memory (Memory & Context)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "catalog rows single column",
+      "key_states": [
+        "catalog rows with status; last-known-good note under offline"
+      ],
+      "pass": true
+    },
+    {
+      "family": "personas",
+      "title": "Personas",
+      "entry_points": [
+        "Home browse-by-area card for Personas",
+        "universal search (sr:manager:personas)",
+        "domain page related managers #/cat/personas"
+      ],
+      "route": "#/mgr/personas",
+      "shell_retained": true,
+      "back_target": "#/cat/personas (Personas); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "roster collapses to push pane; detail full width; Back names list",
+      "key_states": [
+        "roster list with health dots; object detail pushes at narrow; Back returns to roster",
+        "attention health states on specific objects"
+      ],
+      "pass": true
+    },
+    {
+      "family": "goal",
+      "title": "Goal & Automation",
+      "entry_points": [
+        "Home browse-by-area card for Planning & Verification",
+        "universal search (sr:manager:goal)",
+        "domain page related managers #/cat/planning"
+      ],
+      "route": "#/mgr/goal",
+      "shell_retained": true,
+      "back_target": "#/cat/planning (Planning & Verification); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "roster collapses to push pane; detail full width; Back names list",
+      "key_states": [
+        "roster list with health dots; object detail pushes at narrow; Back returns to roster",
+        "attention health states on specific objects"
+      ],
+      "pass": true
+    },
+    {
+      "family": "crew",
+      "title": "Crew",
+      "entry_points": [
+        "Home browse-by-area card for Branching & Collaboration",
+        "universal search (sr:manager:crew)",
+        "domain page related managers #/cat/branching"
+      ],
+      "route": "#/mgr/crew",
+      "shell_retained": true,
+      "back_target": "#/cat/branching (Branching & Collaboration); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "roster collapses to push pane; detail full width; Back names list",
+      "key_states": [
+        "roster list with health dots; object detail pushes at narrow; Back returns to roster",
+        "attention health states on specific objects"
+      ],
+      "pass": true
+    },
+    {
+      "family": "permissions",
+      "title": "Permissions & FileSafe",
+      "entry_points": [
+        "Home browse-by-area card for Permissions & Safety",
+        "universal search (sr:manager:permissions)",
+        "domain page related managers #/cat/safety"
+      ],
+      "route": "#/mgr/permissions",
+      "shell_retained": true,
+      "back_target": "#/cat/safety (Permissions & Safety); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "roster collapses to push pane; detail full width; Back names list",
+      "key_states": [
+        "roster list with health dots; object detail pushes at narrow; Back returns to roster",
+        "attention health states on specific objects"
+      ],
+      "pass": true
+    },
+    {
+      "family": "bsd",
+      "title": "Back Seat Driver",
+      "entry_points": [
+        "Home browse-by-area card for Permissions & Safety",
+        "universal search (sr:manager:bsd)",
+        "domain page related managers #/cat/safety"
+      ],
+      "route": "#/mgr/bsd",
+      "shell_retained": true,
+      "back_target": "#/cat/safety (Permissions & Safety)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "rows single column",
+      "key_states": [
+        "preference document rows; managed/unavailable/restart/changed-elsewhere chips under scenarios"
+      ],
+      "pass": true
+    },
+    {
+      "family": "notifications",
+      "title": "Notifications",
+      "entry_points": [
+        "Home browse-by-area card for General & Appearance",
+        "universal search (sr:manager:notifications)",
+        "domain page related managers #/cat/general"
+      ],
+      "route": "#/mgr/notifications",
+      "shell_retained": true,
+      "back_target": "#/cat/general (General & Appearance)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "rows single column",
+      "key_states": [
+        "preference document rows; managed/unavailable/restart/changed-elsewhere chips under scenarios"
+      ],
+      "pass": true
+    },
+    {
+      "family": "sounds",
+      "title": "Sounds",
+      "entry_points": [
+        "Home browse-by-area card for General & Appearance",
+        "universal search (sr:manager:sounds)",
+        "domain page related managers #/cat/general"
+      ],
+      "route": "#/mgr/sounds",
+      "shell_retained": true,
+      "back_target": "#/cat/general (General & Appearance)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "catalog rows single column",
+      "key_states": [
+        "catalog rows with status; last-known-good note under offline"
+      ],
+      "pass": true
+    },
+    {
+      "family": "appearance",
+      "title": "Appearance",
+      "entry_points": [
+        "Home browse-by-area card for General & Appearance",
+        "universal search (sr:manager:appearance)",
+        "domain page related managers #/cat/general"
+      ],
+      "route": "#/mgr/appearance",
+      "shell_retained": true,
+      "back_target": "#/cat/general (General & Appearance)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "catalog rows single column",
+      "key_states": [
+        "catalog rows with status; last-known-good note under offline"
+      ],
+      "pass": true
+    },
+    {
+      "family": "spellcheck",
+      "title": "Spellcheck & Dictionaries",
+      "entry_points": [
+        "Home browse-by-area card for General & Appearance",
+        "universal search (sr:manager:spellcheck)",
+        "domain page related managers #/cat/general"
+      ],
+      "route": "#/mgr/spellcheck",
+      "shell_retained": true,
+      "back_target": "#/cat/general (General & Appearance)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "catalog rows single column",
+      "key_states": [
+        "catalog rows with status; last-known-good note under offline"
+      ],
+      "pass": true
+    },
+    {
+      "family": "desktop",
+      "title": "Desktop, Tray & Window",
+      "entry_points": [
+        "Home browse-by-area card for System & Advanced",
+        "universal search (sr:manager:desktop)",
+        "domain page related managers #/cat/system"
+      ],
+      "route": "#/mgr/desktop",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "rows single column",
+      "key_states": [
+        "preference document rows; managed/unavailable/restart/changed-elsewhere chips under scenarios"
+      ],
+      "pass": true
+    },
+    {
+      "family": "teacher",
+      "title": "Teacher",
+      "entry_points": [
+        "Home browse-by-area card for General & Appearance",
+        "universal search (sr:manager:teacher)",
+        "domain page related managers #/cat/general"
+      ],
+      "route": "#/mgr/teacher",
+      "shell_retained": true,
+      "back_target": "#/cat/general (General & Appearance)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "rows single column",
+      "key_states": [
+        "preference document rows; managed/unavailable/restart/changed-elsewhere chips under scenarios"
+      ],
+      "pass": true
+    },
+    {
+      "family": "doctor",
+      "title": "Doctor",
+      "entry_points": [
+        "Home browse-by-area card for System & Advanced",
+        "universal search (sr:manager:doctor)",
+        "domain page related managers #/cat/system"
+      ],
+      "route": "#/mgr/doctor",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "drawer stacks under header; single pane",
+      "key_states": [
+        "diagnostic drawer; offline scenario shows last-known honestly; no permanent spinners"
+      ],
+      "pass": true
+    },
+    {
+      "family": "files",
+      "title": "File Manager & Editor",
+      "entry_points": [
+        "Home browse-by-area card for Code & Execution",
+        "universal search (sr:manager:files)",
+        "domain page related managers #/cat/code"
+      ],
+      "route": "#/mgr/files",
+      "shell_retained": true,
+      "back_target": "#/cat/code (Code & Execution)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "catalog rows single column",
+      "key_states": [
+        "catalog rows with status; last-known-good note under offline"
+      ],
+      "pass": true
+    },
+    {
+      "family": "terminal",
+      "title": "Terminal",
+      "entry_points": [
+        "Home browse-by-area card for Code & Execution",
+        "universal search (sr:manager:terminal)",
+        "domain page related managers #/cat/code"
+      ],
+      "route": "#/mgr/terminal",
+      "shell_retained": true,
+      "back_target": "#/cat/code (Code & Execution)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "rows single column",
+      "key_states": [
+        "preference document rows; managed/unavailable/restart/changed-elsewhere chips under scenarios"
+      ],
+      "pass": true
+    },
+    {
+      "family": "lsp",
+      "title": "Language Servers",
+      "entry_points": [
+        "Home browse-by-area card for Code & Execution",
+        "universal search (sr:manager:lsp)",
+        "domain page related managers #/cat/code"
+      ],
+      "route": "#/mgr/lsp",
+      "shell_retained": true,
+      "back_target": "#/cat/code (Code & Execution); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "roster collapses to push pane; detail full width; Back names list",
+      "key_states": [
+        "roster list with health dots; object detail pushes at narrow; Back returns to roster",
+        "attention health states on specific objects"
+      ],
+      "pass": true
+    },
+    {
+      "family": "formatters",
+      "title": "Formatters",
+      "entry_points": [
+        "Home browse-by-area card for Code & Execution",
+        "universal search (sr:manager:formatters)",
+        "domain page related managers #/cat/code"
+      ],
+      "route": "#/mgr/formatters",
+      "shell_retained": true,
+      "back_target": "#/cat/code (Code & Execution); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "roster collapses to push pane; detail full width; Back names list",
+      "key_states": [
+        "roster list with health dots; object detail pushes at narrow; Back returns to roster",
+        "attention health states on specific objects"
+      ],
+      "pass": true
+    },
+    {
+      "family": "commands",
+      "title": "Commands & Shortcuts",
+      "entry_points": [
+        "Home browse-by-area card for Skills, Plugins & Commands",
+        "universal search (sr:manager:commands)",
+        "domain page related managers #/cat/extensions"
+      ],
+      "route": "#/mgr/commands",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions (Skills, Plugins & Commands); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "roster collapses to push pane; detail full width; Back names list",
+      "key_states": [
+        "roster list with health dots; object detail pushes at narrow; Back returns to roster",
+        "attention health states on specific objects"
+      ],
+      "pass": true
+    },
+    {
+      "family": "mcp",
+      "title": "MCP Servers",
+      "entry_points": [
+        "Home browse-by-area card for Skills, Plugins & Commands",
+        "universal search (sr:manager:mcp)",
+        "domain page related managers #/cat/extensions"
+      ],
+      "route": "#/mgr/mcp",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions (Skills, Plugins & Commands); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "roster collapses to push pane; detail full width; Back names list",
+      "key_states": [
+        "roster list with health dots; object detail pushes at narrow; Back returns to roster",
+        "attention health states on specific objects"
+      ],
+      "pass": true
+    },
+    {
+      "family": "skills",
+      "title": "Skills",
+      "entry_points": [
+        "Home browse-by-area card for Skills, Plugins & Commands",
+        "universal search (sr:manager:skills)",
+        "domain page related managers #/cat/extensions"
+      ],
+      "route": "#/mgr/skills",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions (Skills, Plugins & Commands); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "roster collapses to push pane; detail full width; Back names list",
+      "key_states": [
+        "roster list with health dots; object detail pushes at narrow; Back returns to roster",
+        "attention health states on specific objects"
+      ],
+      "pass": true
+    },
+    {
+      "family": "plugins",
+      "title": "Plugins",
+      "entry_points": [
+        "Home browse-by-area card for Skills, Plugins & Commands",
+        "universal search (sr:manager:plugins)",
+        "domain page related managers #/cat/extensions"
+      ],
+      "route": "#/mgr/plugins",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions (Skills, Plugins & Commands); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "roster collapses to push pane; detail full width; Back names list",
+      "key_states": [
+        "roster list with health dots; object detail pushes at narrow; Back returns to roster",
+        "attention health states on specific objects"
+      ],
+      "pass": true
+    },
+    {
+      "family": "tools",
+      "title": "Tools",
+      "entry_points": [
+        "Home browse-by-area card for Skills, Plugins & Commands",
+        "universal search (sr:manager:tools)",
+        "domain page related managers #/cat/extensions"
+      ],
+      "route": "#/mgr/tools",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions (Skills, Plugins & Commands); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "roster collapses to push pane; detail full width; Back names list",
+      "key_states": [
+        "roster list with health dots; object detail pushes at narrow; Back returns to roster",
+        "attention health states on specific objects"
+      ],
+      "pass": true
+    },
+    {
+      "family": "testing",
+      "title": "Testing & Debug",
+      "entry_points": [
+        "Home browse-by-area card for Planning & Verification",
+        "universal search (sr:manager:testing)",
+        "domain page related managers #/cat/planning"
+      ],
+      "route": "#/mgr/testing",
+      "shell_retained": true,
+      "back_target": "#/cat/planning (Planning & Verification)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "rows single column",
+      "key_states": [
+        "preference document rows; managed/unavailable/restart/changed-elsewhere chips under scenarios"
+      ],
+      "pass": true
+    },
+    {
+      "family": "storage",
+      "title": "Storage & Retention",
+      "entry_points": [
+        "Home browse-by-area card for System & Advanced",
+        "universal search (sr:manager:storage)",
+        "domain page related managers #/cat/system"
+      ],
+      "route": "#/mgr/storage",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "catalog rows single column",
+      "key_states": [
+        "catalog rows with status; last-known-good note under offline"
+      ],
+      "pass": true
+    },
+    {
+      "family": "backup",
+      "title": "Backup & Restore",
+      "entry_points": [
+        "Home browse-by-area card for System & Advanced",
+        "universal search (sr:manager:backup)",
+        "domain page related managers #/cat/system"
+      ],
+      "route": "#/mgr/backup",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "catalog rows single column",
+      "key_states": [
+        "catalog rows with status; last-known-good note under offline"
+      ],
+      "pass": true
+    },
+    {
+      "family": "lifecycle",
+      "title": "Settings Lifecycle",
+      "entry_points": [
+        "Home browse-by-area card for System & Advanced",
+        "universal search (sr:manager:lifecycle)",
+        "domain page related managers #/cat/system"
+      ],
+      "route": "#/mgr/lifecycle",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "single pane; confirm stacks",
+      "key_states": [
+        "restore point before apply; dry-run-first preview; verify + rollback"
+      ],
+      "pass": true
+    },
+    {
+      "family": "history",
+      "title": "History & Sessions",
+      "entry_points": [
+        "Home browse-by-area card for System & Advanced",
+        "universal search (sr:manager:history)",
+        "domain page related managers #/cat/system"
+      ],
+      "route": "#/mgr/history",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "catalog rows single column",
+      "key_states": [
+        "catalog rows with status; last-known-good note under offline"
+      ],
+      "pass": true
+    },
+    {
+      "family": "artifacts",
+      "title": "Runtime Artifacts",
+      "entry_points": [
+        "Home browse-by-area card for System & Advanced",
+        "universal search (sr:manager:artifacts)",
+        "domain page related managers #/cat/system"
+      ],
+      "route": "#/mgr/artifacts",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "catalog rows single column",
+      "key_states": [
+        "catalog rows with status; last-known-good note under offline"
+      ],
+      "pass": true
+    },
+    {
+      "family": "scm",
+      "title": "Source Control & Worktrees",
+      "entry_points": [
+        "Home browse-by-area card for Branching & Collaboration",
+        "universal search (sr:manager:scm)",
+        "domain page related managers #/cat/branching"
+      ],
+      "route": "#/mgr/scm",
+      "shell_retained": true,
+      "back_target": "#/cat/branching (Branching & Collaboration)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "catalog rows single column",
+      "key_states": [
+        "catalog rows with status; last-known-good note under offline"
+      ],
+      "pass": true
+    },
+    {
+      "family": "gha",
+      "title": "GitHub Actions",
+      "entry_points": [
+        "Home browse-by-area card for Skills, Plugins & Commands",
+        "universal search (sr:manager:gha)",
+        "domain page related managers #/cat/extensions"
+      ],
+      "route": "#/mgr/gha",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions (Skills, Plugins & Commands)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "catalog rows single column",
+      "key_states": [
+        "catalog rows with status; last-known-good note under offline"
+      ],
+      "pass": true
+    },
+    {
+      "family": "containers",
+      "title": "Containers & Registries",
+      "entry_points": [
+        "Home browse-by-area card for System & Advanced",
+        "universal search (sr:manager:containers)",
+        "domain page related managers #/cat/system"
+      ],
+      "route": "#/mgr/containers",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced); one more level from object to roster",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "roster collapses to push pane; detail full width; Back names list",
+      "key_states": [
+        "roster list with health dots; object detail pushes at narrow; Back returns to roster",
+        "attention health states on specific objects"
+      ],
+      "pass": true
+    },
+    {
+      "family": "web",
+      "title": "Web, Search & Fetch",
+      "entry_points": [
+        "Home browse-by-area card for Web & Search",
+        "universal search (sr:manager:web)",
+        "domain page related managers #/cat/web"
+      ],
+      "route": "#/mgr/web",
+      "shell_retained": true,
+      "back_target": "#/cat/web (Web & Search)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "rows single column",
+      "key_states": [
+        "preference document rows; managed/unavailable/restart/changed-elsewhere chips under scenarios"
+      ],
+      "pass": true
+    },
+    {
+      "family": "searchindex",
+      "title": "Project Search Index",
+      "entry_points": [
+        "Home browse-by-area card for System & Advanced",
+        "universal search (sr:manager:searchindex)",
+        "domain page related managers #/cat/system"
+      ],
+      "route": "#/mgr/searchindex",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "stat cards stack to one column",
+      "key_states": [
+        "read-only projection; no mutation"
+      ],
+      "pass": true
+    },
+    {
+      "family": "cleanup",
+      "title": "Workspace Cleanup",
+      "entry_points": [
+        "Home browse-by-area card for System & Advanced",
+        "universal search (sr:manager:cleanup)",
+        "domain page related managers #/cat/system"
+      ],
+      "route": "#/mgr/cleanup",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "single pane; confirm stacks",
+      "key_states": [
+        "restore point before apply; dry-run-first preview; verify + rollback"
+      ],
+      "pass": true
+    },
+    {
+      "family": "media",
+      "title": "Media & Output",
+      "entry_points": [
+        "Home browse-by-area card for Media & Output",
+        "universal search (sr:manager:media)",
+        "domain page related managers #/cat/media"
+      ],
+      "route": "#/mgr/media",
+      "shell_retained": true,
+      "back_target": "#/cat/media (Media & Output)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "rows single column",
+      "key_states": [
+        "preference document rows; managed/unavailable/restart/changed-elsewhere chips under scenarios"
+      ],
+      "pass": true
+    },
+    {
+      "family": "dry",
+      "title": "DRY Method",
+      "entry_points": [
+        "Home browse-by-area card for Skills, Plugins & Commands",
+        "universal search (sr:manager:dry)",
+        "domain page related managers #/cat/extensions"
+      ],
+      "route": "#/mgr/dry",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions (Skills, Plugins & Commands)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "catalog rows single column",
+      "key_states": [
+        "catalog rows with status; last-known-good note under offline"
+      ],
+      "pass": true
+    },
+    {
+      "family": "onboarding",
+      "title": "Product Onboarding",
+      "entry_points": [
+        "Home browse-by-area card for General & Appearance",
+        "universal search (sr:manager:onboarding)",
+        "domain page related managers #/cat/general"
+      ],
+      "route": "#/mgr/onboarding",
+      "shell_retained": true,
+      "back_target": "#/cat/general (General & Appearance)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "sequence stacks; single pane",
+      "key_states": [
+        "stepwise sequence; runtime-demand deep link; update ask-first"
+      ],
+      "pass": true
+    },
+    {
+      "family": "updates",
+      "title": "App & Content Updates",
+      "entry_points": [
+        "Home browse-by-area card for System & Advanced",
+        "universal search (sr:manager:updates)",
+        "domain page related managers #/cat/system"
+      ],
+      "route": "#/mgr/updates",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "sequence stacks; single pane",
+      "key_states": [
+        "stepwise sequence; runtime-demand deep link; update ask-first"
+      ],
+      "pass": true
+    },
+    {
+      "family": "servers",
+      "title": "Servers",
+      "entry_points": [
+        "Home browse-by-area card for System & Advanced",
+        "universal search (sr:manager:servers)",
+        "domain page related managers #/cat/system"
+      ],
+      "route": "#/mgr/servers",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "sequence stacks; single pane",
+      "key_states": [
+        "stepwise sequence; runtime-demand deep link; update ask-first"
+      ],
+      "pass": true
+    },
+    {
+      "family": "hosting",
+      "title": "Project Hosting & Files",
+      "entry_points": [
+        "Home browse-by-area card for System & Advanced",
+        "universal search (sr:manager:hosting)",
+        "domain page related managers #/cat/system"
+      ],
+      "route": "#/mgr/hosting",
+      "shell_retained": true,
+      "back_target": "#/cat/system (System & Advanced)",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "sequence stacks; single pane",
+      "key_states": [
+        "stepwise sequence; runtime-demand deep link; update ask-first"
+      ],
+      "pass": true
+    },
+    {
+      "family": "onboarding",
+      "title": "Product Onboarding",
+      "entry_points": [
+        "universal search (concept-registered sr:manager:onboarding)",
+        "domain page owner-module insertions",
+        "deferred shell #/mgr/onboarding"
+      ],
+      "route": "#/mgr/onboarding",
+      "shell_retained": true,
+      "back_target": "#/cat/general",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "single pane; shell card stacks",
+      "key_states": [
+        "named owner shown",
+        "insertion contract shown",
+        "return/deep-link contract shown",
+        "no fabricated backend"
+      ],
+      "pass": true
+    },
+    {
+      "family": "installation",
+      "title": "Provider CLI Installation",
+      "entry_points": [
+        "universal search (concept-registered sr:manager:installation)",
+        "domain page owner-module insertions",
+        "deferred shell #/mgr/installation"
+      ],
+      "route": "#/mgr/installation",
+      "shell_retained": true,
+      "back_target": "#/cat/ai",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "single pane; shell card stacks",
+      "key_states": [
+        "named owner shown",
+        "insertion contract shown",
+        "return/deep-link contract shown",
+        "no fabricated backend"
+      ],
+      "pass": true
+    },
+    {
+      "family": "server-claim",
+      "title": "Server Claim",
+      "entry_points": [
+        "universal search (concept-registered sr:manager:server-claim)",
+        "domain page owner-module insertions",
+        "deferred shell #/mgr/server-claim"
+      ],
+      "route": "#/mgr/server-claim",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "single pane; shell card stacks",
+      "key_states": [
+        "named owner shown",
+        "insertion contract shown",
+        "return/deep-link contract shown",
+        "no fabricated backend"
+      ],
+      "pass": true
+    },
+    {
+      "family": "servers",
+      "title": "Servers",
+      "entry_points": [
+        "universal search (concept-registered sr:manager:servers)",
+        "domain page owner-module insertions",
+        "deferred shell #/mgr/servers"
+      ],
+      "route": "#/mgr/servers",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "single pane; shell card stacks",
+      "key_states": [
+        "named owner shown",
+        "insertion contract shown",
+        "return/deep-link contract shown",
+        "no fabricated backend"
+      ],
+      "pass": true
+    },
+    {
+      "family": "hosting",
+      "title": "Project Hosting & Files",
+      "entry_points": [
+        "universal search (concept-registered sr:manager:hosting)",
+        "domain page owner-module insertions",
+        "deferred shell #/mgr/hosting"
+      ],
+      "route": "#/mgr/hosting",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "single pane; shell card stacks",
+      "key_states": [
+        "named owner shown",
+        "insertion contract shown",
+        "return/deep-link contract shown",
+        "no fabricated backend"
+      ],
+      "pass": true
+    },
+    {
+      "family": "remote-access",
+      "title": "Remote Access",
+      "entry_points": [
+        "universal search (concept-registered sr:manager:remote-access)",
+        "domain page owner-module insertions",
+        "deferred shell #/mgr/remote-access"
+      ],
+      "route": "#/mgr/remote-access",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "single pane; shell card stacks",
+      "key_states": [
+        "named owner shown",
+        "insertion contract shown",
+        "return/deep-link contract shown",
+        "no fabricated backend"
+      ],
+      "pass": true
+    },
+    {
+      "family": "sync-move",
+      "title": "Sync & Move",
+      "entry_points": [
+        "universal search (concept-registered sr:manager:sync-move)",
+        "domain page owner-module insertions",
+        "deferred shell #/mgr/sync-move"
+      ],
+      "route": "#/mgr/sync-move",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "single pane; shell card stacks",
+      "key_states": [
+        "named owner shown",
+        "insertion contract shown",
+        "return/deep-link contract shown",
+        "no fabricated backend"
+      ],
+      "pass": true
+    },
+    {
+      "family": "updates",
+      "title": "App & Content Updates",
+      "entry_points": [
+        "universal search (concept-registered sr:manager:updates)",
+        "domain page owner-module insertions",
+        "deferred shell #/mgr/updates"
+      ],
+      "route": "#/mgr/updates",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "single pane; shell card stacks",
+      "key_states": [
+        "named owner shown",
+        "insertion contract shown",
+        "return/deep-link contract shown",
+        "no fabricated backend"
+      ],
+      "pass": true
+    },
+    {
+      "family": "server-backup",
+      "title": "Full Server Backup",
+      "entry_points": [
+        "universal search (concept-registered sr:manager:server-backup)",
+        "domain page owner-module insertions",
+        "deferred shell #/mgr/server-backup"
+      ],
+      "route": "#/mgr/server-backup",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "Close Settings receipt + return note (shell)",
+      "narrow_behavior": "single pane; shell card stacks",
+      "key_states": [
+        "named owner shown",
+        "insertion contract shown",
+        "return/deep-link contract shown",
+        "no fabricated backend"
+      ],
+      "pass": true
+    }
+  ]
+}

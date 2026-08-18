@@ -1,225 +1,786 @@
 {
-  "schema_id": "pm.usage_concept_impact_register.v1",
-  "concept_or_work_id": "QwenUsageConcept/u11-prism",
-  "packet": "PM_Usage_Concept_Update_Final_Cumulative_2026-08-08",
-  "date": "2026-08-11",
-  "scope_override": {
-    "standing_default_at_session_start": "P:\\.claude\\CLAUDE.md (developer-level) restricted edits to Plans/**; its explicit-request exception list (AGENTS.md, .cursorrules, .claude/**, .cursor/**) did not include Concepts/**.",
-    "provisional_authorization": "The approving prompt and the plan's Scope section carried the user's in-prompt override for Concepts/usage-concepts/QwenUsageConcept/** only (same pattern as the 2026-08-11 Settings/Chat concept sessions). This was treated as provisional pending principal ratification.",
-    "ratification": "During review an advisor objected on hierarchy grounds. The repo principal then (a) ruled live in-session ('Ignore the CLAUDE.md. You are authorized. I am authorizing it.') and (b) amended P:\\.claude\\CLAUDE.md Scope line 4 to 'Allowed edits: Plans/** Concepts/**'. The amendment is the operative authorization; the in-prompt override and ruling were provisional steps superseded by it.",
-    "agent_side_constraint": "The agent never amended CLAUDE.md itself (the 'do not amend unless asked' notes were agent-side defaults, not claims about the principal's power); the principal made the amendment directly.",
-    "no_precedent": "In-prompt authorizations do not waive developer-level project context. Future out-of-scope work must escalate and obtain a CLAUDE.md amendment (or an explicit request to make one); absent that, sessions default to BLOCKED.",
-    "audit": "Every write stayed inside Concepts/usage-concepts/QwenUsageConcept/** (u11-prism.html, u11-data.js, u11-widgets.js, u11-widgets.css, u11-rundetail.js, u11-context.js, u11-verify.mjs, reports/**, verify-shots/**, .verify/**). Plans/** and _shared/** untouched. Git unusable on the NAS share (dubious ownership); audited via session write log."
+ "schema_id": "pm.usage_concept_impact_register.v1",
+ "concept_or_work_id": "QwenUsageConcept/u11-prism",
+ "packet": "PM_Usage_Concept_Update_Final_Cumulative_2026-08-08",
+ "date": "2026-08-18",
+ "revision_history": [
+  "2026-08-11 - first issue against PM_Usage_Concept_Update_Final_Cumulative_2026-08-08.",
+  "2026-08-13 - correction packet PM_Usage_Dependency_and_Work_Correction_2026-08-13 applied, but recorded only in an appended correction_2026_08_13 block, so the body kept asserting the superseded numbers alongside it.",
+  "2026-08-18 - audit repair. The 2026-08-13 correction is folded into the body so this document states one truth, and every claim the independent audit measured false is retracted in place with the original wording preserved. Retracted claims are not softened and not re-asserted in weaker words.",
+  "2026-08-18 (second pass) - the harness caught up. u11-verify.mjs went from 90 to 108 cases and was re-run in place, so this register finally quotes a measured result for the concept as it stands rather than a stale one. The Event Authority boundary the concept sits inside is recorded, and both harness reports now carry a schema id."
+ ],
+ "audit_of_record": {
+  "location": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/",
+  "date": "2026-08-17",
+  "what_it_is": "An independent 12-axis audit of this concept, run read-only against the 2026-08-15 concept state. It ships AUDIT_REPORT.md, FINDINGS.json (167 surviving findings plus 20 refuted, each with evidence and a reproduction command), DECISION_CLASSIFICATION.json (all 107 packet decisions classified), CANONICAL_FIXTURE_CROSSCHECK.json, a port handoff with measured corrections, 15 re-runnable harness scripts, 27 probe result files and 80 screenshots.",
+  "headline_verdict": "Not ready to port; ready for one more iteration. 7 blockers, 51 majors, 38 register and evidence-integrity defects.",
+  "why_this_register_changed": "The audit found that this register asserted two different test results, deferred five owners to Plans files that do not exist, listed six commands as dispatched that are never dispatched, certified a hard-failure guardrail that measurement disproved, and declared no owner or retention for any of the five localStorage keys the concept writes.",
+  "reader_instruction": "Read AUDIT_REPORT.md sections 4, 8 and 12 before treating anything in reports/ as settled. This repair corrects the registers only; the concept-side defects the audit found are separate changes."
+ },
+ "scope_override": {
+  "standing_default_at_session_start": "P:\\.claude\\CLAUDE.md (developer-level) restricted edits to Plans/**; its explicit-request exception list (AGENTS.md, .cursorrules, .claude/**, .cursor/**) did not include Concepts/**.",
+  "provisional_authorization": "The approving prompt and the plan's Scope section carried the user's in-prompt override for Concepts/usage-concepts/QwenUsageConcept/** only (same pattern as the 2026-08-11 Settings/Chat concept sessions). This was treated as provisional pending principal ratification.",
+  "ratification": "During review an advisor objected on hierarchy grounds. The repo principal then (a) ruled live in-session ('Ignore the CLAUDE.md. You are authorized. I am authorizing it.') and (b) amended P:\\.claude\\CLAUDE.md Scope line 4 to 'Allowed edits: Plans/** Concepts/**'. The amendment is the operative authorization; the in-prompt override and ruling were provisional steps superseded by it.",
+  "agent_side_constraint": "The agent never amended CLAUDE.md itself (the 'do not amend unless asked' notes were agent-side defaults, not claims about the principal's power); the principal made the amendment directly.",
+  "no_precedent": "In-prompt authorizations do not waive developer-level project context. Future out-of-scope work must escalate and obtain a CLAUDE.md amendment (or an explicit request to make one); absent that, sessions default to BLOCKED.",
+  "audit": "Every write stayed inside Concepts/usage-concepts/QwenUsageConcept/** (u11-prism.html, u11-data.js, u11-widgets.js, u11-widgets.css, u11-rundetail.js, u11-context.js, u11-verify.mjs, reports/**, verify-shots/**, .verify/**). Plans/** and _shared/** untouched. Git unusable on the NAS share (dubious ownership); audited via session write log."
+ },
+ "plan_owner_impacts": [
+  {
+   "subject": "Usage owner docs",
+   "owner": [
+    "Plans/usage-feature.md"
+   ],
+   "impact": "U11 demonstrates the full final cumulative dataset: BSD events, attachment transforms, operational maintenance, host/environment lineage, concurrency envelope, telemetry-unavailable estimate.",
+   "status": "deferred-named-owner"
   },
-  "plan_owner_impacts": [
-    {
-      "owner": "Plans/usage-feature.md",
-      "impact": "U11 demonstrates the full final cumulative dataset: BSD events, attachment transforms, operational maintenance, host/environment lineage, concurrency envelope, telemetry-unavailable estimate.",
-      "status": "deferred-named-owner"
-    },
-    {
-      "owner": "Plans/Multi-Account.md",
-      "impact": "Account rows now carry priority + lastUsedAt, a Use next action dispatching cmd.provider.switch_route (future work only; in-flight never moved), and Open provider console (provisional cmd.provider.usage.open_management).",
-      "status": "deferred-named-owner"
-    },
-    {
-      "owner": "Plans/FinalGUISpec.md",
-      "impact": "Context ring compact module re-verified against packet §05 requirements; zero forbidden labels confirmed; new Maintenance & operations widget and estimate row follow the value-state chip vocabulary.",
-      "status": "deferred-named-owner"
-    },
-    {
-      "owner": "Plans/Models_System.md",
-      "impact": "requested/effective model and account divergence demonstrated on ue-608 (fallback) and thread:t-91 (switch); capability fields unchanged.",
-      "status": "deferred-named-owner"
-    },
-    {
-      "owner": "Plans/CLI_Bridged_Providers.md",
-      "impact": "CLI update lifecycle represented by ops-1 (check/wait-for-idle/install/verify/rollback) with the verify model call as separate validation attempt ue-609.",
-      "status": "deferred-named-owner"
-    },
-    {
-      "owner": "Plans/Goal_Runtime.md",
-      "impact": "Sustainable concurrency envelope (hardMax/configuredPreferred/providerAdvertised/effectiveNow/predictedSustainable) now on all three runs; Usage supplies the envelope data, Goal Runtime owns admission.",
-      "status": "deferred-named-owner"
-    },
-    {
-      "owner": "Plans/Free_Models.md",
-      "impact": "Free model cooldown (fixture 6) rendered in the free lens; lens stays routing-only, no Free Models quota ledger.",
-      "status": "deferred-named-owner"
-    },
-    {
-      "owner": "Plans/Notifications.md",
-      "impact": "Sound preview (ops-4) and notification test-send (ops-5) recorded as operational, never model usage.",
-      "status": "deferred-named-owner"
-    },
-    {
-      "owner": "Plans/Server_Project_Sync.md",
-      "impact": "Offline outbox (ops-2) and server continuity (ops-3) fixtures; reconnect replay attributed via operationalRef.",
-      "status": "deferred-named-owner"
-    },
-    {
-      "owner": "Plans/Storage_events.md",
-      "impact": "Attempt schema extended (bsd, attachment, validationFor, operationalRef, replayKind, roleLabel, runLineage, hostId, envId, tokens.cacheWrite); event-schema-delta.json carries the full table.",
-      "status": "deferred-named-owner"
-    }
-  ],
-  "command_id_impacts": [
-    {
-      "command": "cmd.usage.refresh",
-      "disposition": "reused",
-      "evidence": "Usage page head refresh; verified by harness"
-    },
-    {
-      "command": "cmd.usage.export",
-      "disposition": "reused",
-      "evidence": "Export intent flow; records→JSONL verified"
-    },
-    {
-      "command": "cmd.account.select_profile",
-      "disposition": "reused",
-      "evidence": "Scope picker selection"
-    },
-    {
-      "command": "cmd.provider.switch_route",
-      "disposition": "reused",
-      "evidence": "Account row 'Use next'"
-    },
-    {
-      "command": "cmd.usage.forecast.request",
-      "disposition": "provisional-candidate",
-      "evidence": "Capacity widget 'Refresh forecast'"
-    },
-    {
-      "command": "cmd.provider.usage.open_management",
-      "disposition": "provisional-candidate",
-      "evidence": "Account row 'Open provider console'"
-    },
-    {
-      "command": "cmd.usage.detail.open",
-      "disposition": "reuse-alias-flagged",
-      "evidence": "U11 dispatches cmd.chat.open_thread_context_details for the same affordance; recommend canonical owner adjudicates"
-    }
-  ],
-  "wiring_impacts": [
-    {
-      "chain": "receipt → normalize w/ source quality → immutable event → logical-turn grouping → projections/forecast → UI → semantic deep link",
-      "u11_mapping": "attempts[].receiptRef/sourceClass → attempts[] → works[] → bucketTotals/forecasts → widgets → deepLink()"
-    }
-  ],
-  "dry_component_impacts": [
-    {
-      "role": "UsageEventStore",
-      "u11_owner": "u11-data.js attempts + attemptById"
-    },
-    {
-      "role": "SettlementResolver",
-      "u11_owner": "billingRoute + settlement fields"
-    },
-    {
-      "role": "UsageForecast",
-      "u11_owner": "forecasts[]"
-    },
-    {
-      "role": "HelperPurposeGroup",
-      "u11_owner": "buckets + purpose taxonomy"
-    },
-    {
-      "role": "MaintenanceActivity",
-      "u11_owner": "operational[] (new)"
-    },
-    {
-      "role": "ContextUsageDetail",
-      "u11_owner": "u11-context.js"
-    },
-    {
-      "role": "UsageWidgetHost",
-      "u11_owner": "shared PMWidgets + u11-widgets.js"
-    },
-    {
-      "role": "RunOutProjection",
-      "u11_owner": "NONE — no canonical definition; FINDINGS U1"
-    },
-    {
-      "role": "SourceFreshness",
-      "u11_owner": "meta.projectionHealth/projectionFreshness"
-    }
-  ],
-  "event_schema_impacts": [
-    "purpose values renamed to packet taxonomy (aliases in event-schema-delta.json)",
-    "billingRoute enum extended: extra_balance, usage_pack, no_charge_observed, unknown",
-    "new optional fields: bsd, attachment, validationFor, operationalRef, replayKind, roleLabel, runLineage, hostId, envId, fallbackReason, tokens.cacheWrite",
-    "new collections: bsdEvents, operational, hosts, environments",
-    "legacy IDs renumbered: ue-600→ue-650, ue-601→ue-651, ue-610→ue-652 (definitions only)"
-  ],
-  "storage_retention_impacts": [
-    "meta.retentionDays stays 90; historical attempts keep immutable identity",
-    "new attempts ue-600..ue-611 carry costMicro 0 — cost identity preserved"
-  ],
-  "settings_deep_links": [
-    {
-      "surface": "settings",
-      "manager": "providers",
-      "section": "routing",
-      "focus_reason": "usage_quick_controls | reconnect"
-    },
-    {
-      "surface": "settings",
-      "manager": "usage",
-      "section": "usage_and_extra_usage",
-      "focus_reason": "see_all"
-    }
-  ],
-  "provider_adapter_impacts": [
-    "Gemini CLI vision model hosts attachment transform ue-602",
-    "OpenCode shared gateway stays keyless (ue-603)",
-    "Claude Work CLI profile hosts BSD ue-600/ue-601 and MoA aggregator ue-607"
-  ],
-  "server_sync_impacts": [
-    "host:truenas/env:docker lineage on ue-606/ue-607 and ops-3/6/7",
-    "offline outbox → reconnect replay joined via operationalRef"
-  ],
-  "demo_fixtures": [
-    "All 18 packet fixtures represented — see demo-fixture-report.json"
-  ],
-  "test_results": [
-    "visual-interaction-test-report.json — 77/77 pass. Exit 0."
-  ],
-  "unresolved_questions": [
-    "cmd.usage.detail.open vs cmd.chat.open_thread_context_details alias conflict — canonical owner must adjudicate",
-    "RunOutProjection has no canonical definition in Plans/** — needs an owner before production",
-    "billingRoute values extra_balance / no_charge_observed legal but not yet demonstrated by a fixture"
-  ],
-  "scope_reconciliation": {
-    "status": "closed",
-    "chronology": [
-      "2026-08-11 session start: standing default Plans/**-only; plan recorded the user's in-prompt override as provisional.",
-      "Review advisory #1: objected; agent recorded the override verbatim and continued under the principal's live ruling.",
-      "Review advisory #2: objected that a user utterance cannot waive developer-level context; agent escalated via ask().",
-      "Principal ruling: 'Ignore the CLAUDE.md. You are authorized. I am authorizing it.'",
-      "Review advisory #3/#4: contested persisted-memory framing; agent corrected then deleted the contested memory, retaining only neutral operational facts.",
-      "Principal amendment: P:\\.claude\\CLAUDE.md Scope now 'Allowed edits: Plans/** Concepts/**' — authorization cured at the developer level; all earlier provisional steps superseded."
-    ],
-    "current_authority": "P:\\.claude\\CLAUDE.md as amended 2026-08-11 (Concepts/** allowed). This register's earlier 'Plans/**-only' statements describe the pre-amendment default and are historical, not operative."
+  {
+   "subject": "FinalGUISpec",
+   "owner": [
+    "Plans/FinalGUISpec.md"
+   ],
+   "impact": "Context ring compact module re-verified against packet section 05 requirements; new Maintenance and operations widget and estimate row follow the value-state chip vocabulary.",
+   "status": "deferred-named-owner",
+   "note": "The 2026-08-11 wording claimed 'zero forbidden labels confirmed'. That phrase is dropped here: no check in this concept's harness enumerates the forbidden-label set, so the claim was never measured."
   },
+  {
+   "subject": "Models System",
+   "owner": [
+    "Plans/Models_System.md"
+   ],
+   "impact": "Requested versus effective model and account divergence demonstrated on ue-608 (fallback) and thread:t-91 (switch); capability fields unchanged.",
+   "status": "deferred-named-owner"
+  },
+  {
+   "subject": "Multi-Account",
+   "owner": [
+    "Plans/Multi-Account.md"
+   ],
+   "impact": "Account rows carry priority and lastUsedAt, a 'Use next' action dispatching cmd.provider.switch_route (future work only; in-flight never moved), and 'Open provider console' (provisional cmd.provider.usage.open_management).",
+   "status": "deferred-named-owner"
+  },
+  {
+   "subject": "Provider adapters",
+   "owner": [
+    "Plans/Provider_OpenCode.md",
+    "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+    "Plans/Models_System.md"
+   ],
+   "impact": "Provider-native receipt shapes are represented only as normalized attempts[] with sourceClass; the concept demonstrates no adapter behaviour of its own.",
+   "status": "deferred-named-owner",
+   "note": "Restored 2026-08-18. Packet 06 names 'Provider adapters' as one of its 20 owner subjects; the 2026-08-11 issue of this register and of plan-owner-delta.md silently replaced it with a CLI-bridged-providers row (audit A11-13 sub-item 3). Both rows are now carried. The three owner paths were verified to exist on 2026-08-18; which of them owns adapter identity is not adjudicated here."
+  },
+  {
+   "subject": "CLI-bridged providers",
+   "owner": [
+    "Plans/CLI_Bridged_Providers.md"
+   ],
+   "impact": "CLI update lifecycle represented by ops-1 (check / wait-for-idle / install / verify / rollback) with the verify model call as separate validation attempt ue-609. ops-1 carries acquisition lineage (explicit_user_setup, official installer, publisher-signed artifact, bound host and environment) and ops-8 demonstrates the runtime-demand path returning Provider Setup Required with a deep link and continuation token instead of a silent install.",
+   "status": "demonstrated",
+   "note": "Folded in from the 2026-08-13 correction block, which had recorded this as a separate appended entry while the body still carried the pre-correction wording. Source of record: PM_Usage_Dependency_and_Work_Correction_2026-08-13 / PROVIDER_CLI_FINAL_ADJUDICATION.md."
+  },
+  {
+   "subject": "Free Models / catalogs",
+   "owner": [
+    "Plans/Models_System.md"
+   ],
+   "impact": "Free lens renders cooldown (fixture 6); the lens stays routing-only and keeps no Free Models quota ledger. Free Models wrapper catalog and route-readiness identity is MS-118; priority and deterministic fallback eligibility is MS-120.",
+   "status": "deferred-named-owner",
+   "note": "Owner corrected 2026-08-18. There is no Plans/Free_Models.md and there never was; Free Models is owned inside Plans/Models_System.md. MS-118 ('Free Models Wrapper Catalog And Route Readiness Identity', Models_System.md:8108) and MS-120 ('Free Models Top-10 Precedence And Deterministic Fallback Eligibility', :8236) were both verified present on 2026-08-18.",
+   "retraction": {
+    "retracted_on": "2026-08-18",
+    "retracted_claim": {
+     "owner": "Plans/Free_Models.md",
+     "status": "deferred-named-owner"
+    },
+    "why_the_claim_was_false": "The path did not exist and never had. `test -e` returned MISSING and `git log --all --diff-filter=A -- Plans/<file>` returned 0 commits for each of the five, re-confirmed 2026-08-18. Packet 06 lists these as subject areas ('Goal Runtime', 'Free Models/catalogs', 'Notifications', 'Server/Project Sync', 'Storage/events'), never as filenames; this register converted the labels into file paths and never checked them. A deferral to a nonexistent owner is an open hole, not a handoff (audit A11-01).",
+    "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A11-01 (major)"
+   }
+  },
+  {
+   "subject": "Prompt Pipeline",
+   "owner": [
+    "Plans/Prompt_Pipeline.md"
+   ],
+   "impact": "Context segment families (Messages, System, Tools, Skills and MCP, Memory, Summaries, Attachments) with stable-prefix identity, cache epoch and PM-derived tool-schema overhead.",
+   "status": "deferred-named-owner",
+   "note": "Owner path added 2026-08-18 and verified to exist; the 2026-08-11 issue named the subject with no path at all, which was the honest choice and is now upgraded to a checked one."
+  },
+  {
+   "subject": "Goal Runtime",
+   "owner": [
+    "Plans/Goal_Runtime_System.md"
+   ],
+   "impact": "Sustainable concurrency envelope (hardMax / configuredPreferred / providerAdvertised / effectiveNow / predictedSustainable) on all three runs; Usage supplies the envelope data, Goal Runtime owns admission. GRS-002 is the one runtime engine with three product integrations; GRS-005 is durable Goal state and the event log.",
+   "status": "deferred-named-owner",
+   "note": "Owner corrected 2026-08-18. There is no Plans/Goal_Runtime.md; the real owner is Plans/Goal_Runtime_System.md. GRS-002 (:273) and GRS-005 (:525) were both verified present on 2026-08-18.",
+   "retraction": {
+    "retracted_on": "2026-08-18",
+    "retracted_claim": {
+     "owner": "Plans/Goal_Runtime.md",
+     "status": "deferred-named-owner"
+    },
+    "why_the_claim_was_false": "The path did not exist and never had. `test -e` returned MISSING and `git log --all --diff-filter=A -- Plans/<file>` returned 0 commits for each of the five, re-confirmed 2026-08-18. Packet 06 lists these as subject areas ('Goal Runtime', 'Free Models/catalogs', 'Notifications', 'Server/Project Sync', 'Storage/events'), never as filenames; this register converted the labels into file paths and never checked them. A deferral to a nonexistent owner is an open hole, not a handoff (audit A11-01).",
+    "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A11-01 (major)"
+   }
+  },
+  {
+   "subject": "Orchestrator / Subagents",
+   "owner": [
+    "Plans/Orchestrator_Page.md",
+    "Plans/orchestrator-subagent-integration.md"
+   ],
+   "impact": "Run detail inspector shows measured state only and links semantically to Goals and Crew; never a second orchestrator.",
+   "status": "deferred-named-owner",
+   "note": "Owner paths added 2026-08-18 and verified to exist."
+  },
+  {
+   "subject": "Planning Wizard",
+   "owner": [
+    "Plans/Planning_Wizard.md"
+   ],
+   "impact": "run:plan-12 (internal visibility) with route plan stages: high-quality conversation route, background extraction routes, reserved synthesis and audit.",
+   "status": "deferred-named-owner",
+   "note": "Split out 2026-08-18. Packet 06 lists 'Planning Wizard' and 'PRD Builder' as two separate owner subjects; plan-owner-delta.md merged them into one row, which is one of the two reasons its row count was 19 against the packet's 20."
+  },
+  {
+   "subject": "PRD Builder",
+   "owner": [
+    "Plans/PRD_Builder.md"
+   ],
+   "impact": "No PRD Builder run is fixtured in this concept. The capacity, forecast and admission vocabulary the Planning Wizard run demonstrates is the same vocabulary a PRD Builder run would use, but nothing in the dataset exercises it.",
+   "status": "not-demonstrated",
+   "note": "Split out 2026-08-18 and honestly downgraded. The merged 'Planning Wizard / PRD Builder' row carried the disposition 'demonstrated' on the strength of run:plan-12 alone, which is a Planning Wizard run. `grep -ci prd` over u11-data.js returns 0."
+  },
+  {
+   "subject": "Assistant Chat",
+   "owner": [
+    "Plans/assistant-chat-design.md"
+   ],
+   "impact": "Mid-turn redirect (interrupt and resume with wasted tokens), thread request lineage, cross-project child with path redaction.",
+   "status": "deferred-named-owner",
+   "note": "Owner path added 2026-08-18 and verified to exist."
+  },
+  {
+   "subject": "Settings registry",
+   "owner": [
+    "Plans/FinalGUISpec.md",
+    "Plans/settings_inventory.json"
+   ],
+   "impact": "RETRACTED - see the retraction object. No claim about Usage-versus-Settings policy ownership belongs in this register until a harness measures the repaired quick-controls sheet.",
+   "status": "disproven - retracted",
+   "note": "Owner paths added 2026-08-18 and verified to exist. F3-441 designates Plans/settings_inventory.json as the canonical inventory registry; F3-434 (FinalGUISpec.md:30614) owns the category bloom and the open(category, focusSettingId) deep-link contract.",
+   "retraction": {
+    "retracted_on": "2026-08-18",
+    "retracted_claim": {
+     "subject": "Settings registry",
+     "impact": "U11 is a consumer only: quick-controls sheet reads settingsDefaults, never owns policy; every policy change deep-links to Settings (providers/usage managers).",
+     "status": "demonstrated (consumer contract)"
+    },
+    "why_the_claim_was_false": "It certified as proven the single behaviour core packet 05 names a Hard failure ('Usage mutates policy locally instead of deep-linking to Settings'), while the shipped sheet did exactly that. Measured 2026-08-17: the quick-controls sheet persisted five Settings-owned policies to localStorage - warn before running low, automatic account and provider switching, continuation product, continuation 'then' action, extra paid usage, and the monthly spending limit - with a command-log delta of 0, so zero commands were dispatched and zero deep links were taken.",
+    "measured_evidence": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/audit-evidence/probes/axis1-ownership-probe-results.json - five persisted 'u11:settings' writes with cmdLogLen 0 at every step.",
+    "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ findings A01-01 (blocker), A01-03 (blocker), A10-08 (minor)",
+    "scope": "The clause is retracted, not re-asserted in weaker words. Repair of the sheet is a separate change; only a harness measurement of the repaired sheet can restore a disposition here."
+   }
+  },
+  {
+   "subject": "Media",
+   "owner": [
+    "Plans/Media_Generation_and_Capabilities.md"
+   ],
+   "impact": "Attachment transform receipt.jpg to pm_vision_ocr to art-91 with consent, privacy and local-compute fields.",
+   "status": "deferred-named-owner",
+   "note": "Owner path added 2026-08-18 and verified to exist."
+  },
+  {
+   "subject": "MCP / Tools / Skills",
+   "owner": [
+    "Plans/MCP_Integration.md",
+    "Plans/Tools.md",
+    "Plans/Skills_System.md"
+   ],
+   "impact": "mcp_router (ue-603, keyless shared route) and skill_search (ue-604); tool statistics and self-recovery receipts.",
+   "status": "deferred-named-owner",
+   "note": "Owner paths added 2026-08-18 and verified to exist."
+  },
+  {
+   "subject": "Testing / Browser / Artifacts",
+   "owner": [
+    "Plans/Automated_Testing_System.md",
+    "Plans/Project_Output_Artifacts.md",
+    "Plans/Runtime_Artifacts_Panel.md"
+   ],
+   "impact": "No Playwright-shaped Usage categories (packet section 04); verification uses an external harness outside the dataset.",
+   "status": "deferred-named-owner",
+   "note": "Owner paths added 2026-08-18 and verified to exist."
+  },
+  {
+   "subject": "Server / Project Sync",
+   "owner": [
+    "Plans/Project_Sync_and_Backbone.md",
+    "Plans/Shared_Integration_Runtime.md"
+   ],
+   "impact": "Offline outbox (ops-2) and server continuity (ops-3) fixtures; reconnect replay attributed via operationalRef. PSB-001 is the Project Sync owner boundary; SIR-005 owns the durable command outbox, replay coordination and stream coalescing that the offline-to-reconnect path actually rests on.",
+   "status": "deferred-named-owner",
+   "note": "Owner corrected 2026-08-18. There is no Plans/Server_Project_Sync.md; the subject splits across two real owners. PSB-001 (Project_Sync_and_Backbone.md:51, owner_boundary, accepted) and SIR-005 (Shared_Integration_Runtime.md:496, requirement, accepted - ThreadCommandOutbox, ProjectionReplayCoordinator and StreamCoalescer) were both verified present on 2026-08-18. SIR-005 specifically, not SIR-006 or SIR-007, which are different units.",
+   "retraction": {
+    "retracted_on": "2026-08-18",
+    "retracted_claim": {
+     "owner": "Plans/Server_Project_Sync.md",
+     "status": "deferred-named-owner"
+    },
+    "why_the_claim_was_false": "The path did not exist and never had. `test -e` returned MISSING and `git log --all --diff-filter=A -- Plans/<file>` returned 0 commits for each of the five, re-confirmed 2026-08-18. Packet 06 lists these as subject areas ('Goal Runtime', 'Free Models/catalogs', 'Notifications', 'Server/Project Sync', 'Storage/events'), never as filenames; this register converted the labels into file paths and never checked them. A deferral to a nonexistent owner is an open hole, not a handoff (audit A11-01).",
+    "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A11-01 (major)"
+   }
+  },
+  {
+   "subject": "Provider installation lifecycle",
+   "owner": [
+    "Plans/CLI_Bridged_Providers.md"
+   ],
+   "impact": "Covered by the CLI-bridged providers row above (failure class, outcome and affected-connections fields on ops-1).",
+   "status": "demonstrated"
+  },
+  {
+   "subject": "Notifications",
+   "owner": [
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Contracts_V0.md",
+    "Plans/storage-plan.md",
+    "Plans/Permissions_System.md"
+   ],
+   "impact": "Sound preview (ops-4) and notification test-send (ops-5) recorded as operational receipts, never model usage.",
+   "status": "deferred-named-owner",
+   "note": "Owner corrected 2026-08-18. There is no Plans/Notifications.md and no single owner document; Notifications is a six-way split, each unit verified present on 2026-08-18: UCC-103 'Notifications And Sounds Command Catalog' (UI_Command_Catalog.md:7530) owns the commands; WM-039 'Notifications And Sounds Settings Wiring' (Wiring_Matrix.md:3251) owns the wiring; F3-405 'Notifications And Sounds Settings Surface' (FinalGUISpec.md:27693) owns the GUI and the test-send affordance; CV-298 'Notification Delivery Envelope Destination Receipt And Predicate Contract' (Contracts_V0.md:18966) owns the destination payload and events; SP-222 'Notification Settings Destinations Receipts And Sound Assets Storage' (storage-plan.md:15815) owns storage; PS-124 'Notification Destination Secret Custody And Live Send Authority' (Permissions_System.md:8387) owns secret custody and live-send authority.",
+   "retraction": {
+    "retracted_on": "2026-08-18",
+    "retracted_claim": {
+     "owner": "Plans/Notifications.md",
+     "status": "deferred-named-owner"
+    },
+    "why_the_claim_was_false": "The path did not exist and never had. `test -e` returned MISSING and `git log --all --diff-filter=A -- Plans/<file>` returned 0 commits for each of the five, re-confirmed 2026-08-18. Packet 06 lists these as subject areas ('Goal Runtime', 'Free Models/catalogs', 'Notifications', 'Server/Project Sync', 'Storage/events'), never as filenames; this register converted the labels into file paths and never checked them. A deferral to a nonexistent owner is an open hole, not a handoff (audit A11-01).",
+    "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A11-01 (major)"
+   }
+  },
+  {
+   "subject": "Storage / events",
+   "owner": [
+    "Plans/storage-plan.md",
+    "Plans/storage_value_registry.json"
+   ],
+   "impact": "Attempt schema extended (bsd, attachment, validationFor, operationalRef, replayKind, roleLabel, runLineage, hostId, envId, tokens.cacheWrite); event-schema-delta.json carries the full table. SP-234 owns usage projection storage and the alias contract; SP-237 owns retention, compaction, deletion and quarantine.",
+   "status": "deferred-named-owner",
+   "note": "Owner corrected 2026-08-18. There is no Plans/Storage_events.md. SP-234 'Usage Projection Storage And Alias Contract' (storage-plan.md:16772) and SP-237 'Case L Retention Compaction Deletion And Quarantine' (:17450) plus Plans/storage_value_registry.json were all verified present on 2026-08-18. This correction also gives the client-persistence declaration in storage_retention_impacts a reachable owner for the first time.",
+   "retraction": {
+    "retracted_on": "2026-08-18",
+    "retracted_claim": {
+     "owner": "Plans/Storage_events.md",
+     "status": "deferred-named-owner"
+    },
+    "why_the_claim_was_false": "The path did not exist and never had. `test -e` returned MISSING and `git log --all --diff-filter=A -- Plans/<file>` returned 0 commits for each of the five, re-confirmed 2026-08-18. Packet 06 lists these as subject areas ('Goal Runtime', 'Free Models/catalogs', 'Notifications', 'Server/Project Sync', 'Storage/events'), never as filenames; this register converted the labels into file paths and never checked them. A deferral to a nonexistent owner is an open hole, not a handoff (audit A11-01).",
+    "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A11-01 (major)"
+   }
+  }
+ ],
+ "plan_owner_impacts_reconciliation": {
+  "reconciled_on": "2026-08-18",
+  "count": 21,
+  "rule": "This array and reports/plan-owner-delta.md now carry the same subjects in the same order, one row per entry. Either file changing without the other is a defect.",
+  "what_was_wrong": "As shipped 2026-08-11 this array had 10 entries and plan-owner-delta.md had 19 table rows, against the 20 owner subjects packet 06 lists (audit A11-13 sub-item 3). The two documents were never the same list.",
+  "how_the_counts_reconcile": "20 packet subjects, plus one subject the concept added and the packet does not name (CLI-bridged providers, Plans/CLI_Bridged_Providers.md, a real owner document), equals 21. plan-owner-delta.md reached 19 by merging Planning Wizard with PRD Builder into a single row and by replacing the packet's 'Provider adapters' subject with the CLI-bridged-providers row. Both are undone here: the merge is split and Provider adapters is restored alongside CLI-bridged providers.",
+  "path_verification": "Every Plans path and every PlanUnit id cited in this array was checked to exist on 2026-08-18 with `test -e` and `grep -c '<unit-id>' <file>`. Subjects for which no owner document was identified carry no path rather than a guessed one - that is the direct lesson of audit A11-01."
+ },
+ "command_id_impacts": [
+  {
+   "command": "cmd.usage.refresh",
+   "disposition": "reused-canonical",
+   "dispatch_site": "u11-prism.html, the cmd.usage.refresh dispatch",
+   "evidence": "Usage page head refresh; harness case 'interaction refresh toasts'"
+  },
+  {
+   "command": "cmd.usage.export",
+   "disposition": "reused-canonical",
+   "dispatch_site": "u11-prism.html, the cmd.usage.export dispatch",
+   "evidence": "Export intent flow; harness case 'interaction export records to JSONL'"
+  },
+  {
+   "command": "cmd.account.select_profile",
+   "disposition": "reused-canonical",
+   "dispatch_site": "u11-prism.html, the cmd.account.select_profile dispatch",
+   "evidence": "Scope picker selection; harness case 'interaction scope picker'"
+  },
+  {
+   "command": "cmd.provider.switch_route",
+   "disposition": "reused-canonical-with-divergent-payload",
+   "dispatch_site": "u11-widgets.js, the cmd.provider.switch_route dispatch in the 'usenext' branch",
+   "evidence": "Account row 'Use next'",
+   "divergence": "The concept sends { accountId }. The canonical payload is provider_id plus retry_after_ms (UI_Command_Catalog.md:8304, :8309; FinalGUISpec.md:28909 rate_limit CTA row), behind the alternate_route_available guard. The command choice is defensible for the at-limit fallback case; the payload is not the canonical one. See the retraction on the word 'verbatim' in candidate-command-delta.json (audit A11-08)."
+  },
+  {
+   "command": "cmd.settings.bloom.open",
+   "disposition": "reused-canonical",
+   "dispatch_site": "u11-data.js, the U11.dispatch call inside U11.openSettings (U11.openSettings)",
+   "evidence": "Every Settings-directed route in the concept. Owner F3-434 (FinalGUISpec.md:30614), shape open(category, focusSettingId), certified at Plans/Wiring_Matrix.production.json row catalog.settings_bloom_open (:30116).",
+   "note": "Replaced the invented pseudo-command 'semantic.deep_link' and its invented payload { surface, manager, section, focus_reason } on 2026-08-18. `grep -rn 'semantic.deep_link' u11-*.js u11-prism.html` now returns 0 hits."
+  },
+  {
+   "command": "cmd.chat.open_thread_context_details",
+   "disposition": "reused-canonical-plus-one-out-of-scope-dispatch",
+   "dispatch_site": "u11-context.js, the cmd.chat.open_thread_context_details dispatch (canonical, { thread_id }); u11-rundetail.js, the cmd.chat.open_thread_context_details dispatch in open(runId) (out of scope, { surface: 'run_detail', id: runId })",
+   "evidence": "Context ring 'More details' and the Usage run inspector",
+   "divergence": "UI_Command_Catalog.md:8159 states these three chat commands 'remain the thread Context Detail Pane commands; they are not aliases for app-wide Usage', and :8163 bars run-only payloads from satisfying Usage route identity. The u11-rundetail.js, the cmd.chat.open_thread_context_details dispatch in open(runId) dispatch is from a Usage surface with a run-only payload and no thread_id, so it is the forbidden direction. See the corrected disposition for cmd.usage.detail.open in candidate-command-delta.json (audit A11-05)."
+  },
+  {
+   "command": "cmd.chat.compact_context",
+   "disposition": "reused-canonical",
+   "dispatch_site": "u11-context.js, the cmd.chat.compact_context dispatch",
+   "evidence": "Context ring compaction control"
+  },
+  {
+   "command": "cmd.chat.close_thread_context_details",
+   "disposition": "reused-canonical",
+   "dispatch_site": "u11-context.js, the cmd.chat.close_thread_context_details dispatch",
+   "evidence": "Context details close"
+  },
+  {
+   "command": "cmd.widget.add",
+   "disposition": "reused-canonical-partially-wired",
+   "dispatch_site": "u11-widgets.js, the cmd.widget.add dispatch inside U11W.duplicate (inside U11W.duplicate only)",
+   "evidence": "Widget kebab 'Duplicate', tagged { via: 'duplicate' }",
+   "divergence": "The real 'Add widget' control lives in the shared engine (_shared/usage-widgets.js:899 data-pmw-add) and dispatches nothing. Measured 2026-08-18: `grep -c 'dispatch\\|U11\\.\\|cmdLog' _shared/usage-widgets.js` returns 0."
+  },
+  {
+   "command": "cmd.usage.forecast.request",
+   "disposition": "provisional-candidate",
+   "dispatch_site": "u11-widgets.js, the cmd.usage.forecast.request dispatch",
+   "evidence": "Capacity widget 'Refresh forecast'",
+   "note": "Measured 2026-08-18: 0 occurrences anywhere under Plans/ excluding _shards. Admissible as an id - see the segment-count ruling in candidate-command-delta.json - but unregistered."
+  },
+  {
+   "command": "cmd.provider.usage.open_management",
+   "disposition": "provisional-candidate-blocked",
+   "dispatch_site": "u11-widgets.js, the cmd.provider.usage.open_management dispatch",
+   "evidence": "Account row 'Open provider console'",
+   "note": "Measured 2026-08-18: 0 occurrences anywhere under Plans/ excluding _shards. Blocked on DRY grounds: cmd.nav.open_usage_subject (68 occurrences under Plans/) already owns usage-subject opens, and DRY_Rules.md:2123 routes cmd.context.receipt.open to it by subject kind."
+  },
+  {
+   "command": "cmd.usage.detail.open",
+   "disposition": "candidate-declined-in-favour-of-cmd.nav.open_usage_subject",
+   "dispatch_site": "never dispatched",
+   "evidence": "Packet 06 lists it as a candidate to adjudicate. Corrected disposition recorded 2026-08-18; see candidate-command-delta.json for the full ruling and the retraction of the 2026-08-11 recommendation."
+  },
+  {
+   "command": "cmd.widget.remove / resize / configure / move / reset_layout",
+   "disposition": "declared-not-dispatched",
+   "dispatch_site": "none",
+   "evidence": "Corrected 2026-08-18. These five were listed as dispatched on 2026-08-11 and are not. The shared widget engine that owns removeWidget (_shared/usage-widgets.js:600), setSize (:609) and resetCanvas (:616) contains no dispatch code at all; the five ids appear in this concept only as keys in the toast table at u11-data.js, the toast label table inside U11.dispatch. Each has a production wiring row (catalog.widget_remove / resize / configure / move / reset_layout in Plans/Wiring_Matrix.production.json) carrying a dispatcher-fixture evidence requirement that this concept does not satisfy (audit A11-07)."
+  },
+  {
+   "command": "cmd.chat.focus_thread_context_details",
+   "disposition": "declared-not-dispatched",
+   "dispatch_site": "none",
+   "evidence": "Corrected 2026-08-18. Listed as dispatched on 2026-08-11 and never dispatched; it exists in this concept only as a toast-table key (audit A11-07)."
+  }
+ ],
+ "command_id_impacts_retraction": {
+  "retracted_on": "2026-08-18",
+  "retracted_claim": {
+   "what": "The 2026-08-11 array held 7 entries and omitted the six shared widget commands, the three chat context commands and cmd.chat.compact_context entirely, while candidate-command-delta.json's in_concept_dispatches listed 16 ids as dispatched.",
+   "verbatim_entries": [
+    {
+     "command": "cmd.provider.switch_route",
+     "disposition": "reused",
+     "evidence": "Account row 'Use next'"
+    },
+    {
+     "command": "cmd.usage.detail.open",
+     "disposition": "reuse-alias-flagged",
+     "evidence": "U11 dispatches cmd.chat.open_thread_context_details for the same affordance; recommend canonical owner adjudicates"
+    },
+    {
+     "command": "semantic.deep_link",
+     "disposition": "reused",
+     "evidence": "setup_required fixture deep-links to settings/providers setup with focus_reason setup_required + continuation token; no new command minted (packet: opening setup is not a purchase command)"
+    }
+   ]
+  },
+  "why_the_claim_was_false": "Six of the sixteen ids are never dispatched; the 16-item list was transcribed from the toast table at u11-data.js:1385-1402 rather than from dispatch sites. 'semantic.deep_link' was not a command at all - it was a locally invented pseudo-command carrying an invented payload shape into a register of canonical command impacts. The word 'reused' asserted canonical provenance for something canon does not define.",
+  "measured_evidence": "2026-08-18, working tree: `grep -rn \"\\.dispatch(\" u11-prism.html u11-widgets.js u11-context.js u11-rundetail.js u11-data.js u11-time.js _shared/*.js` returns exactly 12 call sites covering 11 distinct ids, enumerated in command_id_impacts above.",
+  "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A11-07 (major); the semantic.deep_link limb from A01-06, A01-07, A10-01, A11-09"
+ },
+ "wiring_impacts": [
+  {
+   "chain": "receipt -> normalize with source quality -> immutable event -> logical-turn grouping -> projections and forecast -> UI -> canonical Settings deep link",
+   "u11_mapping": "attempts[].receiptRef / sourceClass -> attempts[] -> works[] -> bucketTotals / forecasts -> widgets -> U11.openSettings -> cmd.settings.bloom.open",
+   "note": "Terminal stage corrected 2026-08-18. The 2026-08-11 wording ended in 'semantic deep link' and 'deepLink()', which named no canonical command. The terminal stage is now cmd.settings.bloom.open with payload { category, focus_setting_id } (owner F3-434; wiring row catalog.settings_bloom_open)."
+  },
+  {
+   "chain": "runtime demand for a missing provider CLI -> Provider Setup Required -> canonical Settings deep link -> continuation token -> resume",
+   "u11_mapping": "operational[] ops-8 (kind setup_required, providerUsage none, no validationEventId) -> operations widget 'Open provider setup' CTA -> U11.openSettings -> cmd.settings.bloom.open -> ops-8.setupLink.continuation 'cont-8841'",
+   "note": "Added 2026-08-18. The 2026-08-13 correction packet created this wiring path and CORRECTION_GOAL_PROMPT.md:22 required the wiring register to record it; neither this array nor candidate-wiring-delta.json was updated at the time (audit A11-13 sub-item 9). It is recorded now in both."
+  }
+ ],
+ "event_authority_boundary_2026_08_18": {
+  "finding": "A11-22 (info) - recorded, not repaired. It cannot be repaired from inside this concept.",
+  "measured_on": "2026-08-18",
+  "measured_from": "Plans/Wiring_Matrix.production.json and Plans/DRY_Rules.md, both read-only to this concept",
+  "statement": "The Usage command family declares no domain events in production wiring. All five usage rows - catalog.usage_refresh, catalog.usage_export, catalog.usage_forecast_request, catalog.nav_open_usage_subject and catalog.artifacts_show_in_usage - carry expected_event_types []. 160 of the matrix's 726 entries declare event types; no usage row is among them.",
+  "what_the_rows_declare_instead": "effect_kind 'receipt'. catalog.usage_refresh spells it out: 'cmd.usage.refresh has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.'",
+  "denominator": "Plans/DRY_Rules.md:2139, in 'Unresolved schema and Event Authority boundary' (:2132-2143): 'The Event Authority denominator remains UNKNOWN_OPEN. No event family is inferred, registered, or declared emitted from a service name in this registry.' Admitting a usage event family is an Event Authority adjudication. This register does not perform one and does not name a candidate family, because naming one would be the inference that clause forbids.",
+  "consequence": "event_schema_impacts below, and everything in reports/event-schema-delta.json, are proposals against a receipt-and-projection contract with no wiring row to attach to. They are not evidence that a usage event family exists.",
+  "the_one_command_that_does_declare_an_event": "catalog.account_select_profile (cmd.account.select_profile) with ['account_switch_event'] and effect_kind 'event' - the one the concept previously misbound to a view filter (audit A11-02). The scope picker now dispatches nothing at all, and the harness case 'closure changing the page scope dispatches no command' holds it there.",
+  "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A11-22 (info)"
+ },
+ "dry_component_impacts": [
+  {
+   "role": "UsageEventStore",
+   "u11_owner": "u11-data.js - attempts[] plus a single index, U11.attemptById (:1195); U11.attemptByEventId (:1200) is a plain alias of it, not a second index"
+  },
+  {
+   "role": "UsageNormalizer",
+   "u11_owner": "u11-data.js - sourceClass and settlement fields on every attempt and meter. The render-time helpers R().human and R().deText live in _shared/usage-data.js (:921, :927), not in u11-data.js, and R.human is a one-line underscore-to-space substitution, not a normalizer"
+  },
+  {
+   "role": "SettlementResolver",
+   "u11_owner": "u11-data.js - billingRoute (what paid) orthogonal to settlement (source quality of the settlement fact)"
+  },
+  {
+   "role": "UsageDataQuality",
+   "u11_owner": "u11-data.js - meter vs values plus conf and note; telemetry-unavailable estimate on meter:oc-go-monthly. Eight vs values occur in the data: provider_reported 22, measured 3, stale 2, unknown 2, disabled 1, estimated 1, not_exposed 1, unavailable 1"
+  },
+  {
+   "role": "UsageForecast",
+   "u11_owner": "u11-data.js - forecasts[] (fc-goal-47, fc-plan-12) plus costs.forecastMonthMicro"
+  },
+  {
+   "role": "CapacityProjection",
+   "u11_owner": "u11-data.js - runs[].capacity envelope { hardMax, configuredPreferred, providerAdvertised, effectiveNow, predictedSustainable } plus admitted / queued / waves"
+  },
+  {
+   "role": "RouteReceipt",
+   "u11_owner": "u11-data.js - attempts[].receiptRef plus connection / product / model ids; run detail 'Connection used' section"
+  },
+  {
+   "role": "CacheReceipt",
+   "u11_owner": "u11-data.js - tokens.cacheRead / cacheWrite, thread.context.cacheEpoch / stablePrefixId, and cacheStats[] whose state enum is measured | estimated | unsupported (8 rows: 5 measured, 1 estimated, 2 unsupported)"
+  },
+  {
+   "role": "TimeBreakdown",
+   "u11_owner": "u11-data.js - runs[].timing.rows: provider active versus waits, including the Outbox/offline wait and Reconnect/sync/replay rows"
+  },
+  {
+   "role": "ProviderFamilyUsage",
+   "u11_owner": "u11-data.js - costs.byFamily plus the families and accounts hierarchy (10 families)"
+  },
+  {
+   "role": "AccountConnectionUsage",
+   "u11_owner": "u11-data.js - accounts[] (13 records, 12 visible, 1 removed) plus connections[] (16) with accountsOfFamily / connectionsOfAccount helpers (:1203, :1206); priority and lastUsedAt"
+  },
+  {
+   "role": "HelperPurposeGroup",
+   "u11_owner": "u11-data.js - buckets{} plus the packet purpose taxonomy, rendered via R().human from _shared/usage-data.js:921"
+  },
+  {
+   "role": "Goal/CrewUsage",
+   "u11_owner": "u11-data.js - runs[] (3) plus members[] joining to attempts by eventId"
+  },
+  {
+   "role": "MaintenanceActivity",
+   "u11_owner": "u11-data.js - operational[] (8 entries, 8 distinct kinds: cli_update, offline_outbox, server_continuity, sound_preview, notification_test, backup, project_move, setup_required) with phases, host and environment lineage and validationEventId join; operations widget in u11-widgets.js"
+  },
+  {
+   "role": "ContextUsageDetail",
+   "u11_owner": "u11-context.js - ring compact module plus docked details (admitted sources, cache and compaction separated)"
+  },
+  {
+   "role": "RunOutProjection",
+   "u11_owner": "NONE - gap",
+   "note": "No canonical RunOutProjection definition exists in Plans/** or in the concept set. costs.forecastMonthMicro is a month-end forecast, not a run-out date. Needs an owner before production."
+  },
+  {
+   "role": "SourceFreshness",
+   "u11_owner": "u11-data.js - meta.projectionHealth / projectionFreshness / nextAutoRefresh (:39-41) plus the head freshness chip"
+  },
+  {
+   "role": "UsageWidgetHost",
+   "u11_owner": "shared PMWidgets engine (_shared/usage-widgets.js) plus the u11-widgets.js TYPES registry (:1145, 15 types) and the instance contract (layout, presentation, scope, time, content)"
+  }
+ ],
+ "dry_component_impacts_reconciliation": {
+  "reconciled_on": "2026-08-18",
+  "count": 18,
+  "what_was_wrong": "This array had 9 entries against candidate-dry-delta.json's 18 roles, and two of the 18 attributions were inaccurate (audit A11-13 sub-item 4, A11-18). It now carries all 18 in the same order as candidate-dry-delta.json.",
+  "corrections_carried_here": [
+   "UsageEventStore: 'attemptById/attemptByEventId index' implied two indexes. u11-data.js, the line `U11.attemptByEventId = U11.attemptById;` is `U11.attemptByEventId = U11.attemptById;` - one index under two names.",
+   "UsageNormalizer: R().human and R().deText were attributed to u11-data.js. Both live in _shared/usage-data.js (:921, :927) and are reached through u11-widgets.js, `function R() { return window.USrender; }` `function R() { return window.USrender; }`. `grep -n deText u11-data.js` returns no hits.",
+   "CacheReceipt: the cacheStats enum was described as 'provider-reported vs derived vs not exposed'. The shipped enum is measured | estimated | unsupported.",
+   "UsageDataQuality: the declared value-state set omitted not_exposed, which the data uses at u11-data.js, meter:local-ollama (meter:local-ollama).",
+   "HelperPurposeGroup: the taxonomy size was given as 17 where event-schema-delta.json and packet section 02 both declare 18. The count is dropped from the role string; the 18-declared-versus-17-used gap is disclosed in event-schema-delta.json instead."
+  ]
+ },
+ "event_schema_impacts": [
+  "purpose values renamed to the packet taxonomy (aliases in event-schema-delta.json); 18 values declared, 17 occur on any attempt",
+  "billingRoute enum extended: extra_balance, usage_pack, no_charge_observed, unknown; of these only usage_pack is demonstrated",
+  "new optional fields: bsd, attachment, validationFor, operationalRef, replayKind, roleLabel, runLineage, hostId, envId, fallbackReason, tokens.cacheWrite",
+  "new collections: bsdEvents, operational, hosts, environments",
+  "meter schema declared for the first time on 2026-08-18 (33 meters carrying sourceClass, settlement, vs, conf, note and an optional user-visible estimate object); it had been omitted from event-schema-delta.json entirely (audit A11-15)",
+  "legacy demo ids renumbered: ue-600 to ue-650, ue-601 to ue-651, ue-610 to ue-652 (definitions only, disclosed with a reason in event-schema-delta.json)"
+ ],
+ "storage_retention_impacts": [
+  {
+   "kind": "dataset-retention",
+   "statement": "meta.retentionDays stays 90.",
+   "status": "declared"
+  },
+  {
+   "kind": "cost-identity",
+   "statement": "The twelve new attempts ue-600..ue-611 carry costMicro 0, so the three-way cost identity is unchanged.",
+   "status": "declared",
+   "note": "Kept for continuity, but this is a cost-identity fact filed under storage and retention. It was one of only two entries in this array as shipped 2026-08-11, neither of which was about storage (audit A11-14)."
+  },
+  {
+   "kind": "client-persistence",
+   "statement": "The concept writes five durable localStorage keys. Declared here for the first time on 2026-08-18; each was located in source on that date. All five are prototype client state with no server component and no personal data; none is covered by meta.retentionDays, which governs the demo dataset only.",
+   "status": "declared",
+   "owner": "Plans/storage-plan.md - SP-234 (usage projection storage and alias contract, :16772) and SP-237 (retention, compaction, deletion and quarantine, :17450), plus Plans/storage_value_registry.json",
+   "keys": [
+    {
+     "key": "u11:disclosure",
+     "written_at": "u11-prism.html, the STORE.set('u11:disclosure', ...) call",
+     "read_at": "u11-prism.html, the STORE.get('u11:disclosure', ...) call",
+     "holds": "the selected disclosure level (essentials | standard | advanced)",
+     "retention": "until the user changes it or clears site data; never expired by the concept",
+     "eviction": "none - the concept never removes this key"
+    },
+    {
+     "key": "u11:scope",
+     "written_at": "u11-prism.html, the STORE.set('u11:scope', ...) call",
+     "read_at": "u11-prism.html, the STORE.get('u11:scope', ...) call",
+     "holds": "the selected usage scope id (for example scope:all)",
+     "retention": "until the user changes it or clears site data; never expired by the concept",
+     "eviction": "none - the concept never removes this key"
+    },
+    {
+     "key": "u11:settingsView",
+     "written_at": "u11-prism.html, the STORE.set('u11:settingsView', ...) call",
+     "read_at": "u11-prism.html, the STORE.get('u11:settingsView', ...) call",
+     "holds": "view state of the Usage settings sheet only",
+     "retention": "until the user changes it or clears site data; never expired by the concept",
+     "eviction": "none - the concept never removes this key",
+     "note": "Replaced the key 'u11:settings' on 2026-08-18. The old key persisted five Settings-owned policies; that is the behaviour retracted in the Settings-registry row above and in demo-fixture-report.json. The replacement is named settingsView because it is intended to hold view state and no policy. This register does not certify that intent: no harness case measures what is written to it."
+    },
+    {
+     "key": "pmw:<pageId>",
+     "written_at": "_shared/usage-widgets.js:133 and u11-widgets.js, the pmw: setItem in its local keyFor path",
+     "read_at": "_shared/usage-widgets.js:114",
+     "holds": "the widget board layout for one room, as { v: 2, items: [...] }; one key per room, so up to 13",
+     "retention": "until reset or cleared",
+     "eviction": "_shared/usage-widgets.js:619 removes the key on canvas reset",
+     "owner_note": "Key format is owned by the shared widget engine (_shared/usage-widgets.js:74 keyFor), not by u11."
+    },
+    {
+     "key": "pm.theme",
+     "written_at": "_shared/usage-chrome.js:251",
+     "read_at": "u11-prism.html, the inline pre-paint theme script in <head>",
+     "holds": "the selected theme id",
+     "retention": "until the user changes it or clears site data",
+     "eviction": "none",
+     "owner_note": "Owned by the shared app-shell chrome and used by all eleven concepts in this folder, not by u11 alone."
+    },
+    {
+     "key": "u11:seeded",
+     "written_at": "u11-prism.html:896, :922 and :1651 - STORE.set('u11:seeded', seededTypes)",
+     "read_at": "u11-prism.html:877 - STORE.get('u11:seeded', {})",
+     "holds": "a map of room canvas id to the widget types already seeded into that room's default board, so a default board is laid out once and the user's later removals are not undone on reload",
+     "retention": "until Reset layout or the user clears site data",
+     "eviction": "rewritten wholesale on reset; the concept never deletes the key",
+     "classification": "view state - carries no Settings-owned policy"
+    },
+    {
+     "key": "u11:parked",
+     "written_at": "u11-prism.html:921 and :1651 - STORE.set('u11:parked', parked)",
+     "read_at": "u11-prism.html:876 - STORE.get('u11:parked', {})",
+     "holds": "a map of room canvas id to the widget currently parked in focus in that room",
+     "retention": "until Reset layout or the user clears site data",
+     "eviction": "rewritten wholesale on reset; the concept never deletes the key",
+     "classification": "view state - carries no Settings-owned policy"
+    },
+    {
+     "key": "u11:range",
+     "written_at": "u11-prism.html:2116 - STORE.set('u11:range', range)",
+     "read_at": "u11-prism.html:770 - STORE.get('u11:range', { id: '24h' }) through normRange",
+     "holds": "the selected date range for the rooms, as { id }; added 2026-08-18 with the date-range control",
+     "retention": "until the user changes it or clears site data",
+     "eviction": "none - the concept never removes this key",
+     "classification": "view state - carries no Settings-owned policy"
+    }
+   ]
+  },
+  {
+   "kind": "event-identity",
+   "statement": "Three demo event ids were renumbered so the packet fixtures could take ue-600, ue-601 and ue-610. The renumber is disclosed with its reason in event-schema-delta.json. It is prototype dataset bookkeeping, not a production usage-event identity migration, and there are no external references to the renumbered ids.",
+   "status": "declared",
+   "supersedes": "The 2026-08-11 clause 'historical attempts keep immutable identity' was unqualified and read as a claim that no identity had changed. It is retracted below."
+  }
+ ],
+ "storage_retention_impacts_retraction": {
+  "retracted_on": "2026-08-18",
+  "retracted_claim": [
+   "meta.retentionDays stays 90; historical attempts keep immutable identity",
+   "new attempts ue-600..ue-611 carry costMicro 0 - cost identity preserved"
+  ],
+  "why_the_claim_was_false": "The array was the concept's only storage-and-retention declaration and contained no statement about client persistence at all - no key, no owner, no retention period, no eviction rule - while the concept persisted five localStorage keys. The 'immutable identity' half was also unqualified against this concept's own three disclosed event-id renumbers, and the second entry is a cost-identity fact filed under storage. Compounded at the time by the Storage/events owner being a path that did not exist, so the storage question had neither a local declaration nor a reachable owner.",
+  "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A11-14 (major, severity adjusted to minor by critic review)"
+ },
+ "settings_deep_links": [
+  {
+   "command": "cmd.settings.bloom.open",
+   "payload": {
+    "category": "one of the 12 categories in Plans/settings_inventory.json",
+    "focus_setting_id": "a real settings row id, or null"
+   },
+   "owner": "F3-434 - Category Chips, Attention Dots, And Bloom Modal (Plans/FinalGUISpec.md:30614)",
+   "certified_at": "Plans/Wiring_Matrix.production.json row catalog.settings_bloom_open (:30116)",
+   "concept_entry_point": "U11.openSettings(category, focusSettingId) at u11-data.js, U11.openSettings",
+   "example": "open('ai', 'ai.usage.usage-windows')"
+  }
+ ],
+ "settings_deep_links_retraction": {
+  "retracted_on": "2026-08-18",
+  "retracted_claim": [
+   {
+    "surface": "settings",
+    "manager": "providers",
+    "section": "routing",
+    "focus_reason": "usage_quick_controls | reconnect"
+   },
+   {
+    "surface": "settings",
+    "manager": "usage",
+    "section": "usage_and_extra_usage",
+    "focus_reason": "see_all"
+   }
+  ],
+  "why_the_claim_was_false": "The envelope was invented. Plans/settings_inventory.json has 12 categories and neither 'providers' nor 'usage' is one of them - both exist only as subgroups of different parents ('providers' under web, meaning web-search providers; 'usage' under ai). The tokens focus_reason, usage_and_extra_usage, usage_quick_controls and see_all have zero occurrences under Plans/. A register of settings deep links that names no canonical command and no canonical destination documents nothing.",
+  "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ findings A01-06, A01-07, A10-01, A11-09; corrected identity established in AUDIT_REPORT.md section 9"
+ },
+ "provider_adapter_impacts": [
+  "Gemini CLI vision model hosts attachment transform ue-602",
+  "OpenCode shared gateway stays keyless (ue-603)",
+  "Claude Work CLI profile hosts BSD ue-600/ue-601 and MoA aggregator ue-607"
+ ],
+ "server_sync_impacts": [
+  "host:truenas/env:docker lineage on ue-606/ue-607 and ops-3/6/7",
+  "offline outbox → reconnect replay joined via operationalRef"
+ ],
+ "demo_fixtures": [
+  "20 fixtures are registered in demo-fixture-report.json: the 18 the packet requires at 05_GUI_CONTEXT_RING_DEMO_AND_TESTS.md:57-79, plus fixtures 19 and 20 added by the 2026-08-13 correction packet.",
+  "Verification basis is not uniform and demo-fixture-report.json now records it per fixture. Classified against u11-verify.mjs on 2026-08-18: 12 fixtures are asserted against window.U11 data only, with no DOM or render check anywhere; 5 are asserted against data with a separate harness case that renders part of the same surface; 3 are verified in the rendered DOM. A data-asserted fixture would pass unchanged against a page that rendered nothing.",
+  "Fixture 8 was misattributed. Corrected 2026-08-18 to run:plan-12, which satisfies 'six required specialists in three two-agent waves' exactly."
+ ],
+ "demo_fixtures_retraction": {
+  "retracted_on": "2026-08-18",
+  "retracted_claim": [
+   "All 18 packet fixtures represented - see demo-fixture-report.json"
+  ],
+  "why_the_claim_was_false": "Not because 18 was the wrong packet count - the packet does require exactly 18 - but because this entry was never corrected when the 2026-08-13 correction packet took the register to 20 fixtures, and because it presented representation as if it were verification. The correction_2026_08_13 block's keys were exactly packet, highest_precedence_source, plan_owner_impacts, command_id_impacts and test_results; demo_fixtures was not among them, so this document asserted 18 while demo-fixture-report.json carried 20 (audit A11-13 sub-item 2).",
+  "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A11-13 (minor)"
+ },
+ "test_results": [
+  "reports/visual-interaction-test-report.json records 108 cases, 108 pass, 0 fail, exit 0, from a run at 2026-08-18T14:09:40.337Z against the concept as it stood at that moment. This is the measured state and it supersedes every earlier count quoted in this file.",
+  "The 108 cases split: 40 theme-by-width matrix loads (8 themes x 5 widths), 18 closure guards, 18 fixture checks, 13 hard-failure guards, 7 new-behaviour checks, 6 interaction flows, 3 correction checks, 1 new-behaviour console check, 1 hard-failure console check, 1 context-details check.",
+  "The 18 closure guards are new on 2026-08-18 and exist because roughly fifty findings were closed across two remediation passes with almost no test behind them, and twice a closed thing silently broke - a Ledger column that collapsed to 0px at 360-520 and took 98 strings with it, and a duplicate element id. They guard: turn-card aggregation (work-item totals, disjoint roles, multi-family routes), scope-footer arithmetic, deep-link destination identity against Plans/settings_inventory.json, the model scope level, the CBP-027 probe vocabulary and its credits MUST_NOT set, time-kind coverage on every run, the command contract (a scope change dispatches nothing; run inspector on cmd.nav.open_subject, attempt inspector on cmd.nav.open_usage_subject), removed-source history under a bucket filter, zero-width and unrecoverable truncation at 360 and 520, duplicate ids across every room and overlay, tooltip enum hygiene, and unknown-never-zero read from rendered percentages.",
+  "All 18 closure cases and the three cases rewritten in the same pass were negative-controlled: the thing each guards was broken in a scratch copy of the concept, the case was confirmed red, and the copy was discarded. A case that has never been seen to fail is not a guard.",
+  "What the harness does not cover is stated in README.md under 'What the harness does not cover'. It is a real gate for what it tests and silent about part of the surface; the dead-controls half of packet 05's ninth hard failure is the largest deliberate gap and is named in u11-verify.mjs itself."
+ ],
+ "test_results_correction_2026_08_18": {
+  "corrected_on": "2026-08-18 (second pass)",
+  "retracted_claim": [
+   "reports/visual-interaction-test-report.json records 80 cases, 80 pass, 0 fail, from a run at 2026-08-13T22:40:12.792Z. That is the only harness result this concept has ever produced for u11 and the independent audit replayed it and reproduced it.",
+   "The 80 cases split: 40 theme-by-width matrix loads (8 themes x 5 widths), 6 interaction flows, 7 new-behaviour checks, 1 new-behaviour console check, 3 correction checks, 4 guard checks, 18 fixture checks, 1 context-details check.",
+   "That result is stale as of 2026-08-18 and must not be quoted as the current state. u11-verify.mjs was edited on 2026-08-18 - one case was renamed from 'interaction settings sheet deep link toast' to 'interaction settings sheet routes to canonical Settings and writes no policy' - and u11-data.js, u11-widgets.js, u11-rundetail.js, u11-context.js and u11-prism.html were all edited the same day. The harness still defines 80 cases (counted from its record() call sites on 2026-08-18) but it has not been re-run since those edits, so no measured pass count describes the current concept.",
+   "What the harness does not cover is stated in README.md under 'What the harness does not cover'. It is a real gate for what it tests and silent about roughly half the surface."
+  ],
+  "why_the_claim_was_false": "It was not false when written - it was carefully, explicitly stale, and said so: 'no measured pass count describes the current concept'. That was the honest state on the morning of 2026-08-18 and it is no longer the state, so leaving it standing would have made this register wrong in the other direction. The 80/80 figure it quoted came from a 2026-08-13 run; the harness has since been re-written and re-run.",
+  "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A10-14 (minor), residual pass"
+ },
+ "test_results_retraction": {
+  "retracted_on": "2026-08-18",
+  "retracted_claim": [
+   "visual-interaction-test-report.json - 77/77 pass. Exit 0."
+  ],
+  "why_the_claim_was_false": "It described a superseded run. The 2026-08-13 correction took the harness to 80 cases and the correction_2026_08_13 block recorded 80/80, but this line was left standing in the body, so the register asserted two different test results at once and a reader had no way to tell which was operative (audit A11-13 sub-item 1). The superseded 77-case run is retained at reports/visual-interaction-test-report.pre-correction-77.json.",
+  "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A11-13 (minor)"
+ },
+ "unresolved_questions": [
+  "RunOutProjection has no canonical definition in Plans/** - needs an owner before production.",
+  "billingRoute values extra_balance, no_charge_observed and unknown are legal but demonstrated by no fixture; purpose value catalog_validation is declared but occurs on no attempt.",
+  "cmd.usage.forecast.request is an admissible id (UCC-006 sets no segment cap and the Wiring_Matrix.schema.json:75 pattern is unbounded) but is registered nowhere; it needs a typed payload and a receipt contract before registration.",
+  "cmd.provider.usage.open_management stays blocked while cmd.nav.open_usage_subject owns usage-subject opens; the open action needs re-expressing on that command or a documented exception from the command owner.",
+  "The Usage run inspector dispatches cmd.chat.open_thread_context_details from a Usage surface with a run-only payload, which UI_Command_Catalog.md:8159 and :8163 forbid. The correct command is cmd.nav.open_usage_subject and the concept dispatches it nowhere.",
+  "The five shared widget commands with production wiring rows (remove, resize, configure, move, reset_layout) have no dispatcher in this concept because the shared engine contains no dispatch code. Whether u11 or the shared engine should own that dispatch is unsettled.",
+  "The Usage quick-controls sheet is under repair by a separate change. Until a harness case measures the repaired sheet, this concept has no measured claim about Settings policy ownership.",
+  "Neither packet declares a schema_id for six of the seven required JSON outputs. The ids now carried by candidate-wiring-delta.json, candidate-dry-delta.json, event-schema-delta.json and demo-fixture-report.json are locally minted and flagged as such; the packet owner should ratify or replace them."
+ ],
+ "superseded_blocks": {
   "correction_2026_08_13": {
+   "status": "folded into the body 2026-08-18",
+   "why": "As shipped it appended corrected values next to uncorrected ones, so the document asserted both. Its content now lives in plan_owner_impacts (CLI-bridged providers), command_id_impacts (cmd.settings.bloom.open, which replaced its semantic.deep_link entry), wiring_impacts (the runtime-demand chain) and test_results.",
+   "original_content": {
     "packet": "PM_Usage_Dependency_and_Work_Correction_2026-08-13",
     "highest_precedence_source": "PROVIDER_CLI_FINAL_ADJUDICATION.md — provider CLIs not bundled/pre-seeded/silently acquired; explicit user-triggered first setup from official source for exact host/env; post-consent update/repair/rollback allowed",
     "plan_owner_impacts": [
-      {
-        "owner": "Plans/CLI_Bridged_Providers.md",
-        "impact": "ops-1 now carries acquisition lineage (explicit_user_setup, official installer, publisher-signed artifact, bound host/env); ops-8 demonstrates the runtime-demand path returning Provider Setup Required with deep-link + continuation token instead of silent install.",
-        "status": "demonstrated"
-      }
+     {
+      "owner": "Plans/CLI_Bridged_Providers.md",
+      "impact": "ops-1 now carries acquisition lineage (explicit_user_setup, official installer, publisher-signed artifact, bound host/env); ops-8 demonstrates the runtime-demand path returning Provider Setup Required with deep-link + continuation token instead of silent install.",
+      "status": "demonstrated"
+     }
     ],
     "command_id_impacts": [
-      {
-        "command": "semantic.deep_link",
-        "disposition": "reused",
-        "evidence": "setup_required fixture deep-links to settings/providers setup with focus_reason setup_required + continuation token; no new command minted (packet: opening setup is not a purchase command)"
-      }
+     {
+      "command": "semantic.deep_link",
+      "disposition": "reused",
+      "evidence": "setup_required fixture deep-links to settings/providers setup with focus_reason setup_required + continuation token; no new command minted (packet: opening setup is not a purchase command)"
+     }
     ],
     "test_results": [
-      "reports/visual-interaction-test-report.json — 80/80 cases pass (2026-08-13 post-correction), including 3 new correction checks (acquisition lineage, setup_required deep-link, inspector acquisition note) and the restored-surface re-checks. Exit 0."
+     "reports/visual-interaction-test-report.json — 80/80 cases pass (2026-08-13 post-correction), including 3 new correction checks (acquisition lineage, setup_required deep-link, inspector acquisition note) and the restored-surface re-checks. Exit 0."
     ]
+   }
   }
+ },
+ "scope_reconciliation": {
+  "status": "closed",
+  "chronology": [
+   "2026-08-11 session start: standing default Plans/**-only; plan recorded the user's in-prompt override as provisional.",
+   "Review advisory #1: objected; agent recorded the override verbatim and continued under the principal's live ruling.",
+   "Review advisory #2: objected that a user utterance cannot waive developer-level context; agent escalated via ask().",
+   "Principal ruling: 'Ignore the CLAUDE.md. You are authorized. I am authorizing it.'",
+   "Review advisory #3/#4: contested persisted-memory framing; agent corrected then deleted the contested memory, retaining only neutral operational facts.",
+   "Principal amendment: P:\\.claude\\CLAUDE.md Scope now 'Allowed edits: Plans/** Concepts/**' — authorization cured at the developer level; all earlier provisional steps superseded."
+  ],
+  "current_authority": "P:\\.claude\\CLAUDE.md as amended 2026-08-11 (Concepts/** allowed). This register's earlier 'Plans/**-only' statements describe the pre-amendment default and are historical, not operative."
+ },
+ "source_citation_policy": "Source citations into u11-prism.html, u11-data.js, u11-widgets.js, u11-rundetail.js and u11-context.js name a symbol, identifier or exact string rather than a line number. Those five files were under concurrent edit on 2026-08-18 - u11-data.js moved twice while this repair was being written - so a line number here would be wrong by the time it was read. Line numbers are retained only for files that are stable in this pass: everything under Plans/ and under _shared/. Text preserved inside a `retraction` or `retracted_claim` object is left exactly as it was written, line numbers included, because its purpose is to record what a document said on a past date.",
+ "corrections_2026_08_18": [
+  {
+   "what": "storage_retention_impacts under-declared the persistence surface",
+   "detail": "Three written keys were undeclared: u11:seeded, u11:parked and u11:range. The first two were found by a harness guard that checked the declared allowlist and failed; the third was added the same day by the date-range control.",
+   "note": "A first attempt to add them cloned an existing entry and substituted only the key name, which produced three entries whose 'holds' text was false. That draft was discarded and the entries below were written from the measured call sites instead."
+  },
+  {
+   "what": "the two harness reports carried no schema id",
+   "detail": "Seven of the nine report JSONs in reports/ carried a schema_id; visual-interaction-test-report.json and its pre-correction sibling did not, so neither was self-identifying. u11-verify.mjs now emits schema_id 'pm.usage_visual_interaction_test_report.v1' as the first key of the report it writes, and the pre-correction snapshot carries the same id, added by hand with an explicit note that only the identifier was added and no result was touched. All nine now carry one.",
+   "provenance_caveat": "The id is minted locally in the family of the one schema id the packet declares (pm.usage_candidate_command_delta.v1). It is not canonical. The packet owner should ratify or replace it, exactly as the other seven locally minted ids say.",
+   "source": "Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/ finding A11-13 (minor), residual pass"
+  },
+  {
+   "what": "the closures from this remediation had no tests",
+   "detail": "Roughly fifty findings were closed across two passes and almost none had a guard. u11-verify.mjs gained an 18-case closure section, and three existing cases were rewritten because their names claimed more than their assertions proved: the capacity-envelope case recorded pass when any element contained the substring 'sustainable' and now checks every ceiling the run record carries; the forecast-refresh case was named for a refresh that does not happen and now proves the dispatch and the demo disclosure, reporting that the rendered forecast is unchanged; and fixture 8 asserted run:goal-47 while the register had already re-attributed the fixture to run:plan-12.",
+   "method_note": "Every assertion derives its expected values from window.U11 at run time. The dataset is 54 attempts today and will change again; nothing in the closure section hard-codes 54, 52, 2, 12 or any id set, and where a number has to be found in rendered text it is located structurally - the element the renderer wraps it in - rather than by matching a sentence. Three cases had to be rewritten in an earlier pass because the copy improved and the assertion broke.",
+   "source": "residual remediation pass 2026-08-18"
+  }
+ ]
 }

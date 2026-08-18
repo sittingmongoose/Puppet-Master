@@ -1,0 +1,1304 @@
+{
+ "schema_id": "pm.usage_audit.real_gate_runs.v1",
+ "generated_utc": "2026-08-17",
+ "purpose": "Replace the two hand-written simulators (scratchpad/varscan.py, scratchpad/gatesim.py) that produced every gate number in handoff/PORT_HANDOFF_PM7_BUILD_ROUTE.md with output from the REAL checkers in Concepts/pm6-build/checks/.",
+ "method": {
+  "why_a_scratch_tree": "All nine checkers accept the assembled document as argv[1] (check_original.py:14 is the sole exception - it resolves BUILD.parent/PMConcept4.html itself). assemble.py supports --out (assemble.py:68-74) but hardcodes PARTS = HERE/'parts' (assemble.py:23), so a u11-substituted part set cannot be fed to the repo copy without writing into Concepts/pm6-build/parts/. The whole pm6-build tree was therefore COPIED into the scratchpad, the parts substituted there, and the scratch copy of assemble.py run with --out pointing into the scratchpad. The repo was never written to.",
+  "repo_write_proof": "git status --porcelain over Concepts/pm6-build/, Concepts/PMConcept4.html, Concepts/PMConcept7.html and Concepts/usage-concepts/QwenUsageConcept/ reports no modification from this probe; Concepts/pm6-build/manifest.json still lists 54 parts.",
+  "scratch_root": "/tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run",
+  "setup_script": "/tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/setup_candidate.py",
+  "cssvars_script": "/tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/cssvars.py",
+  "variants": {
+   "base": "byte copy of Concepts/pm6-build with no substitutions - the CONTROL. Establishes that every failure in cand-A/cand-B is attributable to u11 and not pre-existing.",
+   "cand-A": "the handoff's own proposal, sec 1.2/1.3: parts 15/27/47 replaced, 6 new part slots created, _shared/usage-chrome.js NOT ported (chrome dropped per sec 5).",
+   "cand-B": "cand-A plus _shared/usage-chrome.js in its own script part - the naive straight port the simulators actually measured."
+  },
+  "u11_slices_used": {
+   "inline_style_body": "u11-prism.html:21-341 (between <style>@20 and </style>@342)",
+   "markup": "u11-prism.html:348-528 (inner of <template id=\"usage-page\">@347-529, de-templated) + :531-546 (scope popover + 2 sprouts)",
+   "boot_script_body": "u11-prism.html:561-1462 (between <script>@560 and </script>@1463)",
+   "css_files": [
+    "_shared/usage-shared.css",
+    "_shared/usage-widgets.css",
+    "u11-widgets.css",
+    "u11-rundetail.css",
+    "u11-context.css"
+   ],
+   "js_files": [
+    "_shared/icons.js",
+    "_shared/usage-icons.js",
+    "u11-icons.js",
+    "_shared/menu.js",
+    "_shared/usage-data.js",
+    "u11-time.js",
+    "u11-data.js",
+    "_shared/usage-widgets.js",
+    "u11-widgets.js",
+    "u11-rundetail.js",
+    "u11-context.js",
+    "_shared/usage-chrome.js (cand-B only)"
+   ]
+  },
+  "known_deviations_from_the_handoff": [
+   "The handoff folds _shared/icons.js + _shared/usage-icons.js + u11-icons.js additively into the existing PM_ICONS hoist in 29x-pm6-js-globals.part.html with NO new block (sec 1.3). This probe instead gave them their own balanced script part (29x-pm6-js-usage-icons.part.html) so the substitution stays purely additive and auditable. Effect on the nine checkers: one extra balanced-zero advisory line in check_structure and one extra script block in the check_js count. No gate verdict changes.",
+   "The handoff rewrites part 47 (29x-pm6-js-usage.part.html, the PM_DEMO bridge) over the new u11 API (sec 4.1). That is design work, not a measurable transform, so the existing 196-line bridge was left byte-unchanged. It is a runtime concern, not a gate concern - no checker reads it semantically.",
+   "Part 18's unlabeled <style> block was emitted as the handoff's 'documented stub' option rather than carrying room/pane CSS, since all five ported CSS files went into the two pm6-css-* blocks. This is the configuration that MAXIMISES the check_css raw-hex finding count, i.e. the conservative measurement."
+  ]
+ },
+ "artifacts": {
+  "base": {
+   "path": "/tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/base.assembled.html",
+   "lines": 49353,
+   "bytes": 3230711,
+   "sha256_16": "3d82a850dad0e412",
+   "parts_registered": 54
+  },
+  "cand-A": {
+   "path": "/tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/cand-A.assembled.html",
+   "lines": 57252,
+   "bytes": 3723892,
+   "sha256_16": "4477686e9ce68ffe",
+   "parts_registered": 61
+  },
+  "cand-B": {
+   "path": "/tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/cand-B.assembled.html",
+   "lines": 57615,
+   "bytes": 3743681,
+   "sha256_16": "c85ac594563d6d3d",
+   "parts_registered": 62
+  }
+ },
+ "runs": {
+  "base": {
+   "check_original": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/base/pm6-build/checks/check_original.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/base.assembled.html",
+    "exit_code": 0,
+    "verdict": "PASS",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_original: OK (PMConcept4.html sha256 470c4f795ddcc381… matches record)"
+    ]
+   },
+   "check_structure": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/base/pm6-build/checks/check_structure.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/base.assembled.html",
+    "exit_code": 0,
+    "verdict": "PASS",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_structure: OK (global deltas {'div': 0, 'span': 0, 'style': 0, 'script': 0, 'template': 0}, body x1, </html> last, 54 parts match lock)"
+    ]
+   },
+   "check_js": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/base/pm6-build/checks/check_js.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/base.assembled.html",
+    "exit_code": 0,
+    "verdict": "PASS",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_js: OK (18 script blocks parse clean)"
+    ]
+   },
+   "check_css": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/base/pm6-build/checks/check_css.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/base.assembled.html",
+    "exit_code": 0,
+    "verdict": "PASS",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_css: OK (13 style blocks balanced; 251 distinct vars all defined; pm6 hex rule clean)"
+    ]
+   },
+   "check_ids": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/base/pm6-build/checks/check_ids.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/base.assembled.html",
+    "exit_code": 0,
+    "verdict": "PASS",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_ids: OK (482 distinct ids; 1 baseline dups unchanged; 0 new dups)"
+    ]
+   },
+   "check_hooks": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/base/pm6-build/checks/check_hooks.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/base.assembled.html",
+    "exit_code": 0,
+    "verdict": "PASS",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_hooks: OK (72 id hooks, 51 selector probes, 8 inline handler symbols all defined)"
+    ]
+   },
+   "check_settings_data": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/base/pm6-build/checks/check_settings_data.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/base.assembled.html",
+    "exit_code": 0,
+    "verdict": "PASS",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_settings_data: OK (12 categories, 818 settings, all tiers valid, 1 assignment in assembled)"
+    ]
+   },
+   "check_no_emoji": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/base/pm6-build/checks/check_no_emoji.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/base.assembled.html",
+    "exit_code": 0,
+    "verdict": "PASS",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_no_emoji: 566 WARNING glyph(s) >= U+2190 outside allowlist (not banned ranges):",
+     "  ~ '−' U+2212 MINUS SIGN x3 (lines [9789, 42271, 42272])",
+     "  ~ '─' U+2500 BOX DRAWINGS LIGHT HORIZONTAL x435 (lines [147, 147, 147, 147, 1848, 1848, 1848, 1848]…)",
+     "  ~ '│' U+2502 BOX DRAWINGS LIGHT VERTICAL x1 (lines [23642])",
+     "  ~ '═' U+2550 BOX DRAWINGS DOUBLE HORIZONTAL x126 (lines [26708, 26708, 26708, 26708, 26708, 26708, 26708, 26708]…)",
+     "  ~ '▶' U+25B6 BLACK RIGHT-POINTING TRIANGLE x1 (lines [26704])",
+     "check_no_emoji: OK (0 banned glyphs; 566 warnings)"
+    ]
+   },
+   "check_vocab": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/base/pm6-build/checks/check_vocab.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/base.assembled.html",
+    "exit_code": 0,
+    "verdict": "PASS",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_vocab: OK (no gate-regex matches)"
+    ]
+   },
+   "_assemble_py_gate_g2": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/base/pm6-build/assemble.py --gate g2 --out /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/base.assembled.html",
+    "exit_code": 0,
+    "verdict": "PASS",
+    "log": "/tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/logs/base.g2.log"
+   }
+  },
+  "cand-A": {
+   "check_original": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/cand-A/pm6-build/checks/check_original.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/cand-A.assembled.html",
+    "exit_code": 0,
+    "verdict": "PASS",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_original: OK (PMConcept4.html sha256 470c4f795ddcc381… matches record)"
+    ]
+   },
+   "check_structure": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/cand-A/pm6-build/checks/check_structure.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/cand-A.assembled.html",
+    "exit_code": 1,
+    "verdict": "FAIL",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_structure: advisory — 10x-pm6-css-usage-u11.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)",
+     "check_structure: advisory — 29x-pm6-js-usage-data-a.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)",
+     "check_structure: advisory — 29x-pm6-js-usage-data-b.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)",
+     "check_structure: advisory — 29x-pm6-js-usage-widgets-a.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)",
+     "check_structure: advisory — 29x-pm6-js-usage-widgets-b.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)",
+     "check_structure: advisory — 29x-pm6-js-usage-detail.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)",
+     "check_structure: advisory — 29x-pm6-js-usage-icons.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)",
+     "check_structure: FAIL",
+     "  - <body> count 5 != 1"
+    ]
+   },
+   "check_js": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/cand-A/pm6-build/checks/check_js.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/cand-A.assembled.html",
+    "exit_code": 0,
+    "verdict": "PASS",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_js: OK (24 script blocks parse clean)"
+    ]
+   },
+   "check_css": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/cand-A/pm6-build/checks/check_css.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/cand-A.assembled.html",
+    "exit_code": 1,
+    "verdict": "FAIL",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_css: FAIL",
+     "  - var(--accent-cyan) used but never defined",
+     "  - var(--num-font) used but never defined",
+     "  - var(--pm-motion-k) used but never defined",
+     "  - var(--tone-) used but never defined",
+     "  - var(--tone-err-text) used but never defined",
+     "  - var(--tone-info-text) used but never defined",
+     "  - var(--tone-mute-text) used but never defined",
+     "  - var(--tone-ok-text) used but never defined",
+     "  - var(--tone-purple-text) used but never defined",
+     "  - var(--tone-warn-text) used but never defined",
+     "  - var(--us-fill-hot) used but never defined",
+     "  - var(--us-fill-info) used but never defined",
+     "  - var(--us-fill-mute) used but never defined",
+     "  - var(--us-fill-ok) used but never defined",
+     "  - var(--us-fill-purple) used but never defined",
+     "  - var(--us-fill-warn) used but never defined",
+     "  - var(--us-mlb) used but never defined",
+     "  - var(--us-mpc) used but never defined",
+     "  - var(--us-wlb) used but never defined",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: '--u11-pink: #ff4d6d'",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: '--u11-orange: #ff8c3a'",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: '--u11-lime: #a3e635'",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: '--u11-teal: #2dd4bf'",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: '--u11-blue: var(--accent-blue, #4c8dff)'",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: '--u11-purple: #a78bfa'",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: '--u11-magenta: var(--accent-magenta, #ff7ac8)'",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: 'color: var(--accent-blue, #4c8dff)'",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: 'color: #ff4d6d'",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: 'color: #2dd4bf'",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: 'color: #a3e635'",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: 'color: #ff8c3a'",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: 'color: #a78bfa'"
+    ]
+   },
+   "check_ids": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/cand-A/pm6-build/checks/check_ids.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/cand-A.assembled.html",
+    "exit_code": 0,
+    "verdict": "PASS",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_ids: OK (496 distinct ids; 1 baseline dups unchanged; 0 new dups)"
+    ]
+   },
+   "check_hooks": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/cand-A/pm6-build/checks/check_hooks.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/cand-A.assembled.html",
+    "exit_code": 0,
+    "verdict": "PASS",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_hooks: OK (72 id hooks, 51 selector probes, 8 inline handler symbols all defined)"
+    ]
+   },
+   "check_settings_data": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/cand-A/pm6-build/checks/check_settings_data.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/cand-A.assembled.html",
+    "exit_code": 0,
+    "verdict": "PASS",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_settings_data: OK (12 categories, 818 settings, all tiers valid, 1 assignment in assembled)"
+    ]
+   },
+   "check_no_emoji": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/cand-A/pm6-build/checks/check_no_emoji.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/cand-A.assembled.html",
+    "exit_code": 0,
+    "verdict": "PASS",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_no_emoji: 579 WARNING glyph(s) >= U+2190 outside allowlist (not banned ranges):",
+     "  ~ '↔' U+2194 LEFT RIGHT ARROW x3 (lines [15367, 43530, 43530])",
+     "  ~ '↺' U+21BA ANTICLOCKWISE OPEN CIRCLE ARROW x1 (lines [47876])",
+     "  ~ '−' U+2212 MINUS SIGN x5 (lines [9789, 23588, 47909, 50170, 50171])",
+     "  ~ '≈' U+2248 ALMOST EQUAL TO x3 (lines [16190, 16190, 48811])",
+     "  ~ '≤' U+2264 LESS-THAN OR EQUAL TO x4 (lines [15363, 15413, 15594, 44299])",
+     "  ~ '─' U+2500 BOX DRAWINGS LIGHT HORIZONTAL x435 (lines [147, 147, 147, 147, 1848, 1848, 1848, 1848]…)",
+     "  ~ '│' U+2502 BOX DRAWINGS LIGHT VERTICAL x1 (lines [25253])",
+     "  ~ '═' U+2550 BOX DRAWINGS DOUBLE HORIZONTAL x126 (lines [28319, 28319, 28319, 28319, 28319, 28319, 28319, 28319]…)",
+     "  ~ '▶' U+25B6 BLACK RIGHT-POINTING TRIANGLE x1 (lines [28315])",
+     "check_no_emoji: OK (0 banned glyphs; 579 warnings)"
+    ]
+   },
+   "check_vocab": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/cand-A/pm6-build/checks/check_vocab.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/cand-A.assembled.html",
+    "exit_code": 1,
+    "verdict": "FAIL",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_vocab: 46 gate-regex match(es)",
+     "  [tiers] x22",
+     "    line 15327: 'tier' | .83 / friendly 1.08 / glass 1.33). The instant tier (hover, pickup) and the",
+     "    line 15328: 'tier' | data tier (refresh, flash) are perceptually anchored (NN/g) and never scale.",
+     "    line 15357: 'tier' | --mo-widget-pickup-dur: 120ms;                   /* instant tier: never scaled */",
+     "    line 15374: 'tier' | /* data + charts — data tier: never scaled (keep <1s flow limit) */",
+     "    line 15381: 'tier' | /* hover/micro feedback — instant tier: never scaled */",
+     "    line 15385: 'tier' | /* personality/spring vocabulary — expert-tier primitives: real overshoot",
+     "    line 15388: 'tiers' | springs). Durations scale with --pm-motion-k like the tiers above; the",
+     "    line 15655: 'tiers' | Design language: three type tiers (bold tabular value / muted",
+     "    line 23474: 'tier' | /* curated hole-free boards on the 4-track tier (deterministic; no dense flow) */",
+     "    line 43906: 'tier' | …atus: 'Pay-as-you-go rate limit', sub: 'tier-based RPM/TPM, not a fixed counter' },…",
+     "    line 44731: 'tier' | /* Free-tier / local products */",
+     "    line 44732: 'tier' | …-gemini-cli',       label: 'Gemini free tier',       kind: 'free_allowance', include…",
+     "    line 44734: 'tier' | …{ id: 'prod:zai-free-tier',         connectionId: 'conn:zai-legac…",
+     "    line 44734: 'tier' | …legacy',              label: 'Z.AI free tier',         kind: 'free_allowance', inclu…",
+     "    line 44782: 'tier' | …free-day',    productId: 'prod:zai-free-tier',       label: 'Free tokens today', uni…",
+     "    line 44946: 'tier' | note: 'Web extraction helper on free tier' },",
+     "    line 45695: 'tier' | …{ text: 'One probe consumed free-tier allowance; batch probes to protect the…",
+     "    line 45695: 'tier' | …ance; batch probes to protect the daily tier.', tag: 'probes' }…",
+     "    line 46341: 'tiers' | mutated here, so wide tiers restore the full span; narrow tiers stop",
+     "    line 46341: 'tiers' | mutated here, so wide tiers restore the full span; narrow tiers stop",
+     "    … +2 more",
+     "  [phases] x22",
+     "    line 24097: 'phase' | - a capture-phase click sets _keepOpen only for in-sprout clicks;",
+     "    line 24099: 'phase' | _keepOpen holds (the sprout's own target-phase handlers already ran);",
+     "    line 44603: 'phase' | human logical work (turn / Goal phase / PlanningRun topic / Crew /",
+     "    line 44889: 'phase' | logical turn / Goal phase / PlanningRun topic / Crew / thread",
+     "    line 44905: 'phase' | …hase',     label: 'Specialist reviews · phase 2', runId: 'run:goal-47',   status: 'ru…",
+     "    line 45356: 'phases' | …phases: [{ label: 'Check', ms: 2 * MIN }, { la…",
+     "    line 45362: 'phases' | …phases: [{ label: 'Offline', ms: 22 * MIN }, {…",
+     "    line 45368: 'phases' | phases: [], failureClass: null, outcome: 'completed',",
+     "    line 45373: 'phases' | phases: [], failureClass: null, outcome: 'completed',",
+     "    line 45378: 'phases' | phases: [], failureClass: null, outcome: 'completed',",
+     "    line 45383: 'phases' | phases: [], failureClass: null, outcome: 'completed',",
+     "    line 45388: 'phases' | phases: [], failureClass: null, outcome: 'completed',",
+     "    line 45393: 'phases' | phases: [], failureClass: null, outcome: 'setup_required',",
+     "    line 45420: 'phase' | …roject: 'Tastebook', status: 'running', phase: 'Specialist reviews',…",
+     "    line 45455: 'phase' | …ct: 'Puppet Master', status: 'running', phase: 'Source extraction',…",
+     "    line 45471: 'phase' | …ct: 'Puppet Master', status: 'running', phase: 'Critique round 1',…",
+     "    line 47603: 'phase' | var subTxt = run.phase + ' · ' + visLab;",
+     "    line 47840: 'phases' | if (op.phases && op.phases.length) {",
+     "    line 47840: 'phases' | if (op.phases && op.phases.length) {",
+     "    line 47842: 'phases' | op.phases.forEach(function (ph) {",
+     "    … +2 more",
+     "  [Gemini CLI] x2",
+     "    line 44692: 'Gemini CLI' | …untId: 'acct:google-personal',  label: 'Gemini CLI profile',     authMethod: 'cli_owned_pr…",
+     "    line 44692: 'Gemini CLI' | …od: 'cli_owned_profile',  authOwnedBy: 'Gemini CLI',    state: 'ready' },…"
+    ]
+   },
+   "_assemble_py_gate_g2": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/cand-A/pm6-build/assemble.py --gate g2 --out /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/cand-A.assembled.html",
+    "exit_code": 1,
+    "verdict": "FAIL",
+    "log": "/tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/logs/cand-A.g2.log"
+   }
+  },
+  "cand-B": {
+   "check_original": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/cand-B/pm6-build/checks/check_original.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/cand-B.assembled.html",
+    "exit_code": 0,
+    "verdict": "PASS",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_original: OK (PMConcept4.html sha256 470c4f795ddcc381… matches record)"
+    ]
+   },
+   "check_structure": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/cand-B/pm6-build/checks/check_structure.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/cand-B.assembled.html",
+    "exit_code": 1,
+    "verdict": "FAIL",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_structure: advisory — 10x-pm6-css-usage-u11.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)",
+     "check_structure: advisory — 29x-pm6-js-usage-data-a.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)",
+     "check_structure: advisory — 29x-pm6-js-usage-data-b.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)",
+     "check_structure: advisory — 29x-pm6-js-usage-widgets-a.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)",
+     "check_structure: advisory — 29x-pm6-js-usage-widgets-b.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)",
+     "check_structure: advisory — 29x-pm6-js-usage-detail.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)",
+     "check_structure: advisory — 29x-pm6-js-usage-icons.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)",
+     "check_structure: advisory — 29x-pm6-js-usage-chrome.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)",
+     "check_structure: FAIL",
+     "  - <body> count 5 != 1"
+    ]
+   },
+   "check_js": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/cand-B/pm6-build/checks/check_js.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/cand-B.assembled.html",
+    "exit_code": 0,
+    "verdict": "PASS",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_js: OK (25 script blocks parse clean)"
+    ]
+   },
+   "check_css": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/cand-B/pm6-build/checks/check_css.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/cand-B.assembled.html",
+    "exit_code": 1,
+    "verdict": "FAIL",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_css: FAIL",
+     "  - var(--accent-cyan) used but never defined",
+     "  - var(--num-font) used but never defined",
+     "  - var(--pm-motion-k) used but never defined",
+     "  - var(--tone-) used but never defined",
+     "  - var(--tone-err-text) used but never defined",
+     "  - var(--tone-info-text) used but never defined",
+     "  - var(--tone-mute-text) used but never defined",
+     "  - var(--tone-ok-text) used but never defined",
+     "  - var(--tone-purple-text) used but never defined",
+     "  - var(--tone-warn-text) used but never defined",
+     "  - var(--us-fill-hot) used but never defined",
+     "  - var(--us-fill-info) used but never defined",
+     "  - var(--us-fill-mute) used but never defined",
+     "  - var(--us-fill-ok) used but never defined",
+     "  - var(--us-fill-purple) used but never defined",
+     "  - var(--us-fill-warn) used but never defined",
+     "  - var(--us-mlb) used but never defined",
+     "  - var(--us-mpc) used but never defined",
+     "  - var(--us-wlb) used but never defined",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: '--u11-pink: #ff4d6d'",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: '--u11-orange: #ff8c3a'",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: '--u11-lime: #a3e635'",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: '--u11-teal: #2dd4bf'",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: '--u11-blue: var(--accent-blue, #4c8dff)'",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: '--u11-purple: #a78bfa'",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: '--u11-magenta: var(--accent-magenta, #ff7ac8)'",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: 'color: var(--accent-blue, #4c8dff)'",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: 'color: #ff4d6d'",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: 'color: #2dd4bf'",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: 'color: #a3e635'",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: 'color: #ff8c3a'",
+     "  - pm6 block pm6-css-usage-u11: raw hex outside [data-theme] scope: 'color: #a78bfa'"
+    ]
+   },
+   "check_ids": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/cand-B/pm6-build/checks/check_ids.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/cand-B.assembled.html",
+    "exit_code": 1,
+    "verdict": "FAIL",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_ids: FAIL",
+     "  - NEW duplicate id \"projectMenu\" x2",
+     "  - NEW duplicate id \"projectMenuWrap\" x2",
+     "  - NEW duplicate id \"themeMenu\" x2",
+     "  - NEW duplicate id \"themeMenuLabel\" x2",
+     "  - NEW duplicate id \"themeMenuWrap\" x2"
+    ]
+   },
+   "check_hooks": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/cand-B/pm6-build/checks/check_hooks.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/cand-B.assembled.html",
+    "exit_code": 0,
+    "verdict": "PASS",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_hooks: OK (72 id hooks, 51 selector probes, 8 inline handler symbols all defined)"
+    ]
+   },
+   "check_settings_data": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/cand-B/pm6-build/checks/check_settings_data.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/cand-B.assembled.html",
+    "exit_code": 0,
+    "verdict": "PASS",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_settings_data: OK (12 categories, 818 settings, all tiers valid, 1 assignment in assembled)"
+    ]
+   },
+   "check_no_emoji": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/cand-B/pm6-build/checks/check_no_emoji.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/cand-B.assembled.html",
+    "exit_code": 0,
+    "verdict": "PASS",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_no_emoji: 579 WARNING glyph(s) >= U+2190 outside allowlist (not banned ranges):",
+     "  ~ '↔' U+2194 LEFT RIGHT ARROW x3 (lines [15367, 43530, 43530])",
+     "  ~ '↺' U+21BA ANTICLOCKWISE OPEN CIRCLE ARROW x1 (lines [47876])",
+     "  ~ '−' U+2212 MINUS SIGN x5 (lines [9789, 23588, 47909, 50533, 50534])",
+     "  ~ '≈' U+2248 ALMOST EQUAL TO x3 (lines [16190, 16190, 48811])",
+     "  ~ '≤' U+2264 LESS-THAN OR EQUAL TO x4 (lines [15363, 15413, 15594, 44299])",
+     "  ~ '─' U+2500 BOX DRAWINGS LIGHT HORIZONTAL x435 (lines [147, 147, 147, 147, 1848, 1848, 1848, 1848]…)",
+     "  ~ '│' U+2502 BOX DRAWINGS LIGHT VERTICAL x1 (lines [25253])",
+     "  ~ '═' U+2550 BOX DRAWINGS DOUBLE HORIZONTAL x126 (lines [28319, 28319, 28319, 28319, 28319, 28319, 28319, 28319]…)",
+     "  ~ '▶' U+25B6 BLACK RIGHT-POINTING TRIANGLE x1 (lines [28315])",
+     "check_no_emoji: OK (0 banned glyphs; 579 warnings)"
+    ]
+   },
+   "check_vocab": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/cand-B/pm6-build/checks/check_vocab.py /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/cand-B.assembled.html",
+    "exit_code": 1,
+    "verdict": "FAIL",
+    "hard_at_g2": true,
+    "stdout": [
+     "check_vocab: 46 gate-regex match(es)",
+     "  [tiers] x22",
+     "    line 15327: 'tier' | .83 / friendly 1.08 / glass 1.33). The instant tier (hover, pickup) and the",
+     "    line 15328: 'tier' | data tier (refresh, flash) are perceptually anchored (NN/g) and never scale.",
+     "    line 15357: 'tier' | --mo-widget-pickup-dur: 120ms;                   /* instant tier: never scaled */",
+     "    line 15374: 'tier' | /* data + charts — data tier: never scaled (keep <1s flow limit) */",
+     "    line 15381: 'tier' | /* hover/micro feedback — instant tier: never scaled */",
+     "    line 15385: 'tier' | /* personality/spring vocabulary — expert-tier primitives: real overshoot",
+     "    line 15388: 'tiers' | springs). Durations scale with --pm-motion-k like the tiers above; the",
+     "    line 15655: 'tiers' | Design language: three type tiers (bold tabular value / muted",
+     "    line 23474: 'tier' | /* curated hole-free boards on the 4-track tier (deterministic; no dense flow) */",
+     "    line 43906: 'tier' | …atus: 'Pay-as-you-go rate limit', sub: 'tier-based RPM/TPM, not a fixed counter' },…",
+     "    line 44731: 'tier' | /* Free-tier / local products */",
+     "    line 44732: 'tier' | …-gemini-cli',       label: 'Gemini free tier',       kind: 'free_allowance', include…",
+     "    line 44734: 'tier' | …{ id: 'prod:zai-free-tier',         connectionId: 'conn:zai-legac…",
+     "    line 44734: 'tier' | …legacy',              label: 'Z.AI free tier',         kind: 'free_allowance', inclu…",
+     "    line 44782: 'tier' | …free-day',    productId: 'prod:zai-free-tier',       label: 'Free tokens today', uni…",
+     "    line 44946: 'tier' | note: 'Web extraction helper on free tier' },",
+     "    line 45695: 'tier' | …{ text: 'One probe consumed free-tier allowance; batch probes to protect the…",
+     "    line 45695: 'tier' | …ance; batch probes to protect the daily tier.', tag: 'probes' }…",
+     "    line 46341: 'tiers' | mutated here, so wide tiers restore the full span; narrow tiers stop",
+     "    line 46341: 'tiers' | mutated here, so wide tiers restore the full span; narrow tiers stop",
+     "    … +2 more",
+     "  [phases] x22",
+     "    line 24097: 'phase' | - a capture-phase click sets _keepOpen only for in-sprout clicks;",
+     "    line 24099: 'phase' | _keepOpen holds (the sprout's own target-phase handlers already ran);",
+     "    line 44603: 'phase' | human logical work (turn / Goal phase / PlanningRun topic / Crew /",
+     "    line 44889: 'phase' | logical turn / Goal phase / PlanningRun topic / Crew / thread",
+     "    line 44905: 'phase' | …hase',     label: 'Specialist reviews · phase 2', runId: 'run:goal-47',   status: 'ru…",
+     "    line 45356: 'phases' | …phases: [{ label: 'Check', ms: 2 * MIN }, { la…",
+     "    line 45362: 'phases' | …phases: [{ label: 'Offline', ms: 22 * MIN }, {…",
+     "    line 45368: 'phases' | phases: [], failureClass: null, outcome: 'completed',",
+     "    line 45373: 'phases' | phases: [], failureClass: null, outcome: 'completed',",
+     "    line 45378: 'phases' | phases: [], failureClass: null, outcome: 'completed',",
+     "    line 45383: 'phases' | phases: [], failureClass: null, outcome: 'completed',",
+     "    line 45388: 'phases' | phases: [], failureClass: null, outcome: 'completed',",
+     "    line 45393: 'phases' | phases: [], failureClass: null, outcome: 'setup_required',",
+     "    line 45420: 'phase' | …roject: 'Tastebook', status: 'running', phase: 'Specialist reviews',…",
+     "    line 45455: 'phase' | …ct: 'Puppet Master', status: 'running', phase: 'Source extraction',…",
+     "    line 45471: 'phase' | …ct: 'Puppet Master', status: 'running', phase: 'Critique round 1',…",
+     "    line 47603: 'phase' | var subTxt = run.phase + ' · ' + visLab;",
+     "    line 47840: 'phases' | if (op.phases && op.phases.length) {",
+     "    line 47840: 'phases' | if (op.phases && op.phases.length) {",
+     "    line 47842: 'phases' | op.phases.forEach(function (ph) {",
+     "    … +2 more",
+     "  [Gemini CLI] x2",
+     "    line 44692: 'Gemini CLI' | …untId: 'acct:google-personal',  label: 'Gemini CLI profile',     authMethod: 'cli_owned_pr…",
+     "    line 44692: 'Gemini CLI' | …od: 'cli_owned_profile',  authOwnedBy: 'Gemini CLI',    state: 'ready' },…"
+    ]
+   },
+   "_assemble_py_gate_g2": {
+    "command": "python3 /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/cand-B/pm6-build/assemble.py --gate g2 --out /tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/out/cand-B.assembled.html",
+    "exit_code": 1,
+    "verdict": "FAIL",
+    "log": "/tmp/claude-1000/-mnt-Cursor-PuppetMaster/7e74d8f5-7c2a-4eeb-8947-13056b4b2e5f/scratchpad/gate-run/logs/cand-B.g2.log"
+   }
+  }
+ },
+ "findings": {
+  "control_result": {
+   "claim": "the pm6-build base is gate-clean, so candidate failures are attributable to u11",
+   "verdict": "CONFIRMED",
+   "measured": "base: all 9 checkers exit 0; assemble.py --gate g2 -> PASS",
+   "base_preexisting_undefined_css_vars": []
+  },
+  "check_ids": {
+   "handoff_claim": "exactly 5 collisions with the PM6/PM7 base, all from _shared/usage-chrome.js",
+   "verdict": "CONFIRMED (both halves)",
+   "naive_port_cand_B": {
+    "exit_code": 1,
+    "new_duplicate_ids": [
+     {
+      "id": "projectMenu",
+      "count": 2
+     },
+     {
+      "id": "projectMenuWrap",
+      "count": 2
+     },
+     {
+      "id": "themeMenu",
+      "count": 2
+     },
+     {
+      "id": "themeMenuLabel",
+      "count": 2
+     },
+     {
+      "id": "themeMenuWrap",
+      "count": 2
+     }
+    ],
+    "count": 5
+   },
+   "handoff_proposal_cand_A_chrome_dropped": {
+    "exit_code": 0,
+    "stdout": [
+     "check_ids: OK (496 distinct ids; 1 baseline dups unchanged; 0 new dups)"
+    ]
+   },
+   "note": "The 5 real duplicates are exactly the 5 the handoff named (projectMenu, projectMenuWrap, themeMenu, themeMenuLabel, themeMenuWrap) and dropping usage-chrome.js really does clear the gate. The handoff's secondary claim that these are the ONLY id risk also holds: no u11* id collides."
+  },
+  "check_css": {
+   "handoff_claim": "HARD FAIL, 19 undefined vars + 13 raw-hex findings in a pm6-css-* block",
+   "verdict": "CONFIRMED exactly",
+   "exit_code": 1,
+   "undefined_vars_real": [
+    "--accent-cyan",
+    "--num-font",
+    "--pm-motion-k",
+    "--tone-",
+    "--tone-err-text",
+    "--tone-info-text",
+    "--tone-mute-text",
+    "--tone-ok-text",
+    "--tone-purple-text",
+    "--tone-warn-text",
+    "--us-fill-hot",
+    "--us-fill-info",
+    "--us-fill-mute",
+    "--us-fill-ok",
+    "--us-fill-purple",
+    "--us-fill-warn",
+    "--us-mlb",
+    "--us-mpc",
+    "--us-wlb"
+   ],
+   "undefined_var_count": 19,
+   "raw_hex_findings_real": [
+    "'--u11-pink: #ff4d6d'",
+    "'--u11-orange: #ff8c3a'",
+    "'--u11-lime: #a3e635'",
+    "'--u11-teal: #2dd4bf'",
+    "'--u11-blue: var(--accent-blue, #4c8dff)'",
+    "'--u11-purple: #a78bfa'",
+    "'--u11-magenta: var(--accent-magenta, #ff7ac8)'",
+    "'color: var(--accent-blue, #4c8dff)'",
+    "'color: #ff4d6d'",
+    "'color: #2dd4bf'",
+    "'color: #a3e635'",
+    "'color: #ff8c3a'",
+    "'color: #a78bfa'"
+   ],
+   "raw_hex_count": 13,
+   "total_fail_lines": 32
+  },
+  "css_vars_defined_equivalent": {
+   "handoff_claim": "19 undefined custom properties hard-fail the build; an intermediate figure of 22 undefined vs 02-css-tokens.part.html alone, of which 3 (--cat, --pm6-glass-plate, --wf) resolve elsewhere",
+   "verdict": "CONFIRMED exactly, at every layer",
+   "method": "check_css.py's own regexes reused verbatim: uses = var\\(\\s*--([\\w-]+) (check_css.py:38); defs = --([\\w-]+)\\s*: plus setProperty\\(['\\\"]--([\\w-]+) (check_css.py:39-40).",
+   "consumers": {
+    "u11-widgets.css": {
+     "var_uses_distinct": 36,
+     "defines_distinct": 7
+    },
+    "u11-context.css": {
+     "var_uses_distinct": 40,
+     "defines_distinct": 0
+    },
+    "u11-rundetail.css": {
+     "var_uses_distinct": 35,
+     "defines_distinct": 0
+    },
+    "_shared/usage-shared.css": {
+     "var_uses_distinct": 109,
+     "defines_distinct": 103
+    },
+    "_shared/usage-widgets.css": {
+     "var_uses_distinct": 44,
+     "defines_distinct": 0
+    }
+   },
+   "consumed_distinct_total": 137,
+   "self_defined_by_the_5_ported_css_files": 110,
+   "parts_that_define_custom_properties": {
+    "01-head-prelude.part.html": 1,
+    "02-css-tokens.part.html": 124,
+    "03-css-glass-a.part.html": 28,
+    "04-css-glass-b.part.html": 28,
+    "05-css-shell.part.html": 11,
+    "06-css-components-a.part.html": 9,
+    "08-css-components-c.part.html": 6,
+    "09-css-bento-themes.part.html": 7,
+    "10-css-settings.part.html": 2,
+    "10x-pm6-css-bottom.part.html": 7,
+    "10x-pm6-css-chat.part.html": 7,
+    "10x-pm6-css-cozy-shelves.part.html": 9,
+    "10x-pm6-css-dashboard.part.html": 4,
+    "10x-pm6-css-global.part.html": 54,
+    "10x-pm6-css-orchestrator.part.html": 4,
+    "10x-pm6-css-panels.part.html": 1,
+    "10x-pm6-css-wizard.part.html": 4,
+    "12-html-side-panels.part.html": 1,
+    "14-page-dashboard.part.html": 3,
+    "15-page-projects.part.html": 1,
+    "16-page-wizard.part.html": 1,
+    "17-page-orchestrator.part.html": 1,
+    "18-page-usage.part.html": 2,
+    "24-js-main.part.html": 4,
+    "25-js-terminal-demo.part.html": 3,
+    "29-js-settings-engine.part.html": 1,
+    "29x-pm6-js-chat.part.html": 10,
+    "29x-pm6-js-cozy-shelves.part.html": 3,
+    "29x-pm6-js-dashboard.part.html": 8,
+    "29x-pm6-js-globals.part.html": 8,
+    "29x-pm6-js-orchestrator.part.html": 1,
+    "29x-pm6-js-panels.part.html": 4,
+    "29x-pm6-js-projects.part.html": 1,
+    "29x-pm6-js-wizard.part.html": 1
+   },
+   "02_css_tokens_part_defines": 124,
+   "all_parts_define_distinct": 268,
+   "layer1_vs_02_alone_ignoring_self_supply": {
+    "count": 75,
+    "list": [
+     "--accent-cyan",
+     "--cat",
+     "--mo-antic-dur-r",
+     "--mo-data-flash-dur",
+     "--mo-data-refresh-dur",
+     "--mo-data-refresh-ease",
+     "--mo-focus-exit-dur",
+     "--mo-focus-scrim-dur",
+     "--mo-follow-dur-r",
+     "--mo-hover-dur",
+     "--mo-hover-ease",
+     "--mo-popup-close-dur",
+     "--mo-popup-close-ease",
+     "--mo-popup-open-dur",
+     "--mo-popup-open-ease",
+     "--mo-popup-open-fade",
+     "--mo-press-dur",
+     "--mo-press-dur-r",
+     "--mo-press-ease",
+     "--mo-reveal-dur-r",
+     "--mo-settle-dur-r",
+     "--mo-spring-dur",
+     "--mo-spring-dur-r",
+     "--mo-spring-ease",
+     "--mo-stagger",
+     "--mo-tab-select-dur",
+     "--num-font",
+     "--pm-ease-in",
+     "--pm-ease-in-out",
+     "--pm-ease-out",
+     "--pm-ease-smooth",
+     "--pm-ease-spring",
+     "--pm-motion-k",
+     "--pm6-glass-plate",
+     "--pm6-sprout-ox",
+     "--pm6-sprout-oy",
+     "--pm6-sprout-sx",
+     "--pm6-sprout-sy",
+     "--pm6-sprout-tx",
+     "--pm6-sprout-ty",
+     "--tone-",
+     "--tone-err",
+     "--tone-err-text",
+     "--tone-info",
+     "--tone-info-text",
+     "--tone-mute",
+     "--tone-mute-text",
+     "--tone-ok",
+     "--tone-ok-text",
+     "--tone-purple",
+     "--tone-purple-text",
+     "--tone-warn",
+     "--tone-warn-text",
+     "--u11-blue",
+     "--u11-lime",
+     "--u11-magenta",
+     "--u11-orange",
+     "--u11-pink",
+     "--u11-purple",
+     "--u11-teal",
+     "--us-fill-hot",
+     "--us-fill-info",
+     "--us-fill-mute",
+     "--us-fill-ok",
+     "--us-fill-purple",
+     "--us-fill-warn",
+     "--us-gap",
+     "--us-mlb",
+     "--us-mpc",
+     "--us-pad",
+     "--us-row",
+     "--us-sec-h",
+     "--us-tight",
+     "--us-wlb",
+     "--wf"
+    ],
+    "note": "not the gate; shown because 55 of these are --mo-*/--pm-ease-*/--us-*/--tone-* tokens the ported CSS defines itself"
+   },
+   "layer2_vs_02_alone_plus_self_supply": {
+    "count": 22,
+    "list": [
+     "--accent-cyan",
+     "--cat",
+     "--num-font",
+     "--pm-motion-k",
+     "--pm6-glass-plate",
+     "--tone-",
+     "--tone-err-text",
+     "--tone-info-text",
+     "--tone-mute-text",
+     "--tone-ok-text",
+     "--tone-purple-text",
+     "--tone-warn-text",
+     "--us-fill-hot",
+     "--us-fill-info",
+     "--us-fill-mute",
+     "--us-fill-ok",
+     "--us-fill-purple",
+     "--us-fill-warn",
+     "--us-mlb",
+     "--us-mpc",
+     "--us-wlb",
+     "--wf"
+    ],
+    "note": "reproduces the handoff's intermediate figure of 22 exactly"
+   },
+   "layer3_vs_all_token_defining_parts_plus_self": {
+    "count": 20,
+    "list": [
+     "--accent-cyan",
+     "--num-font",
+     "--pm-motion-k",
+     "--tone-",
+     "--tone-err-text",
+     "--tone-info-text",
+     "--tone-mute-text",
+     "--tone-ok-text",
+     "--tone-purple-text",
+     "--tone-warn-text",
+     "--us-fill-hot",
+     "--us-fill-info",
+     "--us-fill-mute",
+     "--us-fill-ok",
+     "--us-fill-purple",
+     "--us-fill-warn",
+     "--us-mlb",
+     "--us-mpc",
+     "--us-wlb",
+     "--wf"
+    ],
+    "note": "--cat resolves in 12-html-side-panels.part.html; --pm6-glass-plate in 03-css-glass-a/04-css-glass-b"
+   },
+   "layer4_the_real_gate_whole_document": {
+    "count": 19,
+    "list": [
+     "--accent-cyan",
+     "--num-font",
+     "--pm-motion-k",
+     "--tone-",
+     "--tone-err-text",
+     "--tone-info-text",
+     "--tone-mute-text",
+     "--tone-ok-text",
+     "--tone-purple-text",
+     "--tone-warn-text",
+     "--us-fill-hot",
+     "--us-fill-info",
+     "--us-fill-mute",
+     "--us-fill-ok",
+     "--us-fill-purple",
+     "--us-fill-warn",
+     "--us-mlb",
+     "--us-mpc",
+     "--us-wlb"
+    ],
+    "note": "identical to the live check_css FAIL list above. --wf drops out here because the payload defines it itself, in an inline style attribute at u11-prism.html:1416."
+   },
+   "attribution": {
+    "accent-cyan": {
+     "consumed_by": [
+      "u11-context.css"
+     ],
+     "sites": [
+      "u11-context.css:46: .seg-e { background: var(--tone-purple, var(--accent-magenta)); } .seg-f { background: var(--accent-cyan, var("
+     ]
+    },
+    "num-font": {
+     "consumed_by": [
+      "u11-widgets.css",
+      "u11-prism.html<style>"
+     ],
+     "sites": [
+      "u11-widgets.css:93: .u11w-num { font-family: var(--num-font); font-size: 14.5px; font-weight: 700; line-height: 1.2;"
+     ]
+    },
+    "pm-motion-k": {
+     "consumed_by": [
+      "_shared/usage-shared.css"
+     ],
+     "sites": [
+      "_shared/usage-shared.css:317: --mo-popup-open-dur: calc(220ms * var(--pm-motion-k, 1));",
+      "_shared/usage-shared.css:319: --mo-popup-open-fade: calc(120ms * var(--pm-motion-k, 1)); /* opacity leads, no overshoot */",
+      "_shared/usage-shared.css:320: --mo-popup-close-dur: calc(150ms * var(--pm-motion-k, 1));",
+      "_shared/usage-shared.css:324: --mo-tab-select-dur: calc(250ms * var(--pm-motion-k, 1));"
+     ]
+    },
+    "tone-": {
+     "consumed_by": [
+      "u11-widgets.css",
+      "u11-context.css",
+      "u11-rundetail.css",
+      "_shared/usage-shared.css",
+      "_shared/usage-widgets.css",
+      "u11-prism.html<style>"
+     ],
+     "sites": [
+      "u11-widgets.css:71: .u11w-hot { color: var(--tone-err-text); }",
+      "u11-widgets.css:131: .u11w-next.ok { background: rgba(80,200,120,.08); background: color-mix(in srgb, var(--tone-ok) 8%, transparen",
+      "u11-widgets.css:132: .u11w-next.ok svg { color: var(--tone-ok-text); }",
+      "u11-widgets.css:209: .u11w-attn { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--tone-warn-text); fl"
+     ]
+    },
+    "tone-err-text": {
+     "consumed_by": [
+      "u11-widgets.css",
+      "u11-context.css",
+      "u11-rundetail.css",
+      "_shared/usage-shared.css",
+      "_shared/usage-widgets.css",
+      "u11-prism.html<style>"
+     ],
+     "sites": [
+      "u11-widgets.css:71: .u11w-hot { color: var(--tone-err-text); }",
+      "u11-widgets.css:229: .u11w-gcard.blocked .u11w-gico { background: rgba(255,90,90,.14); background: color-mix(in srgb, var(--tone-er",
+      "u11-widgets.css:262: .u11w-attrow.err .u11w-attstatus { color: var(--tone-err-text); }",
+      "u11-context.css:185: .u11ctx-attrow.err em { color: var(--tone-err-text); }"
+     ]
+    },
+    "tone-info-text": {
+     "consumed_by": [
+      "u11-widgets.css",
+      "_shared/usage-shared.css"
+     ],
+     "sites": [
+      "u11-widgets.css:252: .u11w-mismatch.info { color: var(--tone-info-text); background: rgba(90,150,255,.10); background: color-mix(in",
+      "u11-widgets.css:348: .u11w-opacq svg { width: 11px; height: 11px; flex: none; margin-top: 2px; color: var(--tone-info-text); }",
+      "u11-widgets.css:360: .u11w-sub.estimate { display: flex; align-items: flex-start; gap: 6px; color: var(--tone-info-text); }",
+      "_shared/usage-shared.css:110: .vs-info   { background: color-mix(in srgb, var(--tone-info) 14%, transparent); color: var(--tone-info-text); "
+     ]
+    },
+    "tone-mute-text": {
+     "consumed_by": [
+      "_shared/usage-shared.css"
+     ],
+     "sites": [
+      "_shared/usage-shared.css:111: .vs-mute   { background: color-mix(in srgb, var(--tone-mute) 14%, transparent); color: var(--tone-mute-text); ",
+      "_shared/usage-shared.css:215: .us-wc .a.yes { color: var(--tone-ok-text); } .us-wc .a.no { color: var(--tone-mute-text); } .us-wc .a.part { "
+     ]
+    },
+    "tone-ok-text": {
+     "consumed_by": [
+      "u11-widgets.css",
+      "u11-rundetail.css",
+      "_shared/usage-shared.css"
+     ],
+     "sites": [
+      "u11-widgets.css:132: .u11w-next.ok svg { color: var(--tone-ok-text); }",
+      "u11-widgets.css:266: .u11w-rec { font-family: var(--mono-font); font-size: 9.5px; color: var(--tone-ok-text); margin-left: 4px; }",
+      "u11-widgets.css:269: .u11w-toolop svg { width: 13px; height: 13px; flex: none; margin-top: 1px; color: var(--tone-ok-text); }",
+      "u11-widgets.css:340: .u11w-kind.ok { color: var(--tone-ok-text); background: rgba(80,200,120,.12); background: color-mix(in srgb, v"
+     ]
+    },
+    "tone-purple-text": {
+     "consumed_by": [
+      "_shared/usage-shared.css"
+     ],
+     "sites": [
+      "_shared/usage-shared.css:112: .vs-purple { background: color-mix(in srgb, var(--tone-purple) 14%, transparent); color: var(--tone-purple-tex"
+     ]
+    },
+    "tone-warn-text": {
+     "consumed_by": [
+      "u11-widgets.css",
+      "u11-rundetail.css",
+      "_shared/usage-shared.css",
+      "u11-prism.html<style>"
+     ],
+     "sites": [
+      "u11-widgets.css:209: .u11w-attn { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--tone-warn-text); fl",
+      "u11-widgets.css:215: .u11w-conn.warn { color: var(--tone-warn-text); border-color: var(--tone-warn); }",
+      "u11-widgets.css:230: .u11w-gcard.warn .u11w-gico { background: rgba(255,180,60,.14); background: color-mix(in srgb, var(--tone-warn",
+      "u11-widgets.css:250: font-size: 11.5px; line-height: 1.45; color: var(--tone-warn-text);"
+     ]
+    },
+    "us-fill-hot": {
+     "consumed_by": [
+      "_shared/usage-shared.css"
+     ],
+     "sites": [
+      "_shared/usage-shared.css:152: .us-fill.hot { background: var(--us-fill-hot, var(--tone-err)); }",
+      "_shared/usage-shared.css:167: .dfill[stroke=\"var(--tone-err)\"]  { stroke: var(--us-fill-hot, var(--tone-err)); }"
+     ]
+    },
+    "us-fill-info": {
+     "consumed_by": [
+      "_shared/usage-shared.css"
+     ],
+     "sites": [
+      "_shared/usage-shared.css:153: .us-fill.info { background: var(--us-fill-info, var(--tone-info)); }",
+      "_shared/usage-shared.css:168: .dfill[stroke=\"var(--tone-info)\"] { stroke: var(--us-fill-info, var(--tone-info)); }"
+     ]
+    },
+    "us-fill-mute": {
+     "consumed_by": [
+      "_shared/usage-shared.css"
+     ],
+     "sites": [
+      "_shared/usage-shared.css:157: .us-fill.mute { background: var(--us-fill-mute, var(--tone-mute)); }"
+     ]
+    },
+    "us-fill-ok": {
+     "consumed_by": [
+      "_shared/usage-shared.css"
+     ],
+     "sites": [
+      "_shared/usage-shared.css:150: .us-fill.ok { background: var(--us-fill-ok, var(--tone-ok)); }",
+      "_shared/usage-shared.css:165: .dfill[stroke=\"var(--tone-ok)\"]   { stroke: var(--us-fill-ok, var(--tone-ok)); }"
+     ]
+    },
+    "us-fill-purple": {
+     "consumed_by": [
+      "_shared/usage-shared.css"
+     ],
+     "sites": [
+      "_shared/usage-shared.css:154: .us-fill.purple { background: var(--us-fill-purple, var(--tone-purple)); }"
+     ]
+    },
+    "us-fill-warn": {
+     "consumed_by": [
+      "_shared/usage-shared.css"
+     ],
+     "sites": [
+      "_shared/usage-shared.css:151: .us-fill.warn { background: var(--us-fill-warn, var(--tone-warn)); }",
+      "_shared/usage-shared.css:166: .dfill[stroke=\"var(--tone-warn)\"] { stroke: var(--us-fill-warn, var(--tone-warn)); }"
+     ]
+    },
+    "us-mlb": {
+     "consumed_by": [
+      "_shared/usage-shared.css"
+     ],
+     "sites": [
+      "_shared/usage-shared.css:241: .us-meter { display: grid; align-items: center; gap: var(--sm); min-width: 0; grid-template-columns: var(--us-"
+     ]
+    },
+    "us-mpc": {
+     "consumed_by": [
+      "_shared/usage-shared.css"
+     ],
+     "sites": [
+      "_shared/usage-shared.css:241: .us-meter { display: grid; align-items: center; gap: var(--sm); min-width: 0; grid-template-columns: var(--us-"
+     ]
+    },
+    "us-wlb": {
+     "consumed_by": [
+      "_shared/usage-shared.css"
+     ],
+     "sites": [
+      "_shared/usage-shared.css:245: .us-winrow { display: grid; align-items: center; gap: var(--sm); min-width: 0; padding: 2px 0; grid-template-c"
+     ]
+    }
+   },
+   "confirmed_sub_claims": {
+    "base_has_zero_preexisting_undefined_vars": true,
+    "tone_dash_is_a_comment_artifact": "CONFIRMED - _shared/usage-shared.css:161 text \"'var(--tone-*)' attribute strings\"; check_css.py:38 scans raw text and does not strip comments",
+    "three_resolve_elsewhere": "PARTLY - 2 of the 3 (--cat, --pm6-glass-plate) resolve in OTHER PARTS; the 3rd (--wf) resolves inside the u11 payload itself, not in the base"
+   }
+  },
+  "check_vocab": {
+   "handoff_claim": "HARD FAIL at g2/g3, 46 matches (22 tiers + 22 phases + 2 Gemini CLI)",
+   "verdict": "CONFIRMED exactly",
+   "exit_code": 1,
+   "total_matches": 46,
+   "by_gate": {
+    "tiers": 22,
+    "phases": 22,
+    "Gemini CLI": 2,
+    "Pass 1/2/3": 0,
+    "Compile Settings": 0,
+    "platform_specs": 0,
+    "Tauri": 0
+   },
+   "base_control": "base check_vocab: OK (no gate-regex matches) - every one of the 46 is u11-borne",
+   "chrome_contributes_zero": "cand-B also reports exactly 46",
+   "full_stdout": [
+    "check_vocab: 46 gate-regex match(es)",
+    "  [tiers] x22",
+    "    line 15327: 'tier' | .83 / friendly 1.08 / glass 1.33). The instant tier (hover, pickup) and the",
+    "    line 15328: 'tier' | data tier (refresh, flash) are perceptually anchored (NN/g) and never scale.",
+    "    line 15357: 'tier' | --mo-widget-pickup-dur: 120ms;                   /* instant tier: never scaled */",
+    "    line 15374: 'tier' | /* data + charts — data tier: never scaled (keep <1s flow limit) */",
+    "    line 15381: 'tier' | /* hover/micro feedback — instant tier: never scaled */",
+    "    line 15385: 'tier' | /* personality/spring vocabulary — expert-tier primitives: real overshoot",
+    "    line 15388: 'tiers' | springs). Durations scale with --pm-motion-k like the tiers above; the",
+    "    line 15655: 'tiers' | Design language: three type tiers (bold tabular value / muted",
+    "    line 23474: 'tier' | /* curated hole-free boards on the 4-track tier (deterministic; no dense flow) */",
+    "    line 43906: 'tier' | …atus: 'Pay-as-you-go rate limit', sub: 'tier-based RPM/TPM, not a fixed counter' },…",
+    "    line 44731: 'tier' | /* Free-tier / local products */",
+    "    line 44732: 'tier' | …-gemini-cli',       label: 'Gemini free tier',       kind: 'free_allowance', include…",
+    "    line 44734: 'tier' | …{ id: 'prod:zai-free-tier',         connectionId: 'conn:zai-legac…",
+    "    line 44734: 'tier' | …legacy',              label: 'Z.AI free tier',         kind: 'free_allowance', inclu…",
+    "    line 44782: 'tier' | …free-day',    productId: 'prod:zai-free-tier',       label: 'Free tokens today', uni…",
+    "    line 44946: 'tier' | note: 'Web extraction helper on free tier' },",
+    "    line 45695: 'tier' | …{ text: 'One probe consumed free-tier allowance; batch probes to protect the…",
+    "    line 45695: 'tier' | …ance; batch probes to protect the daily tier.', tag: 'probes' }…",
+    "    line 46341: 'tiers' | mutated here, so wide tiers restore the full span; narrow tiers stop",
+    "    line 46341: 'tiers' | mutated here, so wide tiers restore the full span; narrow tiers stop",
+    "    … +2 more",
+    "  [phases] x22",
+    "    line 24097: 'phase' | - a capture-phase click sets _keepOpen only for in-sprout clicks;",
+    "    line 24099: 'phase' | _keepOpen holds (the sprout's own target-phase handlers already ran);",
+    "    line 44603: 'phase' | human logical work (turn / Goal phase / PlanningRun topic / Crew /",
+    "    line 44889: 'phase' | logical turn / Goal phase / PlanningRun topic / Crew / thread",
+    "    line 44905: 'phase' | …hase',     label: 'Specialist reviews · phase 2', runId: 'run:goal-47',   status: 'ru…",
+    "    line 45356: 'phases' | …phases: [{ label: 'Check', ms: 2 * MIN }, { la…",
+    "    line 45362: 'phases' | …phases: [{ label: 'Offline', ms: 22 * MIN }, {…",
+    "    line 45368: 'phases' | phases: [], failureClass: null, outcome: 'completed',",
+    "    line 45373: 'phases' | phases: [], failureClass: null, outcome: 'completed',",
+    "    line 45378: 'phases' | phases: [], failureClass: null, outcome: 'completed',",
+    "    line 45383: 'phases' | phases: [], failureClass: null, outcome: 'completed',",
+    "    line 45388: 'phases' | phases: [], failureClass: null, outcome: 'completed',",
+    "    line 45393: 'phases' | phases: [], failureClass: null, outcome: 'setup_required',",
+    "    line 45420: 'phase' | …roject: 'Tastebook', status: 'running', phase: 'Specialist reviews',…",
+    "    line 45455: 'phase' | …ct: 'Puppet Master', status: 'running', phase: 'Source extraction',…",
+    "    line 45471: 'phase' | …ct: 'Puppet Master', status: 'running', phase: 'Critique round 1',…",
+    "    line 47603: 'phase' | var subTxt = run.phase + ' · ' + visLab;",
+    "    line 47840: 'phases' | if (op.phases && op.phases.length) {",
+    "    line 47840: 'phases' | if (op.phases && op.phases.length) {",
+    "    line 47842: 'phases' | op.phases.forEach(function (ph) {",
+    "    … +2 more",
+    "  [Gemini CLI] x2",
+    "    line 44692: 'Gemini CLI' | …untId: 'acct:google-personal',  label: 'Gemini CLI profile',     authMethod: 'cli_owned_pr…",
+    "    line 44692: 'Gemini CLI' | …od: 'cli_owned_profile',  authOwnedBy: 'Gemini CLI',    state: 'ready' },…"
+   ]
+  },
+  "check_no_emoji": {
+   "handoff_claim": "PASSES with 5 warning classes: (approx)x3, (<=)x4, (<->)x3, (anticlockwise)x1, (minus)x2",
+   "verdict": "CONFIRMED exactly",
+   "exit_code": 0,
+   "banned_glyphs": 0,
+   "warning_total_cand_A": 579,
+   "warning_total_base": 566,
+   "new_warning_classes_introduced_by_u11": [
+    {
+     "codepoint": "U+2194",
+     "glyph": "↔",
+     "name": "LEFT RIGHT ARROW",
+     "count": 3
+    },
+    {
+     "codepoint": "U+21BA",
+     "glyph": "↺",
+     "name": "ANTICLOCKWISE OPEN CIRCLE ARROW",
+     "count": 1
+    },
+    {
+     "codepoint": "U+2248",
+     "glyph": "≈",
+     "name": "ALMOST EQUAL TO",
+     "count": 3
+    },
+    {
+     "codepoint": "U+2264",
+     "glyph": "≤",
+     "name": "LESS-THAN OR EQUAL TO",
+     "count": 4
+    },
+    {
+     "codepoint": "U+2212",
+     "glyph": "−",
+     "name": "MINUS SIGN",
+     "count": 2,
+     "note": "pre-existing class; base had 3, cand-A has 5, so u11 adds 2"
+    }
+   ],
+   "hard_no_emoji_rule_status": "check_no_emoji is satisfied, but the stricter scripts/pm-gui-asset-policy.py no_emoji_or_unicode_pseudo_icons policy is NOT - see below"
+  },
+  "check_structure": {
+   "handoff_claim": "new parts pass on the balanced-zero sibling-split rule; manifest.lock needs no edit; global deltas stay zero",
+   "verdict": "REFUTED - the handoff MISSED a real hard failure",
+   "exit_code": 1,
+   "failure": "<body> count 5 != 1",
+   "root_cause": "check_structure.py:52 counts the raw regex <body\\b over the whole document, with no comment or string stripping (unlike tag_deltas at :28-34, which does strip script bodies). Four ported files mention the literal string \"<body>\" inside CSS/JS COMMENTS, and each one is counted as a second <body> tag.",
+   "the_four_sites": [
+    "_shared/usage-widgets.css:99  /* The held widget is a fixed clone (.uw-lifted) on <body> above the focus",
+    "_shared/usage-widgets.css:119 /* The focused card is parked on <body> by usage-widgets.js (host chrome wraps",
+    "_shared/usage-widgets.js:325  /* a focused card is parked on <body> (see hoistFocus), so lookups that only",
+    "_shared/usage-widgets.js:486  scrim. The card is position:fixed, so we park it on <body> beside the scrim"
+   ],
+   "severity": "HARD at every gate from g0 up (assemble.py:34-38 puts check_structure in HARD for g0/g1/g2/g3). The build cannot reach a green gate until 4 comments are reworded.",
+   "what_DID_pass": "all per-part and global div/span/style/script/template deltas matched the lock, and </html> is still last; the 7 new parts each printed the expected balanced-zero advisory and passed it. So the handoff's balanced-zero reasoning is itself sound - it is just not the whole rule.",
+   "same_defect_class_as": "the --tone- comment artifact in check_css: three of these nine checkers harvest tokens from raw text without stripping comments, and the handoff caught only one of the two instances.",
+   "full_stdout": [
+    "check_structure: advisory — 10x-pm6-css-usage-u11.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)",
+    "check_structure: advisory — 29x-pm6-js-usage-data-a.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)",
+    "check_structure: advisory — 29x-pm6-js-usage-data-b.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)",
+    "check_structure: advisory — 29x-pm6-js-usage-widgets-a.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)",
+    "check_structure: advisory — 29x-pm6-js-usage-widgets-b.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)",
+    "check_structure: advisory — 29x-pm6-js-usage-detail.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)",
+    "check_structure: advisory — 29x-pm6-js-usage-icons.part.html has no manifest.lock entry; expecting balanced-zero tag deltas (sibling-split rule)",
+    "check_structure: FAIL",
+    "  - <body> count 5 != 1"
+   ]
+  },
+  "check_js": {
+   "handoff_claim": "the u11 payload is ES5-style IIFE code and parses standalone",
+   "verdict": "CONFIRMED",
+   "exit_code": 0,
+   "stdout": [
+    "check_js: OK (24 script blocks parse clean)"
+   ],
+   "node_version": "v20.19.4",
+   "note": "24 script blocks parse clean under node --check, up from 17 in the base - all 7 new/rewritten script blocks parse."
+  },
+  "check_hooks": {
+   "handoff_claim": "no Usage MUST-EXIST hook is disturbed; inline handlers resolve",
+   "verdict": "CONFIRMED",
+   "exit_code": 0,
+   "stdout": [
+    "check_hooks: OK (72 id hooks, 51 selector probes, 8 inline handler symbols all defined)"
+   ]
+  },
+  "check_settings_data": {
+   "handoff_claim": "unaffected - part 28 and the sidecar are not touched",
+   "verdict": "CONFIRMED",
+   "exit_code": 0,
+   "stdout": [
+    "check_settings_data: OK (12 categories, 818 settings, all tiers valid, 1 assignment in assembled)"
+   ]
+  },
+  "check_original": {
+   "verdict": "CONFIRMED (PASS)",
+   "exit_code": 0,
+   "stdout": [
+    "check_original: OK (PMConcept4.html sha256 470c4f795ddcc381… matches record)"
+   ]
+  },
+  "gui_asset_policy": {
+   "command_as_run_by_the_real_pipeline": "python3 scripts/pm-gui-asset-policy.py validate    # exactly how scripts/pm-plans-verify.py:3605 invokes it, with no --source-root",
+   "pipeline_result": {
+    "status": "not_applicable",
+    "policy_state": "pending_no_gui_source_yet",
+    "source_roots": [
+     "tests"
+    ],
+    "checked_files": 0,
+    "failures": 0,
+    "exit_code": 0,
+    "why": "SOURCE_ROOTS (pm-gui-asset-policy.py:15-30) is ui/src/app/apps/crates/frontend/web/wasm/native/assets/resources/tests/fixtures/snapshots. Only 'tests' exists in this repo and it holds no GUI-trigger file, so the policy short-circuits at :413-425. Concepts/** is NOT in scope for the policy as wired into run-gates."
+   },
+   "command_pointed_at_the_bundle": "python3 scripts/pm-gui-asset-policy.py validate --source-root Concepts/usage-concepts/QwenUsageConcept",
+   "forced_result": {
+    "status": "fail",
+    "policy_state": "enforced",
+    "exit_code": 1,
+    "checked_files": 39,
+    "failures_total_across_root": 124,
+    "failures_inside_the_18_file_port_bundle": 26
+   },
+   "font_verdict": {
+    "handoff_and_task_framing": "four fonts.googleapis.com references at u11-prism.html:9-12",
+    "verdict": "PARTLY - four external font-host references, but 3 googleapis + 1 gstatic",
+    "measured": [
+     {
+      "line": 9,
+      "policy": "no_network_or_cdn_icons",
+      "host": "fonts.googleapis.com",
+      "excerpt": "<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">"
+     },
+     {
+      "line": 10,
+      "policy": "no_network_or_cdn_icons",
+      "host": "fonts.gstatic.com",
+      "excerpt": "<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>"
+     },
+     {
+      "line": 11,
+      "policy": "no_network_or_cdn_icons",
+      "host": "fonts.googleapis.com",
+      "excerpt": "<link rel=\"preload\" as=\"style\" href=\"https://fonts.googleapis.com/css2?family=Cal+Sans&...\">"
+     },
+     {
+      "line": 12,
+      "policy": "no_network_or_cdn_icons",
+      "host": "fonts.googleapis.com",
+      "excerpt": "<noscript><link href=\"https://fonts.googleapis.com/css2?family=Cal+Sans&...\" rel=\"stylesheet\"></noscript>"
+     }
+    ],
+    "matched_by": "REMOTE_ICON_RE at pm-gui-asset-policy.py:74-77 (fonts\\.googleapis|fonts\\.gstatic)",
+    "TWO_FACTS_THAT_DEFUSE_IT": [
+     "The port does not carry them. All four live in u11-prism.html's <head> (lines 9-12). The ported slices are :21-341, :348-528, :531-546 and :561-1462 - a grep for fonts.googleapis / fonts.gstatic / cdn.jsdelivr / unpkg / cdnjs across those slices returns 0.",
+     "The port TARGET already ships the identical four. Concepts/pm6-build/parts/01-head-prelude.part.html carries the same preconnect/preconnect/preload/noscript quartet, landing at assembled lines 67, 68, 71, 72 - so both base.assembled.html and cand-A.assembled.html contain exactly 4 remote font references. u11 introduces no new violation of this policy; the pre-existing PM6/PM7 head does."
+    ]
+   },
+   "stricter_emoji_policy_verdict": {
+    "policy": "no_emoji_or_unicode_pseudo_icons (pm-gui-asset-policy.py:171-186)",
+    "verdict": "REAL FAIL - 22 findings in the port bundle that check_no_emoji does not catch, because this policy bans the whole arrow (U+2190-21FF), technical (U+2300-23FF), enclosed (U+2460-24FF) and geometric (U+25A0-25FF) blocks plus a PSEUDO_ICON_CHARS set including U+00D7 and U+2212, with NO allowlist for the PARTS.md typographic glyphs.",
+    "count_by_file": {
+     "u11-data.js": 9,
+     "_shared/usage-data.js": 4,
+     "_shared/usage-widgets.js": 2,
+     "u11-widgets.js": 2,
+     "u11-rundetail.js": 2,
+     "_shared/usage-shared.css": 1,
+     "_shared/usage-widgets.css": 1,
+     "u11-prism.html": 1
+    },
+    "note": "The handoff (sec 3.10) named only 3 of these. The dominant codepoints are U+2192 RIGHTWARDS ARROW (7, all in comments and data labels) and U+00D7 MULTIPLICATION SIGN (6), neither of which the handoff mentions. Note also that U+2192 and U+00D7 are on the PARTS.md allowlist that check_no_emoji honours, so the two policies genuinely disagree - an owner ruling, not a bug.",
+    "full_list_file": "real-gate-runs.md sec 7"
+   }
+  }
+ }
+}

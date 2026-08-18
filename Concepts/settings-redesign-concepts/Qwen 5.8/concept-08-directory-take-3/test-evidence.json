@@ -1,0 +1,36 @@
+{
+  "schema_id": "pm.settings_bakeoff.test_evidence.v2.concept",
+  "concept_id": "concept-08-directory-take-3",
+  "model": "Qwen 5.8",
+  "method": "Static checks by reading my own code plus live headless-browser verification (Puppeteer, 2026-08-18). getComputedStyle probes only run after #app/#d3-view existence is asserted.",
+  "static_checks": [
+    { "check": "no iframe", "pass": true, "evidence": "No <iframe> anywhere; only #app plus the nine shared script tags mandated by the contract." },
+    { "check": "no cross-concept refs", "pass": true, "evidence": "href/src limited to _shared/* modules; all navigation is in-page hash routes; no links to concept-01…04 or sibling stems." },
+    { "check": "routes list", "pass": true, "evidence": "#/home, #/cat/<catId>, #/cat/<catId>/<subId>, #/mgr/<familyId>, #/mgr/<familyId>/<objectId>, #/mgr/providers/<providerId>, #/deferred/<id>, #/all, #/copy, #/lifecycle (alias of #/mgr/lifecycle), #/q/<query>. hashchange-driven; Back = one level; Escape order popup → manager object → Home." },
+    { "check": "virtualization present", "pass": true, "evidence": "PMManagers2.virtualList on #/all (rowHeight 64); host [data-test=vlist] carries data-window start:end:total — observed 0:16:828 at rest, 306:328:828 after scroll, 0:16:2828 with Synthetic stress +2000 (real 828 never replaced)." },
+    { "check": "search routed by rid only", "pass": true, "evidence": "selectResult resolves via PMSearch2.byRid(rid); every result row carries data-rid; Enter/click never use array index." },
+    { "check": "q history entry before landing", "pass": true, "evidence": "location.hash='#/q/<query>' assigned before the landing hash; browser Back restored the query text and the identical grouped dropdown (observed)." },
+    { "check": "harness hooks present", "pass": true, "evidence": "data-test=search-input / search-results / back / close / breadcrumb / home / all / copy / vlist; data-rid on rows; #d3-view data-route equals location.hash minus '#'; data-manager on all 42 family views; pm2-locate on exact landing; result label span carries pm2-r-title for duplicate-label detection." },
+    { "check": "no emoji", "pass": true, "evidence": "All glyphs are PMIcons SVG or plain text; copy step completion renders the check SVG icon." },
+    { "check": "no left accent bars / no scope selectors / no inheritance / no profiles", "pass": true, "evidence": "CSS contains no border-left accent patterns; no Global/Project/Goal/Host controls; receipts state 'this Project only'." },
+    { "check": "reduced motion kills concept animation", "pass": true, "evidence": "[data-reduced-motion='1'] disables #d3-view/.d3-card/.d3-dest animation and transitions; pm-managers2.css handles pm2-locate and skeletons." },
+    { "check": "deferred shells named-owner", "pass": true, "evidence": "9 deferred families render owner + insertion + return contract at #/mgr/<id> and #/deferred/<id>; no backend state fabricated." },
+    { "check": "credentials never raw", "pass": true, "evidence": "Credential sections render masked vault-ref / PM-secret / CLI-owned fields; Reveal disabled; copy diff marks credential rows as account references." },
+    { "check": "truthful scenario states", "pass": true, "evidence": "Scenario-driven Home banner for validation-failure, refreshing, lkg-active, low-resource, poor-network, exhausted, restart-required, reconnect-required, changed-elsewhere, managed, unavailable; notices() rows for attention/update/rollback/offline/import-conflict; loading-with-cache skeleton on first visit per route; ObservableWork phases with wait reasons and determinate denominators only." }
+  ],
+  "live_checks": [
+    { "check": "home renders with hooks", "pass": true, "observed": "data-route=/home; 12 large domain cards; attention rows; search/back/close/breadcrumb present." },
+    { "check": "42 manager routes", "pass": true, "observed": "Sweep of all 42 family ids: [data-manager], [data-test=breadcrumb], [data-test=back], [data-test=close], [data-test=search-input] all present; data-route matches /mgr/<id>." },
+    { "check": "duplicate labels route distinctly", "pass": true, "observed": "Two 'Rate Limits' rows → claude-oauth vs openai-cli objects; two 'Context Window' rows → providers models section vs gpt-5-2 model row." },
+    { "check": "exact landing highlight", "pass": true, "observed": "pm2-locate on #sec-limits (provider object) and on [data-row=code.terminal.scrollback-limit] (inventory row), with control focus." },
+    { "check": "back restores query+results", "pass": true, "observed": "history.back() → #/q/rate%20limits; input value 'rate limits'; dropdown open with the same 5 grouped rows." },
+    { "check": "typo fuzzy", "pass": true, "observed": "'spellechck' → sr:manager:spellcheck." },
+    { "check": "unavailable no-route", "pass": true, "observed": "'settings sync' selection leaves the hash unchanged and shows the availability receipt toast." },
+    { "check": "copy transaction", "pass": true, "observed": "Preview counts Add 124 / Replace 414 / Unchanged 283; apply → 538 changed, restore point kept, verification passed; rollback button present." },
+    { "check": "narrow and squeezed push navigation", "pass": true, "observed": "At 780px (squeezed after resize event): domain grid single column; roster managers show roster alone with detail hidden; object view hides roster and shows detail; Back reads 'Back to Personas list'; Escape returns to the roster route. Tier fallback (window resize listener mirroring PMShell2 thresholds 860/1150/1600) added because hidden-headless ResizeObserver delivery is frame-gated." }
+  ],
+  "known_limitations": [
+    "In hidden headless tabs ResizeObserver callbacks are frame-gated; the resize fallback keeps tiers truthful in both visible and hidden contexts (same thresholds as PMShell2).",
+    "Family fixture rows (e.g. memory.half-life) are simulated concept-local rows; receipts label them as demo actions."
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "id": "rail:cursor-side-panels",
+  "topic": "rail",
+  "model": "Cursor",
+  "presentation": "hybrid",
+  "order": 40,
+  "widthControl": {
+    "enabled": true,
+    "label": "Panel width",
+    "role": "panel",
+    "min": 220,
+    "max": 560,
+    "step": 1,
+    "default": 280,
+    "presets": [
+      220,
+      280,
+      420,
+      560
+    ],
+    "previewWidth": 1200
+  },
+  "workspace": {
+    "path": "index.html",
+    "title": "Cursor Side-panel Index",
+    "openActions": "both",
+    "controlMode": "internal",
+    "tags": [
+      "index",
+      "navigation"
+    ],
+    "order": 5,
+    "id": "workspace",
+    "openPath": "index.html"
+  },
+  "entries": [
+    {
+      "id": "stacked-rail",
+      "title": "01 Stacked Rail",
+      "path": "shells/01-stacked-rail.html",
+      "tags": [
+        "shell",
+        "stacked"
+      ],
+      "order": 10,
+      "openPath": "shells/01-stacked-rail.html",
+      "controlMode": "internal"
+    },
+    {
+      "id": "segment-strip",
+      "title": "02 Segment Strip",
+      "path": "shells/02-segment-strip.html",
+      "tags": [
+        "shell",
+        "segmented"
+      ],
+      "order": 20,
+      "openPath": "shells/02-segment-strip.html",
+      "controlMode": "internal"
+    },
+    {
+      "id": "inspector-sheet",
+      "title": "03 Inspector Sheet",
+      "path": "shells/03-inspector-sheet.html",
+      "tags": [
+        "shell",
+        "inspector"
+      ],
+      "order": 30,
+      "openPath": "shells/03-inspector-sheet.html",
+      "controlMode": "internal"
+    },
+    {
+      "id": "command-toolbar",
+      "title": "04 Command Toolbar",
+      "path": "shells/04-command-toolbar.html",
+      "tags": [
+        "shell",
+        "commands"
+      ],
+      "order": 40,
+      "openPath": "shells/04-command-toolbar.html",
+      "controlMode": "internal"
+    },
+    {
+      "id": "icon-spine",
+      "title": "05 Icon Spine",
+      "path": "shells/05-icon-spine.html",
+      "tags": [
+        "shell",
+        "icons"
+      ],
+      "order": 50,
+      "openPath": "shells/05-icon-spine.html",
+      "controlMode": "internal"
+    },
+    {
+      "id": "focus-ladder",
+      "title": "06 Focus Ladder",
+      "path": "shells/06-focus-ladder.html",
+      "tags": [
+        "shell",
+        "focus"
+      ],
+      "order": 60,
+      "openPath": "shells/06-focus-ladder.html",
+      "controlMode": "internal"
+    },
+    {
+      "id": "lab-studio",
+      "title": "Cursor Panel Lab Studio",
+      "path": "labs/studio.html",
+      "openActions": "both",
+      "controlMode": "internal",
+      "tags": [
+        "lab",
+        "variants",
+        "configurator"
+      ],
+      "order": 70,
+      "openPath": "labs/studio.html"
+    }
+  ]
+}

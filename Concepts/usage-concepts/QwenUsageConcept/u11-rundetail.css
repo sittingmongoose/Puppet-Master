@@ -104,6 +104,17 @@
 .u11rd-brow { display: flex; align-items: baseline; gap: 8px; font-size: var(--fs-2xs); padding: 2px 0; }
 .u11rd-brow span { flex: 1 1 auto; color: var(--text-secondary); }
 .u11rd-brow b { font-family: var(--mono-font); color: var(--text-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* every attempt in the bucket, openable — the only path to an attempt the
+   Ledger collapses away at Essentials and Standard (audit A07-09) */
+.u11rd-blist { display: flex; flex-direction: column; gap: 2px; margin: 0 0 4px 10px; }
+.u11rd-battrow { display: flex; align-items: baseline; gap: 8px; width: 100%; text-align: left; cursor: pointer;
+  border: none; background: transparent; padding: 2px 6px; border-radius: var(--radius-sm); font: inherit; }
+.u11rd-battrow:hover { background: var(--accent-soft); }
+.u11rd-battrow:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 1px; }
+.u11rd-bname { flex: 0 1 auto; min-width: 0; font-size: var(--fs-2xs); color: var(--text-secondary);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.u11rd-bmeta { flex: 1 1 auto; min-width: 0; font-size: 10px; color: var(--text-muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 .u11rd-att { border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 8px 10px;
   display: flex; flex-direction: column; gap: 3px; }
@@ -126,6 +137,26 @@
 .u11rd-anote.warn { color: var(--tone-warn-text); }
 .u11rd-anote.err { color: var(--tone-err-text); }
 .u11rd-ameta { font-family: var(--mono-font); font-size: 10px; color: var(--text-muted); line-height: 1.6; }
+
+/* billing route + cost state on one line: four settlements, four strings */
+.u11rd-amoney { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; font-size: var(--fs-2xs); }
+.u11rd-aroutelab { font-weight: 700; color: var(--text-secondary); }
+.u11rd-acost { font-family: var(--mono-font); color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.u11rd-acost.hid { font-family: inherit; color: var(--text-muted); }
+.u11rd-acost.unk { font-family: inherit; color: var(--tone-warn-text); }
+/* requested versus used — em dash between the two identities */
+.u11rd-aswitch { font-size: var(--fs-2xs); color: var(--tone-warn-text); line-height: 1.5; }
+.u11rd-aswitch b { color: var(--text-primary); font-weight: 700; }
+.u11rd-astream { display: flex; align-items: flex-start; gap: 6px; font-size: var(--fs-2xs); color: var(--text-muted); line-height: 1.5; }
+.u11rd-astream svg { width: 11px; height: 11px; flex: none; margin-top: 1px; }
+.u11rd-aparent { display: flex; align-items: center; gap: 6px; font-size: var(--fs-2xs); color: var(--text-muted); }
+.u11rd-aparent svg { width: 11px; height: 11px; flex: none; }
+/* values nobody recorded read as words, never as a zero */
+.u11rd-unrec { font-style: normal; color: var(--text-muted); opacity: .9; }
+.u11rd-inh { font-style: normal; font-size: 10px; color: var(--text-muted); }
+/* time-kind coverage under the partition bars */
+.u11rd-tkinds { display: flex; flex-direction: column; gap: 3px; font-size: 10.5px; color: var(--text-muted); line-height: 1.5; }
+.u11rd-tkinds b { color: var(--text-secondary); font-weight: 700; }
 
 .u11rd-note { display: flex; align-items: flex-start; gap: 6px; font-size: var(--fs-2xs); color: var(--text-muted); line-height: 1.5; }
 .u11rd-note svg { width: 11px; height: 11px; flex: none; margin-top: 1px; }

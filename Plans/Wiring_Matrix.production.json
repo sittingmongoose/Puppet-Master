@@ -42256,6 +42256,62 @@
       "event_test_requirements": [
         "Assert cmd.bsd.set returns typed receipt/projection references including missing_event_registration and emits no unexpected persisted domain event while Event Authority remains UNKNOWN_OPEN."
       ]
+    },
+    "catalog.usage_forecast_request": {
+      "ui_element_id": "catalog.usage_forecast_request",
+      "ui_location": "Usage page > Forecast module > Request forecast",
+      "ui_command_id": "cmd.usage.forecast.request",
+      "handler_location": "handlers::usage::request_forecast",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Requesting a forecast returns a labelled projection for the active Usage scope and window and never a quota run-out date or a countdown",
+        "The projection carries its own source class, confidence, and freshness so a stale or low-confidence forecast is visible rather than presented as fact",
+        "A route with no provider-published basis for the forecast renders unknown rather than a guessed figure",
+        "cmd.usage.forecast.request must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.usage.forecast.request must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.usage.forecast.request; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.usage_forecast_request.availability",
+      "disabled_reason_projection": "state.commands.usage_forecast_request.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.usage.forecast.request has no declared persisted event while the Event Authority denominator remains UNKNOWN_OPEN; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.usage.forecast.request.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.usage_forecast_request exposes a stable role/name/description matching cmd.usage.forecast.request; the Usage forecast control names the scope and window it will forecast.",
+        "keyboard_access": "catalog.usage_forecast_request is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.usage_forecast_request preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.usage_forecast_request surfaces state.commands.usage_forecast_request.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.usage_forecast_request.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.usage.forecast.request reaches handlers::usage::request_forecast with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.usage_forecast_request.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.usage_forecast_request.availability and disabled copy reads state.commands.usage_forecast_request.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.usage_forecast_request.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.usage.forecast.request has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.usage_forecast_request.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.usage.forecast.request records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.",
+        "Assert no usage event family is emitted or inferred while the Event Authority denominator remains UNKNOWN_OPEN and the row carries missing_event_registration."
+      ]
     }
   }
 }

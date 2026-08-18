@@ -226,63 +226,108 @@
     {
       "area": "value-state model",
       "impact": "Settings must model 9 explicit value states (Default, Recommended, Inherited, Auto, Not-configured, Managed, Custom, Unavailable, Effective-differs). Auto/Inherit/Not-configured/Disabled must never be represented as an unexplained empty string. Every row carries default/source, scope, availability, restart/reconnect requirement, and validation/error.",
-      "affected_owners": ["Plans/settings_inventory.json", "Plans/FinalGUISpec.md"]
+      "affected_owners": [
+        "Plans/settings_inventory.json",
+        "Plans/FinalGUISpec.md"
+      ]
     },
     {
       "area": "scope vocabulary",
       "impact": "Scope registry must represent turn/thread/Goal/PlanningRun/Crew/project/global/host/environment/installation/device/workspace-worktree/account/provider/Persona. Concepts show scope only when it helps the user; the full internal vocabulary belongs in Details.",
-      "affected_owners": ["Plans/settings_inventory.json"]
+      "affected_owners": [
+        "Plans/settings_inventory.json"
+      ]
     },
     {
       "area": "requested/effective/origin triple",
       "impact": "Memory, Persona, Goal, Crew, Permissions, and provider/model rows need a requested/effective/origin triple rather than a scalar value. Origin records whether the effective value came from default, inheritance, managed policy, or runtime fallback.",
-      "affected_owners": ["Plans/settings_inventory.json", "Plans/assistant-memory-subsystem.md", "Plans/Goal_Runtime_System.md", "Plans/orchestrator-subagent-integration.md"]
+      "affected_owners": [
+        "Plans/settings_inventory.json",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ]
     },
     {
       "area": "secret-value taxonomy",
       "impact": "Credentials are not ordinary text fields. Schema must distinguish PM-owned secret input, secure vault/reference selector, CLI-owned authentication, PM-owned OAuth, environment-backed secret, command-helper/vault-backed secret, and non-secret text. Reveal/copy/persist/test semantics differ by type; normal UI never exposes raw tokens.",
-      "affected_owners": ["Plans/settings_inventory.json", "Plans/CLI_Bridged_Providers.md", "Plans/Multi-Account.md"]
+      "affected_owners": [
+        "Plans/settings_inventory.json",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Multi-Account.md"
+      ]
     },
     {
       "area": "action-vs-value separation",
       "impact": "One-shot actions (Back Up Now, Squeeze Context Now, Rebuild Memory, Verify Gist, Reconnect, Catalog Refresh), status projections (Last backup, Provider Health), diagnostics (Open backup log), persistent settings (Backup schedule, half-life), and manager routes (Backup & Restore, Memory) cannot all render as equivalent form rows. Schema must tag each row kind.",
-      "affected_owners": ["Plans/settings_inventory.json", "Plans/FinalGUISpec.md"]
+      "affected_owners": [
+        "Plans/settings_inventory.json",
+        "Plans/FinalGUISpec.md"
+      ]
     },
     {
       "area": "exposure level",
       "impact": "Every row carries exposure: Standard/Advanced/Expert-or-risky/Managed-read-only/Diagnostic/Unavailable. Search can find all levels; ordinary navigation does not invite users to change dangerous internals casually.",
-      "affected_owners": ["Plans/settings_inventory.json"]
+      "affected_owners": [
+        "Plans/settings_inventory.json"
+      ]
     }
   ],
   "command_id_impacts": [
     {
       "candidate_family": "navigation",
       "note": "cmd.settings.open / cmd.settings.navigate / cmd.settings.search.focus / cmd.settings.search.select_result / cmd.settings.category.select / cmd.settings.subcategory.select / cmd.settings.setting.focus / cmd.settings.manager.open are provisional. They must be adjudicated against existing shell_view/navigation_wrapper IDs and the panel-context vocabulary before minting canon.",
-      "existing_canon_overlap": ["UCC-* navigation wrappers", "cmd.panel.switch", "cmd.project.open (route-targeting precedent)"],
+      "existing_canon_overlap": [
+        "UCC-* navigation wrappers",
+        "cmd.panel.switch",
+        "cmd.project.open (route-targeting precedent)"
+      ],
       "disposition_note": "Prefer reuse of the route/open + panel-context contract over a broad cmd.nav.* family."
     },
     {
       "candidate_family": "values",
       "note": "cmd.settings.value.set / cmd.settings.default.restore / cmd.settings.scope.inspect. Must distinguish persistent setting mutation from one-shot action.",
-      "existing_canon_overlap": ["catalog.* item mutators", "Wiring_Matrix.production.json setting rows"],
+      "existing_canon_overlap": [
+        "catalog.* item mutators",
+        "Wiring_Matrix.production.json setting rows"
+      ],
       "disposition_note": "value.set is a new_candidate family pending census; scope.inspect is read-only and likely reuse."
     },
     {
       "candidate_family": "providers",
       "note": "cmd.provider.installation.* (scan/select/install/update/repair/rollback/verify), cmd.provider.connection.* (add/authenticate/reconnect), cmd.provider.catalog.refresh, cmd.model.favorite.set / alias.set / priority.set / visibility.set. Must not duplicate account/Usage/auth/install actions.",
-      "existing_canon_overlap": ["catalog.install", "catalog.update", "catalog.remove", "catalog.install_item", "catalog.update_item", "catalog.remove_item", "cmd.account.select_profile", "cmd.provider.switch_route", "cmd.usage.refresh", "cmd.usage.export", "cmd.github.connect"],
+      "existing_canon_overlap": [
+        "catalog.install",
+        "catalog.update",
+        "catalog.remove",
+        "catalog.install_item",
+        "catalog.update_item",
+        "catalog.remove_item",
+        "cmd.account.select_profile",
+        "cmd.provider.switch_route",
+        "cmd.usage.refresh",
+        "cmd.usage.export",
+        "cmd.github.connect"
+      ],
       "disposition_note": "Reuse catalog.install/update/remove_* for generic lifecycle; alias or supersede provider.installation.* against the CLI_Bridged_Providers owner. catalog.refresh is a new_candidate."
     },
     {
       "candidate_family": "memory_persona_crew",
       "note": "cmd.memory.* (open/verify/edit/delete/restore), cmd.persona.manage, cmd.crew.template.* (create/update/delete). memory.gist and memory.gist.* are flagged as un-cataloged owner signals that must resolve to stable command/event/storage rows or be retired.",
-      "existing_canon_overlap": ["memory.gist (uncataloged owner signal — must resolve)", "requested_persona_id / effective_persona_id (RETIRED — must not reappear)"],
+      "existing_canon_overlap": [
+        "memory.gist (uncataloged owner signal — must resolve)",
+        "requested_persona_id / effective_persona_id (RETIRED — must not reappear)"
+      ],
       "disposition_note": "Persona identity payloads must NOT use requested_persona_id/effective_persona_id (retired aliases). Crew templates are new_candidate under orchestrator-subagent-integration ownership."
     },
     {
       "candidate_family": "permissions",
       "note": "cmd.permissions.rule.* (add/update/reorder/delete/test). Per-tool overrides and per-Persona profiles ride on the Permissions_System owner.",
-      "existing_canon_overlap": ["permissions.toml", "/permission/config (uncataloged owner signal)", "/tool/permission (uncataloged owner signal)"],
+      "existing_canon_overlap": [
+        "permissions.toml",
+        "/permission/config (uncataloged owner signal)",
+        "/tool/permission (uncataloged owner signal)"
+      ],
       "disposition_note": "new_candidate family; must resolve /permission/config and /tool/permission registration obligations."
     },
     {
@@ -323,37 +368,59 @@
     {
       "component": "SettingsDestination",
       "impact": "In this concept the destination is a large editorial panel (title + purpose + live status + open affordance), proving it must carry a live status chip and purpose text, not be a bare link.",
-      "used_by": ["Settings Home", "every manager entry"]
+      "used_by": [
+        "Settings Home",
+        "every manager entry"
+      ]
     },
     {
       "component": "SubcategoryScrollspy",
       "impact": "Book-TOC workspace exercises a left vertical index synced to a continuous document. Must be portable (no DOM measurement as semantic state) and oscillation-free.",
-      "used_by": ["Settings Workspace (all categories)"]
+      "used_by": [
+        "Settings Workspace (all categories)"
+      ]
     },
     {
       "component": "RequestedEffectiveInspector",
       "impact": "Exercised by provider/model routes, Goal worker/reviewer, Crew members+concurrency, Persona capabilities, and Permissions effective result. One shared inspector shape prevents per-manager divergence.",
-      "used_by": ["Provider/Account/Model", "Goals & Automation", "Crew", "Personas", "Permissions"]
+      "used_by": [
+        "Provider/Account/Model",
+        "Goals & Automation",
+        "Crew",
+        "Personas",
+        "Permissions"
+      ]
     },
     {
       "component": "MemoryRow",
       "impact": "Carries half-life/fade indicator, verified/unverified provenance badge, pin, version-history entry, and capsule token estimate. Distinct from a generic resource row.",
-      "used_by": ["Memory"]
+      "used_by": [
+        "Memory"
+      ]
     },
     {
       "component": "PermissionRuleEditor",
       "impact": "Ordered last-match-wins list with reorder, per-tool overrides, per-Persona profiles, wildcard help, and a test/dry-run result.",
-      "used_by": ["Permissions & FileSafe"]
+      "used_by": [
+        "Permissions & FileSafe"
+      ]
     },
     {
       "component": "SecretField",
       "impact": "Distinguishes CLI-owned auth, PM-direct OAuth, API-key, vault reference, and non-secret text. Reveal/copy/persist/test differ by type; never exposes raw tokens in normal UI.",
-      "used_by": ["Provider/Account/Model", "Permissions & FileSafe"]
+      "used_by": [
+        "Provider/Account/Model",
+        "Permissions & FileSafe"
+      ]
     },
     {
       "component": "HealthSummary",
       "impact": "FileSafe floor health, provider installation health, and memory rebuild status all project through one health summary shape.",
-      "used_by": ["Permissions & FileSafe", "Provider/Account/Model", "Memory"]
+      "used_by": [
+        "Permissions & FileSafe",
+        "Provider/Account/Model",
+        "Memory"
+      ]
     }
   ],
   "schema_event_storage_impacts": [
@@ -655,5 +722,22 @@
       "blocking": false,
       "owner_hint": "Plans/orchestrator-subagent-integration.md"
     }
-  ]
+  ],
+  "correction_2026_08_13": {
+    "packet": "PM_Settings_Dependency_and_Work_Correction_2026-08-13",
+    "processed": "2026-08-15 (repair pass; original build never processed this packet)",
+    "report": "../../reference-review-report.json",
+    "changes": [
+      "ObservableWork projection + skeleton hydration on manager open (truthful wait; no fabricated progress)",
+      "RuntimeResourceGovernor admission outcomes demonstrated in the Goal manager (admitted/queued/blocked/cancelled + sole-owner note; register §2)",
+      "Honest reconnect/refresh outcomes; offline state block with last-known-good + held refresh",
+      "Provider Setup Required runtime-demand flow with continuation token (final adjudication)",
+      "Virtualized 100-installation scale proof with bounded DOM",
+      "wireShell duplicate-listener leak fixed; theme crossfade; switch/toast/modal motion springs",
+      "System vitals ribbon on Home (connections ready/attention, models, installations, unread notices) — count-up entrance, data-derived from PM_DEMO",
+      "Directed view transitions (S.swapStage + M.transitionView): descending into an area slides left, returning home reverses; no cold innerHTML swaps",
+      "Search: shared dropdown wiring — typo tolerance, match highlighting, ArrowUp/Down/Enter/Escape, visible no-results state, staggered results, dropdown open choreography"
+    ],
+    "note": "Candidate command/wiring/DRY deltas unchanged: the correction adds no new semantic actions beyond the runtime-demand receipt, whose candidate command lives in the existing pam.* census (flagged reuse)."
+  }
 }

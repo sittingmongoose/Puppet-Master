@@ -1,0 +1,68 @@
+{
+  "schema_id": "pm.settings_bakeoff.test_evidence.v1",
+  "concept": "concept-05-directory-take-1",
+  "generated": "2026-08-18",
+  "static_checks": {
+    "node_check": {
+      "command": "node --check concept-05-directory-take-1/concept-05.js",
+      "result": "pass",
+      "ran": "2026-08-18"
+    },
+    "page_compliance": {
+      "checks": [
+        "no <iframe> in concept-05-directory-take-1.html",
+        "no href/src referencing concept-01..concept-04",
+        "no references to shared/lib/pm-views.js, pm-search.js, pm-router.js, pm-scrollspy.js",
+        "include order matches the frozen skeleton (themes, shell, components, v2, concept CSS; core-data, v2 modules, menu, bridge, shell, concept JS)",
+        "pmx-model label carries data-concept-model=\"kimi-k3\""
+      ],
+      "result": "pass"
+    },
+    "scripted_smoke_run": {
+      "method": "headless DOM-stub harness executing the real concept-05.js against the real shared v2 layer (node, 2026-08-18)",
+      "checks": 38,
+      "failures": 0,
+      "covered": [
+        "boot: #pmv2-search field, #pmv2-results dropdown, 12 directory cards, attention block, critical banner",
+        "demo drawer lists all 18 scenarios plus default",
+        "domain page carries data-domain-id and manager rows; Back button names its target location",
+        "providers workspace: 9-fixture roster, detail data-object-id, not-installed provider shows explicit official-source setup box",
+        "search typo 'theem' returns results; selection lands on the Theme row inside the Visual Style form with .pmv2-locate; store.searchState saved",
+        "Back restores the query into the field and re-selects the saved result in the dropdown",
+        "managed_object (Anthropic) routes to the provider detail",
+        "select control commits through store.setValue; reset restores the default",
+        "copy transaction: source → 11 categories → preview totals → confirm → apply → receipt; rollback writes its own receipt; overrides applied atomically",
+        "All Settings compendium: 828 rows faceted, windowed render (12 rows in DOM), data-setting-id on rows",
+        "scenario switching renders the projection strip",
+        "deferred owner shell shows the truthful insertion-point note"
+      ]
+    },
+    "manager_sweep": {
+      "method": "scripted visit of every domain, subgroup section, manager (all tabs), roster object, and deferred owner shell",
+      "destinations_visited": 115,
+      "tab_clicks": 99,
+      "render_errors": 0,
+      "result": "pass"
+    },
+    "ollama_workflow_landing": {
+      "method": "search 'ollama' → workflow result r_73f0b93f58506ba3 → providers workspace",
+      "result": "pass — truthful 'Not connected' detail with explicit official-source setup panel"
+    },
+    "evidence_json_parse": {
+      "files": [
+        "manager-coverage.json", "manager-route-matrix.json", "search-route-matrix.json",
+        "impact-register.json", "candidate-command-delta.json",
+        "candidate-wiring-delta.json", "candidate-dry-delta.json", "test-evidence.json"
+      ],
+      "result": "all parse via JSON.parse (manager-coverage: 42 unique family strings, all 'demonstrated'; 9 deferred_named_owner)"
+    }
+  },
+  "search_cases": "see search-route-matrix.json (16 cases, real immutable result IDs harvested from the built index; all verified resolvable and returned inside the dropdown limit)",
+  "theme_width_matrix": {
+    "themes": ["friendly-dark", "friendly-light", "glass-dark", "glass-light", "retro-dark", "retro-light", "basic-dark", "basic-light"],
+    "widths": [760, 900, 1280, 1700, 2200, 2500],
+    "result": "pending-verification-phase",
+    "design_notes": "container queries on .d05: single-column directory + one-pane push navigation at <=900px; two-column directory to 1700px+; bounded measures at 2200/2500; reduced-motion kill switch on :root[data-motion='reduced']; all colors via var(--pm-*) tokens"
+  },
+  "notes": "No console errors by construction: the concept touches only the shared headless v2 APIs, guards every optional page element, and was executed end-to-end (boot + navigation + search + copy + scenarios) in the scripted harness with zero handler errors. Browser-based visual verification belongs to the verification phase."
+}

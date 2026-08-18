@@ -1,0 +1,82 @@
+{
+ "schema_id": "pm.settings_bakeoff.candidate_dry_delta.v1",
+ "concept": "concept-10-command-suite",
+ "provisional": true,
+ "canon_mutated": false,
+ "singular_owners_preserved": [
+  "ResourceGovernor",
+  "ObservableWork",
+  "BinaryLocator",
+  "shared integration lifecycle",
+  "provider readiness/usage",
+  "Project identity",
+  "browser sessions",
+  "Product Onboarding",
+  "Installation/Deployment",
+  "Server Claim/Bootstrap",
+  "Servers/Execution Hosts/Clients",
+  "Project Hosting & Files",
+  "Remote Access",
+  "Project Sync/Move",
+  "App/Content Updates",
+  "Full Server backup owner flow"
+ ],
+ "entries": [
+  {
+   "component": "PM_V2_INVENTORY (projection of Plans/settings_inventory.json)",
+   "kind": "headless-data",
+   "shared": true,
+   "second_owner_created": false,
+   "notes": "real 828-record inventory; no duplication of canon"
+  },
+  {
+   "component": "PM_V2_REGISTRY (manager/domain registry)",
+   "kind": "headless-semantics",
+   "shared": true,
+   "second_owner_created": false,
+   "notes": null
+  },
+  {
+   "component": "PM_V2_STORE (project store + ObservableWork sim)",
+   "kind": "headless-semantics",
+   "shared": true,
+   "second_owner_created": false,
+   "notes": "no second ResourceGovernor/progress owner; sim only"
+  },
+  {
+   "component": "PM_V2_SEARCH (immutable-ID index)",
+   "kind": "headless-semantics",
+   "shared": true,
+   "second_owner_created": false,
+   "notes": null
+  },
+  {
+   "component": "PM_V2_COPY (transaction engine)",
+   "kind": "headless-semantics",
+   "shared": true,
+   "second_owner_created": false,
+   "notes": null
+  },
+  {
+   "component": "PM_V2_OBJECTS (demo rosters)",
+   "kind": "headless-data",
+   "shared": true,
+   "second_owner_created": false,
+   "notes": null
+  },
+  {
+   "component": "PMV2Menu + pm-v2.css (PM menu/scrollbar/highlight standards)",
+   "kind": "headless-semantics",
+   "shared": true,
+   "second_owner_created": false,
+   "notes": "packet-mandated standards, not a shared renderer"
+  },
+  {
+   "component": "Concept Home/navigation/managers/search dropdown/motion",
+   "kind": "presentation-native",
+   "shared": false,
+   "second_owner_created": false,
+   "notes": "concept-native visible implementation; no cross-concept renderer"
+  }
+ ]
+}

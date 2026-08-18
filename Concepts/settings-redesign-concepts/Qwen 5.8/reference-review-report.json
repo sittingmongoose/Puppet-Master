@@ -114,5 +114,15 @@
     "None blocking. Open by design: human taste pass; canonical owner adjudication of candidate IDs (audit agent's role)."
   ],
   "materiality_verdict": "The dependency omission MATERIALLY affected the work: it produced fake determinate progress, an always-measured closed panel, raw internal identities in the normal GUI, a missing provider runtime-demand flow, and absent low-resource/poor-network and governor/ObservableWork representation. All are now corrected with probe evidence. Acquisition policy itself was already compliant (via REFERENCE_SUPERSESSIONS.md), so no fixture violated the provider-CLI rule before this pass.",
-  "no_winner_recommended": true
+  "no_winner_recommended": true,
+  "pass_2026_08_18_seven_new_concepts": {
+    "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18.zip",
+    "scope": "Add concepts 05–11 as complete self-contained systems; concepts 01–04 frozen; shared layer extended additively only (new pm-*2 modules; zero edits to pre-existing _shared files).",
+    "references_opened": "See REFERENCE_REVIEW_2026-08-18.json (immutable snapshot): all new top-level packet files, machine-readable contracts, seven boards, base+correction authority, repo canon (CONCEPT_RULES, inventory 828/12 verified, ConceptHub validator/server).",
+    "new_shared_modules_additive": ["_shared/pm-inventory-data.js", "_shared/pm-managers2-data.js", "_shared/pm-state2.js", "_shared/pm-search2.js", "_shared/pm-managers2.js", "_shared/pm-managers2.css", "_shared/pm-copy2.js", "_shared/pm-shell2.js"],
+    "concepts_added": ["concept-05-directory-take-1", "concept-06-directory-take-2", "concept-07-compendium-workspace", "concept-08-directory-take-3", "concept-09-tome-tabs", "concept-10-command-suite", "concept-11-tabbed-organizer"],
+    "supersessions_applied": ["per-concept complete coverage (shared_grammar forbidden)", "current-Project-only settings (legacy scope projected, never rendered)", "immutable-result-ID search routing", "layout-only retheme for 09–11"],
+    "tests_rerun_summary": "pending: packet validator, ConceptHub validate.py, harness.py matrix (see SEVEN_NEW_CONCEPTS_TEST_REPORT.md)",
+    "no_winner_recommended": true
+  }
 }

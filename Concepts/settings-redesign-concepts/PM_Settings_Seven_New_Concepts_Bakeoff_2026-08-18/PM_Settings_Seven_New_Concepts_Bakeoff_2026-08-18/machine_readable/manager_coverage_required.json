@@ -1,0 +1,79 @@
+{
+  "schema_id": "pm.settings_bakeoff.manager_coverage.v2",
+  "coverage_scope": "each_new_concept_individually",
+  "accepted_statuses": [
+    "demonstrated",
+    "deferred_named_owner",
+    "missing"
+  ],
+  "forbidden_statuses": [
+    "shared_grammar"
+  ],
+  "required_demonstrated": [
+    "Settings Home",
+    "Settings Search",
+    "Settings Workspace",
+    "Ordinary setting grammar",
+    "Provider / Account / Model / Installation",
+    "Context & Instructions",
+    "Memory",
+    "Personas",
+    "Goal & Automation",
+    "Crew",
+    "Permissions & FileSafe",
+    "Back Seat Driver",
+    "Notifications & Sounds",
+    "Sound Library / Uploads / Packs",
+    "Appearance / themes / fonts / motion",
+    "Spellcheck & Dictionaries",
+    "Desktop / Tray / Window",
+    "Teacher / Help",
+    "Doctor",
+    "File Manager / Editor",
+    "Terminal",
+    "LSP",
+    "Formatters",
+    "Commands & Shortcuts",
+    "MCP",
+    "Skills",
+    "Plugins",
+    "Tools",
+    "Testing & Debug",
+    "Storage & Retention",
+    "Backup & Restore",
+    "Settings Lifecycle",
+    "History & Sessions",
+    "Runtime Artifacts / Project Outputs",
+    "Source Control / Worktrees",
+    "GitHub Actions",
+    "Containers & Registries",
+    "Web / Search / Fetch / Crawl",
+    "Project Search Index",
+    "Workspace Cleanup",
+    "Media & Output",
+    "DRY Method visible state where exposed"
+  ],
+  "allowed_deferred_named_owner": [
+    "Product Onboarding",
+    "Installation / Deployment",
+    "Server Claim / Bootstrap",
+    "Servers / Execution Hosts / Clients",
+    "Project Hosting & Files",
+    "Remote Access",
+    "Project Sync / Move",
+    "Puppet Master application/content updates",
+    "Full Server backup owner flow"
+  ],
+  "deferred_requirements": [
+    "reachable insertion destination",
+    "canonical owner named",
+    "return/deep-link contract shown",
+    "no fabricated backend state machine"
+  ],
+  "failure_rules": [
+    "missing is failure",
+    "cross-concept manager route is failure",
+    "iframe or foreign visible renderer is failure",
+    "shared headless semantics do not substitute for visible concept-native implementation"
+  ]
+}

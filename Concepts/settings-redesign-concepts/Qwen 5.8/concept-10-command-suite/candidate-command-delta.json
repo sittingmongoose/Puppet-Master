@@ -1,0 +1,44 @@
+{
+  "schema_id": "pm.settings_candidate_command_delta.v1",
+  "concept_id": "concept-10-command-suite",
+  "note": "Provisional census of reuse/alias/candidate for the Command Suite keyboard-first surface. Exact IDs adjudicated by Commands owner; nothing canonical assigned here.",
+  "preserve_or_reuse": [
+    { "id": "cmd.account.select_profile", "use_in_concept": "Providers roster detail: account selection popup (PMManagers2.popupMenu)." },
+    { "id": "cmd.provider.switch_route", "use_in_concept": "Providers detail: routing/fallback row action." },
+    { "id": "cmd.usage.refresh", "use_in_concept": "Providers usage table refresh (ObservableWork, cached values visible during refresh)." },
+    { "id": "cmd.usage.export", "use_in_concept": "Usage table export action (receipt)." },
+    { "id": "cmd.settings.open", "use_in_concept": "Shell Settings rail item and Close Settings return target." },
+    { "id": "cmd.settings.search.focus", "use_in_concept": "Ctrl+K / '/' focuses the universal search from any pane." },
+    { "id": "cmd.settings.search.select_result", "use_in_concept": "Enter on a highlighted dropdown row routes by rid." },
+    { "id": "cmd.settings.navigate", "use_in_concept": "Arrow-key drill between Index, Pages, and Detail panes." },
+    { "id": "cmd.settings.category.select", "use_in_concept": "Enter on a command-index row opens the domain pane." },
+    { "id": "cmd.settings.subcategory.select", "use_in_concept": "Enter on a page row opens the page pane." },
+    { "id": "cmd.settings.setting.focus", "use_in_concept": "Deep-link scroll+focus+pm2-locate on the exact row." },
+    { "id": "cmd.settings.manager.open", "use_in_concept": "Enter on a manager row opens #/mgr/<familyId>." },
+    { "id": "cmd.settings.value.set", "use_in_concept": "Every row control change (PMState2.setSetting)." },
+    { "id": "cmd.settings.default.restore", "use_in_concept": "Row Details reset-to-default and editor Reset." },
+    { "id": "cmd.settings.copy_from_project.preview", "use_in_concept": "Copy flow preview step (PMCopy2.preview)." },
+    { "id": "cmd.settings.copy_from_project.apply", "use_in_concept": "Copy flow confirm step (restore point, atomic apply, verify)." },
+    { "id": "cmd.settings.import.rollback", "use_in_concept": "Lifecycle rollback action over restore points." },
+    { "id": "cmd.provider.catalog.refresh", "use_in_concept": "Models table refresh with last-known values offline." },
+    { "id": "cmd.provider.connection.reconnect", "use_in_concept": "Reconnect-required scenario row action." },
+    { "id": "cmd.provider.installation.update", "use_in_concept": "Update ask-first flow in provider install section." },
+    { "id": "cmd.provider.installation.rollback", "use_in_concept": "Verification-failed rolled-back receipt path." }
+  ],
+  "retire_or_alias": [
+    { "id": "cmd.settings.bloom.open", "reason": "Old chip/bloom architecture; Command Suite has no bloom surface. Preserve compatibility alias only if needed; concept never renders it." }
+  ],
+  "candidates": [
+    { "id": "cmd.settings.palette.open", "family": "navigation", "rationale": "Ctrl+K command palette overlay listing index destinations, managers, and actions; distinct from search.focus (overlay vs inline field).", "ui_binding": "Ctrl+K", "payload": "{ origin: route }", "result": "overlay open", "recovery": "Esc closes overlay, focus restored" },
+    { "id": "cmd.settings.palette.execute", "family": "navigation", "rationale": "Enter executes the highlighted palette entry via canonical dest object (rid or route), never by visual index.", "ui_binding": "Enter in palette", "recovery": "Esc" },
+    { "id": "cmd.settings.drill.right", "family": "navigation", "rationale": "Move focus one pane right (Index→Pages→Detail), keyboard-first drill-down.", "ui_binding": "ArrowRight / L", "recovery": "ArrowLeft returns" },
+    { "id": "cmd.settings.drill.left", "family": "navigation", "rationale": "Move focus one pane left; at Index pane acts as Back one Settings level.", "ui_binding": "ArrowLeft / H / Backspace(outside fields)" },
+    { "id": "cmd.settings.pane.escape", "family": "navigation", "rationale": "Escape order: popup → palette/drawer → one level out → stop at Home.", "ui_binding": "Esc" },
+    { "id": "cmd.settings.editor.save", "family": "values", "rationale": "Exact setting editor beside context: explicit Save applies staged value via cmd.settings.value.set with receipt.", "ui_binding": "Ctrl+Enter in editor", "idempotency": "revision-checked; stale editor shows changed-elsewhere notice" },
+    { "id": "cmd.settings.editor.discard", "family": "values", "rationale": "Discard staged editor value; no state mutation.", "ui_binding": "Esc in editor" }
+  ],
+  "collision_notes": [
+    "cmd.settings.palette.open must not shadow a global app palette; propose Settings-scoped activation only while Settings surface is focused.",
+    "cmd.settings.editor.save is a projection of cmd.settings.value.set with staged payload; if Commands owner rejects, reuse value.set directly and drop the candidate."
+  ]
+}

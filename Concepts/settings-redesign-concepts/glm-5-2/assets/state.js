@@ -168,49 +168,125 @@
     PM._spyObs = io;
   };
 
-  /* ---------- SEARCH (fuzzy discovery across categories/settings/managers) ---------- */
+  /* ---------- SEARCH (fuzzy + typo-tolerant, across categories/settings/managers) ----------
+     Match tiers (best first): substring · word-prefix · subsequence fuzzy · close-typo (edit distance).
+     Each result carries `range` = [start,end] of the best contiguous match in the original-case
+     label for highlighting, and `tier` for scoring. Subsequence matches degrade to no-highlight. */
+  PM._fuzzyMatch = function (q, text) {
+    if (!text) return null;
+    var lower = text.toLowerCase();
+    var idx = lower.indexOf(q);
+    if (idx > -1) return { tier: 0, range: [idx, idx + q.length] };
+    // word-prefix: query matches the start of any word (camel or space separated)
+    var words = lower.split(/[^a-z0-9]+/);
+    var pos = 0;
+    for (var w = 0; w < words.length; w++) {
+      if (words[w].indexOf(q) === 0) {
+        return { tier: 1, range: [pos, pos + q.length] };
+      }
+      pos += words[w].length + 1;
+    }
+    // close-typo: bounded edit distance against query and against any word
+    var tol = q.length >= 7 ? 2 : q.length >= 4 ? 1 : 0;
+    if (tol > 0) {
+      pos = 0;
+      for (w = 0; w < words.length; w++) {
+        if (words[w] && Math.abs(words[w].length - q.length) <= tol && PM._editDistance(q, words[w]) <= tol) {
+          return { tier: 3, range: [pos, pos + words[w].length] };
+        }
+        pos += words[w].length + 1;
+      }
+    }
+    // subsequence: all query chars appear in order (weak match, no honest contiguous range)
+    var qi = 0;
+    for (var i = 0; i < lower.length && qi < q.length; i++) {
+      if (lower.charAt(i) === q.charAt(qi)) qi++;
+    }
+    if (qi === q.length) return { tier: 2, range: null };
+    return null;
+  };
+  PM._editDistance = function (a, b) {
+    var m = a.length, n = b.length;
+    if (Math.abs(m - n) > 3) return 9;
+    var prev = new Array(n + 1), cur = new Array(n + 1);
+    for (var j = 0; j <= n; j++) prev[j] = j;
+    for (var i = 1; i <= m; i++) {
+      cur[0] = i;
+      for (j = 1; j <= n; j++) {
+        cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a.charAt(i - 1) === b.charAt(j - 1) ? 0 : 1));
+      }
+      var t = prev; prev = cur; cur = t;
+    }
+    return prev[n];
+  };
+
+  /* Match a query against an entry: tier from the best field, but the highlight
+     range only ever comes from the label field (never from expl/kw text). */
+  PM._matchEntry = function (q, label, others) {
+    var lm = PM._fuzzyMatch(q, label);
+    var m = lm;
+    if (!m) {
+      for (var i = 0; i < (others || []).length; i++) {
+        var om = PM._fuzzyMatch(q, others[i]);
+        if (om) { m = om; break; }
+      }
+    }
+    return m ? { tier: m.tier, range: lm ? lm.range : null } : null;
+  };
+
   PM.runSearch = function (q) {
     PM.state.query = q;
     if (!q || !q.trim()) return [];
     q = q.trim().toLowerCase();
     var out = [];
+    function push(hit) {
+      var m = hit.m;
+      out.push({
+        kind: hit.kind, cat: hit.cat, sub: hit.sub, manager: hit.manager,
+        label: hit.label, expl: hit.expl, state: hit.state,
+        tier: m.tier, range: m.range && m.range[0] != null && m.range[1] <= hit.label.length ? m.range : null,
+        score: 100 - m.tier * 20 - (hit.base || 0)
+      });
+    }
     // settings rows
     Object.keys(PM.settingsBySub).forEach(function (key) {
       PM.settingsBySub[key].forEach(function (r) {
-        if (r.label.toLowerCase().indexOf(q) > -1 || (r.expl && r.expl.toLowerCase().indexOf(q) > -1)) {
+        var m = PM._matchEntry(q, r.label, [r.expl]);
+        if (m) {
           var parts = key.split(".");
-          out.push({ kind: "setting", cat: parts[0], sub: parts[1], label: r.label, expl: r.expl, state: r.state });
+          push({ kind: "setting", cat: parts[0], sub: parts[1], label: r.label, expl: r.expl, state: r.state, m: m });
         }
       });
     });
     // categories + subcategories
     PM.categories.forEach(function (c) {
-      if (c.title.toLowerCase().indexOf(q) > -1 || c.id.indexOf(q) > -1)
-        out.push({ kind: "category", cat: c.id, sub: c.sub[0] && c.sub[0].id, label: c.title, expl: c.purpose });
+      var m = PM._matchEntry(q, c.title, [c.id, c.purpose]);
+      if (m) push({ kind: "category", cat: c.id, sub: c.sub[0] && c.sub[0].id, label: c.title, expl: c.purpose, m: m });
       c.sub.forEach(function (s) {
-        if (s.title.toLowerCase().indexOf(q) > -1)
-          out.push({ kind: "subcategory", cat: c.id, sub: s.id, label: s.title, expl: c.purpose });
+        var sm = PM._matchEntry(q, s.title);
+        if (sm) push({ kind: "subcategory", cat: c.id, sub: s.id, label: s.title, expl: c.purpose, m: sm });
       });
     });
     // managers
     Object.keys(PM.managers).forEach(function (mid) {
-      var m = PM.managers[mid];
-      if (m.title.toLowerCase().indexOf(q) > -1)
-        out.push({ kind: "manager", manager: mid, label: m.title, expl: "Open the " + m.title + " manager." });
+      var mgr = PM.managers[mid];
+      var m = PM._matchEntry(q, mgr.title);
+      if (m) push({ kind: "manager", manager: mid, label: mgr.title, expl: "Open the " + mgr.title + " manager.", m: m });
     });
     // destinations
     PM.destinations.forEach(function (d) {
-      if (d.title.toLowerCase().indexOf(q) > -1 || d.purpose.toLowerCase().indexOf(q) > -1)
-        out.push({ kind: "destination", cat: d.target.split(".")[0], sub: d.target.split(".")[1], label: d.title, expl: d.purpose });
+      var m = PM._matchEntry(q, d.title, [d.purpose]);
+      if (m) push({ kind: "destination", cat: d.target.split(".")[0], sub: d.target.split(".")[1], label: d.title, expl: d.purpose, m: m });
     });
     // packet-01 extra result types: action / status / diagnostic / workflow / unavailable-capability
     (PM_DEMO.searchExtra || []).forEach(function (e) {
-      var hay = (e.label + " " + e.expl + " " + (e.kw || "")).toLowerCase();
-      if (hay.indexOf(q) > -1) {
+      var m = PM._matchEntry(q, e.label, [e.expl, e.kw]);
+      if (m) {
         var r = e.route || {};
-        out.push({ kind: e.kind, label: e.label, expl: e.expl, manager: r.manager, cat: r.cat, sub: r.sub });
+        push({ kind: e.kind, label: e.label, expl: e.expl, manager: r.manager, cat: r.cat, sub: r.sub, m: m });
       }
     });
+    out.sort(function (a, b) { return a.score - b.score; });
     return out.slice(0, 24);
   };
 
@@ -280,7 +356,17 @@
       if ((e.metaKey || e.ctrlKey) && (e.key === "k" || e.key === "K")) {
         e.preventDefault();
         var s = document.querySelector('[data-search-input]');
-        if (s) { s.focus(); s.select && s.select(); }
+        if (s) {
+          s.focus(); s.select && s.select();
+          // showcase: one-shot focus breathe on the search field (state preserved under reduced motion)
+          var field = s.closest(".cr-search, .st-search, .sr-search, .at-cmdk-field");
+          if (field && !PM.state.reducedMotion) {
+            field.classList.remove("pm-breathe");
+            void field.offsetWidth;
+            field.classList.add("pm-breathe");
+            setTimeout(function () { field.classList.remove("pm-breathe"); }, 480);
+          }
+        }
       }
       if (e.key === "Escape") {
         var pop = document.querySelector("[data-popover]");

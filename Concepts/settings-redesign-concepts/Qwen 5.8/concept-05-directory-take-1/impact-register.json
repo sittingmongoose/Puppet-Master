@@ -1,0 +1,167 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "concept_id": "concept-05-directory-take-1",
+  "model": "Qwen 5.8",
+  "title": "Directory \u2014 Take 1 \u2014 Qwen 5.8",
+  "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+  "plan_owner_impacts": [
+    {
+      "owner": "FinalGUISpec",
+      "impact": "Superseded: chip/bloom/shelves replaced by a quiet directory Home (large search, one attention block, two-column destination cards) and destination-row domain pages."
+    },
+    {
+      "owner": "settings inventory and schema",
+      "impact": "12 inventory categories become directory destinations; a category\u2192destination mapping is intrinsic (1:1); tier vocabulary migration still required; ids keep inventory roots in this concept."
+    },
+    {
+      "owner": "Models System",
+      "impact": "Provider list/detail workspace answers the six default overview questions (connected/account/models/usage/routing/setup); Free Models remains a wrapper."
+    },
+    {
+      "owner": "Multi-Account",
+      "impact": "Accounts tab shows nickname/health/preferred/sticky/enabled; isolation strategies surfaced via readiness chips; no simultaneous-profile pretense."
+    },
+    {
+      "owner": "CLI Bridged Providers",
+      "impact": "CLI-owned OAuth stated on Anthropic/Claude fixtures; PM-direct OAuth only OpenAI/Codex/GitHub."
+    },
+    {
+      "owner": "Provider OpenCode",
+      "impact": "External-server fixture with managed-externally grammar and capability-probe-only stance."
+    },
+    {
+      "owner": "Media",
+      "impact": "Continuation settings absent; media manager owns location/naming/export; unavailable continuation exemplar in search."
+    },
+    {
+      "owner": "Prompt Pipeline",
+      "impact": "Context manager shows instruction chain + budget; registry never injected merely because exposed."
+    },
+    {
+      "owner": "Assistant Memory",
+      "impact": "Half-life/verification/pinning/gist health rows; fading changes retrieval, not truth."
+    },
+    {
+      "owner": "Personas",
+      "impact": "Behavior-not-authority enforced line; roster+detail with capsule objects."
+    },
+    {
+      "owner": "Goal Runtime",
+      "impact": "Settings owns defaults/ceilings; live run state stays external; concurrency readout operational."
+    },
+    {
+      "owner": "Orchestrator/Subagents",
+      "impact": "Crew roster with isolation and route policy; requested-vs-effective language reserved."
+    },
+    {
+      "owner": "Planning Wizard / PRD Builder",
+      "impact": "Interview rows keep quality-effect badges via ordinary grammar."
+    },
+    {
+      "owner": "Permissions",
+      "impact": "Last-match-wins, FileSafe floor, presets, trace action; conflict-pair trace demonstrated."
+    },
+    {
+      "owner": "FileSafe",
+      "impact": "Non-bypassable floor surfaced as status row; never encourages bypass."
+    },
+    {
+      "owner": "Commands",
+      "impact": "Palette scope, custom commands, conflict diagnostic with dry-run that never sends work."
+    },
+    {
+      "owner": "UI Command Catalog",
+      "impact": "Census in candidate-command-delta.json; canon reused, no minting."
+    },
+    {
+      "owner": "MCP",
+      "impact": "Roster of connected/disabled servers with repair; no browser MCP routes."
+    },
+    {
+      "owner": "Skills / Plugins / Tools",
+      "impact": "Distinct rosters sharing grammar; trust/opt-in states."
+    },
+    {
+      "owner": "LSP",
+      "impact": "Catalog/provenance, repair, diagnostics visibility."
+    },
+    {
+      "owner": "Formatters",
+      "impact": "Enable/on-save/ownership with not-found fallback fixture."
+    },
+    {
+      "owner": "File Manager",
+      "impact": "Changed-on-disk, autosave, encoding, tabs, hidden/ignored rows."
+    },
+    {
+      "owner": "Testing",
+      "impact": "Evidence strength + automation visibility; matrix action."
+    },
+    {
+      "owner": "Worktrees/Git/GitHub",
+      "impact": "Provisioning/cleanup/ports; pinned workflows; approvals open on GitHub."
+    },
+    {
+      "owner": "Containers/Registries",
+      "impact": "Human top-level tools with per-tool probes and registry auth."
+    },
+    {
+      "owner": "Storage",
+      "impact": "Four backup classes; compaction only as owner-admitted request."
+    },
+    {
+      "owner": "Runtime Artifacts/Outputs",
+      "impact": "Location/identity/retention with PM-owned vs provider-native distinction."
+    },
+    {
+      "owner": "Release/updates owner",
+      "impact": "Deferred Updates module grammar + provider update lifecycle (ask-first, scheduled, rolled-back)."
+    },
+    {
+      "owner": "Binary Locator",
+      "impact": "Confidence ladder, shadowed installations, unknown-owner manual-only."
+    }
+  ],
+  "settings_inventory_impacts": [
+    "No new inventory rows minted; concept curates existing ids per family (CUR map) and renders family-local demo rows labeled as concept demo."
+  ],
+  "settings_schema_impacts": [
+    "Legacy 'global' scope metadata remains provenance-only; never rendered as editable scope (see plan-owner-delta.md)."
+  ],
+  "command_id_impacts": [
+    "See candidate-command-delta.json."
+  ],
+  "wiring_impacts": [
+    "See candidate-wiring-delta.json; every control traced; demo state labeled simulated."
+  ],
+  "dry_component_impacts": [
+    "See candidate-dry-delta.json; shared atoms consumed from _shared/pm-managers2.js; concept-specific composition listed."
+  ],
+  "schema_event_storage_impacts": [
+    "Receipts, restore points, and ObservableWork ops via PMState2; no new storage schema."
+  ],
+  "migration_supersession_impacts": [
+    "Bloom/shelves/right-panel language superseded by directory navigation; cmd.settings.bloom.open retire/alias flag carried from catalog census."
+  ],
+  "slint_port_impacts": [
+    "None; concept is web-only prototype."
+  ],
+  "test_fixtures": [
+    "search-route-matrix.json (16 cases), manager-route-matrix.json (42 rows), test-evidence.json static checks."
+  ],
+  "deferred_named_owners": [
+    "Product Onboarding plan owner",
+    "Provider Lifecycle owner",
+    "Server Backbone",
+    "Server Backbone",
+    "Project Syncing and Updates",
+    "Server Backbone",
+    "Project Syncing and Updates",
+    "Project Syncing and Updates",
+    "Server Backbone"
+  ],
+  "unresolved_questions": [
+    "Exact destination-card density tuning for ultrawide; deferred module insertion timing owned by named owners."
+  ],
+  "demonstrated_families": "All 42 required families demonstrated concept-natively; 9 deferred modules rendered as reserved insertions with named owners."
+}

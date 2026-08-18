@@ -1,0 +1,129 @@
+{
+ "ledgerRoom": {
+  "paneName": "ledger",
+  "paneTextLen": 5417,
+  "canvases": [
+   {
+    "page": "u11-ledger",
+    "types": "ledger,runs,operations",
+    "kids": 3
+   }
+  ],
+  "cards": [
+   {
+    "title": "Ledger",
+    "h": 468,
+    "disp": "flex",
+    "bodyLen": 2371,
+    "innerTextLen": 2378
+   },
+   {
+    "title": "Runs & agents",
+    "h": 388,
+    "disp": "flex",
+    "bodyLen": 378,
+    "innerTextLen": 392
+   },
+   {
+    "title": "Maintenance & operations",
+    "h": 388,
+    "disp": "flex",
+    "bodyLen": 2239,
+    "innerTextLen": 2264
+   }
+  ]
+ },
+ "runsOps": {
+  "runs": {
+   "titleFound": "Runs & agents",
+   "textContent": "Refactor pricing pipelineGoalRunning2Done0Queued6Specialist reviews · visible · elapsed 2h 04m · provider active 12mOpen run detailSpec: U11 usage conceptPlanning runRunning0Done0Queued0Source extraction · internalOpen run detailDesign critique crewCrewRunning1Done2Queued2Critique round 1 · orchestratorOpen run detailDuplicateOpen Usage settings",
+   "innerText": "Refactor pricing pipeline\nGOAL\nRunning\n2\nDone\n0\nQueued\n6\nSpecialist reviews · visible · elapsed 2h 04m · provider active 12m\nOpen run detail\nSpec: U11 usage concept\nPLANNING RUN\nRunning\n0\nDone\n0\nQueued\n0\nSource extraction · internal\nOpen run detail\nDesign critique crew\nCREW\nRunning\n1\nDone\n2\nQueued\n2\nCritique round 1 · orchestrator\nOpen run detail\nDuplicate\nOpen Usage settings",
+   "offsetH": 388,
+   "bodyScrollH": 686,
+   "bodyClientH": 334
+  },
+  "operations": {
+   "titleFound": "Maintenance & operations",
+   "textContent": "Codex CLI updaterolled backUpdate verified, then rolled backCheck2mWait for idle9mInstall3mVerify4mRollback1mStudio PC · NativeExplicit user setup · official OpenAI installer · bound to Studio PC / Native · v0.42.0 · updates/repair post-consent onlyInstaller time is maintenance, not model usage. The verify step made one real model call (recorded separately).View the verification callClient offline · outboxcompletedQueued while offline · replayed on reconnectOffline22mOutbox wait22mReconnect + replay3mJared’s MacBook Air · NativeThe reconnect replay is a real provider attempt — see ue-610. Queue time itself is never model usage.Home Server kept workingcompletedServer work continuedTrueNAS Home Server · Docker · pm-serverServer work continues while the client is offline; slow thread load is not provider usage.Notification sound previewcompletedLocal sound preview — not usageStudio PC · NativeA local sound preview is not provider usage.Notification test-sendcompletedTest notification sentStudio PC · NativeOperational receipt, not model usage.Project Vault backupcompletedVault backup completedTrueNAS Home Server · Docker · pm-serverBackup is maintenance, never model usage.Project Move: Tastebook → VaultcompletedProject moved to VaultTrueNAS Home Server · Docker · pm-serverMoving a project between storage locations is not provider usage.Codex CLI requested on Home Server · not installedcompletedProvider Setup Required — no compatible installation on this host/environmentTrueNAS Home Server · Docker · pm-serverThe Studio PC installation is not assumed here: installations bind to the exact host and environment. Originating operation and continuation token preserved; Auto/On may maintain an approved installation but never perform first acquisition. Resume only after explicit Install from the official source and separate authentication.Open provider setupMaintenance is never model usage. First acquisition is explicit user setup from the official source for the exact host/environment; Auto/On maintain only already-approved installations. When a flow verifies with a model, that call appears separately as a validation event.DuplicateOpen Usage settings",
+   "innerText": "Codex CLI update\nROLLED BACK\nUpdate verified, then rolled back\nCheck\n2m\nWait for idle\n9m\nInstall\n3m\nVerify\n4m\nRollback\n1m\nStudio PC · Native\nExplicit user setup · official OpenAI installer · bound to Studio PC / Native · v0.42.0 · updates/repair post-consent only\nInstaller time is maintenance, not model usage. The verify step made one real model call (recorded separately).\nView the verification call\nClient offline · outbox\nCOMPLETED\nQueued while offline · replayed on reconnect\nOffline\n22m\nOutbox wait\n22m\nReconnect + replay\n3m\nJared’s MacBook Air · Native\nThe reconnect replay is a real provider attempt — see ue-610. Queue time itself is never model usage.\nHome Server kept working\nCOMPLETED\nServer work continued\nTrueNAS Home Server · Docker · pm-server\nServer work continues while the client is offline; slow thread load is not provider usage.\nNotification sound preview\nCOMPLETED\nLocal sound preview — not usage\nStudio PC · Native\nA local sound preview is not provider usage.\nNotification test-send\nCOMPLETED\nTest notification sent\nStudio PC · Native\nOperational receipt, not model usage.\nProject Vault backup\nCOMPLETED\nVault backup completed\nTrueNAS Home Server · Docker · pm-server\nBackup is maintenance, never model usage.\nProject Move: Tastebook → Vault\nCOMPLETED\nProject moved to Vault\nTrueNAS Home Server · Docker · pm-server\nMoving a project between storage locations is not provider usage.\nCodex CLI requested on Home Server · not installed\nCOMPLETED\nProvider Setup Required — no compatible installation on this host/environment\nTrueNAS Home Server · Docker · pm-server\nThe Studio PC installation is not assumed here: installations bind to the exact host and environment. Originating operation and continuation token preserved; Auto/On may maintain an approved installation but never perform first acquisition. Resume only after explicit Install from the official source and separate authentication.\nOpen provider setup\nMaintenance is never model usage. First acquisition is explicit user setup from the official source for the exact host/environment; Auto/On maintain only already-approved installations. When a flow verifies with a model, that call appears separately as a validation event.\nDuplicate\nOpen Usage settings",
+   "offsetH": 388,
+   "bodyScrollH": 1290,
+   "bodyClientH": 334
+  }
+ },
+ "attempt": {
+  "text": "Specialist reviews · phase 2\nGOAL PHASE\nrunning\nSpecialist reviews · phase 2\nOne immutable usage event per real provider attempt. The final route never overwrites earlier attempts.\nATTEMPTS IN THIS WORK\n2\nSPECIALISTS & SUBAGENTS\nsubagent\nrunning\nQwen3 Coder Plus · Alibaba · Personal · Coding Plan connection\n12.1k in · 800 out · 3.1k cache write · $0.00\nRole Pricing specialist · persona Domain analyst · child child-47-1\nAug 4 · 14:31 EDT · settlement streaming partial · source provider reported · rcpt-560\nSPECIALISTS & SUBAGENTS\nsubagent\nrunning\nQwen3 Coder Plus · Alibaba · Personal · Coding Plan connection\n10.8k in · 600 out · $0.00\nRole Migration specialist · persona Domain analyst · child child-47-2\nAug 4 · 14:31 EDT · settlement streaming partial · source provider reported · rcpt-561\nCONNECTION USED\nROUTE EVIDENCE\nConnection\nCoding Plan connection\nAuthentication\nAPI key · secret ref\nAuth owned by\nPuppet Master\nAccount\nAlibaba · Personal\nExpected product\nCoding Plan\nBilling route\nplan included\nSettlement\nstreaming partial\nCache write\n3.1k",
+  "kvs": [
+   "Connection = Coding Plan connection",
+   "Authentication = API key · secret ref",
+   "Auth owned by = Puppet Master",
+   "Account = Alibaba · Personal",
+   "Expected product = Coding Plan",
+   "Billing route = plan included",
+   "Settlement = streaming partial",
+   "Cache write = 3.1k"
+  ]
+ },
+ "tools": {
+  "title": "Tool usage",
+  "text": "ToolCallsp50p95Err %search45845ms210ms0.2edit ↺131230ms140ms0.8terminal20560ms390ms0.9test ↺1961800ms9200ms2.1mcp-github66210ms880ms0.5browser41950ms4100ms1.4Test command output was truncatedFull redacted output was saved and inspected; the command was not rerun.Patch already appliedSuccessful no-op · zero mutation · no redundant repair attempt.Recovered tool calls are not rerun — no duplicate user work, no provider tokens.DuplicateOpen Usage settings"
+ },
+ "refresh": {
+  "found": true,
+  "run": "run:goal-47",
+  "textChanged": false,
+  "toast": "Forecast refreshed (demo)",
+  "generatedLine": [
+   "generated 14:14 EDT",
+   "generated 14:20 EDT"
+  ]
+ },
+ "zoneUTC": {
+  "resolved": "UTC",
+  "used": "America/New_York",
+  "fallback": true,
+  "clockOfNow": "14:42",
+  "full": "Tue Aug 4, 2026 14:42:00 EDT · America/New_York"
+ },
+ "zoneTokyo": {
+  "resolved": "Asia/Tokyo",
+  "used": "Asia/Tokyo",
+  "fallback": false,
+  "clockOfNow": "03:42",
+  "full": "Wed Aug 5, 2026 03:42:00 GMT+9 · Asia/Tokyo",
+  "paneSample": [
+   "03:42 GMT",
+   "03:47 GMT",
+   "03:14 GMT",
+   "03:20 GMT",
+   "06:47 GMT",
+   "13:00 GMT",
+   "05:56 GMT",
+   "04:37 GMT",
+   "03:40 GMT",
+   "03:20 GMT",
+   "02:55 GMT"
+  ]
+ },
+ "zoneUTCexplicit": {
+  "resolved": "UTC",
+  "used": "America/New_York",
+  "fallback": true,
+  "clockOfNow": "14:42",
+  "full": "Tue Aug 4, 2026 14:42:00 EDT · America/New_York",
+  "paneSample": [
+   "14:42 EDT",
+   "14:47 EDT",
+   "14:14 EDT",
+   "14:20 EDT",
+   "17:47 EDT",
+   "00:00 EDT",
+   "16:56 EDT",
+   "15:37 EDT",
+   "14:40 EDT",
+   "14:20 EDT",
+   "13:55 EDT"
+  ]
+ },
+ "msgs": []
+}

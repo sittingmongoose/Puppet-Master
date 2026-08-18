@@ -1,0 +1,505 @@
+{
+ "schema_id": "pm.usage_independent_audit.final_verification.v1",
+ "ran_at_utc": "2026-08-18T04:30:00Z",
+ "ran_by": "independent remediation-status pass (wave 11)",
+ "scope": "Re-runs the audit's own probes against the post-remediation concept and re-scores the UF-088 canonical fixture cross-check. All numbers below were produced by the commands named in each block; none is quoted from a prior report.",
+ "environment": {
+  "browser": "/home/sittingmongoose/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome",
+  "driver": "playwright-core 1.62.1 vendored at QwenUsageConcept/.verify/node_modules",
+  "page": "file:///mnt/Cursor/PuppetMaster/Concepts/usage-concepts/QwenUsageConcept/u11-prism.html",
+  "host_timezone": "UTC (verified: `date` reports UTC; Intl.DateTimeFormat().resolvedOptions().timeZone === 'UTC' in-page), so the A06-06b trigger condition is live rather than simulated"
+ },
+ "w1_blocker_verification": {
+  "script": "remediation-evidence/w1-blocker-verification.mjs",
+  "re_ran_at_utc": "2026-08-18T04:07:22Z",
+  "passed": 13,
+  "total": 13,
+  "audit_original_state": "7 of 7 blockers reproduced at audit time (AUDIT_REPORT.md section 4)",
+  "end_state": "13 of 13 checks pass; 0 console errors",
+  "results": [
+   {
+    "id": "B7",
+    "name": "timezone not silently relabelled on a UTC host",
+    "pass": true,
+    "detail": "resolved=UTC U11time.zone=UTC sample=18:42 bodyMentionsEDT=false"
+   },
+   {
+    "id": "B4",
+    "name": "no fabricated -1% percentage in the scope picker",
+    "pass": true,
+    "detail": "rows=100 negative=0 []"
+   },
+   {
+    "id": "B4b",
+    "name": "rows with no reading say so instead of showing a green all-clear",
+    "pass": true,
+    "detail": "labelled-unknown=17 sample=[\"Shared membership pool | limit not exposed | 1 meter\",\"Extra Usage pool | limit not exposed | pool\",\"Monthly credits | limit not exposed | billing cycle · resets in 28d · \"]"
+   },
+   {
+    "id": "B1",
+    "name": "settings sheet contains zero policy-writing inputs",
+    "pass": true,
+    "detail": "policy inputs=0  read-only change-links=6"
+   },
+   {
+    "id": "B1b",
+    "name": "no u11:settings policy key is written to localStorage",
+    "pass": true,
+    "detail": "u11:settings before=null after=null"
+   },
+   {
+    "id": "B1c",
+    "name": "change route dispatches the canonical cmd.settings.bloom.open with a real setting id",
+    "pass": true,
+    "detail": "target=ai.usage.pressure-visibility dispatched=[{\"cmd\":\"cmd.settings.bloom.open\",\"payload\":{\"category\":\"ai\",\"focus_setting_id\":\"ai.usage.pressure-visibility\",\"reason\":\"usage_sheet\"},\"at\":\"2026-08-18T04:07:22.405Z\"}]"
+   },
+   {
+    "id": "B5",
+    "name": "ladder shows every declared step for the selected product (no dedupe collapse)",
+    "pass": true,
+    "detail": "product=prod:codex-plus declared=4 shown=4 labels=[\"Use the usage included with your plan\",\"Draw on Usage credits\",\"Apply the saved reset · Saved reset\",\"Wait for the reset\"]"
+   },
+   {
+    "id": "B5b",
+    "name": "no raw enum token reaches a user-visible ladder label",
+    "pass": true,
+    "detail": "raw=[]"
+   },
+   {
+    "id": "B3",
+    "name": "token totals respect the published per-provider counting semantics",
+    "pass": true,
+    "detail": "inclusive route=1100 (expect 1100, cache NOT added) | additive route=1600 (expect 1600, cache added) | unknown semantics=1100 (expect 1100, never guessed)"
+   },
+   {
+    "id": "B3b",
+    "name": "a missing bucket renders as unknown, never as a fabricated zero",
+    "pass": true,
+    "detail": "empty tokens -> total=null (must be null, not 0)"
+   },
+   {
+    "id": "B3c",
+    "name": "run detail states the counting basis and shows no fabricated zero total",
+    "pass": true,
+    "detail": "basisStated=true fabricatedZero=false samples=[\"776.6k tokens\",\"26.0k tokens\",\"24.3k tokens\"]"
+   },
+   {
+    "id": "B6",
+    "name": "every Free Models row identifies its underlying provider",
+    "pass": true,
+    "detail": "rows=9 missingProvider=0 []"
+   },
+   {
+    "id": "CON",
+    "name": "zero console errors across the run",
+    "pass": true,
+    "detail": "errors=0 []"
+   }
+  ]
+ },
+ "w6_a11y_verification": {
+  "script": "remediation-evidence/w6-a11y-verification.mjs",
+  "re_ran_at_utc": "2026-08-18T04:08:10Z",
+  "passed": 9,
+  "total": 9,
+  "audit_original_state": "A12-01, A12-02 and A12-03 all reproduced; the rail had no tab semantics, 27 settings buttons were inert, and the closed scope picker exposed 100 phantom listbox options with a focusable close button",
+  "end_state": "9 of 9 checks pass; 13 tabs / 13 panes wired, aria-current moves and is announced, disclosure is a radiogroup, the closed picker is visibility:hidden with 0 focusable nodes and 0 phantom options, focus is trapped and returned, and all 27 buttons open the sheet",
+  "results": [
+   {
+    "id": "A12-01a",
+    "n": "every room button points at a pane that exists",
+    "p": true,
+    "d": "tabs=13 broken=0 | panes=13 broken=0"
+   },
+   {
+    "id": "A12-01b",
+    "n": "a room change moves aria-current and is announced",
+    "p": true,
+    "d": "aria-current null -> costs | announced=\"Costs — section 3 of 13\""
+   },
+   {
+    "id": "A12-01c",
+    "n": "disclosure exposes its selected level",
+    "p": true,
+    "d": "[{\"l\":\"essentials\",\"c\":\"false\",\"r\":\"radio\"},{\"l\":\"standard\",\"c\":\"false\",\"r\":\"radio\"},{\"l\":\"advanced\",\"c\":\"true\",\"r\":\"radio\"}]"
+   },
+   {
+    "id": "A12-03a",
+    "n": "closed scope picker is out of the tab order and the a11y tree",
+    "p": true,
+    "d": "visibility=hidden focusableWhenClosed=0 phantomOptions=0 (hidden by visibility)"
+   },
+   {
+    "id": "A12-03b",
+    "n": "open scope picker declares expanded and modal, and takes focus",
+    "p": true,
+    "d": "{\"expanded\":\"true\",\"modal\":\"true\",\"visibility\":\"visible\",\"focused\":\"u11-pop-row lv0 on\"}"
+   },
+   {
+    "id": "A12-03c",
+    "n": "focus does not escape the open dialog",
+    "p": true,
+    "d": "activeElement inside popover=true"
+   },
+   {
+    "id": "A12-03d",
+    "n": "Escape returns focus to the trigger",
+    "p": true,
+    "d": "focus back on trigger=true"
+   },
+   {
+    "id": "A12-02",
+    "n": "the widget \"Open Usage settings\" buttons now do something",
+    "p": true,
+    "d": "buttons=27 sheetOpened=true"
+   },
+   {
+    "id": "ERR",
+    "n": "no page errors",
+    "p": true,
+    "d": "errors=0 []"
+   }
+  ]
+ },
+ "uf088_canonical_fixture_crosscheck": {
+  "script": "scratchpad/uf088.mjs (method transcribed from CANONICAL_FIXTURE_CROSSCHECK.json)",
+  "canonical_source": "tests/fixtures/usage_gui/golden/usage_gui_acceptance_fixtures.json (pm.usage_gui.acceptance_fixture_matrix.v1, owner UF-088)",
+  "method": "Re-run of CANONICAL_FIXTURE_CROSSCHECK.json against the post-remediation concept, same corpora definition and same literal/equivalence matching, plus one declared extension (derived_field).",
+  "method_detail": {
+   "dom_corpus": "innerText of all 13 room panes at ADVANCED disclosure with every More group expanded, plus the scope picker list and footer, the read-only Usage settings sheet, the context ring popover, the context-details popover for thread:t-88 and thread:t-91, run detail for run:goal-47 and run:plan-12, and the attempt inspector for ue-501, ue-091, ue-520, ue-611, ue-541 and ue-606",
+   "data_corpus": "bounded cycle-safe walk of window.U11, depth 9, 4MB cap, recording key names, scalar values and key:value pairs",
+   "matching": "literal case-insensitive substring; key half and value half of key:value tokens recorded separately",
+   "equivalence": "camelCase(key half) or the literal snake_case key present as a KEY in the data walk",
+   "declared_extension": "derived_field records canonical fields produced only by a U11 accessor (tokenBucketsOf, the cmd.nav.open_usage_subject payload) rather than by a static property; it scored 0 additional tokens because every such field is also reachable as a static key"
+  },
+  "corpus_sizes": {
+   "dom_chars": 107483,
+   "data_chars": 244836,
+   "data_distinct_keys": 746
+  },
+  "audit_original_score": {
+   "must_tokens_total": 79,
+   "must_tokens_present_literally_in_dom": 2,
+   "must_tokens_present_literally_in_data": 0,
+   "must_tokens_with_a_camelcase_field_in_data": 9,
+   "must_not_literal_hits": 4,
+   "must_not_genuine_violations": 0
+  },
+  "mid_repair_check_reported": {
+   "must_tokens_with_a_camelcase_field_in_data": 35,
+   "must_tokens_present_literally_in_data": 29,
+   "note": "quoted from the task brief, not re-measured by this pass"
+  },
+  "final_score": {
+   "fixtures": 13,
+   "must_tokens_total": 79,
+   "must_tokens_present_literally_in_dom": 2,
+   "must_tokens_present_literally_in_data": 38,
+   "must_tokens_with_a_camelcase_field_in_data": 47,
+   "must_tokens_only_in_a_derived_accessor": 0,
+   "must_tokens_represented_by_any_measure": 50,
+   "must_tokens_absent_everywhere": 29,
+   "must_not_total": 43,
+   "must_not_literal_hits": 3
+  },
+  "must_not_hit_adjudication": [
+   {
+    "fixture": "GUI-USG-003",
+    "token": "$0.00",
+    "verdict": "false positive",
+    "why": "the two live renderings are '$0.00 reported' on a provider-reported free-allowance call and '$0.00 of $3.20 used' on a prepaid balance. GUI-USG-003 forbids $0.00 as a rendering of UNKNOWN cost; unknown cost renders as the literal string 'cost unknown' (6 occurrences measured in the Ledger)."
+   },
+   {
+    "fixture": "GUI-USG-005",
+    "token": "success",
+    "verdict": "false positive",
+    "why": "matched inside 'Successful no-op · zero mutation' in the Tool usage room. The disabled quota bucket itself renders 'AI Credit Overages | disabled | Turned off · Extra usage is off'."
+   },
+   {
+    "fixture": "GUI-RAW-001",
+    "token": "credentials",
+    "verdict": "false positive",
+    "why": "matched inside the redaction notice 'Raw is redacted — credentials, raw payloads, account ids and local paths are withheld.' in both context-detail threads — the fixture's requirement being satisfied, not violated."
+   }
+  ],
+  "genuine_must_not_violations": 0,
+  "per_fixture": [
+   {
+    "fixture_id": "GUI-USG-001",
+    "title": "missing usage renders unknown, not zero",
+    "must_total": 5,
+    "must_literal_in_dom": 0,
+    "must_literal_in_data": 2,
+    "must_with_camelcase_equivalent_field": [
+     "source_class:unknown",
+     "source_confidence:unknown",
+     "source_authority:unknown",
+     "usage_reporting_state:unknown_or_unavailable"
+    ],
+    "must_absent_everywhere": [
+     "raw_payload_ref:absent_or_redacted"
+    ],
+    "must_not_total": 3,
+    "must_not_literal_hits": []
+   },
+   {
+    "fixture_id": "GUI-USG-002",
+    "title": "provider-reported zero remains reported zero",
+    "must_total": 7,
+    "must_literal_in_dom": 1,
+    "must_literal_in_data": 3,
+    "must_with_camelcase_equivalent_field": [
+     "source_class:provider_reported",
+     "source_confidence",
+     "source_authority",
+     "settlement_status:settled_or_adjusted"
+    ],
+    "must_absent_everywhere": [
+     "zero_buckets",
+     "raw_payload_ref"
+    ],
+    "must_not_total": 3,
+    "must_not_literal_hits": []
+   },
+   {
+    "fixture_id": "GUI-USG-003",
+    "title": "unknown cost fails closed",
+    "must_total": 6,
+    "must_literal_in_dom": 0,
+    "must_literal_in_data": 3,
+    "must_with_camelcase_equivalent_field": [
+     "cost_status:unknown",
+     "source_confidence",
+     "source_authority"
+    ],
+    "must_absent_everywhere": [
+     "cost_microdollars:null",
+     "cost_minor_units:null",
+     "unknown_cost_copy"
+    ],
+    "must_not_total": 3,
+    "must_not_literal_hits": [
+     "$0.00"
+    ]
+   },
+   {
+    "fixture_id": "GUI-USG-004",
+    "title": "BYOK and subscription costs are hidden, not estimated",
+    "must_total": 7,
+    "must_literal_in_dom": 0,
+    "must_literal_in_data": 6,
+    "must_with_camelcase_equivalent_field": [
+     "usage_event_ref",
+     "usage_record_id",
+     "source_confidence",
+     "source_authority",
+     "hidden_byok",
+     "hidden_subscription",
+     "display_cost_policy:suppress"
+    ],
+    "must_absent_everywhere": [],
+    "must_not_total": 3,
+    "must_not_literal_hits": []
+   },
+   {
+    "fixture_id": "GUI-USG-005",
+    "title": "disabled quota bucket is disabled, not empty",
+    "must_total": 3,
+    "must_literal_in_dom": 0,
+    "must_literal_in_data": 1,
+    "must_with_camelcase_equivalent_field": [
+     "quota_status:disabled",
+     "window_kind:unknown_or_disabled"
+    ],
+    "must_absent_everywhere": [
+     "disabled_reason"
+    ],
+    "must_not_total": 5,
+    "must_not_literal_hits": [
+     "success"
+    ]
+   },
+   {
+    "fixture_id": "GUI-USG-006",
+    "title": "reported cache zero differs from unsupported cache",
+    "must_total": 4,
+    "must_literal_in_dom": 0,
+    "must_literal_in_data": 3,
+    "must_with_camelcase_equivalent_field": [
+     "cache_read:0",
+     "cache_reporting_state:reported",
+     "cache_reporting_state:not_exposed",
+     "cache_reporting_state:unknown"
+    ],
+    "must_absent_everywhere": [],
+    "must_not_total": 2,
+    "must_not_literal_hits": []
+   },
+   {
+    "fixture_id": "GUI-USG-007",
+    "title": "inclusive and exclusive token totals do not double count",
+    "must_total": 4,
+    "must_literal_in_dom": 0,
+    "must_literal_in_data": 4,
+    "must_with_camelcase_equivalent_field": [
+     "counting_semantics",
+     "input_total_includes_cache",
+     "output_total_includes_reasoning",
+     "provider_total_semantics"
+    ],
+    "must_absent_everywhere": [],
+    "must_not_total": 3,
+    "must_not_literal_hits": []
+   },
+   {
+    "fixture_id": "GUI-USG-008",
+    "title": "partial and aborted streams preserve partial usage once",
+    "must_total": 4,
+    "must_literal_in_dom": 0,
+    "must_literal_in_data": 1,
+    "must_with_camelcase_equivalent_field": [
+     "settlement_status:streaming_partial_or_failed",
+     "stream_state:partial_or_aborted",
+     "dedupe_key"
+    ],
+    "must_absent_everywhere": [
+     "accepted_partial_rollup_once"
+    ],
+    "must_not_total": 3,
+    "must_not_literal_hits": []
+   },
+   {
+    "fixture_id": "GUI-CBP-001",
+    "title": "Antigravity missing commands render not exposed or unknown",
+    "must_total": 8,
+    "must_literal_in_dom": 0,
+    "must_literal_in_data": 1,
+    "must_with_camelcase_equivalent_field": [],
+    "must_absent_everywhere": [
+     "/stats",
+     "/usage",
+     "/quota",
+     "/credits",
+     "stats_unavailable",
+     "quota:not_exposed",
+     "credits:not_exposed"
+    ],
+    "must_not_total": 4,
+    "must_not_literal_hits": []
+   },
+   {
+    "fixture_id": "GUI-CBP-002",
+    "title": "Antigravity G1 credits are credits-only",
+    "must_total": 6,
+    "must_literal_in_dom": 0,
+    "must_literal_in_data": 0,
+    "must_with_camelcase_equivalent_field": [
+     "route:agy"
+    ],
+    "must_absent_everywhere": [
+     "provider_id:antigravity_cli",
+     "G1 credits",
+     "UseG1Credits",
+     "credits_status",
+     "credits_remaining"
+    ],
+    "must_not_total": 4,
+    "must_not_literal_hits": []
+   },
+   {
+    "fixture_id": "GUI-ROUTE-001",
+    "title": "Usage route opens object-first by usage event",
+    "must_total": 12,
+    "must_literal_in_dom": 0,
+    "must_literal_in_data": 9,
+    "must_with_camelcase_equivalent_field": [
+     "object_id:usage_event_ref",
+     "usage_record_id",
+     "provider_attempt_ref",
+     "attempt_id",
+     "source_class",
+     "source_confidence",
+     "source_authority",
+     "settlement_status",
+     "projection_freshness",
+     "projection_health"
+    ],
+    "must_absent_everywhere": [
+     "route_target.object_kind:usage_event",
+     "trace_ref"
+    ],
+    "must_not_total": 4,
+    "must_not_literal_hits": []
+   },
+   {
+    "fixture_id": "GUI-RAW-001",
+    "title": "Raw and Curated usage views redact provider payloads",
+    "must_total": 8,
+    "must_literal_in_dom": 1,
+    "must_literal_in_data": 3,
+    "must_with_camelcase_equivalent_field": [
+     "source_class",
+     "source_confidence",
+     "source_authority"
+    ],
+    "must_absent_everywhere": [
+     "Curated normalized fields",
+     "Raw redacted refs",
+     "omitted_counts",
+     "permission_state"
+    ],
+    "must_not_total": 4,
+    "must_not_literal_hits": [
+     "credentials"
+    ]
+   },
+   {
+    "fixture_id": "GUI-RAP-001",
+    "title": "Runtime artifact usage drill-through requires envelope and per-type schemas",
+    "must_total": 5,
+    "must_literal_in_dom": 0,
+    "must_literal_in_data": 2,
+    "must_with_camelcase_equivalent_field": [
+     "usage_event_ref",
+     "usage_record_id"
+    ],
+    "must_absent_everywhere": [
+     "cost_usage",
+     "tool_llm_trace",
+     "envelope_plus_per_type"
+    ],
+    "must_not_total": 2,
+    "must_not_literal_hits": []
+   }
+  ],
+  "honest_reading": "47 of 79 canonical MUST facts now have an equivalent field in the concept's data model (audit: 9), 38 appear literally in the data as canonical snake_case (audit: 0), and 2 appear literally in the rendered DOM (audit: 2, unchanged). Counting any of the three measures, 50 of 79 are represented and 29 remain absent everywhere. The remaining absences concentrate in GUI-CBP-001 (7 of 8 absent) and GUI-CBP-002 (5 of 6 absent) — the Antigravity slash-command and G1-credits vocabulary, which finding A07-07 already records as wholly unimplemented — plus GUI-RAW-001 (4 of 8) and GUI-RAP-001 (3 of 5). Literal DOM presence did not move, because the concept renders prose rather than canonical field names; the gain is entirely in the data model."
+ },
+ "supporting_reruns_by_this_pass": {
+  "concept_harness": {
+   "command": "node u11-verify.mjs (in QwenUsageConcept)",
+   "result": "90 pass · 0 fail · 90 cases · 113.1s",
+   "audit_original": "80 cases, 80 green, and A01-09/A10-14 recorded that 18 of 20 fixture claims were in-memory assertions only"
+  },
+  "concept_gate": {
+   "command": "python3 Concepts/ConceptHub/validate.py ../usage-concepts/QwenUsageConcept",
+   "result": "Concept validation passed",
+   "audit_original": "24 issues"
+  },
+  "spec_lock": {
+   "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+   "result": "{\"status\":\"pass\",\"failures\":[]}",
+   "audit_original": "26 stale pins of 83"
+  },
+  "not_rerun_by_this_pass": [
+   "python3 scripts/pm-plans-verify.py run-gates (26 gates)",
+   "the nine pm6-build port checkers"
+  ]
+ },
+ "page_errors": [],
+ "side_effect_disclosure": {
+  "what": "Running `node u11-verify.mjs` to re-verify the harness independently rewrote the concept's own report at Concepts/usage-concepts/QwenUsageConcept/reports/visual-interaction-test-report.json, which this pass was not supposed to edit.",
+  "measured_impact": "Two consecutive runs of the harness were diffed field by field. Only `ran_at` and `duration_ms` differ between runs. The 90 case names, all 90 verdicts and every per-case detail string are byte-identical and deterministic, and pass/fail is 90/0 in both.",
+  "net_change_to_the_concept": "ran_at moved to the time of this pass's run and duration_ms to that run's elapsed time. No verdict, case, count or detail string was altered.",
+  "not_reverted": "The pre-run bytes were not captured before the first run, so the two timestamp fields cannot be restored exactly. Disclosed here rather than silently left."
+ }
+}

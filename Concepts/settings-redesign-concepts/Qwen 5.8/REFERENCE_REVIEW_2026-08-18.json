@@ -1,0 +1,50 @@
+{
+  "schema_id": "pm.settings_reference_review_snapshot.v1",
+  "model": "Qwen 5.8",
+  "topic": "settings-redesign",
+  "pass": "2026-08-18 seven new concepts",
+  "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18.zip",
+  "references_opened_this_pass": [
+    "00_START_HERE.md", "01_ASSIGNMENT_AND_PRECEDENCE.md", "02_SEVEN_CONCEPT_BLUEPRINTS.md",
+    "03_HOME_SEARCH_AND_NAVIGATION.md", "04_PROJECT_ONLY_SETTINGS_AND_COPY.md",
+    "05_COMPLETE_MANAGER_INTEGRATION.md", "06_INFORMATION_ARCHITECTURE_AND_DENSITY.md",
+    "07_THEME_MOTION_RESPONSIVE_AND_SLINT.md", "08_DATA_PERFORMANCE_AND_TRUTHFUL_STATE.md",
+    "09_COMMAND_WIRING_DRY_AND_PLAN_IMPACT.md", "10_TESTING_EVIDENCE_AND_ACCEPTANCE.md",
+    "11_REQUIRED_FILES_AND_REPORTS.md", "12_REPO_BASELINE_AND_KNOWN_FAILURES.md",
+    "GOAL_PROMPT.md", "PROMPT_USAGE.md", "AUDIT_PROMPT.md", "PACKET_MANIFEST.json", "SHA256SUMS.txt",
+    "machine_readable/concept_blueprints.json", "machine_readable/manager_coverage_required.json",
+    "machine_readable/model_folder_map.json", "machine_readable/repo_baseline.json",
+    "machine_readable/search_contract.json", "machine_readable/supersessions.json", "machine_readable/test_matrix.json",
+    "reference/selected_concepts/README.md and all seven boards",
+    "tools/validate_seven_new_concepts.py",
+    "authority/base_packet: 00–10, IMPLEMENTATION_PROMPT, SOURCE_AND_PRECEDENCE_MAP, IMPACT_REGISTER.template, reference/PROVIDER_IDENTIFICATION_INSTALLATION_AUTH_UPDATE_HANDOFF.md (compressed via subagent)",
+    "authority/correction_packet: 00_READ_ME_FIRST, PROVIDER_CLI_FINAL_ADJUDICATION, REFERENCE_REVIEW_AND_REPAIR_REQUIREMENTS, 02_FULL_THREAD_CURRENT_DECISION_REGISTER.md (sections 7–13 and 20–25 read directly; 1–6/14–19 compressed via subagent)",
+    "repo: Concepts/CONCEPT_RULES.md, Plans/settings_inventory.json (828/12 verified), Concepts/ConceptHub/validate.py + server.py, current Qwen 5.8 folder (hub, index, concepts 01–04, _shared/*)"
+  ],
+  "image_interpretations": {
+    "01_A1_Directory_Take_1": "Hierarchy/composition only: quiet directory home, large search above content, single compact attention block, two-column destination cards, roster+form provider workspace, in-form exact-result highlight, focused copy review. Synthetic names/counts/scope controls ignored.",
+    "02_A1_Directory_Take_2": "Editorial list-led home, narrow stable domain rail, single-column destination rows, restrained detail sheet, quiet copy dialog. Vertical rhythm preserved; no decorative status blocks.",
+    "03_A2_Compendium_Workspace_Take_1": "First-class faceted All Settings compendium, domain overview + key settings + related managers, integrated list/detail manager, contextual exact-result landing, copy preview with counts and diff.",
+    "04_A1_Directory_Take_3": "Spacious large-card directory, attention at top, manager-destination overview, provider status cards with explicit quick actions, in-place credential highlight, full-width selectable-category copy flow.",
+    "05_Tome_Tabs": "Layout only: persistent edge/chapter tabs, layered page depth, broad reading canvas, domain + manager-local tabs, stepwise copy. All steampunk/parchment/brass/gears/sepia removed; rendered in PM tokens.",
+    "06_Command_Suite": "Layout only: command index, keyboard-first movement, multi-pane drill-down, compact legible tables, path/status visibility, transactional copy panels. Terminal-green/CRT/monospace-body removed.",
+    "07_Tabbed_Organizer": "Layout only: category tabs, layered sheets preserving location, compact home categories + recent changes, related-manager strip, provider roster with detail tabs, adjacent-pane copy. Paper/binder/office skeuomorphism removed."
+  },
+  "legacy_assumptions_superseded": [
+    "collective manager coverage across four concepts -> every concept 05-11 individually demonstrates all 42 required families",
+    "shared_grammar as coverage status -> forbidden; statuses are demonstrated/deferred_named_owner/missing",
+    "editable global/project/goal/host scope or inheritance -> current-Project-only; legacy inventory scope metadata projected, never rendered as scope",
+    "search routing by grouped visual position -> immutable result IDs with canonical destination objects",
+    "novelty skins for Tome/Command/Organizer -> layout-only retheme to current Puppet Master"
+  ],
+  "no_cross_concept_routing_evidence": [
+    "shared modules pm-*2.js are headless data/semantics only (no visible renderer); every concept renders its own Home/nav/dropdown/managers/motion",
+    "packet validator cross_concept_route check (href/src to concept-0[1-4]) run and passing",
+    "harness manager-isolation crawl asserts every manager route renders in-concept with breadcrumb/back/close and no iframe"
+  ],
+  "known_limitations": [
+    "HTML prototypes: ObservableWork/ResourceGovernor/BinaryLocator are truthful simulations, not production wiring; candidate registers remain provisional",
+    "synthetic stress rows are labeled synthetic and never replace the real 828 inventory",
+    "deferred families are insertion shells with named owners and return contracts, per packet"
+  ]
+}

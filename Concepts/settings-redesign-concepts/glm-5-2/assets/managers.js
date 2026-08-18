@@ -183,8 +183,79 @@
       title: "Provider / Agent / Model", icon: "pam",
       addLabel: "Add connection", health: health,
       summary: "Providers, accounts, connections, models, and agent role assignments.",
-      toolbar: [{id:"refresh",label:"Refresh all",icon:"refresh"}, {id:"fail",label:"Simulate failure"}]
-    }, catalog + rows + roles + M.installations() + M.secretsSection());
+      toolbar: [
+        {id:"refresh",label:"Refresh all",icon:"refresh"},
+        {id:"offline",label:"Simulate offline",icon:"plug"},
+        {id:"demand",label:"Runtime demand",icon:"bolt"},
+        {id:"fail",label:"Simulate failure"}
+      ]
+    }, catalog + rows + roles + M.installations() + M.virtualInstallations() + M.secretsSection());
+  };
+
+  /* ---------- VIRTUALIZED INSTALLATION LIST (correction 2026-08-13: bounded DOM) ----------
+     100 synthetic installations rendered through a windowed list: only the visible
+     slice (+overscan) exists in the DOM. Deterministic data — no randomness. */
+  var V_BASES = [
+    { provider:"Claude CLI", owner:"Claude (official)", cmd:"claude", method:"Homebrew", auth:"CLI-owned OAuth", health:"ok", conf:"Proven" },
+    { provider:"Codex CLI", owner:"OpenAI (official)", cmd:"codex", method:"npm global", auth:"PM-direct OAuth", health:"ok", conf:"Proven" },
+    { provider:"Gemini CLI", owner:"Google (official)", cmd:"gemini", method:"npm global", auth:"CLI-owned OAuth", health:"ok", conf:"Strongly identified" },
+    { provider:"Qwen CLI", owner:"Qwen (official)", cmd:"qwen", method:"pipx", auth:"CLI-owned OAuth", health:"warn", conf:"Probable" },
+    { provider:"OpenCode", owner:"OpenCode (official)", cmd:"opencode", method:"npm global", auth:"PM-direct OAuth", health:"ok", conf:"Strongly identified" }
+  ];
+  function vRowHTML(i) {
+    var b = V_BASES[i % V_BASES.length];
+    var slot = Math.floor(i / V_BASES.length) + 1;
+    return '<div class="res-row vrow" style="height:52px" data-vrow="' + i + '">' +
+      '<span class="sdot ' + b.health + '"></span>' +
+      '<div class="col grow gap-xs" style="min-width:0">' +
+        '<div class="row center gap-sm wrap"><strong>' + b.provider + '</strong>' +
+        '<span class="chip ' + (b.health === "ok" ? "ok" : "warn") + '">profile ' + slot + '</span>' +
+        '<span class="chip">' + b.conf + '</span></div>' +
+        '<span class="chip mono" style="align-self:flex-start">' + b.cmd + '-' + slot + ' → /opt/profiles/' + b.cmd + '/' + slot + '/bin/' + b.cmd + '</span>' +
+      '</div>' +
+      '<button class="btn sm ghost" data-mgr-act="details">Details</button>' +
+    '</div>';
+  }
+  M.virtualInstallations = function () {
+    var initial = "";
+    for (var i = 0; i < 16; i++) initial += vRowHTML(i);
+    return [
+      '<details class="provider virtual-scale" style="margin-top:var(--gap)" data-virtual>',
+        '<summary><div class="row center gap-sm"><h3>Scale proof — 100 installations</h3>',
+        '<span class="chip info">virtualized · bounded DOM</span></div>',
+        '<span class="muted small">Windowed list: only the visible slice renders. Long lists never render unbounded (lazy hydration + virtualization contract).</span></summary>',
+        '<div class="vlist-shell">',
+          '<div class="vlist-meta muted small" data-vmeta>Showing 1–16 of 100 · 16 DOM rows</div>',
+          '<div class="vlist" data-vlist data-vtotal="100" data-vrowh="52" tabindex="0" role="list" aria-label="100 installations (virtualized)">',
+            '<div class="vlist-pad" data-vpad style="height:5200px"><div class="vlist-window" data-vwin style="transform:translateY(0px)">' + initial + '</div></div>',
+          '</div>',
+        '</div>',
+      '</details>'
+    ].join("");
+  };
+  M.wireVirtualList = function (root) {
+    var vlist = root.querySelector("[data-vlist]");
+    if (!vlist || vlist.dataset.wired) return;
+    vlist.dataset.wired = "1";
+    var win = vlist.querySelector("[data-vwin]");
+    var meta = root.querySelector("[data-vmeta]");
+    var total = Number(vlist.getAttribute("data-vtotal"));
+    var rowH = Number(vlist.getAttribute("data-vrowh"));
+    var render = function () {
+      var st = vlist.scrollTop;
+      var h = vlist.clientHeight || 16 * rowH;
+      var start = Math.max(0, Math.floor(st / rowH) - 4);
+      var end = Math.min(total, Math.ceil((st + h) / rowH) + 4);
+      var html = "";
+      for (var i = start; i < end; i++) html += vRowHTML(i);
+      win.innerHTML = html;
+      win.style.transform = "translateY(" + (start * rowH) + "px)";
+      if (meta) meta.textContent = "Showing " + (start + 1) + "–" + end + " of " + total + " · " + (end - start) + " DOM rows";
+    };
+    vlist.addEventListener("scroll", render, { passive: true });
+    var details = vlist.closest("details[data-virtual]");
+    if (details) details.addEventListener("toggle", function () { if (details.open) render(); });
+    render();
   };
 
   /* ---------- MEMORY (deep-dive 01) ---------- */
@@ -289,9 +360,9 @@
             '<div class="row center gap-xs"><button class="btn sm">Edit</button><button class="btn sm ghost">Duplicate</button></div>',
           '</div>',
           '<div class="crew-stats">',
-            '<div class="crew-stat"><span class="muted small">Requested members</span><strong>' + c.membersReq + '</strong></div>',
-            '<div class="crew-stat"><span class="muted small">Effective members</span><strong>' + c.membersEff + '</strong></div>',
-            '<div class="crew-stat"><span class="muted small">Queued</span><strong>' + c.queued + '</strong></div>',
+            '<div class="crew-stat"><span class="muted small">Requested members</span><strong data-countup="' + c.membersReq + '">0</strong></div>',
+            '<div class="crew-stat"><span class="muted small">Effective members</span><strong data-countup="' + c.membersEff + '">0</strong></div>',
+            '<div class="crew-stat"><span class="muted small">Queued</span><strong data-countup="' + c.queued + '">0</strong></div>',
             '<div class="crew-stat"><span class="muted small">Concurrency req → eff</span><strong>' + c.concurrencyReq + ' → ' + c.concurrencyEff + '</strong></div>',
           '</div>',
           '<div class="crew-reqeff mgr-note info small">Requested ' + c.membersReq + '; effective ' + c.membersEff + ' now. ' + c.queued + ' queued across waves. ' + c.guard + '</div>',
@@ -571,17 +642,41 @@
 
   /* ---------- C1: Context / Memory / Personas / Goal / Crew / Permissions / BSD ---------- */
   M.goal = function () {
+    /* RuntimeResourceGovernor admission preview (correction register §2): outcomes as
+       reported by the governor — this manager owns defaults/ceilings only and never
+       re-implements admission or progress (ObservableWork is the sole progress owner). */
+    var outcomeMap = {
+      admitted: ["ok", "Admitted"],
+      queued:   ["warn", "Queued · " ],
+      blocked:  ["bad", "Blocked · "],
+      cancelled:["neutral", "Cancelled · "]
+    };
+    var admissions = (PM_DEMO.goalAdmissions || []).map(function (a) {
+      var om = outcomeMap[a.outcome] || ["neutral", a.outcome];
+      var chip = om[0] === "ok" ? '<span class="chip ok">Admitted</span>'
+        : '<span class="chip ' + om[0] + '">' + om[1] + (a.waitReason ? a.waitReason : "") + '</span>';
+      return '<div class="res-row" data-res>' +
+        '<span class="sdot ' + om[0] + '"></span>' +
+        '<div class="col grow gap-xs"><div class="row center gap-sm wrap"><strong>' + a.route + '</strong>' +
+        '<span class="chip">requested ' + a.requested + '</span>' + chip + '</div>' +
+        '<span class="muted small">' + a.note + '</span></div>' +
+        '<button class="btn sm ghost" data-mgr-act="details">Details</button></div>';
+    }).join("");
     return M.family({ title:"Goals & Automation", icon:"target", addLabel:"New default",
       health:{text:"Defaults + ceilings only — runtime admits actual work",kind:"ok"},
       summary:"Settings owns defaults and ceilings. Usage reports capacity; orchestrator admits work.",
       toolbar:[{id:"routes",label:"Worker / reviewer routes"}] }, PM_DEMO.goalRows,
-      '<div class="mgr-note info small">Requested vs effective preserved. High-quality planning route required by default.</div>');
+      '<div class="imp-section-label">RuntimeResourceGovernor — admission outcomes (sole owner)</div>' +
+      '<div class="res-list">' + admissions + '</div>' +
+      '<div class="mgr-note info small">Requested vs effective preserved. High-quality planning route required by default. Admission outcomes come from the single RuntimeResourceGovernor (admitted / queued / blocked / cancelled — never re-implemented here); waits and progress project through ObservableWork only.</div>');
   };
   M.permissions = function () {
     return M.family({ title:"Permissions & FileSafe", icon:"shield", addLabel:"Add rule",
       health:{text:"FileSafe enforced · non-bypassable",kind:"ok"},
       summary:"Ordered rules (last-match-wins), per-tool overrides, per-Persona profiles. FileSafe is the floor.",
       toolbar:[{id:"matrix",label:"Read-only / full matrix"}] }, PM_DEMO.permissionRows,
+      PM.shared.stateBlock("managed", "3 rules are managed by administrator policy",
+        "Managed rules are read-only here — values, order, and the FileSafe floor come from policy. Personal rules still apply underneath; policy always wins.") +
       '<div class="mgr-note warn small">FileSafe is the non-bypassable floor. Requested/effective/origin shown where policy differs.</div>');
   };
   M.bsd = function () {
@@ -715,6 +810,8 @@
       health:{text:"Docker up · Podman stopped",kind:"warn"},
       summary:"Docker / Podman / Kubernetes tools top-level; detail: Engine/CLI/Compose/kubectl/Helm/registries.",
       toolbar:[{id:"health",label:"Health"}] }, PM_DEMO.containerRows,
+      PM.shared.stateBlock("unavailable", "Kubernetes driver unavailable on this Host/Environment",
+        "Capability probe found no supported driver. The surface stays visible with its reason — installing a driver elsewhere makes it reappear; nothing is silently installed.") +
       '<div class="mgr-note info small">Domain-specific capability probes reuse the shared tool lifecycle.</div>');
   };
   M.webfetch = function () {
@@ -856,7 +953,8 @@
       "</div>"
     );
     document.body.appendChild(modal);
-    var close = function () { modal.remove(); };
+    var releaseTrap = PM.shared.trapFocus(modal);
+    var close = function () { modal.remove(); releaseTrap(); };
     modal.querySelector("[data-imp-close]").addEventListener("click", close);
     modal.querySelector("[data-imp-rollback]").addEventListener("click", function () {
       modal.querySelector(".imp-list").insertAdjacentHTML("beforebegin",
@@ -880,15 +978,53 @@
   /* ---------- MANAGER INTERACTIONS (functional, simulated) ---------- */
   M.wire = function (root) {
     if (!root) return;
-    // loading state (packet 08): brief hydration indicator on first open
+    /* Truthful first-open wait (correction 2026-08-13): skeleton rows + an ObservableWork
+       projection — indeterminate phase with waitReason, never a fabricated percentage.
+       The wait itself is a labeled concept simulation; the projection contract is the point.
+       Body content is evacuated during the wait, so ALL row wiring runs after restore. */
     var body = root.querySelector(".mgr-body");
     if (body && !root.dataset.loadingShown) {
       root.dataset.loadingShown = "1";
-      var loadBlock = PM.el("div", "mgr-loading-overlay", {},
-        PM.shared.stateBlock("loading", "Loading…", "Hydrating manager…"));
-      body.insertBefore(loadBlock, body.firstChild);
-      setTimeout(function () { if (loadBlock.parentNode) loadBlock.remove(); }, 250);
-    }
+      var realContent = Array.prototype.slice.call(body.childNodes);
+      var waitHost = PM.el("div", "mgr-loading-overlay", {});
+      waitHost.innerHTML =
+        PM.shared.skeletonRows(4, "Hydrating manager rows") +
+        PM.shared.workBlock({
+          phase: "Hydrating manager rows",
+          waitReason: "owner store read (concept demo — simulated wait, no fabricated progress)",
+          note: "Determinate progress appears only when a real denominator exists.",
+          onCancel: false
+        });
+      body.innerHTML = "";
+      body.appendChild(waitHost);
+      setTimeout(function () {
+        if (!waitHost.parentNode) { wireAll(); return; }
+        // showcase: skeleton rows rise-fade out, then the first real rows stagger in
+        var morphIn = function () {
+          waitHost.remove();
+          realContent.forEach(function (n) { if (n) body.appendChild(n); });
+          wireAll();
+          if (PM.motion && !PM.state.reducedMotion) {
+            PM.motion.staggerIn(body, "[data-conn], [data-model], [data-gist], [data-mcp], [data-skill], [data-persona], [data-lsp], [data-term], [data-media], [data-crew], [data-res]", { step: 22, duration: 240, delay: 30, limit: 8 });
+          }
+        };
+        var skel = waitHost.querySelector("[data-skel]");
+        if (skel && PM.motion && !PM.state.reducedMotion) {
+          PM.motion.staggerIn(skel, ".skel-row", { step: 14, duration: 160, axis: "none", limit: 4 });
+          // fade the whole wait block as rows settle, then morph
+          PM.motion.crossFade(waitHost, morphIn, { duration: 180 });
+        } else {
+          PM.motion && PM.motion.crossFade(waitHost, morphIn, { duration: 180 });
+        }
+      }, 420);
+    } else wireAll();
+
+    function wireAll() {
+      // showcase: count-up any [data-countup] stat once per open (state preserved under reduced motion)
+      root.querySelectorAll("[data-countup]").forEach(function (el) {
+        if (el.dataset.counted) return; el.dataset.counted = "1";
+        if (PM.motion && PM.motion.countUp) PM.motion.countUp(el, Number(el.getAttribute("data-countup")) || 0, { duration: 620 });
+      });
     // search filter
     root.querySelectorAll('[data-manager-search]').forEach(function (inp) {
       inp.addEventListener("input", function () {
@@ -909,9 +1045,15 @@
         } else if (empty) { empty.remove(); }
       });
     });
-    // refresh preserves last-known-good rows during loading (packet: smoke #4)
+    // refresh preserves last-known-good rows during loading (packet: smoke #4);
+    // while the offline banner is up, refresh is held with an honest reason.
     root.querySelectorAll('[data-manager-toolbar="refresh"], [data-provider-action="refresh"], [data-conn-action="refresh"]').forEach(function (btn) {
+      if (btn.dataset.wired) return; btn.dataset.wired = "1";
       btn.addEventListener("click", function () {
+        if (root.querySelector(".mgr-offline-overlay")) {
+          PM.toast("Refresh held — offline. waitReason: network; last-known-good remains.");
+          return;
+        }
         var target = this.closest("[data-provider]") || root;
         var overlay = PM.el("div", "refresh-overlay", {}, PM.svg("refresh",16) + '<span>Refreshing — last-known-good held</span>');
         target.style.position = "relative";
@@ -940,17 +1082,86 @@
         });
       });
     });
-    // reconnect returns a visible simulated result (smoke #8)
+    // simulate offline → offline state block (correction 2026-08-13): last-known-good
+    // catalog stays usable; refresh is refused with an honest reason, not a spinner.
+    root.querySelectorAll('[data-manager-toolbar="offline"]').forEach(function (btn) {
+      if (btn.dataset.wired) return; btn.dataset.wired = "1";
+      btn.addEventListener("click", function () {
+        var mgrBody = root.querySelector(".mgr-body");
+        if (!mgrBody) return;
+        var existing = mgrBody.querySelector(".mgr-offline-overlay");
+        if (existing) { existing.remove(); PM.toast("Back online — refresh resumes"); return; }
+        var off = PM.el("div", "mgr-offline-overlay", {});
+        off.innerHTML =
+          '<div style="display:flex;justify-content:flex-end"><button class="btn sm ghost" data-offline-dismiss>' + PM.svg("close", 13) + 'Back online</button></div>' +
+          PM.shared.stateBlock("offline", "Offline — showing last-known-good",
+            "The catalog, connections, and installation list keep their last verified state. Refresh and probes pause with a network waitReason; nothing is reported as fresh. Usage totals are withheld until the network returns.");
+        var refreshBtn = root.querySelector('[data-manager-toolbar="refresh"], [data-provider-action="refresh"]');
+        mgrBody.insertBefore(off, mgrBody.firstChild);
+        var note = PM.el("div", "mgr-note warn small", {});
+        note.setAttribute("data-offline-note", "");
+        note.innerHTML = PM.svg("plug", 11) + " Refresh held — offline. waitReason: network.";
+        if (refreshBtn && refreshBtn.parentNode) refreshBtn.parentNode.appendChild(note);
+        off.querySelector("[data-offline-dismiss]").addEventListener("click", function () {
+          off.remove();
+          var n = root.querySelector("[data-offline-note]"); if (n) n.remove();
+          PM.toast("Back online — refresh resumes");
+        });
+      });
+    });
+    // runtime demand → Provider Setup Required receipt + continuation token (adjudication)
+    root.querySelectorAll('[data-manager-toolbar="demand"]').forEach(function (btn) {
+      if (btn.dataset.wired) return; btn.dataset.wired = "1";
+      btn.addEventListener("click", function () { showSetupRequired(btn); });
+    });
+    // virtualized scale list (bounded DOM proof)
+    M.wireVirtualList(root);
+    // reconnect runs a probe whose outcome is honest: the currently-failing row's
+    // FIRST probe times out (with waitReason) and recovers on retry; healthy rows
+    // reconnect outright. No predetermined success (correction 2026-08-13).
     root.querySelectorAll('[data-conn-action="reconnect"], [data-mcp-act="reconnect"]').forEach(function (btn) {
+      if (btn.dataset.wired) return; btn.dataset.wired = "1";
       btn.addEventListener("click", function () {
         var row = this.closest("[data-conn],[data-mcp]");
         var dot = row && row.querySelector(".sdot");
-        btn.disabled = true; btn.textContent = "Reconnecting…";
+        var wasFailing = dot && (dot.classList.contains("warn") || dot.classList.contains("bad"));
+        var attempts = row ? Number(row.dataset.probeAttempts || 0) : 0;
+        if (row) row.dataset.probeAttempts = String(attempts + 1);
+        var self = this;
+        self.disabled = true; self.textContent = "Probing…";
+        // ObservableWork wait projection while the probe runs
+        var waitEl = null;
+        if (row) {
+          waitEl = PM.el("div", "mgr-note", {});
+          waitEl.innerHTML = PM.shared.workBlock({
+            phase: "Auth probe", waitReason: "provider network probe (simulated latency)",
+            onCancel: false
+          });
+          row.querySelector(".col.grow") && row.querySelector(".col.grow").appendChild(waitEl);
+          PM.shared.wireWorkBlocks(row);
+        }
         setTimeout(function () {
-          btn.disabled = false; btn.outerHTML = "";
-          if (dot) { dot.classList.remove("warn","bad"); dot.classList.add("ok"); }
-          if (row) { row.querySelectorAll(".chip.bad,.chip.warn").forEach(function(c){ c.classList.remove("bad","warn"); c.classList.add("ok"); }); }
-          PM.toast("Reconnected · probe ok");
+          self.disabled = false;
+          if (waitEl && waitEl.parentNode) waitEl.remove();
+          var fails = wasFailing && attempts === 0;
+          if (fails) {
+            self.textContent = "Retry probe";
+            var note = row && row.querySelector(".mgr-note.bad.probe-note");
+            if (!note && row) {
+              note = PM.el("div", "mgr-note bad small probe-note", {});
+              row.querySelector(".col.grow").appendChild(note);
+            }
+            if (note) note.innerHTML = PM.svg("warn", 11) + " Probe timed out after 10s — endpoint reachable, auth handshake did not complete. waitReason: network. Retry probes with backoff; row keeps last-known-good state.";
+            PM.toast("Probe failed — timeout, not success · retry available");
+          } else {
+            self.outerHTML = "";
+            if (dot) { dot.classList.remove("warn", "bad"); dot.classList.add("ok"); }
+            if (row) {
+              row.querySelectorAll(".chip.bad,.chip.warn").forEach(function (c) { c.classList.remove("bad", "warn"); c.classList.add("ok"); });
+              var old = row.querySelector(".probe-note"); if (old) old.remove();
+            }
+            PM.toast("Reconnected · probe ok");
+          }
         }, 1100);
       });
     });
@@ -1108,7 +1319,58 @@
     });
     // secret field actions (reveal/copy/test/vault/cli-launch/pm-authorize, packet 02)
     PM.shared.wireSecretFields(root);
+    } /* end wireAll */
   };
+
+  /* ---------- runtime demand → Provider Setup Required (final adjudication) ----------
+     Demonstrates the runtime-demand contract: Auto/On is not consent; the demand is
+     answered with a receipt + deep link + continuation token; work resumes after
+     explicit setup. No silent acquisition anywhere in the flow. */
+  function showSetupRequired(anchor) {
+    var old = document.querySelector("[data-popover].setup-required"); if (old) old.remove();
+    var token = "pm-continuation:goal-2281/run-4:gemini-cli";
+    var modal = PM.el("div", "setup-required setup-modal", { "data-popover": "", role: "dialog", "aria-label": "Provider Setup Required" },
+      '<div class="setup-modal-head"><strong>Provider Setup Required</strong><button class="btn sm ghost icon" data-req-close>' + PM.svg("close", 14) + '</button></div>' +
+      '<div class="imp-row" style="margin:10px 0">' +
+        '<div class="col gap-xs"><strong>A Goal requested Gemini CLI</strong>' +
+        '<span class="muted small">Goal 2281 · run 4 · step "summarize releases" — the model route resolved to a provider whose CLI is not installed.</span></div>' +
+        '<span class="chip warn">Not installed</span>' +
+      '</div>' +
+      '<div class="mgr-note warn small">' + PM.svg("info", 12) + ' Initial install is explicit and user-triggered, from the official provider source, for the exact selected Host/Environment. <b>Auto and On are not consent for first acquisition.</b> Never bundled, never pre-seeded, never silently installed by Project, model, Goal, Plan, or agent demand.</div>' +
+      '<div class="imp-section-label">Continuation</div>' +
+      '<div class="row center gap-sm wrap"><span class="chip mono">' + token + '</span>' +
+      '<span class="muted small">Kept with the paused run — work resumes exactly here after setup.</span></div>' +
+      '<div class="setup-modal-foot">' +
+        '<button class="btn sm ghost" data-req-close>Not now — run stays paused</button>' +
+        '<button class="btn sm primary" data-req-setup>' + PM.svg("external", 13) + 'Open provider setup (explicit consent)</button>' +
+      '</div>'
+    );
+    document.body.appendChild(modal);
+    var r = anchor.getBoundingClientRect();
+    modal.style.top = Math.max(12, r.bottom + 8) + "px";
+    modal.style.left = Math.max(12, Math.min(r.left, window.innerWidth - 480)) + "px";
+    var release = PM.shared.trapFocus(modal);
+    var close = function () { modal.remove(); release(); };
+    modal.querySelector("[data-req-close]").addEventListener("click", close);
+    modal.querySelector("[data-req-setup]").addEventListener("click", function () {
+      close();
+      // deep-link into the provider manager through the active concept's own IA
+      if (PM.openOwnedManager) PM.openOwnedManager("pam");
+      else { PM.openManager("pam"); PM.render && PM.render(); }
+      setTimeout(function () {
+        var host = document.querySelector('[data-manager-id="pam"]') || document.querySelector(".mgr");
+        if (host && !host.querySelector("[data-setup-link-note]")) {
+          var note = PM.el("div", "mgr-note info small", {});
+          note.setAttribute("data-setup-link-note", "");
+          note.innerHTML = PM.svg("bolt", 12) + " Arrived from a runtime demand — continuation token <span class=\"mono\">" + token + "</span> held. Install Gemini CLI explicitly from the official source (see installations below), then resume the run.";
+          var mb = host.querySelector(".mgr-body"); if (mb) mb.insertBefore(note, mb.firstChild);
+        }
+        var gemini = Array.prototype.slice.call(document.querySelectorAll(".res-row")).find(function (row) { return row.textContent.indexOf("Gemini CLI") > -1; });
+        if (gemini) { PM.motion && PM.motion.pulseOnce(gemini, { duration: 700 }); gemini.scrollIntoView({ block: "center", behavior: PM.state.reducedMotion ? "auto" : "smooth" }); }
+      }, PM.openOwnedManager ? 320 : 60);
+      PM.toast("Run paused with continuation token — resume after explicit setup");
+    });
+  }
 
   /* ---------- free-model setup stepper (A8) ---------- */
   function showSetupStepper(anchor) {
@@ -1126,9 +1388,10 @@
       '<div class="setup-modal-foot"><button class="btn sm ghost" data-setup-close>Cancel</button><button class="btn sm primary" data-setup-done>Mark complete · return to model</button></div>'
     );
     document.body.appendChild(modal);
-    modal.querySelector("[data-setup-close]").addEventListener("click", function () { modal.remove(); });
+    var releaseTrap = PM.shared.trapFocus(modal);
+    modal.querySelector("[data-setup-close]").addEventListener("click", function () { modal.remove(); releaseTrap(); });
     modal.querySelector("[data-setup-done]").addEventListener("click", function () {
-      modal.remove();
+      modal.remove(); releaseTrap();
       PM.toast("Setup complete · returned to model row");
     });
   }
@@ -1155,10 +1418,13 @@
   PM.toast = function (msg) {
     var old = document.querySelector(".pm-toast");
     if (old) old.remove();
-    var t = PM.el("div", "pm-toast", { role:"status" }, msg);
+    var t = PM.el("div", "pm-toast", { role:"status" }, (PM_ICONS.ok ? PM.svg("ok", 14) : "") + "<span>" + msg + "</span>");
     document.body.appendChild(t);
     requestAnimationFrame(function () { t.classList.add("show"); });
-    setTimeout(function () { t.classList.remove("show"); setTimeout(function(){ t.remove(); }, 300); }, 2200);
+    setTimeout(function () {
+      t.classList.add("leaving");
+      setTimeout(function(){ t.remove(); }, 280);
+    }, 2200);
   };
   PM.menu = function (anchor, innerHTML, onPick) {
     var old = document.querySelector("[data-popover]"); if (old) old.remove();

@@ -1,0 +1,1008 @@
+{
+ "ran_at": "2026-08-18T04:25:37.613Z",
+ "method_note": "Re-run of CANONICAL_FIXTURE_CROSSCHECK.json against the post-remediation concept, same corpora definition and same literal/equivalence matching, plus one declared extension (derived_field).",
+ "corpus_sizes": {
+  "dom_chars": 107483,
+  "data_chars": 244836,
+  "data_distinct_keys": 746
+ },
+ "headline": {
+  "fixtures": 13,
+  "must_tokens_total": 79,
+  "must_tokens_present_literally_in_dom": 2,
+  "must_tokens_present_literally_in_data": 38,
+  "must_tokens_with_a_camelcase_field_in_data": 47,
+  "must_tokens_only_in_a_derived_accessor": 0,
+  "must_tokens_represented_by_any_measure": 50,
+  "must_tokens_absent_everywhere": 29,
+  "must_not_total": 43,
+  "must_not_literal_hits": 3
+ },
+ "fixtures": [
+  {
+   "fixture_id": "GUI-USG-001",
+   "title": "missing usage renders unknown, not zero",
+   "must_total": 5,
+   "tokens": [
+    {
+     "token": "source_class:unknown",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": true,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "source_confidence:unknown",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": true,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "source_authority:unknown",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": true,
+     "value_half_in_dom": true,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "usage_reporting_state:unknown_or_unavailable",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": true,
+     "value_half_in_dom": false,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "raw_payload_ref:absent_or_redacted",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": false,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    }
+   ],
+   "must_not_total": 3,
+   "must_not_literal_hits": [],
+   "must_literal_in_dom": 0,
+   "must_literal_in_data": 2,
+   "must_with_camelcase_equivalent_field": [
+    "source_class:unknown",
+    "source_confidence:unknown",
+    "source_authority:unknown",
+    "usage_reporting_state:unknown_or_unavailable"
+   ],
+   "must_absent_everywhere": [
+    "raw_payload_ref:absent_or_redacted"
+   ]
+  },
+  {
+   "fixture_id": "GUI-USG-002",
+   "title": "provider-reported zero remains reported zero",
+   "must_total": 7,
+   "tokens": [
+    {
+     "token": "source_class:provider_reported",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": false,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "source_confidence",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "source_authority",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "settlement_status:settled_or_adjusted",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": true,
+     "value_half_in_dom": false,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "zero_buckets",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    },
+    {
+     "token": "raw_payload_ref",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    },
+    {
+     "token": "provider_payload_hash",
+     "literal_in_dom": true,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    }
+   ],
+   "must_not_total": 3,
+   "must_not_literal_hits": [],
+   "must_literal_in_dom": 1,
+   "must_literal_in_data": 3,
+   "must_with_camelcase_equivalent_field": [
+    "source_class:provider_reported",
+    "source_confidence",
+    "source_authority",
+    "settlement_status:settled_or_adjusted"
+   ],
+   "must_absent_everywhere": [
+    "zero_buckets",
+    "raw_payload_ref"
+   ]
+  },
+  {
+   "fixture_id": "GUI-USG-003",
+   "title": "unknown cost fails closed",
+   "must_total": 6,
+   "tokens": [
+    {
+     "token": "cost_status:unknown",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": true,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "source_confidence",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "source_authority",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "cost_microdollars:null",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": false,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    },
+    {
+     "token": "cost_minor_units:null",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": false,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    },
+    {
+     "token": "unknown_cost_copy",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    }
+   ],
+   "must_not_total": 3,
+   "must_not_literal_hits": [
+    "$0.00"
+   ],
+   "must_literal_in_dom": 0,
+   "must_literal_in_data": 3,
+   "must_with_camelcase_equivalent_field": [
+    "cost_status:unknown",
+    "source_confidence",
+    "source_authority"
+   ],
+   "must_absent_everywhere": [
+    "cost_microdollars:null",
+    "cost_minor_units:null",
+    "unknown_cost_copy"
+   ]
+  },
+  {
+   "fixture_id": "GUI-USG-004",
+   "title": "BYOK and subscription costs are hidden, not estimated",
+   "must_total": 7,
+   "tokens": [
+    {
+     "token": "usage_event_ref",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "usage_record_id",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "source_confidence",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "source_authority",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "hidden_byok",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "hidden_subscription",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "display_cost_policy:suppress",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": true,
+     "value_half_in_dom": true,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    }
+   ],
+   "must_not_total": 3,
+   "must_not_literal_hits": [],
+   "must_literal_in_dom": 0,
+   "must_literal_in_data": 6,
+   "must_with_camelcase_equivalent_field": [
+    "usage_event_ref",
+    "usage_record_id",
+    "source_confidence",
+    "source_authority",
+    "hidden_byok",
+    "hidden_subscription",
+    "display_cost_policy:suppress"
+   ],
+   "must_absent_everywhere": []
+  },
+  {
+   "fixture_id": "GUI-USG-005",
+   "title": "disabled quota bucket is disabled, not empty",
+   "must_total": 3,
+   "tokens": [
+    {
+     "token": "quota_status:disabled",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": true,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "window_kind:unknown_or_disabled",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": false,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "disabled_reason",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    }
+   ],
+   "must_not_total": 5,
+   "must_not_literal_hits": [
+    "success"
+   ],
+   "must_literal_in_dom": 0,
+   "must_literal_in_data": 1,
+   "must_with_camelcase_equivalent_field": [
+    "quota_status:disabled",
+    "window_kind:unknown_or_disabled"
+   ],
+   "must_absent_everywhere": [
+    "disabled_reason"
+   ]
+  },
+  {
+   "fixture_id": "GUI-USG-006",
+   "title": "reported cache zero differs from unsupported cache",
+   "must_total": 4,
+   "tokens": [
+    {
+     "token": "cache_read:0",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": true,
+     "value_half_in_dom": true,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "cache_reporting_state:reported",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": true,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "cache_reporting_state:not_exposed",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": false,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "cache_reporting_state:unknown",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": true,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    }
+   ],
+   "must_not_total": 2,
+   "must_not_literal_hits": [],
+   "must_literal_in_dom": 0,
+   "must_literal_in_data": 3,
+   "must_with_camelcase_equivalent_field": [
+    "cache_read:0",
+    "cache_reporting_state:reported",
+    "cache_reporting_state:not_exposed",
+    "cache_reporting_state:unknown"
+   ],
+   "must_absent_everywhere": []
+  },
+  {
+   "fixture_id": "GUI-USG-007",
+   "title": "inclusive and exclusive token totals do not double count",
+   "must_total": 4,
+   "tokens": [
+    {
+     "token": "counting_semantics",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "input_total_includes_cache",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "output_total_includes_reasoning",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "provider_total_semantics",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    }
+   ],
+   "must_not_total": 3,
+   "must_not_literal_hits": [],
+   "must_literal_in_dom": 0,
+   "must_literal_in_data": 4,
+   "must_with_camelcase_equivalent_field": [
+    "counting_semantics",
+    "input_total_includes_cache",
+    "output_total_includes_reasoning",
+    "provider_total_semantics"
+   ],
+   "must_absent_everywhere": []
+  },
+  {
+   "fixture_id": "GUI-USG-008",
+   "title": "partial and aborted streams preserve partial usage once",
+   "must_total": 4,
+   "tokens": [
+    {
+     "token": "settlement_status:streaming_partial_or_failed",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": true,
+     "value_half_in_dom": false,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "stream_state:partial_or_aborted",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": true,
+     "value_half_in_dom": false,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "dedupe_key",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "accepted_partial_rollup_once",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    }
+   ],
+   "must_not_total": 3,
+   "must_not_literal_hits": [],
+   "must_literal_in_dom": 0,
+   "must_literal_in_data": 1,
+   "must_with_camelcase_equivalent_field": [
+    "settlement_status:streaming_partial_or_failed",
+    "stream_state:partial_or_aborted",
+    "dedupe_key"
+   ],
+   "must_absent_everywhere": [
+    "accepted_partial_rollup_once"
+   ]
+  },
+  {
+   "fixture_id": "GUI-CBP-001",
+   "title": "Antigravity missing commands render not exposed or unknown",
+   "must_total": 8,
+   "tokens": [
+    {
+     "token": "/stats",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    },
+    {
+     "token": "/usage",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    },
+    {
+     "token": "/quota",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    },
+    {
+     "token": "/credits",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    },
+    {
+     "token": "stats_unavailable",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    },
+    {
+     "token": "usage:unknown",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": true,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    },
+    {
+     "token": "quota:not_exposed",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": true,
+     "value_half_in_dom": false,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    },
+    {
+     "token": "credits:not_exposed",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": true,
+     "value_half_in_dom": false,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    }
+   ],
+   "must_not_total": 4,
+   "must_not_literal_hits": [],
+   "must_literal_in_dom": 0,
+   "must_literal_in_data": 1,
+   "must_with_camelcase_equivalent_field": [],
+   "must_absent_everywhere": [
+    "/stats",
+    "/usage",
+    "/quota",
+    "/credits",
+    "stats_unavailable",
+    "quota:not_exposed",
+    "credits:not_exposed"
+   ]
+  },
+  {
+   "fixture_id": "GUI-CBP-002",
+   "title": "Antigravity G1 credits are credits-only",
+   "must_total": 6,
+   "tokens": [
+    {
+     "token": "provider_id:antigravity_cli",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": false,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    },
+    {
+     "token": "route:agy",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": true,
+     "value_half_in_dom": false,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "G1 credits",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    },
+    {
+     "token": "UseG1Credits",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    },
+    {
+     "token": "credits_status",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    },
+    {
+     "token": "credits_remaining",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    }
+   ],
+   "must_not_total": 4,
+   "must_not_literal_hits": [],
+   "must_literal_in_dom": 0,
+   "must_literal_in_data": 0,
+   "must_with_camelcase_equivalent_field": [
+    "route:agy"
+   ],
+   "must_absent_everywhere": [
+    "provider_id:antigravity_cli",
+    "G1 credits",
+    "UseG1Credits",
+    "credits_status",
+    "credits_remaining"
+   ]
+  },
+  {
+   "fixture_id": "GUI-ROUTE-001",
+   "title": "Usage route opens object-first by usage event",
+   "must_total": 12,
+   "tokens": [
+    {
+     "token": "route_target.object_kind:usage_event",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": false,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    },
+    {
+     "token": "object_id:usage_event_ref",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": true,
+     "value_half_in_dom": false,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "usage_record_id",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "provider_attempt_ref",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "attempt_id",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "trace_ref",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    },
+    {
+     "token": "source_class",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "source_confidence",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "source_authority",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "settlement_status",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "projection_freshness",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "projection_health",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    }
+   ],
+   "must_not_total": 4,
+   "must_not_literal_hits": [],
+   "must_literal_in_dom": 0,
+   "must_literal_in_data": 9,
+   "must_with_camelcase_equivalent_field": [
+    "object_id:usage_event_ref",
+    "usage_record_id",
+    "provider_attempt_ref",
+    "attempt_id",
+    "source_class",
+    "source_confidence",
+    "source_authority",
+    "settlement_status",
+    "projection_freshness",
+    "projection_health"
+   ],
+   "must_absent_everywhere": [
+    "route_target.object_kind:usage_event",
+    "trace_ref"
+   ]
+  },
+  {
+   "fixture_id": "GUI-RAW-001",
+   "title": "Raw and Curated usage views redact provider payloads",
+   "must_total": 8,
+   "tokens": [
+    {
+     "token": "Curated normalized fields",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    },
+    {
+     "token": "source_class",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "source_confidence",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "source_authority",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "Raw redacted refs",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    },
+    {
+     "token": "provider_payload_hash",
+     "literal_in_dom": true,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    },
+    {
+     "token": "omitted_counts",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    },
+    {
+     "token": "permission_state",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    }
+   ],
+   "must_not_total": 4,
+   "must_not_literal_hits": [
+    "credentials"
+   ],
+   "must_literal_in_dom": 1,
+   "must_literal_in_data": 3,
+   "must_with_camelcase_equivalent_field": [
+    "source_class",
+    "source_confidence",
+    "source_authority"
+   ],
+   "must_absent_everywhere": [
+    "Curated normalized fields",
+    "Raw redacted refs",
+    "omitted_counts",
+    "permission_state"
+   ]
+  },
+  {
+   "fixture_id": "GUI-RAP-001",
+   "title": "Runtime artifact usage drill-through requires envelope and per-type schemas",
+   "must_total": 5,
+   "tokens": [
+    {
+     "token": "cost_usage",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    },
+    {
+     "token": "tool_llm_trace",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    },
+    {
+     "token": "envelope_plus_per_type",
+     "literal_in_dom": false,
+     "literal_in_data": false,
+     "key_half_in_data": false,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": false,
+     "derived_field": false
+    },
+    {
+     "token": "usage_event_ref",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    },
+    {
+     "token": "usage_record_id",
+     "literal_in_dom": false,
+     "literal_in_data": true,
+     "key_half_in_data": true,
+     "value_half_in_dom": null,
+     "camelcase_equivalent_field": true,
+     "derived_field": false
+    }
+   ],
+   "must_not_total": 2,
+   "must_not_literal_hits": [],
+   "must_literal_in_dom": 0,
+   "must_literal_in_data": 2,
+   "must_with_camelcase_equivalent_field": [
+    "usage_event_ref",
+    "usage_record_id"
+   ],
+   "must_absent_everywhere": [
+    "cost_usage",
+    "tool_llm_trace",
+    "envelope_plus_per_type"
+   ]
+  }
+ ],
+ "page_errors": []
+}

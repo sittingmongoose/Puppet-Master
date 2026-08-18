@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="en" data-theme="friendly-dark" data-reduced-motion="0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="data:,">
+<title>07 A2 Compendium Workspace / Take 1 — GLM-5.2 Settings</title>
+<link rel="stylesheet" href="assets/themes.css">
+<link rel="stylesheet" href="assets/shell.css">
+<link rel="stylesheet" href="assets/v2/pm-std.css">
+<script src="assets/icons.svg.js"></script>
+<script src="assets/v2/pm-inventory.js"></script>
+<script src="assets/v2/pm-data.js"></script>
+<script src="assets/v2/pm-managers.js"></script>
+<script src="assets/v2/pm-search.js"></script>
+<script src="assets/v2/pm-routes.js"></script>
+<script src="assets/v2/pm-store.js"></script>
+<script src="concept-hub-bridge.js"></script>
+<style>
+/* ===== CONCEPT 07 — A2 COMPENDIUM WORKSPACE / TAKE 1 (GLM-5.2) =====
+   Native geometry: the All-Settings COMPENDIUM is a first-class citizen — faceted,
+   searchable, virtualized long-tail index. Domain pages combine overview + key
+   settings + related managers. Manager = integrated list/detail workspace.
+   Facets collapse to a drawer when narrow. Layered-reveal motion. */
+.c7 { height: 100%; display: flex; flex-direction: column; min-width: 0; }
+/* ---------- HOME ---------- */
+.c7-home { flex: 1; overflow: auto; }
+.c7-wrap { max-width: 1160px; margin: 0 auto; padding: clamp(16px, 2.8vw, 42px) clamp(16px, 2.8vw, 36px) 60px; }
+.c7-eyebrow { font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); }
+.c7-eyebrow b { color: var(--accent); }
+.c7-h1 { font-size: clamp(25px, 3vw, 33px); font-weight: 800; letter-spacing: -.02em; margin: 4px 0 4px; }
+.c7-sub { color: var(--ink-2); font-size: 13.5px; max-width: 64ch; margin-bottom: 18px; line-height: 1.6; }
+.c7-searchwrap { position: relative; margin-bottom: 16px; }
+.c7-search { display: flex; align-items: center; gap: 12px; height: 54px; padding: 0 16px; background: var(--surface-elev); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--sh-1); }
+.c7-search:focus-within { border-color: var(--accent-line); box-shadow: 0 0 0 3px var(--accent-soft); }
+.c7-search input { flex: 1; min-width: 0; background: none; border: none; outline: none; font-size: 16px; color: var(--ink); }
+.c7-drop { position: absolute; top: calc(100% + 8px); left: 0; right: 0; z-index: 30; background: var(--surface-elev); border: 1px solid var(--line-2); border-radius: var(--r); box-shadow: var(--sh-3); max-height: 380px; overflow: auto; padding: 4px; }
+.c7-res { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: var(--r-xs); cursor: pointer; }
+.c7-res:hover, .c7-res[aria-selected="true"] { background: var(--surface-2); }
+.c7-res .g { flex: none; font-size: 9.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-4); width: 92px; }
+.c7-res .lbl { font-size: 13px; font-weight: 650; }
+.c7-res .path { font-size: 11px; color: var(--ink-3); }
+.c7-res .why { font-size: 10.5px; color: var(--warn); margin-left: auto; }
+.c7-drop-empty { padding: 16px; text-align: center; font-size: 12.5px; color: var(--ink-2); }
+.c7-note { display: flex; align-items: center; gap: 10px; padding: 10px 14px; margin-bottom: 14px; border: 1px solid color-mix(in srgb, var(--warn) 38%, var(--line)); border-radius: var(--r-sm); background: color-mix(in srgb, var(--warn-soft) 42%, var(--surface)); font-size: 12.5px; }
+.c7-grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 18px; }
+.c7-col h3.lt { font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 10px; }
+.c7-area { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.c7-area-card { display: flex; align-items: center; gap: 10px; padding: 12px 13px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface); cursor: pointer; transition: border-color var(--t-fast) var(--ease); }
+.c7-area-card:hover { border-color: var(--accent-line); }
+.c7-area-card .ic { color: var(--ink-2); flex: none; }
+.c7-area-card .t { font-size: 13.5px; font-weight: 700; }
+.c7-area-card .d { font-size: 11px; color: var(--ink-3); }
+.c7-att { border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface); overflow: hidden; }
+.c7-att-row { display: flex; align-items: center; gap: 8px; padding: 8px 11px; font-size: 12px; border-bottom: 1px solid var(--line); }
+.c7-att-row:last-child { border-bottom: none; }
+.c7-att-row .d { color: var(--ink-3); font-size: 11px; }
+.c7-att-row button { margin-left: auto; font-size: 11px; color: var(--accent); background: none; border: none; font-weight: 700; cursor: pointer; }
+.c7-recent { border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface); padding: 4px 0; }
+.c7-recent-row { display: flex; gap: 8px; align-items: center; padding: 7px 11px; font-size: 12px; border-bottom: 1px solid var(--line); }
+.c7-recent-row:last-child { border-bottom: none; }
+.c7-recent-row .when { margin-left: auto; color: var(--ink-4); font-size: 10.5px; }
+.c7-utils { display: flex; gap: 8px; margin-top: 16px; }
+.c7-util { display: inline-flex; align-items: center; gap: 7px; padding: 8px 12px; font-size: 12px; font-weight: 650; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface); color: var(--ink-2); cursor: pointer; }
+.c7-util.primary { border-color: var(--accent); color: var(--accent); }
+.c7-util:hover { color: var(--ink); }
+/* ---------- COMPENDIUM (All Settings) ---------- */
+.c7-comp { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.c7-comp-head { display: flex; align-items: center; gap: 12px; padding: 12px clamp(14px, 2.4vw, 30px); border-bottom: 1px solid var(--line); background: var(--surface); flex-wrap: wrap; }
+.c7-comp-head h2 { margin: 0; font-size: 17px; font-weight: 800; }
+.c7-comp-head .n { font-size: 11.5px; color: var(--ink-3); }
+.c7-comp-head .sp { flex: 1; }
+.c7-facetbar { display: flex; gap: 6px; padding: 8px clamp(14px, 2.4vw, 30px); border-bottom: 1px solid var(--line); background: var(--surface); overflow-x: auto; align-items: center; }
+.c7-facet { position: relative; }
+.c7-facet > button { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border: 1px solid var(--line); border-radius: var(--r-pill); background: var(--surface-2); color: var(--ink-2); font-size: 11.5px; font-weight: 650; cursor: pointer; white-space: nowrap; }
+.c7-facet > button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+.c7-comp-body { flex: 1; min-height: 0; display: flex; }
+.c7-list { flex: 1; min-width: 0; overflow: auto; }
+.c7-row { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 2fr) 120px 150px; gap: 12px; align-items: center; padding: 9px clamp(14px, 2.4vw, 30px); border-bottom: 1px solid var(--line); font-size: 12.5px; cursor: pointer; }
+.c7-row:hover { background: var(--surface); }
+.c7-row[aria-selected="true"] { background: var(--surface-2); box-shadow: inset 2px 0 0 var(--accent); }
+.c7-row .id { font-weight: 650; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.c7-row .ds { color: var(--ink-2); font-size: 11.5px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.c7-row .dom { font-size: 11px; color: var(--ink-3); }
+.c7-row .st { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+.c7-listhead { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 2fr) 120px 150px; gap: 12px; padding: 7px clamp(14px, 2.4vw, 30px); font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-4); border-bottom: 1px solid var(--line-2); position: sticky; top: 0; background: var(--bg); z-index: 3; }
+.c7-detail { width: 360px; flex: none; border-left: 1px solid var(--line); background: var(--surface); overflow: auto; padding: 16px 18px 40px; }
+.c7-detail h3 { margin: 0 0 2px; font-size: 15.5px; font-weight: 800; }
+.c7-detail .dd { font-size: 12.5px; color: var(--ink-2); line-height: 1.6; margin: 6px 0 12px; }
+.c7-kv { display: grid; grid-template-columns: 108px 1fr; gap: 4px 12px; font-size: 12px; margin-bottom: 10px; }
+.c7-kv .k { color: var(--ink-3); font-weight: 650; }
+.c7-kv .v { color: var(--ink); overflow-wrap: anywhere; }
+.c7-whyland { border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line)); background: color-mix(in srgb, var(--accent-soft) 45%, var(--surface)); border-radius: var(--r-sm); padding: 10px 12px; font-size: 12px; margin-bottom: 12px; }
+/* ---------- DOMAIN OVERVIEW ---------- */
+.c7-dom { flex: 1; min-height: 0; overflow: auto; }
+.c7-dom-head { padding: 18px clamp(16px, 2.8vw, 36px) 6px; }
+.c7-dom-head .cr { font-size: 12px; color: var(--ink-3); }
+.c7-dom-head h2 { margin: 2px 0 4px; font-size: 24px; font-weight: 800; letter-spacing: -.02em; }
+.c7-dom-head .lede { font-size: 13px; color: var(--ink-2); max-width: 66ch; }
+.c7-dom-body { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 18px; padding: 10px clamp(16px, 2.8vw, 36px) 50px; align-items: start; }
+.c7-panel { border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); }
+.c7-panel-h { padding: 11px 14px 8px; font-size: 11px; font-weight: 800; letter-spacing: .11em; text-transform: uppercase; color: var(--ink-3); }
+.c7-key { padding: 0 6px 6px; }
+.c7-keyrow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; padding: 9px 8px; border-bottom: 1px solid var(--line); }
+.c7-keyrow:last-child { border-bottom: none; }
+.c7-keyrow .lbl { font-size: 13px; font-weight: 650; }
+.c7-keyrow .desc { font-size: 11.5px; color: var(--ink-2); margin-top: 2px; }
+.c7-rel { padding: 0 8px 8px; }
+.c7-relrow { display: flex; align-items: center; gap: 10px; padding: 10px 8px; border-bottom: 1px solid var(--line); cursor: pointer; }
+.c7-relrow:last-child { border-bottom: none; }
+.c7-relrow:hover .t { color: var(--accent); }
+.c7-relrow .t { font-size: 13px; font-weight: 700; }
+.c7-relrow .d { font-size: 11.5px; color: var(--ink-2); }
+.c7-pagelist { margin-top: 8px; }
+.c7-pagerow { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border: 1px solid var(--line); border-radius: var(--r-xs); margin-bottom: 6px; cursor: pointer; font-size: 12.5px; background: var(--surface); }
+.c7-pagerow:hover { border-color: var(--accent-line); }
+.c7-pagerow .cnt { margin-left: auto; color: var(--ink-3); font-size: 11px; }
+/* ---------- MANAGER list/detail ---------- */
+.c7-mgr { flex: 1; min-height: 0; display: flex; }
+.c7-mgr-list { width: 400px; flex: none; border-right: 1px solid var(--line); overflow: auto; }
+.c7-mgr-head { position: sticky; top: 0; background: var(--surface); padding: 12px 14px 8px; border-bottom: 1px solid var(--line); z-index: 2; }
+.c7-mgr-head h2 { margin: 0 0 2px; font-size: 16px; font-weight: 800; display: flex; gap: 8px; align-items: center; }
+.c7-mgr-head .sum { font-size: 11.5px; color: var(--ink-3); }
+.c7-mrow { display: grid; grid-template-columns: 12px minmax(0, 1fr) auto; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--line); cursor: pointer; align-items: start; }
+.c7-mrow:hover { background: var(--surface); }
+.c7-mrow[aria-selected="true"] { background: var(--surface-2); }
+.c7-mrow .t { font-size: 13px; font-weight: 700; }
+.c7-mrow .d { font-size: 11.5px; color: var(--ink-2); margin-top: 1px; }
+.c7-mrow .meta { font-size: 10.5px; color: var(--ink-3); margin-top: 3px; display: flex; gap: 5px; flex-wrap: wrap; }
+.c7-mgr-detail { flex: 1; min-width: 0; overflow: auto; padding: 18px clamp(16px, 2.4vw, 32px) 50px; }
+.c7-mgr-detail h3 { margin: 0 0 2px; font-size: 19px; font-weight: 800; }
+.c7-tabs { display: flex; gap: 4px; margin: 10px 0 14px; flex-wrap: wrap; }
+.c7-tabs button { padding: 6px 12px; font-size: 12px; font-weight: 650; color: var(--ink-2); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-pill); cursor: pointer; }
+.c7-tabs button[aria-selected="true"] { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
+.c7-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.c7-kv2 { display: grid; grid-template-columns: 150px 1fr; gap: 5px 14px; font-size: 12.5px; margin-bottom: 14px; }
+.c7-kv2 .k { color: var(--ink-3); font-weight: 650; }
+.c7-kv2 .v { color: var(--ink); line-height: 1.55; overflow-wrap: anywhere; }
+.c7-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+.c7-btn { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border: 1px solid var(--line); border-radius: var(--r-xs); background: var(--surface); color: var(--ink-2); font-size: 12px; font-weight: 650; cursor: pointer; }
+.c7-btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.c7-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.c7-table th { text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-3); padding: 6px 8px; border-bottom: 1px solid var(--line); }
+.c7-table td { padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.c7-table td.mut { color: var(--ink-2); }
+.c7-offline { display: flex; gap: 9px; padding: 10px 12px; margin: 8px 0; border: 1px solid color-mix(in srgb, var(--warn) 40%, var(--line)); border-radius: var(--r-xs); background: color-mix(in srgb, var(--warn-soft) 45%, var(--surface)); font-size: 12px; }
+.c7-work { border: 1px solid var(--line); border-radius: var(--r-xs); padding: 11px 13px; margin: 8px 0; font-size: 12px; }
+.c7-work .bar { height: 5px; background: var(--surface-3); border-radius: 99px; overflow: hidden; margin-top: 7px; }
+.c7-work .bar > div { height: 100%; background: var(--accent); transition: width var(--t-mid) var(--ease); }
+.c7-setup { border: 1px solid var(--line-2); border-radius: var(--r-xs); padding: 12px 14px; margin: 8px 0; }
+.c7-setup ol { margin: 4px 0 0; padding-left: 18px; font-size: 11.5px; color: var(--ink-2); line-height: 1.7; }
+/* ---------- copy ---------- */
+.c7-veil { position: absolute; inset: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 60%, transparent); display: grid; place-items: center; padding: 16px; }
+.c7-copy { width: min(960px, 100%); max-height: calc(100% - 12px); display: flex; flex-direction: column; background: var(--surface-elev); border: 1px solid var(--line-2); border-radius: var(--r-lg); overflow: hidden; }
+.c7-copy-head { display: flex; align-items: center; gap: 10px; padding: 13px 16px; border-bottom: 1px solid var(--line); }
+.c7-copy-head h3 { margin: 0; font-size: 16px; font-weight: 800; }
+.c7-copy-body { flex: 1; min-height: 0; overflow: auto; padding: 14px 16px; }
+.c7-copy-foot { display: flex; gap: 8px; padding: 11px 16px; border-top: 1px solid var(--line); }
+.c7-copy-foot .sp { flex: 1; }
+.c7-step { font-size: 10.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.c7-srcgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 8px; }
+.c7-src { padding: 11px 13px; border: 1px solid var(--line); border-radius: var(--r-sm); cursor: pointer; background: var(--surface); }
+.c7-src[aria-selected="true"] { border-color: var(--accent-line); background: var(--surface-2); }
+.c7-catgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.c7-cat { display: grid; grid-template-columns: 18px 1fr; gap: 10px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-sm); cursor: pointer; background: var(--surface); }
+.c7-cat[aria-selected="true"] { border-color: var(--accent-line); background: var(--surface-2); }
+.c7-counts { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+.c7-count { padding: 9px 13px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface); text-align: center; min-width: 86px; }
+.c7-count .n { font-size: 19px; font-weight: 800; display: block; }
+.c7-count .l { font-size: 10.5px; color: var(--ink-3); }
+.c7-diff { border: 1px solid var(--line); border-radius: var(--r-sm); height: 240px; overflow: auto; }
+.c7-diff-row { display: grid; grid-template-columns: 90px minmax(0, 1fr) minmax(0, 1fr); gap: 8px; padding: 6px 10px; border-bottom: 1px solid var(--line); font-size: 11.5px; align-items: center; }
+.c7-diff-row .k { font-weight: 800; font-size: 10px; text-transform: uppercase; }
+.c7-diff-row.add .k { color: var(--ok); } .c7-diff-row.rep .k { color: var(--info); } .c7-diff-row.conf .k { color: var(--warn); }
+.c7-diff-row .y, .c7-diff-row .s { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink-2); }
+.c7-receipt { border: 1px solid color-mix(in srgb, var(--ok) 40%, var(--line)); background: color-mix(in srgb, var(--ok-soft) 38%, var(--surface)); border-radius: var(--r-sm); padding: 13px; font-size: 12.5px; }
+/* drawer + topbar */
+.c7-drawer { position: absolute; right: 0; top: 0; bottom: 0; width: min(430px, 94%); z-index: 45; background: var(--surface-elev); border-left: 1px solid var(--line-2); box-shadow: var(--sh-3); transform: translateX(102%); transition: transform var(--t-mid) var(--ease); display: flex; flex-direction: column; }
+.c7-drawer[data-open="1"] { transform: none; }
+.c7-drawer-head { display: flex; align-items: center; gap: 8px; padding: 13px 15px; border-bottom: 1px solid var(--line); }
+.c7-drawer-head h4 { margin: 0; font-size: 14px; flex: 1; }
+.c7-drawer-body { flex: 1; overflow: auto; padding: 13px 15px; font-size: 12.5px; line-height: 1.65; color: var(--ink-2); }
+.c7-crumb { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-3); min-width: 0; overflow: hidden; }
+.c7-crumb b { color: var(--ink); white-space: nowrap; }
+.c7-proj { font-size: 12px; color: var(--ink-2); white-space: nowrap; }
+.c7-proj b { color: var(--ink); }
+.c7-tb { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 11px; border: 1px solid var(--line); border-radius: var(--r-xs); background: var(--surface); color: var(--ink-2); font-size: 12px; font-weight: 650; cursor: pointer; white-space: nowrap; }
+.c7-minis { display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; min-width: 170px; max-width: 300px; flex: 1; border: 1px solid var(--line); border-radius: var(--r-xs); background: var(--surface); }
+.c7-minis input { flex: 1; min-width: 0; background: none; border: none; outline: none; color: var(--ink); font-size: 12.5px; }
+.c7-skel { border-radius: var(--r-xs); background: var(--surface-2); animation: v2-shimmer 1.4s ease-in-out infinite; }
+@media (max-width: 1099px) {
+  .c7-grid, .c7-area, .c7-dom-body, .c7-catgrid { grid-template-columns: 1fr; }
+  .c7-mgr { flex-direction: column; }
+  .c7-mgr-list { width: auto; max-height: 40%; border-right: none; border-bottom: 1px solid var(--line); }
+  .c7-detail { display: none; }
+  .c7-row, .c7-listhead { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) 110px; }
+  .c7-row .st, .c7-listhead .st { display: none; }
+  .c7-facetbar { flex-wrap: wrap; }
+}
+@media (max-width: 899px) {
+  .pm-shell { grid-template-columns: 60px 1fr var(--chat-w, 0px); grid-template-areas: "topbar topbar topbar" "activity stage chat" "footer footer footer"; }
+  .pm-rail { position: absolute; z-index: 44; top: var(--shell-h); bottom: var(--footer-h); left: 60px; width: 260px; box-shadow: var(--sh-3); background: var(--surface-elev); }
+  .c7-crumb { display: none; }
+}
+@media (min-width: 1900px) { .c7-wrap { max-width: 1380px; } .c7-detail { width: 420px; } .c7-mgr-list { width: 460px; } }
+</style>
+</head>
+<body>
+<div class="pm-shell" id="shell" data-rail="closed" data-chat="closed">
+  <header class="pm-topbar">
+    <span class="pm-brand">PUPPET&nbsp;MASTER</span>
+    <button class="c7-tb" id="navToggle" aria-label="Settings navigation"></button>
+    <nav class="c7-crumb" id="crumb" aria-label="Settings location"></nav>
+    <span class="pm-spacer"></span>
+    <div class="c7-minis" id="miniWrap" hidden><span id="miniIcon"></span><input id="miniSearch" type="search" placeholder="Search settings" aria-label="Search settings" autocomplete="off"></div>
+    <span class="c7-proj" id="projChip"></span>
+    <button class="c7-tb" id="themeBtn"></button>
+    <button class="c7-tb" id="closeBtn"></button>
+  </header>
+  <nav class="pm-activity" aria-label="Activity Bar" id="activity"></nav>
+  <aside class="pm-rail" data-hidden></aside>
+  <main class="pm-stage" id="stage" style="position:relative;">
+    <a data-concept-model="GLM-5.2" href="index.html" title="GLM-5.2 settings concept" style="position:absolute;opacity:0;pointer-events:none;" aria-hidden="true">GLM-5.2</a>
+    <div class="c7" id="app"></div>
+    <div class="c7-drawer v2-surface" id="drawer" data-open="0"><div class="c7-drawer-head"><h4 id="drawerTitle">Details</h4><button class="c7-tb" id="drawerClose"></button></div><div class="c7-drawer-body" id="drawerBody"></div></div>
+    <div id="menuHost"></div>
+  </main>
+  <aside class="pm-chat" data-hidden></aside>
+  <footer class="pm-footer" id="footer"></footer>
+</div>
+<script>
+(function () {
+  "use strict";
+  var PM2 = window.PM2, STORE = new PM2.Store("c07");
+  var NS = "concept-07-compendium-workspace";
+  var el = function (id) { return document.getElementById(id); };
+  var app = el("app"), stage = el("stage");
+  var NAV = new PM2.routes.Nav({ domain: null });
+  var QP = new URLSearchParams(location.search);
+  if (QP.get("theme")) document.documentElement.setAttribute("data-theme", QP.get("theme"));
+  if (QP.get("reduced") === "1") document.documentElement.setAttribute("data-reduced-motion", "1");
+  var ICONS = { general: "settings", ai: "pam", safety: "shield", code: "code", memory: "memory", planning: "compass", branching: "crew", media: "map", web: "search", personas: "users", extensions: "stack", system: "grid" };
+  function esc(x) { return String(x == null ? "" : x).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  el("projChip").innerHTML = '<span class="sdot ok"></span><b>' + PM2.currentProject.name + "</b> · current project";
+  el("closeBtn").innerHTML = PM2.svg("close", 13) + "Close";
+  el("navToggle").innerHTML = PM2.svg("list", 13) + "Settings";
+  el("miniIcon").innerHTML = PM2.svg("search", 13);
+  el("themeBtn").innerHTML = PM2.svg("settings", 13) + "Friendly Dark";
+  el("drawerClose").innerHTML = PM2.svg("close", 12) + "Close";
+  el("activity").innerHTML = ["home", "settings", "terminal", "stack", "users", "search"].map(function (i) { return '<button class="pm-act" aria-label="' + i + '">' + PM2.svg(i, 18) + "</button>"; }).join("");
+  el("footer").innerHTML = "<span><b>Settings</b> · " + NS + "</span><span class='pm-spacer'></span><span>828 settings · 12 categories · compendium</span>";
+
+  var menu = null;
+  function openMenu(anchor, items, onPick) {
+    closeMenu();
+    var m = document.createElement("div"); m.className = "v2menu";
+    m.innerHTML = items.map(function (it, i) { return it.sep ? '<div class="v2menu-sep"></div>' : '<button class="v2menu-item" data-i="' + i + '">' + (it.icon ? PM2.svg(it.icon, 14) : "") + '<span class="v2menu-label">' + it.label + "</span></button>"; }).join("");
+    el("menuHost").appendChild(m);
+    var r = anchor.getBoundingClientRect(), sr = stage.getBoundingClientRect();
+    var top = r.bottom - sr.top + 6, left = Math.min(Math.max(0, r.left - sr.left), sr.width - 230);
+    if (r.bottom + 280 > window.innerHeight) top = Math.max(4, r.top - sr.top - 280);
+    m.style.top = top + "px"; m.style.left = left + "px";
+    m.addEventListener("click", function (e) { var b = e.target.closest(".v2menu-item"); if (!b) return; closeMenu(); onPick(items[+b.dataset.i]); });
+    menu = m;
+  }
+  function closeMenu() { if (menu) { menu.remove(); menu = null; return true; } return false; }
+  document.addEventListener("click", function (e) { if (menu && !menu.contains(e.target)) closeMenu(); }, true);
+  el("themeBtn").addEventListener("click", function () {
+    var themes = PM2.mgrById["mgr.appearance"].themes;
+    openMenu(el("themeBtn"), themes.map(function (t) { return { label: t }; }).concat([{ sep: 1 }, { label: "Reduced motion: " + (RM() ? "on" : "off") }]), function (it) {
+      if (it.label.indexOf("Reduced") === 0) { document.documentElement.setAttribute("data-reduced-motion", RM() ? "0" : "1"); return; }
+      document.documentElement.setAttribute("data-theme", it.label);
+      document.documentElement.style.colorScheme = /-dark$/.test(it.label) ? "dark" : "light";
+      el("themeBtn").innerHTML = PM2.svg("settings", 13) + it.label;
+    });
+  });
+  function RM() { return document.documentElement.getAttribute("data-reduced-motion") === "1"; }
+  el("closeBtn").addEventListener("click", goHome);
+  el("navToggle").addEventListener("click", function () { var r = el("rail"); r.dataset.hidden = r.dataset.hidden ? "" : "hidden"; });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      if (closeMenu()) return;
+      if (el("drawer").dataset.open === "1") { closeDrawer(); return; }
+      if (COPY.open) { copyClose(); return; }
+      if (NAV.canBack()) { NAV.back(); return; }
+      if (state.view !== "home") goHome();
+    }
+  });
+
+  var state = { view: "home", domain: null, section: null, manager: null, object: null, tab: 0, hydrated: {}, lastQuery: "", lastRid: null, facet: "all", compSel: null };
+  var lastRendered = "", pendingRestore = null;
+  NAV.on(function (route, depth, extra) {
+    var s = PM2.routes.str(route);
+    if (extra && extra.returnedFrom && extra.returnedFrom.query) pendingRestore = { query: extra.returnedFrom.query, resultId: extra.returnedFrom.resultId };
+    if (s === lastRendered) return;
+    lastRendered = s; location.hash = s; render(route);
+  });
+  window.addEventListener("hashchange", function () { var r = PM2.routes.parse(location.hash); if (PM2.routes.str(r) !== PM2.routes.str(NAV.top())) NAV.go(r); });
+  function goHome() { state.view = "home"; state.domain = state.section = state.manager = null; NAV.reset({ domain: null }); render({ domain: null }); }
+
+  /* search */
+  var drop = null, dropSel = -1;
+  function searchAttach(input) {
+    var wrap = input.parentElement;
+    input.addEventListener("input", function () { state.lastQuery = input.value; showDrop(wrap, PM2.search.query(input.value)); });
+    input.addEventListener("keydown", function (e) {
+      if (!drop) { if (e.key === "Escape" && state.view !== "home") goHome(); return; }
+      var rows = drop.querySelectorAll(".c7-res");
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); dropSel = e.key === "ArrowDown" ? Math.min(rows.length - 1, dropSel + 1) : Math.max(0, dropSel - 1); rows.forEach(function (r, i) { r.setAttribute("aria-selected", i === dropSel ? "true" : "false"); }); rows[dropSel] && rows[dropSel].scrollIntoView({ block: "nearest" }); }
+      else if (e.key === "Enter") { e.preventDefault(); var rid = dropSel >= 0 && rows[dropSel] ? rows[dropSel].dataset.rid : (rows[0] && rows[0].dataset.rid); if (rid) pickResult(rid); }
+      else if (e.key === "Escape") hideDrop();
+    });
+  }
+  function showDrop(wrap, res) {
+    hideDrop();
+    if (!res.query) return;
+    drop = document.createElement("div"); drop.className = "c7-drop v2-surface";
+    var html = "";
+    if (!res.results.length) {
+      html = '<div class="c7-drop-empty">No results' + (res.suggestion ? " — did you mean <b>" + esc(res.suggestion) + "</b>?" : "") + "</div>";
+      if (res.suggestion) html += '<div class="c7-res" data-rid="suggest:' + esc(res.suggestion) + '"><span class="g">suggestion</span><span class="lbl">“' + esc(res.suggestion) + "”</span></div>";
+    } else {
+      res.results.forEach(function (r) {
+        html += '<div class="c7-res" data-rid="' + esc(r.rid) + '"><span class="g">' + r.type.replace(/_/g, " ").slice(0, 11) + '</span><span class="lbl">' + esc(r.label) + '</span><span class="path">' + esc(r.path.join(" › ")) + "</span>" + (r.availability ? '<span class="why">' + esc(r.availability) + "</span>" : "") + "</div>";
+      });
+    }
+    drop.innerHTML = html; wrap.appendChild(drop); dropSel = -1;
+    drop.addEventListener("mousedown", function (e) {
+      var row = e.target.closest(".c7-res"); if (!row) return; e.preventDefault();
+      if (row.dataset.rid.indexOf("suggest:") === 0) { var q = row.dataset.rid.slice(8); var inp = wrap.querySelector("input"); inp.value = q; state.lastQuery = q; showDrop(wrap, PM2.search.query(q)); return; }
+      pickResult(row.dataset.rid);
+    });
+  }
+  function hideDrop() { if (drop) { drop.remove(); drop = null; } }
+  document.addEventListener("click", function (e) { if (drop && !e.target.closest(".c7-searchwrap") && !e.target.closest(".c7-minis")) hideDrop(); });
+  function pickResult(rid) {
+    var entry = PM2.search.byRid(rid); if (!entry) return;
+    state.lastRid = rid; hideDrop();
+    if (entry.type === "intentional_help_result" && entry.dest.mode === "copy") { NAV.go({ mode: "copy" }); openCopy(); return; }
+    var plan = PM2.routes.planFor(entry.dest);
+    NAV.go(Object.assign({}, entry.dest, { query: state.lastQuery, resultId: rid }));
+    land(plan, entry);
+  }
+  function land(plan, entry) {
+    var tries = 0;
+    (function go() {
+      var target = null;
+      if (plan.route.row) {
+        target = stage.querySelector('[data-row="' + plan.route.row + '"]');
+        if (target && state.view === "compendium") { /* select in compendium */ }
+      }
+      if (!target && plan.route.object) target = stage.querySelector('[data-obj="' + plan.route.object + '"]');
+      if (!target && plan.route.manager) target = stage.querySelector('[data-mgr="' + plan.route.manager + '"]');
+      if (!target && plan.route.row) target = stage.querySelector('[data-row="' + plan.route.row + '"]');
+      if (!target && tries++ < 16) { setTimeout(go, 110); return; }
+      if (target) {
+        target.scrollIntoView({ block: "center", behavior: RM() ? "auto" : "smooth" });
+        target.classList.remove("v2-calm"); void target.offsetWidth; target.classList.add("v2-calm");
+        if (target.classList.contains("c7-row")) selectRow(target.dataset.row);
+        var f = target.querySelector("input,select,button,.c7-switch") || target;
+        try { f.focus({ preventScroll: true }); } catch (e) {}
+      }
+      if (entry && entry.type === "setting") {
+        var s = PM2.inventory.byId[plan.route.row];
+        if (s) openDrawer("Why you landed here", "<b>" + esc(s.label) + "</b> matched your search for “" + esc(state.lastQuery) + "”.<br>" + esc(s.desc) + "<br><br>Location: " + esc(PM2.routes.crumb(NAV.top()).join(" › ")) + "<br>Back returns you to the query and this result.");
+      }
+    })();
+  }
+
+  function render(route) {
+    closeDrawer(); hideDrop();
+    if (route.manager && PM2.mgrById[route.manager]) renderManager(route);
+    else if (route.domain === "all") renderCompendium(route);
+    else if (route.domain) renderDomain(route);
+    else if (route.mode === "copy") { renderHome(); openCopy(); }
+    else renderHome();
+    renderRail(route); renderCrumb(route);
+    el("miniWrap").hidden = state.view === "home";
+  }
+  function renderCrumb(route) {
+    var html = "<b>Settings</b>";
+    if (route.domain === "all") html += ' <span>›</span> All settings';
+    else PM2.routes.crumb(route).forEach(function (p) { html += ' <span>›</span> ' + esc(p); });
+    if (NAV.canBack()) html = '<button class="c7-tb" id="backBtn">' + PM2.svg("back", 12) + "Back</button>" + html;
+    el("crumb").innerHTML = html;
+    var b = el("backBtn"); if (b) b.addEventListener("click", function () { NAV.back(); });
+  }
+  function renderRail(route) {
+    var html = '<div class="pm-rail-head">Settings</div><div class="pm-rail-body v2-surface">';
+    html += '<div class="pm-side-item" data-nav="home"' + (!route.domain ? ' aria-current="page"' : "") + ">" + PM2.svg("home", 15) + "Home</div>";
+    html += '<div class="pm-side-item" data-nav="all"' + (route.domain === "all" ? ' aria-current="page"' : "") + ">" + PM2.svg("list", 15) + "All settings</div>";
+    PM2.inventory.categories.forEach(function (c) {
+      html += '<div class="pm-side-item" data-nav="' + c.id + '"' + (route.domain === c.id ? ' aria-current="page"' : "") + ">" + PM2.svg(ICONS[c.id] || "grid", 15) + esc(c.title) + '<span class="pm-side-cnt">' + PM2.inventory.byCategory[c.id].length + "</span></div>";
+    });
+    html += '<div class="pm-side-item" data-nav="copy">' + PM2.svg("layers", 15) + "Copy from…</div></div>";
+    el("rail").innerHTML = html;
+    el("rail").querySelectorAll("[data-nav]").forEach(function (n) {
+      n.addEventListener("click", function () {
+        var v = n.dataset.nav;
+        if (v === "home") goHome(); else if (v === "copy") openCopy(); else NAV.go({ domain: v });
+        if (window.innerWidth < 900) el("rail").dataset.hidden = "hidden";
+      });
+    });
+  }
+
+  /* HOME */
+  function renderHome() {
+    state.view = "home"; state.domain = state.section = state.manager = null;
+    var html = '<div class="c7-home v2-surface"><div class="c7-wrap">';
+    html += '<div class="c7-eyebrow"><b>07</b> · A2 Compendium Workspace · Take 1</div>';
+    html += '<h1 class="c7-h1">The whole of Settings, one compendium</h1>';
+    html += '<div class="c7-sub">Browse by area, or open the <b>All Settings</b> index — every one of 828 settings, faceted and searchable, for <b>' + esc(PM2.currentProject.name) + "</b>.</div>";
+    html += '<div class="c7-searchwrap"><div class="c7-search">' + PM2.svg("search", 17) + '<input id="homeSearch" type="search" placeholder="Search all settings, managers, objects, actions…" aria-label="Universal search" autocomplete="off"><span class="v2kbd">/</span></div></div>';
+    html += '<div class="c7-note"><span class="sdot warn"></span><span><b>One provider needs setup</b> — Codex CLI installs only explicitly, from the official source.</span><span style="flex:1"></span><button class="c7-tb" data-dest=\'' + esc(JSON.stringify({ manager: "mgr.provider", object: "prov.codex-cli" })) + '">Open</button></div>';
+    html += '<div class="c7-grid">';
+    html += '<div class="c7-col"><h3 class="lt">Browse by area</h3><div class="c7-area">';
+    PM2.inventory.categories.forEach(function (c) {
+      html += '<div class="c7-area-card" data-domain="' + c.id + '" tabindex="0"><span class="ic">' + PM2.svg(ICONS[c.id] || "grid", 18) + '</span><div style="min-width:0"><div class="t">' + esc(c.title) + '</div><div class="d">' + PM2.inventory.byCategory[c.id].length + " settings · " + PM2.managers.filter(function (m) { return m.domain === c.id; }).length + " managers</div></div></div>";
+    });
+    html += "</div></div>";
+    html += '<div class="c7-col"><h3 class="lt">Needs attention · 3</h3><div class="c7-att">';
+    [{ t: "Codex CLI setup required", d: "explicit install", go: { manager: "mgr.provider", object: "prov.codex-cli" } },
+     { t: "ntfy offline", d: "queued since 08-17", go: { manager: "mgr.notifications", object: "ntf.ntfy" } },
+     { t: "Vault migration awaits restart", d: "storage", go: { manager: "mgr.storage", object: "sto.migrate" } }].forEach(function (a) {
+      html += '<div class="c7-att-row"><span class="sdot warn"></span><span>' + esc(a.t) + '</span><span class="d">' + esc(a.d) + '</span><button data-dest=\'' + esc(JSON.stringify(a.go)) + "'>Open</button></div>";
+    });
+    html += '</div><h3 class="lt" style="margin-top:16px">Recent changes</h3><div class="c7-recent">';
+    [["Theme", "Glass Dark", "today 10:12"], ["Fast lane model", "gpt-5.2-mini (fallback)", "yesterday"], ["Quiet hours", "22:00–07:00", "Aug 14"]].forEach(function (r) {
+      html += '<div class="c7-recent-row"><span class="sdot info"></span><span><b>' + r[0] + "</b> → " + esc(r[1]) + '</span><span class="when">' + r[2] + "</span></div>";
+    });
+    html += "</div></div></div>";
+    html += '<div class="c7-utils"><button class="c7-util primary" data-nav="all">' + PM2.svg("list", 13) + 'All Settings — full index</button><button class="c7-util" data-nav="copy">' + PM2.svg("layers", 13) + 'Copy settings from another project</button></div>';
+    html += "</div></div>";
+    app.innerHTML = html;
+    searchAttach(el("homeSearch"));
+    var rq = pendingRestore ? pendingRestore.query : NAV.top().query;
+    if (rq) { el("homeSearch").value = rq; state.lastQuery = rq; if (pendingRestore && pendingRestore.resultId) state.lastRid = pendingRestore.resultId; pendingRestore = null; }
+    app.querySelectorAll("[data-domain]").forEach(function (c) {
+      c.addEventListener("click", function () { NAV.go({ domain: c.dataset.domain }); });
+      c.addEventListener("keydown", function (e) { if (e.key === "Enter") NAV.go({ domain: c.dataset.domain }); });
+    });
+    app.querySelectorAll("[data-dest]").forEach(function (b) { b.addEventListener("click", function (e) { e.stopPropagation(); var d = JSON.parse(b.dataset.dest); NAV.go(d); land(PM2.routes.planFor(d)); }); });
+    app.querySelectorAll(".c7-util").forEach(function (b) { b.addEventListener("click", function () { var v = b.dataset.nav; if (v === "all") NAV.go({ domain: "all" }); else if (v === "copy") openCopy(); }); });
+  }
+
+  /* DOMAIN OVERVIEW — key settings + related managers + pages */
+  function renderDomain(route) {
+    state.view = "domain"; state.domain = route.domain; state.manager = null;
+    var c = PM2.inventory.categories.filter(function (x) { return x.id === route.domain; })[0];
+    var mgrs = PM2.managers.filter(function (m) { return m.domain === route.domain; });
+    var rows = PM2.inventory.byCategory[route.domain];
+    var key = rows.filter(function (s) { return s.curated || (s.badges || []).length; }).slice(0, 8);
+    if (key.length < 6) key = rows.slice(0, 6);
+    var html = '<div class="c7-dom v2-surface"><div class="c7-dom-head"><div class="cr"><b>Settings</b> › ' + esc(c.title) + '</div><h2>' + esc(c.title) + '</h2><div class="lede">' + rows.length + ' settings · ' + c.subgroups.length + ' pages · ' + mgrs.length + ' managers · changes apply to ' + esc(PM2.currentProject.name) + ' only.</div></div>';
+    html += '<div class="c7-dom-body">';
+    html += '<div><div class="c7-panel"><div class="c7-panel-h">Key settings</div><div class="c7-key" id="keyRows"></div></div>';
+    html += '<div class="c7-panel" style="margin-top:12px"><div class="c7-panel-h">Pages</div><div class="c7-rel c7-pagelist">';
+    c.subgroups.forEach(function (sg) {
+      var sid = sg.id || sg, srows = PM2.inventory.subgroups[route.domain + "." + sid] || [];
+      html += '<div class="c7-pagerow" data-page="' + sid + '">' + PM2.svg("stack", 14) + '<span>' + esc(sg.title || sid) + '</span><span class="cnt">' + srows.length + "</span></div>";
+    });
+    html += "</div></div></div>";
+    html += '<div><div class="c7-panel"><div class="c7-panel-h">Related managers</div><div class="c7-rel">';
+    mgrs.forEach(function (m) {
+      html += '<div class="c7-relrow" data-mgr="' + m.id + '"><span style="color:var(--ink-2)">' + PM2.svg(m.icon, 16) + '</span><div style="min-width:0;flex:1"><div class="t">' + esc(m.title) + '</div><div class="d">' + esc(m.blurb) + "</div></div>" + '<span class="v2badge ' + (m.health.kind === "ok" ? "ok" : m.health.kind) + '">' + esc(m.health.text) + "</span></div>";
+    });
+    if (route.domain === "system") {
+      PM2.owners.forEach(function (o) {
+        html += '<div class="c7-relrow" data-owner="' + o.id + '"><span style="color:var(--ink-2)">' + PM2.svg("plug", 16) + '</span><div style="min-width:0;flex:1"><div class="t">' + esc(o.title) + '</div><div class="d">' + esc(o.owner) + "</div></div>" + '<span class="v2badge info">insertion</span></div>';
+      });
+    }
+    html += '</div></div><button class="c7-util" data-all-of="' + route.domain + '" style="margin-top:12px">' + PM2.svg("list", 13) + "All " + rows.length + " settings in " + esc(c.title) + " →</button></div>";
+    html += "</div></div>";
+    app.innerHTML = html;
+    var keyHost = el("keyRows");
+    key.forEach(function (s) {
+      var st = STORE.get(s.id), meta = PM2.statusMeta[st.status];
+      var d = document.createElement("div");
+      d.className = "c7-keyrow"; d.dataset.row = s.id;
+      d.innerHTML = '<div><div class="lbl">' + esc(s.label) + ' <span class="v2badge ' + (meta.tone === "neutral" ? "" : meta.tone) + '">' + esc(meta.label) + '</span></div><div class="desc">' + esc(s.desc.slice(0, 140)) + (s.desc.length > 140 ? "…" : "") + "</div></div>" + keyCtl(s, st);
+      wireCtl(d, s);
+      keyHost.appendChild(d);
+    });
+    app.querySelectorAll("[data-mgr]").forEach(function (r) { r.addEventListener("click", function () { NAV.go({ domain: route.domain, manager: r.dataset.mgr }); }); });
+    app.querySelectorAll("[data-owner]").forEach(function (r) {
+      r.addEventListener("click", function () {
+        var o = PM2.owners.filter(function (x) { return x.id === r.dataset.owner; })[0];
+        openDrawer(o.title, "<b>Owner:</b> " + esc(o.owner) + "<br><b>Contract:</b> " + esc(o.contract) + "<br><b>Return:</b> " + esc(o.returnRoute));
+      });
+    });
+    app.querySelectorAll("[data-page]").forEach(function (p) {
+      p.addEventListener("click", function () { state.facet = "domain:" + route.domain; NAV.go({ domain: "all" }); setTimeout(function () { jumpToPage(route.domain, p.dataset.page); }, 100); });
+    });
+    var ab = app.querySelector("[data-all-of]");
+    if (ab) ab.addEventListener("click", function () { state.facet = "domain:" + route.domain; NAV.go({ domain: "all" }); });
+    if (route.page && route.row) {
+      var pr = app.querySelector('[data-page="' + route.page + '"]');
+      if (pr) pr.click();
+      setTimeout(function () { var t = app.querySelector('[data-row="' + route.row + '"]'); if (t) { t.scrollIntoView({ block: "center" }); t.classList.add("v2-calm"); } }, 350);
+    }
+  }
+  function jumpToPage(domainId, pageId) {
+    var t = stage.querySelector('[data-pagerow="' + pageId + '"]');
+    if (t) { t.scrollIntoView(); return; }
+    var row = stage.querySelector('.c7-row[data-row^="' + domainId + "." + pageId + '"]');
+    if (row) row.scrollIntoView({ block: "center" });
+  }
+  function keyCtl(s, st) {
+    switch (s.type) {
+      case "toggle": return '<div><button class="d5switch c7-switch" role="switch" aria-checked="' + (st.value === true) + '"></button></div>';
+      case "select": case "radio": return '<div><select class="c7-sel-x">' + (s.options || []).map(function (o) { return "<option" + (o === st.value ? " selected" : "") + ">" + esc(o) + "</option>"; }).join("") + "</select></div>";
+      default: return '<div><span class="v2badge">' + esc(JSON.stringify(st.value)).slice(0, 24) + "</span></div>";
+    }
+  }
+  function wireCtl(d, s) {
+    var sw = d.querySelector(".c7-switch");
+    if (sw) sw.addEventListener("click", function () { var nv = !(sw.getAttribute("aria-checked") === "true"); sw.setAttribute("aria-checked", nv); STORE.set(s.id, nv, "custom"); });
+    var se = d.querySelector("select");
+    if (se) se.addEventListener("change", function () { STORE.set(s.id, se.value, "custom"); });
+  }
+
+  /* COMPENDIUM */
+  var FACETS = [["all", "All 828"], ["changed", "Changed"], ["managed", "Managed"], ["unavailable", "Unavailable"], ["restart", "Restart req."], ["advanced", "Advanced tier"], ["simple", "Simple tier"], ["attention", "Attention"]];
+  PM2.inventory.categories.forEach(function (c) { FACETS.push(["domain:" + c.id, c.title]); });
+  function renderCompendium(route) {
+    state.view = "compendium"; state.domain = "all"; state.manager = null;
+    var html = '<div class="c7-comp"><div class="c7-comp-head">';
+    html += '<button class="c7-tb" id="compBack">' + PM2.svg("back", 12) + 'Back</button><h2>All Settings</h2><span class="n">828 rows · virtualized · facets apply instantly</span><span class="sp"></span>';
+    html += '<input class="field" id="compFilter" type="search" placeholder="Filter…" aria-label="Filter" style="width:220px"></div>';
+    html += '<div class="c7-facetbar" id="facetbar"></div>';
+    html += '<div class="c7-comp-body"><div class="c7-list v2-surface" id="compList"><div class="c7-listhead"><span>Setting</span><span>Description</span><span>Domain</span><span class="st">Status</span></div><div class="v2-virt" id="virt" style="height: calc(100vh - 220px); position: relative; overflow: auto;"></div></div>';
+    html += '<aside class="c7-detail v2-surface" id="compDetail"><div style="color:var(--ink-3);font-size:12.5px;padding:8px 2px">Select a row to inspect it — value, states, why-this-value, and its exact place in Settings.</div></aside></div></div>';
+    app.innerHTML = html;
+    el("compBack").addEventListener("click", function () { NAV.back(); });
+    var fb = el("facetbar");
+    function drawFacets() {
+      fb.innerHTML = FACETS.map(function (f) {
+        return '<span class="c7-facet"><button data-facet="' + f[0] + '" aria-pressed="' + (state.facet === f[0]) + '">' + f[1] + "</button></span>";
+      }).join("");
+      fb.querySelectorAll("[data-facet]").forEach(function (b) { b.addEventListener("click", function () { state.facet = b.dataset.facet; drawFacets(); drawRows(0); }); });
+    }
+    var all = [], ROWH = 52, virt = el("virt");
+    var pad = document.createElement("div"); pad.className = "v2-virt-pad";
+    var win = document.createElement("div"); win.className = "v2-virt-win"; win.style.position = "relative";
+    virt.append(pad, win);
+    function filtered() {
+      var q = (el("compFilter").value || "").toLowerCase();
+      var f = state.facet;
+      return PM2.inventory.categories.flatMap(function (c) { return PM2.inventory.byCategory[c.id]; }).filter(function (s) {
+        var st = STORE.get(s.id);
+        if (f.indexOf("domain:") === 0 && s.id.split(".")[0] !== f.slice(7)) return false;
+        if (f === "changed" && st.status !== "custom") return false;
+        if (f === "managed" && st.status !== "managed") return false;
+        if (f === "unavailable" && st.status !== "unavailable") return false;
+        if (f === "restart" && st.status !== "restart") return false;
+        if (f === "advanced" && s.tier !== "advanced") return false;
+        if (f === "simple" && s.tier !== "simple") return false;
+        if (f === "attention" && ["restart", "managed", "unavailable", "changed-elsewhere", "import-conflict"].indexOf(st.status) < 0) return false;
+        if (q && (s.label + " " + s.id).toLowerCase().indexOf(q) < 0) return false;
+        return true;
+      });
+    }
+    function drawRows() {
+      all = filtered();
+      var w = PM2.window({ scrollTop: virt.scrollTop, viewportHeight: virt.clientHeight, rowHeight: ROWH, total: all.length });
+      pad.style.height = w.padTop + "px"; win.style.transform = "translateY(" + w.padTop + "px)";
+      var h = "";
+      for (var i = w.first; i < w.first + w.count; i++) {
+        var s = all[i]; if (!s) break;
+        var st = STORE.get(s.id), meta = PM2.statusMeta[st.status];
+        h += '<div class="c7-row" data-row="' + s.id + '" data-virt="' + i + '"><span class="id">' + esc(s.label) + '</span><span class="ds">' + esc(s.desc.slice(0, 110)) + (s.desc.length > 110 ? "…" : "") + '</span><span class="dom">' + esc(PM2.categoryTitle(s.id.split(".")[0])) + '</span><span class="st"><span class="v2badge ' + (meta.tone === "neutral" ? "" : meta.tone) + '">' + esc(meta.label) + "</span>" + (s.tier === "advanced" ? '<span class="v2badge">adv</span>' : "") + "</span></div>";
+      }
+      win.innerHTML = h;
+      win.querySelectorAll(".c7-row").forEach(function (r) { r.addEventListener("click", function () { selectRow(r.dataset.row); }); });
+      PM2.telemetry.domRows = [win.children.length];
+    }
+    window.selectRow = selectRow;
+    function selectRow(sid) {
+      state.compSel = sid;
+      virt.querySelectorAll(".c7-row").forEach(function (r) { r.setAttribute("aria-selected", r.dataset.row === sid ? "true" : "false"); });
+      var s = PM2.inventory.byId[sid]; var st = STORE.get(sid); var meta = PM2.statusMeta[st.status];
+      el("compDetail").innerHTML = '<h3>' + esc(s.label) + '</h3><div class="dd">' + esc(s.desc) + "</div>" +
+        '<div class="c7-kv"><span class="k">Value</span><span class="v">' + esc(JSON.stringify(st.value)) + "</span>" +
+        '<span class="k">Status</span><span class="v">' + esc(meta.label) + "</span>" +
+        '<span class="k">Type</span><span class="v">' + esc(s.type) + (s.tier === "advanced" ? " · advanced tier" : "") + "</span>" +
+        '<span class="k">Default</span><span class="v">' + esc(JSON.stringify(s.default)) + "</span>" +
+        '<span class="k">Applies to</span><span class="v">' + esc(PM2.currentProject.name) + " only</span>" +
+        '<span class="k">Place</span><span class="v">' + esc(PM2.categoryTitle(s.id.split(".")[0])) + " › " + esc(PM2.subgroupTitle(s.id.split(".")[0], s.id.split(".")[1])) + "</span>" +
+        '<span class="k">Registry scope</span><span class="v" style="color:var(--ink-3)">' + esc((s.scope || []).join(", ")) + " (diagnostic only)</span>" +
+        '<span class="k">ID</span><span class="v" style="font-family:var(--mono);font-size:11px">' + esc(s.id) + "</span></div>" +
+        '<div class="c7-actions"><button class="c7-btn" data-goto-page="' + s.id.split(".")[1] + '">' + PM2.svg("chevron", 12) + "Open in domain page</button><button class=\"c7-btn\" data-why="' + s.id + '">Why this value?</button></div>' +
+        (st.status === "managed" ? '<div class="c7-offline"><span class="sdot info"></span>Managed by organization policy — read-only here. Origin lives in Details.</div>' : "") +
+        (st.status === "restart" ? '<div class="c7-offline"><span class="sdot warn"></span>Takes full effect after restart.</div>' : "");
+      el("compDetail").querySelector("[data-why]").addEventListener("click", function () { openDrawer("Why this value", "<b>" + esc(s.label) + "</b><br>Status " + esc(meta.label) + " · default " + esc(JSON.stringify(s.default)) + " · applies to " + esc(PM2.currentProject.name) + " only.<br>Registry scope (diagnostic): " + esc((s.scope || []).join(", "))); });
+      el("compDetail").querySelector("[data-goto-page]").addEventListener("click", function () { NAV.go({ domain: s.id.split(".")[0], page: s.id.split(".")[1], row: s.id }); });
+    }
+    virt.addEventListener("scroll", drawRows);
+    el("compFilter").addEventListener("input", drawRows);
+    drawFacets(); drawRows();
+    if (route.row) setTimeout(function () { selectRow(route.row); var t = virt.querySelector('[data-row="' + route.row + '"]'); if (t) { t.scrollIntoView({ block: "center" }); t.classList.add("v2-calm"); } }, 200);
+  }
+
+  /* MANAGER list/detail */
+  function renderManager(route) {
+    var m = PM2.mgrById[route.manager];
+    state.view = "manager"; state.manager = m.id; state.tab = route.tab ? Math.max(0, route.tab | 0) : 0;
+    var html = '<div class="c7-mgr">';
+    html += '<div class="c7-mgr-list v2-surface"><div class="c7-mgr-head"><button class="c7-tb" id="mgrBack">' + PM2.svg("back", 12) + "Back</button><h2>" + PM2.svg(m.icon, 16) + " " + esc(m.title) + '</h2><div class="sum">' + esc(m.health.text) + "</div></div><div id=\"mgrRows\">";
+    html += '<div class="c7-skel" style="height:34px;margin:10px 14px"></div><div class="c7-skel" style="height:34px;margin:10px 14px;width:80%"></div><div style="font-size:11px;color:var(--ink-3);padding:6px 16px">Hydrating…</div></div></div>";
+    html += '<div class="c7-mgr-detail v2-surface" id="mgrDetail"><div style="color:var(--ink-3);font-size:12.5px">Select a record.</div></div></div>';
+    app.innerHTML = html;
+    el("mgrBack").addEventListener("click", function () { NAV.back(); });
+    if (!state.hydrated[m.id]) setTimeout(function () { state.hydrated[m.id] = true; PM2.telemetry.managersHydrated.push(m.id); hydrate(m, route); }, 260);
+    else hydrate(m, route);
+  }
+  function hydrate(m, route) {
+    var host = el("mgrRows"); if (!host) return;
+    var html = "";
+    (m.groups || []).forEach(function (g) {
+      html += '<div style="padding:10px 14px 4px;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)">' + esc(g.label) + "</div>";
+      m.records.filter(function (r) { return r.group === g.id; }).forEach(function (r) { html += mrow(m, r); });
+    });
+    if (!m.groups) m.records.forEach(function (r) { html += mrow(m, r); });
+    host.innerHTML = html;
+    host.querySelectorAll("[data-obj]").forEach(function (r) {
+      r.addEventListener("click", function () {
+        host.querySelectorAll("[data-obj]").forEach(function (x) { x.setAttribute("aria-selected", x === r ? "true" : "false"); });
+        var rec = m.records.filter(function (x) { return x.id === r.dataset.obj; })[0];
+        el("mgrDetail").innerHTML = detailHTML(m, rec);
+        NAV.go({ domain: m.domain, manager: m.id, object: r.dataset.obj, tab: state.tab }, { replace: true });
+        wireDetail(m);
+      });
+    });
+    if (route.object) { var r0 = host.querySelector('[data-obj="' + route.object + '"]'); if (r0) r0.click(); }
+  }
+  function mrow(m, r) {
+    var tone = r.status === "ok" ? "ok" : r.status === "bad" ? "bad" : "warn";
+    return '<div class="c7-mrow" data-obj="' + r.id + '" aria-selected="false" tabindex="0"><span class="sdot ' + tone + '" style="margin-top:5px"></span><div style="min-width:0"><div class="t">' + esc(r.label) + '</div><div class="d">' + esc(r.desc || "") + '</div><div class="meta">' + (r.chips || []).slice(0, 3).map(function (c) { return '<span class="v2badge">' + esc(c[0]) + ": " + esc(String(c[1]).slice(0, 26)) + "</span>"; }).join("") + "</div></div>" + PM2.svg("chevron", 14) + "</div>";
+  }
+  function chipsHTML(r) { return '<div class="c7-chips">' + (r.chips || []).map(function (c) { return '<span class="v2badge">' + esc(c[0]) + ": " + esc(String(c[1])) + "</span>"; }).join("") + "</div>"; }
+  function actsHTML(m, r) {
+    return '<div class="c7-actions">' + (r.actions || []).map(function (a) { return '<button class="c7-btn' + (a.kind === "primary" ? " primary" : "") + '" data-action="' + esc(a.id) + '" data-owner="' + esc(r.id) + '">' + esc(a.label) + "</button>"; }).join("") + (m.ops || []).map(function (a) { return '<button class="c7-btn" data-op="' + esc(a.id) + '">' + esc(a.label) + "</button>"; }).join("") + "</div>";
+  }
+  function detailHTML(m, r) {
+    if (!r) return "<div style='color:var(--ink-3)'>No records</div>";
+    var h = "<h3>" + esc(r.label) + "</h3><div class='c7-tabs'>" + (m.tabs || ["Overview"]).map(function (t, i) { return '<button data-tab="' + i + '"' + (i === state.tab ? ' aria-selected="true"' : "") + ">" + esc(t) + "</button>"; }).join("") + "</div>";
+    h += '<div style="font-size:12.5px;color:var(--ink-2);line-height:1.6;margin-bottom:10px">' + esc(r.desc || m.blurb) + "</div>" + chipsHTML(r);
+    var tab = (m.tabs || ["Overview"])[state.tab] || "Overview";
+    if (m.id === "mgr.provider") {
+      if (tab === "Installations" || r.setup) {
+        h += '<table class="c7-table"><tr><th>Installation</th><th>Version</th><th>Owner · confidence</th><th>State</th></tr>' + m.installations.map(function (i) { return "<tr><td>" + esc(i.label) + "</td><td>" + esc(i.version || "—") + "</td><td class='mut'>" + esc((i.owner || "—") + " · " + (i.confidence || "")) + "</td><td><span class=\"v2badge " + (i.state === "selected" ? "ok" : i.state === "shadowed" ? "info" : "warn") + '">' + esc(i.state) + "</span></td></tr>"; }).join("") + "</table>";
+        if (r.setup) h += '<div class="c7-setup"><b style="font-size:13px">Setup — explicit, official source, exact host</b><ol>' + r.setup.steps.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ol></div>";
+      } else if (tab === "Models" && r.models) {
+        h += '<table class="c7-table"><tr><th>Model</th><th>Capabilities</th><th>Context</th><th>Modes · effort</th></tr>' + r.models.map(function (mm) { return "<tr><td><b>" + esc(mm.label) + "</b>" + (mm.selected ? ' <span class="v2badge ok">selected</span>' : "") + "</td><td class='mut'>" + esc(mm.caps.join(" · ")) + "</td><td class='mut'>" + esc(mm.ctx) + "</td><td class='mut'>" + esc(mm.mode.join("/") + " · " + mm.effort.join("/")) + "</td></tr>"; }).join("") + "</table>";
+      } else if (tab === "Routing & fallback") {
+        h += '<table class="c7-table"><tr><th>Route</th><th>Requested</th><th>Effective</th><th>Why</th></tr>' + m.routing.rows.map(function (x) { return "<tr><td><b>" + esc(x.label) + "</b></td><td>" + esc(x.requested) + "</td><td>" + esc(x.effective) + "</td><td class='mut'>" + esc(x.why || "—") + "</td></tr>"; }).join("") + "</table>";
+      } else if (tab === "Usage") {
+        if (r.id === "prov.deepseek-key") h += '<div class="c7-offline"><span class="sdot warn"></span>Provider ready — Usage unavailable (503); last-known-good shown.</div>';
+        h += '<table class="c7-table"><tr><th>Connection</th><th>Usage</th></tr>' + m.usage.rows.map(function (u) { return "<tr><td><b>" + esc(u[0]) + "</b></td><td class='mut'>" + esc(u[1]) + "</td></tr>"; }).join("") + "</table>";
+      } else {
+        (r.detail || []).forEach(function (d) { h += '<div class="c7-kv2"><span class="k">' + esc(d[0]) + "</span><span class='v'>" + esc(d[1]) + "</span></div>"; });
+      }
+    } else {
+      (r.detail || []).forEach(function (d) { h += '<div class="c7-kv2"><span class="k">' + esc(d[0]) + "</span><span class='v'>" + esc(d[1]) + "</span></div>"; });
+      if (m.filesafe && m.id === "mgr.permissions") h += '<div class="c7-kv2"><span class="k">FileSafe</span><span class="v">Boundary <b>' + esc(m.filesafe.boundary) + "</b> · protected " + esc(m.filesafe.protected.join(", ")) + "</span></div>";
+      if (m.note) h += '<div class="c7-offline" style="border-color:var(--line)"><span class="sdot info"></span>' + esc(m.note) + "</div>";
+      if (r.work) h += '<button class="c7-btn primary" data-op="a.rebuild" style="margin-top:4px">' + PM2.svg("refresh", 12) + " Run with progress <span class='v2kbd'>" + esc(r.work.denominator) + "</span></button>";
+    }
+    h += actsHTML(m, r);
+    return h;
+  }
+  function wireDetail(m) {
+    var root = el("mgrDetail"); if (!root) return;
+    root.querySelectorAll("[data-tab]").forEach(function (t) {
+      t.addEventListener("click", function () {
+        state.tab = +t.dataset.tab;
+        var sel = m.records.filter(function (x) { return x.id === (NAV.top().object) ; })[0] || m.records[0];
+        root.innerHTML = detailHTML(m, sel);
+        wireDetail(m);
+      });
+    });
+    root.querySelectorAll("[data-action]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        if (b.dataset.action === "a.install") {
+          var s = PM2.mgrById["mgr.provider"].records.filter(function (x) { return x.id === "prov.codex-cli"; })[0];
+          openDrawer("Install Codex CLI — explicit", "<b>Source:</b> " + esc(s.setup.source) + "<br><b>Host:</b> " + esc(s.setup.host) + "<br>Never bundled, never silent. Authentication is separate.<div class='c7-actions' style='margin-top:8px'><button class='c7-btn primary' id='doInst'>Install from official source</button></div><div id='iw'></div>");
+          el("doInst").addEventListener("click", function () {
+            var w = STORE.work({ kind: "install", label: "Install Codex CLI", phases: ["download", "verify", "install", "verify launch", "done"], steps: 12, fast: true, receipt: { summary: "Codex CLI installed — authenticate separately" } });
+            var box = document.createElement("div"); box.className = "c7-work"; el("iw").appendChild(box);
+            var un = STORE.subscribe("work", function () {
+              box.innerHTML = "<b>" + esc(w.label) + "</b> — " + esc(w.note) + '<div class="bar"><div style="width:' + Math.round((w.phaseI + 1) / w.phases.length * 100) + '%"></div></div>';
+              if (w.state === "done") { box.innerHTML += '<div class="c7-receipt" style="margin-top:6px">Installed. Authenticate separately next.</div>'; un(); }
+            });
+          });
+          return;
+        }
+        openDrawer("Action", "<b>" + esc(b.textContent.trim()) + "</b> routes to its canonical owner with typed payload, availability reason, revision/idempotency, permission, receipt, ObservableWork link, cancel/rollback, and route/focus effect.");
+      });
+    });
+    root.querySelectorAll("[data-op]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var w = STORE.work({ kind: "lifecycle", label: b.textContent.trim().split(" ")[0], denominator: 12408, fast: true, receipt: { summary: "Operation completed with receipt" } });
+        var box = document.createElement("div"); box.className = "c7-work"; b.parentElement.appendChild(box);
+        function dd() { box.innerHTML = "<b>" + esc(w.label) + "</b> — " + esc(w.note) + (w.progress !== null ? ' <span class="v2kbd">' + w.done + "/" + w.denominator + "</span>" : "") + '<div class="bar"><div style="width:' + (w.progress || 0) + '%"></div></div>'; if (w.state === "done") setTimeout(function () { box.remove(); }, 1500); }
+        dd();
+        var un = STORE.subscribe("work", function () { dd(); if (w.state === "done") un(); });
+      });
+    });
+  }
+
+  /* drawer */
+  function openDrawer(title, html) { el("drawerTitle").textContent = title; el("drawerBody").innerHTML = html; el("drawer").dataset.open = "1"; }
+  function closeDrawer() { el("drawer").dataset.open = "0"; }
+  el("drawerClose").addEventListener("click", closeDrawer);
+
+  /* COPY with detailed diff */
+  var COPY = { open: false, step: 0, src: null, cats: [], preview: null, result: null };
+  function openCopy() {
+    COPY.open = true; COPY.step = 0; COPY.src = null; COPY.cats = PM2.copyCategories.map(function (c) { return c.id; }); COPY.preview = null; COPY.result = null;
+    var veil = document.createElement("div"); veil.className = "c7-veil"; veil.id = "copyVeil";
+    veil.innerHTML = '<div class="c7-copy" role="dialog" aria-modal="true"><div class="c7-copy-head"><h3>Copy settings from another project</h3><span style="flex:1"></span><button class="c7-tb" id="copyX">' + PM2.svg("close", 12) + "Close</button></div><div class=\"c7-copy-body v2-surface\" id=\"copyBody\"></div><div class=\"c7-copy-foot\" id=\"copyFoot\"></div></div>";
+    stage.appendChild(veil);
+    el("copyX").addEventListener("click", copyClose);
+    drawCopy();
+  }
+  function copyClose() { COPY.open = false; var v = el("copyVeil"); if (v) v.remove(); }
+  function drawCopy() {
+    var b = el("copyBody"), f = el("copyFoot"); if (!b) return;
+    if (COPY.step === 0) {
+      b.innerHTML = '<div class="c7-step">1 of 4 · Source project</div><div style="font-size:12.5px;color:var(--ink-2);margin-bottom:10px">One-time copy. No link, no sync, no profiles — projects stay independent.</div><div class="c7-srcgrid">' +
+        PM2.projects.filter(function (p) { return !p.current; }).map(function (p) {
+          return '<div class="c7-src" data-src="' + p.id + '" aria-selected="' + (COPY.src === p.id) + '"><b>' + esc(p.name) + '</b><div style="font-size:11.5px;color:var(--ink-3)">' + esc(p.path) + " · " + p.changedCount + " changed · " + p.attention + " attention</div></div>";
+        }).join("") + "</div>";
+      f.innerHTML = '<span style="font-size:11.5px;color:var(--ink-3)">Destination: <b>' + esc(PM2.currentProject.name) + "</b></span><span class='sp'></span><button class=\"c7-btn\" id=\"copyNext\"" + (COPY.src ? "" : " disabled style='opacity:.5'") + ">Choose categories</button>";
+      b.querySelectorAll("[data-src]").forEach(function (s) { s.addEventListener("click", function () { COPY.src = s.dataset.src; drawCopy(); }); });
+      var n = el("copyNext"); if (n) n.addEventListener("click", function () { COPY.step = 1; drawCopy(); });
+    } else if (COPY.step === 1) {
+      b.innerHTML = '<div class="c7-step">2 of 4 · Categories</div><div class="c7-catgrid">' + PM2.copyCategories.map(function (c) {
+        return '<div class="c7-cat" data-cat="' + c.id + '" aria-selected="' + (COPY.cats.indexOf(c.id) >= 0) + '"><span class="v2kbd" style="border-radius:5px;height:20px">' + (COPY.cats.indexOf(c.id) >= 0 ? "✓" : "") + '</span><div><b style="font-size:13px">' + esc(c.title) + '</b><div style="font-size:11.5px;color:var(--ink-2)">' + esc(c.includes) + "</div></div></div>";
+      }).join("") + "</div>";
+      f.innerHTML = '<button class="c7-btn" id="copyBack">Back</button><span class="sp"></span><button class="c7-btn" id="copyNext">Preview copy</button>';
+      b.querySelectorAll("[data-cat]").forEach(function (c) {
+        c.addEventListener("click", function () {
+          var id = c.dataset.cat, i = COPY.cats.indexOf(id);
+          if (i >= 0) COPY.cats.splice(i, 1); else COPY.cats.push(id);
+          c.setAttribute("aria-selected", COPY.cats.indexOf(id) >= 0);
+          c.querySelector(".v2kbd").textContent = COPY.cats.indexOf(id) >= 0 ? "✓" : "";
+        });
+      });
+      el("copyBack").addEventListener("click", function () { COPY.step = 0; drawCopy(); });
+      el("copyNext").addEventListener("click", function () { COPY.preview = PM2.copyPreview(COPY.src, COPY.cats); COPY.step = 2; drawCopy(); });
+    } else if (COPY.step === 2) {
+      var t = COPY.preview.totals;
+      b.innerHTML = '<div class="c7-step">3 of 4 · Preview with detailed diff</div>' +
+        '<div class="c7-counts"><span class="c7-count"><span class="n">' + t.additions + '</span><span class="l">additions</span></span><span class="c7-count"><span class="n">' + t.replacements + '</span><span class="l">replacements</span></span><span class="c7-count"><span class="n">' + t.unchanged + '</span><span class="l">unchanged</span></span><span class="c7-count"><span class="n">' + t.unavailable + '</span><span class="l">not copyable</span></span><span class="c7-count"><span class="n">' + t.conflicts + '</span><span class="l">conflicts skipped</span></span></div>' +
+        '<div class="c7-offline" style="border-color:var(--line)"><span class="sdot info"></span>' + esc(COPY.preview.credentialNote) + "</div>" +
+        '<div class="c7-diff v2-surface" id="cpDiff"><div class="c7-diff-row" style="font-weight:800;font-size:10px;text-transform:uppercase;color:var(--ink-3)"><span>Kind</span><span>This project</span><span>Source</span></div></div>';
+      var list = el("cpDiff"), rows = COPY.preview.rows;
+      function addRows() {
+        var w = PM2.window({ scrollTop: list.scrollTop, viewportHeight: 240, rowHeight: 30, total: rows.length });
+        var h = "";
+        for (var i = w.first; i < w.first + w.count; i++) {
+          var rr = rows[i]; if (!rr) break;
+          var s = PM2.inventory.byId[rr.settingId];
+          var mine = STORE.get(rr.settingId);
+          h += '<div class="c7-diff-row ' + rr.kind.slice(0, 4) + '"><span class="k">' + rr.kind.replace(/s$/, "") + '</span><span class="y">' + esc(s ? s.label : rr.settingId) + ' — ' + esc(JSON.stringify(mine.value)).slice(0, 26) + '</span><span class="s">' + (rr.kind === "unchanged" ? "same" : esc(JSON.stringify(rr.sourceValue)).slice(0, 26)) + "</span></div>";
+        }
+        while (list.children.length > 1) list.lastChild.remove();
+        var pad3 = document.createElement("div"); pad3.style.height = w.padTop + "px";
+        var win3 = document.createElement("div"); win3.style.position = "relative"; win3.style.transform = "translateY(" + w.padTop + "px)";
+        win3.innerHTML = h;
+        list.append(pad3, win3);
+      }
+      addRows();
+      list.addEventListener("scroll", addRows);
+      f.innerHTML = '<button class="c7-btn" id="copyBack">Back</button><span class="sp"></span><span style="font-size:11.5px;color:var(--ink-3)">Restore point created before any change.</span><button class="c7-btn primary" id="copyGo">Restore point & apply</button>';
+      el("copyBack").addEventListener("click", function () { COPY.step = 1; drawCopy(); });
+      el("copyGo").addEventListener("click", function () {
+        COPY.step = 3;
+        b.innerHTML = '<div class="c7-step">4 of 4 · Applying atomically…</div><div class="c7-work" id="cw"></div>'; f.innerHTML = "";
+        var box = el("cw");
+        var w = STORE.work({ kind: "copy", label: "Copy settings", phases: ["restore point", "apply", "verify"], steps: 10, fast: true });
+        var un = STORE.subscribe("work", function () {
+          box.innerHTML = "<b>" + esc(w.label) + "</b> — " + esc(w.note) + '<div class="bar"><div style="width:' + ((w.phaseI + 1) / 3 * 100) + '%"></div></div>';
+          if (w.state === "done") {
+            un();
+            COPY.result = STORE.applyCopy(COPY.preview, COPY.cats);
+            b.innerHTML = '<div class="c7-step">Done — verified & receipted</div><div class="c7-receipt"><b>' + COPY.result.counts.applied + " copied</b> · " + COPY.result.counts.skipped + " skipped.<br>Verified " + COPY.result.verify.checked + " / mismatches " + COPY.result.verify.mismatches + ". Receipt <b>" + esc(COPY.result.receipt.id) + "</b> · restore point <b>" + esc(COPY.result.restorePoint.label) + "</b>.<br>" + COPY.result.verify.note + "</div>" +
+              '<div class="c7-offline" style="border-color:var(--line);margin-top:8px"><span class="sdot ok"></span><b>' + esc(PM2.currentProject.name) + "</b> and <b>" + esc(COPY.preview.source.name) + "</b> are independent from here on.</div>";
+            f.innerHTML = '<button class="c7-btn" id="copyRoll">Rollback</button><span class="sp"></span><button class="c7-btn primary" id="copyDone">Done</button>';
+            el("copyRoll").addEventListener("click", function () { STORE.rollback(COPY.result.restorePoint.id); openDrawer("Rollback complete", "Restored to the pre-copy restore point. Receipt recorded."); copyClose(); });
+            el("copyDone").addEventListener("click", copyClose);
+          }
+        });
+      });
+    }
+  }
+
+  /* boot */
+  var initial = PM2.routes.parse(location.hash);
+  if (initial.domain || initial.manager || initial.mode) NAV.stack = [Object.assign({ domain: null }, initial)];
+  render(NAV.top());
+  if (initial.row || initial.object || initial.query) land(PM2.routes.planFor(initial), PM2.search.byRid(initial.resultId || "") || null);
+  searchAttach(el("miniSearch"));
+  window.__C7 = { PM2: PM2, STORE: STORE, NAV: NAV, state: state, pickResult: pickResult, selectRow: (typeof selectRow === "function") ? selectRow : null };
+})();
+</script>
+</body>
+</html>

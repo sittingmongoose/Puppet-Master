@@ -1,0 +1,29 @@
+{
+  "schema_id": "pm.settings_candidate_dry_delta.v1",
+  "concept_id": "concept-05-directory-take-1",
+  "model": "Qwen 5.8",
+  "note": "Candidate design roles; shared atoms consumed from _shared; composition concept-native.",
+  "shared_families_consumed": [
+    "PMShell2 (surrounding shell + tray)",
+    "PMState2 (store/scenarios/ObservableWork)",
+    "PMSearch2 (universal search)",
+    "PMManagers2.row/bindRows/popupMenu/virtualList/skeleton",
+    "PMCopy2 (copy transaction)",
+    "PMIcons",
+    "pm2-locate highlight",
+    "pm-badge/pm-btn/pm-toggle atoms"
+  ],
+  "concept_specific_candidates": [
+    "DirectoryHome (large search + attention + two-col destinations)",
+    "DomainDestinationRows",
+    "ManagerWorkspaceNav (left manager list)",
+    "ProviderListDetail (connections rail + tabs)",
+    "SpatialExpandContract motion wrapper",
+    "PushNavNarrow transform",
+    "CopyReviewFlow steps"
+  ],
+  "reuse_evidence": [
+    "DRY Method family rendered at #/mgr/dry with detections/savings/opt-outs",
+    "memory.assembly.dry-method-guard curated in Memory manager"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "schema_id": "pm.settings_bakeoff.test_evidence.v2.concept",
+  "concept_id": "concept-09-tome-tabs",
+  "model": "Qwen 5.8",
+  "method": "Static checks by reading the concept's own source plus live headless-browser verification over http against the real shared modules.",
+  "static_checks": [
+    { "check": "no <iframe> in concept-09-tome-tabs.html", "pass": true },
+    { "check": "no href/src referencing concept-01..04", "pass": true },
+    { "check": "data-concept-model=\"Qwen 5.8\" on <body>", "pass": true },
+    { "check": "routes list", "routes": ["#/home", "#/cat/<catId>", "#/cat/<catId>/<subId>", "#/mgr/<familyId>", "#/mgr/<familyId>/<objectId>", "#/all", "#/copy", "#/lifecycle", "#/q/<query>"], "pass": true },
+    { "check": "virtualization present: PMManagers2.virtualList on #/all with rowHeight 64 and data-window updates", "pass": true },
+    { "check": "no scope selectors (Global/Project/Goal/Host), no inheritance, no profiles/sync UI", "pass": true },
+    { "check": "no emoji; icons only via PMIcons", "pass": true },
+    { "check": "no left accent bars; no parchment/brass/gears/sepia/fantasy/book ornament; colors only via var(--token)", "pass": true },
+    { "check": "reduced motion: [data-reduced-motion=1] kills page-turn and skeleton animations (pm-shell.css + concept CSS)", "pass": true },
+    { "check": "search rows carry data-rid and .pm2-r-title; routing via PMSearch2.byRid only", "pass": true },
+    { "check": "test hooks present: data-test=search-input/search-results/back/close/home/all/copy/vlist, data-route on root view, data-manager on every manager section, data-window on vlist host", "pass": true }
+  ],
+  "live_checks": [
+    { "check": "home renders: 14 rail tabs, 12 chapter cards, notices, utilities", "pass": true },
+    { "check": "search 'rate limit': grouped dropdown (Settings/Objects), duplicate 'Rate Limits' rows with distinct paths", "pass": true },
+    { "check": "select result: routes to #/mgr/providers/claude-oauth?sec=limits, .pm2-locate on roster item, data-manager=providers", "pass": true },
+    { "check": "browser Back: #/q/rate%20limit with query text restored and dropdown reopened with same 7 results", "pass": true },
+    { "check": "all 42 manager routes: [data-manager], [data-test=back], [data-test=breadcrumb] present; data-route correct", "pass": true },
+    { "check": "#/all: data-window 25:46:828 at scrollTop 2000; count '828 rows'; synthetic toggle adds 2000 (2828 total)", "pass": true },
+    { "check": "copy flow: source -> categories -> preview counts (add/replace/unchanged/unavailable/conflict) -> apply -> step 4 with rollback", "pass": true },
+    { "check": "squeezed tier: rail hidden, roster pushes (hidden when object open), Back names roster level", "pass": true },
+    { "check": "offline scenario: critical banner on home, Doctor last-known-health banner", "pass": true },
+    { "check": "providers detail tabs render (overview/accounts/models/install/limits/logs); deferred shells single per owner", "pass": true }
+  ],
+  "known_limitations": [
+    "Manager-local fixture rows are demo values persisted under pm.tt9.fx; they are not inventory rows by design.",
+    "Wide-tier margin pane is informational only (location, attention, receipts).",
+    "Concept is a prototype; no canonical Plans/catalog changes."
+  ]
+}

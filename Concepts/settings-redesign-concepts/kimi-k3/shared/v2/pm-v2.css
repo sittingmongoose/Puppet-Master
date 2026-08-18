@@ -1,0 +1,79 @@
+/* ============================================================================
+   pm-v2.css — shared PM standards for kimi-k3 concepts 05–11
+   ----------------------------------------------------------------------------
+   Standards only (packet 07): the Puppet Master custom scrollbar, the calm
+   search-result locator highlight, skeleton shimmer, and focus behavior.
+   Everything else visible is concept-native CSS. Composes with pm-themes.css
+   tokens and pm-components.css classes; never overrides them.
+   ========================================================================== */
+
+/* ---------- Puppet Master custom scrollbar (overlay, reveal-on-hover) ------
+   Port of the PMConcept7 standard: hidden at rest, thin themed thumb on
+   hover/scroll-active, 3px transparent border for the inset overlay look.
+   Concepts opt scroll panes in with the `.pmv2-scroll` class. */
+:root {
+  --pmv2-sb-thumb: color-mix(in srgb, var(--pm-ink) 18%, transparent);
+  --pmv2-sb-thumb-hover: color-mix(in srgb, var(--pm-ink) 32%, transparent);
+  --pmv2-sb-radius: 8px;
+}
+@property --pmv2-sb-ink { syntax: "*"; inherits: false; }
+.pmv2-scroll { scrollbar-width: thin; scrollbar-color: var(--pmv2-sb-ink, transparent) transparent; }
+.pmv2-scroll::-webkit-scrollbar { width: 10px; height: 10px; }
+.pmv2-scroll::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
+.pmv2-scroll::-webkit-scrollbar-corner { background: transparent; }
+.pmv2-scroll::-webkit-scrollbar-track { background: transparent; }
+.pmv2-scroll::-webkit-scrollbar-thumb {
+  background: transparent;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  border-radius: var(--pmv2-sb-radius);
+  transition: background 0.25s ease;
+}
+:is(.pmv2-scroll:hover, .pmv2-scroll:focus-within)::-webkit-scrollbar-thumb { background: var(--pmv2-sb-thumb); }
+.pmv2-scroll::-webkit-scrollbar-thumb:hover { background: var(--pmv2-sb-thumb-hover); }
+:is(.pmv2-scroll:hover, .pmv2-scroll:focus-within) { --pmv2-sb-ink: var(--pmv2-sb-thumb); }
+:root[data-motion="reduced"] .pmv2-scroll::-webkit-scrollbar-thumb { transition: none; }
+
+/* ---------- Calm locator highlight (exact search result landing) ----------
+   One gentle settle, never flashing: ring + raised surface, ~1.6s, then a
+   persistent quiet outline so the destination stays findable. Reduced motion
+   keeps the persistent outline and skips the animation entirely. */
+.pmv2-locate {
+  position: relative;
+  outline: 2px solid var(--pm-focus);
+  outline-offset: 2px;
+  border-radius: var(--pm-radius-s);
+}
+@keyframes pmv2-locate-settle {
+  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--pm-focus) 42%, transparent); }
+  100% { box-shadow: 0 0 0 12px transparent; }
+}
+:root:not([data-motion="reduced"]) .pmv2-locate {
+  animation: pmv2-locate-settle calc(1.6s * var(--pm-motion-scale, 1)) ease-out 1;
+}
+
+/* ---------- Loading skeleton (determinate-free, calm, no theatre) --------- */
+.pmv2-skeleton {
+  border-radius: var(--pm-radius-s);
+  background: color-mix(in srgb, var(--pm-ink) 8%, transparent);
+  min-height: 1em;
+}
+:root:not([data-motion="reduced"]) .pmv2-skeleton {
+  animation: pmv2-skel calc(1.8s * var(--pm-motion-scale, 1)) ease-in-out infinite alternate;
+}
+@keyframes pmv2-skel {
+  from { opacity: 0.55; }
+  to   { opacity: 1; }
+}
+
+/* ---------- Focus visibility (Slint-portable: real focus, clear ring) ----- */
+:focus-visible {
+  outline: 2px solid var(--pm-focus);
+  outline-offset: 1px;
+}
+
+/* ---------- Utility: visually hidden but reachable ------------------------- */
+.pmv2-sr {
+  position: absolute; width: 1px; height: 1px;
+  clip-path: inset(50%); overflow: hidden; white-space: nowrap;
+}

@@ -1,0 +1,580 @@
+{
+  "schema_id": "pm.usage_visual_interaction_test_report.v1",
+  "harness": "playwright-core + system Chrome (chrome)",
+  "concept": "QwenUsageConcept/u11-prism",
+  "packet": "PM_Usage_Concept_Update_Final_Cumulative_2026-08-08",
+  "ran_at": "2026-08-18T15:10:53.697Z",
+  "duration_ms": 176681,
+  "cases": [
+    {
+      "name": "matrix friendly-dark @ 900px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix friendly-dark @ 1280px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix friendly-dark @ 1700px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix friendly-dark @ 2200px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix friendly-dark @ 2500px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix friendly-light @ 900px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix friendly-light @ 1280px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix friendly-light @ 1700px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix friendly-light @ 2200px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix friendly-light @ 2500px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix glass-dark @ 900px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix glass-dark @ 1280px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix glass-dark @ 1700px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix glass-dark @ 2200px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix glass-dark @ 2500px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix glass-light @ 900px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix glass-light @ 1280px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix glass-light @ 1700px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix glass-light @ 2200px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix glass-light @ 2500px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix retro-dark @ 900px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix retro-dark @ 1280px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix retro-dark @ 1700px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix retro-dark @ 2200px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix retro-dark @ 2500px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix retro-light @ 900px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix retro-light @ 1280px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix retro-light @ 1700px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix retro-light @ 2200px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix retro-light @ 2500px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix basic-dark @ 900px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix basic-dark @ 1280px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix basic-dark @ 1700px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix basic-dark @ 2200px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix basic-dark @ 2500px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix basic-light @ 900px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix basic-light @ 1280px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix basic-light @ 1700px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix basic-light @ 2200px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "matrix basic-light @ 2500px",
+      "status": "pass",
+      "detail": "page=1 rail=15 underscores=0 consoleErrors=0"
+    },
+    {
+      "name": "interaction scope picker → OpenAI chip",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "interaction disclosure Std→Adv toggles authority rail",
+      "status": "pass",
+      "detail": "hidden@std=true visible@adv=true"
+    },
+    {
+      "name": "interaction settings sheet routes to canonical Settings and writes no policy",
+      "status": "pass",
+      "detail": "policyInputs=0 u11:settings=null dispatch={\"cat\":\"ai\",\"id\":\"ai.usage.pressure-visibility\"}"
+    },
+    {
+      "name": "interaction export records → JSONL → cmd.usage.export",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "interaction refresh toasts",
+      "status": "pass",
+      "detail": "Usage projections refreshed (demo)"
+    },
+    {
+      "name": "interaction zero console errors",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "new BSD section in attempt inspector (ue-600)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "correction inspector acquisition note on verification call (ue-609)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "new operations widget (CLI update · rolled back · 5 stages)",
+      "status": "pass",
+      "detail": "stages=5"
+    },
+    {
+      "name": "correction acquisition lineage on cli_update (explicit setup · official source · bound host/env)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "correction setup_required → provider setup deep-link, no silent install",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "guard maintenance entries carry no token totals",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "new capacity envelope renders every ceiling the run record carries",
+      "status": "pass",
+      "detail": "runs=3 ceilings=15 problems=0"
+    },
+    {
+      "name": "new forecast refresh dispatches cmd.usage.forecast.request and recomputes the projection",
+      "status": "pass",
+      "detail": "Forecast recomputed (demo) · reading 2 · renderedForecastChanged=true"
+    },
+    {
+      "name": "new account row Use next → switch_route + toast",
+      "status": "pass",
+      "detail": "Future work will prefer Alibaba · Personal. In-flight requests are never moved. | Priority 1last used 13m agoUse nextOpen provider console"
+    },
+    {
+      "name": "new plans estimate (unavailable → PM estimate 63%)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "guard unknown≠zero (kimi pool / zai limit unknown; estimate distinct)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "new free model cooldown row",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "guard unconfigured providers absent from DOM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "guard cost identity 61.85M + 125.57M = 187.42M",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "new-behavior zero console errors",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "guard free models every rendered row names family, account and connection",
+      "status": "pass",
+      "detail": "rows=9/9 gaps=0 unidentifiedFallback=false"
+    },
+    {
+      "name": "guard free models ineligible rows keep their underlying route",
+      "status": "pass",
+      "detail": "ineligible=2 [free:ds-ended, free:glm-unverified] incomplete=0"
+    },
+    {
+      "name": "guard every billing route renders its own label plus connection, account and product evidence",
+      "status": "pass",
+      "detail": "routes=7 distinctLabels=7 problems=0"
+    },
+    {
+      "name": "guard helper calls render as their own attempts, never folded into the main model",
+      "status": "pass",
+      "detail": "work=work-1 attempts=9 rendered=9 helpers=7 missing=0 folded=0"
+    },
+    {
+      "name": "guard historical attempts keep their own route and settlement, not the current alias",
+      "status": "pass",
+      "detail": "historical=2 settlements=2 distinct=true problems=0"
+    },
+    {
+      "name": "guard account rows are exactly the configured accounts, none shown before setup",
+      "status": "pass",
+      "detail": "rows=12 configured=12 stray=0 removedLeak=0 unconfiguredLeak=0"
+    },
+    {
+      "name": "guard Usage persists only view and layout state, never a Settings-owned policy",
+      "status": "pass",
+      "detail": "keys=4 [pm.theme, u11:disclosure, u11:scope, u11:seeded] roomCanvases=13 policyShaped=0"
+    },
+    {
+      "name": "guard no label is cut off without an ellipsis or a title to recover it",
+      "status": "pass",
+      "detail": "clipped=156 withoutAffordance=0 zeroWidth=0"
+    },
+    {
+      "name": "guard every meter fill stays inside its track",
+      "status": "pass",
+      "detail": "tracks=216 escaped=0"
+    },
+    {
+      "name": "hard-failure guards zero console errors",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "closure turn card figures are the work item total, never the headline attempt",
+      "status": "pass",
+      "detail": "cards=12 bucketFigures=45 workItemsLargerThanTheirHeadline=11 problems=0"
+    },
+    {
+      "name": "closure user_work primaries are never counted as helper calls",
+      "status": "pass",
+      "detail": "cards=12 workItemsWithMoreThanOnePrimary=6 problems=0"
+    },
+    {
+      "name": "closure a work item spanning several provider families names every one of them",
+      "status": "pass",
+      "detail": "multiFamilyWorkItems=7 problems=0"
+    },
+    {
+      "name": "closure scope footer counts current usage without removed accounts and the arithmetic closes",
+      "status": "pass",
+      "detail": "scopes=scope:all:52+2=54 fam:openai:8+2=10 attempts=54 problems=0"
+    },
+    {
+      "name": "closure provider-setup deep link carries provider, account, connection, CLI, host, environment and its continuation",
+      "status": "pass",
+      "detail": "ops=ops-8 category=ai focus_setting_id=ai.accounts.provider-connections inCanon=true continuation=cont-8841 reachedDOM=true absentIdentity=none rewritten=none inventory=828 rows"
+    },
+    {
+      "name": "closure Settings sheet routes to a settings row that exists in canon",
+      "status": "pass",
+      "detail": "dispatch={\"cat\":\"ai\",\"id\":\"ai.usage.pressure-visibility\"} inCanon=true inventory=828 rows"
+    },
+    {
+      "name": "closure the model level is a navigable scope, not \"Unknown scope\"",
+      "status": "pass",
+      "detail": "pickerRows=116 modelRows=16 unknownRows=0 picked=model:qwen3-coder-plus kind=model narrowsTo=11/54 chip=\"Qwen3 Coder Plus\" ledgerCards=5 outOfScopeCards=0 kinds={\"all\":1,\"comparison\":1,\"family\":10,\"account\":12,\"connection\":16,\"product\":27,\"meter\":33,\"model\":16}"
+    },
+    {
+      "name": "closure CBP-027 probe states render in the record’s own words for every installation",
+      "status": "pass",
+      "detail": "installations=3/3 probeRows=24/24 vocabulary=11 unrendered=0 fabricated=0"
+    },
+    {
+      "name": "closure CBP-027 credits never become a token bucket, a cost, a quota or a provider total",
+      "status": "pass",
+      "detail": "creditRecords=3 tokenBucketsHeldUnknown=33 problems=0"
+    },
+    {
+      "name": "closure the rendered time-kind coverage matches U11.timeKindCoverage for every run",
+      "status": "pass",
+      "detail": "runs=run:goal-47 11/11 · run:plan-12 9/11 missing:reset_wait+maintenance · run:crew-3 9/11 missing:resource_wait+maintenance problems=0"
+    },
+    {
+      "name": "closure changing the page scope dispatches no command",
+      "status": "pass",
+      "detail": "target=cmp:coding-sprint scopeApplied=true dispatched=[] pickerRows=116"
+    },
+    {
+      "name": "closure the run inspector opens on cmd.nav.open_subject and the attempt inspector on cmd.nav.open_usage_subject",
+      "status": "pass",
+      "detail": "run=run:goal-47 [cmd.nav.open_subject] {\"kind\":\"run\",\"obj\":\"run:goal-47\",\"run\":\"run:goal-47\"} · attempt=ue-501 [cmd.nav.open_usage_subject] {\"kind\":\"usage_event\",\"obj\":\"ue-501\",\"ref\":\"ue-501\"}"
+    },
+    {
+      "name": "closure removed-source history survives a bucket filter set to its own bucket",
+      "status": "pass",
+      "detail": "historicalAttempts=2 configSheetDrivable=true main→2 rows specialists→0 rows · all→2 rows"
+    },
+    {
+      "name": "closure no leaf collapses to zero width or is cut off without recovery at 360 and 520",
+      "status": "pass",
+      "detail": "rooms=13 360px zeroWidth=0 withoutAffordance=0 · 520px zeroWidth=0 withoutAffordance=0 clipped=71"
+    },
+    {
+      "name": "closure no element id is used twice, in any room or overlay",
+      "status": "pass",
+      "detail": "surfacesScanned=16 idsAtMost=68 duplicates=0"
+    },
+    {
+      "name": "closure no title or aria-label carries a raw enum token",
+      "status": "pass",
+      "detail": "scans=14 underscoreTooltips=0 machineReadableDataAttributes=267"
+    },
+    {
+      "name": "closure a meter with no published figure renders no percentage, and no percentage is negative",
+      "status": "pass",
+      "detail": "meterRows=33 withFigure=26 unknown=7 problems=0 negativePercentagesInRooms=0"
+    },
+    {
+      "name": "closure a reported cache zero is distinguishable from a cache that is not exposed",
+      "status": "pass",
+      "detail": "reportedZeroRows=1 notExposedRows=1 saysMeasuredZero=true saysNothingToRead=true zeroShownAsUnknown=false cacheRoomOpen=true"
+    },
+    {
+      "name": "closure a provider-reported zero stays a reported zero and is never relabelled unknown",
+      "status": "pass",
+      "detail": "reportedRows=7 rowsThatLoseTheirZero=0"
+    },
+    {
+      "name": "closure guards zero console errors",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 1 Codex limit → credits continuation",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 2 Alibaba Extra Bundle consumption (ue-611 usage_pack)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 3 Work→Personal fallback (ue-608 requested≠effective)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 4 separately settled vision helper + attachment transform",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 5 model change replay/cache reset (cm-4 + replay ue-591)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 6 free model cooldown rendered",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 7 background validation consumes allowance (probe attribution)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 8 six required specialists in three two-agent waves, rendered",
+      "status": "pass",
+      "detail": "run:plan-12 \"Spec: U11 usage concept\" 6 required / 2 admitted / 4 queued / 3 waves · capacityRow={\"names\":true,\"waveplan\":true,\"requested\":true} runDetail={\"required\":true,\"admitted\":true,\"queued\":true,\"waves\":true}"
+    },
+    {
+      "name": "fixture 9 provider unavailable → PM estimate (meter:oc-go-monthly)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 10 requested vs effective model (thread:t-91 switch)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 11 BSD silent + advice + duplicate suppressed",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 12 attachment transform event fields (ue-602)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 13 CLI update idle/verify/rollback (ops-1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 14 offline outbox + reconnect replay (ops-2 + ue-610)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 15 server work continues offline (ops-3 on TrueNAS)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 16 cross-project child (work-12 · Harbor)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 17 sound preview + notification test-send (ops-4/ops-5)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "fixture 18 unconfigured account absent from normal view",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "context details show stable prefix / cache epoch / tool schema overhead",
+      "status": "pass",
+      "detail": ""
+    }
+  ],
+  "pass": 110,
+  "fail": 0,
+  "screenshots": [
+    "verify-shots/theme-friendly-dark-1700.png",
+    "verify-shots/theme-friendly-light-1700.png",
+    "verify-shots/theme-glass-dark-1700.png",
+    "verify-shots/theme-glass-light-1700.png",
+    "verify-shots/theme-retro-dark-1700.png",
+    "verify-shots/theme-retro-light-1700.png",
+    "verify-shots/theme-basic-dark-1700.png",
+    "verify-shots/theme-basic-light-1700.png",
+    "verify-shots/bsd-inspector.png",
+    "verify-shots/operations-widget.png",
+    "verify-shots/setup-required.png",
+    "verify-shots/capacity-envelope.png",
+    "verify-shots/accounts-usenext.png",
+    "verify-shots/plans-estimate.png",
+    "verify-shots/free-cooldown.png",
+    "verify-shots/context-details.png"
+  ]
+}

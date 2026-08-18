@@ -1,0 +1,83 @@
+{
+ "opsWidget": {
+  "hostClass": "uw-body",
+  "hostText": "Codex CLI update ROLLED BACK Update verified, then rolled back Check 2m Wait for idle 9m Install 3m Verify 4m Rollback 1m Studio PC · Native Explicit user setup · official OpenAI installer · bound to Studio PC / Native · v0.42.0 · updates/repair post-consent only Installer time is maintenance, not model usage. The verify step made one real model call (recorded separately). View the verification call Client offline · outbox COMPLETED Queued while offline · replayed on reconnect Offline 22m Outbox wait 22m Reconnect + replay 3m Jared’s MacBook Air · Native The reconnect replay is a real provider attempt — see ue-610. Queue time itself is never model usage. Home Server kept working COMPLETED Server work continued TrueNAS Home Server · Docker · pm-server Server work continues while the client is offline; slow thread load is not provider usage. Notification sound preview COMPLETED Local sound preview — not usage Studio PC · Native A local sound preview is not provider usage. Notification test-send COMPLETED Test notification sent Studio PC · Native Operational receipt, not model usage. Project Vault backup COMPLETED Vault backup completed TrueNAS Home Server · Docker · pm-server Backup is maintenance, never model usage. Project Move: Tastebook → Vault COMPLETED Project moved to Vault TrueNAS Home Server · Docker · pm-server Moving a project between storage locations is not provider usage. Codex CLI requested on Home Server · not installed COMPLETED Provider Setup Required — no compatible installation on this host/environment TrueNAS Home Server · Docker · pm-server The Studio PC",
+  "notesInPane": [
+   "Maintenance is never model usage. First acquisition is explicit user setup from the official source for the exact host/environment; Auto/On maintain only already-approved installations. When a flow verifies with a model, that call appears separately as a validation event."
+  ],
+  "headsSample": [
+   "Ledger",
+   "TURN Fix pricing migration 14:34 EDT",
+   "TURN Regenerate invoice fixtures 14:16 EDT",
+   "TURN Redirect: rewrite rate limiter 14:40 EDT",
+   "TURN Run integration tests 14:01 EDT",
+   "TURN Apply deploy script changes 13:44 EDT",
+   "TURN Read receipt photo 13:31 EDT",
+   "GOAL PHASE Specialist reviews · phase 2 now",
+   "PLANNING TOPIC Source extraction · topics now",
+   "CREW STEP Critique round 1 now",
+   "THREAD REQUEST Checkout service audit now",
+   "THREAD REQUEST Branch: retry on Claude now"
+  ]
+ },
+ "fullScan": {
+  "0.43.1": {
+   "inBodyText": false,
+   "inOuterHtml": false
+  },
+  "verify_failed": {
+   "inBodyText": false,
+   "inOuterHtml": false
+  },
+  "Verify failed": {
+   "inBodyText": false,
+   "inOuterHtml": false
+  },
+  "x64": {
+   "inBodyText": false,
+   "inOuterHtml": false
+  },
+  "Failure class": {
+   "inBodyText": false,
+   "inOuterHtml": false
+  },
+  "failure": {
+   "inBodyText": false,
+   "inOuterHtml": true
+  },
+  "Outcome": {
+   "inBodyText": false,
+   "inOuterHtml": false
+  },
+  "Affected": {
+   "inBodyText": false,
+   "inOuterHtml": false
+  },
+  "cont-8841": {
+   "inBodyText": false,
+   "inOuterHtml": false
+  },
+  "Target version": {
+   "inBodyText": false,
+   "inOuterHtml": false
+  },
+  "publisher-signed": {
+   "inBodyText": true,
+   "inOuterHtml": true
+  },
+  "rolled back": {
+   "inBodyText": true,
+   "inOuterHtml": true
+  },
+  "Rollback": {
+   "inBodyText": true,
+   "inOuterHtml": true
+  },
+  "__inspectorOpen": true
+ },
+ "picker": {
+  "opened": true,
+  "addSel": "uw-addbtn",
+  "rows": []
+ }
+}

@@ -1,0 +1,122 @@
+{
+  "schema_id": "pm.settings_bakeoff.candidate_command_delta.v2.concept",
+  "concept_id": "concept-07-compendium-workspace",
+  "model": "Qwen 5.8",
+  "provisional": true,
+  "note": "Census against authority/base_packet/CANDIDATE_COMMAND_ID_REGISTER.json. No canonical IDs assigned; every entry awaits owner adjudication with typed payload, identity, availability, revision, permission, persistence, ObservableWork link, cancellation/rollback, route effect, and GUI/NL/palette equivalence.",
+  "reuse": [
+    {
+      "id": "cmd.settings.open",
+      "concept_use": "shell Settings rail item and Close Settings return"
+    },
+    {
+      "id": "cmd.settings.navigate",
+      "concept_use": "nav items, breadcrumb, back (payload gains compendium facet level)"
+    },
+    {
+      "id": "cmd.settings.search.focus",
+      "concept_use": "hero field on Home; compact topbar field elsewhere"
+    },
+    {
+      "id": "cmd.settings.search.select_result",
+      "concept_use": "Enter/click on data-rid row; routes via immutable rid only"
+    },
+    {
+      "id": "cmd.settings.category.select",
+      "concept_use": "browse-by-area cards and nav domain items"
+    },
+    {
+      "id": "cmd.settings.subcategory.select",
+      "concept_use": "area chips on domain pages"
+    },
+    {
+      "id": "cmd.settings.setting.focus",
+      "concept_use": "?row= deep link with scroll+focus+.pm2-locate and About-this-setting card"
+    },
+    {
+      "id": "cmd.settings.manager.open",
+      "concept_use": "related-manager rows and search manager entries"
+    },
+    {
+      "id": "cmd.settings.value.set",
+      "concept_use": "all row controls (inventory rows)"
+    },
+    {
+      "id": "cmd.settings.default.restore",
+      "concept_use": "row Details reset action"
+    },
+    {
+      "id": "cmd.settings.copy_from_project.preview",
+      "concept_use": "copy step 2 preview via PMCopy2.preview"
+    },
+    {
+      "id": "cmd.settings.copy_from_project.apply",
+      "concept_use": "copy step 3 apply with restore point + verify"
+    },
+    {
+      "id": "cmd.settings.import.rollback",
+      "concept_use": "lifecycle rollback and copy rollback"
+    },
+    {
+      "id": "cmd.provider.connection.reconnect",
+      "concept_use": "anthropic sign-in continuation"
+    },
+    {
+      "id": "cmd.provider.installation.install",
+      "concept_use": "explicit official-source install with Host/Environment"
+    },
+    {
+      "id": "cmd.provider.installation.update",
+      "concept_use": "ask-first update review"
+    },
+    {
+      "id": "cmd.provider.installation.rollback",
+      "concept_use": "rollback after failed verification"
+    },
+    {
+      "id": "cmd.usage.refresh",
+      "concept_use": "limits tab; usage-unavailable stays honest (no guessed meters)"
+    },
+    {
+      "id": "cmd.notifications.sound.preview",
+      "concept_use": "sounds test send (rate-limited, receipted)"
+    },
+    {
+      "id": "cmd.storage.backup.open",
+      "concept_use": "backup manager entry"
+    },
+    {
+      "id": "cmd.artifact.manager.open",
+      "concept_use": "artifacts browse"
+    }
+  ],
+  "alias": [
+    {
+      "id": "cmd.settings.scope.inspect",
+      "reason": "scope is provenance-only; keep as read-only inspect, never editable scope"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "cmd.settings.compendium.facet.set",
+      "reason": "facet selection (category/type/status/tier/synth/sort/within-filter) as addressable state (#/all?cat=...&...); needs palette/NL equivalence",
+      "owner": "Settings IA owner"
+    },
+    {
+      "id": "cmd.settings.compendium.row.open",
+      "reason": "compendium row -> exact subpage row deep link is a distinct navigation semantic from search select",
+      "owner": "Settings IA owner"
+    },
+    {
+      "id": "cmd.settings.manager.tab.select",
+      "reason": "manager-local tab selection as addressable state (?sec=) with section aliases",
+      "owner": "Provider Lifecycle owner"
+    }
+  ],
+  "retire_or_alias_from_register": [
+    {
+      "id": "cmd.settings.bloom.open",
+      "disposition": "retire; no bloom/chip geometry in this concept"
+    }
+  ]
+}

@@ -56,7 +56,11 @@ def temporary_artifacts(folder: Path) -> List[str]:
             continue
         name = path.name.lower()
         if path.is_dir() and name in TEMP_ARTIFACT_DIR_NAMES:
-            found.append(f"{relative.as_posix()}/")
+            # A tracked .gitignore may reserve an output directory without
+            # retaining any generated verification material.
+            has_output = any(child.name != ".gitignore" for child in path.rglob("*") if child.is_file())
+            if has_output:
+                found.append(f"{relative.as_posix()}/")
         elif path.is_file() and (name in TEMP_ARTIFACT_FILE_NAMES or TEMP_ARTIFACT_FILE_PATTERN.search(name)):
             found.append(relative.as_posix())
     return sorted(set(found))
@@ -133,8 +137,11 @@ def validate(folder: Path) -> List[str]:
         errors.append("topic is required")
     if not model:
         errors.append("model is required")
-    elif normalize_name(model) not in normalize_name(folder.name):
+    elif normalize_name(model) not in normalize_name(folder.name) and not bool(manifest.get("unknownModel", False)):
         errors.append(f"folder name '{folder.name}' must include model name '{model}'")
+    manifest_id = manifest.get("id")
+    if manifest_id is not None and (not isinstance(manifest_id, str) or not manifest_id.strip()):
+        errors.append("id must be a non-empty string when provided")
     if presentation not in PRESENTATIONS:
         errors.append(f"presentation must be one of {sorted(PRESENTATIONS)}")
     errors.extend(validate_width_control(manifest.get("widthControl")))

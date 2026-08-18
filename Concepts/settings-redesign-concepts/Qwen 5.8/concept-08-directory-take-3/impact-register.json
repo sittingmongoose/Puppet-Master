@@ -1,0 +1,79 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "concept_id": "concept-08-directory-take-3",
+  "model": "Qwen 5.8",
+  "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+  "plan_owner_impacts": [
+    { "owner": "FinalGUISpec", "impact": "Take 3 demonstrates a bright spacious directory home (12 large domain cards with icon/title/purpose/health meta), search + attention at top, manager-destination domain overviews, and a provider summary of status cards + explicit quick actions. Supersedes bloom/chip/shelf vocabulary; no right-panel language remains." },
+    { "owner": "settings inventory and schema", "impact": "Inventory categories render as directory cards and subgroups as pill subnav; 828 real rows untouched. Tier vocabulary (simple/advanced) used verbatim in All Settings facets; no id re-rooting proposed by this concept." },
+    { "owner": "Models System", "impact": "Provider manager answers connected?/which account/which models/usage-end/routing/setup via status cards; Free Coding Models wrapper never owns credentials, quota, or Usage; catalog refresh keeps last-known-good on failure." },
+    { "owner": "Multi-Account", "impact": "Accounts section shows preferred/sticky/enabled/health per account; Azure fixture shows requested vs effective fallback order honestly." },
+    { "owner": "CLI Bridged Providers", "impact": "CLI-owned OAuth boundary rendered as masked secret + 'Open CLI sign-in'; PM-direct OAuth only for OpenAI/Codex fixtures." },
+    { "owner": "Provider OpenCode", "impact": "External-server provider with manual-only updates and medium-confidence installation; capability probes only." },
+    { "owner": "Media", "impact": "Media & Output family demonstrated at #/mgr/media (location/naming/export); no retired destination revived." },
+    { "owner": "Prompt Pipeline", "impact": "Context & Instructions manager shows instruction chain admission status and excluded paths; registry exposure never implies prompt injection." },
+    { "owner": "Assistant Memory", "impact": "Memory manager demonstrates half-life-as-activation, verification, pinning, restore, gist health diagnostic with rebuild action." },
+    { "owner": "Personas", "impact": "Roster of behavior capsules with authority-is-not-behavior status row; selection scope explicit." },
+    { "owner": "Goal Runtime", "impact": "Goal & Automation shows ceilings/defaults and active-Goal count as operational status, not live run state." },
+    { "owner": "Orchestrator/Subagents", "impact": "Crew roster shows templates with route policy and isolation; swarm attention health near concurrency ceiling." },
+    { "owner": "Planning Wizard", "impact": "Planning quality rows live in planning domain pages; no route quality change proposed." },
+    { "owner": "PRD Builder", "impact": "Same planning-constraint surface; no new owner claims." },
+    { "owner": "Permissions", "impact": "Permissions manager demonstrates ordered rules, last-match-wins, FileSafe floor, default profile, and rule trace action." },
+    { "owner": "FileSafe", "impact": "Non-bypassable floor status row; manager never encourages bypass." },
+    { "owner": "Commands", "impact": "Commands & Shortcuts roster with dry-run status; dry run never sends work to an agent." },
+    { "owner": "UI Command Catalog", "impact": "Census reused canon ids only (see candidate-command-delta.json); no canon minted; cmd.settings.* candidates remain provisional." },
+    { "owner": "MCP", "impact": "MCP roster across connected/disabled/needs-repair fixtures with progressive exposure and approval defaults." },
+    { "owner": "Skills / Plugins / Tools", "impact": "Three rosters with trust/provenance, channel/restart, and installed/enabled/selected/invoked states." },
+    { "owner": "LSP", "impact": "Roster with autodetect, diagnostics, format ownership, repair action; crash fixture noted." },
+    { "owner": "Formatters", "impact": "Roster with per-language ownership and scope; test action." },
+    { "owner": "File Manager", "impact": "Changed-on-disk, autosave, encoding, line endings rows in files manager." },
+    { "owner": "Testing", "impact": "Evidence strength, autotest, debug visibility, matrix rows." },
+    { "owner": "Worktrees/Git/GitHub", "impact": "SCM manager with provisioning/cleanup/ports; GHA watch/notify/approvals with runs staying on GitHub." },
+    { "owner": "Containers/Registries", "impact": "Roster of Docker/Podman/registry with capability probes sharing installation lifecycle." },
+    { "owner": "Storage", "impact": "Four honest backup classes; compaction only as owner-admitted request; cleanup manager dry-run first." },
+    { "owner": "Release/updates owner", "impact": "Provider update lifecycle (available → updating → verifying → ready | verification-failed → rolled-back) demonstrated with ObservableWork; deferred App & Content Updates shell names Project Syncing and Updates owner." },
+    { "owner": "Binary Locator", "impact": "Installation cards show confidence ladder and shadowed/selected; unknown owner manual-only." }
+  ],
+  "settings_inventory_impacts": [
+    "No inventory rows added, removed, or re-rooted; concept consumes PMInventoryData as-is.",
+    "Family fixture rows (memory.half-life etc.) are concept-local demo rows rendered with the same row grammar; they are not inventory ids and are labeled as simulated in receipts."
+  ],
+  "settings_schema_impacts": [
+    "Legacy inventory scope arrays include 'global'; this concept renders Project-only semantics (receipts say 'this Project only') and proposes schema work to drop or reinterpret the global scope token — see plan-owner-delta.md."
+  ],
+  "command_id_impacts": ["See candidate-command-delta.json (census reuse/alias/candidate; provisional only)."],
+  "wiring_impacts": ["See candidate-wiring-delta.json; every control traces UI→command→owner→validation→mutation→event/receipt→projection→attribution→recovery; demo state marked simulated."],
+  "dry_component_impacts": ["See candidate-dry-delta.json; shared headless modules consumed from _shared (pm-state2, pm-search2, pm-managers2, pm-copy2, pm-shell2); concept-specific candidates listed."],
+  "schema_event_storage_impacts": [
+    "Receipts and restore points stored per-concept in localStorage key pm.settings-demo2.concept-08-directory-take-3; no cross-concept writes.",
+    "ObservableWork ops are in-memory only (state.ops cleared on serialize), matching the headless store contract."
+  ],
+  "migration_supersession_impacts": [
+    "Supersedes bloom-modal navigation vocabulary with directory cards; cmd.settings.bloom.open retire/alias flagged in command delta.",
+    "No supersession of inventory ids; category→domain mapping is presentational only."
+  ],
+  "slint_port_impacts": [
+    "Concept is plain HTML/CSS/JS over shared headless modules; a future Slint port would map d3-card/d3-dest/d3-roster/d3-seccard compositions to components while reusing the same headless stores."
+  ],
+  "test_fixtures": [
+    "search-route-matrix.json (16 cases incl. grouped, duplicate labels, typo, unavailable, manager object, deep row, back-restores-query)",
+    "manager-route-matrix.json (42 families)",
+    "manager-coverage.json (42 demonstrated + 9 deferred named owner)"
+  ],
+  "deferred_named_owners": [
+    { "name": "Product Onboarding", "owner": "Product Onboarding plan owner", "insertion": "First-run flow reuses provider/account/installation records; no duplicate secret store.", "return": "Returns to Providers manager with new connection selected and continuation receipt.", "route": "#/mgr/onboarding, #/deferred/onboarding" },
+    { "name": "Installation / Deployment", "owner": "Provider Lifecycle owner", "insertion": "Explicit official-source install for exact Host/Environment with verification and rollback inside provider card.", "return": "Install receipts deep-link to provider installation section; failed verification returns with previous generation restored.", "route": "provider card #sec-install" },
+    { "name": "Server Claim / Bootstrap", "owner": "Server Backbone", "insertion": "Claim handshake binds server record before hosted work.", "return": "Claim returns to Servers card with connected mark and receipt.", "route": "#/deferred/server-claim" },
+    { "name": "Servers / Execution Hosts / Clients", "owner": "Server Backbone", "insertion": "Manager grammar reserved under System & Advanced; human-language cards only.", "return": "Server cards deep-link back at matching storage/hosting row.", "route": "#/mgr/servers, #/deferred/servers" },
+    { "name": "Project Hosting & Files", "owner": "Project Syncing and Updates", "insertion": "Source Location card plus Project Sync status slots.", "return": "Hosting changes return to Project Hosting card with sync status and move receipt.", "route": "#/mgr/hosting, #/deferred/hosting" },
+    { "name": "Remote Access", "owner": "Server Backbone", "insertion": "Pairing and session approvals; protected auth browsing human-only.", "return": "Approvals return to Remote Access card with session list updated.", "route": "#/deferred/remote-access" },
+    { "name": "Project Sync / Move", "owner": "Project Syncing and Updates", "insertion": "Relocation and sync bundles owned by sync pipeline; Settings surfaces status only.", "return": "Finished move returns to Settings Lifecycle with re-verified settings and queued conflicts.", "route": "#/deferred/sync-move" },
+    { "name": "Puppet Master application/content updates", "owner": "Project Syncing and Updates", "insertion": "Host-scoped signed updates separate from provider/LSP/container tool updates.", "return": "Update status cards deep-link into Updates manager with signed-build receipts.", "route": "#/mgr/updates, #/deferred/updates" },
+    { "name": "Full Server backup owner flow", "owner": "Server Backbone", "insertion": "Full Server backup class with own schedule and verification.", "return": "Backup runs return to Backup manager server class with verification receipts.", "route": "#/deferred/server-backup" }
+  ],
+  "unresolved_questions": [
+    "Whether directory-card health meta should derive from notices() only or also from manager readiness aggregates (currently notices-driven).",
+    "Whether #/deferred/<id> pages should live under their domain category route once real modules land."
+  ],
+  "demonstrated_families": "All 42 required families demonstrated concept-natively; 9 deferred families rendered as reachable insertion shells with named owners."
+}

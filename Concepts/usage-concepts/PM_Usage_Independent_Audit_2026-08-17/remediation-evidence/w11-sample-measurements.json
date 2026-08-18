@@ -1,0 +1,1882 @@
+{
+ "schema_id": "pm.usage_independent_audit.w11_sample_measurements.v1",
+ "ran_at_utc": "2026-08-18T04:30:00Z",
+ "purpose": "Raw measurements taken by the independent remediation-status pass against the live concept over file://. Every 'measured' basis in FINDINGS.json remediation objects that does not cite w1/w6 cites a key in this file.",
+ "driver": "playwright-core 1.62.1 + chromium-1234, viewport 1900x1200 unless stated",
+ "runs": {
+  "round1_disclosure_data_rooms": {
+   "disclosure.default.mountedTypes": {
+    "level": null,
+    "boards": {
+     "u11-overview": "capacity,plans,costs,context,attention,accounts",
+     "u11-plans": "plans,capacity",
+     "u11-costs": "costs",
+     "u11-accounts": "accounts",
+     "u11-free": "free",
+     "u11-context": "context",
+     "u11-analytics": "costs",
+     "u11-ledger": "ledger",
+     "u11-attention": "attention",
+     "u11-cache": "",
+     "u11-tools": "",
+     "u11-signals": "",
+     "u11-authority": ""
+    }
+   },
+   "A09-03.disclosureMounts": {
+    "essentials": {
+     "boards": {
+      "u11-overview": "accounts,attention,capacity,context,costs,plans",
+      "u11-plans": "capacity,plans",
+      "u11-costs": "costs",
+      "u11-accounts": "accounts",
+      "u11-free": "free",
+      "u11-context": "context",
+      "u11-analytics": "costs",
+      "u11-ledger": "ledger",
+      "u11-attention": "attention",
+      "u11-cache": "",
+      "u11-tools": "",
+      "u11-signals": "",
+      "u11-authority": ""
+     },
+     "railVisible": [
+      "overview",
+      "plans",
+      "costs",
+      "accounts",
+      "free",
+      "context",
+      "analytics",
+      "ledger"
+     ]
+    },
+    "standard": {
+     "boards": {
+      "u11-overview": "accounts,attention,capacity,context,costs,plans",
+      "u11-plans": "capacity,plans",
+      "u11-costs": "analytics,costs",
+      "u11-accounts": "accounts",
+      "u11-free": "free",
+      "u11-context": "cache,context",
+      "u11-analytics": "analytics,costs",
+      "u11-ledger": "ledger,operations,runs",
+      "u11-attention": "attention",
+      "u11-cache": "cache",
+      "u11-tools": "tools",
+      "u11-signals": "signals",
+      "u11-authority": ""
+     },
+     "railVisible": [
+      "overview",
+      "plans",
+      "costs",
+      "accounts",
+      "free",
+      "context",
+      "analytics",
+      "ledger"
+     ]
+    },
+    "advanced": {
+     "boards": {
+      "u11-overview": "accounts,attention,capacity,context,costs,plans",
+      "u11-plans": "authority,capacity,plans",
+      "u11-costs": "analytics,costs",
+      "u11-accounts": "accounts,authority",
+      "u11-free": "authority,free",
+      "u11-context": "cache,context",
+      "u11-analytics": "analytics,costs",
+      "u11-ledger": "ledger,operations,runs",
+      "u11-attention": "attention",
+      "u11-cache": "cache",
+      "u11-tools": "tools",
+      "u11-signals": "signals",
+      "u11-authority": "authority"
+     },
+     "railVisible": [
+      "overview",
+      "plans",
+      "costs",
+      "accounts",
+      "free",
+      "context",
+      "analytics",
+      "ledger"
+     ]
+    },
+    "identicalEssVsAdv": false,
+    "essTypesTotal": 15,
+    "advTypesTotal": 27
+   },
+   "data": {
+    "attempts": 54,
+    "parentEventIdCarrier": 54,
+    "parentEventIdNonNull": 26,
+    "dedupeKeyCarrier": 54,
+    "costStatusCov": 54,
+    "displayCostPolicyCov": 54,
+    "streamStateCov": 54,
+    "settlementValues": [
+     "observed",
+     "failed",
+     "streaming_partial",
+     "unknown",
+     "settled",
+     "adjusted"
+    ],
+    "statusValues": [
+     "completed",
+     "failed",
+     "interrupted",
+     "running",
+     "queued",
+     "stale_served_then_refreshed",
+     "timed_out_discarded"
+    ],
+    "billingRouteValues": [
+     "plan_included",
+     "free",
+     "api_billed",
+     "usage_pack",
+     "unknown",
+     "extra_balance",
+     "no_charge_observed"
+    ],
+    "purposeCount": 18,
+    "purposeHasCatalogValidation": true,
+    "modelMismatch": [
+     "ue-541"
+    ],
+    "reasoningCarriers": 20,
+    "routeFieldCoverage": [
+     "reasoningEffort:3/54",
+     "speedMode:3/54",
+     "conversationMode:3/54",
+     "requestedAccessProfile:3/54",
+     "effectiveAccessProfile:3/54",
+     "sessionId:3/54"
+    ],
+    "queuedPlaceholders": [
+     "ue-574",
+     "ue-583",
+     "ue-584",
+     "ue-619"
+    ],
+    "ue520": "interrupted/streaming_partial",
+    "fallbackReasonCarriers": [
+     "ue-608"
+    ],
+    "bsdStates": [
+     "bsd-1:silent",
+     "bsd-2:advice_emitted",
+     "bsd-3:duplicate_suppressed"
+    ],
+    "bsdByEventIdKeys": [
+     "ue-600",
+     "ue-601"
+    ],
+    "peakConcurrency": false,
+    "runsCapacityReserve": [
+     [
+      "run:goal-47",
+      2,
+      2
+     ],
+     [
+      "run:plan-12",
+      2,
+      2
+     ],
+     [
+      "run:crew-3",
+      3,
+      3
+     ]
+    ],
+    "queuedReasons": [
+     null,
+     "pm_policy",
+     "port_conflict",
+     "provider_limit",
+     "host_resource_pressure",
+     "runtime_capacity",
+     "waiting_for_update_repair"
+    ],
+    "costsByFamilySum": 187420000,
+    "costsSpentMonth": 187420000,
+    "costsPlanIncluded": 125570000,
+    "continuationCount": 12,
+    "productCount": 29,
+    "sourceLocationCount": 4,
+    "clientCount": 3,
+    "authMethods": [
+     "api_key_secret_ref",
+     "pm_oauth",
+     "cli_owned_profile",
+     "no_auth",
+     "local_endpoint",
+     "vault_ref",
+     "environment_ref"
+    ],
+    "toolKeys": [
+     "tool",
+     "calls",
+     "p50",
+     "p95",
+     "err",
+     "idx",
+     "recoveries",
+     "sourceClass",
+     "sourceAuthority",
+     "sourceConfidence",
+     "schemaOverheadTokens"
+    ],
+    "cacheStatsStates": [
+     "measured:91.4",
+     "measured:92.4",
+     "measured:88.1",
+     "estimated:81.5",
+     "unsupported:null",
+     "unsupported:null",
+     "measured:90.2",
+     "measured:94"
+    ],
+    "ctxCacheHit": 96.8,
+    "cacheStats0hit": 91.4,
+    "tokenBucketSample": {
+     "input_total": 42100,
+     "input_non_cached": 24100,
+     "cache_read": 18000,
+     "cache_write": 2400,
+     "cache_write_1h": null,
+     "cache_write_ttl": null,
+     "output_total": 3200,
+     "output_visible": 1900,
+     "reasoning": 1300,
+     "provider_total": 45300,
+     "context_estimate": 41800,
+     "context_estimate_is_local_only": true,
+     "counting_semantics": {
+      "input_total_includes_cache": "yes",
+      "output_total_includes_reasoning": "yes",
+      "provider_total_semantics": "provider_reported",
+      "cache_in_input": "inclusive",
+      "reasoning_in_output": "inclusive",
+      "published_row": "Codex \u00b7 ChatGPT plan",
+      "note": "Cache read is already counted inside the input total here, so adding it would inflate the call by roughly forty per cent."
+     },
+     "usage_reporting_state": "final"
+    },
+    "countingSemanticsRoutes": 11,
+    "bucketTotalsDefined": "function",
+    "localOpsLabels": [
+     "Persona selection",
+     "Memory fade",
+     "Local history search",
+     "Context Lens inspection",
+     "ZIP extraction",
+     "Local context prune",
+     "Local spellcheck",
+     "Background indexer"
+    ],
+    "ops8": {
+     "id": "ops-8",
+     "kind": "setup_required",
+     "title": "Codex CLI requested on Home Server \u00b7 not installed",
+     "status": "completed",
+     "hostId": "host:truenas",
+     "envId": "env:docker",
+     "providerUsage": "none",
+     "validationEventId": null,
+     "sourceLocationId": "srcloc:tastebook-server",
+     "clientId": "client:desktop-win",
+     "stages": [],
+     "failureClass": null,
+     "outcome": "setup_required",
+     "copy": "Provider Setup Required \u2014 no compatible installation on this host/environment",
+     "detail": "The Studio PC installation is not assumed here: installations bind to the exact host and environment. Originating operation and continuation token preserved; Auto/On may maintain an approved installation but never perform first acquisition. Resume only after explicit Install from the official source and separate authentication.",
+     "setupLink": {
+      "surface": "settings",
+      "manager": "providers",
+      "section": "setup",
+      "focus_reason": "setup_required",
+      "continuation": "cont-8841"
+     }
+    },
+    "ue609": {
+     "workId": "work-4",
+     "purpose": "probe"
+    },
+    "settingsDefaultsKeys": [
+     "warnLow",
+     "autoSwitch",
+     "afterIncludedByProduct",
+     "extraUsage"
+    ],
+    "metersDisabled": [
+     "meter:agi-overage"
+    ]
+   },
+   "domCorpus": {
+    "chars": 65976,
+    "perRoom": [
+     "overview:13651",
+     "plans:6586",
+     "costs:1589",
+     "accounts:8130",
+     "free:6040",
+     "context:3054",
+     "analytics:1631",
+     "ledger:15553",
+     "attention:1029",
+     "cache:2725",
+     "tools:1642",
+     "signals:1115",
+     "authority:3219"
+    ]
+   },
+   "textChecks": {
+    "A07-02 providerReadyCopy": true,
+    "A07-03 disabledCopy": true,
+    "A07-07 antigravityVocab": [
+     "/stats=false",
+     "/quota=false",
+     "/credits=false",
+     "G1 credits=false",
+     "Models & Quota=false",
+     "statusline=false",
+     "not exposed=true"
+    ],
+    "A07-08 sourceLocation": true,
+    "A07-10 unraidK8sWsl": [
+     "Unraid=true",
+     "Kubernetes=true",
+     "WSL=true"
+    ],
+    "A04-14 catalogValidation": true,
+    "A09-06 reasoningWord": 3,
+    "A09-10 sessions": "2 sess-ids; sessionWord=6",
+    "A06-16 peakConcurrency": false,
+    "A06-15 forecastNotLimit": true,
+    "A03-11 productKind": 23,
+    "A06-17b trialEnds": true,
+    "A08-01 failureClassOutcome": [
+     "Failure class=false",
+     "Outcome=false",
+     "Affected=false"
+    ],
+    "A08-08 rawEventIdCopy": true,
+    "A05-03 emDashMarker": 98,
+    "A03-06 limitNotExposed": 10,
+    "A02-14 legacyCatalogSync": false,
+    "A08-09 localOpsRendered": null
+   },
+   "A02-03/A07-06.freeRows": [
+    {
+     "t": "Gemini 2.5 Flash | Google \u00b7 Personal \u00b7 Google CLI profile \u00b7 Gemini free allowance \u00b7 jared@personal.dev | Free, limited \u00b7 selected through Free Models | Allowanc",
+     "fam": true,
+     "acct": true
+    },
+    {
+     "t": "GLM-4.5-Air | Z.AI \u00b7 Personal \u00b7 Legacy plan connection \u00b7 Z.AI free allowance \u00b7 jared@personal.dev | Free, limited \u00b7 selected through Free Models \u00b7 cooling down ",
+     "fam": true,
+     "acct": true
+    },
+    {
+     "t": "GPT-5.6 | GitHub \u00b7 Personal \u00b7 Copilot Free \u00b7 jaredsmacbookair | Free, limited \u00b7 selected through Free Models | Allowance used | 64 | % used | Premium requests \u00b7",
+     "fam": true,
+     "acct": true
+    },
+    {
+     "t": "Qwen3 Coder Plus | OpenCode \u00b7 Personal \u00b7 OpenCode Go \u00b7 Included free models \u00b7 jared@personal.dev | Free with account requirements \u00b7 selected through Free Models",
+     "fam": true,
+     "acct": true
+    },
+    {
+     "t": "Kimi K2 | Kimi \u00b7 Personal \u00b7 Kimi Code subscription \u00b7 K2 trial \u00b7 jared@personal.dev | Free until Aug 16 \u00b7 selected through Free Models | Allowance used | 21 | % ",
+     "fam": true,
+     "acct": true
+    },
+    {
+     "t": "Qwen3 Max | OpenCode \u00b7 Personal \u00b7 Shared gateway \u00b7 Shared free route \u00b7 jared@personal.dev | Shared free access \u00b7 selected through Free Models | Shared route use",
+     "fam": true,
+     "acct": true
+    },
+    {
+     "t": "qwen3-coder:30b \u00b7 local | Local \u00b7 This Mac \u00b7 Ollama \u00b7 local \u00b7 Local models \u00b7 Ollama runtime | Free \u00b7 selected through Free Models | Local capacity \u00b7 session onl",
+     "fam": true,
+     "acct": true
+    },
+    {
+     "t": "DeepSeek V3.2 | Z.AI \u00b7 Personal \u00b7 Credit plan connection \u00b7 jared@personal.dev | No longer free \u00b7 selected through Free Models \u00b7 Free access ended Jul 15 | Not s",
+     "fam": true,
+     "acct": true
+    },
+    {
+     "t": "GLM-4.7 | Z.AI \u00b7 Personal \u00b7 Credit plan connection \u00b7 jared@personal.dev | Could not verify \u00b7 selected through Free Models \u00b7 Free status could not be verified | ",
+     "fam": true,
+     "acct": true
+    }
+   ],
+   "A03-04/05/06/12.plans": {
+    "rowCount": 42,
+    "chips": 8,
+    "sample": [
+     "Weekly window \u00b7 rolling window | 96 | % used",
+     "Weekly window \u00b7 rolling window | 61 | % used",
+     "Monthly credits \u00b7 billing cycle | unavailable | medium confidence | Provider ready \u00b7 Usage details unavailable",
+     "Kimi Code plan Rolling week \u00b7 rolling window | 71 | % used",
+     "Team seat credits Seat credits \u00b7 billing cycle | stale | low confidence | 70 | % used",
+     "Baseline plan Included usage \u00b7 rolling window | 64 | % used",
+     "Copilot Free Premium requests \u00b7 billing cycle | 64 | % used",
+     "Z.AI free allowance Free tokens today \u00b7 fixed window | estimated | medium confidence | 60 | % used",
+     "Shared Usage Pack Shared pack balance \u00b7 purchased pack | stale | low confidence | 58 | % used",
+     "Coding Plan Weekly window \u00b7 rolling window | 52 | % used",
+     "ChatGPT plan 5-hour window \u00b7 rolling window | 46 | % used",
+     "Gemini free allowance Free requests today \u00b7 fixed window | 30 | % used",
+     "Personal Token Plan Token balance \u00b7 prepaid balance | 24 | % used",
+     "Usage credits Credits used \u00b7 prepaid balance | 21 | % used",
+     "K2 trial Trial allowance \u00b7 trial | 21 | % used",
+     "Extra usage Extra usage \u00b7 billing cycle | 12 | % used",
+     "Claude API \u00b7 PAYG API spend \u00b7 billing cycle | 4 | % used",
+     "Saved reset Saved resets \u00b7 banked credit | 0 | % used",
+     "Zen balance Zen balance \u00b7 prepaid balance | 0 | % used",
+     "Shared membership pool Extra Usage pool \u00b7 shared pool | unknown | medium confidence | Limit not exposed \u00b7 3.1k observed",
+     "Legacy plan Included requests \u00b7 billing cycle | unknown | medium confidence | Limit not exposed \u00b7 118 observed",
+     "AI Credit Overages AI credit overage \u00b7 prepaid balance | disabled | confidence not recorded | Turned off \u00b7 Extra usage is off",
+     "Included free models Free model use \u00b7 no window | 26 requests observed by Puppet Master \u00b7 no limit to report",
+     "Shared free route Shared route use \u00b7 no window | 7 requests observed by Puppet Master \u00b7 no limit to report",
+     "Local models Local capacity \u00b7 session only | not exposed | confidence not recorded | Not exposed by this provider",
+     "Requested | 8"
+    ],
+    "railMeta": "Plans & limits\n29 products \u00b7 2 hot",
+    "paneHead": "02\nPlans & limits\n\nIncluded allowances and extra capacity per product. Where the provider publishes a continuation path, the row says what happens next in plain language \u2014 the rest say nothing rather than guess. Unknown limits say so; they never render as zero.\n\nall current usage\n29 products \u00b7 12 publish what happens next\nLast 24 hours\n48 of 54 events\n776.6k tokens\n$0.2100 priced by the provider o"
+   },
+   "A03-15/16.costs": {
+    "text": "03\nCosts & spending\n\nWhat this month has cost so far \u2014 API-billed vs plan-included against one cost authority. The spending limit is yours; it is not a plan allowance.\n\nall current usage\nlimit $300.00 \u00b7 warn at 80%\nLast 24 hours\n48 of 54 events\n776.6k tokens\n$0.2100 priced by the provider on 7 events \u00b7 38 covered by a plan \u00b7 1 billed to your own key \u00b7 2 cost not reported\n4 with no start time\nThe range drives these figures, the key figures on Overview and what Export writes. Month-to-date spending, the burn rate and the forecast are month-scoped by the provider, not by the range above. The range figures count events.\nAdd widget\nDrag the grip to move, drag the corner to resize, open a widget menu for focus, size, config and remove.\nCosts & spending\n$187.42\nspent of $300.00 spending limit \u00b7 warn at 80%\nSpending limit used\n62\n%\nAPI-billed\n$61.85\nPlan-included\n$125.57\nBurn\n$2.85/h \u00b7 $20.30/d\nForecast\n$224.10 by month end\nClaude\n$74.21\nOpenAI\n$52.38\nAlibaba\n$31.24\nKimi\n$14.96\nOpenCode\n$2.20\nZ.AI\n$8.12\nAntigravity\n$4.31\nOne cost authority \u00b7 the API/plan split is a projection, not a second model. Spending limit is user-controlled, not a plan allowance.\nDuplicate\nOpen Usage settings\nToken analytics\n5h\n24h\n7d\n00\n02\n04\n06\n08\n10\n12\n14\n16\n18\n20\n22\nInput\nOutput\nReasoning\nCache read\nBreak down by model, provider or account\nColumn totals add input plus output only. A range mixes routes whose counting rules differ, so cache read keeps its own band and is never added on top \u2014 adding it would d"
+   },
+   "A03-10.attention": "09\nAttention\n\nAnomaly & quota guard decisions, each carrying its why. Blocked and warned decisions are shown by default; set the widget's Show control to all for the allowed and watching ones.\n\nall current usage\n4 decisions \u00b7 2 shown by default\nLast 24 hours\n48 of 54 events\n776.6k tokens\n$0.2100 priced by the provider on 7 events \u00b7 38 covered by a plan \u00b7 1 billed to your own key \u00b7 2 cost not reported\n4 with no start time\nThe range drives these figures, the key figures on Overview and what Export writes. Widgets that publish their own window keep it and say so.\nAdd widget\nDrag the grip to move, drag the corner to resize, open a widget menu for focus, size, config and remove.\nAttention\nToken spike blocked\n18:20 UTC\nWork OpenAI \u00b7 Codex\nA 4.1\u00d7 input spike tripped the 1-hour 3.0\u00d7 rule.\nWhy\nwindow\n1h\nrule\n3.0\u00d7 spike\nobserved\n4.1\u00d7\nsamples\n9\nSpend rate elevated\n17:55 UTC\nClaude API \u00b7 PAYG\nBurn is 2.2\u00d7 the 7-day norm; still under the org spending limit.\nWhy\nburn\n$2.85/h\nnorm\n$1.30/h\nlimit\n$150\nDuplicate\nOpen Usage settings",
+   "A05-02/03/15.cache": {
+    "rows": [
+     "Claude CLI profile | Claude \u00b7 Work | measured | Cache hit | 91 | % | Saved today | \u2212$2.10 | Cache read | 30.1k | Cache write | 4.1k | Provider prompt-cache hit for this connection today. The context-r",
+     "Codex \u00b7 ChatGPT plan | OpenAI \u00b7 Personal | measured | Cache hit | 92 | % | Saved today | \u2212$1.62 | Cache read | 67.8k | Cache write | 8.9k",
+     "Coding Plan connection | Alibaba \u00b7 Personal | measured | Cache hit | 88 | % | Saved today | \u2212$0.94 | Cache read | 41.2k | Cache write | 6.1k",
+     "Kimi Code subscription | Kimi \u00b7 Personal | estimated | Cache hit \u00b7 Puppet Master estimate | 82 | % | Saved today \u00b7 Puppet Master estimate | \u2212$0.48 | Cache read | 31.0k | Cache write | \u2014 | Cache write ",
+     "Claude API | Claude \u00b7 Work | measured | Cache hit | 94 | % | Saved today | \u2212$0.31 | Cache read | 12.4k | Cache write | 2.0k",
+     "Google CLI profile | Google \u00b7 Personal | measured | Cache hit | 90 | % | Saved today | \u2212$0.22 | Cache read | 8.9k | Cache write | 1.2k",
+     "Legacy plan connection | Z.AI \u00b7 Personal | not exposed | Cache not exposed on this route \u2014 nothing to read, which is different from reading zero. | Cache hit | \u2014 | Cache write | \u2014 | Reason \u00b7 route has",
+     "Antigravity CLI profile | Antigravity \u00b7 Personal | unknown | Cache reporting unknown \u2014 Puppet Master could not ask here, so this is neither a zero nor a proven absence. | Cache hit | \u2014 | Cache write |"
+    ],
+    "text": "10\nPrompt cache\n\nPer-connection prompt-cache hit and savings. A reported zero, a route that does not expose cache, and a route we could not read are three different statements \u2014 never the same one.\n\nall current usage\n8 connections\nLast 24 hours\n48 of 54 events\n776.6k tokens\n$0.2100 priced by the provider on 7 events \u00b7 38 covered by a plan \u00b7 1 billed to your own key \u00b7 2 cost not reported\n4 with no start time\nThe range drives these figures, the key figures on Overview and what Export writes. Widgets that publish their own window keep it and say so.\nAdd widget\nDrag the grip to move, drag the corner to resize, open a widget menu for focus, size, config and remove.\nPrompt cache\nClaude CLI profile\nClaude \u00b7 Work\nmeasured\nCache hit\n91\n%\nSaved today\n\u2212$2.10\nCache read\n30.1k\nCache write\n4.1k\nProvider prompt-cache hit for this connection today. The context-ring figure on the thread is a different measurement of a different thing \u2014 it is not this number rounded.\nCodex \u00b7 ChatGPT plan\nOpenAI \u00b7 Personal\nmeasured\nCache hit\n92\n%\nSaved today\n\u2212$1.62\nCache read\n67.8k\nCache write\n8.9k\nCoding Plan connection\nAlibaba \u00b7 Personal\nmeasured\nCache hit\n88\n%\nSaved today\n\u2212$0.94\nCache read\n41.2k\nCache write\n6.1k\nK"
+   },
+   "A05-11.tools": {
+    "headers": [
+     "Tool",
+     "Calls",
+     "p50",
+     "p95",
+     "Err %",
+     "Schema tokens",
+     "Source"
+    ],
+    "text": "11\nTool usage\n\nLatency and error tax by tool over the last 24h. Self-recovering tools are counted once \u2014 never as duplicate user work.\n\nall current usage\n6 tools \u00b7 last 24h\nLast 24 hours\n48 of 54 events\n776.6k tokens\n$0.2100 priced by the provider on 7 events \u00b7 38 covered by a plan \u00b7 1 billed to your own key \u00b7 2 cost not reported\n4 with no start time\nThe range drives these figures, the key figures on Overview and what Export writes. The tool table publishes its own 24-hour window and is not moved by the range above.\nAdd widget\nDrag the grip to move, drag the corner to resize, open a widget menu for focus, size, config and remove.\nTool usage\nTOOL\tCALLS\tP50\tP95\tERR %\tSCHEMA TOKENS\tSOURCE\nsearc"
+   },
+   "A04-02/A05-13/A09-06.analytics": {
+    "cols": [
+     "00 \u00b7 5k tokens \u00b7 input plus output \u00b7 cache read 3k shown beside it, not added \u00b7 Counting basis for this range is not published, so only input and output are added \u00b7 cache read and reasoning stay visible but are never added on top.",
+     "02 \u00b7 3k tokens \u00b7 input plus output \u00b7 cache read 2k shown beside it, not added \u00b7 Counting basis for this range is not published, so only input and output are added \u00b7 cache read and reasoning stay visible but are never added on top.",
+     "04 \u00b7 4k tokens \u00b7 input plus output \u00b7 cache read 2k shown beside it, not added \u00b7 Counting basis for this range is not published, so only input and output are added \u00b7 cache read and reasoning stay visible but are never added on top.",
+     "06 \u00b7 8k tokens \u00b7 input plus output \u00b7 cache read 4k shown beside it, not added \u00b7 Counting basis for this range is not published, so only input and output are added \u00b7 cache read and reasoning stay visible but are never added on top.",
+     "08 \u00b7 18k tokens \u00b7 input plus output \u00b7 cache read 9k shown beside it, not added \u00b7 Counting basis for this range is not published, so only input and output are added \u00b7 cache read and reasoning stay visible but are never added on top.",
+     "10 \u00b7 30k tokens \u00b7 input plus output \u00b7 cache read 15k shown beside it, not added \u00b7 Counting basis for this range is not published, so only input and output are added \u00b7 cache read and reasoning stay visible but are never added on top.",
+     "12 \u00b7 24k tokens \u00b7 input plus output \u00b7 cache read 12k shown beside it, not added \u00b7 Counting basis for this range is not published, so only input and output are added \u00b7 cache read and reasoning stay visible but are never added on top.",
+     "14 \u00b7 35k tokens \u00b7 input plus output \u00b7 cache read 18k shown beside it, not added \u00b7 Counting basis for this range is not published, so only input and output are added \u00b7 cache read and reasoning stay visible but are never added on top.",
+     "16 \u00b7 32k tokens \u00b7 input plus output \u00b7 cache read 17k shown beside it, not added \u00b7 Counting basis for this range is not published, so only input and output are added \u00b7 cache read and reasoning stay visible but are never added on top.",
+     "18 \u00b7 26k tokens \u00b7 input plus output \u00b7 cache read 13k shown beside it, not added \u00b7 Counting basis for this range is not published, so only input and output are added \u00b7 cache read and reasoning stay visible but are never added on top.",
+     "20 \u00b7 14k tokens \u00b7 input plus output \u00b7 cache read 7k shown beside it, not added \u00b7 Counting basis for this range is not published, so only input and output are added \u00b7 cache read and reasoning stay visible but are never added on top.",
+     "22 \u00b7 8k tokens \u00b7 input plus output \u00b7 cache read 4k shown beside it, not added \u00b7 Counting basis for this range is not published, so only input and output are added \u00b7 cache read and reasoning stay visible but are never added on top."
+    ],
+    "text": "07\nToken analytics\n\nInput, output, reasoning and cache-read traffic across the chart's own 5h / 24h / 7d windows. Cache read keeps its own band and is added to a total only for providers that bill it as a separate bucket. Click a legend entry to mute its series.\n\nall current usage\nstacked shares \u00b7 mute via legend\nLast 24 hours\n48 of 54 events\n776.6k tokens\n$0.2100 priced by the provider on 7 events \u00b7 38 covered by a plan \u00b7 1 billed to your own key \u00b7 2 cost not reported\n4 with no start time\nThe range drives these figures, the key figures on Overview and what Export writes. The chart publishes its own 5h / 24h / 7d windows and is not moved by the range above.\nAdd widget\nDrag the grip to move, drag the corner to resize, open a widget menu for focus, size, config and remove.\nToken analytics\n5h\n24h\n7d\n00\n02\n04\n06\n08\n10\n12\n14\n16\n18\n20\n22\nInput\nOutput\nReasoning\nCache read\nBreak down by model, provider or account\nColumn totals add input plus output only. A range mixes routes whose counting rules differ, so cache read keeps its own band and is never added on top \u2014 adding it would double-count every provider that reports cache inside input.\nDuplicate\nOpen Usage settings\nCosts & spending\n$187.42\nspent of $300.00 spending limit \u00b7 warn at 80%\nSpending limit used\n62\n%\nAPI-billed\n$61.85\nPlan-included\n$125.57\nBurn\n$2.85/h \u00b7 $20.30/d\nForecast\n$224.10 by month end\nClaude\n$74.21\nOpenAI\n$52.38\nAlibaba\n$31.24\nKimi\n$14.96\nOpenCode\n$2.20\nZ.AI\n$8.12\nAntigravity\n$4.31\nOne cost authority \u00b7 the API/plan split is a projection, not a second model. Spending limit is user-controlled, not a plan allowance"
+   },
+   "A04-07/A08-10/11.authority": "13\nSource authority\n\nThe advanced layer \u2014 where every figure came from: source class per event, settlement, projection freshness and health, retention, and what the catalog refreshes and probes did.\n\nall current usage\nsource class \u00b7 settlement \u00b7 freshness\nLast 24 hours\n48 of 54 events\n776.6k tokens\n$0.2100 priced by the provider on 7 events \u00b7 38 covered by a plan \u00b7 1 billed to your own key \u00b7 2 cost not reported\n4 with no start time\nThe range drives these figures, the key figures on Overview and what Export writes. Provenance and settlement counts cover every recorded event. Reference or catalog prices and pricing-version provenance are not shown anywhere in this concept.\nAdd widget\nDrag the grip to move, drag the corner to resize, open a widget menu for focus, size, config and remove.\nSource authority\nReported by the provider CLI\n20\nevents\nMeasured by Puppet Master\n1\nevents\nReported by the provider\n29\nevents\nNot recorded\n4\nevents\nSettlement & freshness\nProjection freshness\ncurrent\nProjection health\ncurrent\nNext auto-refresh\n18:47 UTC\nRetention\n90 days\nCatalog refresh \u2014 never active model probing\nStale catalog served immediately\nBackground refresh succeeded \u00b7 no provider usage \u00b7 free coding models \u00b7 stale served then refreshed \u00b7 18:02 UTC\n3 models changed \u00b7 1 free-state change\nCatalog refresh in backoff\nLast known good used \u00b7 no provider usage unless probed \u00b7 models dev \u00b7 backoff \u00b7 18:27 UTC\nbacking off until 19:07 UTC \u00b7 this refresh did send one model request \u00b7 ue-612\nOpen the refresh call\nBackground and validation calls\nActive probe \u00b7 GLM-4.7\n1.2k input \u00b7 60 output \u00b7 active model probe \u00b7 attributed to validation, never user work \u00b7 completed \u00b7 17:57 UTC\nNo allowance recorded for this route \u2014 nothing to draw down, which is not the same as drawing zero.\nTastebook \u00b7 Source",
+   "A02-12.accounts": {
+    "text": "04\nAccounts & connections\n\nConfigured accounts grouped by provider. Requested is what you chose; used is what served it \u2014 mismatches surface only when they matter. CLI-owned profiles stay distinct from API routes.\n\nall current usage\n12 accounts \u00b7 requested vs used\nLast 24 hours\n48 of 54 events\n776.6k tokens\n$0.2100 priced by the provider on 7 events \u00b7 38 covered by a plan \u00b7 1 billed to your own key \u00b7 2 cost not reported\n4 with no start time\nThe range drives these figures, the key figures on Overview and what Export writes. Widgets that publish their own window keep it and say so.\nAdd widget\nDrag the grip to move, drag the corner to resize, open a widget menu for focus, size, config and remove.\nAccounts & connections\nALIBABA\nPersonal\njared@personal.dev\nACTIVE\nUsing Alibaba \u00b7 Personal \u00b7 Extra Bundle\nCoding Plan connection\nExtra Bundle \u00b7 Bundle requests \u00b7 purchased pack \u00b7 80% used \u00b7 expires"
+   },
+   "A04-04/05/08/11 + A08.ledger": {
+    "turnCards": [
+     "TURN | Fix pricing migration | 18:34 UTC | GPT-5.6-Codex \u00b7 OpenAI \u00b7 Personal \u00b7 ChatGPT plan | 42.1k input \u00b7 3.2k output \u00b7 18.0k cache read \u00b7 8 helper calls \u00b7 1 subagent \u00b7 cost | hidden \u00b7 plan | Main work | user work | completed | 42.1k input \u00b7 3.2k output \u00b7 18",
+     "TURN | Regenerate invoice fixtures | 18:16 UTC | GPT-5.6-Codex \u00b7 OpenAI \u00b7 Personal \u00b7 ChatGPT plan | 22.4k input \u00b7 1.8k output \u00b7 9.6k cache read \u00b7 3 helper calls \u00b7 cost | hidden \u00b7 plan | You chose Work OpenAI, but Puppet Master used Personal OpenAI because Work",
+     "TURN | Redirect: rewrite rate limiter | 18:40 UTC | Claude Opus 4.6 \u00b7 Claude \u00b7 Work \u00b7 Claude Max plan | 6.2k input \u00b7 400 output \u00b7 3 helper calls \u00b7 cost | hidden \u00b7 plan | Session sess-t88-1 | Interrupted by your correction; partial usage retained. | Main work |",
+     "TURN | Run integration tests | 18:01 UTC | Kimi K2 \u00b7 Kimi \u00b7 Personal \u00b7 Kimi Code plan | 15.3k input \u00b7 900 output \u00b7 7.7k cache read \u00b7 3 helper calls \u00b7 cost | hidden \u00b7 plan | Session sess-t88-2 | Main work | user work | completed | 15.3k input \u00b7 900 output \u00b7 7.7",
+     "TURN | Apply deploy script changes | 17:44 UTC | Claude Sonnet 4.6 \u00b7 Claude \u00b7 Work \u00b7 Claude Max plan | 12.8k input \u00b7 1.5k output \u00b7 6.4k cache read \u00b7 2 helper calls \u00b7 cost | hidden \u00b7 plan | You chose Claude Opus 4.6, but Puppet Master used Claude Sonnet 4.6 bec",
+     "TURN | Read receipt photo | 17:31 UTC | GPT-5.6-Codex \u00b7 OpenAI \u00b7 Personal \u00b7 ChatGPT plan | 9.8k input \u00b7 700 output \u00b7 2 helper calls \u00b7 cost | hidden \u00b7 plan | Main work | user work | completed | 9.8k input \u00b7 700 output | cost hidden \u00b7 plan covers it | ue-550 | i",
+     "GOAL STAGE | Specialist reviews \u00b7 stage 2 | now | Qwen3 Coder Plus \u00b7 Alibaba \u00b7 Personal \u00b7 Coding Plan | 12.1k input \u00b7 800 output \u00b7 1 helper call \u00b7 2 subagents \u00b7 cost | hidden \u00b7 plan | Specialists & subagents | subagent | running | 12.1k input \u00b7 800 output | co",
+     "PLANNING TOPIC | Source extraction \u00b7 topics | now | Claude Opus 4.6 \u00b7 Claude \u00b7 Work \u00b7 Claude Max plan | 51.2k input \u00b7 4.1k output \u00b7 30.1k cache read \u00b7 6 helper calls \u00b7 4 subagents \u00b7 cost | hidden \u00b7 plan | Main work | user work | completed | 51.2k input \u00b7 4.1k "
+    ],
+    "opCards": [
+     {
+      "t": "Codex CLI update | ROLLED BACK | Update verified, then rolled back | Check | 2m | Wait for idle | 9m | Install | 3m | Verify | 4m | Rollback | 1m | Tastebook \u00b7 Studio PC \u00b7 Native \u00b7 Tastebook \u00b7 main worktree \u00b7 Desktop app",
+      "kind": "rolled back",
+      "cls": "u11w-kind warn",
+      "btns": 1
+     },
+     {
+      "t": "Client offline \u00b7 outbox | COMPLETED | Queued while offline \u00b7 replayed on reconnect | Offline | 22m | Outbox wait | 22m | Reconnect + replay | 3m | Tastebook \u00b7 Jared\u2019s MacBook Air \u00b7 Native \u00b7 Puppet Master \u00b7 main worktree ",
+      "kind": "completed",
+      "cls": "u11w-kind ok",
+      "btns": 0
+     },
+     {
+      "t": "Home Server kept working | COMPLETED | Server work continued | Tastebook \u00b7 TrueNAS Home Server \u00b7 home server \u00b7 Docker \u00b7 pm-server \u00b7 Tastebook \u00b7 server checkout \u00b7 No client attached | Server work continues while the clien",
+      "kind": "completed",
+      "cls": "u11w-kind ok",
+      "btns": 0
+     },
+     {
+      "t": "Notification sound preview | COMPLETED | Local sound preview \u2014 not usage | Tastebook \u00b7 Studio PC \u00b7 Native \u00b7 Tastebook \u00b7 main worktree \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected | A local sound preview is not provider usage.",
+      "kind": "completed",
+      "cls": "u11w-kind ok",
+      "btns": 0
+     },
+     {
+      "t": "Notification test-send | COMPLETED | Test notification sent | Tastebook \u00b7 Studio PC \u00b7 Native \u00b7 Tastebook \u00b7 main worktree \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected | Operational receipt, not model usage.",
+      "kind": "completed",
+      "cls": "u11w-kind ok",
+      "btns": 0
+     },
+     {
+      "t": "Project Vault backup | COMPLETED | Vault backup completed | Tastebook \u00b7 TrueNAS Home Server \u00b7 home server \u00b7 Docker \u00b7 pm-server \u00b7 Tastebook \u00b7 server checkout \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected | Backup is maintenance, ",
+      "kind": "completed",
+      "cls": "u11w-kind ok",
+      "btns": 0
+     },
+     {
+      "t": "Project Move: Tastebook \u2192 Vault | COMPLETED | Project moved to Vault | Tastebook \u00b7 TrueNAS Home Server \u00b7 home server \u00b7 Docker \u00b7 pm-server \u00b7 Tastebook \u00b7 server checkout \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected | Moving a pro",
+      "kind": "completed",
+      "cls": "u11w-kind ok",
+      "btns": 0
+     },
+     {
+      "t": "Codex CLI requested on Home Server \u00b7 not installed | COMPLETED | Provider Setup Required \u2014 no compatible installation on this host/environment | Tastebook \u00b7 TrueNAS Home Server \u00b7 home server \u00b7 Docker \u00b7 pm-server \u00b7 Tasteb",
+      "kind": "completed",
+      "cls": "u11w-kind ok",
+      "btns": 1
+     },
+     {
+      "t": "Unraid server ran the nightly index | COMPLETED | Unraid server kept working | Tastebook \u00b7 Unraid Tower \u00b7 home server \u00b7 Docker \u00b7 pm-server \u00b7 Tastebook \u00b7 server checkout \u00b7 No client attached | A second home-server form, w",
+      "kind": "completed",
+      "cls": "u11w-kind ok",
+      "btns": 0
+     },
+     {
+      "t": "Cluster environment reachable | COMPLETED | Cluster node reachable | Tastebook \u00b7 Cluster node \u00b7 pm-server \u00b7 Kubernetes \u00b7 pm-server pod \u00b7 Puppet Master \u00b7 server checkout \u00b7 Desktop app \u00b7 MacBook Air \u00b7 reconnected | Install",
+      "kind": "completed",
+      "cls": "u11w-kind ok",
+      "btns": 0
+     },
+     {
+      "t": "Windows subsystem distro checked | COMPLETED | Windows subsystem checked \u00b7 optional | Tastebook \u00b7 Studio PC \u00b7 WSL (optional) \u00b7 Tastebook \u00b7 main worktree \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected | Native Windows is already c",
+      "kind": "completed",
+      "cls": "u11w-kind ok",
+      "btns": 0
+     },
+     {
+      "t": "Back Seat Driver duplicate suppressed | COMPLETED | Duplicate suppressed \u2014 no second provider call | Tastebook \u00b7 Studio PC \u00b7 Native \u00b7 Tastebook \u00b7 main worktree \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected | A repeat check insid",
+      "kind": "completed",
+      "cls": "u11w-kind ok",
+      "btns": 0
+     },
+     {
+      "t": "Back Seat Driver \u00b7 Duplicate suppressed | DUPLICATE SUPPRESSED | Duplicate of bsd-1 within cooldown \u00b7 requested Auto \u00b7 effective Auto \u00b7 duplicate of ue-600 | No second provider call was made \u2014 zero additional usage. | Op",
+      "kind": "Duplicate suppressed",
+      "cls": "u11w-kind ok",
+      "btns": 0
+     }
+    ],
+    "attemptRowSample": [
+     "inspect",
+     "inspect",
+     "inspect",
+     "inspect"
+    ],
+    "attemptRowCount": 52
+   },
+   "A09-07.perModel": {
+    "scopeKinds": [],
+    "modelRoomExists": false,
+    "sortControls": 0,
+    "modelBreakdownText": 0
+   },
+   "A10-12.hashRouting": {
+    "before": "ledger",
+    "hash": "#room=costs&level=advanced&scope=scope:all&range=24h",
+    "after": "costs",
+    "changed": true
+   },
+   "A10-13.fixtureSelect": {
+    "u11FixtureKeys": [],
+    "fixtureControls": 0
+   },
+   "A01-06/A10-01.setupLink": {
+    "clicked": true,
+    "entries": [
+     {
+      "cmd": "cmd.settings.bloom.open",
+      "payload": {
+       "category": "ai",
+       "focus_setting_id": "ai.accounts.default-account",
+       "reason": "setup_required"
+      }
+     }
+    ]
+   },
+   "A01-07.deepLinks": [],
+   "inspect.ue-608": "NOPOP",
+   "inspect.ue-091": "NOPOP",
+   "inspect.ue-520": "NOPOP",
+   "inspect.ue-611": "NOPOP",
+   "runDetail.goal47": {
+    "text": null,
+    "fillSum": 2776.2000000000003,
+    "fillCount": 62
+   },
+   "runDetail.plan12": null,
+   "context.t88": {
+    "text": "Context details\nPricing migration fixes\nCheckout service audit\nCURRENT CONTEXT\nProvider\nClaude\nAccount\nClaude \u00b7 Work\nConnection used\nClaude CLI profile \u00b7 CLI profile\nModel\nClaude Opus 4.6\nContext used\n42.2k / 128k \u00b7 33% of the window\nContext cache hit\n96.8%\nCurrent window\nsince 15:42 UTC\nLast activity\n18:40 UTC\nStable prefix\nsp-88\nCache epoch\ne-12\nTool schema overhead\n5.9k \u00b7 14% of the 42.2k in context \u00b7 5% of the 128k window\nTool schema overhead is Puppet Master\u2019s own measurement of the tool and MCP schemas held in the window. It is not a provider figure.\nWHAT IS IN CONTEXT\nEvery share below is a share of the 42.2k now in context. The window is 128k.\nMessages\n46%\n19.4k\nSystem & instructions\n18%\n7.6k\nTools\n14%\n5.9k\nSkills & MCP\n9%\n3.8k\nMemory / pinned\n5%\n2.1k\nFewer sources (3 more)\nSummaries\n4%\n1.7k\nAttachments / media\n3%\n1.3k\nOther\n1%\n400\nWHAT CHANGED\n16:32 UTC\nRUN\nGoal started \u00b7 Refactor pricing pipeline\n17:02 UTC\nMAINTENANCE\nCompaction timed out\nHelper call may have usage, but no context mutation was committed. \u00b7 nothing reclaimed \u00b7 cache effect unknown\nHelper ue-613: 8.6k in \u00b7 output not reported \u00b7 8.6k counted as input \u00b7 no separate charge \u00b7 result discarded, usage counted once\n17:44 UTC\nMAINTENANCE\nContext compacted\nOlder turns were summarised so the thread could keep going \u00b7 18.2k reclaimed \u00b7 cache rebuilt, because compaction changed prefix\nHelper ue-502: 2.4k in \u00b7 310 out \u00b7 2.7k counted as input plus output \u00b7 no separate charge\n18:09 UTC\nMAINTENANCE\nLocal prune\nStale context dropped by a deterministic local rule \u00b7 6.1k reclaimed \u00b7 cache preserved\nNo provider call \u2014 this operation ran locally and spent no provider usage.\n18:35 UTC\nREDIRECT\nMid-turn redirect\nInterrupted attempt retained \u00b7 resumed underneath\nHELPER WORK THAT WAS NOT USED\nCatalog validation \u00b7 stale served then refreshed\n18:28 UTC\nGLM-4.7 \u00b7 Z.AI \u00b7 Personal \u00b7 Credit plan \u00b7 background work, not attached to this thread\nue-612 \u00b7 counted once under dk-612\n900 in \u00b7 80 out \u00b7 no separate charge\ntotal 980\nThe last known good catalog row was served immediately and this call refreshed it afterwards. The free status still could not be confirmed, so the row stays \u201ccould not verify\u201d \u2014 never \u201cfree\u201d.\nCompression \u00b7 timed out discarded\n17:02 UTC\nQwen3 Coder Plus \u00b7 Alibaba \u00b7 Personal \u00b7 Coding Plan\nue-613 \u00b7 counted once under dk-613\n8.6k in \u00b7 no separate charge\ntotal 8.6k\nThe compaction result was discarded and no context change was committed. The provider work still happened, so it is recorded once \u2014 output was never reported and stays unknown, not zero.\nContext mutation and provider settlement are separate facts. Nothing above changed the context, and none of it is added to historical totals a second time.\nMESSAGES AND ATTEMPTS\nHide 6 turns\nFix pricing migration\n18:34 UTC\nGPT-5.6-Codex \u00b7 OpenAI \u00b7 Personal \u00b7 ChatGPT plan\nMain work \u00b7 user work\n42.1k in \u00b7 3.2k out \u00b7 18k cache read \u00b7 2.4k cache write \u00b7 no separate charge\ncompleted\nContext & compression \u00b7 compression\n2.4k in \u00b7 310 out \u00b7 no separate ",
+    "raw": "{\n  \"thread_id\": \"[redacted]\",\n  \"context_epoch\": \"e-12\",\n  \"stable_prefix_id\": \"sp-88\",\n  \"effective_model\": \"model:claude-opus-4-6\",\n  \"effective_window\": 128000,\n  \"provider_payload_hash\": \"sha256:9f2c\u2026a41\",\n  \"config_snapshot_hash\": \"sha256:1b7e\u202690c\",\n  \"segments\": 8,\n  \"note\": \"raw provider payloads are never shown in the curated view\"\n}"
+   },
+   "context.t91": {
+    "labels": [
+     "Provider",
+     "Account",
+     "Connection used",
+     "Model",
+     "Context used",
+     "Context cache hit",
+     "Current window",
+     "Last activity",
+     "Stable prefix",
+     "Cache epoch",
+     "Tool schema overhead",
+     "From",
+     "To",
+     "Reason",
+     "Cache effect",
+     "Preflight",
+     "Replay"
+    ],
+    "text": "Context details\nPricing migration fixes\nCheckout service audit\nCURRENT CONTEXT\nProvider\nKimi\nAccount\nKimi \u00b7 Personal\nConnection used\nKimi Code subscription\nModel\nKimi K2\nContext used\n88.4k / 128k \u00b7 69% of the window\nContext cache hit\n41.2%\nCurrent window\nsince 16:26 UTC\nLast activity\n18:33 UTC\nStable prefix\nnot recorded for this thread\nCache epoch\nnot recorded for this thread\nTool schema overhead\nnot recorded for this thread\nSwitched thread \u2014 the ring re-baselined to the current effective model\u2019s window. Earlier windows live in the timeline.\nWHAT IS IN CONTEXT\nEvery share below is a share of the 88.4k now in context. The window is 128k.\nMessages\n52%\n46k\nSystem & instructions\n12%\n10.6k\nTools\n16%\n14.1k\nSummaries\n11%\n9.7k\nSkills & MCP\n6%\n5.3k\nFewer sources (1 more)\nOther\n3%\n2.7k\nWHAT CHANGED\n16:02 UTC\nROUTE\nStarted on GPT-5.6-Codex\nPersonal OpenAI \u00b7 ChatGPT plan \u00b7 200K window\n16:12 UTC\nMAINTENANCE\nMicro-compaction\nSeveral small helper calls \u00b7 cache-break consequence visible \u00b7 7.5k reclaimed \u00b7 cache broken, because tool schema changed\nNo helper event is linked to this operation, so any provider usage it caused is not attributed here.\n16:24 UTC\nSWITCH\nModel switch \u00b7 GPT-5.6 \u2192 Kimi K2\nFrom\nGPT-5.6-Codex \u00b7 200k window\nTo\nKimi K2 \u00b7 128k window\nReason\nCodex weekly pressure \u00b7 cheaper audit route\nCache effect\nbroken \u2192 rebuilt\nPreflight\ncompression ran before the replay\nReplay\nue-591 \u00b7 attributed to the new connection\nThe current meter re-baselined to the smaller window; per-attempt attribution stays with the model that handled each attempt.\n16:25 UTC\nMAINTENANCE\nModel switch repack\nGPT-5.6 \u2192 Kimi K2 \u00b7 preflight compression \u00b7 replay on the new connection \u00b7 55.1k reclaimed \u00b7 cache rebuilt, because model changed\nHelper ue-591: 48.9k in \u00b7 200 out \u00b7 49.1k counted as input plus output \u00b7"
+   },
+   "A09-04.ringColours": {
+    "n": 6,
+    "distinct": 6,
+    "segs": [
+     [
+      "Messages \u00b7 52% of the 88.4k now in context",
+      "rgb(111, 198, 232)"
+     ],
+     [
+      "System & instructions \u00b7 12% of the 88.4k now in context",
+      "rgb(195, 177, 228)"
+     ],
+     [
+      "Tools \u00b7 16% of the 88.4k now in context",
+      "rgb(255, 173, 147)"
+     ],
+     [
+      "Summaries \u00b7 11% of the 88.4k now in context",
+      "rgb(255, 217, 127)"
+     ],
+     [
+      "Skills & MCP \u00b7 6% of the 88.4k now in context",
+      "rgb(111, 218, 188)"
+     ],
+     [
+      "Other \u00b7 3% of the 88.4k now in context",
+      "rgb(155, 150, 164)"
+     ]
+    ]
+   },
+   "errors": []
+  },
+  "round2_inspectors_scope_ring_fixtures": {
+   "inspect.ue-608": "Checkout service audit\nTHREAD REQUEST\nrunning\nCheckout service audit\nOne immutable usage event per real provider attempt. The final route never overwrites earlier attempts.\nATTEMPTS IN THIS WORK\n5\nMAIN WORK\nuser work\ncompleted\nGPT-5.6-Codex \u00b7 OpenAI \u00b7 Personal \u00b7 Codex \u00b7 ChatGPT plan\n61.0k in \u00b7 4.8k out \u00b7 40.2k cache read \u00b7 1.8k cache write \u00b7 2.6k reasoning\nIncluded in plan\nno separate charge\nAug 4 \u00b7 16:02 UTC \u2192 16:22 UTC \u00b7 provider active 20m \u00b7 settlement observed \u00b7 source reported by the provider CLI \u00b7 rcpt-590\nRETRIES & ROUTE CHANGES\nconversation replay\ncompleted\nKimi K2 \u00b7 Kimi \u00b7 Personal \u00b7 Kimi Code subscription\n48.9k in \u00b7 200 out\nIncluded in plan\nno separate charge\nFollows user work \u00b7 ue-590\nopen parent\nReplay after model switch \u2014 old cache did not carry over\nAug 4 \u00b7 16:24 UTC \u2192 16:26 UTC \u00b7 provider active 2m \u00b7 settlement observed \u00b7 source reported by the provider \u00b7 rcpt-591\nMAIN WORK\nuser work\ncompleted\nKimi K2 \u00b7 Kimi \u00b7 Personal \u00b7 Kimi Code subscription\n33.7k in \u00b7 2.6k out \u00b7 24.8k cache read\nIncluded in plan\nno separate charge\nAug 4 \u00b7 16:27 UTC \u2192 16:42 UTC \u00b7 provider active 15m \u00b7 settlement observed \u00b7 source reported by the provider \u00b7 rcpt-592\nRETRIES & ROUTE CHANGES\nfallback attempt\ncompleted\nGPT-5.6-Codex \u00b7 OpenAI \u00b7 Personal \u00b7 Codex \u00b7 ChatGPT plan\nRequested OpenAI \u00b7 Work \u2014 Used OpenAI \u00b7 Personal\n5.2k in \u00b7 640 out \u00b7 1.7k cache read \u00b7 210 reasoning\nIncluded in plan\nno separate charge\nFollows user work \u00b7 ue-590\nopen parent\nYou chose Work OpenAI, but Puppet Master used Personal OpenAI because Work OpenAI had reached its limit.\nAug 4 \u00b7 16:44 UTC \u2192 16:46 UTC \u00b7 provider active 2m \u00b7 settlement observed \u00b7 source reported by the provider CLI \u00b7 rcpt-638\nRETRIES & ROUTE CHANGES\nconversation replay\ncompleted\nKimi K2 \u00b7 Kimi \u00b7 Personal \u00b7 Kimi Code subscription\n4.8k in \u00b7 150 out\nIncluded in plan\nno separate charge\nFollows user work \u00b7 ue-592\nopen parent\nAug 4 \u00b7 16:57 UTC \u2192 16:58 UTC \u00b7 provider active 1m \u00b7 settlement observed \u00b7 source reported by the provider \u00b7 rcpt-640\nWHERE IT RAN\nSERVER-FIRST LINEAGE\nProject\nTastebook\nHome server, execution host, execution environment, source location and client were not recorded for this event, and the work that owns it records none either. That is unknown, not \"ran nowhere\".\nCONNECTION USED\nROUTE EVIDENCE\nConnection\nCodex \u00b7 ChatGPT plan\nAuthentication\nPuppet Master OAuth\nAuth owned by\nPuppet Master\nAccount\nOpenAI \u00b7 Personal\nExpected product\nChatGPT plan\nBilling route\nIncluded in plan\nSettlement\nobserved\nCost\nno separate charge\nCache write\nnot reported on this attempt\nEVENT LINEAGE\nONE EVENT PER REAL ATTEMPT\nThis event\nue-608\nFollows\nue-590 \u00b7 user work\nLeads to\nno attempt was made from this one\nRollup key\ndk-608 \u00b7 counted once\nStream state\nfinal",
+   "inspect.ue-091": "Legacy: catalog sync\nTURN\ncompleted\nLegacy: catalog sync\nRemoved account \u00b7 Old OpenAI \u2014 identity preserved in history; never selectable as a current source.\nOne immutable usage event per real provider attempt. The final route never overwrites earlier attempts.\nATTEMPTS IN THIS WORK\n2\nMAIN WORK\nuser work\ncompleted\nGPT-5.6 \u00b7 Removed account \u00b7 Old OpenAI \u00b7 Old API key \u00b7 vault reference\n30.2k in \u00b7 2.4k out \u00b7 900 reasoning\nBilled to the provider account\n$0.4100\nJul 28 \u00b7 18:40 UTC \u2192 19:10 UTC \u00b7 provider active 30m \u00b7 settlement settled \u00b7 source reported by the provider \u00b7 rcpt-091\nMAIN WORK\nuser work\ncompleted\nGPT-5.6 \u00b7 Removed account \u00b7 Old OpenAI \u00b7 Old API key \u00b7 environment reference\n18.9k in \u00b7 1.5k out \u00b7 560 reasoning\nBilled to the provider account\n$0.2600\nJul 28 \u00b7 17:55 UTC \u2192 18:12 UTC \u00b7 provider active 17m \u00b7 settlement adjusted after settling \u00b7 source reported by the provider \u00b7 rcpt-092\nWHERE IT RAN\nSERVER-FIRST LINEAGE\nProject\nTastebook\nHome server, execution host, execution environment, source location and client were not recorded for this event, and the work that owns it records none either. That is unknown, not \"ran nowhere\".\nCONNECTION USED\nROUTE EVIDENCE\nConnection\nOld API key \u00b7 vault reference\nAuthentication\nVault ref\nAuth owned by\nPuppet Master\nAccount\nRemoved account \u00b7 Old OpenAI\nExpected product\nOld OpenAI \u00b7 pay as you go\nBilling route\nBilled to the provider account\nSettlement\nsettled\nCost\n$0.4100\nCache write\nunknown \u2014 this route publishes no cache reporting state\nEVENT LINEAGE\nONE EVENT PER REAL ATTEMPT\nThis event\nue-091\nFollows\nnothing \u2014 this attempt starts its own chain\nLeads to\nno attempt was made from this one\nRollup key\ndk-091 \u00b7 counted once\nStream state\nfinal",
+   "inspect.ue-520": "Redirect: rewrite rate limiter\nTURN\ncompleted\nRedirect: rewrite rate limiter\nOne immutable usage event per real provider attempt. The final route never overwrites earlier attempts.\nATTEMPTS IN THIS WORK\n4\nMAIN WORK\nuser work\ninterrupted\nClaude Opus 4.6 \u00b7 Claude \u00b7 Work \u00b7 Claude CLI profile\n6.2k in \u00b7 400 out \u00b7 260 reasoning\nIncluded in plan\nno separate charge\nStream aborted \u2014 interrupted by your correction \u2014 the partial stream was retained once. Usage observed before it stopped is kept and counted once under dk-520.\nInterrupted by your correction; partial usage retained. Wasted 6.6k tokens.\nReasoning effort: High \u00b7 Speed: Normal \u00b7 Mode: Agent\nAug 4 \u00b7 18:35 UTC \u2192 18:36 UTC \u00b7 provider active 1m \u00b7 settlement partial stream \u00b7 source reported by the provider CLI \u00b7 rcpt-520\nMAIN WORK\nuser work\ncompleted\nClaude Opus 4.6 \u00b7 Claude \u00b7 Work \u00b7 Claude CLI profile\n38.4k in \u00b7 2.9k out \u00b7 22.0k cache read \u00b7 1.4k reasoning\nIncluded in plan\nno separate charge\nFollows user work \u00b7 ue-520\nopen parent\nReasoning effort: High \u00b7 Speed: Normal \u00b7 Mode: Agent\nAug 4 \u00b7 18:36 UTC \u2192 18:40 UTC \u00b7 provider active 4m \u00b7 settlement observed \u00b7 source reported by the provider CLI \u00b7 rcpt-521\nVALIDATION & PROBES\nbsd\ncompleted\nClaude Opus 4.6 \u00b7 Claude \u00b7 Work \u00b7 Claude CLI profile\n4.1k in \u00b7 260 out \u00b7 1.8k cache read \u00b7 90 reasoning\nIncluded in plan\nno separate charge\nFollows user work \u00b7 ue-520\nopen parent\nAug 4 \u00b7 18:37 UTC \u2192 18:37 UTC \u00b7 provider active under a minute \u00b7 settlement observed \u00b7 source reported by the provider CLI \u00b7 rcpt-631\nMAIN WORK\nuser work\ncompleted\nClaude Opus 4.6 \u00b7 Claude \u00b7 Work \u00b7 Claude CLI profile\n9.6k in \u00b7 1.3k out \u00b7 5.2k cache read \u00b7 430 reasoning\nExtra usage balance\n$0.1800\nFollows user work \u00b7 ue-521\nopen parent\nIncluded usage was spent, so this continued on Extra usage inside the $100 spending limit \u2014 metered continuation, not a plan allowance.\nAug 4 \u00b7 18:37 UTC \u2192 18:38 UTC \u00b7 provider active 1m \u00b7 settlement settled \u00b7 source reported by the provider \u00b7 rcpt-617\nWHERE IT RAN\nSERVER-FIRST LINEAGE\nProject\nTastebook\nHome server, execution host, execution environment, source location and client were not recorded for this event, and the work that owns it records none either. That is unknown, not \"ran nowhere\".\nCONNECTION USED\nROUTE EVIDENCE\nConnection\nClaude CLI profile\nAuthentication\nCLI-owned OAuth profile\nAuth owned by\nClaude CLI\nAccount\nClaude \u00b7 Work\nExpected product\nClaude Max plan\nBilling route\nIncluded in plan\nSettlement\npartial stream\nCost\nno separate charge\nCache write\nnot reported on this attempt\nAuthenticated alone does not prove which plan or billing path paid for the call \u2014 authentication source and observed billing route are separate facts.\nEVENT LINEAGE\nONE EVENT PER REAL ATTEMPT\nThis event\nue-520\nFollows\nnothing \u2014 this attempt starts its own chain\nLeads to\nue-521, ue-601\nRollup key\ndk-520 \u00b7 counted once\nStream state\naborted\nWhy it stopped\ninterrupted by your correction \u2014 the partial stream was retained once",
+   "inspect.ue-611": "Fix pricing migration\nTURN\ncompleted\nFix pricing migration\nOne immutable usage event per real provider attempt. The final route never overwrites earlier attempts.\nATTEMPTS IN THIS WORK\n9\nMAIN WORK\nuser work\ncompleted\nGPT-5.6-Codex \u00b7 OpenAI \u00b7 Personal \u00b7 Codex \u00b7 ChatGPT plan\n42.1k in \u00b7 3.2k out \u00b7 18.0k cache read \u00b7 2.4k cache write \u00b7 1.3k reasoning\nIncluded in plan\nno separate charge\nAug 4 \u00b7 18:26 UTC \u2192 18:34 UTC \u00b7 provider active 8m \u00b7 settlement observed \u00b7 source reported by the provider CLI \u00b7 rcpt-501\nCONTEXT & COMPRESSION\ncompression\ncompleted\nQwen3 Coder Plus \u00b7 Alibaba \u00b7 Personal \u00b7 Coding Plan connection\n2.4k in \u00b7 310 out\nIncluded in plan\nno separate charge\nFollows user work \u00b7 ue-501\nopen parent\nCompression helper for turn context\nAug 4 \u00b7 18:28 UTC \u2192 18:29 UTC \u00b7 provider active 1m \u00b7 settlement observed \u00b7 source reported by the provider \u00b7 rcpt-502\nSPECIALISTS & SUBAGENTS\nsubagent\ncompleted\nKimi K2 \u00b7 Kimi \u00b7 Personal \u00b7 Kimi Code subscription\n8.9k in \u00b7 1.1k out \u00b7 4.1k cache read\nIncluded in plan\nno separate charge\nFollows user work \u00b7 ue-501\nopen parent\nRole Reviewer \u00b7 persona Skeptical reviewer\nAug 4 \u00b7 18:29 UTC \u2192 18:33 UTC \u00b7 provider active 4m \u00b7 settlement observed \u00b7 source reported by the provider \u00b7 rcpt-503\nRESEARCH, ATTACHMENTS & MEDIA\nweb extract\ncompleted\nGemini 2.5 Flash \u00b7 Google \u00b7 Personal \u00b7 Google CLI profile\n1.9k in \u00b7 240 out\nFree allowance\n$0.00 reported\nFollows user work \u00b7 ue-501\nopen parent\nWeb extraction helper on the free allowance\nAug 4 \u00b7 18:30 UTC \u2192 18:30 UTC \u00b7 provider active under a minute \u00b7 settlement observed \u00b7 source reported by the provider CLI \u00b7 rcpt-504\nVALIDATION & PROBES\nbsd\ncompleted\nClaude Opus 4.6 \u00b7 Claude \u00b7 Work \u00b7 Claude CLI profile\n2.6k in \u00b7 120 out \u00b7 1.4k cache read \u00b7 40 reasoning\nIncluded in plan\nno separate charge\nFollows user work \u00b7 ue-501\nopen parent\nAug 4 \u00b7 18:23 UTC \u2192 18:23 UTC \u00b7 provider active under a minute \u00b7 settlement observed \u00b7 source reported by the provider CLI \u00b7 rcpt-630\nTOOL & MCP HELPERS\nmcp router\ncompleted\nQwen3 Max \u00b7 OpenCode \u00b7 Personal \u00b7 Shared gateway\n1.1k in \u00b7 140 out\nFree allowance\n$0.00 reported\nFollows user work \u00b7 ue-501\nopen parent\nAug 4 \u00b7 18:31 UTC \u2192 18:31 UTC \u00b7 provider active under a minute \u00b7 settlement observed \u00b7 source reported by the provider \u00b7 rcpt-633\nTOOL & MCP HELPERS\nskill search\ncompleted\nQwen3 Coder Plus \u00b7 Alibaba \u00b7 Personal \u00b7 Coding Plan connection\n900 in \u00b7 110 out \u00b7 300 cache read\nIncluded in plan\nno separate charge\nFollows user work \u00b7 ue-501\nopen parent\nAug 4 \u00b7 18:32 UTC \u2192 18:32 UTC \u00b7 provider active under a minute \u00b7 settlement observed \u00b7 source reported by the provider \u00b7 rcpt-634\nMAIN WORK\nuser work\ncompleted\nQwen3 Coder Plus \u00b7 Alibaba \u00b7 Personal \u00b7 Coding Plan connection\n3.9k in \u00b7 540 out \u00b7 1.2k cache read\nUsage pack\nno separate charge\nDrawn from the Extra Bundle after included usage ran low\nAug 4 \u00b7 18:36 UTC \u2192 18:38 UTC \u00b7 provider active 2m \u00b7 settlement observed \u00b7 source reported by the provider \u00b7 rcpt-641\nCONTEXT & COMPRESSION\ncompression\ntimed_out_discarded\nQwen3 Coder Plus \u00b7 Alibaba \u00b7 Personal \u00b7 Coding Plan connection\n8.6k in\nIncluded in plan\nno separate charge\nStream aborted \u2014 the helper timed out before the provider finished the stream. Usage observed before it stopped is kept and counted once under dk-613.\nThe compaction result was discarded and no context change was committed. The provider work still happened, so it is recorded once \u2014 output was never reported and stays unknown, not zero.\nAug 4 \u00b7 17:01 UTC \u2192 17:02 UTC \u00b7 provider active 1m \u00b7 settlement partial stream \u00b7 source reported by the provider \u00b7 rcpt-613\nWHERE IT RAN\nSERVER-FIRST LINEAGE\nProject\nTastebook\nHome server, execution host, execution environment, source location and client were not recorded for this event, and the work that owns it records none either. That is unknown, not \"ran nowhere\".\nCONNECTION USED\nROUTE EVIDENCE\nConnection\nCoding Plan connection\nAuthentication\nAPI key \u00b7 secret ref\nAuth owned by\nPuppet Master\nAccount\nAlibaba \u00b7 Personal\nExpected product\nExtra Bundle\nBilling route\nUsage pack\nSettlement\nobserved\nCost\nno separate charge\nCache write\nnot reported on this attempt\nEVENT LINEAGE\nONE EVENT PER REAL ATTEMPT\nThis event\nue-611\nFollows\nnothing \u2014 this attempt starts its own chain\nLeads to\nno attempt was made from this one\nRollup key\ndk-611 \u00b7 counted once\nStream state\nfinal",
+   "inspect.ue-541": "Apply deploy script changes\nTURN\ncompleted\nApply deploy script changes\nOne immutable usage event per real provider attempt. The final route never overwrites earlier attempts.\nATTEMPTS IN THIS WORK\n3\nSPECIALISTS & SUBAGENTS\napproval review\ncompleted\nClaude Sonnet 4.6 \u00b7 Claude \u00b7 Work \u00b7 Claude CLI profile\n3.1k in \u00b7 500 out \u00b7 150 reasoning\nIncluded in plan\nno separate charge\nFollows user work \u00b7 ue-541\nopen parent\nApproval reviewer\nAug 4 \u00b7 17:40 UTC \u2192 17:41 UTC \u00b7 provider active 1m \u00b7 settlement observed \u00b7 source reported by the provider CLI \u00b7 rcpt-540\nMAIN WORK\nuser work\ncompleted\nClaude Sonnet 4.6 \u00b7 Claude \u00b7 Work \u00b7 Claude CLI profile\nRequested Claude Opus 4.6 \u2014 Used Claude Sonnet 4.6\n12.8k in \u00b7 1.5k out \u00b7 6.4k cache read \u00b7 520 reasoning\nIncluded in plan\nno separate charge\nThe route the request asked for and the route that ran are both kept; neither overwrites the other.\nYou chose Claude Opus 4.6, but Puppet Master used Claude Sonnet 4.6 because the Opus 5-hour window was already under pressure.\nAug 4 \u00b7 17:36 UTC \u2192 17:40 UTC \u00b7 provider active 4m \u00b7 settlement observed \u00b7 source reported by the provider CLI \u00b7 rcpt-541\nRETRIES & ROUTE CHANGES\nuser work\nqueued\nClaude Opus 4.6 \u00b7 Claude \u00b7 Work \u00b7 Claude CLI profile\nRequested Claude \u00b7 Work \u2014 Used no account \u00b7 no provider attempt was made\nRequested Claude Opus 4.6 \u2014 Used no model \u00b7 no provider attempt was made\nno provider usage was reported\nRoute asked for: Included in plan\ncost unknown\nQueued \u2014 no provider attempt yet\nHeld while another writer holds the deploy script this edit needs \u2014 no provider attempt has been made.\nQueued because another writer holds a file it needs.\nCost unknown \u2014 no provider attempt was made, so there is nothing to price.\nnot started \u00b7 settlement unknown \u00b7 source unknown\nWHERE IT RAN\nSERVER-FIRST LINEAGE\nProject\nTastebook\nHome server, execution host, execution environment, source location and client were not recorded for this event, and the work that owns it records none either. That is unknown, not \"ran nowhere\".\nCONNECTION USED\nROUTE EVIDENCE\nConnection\nClaude CLI profile\nAuthentication\nCLI-owned OAuth profile\nAuth owned by\nClaude CLI\nAccount\nClaude \u00b7 Work\nExpected product\nClaude Max plan\nBilling route\nIncluded in plan\nSettlement\nobserved\nCost\nno separate charge\nCache write\nnot reported on this attempt\nAuthenticated alone does not prove which plan or billing path paid for the call \u2014 authentication source and observed billing route are separate facts.\nEVENT LINEAGE\nONE EVENT PER REAL ATTEMPT\nThis event\nue-541\nFollows\nnothing \u2014 this attempt starts its own chain\nLeads to\nue-540\nRollup key\ndk-541 \u00b7 counted once\nStream state\nfinal\nAPPROVALS\nRECEIPTS\nDecision\ndenied \u00d7 3\nWaited\n6m\nReviewer usage\n3.1k in \u00b7 500 out \u00b7 150 reasoning \u00b7 no separate charge \u00b7 Included in plan\nBreaker\ntripped \u2014 further proposals stopped\nFull Access was limited by Review mode. Three denials in a row tripped the breaker.",
+   "inspect.ue-501": "Fix pricing migration\nTURN\ncompleted\nFix pricing migration\nOne immutable usage event per real provider attempt. The final route never overwrites earlier attempts.\nATTEMPTS IN THIS WORK\n9\nMAIN WORK\nuser work\ncompleted\nGPT-5.6-Codex \u00b7 OpenAI \u00b7 Personal \u00b7 Codex \u00b7 ChatGPT plan\n42.1k in \u00b7 3.2k out \u00b7 18.0k cache read \u00b7 2.4k cache write \u00b7 1.3k reasoning\nIncluded in plan\nno separate charge\nAug 4 \u00b7 18:26 UTC \u2192 18:34 UTC \u00b7 provider active 8m \u00b7 settlement observed \u00b7 source reported by the provider CLI \u00b7 rcpt-501\nCONTEXT & COMPRESSION\ncompression\ncompleted\nQwen3 Coder Plus \u00b7 Alibaba \u00b7 Personal \u00b7 Coding Plan connection\n2.4k in \u00b7 310 out\nIncluded in plan\nno separate charge\nFollows user work \u00b7 ue-501\nopen parent\nCompression helper for turn context\nAug 4 \u00b7 18:28 UTC \u2192 18:29 UTC \u00b7 provider active 1m \u00b7 settlement observed \u00b7 source reported by the provider \u00b7 rcpt-502\nSPECIALISTS & SUBAGENTS\nsubagent\ncompleted\nKimi K2 \u00b7 Kimi \u00b7 Personal \u00b7 Kimi Code subscription\n8.9k in \u00b7 1.1k out \u00b7 4.1k cache read\nIncluded in plan\nno separate charge\nFollows user work \u00b7 ue-501\nopen parent\nRole Reviewer \u00b7 persona Skeptical reviewer\nAug 4 \u00b7 18:29 UTC \u2192 18:33 UTC \u00b7 provider active 4m \u00b7 settlement observed \u00b7 source reported by the provider \u00b7 rcpt-503\nRESEARCH, ATTACHMENTS & MEDIA\nweb extract\ncompleted\nGemini 2.5 Flash \u00b7 Google \u00b7 Personal \u00b7 Google CLI profile\n1.9k in \u00b7 240 out\nFree allowance\n$0.00 reported\nFollows user work \u00b7 ue-501\nopen parent\nWeb extraction helper on the free allowance\nAug 4 \u00b7 18:30 UTC \u2192 18:30 UTC \u00b7 provider active under a minute \u00b7 settlement observed \u00b7 source reported by the provider CLI \u00b7 rcpt-504\nVALIDATION & PROBES\nbsd\ncompleted\nClaude Opus 4.6 \u00b7 Claude \u00b7 Work \u00b7 Claude CLI profile\n2.6k in \u00b7 120 out \u00b7 1.4k cache read \u00b7 40 reasoning\nIncluded in plan\nno separate charge\nFollows user work \u00b7 ue-501\nopen parent\nAug 4 \u00b7 18:23 UTC \u2192 18:23 UTC \u00b7 provider active under a minute \u00b7 settlement observed \u00b7 source reported by the provider CLI \u00b7 rcpt-630\nTOOL & MCP HELPERS\nmcp router\ncompleted\nQwen3 Max \u00b7 OpenCode \u00b7 Personal \u00b7 Shared gateway\n1.1k in \u00b7 140 out\nFree allowance\n$0.00 reported\nFollows user work \u00b7 ue-501\nopen parent\nAug 4 \u00b7 18:31 UTC \u2192 18:31 UTC \u00b7 provider active under a minute \u00b7 settlement observed \u00b7 source reported by the provider \u00b7 rcpt-633\nTOOL & MCP HELPERS\nskill search\ncompleted\nQwen3 Coder Plus \u00b7 Alibaba \u00b7 Personal \u00b7 Coding Plan connection\n900 in \u00b7 110 out \u00b7 300 cache read\nIncluded in plan\nno separate charge\nFollows user work \u00b7 ue-501\nopen parent\nAug 4 \u00b7 18:32 UTC \u2192 18:32 UTC \u00b7 provider active under a minute \u00b7 settlement observed \u00b7 source reported by the provider \u00b7 rcpt-634\nMAIN WORK\nuser work\ncompleted\nQwen3 Coder Plus \u00b7 Alibaba \u00b7 Personal \u00b7 Coding Plan connection\n3.9k in \u00b7 540 out \u00b7 1.2k cache read\nUsage pack\nno separate charge\nDrawn from the Extra Bundle after included usage ran low\nAug 4 \u00b7 18:36 UTC \u2192 18:38 UTC \u00b7 provider active 2m \u00b7 settlement observed \u00b7 source reported by the provider \u00b7 rcpt-641\nCONTEXT & COMPRESSION\ncompression\ntimed_out_discarded\nQwen3 Coder Plus \u00b7 Alibaba \u00b7 Personal \u00b7 Coding Plan connection\n8.6k in\nIncluded in plan\nno separate charge\nStream aborted \u2014 the helper timed out before the provider finished the stream. Usage observed before it stopped is kept and counted once under dk-613.\nThe compaction result was discarded and no context change was committed. The provider work still happened, so it is recorded once \u2014 output was never reported and stays unknown, not zero.\nAug 4 \u00b7 17:01 UTC \u2192 17:02 UTC \u00b7 provider active 1m \u00b7 settlement partial stream \u00b7 source reported by the provider \u00b7 rcpt-613\nWHERE IT RAN\nSERVER-FIRST LINEAGE\nProject\nTastebook\nHome server, execution host, execution environment, source location and client were not recorded for this event, and the work that owns it records none either. That is unknown, not \"ran nowhere\".\nCONNECTION USED\nROUTE EVIDENCE\nConnection\nCodex \u00b7 ChatGPT plan\nAuthentication\nPuppet Master OAuth\nAuth owned by\nPuppet Master\nAccount\nOpenAI \u00b7 Personal\nExpected product\nChatGPT plan\nBilling route\nIncluded in plan\nSettlement\nobserved\nCost\nno separate charge\nCache write\n2.4k\nEVENT LINEAGE\nONE EVENT PER REAL ATTEMPT\nThis event\nue-501\nFollows\nnothing \u2014 this attempt starts its own chain\nLeads to\nue-502, ue-503, ue-504, ue-600, ue-603, ue-604\nRollup key\ndk-501 \u00b7 counted once\nStream state\nfinal",
+   "inspect.ue-606": "Source extraction \u00b7 topics\nPLANNING TOPIC\nrunning\nSource extraction \u00b7 topics\nOne immutable usage event per real provider attempt. The final route never overwrites earlier attempts.\nATTEMPTS IN THIS WORK\n7\nMAIN WORK\nuser work\ncompleted\nClaude Opus 4.6 \u00b7 Claude \u00b7 Work \u00b7 Claude CLI profile\n51.2k in \u00b7 4.1k out \u00b7 30.1k cache read \u00b7 4.1k cache write \u00b7 2.4k reasoning\nIncluded in plan\nno separate charge\nHigh-quality conversational planning route\nAug 4 \u00b7 17:07 UTC \u2192 17:22 UTC \u00b7 provider active 15m \u00b7 settlement observed \u00b7 source reported by the provider CLI \u00b7 rcpt-570\nRESEARCH, ATTACHMENTS & MEDIA\nsubagent\ncompleted\nQwen3 Max \u00b7 Alibaba \u00b7 Personal \u00b7 Coding Plan connection\n24.8k in \u00b7 1.2k out\nIncluded in plan\nno separate charge\nFollows user work \u00b7 ue-570\nopen parent\nRole Extraction \u00b7 child plan-12-ext-1\nAug 4 \u00b7 17:23 UTC \u2192 17:32 UTC \u00b7 provider active 9m \u00b7 settlement observed \u00b7 source reported by the provider \u00b7 rcpt-571\nRESEARCH, ATTACHMENTS & MEDIA\nsubagent\ncompleted\nQwen3 Max \u00b7 Alibaba \u00b7 Personal \u00b7 Coding Plan connection\n21.3k in \u00b7 900 out\nIncluded in plan\nno separate charge\nFollows user work \u00b7 ue-570\nopen parent\nRole Extraction \u00b7 child plan-12-ext-2\nAug 4 \u00b7 17:23 UTC \u2192 17:33 UTC \u00b7 provider active 10m \u00b7 settlement observed \u00b7 source reported by the provider \u00b7 rcpt-572\nRESEARCH, ATTACHMENTS & MEDIA\nsubagent\nrunning\nKimi K2 \u00b7 Kimi \u00b7 Personal \u00b7 Kimi Code subscription\n18.1k in \u00b7 400 out\nIncluded in plan\nno separate charge\nStream partial. What the provider reported is kept and counted once under dk-573.\nFollows user work \u00b7 ue-570\nopen parent\nRole Extraction \u00b7 child plan-12-ext-3\nAug 4 \u00b7 18:18 UTC \u00b7 still running \u00b7 settlement partial stream \u00b7 source reported by the provider \u00b7 rcpt-573\nRESEARCH, ATTACHMENTS & MEDIA\nsubagent\nqueued\nKimi K2 \u00b7 Kimi \u00b7 Personal \u00b7 Kimi Code subscription\nRequested Kimi \u00b7 Personal \u2014 Used no account \u00b7 no provider attempt was made\nRequested Kimi K2 \u2014 Used no model \u00b7 no provider attempt was made\nno provider usage was reported\nRoute asked for: Included in plan\ncost unknown\nFollows user work \u00b7 ue-570\nopen parent\nQueued \u2014 no provider attempt yet\nHeld by Puppet Master policy \u2014 two extraction children run at a time.\nQueued because Puppet Master policy holds it.\nCost unknown \u2014 no provider attempt was made, so there is nothing to price.\nRole Extraction \u00b7 child plan-12-ext-4\nnot started \u00b7 settlement unknown \u00b7 source unknown\nRESEARCH, ATTACHMENTS & MEDIA\nmoa reference\ncompleted\nQwen3 Max \u00b7 Alibaba \u00b7 Personal \u00b7 Coding Plan connection\n3.4k in \u00b7 420 out \u00b7 900 cache read\nIncluded in plan\nno separate charge\nFollows user work \u00b7 ue-570\nopen parent\nAug 4 \u00b7 18:07 UTC \u2192 18:11 UTC \u00b7 provider active 4m \u00b7 settlement observed \u00b7 source reported by the provider \u00b7 rcpt-636\nSYNTHESIS & VERIFICATION\nmoa aggregator\nrunning\nClaude Opus 4.6 \u00b7 Claude \u00b7 Work \u00b7 Claude CLI profile\n6.0k in \u00b7 900 out \u00b7 2.0k cache read \u00b7 300 reasoning\nIncluded in plan\nno separate charge\nStream partial. What the provider reported is kept and counted once under dk-607.\nFollows user work \u00b7 ue-570\nopen parent\nAug 4 \u00b7 18:13 UTC \u00b7 still running \u00b7 settlement observed \u00b7 source reported by the provider CLI \u00b7 rcpt-637\nWHERE IT RAN\nSERVER-FIRST LINEAGE\nProject\nTastebook\nHome server\nTrueNAS Home Server \u2014 the execution host is the server itself\nExecution host\nTrueNAS Home Server \u00b7 TrueNAS \u00b7 Docker\nExecution environment\nDocker \u00b7 pm-server\nSource location\nPuppet Master \u00b7 server checkout from the run\nClient\nDesktop app \u00b7 MacBook Air \u00b7 reconnected from the run\nThis client was offline during the outbox window; the queued work replayed on reconnect.\nSource trees are identified by name only \u2014 local paths are never stored or shown.\nCONNECTION USED\nROUTE EVIDENCE\nConnection\nCoding Plan connection\nAuthentication\nAPI key \u00b7 secret ref\nAuth owned by\nPuppet Master\nAccount\nAlibaba \u00b7 Personal\nExpected product\nCoding Plan\nBilling route\nIncluded in plan\nSettlement\nobserved\nCost\nno separate charge\nCache write\nnot reported on this attempt\nEVENT LINEAGE\nONE EVENT PER REAL ATTEMPT\nThis event\nue-606\nFollows\nue-570 \u00b7 user work\nLeads to\nno attempt was made from this one\nRollup key\ndk-606 \u00b7 counted once\nStream state\nfinal",
+   "runDetail.goal47": {
+    "text": "Refactor pricing pipeline\nGOAL\nrunning\nOwning surface\nAssistant Chat \u00b7 Goal Mode\nVisibility\nvisible\nProject\nTastebook\nStage\nSpecialist reviews\nStarted\n16:32 UTC\nADMISSION\nUSAGE FORECASTS \u00b7 GOAL RUNTIME DECIDES\n8 requested workers\n8 required specialists \u2014 still required when they run in waves\n2 admitted now \u00b7 effective concurrency 2\n6 queued \u00b7 4 waves\nSustainable concurrency 2 \u00b7 reserved for synthesis, testing, verification, repair\nHard max\n8\nConfigured preferred\n4\nProvider advertised\n2\nEffective now\n2\nPredicted sustainable\n2\nWHERE IT RAN\nSERVER-FIRST LINEAGE\nProject\nTastebook\nHome server\nthis work did not run on a home server\nExecution host\nStudio PC \u00b7 Windows 11\nExecution environment\nNative\nSource location\nTastebook \u00b7 main worktree\nClient\nDesktop app \u00b7 Studio PC \u00b7 connected\nSource trees are identified by name only \u2014 local paths are never stored or shown.\nMEMBERS\n8\nPricing specialist\nDomain analyst\nrequested Alibaba \u00b7 Coding Plan\nrunning\nattempt\nMigration specialist\nDomain analyst\nrequested Alibaba \u00b7 Coding Plan\nrunning\nattempt\nSchema specialist\nDomain analyst\nrequested Qwen \u00b7 planned \u00b7 queued by Puppet Master policy\nqueued\nBackfill specialist\nDomain analyst\nrequested Qwen \u00b7 planned \u00b7 queued by port conflict\nqueued\nAPI specialist\nDomain analyst\nrequested Kimi \u00b7 planned \u00b7 queued by provider limit\nqueued\nTest strategist\nTest skeptic\nrequested Kimi \u00b7 planned \u00b7 queued by host resource pressure\nqueued\nDocs specialist\nEditor\nrequested Qwen \u00b7 planned \u00b7 queued by runtime capacity\nqueued\nRisk reviewer\nSkeptical reviewer\nrequested Kimi \u00b7 planned \u00b7 queued by waiting for an update or repair\nqueued\nTIMING\nPARTITIONS TOTAL 2H 08M\nSince it started\n2h 10m \u00b7 from 16:32 UTC\nMeasured run time\n2h 04m \u00b7 6m of the wall clock is not yet measured\nPartitions total\n2h 08m \u00b7 4m longer than the run time because 2 children ran at the same time\nProvider/model active\n12m\nWaiting for test device\n47m\nWaiting for worktree\n31m\nWaiting for provider capacity\n9m\nWaiting for approval\n6m\nWaiting for reset/cooldown\n0m\nLocal tool/runtime time\n19m\nOutbox/offline wait\n0m\nReconnect / sync / replay\n4m\nEach bar is a share of the 2h 08m of partitioned time, not of the wall clock.\nTime kinds\n10 of 11 recorded on this run\n\u201cLocal tool/runtime time\u201d is one figure covering local compute and tool or runtime execution \u2014 this run does not separate them.\nMaintenance \u2014 not recorded for this run; kept in Maintenance and operations, never inside this run\u2019s elapsed.\nQueue and local-resource time never inflate provider tokens, cost, or allowance.\nCAPACITY FORECAST\nLikely enough capacity to finish before the next reset.\nReasonable forecast \u00b7 based on 12 similar runs \u00b7 generated 18:14 UTC\nUsage per child\n18.0k\u201326.0k tokens\nCost per child\nno separate charge\nElapsed per child\n6\u20139m\nReset inputs\nCodex 5-hour window \u00b7 Claude 5-hour window\nCapacity is kept aside for synthesis, testing, and repair.\nACTIVITY\n2 ATTEMPTS\nSpecialists & subagents \u00b7 counted as input plus output\n2 \u00b7 24.3k tokens\nOpen in Goals\nUsage reports state and forecasts. Admission, scheduling, waves, and dispatch belong to the Goal Runtime / Orchestrator.",
+    "fillSum": 100,
+    "fillCount": 9
+   },
+   "runDetail.plan12": {
+    "text": "Spec: U11 usage concept\nPLANNING RUN\nrunning\nOwning surface\nPlanning Wizard / PRD Builder\nVisibility\ninternal\nProject\nPuppet Master\nStage\nSource extraction\nStarted\n17:02 UTC\nADMISSION\nUSAGE FORECASTS \u00b7 GOAL RUNTIME DECIDES\n6 requested workers\n6 required specialists \u2014 still required when they run in waves\n2 admitted now \u00b7 effective concurrency 2\n4 queued \u00b7 3 waves\nSustainable concurrency 2 \u00b7 reserved for synthesis, testing, audit, repair\nHard max\n8\nConfigured preferred\n4\nProvider advertised\n2\nEffective now\n2\nPredicted sustainable\n2\nWHERE IT RAN\nSERVER-FIRST LINEAGE\nProject\nPuppet Master\nHome server\nTrueNAS Home Server \u2014 the execution host is the server itself\nExecution host\nTrueNAS Home Server \u00b7 TrueNAS \u00b7 Docker\nExecution environment\nDocker \u00b7 pm-server\nSource location\nPuppet Master \u00b7 server checkout\nClient\nDesktop app \u00b7 MacBook Air \u00b7 reconnected\nThis client was offline during the outbox window; the queued work replayed on reconnect.\nSource trees are identified by name only \u2014 local paths are never stored or shown.\nROUTE PLAN\nConversation\nClaude \u00b7 Work CLI profile \u00b7 high-quality route\nResearch & extraction\n4 children across Qwen and Kimi \u00b7 background route\nSynthesis & audit\nreserved \u00b7 reserved capacity\nTIMING\nNOT RECORDED\nNo time decomposition was recorded for this run. That is unknown, not zero \u2014 none of the eleven time kinds is measured or claimed here.\nCAPACITY FORECAST\nEnough for two complete extraction children at a time, with synthesis and audit reserved.\nLimited history \u00b7 may change after a route switch \u00b7 generated 18:20 UTC\nExtraction per child\n20.0k\u201330.0k tokens\nConversation\nClaude \u00b7 high-quality route\nReset inputs\nKimi rolling week \u00b7 Alibaba weekly window\nThe forecast reserves capacity for synthesis, testing, audit, and likely repair rather than spending everything on early extraction children.\nACTIVITY\n7 ATTEMPTS\nMain work \u00b7 counted as input plus output plus cache read plus cache write\n1 \u00b7 89.5k tokens\nResearch, attachments & media \u00b7 counted as input plus output\n5 \u00b7 70.5k tokens\nSynthesis & verification \u00b7 counted as input plus output plus cache read\n1 \u00b7 8.9k tokens\nOpen in the Planning Wizard\nUsage reports state and forecasts. Admission, scheduling, waves, and dispatch belong to the Goal Runtime / Orchestrator.",
+    "fillSum": 0,
+    "fillCount": 0
+   },
+   "runDetail.crew3": {
+    "text": "Design critique crew\nCREW\nrunning\nOwning surface\nOrchestrator \u00b7 GoalRun\nVisibility\norchestrator\nProject\nPuppet Master\nStage\nCritique round 1\nStarted\n17:47 UTC\nADMISSION\nUSAGE FORECASTS \u00b7 GOAL RUNTIME DECIDES\n5 requested members\nRequired specialists are not stated for this run\n3 admitted now \u00b7 effective concurrency 3\n2 queued \u00b7 2 waves\nSustainable concurrency 3 \u00b7 reserved for reducer\nHard max\n8\nConfigured preferred\n6\nProvider advertised\n3\nEffective now\n3\nPredicted sustainable\n3\nWHERE IT RAN\nSERVER-FIRST LINEAGE\nProject\nPuppet Master\nHome server\nthis work did not run on a home server\nExecution host\nJared\u2019s MacBook Air \u00b7 macOS 15\nExecution environment\nNative\nSource location\nPuppet Master \u00b7 main worktree\nClient\nDesktop app \u00b7 MacBook Air \u00b7 reconnected\nThis client was offline during the outbox window; the queued work replayed on reconnect.\nSource trees are identified by name only \u2014 local paths are never stored or shown.\nMEMBERS\n5\nCritique \u00b7 layout\nSenior design critic\nused Claude \u00b7 Work CLI profile\ncompleted\nattempt\nCritique \u00b7 data\nData skeptic\nused Qwen \u00b7 Coding Plan\ncompleted\nattempt\nCritique \u00b7 motion\nMotion reviewer\nused Kimi Code\nrunning\nattempt\nCritique \u00b7 copy\nCopy editor\nrequested Codex \u00b7 ChatGPT plan \u00b7 queued by provider limit\nqueued\nattempt\nReducer\nSynthesizer\nrequested Claude \u00b7 Work CLI profile \u00b7 queued by Puppet Master policy\nqueued\nattempt\nTIMING\nNOT RECORDED\nNo time decomposition was recorded for this run. That is unknown, not zero \u2014 none of the eleven time kinds is measured or claimed here.\nACTIVITY\n5 ATTEMPTS\nSpecialists & subagents \u00b7 counted as input plus output\n4 \u00b7 38.5k tokens\nSynthesis & verification\n1 \u00b7 no provider usage reported\nOpen in Crew\nUsage reports state and forecasts. Admission, scheduling, waves, and dispatch belong to the Goal Runtime / Orchestrator.",
+    "fillSum": 0,
+    "fillCount": 0
+   },
+   "scopePicker": {
+    "rowCount": 100,
+    "scopeKinds": [
+     "scope",
+     "cmp",
+     "fam",
+     "acct",
+     "conn",
+     "prod",
+     "meter"
+    ],
+    "modelRows": 0,
+    "negative": 0,
+    "foot": "54 usage events for All current usage \u00b7 $0.8800 priced by the provider on 9 events \u00b7 38 covered by a plan \u00b7 1 billed to your own key \u00b7 6 cost not reported. Removed accounts keep their history but never appear here.",
+    "padSample": [
+     [
+      "All current usage | the default view \u00b7 every configured source",
+      "10px"
+     ],
+     [
+      "Coding sprint set | 78% | comparison set \u00b7 3 products",
+      "10px"
+     ],
+     [
+      "Alibaba | 80% | 2 accounts",
+      "10px"
+     ],
+     [
+      "Personal | 80% | 1 connection",
+      "22px"
+     ],
+     [
+      "Coding Plan connection | 80% | Alibaba \u00b7 Personal",
+      "36px"
+     ],
+     [
+      "Coding Plan | 52% | 3 meters \u00b7 subscription",
+      "50px"
+     ],
+     [
+      "5-hour window | 34% | rolling \u00b7 resets in 4h 00m \u00b7 22:42 UTC",
+      "50px"
+     ],
+     [
+      "Weekly window | 52% | rolling \u00b7 resets in 5d 9h \u00b7 Mon 04:00 UTC",
+      "50px"
+     ],
+     [
+      "Monthly window | 41% | billing cycle \u00b7 resets in 28d \u00b7 Sep 1 04:",
+      "50px"
+     ],
+     [
+      "Personal Token Plan | 24% | 1 meter",
+      "50px"
+     ],
+     [
+      "Token balance | 24% | balance",
+      "50px"
+     ],
+     [
+      "Extra Bundle | 80% | 1 meter",
+      "50px"
+     ],
+     [
+      "Bundle requests | 80% | pack",
+      "50px"
+     ],
+     [
+      "Team | 70% | 1 connection \u00b7 needs attention",
+      "22px"
+     ],
+     [
+      "Team connection | 70% | Alibaba \u00b7 Team \u00b7 reconnect needed",
+      "36px"
+     ],
+     [
+      "Team seat credits | 70% | 1 meter \u00b7 subscription",
+      "50px"
+     ],
+     [
+      "Seat credits | 70% | billing cycle \u00b7 resets in 28d \u00b7 Sep 1 04:00",
+      "50px"
+     ],
+     [
+      "Shared Usage Pack | 58% | 1 meter",
+      "50px"
+     ],
+     [
+      "Shared pack balance | 58% | pack",
+      "50px"
+     ],
+     [
+      "OpenAI | 100% | 2 accounts",
+      "10px"
+     ],
+     [
+      "Personal | 46% | 1 connection",
+      "22px"
+     ],
+     [
+      "Codex \u00b7 ChatGPT plan | 46% | OpenAI \u00b7 Personal",
+      "36px"
+     ]
+    ]
+   },
+   "A09-07.modelBreakdown": {
+    "groupCtl": [
+     "all current usage",
+     "Add widget",
+     "Duplicate",
+     "Open Usage settings",
+     "5h",
+     "24h",
+     "7d",
+     "Input",
+     "Output",
+     "Reasoning",
+     "Cache read",
+     "Break down by model, provider or account",
+     "Duplicate",
+     "Open Usage settings"
+    ],
+    "byControls": [],
+    "paneHasModelRow": false
+   },
+   "A09-07.modelClick": "NO-MODEL-BUTTON",
+   "A09-09.ranges": {
+    "rangeControls": 1,
+    "rangeButton": true,
+    "tables": 1,
+    "charts": 2
+   },
+   "A10-13.fixtures": {
+    "opened": true,
+    "rows": 20,
+    "text": "Demo fixtures\nThe twenty acceptance fixtures this prototype carries. Each one sets the disclosure level, opens the room and \u2014 where the evidence lives in an inspector \u2014 opens it. Every row is also a link: #fixture=1.\n1\nCodex plan reaches its limit, then optional credits\nEssentials \u00b7 Plans & limits room \u2014 ChatGPT Business at 100% and its continuation ladder in Usage settings\n2\nAlibaba Token Plan consumes an Extra Bundle\nAdvanced \u00b7 Ledger room \u2014 billing route \u201cusage pack\u201d on the pack draw\n3\nWork account hits its limit; later work switches to Personal\nAdvanced \u00b7 Ledger room \u2014 requested account di"
+   },
+   "A10-13.fixtureHash": {
+    "hash": "#room=context&level=standard&scope=scope:all&range=24h",
+    "pane": "context",
+    "rdOpen": false,
+    "rdText": "Design critique crew\nCREW\nrunning\nOwning surface\nOrchestrator \u00b7 GoalRun\nVisibility\norchestrator\nProject\nPuppet Master\nStage\nCritique round 1\nStarted\n17:47 UTC\nADMISSION\nUSAGE FORECASTS \u00b7 GOAL RUNTIME DECIDES\n5 requested members\nRequired specialists are not stated for this run\n3 admitted now \u00b7 effective concurrency 3\n2 queued \u00b7 2 waves\nSustainable concurrency 3 \u00b7 reserved for reducer\nHard max\n8\nCon"
+   },
+   "A09-04.ring.t88": {
+    "n": 6,
+    "distinct": 6,
+    "segs": [
+     [
+      "Messages \u00b7 52% of the 88.4k now in conte",
+      "rgb(111, 198, 232)"
+     ],
+     [
+      "System & instructions \u00b7 12% of the 88.4k",
+      "rgb(195, 177, 228)"
+     ],
+     [
+      "Tools \u00b7 16% of the 88.4k now in context",
+      "rgb(255, 173, 147)"
+     ],
+     [
+      "Summaries \u00b7 11% of the 88.4k now in cont",
+      "rgb(255, 217, 127)"
+     ],
+     [
+      "Skills & MCP \u00b7 6% of the 88.4k now in co",
+      "rgb(111, 218, 188)"
+     ],
+     [
+      "Other \u00b7 3% of the 88.4k now in context",
+      "rgb(155, 150, 164)"
+     ]
+    ],
+    "legend": [
+     "Messages 52%",
+     "System & instructions 12%",
+     "Tools 16%",
+     "3 smaller sources 20%"
+    ]
+   },
+   "A05-12.ctxAttRows": {
+    "rows": [
+     "ue-612 \u00b7 counted once under dk-612 | 900 in \u00b7 80 out \u00b7 no separate charge | total 980",
+     "ue-613 \u00b7 counted once under dk-613 | 8.6k in \u00b7 no separate charge | total 8.6k",
+     "Main work \u00b7 user work | 42.1k in \u00b7 3.2k out \u00b7 18k cache read \u00b7 2.4k cache write \u00b7 no separate charge | completed",
+     "Context & compression \u00b7 compression | 2.4k in \u00b7 310 out \u00b7 no separate charge | completed",
+     "Specialists & subagents \u00b7 subagent | 8.9k in \u00b7 1.1k out \u00b7 4.1k cache read \u00b7 cache write not exposed \u00b7 no separate charge | completed",
+     "Research, attachments & media \u00b7 web extract | 1.9k in \u00b7 240 out \u00b7 $0.00 reported | completed"
+    ],
+    "rawEpoch": null,
+    "curatedEpoch": "e-12"
+   },
+   "A05-08.compaction": [
+    "Context compacted | Older turns were summarised so the thread could keep going \u00b7 18.2k reclaimed \u00b7 cache rebuilt | Helper ue-502: 2.4k in \u00b7 310 out \u00b7 2.7k counted as input plus output \u00b7 no separate charge | Historical usage totals unchanged.",
+    "Local prune | Stale context dropped by a deterministic local rule \u00b7 6.1k reclaimed \u00b7 cache preserved | No provider call \u2014 this operation ran locally and spent no provider usage. | Historical usage totals unchanged.",
+    "Context repacked after a model switch | GPT-5.6 \u2192 Kimi K2 \u00b7 preflight compression \u00b7 replay on the new connection \u00b7 55.1k reclaimed \u00b7 cache rebuilt | Helper ue-591: 48.9k in \u00b7 200 out \u00b7 49.1k counted as input plus output \u00b7 no separate charge | Historical usage totals unchanged.",
+    "No gain | Would reclaim about no tokens \u00b7 no change committed | Historical usage totals unchanged.",
+    "Deferred \u00b7 locked | Context is locked by an active turn \u00b7 try again when it settles | Historical usage totals unchanged.",
+    "Timed out \u00b7 discarded | Helper call may have usage, but no context mutation was committed. \u00b7 nothing reclaimed \u00b7 cache effect unknown | Helper ue-613: 8.6k in \u00b7 output not reported \u00b7 8.6k counted as input \u00b7 no separate charge \u00b7 result discarded, usage counted once | Historical usage totals unchanged."
+   ],
+   "A05-19.spark": [
+    [
+     "37",
+     "37%"
+    ],
+    [
+     "29",
+     "29%"
+    ],
+    [
+     "17",
+     "17%"
+    ],
+    [
+     "8",
+     "8%"
+    ],
+    [
+     "0",
+     "8%"
+    ],
+    [
+     "0",
+     "8%"
+    ],
+    [
+     "4",
+     "8%"
+    ],
+    [
+     "5",
+     "8%"
+    ]
+   ],
+   "capacity.text": "NO-CARD",
+   "ops.cards": [
+    {
+     "kind": "rolled back",
+     "cls": "u11w-kind warn",
+     "btns": [
+      "View the verification call"
+     ],
+     "t": "Codex CLI update | ROLLED BACK | Update verified, then rolled back | Check | 2m | Wait for idle | 9m | Install | 3m | Verify | 4m | Rollback | 1m | Tastebook \u00b7 Studio PC \u00b7 Native \u00b7 Tastebook \u00b7 main worktree \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected | Explicit user setup \u00b7 official OpenAI installer \u00b7 bou"
+    },
+    {
+     "kind": "completed",
+     "cls": "u11w-kind ok",
+     "btns": [],
+     "t": "Client offline \u00b7 outbox | COMPLETED | Queued while offline \u00b7 replayed on reconnect | Offline | 22m | Outbox wait | 22m | Reconnect + replay | 3m | Tastebook \u00b7 Jared\u2019s MacBook Air \u00b7 Native \u00b7 Puppet Master \u00b7 main worktree \u00b7 Desktop app \u00b7 MacBook Air \u00b7 reconnected | The reconnect replay is a real provi"
+    },
+    {
+     "kind": "completed",
+     "cls": "u11w-kind ok",
+     "btns": [],
+     "t": "Home Server kept working | COMPLETED | Server work continued | Tastebook \u00b7 TrueNAS Home Server \u00b7 home server \u00b7 Docker \u00b7 pm-server \u00b7 Tastebook \u00b7 server checkout \u00b7 No client attached | Server work continues while the client is offline; slow thread load is not provider usage."
+    },
+    {
+     "kind": "completed",
+     "cls": "u11w-kind ok",
+     "btns": [],
+     "t": "Notification sound preview | COMPLETED | Local sound preview \u2014 not usage | Tastebook \u00b7 Studio PC \u00b7 Native \u00b7 Tastebook \u00b7 main worktree \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected | A local sound preview is not provider usage."
+    },
+    {
+     "kind": "completed",
+     "cls": "u11w-kind ok",
+     "btns": [],
+     "t": "Notification test-send | COMPLETED | Test notification sent | Tastebook \u00b7 Studio PC \u00b7 Native \u00b7 Tastebook \u00b7 main worktree \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected | Operational receipt, not model usage."
+    },
+    {
+     "kind": "completed",
+     "cls": "u11w-kind ok",
+     "btns": [],
+     "t": "Project Vault backup | COMPLETED | Vault backup completed | Tastebook \u00b7 TrueNAS Home Server \u00b7 home server \u00b7 Docker \u00b7 pm-server \u00b7 Tastebook \u00b7 server checkout \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected | Backup is maintenance, never model usage."
+    },
+    {
+     "kind": "completed",
+     "cls": "u11w-kind ok",
+     "btns": [],
+     "t": "Project Move: Tastebook \u2192 Vault | COMPLETED | Project moved to Vault | Tastebook \u00b7 TrueNAS Home Server \u00b7 home server \u00b7 Docker \u00b7 pm-server \u00b7 Tastebook \u00b7 server checkout \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected | Moving a project between storage locations is not provider usage."
+    },
+    {
+     "kind": "completed",
+     "cls": "u11w-kind ok",
+     "btns": [
+      "Open provider setup"
+     ],
+     "t": "Codex CLI requested on Home Server \u00b7 not installed | COMPLETED | Provider Setup Required \u2014 no compatible installation on this host/environment | Tastebook \u00b7 TrueNAS Home Server \u00b7 home server \u00b7 Docker \u00b7 pm-server \u00b7 Tastebook \u00b7 server checkout \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected | The Studio PC inst"
+    },
+    {
+     "kind": "completed",
+     "cls": "u11w-kind ok",
+     "btns": [],
+     "t": "Unraid server ran the nightly index | COMPLETED | Unraid server kept working | Tastebook \u00b7 Unraid Tower \u00b7 home server \u00b7 Docker \u00b7 pm-server \u00b7 Tastebook \u00b7 server checkout \u00b7 No client attached | A second home-server form, with no desktop worker attached. Indexing is maintenance, never model usage."
+    },
+    {
+     "kind": "completed",
+     "cls": "u11w-kind ok",
+     "btns": [],
+     "t": "Cluster environment reachable | COMPLETED | Cluster node reachable | Tastebook \u00b7 Cluster node \u00b7 pm-server \u00b7 Kubernetes \u00b7 pm-server pod \u00b7 Puppet Master \u00b7 server checkout \u00b7 Desktop app \u00b7 MacBook Air \u00b7 reconnected | Installations bind to the exact host and environment: the pod is its own environment, n"
+    },
+    {
+     "kind": "completed",
+     "cls": "u11w-kind ok",
+     "btns": [],
+     "t": "Windows subsystem distro checked | COMPLETED | Windows subsystem checked \u00b7 optional | Tastebook \u00b7 Studio PC \u00b7 WSL (optional) \u00b7 Tastebook \u00b7 main worktree \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected | Native Windows is already complete; the subsystem is a separate environment on the same host, and nothing r"
+    },
+    {
+     "kind": "completed",
+     "cls": "u11w-kind ok",
+     "btns": [],
+     "t": "Back Seat Driver duplicate suppressed | COMPLETED | Duplicate suppressed \u2014 no second provider call | Tastebook \u00b7 Studio PC \u00b7 Native \u00b7 Tastebook \u00b7 main worktree \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected | A repeat check inside the cooldown was suppressed before dispatch. No provider call was made, so the"
+    },
+    {
+     "kind": "Duplicate suppressed",
+     "cls": "u11w-kind ok",
+     "btns": [],
+     "t": "Back Seat Driver \u00b7 Duplicate suppressed | DUPLICATE SUPPRESSED | Duplicate of bsd-1 within cooldown \u00b7 requested Auto \u00b7 effective Auto \u00b7 duplicate of ue-600 | No second provider call was made \u2014 zero additional usage. | Operational decision record ops-12 \u00b7 Tastebook \u00b7 Studio PC \u00b7 Native \u00b7 Tastebook \u00b7 "
+    }
+   ],
+   "A08-09.localOps": {
+    "total": 8,
+    "found": [
+     "Persona selection",
+     "Memory fade",
+     "Local history search",
+     "Context Lens inspection",
+     "ZIP extraction",
+     "Local context prune",
+     "Local spellcheck",
+     "Background indexer"
+    ]
+   },
+   "errors": []
+  },
+  "round3_capacity_timing_sheet_costs": {
+   "capacity": "Completion capacity\n19\nRequested\n7\nCan run now\n12\nQueued\n4\nLongest wave plan\nAcross 3 active runs \u00b7 requested, can run now and queued are worker counts and add up. Wave depth does not add up \u2014 these runs are concurrent on different hosts \u2014 so the longest single plan is shown (Refactor pricing pipeline).\nRefactor pricing pipeline\nGOAL\nRequested\n8\nCan run now\n2\nQueued\n6\n2 at a time \u00b7 4 waves \u00b7 capacity kept aside for synthesis, testing, verification, repair\n8 hard max \u00b7 4 preferred \u00b7 2 advertised \u00b7 2 sustainable\nLikely enough capacity to finish before the next reset.\nReasonable forecast \u00b7 based on 12 similar runs \u00b7 generated 18:14 UTC\nRefresh forecast\nOpen run detail\nSpec: U11 usage concept\nPLANNING RUN\nRequested\n6\nCan run now\n2\nQueued\n4\n2 at a time \u00b7 3 waves \u00b7 capacity kept aside for synthesis, testing, audit, repair\n8 hard max \u00b7 4 preferred \u00b7 2 advertised \u00b7 2 sustainable\nEnough for two complete extraction children at a time, with synthesis and audit reserved.\nLimited history \u00b7 may change after a route switch \u00b7 generated 18:20 UTC\nRefresh forecast\nOpen run detail\nDesign critique crew\nCREW\nRequested\n5\nCan run now\n3\nQueued\n2\n3 at a time \u00b7 2 waves \u00b7 capacity kept aside for reducer\n8 hard max \u00b7 6 preferred \u00b7 3 advertised \u00b7 3 sustainable\nOpen run detail\nUsage supplies the forecast. Goal Runtime owns admission, scheduling, waves, and dispatch.\nDuplicate\nOpen Usage settings",
+   "runsWidget": "Runs & agents\nRefactor pricing pipeline\nGOAL\nRequested\n8\nRunning\n2\nDone\n0\nQueued\n6\nCounted from this run\u2019s member list.\nSpecialist reviews \u00b7 visible \u00b7 elapsed 2h 04m \u00b7 provider active 12m\nTastebook \u00b7 Studio PC \u00b7 Native \u00b7 Tastebook \u00b7 main worktree \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected\nOpen run detail\nSpec: U11 usage concept\nPLANNING RUN\nRequested\n6\nCan run now\n2\nDone\nnot broken out\nQueued\n4\nCounted from this run\u2019s admission block \u2014 it reports admission, not a per-member list, so completed work is not broken out here.\nSource extraction \u00b7 internal\nPuppet Master \u00b7 TrueNAS Home Server \u00b7 home server \u00b7 Docker \u00b7 pm-server \u00b7 Puppet Master \u00b7 server checkout \u00b7 Desktop app \u00b7 MacBook Air \u00b7 reconnected\nOpen run detail\nDesign critique crew\nCREW\nRequested\n5\nRunning\n1\nDone\n2\nQueued\n2\nCounted from this run\u2019s member list.\nCritique round 1 \u00b7 orchestrator\nPuppet Master \u00b7 Jared\u2019s MacBook Air \u00b7 Native \u00b7 Puppet Master \u00b7 main worktree \u00b7 Desktop app \u00b7 MacBook Air \u00b7 reconnected\nOpen run detail\nWorker counts come from whichever form each run records. Goal Runtime and the Orchestrator own admission, scheduling and waves; this room only reports them.\nDuplicate\nOpen Usage settings",
+   "opsAll": [
+    {
+     "kind": "rolled back",
+     "cls": "u11w-kind warn",
+     "btns": [
+      "View the verification call"
+     ],
+     "t": "Codex CLI update | ROLLED BACK | Update verified, then rolled back | Check | 2m | Wait for idle | 9m | Install | 3m | Verify | 4m | Rollback | 1m | Tastebook \u00b7 Studio PC \u00b7 Native \u00b7 Tastebook \u00b7 main worktree \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected | Explicit user setup \u00b7 official OpenAI installer \u00b7 bound to Studio PC / Native \u00b7 v0.42.0 \u00b7 upd"
+    },
+    {
+     "kind": "completed",
+     "cls": "u11w-kind ok",
+     "btns": [],
+     "t": "Client offline \u00b7 outbox | COMPLETED | Queued while offline \u00b7 replayed on reconnect | Offline | 22m | Outbox wait | 22m | Reconnect + replay | 3m | Tastebook \u00b7 Jared\u2019s MacBook Air \u00b7 Native \u00b7 Puppet Master \u00b7 main worktree \u00b7 Desktop app \u00b7 MacBook Air \u00b7 reconnected | The reconnect replay is a real provider attempt \u2014 see ue-610. Queue time its"
+    },
+    {
+     "kind": "completed",
+     "cls": "u11w-kind ok",
+     "btns": [],
+     "t": "Home Server kept working | COMPLETED | Server work continued | Tastebook \u00b7 TrueNAS Home Server \u00b7 home server \u00b7 Docker \u00b7 pm-server \u00b7 Tastebook \u00b7 server checkout \u00b7 No client attached | Server work continues while the client is offline; slow thread load is not provider usage."
+    },
+    {
+     "kind": "completed",
+     "cls": "u11w-kind ok",
+     "btns": [],
+     "t": "Notification sound preview | COMPLETED | Local sound preview \u2014 not usage | Tastebook \u00b7 Studio PC \u00b7 Native \u00b7 Tastebook \u00b7 main worktree \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected | A local sound preview is not provider usage."
+    },
+    {
+     "kind": "completed",
+     "cls": "u11w-kind ok",
+     "btns": [],
+     "t": "Notification test-send | COMPLETED | Test notification sent | Tastebook \u00b7 Studio PC \u00b7 Native \u00b7 Tastebook \u00b7 main worktree \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected | Operational receipt, not model usage."
+    },
+    {
+     "kind": "completed",
+     "cls": "u11w-kind ok",
+     "btns": [],
+     "t": "Project Vault backup | COMPLETED | Vault backup completed | Tastebook \u00b7 TrueNAS Home Server \u00b7 home server \u00b7 Docker \u00b7 pm-server \u00b7 Tastebook \u00b7 server checkout \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected | Backup is maintenance, never model usage."
+    },
+    {
+     "kind": "completed",
+     "cls": "u11w-kind ok",
+     "btns": [],
+     "t": "Project Move: Tastebook \u2192 Vault | COMPLETED | Project moved to Vault | Tastebook \u00b7 TrueNAS Home Server \u00b7 home server \u00b7 Docker \u00b7 pm-server \u00b7 Tastebook \u00b7 server checkout \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected | Moving a project between storage locations is not provider usage."
+    },
+    {
+     "kind": "completed",
+     "cls": "u11w-kind ok",
+     "btns": [
+      "Open provider setup"
+     ],
+     "t": "Codex CLI requested on Home Server \u00b7 not installed | COMPLETED | Provider Setup Required \u2014 no compatible installation on this host/environment | Tastebook \u00b7 TrueNAS Home Server \u00b7 home server \u00b7 Docker \u00b7 pm-server \u00b7 Tastebook \u00b7 server checkout \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected | The Studio PC installation is not assumed here: installati"
+    },
+    {
+     "kind": "completed",
+     "cls": "u11w-kind ok",
+     "btns": [],
+     "t": "Unraid server ran the nightly index | COMPLETED | Unraid server kept working | Tastebook \u00b7 Unraid Tower \u00b7 home server \u00b7 Docker \u00b7 pm-server \u00b7 Tastebook \u00b7 server checkout \u00b7 No client attached | A second home-server form, with no desktop worker attached. Indexing is maintenance, never model usage."
+    },
+    {
+     "kind": "completed",
+     "cls": "u11w-kind ok",
+     "btns": [],
+     "t": "Cluster environment reachable | COMPLETED | Cluster node reachable | Tastebook \u00b7 Cluster node \u00b7 pm-server \u00b7 Kubernetes \u00b7 pm-server pod \u00b7 Puppet Master \u00b7 server checkout \u00b7 Desktop app \u00b7 MacBook Air \u00b7 reconnected | Installations bind to the exact host and environment: the pod is its own environment, not the TrueNAS Docker one."
+    },
+    {
+     "kind": "completed",
+     "cls": "u11w-kind ok",
+     "btns": [],
+     "t": "Windows subsystem distro checked | COMPLETED | Windows subsystem checked \u00b7 optional | Tastebook \u00b7 Studio PC \u00b7 WSL (optional) \u00b7 Tastebook \u00b7 main worktree \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected | Native Windows is already complete; the subsystem is a separate environment on the same host, and nothing requires it."
+    },
+    {
+     "kind": "completed",
+     "cls": "u11w-kind ok",
+     "btns": [],
+     "t": "Back Seat Driver duplicate suppressed | COMPLETED | Duplicate suppressed \u2014 no second provider call | Tastebook \u00b7 Studio PC \u00b7 Native \u00b7 Tastebook \u00b7 main worktree \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected | A repeat check inside the cooldown was suppressed before dispatch. No provider call was made, so there is no usage event and no additional u"
+    },
+    {
+     "kind": "Duplicate suppressed",
+     "cls": "u11w-kind ok",
+     "btns": [],
+     "t": "Back Seat Driver \u00b7 Duplicate suppressed | DUPLICATE SUPPRESSED | Duplicate of bsd-1 within cooldown \u00b7 requested Auto \u00b7 effective Auto \u00b7 duplicate of ue-600 | No second provider call was made \u2014 zero additional usage. | Operational decision record ops-12 \u00b7 Tastebook \u00b7 Studio PC \u00b7 Native \u00b7 Tastebook \u00b7 main worktree \u00b7 Desktop app \u00b7 Studio PC "
+    }
+   ],
+   "turnCards": [
+    "TURN | Fix pricing migration | 18:34 UTC | GPT-5.6-Codex \u00b7 OpenAI \u00b7 Personal \u00b7 ChatGPT plan | 42.1k input \u00b7 3.2k output \u00b7 18.0k cache read \u00b7 8 helper calls \u00b7 1 subagent \u00b7 cost | hidden \u00b7 plan | Main work | user work | completed | 42.1k input \u00b7 3.2k output \u00b7 18.0k cache read | cost hidden \u00b7 plan covers it | ue-501 | inspect | Context & compression | compression | completed | 2.4k input \u00b7 310 output | cost hidden \u00b7 pla",
+    "TURN | Regenerate invoice fixtures | 18:16 UTC | GPT-5.6-Codex \u00b7 OpenAI \u00b7 Personal \u00b7 ChatGPT plan | 22.4k input \u00b7 1.8k output \u00b7 9.6k cache read \u00b7 3 helper calls \u00b7 cost | hidden \u00b7 plan | You chose Work OpenAI, but Puppet Master used Personal OpenAI because Work OpenAI had reached its limit. | Retries & route changes | user work | failed | no provider usage | cost unknown | ue-510 | inspect | Main work | user work | co",
+    "TURN | Redirect: rewrite rate limiter | 18:40 UTC | Claude Opus 4.6 \u00b7 Claude \u00b7 Work \u00b7 Claude Max plan | 6.2k input \u00b7 400 output \u00b7 3 helper calls \u00b7 cost | hidden \u00b7 plan | Session sess-t88-1 | Interrupted by your correction; partial usage retained. | Main work | user work | interrupted | 6.2k input \u00b7 400 output | cost hidden \u00b7 plan covers it | ue-520 | inspect | Main work | user work | completed | 38.4k input \u00b7 2.9k ou",
+    "TURN | Run integration tests | 18:01 UTC | Kimi K2 \u00b7 Kimi \u00b7 Personal \u00b7 Kimi Code plan | 15.3k input \u00b7 900 output \u00b7 7.7k cache read \u00b7 3 helper calls \u00b7 cost | hidden \u00b7 plan | Session sess-t88-2 | Main work | user work | completed | 15.3k input \u00b7 900 output \u00b7 7.7k cache read | cost hidden \u00b7 plan covers it | ue-530 | inspect | Validation & probes | probe | completed | 1.5k input \u00b7 210 output | cost hidden \u00b7 plan covers i",
+    "TURN | Apply deploy script changes | 17:44 UTC | Claude Sonnet 4.6 \u00b7 Claude \u00b7 Work \u00b7 Claude Max plan | 12.8k input \u00b7 1.5k output \u00b7 6.4k cache read \u00b7 2 helper calls \u00b7 cost | hidden \u00b7 plan | You chose Claude Opus 4.6, but Puppet Master used Claude Sonnet 4.6 because the Opus 5-hour window was already under pressure. | Specialists & subagents | approval review | completed | 3.1k input \u00b7 500 output | cost hidden \u00b7 plan c",
+    "TURN | Read receipt photo | 17:31 UTC | GPT-5.6-Codex \u00b7 OpenAI \u00b7 Personal \u00b7 ChatGPT plan | 9.8k input \u00b7 700 output \u00b7 2 helper calls \u00b7 cost | hidden \u00b7 plan | Main work | user work | completed | 9.8k input \u00b7 700 output | cost hidden \u00b7 plan covers it | ue-550 | inspect | Research, attachments & media | vision | completed | 5.4k input \u00b7 300 output | $0.0300 | ue-551 | inspect | Research, attachments & media | attachment "
+   ],
+   "A04-04.workTotals": {
+    "work3": [
+     "ue-520:6200",
+     "ue-521:38400",
+     "ue-601:4100",
+     "ue-617:9600"
+    ],
+    "work3Sum": 58300,
+    "work7Count": 2,
+    "work7Purposes": [
+     "subagent",
+     "subagent"
+    ],
+    "work9Families": [
+     "fam:claude",
+     "fam:alibaba",
+     "fam:kimi",
+     "fam:openai"
+    ]
+   },
+   "A02-01.scopeFoot": {
+    "foot": "54 usage events for All current usage \u00b7 $0.8800 priced by the provider on 9 events \u00b7 38 covered by a plan \u00b7 1 billed to your own key \u00b7 6 cost not reported. Removed accounts keep their history but never appear here.",
+    "removedIds": [
+     "acct:openai-old"
+    ],
+    "removedAttempts": [
+     "ue-091:410000",
+     "ue-092:260000"
+    ],
+    "removedCostUsd": 0.67,
+    "currentCostUsd": 0.21,
+    "allCostUsd": 0.88,
+    "currentCount": 52,
+    "allCount": 54
+   },
+   "timing.goal47": {
+    "block": "TIMING\nPARTITIONS TOTAL 2H 08M\nSince it started\n2h 10m \u00b7 from 16:32 UTC\nMeasured run time\n2h 04m \u00b7 6m of the wall clock is not yet measured\nPartitions total\n2h 08m \u00b7 4m longer than the run time because 2 children ran at the same time\nProvider/model active\n12m\nWaiting for test device\n47m\nWaiting for worktree\n31m\nWaiting for provider capacity\n9m\nWaiting for approval\n6m\nWaiting for reset/cooldown\n0m\nLocal tool/runtime time\n19m\nOutbox/offline wait\n0m\nReconnect / sync / replay\n4m\nEach bar is a share of the 2h 08m of partitioned time, not of the wall clock.\nTime kinds\n10 of 11 recorded on this run\n\u201cLocal tool/runtime time\u201d is one figure covering local compute and tool or runtime execution \u2014 this run does not separate them.\nMaintenance \u2014 not recorded for this run; kept in Maintenance and operations, never inside this run\u2019s elapsed.\nQueue and local-resource time never inflate provider tokens, cost, or allowance.\nCAPACITY FORECAST\nLikely enough capacity to finish before the next reset.\nReasonable forecast \u00b7 based on 12 similar runs \u00b7 generated 18:14 UTC\nUsage per child\n18.0k\u201326.0k tokens\nCost per child\nno separate charge\nElapsed per child\n6\u20139m\nReset inputs\nCodex 5-hour window \u00b7 Claude 5-hour window\nCapacity is kept aside for synthesis, testing, and repair.\nACTIVITY\n2 ATTEMPTS\nSpecialists & subagents \u00b7 counted as input plus output\n2 \u00b7 24.3k tokens\nOpen in Goals\nUsage reports state and forecasts. Admission, scheduling, waves, and dispatch belong to the Goal Runtime / Orchestrator.",
+    "hasMaintenance": true,
+    "rowCount": 49
+   },
+   "A06-10.queuedReasons": {
+    "canon": [
+     "provider_limit",
+     "runtime_capacity",
+     "pm_policy",
+     "port_conflict",
+     "file_writer_conflict",
+     "host_resource_pressure",
+     "waiting_for_update_repair",
+     "waiting_for_reset"
+    ],
+    "inRuns": [
+     "pm_policy",
+     "port_conflict",
+     "provider_limit",
+     "host_resource_pressure",
+     "runtime_capacity",
+     "waiting_for_update_repair"
+    ],
+    "inAttempts": [
+     "pm_policy",
+     "provider_limit",
+     "file_writer_conflict"
+    ],
+    "missingFromData": [
+     "waiting_for_reset"
+    ]
+   },
+   "A09-07.byModel": {
+    "found": true,
+    "after": "03\nCosts & spending\n\nWhat this month has cost so far \u2014 API-billed vs plan-included against one cost authority. The spending limit is yours; it is not a plan allowance.\n\nall current usage\nlimit $300.00 \u00b7 warn at 80%\nLast 24 hours\n48 of 54 events\n776.6k tokens\n$0.2100 priced by the provider on 7 events \u00b7 38 covered by a plan \u00b7 1 billed to your own key \u00b7 2 cost not reported\n4 with no start time\nThe range drives these figures, the key figures on Overview and what Export writes. Month-to-date spending, the burn rate and the forecast are month-scoped by the provider, not by the range above. The range figures count events.\nAdd widget\nDrag the grip to move, drag the corner to resize, open a widget menu for focus, size, config and remove.\nCosts & spending\n$187.42\nspent of $300.00 spending limit \u00b7 warn at 80%\nSpending limit used\n62\n%\nAPI-billed\n$61.85\nPlan-included\n$125.57\nBurn\n$2.85/h \u00b7 $20.30/d\nForecast\n$224.10 by month end\nClaude\n$74.21\nOpenAI\n$52.38\nAlibaba\n$31.24\nKimi\n$14.96\nOpenCode\n$2.20\nZ.AI\n$8.12\nAntigravity\n$4.31\nOne cost authority \u00b7 the API/plan split is a projection, not a second model. Spending limit is user-controlled, not a plan allowance.\nDuplicate\nOpen Usage settings\nToken analytics\n5h\n24h\n7d\n00\n02\n04\n06\n08\n10\n12\n14\n16\n18\n20\n22\nInput\nOutput\nReasoning\nCache read\nHide the breakdown\nBreak down by\nModel\nProvider\nAccount\nMODEL\tTOKENS\tATTEMPTS\tCOST\nClaude Opus 4.6\t277.5k\t11\t$0"
+   },
+   "A05-05.rawBlock": {
+    "hasRaw": true,
+    "rawSnippet": "  \"context_epoch\": \"e-12\",",
+    "rawEl": true,
+    "pmDerived": false,
+    "segbar": [
+     [
+      "Messages \u00b7 46% of the 42.2k no",
+      "rgb(111, 198, 232)"
+     ],
+     [
+      "System & instructions \u00b7 18% of",
+      "rgb(195, 177, 228)"
+     ],
+     [
+      "Tools \u00b7 14% of the 42.2k now i",
+      "rgb(255, 173, 147)"
+     ],
+     [
+      "Skills & MCP \u00b7 9% of the 42.2k",
+      "rgb(111, 218, 188)"
+     ],
+     [
+      "Memory / pinned \u00b7 5% of the 42",
+      "rgb(244, 143, 177)"
+     ],
+     [
+      "Summaries \u00b7 4% of the 42.2k no",
+      "rgb(255, 217, 127)"
+     ],
+     [
+      "Attachments / media \u00b7 3% of th",
+      "rgb(182, 206, 106)"
+     ],
+     [
+      "Other \u00b7 1% of the 42.2k now in",
+      "rgb(155, 150, 164)"
+     ]
+    ]
+   },
+   "A09-04.t88ring": {
+    "dataFamilies": [
+     "Messages",
+     "System & instructions",
+     "Tools",
+     "Skills & MCP",
+     "Memory / pinned",
+     "Summaries",
+     "Attachments / media",
+     "Other"
+    ],
+    "ringSegs": [
+     [
+      "Messages \u00b7 46% of the 42.2k now in",
+      "rgb(111, 198, 232)"
+     ],
+     [
+      "System & instructions \u00b7 18% of the",
+      "rgb(195, 177, 228)"
+     ],
+     [
+      "Tools \u00b7 14% of the 42.2k now in co",
+      "rgb(255, 173, 147)"
+     ],
+     [
+      "Skills & MCP \u00b7 9% of the 42.2k now",
+      "rgb(111, 218, 188)"
+     ],
+     [
+      "Memory / pinned \u00b7 5% of the 42.2k ",
+      "rgb(244, 143, 177)"
+     ],
+     [
+      "Summaries \u00b7 4% of the 42.2k now in",
+      "rgb(255, 217, 127)"
+     ],
+     [
+      "Attachments / media \u00b7 3% of the 42",
+      "rgb(182, 206, 106)"
+     ],
+     [
+      "Other \u00b7 1% of the 42.2k now in con",
+      "rgb(155, 150, 164)"
+     ]
+    ],
+    "distinct": 8,
+    "tabExists": true
+   },
+   "A05-19.sparkTitles": [
+    [
+     "37",
+     null,
+     "37%"
+    ],
+    [
+     "29",
+     null,
+     "29%"
+    ],
+    [
+     "17",
+     null,
+     "17%"
+    ],
+    [
+     "8",
+     null,
+     "8%"
+    ],
+    [
+     "0",
+     null,
+     "8%"
+    ],
+    [
+     "0",
+     null,
+     "8%"
+    ],
+    [
+     "4",
+     null,
+     "8%"
+    ],
+    [
+     "5",
+     null,
+     "8%"
+    ]
+   ],
+   "sheet": "Usage settings\nWhat Settings currently says, reported here. Usage does not change policy \u2014 every change opens the setting that owns it.\nPREFERENCES\nWarn me before I run low\nOn\nChange in Settings\nAutomatic account and provider switching\nOn\nChange in Settings\nAFTER INCLUDED USAGE\nProduct\nCoding Plan\nTeam seat credits\nChatGPT plan\nChatGPT Business plan\nClaude Max plan\nClaude API \u00b7 PAYG\nKimi Code plan\nOpenCode Go plan\nZen balance\nLegacy plan\nCredit plan\nBaseline plan\n1\nUse the usage included with your plan\n2\nDraw on Usage credits\n3\nApply the saved reset \u00b7 Saved reset\n4\nWait for the reset\nSettings holds \"credits\" for this product, which is not a step this provider offers. Open the setting to resolve it.\nChosen by\nWhen the Budget Runs Out\nChange in Settings\nEXTRA PAID USAGE\nExtra usage\nOn\nChange in Settings\nSpending limit\n$100.00 per month\nChange in Settings\nAI Credit Overages\nOff\nChange in Settings\nCURRENT ALLOWANCE (READ-ONLY)\nChatGPT Business plan \u00b7 5-hour window\n100%\nChatGPT Business plan \u00b7 Weekly window\n96%\nExtra Bundle \u00b7 Bundle requests\n80%\nSaved resets\n1 banked \u00b7 expires Sep 1 04:00 UTC\nPersonal Token Plan\n3.8M left\nExtra Bundle\n40 left\nOpen provider settings\nSee all usage settings\nSource authority, settlement, projection freshness and the catalog probes are in the Source authority room at the Advanced level. Meter-policy versions and reference or catalog prices are not shown anywhere in this view. Widget settings never change these policies.",
+   "A03-06.rows": [
+    "Shared membership pool Extra Usage pool \u00b7 shared poolunknownmedium confidenceLimit not exposed \u00b7 3.1k observed",
+    "Legacy plan Included requests \u00b7 billing cycleunknownmedium confidenceLimit not exposed \u00b7 118 observed",
+    "AI Credit Overages AI credit overage \u00b7 prepaid balancedisabledconfidence not recordedTurned off \u00b7 Extra usage is off",
+    "Local models Local capacity \u00b7 session onlynot exposedconfidence not recordedNot exposed by this provider"
+   ],
+   "A03-16.gauge": "Costs & spending\n$187.42\nspent of $300.00 spending limit \u00b7 warn at 80%\nSpending limit used\n62\n%\nAPI-billed\n$61.85\nPlan-included\n$125.57\nBurn\n$2.85/h \u00b7 $20.30/d\nForecast\n$224.10 by month end\nClaude\n$74.21\nOpenAI\n$52.38\nAlibaba\n$31.24\nKimi\n$14.96\nOpenCode\n$2.20\nZ.AI\n$8.12\nAntigravity\n$4.31\nOne cost authority \u00b7 the API/plan split is a projection, not a second model. Spending limit is user-controlled, not a plan allowance.\nDuplicate\nOpen Usage settings",
+   "A09-11.rawTokens": [],
+   "errors": []
+  },
+  "round4_ops_commands_scope_footer": {
+   "ops8.full": {
+    "text": "Codex CLI requested on Home Server \u00b7 not installed\nCOMPLETED\nProvider Setup Required \u2014 no compatible installation on this host/environment\nTastebook \u00b7 TrueNAS Home Server \u00b7 home server \u00b7 Docker \u00b7 pm-server \u00b7 Tastebook \u00b7 server checkout \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected\nThe Studio PC installation is not assumed here: installations bind to the exact host and environment. Originating operation and continuation token preserved; Auto/On may maintain an approved installation but never perform first acquisition. Resume only after explicit Install from the official source and separate authentication.\nOpen provider setup",
+    "setupLink": {
+     "surface": "settings",
+     "manager": "providers",
+     "section": "setup",
+     "focus_reason": "setup_required",
+     "continuation": "cont-8841"
+    }
+   },
+   "ops2.full": {
+    "text": "Client offline \u00b7 outbox\nCOMPLETED\nQueued while offline \u00b7 replayed on reconnect\nOffline\n22m\nOutbox wait\n22m\nReconnect + replay\n3m\nTastebook \u00b7 Jared\u2019s MacBook Air \u00b7 Native \u00b7 Puppet Master \u00b7 main worktree \u00b7 Desktop app \u00b7 MacBook Air \u00b7 reconnected\nThe reconnect replay is a real provider attempt \u2014 see ue-610. Queue time itself is never model usage.",
+    "acts": []
+   },
+   "ops1.full": "Codex CLI update\nROLLED BACK\nUpdate verified, then rolled back\nCheck\n2m\nWait for idle\n9m\nInstall\n3m\nVerify\n4m\nRollback\n1m\nTastebook \u00b7 Studio PC \u00b7 Native \u00b7 Tastebook \u00b7 main worktree \u00b7 Desktop app \u00b7 Studio PC \u00b7 connected\nExplicit user setup \u00b7 official OpenAI installer \u00b7 bound to Studio PC / Native \u00b7 v0.42.0 \u00b7 updates/repair post-consent only\nInstaller time is maintenance, not model usage. The verify step made one real model call (recorded separately).\nView the verification call",
+   "cmdLog": [
+    {
+     "cmd": "cmd.usage.forecast.request",
+     "keys": [
+      "runId"
+     ],
+     "fam": false
+    },
+    {
+     "cmd": "cmd.chat.open_thread_context_details",
+     "keys": [
+      "surface",
+      "id"
+     ],
+     "fam": false
+    },
+    {
+     "cmd": "cmd.usage.forecast.request",
+     "keys": [
+      "runId"
+     ],
+     "fam": false
+    },
+    {
+     "cmd": "cmd.chat.open_thread_context_details",
+     "keys": [
+      "surface",
+      "id"
+     ],
+     "fam": false
+    },
+    {
+     "cmd": "cmd.chat.open_thread_context_details",
+     "keys": [
+      "surface",
+      "id"
+     ],
+     "fam": false
+    },
+    {
+     "cmd": "cmd.widget.add",
+     "keys": [
+      "type",
+      "via"
+     ],
+     "fam": false
+    },
+    {
+     "cmd": "cmd.widget.add",
+     "keys": [
+      "type",
+      "via"
+     ],
+     "fam": false
+    },
+    {
+     "cmd": "cmd.widget.add",
+     "keys": [
+      "type",
+      "via"
+     ],
+     "fam": false
+    }
+   ],
+   "cmdLog.attemptOpen": [
+    {
+     "cmd": "cmd.nav.open_usage_subject",
+     "payload": {
+      "route_target": {
+       "object_kind": "usage_event",
+       "object_id": "ue-501"
+      },
+      "usage_event_ref": "ue-501",
+      "usage_record_id": "rcpt-501",
+      "provider_attempt_ref": "rcpt-501",
+      "attempt_id": "ue-501",
+      "parent_usage_record_id": null,
+      "dedupe_key": "dk-501",
+      "run_id": null,
+      "thread_id": "thread:t-88",
+      "source_class": "cli_reported",
+      "settlement_status": "observed",
+      "projection_freshness": "current",
+      "projection_health": "current"
+     }
+    }
+   ],
+   "cmdLog.runDeepLink": {
+    "label": "Open in the Planning Wizard",
+    "log": [
+     {
+      "cmd": "cmd.chat.open_thread_context_details",
+      "payload": {
+       "surface": "run_detail",
+       "id": "run:plan-12"
+      }
+     },
+     {
+      "cmd": "cmd.nav.open_subject",
+      "payload": {
+       "route_target": {
+        "object_kind": "run",
+        "object_id": "run:plan-12"
+       },
+       "open_subject": {
+        "kind": "planning_run",
+        "id": "run:plan-12",
+        "title": "Spec: U11 usage concept",
+        "owning_surface": "planning_wizard"
+       },
+       "manager": "planning",
+       "run_id": "run:plan-12",
+       "project": "Puppet Master"
+      }
+     }
+    ]
+   },
+   "cmdLog.accountSelect": [
+    {
+     "cmd": "cmd.account.select_profile",
+     "payload": {
+      "scope": "acct:alibaba-personal"
+     }
+    }
+   ],
+   "A02-01.famFoot": {
+    "foot": "9 usage events for OpenAI \u00b7 $0.6700 priced by the provider on 2 events \u00b7 5 covered by a plan \u00b7 2 cost not reported. Removed accounts keep their history but never appear here.",
+    "openaiAllCount": 9,
+    "openaiAllCost": 0.67,
+    "openaiCurrentCount": 7,
+    "openaiCurrentCost": 0
+   },
+   "A04-16.compare": {
+    "5h": null,
+    "24h": null,
+    "7d": null,
+    "paneTail": "s output only. A range mixes routes whose counting rules differ, so cache read keeps its own band and is never added on top \u2014 adding it would double-count every provider that reports cache inside input.\nDuplicate\nReset settings\nOpen Usage settings\nCosts & spending\n$187.42\nspent of $300.00 spending limit \u00b7 warn at 80%\nSpending limit used\n62\n%\nAPI-billed\n$61.85\nPlan-included\n$125.57\nBurn\n$2.85/h \u00b7 $20.30/d\nForecast\n$224.10 by month end\nClaude\n$74.21\nOpenAI\n$52.38\nAlibaba\n$31.24\nKimi\n$14.96\nOpenCode\n$2.20\nZ.AI\n$8.12\nAntigravity\n$4.31\nOne cost authority \u00b7 the API/plan split is a projection, not a second model. Spending limit is user-controlled, not a plan allowance.\nDuplicate\nOpen Usage settings"
+   },
+   "A04-02.analyticsRecon": {
+    "colCount": 7,
+    "first": "Tue \u00b7 120k tokens \u00b7 input plus output \u00b7 cache read 61k shown beside it, not added \u00b7 Counting basis for this range is not published, so only input and output are added \u00b7 cache read and reasoning stay visible but are never added on top.",
+    "ledgerInOut": 741390,
+    "note": null
+   },
+   "bsd3": {
+    "renderedIn": "ledger",
+    "bsdByEventId": [
+     "ue-600",
+     "ue-601"
+    ],
+    "bsd3": {
+     "id": "bsd-3",
+     "eventId": null,
+     "workId": "work-1",
+     "providerCallMade": false,
+     "operationalId": "ops-12",
+     "duplicateOfEventId": "ue-600",
+     "requestedState": "Auto",
+     "effectiveState": "Auto",
+     "trigger": "Duplicate of bsd-1 within cooldown",
+     "result": "duplicate_suppressed",
+     "advice": null,
+     "latencyMs": 0,
+     "overrideScope": null,
+     "copy": "Duplicate suppressed",
+     "detail": "No second provider call was made \u2014 zero additional usage."
+    }
+   },
+   "A07-02.copy": {
+    "rooms": [
+     "overview",
+     "plans",
+     "costs",
+     "accounts",
+     "free",
+     "context",
+     "analytics",
+     "ledger",
+     "attention",
+     "cache",
+     "tools",
+     "signals",
+     "authority"
+    ]
+   },
+   "A02-09.bucketFilter": {
+    "historicalVisibleUnfiltered": true,
+    "controls": [
+     "undefined|all current usage",
+     "undefined|Add widget",
+     "undefined|",
+     "undefined|",
+     "undefined|",
+     "undefined|inspect",
+     "undefined|inspect",
+     "undefined|inspect",
+     "undefined|inspect",
+     "undefined|inspect",
+     "undefined|inspect",
+     "undefined|inspect",
+     "undefined|inspect",
+     "undefined|inspect",
+     "undefined|inspect",
+     "undefined|inspect",
+     "undefined|inspect",
+     "undefined|inspect",
+     "undefined|inspect",
+     "undefined|inspect",
+     "undefined|inspect",
+     "undefined|inspect",
+     "undefined|inspect",
+     "undefined|inspect",
+     "undefined|inspect",
+     "undefined|inspect",
+     "undefined|inspect",
+     "undefined|inspect",
+     "undefined|inspect",
+     "undefined|inspect"
+    ]
+   },
+   "A02-12.accountRow": {
+    "rows": [],
+    "tail": "ive probe \u00b7 Qwen3 Coder Plus\n1.5k input \u00b7 210 output \u00b7 active model probe \u00b7 attributed to validation, never user work \u00b7 completed \u00b7 17:50 UTC\nNo allowance recorded for this route \u2014 nothing to draw down, which is not the same as drawing zero.\nTastebook \u00b7 Source location not recorded \u00b7 No client attached\ninspect\nRoute snapshots, receipt refs, pricing versions and source authority live here \u2014 never in the Essentials view. Absent is not zero; unknown is not unavailable.\nDuplicate\nOpen Usage settings"
+   },
+   "A03-12.plansMeta": {
+    "rail": "Plans & limits | 29 products \u00b7 2 hot",
+    "head": "02\nPlans & limits\n\nIncluded allowances and extra capacity per product. Where the provider publishes a continuation path, the row says what happens next in plain language \u2014 the rest say nothing rather than guess. Unknown limits say so; they never render as zero.\n\nall current usage\n29 products \u00b7 12 publish what happens next\nLast 24 hours\n48 of 54 events\n776.6k tokens\n$0.2100 priced by the provider on 7 events \u00b7 38 covered by a plan \u00b7 1 billed to your own key \u00b7 2 cost not reported\n4 with no start time\nThe range drives these figures, the key figures on Overview and what Export writes. The capacity",
+    "continuationCount": 12,
+    "products": 29
+   },
+   "errors": []
+  },
+  "round5_viewport_fonts_embed_analytics": {
+   "A09-01/08.fontsLoaded": {
+    "fonts": {
+     "size": 122,
+     "mono": true
+    },
+    "w360": {
+     "tokCount": 49,
+     "tokZero": 0,
+     "tokClipped": 0,
+     "stCount": 49,
+     "stClipped": 0,
+     "docOverflow": false
+    },
+    "w520": {
+     "tokCount": 49,
+     "tokZero": 0,
+     "tokClipped": 0,
+     "stCount": 49,
+     "stClipped": 0,
+     "docOverflow": false
+    },
+    "w900": {
+     "tokCount": 49,
+     "tokZero": 0,
+     "tokClipped": 49,
+     "stCount": 49,
+     "stClipped": 0,
+     "docOverflow": false
+    }
+   },
+   "A09-13major.cdnBlocked": {
+    "fonts": {
+     "size": 0,
+     "mono": true
+    },
+    "w360": {
+     "tokCount": 49,
+     "tokZero": 0,
+     "tokClipped": 0
+    },
+    "w520": {
+     "tokCount": 49,
+     "tokZero": 0,
+     "tokClipped": 0
+    }
+   },
+   "A09-05.embed": {
+    "titleBarDisplay": "flex",
+    "statusBarDisplay": "flex",
+    "ringBox": [
+     40,
+     28
+    ],
+    "ringHittable": "svg"
+   },
+   "A04-02.sum7d": {
+    "cols": 7,
+    "chartSum": 742000,
+    "ledgerInOut": 741390,
+    "foot": "et menu for focus, size, config and remove.\nToken analytics\n5h\n24h\n7d\nTue\nWed\nThu\nFri\nSat\nSun\nMon\nInput\nOutput\nReasoning\nCache read\nBreak down by model, provider or account\nColumn totals add input plus output only. A range mixes routes whose counting rules differ, so cache read keeps its own band and is never added on top \u2014 adding it would double-count every provider that reports cache inside input.\nDuplicate\nReset settings\nOpen Usage settings\nCosts & spending\n$187.42\nspent of $300.00 spending limit \u00b7 warn at 80%\nSpending limit used\n62\n%\nAPI-billed\n$61.85\nPlan-included\n$125.57\nBurn\n$2.85/h \u00b7 $20.30/d\nForecast\n$224.10 by month end\nClaude\n$74.21\nOpenAI\n$52.38\nAlibaba\n$31.24\nKimi\n$14.96\nOpenCode\n$2.20\nZ.AI\n$8.12\nAntigravity\n$4.31\nOne cost authority \u00b7 the API/plan split is a projection, not a second model. Spending limit is user-controlled, not a plan allowance.\nDuplicate\nOpen Usage settings"
+   },
+   "A04-16.compareCfg": {
+    "buttons": [
+     "all current usage",
+     "Add widget",
+     "5h",
+     "24h",
+     "7d",
+     "Input",
+     "Output",
+     "Reasoning",
+     "Cache read",
+     "Break down by model, provider or account",
+     "Duplicate",
+     "Reset settings",
+     "Open Usage settings",
+     "Duplicate",
+     "Open Usage settings"
+    ],
+    "hasCompare": false,
+    "pctChip": null
+   },
+   "A02-12.accountsRows": {
+    "block": "ALIBABA\nPersonal\njared@personal.dev\nACTIVE\nUsing Alibaba \u00b7 Personal \u00b7 Extra Bundle\nCoding Plan connection\nExtra Bundle \u00b7 Bundle requests \u00b7 purchased pack \u00b7 80% used \u00b7 expires in 42d \u00b7 Sep 15 04:00 UTC\nWhat happens next \u00b7 Coding Plan \u00b7 When included usage runs out, draw on the Personal Token Plan, then the Extra Bundle. Otherwise wait for the window reset.\nPriority 1\nlast used 13m ago\nUse next\nOpen provider console\nTeam\nTastebook org seat\nACTIVE\nUsing Alibaba \u00b7 Team \u00b7 Team seat credits\nReconnect needed \u2014 session expired\nReconnect\nTeam connection\nneeds attention\nTeam seat credits \u00b7 Seat credits \u00b7 billing cycle \u00b7 70% used\nstale\nlow confidence\n\u00b7 resets in 28d \u00b7 Sep 1 04:00 UTC\nWhat happens next \u00b7 Team seat credits \u00b7 When seat credits run out, draw on the Shared Usage Pack. Otherwise wait for the monthly refresh.\nPriority 1\nlast used 1d 2h ago\nUse next\nOpen provider console\nOPENAI\nPersonal\nja"
+   },
+   "A05-19.sparkOwners": {
+    "bars": [
+     [
+      "37",
+      "37%"
+     ],
+     [
+      "29",
+      "29%"
+     ],
+     [
+      "17",
+      "17%"
+     ],
+     [
+      "8",
+      "8%"
+     ],
+     [
+      "0",
+      "8%"
+     ],
+     [
+      "0",
+      "8%"
+     ],
+     [
+      "4",
+      "8%"
+     ],
+     [
+      "5",
+      "8%"
+     ]
+    ],
+    "cacheStats": [
+     "conn:claude-work-cli|measured|save=2.1",
+     "conn:openai-personal-codex|measured|save=1.62",
+     "conn:alibaba-personal-coding|measured|save=0.94",
+     "conn:kimi-code|estimated|save=0.48",
+     "conn:zai-legacy|unsupported|save=0",
+     "conn:antigravity-cli|unsupported|save=0",
+     "conn:google-antigravity-cli|measured|save=0.22",
+     "conn:claude-work-api|measured|save=0.31"
+    ]
+   },
+   "A06-13.reserve": {
+    "block": "ADMISSION\nUSAGE FORECASTS \u00b7 GOAL RUNTIME DECIDES\n8 requested workers\n8 required specialists \u2014 still required when they run in waves\n2 admitted now \u00b7 effective concurrency 2\n6 queued \u00b7 4 waves\nSustainable concurrency 2 \u00b7 reserved for synthesis, testing, verification, repair\nHard max\n8\nConfigured preferred\n4\nProvider advertised\n2\nEffective now\n2\nPredicted sustainable\n2\nWHERE IT RAN\nSERVER-FIRST LINEAGE\nProject\nTasteboo",
+    "runs": [
+     [
+      "run:goal-47",
+      2,
+      2,
+      null
+     ],
+     [
+      "run:plan-12",
+      2,
+      2,
+      null
+     ],
+     [
+      "run:crew-3",
+      3,
+      3,
+      null
+     ]
+    ]
+   }
+  },
+  "round6_ops_data_deeplinks": {
+   "opsData": {
+    "ops1Keys": [
+     "id",
+     "kind",
+     "title",
+     "status",
+     "hostId",
+     "envId",
+     "providerUsage",
+     "validationEventId",
+     "sourceLocationId",
+     "clientId",
+     "acquisition",
+     "stages",
+     "failureClass",
+     "outcome",
+     "copy",
+     "detail"
+    ],
+    "ops1": {
+     "failureClass": "verify_failed",
+     "outcome": "rolled_back"
+    },
+    "ops2": {
+     "providerUsage": "validation_only"
+    },
+    "ue609": {
+     "workId": "work-4",
+     "purpose": "probe"
+    },
+    "ue610": {
+     "workId": "work-10",
+     "purpose": "conversation_replay"
+    }
+   },
+   "authorityGroups": {
+    "toolops": [
+     "Stale catalog served immediately | Background refresh succeeded \u00b7 no provider usage \u00b7 free coding models \u00b7 stale served then refreshed \u00b7 18:02 UTC | 3 models changed \u00b7 1 ",
+     "Catalog refresh in backoff | Last known good used \u00b7 no provider usage unless probed \u00b7 models dev \u00b7 backoff \u00b7 18:27 UTC | backing off until 19:07 UTC \u00b7 this refresh did se",
+     "Active probe \u00b7 GLM-4.7 | 1.2k input \u00b7 60 output \u00b7 active model probe \u00b7 attributed to validation, never user work \u00b7 completed \u00b7 17:57 UTC | No allowance recorded for this ",
+     "Catalog validation call \u00b7 GLM-4.7 | 900 input \u00b7 80 output \u00b7 catalog validation \u2014 a refresh that had to ask a model, not active model probing \u00b7 stale served then refreshed",
+     "Active probe \u00b7 Gemini 2.5 Flash | 1.1k input \u00b7 90 output \u00b7 active model probe \u00b7 attributed to validation, never user work \u00b7 completed \u00b7 17:44 UTC | Consumes allowance \u00b7 1",
+     "Active probe \u00b7 Qwen3 Coder Plus | 1.5k input \u00b7 210 output \u00b7 active model probe \u00b7 attributed to validation, never user work \u00b7 completed \u00b7 17:50 UTC | No allowance recorded"
+    ],
+    "text": "13\nSource authority\n\nThe advanced layer \u2014 where every figure came from: source class per event, settlement, projection freshness and health, retention, and what the catalog refreshes and probes did.\n\nall current usage\nsource class \u00b7 settlement \u00b7 freshness\nLast 24 hours\n48 of 54 events\n776.6k tokens\n$0.2100 priced by the provider on 7 events \u00b7 38 covered by a plan \u00b7 1 billed to your own key \u00b7 2 cost not reported\n4 with no start time\nThe range drives these figures, the key figures on Overview and what Export writes. Provenance and settlement counts cover every recorded event. Reference or catalog prices and pricing-version provenance are not shown anywhere in this concept.\nAdd widget\nDrag the grip to move, drag the corner to resize, open a widget menu for focus, size, config and remove.\nSource authority\nReported by the provider CLI\n20\nevents\nMeasured by Puppet Master\n1\nevents\nReported by the provider\n29\nevents\nNot recorded\n4\nevents\nSettlement & freshness\nProjection freshness\ncurrent\nProjection health\ncurrent\nNext auto-refresh\n18:47 UTC\nRetention\n90 days\nCatalog refresh \u2014 never active model probing\nStale catalog served immediately\nBackground refresh succeeded \u00b7 no provider usage \u00b7 free coding models \u00b7 stale served then refreshed \u00b7 18:02 UTC\n3 models changed \u00b7 1 free-state change\nCatalog refresh in backoff\nLast known good used \u00b7 no provider usage unless probed \u00b7 models dev \u00b7 backoff \u00b7 18:27 UTC\nbacking off until 19:07 UTC \u00b7 this refresh did send one model request \u00b7 ue-612\nOpen the refresh call\nBackground and validation calls\nActive probe \u00b7 GLM-4.7\n1.2k input \u00b7 60 output \u00b7 active model probe \u00b7 attributed to validation, never user work \u00b7 completed \u00b7 17:57 UTC\nNo allowance recorded for this route \u2014 nothing to draw down, which is not the same as drawing zero.\nTastebook \u00b7 Source location not recorded \u00b7 No client attached\ninspect\nCatalog validation call \u00b7 GLM-4.7\n900 input \u00b7 80 output \u00b7 catalog validation \u2014 a refresh that had to ask a model, not active model probing \u00b7 stale served then refreshed \u00b7 18:27 UTC\nNo allowance recorded for this route \u2014 nothing to draw down, which is not the same as drawing zero.\nTastebook \u00b7 Unraid Tower \u00b7 home server \u00b7 Docker \u00b7 pm-server \u00b7 Tastebook \u00b7 server checkout \u00b7 No client attached\ninspect\nActive probe \u00b7 Gemini 2.5 Flash\n1.1k input \u00b7 90 output \u00b7 active model probe \u00b7 attributed to validation, never user work \u00b7 completed \u00b7 17:44 UTC\nConsumes allowance \u00b7 1 request from Gemini free allowance \u00b7 Free requests today \u00b7 18 of 60 used after this call \u00b7 42 left \u00b7 quota reported\nOne free request of today\u2019s 60 went to validation, not to your wo"
+   },
+   "ue609.inspector": "Run integration tests\nTURN\ncompleted\nRun integration tests\nOne immutable usage event per real provider attempt. The final route never overwrites earlier attempts.\nATTEMPTS IN THIS WORK\n4\nMAIN WORK\nuser work\ncompleted\nKimi K2 \u00b7 Kimi \u00b7 Personal \u00b7 Kimi Code subscription\n15.3k in \u00b7 900 out \u00b7 7.7k cache read\nIncluded in plan\nno separate charge\nFull Access was limited by Review mode; safe browser/test tools still worked.\nReasoning effort: Medium \u00b7 Speed: Fast \u00b7 Mode: Review\nRequested full access \u00b7 effective review limited \u2014 mode ceiling applied.\nAug 4 \u00b7 17:53 UTC \u2192 18:01 UTC \u00b7 provider active 8m \u00b7 settlement observed \u00b7 source reported by the provider \u00b7 rcpt-530\nVALIDATION & PROBES\nprobe\ncompleted\nQwen3 Coder Plus \u00b7 OpenCode \u00b7 Personal \u00b7 OpenCode Go\n1.5k in \u00b7 210 out\nIncluded in plan\nno separate charge\nAug 4 \u00b7 17:50 UTC \u2192 17:50 UTC \u00b7 provider active under a minute \u00b7 settlement observed \u00b7 source reported by the provider \u00b7 rcpt-639\nMAIN WORK\nuser work\ncompleted\nGLM-4.7 \u00b7 Z.AI \u00b7 Personal \u00b7 Legacy plan connection\n7.4k in \u00b7 820 out\nBilled to the provider account\nprice hidden \u00b7 your own key pays it\nBilled to your own provider account. Tokens, route and settlement are kept in full; the per-token price is hidden because Puppet Master does not hold the price you pay.\nAug 4 \u00b7 17:55 UTC \u2192 17:57 UTC \u00b7 provider active 2m \u00b7 settlement observed \u00b7 source reported by the provider \u00b7 rcpt-614\nMAIN WORK\nuser work\ncompleted\nDeepSeek V3.2 \u00b7 Z.AI \u00b7 Personal \u00b7 Credit plan connection\n5.2k in \u00b7 610 out\nBilling route unknown\ncost unknown\nThe tokens are provider-reported and certain. The price and the paying product are not, so both stay unknown \u2014 never a zero and never the nearest guess.\nCost unknown \u2014 the provider returned tokens with no price and no plan attribution for this call.\nAug 4 \u00b7 17:58 UTC \u2192 ",
+   "contToken": {
+    "inDom": false,
+    "inPane": false
+   },
+   "deepLinkPayloads": [
+    [
+     "reconnect",
+     {
+      "cmd": "cmd.settings.bloom.open",
+      "payload": {
+       "category": "ai",
+       "focus_setting_id": "ai.accounts.multi-account-switching",
+       "reason": "reconnect"
+      },
+      "at": "2026-08-18T04:28:49.062Z"
+     }
+    ],
+    [
+     "openmgmt",
+     {
+      "cmd": "cmd.provider.usage.open_management",
+      "payload": {
+       "familyId": "fam:alibaba"
+      },
+      "at": "2026-08-18T04:28:49.463Z"
+     }
+    ],
+    [
+     "usenext",
+     {
+      "cmd": "cmd.provider.switch_route",
+      "payload": {
+       "accountId": "acct:alibaba-personal"
+      },
+      "at": "2026-08-18T04:28:49.864Z"
+     }
+    ]
+   ],
+   "A09-01.w900": [
+    [
+     "42.1k input \u00b7 3.2k output \u00b7 18.0k cache read",
+     546,
+     546,
+     "ellipsis",
+     "hidden"
+    ],
+    [
+     "2.4k input \u00b7 310 output",
+     546,
+     546,
+     "ellipsis",
+     "hidden"
+    ],
+    [
+     "8.9k input \u00b7 1.1k output \u00b7 4.1k cache read",
+     546,
+     546,
+     "ellipsis",
+     "hidden"
+    ]
+   ]
+  }
+ }
+}

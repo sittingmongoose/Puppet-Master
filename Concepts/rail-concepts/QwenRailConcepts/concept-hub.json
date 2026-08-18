@@ -1,0 +1,198 @@
+{
+  "schemaVersion": 1,
+  "id": "rail:qwen",
+  "topic": "rail",
+  "model": "Qwen",
+  "presentation": "hybrid",
+  "order": 10,
+  "widthControl": {
+    "enabled": true,
+    "label": "Panel width",
+    "role": "panel",
+    "min": 220,
+    "max": 560,
+    "step": 1,
+    "default": 280,
+    "presets": [
+      220,
+      280,
+      420,
+      560
+    ],
+    "previewWidth": 1200
+  },
+  "workspace": {
+    "path": "index.html",
+    "title": "Qwen Rail Index",
+    "openActions": "both",
+    "controlMode": "internal",
+    "tags": [
+      "index",
+      "dashboard",
+      "configurator"
+    ],
+    "order": 5,
+    "id": "workspace",
+    "openPath": "index.html"
+  },
+  "entries": [
+    {
+      "id": "control-room",
+      "title": "C1 Control Room",
+      "path": "c1-control-room.html",
+      "tags": [
+        "dense",
+        "operations"
+      ],
+      "order": 10,
+      "openPath": "c1-control-room.html",
+      "controlMode": "internal"
+    },
+    {
+      "id": "cozy-shelves",
+      "title": "C2 Cozy Shelves",
+      "path": "c2-cozy-shelves.html",
+      "tags": [
+        "cozy",
+        "shelves"
+      ],
+      "order": 20,
+      "openPath": "c2-cozy-shelves.html",
+      "controlMode": "internal"
+    },
+    {
+      "id": "cozy-shelves-files",
+      "title": "C2 Cozy Shelves — File Manager",
+      "path": "c2-cozy-shelves-files.html",
+      "openPath": "c2-cozy-shelves-files.html",
+      "openActions": "both",
+      "controlMode": "internal",
+      "tags": [
+        "cozy",
+        "shelves",
+        "files"
+      ],
+      "order": 25
+    },
+    {
+      "id": "single-thread",
+      "title": "C3 Single Thread",
+      "path": "c3-single-thread.html",
+      "tags": [
+        "focus",
+        "thread"
+      ],
+      "order": 30,
+      "openPath": "c3-single-thread.html",
+      "controlMode": "internal"
+    },
+    {
+      "id": "paper-trail",
+      "title": "C4 Paper Trail",
+      "path": "c4-paper-trail.html",
+      "tags": [
+        "ledger",
+        "history"
+      ],
+      "order": 40,
+      "openPath": "c4-paper-trail.html",
+      "controlMode": "internal"
+    },
+    {
+      "id": "attention-deck",
+      "title": "C5 Attention Deck",
+      "path": "c5-attention-deck.html",
+      "tags": [
+        "attention",
+        "deck"
+      ],
+      "order": 50,
+      "openPath": "c5-attention-deck.html",
+      "controlMode": "internal"
+    },
+    {
+      "id": "split-rail",
+      "title": "C6 Split Rail",
+      "path": "c6-split-rail.html",
+      "tags": [
+        "split",
+        "navigation"
+      ],
+      "order": 60,
+      "openPath": "c6-split-rail.html",
+      "controlMode": "internal"
+    },
+    {
+      "id": "source-staging",
+      "title": "Bonus Source: Staging Board",
+      "path": "bonus-source-a.html",
+      "tags": [
+        "source",
+        "bonus"
+      ],
+      "order": 70,
+      "openPath": "bonus-source-a.html",
+      "controlMode": "internal"
+    },
+    {
+      "id": "source-stream",
+      "title": "Bonus Source: Git Stream",
+      "path": "bonus-source-b.html",
+      "tags": [
+        "source",
+        "bonus"
+      ],
+      "order": 80,
+      "openPath": "bonus-source-b.html",
+      "controlMode": "internal"
+    },
+    {
+      "id": "docker-fleet",
+      "title": "Bonus Docker: Fleet Grid",
+      "path": "bonus-docker-a.html",
+      "tags": [
+        "docker",
+        "bonus"
+      ],
+      "order": 90,
+      "openPath": "bonus-docker-a.html",
+      "controlMode": "internal"
+    },
+    {
+      "id": "docker-topology",
+      "title": "Bonus Docker: Compose Topology",
+      "path": "bonus-docker-b.html",
+      "tags": [
+        "docker",
+        "bonus"
+      ],
+      "order": 100,
+      "openPath": "bonus-docker-b.html",
+      "controlMode": "internal"
+    },
+    {
+      "id": "artifacts-wall",
+      "title": "Bonus Artifacts: Evidence Wall",
+      "path": "bonus-artifacts-a.html",
+      "tags": [
+        "artifacts",
+        "bonus"
+      ],
+      "order": 110,
+      "openPath": "bonus-artifacts-a.html",
+      "controlMode": "internal"
+    },
+    {
+      "id": "artifacts-log",
+      "title": "Bonus Artifacts: Audit Log",
+      "path": "bonus-artifacts-b.html",
+      "tags": [
+        "artifacts",
+        "bonus"
+      ],
+      "order": 120,
+      "openPath": "bonus-artifacts-b.html",
+      "controlMode": "internal"
+    }
+  ]
+}

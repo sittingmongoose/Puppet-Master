@@ -69,6 +69,10 @@
       min-height: 120px;
     }
     .cr-dest:hover { transform: translateY(-3px); border-color: var(--accent-line); background: var(--surface-2); box-shadow: var(--sh-2); }
+    /* showcase: hover lift composes with the pointer tilt (vars written by pointerFX) */
+    [data-reduced-motion="0"] .cr-dest:hover {
+      transform: translateY(-3px) perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+    }
     .cr-dest-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
     .cr-dest-icon { width: 36px; height: 36px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); border-radius: var(--r-sm); flex: none; }
     .cr-dest h3 { margin: 0; font-size: 16px; font-weight: 700; }
@@ -107,6 +111,30 @@
 
     /* home config strip (theme/reduced motion) */
     .cr-configstrip { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+
+    /* system vitals ribbon — live mission-control readout (calm, data-driven) */
+    .cr-vitals { display: flex; align-items: stretch; gap: 0; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); margin-bottom: 22px; overflow: hidden; }
+    .cr-vital { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-right: 1px solid var(--line-2); }
+    .cr-vital:last-child { border-right: none; }
+    .cr-vital strong { font-size: 22px; font-weight: 800; letter-spacing: -.02em; line-height: 1; font-variant-numeric: tabular-nums; }
+    .cr-vital .muted { font-size: 11px; }
+    .cr-vital .sdot { width: 9px; height: 9px; }
+    @media (max-width: 900px) { .cr-vitals { flex-wrap: wrap; } .cr-vital { min-width: 45%; border-bottom: 1px solid var(--line-2); } }
+    /* showcase: per-vital sparkline — deterministic series, drawn once on entry */
+    .cr-spark { display: block; width: 62px; height: 20px; flex: none; opacity: .9; }
+    .cr-spark polyline { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .cr-spark .cr-spark-fill { fill: var(--accent-soft); stroke: none; opacity: .55; }
+    [data-reduced-motion="0"] .cr-spark polyline { stroke-dasharray: 100; stroke-dashoffset: 100; animation: cr-spark-draw 700ms var(--ease-settle) 340ms forwards; }
+    @keyframes cr-spark-draw { to { stroke-dashoffset: 0; } }
+
+    /* showcase: console power-up — one-time hero sequence (layout-stable, transform/opacity only) */
+    [data-reduced-motion="0"] .cr-boot .cr-eyebrow  { animation: cr-boot-rise 420ms var(--ease-settle) backwards; }
+    [data-reduced-motion="0"] .cr-boot .cr-h1       { animation: cr-boot-rise 460ms var(--ease-settle) 80ms backwards; }
+    [data-reduced-motion="0"] .cr-boot .cr-sub      { animation: cr-boot-rise 420ms var(--ease-settle) 160ms backwards; }
+    [data-reduced-motion="0"] .cr-boot .cr-searchwrap { animation: cr-boot-rise 460ms var(--ease-settle) 220ms backwards; }
+    [data-reduced-motion="0"] .cr-boot .cr-vitals   { animation: cr-boot-rise 480ms var(--ease-settle) 300ms backwards; }
+    [data-reduced-motion="0"] .cr-boot .cr-configstrip { animation: cr-boot-rise 420ms var(--ease-settle) 380ms backwards; }
+    @keyframes cr-boot-rise { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: none; } }
 
     /* concept motion: editorial cinematic — staggered reveals */
     [data-reduced-motion="0"] .cr-dest, [data-reduced-motion="0"] .cr-notice {
@@ -166,6 +194,8 @@
           PM.shared.chat() +
           PM.shared.footer();
         PM.shared.wireShell();
+        // showcase: pointer-reactive glow/tilt/magnetic press (auto-gated)
+        PM.motion.pointerFX && PM.motion.pointerFX(document);
       }
 
       /* ---------- HOME ---------- */
@@ -177,7 +207,7 @@
             ? '<span class="chip ' + d.statusKind + '">' + d.status + '</span>'
             : '<span class="chip">' + d.status + '</span>';
           return [
-            '<button class="cr-dest" data-dest="' + d.target + '" ' + (d.manager ? 'data-manager="' + d.manager + '"' : "") + '>',
+            '<button class="cr-dest" data-pm-tilt="1" data-dest="' + d.target + '" ' + (d.manager ? 'data-manager="' + d.manager + '"' : "") + '>',
               '<div class="cr-dest-top">',
                 '<span class="cr-dest-icon">' + PM.svg(icon, 18) + '</span>',
                 statusChip,
@@ -209,6 +239,8 @@
           });
         });
 
+        var vitals = vitalsFor();
+
         var stage = document.querySelector("[data-stage]");
         stage.innerHTML = [
           '<div class="cr-home">',
@@ -216,6 +248,13 @@
               '<div class="cr-eyebrow"><span class="cr-num">Concept 01</span>Control Room · GLM-5.2</div>',
               '<h1 class="cr-h1">Settings as <span class="cr-thesis">mission control.</span></h1>',
               '<p class="cr-sub">One dominant search is the primary verb. Important areas are large editorial panels with a title, purpose, and live status — never filter chips. Notices carry one clear action.</p>',
+              '<div class="cr-vitals" role="status" aria-label="System vitals">',
+                '<div class="cr-vital"><span class="sdot ok"></span><div class="col gap-xs"><strong data-vital="ready">0</strong><span class="muted">connections ready</span></div>' + sparkline("ready") + '</div>',
+                '<div class="cr-vital"><span class="sdot ' + (vitals.attention ? "warn" : "ok") + '"></span><div class="col gap-xs"><strong data-vital="attention">0</strong><span class="muted">need attention</span></div>' + sparkline("attention") + '</div>',
+                '<div class="cr-vital"><span class="sdot info"></span><div class="col gap-xs"><strong data-vital="models">0</strong><span class="muted">models available</span></div>' + sparkline("models") + '</div>',
+                '<div class="cr-vital"><span class="sdot info"></span><div class="col gap-xs"><strong data-vital="installs">0</strong><span class="muted">CLI installations</span></div>' + sparkline("installs") + '</div>',
+                '<div class="cr-vital"><span class="sdot ' + (vitals.inbox ? "warn" : "neutral") + '"></span><div class="col gap-xs"><strong data-vital="inbox">0</strong><span class="muted">unread notices</span></div>' + sparkline("inbox") + '</div>',
+              '</div>',
               '<div class="cr-searchwrap">',
                 '<div class="cr-search">',
                   '<span class="cr-sicon">' + PM.svg("search", 20) + '</span>',
@@ -240,40 +279,37 @@
       }
 
       function wireHome() {
-        // search
+        // vitals count-up (calm, once per home entry)
+        if (PM.motion) document.querySelectorAll("[data-vital]").forEach(function (el) {
+          var key = el.getAttribute("data-vital");
+          PM.motion.countUp(el, vitalsFor()[key] || 0, { duration: 620 });
+        });
+        // search: shared dropdown wiring — keyboard arrows/enter, empty state, typo-tolerant match, highlight
         var inp = document.querySelector("[data-search-input]");
         var res = document.querySelector("[data-results]");
-        inp.addEventListener("input", function () {
-          var q = this.value;
-          var results = PM.runSearch(q);
-          if (!q.trim() || !results.length) { res.classList.add("hidden"); res.innerHTML = ""; return; }
-          res.classList.remove("hidden");
-          res.innerHTML = results.map(function (r, i) {
-            var km = PM.shared.searchKindMeta(r.kind);
-            var sub = r.expl ? '<span class="muted"> — ' + r.expl.slice(0,60) + (r.expl.length>60?"…":"") + '</span>' : "";
-            var target = r.manager ? 'data-r-manager="' + r.manager + '"' : 'data-r-cat="' + r.cat + '" data-r-sub="' + (r.sub||"") + '"';
-            return '<div class="cr-result ' + (i===0?"focus":"") + '" ' + target + ' tabindex="0"><span class="cr-rkind ' + km.cls + '">' + km.label + '</span><div class="col"><strong>' + r.label + '</strong>' + sub + '</div></div>';
-          }).join("");
-          // C2 motion: search results cascade in (editorial cinematic, 30ms stagger)
-          PM.motion.staggerIn(res, ".cr-result", { step: 28, duration: 260, axis: "y" });
-        });
-        inp.addEventListener("keydown", function (e) {
-          if (e.key === "Enter") {
-            var first = res.querySelector(".cr-result");
-            if (first) first.click();
+        PM.shared.wireSearchDropdown({
+          input: inp, resultsHost: res, itemSelector: ".cr-result",
+          render: function (results) {
+            return results.map(function (r, i) {
+              var km = PM.shared.searchKindMeta(r.kind);
+              var sub = r.expl ? '<span class="muted"> — ' + r.expl.slice(0,60) + (r.expl.length>60?"…":"") + '</span>' : "";
+              var target = r.manager ? 'data-r-manager="' + r.manager + '"' : 'data-r-cat="' + r.cat + '" data-r-sub="' + (r.sub||"") + '"';
+              return '<div class="cr-result ' + (i===0?"focus":"") + '" ' + target + ' tabindex="0" role="option" aria-selected="' + (i===0?"true":"false") + '"><span class="cr-rkind ' + km.cls + '">' + km.label + '</span><div class="col"><strong>' + PM.shared.hl(r.label, r.range) + '</strong>' + sub + '</div></div>';
+            }).join("");
+          },
+          onPick: function (r, el) {
+            if (!el) return;
+            PM.motion && PM.motion.captureOrigin(el);
+            var mgr = el.getAttribute("data-r-manager");
+            if (mgr) { PM.openManager(mgr); render(); return; }
+            PM.openCategory(el.getAttribute("data-r-cat"), el.getAttribute("data-r-sub"));
+            render();
           }
         });
-        res.addEventListener("click", function (e) {
-          var r = e.target.closest(".cr-result"); if (!r) return;
-          var mgr = r.getAttribute("data-r-manager");
-          if (mgr) { PM.openManager(mgr); render(); return; }
-          var cat = r.getAttribute("data-r-cat"), sub = r.getAttribute("data-r-sub");
-          inp.value = ""; res.classList.add("hidden");
-          PM.openCategory(cat, sub); render();
-        });
-        // destinations
+        // destinations — entrance radiates from the clicked panel (spatial origin)
         document.querySelectorAll(".cr-dest").forEach(function (d) {
           d.addEventListener("click", function () {
+            PM.motion && PM.motion.captureOrigin(this);
             var mgr = this.getAttribute("data-manager");
             var t = this.getAttribute("data-dest");
             if (mgr) { PM.openManager(mgr); }
@@ -284,6 +320,7 @@
         // notices
         document.querySelectorAll("[data-notice]").forEach(function (n) {
           n.addEventListener("click", function () {
+            PM.motion && PM.motion.captureOrigin(this);
             var t = this.getAttribute("data-target");
             if (t.indexOf(".") > -1) PM.openCategory(t.split(".")[0], t.split(".")[1]);
             else PM.openCategory(t);
@@ -291,6 +328,7 @@
           });
         });
         document.querySelector("[data-go-workspace]").addEventListener("click", function () {
+          PM.motion && PM.motion.captureOrigin(this);
           PM.openCategory("general"); render();
         });
         PM.shared.wireThemePicker();
@@ -359,9 +397,40 @@
         setTimeout(function () { PM.initScrollspy(); }, 60);
       }
 
+      /* deterministic mini-series per vital — no randomness, derived from live counts */
+      function sparkline(key) {
+        var v = vitalsFor()[key] || 3;
+        var shape = [0.45, 0.62, 0.55, 0.78, 0.7, 1.0, 0.9];
+        var amp = 0.5 + Math.min(1, v / 10) * 0.5;
+        var pts = shape.map(function (s, i) {
+          return (i * (62 / (shape.length - 1))).toFixed(1) + "," + (17 - s * amp * 14).toFixed(1);
+        });
+        return '<svg class="cr-spark" viewBox="0 0 62 20" aria-hidden="true">' +
+          '<polyline class="cr-spark-fill" points="' + pts.join(" ") + ' 62,20 0,20"/>' +
+          '<polyline points="' + pts.join(" ") + '" pathLength="100"/></svg>';
+      }
+
       function tocIcon(catId) {
         return ({ general:"home", appearance:"theme", agents:"pam", permissions:"shield", code:"code",
           context:"brain", planning:"compass", git:"history", extensions:"mcp", media:"media", system:"server" })[catId] || "grid";
+      }
+
+      /* mission-control readout, derived from the live demo state */
+      function vitalsFor() {
+        var v = PM_DEMO.providers.reduce(function (acc, p) {
+          p.groups.forEach(function (g) {
+            g.items.forEach(function (it) {
+              acc.total++;
+              if (it.status === "ready") acc.ready++;
+              else acc.attention++;
+            });
+          });
+          acc.models += p.models.filter(function (m) { return m.status === "available"; }).length;
+          return acc;
+        }, { total: 0, ready: 0, attention: 0, models: 0 });
+        v.installs = (PM_DEMO.installations || []).length;
+        v.inbox = (PM_DEMO.inbox || []).length;
+        return v;
       }
 
       function wireWorkspace() {
@@ -434,22 +503,40 @@
       }
 
       /* ---------- RENDER ROOT ---------- */
-      var _lastView = null;
+      var _lastView = null, _renderToken = 0, _booted = false;
+      function directionFor(from, to) {
+        // depth metaphor: descending into an area moves left; returning home reverses
+        if (from === to) return { outDir: "none", inDir: "none" };
+        if (to === "home") return { outDir: "right", inDir: "left" };
+        return { outDir: "left", inDir: "right" };
+      }
       function render() {
         var crumb = document.querySelector("[data-crumb]");
         if (PM.state.view === "home" && crumb) crumb.innerHTML = "Settings";
         else if (crumb) crumb.innerHTML = 'Settings · <b>' + (PM.state.activeManager ? PM.managers[PM.state.activeManager].title : (PM.catById(PM.state.activeCat)||{}).title) + '</b>';
 
-        var stage = document.querySelector("[data-stage]");
-        // C2 motion: on home entry, stagger the destination panels + notices (editorial cinematic)
-        if (PM.state.view === "home" && _lastView !== "home" && PM.motion) {
-          home();
-          PM.motion.staggerIn(stage, ".cr-dest", { step: 50, duration: 460, axis: "y", delay: 80 });
-          PM.motion.staggerIn(stage, ".cr-notice", { step: 40, duration: 380, axis: "y" });
-        } else if (PM.state.view === "home") home();
-        else if (PM.state.view === "manager") manager();
-        else workspace();
-        _lastView = PM.state.view;
+        var view = PM.state.view;
+        var from = _lastView;
+        var token = ++_renderToken;
+        function renderView() {
+          if (token !== _renderToken) return;
+          var stage = document.querySelector("[data-stage]");
+          // C2 motion: on home entry, stagger the destination panels + notices (editorial cinematic)
+          if (view === "home") {
+            home();
+            var hero = stage.querySelector(".cr-hero");
+            if (hero && !_booted && !PM.state.reducedMotion) { hero.classList.add("cr-boot"); _booted = true; }
+            if (from !== "home" && PM.motion) {
+              PM.motion.staggerIn(stage, ".cr-dest", { step: 50, duration: 460, axis: "y", delay: 80 });
+              PM.motion.staggerIn(stage, ".cr-notice", { step: 40, duration: 380, axis: "y" });
+            }
+          }
+          else if (view === "manager") manager();
+          else workspace();
+          _lastView = view;
+        }
+        // directed stage swap — entrance radiates from the invoking control when captured
+        PM.shared.swapStage(renderView, directionFor(from, view));
       }
 
       PM.render = render;

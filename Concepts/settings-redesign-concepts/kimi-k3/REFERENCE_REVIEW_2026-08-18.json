@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.settings_bakeoff.reference_review.v1",
+  "model": "kimi-k3",
+  "date": "2026-08-18",
+  "pass": "seven-new-concepts",
+  "packets_opened": [
+    "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18.zip (complete cumulative authority)",
+    "00_START_HERE.md",
+    "GOAL_PROMPT.md",
+    "01_ASSIGNMENT_AND_PRECEDENCE.md",
+    "02_SEVEN_CONCEPT_BLUEPRINTS.md",
+    "03_HOME_SEARCH_AND_NAVIGATION.md",
+    "04_PROJECT_ONLY_SETTINGS_AND_COPY.md",
+    "05_COMPLETE_MANAGER_INTEGRATION.md",
+    "06_INFORMATION_ARCHITECTURE_AND_DENSITY.md",
+    "07_THEME_MOTION_RESPONSIVE_AND_SLINT.md",
+    "08_DATA_PERFORMANCE_AND_TRUTHFUL_STATE.md",
+    "09_COMMAND_WIRING_DRY_AND_PLAN_IMPACT.md",
+    "10_TESTING_EVIDENCE_AND_ACCEPTANCE.md",
+    "11_REQUIRED_FILES_AND_REPORTS.md",
+    "12_REPO_BASELINE_AND_KNOWN_FAILURES.md",
+    "AUDIT_PROMPT.md",
+    "machine_readable/concept_blueprints.json",
+    "machine_readable/manager_coverage_required.json",
+    "machine_readable/model_folder_map.json",
+    "machine_readable/repo_baseline.json",
+    "machine_readable/search_contract.json",
+    "machine_readable/supersessions.json",
+    "machine_readable/test_matrix.json",
+    "tools/validate_seven_new_concepts.py",
+    "authority/base_packet/00_START_HERE.md + read-order files (Aug 8 cumulative packet)",
+    "authority/correction_packet/00_READ_ME_FIRST.md + decision register + provider CLI adjudication (Aug 13)",
+    "authority/repo_reference/CONCEPT_RULES.md and current Concepts/CONCEPT_RULES.md"
+  ],
+  "reference_images_interpretation": [
+    {
+      "concept": "concept-05-directory-take-1",
+      "image": "01_A1_Directory_Take_1_LAYOUT_RECONSTRUCTION.png",
+      "interpreted_as": "layout/hierarchy only: left nav rail, search-first Home, one attention block, two-column Browse Settings cards, destination-row domain page, provider list/detail workspace, in-form deep-link highlight, focused review copy dialog. No pixel copy; no synthetic data."
+    },
+    {
+      "concept": "concept-06-directory-take-2",
+      "image": "02_A1_Directory_Take_2.png",
+      "interpreted_as": "editorial list-led Home, narrow domain rail, full-path search dropdown rows, roster + restrained detail sheet, nested in-Settings subnavigation, quiet copy dialog. Warm parchment-toned styling of the board was NOT carried over; PM theme tokens used."
+    },
+    {
+      "concept": "concept-07-compendium-workspace",
+      "image": "03_A2_Compendium_Workspace_Take_1.png",
+      "interpreted_as": "Home + first-class All Settings compendium with facets; domain overview + key settings + related managers; list/detail manager; copy preview with counts and diff."
+    },
+    {
+      "concept": "concept-08-directory-take-3",
+      "image": "04_A1_Directory_Take_3.png",
+      "interpreted_as": "spacious directory, fewer/larger domain cards, manager-destination domain overview, provider status cards + quick actions, full-width stepped copy flow."
+    },
+    {
+      "concept": "concept-09-tome-tabs",
+      "image": "05_Tome_Tabs_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+      "interpreted_as": "layout only: persistent edge/chapter tabs, layered page stack, broad reading canvas, domain + manager-local tabs, list/detail managers, stepwise copy. ALL steampunk/parchment/brass/gear/fantasy/sepia styling removed; expressed in PM theme tokens."
+    },
+    {
+      "concept": "concept-10-command-suite",
+      "image": "06_Command_Suite_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+      "interpreted_as": "layout only: command index, keyboard-first movement, multi-pane drill-down, compact tables, path/status bar, editor beside context, transactional copy panels. Terminal-green/CRT/monospace-body styling removed."
+    },
+    {
+      "concept": "concept-11-tabbed-organizer",
+      "image": "07_Tabbed_Organizer_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+      "interpreted_as": "layout only: category tabs, layered sheets preserving location, compact Home + recent changes, domain tabs + related-manager strip, roster with detail tabs, adjacent-pane copy. Paper/binder/office styling removed."
+    }
+  ],
+  "superseded_legacy_assumptions": [
+    "Four-concept build superseded by seven new concepts (05\u201311).",
+    "Collective manager coverage and shared_grammar coverage superseded: every new concept individually demonstrates every non-deferred manager family.",
+    "Global/Project/Goal/Host scope editing superseded: current-Project-only; legacy inventory scope metadata projected, never exposed.",
+    "Index/position-based search routing superseded: immutable result ID + full destination object only.",
+    "Reference visuals for Tome/Command/Tabbed superseded to layout-only with mandatory PM retheme.",
+    "Concepts 01\u201304 frozen: no repair, rename, renumber, or behavioral change."
+  ],
+  "no_cross_concept_renderer_evidence": {
+    "method": "packet validator static scan + code inspection",
+    "evidence": [
+      "tools/validate_seven_new_concepts.py cross_concept_route check: no concept-05..11 page references concept-01..04 via href/src (scan passes).",
+      "No <iframe> in any new page (validator foreign_renderer check passes).",
+      "shared/lib/pm-views.js (the concepts 01\u201304 shared visible renderer) is not included by any 05\u201311 page; script includes are limited to shared/data + shared/v2 headless modules + pm-bridge/pm-shell standards.",
+      "Each concept renders Home, navigation, managers, search dropdown, and motion from its own concept-NN.js/concept-NN.css."
+    ]
+  },
+  "repo_sources_read": [
+    "Concepts/CONCEPT_RULES.md",
+    "Concepts/ConceptHub/README.md + validate.py + server.py",
+    "Concepts/PMConcept7.html (current product baseline; custom-scrollbar standard ported)",
+    "Plans/settings_inventory.json (828 settings / 12 categories; read-only, projected not edited)",
+    "kimi-k3 concepts 01\u201304 pages + shared/css + shared/lib + shared/data (frozen; reused only as markup pattern reference)"
+  ]
+}

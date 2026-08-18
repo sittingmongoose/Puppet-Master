@@ -1,0 +1,154 @@
+{
+  "schema_id": "pm.settings_dependency_correction_review.v1",
+  "model": "GLM-5.2",
+  "date": "2026-08-15",
+  "correction_pass": {
+    "executor_note": "The original GLM-5.2 build (commits 40804e7ee 2026-08-11 → 82aa1771e 2026-08-13 01:20) never processed this correction packet: no file in the folder referenced it, its last commit predates the correction round, and no reference-review-report.json existed. This review and repair pass was executed 2026-08-15 at the user's direction after an external audit found the omission (sibling folders fable / 5.6 Sol / Qwen 5.8 / CursorAuto / kimi-k3 / Opus 5 had each completed it 2026-08-13→14). Every omission below is stated against the pre-correction state; all repairs are verified in this pass.",
+    "original_build_window": "2026-08-11 → 2026-08-13",
+    "repair_window": "2026-08-15"
+  },
+  "packets": {
+    "original": "PM_Settings_Bakeoff_Final_Cumulative_2026-08-08.zip",
+    "correction": "PM_Settings_Dependency_and_Work_Correction_2026-08-13.zip"
+  },
+  "correction_references_opened": [
+    { "ref": "correction/00_READ_ME_FIRST.md", "when": "2026-08-15 repair pass", "use": "Declared the two dependency defects (missing Performance register, mispathed provider adjudication) and the required outputs incl. this report" },
+    { "ref": "correction/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md", "when": "2026-08-15 repair pass", "use": "Read in full (25 sections). Controlling decisions applied: §2 sole RuntimeResourceGovernor admission owner; §7 progressive startup, never wait for providers/indexes, hidden surfaces stop work; §11 ObservableWork — determinate progress only with a real denominator, truthful wait states; §8 byte-bounded structures; §13 provider onboarding — cached catalog first, no startup probe storms; §20 Settings completeness canon — Home loads summaries, managers lazy-hydrate; §23 benchmark matrix incl. 825+ settings search and 100 installations; §24 explicit supersessions incl. silent provider CLI bundling" },
+    { "ref": "correction/PROVIDER_CLI_FINAL_ADJUDICATION.md", "when": "2026-08-15 repair pass", "use": "Runtime-demand contract implemented: Provider Setup Required receipt + explicit-consent install path + continuation token; 'Auto/On are not consent for first acquisition'; never bundled / never pre-seeded / official source / exact Host-Environment" },
+    { "ref": "correction/REFERENCE_REVIEW_AND_REPAIR_REQUIREMENTS.md", "when": "2026-08-15 repair pass", "use": "The seven implementation-level review classes (lazy hydration, no startup scans, virtualization, truthful states, degraded-environment function, state outside prompts, no second governor)" },
+    { "ref": "correction/CORRECTION_PACKET_MANIFEST.json", "when": "2026-08-15 repair pass", "use": "Packet inventory; sha256 of root adjudication verified byte-identical to original packet's reference/ copy — the defect was pathing, not content" },
+    { "ref": "correction/CORRECTION_GOAL_PROMPT.md", "when": "2026-08-15 repair pass", "use": "Scope guard: fix only the authorized Settings concept work + candidate reports; do not edit Plans, inventory/schema, Commands canon, Wiring/DRY owners, or another model folder" }
+  ],
+  "original_packet_references": [
+    { "ref": "00_START_HERE.md", "opened_before": "yes (build 08-11)", "opened_now": true, "note": "Scope + read order" },
+    { "ref": "01_CORE_ARCHITECTURE.md … 10_PLAN_COMMAND_WIRING_DRY_IMPACT.md", "opened_before": "yes (build 08-11; requirements quoted throughout FINDINGS/TEST_REPORT)", "opened_now": true, "note": "Re-verified against the repair: 08 fixtures (offline + managed/unavailable state blocks now rendered), 09 test matrix (typo probe now genuinely typo-tolerant; lazy hydration now real)" },
+    { "ref": "DECISION_COVERAGE.json", "opened_before": "partial (129 topics, headline conflicts recorded)", "opened_now": true },
+    { "ref": "MANAGER_COVERAGE_MATRIX.json", "opened_before": "yes — per-concept ownership partition built from it", "opened_now": true },
+    { "ref": "SHARED_PROCESS_RULES.md / SOURCE_AND_PRECEDENCE_MAP.md / REFERENCE_SUPERSESSIONS.md", "opened_before": "yes (non-negotiables quoted in FINDINGS)", "opened_now": true, "note": "The map names the adjudication without a usable path — the path defect the correction packet fixed" },
+    { "ref": "reference/PROVIDER_CLI_FINAL_ADJUDICATION.md", "opened_before": "no — mispathed; operative bullets were inlined from 03/SHARED_PROCESS_RULES so build copy was compliant, but the runtime-demand contract (receipt + continuation token) was never implemented until this pass", "opened_now": true },
+    { "ref": "reference/PERFORMANCE_SETTINGS_RETURN.md + the full Performance decision register", "opened_before": "no — absent from the original packet; its fingerprints were missing from the build (eager manager render at startup, fake 250ms loading spinner, predetermined-success probes, no virtualization, no offline state)", "opened_now": true, "note": "Controlling input for the §Performance repairs below" },
+    { "ref": "remaining reference/* (EGOLITE, OMP catalog, CROSS_SYSTEM_AUDIT, PROVIDER_IDENTIFICATION_HANDOFF, SERVER_BACKBONE, NAVIGATION_VIDEO_DESCRIPTION)", "opened_before": "unprovable", "opened_now": true, "note": "Section-level re-check; no behavioral deltas found beyond the Performance set" },
+    { "ref": "reference/T3_MODEL_PICKER_REFERENCE.png / settings_navigation_contact_sheet.jpg", "opened_before": "unprovable", "opened_now": false, "note": "Binary images; navigation contract covered via the text description" }
+  ],
+  "prior_omissions": [
+    {
+      "id": "OM-1",
+      "omission": "The correction packet was never processed by the original build: no reference-review-report.json existed, no file referenced PM_Settings_Dependency_and_Work_Correction_2026-08-13, and the folder's last commit (82aa1771e, 08-13 01:20) predates the correction round. The 08-13 'polish pass' (sprout, recent strip, SecretField, import modal) was user-driven polish, not correction compliance.",
+      "evidence_that_unreviewed": "git history 40804e7ee→82aa1771e; absence of the required deliverable; registers contained zero correction-era content while every completer sibling's registers gained a correction layer"
+    },
+    {
+      "id": "OM-2",
+      "omission": "Performance-register behaviors absent (register §§7, 11, 20.2): concept-04 eagerly rendered 4 full managers (pam, context, mcp, media) plus every category body at startup — contradicting the correction's lazy-hydration rule and the build's own TEST_REPORT claim; the manager-open 'hydration' was a fake 250ms spinner (simulated progress); reconnect/refresh were predetermined-success timers; no virtualization anywhere; no offline state; the managed/unavailable state blocks existed as dead code with zero call sites; no ObservableWork-style projection (no waitReason, no denominator-gated determinate progress).",
+      "evidence_that_unreviewed": "concept-04-stream.html home() called channelBody() for every category at load; managers.js M.wire 250ms loadBlock; 1100ms reconnect always 'probe ok'; stateBlock kinds managed/unavailable had no callers"
+    },
+    {
+      "id": "OM-3",
+      "omission": "Interaction/motion defects and overstated test claims: PM.runSearch was exact-substring only (typo probe 'provder' returned nothing) while TEST_REPORT marked the typo probe 'wired'; the omni-search had no empty state; search results in concepts 02/03/04 were keyboard-unreachable (no tabindex/keys); S.wireShell() re-bound shell toggles on every navigation with no guard — after ~4 view changes one rail/chat toggle click fired multiple handlers and the panel appeared dead; motion helpers flip/transitionView/growSettle and the pm-pulse-soft keyframe were dead code while README/FINDINGS advertised 'FLIP reorder' and 'height-settles-then-content' as Stack's motion personality; concept-01 had no view-transition motion at all (cold innerHTML swaps) and concept-04 had zero keyframes; the 9-state row model shipped no 'Auto' fixture (8/9).",
+      "evidence_that_unreviewed": "state.js indexOf matcher; shared.js wireShell loop with 12 concept call sites; grep showed M.flip/M.transitionView/M.growSettle defined with zero call sites; demo-data.js had no state:'auto' row"
+    }
+  ],
+  "gaps_found_and_corrected": [
+    {
+      "gap": "Concept-04 eager manager hydration at startup (register §7/§20.2)",
+      "files": ["concept-04-stream.html"],
+      "change": "Manager channels render as lightweight lazy placeholders; an IntersectionObserver hydrates a section's active manager channel when it scrolls into view (rootMargin 120px), channel clicks and search deep-links hydrate immediately with cross-fade; verified 0 manager surfaces in the DOM at startup (was 4)",
+      "concepts": ["04 Stream"]
+    },
+    {
+      "gap": "Simulated progress / fake spinner (register §11 ObservableWork)",
+      "files": ["assets/shared.js", "assets/managers.js", "assets/managers.css"],
+      "change": "New S.workBlock ObservableWork projection — phase label, indeterminate bar with aria-valuetext, waitReason line, Cancel; determinate bar renders only when a real denominator exists; manager first-open now shows skeleton rows + a labeled indeterminate wait ('concept demo — simulated wait, no fabricated progress') instead of a bare spinner; all row wiring deferred until content restore (fixes unbound buttons found by the audit)",
+      "concepts": ["all four"]
+    },
+    {
+      "gap": "Predetermined-success reconnect/refresh",
+      "files": ["assets/managers.js"],
+      "change": "Reconnect now runs a probe whose outcome is honest: the currently-failing row's first probe times out (waitReason network, last-known-good kept, button becomes 'Retry probe') and recovers on retry; healthy rows reconnect outright. Refresh is refused with an honest reason while the offline banner is up",
+      "concepts": ["all four"]
+    },
+    {
+      "gap": "No offline state (register §13)",
+      "files": ["assets/shared.js", "assets/managers.js", "assets/managers.css"],
+      "change": "stateBlock gains an offline kind (distinct material, plug glyph); PAM 'Simulate offline' shows the offline banner — last-known-good catalog stays visible, refresh held with waitReason network, usage withheld; 'Back online' dismisses",
+      "concepts": ["all four (demonstrated in PAM, which is core)"]
+    },
+    {
+      "gap": "Managed/unavailable state blocks were dead code",
+      "files": ["assets/managers.js"],
+      "change": "Permissions manager renders a managed block (3 rules administrator-managed, read-only); Containers manager renders an unavailable block (Kubernetes driver missing on this Host/Environment, reason shown, nothing silently installed)",
+      "concepts": ["all four (family managers are shared)"]
+    },
+    {
+      "gap": "Runtime-demand provider-CLI contract unimplemented (adjudication)",
+      "files": ["assets/managers.js"],
+      "change": "New 'Runtime demand' toolbar action on PAM opens the Provider Setup Required receipt: demand context (Goal 2281 · run 4), 'Auto and On are not consent for first acquisition', explicit-consent install deep-link that navigates to the Gemini CLI installation row through the active concept's own IA, and a pm-continuation:… token held with the paused run",
+      "concepts": ["all four"]
+    },
+    {
+      "gap": "No virtualization / bounded-DOM proof (register §8/§23)",
+      "files": ["assets/managers.js", "assets/managers.css"],
+      "change": "New 'Scale proof — 100 installations' windowed list in PAM: fixed 52px rows, 100-row pad, visible-slice + overscan window re-rendered on scroll with a live 'Showing X–Y of 100 · N DOM rows' meter (verified 11–16 DOM rows at any scroll position)",
+      "concepts": ["all four"]
+    },
+    {
+      "gap": "wireShell duplicate-listener accumulation broke rail/chat toggles",
+      "files": ["assets/shared.js"],
+      "change": "dataset.wired guard (matching wireNoticeSprout); verified one toggle click flips the panel exactly once after 10 navigations (previously stacked 5+ handlers)",
+      "concepts": ["all four"]
+    },
+    {
+      "gap": "Typo-tolerant search missing; no empty state; keyboard-unreachable results",
+      "files": ["assets/state.js", "assets/shared.js", "concept-01-control-room.html", "concept-02-atlas.html", "concept-03-stack.html", "concept-04-stream.html", "assets/managers.css"],
+      "change": "PM.runSearch rewritten with scored match tiers (substring > word-prefix > close-typo via bounded edit distance > subsequence) returning a highlight range from the label field only; shared S.wireSearchDropdown adds ArrowUp/ArrowDown/Enter/Escape, roving aria-selected, a visible no-results state, staggered result entrance, and dropdown open choreography — wired into all four concepts; 'provder' → 12 results with match marks",
+      "concepts": ["all four"]
+    },
+    {
+      "gap": "Dead motion vocabulary advertised as real; no view transitions; flat concept-04",
+      "files": ["assets/motion.js", "assets/shared.js", "assets/shell.css", "assets/managers.css", "concept-01-control-room.html", "concept-02-atlas.html", "concept-03-stack.html", "concept-04-stream.html"],
+      "change": "Docs now match code: Stack expand/collapse uses M.growSettle (height settles, content fades) + animated collapse; new M.flipSiblings powers a real FLIP reorder (attention-first ordering control); M.transitionView (with a zoom variant) drives directed stage swaps in 01/02 via S.swapStage — concept-01 no longer swaps innerHTML cold; Atlas gains a traveling you-are-here pin that eases between regions and a draggable viewport rail; Stream gains its own keyframes (landmark tick pop, sliding channel ink, progress bead riding the flow rail); switch knob spring, toast spring, modal entrances, theme crossfade, count-up vitals ribbon (01) added. Dead pm-pulse-soft keyframe removed; reduced-motion paths preserved throughout",
+      "concepts": ["all four"]
+    },
+    {
+      "gap": "RuntimeResourceGovernor had no representation (register §2 — sole admission owner)",
+      "files": ["assets/demo-data.js", "assets/managers.js"],
+      "change": "Goal manager gains an admission-outcomes section (admitted / queued·resource / blocked·permission / cancelled·user) fed by D.goalAdmissions, with the sole-ownership note: Settings owns defaults + ceilings; the governor is the single admission owner; waits/progress project through ObservableWork only — never re-implemented here. The build was compliant by absence (it never invented a second governor); this pass adds the positive demonstration the register expects",
+      "concepts": ["all four (Goal & Automation family; owned by 01, shared grammar elsewhere)"]
+    },
+    {
+      "gap": "9-state row model missing the Auto fixture",
+      "files": ["assets/demo-data.js"],
+      "change": "gf-auto row added (Window decoration — 'Auto (follows OS)'); all nine states now have visible fixtures",
+      "concepts": ["all four"]
+    }
+  ],
+  "verified_compliant_no_change": [
+    "Provider-CLI acquisition copy was already verbatim-compliant (explicit / official-source / Host-Environment-specific / never bundled / never pre-seeded; gemini-cli 'never silently demand-installed by Project/model/Goal/agent demand') — only the runtime-demand flow was missing, now added",
+    "Humanized installation identity: humanized provider + owner + confidence chips are the identity; raw commands/paths only as mono evidence chips; ambiguous installs humanized ('Unknown AI helper', 'manual only')",
+    "Auth boundary copy (CLI-owned OAuth: Claude/Antigravity; PM-direct: OpenAI/Codex, GitHub, Copilot) present in installations + secrets sections",
+    "All 17 provider fixtures and the 9-state chip grammar verified present in PAM render (headless render of all 35 managers: 0 failures)",
+    "Coverage matrix unchanged: every family demonstrated/shared_grammar; Server shell deferred_named_owner with named canonical owners",
+    "8 themes + reduced-motion hard kill + density; 760px squeeze passes with 0px horizontal overflow on all four concepts after the changes",
+    "No SQLite, no Playwright in the product surface (this audit's browser was a transient external tool in /tmp, outside the repo), PM-native Browser Program copy intact"
+  ],
+  "tests_rerun": [
+    { "test": "node --check", "scope": "8 asset JS + concept-hub-bridge.js + 4 inline concept scripts", "result": "PASS (all)" },
+    { "test": "ConceptHub validator (Concepts/ConceptHub/validate.py)", "scope": "glm-5-2 folder", "result": "PASS — 'Concept validation passed'" },
+    { "test": "Headless renderer execution (Node + DOM shim)", "scope": "all 35 managers render >80 chars, zero throws; offline/work/skeleton/vlist blocks render; auto fixture present; typo/prefix/fuzzy/empty search probes", "result": "PASS" },
+    { "test": "Interactive browser audit (transient Playwright 1.62.1 + headless Chromium, scratch dir /tmp/pm-glm-audit outside the repo)", "scope": "37 probes across the four concepts: zero console/page errors; typo search + highlighting; keyboard nav; empty state; offline banner + held refresh + dismiss; Provider Setup Required modal + continuation token + deep-link; virtualized list windowing; honest probe failure + retry recovery; shell-toggle single-flip after 10 navigations; theme soft-apply; Atlas pin persist + region navigation + viewport track; FLIP reorder; expand/collapse depth sheets; Stream zero-managers-at-startup + IO hydration + channel ink + manual hydrate; river search", "result": "PASS 37/37; 13 screenshots captured (80–190 KB)" },
+    { "test": "Responsive + reduced motion", "scope": "760px horizontal overflow = 0px on all four concepts; reduced-motion toggle preserves state and search remains functional", "result": "PASS" }
+  ],
+  "registers_updated": [
+    "IMPACT_REGISTER.json (root) — correction_2026_08_13 layer added",
+    "concepts/control-room/impact-register.json, concepts/atlas/impact-register.json, concepts/stack/impact-register.json, concepts/stream/impact-register.json — correction_2026_08_13 impact entries added",
+    "TEST_REPORT.md — correction-pass verification matrix; overstated pre-correction claims (typo-tolerance 'substring-fuzzy', 'manager lazy hydration design-honored') corrected",
+    "README.md / FINDINGS.md — motion vocabulary now matches the code (FLIP/growSettle/transitionView are wired); correction pass documented"
+  ],
+  "unresolved_defects": [
+    "All backend interactions remain labeled simulations (concept scope): hydration/refresh waits are timed demos — the ObservableWork projection contract is the deliverable, not real telemetry. workBlock demonstrates the contract (indeterminate + waitReason, denominator-gated determinate) but not register §11's full 20-state field set; admission outcomes in the Goal manager cover the §2 outcome vocabulary",
+    "Fuzzy search tiers are heuristic (substring/prefix/edit-distance/subsequence), not ranked language-model relevance; scores are stable but hand-weighted",
+    "Virtualization is proven on the dedicated 100-installation fixture; sibling long lists (memory Gists, history, artifacts) keep small demo sets and would adopt the same windowing in production (Slint translation note)",
+    "Spellcheck demo still uses the browser spellcheck attribute; production needs the Slint-portable spelling-service abstraction (pre-existing, unchanged)",
+    "Deep links are in-app only (no URL-hash routing) — flagged for the Slint build (FINDINGS.md §14)"
+  ],
+  "materiality": "material — the omitted Performance register and mispathed adjudication produced real compliance defects (startup manager hydration, simulated progress, no offline state, no virtualization, unreachable runtime-demand flow) plus a broken shell-toggle interaction and advertised motion that did not exist; the correction also produced the previously-missing required deliverable (this report). No winner is recommended."
+}

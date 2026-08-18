@@ -1,0 +1,115 @@
+{
+  "schema_id": "pm.settings_bakeoff.test_evidence.v1",
+  "concept_id": "concept-11-tabbed-organizer",
+  "method": "static reads of own markup + headless browser smoke (puppeteer) on file:// page",
+  "static_checks": [
+    {
+      "name": "no iframe",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "no cross-concept refs",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "no emoji in UI strings",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "no left accent bars",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "no scope selectors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "no forbidden skeuomorphism visuals",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "routes present (behavioral)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "virtualization present",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "rid-only routing",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "pm2-locate used",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "data hooks present",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "shared modules loaded in order",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "concept CSS uses tokens only",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "sheet-slide motion + reduced-motion kill",
+      "pass": true,
+      "detail": ""
+    }
+  ],
+  "browser_smoke": [
+    {
+      "name": "home hooks present (home/search-input/breadcrumb/back/close)",
+      "pass": true
+    },
+    {
+      "name": "search \"rate limit\" grouped dropdown with data-rid rows and duplicate Rate Limits titles",
+      "pass": true
+    },
+    {
+      "name": "click sr:object:openai-cli.rate-limits -> #/mgr/providers/openai-cli?sec=limits with [data-manager=providers], Limits tab selected, pm2-locate applied",
+      "pass": true
+    },
+    {
+      "name": "Back restores #/q/rate%20limit with query text and reopened dropdown (7 rows)",
+      "pass": true
+    },
+    {
+      "name": "#/all vlist data-window 0:15:828; after scroll 306:328:828; synthetic toggle -> total 2828",
+      "pass": true
+    },
+    {
+      "name": "42/42 manager routes render [data-manager] + breadcrumb + back",
+      "pass": true
+    },
+    {
+      "name": "claude-oauth limits deep link shows near-cap warning; narrow tier collapses roster to horizontal strip",
+      "pass": true
+    },
+    {
+      "name": "copy flow: source nova-platform + 3 categories -> preview counts (36 add / 144 replace / 82 unchanged) -> apply -> rollback action present",
+      "pass": true
+    }
+  ],
+  "known_limitations": [
+    "Family-local manager rows persist per session only (demo famState), by design; inventory rows persist via PMState2.",
+    "Hidden-tab rAF throttling required a 120ms poll fallback to keep data-window fresh; visible tabs update on scroll events."
+  ]
+}

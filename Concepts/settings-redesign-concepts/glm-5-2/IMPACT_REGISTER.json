@@ -67,5 +67,60 @@
     "Slint 1.17.1 portability: semantic state is kept separate from DOM geometry throughout (active-sub, expanded, theme, reduced-motion in PM.state); residual port risks are virtualization of long lists, the IntersectionObserver scrollspy mechanism, and FLIP/smooth-scroll motion (all have portable reduced-motion fallbacks).",
     "Shared process rules honored: no SQLite; no Playwright terminology (PM-native Browser Program only); native Windows complete without WSL; CLI-owned OAuth boundary respected; provider CLI initial acquisition explicit/official-source; SQLite remains prohibited."
   ],
+  "correction_2026_08_13": {
+    "packet": "PM_Settings_Dependency_and_Work_Correction_2026-08-13",
+    "processed": "2026-08-15 (repair pass; the original 08-11→08-13 build never processed this packet — see reference-review-report.json)",
+    "report": "reference-review-report.json",
+    "defects_corrected": 12,
+    "headline_changes": [
+      "Lazy hydration: concept-04 no longer renders manager surfaces at startup (was 4 full managers); channels hydrate on first view/open",
+      "ObservableWork projection (S.workBlock): indeterminate wait + waitReason, determinate only with a real denominator; skeleton rows replace the fake spinner; row wiring deferred until content restore",
+      "Honest probes: failing row's first reconnect times out (waitReason network) and recovers on retry; refresh held while offline",
+      "Offline state block (last-known-good) + previously-dead managed/unavailable blocks now rendered (Permissions, Containers)",
+      "Runtime-demand flow: Provider Setup Required receipt + explicit-consent deep link + pm-continuation token (final adjudication)",
+      "RuntimeResourceGovernor admission outcomes demonstrated in the Goal manager (admitted/queued/blocked/cancelled; sole-owner note)",
+      "Virtualized 100-installation list with live bounded-DOM meter (11–16 rows at any scroll)",
+      "wireShell duplicate-listener leak fixed (rail/chat toggles were breaking after repeated navigation)",
+      "Typo-tolerant scored search (substring > word-prefix > close-typo > subsequence) with label-only highlight ranges; keyboard navigation, empty state, dropdown choreography in all four concepts",
+      "Motion docs now match code: growSettle + animated collapse on Stack, flipSiblings FLIP reorder (attention-first), transitionView/zoom stage swaps (01/02), Atlas traveling pin + draggable viewport rail, Stream tick-pop/channel-ink/progress-bead keyframes, switch/toast/modal springs, theme crossfade, count-up vitals ribbon",
+      "9-state row model completed with the Auto fixture",
+      "Registers/test reports updated with correction traceability; overstated pre-correction claims corrected"
+    ],
+    "tests": "node --check (12 scripts) PASS · ConceptHub validate PASS · headless 35-manager render PASS · Playwright audit 37/37 PASS (zero console/page errors) · 760px overflow 0px ×4 · reduced-motion preserved",
+    "materiality": "material"
+  },
+  "showcase_pass_2026_08_15": {
+    "date": "2026-08-15",
+    "purpose": "Showpiece polish layer: 'showpiece under strict packet-calm' — every motion is interaction- or state-driven, idle screens are perfectly still, pointer reactivity is the differentiator. This layer is explicitly SEPARATE from packet compliance: no packet claim, coverage entry, or correction statement was changed; correction_2026_08_13 above remains the compliance record.",
+    "motion_law_honored": [
+      "Film-level means directed choreography, not constant movement: idle-silence is a tested guarantee (zero running getAnimations() on every Home after 2.1s idle)",
+      "No indefinite attention pulse: all pulses/badges/pops are one-shot on state change",
+      "Establish spatial origin: M.captureOrigin records the clicked control; stage entrances radiate from it",
+      "No text animated before layout is stable: boot sequences and staggers start post-layout; text reveals use settle-then-text",
+      "Reduced motion preserves every state and action: pointer FX, tilt, springs, wakes, and staggers all have state-only paths (probe-verified inert)",
+      "No browser-only physics: spring is bounded (force-settle) and state-driven; no arbitrary DOM measurements at animation time beyond the origin snapshot"
+    ],
+    "engine_additions": [
+      "M.captureOrigin/M.clearOrigin — spatial-origin stage transitions (--pm-origin-x/y; swapStage entrances radiate from the clicked control, zoom variant scales from origin)",
+      "M.spring — critically-damped rAF spring with hard force-settle (≤1100ms), used for Atlas pin drop, viewport thumb follow, magnetic returns",
+      "M.pointerFX — delegated rAF-throttled pointer reactivity: cursor glow (--mx/--my), ≤1.5° tilt (--tilt-x/y on data-pm-tilt cards), magnetic press on buttons; gated on (hover:hover) and (pointer:fine), inert under reduced motion, paused when hidden",
+      "M.staggerIn opts.limit — bounded staggers (≤8 convention)",
+      "Theme-scaled pacing: --pm-motion-scale (friendly/glass 1.0, basic 0.85, retro 0.8) multiplying the --t-* duration tokens",
+      "Micro-choreography: toast icon+label in/out, chip settle, sprout badge pop, one-shot ⌘K search breathe",
+      "Unified field focus language (2026-08-16 polish check): accent border + 3px --accent-soft ring on every field surface (shared .field, Atlas Cmd+K, Stack/Stream search — previously border-tint only), transition-aware, state-only under reduced motion"
+    ],
+    "per_concept": [
+      "01 Control Room 'console power-up': one-time boot sequence (eyebrow→headline→sub→search→vitals→config), vitals count-ups + SVG sparkline dash-draws, destination tilt+glow, origin-radiating swaps",
+      "02 Atlas 'cartography': static contour/grid backdrop, staggered region survey beams (::before), spring pin drop, spring-follow minimap thumb, zoom-from-region entrances",
+      "03 Stack 'deck physics': staggered depth-sheet insets, FLIP reorder flight with ±0.5° rotation, item-head deck press, magnetic chevrons, card glow",
+      "04 Stream 'living river, calm at rest': progress-bead velocity wake mapped to scroll velocity that decays to exactly 0 at rest, bounded section reveals (title→purpose→channels→body), one-shot landmark ripple rings"
+    ],
+    "tests": "Showcase audit 23/23 PASS (idle-silence ×4, zero console/page errors ×4, sparklines, tilt+glow vars, origin capture, reduced-motion inertness, survey beams, contour backdrop, spring pin, rotated FLIP, crew count-ups, flow >0 while scrolling / exactly 0 at rest, section stagger, retro-dark 0.8 pacing, spring settle+release) · full 37-probe regression re-run PASS · 760px overflow 0px ×4 · reduced-motion states preserved · 8-theme sweep stable · Hub preview keeps shell · node --check PASS · ConceptHub validate PASS",
+    "files_modified": [
+      "assets/motion.js", "assets/shared.js", "assets/state.js", "assets/managers.js", "assets/managers.css", "assets/themes.css",
+      "concept-01-control-room.html", "concept-02-atlas.html", "concept-03-stack.html", "concept-04-stream.html",
+      "README.md", "FINDINGS.md", "TEST_REPORT.md", "IMPACT_REGISTER.json"
+    ]
+  },
   "files_modified_outside_model_folder": []
 }

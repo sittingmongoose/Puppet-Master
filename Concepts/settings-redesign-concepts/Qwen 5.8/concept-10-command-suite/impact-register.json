@@ -1,0 +1,57 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "concept_id": "concept-10-command-suite",
+  "model": "Qwen 5.8",
+  "plan_owner_impacts": [
+    { "owner": "FinalGUISpec", "impact": "candidate", "note": "Command Suite introduces a keyboard-first command-index home and horizontal drill-down workspace as an alternate Settings shell; FinalGUISpec must adjudicate whether the command-index geometry becomes canonical or remains a concept." },
+    { "owner": "settings inventory and schema", "impact": "candidate", "note": "No inventory records changed. Legacy per-record scope metadata (e.g. \"global\") is preserved for provenance but never rendered as an editable scope in this concept." },
+    { "owner": "Commands / UI Command Catalog", "impact": "candidate", "note": "Concept exercises candidate navigation/value/lifecycle command families (see candidate-command-delta.json). Palette (Ctrl+K), arrow drill, Enter open, Esc out are UI bindings over candidate IDs only; census and adjudication remain with the Commands owner." },
+    { "owner": "Multi-Account / CLI Bridged Providers / Provider OpenCode", "impact": "candidate", "note": "Provider roster/detail tables (status, limits, models, logs) reuse headless fixtures; no new probe or auth semantics proposed." },
+    { "owner": "Permissions / FileSafe", "impact": "candidate", "note": "Permissions manager rendered as roster+detail with rule tables; no rule-engine changes." },
+    { "owner": "Storage / Backup", "impact": "candidate", "note": "Copy Settings and rollback flows reuse PMCopy2/PMState2 restore points; no new storage owner." },
+    { "owner": "Release/updates owner / Binary Locator", "impact": "candidate", "note": "Update ask-first and CLI install rows deep-link to provider install section; acquisition remains explicit, official-source, Host/Environment scoped." }
+  ],
+  "settings_inventory_impacts": [],
+  "settings_schema_impacts": [
+    { "id": "schema.legacy_global_scope_not_editable", "status": "supersession", "note": "Inventory records carry legacy \"global\" scope strings; this concept presents Project-scoped values only and hides scope as an editable dimension (packet 04)." }
+  ],
+  "command_id_impacts": [
+    { "ref": "candidate-command-delta.json", "note": "Provisional reuse/alias/candidate census; nothing canonical assigned by this concept." }
+  ],
+  "wiring_impacts": [
+    { "ref": "candidate-wiring-delta.json", "note": "Every interactive surface traces UI source to command candidate, owner, receipt/ObservableWork, and recovery. Concept-local state never masquerades as production wiring." }
+  ],
+  "dry_component_impacts": [
+    { "ref": "candidate-dry-delta.json", "note": "Reuses headless owners (PMState2, PMSearch2, PMCopy2, PMManagers2 atoms, ObservableWork). Concept-native presentation only: command index, drill panes, tables, palette." }
+  ],
+  "schema_event_storage_impacts": [
+    { "id": "events.receipt_projection", "status": "reuse", "note": "Receipts and ObservableWork events emitted through PMState2 only; no second progress or event owner introduced." }
+  ],
+  "migration_supersession_impacts": [
+    { "id": "supersede.settings_chip_bloom", "note": "Old Settings chip/bloom/no-sidebar contract superseded by command-index + drill-down shell in this concept." },
+    { "id": "supersede.stale_right_panel_language", "note": "Stale right-panel language replaced by named panes (Index / Pages / Detail) with explicit breadcrumb." },
+    { "id": "supersede.regular_yolo_coupling", "note": "No regular/yolo mode coupling; autonomy expressed via Permissions & Safety manager grammar." },
+    { "id": "supersede.invalid_inventory_values", "note": "Invalid inventory values remain hidden behind Details/Why-this-value; rows show only needed status." }
+  ],
+  "slint_port_impacts": [],
+  "test_fixtures": [
+    { "id": "fixture.search_route_matrix", "ref": "search-route-matrix.json" },
+    { "id": "fixture.manager_route_matrix", "ref": "manager-route-matrix.json" },
+    { "id": "fixture.static_checks", "ref": "test-evidence.json" }
+  ],
+  "deferred_named_owners": [
+    { "family": "Product Onboarding", "owner": "Onboarding owner module", "insertion": "#/mgr/onboarding", "return": "Back to originating Settings pane; deep-link ?return=<hash>" },
+    { "family": "Installation / Deployment", "owner": "Binary Locator / installation lifecycle owner", "insertion": "#/mgr/installation", "return": "Return to provider install section via ?sec=install" },
+    { "family": "Server Claim / Bootstrap", "owner": "Server backbone owner", "insertion": "#/mgr/server-claim", "return": "Back to System & Advanced domain" },
+    { "family": "Servers / Execution Hosts / Clients", "owner": "Execution hosts owner", "insertion": "#/mgr/execution-hosts", "return": "Back to Code & Execution domain" },
+    { "family": "Project Hosting & Files", "owner": "Project hosting owner", "insertion": "#/mgr/project-hosting", "return": "Back to Settings Home" },
+    { "family": "Remote Access", "owner": "Remote access owner", "insertion": "#/mgr/remote-access", "return": "Back to System & Advanced domain" },
+    { "family": "Project Sync / Move", "owner": "Project sync owner", "insertion": "#/mgr/project-sync", "return": "Back to Settings Home" },
+    { "family": "Puppet Master application/content updates", "owner": "Release/updates owner", "insertion": "#/mgr/app-updates", "return": "Return to notice origin via ?return=<hash>" },
+    { "family": "Full Server backup owner flow", "owner": "Server backup owner", "insertion": "#/mgr/server-backup", "return": "Back to Backup & Restore manager" }
+  ],
+  "unresolved_questions": [
+    "Whether Ctrl+K palette binding should alias an existing global palette command or register a Settings-scoped candidate.",
+    "Whether horizontal drill panes map to one canonical SettingsWorkspaceShell variant or remain concept-native."
+  ]
+}

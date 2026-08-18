@@ -16,7 +16,7 @@ import validate
 class CatalogTests(unittest.TestCase):
     def test_live_catalog_inventory_and_authorship(self):
         data = catalog.build_catalog()
-        self.assertEqual(data["counts"], {"topics": 6, "models": 25, "cards": 91})
+        self.assertEqual(data["counts"], {"topics": 6, "models": 28, "cards": 136})
         self.assertEqual(data["warnings"], [])
         by_id = {item["id"]: item for item in data["models"]}
         self.assertEqual(by_id["rail:cursor-side-panels"]["displayModel"], "Cursor")
@@ -25,8 +25,11 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(by_id["rail:cursor-side-panels"]["workspace"]["path"], "index.html")
         self.assertEqual(by_id["rail:qwen"]["workspace"]["path"], "index.html")
         self.assertEqual(by_id["usage:qwen-usage"]["workspace"]["path"], "index.html")
-        self.assertEqual(len(by_id["usage:qwen-usage"]["entries"]), 10)
-        self.assertEqual(by_id["usage:qwen-usage"]["entries"][-1]["path"], "u10-prism.html")
+        self.assertEqual(by_id["usage:qwen-usage"]["source"], "manifest")
+        self.assertEqual(len(by_id["usage:qwen-usage"]["entries"]), 11)
+        self.assertEqual(by_id["usage:qwen-usage"]["entries"][-1]["path"], "u11-prism.html")
+        self.assertEqual(by_id["rail:qwen"]["source"], "manifest")
+        self.assertEqual(len(by_id["rail:qwen"]["entries"]), 13)
         self.assertEqual(by_id["rail:opus"]["workspace"]["path"], "index.html")
         self.assertEqual(by_id["rail:opus"]["entries"][0]["path"], "gallery.html")
         self.assertEqual(by_id["rail:unknown-panel-protos"]["displayModel"], "Unknown — panel-protos")
@@ -156,6 +159,23 @@ class CatalogTests(unittest.TestCase):
 
             self.assertTrue(any("temporary test/verification artifacts" in error for error in errors))
             self.assertTrue(any("test-results/" in error for error in errors))
+
+    def test_validator_allows_gitignored_output_placeholder(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            target = Path(temporary) / "QwenRailConcepts"
+            shutil.copytree(HUB_DIR / "starter" / "model-folder", target)
+            manifest_path = target / "concept-hub.json"
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            manifest["topic"] = "rail"
+            manifest["model"] = "Qwen"
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            page = target / "concept-01.html"
+            page.write_text(page.read_text(encoding="utf-8").replace("YOUR MODEL", "Qwen"), encoding="utf-8")
+            output = target / "verification"
+            output.mkdir()
+            (output / ".gitignore").write_text("*\n!.gitignore\n", encoding="utf-8")
+
+            self.assertEqual(validate.validate(target), [])
 
     def test_future_manifest_is_discovered_without_catalog_edit(self):
         original_concepts = catalog.CONCEPTS_DIR

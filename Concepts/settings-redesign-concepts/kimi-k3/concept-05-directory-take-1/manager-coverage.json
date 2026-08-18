@@ -1,0 +1,372 @@
+{
+  "schema_id": "pm.settings_bakeoff.manager_coverage.v2",
+  "concept": "concept-05-directory-take-1",
+  "families": [
+    {
+      "family": "Provider / Account / Model / Installation",
+      "status": "demonstrated",
+      "entry": "Home directory card → AI Brains & Providers → destination row, or universal search",
+      "route": "Settings / AI Brains & Providers / Providers",
+      "archetype": "resource-roster"
+    },
+    {
+      "family": "Provider / Account / Model / Installation",
+      "status": "demonstrated",
+      "entry": "Home directory card → AI Brains & Providers → destination row, or universal search",
+      "route": "Settings / AI Brains & Providers / Model Defaults & Routing",
+      "archetype": "preference-document"
+    },
+    {
+      "family": "Context & Instructions",
+      "status": "demonstrated",
+      "entry": "Home directory card → Memory & Context → destination row, or universal search",
+      "route": "Settings / Memory & Context / Context & Instructions",
+      "archetype": "preference-document"
+    },
+    {
+      "family": "Memory",
+      "status": "demonstrated",
+      "entry": "Home directory card → Memory & Context → destination row, or universal search",
+      "route": "Settings / Memory & Context / Memory",
+      "archetype": "resource-roster"
+    },
+    {
+      "family": "Personas",
+      "status": "demonstrated",
+      "entry": "Home directory card → Personas → destination row, or universal search",
+      "route": "Settings / Personas / Personas",
+      "archetype": "resource-roster"
+    },
+    {
+      "family": "Crew",
+      "status": "demonstrated",
+      "entry": "Home directory card → Branching & Collaboration → destination row, or universal search",
+      "route": "Settings / Branching & Collaboration / Crew",
+      "archetype": "resource-roster"
+    },
+    {
+      "family": "Goal & Automation",
+      "status": "demonstrated",
+      "entry": "Home directory card → Planning & Verification → destination row, or universal search",
+      "route": "Settings / Planning & Verification / Goal & Automation",
+      "archetype": "preference-document"
+    },
+    {
+      "family": "Back Seat Driver",
+      "status": "demonstrated",
+      "entry": "Home directory card → Planning & Verification → destination row, or universal search",
+      "route": "Settings / Planning & Verification / Back Seat Driver",
+      "archetype": "preference-document"
+    },
+    {
+      "family": "Permissions & FileSafe",
+      "status": "demonstrated",
+      "entry": "Home directory card → Permissions & Safety → destination row, or universal search",
+      "route": "Settings / Permissions & Safety / Permissions & FileSafe",
+      "archetype": "preference-document"
+    },
+    {
+      "family": "Appearance / themes / fonts / motion",
+      "status": "demonstrated",
+      "entry": "Home directory card → General & Appearance → destination row, or universal search",
+      "route": "Settings / General & Appearance / Appearance",
+      "archetype": "preference-document"
+    },
+    {
+      "family": "Notifications & Sounds",
+      "status": "demonstrated",
+      "entry": "Home directory card → General & Appearance → destination row, or universal search",
+      "route": "Settings / General & Appearance / Notifications & Sounds",
+      "archetype": "preference-document"
+    },
+    {
+      "family": "Sound Library / Uploads / Packs",
+      "status": "demonstrated",
+      "entry": "Home directory card → General & Appearance → destination row, or universal search",
+      "route": "Settings / General & Appearance / Sound Library",
+      "archetype": "inventory-catalog"
+    },
+    {
+      "family": "Spellcheck & Dictionaries",
+      "status": "demonstrated",
+      "entry": "Home directory card → General & Appearance → destination row, or universal search",
+      "route": "Settings / General & Appearance / Spellcheck & Dictionaries",
+      "archetype": "inventory-catalog"
+    },
+    {
+      "family": "Desktop / Tray / Window",
+      "status": "demonstrated",
+      "entry": "Home directory card → General & Appearance → destination row, or universal search",
+      "route": "Settings / General & Appearance / Desktop, Tray & Window",
+      "archetype": "preference-document"
+    },
+    {
+      "family": "File Manager / Editor",
+      "status": "demonstrated",
+      "entry": "Home directory card → Code & Execution → destination row, or universal search",
+      "route": "Settings / Code & Execution / File Manager & Editor",
+      "archetype": "preference-document"
+    },
+    {
+      "family": "Terminal",
+      "status": "demonstrated",
+      "entry": "Home directory card → Code & Execution → destination row, or universal search",
+      "route": "Settings / Code & Execution / Terminal",
+      "archetype": "preference-document"
+    },
+    {
+      "family": "LSP",
+      "status": "demonstrated",
+      "entry": "Home directory card → Code & Execution → destination row, or universal search",
+      "route": "Settings / Code & Execution / Language Servers",
+      "archetype": "resource-roster"
+    },
+    {
+      "family": "Formatters",
+      "status": "demonstrated",
+      "entry": "Home directory card → Code & Execution → destination row, or universal search",
+      "route": "Settings / Code & Execution / Formatters",
+      "archetype": "resource-roster"
+    },
+    {
+      "family": "Tools",
+      "status": "demonstrated",
+      "entry": "Home directory card → Skills, Plugins & Commands → destination row, or universal search",
+      "route": "Settings / Skills, Plugins & Commands / Tools",
+      "archetype": "inventory-catalog"
+    },
+    {
+      "family": "Testing & Debug",
+      "status": "demonstrated",
+      "entry": "Home directory card → Code & Execution → destination row, or universal search",
+      "route": "Settings / Code & Execution / Testing & Debug",
+      "archetype": "preference-document"
+    },
+    {
+      "family": "Containers & Registries",
+      "status": "demonstrated",
+      "entry": "Home directory card → Code & Execution → destination row, or universal search",
+      "route": "Settings / Code & Execution / Containers & Registries",
+      "archetype": "resource-roster"
+    },
+    {
+      "family": "Commands & Shortcuts",
+      "status": "demonstrated",
+      "entry": "Home directory card → Skills, Plugins & Commands → destination row, or universal search",
+      "route": "Settings / Skills, Plugins & Commands / Commands & Shortcuts",
+      "archetype": "inventory-catalog"
+    },
+    {
+      "family": "Skills",
+      "status": "demonstrated",
+      "entry": "Home directory card → Skills, Plugins & Commands → destination row, or universal search",
+      "route": "Settings / Skills, Plugins & Commands / Skills",
+      "archetype": "inventory-catalog"
+    },
+    {
+      "family": "Plugins",
+      "status": "demonstrated",
+      "entry": "Home directory card → Skills, Plugins & Commands → destination row, or universal search",
+      "route": "Settings / Skills, Plugins & Commands / Plugins",
+      "archetype": "inventory-catalog"
+    },
+    {
+      "family": "MCP",
+      "status": "demonstrated",
+      "entry": "Home directory card → System & Advanced → destination row, or universal search",
+      "route": "Settings / System & Advanced / MCP Servers",
+      "archetype": "resource-roster"
+    },
+    {
+      "family": "Teacher / Help",
+      "status": "demonstrated",
+      "entry": "Home directory card → System & Advanced → destination row, or universal search",
+      "route": "Settings / System & Advanced / Teacher & Help",
+      "archetype": "preference-document"
+    },
+    {
+      "family": "Doctor",
+      "status": "demonstrated",
+      "entry": "Home directory card → System & Advanced → destination row, or universal search",
+      "route": "Settings / System & Advanced / Doctor",
+      "archetype": "health-projection"
+    },
+    {
+      "family": "Storage & Retention",
+      "status": "demonstrated",
+      "entry": "Home directory card → System & Advanced → destination row, or universal search",
+      "route": "Settings / System & Advanced / Storage & Retention",
+      "archetype": "preference-document"
+    },
+    {
+      "family": "Backup & Restore",
+      "status": "demonstrated",
+      "entry": "Home directory card → System & Advanced → destination row, or universal search",
+      "route": "Settings / System & Advanced / Backup & Restore",
+      "archetype": "transaction"
+    },
+    {
+      "family": "Settings Lifecycle",
+      "status": "demonstrated",
+      "entry": "Home directory card → System & Advanced → destination row, or universal search",
+      "route": "Settings / System & Advanced / Settings Lifecycle",
+      "archetype": "transaction"
+    },
+    {
+      "family": "History & Sessions",
+      "status": "demonstrated",
+      "entry": "Home directory card → System & Advanced → destination row, or universal search",
+      "route": "Settings / System & Advanced / History & Sessions",
+      "archetype": "inventory-catalog"
+    },
+    {
+      "family": "Runtime Artifacts / Project Outputs",
+      "status": "demonstrated",
+      "entry": "Home directory card → System & Advanced → destination row, or universal search",
+      "route": "Settings / System & Advanced / Runtime Artifacts & Outputs",
+      "archetype": "inventory-catalog"
+    },
+    {
+      "family": "Workspace Cleanup",
+      "status": "demonstrated",
+      "entry": "Home directory card → System & Advanced → destination row, or universal search",
+      "route": "Settings / System & Advanced / Workspace Cleanup",
+      "archetype": "transaction"
+    },
+    {
+      "family": "DRY Method visible state where exposed",
+      "status": "demonstrated",
+      "entry": "Home directory card → System & Advanced → destination row, or universal search",
+      "route": "Settings / System & Advanced / DRY Method",
+      "archetype": "health-projection"
+    },
+    {
+      "family": "Source Control / Worktrees",
+      "status": "demonstrated",
+      "entry": "Home directory card → Branching & Collaboration → destination row, or universal search",
+      "route": "Settings / Branching & Collaboration / Source Control & Worktrees",
+      "archetype": "preference-document"
+    },
+    {
+      "family": "GitHub Actions",
+      "status": "demonstrated",
+      "entry": "Home directory card → Branching & Collaboration → destination row, or universal search",
+      "route": "Settings / Branching & Collaboration / GitHub Actions",
+      "archetype": "resource-roster"
+    },
+    {
+      "family": "Web / Search / Fetch / Crawl",
+      "status": "demonstrated",
+      "entry": "Home directory card → Web & Search → destination row, or universal search",
+      "route": "Settings / Web & Search / Web, Fetch & Crawl",
+      "archetype": "preference-document"
+    },
+    {
+      "family": "Project Search Index",
+      "status": "demonstrated",
+      "entry": "Home directory card → Web & Search → destination row, or universal search",
+      "route": "Settings / Web & Search / Project Search Index",
+      "archetype": "health-projection"
+    },
+    {
+      "family": "Media & Output",
+      "status": "demonstrated",
+      "entry": "Home directory card → Media & Output → destination row, or universal search",
+      "route": "Settings / Media & Output / Media & Output",
+      "archetype": "preference-document"
+    },
+    {
+      "family": "Settings Home",
+      "status": "demonstrated",
+      "entry": "Concept root on load",
+      "route": "Settings / Home",
+      "archetype": "home-composition"
+    },
+    {
+      "family": "Settings Search",
+      "status": "demonstrated",
+      "entry": "Hero field on Home; persistent bar field on every other surface",
+      "route": "#pmv2-search → #pmv2-results dropdown",
+      "archetype": "universal-search"
+    },
+    {
+      "family": "Settings Workspace",
+      "status": "demonstrated",
+      "entry": "Any domain card or nav item",
+      "route": "Settings / <domain> workspace hosting pages and managers",
+      "archetype": "workspace-shell"
+    },
+    {
+      "family": "Ordinary setting grammar",
+      "status": "demonstrated",
+      "entry": "Any subgroup destination row or search landing",
+      "route": "Settings / <domain> / <subgroup> form rows",
+      "archetype": "preference-document"
+    }
+  ],
+  "deferred": [
+    {
+      "family": "Product Onboarding",
+      "status": "deferred_named_owner",
+      "owner": "Onboarding owner module",
+      "insertion": "System & Advanced → Getting Started",
+      "return_contract": "Return to System & Advanced overview"
+    },
+    {
+      "family": "Installation / Deployment",
+      "status": "deferred_named_owner",
+      "owner": "Installation/Deployment owner",
+      "insertion": "System & Advanced → Installation",
+      "return_contract": "Return to System & Advanced overview"
+    },
+    {
+      "family": "Server Claim / Bootstrap",
+      "status": "deferred_named_owner",
+      "owner": "Server Claim owner module",
+      "insertion": "System & Advanced → Servers → Claim",
+      "return_contract": "Return to Servers shell"
+    },
+    {
+      "family": "Servers / Execution Hosts / Clients",
+      "status": "deferred_named_owner",
+      "owner": "Servers owner module",
+      "insertion": "System & Advanced → Servers",
+      "return_contract": "Return to System & Advanced overview"
+    },
+    {
+      "family": "Project Hosting & Files",
+      "status": "deferred_named_owner",
+      "owner": "Project Hosting owner module",
+      "insertion": "System & Advanced → Hosting",
+      "return_contract": "Return to System & Advanced overview"
+    },
+    {
+      "family": "Remote Access",
+      "status": "deferred_named_owner",
+      "owner": "Remote Access owner module",
+      "insertion": "System & Advanced → Remote Access",
+      "return_contract": "Return to System & Advanced overview"
+    },
+    {
+      "family": "Project Sync / Move",
+      "status": "deferred_named_owner",
+      "owner": "Project Sync/Move owner module",
+      "insertion": "System & Advanced → Sync & Move",
+      "return_contract": "Return to System & Advanced overview"
+    },
+    {
+      "family": "Puppet Master application/content updates",
+      "status": "deferred_named_owner",
+      "owner": "App Updates owner module",
+      "insertion": "System & Advanced → App Updates",
+      "return_contract": "Return to System & Advanced overview"
+    },
+    {
+      "family": "Full Server backup owner flow",
+      "status": "deferred_named_owner",
+      "owner": "Server Backup owner module",
+      "insertion": "System & Advanced → Servers → Backup",
+      "return_contract": "Return to Servers shell"
+    }
+  ]
+}

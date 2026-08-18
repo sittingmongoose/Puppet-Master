@@ -1,0 +1,636 @@
+{
+  "schema_id": "pm.settings_bakeoff.manager_route_matrix.v1",
+  "concept": "concept-06-directory-take-2",
+  "entries": [
+    {
+      "family": "providers",
+      "entry_points": [
+        "domain page manager list #/cat/ai",
+        "universal search sr:manager:providers",
+        "Home destination row"
+      ],
+      "route": "#/mgr/providers",
+      "shell_retained": true,
+      "back_target": "#/cat/ai",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "context",
+      "entry_points": [
+        "domain page manager list #/cat/memory",
+        "universal search sr:manager:context",
+        "Home destination row"
+      ],
+      "route": "#/mgr/context",
+      "shell_retained": true,
+      "back_target": "#/cat/memory",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "memory",
+      "entry_points": [
+        "domain page manager list #/cat/memory",
+        "universal search sr:manager:memory",
+        "Home destination row"
+      ],
+      "route": "#/mgr/memory",
+      "shell_retained": true,
+      "back_target": "#/cat/memory",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "personas",
+      "entry_points": [
+        "domain page manager list #/cat/personas",
+        "universal search sr:manager:personas",
+        "Home destination row"
+      ],
+      "route": "#/mgr/personas",
+      "shell_retained": true,
+      "back_target": "#/cat/personas",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "goal",
+      "entry_points": [
+        "domain page manager list #/cat/planning",
+        "universal search sr:manager:goal",
+        "Home destination row"
+      ],
+      "route": "#/mgr/goal",
+      "shell_retained": true,
+      "back_target": "#/cat/planning",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "crew",
+      "entry_points": [
+        "domain page manager list #/cat/branching",
+        "universal search sr:manager:crew",
+        "Home destination row"
+      ],
+      "route": "#/mgr/crew",
+      "shell_retained": true,
+      "back_target": "#/cat/branching",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "permissions",
+      "entry_points": [
+        "domain page manager list #/cat/safety",
+        "universal search sr:manager:permissions",
+        "Home destination row"
+      ],
+      "route": "#/mgr/permissions",
+      "shell_retained": true,
+      "back_target": "#/cat/safety",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "bsd",
+      "entry_points": [
+        "domain page manager list #/cat/safety",
+        "universal search sr:manager:bsd",
+        "Home destination row"
+      ],
+      "route": "#/mgr/bsd",
+      "shell_retained": true,
+      "back_target": "#/cat/safety",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "notifications",
+      "entry_points": [
+        "domain page manager list #/cat/general",
+        "universal search sr:manager:notifications",
+        "Home destination row"
+      ],
+      "route": "#/mgr/notifications",
+      "shell_retained": true,
+      "back_target": "#/cat/general",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "sounds",
+      "entry_points": [
+        "domain page manager list #/cat/general",
+        "universal search sr:manager:sounds",
+        "Home destination row"
+      ],
+      "route": "#/mgr/sounds",
+      "shell_retained": true,
+      "back_target": "#/cat/general",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "appearance",
+      "entry_points": [
+        "domain page manager list #/cat/general",
+        "universal search sr:manager:appearance",
+        "Home destination row"
+      ],
+      "route": "#/mgr/appearance",
+      "shell_retained": true,
+      "back_target": "#/cat/general",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "spellcheck",
+      "entry_points": [
+        "domain page manager list #/cat/general",
+        "universal search sr:manager:spellcheck",
+        "Home destination row"
+      ],
+      "route": "#/mgr/spellcheck",
+      "shell_retained": true,
+      "back_target": "#/cat/general",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "desktop",
+      "entry_points": [
+        "domain page manager list #/cat/system",
+        "universal search sr:manager:desktop",
+        "Home destination row"
+      ],
+      "route": "#/mgr/desktop",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "teacher",
+      "entry_points": [
+        "domain page manager list #/cat/general",
+        "universal search sr:manager:teacher",
+        "Home destination row"
+      ],
+      "route": "#/mgr/teacher",
+      "shell_retained": true,
+      "back_target": "#/cat/general",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "doctor",
+      "entry_points": [
+        "domain page manager list #/cat/system",
+        "universal search sr:manager:doctor",
+        "Home destination row"
+      ],
+      "route": "#/mgr/doctor",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "files",
+      "entry_points": [
+        "domain page manager list #/cat/code",
+        "universal search sr:manager:files",
+        "Home destination row"
+      ],
+      "route": "#/mgr/files",
+      "shell_retained": true,
+      "back_target": "#/cat/code",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "terminal",
+      "entry_points": [
+        "domain page manager list #/cat/code",
+        "universal search sr:manager:terminal",
+        "Home destination row"
+      ],
+      "route": "#/mgr/terminal",
+      "shell_retained": true,
+      "back_target": "#/cat/code",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "lsp",
+      "entry_points": [
+        "domain page manager list #/cat/code",
+        "universal search sr:manager:lsp",
+        "Home destination row"
+      ],
+      "route": "#/mgr/lsp",
+      "shell_retained": true,
+      "back_target": "#/cat/code",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "formatters",
+      "entry_points": [
+        "domain page manager list #/cat/code",
+        "universal search sr:manager:formatters",
+        "Home destination row"
+      ],
+      "route": "#/mgr/formatters",
+      "shell_retained": true,
+      "back_target": "#/cat/code",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "commands",
+      "entry_points": [
+        "domain page manager list #/cat/extensions",
+        "universal search sr:manager:commands",
+        "Home destination row"
+      ],
+      "route": "#/mgr/commands",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "mcp",
+      "entry_points": [
+        "domain page manager list #/cat/extensions",
+        "universal search sr:manager:mcp",
+        "Home destination row"
+      ],
+      "route": "#/mgr/mcp",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "skills",
+      "entry_points": [
+        "domain page manager list #/cat/extensions",
+        "universal search sr:manager:skills",
+        "Home destination row"
+      ],
+      "route": "#/mgr/skills",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "plugins",
+      "entry_points": [
+        "domain page manager list #/cat/extensions",
+        "universal search sr:manager:plugins",
+        "Home destination row"
+      ],
+      "route": "#/mgr/plugins",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "tools",
+      "entry_points": [
+        "domain page manager list #/cat/extensions",
+        "universal search sr:manager:tools",
+        "Home destination row"
+      ],
+      "route": "#/mgr/tools",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "testing",
+      "entry_points": [
+        "domain page manager list #/cat/planning",
+        "universal search sr:manager:testing",
+        "Home destination row"
+      ],
+      "route": "#/mgr/testing",
+      "shell_retained": true,
+      "back_target": "#/cat/planning",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "storage",
+      "entry_points": [
+        "domain page manager list #/cat/system",
+        "universal search sr:manager:storage",
+        "Home destination row"
+      ],
+      "route": "#/mgr/storage",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "backup",
+      "entry_points": [
+        "domain page manager list #/cat/system",
+        "universal search sr:manager:backup",
+        "Home destination row"
+      ],
+      "route": "#/mgr/backup",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "lifecycle",
+      "entry_points": [
+        "domain page manager list #/cat/system",
+        "universal search sr:manager:lifecycle",
+        "Home destination row"
+      ],
+      "route": "#/mgr/lifecycle",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "history",
+      "entry_points": [
+        "domain page manager list #/cat/system",
+        "universal search sr:manager:history",
+        "Home destination row"
+      ],
+      "route": "#/mgr/history",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "artifacts",
+      "entry_points": [
+        "domain page manager list #/cat/system",
+        "universal search sr:manager:artifacts",
+        "Home destination row"
+      ],
+      "route": "#/mgr/artifacts",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "scm",
+      "entry_points": [
+        "domain page manager list #/cat/branching",
+        "universal search sr:manager:scm",
+        "Home destination row"
+      ],
+      "route": "#/mgr/scm",
+      "shell_retained": true,
+      "back_target": "#/cat/branching",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "gha",
+      "entry_points": [
+        "domain page manager list #/cat/extensions",
+        "universal search sr:manager:gha",
+        "Home destination row"
+      ],
+      "route": "#/mgr/gha",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "containers",
+      "entry_points": [
+        "domain page manager list #/cat/system",
+        "universal search sr:manager:containers",
+        "Home destination row"
+      ],
+      "route": "#/mgr/containers",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "web",
+      "entry_points": [
+        "domain page manager list #/cat/web",
+        "universal search sr:manager:web",
+        "Home destination row"
+      ],
+      "route": "#/mgr/web",
+      "shell_retained": true,
+      "back_target": "#/cat/web",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "searchindex",
+      "entry_points": [
+        "domain page manager list #/cat/system",
+        "universal search sr:manager:searchindex",
+        "Home destination row"
+      ],
+      "route": "#/mgr/searchindex",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "cleanup",
+      "entry_points": [
+        "domain page manager list #/cat/system",
+        "universal search sr:manager:cleanup",
+        "Home destination row"
+      ],
+      "route": "#/mgr/cleanup",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "media",
+      "entry_points": [
+        "domain page manager list #/cat/media",
+        "universal search sr:manager:media",
+        "Home destination row"
+      ],
+      "route": "#/mgr/media",
+      "shell_retained": true,
+      "back_target": "#/cat/media",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "dry",
+      "entry_points": [
+        "domain page manager list #/cat/extensions",
+        "universal search sr:manager:dry",
+        "Home destination row"
+      ],
+      "route": "#/mgr/dry",
+      "shell_retained": true,
+      "back_target": "#/cat/extensions",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "onboarding",
+      "entry_points": [
+        "domain page manager list #/cat/general",
+        "universal search sr:manager:onboarding",
+        "Home destination row"
+      ],
+      "route": "#/mgr/onboarding",
+      "shell_retained": true,
+      "back_target": "#/cat/general",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "updates",
+      "entry_points": [
+        "domain page manager list #/cat/system",
+        "universal search sr:manager:updates",
+        "Home destination row"
+      ],
+      "route": "#/mgr/updates",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "servers",
+      "entry_points": [
+        "domain page manager list #/cat/system",
+        "universal search sr:manager:servers",
+        "Home destination row"
+      ],
+      "route": "#/mgr/servers",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    },
+    {
+      "family": "hosting",
+      "entry_points": [
+        "domain page manager list #/cat/system",
+        "universal search sr:manager:hosting",
+        "Home destination row"
+      ],
+      "route": "#/mgr/hosting",
+      "shell_retained": true,
+      "back_target": "#/cat/system",
+      "close_target": "closed-state view (Reopen) after receipt; Close never triggered by Escape",
+      "narrow_behavior": "roster pushes to detail sheet (.c6-cols.pushed) with Back-to-list; domain rail hidden",
+      "key_states": "roster health dots; scenario badges (managed/unavailable/restart/changed-elsewhere); deferred insertion shells where applicable",
+      "pass": true
+    }
+  ]
+}

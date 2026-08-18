@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "icons:opus",
+  "topic": "icons",
+  "model": "Opus",
+  "presentation": "workspace",
+  "order": 50,
+  "widthControl": {
+    "enabled": false,
+    "label": "Workspace width",
+    "role": "none",
+    "default": 1440,
+    "previewWidth": 1440
+  },
+  "workspace": {
+    "path": "index.html",
+    "title": "Opus Icon Lab",
+    "openActions": "none",
+    "controlMode": "internal",
+    "tags": [
+      "icons",
+      "lab"
+    ],
+    "id": "workspace",
+    "openPath": "index.html"
+  }
+}

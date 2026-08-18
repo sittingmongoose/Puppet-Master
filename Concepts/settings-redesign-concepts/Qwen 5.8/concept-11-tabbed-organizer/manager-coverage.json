@@ -1,0 +1,340 @@
+{
+  "schema_id": "pm.settings_bakeoff.manager_coverage.v2.concept",
+  "concept_id": "concept-11-tabbed-organizer",
+  "model": "Qwen 5.8",
+  "families": [
+    {
+      "required_name": "Settings Home",
+      "status": "demonstrated",
+      "concept_local_route": "#/home",
+      "note": "concept-native tabbed-organizer composition: compact category cards, edge tabs, recent changes, needs-attention"
+    },
+    {
+      "required_name": "Settings Search",
+      "status": "demonstrated",
+      "concept_local_route": "universal search field on every view (data-test=search-input), dropdown #/q/<query> restore",
+      "note": "concept-native tabbed-organizer composition: grouped dropdown rows with data-rid, type chips, full path, notes; rid-only routing; Back restores query+results via #/q/<q>"
+    },
+    {
+      "required_name": "Settings Workspace",
+      "status": "demonstrated",
+      "concept_local_route": "#/cat/<catId> tabbed workspace + #/all",
+      "note": "concept-native tabbed-organizer composition: layered sheet with domain tabs (Overview/subgroups/Managers), related-manager strip, wide context pane"
+    },
+    {
+      "required_name": "Ordinary setting grammar",
+      "status": "demonstrated",
+      "concept_local_route": "#/cat/<catId>/<subId> product rows via PMManagers2.row + #/all",
+      "note": "concept-native tabbed-organizer composition: ordinary setting rows (title, one explanation, control, Details) inside subgroup tabs and virtualized compendium"
+    },
+    {
+      "required_name": "Provider / Account / Model / Installation",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/providers",
+      "note": "concept-native tabbed-organizer composition: provider roster + detail tabs (Overview/Accounts/Installations/Models/Limits/Logs) answering the six default questions"
+    },
+    {
+      "required_name": "Context & Instructions",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/context",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Memory",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/memory",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Personas",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/personas",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Goal & Automation",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/goal",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Crew",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/crew",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Permissions & FileSafe",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/permissions",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Back Seat Driver",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/bsd",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Notifications & Sounds",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/notifications+sounds",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Sound Library / Uploads / Packs",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/sounds",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Appearance / themes / fonts / motion",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/appearance",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Spellcheck & Dictionaries",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/spellcheck",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Desktop / Tray / Window",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/desktop",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Teacher / Help",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/teacher",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Doctor",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/doctor",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "File Manager / Editor",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/files",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Terminal",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/terminal",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "LSP",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/lsp",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Formatters",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/formatters",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Commands & Shortcuts",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/commands",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "MCP",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/mcp",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Skills",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/skills",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Plugins",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/plugins",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Tools",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/tools",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Testing & Debug",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/testing",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Storage & Retention",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/storage",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Backup & Restore",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/backup",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Settings Lifecycle",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/lifecycle",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "History & Sessions",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/history",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Runtime Artifacts / Project Outputs",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/artifacts",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Source Control / Worktrees",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/scm",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "GitHub Actions",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/gha",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Containers & Registries",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/containers",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Web / Search / Fetch / Crawl",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/web",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Project Search Index",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/searchindex",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Workspace Cleanup",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/cleanup",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Media & Output",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/media",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "DRY Method visible state where exposed",
+      "status": "demonstrated",
+      "concept_local_route": "#/mgr/dry",
+      "note": "concept-native tabbed-organizer composition: family section tabs (Overview/Settings/Status/Actions) or roster+detail sheet inside the same page stack; reachable from domain tab, related strip, and search"
+    },
+    {
+      "required_name": "Product Onboarding",
+      "status": "deferred_named_owner",
+      "owner": "Product Onboarding plan owner",
+      "insertion": "First-run flow uses the same provider, account, connection, and installation records as Settings; no duplicate secret store; no SQLite.",
+      "return_contract": "Completed setup returns to the Providers manager with the new connection selected and a continuation receipt for any interrupted step.",
+      "concept_local_route": "#/mgr/onboarding",
+      "note": "rendered as setup-archetype shell card in the same tab stack; no fabricated backend state machine"
+    },
+    {
+      "required_name": "Installation / Deployment",
+      "status": "deferred_named_owner",
+      "owner": "Provider Lifecycle owner",
+      "insertion": "Explicit user-triggered install from the official source for the exact Host/Environment, with verification and rollback inside the provider card.",
+      "return_contract": "Install receipts deep-link back to the provider's installation section; a failed verification returns with the previous generation restored.",
+      "concept_local_route": "#/mgr/installation",
+      "note": "rendered as setup-archetype shell card in the same tab stack; no fabricated backend state machine"
+    },
+    {
+      "required_name": "Server Claim / Bootstrap",
+      "status": "deferred_named_owner",
+      "owner": "Server Backbone",
+      "insertion": "Claim handshake that binds a server record to this Puppet Master install before any hosted work is offered.",
+      "return_contract": "A successful claim returns to the Servers card with the claimed server marked connected and a claim receipt.",
+      "concept_local_route": "#/mgr/server-claim",
+      "note": "rendered as setup-archetype shell card in the same tab stack; no fabricated backend state machine"
+    },
+    {
+      "required_name": "Servers / Execution Hosts / Clients",
+      "status": "deferred_named_owner",
+      "owner": "Server Backbone",
+      "insertion": "Manager grammar reserved under System & Advanced; human-language cards only; deep-link slot reserved for the server shell.",
+      "return_contract": "Server cards deep-link back into Settings at the matching storage or hosting row with full capability state.",
+      "concept_local_route": "#/mgr/servers",
+      "note": "rendered as setup-archetype shell card in the same tab stack; no fabricated backend state machine"
+    },
+    {
+      "required_name": "Project Hosting & Files",
+      "status": "deferred_named_owner",
+      "owner": "Project Syncing and Updates",
+      "insertion": "Source Location card (Hosted On, Project Files, Run Work) plus Project Sync status slots.",
+      "return_contract": "Hosting changes return to the Project Hosting card with sync status and a move receipt.",
+      "concept_local_route": "#/mgr/hosting",
+      "note": "rendered as setup-archetype shell card in the same tab stack; no fabricated backend state machine"
+    },
+    {
+      "required_name": "Remote Access",
+      "status": "deferred_named_owner",
+      "owner": "Server Backbone",
+      "insertion": "Pairing and session approvals; protected auth browsing sessions remain human-only.",
+      "return_contract": "Approvals return to the Remote Access card with the session list updated; no Settings state is invented here.",
+      "concept_local_route": "#/mgr/remote-access",
+      "note": "rendered as setup-archetype shell card in the same tab stack; no fabricated backend state machine"
+    },
+    {
+      "required_name": "Project Sync / Move",
+      "status": "deferred_named_owner",
+      "owner": "Project Syncing and Updates",
+      "insertion": "Project relocation and sync bundles owned by the sync pipeline; Settings only surfaces status and entry points.",
+      "return_contract": "A finished move returns to Settings Lifecycle with the relocated project's settings re-verified and conflicts, if any, queued for review.",
+      "concept_local_route": "#/mgr/sync-move",
+      "note": "rendered as setup-archetype shell card in the same tab stack; no fabricated backend state machine"
+    },
+    {
+      "required_name": "Puppet Master application/content updates",
+      "status": "deferred_named_owner",
+      "owner": "Project Syncing and Updates",
+      "insertion": "Host-scoped signed Puppet Master updates, separate from provider, source-control, language-server, and container tool updates.",
+      "return_contract": "Update status cards deep-link into the Updates manager with signed-build receipts.",
+      "concept_local_route": "#/mgr/updates",
+      "note": "rendered as setup-archetype shell card in the same tab stack; no fabricated backend state machine"
+    },
+    {
+      "required_name": "Full Server backup owner flow",
+      "status": "deferred_named_owner",
+      "owner": "Server Backbone",
+      "insertion": "Full Server backup class alongside settings backup and project backup, with its own schedule and verification.",
+      "return_contract": "Backup runs return to the Backup manager's server class with verification receipts and the last-run state.",
+      "concept_local_route": "#/mgr/server-backup",
+      "note": "rendered as setup-archetype shell card in the same tab stack; no fabricated backend state machine"
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "schema_id": "pm.settings_candidate_wiring_delta.v1",
+  "concept_id": "concept-05-directory-take-1",
+  "model": "Qwen 5.8",
+  "trace_rule": "UI source \u2192 command \u2192 canonical owner \u2192 validation/permission \u2192 mutation/operation \u2192 event/receipt/ObservableWork \u2192 UI projection \u2192 Usage/diagnostic attribution \u2192 recovery/deep link",
+  "note": "All traces end with demo_note: concept-local state simulated and labeled.",
+  "traces": [
+    {
+      "control_family": "directory destination card",
+      "ui_source": ".d5-dest button",
+      "command": "cmd.settings.navigate (candidate)",
+      "canonical_owner": "Settings directory (concept)",
+      "validation_permission": "none (navigation)",
+      "mutation_or_operation": "hash push to #/cat/<id> with spatial expand",
+      "event_receipt": "none for navigation",
+      "ui_projection": "domain page with destination rows",
+      "usage_diagnostic_attribution": "n/a",
+      "recovery_deep_link": "Back names Settings Home",
+      "demo_note": "Simulated navigation state."
+    },
+    {
+      "control_family": "settings row mutation",
+      "ui_source": "PMManagers2.row controls",
+      "command": "registry-owned non-command mutation",
+      "canonical_owner": "Settings registry",
+      "validation_permission": "managed/unavailable blocked with receipt",
+      "mutation_or_operation": "state.settings[id].value; source\u2192custom",
+      "event_receipt": "emit('setting') + receipt toast",
+      "ui_projection": "row re-render with Custom badge",
+      "usage_diagnostic_attribution": "n/a demo",
+      "recovery_deep_link": "#/cat/<c>/<s>?row=<id>",
+      "demo_note": "Simulated."
+    },
+    {
+      "control_family": "search result selection",
+      "ui_source": ".d5-res[data-rid]",
+      "command": "cmd.settings.search.select_result",
+      "canonical_owner": "Universal search router",
+      "validation_permission": "rid must resolve via PMSearch2.byRid",
+      "mutation_or_operation": "pushState #/q/<query> then routeToDest",
+      "event_receipt": "none; locate highlight",
+      "ui_projection": "domain/manager with pm2-locate",
+      "usage_diagnostic_attribution": "n/a",
+      "recovery_deep_link": "Back restores query+results",
+      "demo_note": "Simulated."
+    },
+    {
+      "control_family": "provider install",
+      "ui_source": "[data-provinstall]",
+      "command": "cmd.provider.installation.select (candidate)",
+      "canonical_owner": "Binary Locator / Provider Lifecycle",
+      "validation_permission": "explicit user choice; official source; Host/Environment exact",
+      "mutation_or_operation": "ObservableWork phases downloading\u2192verifying\u2192probing",
+      "event_receipt": "op events + install receipt",
+      "ui_projection": "installation row appears selected",
+      "usage_diagnostic_attribution": "readiness chips",
+      "recovery_deep_link": "#/mgr/providers/<id>?sec=install",
+      "demo_note": "Simulated lifecycle."
+    },
+    {
+      "control_family": "provider update",
+      "ui_source": "[data-upd]",
+      "command": "cmd.provider.installation.update",
+      "canonical_owner": "Installation lifecycle owner",
+      "validation_permission": "policy ask-first honored",
+      "mutation_or_operation": "updating\u2192verifying\u2192ready | rolled-back",
+      "event_receipt": "receipt per terminal state",
+      "ui_projection": "update block state change",
+      "usage_diagnostic_attribution": "readiness evidence",
+      "recovery_deep_link": "install section",
+      "demo_note": "Simulated."
+    },
+    {
+      "control_family": "copy apply/rollback",
+      "ui_source": "[data-copyapply]/[data-copyrollback]",
+      "command": "cmd.settings.copy.apply / .rollback",
+      "canonical_owner": "PMCopy2 transaction",
+      "validation_permission": "preview required; conflicts listed",
+      "mutation_or_operation": "restore point \u2192 atomic set \u2192 verify",
+      "event_receipt": "copy receipt + rollback receipt",
+      "ui_projection": "counts/diff then rollback button",
+      "usage_diagnostic_attribution": "n/a",
+      "recovery_deep_link": "restore point id",
+      "demo_note": "Simulated."
+    },
+    {
+      "control_family": "deferred module deep link",
+      "ui_source": ".d5-defer cards",
+      "command": "n/a (reserved)",
+      "canonical_owner": "named owner per card",
+      "validation_permission": "owner insertion contract",
+      "mutation_or_operation": "none in concept",
+      "event_receipt": "none",
+      "ui_projection": "reserved slot text",
+      "usage_diagnostic_attribution": "n/a",
+      "recovery_deep_link": "return contract stated on card",
+      "demo_note": "No fabricated backend."
+    }
+  ]
+}

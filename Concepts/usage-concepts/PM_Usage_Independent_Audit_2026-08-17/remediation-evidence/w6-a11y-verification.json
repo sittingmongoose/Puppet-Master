@@ -1,0 +1,60 @@
+{
+ "pass": 9,
+ "total": 9,
+ "R": [
+  {
+   "id": "A12-01a",
+   "n": "every room button points at a pane that exists",
+   "p": true,
+   "d": "tabs=13 broken=0 | panes=13 broken=0"
+  },
+  {
+   "id": "A12-01b",
+   "n": "a room change moves aria-current and is announced",
+   "p": true,
+   "d": "aria-current null -> costs | announced=\"Costs — section 3 of 13\""
+  },
+  {
+   "id": "A12-01c",
+   "n": "disclosure exposes its selected level",
+   "p": true,
+   "d": "[{\"l\":\"essentials\",\"c\":\"false\",\"r\":\"radio\"},{\"l\":\"standard\",\"c\":\"false\",\"r\":\"radio\"},{\"l\":\"advanced\",\"c\":\"true\",\"r\":\"radio\"}]"
+  },
+  {
+   "id": "A12-03a",
+   "n": "closed scope picker is out of the tab order and the a11y tree",
+   "p": true,
+   "d": "visibility=hidden focusableWhenClosed=0 phantomOptions=0 (hidden by visibility)"
+  },
+  {
+   "id": "A12-03b",
+   "n": "open scope picker declares expanded and modal, and takes focus",
+   "p": true,
+   "d": "{\"expanded\":\"true\",\"modal\":\"true\",\"visibility\":\"visible\",\"focused\":\"u11-pop-row lv0 on\"}"
+  },
+  {
+   "id": "A12-03c",
+   "n": "focus does not escape the open dialog",
+   "p": true,
+   "d": "activeElement inside popover=true"
+  },
+  {
+   "id": "A12-03d",
+   "n": "Escape returns focus to the trigger",
+   "p": true,
+   "d": "focus back on trigger=true"
+  },
+  {
+   "id": "A12-02",
+   "n": "the widget \"Open Usage settings\" buttons now do something",
+   "p": true,
+   "d": "buttons=27 sheetOpened=true"
+  },
+  {
+   "id": "ERR",
+   "n": "no page errors",
+   "p": true,
+   "d": "errors=0 []"
+  }
+ ]
+}

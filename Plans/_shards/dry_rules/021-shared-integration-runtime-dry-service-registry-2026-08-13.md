@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L2073-L2196
+Source lines: L2073-L2198
 
-Source SHA256: `0d92075a16671df62644b7d33250c46612e21b63fd2ca60f83c26ca72054b6be`
+Source SHA256: `91fc575972b2d5acdae089906cac29926df5ac7ee89aa70061e955e402038c1f`
 
 ---
 
@@ -132,3 +132,5 @@ owner_hints:
   - Plans/DRY_Rules.md
   - Plans/Shared_Integration_Runtime.md
 ```
+
+<a id="usage-candidate-role-dispositions"></a>

@@ -1,0 +1,401 @@
+{
+  "schema_id": "pm.settings_test_evidence.v1",
+  "concept_id": "concept-06-directory-take-2",
+  "status": "pass",
+  "winner_selected": false,
+  "inventory_ids": 828,
+  "product_index": 1007,
+  "search_cap": 24,
+  "families": {
+    "static_code": {
+      "status": "pass",
+      "checks": [
+        "json_parse",
+        "node_check_concept_js",
+        "no_iframe",
+        "no_concept_01_04_href"
+      ],
+      "note": "Per-concept evidence JSON parse; concept JS previously node --check; isolation grep."
+    },
+    "interaction_smoke": {
+      "status": "pass",
+      "probe": "scripts/seven-new-concepts-qa.py",
+      "note": "Home search, Back, Close, Escape peel, copy apply/rollback, manager open."
+    },
+    "search_route_exactness": {
+      "status": "pass",
+      "smoke_cases": 16,
+      "smoke_queries": [
+        "Theme",
+        "Default",
+        "Workspace",
+        "thme",
+        "Ollama",
+        "Copy Settings",
+        "Remote Access",
+        "usage"
+      ],
+      "live_qa_clicks_all_rendered": [
+        "Theme",
+        "Default",
+        "Copy",
+        "Ollama"
+      ],
+      "index_completeness": {
+        "inventory_ids": 828,
+        "product_index": 1007,
+        "search_cap": 24,
+        "synthetic_overlay": 2000,
+        "synthetic_excluded_from_default_search": true
+      },
+      "routing": "immutable result id on data-id; never visual index or label",
+      "back_restores_query": true,
+      "note": "Matrix is the expected map (>=12 cases). Live QA additionally clicks every rendered Theme/Default/Copy/Ollama pick. Routing uses immutable pickResult id, not visual index or label."
+    },
+    "manager_route_isolation": {
+      "status": "pass",
+      "families": 51,
+      "live_managers_plus_deferred": 47,
+      "iframe": false,
+      "concept_01_04": false,
+      "shared_grammar": false,
+      "back_close": true,
+      "note": "51 families (4 surfaces + 38 managers + 9 deferred named owners). Each route is concept-native."
+    },
+    "copy_depth": {
+      "status": "pass",
+      "default_preview": {
+        "additions": true,
+        "replacements": true,
+        "unchanged": true,
+        "unavailable": true,
+        "conflicts": true
+      },
+      "conflicts": "default host-bound skip always; demo import-conflict adds Theme as additional conflict",
+      "simulated_backend": "sessionStorage",
+      "disclosed_limitation": true,
+      "skip_copy_flow": false,
+      "note": "Copy flow is exercised (preview + apply + rollback). sessionStorage is a disclosed simulated backend, not a skip.",
+      "default_conflict_id": "general.startup.window-state",
+      "demo_additional_conflict": "general.visual.theme"
+    },
+    "details_origin": {
+      "status": "pass",
+      "fields": [
+        "requested",
+        "effective",
+        "origin"
+      ],
+      "note": "Why-this-value / details drawer shows requested, effective, and origin."
+    },
+    "provider_density": {
+      "status": "pass",
+      "checks": [
+        "when_included_usage_ends",
+        "routing_fallback"
+      ],
+      "note": "Provider manager exposes usage-end continuation and routing/fallback."
+    },
+    "responsive_theme_matrix": {
+      "status": "pass",
+      "themes": 8,
+      "widths": [
+        760,
+        900,
+        1280,
+        1700,
+        2200,
+        2500
+      ],
+      "checks": {
+        "overflow": "none",
+        "clip": "none",
+        "scrollbar": "usable",
+        "popup_in_viewport": true,
+        "escape": "peel_order",
+        "reduced_motion": "meaning_retained"
+      },
+      "note": "8 themes \u00d7 6 widths via scripts/seven-new-concepts-qa.py plus independent visual audit."
+    },
+    "performance_hydration": {
+      "status": "pass",
+      "runtime": {
+        "no_manager_storm": true,
+        "search_cap": 24,
+        "virt_list": true
+      },
+      "note": "Search does not hydrate every manager. Dropdown cap 24. All Settings list is virtualized/bounded."
+    },
+    "independent_visual_audit": {
+      "status": "pass",
+      "artifact": "SEVEN_NEW_CONCEPTS_VISUAL_AUDIT.json",
+      "note": "Direct Home inspection plus Playwright overflow/clip/scrollbar/popup/reduced-motion cells."
+    },
+    "original_concept_regression": {
+      "status": "pass",
+      "concepts_01_04": "unmodified",
+      "winner_selected": false,
+      "note": "Harbor/Score/Switchboard/Archive remain frozen. No winner selected among 05\u201311."
+    }
+  },
+  "search_cases": [
+    {
+      "query": "Theme",
+      "result_id": "setting:general.visual.theme",
+      "found": true,
+      "dest": "domain",
+      "highlighted": true,
+      "restored_query": "Theme",
+      "displayed_path": "Settings / General & Appearance / Visual Style / Theme",
+      "pass": true,
+      "back_restores_query": true,
+      "expected_highlight_data_row_id": "general.visual.theme"
+    },
+    {
+      "query": "Theme",
+      "result_id": "setting:general.visual.theme-mode",
+      "found": true,
+      "dest": "domain",
+      "highlighted": true,
+      "restored_query": "Theme",
+      "displayed_path": "Settings / General & Appearance / Visual Style / Theme Mode",
+      "pass": true,
+      "back_restores_query": true,
+      "expected_highlight_data_row_id": "general.visual.theme-mode"
+    },
+    {
+      "query": "Theme",
+      "result_id": "manager:appearance",
+      "found": true,
+      "dest": "manager",
+      "highlighted": false,
+      "restored_query": "Theme",
+      "displayed_path": "Settings / General & Appearance / Appearance",
+      "pass": true,
+      "back_restores_query": true,
+      "expected_highlight_data_row_id": null
+    },
+    {
+      "query": "Default",
+      "result_id": "action:retry-default-account",
+      "found": true,
+      "dest": "manager",
+      "highlighted": true,
+      "restored_query": "Default",
+      "displayed_path": "Settings / Providers / Anthropic / Accounts / Default",
+      "pass": true,
+      "back_restores_query": true,
+      "expected_highlight_data_row_id": "account-default"
+    },
+    {
+      "query": "Default",
+      "result_id": "object:personas:persona-default",
+      "found": true,
+      "dest": "manager",
+      "highlighted": true,
+      "restored_query": "Default",
+      "displayed_path": "Settings / Personas / Default",
+      "pass": true,
+      "back_restores_query": true,
+      "expected_highlight_data_row_id": "persona-default"
+    },
+    {
+      "query": "Default",
+      "result_id": "setting:ai.models.default-model",
+      "found": true,
+      "dest": "domain",
+      "highlighted": true,
+      "restored_query": "Default",
+      "displayed_path": "Settings / AI Brains & Providers / Models & Defaults / Default Model",
+      "pass": true,
+      "back_restores_query": true,
+      "expected_highlight_data_row_id": "ai.models.default-model"
+    },
+    {
+      "query": "Workspace note",
+      "result_id": "object:memory:mem-style",
+      "found": true,
+      "dest": "manager",
+      "highlighted": true,
+      "restored_query": "Workspace note",
+      "displayed_path": "Settings / Memory / Workspace note",
+      "pass": true,
+      "back_restores_query": true,
+      "expected_highlight_data_row_id": "mem-style"
+    },
+    {
+      "query": "Workspace note",
+      "result_id": "object:memory:mem-workspace",
+      "found": true,
+      "dest": "manager",
+      "highlighted": true,
+      "restored_query": "Workspace note",
+      "displayed_path": "Settings / Memory / Workspace note",
+      "pass": true,
+      "back_restores_query": true,
+      "expected_highlight_data_row_id": "mem-workspace"
+    },
+    {
+      "query": "Workspace",
+      "result_id": "manager:cleanup",
+      "found": true,
+      "dest": "manager",
+      "highlighted": false,
+      "restored_query": "Workspace",
+      "displayed_path": "Settings / System & Advanced / Workspace Cleanup",
+      "pass": true,
+      "back_restores_query": true,
+      "expected_highlight_data_row_id": null
+    },
+    {
+      "query": "thme",
+      "result_id": "setting:general.visual.theme",
+      "found": true,
+      "dest": "domain",
+      "highlighted": true,
+      "restored_query": "thme",
+      "displayed_path": "Settings / General & Appearance / Visual Style / Theme",
+      "pass": true,
+      "back_restores_query": true,
+      "expected_highlight_data_row_id": "general.visual.theme"
+    },
+    {
+      "query": "Ollama",
+      "result_id": "workflow:provider-cli-setup",
+      "found": true,
+      "dest": "manager",
+      "highlighted": true,
+      "restored_query": "Ollama",
+      "displayed_path": "Settings / AI Brains & Providers / Providers / Ollama / Setup",
+      "pass": true,
+      "back_restores_query": true,
+      "expected_highlight_data_row_id": "install-official"
+    },
+    {
+      "query": "Ollama",
+      "result_id": "object:providers:local-ollama",
+      "found": true,
+      "dest": "manager",
+      "highlighted": true,
+      "restored_query": "Ollama",
+      "displayed_path": "Settings / Providers / Ollama (local)",
+      "pass": true,
+      "back_restores_query": true,
+      "expected_highlight_data_row_id": "local-ollama"
+    },
+    {
+      "query": "Copy Settings",
+      "result_id": "action:copy-from-project",
+      "found": true,
+      "dest": "copy",
+      "highlighted": false,
+      "restored_query": "Copy Settings",
+      "displayed_path": "Settings / Copy from another project",
+      "pass": true,
+      "back_restores_query": true,
+      "expected_highlight_data_row_id": null
+    },
+    {
+      "query": "Copy",
+      "result_id": "help:copy-policy",
+      "found": true,
+      "dest": "copy",
+      "highlighted": false,
+      "restored_query": "Copy",
+      "displayed_path": "Settings / Help / Copy Settings",
+      "pass": true,
+      "back_restores_query": true,
+      "expected_highlight_data_row_id": null
+    },
+    {
+      "query": "Remote Access",
+      "result_id": "unavailable:remoteAccess",
+      "found": true,
+      "dest": "deferred",
+      "highlighted": false,
+      "restored_query": "Remote Access",
+      "displayed_path": "Settings / System & Advanced / Remote Access",
+      "pass": true,
+      "back_restores_query": true,
+      "expected_highlight_data_row_id": null
+    },
+    {
+      "query": "usage",
+      "result_id": "diagnostic:usage-stale",
+      "found": true,
+      "dest": "manager",
+      "highlighted": true,
+      "restored_query": "usage",
+      "displayed_path": "Settings / Providers / Google AI / Usage",
+      "pass": true,
+      "back_restores_query": true,
+      "expected_highlight_data_row_id": "usage-projection"
+    }
+  ],
+  "manager_sample": [
+    {
+      "id": "providers",
+      "pass": true
+    },
+    {
+      "id": "context",
+      "pass": true
+    },
+    {
+      "id": "memory",
+      "pass": true
+    },
+    {
+      "id": "personas",
+      "pass": true
+    },
+    {
+      "id": "goal",
+      "pass": true
+    },
+    {
+      "id": "crew",
+      "pass": true
+    },
+    {
+      "id": "permissions",
+      "pass": true
+    },
+    {
+      "id": "bsd",
+      "pass": true
+    },
+    {
+      "id": "notifications",
+      "pass": true
+    },
+    {
+      "id": "soundLibrary",
+      "pass": true
+    },
+    {
+      "id": "appearance",
+      "pass": true
+    },
+    {
+      "id": "spellcheck",
+      "pass": true
+    }
+  ],
+  "manager_total": 47,
+  "manager_pass": 47,
+  "copy": true,
+  "persistence": true,
+  "synthetic_excluded": true,
+  "console_errors": [],
+  "isolation": true,
+  "known_limitations": [
+    {
+      "id": "simulated_backend",
+      "backend": "sessionStorage",
+      "disclosed": true,
+      "skip_copy_flow": false,
+      "note": "Copy/CLI/receipts stay simulated sessionStorage (deepened, not a second ResourceGovernor). This is a disclosed limitation, not a skip of the copy flow. Additions, replacements, unchanged, and unavailable rows appear on the default preview; conflicts appear only under Demo state import-conflict."
+    }
+  ]
+}

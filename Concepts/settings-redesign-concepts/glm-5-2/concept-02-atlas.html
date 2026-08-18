@@ -15,11 +15,20 @@
     /* HOME: atlas overview */
     .at-home { flex: 1; display: grid; grid-template-columns: 1fr 320px; min-height: 0; }
     .at-canvas { position: relative; overflow: hidden; padding: 18px; }
-    .at-canvas-inner { position: relative; width: 100%; height: 100%; }
+    .at-canvas-inner { position: relative; width: 100%; height: 100%;
+      /* showcase: static cartographic backdrop — survey grid + contour rings, zero animation */
+      background:
+        radial-gradient(closest-side at 26% 32%, transparent 66%, color-mix(in srgb, var(--accent) 6%, transparent) 67%, transparent 69%),
+        radial-gradient(closest-side at 26% 32%, transparent 82%, color-mix(in srgb, var(--accent) 5%, transparent) 83%, transparent 85%),
+        radial-gradient(closest-side at 74% 74%, transparent 58%, color-mix(in srgb, var(--accent) 6%, transparent) 59%, transparent 61%),
+        radial-gradient(closest-side at 74% 74%, transparent 76%, color-mix(in srgb, var(--accent) 4%, transparent) 77%, transparent 79%),
+        repeating-linear-gradient(0deg, transparent 0 55px, color-mix(in srgb, var(--ink) 4%, transparent) 55px 56px),
+        repeating-linear-gradient(90deg, transparent 0 55px, color-mix(in srgb, var(--ink) 4%, transparent) 55px 56px);
+    }
     /* command overlay search — top center, dims the map when focused */
     .at-cmdk { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); z-index: 20; width: min(560px, 80%); }
-    .at-cmdk-field { display: flex; align-items: center; gap: 10px; padding: 0 14px; height: 46px; background: var(--surface-elev); border: 1px solid var(--line); border-radius: var(--r-pill); box-shadow: var(--sh-2); transition: border-color var(--t-fast) var(--ease); }
-    .at-cmdk-field:focus-within { border-color: var(--accent-line); }
+    .at-cmdk-field { display: flex; align-items: center; gap: 10px; padding: 0 14px; height: 46px; background: var(--surface-elev); border: 1px solid var(--line); border-radius: var(--r-pill); box-shadow: var(--sh-2); transition: border-color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease); }
+    .at-cmdk-field:focus-within { border-color: var(--accent-line); box-shadow: var(--sh-2), 0 0 0 3px var(--accent-soft); }
     .at-cmdk-field input { flex: 1; background: transparent; border: none; outline: none; font-size: 14px; color: var(--ink); }
     .at-cmdk-results { position: absolute; top: calc(100% + 6px); left: 0; right: 0; background: var(--surface-elev); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--sh-3); max-height: 340px; overflow: auto; padding: 6px; z-index: 25; }
     .at-cmdk-result { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: var(--r-sm); cursor: pointer; }
@@ -27,7 +36,7 @@
     .at-cmdk-result .at-rkind { font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); width: 76px; flex: none; }
 
     /* regions: named areas with boundaries; size encodes density (settings count) */
-    .at-regions { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: minmax(70px, auto); gap: 10px; padding: 70px 4px 16px; height: 100%; overflow: auto; }
+    .at-regions { position: relative; display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: minmax(70px, auto); gap: 10px; padding: 70px 4px 16px; height: 100%; overflow: auto; }
     .at-region {
       position: relative; border: 1px solid var(--line); background: var(--surface);
       border-radius: var(--r-lg); padding: 14px; cursor: pointer; text-align: left; color: inherit;
@@ -35,15 +44,23 @@
       transition: transform var(--t-mid) var(--ease), border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
     }
     .at-region:hover { transform: translateY(-2px) scale(1.005); border-color: var(--accent-line); background: var(--surface-2); box-shadow: var(--sh-2); z-index: 3; }
+    /* showcase: hover composes with the pointer tilt (vars written by pointerFX) */
+    [data-reduced-motion="0"] .at-region:hover {
+      transform: translateY(-2px) scale(1.005) perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+    }
     .at-region.has-attention { border-color: color-mix(in srgb, var(--warn) 45%, var(--line)); }
     .at-region-top { display: flex; align-items: center; gap: 8px; }
     .at-region-icon { width: 30px; height: 30px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); border-radius: var(--r-xs); flex: none; }
     .at-region h3 { margin: 0; font-size: 14px; font-weight: 700; }
     .at-region-purpose { color: var(--ink-2); font-size: 11px; line-height: 1.4; }
     .at-region-meta { display: flex; align-items: center; gap: 6px; margin-top: auto; flex-wrap: wrap; }
-    /* you-are-here marker */
+    /* you-are-here marker (text badge on current region) */
     .at-here { position: absolute; top: 8px; right: 10px; font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); display: none; }
     .at-region.current .at-here { display: inline; }
+    /* traveling you-are-here pin — eases between regions across the map */
+    .at-pin { position: absolute; z-index: 8; width: 14px; height: 14px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg) translateZ(0); background: var(--accent); border: 2px solid var(--surface-elev); box-shadow: var(--sh-1); pointer-events: none; opacity: .95; transition: left 320ms var(--ease-settle), top 320ms var(--ease-settle); }
+    .at-pin::after { content: ""; position: absolute; inset: 3px; border-radius: 50%; background: var(--surface-elev); opacity: .35; }
+    [data-reduced-motion="1"] .at-pin { transition: none; }
     /* region grid spans (density-encoded sizes) */
     .at-r-general       { grid-column: span 4; grid-row: span 2; }
     .at-r-appearance    { grid-column: span 3; grid-row: span 2; }
@@ -92,10 +109,12 @@
     .at-mm-sub:hover { color: var(--ink); }
     .at-mm-sub.active { color: var(--accent); }
 
-    /* viewport indicator (right context rail) */
+    /* viewport indicator (right context rail) — draggable/clickable jump affordance */
     .at-viewport-rail { border-left: 1px solid var(--line); background: var(--surface); padding: 12px; overflow: auto; }
     .at-viewport-rail .at-mm-label { margin-bottom: 6px; }
-    .at-viewport-track { position: relative; width: 8px; height: 200px; background: var(--surface-3); border-radius: 99px; margin: 8px auto; }
+    .at-viewport-track { position: relative; width: 8px; height: 200px; background: var(--surface-3); border-radius: 99px; margin: 8px auto; cursor: pointer; }
+    .at-viewport-track::before { content: ""; position: absolute; top: -8px; bottom: -8px; left: -8px; right: -8px; }
+    .at-viewport-track.dragging .at-viewport-thumb { box-shadow: 0 0 0 4px var(--accent-soft); }
     .at-viewport-thumb { position: absolute; left: 0; right: 0; background: var(--accent); border-radius: 99px; transition: top var(--t-fast) var(--ease), height var(--t-fast) var(--ease); }
     .at-vp-sublist { display: flex; flex-direction: column; gap: 2px; }
     .at-vp-sub { font-size: 11px; padding: 4px 8px; border-radius: var(--r-xs); color: var(--ink-3); cursor: pointer; }
@@ -109,11 +128,22 @@
     .at-region:nth-child(1){animation-delay:0ms}.at-region:nth-child(2){animation-delay:50ms}.at-region:nth-child(3){animation-delay:100ms}
     .at-region:nth-child(4){animation-delay:150ms}.at-region:nth-child(5){animation-delay:200ms}.at-region:nth-child(6){animation-delay:250ms}
     @keyframes at-zoom-in { from { opacity:0; transform: scale(.96); } to { opacity:1; transform:none; } }
-    /* C2: region → focus directed continuity (scale + cross-fade) */
-    [data-reduced-motion="0"] .at-workspace { animation: at-focus-in 420ms var(--ease-settle) both; }
-    @keyframes at-focus-in { from { opacity:0; transform: scale(1.04); } to { opacity:1; transform:none; } }
-    /* C2: viewport thumb tweens (not snap) */
-    [data-reduced-motion="0"] #vpThumb { transition: top var(--t-mid) var(--ease), height var(--t-mid) var(--ease); }
+    /* showcase: survey beam — each region's boundary draws left→right on map entry, then rests */
+    .at-region { overflow: hidden; }
+    .at-region::before {
+      content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; z-index: 2;
+      background: linear-gradient(90deg, transparent, var(--accent-line), transparent);
+      opacity: 0; pointer-events: none; transform-origin: left center;
+    }
+    [data-reduced-motion="0"] .at-region::before { animation: at-beam 640ms var(--ease-settle) backwards; }
+    .at-region:nth-child(1)::before{animation-delay:80ms}.at-region:nth-child(2)::before{animation-delay:130ms}
+    .at-region:nth-child(3)::before{animation-delay:180ms}.at-region:nth-child(4)::before{animation-delay:230ms}
+    .at-region:nth-child(5)::before{animation-delay:280ms}.at-region:nth-child(6)::before{animation-delay:330ms}
+    @keyframes at-beam { 0% { opacity: 0; transform: scaleX(0); } 35% { opacity: .9; } 100% { opacity: 0; transform: scaleX(1); } }
+    /* showcase: viewport thumb follows with a spring-like overshoot curve */
+    [data-reduced-motion="0"] #vpThumb { transition: top 260ms var(--ease-pop), height 200ms var(--ease); }
+    /* C2: region → focus directed continuity (scale + cross-fade via shared swapStage zoom) */
+    /* C2: viewport thumb tweens (not snap) — superseded by the spring-curve rule above */
     /* C2: minimap active region indicator slide */
     [data-reduced-motion="0"] .at-mm-region { transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease); }
 
@@ -159,6 +189,8 @@
           PM.shared.chat() +
           PM.shared.footer();
         PM.shared.wireShell();
+        // showcase: pointer-reactive glow/tilt/magnetic press (auto-gated)
+        PM.motion.pointerFX && PM.motion.pointerFX(document);
       }
 
       function regionIcon(catId) {
@@ -175,8 +207,9 @@
           var managerCount = c.sub.filter(function (s) { return s.manager; }).length;
           var sizeClass = "at-r-" + c.id;
           var mgrs = managerCount ? '<span class="chip">' + managerCount + ' manager' + (managerCount>1?"s":"") + '</span>' : "";
+          var current = c.id === PM.state.activeCat;
           return [
-            '<button class="at-region ' + sizeClass + (statusKind==="warn"?" has-attention":"") + '" data-region="' + c.id + '">',
+            '<button class="at-region ' + sizeClass + (statusKind==="warn"?" has-attention":"") + (current?" current":"") + '" data-pm-tilt="1" data-region="' + c.id + '">',
               '<span class="at-here">You are here</span>',
               '<div class="at-region-top">',
                 '<span class="at-region-icon">' + PM.svg(regionIcon(c.id), 16) + '</span>',
@@ -209,7 +242,7 @@
                   '<div class="at-cmdk-field"><span class="muted">' + PM.svg("search",16) + '</span><input type="search" placeholder="Search the settings map…" data-search-input aria-label="Search settings"><span class="muted small">⌘K</span></div>',
                   '<div class="at-cmdk-results hidden" data-results></div>',
                 '</div>',
-                '<div class="at-canvas-inner"><div class="at-regions">' + regions + '</div></div>',
+                '<div class="at-canvas-inner"><div class="at-regions">' + regions + '<span class="at-pin" id="atPin" aria-hidden="true"></span></div></div>',
               '</div>',
               '<aside class="at-rail">',
                 '<h2>Legend</h2>',
@@ -231,28 +264,65 @@
         wireHome();
       }
 
+      /* position the traveling you-are-here pin over a region (or hide it) */
+      function positionPin(catId, animateFrom) {
+        var pin = document.getElementById("atPin");
+        if (!pin) return;
+        var region = catId && document.querySelector('[data-region="' + catId + '"]');
+        if (!region) { pin.style.opacity = "0"; return; }
+        var host = pin.parentNode;
+        if (animateFrom && !PM.state.reducedMotion) {
+          // start from the previous position, then settle onto the target region
+          pin.style.transition = "none";
+          pin.style.left = (parseFloat(pin.style.left || "0")) + "px";
+          pin.style.top = (parseFloat(pin.style.top || "0")) + "px";
+          void pin.offsetWidth;
+          pin.style.transition = "";
+        }
+        pin.style.left = (region.offsetLeft + region.offsetWidth - 24) + "px";
+        pin.style.top = (region.offsetTop + 10) + "px";
+        pin.style.opacity = ".95";
+        void host.offsetWidth;
+        // showcase: the pin drops in with a small spring settle (state-only under reduced motion)
+        if (PM.motion && PM.motion.spring && !PM.state.reducedMotion) {
+          PM.motion.spring(pin, function (v) {
+            pin.style.transform = "rotate(-45deg) scale(" + v.toFixed(3) + ")";
+          }, { from: 1.35, to: 1, stiffness: 210, damping: 13 });
+        }
+      }
+
       function wireHome() {
         var inp = document.querySelector("[data-search-input]");
         var res = document.querySelector("[data-results]");
-        inp.addEventListener("input", function () {
-          var results = PM.runSearch(this.value);
-          if (!this.value.trim() || !results.length) { res.classList.add("hidden"); return; }
-          res.classList.remove("hidden");
-          res.innerHTML = results.map(function (r) {
-            var km = PM.shared.searchKindMeta(r.kind);
-            var target = r.manager ? 'data-r-manager="' + r.manager + '"' : 'data-r-cat="' + r.cat + '" data-r-sub="' + (r.sub||"") + '"';
-            return '<div class="at-cmdk-result" ' + target + '><span class="at-rkind ' + km.cls + '">' + km.label + '</span><div class="col"><strong>' + r.label + '</strong><span class="muted small"> ' + (r.expl||"").slice(0,50) + '</span></div></div>';
-          }).join("");
-        });
-        res.addEventListener("click", function (e) {
-          var r = e.target.closest(".at-cmdk-result"); if (!r) return;
-          var mgr = r.getAttribute("data-r-manager");
-          inp.value = ""; res.classList.add("hidden");
-          if (mgr) { PM.openManager(mgr); } else { PM.openCategory(r.getAttribute("data-r-cat"), r.getAttribute("data-r-sub")); }
-          render();
+        // search: keyboard arrows/enter + empty state + typo tolerance + match highlight
+        PM.shared.wireSearchDropdown({
+          input: inp, resultsHost: res, itemSelector: ".at-cmdk-result",
+          render: function (results) {
+            return results.map(function (r) {
+              var km = PM.shared.searchKindMeta(r.kind);
+              var target = r.manager ? 'data-r-manager="' + r.manager + '"' : 'data-r-cat="' + r.cat + '" data-r-sub="' + (r.sub||"") + '"';
+              return '<div class="at-cmdk-result" ' + target + ' tabindex="0" role="option"><span class="at-rkind ' + km.cls + '">' + km.label + '</span><div class="col"><strong>' + PM.shared.hl(r.label, r.range) + '</strong><span class="muted small"> ' + (r.expl||"").slice(0,50) + '</span></div></div>';
+            }).join("");
+          },
+          onPick: function (r, el) {
+            if (!el) return;
+            PM.motion && PM.motion.captureOrigin(el);
+            var mgr = el.getAttribute("data-r-manager");
+            if (mgr) { PM.openManager(mgr); render(); return; }
+            PM.openCategory(el.getAttribute("data-r-cat"), el.getAttribute("data-r-sub"));
+            render();
+          }
         });
         document.querySelectorAll("[data-region]").forEach(function (b) {
-          b.addEventListener("click", function () { PM.openCategory(this.getAttribute("data-region")); render(); });
+          b.addEventListener("click", function () {
+            var cat = this.getAttribute("data-region");
+            // the pin travels to the region, then the map zooms in from that region (spatial origin)
+            PM._atlasLastRegion = cat;
+            PM.motion && PM.motion.captureOrigin(this);
+            positionPin(cat, true);
+            if (PM.state.reducedMotion) { PM.openCategory(cat); render(); return; }
+            setTimeout(function () { PM.openCategory(cat); render(); }, 230);
+          });
         });
         document.querySelectorAll("[data-notice-target]").forEach(function (b) {
           b.addEventListener("click", function () {
@@ -265,6 +335,8 @@
         PM.shared.wireRecentWork();
         PM.shared.wireOwnedStrip(document.querySelector("[data-stage]"));
         PM.shared.wireShell();
+        // returning to the map keeps the last visited region marked
+        positionPin(PM.state.activeCat || PM._atlasLastRegion);
       }
 
       /* ---------- WORKSPACE: focus + context ---------- */
@@ -364,6 +436,32 @@
             thumb.style.top = pct + "%"; thumb.style.height = Math.max(12, 100/cat.sub.length) + "%";
           }
         };
+        // viewport rail: click or drag the track to move the reading position
+        var track = document.querySelector(".at-viewport-track");
+        var scroller = document.querySelector("[data-scroller]");
+        if (track && scroller) {
+          var seek = function (e) {
+            var r = track.getBoundingClientRect();
+            var pct = Math.max(0, Math.min(1, (e.clientY - r.top) / r.height));
+            scroller.scrollTop = pct * (scroller.scrollHeight - scroller.clientHeight);
+          };
+          track.addEventListener("pointerdown", function (e) {
+            e.preventDefault();
+            track.classList.add("dragging");
+            track.setPointerCapture && track.setPointerCapture(e.pointerId);
+            seek(e);
+            var move = function (ev) { seek(ev); };
+            var up = function () {
+              track.classList.remove("dragging");
+              track.removeEventListener("pointermove", move);
+              track.removeEventListener("pointerup", up);
+              track.removeEventListener("pointercancel", up);
+            };
+            track.addEventListener("pointermove", move);
+            track.addEventListener("pointerup", up);
+            track.addEventListener("pointercancel", up);
+          });
+        }
         PM.shared.wireShell();
       }
 
@@ -385,13 +483,21 @@
         PM.shared.wireShell();
       }
 
+      var _renderToken = 0;
       function render() {
         var crumb = document.querySelector("[data-crumb]");
         if (PM.state.view === "home" && crumb) crumb.innerHTML = "Settings map";
         else if (crumb) crumb.innerHTML = 'Settings · <b>' + (PM.state.activeManager ? PM.managers[PM.state.activeManager].title : (PM.catById(PM.state.activeCat)||{}).title) + '</b>';
-        if (PM.state.view === "home") home();
-        else if (PM.state.view === "manager") manager();
-        else workspace();
+        var token = ++_renderToken;
+        function renderView() {
+          if (token !== _renderToken) return;
+          if (PM.state.view === "home") home();
+          else if (PM.state.view === "manager") manager();
+          else workspace();
+        }
+        // cartographic continuity: zoom settle into a region, plain crossfade back to the map
+        var home_ = PM.state.view === "home";
+        PM.shared.swapStage(renderView, { outDir: home_ ? "right" : "none", inDir: home_ ? "left" : "none", zoom: !home_ });
       }
 
       PM.render = render;

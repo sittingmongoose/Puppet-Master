@@ -1,0 +1,94 @@
+{
+  "schema_id": "pm.settings_bakeoff.test_evidence.v2.concept",
+  "concept_id": "concept-05-directory-take-1",
+  "model": "Qwen 5.8",
+  "static_checks": [
+    {
+      "check": "no iframe",
+      "pass": true,
+      "evidence": "grep '<iframe' = 0"
+    },
+    {
+      "check": "no cross-concept refs",
+      "pass": true,
+      "evidence": "no href/src to concept-01..04; only _shared/* scripts"
+    },
+    {
+      "check": "routes list",
+      "pass": true,
+      "routes": [
+        "#/home",
+        "#/cat/<catId>",
+        "#/cat/<catId>/<subId>",
+        "#/mgr/<familyId>",
+        "#/mgr/<familyId>/<objectId>",
+        "#/all",
+        "#/copy",
+        "#/lifecycle",
+        "#/q/<query>"
+      ]
+    },
+    {
+      "check": "virtualization present",
+      "pass": true,
+      "evidence": "PMManagers2.virtualList on #/all; data-window observed 0:14:828 \u2192 56:76:828 \u2192 0:14:2828 with synthetic toggle"
+    },
+    {
+      "check": "boot zero pageerror",
+      "pass": true,
+      "evidence": "headless Chromium: pageerror listener empty; [data-test=home] present"
+    },
+    {
+      "check": "search pick pushes #/q before routing; Back restores query+results",
+      "pass": true,
+      "evidence": "browser run: hashAfterBack #/q/rate%20limits; inputs restored; dropdowns open with 5 rows"
+    },
+    {
+      "check": "data-route equals hash minus #",
+      "pass": true,
+      "evidence": "browser run: /home, /mgr/memory, /mgr/providers/claude-oauth?sec=limits"
+    },
+    {
+      "check": "42 manager sections with breadcrumb+back",
+      "pass": true,
+      "evidence": "browser loop over all family ids: mgrMissing []"
+    },
+    {
+      "check": "test hooks present",
+      "pass": true,
+      "hooks": [
+        "data-test=search-input",
+        "data-test=search-results",
+        "data-rid rows",
+        "data-test=back",
+        "data-test=close",
+        "data-test=breadcrumb",
+        "data-test=home",
+        "data-test=all",
+        "data-test=copy",
+        "data-manager per family",
+        "data-test=vlist + data-window",
+        "pm2-locate",
+        "pm2-r-title"
+      ]
+    },
+    {
+      "check": "reduced motion kills concept animations",
+      "pass": true,
+      "evidence": "spatial classes gated by data-reduced-motion; shared css kills keyframes"
+    },
+    {
+      "check": "copy flow end-to-end with rollback",
+      "pass": true,
+      "evidence": "browser run: preview counts rendered; apply \u2192 rollback button \u2192 rolled back"
+    },
+    {
+      "check": "close/reopen",
+      "pass": true,
+      "evidence": "closed card with receipt; reopen returns to prior route"
+    }
+  ],
+  "manager_count": 42,
+  "deferred_count": 9,
+  "route_count": 9
+}

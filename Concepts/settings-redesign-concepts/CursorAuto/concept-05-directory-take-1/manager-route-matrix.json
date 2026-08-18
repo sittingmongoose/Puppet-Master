@@ -1,0 +1,1061 @@
+{
+  "schema_id": "pm.settings_manager_route_matrix.v1",
+  "concept_id": "concept-05-directory-take-1",
+  "layout": "directory-take-1",
+  "home_model": "two-column destination cards",
+  "routes": [
+    {
+      "manager": "Settings Home",
+      "entry": "Home destination cards + universal search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "two-column cards and dest/workspace stack to one pane",
+      "pass": true,
+      "concept_local_route": "native",
+      "key_states": [
+        "offline",
+        "empty",
+        "cached"
+      ],
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native",
+      "back_close": true
+    },
+    {
+      "manager": "Settings Search",
+      "entry": "Home destination cards + universal search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "two-column cards and dest/workspace stack to one pane",
+      "pass": true,
+      "concept_local_route": "native",
+      "key_states": [
+        "offline",
+        "empty",
+        "cached"
+      ],
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native",
+      "back_close": true
+    },
+    {
+      "manager": "Settings Workspace",
+      "entry": "Home destination cards + universal search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "two-column cards and dest/workspace stack to one pane",
+      "pass": true,
+      "concept_local_route": "native",
+      "key_states": [
+        "offline",
+        "empty",
+        "cached"
+      ],
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native",
+      "back_close": true
+    },
+    {
+      "manager": "Ordinary setting grammar",
+      "entry": "Home destination cards + universal search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "two-column cards and dest/workspace stack to one pane",
+      "pass": true,
+      "concept_local_route": "native",
+      "key_states": [
+        "offline",
+        "empty",
+        "cached"
+      ],
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native",
+      "back_close": true
+    },
+    {
+      "manager": "Provider / Account / Model / Installation",
+      "entry": "owning domain destination row + search manager:providers",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:providers",
+      "archetype": "roster-detail",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:providers",
+      "back_close": true
+    },
+    {
+      "manager": "Context & Instructions",
+      "entry": "owning domain destination row + search manager:context",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:context",
+      "archetype": "preference-document",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:context",
+      "back_close": true
+    },
+    {
+      "manager": "Memory",
+      "entry": "owning domain destination row + search manager:memory",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:memory",
+      "archetype": "roster-detail",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:memory",
+      "back_close": true
+    },
+    {
+      "manager": "Personas",
+      "entry": "owning domain destination row + search manager:personas",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:personas",
+      "archetype": "roster-detail",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:personas",
+      "back_close": true
+    },
+    {
+      "manager": "Goal & Automation",
+      "entry": "owning domain destination row + search manager:goal",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:goal",
+      "archetype": "preference-document",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:goal",
+      "back_close": true
+    },
+    {
+      "manager": "Crew",
+      "entry": "owning domain destination row + search manager:crew",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:crew",
+      "archetype": "roster-detail",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:crew",
+      "back_close": true
+    },
+    {
+      "manager": "Permissions & FileSafe",
+      "entry": "owning domain destination row + search manager:permissions",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:permissions",
+      "archetype": "inventory-catalog",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:permissions",
+      "back_close": true
+    },
+    {
+      "manager": "Back Seat Driver",
+      "entry": "owning domain destination row + search manager:bsd",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:bsd",
+      "archetype": "preference-document",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:bsd",
+      "back_close": true
+    },
+    {
+      "manager": "Notifications & Sounds",
+      "entry": "owning domain destination row + search manager:notifications",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:notifications",
+      "archetype": "preference-document",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:notifications",
+      "back_close": true
+    },
+    {
+      "manager": "Sound Library / Uploads / Packs",
+      "entry": "owning domain destination row + search manager:soundLibrary",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:soundLibrary",
+      "archetype": "inventory-catalog",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:soundLibrary",
+      "back_close": true
+    },
+    {
+      "manager": "Appearance / themes / fonts / motion",
+      "entry": "owning domain destination row + search manager:appearance",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:appearance",
+      "archetype": "preference-document",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:appearance",
+      "back_close": true
+    },
+    {
+      "manager": "Spellcheck & Dictionaries",
+      "entry": "owning domain destination row + search manager:spellcheck",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:spellcheck",
+      "archetype": "roster-detail",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:spellcheck",
+      "back_close": true
+    },
+    {
+      "manager": "Desktop / Tray / Window",
+      "entry": "owning domain destination row + search manager:desktop",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:desktop",
+      "archetype": "preference-document",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:desktop",
+      "back_close": true
+    },
+    {
+      "manager": "Teacher / Help",
+      "entry": "owning domain destination row + search manager:teacher",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:teacher",
+      "archetype": "preference-document",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:teacher",
+      "back_close": true
+    },
+    {
+      "manager": "Doctor",
+      "entry": "owning domain destination row + search manager:doctor",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:doctor",
+      "archetype": "health-projection",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:doctor",
+      "back_close": true
+    },
+    {
+      "manager": "File Manager / Editor",
+      "entry": "owning domain destination row + search manager:fileManager",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:fileManager",
+      "archetype": "preference-document",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:fileManager",
+      "back_close": true
+    },
+    {
+      "manager": "Terminal",
+      "entry": "owning domain destination row + search manager:terminal",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:terminal",
+      "archetype": "preference-document",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:terminal",
+      "back_close": true
+    },
+    {
+      "manager": "LSP",
+      "entry": "owning domain destination row + search manager:lsp",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:lsp",
+      "archetype": "roster-detail",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:lsp",
+      "back_close": true
+    },
+    {
+      "manager": "Formatters",
+      "entry": "owning domain destination row + search manager:formatters",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:formatters",
+      "archetype": "roster-detail",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:formatters",
+      "back_close": true
+    },
+    {
+      "manager": "Commands & Shortcuts",
+      "entry": "owning domain destination row + search manager:commands",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:commands",
+      "archetype": "inventory-catalog",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:commands",
+      "back_close": true
+    },
+    {
+      "manager": "MCP",
+      "entry": "owning domain destination row + search manager:mcp",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:mcp",
+      "archetype": "roster-detail",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:mcp",
+      "back_close": true
+    },
+    {
+      "manager": "Skills",
+      "entry": "owning domain destination row + search manager:skills",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:skills",
+      "archetype": "roster-detail",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:skills",
+      "back_close": true
+    },
+    {
+      "manager": "Plugins",
+      "entry": "owning domain destination row + search manager:plugins",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:plugins",
+      "archetype": "roster-detail",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:plugins",
+      "back_close": true
+    },
+    {
+      "manager": "Tools",
+      "entry": "owning domain destination row + search manager:tools",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:tools",
+      "archetype": "inventory-catalog",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:tools",
+      "back_close": true
+    },
+    {
+      "manager": "Testing & Debug",
+      "entry": "owning domain destination row + search manager:testing",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:testing",
+      "archetype": "preference-document",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:testing",
+      "back_close": true
+    },
+    {
+      "manager": "Storage & Retention",
+      "entry": "owning domain destination row + search manager:storage",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:storage",
+      "archetype": "preference-document",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:storage",
+      "back_close": true
+    },
+    {
+      "manager": "Backup & Restore",
+      "entry": "owning domain destination row + search manager:backup",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:backup",
+      "archetype": "setup-sequence",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:backup",
+      "back_close": true
+    },
+    {
+      "manager": "Settings Lifecycle",
+      "entry": "owning domain destination row + search manager:lifecycle",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:lifecycle",
+      "archetype": "preview-transaction",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:lifecycle",
+      "back_close": true
+    },
+    {
+      "manager": "History & Sessions",
+      "entry": "owning domain destination row + search manager:history",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:history",
+      "archetype": "inventory-catalog",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:history",
+      "back_close": true
+    },
+    {
+      "manager": "Runtime Artifacts / Project Outputs",
+      "entry": "owning domain destination row + search manager:artifacts",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:artifacts",
+      "archetype": "inventory-catalog",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:artifacts",
+      "back_close": true
+    },
+    {
+      "manager": "Source Control / Worktrees",
+      "entry": "owning domain destination row + search manager:worktrees",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:worktrees",
+      "archetype": "roster-detail",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:worktrees",
+      "back_close": true
+    },
+    {
+      "manager": "GitHub Actions",
+      "entry": "owning domain destination row + search manager:githubActions",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:githubActions",
+      "archetype": "roster-detail",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:githubActions",
+      "back_close": true
+    },
+    {
+      "manager": "Containers & Registries",
+      "entry": "owning domain destination row + search manager:containers",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:containers",
+      "archetype": "roster-detail",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:containers",
+      "back_close": true
+    },
+    {
+      "manager": "Web / Search / Fetch / Crawl",
+      "entry": "owning domain destination row + search manager:web",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:web",
+      "archetype": "preference-document",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:web",
+      "back_close": true
+    },
+    {
+      "manager": "Project Search Index",
+      "entry": "owning domain destination row + search manager:searchIndex",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:searchIndex",
+      "archetype": "health-projection",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:searchIndex",
+      "back_close": true
+    },
+    {
+      "manager": "Workspace Cleanup",
+      "entry": "owning domain destination row + search manager:cleanup",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:cleanup",
+      "archetype": "setup-sequence",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:cleanup",
+      "back_close": true
+    },
+    {
+      "manager": "Media & Output",
+      "entry": "owning domain destination row + search manager:media",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:media",
+      "archetype": "preference-document",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:media",
+      "back_close": true
+    },
+    {
+      "manager": "DRY Method visible state where exposed",
+      "entry": "owning domain destination row + search manager:dryMethod",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "destination column stacks above workspace",
+      "pass": true,
+      "concept_local_route": "native:dryMethod",
+      "archetype": "health-projection",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:dryMethod",
+      "back_close": true
+    },
+    {
+      "manager": "Product Onboarding",
+      "entry": "System destination row + search unavailable:onboarding",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "single workspace pane",
+      "pass": true,
+      "concept_local_route": "native:onboarding",
+      "owner": "Onboarding module",
+      "fabricated_backend": false,
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:onboarding",
+      "back_close": true
+    },
+    {
+      "manager": "Installation / Deployment",
+      "entry": "System destination row + search unavailable:installation",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "single workspace pane",
+      "pass": true,
+      "concept_local_route": "native:installation",
+      "owner": "Installer / Deployment module",
+      "fabricated_backend": false,
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:installation",
+      "back_close": true
+    },
+    {
+      "manager": "Server Claim / Bootstrap",
+      "entry": "System destination row + search unavailable:serverClaim",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "single workspace pane",
+      "pass": true,
+      "concept_local_route": "native:serverClaim",
+      "owner": "Server backbone",
+      "fabricated_backend": false,
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:serverClaim",
+      "back_close": true
+    },
+    {
+      "manager": "Servers / Execution Hosts / Clients",
+      "entry": "System destination row + search unavailable:servers",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "single workspace pane",
+      "pass": true,
+      "concept_local_route": "native:servers",
+      "owner": "Server backbone",
+      "fabricated_backend": false,
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:servers",
+      "back_close": true
+    },
+    {
+      "manager": "Project Hosting & Files",
+      "entry": "System destination row + search unavailable:projectHosting",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "single workspace pane",
+      "pass": true,
+      "concept_local_route": "native:projectHosting",
+      "owner": "Project Hosting module",
+      "fabricated_backend": false,
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:projectHosting",
+      "back_close": true
+    },
+    {
+      "manager": "Remote Access",
+      "entry": "System destination row + search unavailable:remoteAccess",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "single workspace pane",
+      "pass": true,
+      "concept_local_route": "native:remoteAccess",
+      "owner": "Remote Access module",
+      "fabricated_backend": false,
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:remoteAccess",
+      "back_close": true
+    },
+    {
+      "manager": "Project Sync / Move",
+      "entry": "System destination row + search unavailable:projectSync",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "single workspace pane",
+      "pass": true,
+      "concept_local_route": "native:projectSync",
+      "owner": "Project Sync module",
+      "fabricated_backend": false,
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:projectSync",
+      "back_close": true
+    },
+    {
+      "manager": "Puppet Master application/content updates",
+      "entry": "System destination row + search unavailable:appUpdates",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "single workspace pane",
+      "pass": true,
+      "concept_local_route": "native:appUpdates",
+      "owner": "Update owner",
+      "fabricated_backend": false,
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:appUpdates",
+      "back_close": true
+    },
+    {
+      "manager": "Full Server backup owner flow",
+      "entry": "System destination row + search unavailable:fullServerBackup",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "single workspace pane",
+      "pass": true,
+      "concept_local_route": "native:fullServerBackup",
+      "owner": "Server backup owner",
+      "fabricated_backend": false,
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:fullServerBackup",
+      "back_close": true
+    }
+  ],
+  "families": 51,
+  "iframe": false,
+  "isolation": {
+    "iframe": false,
+    "concept_01_04": false,
+    "shared_grammar": false,
+    "back_close": true
+  }
+}

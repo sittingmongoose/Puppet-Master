@@ -1,0 +1,1083 @@
+<!doctype html>
+<html lang="en" data-theme="friendly-dark" data-reduced-motion="0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="data:,">
+<title>05 A1 Directory / Take 1 — GLM-5.2 Settings</title>
+<link rel="stylesheet" href="assets/themes.css">
+<link rel="stylesheet" href="assets/shell.css">
+<link rel="stylesheet" href="assets/v2/pm-std.css">
+<script src="assets/icons.svg.js"></script>
+<script src="assets/v2/pm-inventory.js"></script>
+<script src="assets/v2/pm-data.js"></script>
+<script src="assets/v2/pm-managers.js"></script>
+<script src="assets/v2/pm-search.js"></script>
+<script src="assets/v2/pm-routes.js"></script>
+<script src="assets/v2/pm-store.js"></script>
+<script src="concept-hub-bridge.js"></script>
+<style>
+/* ===== CONCEPT 05 — A1 DIRECTORY / TAKE 1 (GLM-5.2) =====
+   Native geometry: directory Home (hero search, compact attention, two-column
+   destination cards) → card-to-domain workspace expansion → subgroup destination
+   rows → roster+form manager. Push navigation when narrow. Motion = expansion. */
+.d5 { height: 100%; display: flex; flex-direction: column; min-width: 0; }
+.d5-stage { flex: 1; min-height: 0; overflow: hidden; position: relative; background: var(--bg); }
+
+/* ---------- HOME ---------- */
+.d5-home { height: 100%; overflow: auto; padding: clamp(14px, 2.6vw, 44px); }
+.d5-home-inner { max-width: 1240px; margin: 0 auto; }
+.d5-eyebrow { font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); }
+.d5-eyebrow b { color: var(--accent); }
+.d5-h1 { font-size: clamp(24px, 3vw, 34px); font-weight: 800; letter-spacing: -.02em; margin: 4px 0 2px; }
+.d5-sub { color: var(--ink-2); font-size: 13.5px; margin-bottom: 18px; }
+
+/* hero search — the primary verb */
+.d5-searchwrap { position: relative; margin-bottom: 14px; }
+.d5-search { display: flex; align-items: center; gap: 12px; height: 58px; padding: 0 18px;
+  background: var(--surface-elev); border: 1px solid var(--line); border-radius: var(--r-lg);
+  box-shadow: var(--sh-2); transition: border-color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease); }
+.d5-search:focus-within { border-color: var(--accent-line); box-shadow: var(--sh-2), 0 0 0 3px var(--accent-soft); }
+.d5-search svg { color: var(--ink-3); flex: none; }
+.d5-search input { flex: 1; min-width: 0; background: transparent; border: none; outline: none; font-size: 16.5px; color: var(--ink); }
+.d5-search input::placeholder { color: var(--ink-3); }
+/* dropdown — native presentation: flat grouped list, generous rows */
+.d5-drop { position: absolute; top: calc(100% + 8px); left: 0; right: 0; z-index: 30;
+  background: var(--surface-elev); border: 1px solid var(--line-2); border-radius: var(--r);
+  box-shadow: var(--sh-3); max-height: 380px; overflow: auto; padding: 6px; }
+.d5-drop-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px 4px; font-size: 10.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+.d5-drop-head .n { font-weight: 600; letter-spacing: 0; text-transform: none; }
+.d5-res { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: var(--r-sm); cursor: pointer; }
+.d5-res:hover, .d5-res[aria-selected="true"] { background: var(--surface-2); }
+.d5-res .kind { flex: none; width: 86px; font-size: 10px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); }
+.d5-res .lbl { font-size: 13.5px; font-weight: 650; color: var(--ink); }
+.d5-res .path { font-size: 11.5px; color: var(--ink-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.d5-res .lbl, .d5-res .path { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.d5-res .why { flex: none; font-size: 10.5px; color: var(--warn); }
+.d5-drop-empty { padding: 18px 12px; text-align: center; color: var(--ink-2); font-size: 13px; }
+.d5-drop-empty b { color: var(--ink); }
+
+/* one critical banner max */
+.d5-critical { display: flex; align-items: center; gap: 12px; padding: 12px 16px; margin-bottom: 12px;
+  border: 1px solid color-mix(in srgb, var(--warn) 42%, var(--line)); border-radius: var(--r);
+  background: color-mix(in srgb, var(--warn-soft) 55%, var(--surface)); }
+.d5-critical .sdot { width: 10px; height: 10px; }
+.d5-critical .t { font-size: 13.5px; font-weight: 700; color: var(--ink); }
+.d5-critical .s { font-size: 12px; color: var(--ink-2); }
+
+/* compact attention list */
+.d5-attention { border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); margin-bottom: 18px; overflow: hidden; }
+.d5-attention-head { display: flex; align-items: center; gap: 8px; padding: 10px 14px; font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); border-bottom: 1px solid var(--line); }
+.d5-att-row { display: flex; align-items: center; gap: 10px; padding: 9px 14px; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--ink); }
+.d5-att-row:last-child { border-bottom: none; }
+.d5-att-row .why { color: var(--ink-2); font-size: 12px; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.d5-att-row .go { flex: none; }
+
+/* two-column destination cards — dominant content */
+.d5-dir-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.d5-card { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 18px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); cursor: pointer;
+  transition: border-color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease); }
+.d5-card:hover { border-color: var(--accent-line); transform: translateY(-2px); box-shadow: var(--sh-2); }
+.d5-card .top { display: flex; align-items: center; gap: 12px; }
+.d5-card .ic { width: 40px; height: 40px; border-radius: var(--r); display: grid; place-items: center;
+  background: var(--surface-2); color: var(--accent); flex: none; }
+.d5-card h3 { margin: 0; font-size: 16.5px; font-weight: 750; letter-spacing: -.01em; }
+.d5-card .cnt { font-size: 11px; color: var(--ink-3); font-weight: 600; }
+.d5-card p { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--ink-2); max-width: 58ch; }
+.d5-card .foot { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
+.d5-card .mgrs { font-size: 11px; color: var(--ink-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.d5-card .go { margin-left: auto; flex: none; color: var(--ink-3); }
+
+/* secondary utilities — quiet, below the directory */
+.d5-utils { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.d5-util { display: inline-flex; align-items: center; gap: 7px; padding: 8px 13px; font-size: 12.5px;
+  border: 1px solid var(--line); border-radius: var(--r-pill); background: var(--surface); color: var(--ink-2); cursor: pointer; }
+.d5-util:hover { color: var(--ink); border-color: var(--line-2); background: var(--surface-2); }
+
+/* ---------- DOMAIN WORKSPACE (card expands into header) ---------- */
+.d5-ws { height: 100%; display: flex; flex-direction: column; min-height: 0; }
+.d5-ws-head { display: flex; align-items: center; gap: 14px; padding: 16px clamp(14px, 2.4vw, 34px) 12px;
+  border-bottom: 1px solid var(--line); background: var(--surface); }
+.d5-ws-head .ic { width: 42px; height: 42px; border-radius: var(--r); background: var(--surface-2); color: var(--accent); display: grid; place-items: center; flex: none; }
+.d5-ws-head h2 { margin: 0; font-size: 21px; font-weight: 800; letter-spacing: -.02em; }
+.d5-ws-head .meta { font-size: 12px; color: var(--ink-3); }
+.d5-ws-head .sp { flex: 1; }
+.d5-ws-body { flex: 1; min-height: 0; overflow: auto; padding: 16px clamp(14px, 2.4vw, 34px) 40px; }
+.d5-ws-inner { max-width: 980px; margin: 0 auto; }
+.d5-destrow { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border: 1px solid var(--line);
+  border-radius: var(--r); background: var(--surface); margin-bottom: 10px; cursor: pointer;
+  transition: border-color var(--t-fast) var(--ease); }
+.d5-destrow:hover { border-color: var(--accent-line); }
+.d5-destrow .ic { color: var(--ink-2); flex: none; }
+.d5-destrow .t { font-size: 14.5px; font-weight: 700; color: var(--ink); }
+.d5-destrow .d { font-size: 12px; color: var(--ink-2); margin-top: 1px; }
+.d5-destrow .cnt { flex: none; font-size: 11px; color: var(--ink-3); font-weight: 650; }
+.d5-destrow .go { flex: none; color: var(--ink-3); }
+.d5-destrow.mgr { background: var(--surface-2); }
+.d5-section-title { font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin: 20px 0 10px; }
+
+/* ---------- SETTING ROWS (form grammar) ---------- */
+.d5-setrow { display: flex; gap: 16px; align-items: flex-start; padding: 13px 16px; border: 1px solid var(--line);
+  border-radius: var(--r); background: var(--surface); margin-bottom: 8px; }
+.d5-setrow .info { flex: 1; min-width: 0; }
+.d5-setrow .lbl { font-size: 13.5px; font-weight: 700; color: var(--ink); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.d5-setrow .desc { font-size: 12px; color: var(--ink-2); line-height: 1.55; margin-top: 3px; max-width: 70ch; }
+.d5-setrow .ctl { flex: none; width: 220px; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.d5-setrow .err { font-size: 11.5px; color: var(--bad); margin-top: 4px; }
+.d5-setrow[data-status="managed"] .ctl { opacity: .55; }
+.d5-setrow[data-status="unavailable"] { opacity: .6; }
+.d5-ctl { display: flex; align-items: center; gap: 8px; width: 100%; justify-content: flex-end; }
+.d5-ctl input[type="text"], .d5-ctl input[type="number"], .d5-ctl input[type="search"] { width: 100%; min-width: 0; }
+.d5-sel { height: 32px; padding: 0 10px; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-sm); color: var(--ink); font: inherit; font-size: 12.5px; max-width: 100%; }
+.d5-switch { position: relative; width: 40px; height: 22px; border-radius: 99px; background: var(--surface-3); border: 1px solid var(--line); cursor: pointer; flex: none; transition: background var(--t-fast) var(--ease); }
+.d5-switch[aria-checked="true"] { background: var(--accent); border-color: var(--accent); }
+.d5-switch::after { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--surface-elev); transition: transform var(--t-fast) var(--ease); }
+.d5-switch[aria-checked="true"]::after { transform: translateX(18px); }
+.d5-range { width: 100%; accent-color: var(--accent); }
+.d5-why { margin-top: 4px; }
+.d5-why button { font-size: 11.5px; color: var(--ink-3); background: none; border: none; cursor: pointer; padding: 0; font-weight: 650; }
+.d5-why button:hover { color: var(--accent); }
+.d5-details { margin-top: 8px; padding: 10px 12px; border: 1px dashed var(--line-2); border-radius: var(--r-sm); font-size: 11.5px; color: var(--ink-2); line-height: 1.6; }
+.d5-details b { color: var(--ink); }
+
+/* ---------- MANAGER (roster + detail form) ---------- */
+.d5-mgr { height: 100%; display: flex; flex-direction: column; min-height: 0; }
+.d5-mgr-head { display: flex; align-items: center; gap: 12px; padding: 13px clamp(14px, 2.4vw, 34px); border-bottom: 1px solid var(--line); background: var(--surface); }
+.d5-mgr-head .ic { color: var(--accent); }
+.d5-mgr-head h2 { margin: 0; font-size: 17.5px; font-weight: 750; }
+.d5-mgr-head .sum { font-size: 11.5px; color: var(--ink-3); }
+.d5-mgr-head .sp { flex: 1; }
+.d5-tabs { display: flex; gap: 2px; padding: 0 clamp(14px, 2.4vw, 34px); border-bottom: 1px solid var(--line); background: var(--surface); overflow-x: auto; }
+.d5-tab { padding: 9px 13px; font-size: 12.5px; font-weight: 650; color: var(--ink-2); border: none; background: none; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; }
+.d5-tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.d5-mgr-body { flex: 1; min-height: 0; display: flex; }
+.d5-roster { width: 340px; flex: none; border-right: 1px solid var(--line); overflow: auto; padding: 10px; }
+.d5-roster-group { font-size: 10.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); padding: 10px 8px 5px; }
+.d5-rrow { display: flex; align-items: center; gap: 9px; padding: 10px 10px; border-radius: var(--r-sm); cursor: pointer; border: 1px solid transparent; }
+.d5-rrow:hover { background: var(--surface-2); }
+.d5-rrow[aria-selected="true"] { background: var(--surface-2); border-color: var(--line-2); }
+.d5-rrow .lbl { font-size: 13px; font-weight: 650; color: var(--ink); }
+.d5-rrow .sub { font-size: 11px; color: var(--ink-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.d5-rrow .sdot { margin-left: auto; }
+.d5-detail { flex: 1; min-width: 0; overflow: auto; padding: 18px clamp(16px, 2vw, 30px) 40px; }
+.d5-detail-inner { max-width: 760px; }
+.d5-detail h3 { margin: 0 0 2px; font-size: 18px; font-weight: 800; }
+.d5-detail .dsub { color: var(--ink-2); font-size: 13px; line-height: 1.55; margin-bottom: 12px; }
+.d5-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.d5-kv { display: grid; grid-template-columns: 150px 1fr; gap: 6px 14px; font-size: 12.5px; margin-bottom: 14px; }
+.d5-kv .k { color: var(--ink-3); font-weight: 650; }
+.d5-kv .v { color: var(--ink); line-height: 1.5; overflow-wrap: anywhere; }
+.d5-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 4px; }
+.d5-setup { border: 1px solid var(--line-2); border-radius: var(--r); padding: 14px; background: var(--surface); margin: 10px 0; }
+.d5-setup h4 { margin: 0 0 4px; font-size: 13px; }
+.d5-setup ol { margin: 6px 0 0; padding-left: 20px; font-size: 12px; color: var(--ink-2); line-height: 1.7; }
+.d5-work { border: 1px solid var(--line); border-radius: var(--r); padding: 12px 14px; background: var(--surface); margin: 10px 0; font-size: 12.5px; }
+.d5-work .bar { height: 6px; border-radius: 99px; background: var(--surface-3); overflow: hidden; margin-top: 8px; }
+.d5-work .bar > div { height: 100%; background: var(--accent); border-radius: 99px; transition: width var(--t-mid) var(--ease); }
+.d5-work.indet .bar > div { width: 40% !important; animation: d5-indet 1.1s var(--ease) infinite; }
+@keyframes d5-indet { 0% { margin-left: -40%; } 100% { margin-left: 100%; } }
+.d5-offline { display: flex; align-items: center; gap: 10px; padding: 10px 14px; margin-bottom: 10px;
+  border: 1px solid color-mix(in srgb, var(--warn) 40%, var(--line)); border-radius: var(--r);
+  background: color-mix(in srgb, var(--warn-soft) 50%, var(--surface)); font-size: 12.5px; color: var(--ink); }
+.d5-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.d5-table th { text-align: left; font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-3); padding: 7px 10px; border-bottom: 1px solid var(--line); }
+.d5-table td { padding: 8px 10px; border-bottom: 1px solid var(--line); color: var(--ink); vertical-align: top; }
+.d5-table td.mut { color: var(--ink-2); }
+
+/* ---------- COPY FLOW (focused review dialog) ---------- */
+.d5-copyveil { position: absolute; inset: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 62%, transparent); display: grid; place-items: center; padding: 18px; }
+.d5-copy { width: min(880px, 100%); max-height: calc(100% - 20px); display: flex; flex-direction: column;
+  background: var(--surface-elev); border: 1px solid var(--line-2); border-radius: var(--r-lg); box-shadow: var(--sh-3); overflow: hidden; }
+.d5-copy-head { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+.d5-copy-head h3 { margin: 0; font-size: 16px; font-weight: 800; }
+.d5-copy-body { flex: 1; min-height: 0; overflow: auto; padding: 16px 18px; }
+.d5-copy-foot { display: flex; align-items: center; gap: 8px; padding: 12px 18px; border-top: 1px solid var(--line); }
+.d5-copy-foot .sp { flex: 1; }
+.d5-cp-step { font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.d5-src { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--r); margin-bottom: 8px; cursor: pointer; background: var(--surface); }
+.d5-src[aria-selected="true"] { border-color: var(--accent-line); background: var(--surface-2); }
+.d5-src .nm { font-weight: 700; font-size: 13.5px; }
+.d5-src .meta { font-size: 11.5px; color: var(--ink-3); }
+.d5-cats { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; }
+.d5-cat { display: flex; gap: 10px; align-items: flex-start; padding: 11px 13px; border: 1px solid var(--line); border-radius: var(--r-sm); cursor: pointer; background: var(--surface); }
+.d5-cat[aria-selected="true"] { border-color: var(--accent-line); background: var(--surface-2); }
+.d5-cat .t { font-size: 13px; font-weight: 700; }
+.d5-cat .d { font-size: 11.5px; color: var(--ink-2); line-height: 1.5; }
+.d5-check { width: 17px; height: 17px; border-radius: 5px; border: 1.5px solid var(--line-2); flex: none; display: grid; place-items: center; margin-top: 1px; }
+.d5-cat[aria-selected="true"] .d5-check { background: var(--accent); border-color: var(--accent); }
+.d5-counts { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px,1fr)); gap: 8px; margin-bottom: 12px; }
+.d5-count { padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface); }
+.d5-count .n { font-size: 20px; font-weight: 800; }
+.d5-count .l { font-size: 11px; color: var(--ink-3); }
+.d5-count.add .n { color: var(--ok); } .d5-count.rep .n { color: var(--info); } .d5-count.conf .n { color: var(--warn); }
+.d5-cpvirt { border: 1px solid var(--line); border-radius: var(--r-sm); height: 220px; }
+.d5-receipt { border: 1px solid color-mix(in srgb, var(--ok) 40%, var(--line)); background: color-mix(in srgb, var(--ok-soft) 40%, var(--surface)); border-radius: var(--r); padding: 14px; font-size: 13px; }
+
+/* ---------- details drawer / popup host ---------- */
+.d5-drawer { position: absolute; right: 0; top: 0; bottom: 0; width: min(420px, 92%); z-index: 45;
+  background: var(--surface-elev); border-left: 1px solid var(--line-2); box-shadow: var(--sh-3);
+  display: flex; flex-direction: column; transform: translateX(100%); transition: transform var(--t-mid) var(--ease); }
+.d5-drawer[data-open="1"] { transform: none; }
+.d5-drawer-head { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+.d5-drawer-head h4 { margin: 0; font-size: 14.5px; }
+.d5-drawer-body { flex: 1; overflow: auto; padding: 14px 16px; font-size: 12.5px; line-height: 1.65; color: var(--ink-2); }
+.d5-drawer-body b { color: var(--ink); }
+
+/* breadcrumb + top controls */
+.d5-crumb { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-3); min-width: 0; overflow: hidden; }
+.d5-crumb b { color: var(--ink); font-weight: 650; white-space: nowrap; }
+.d5-crumb .sep { opacity: .6; }
+.d5-projchip { display: inline-flex; align-items: center; gap: 7px; padding: 5px 11px; border: 1px solid var(--line); border-radius: var(--r-pill); font-size: 12px; color: var(--ink-2); background: var(--surface); white-space: nowrap; }
+.d5-projchip b { color: var(--ink); }
+.d5-topbtn { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 11px; border: 1px solid var(--line);
+  border-radius: var(--r-sm); background: var(--surface); color: var(--ink-2); font-size: 12px; font-weight: 650; cursor: pointer; white-space: nowrap; }
+.d5-topbtn:hover { color: var(--ink); border-color: var(--line-2); }
+.d5-topbtn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.d5-mini-search { display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; min-width: 200px; max-width: 340px; flex: 1;
+  border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface); color: var(--ink-3); }
+.d5-mini-search input { flex: 1; min-width: 0; background: none; border: none; outline: none; color: var(--ink); font-size: 12.5px; }
+
+/* skeleton hydration */
+.d5-skel-card { height: 88px; border-radius: var(--r-lg); margin-bottom: 12px; }
+.d5-hyd { display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--ink-3); padding: 8px 2px; }
+
+/* narrow push navigation */
+.d5-narrowbtn { display: none; }
+@media (max-width: 1024px) {
+  .d5-dir-grid { grid-template-columns: 1fr; }
+  .d5-mgr-body { flex-direction: column; }
+  .d5-roster { width: auto; border-right: none; border-bottom: 1px solid var(--line); max-height: 38%; flex: none; }
+  .d5-setrow { flex-direction: column; }
+  .d5-setrow .ctl { width: 100%; align-items: flex-start; }
+  .d5-ctl { justify-content: flex-start; }
+  .d5-cats { grid-template-columns: 1fr; }
+  .d5-kv { grid-template-columns: 110px 1fr; }
+}
+@media (max-width: 899px) {
+  .pm-shell { grid-template-columns: 60px 1fr var(--chat-w, 0px); grid-template-areas: "topbar topbar topbar" "activity stage chat" "footer footer footer"; }
+  .pm-rail { position: absolute; z-index: 44; top: var(--shell-h); bottom: var(--footer-h); left: 60px; width: 264px; box-shadow: var(--sh-3); }
+  .d5-narrowbtn { display: inline-flex; }
+  .d5-mini-search { min-width: 120px; }
+  .d5-crumb { display: none; }
+}
+@media (min-width: 1900px) {
+  .d5-home-inner { max-width: 1480px; }
+  .d5-dir-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .d5-ws-inner { max-width: 1180px; }
+  .d5-roster { width: 400px; }
+  .d5-detail-inner { max-width: 900px; }
+}
+</style>
+</head>
+<body>
+<div class="pm-shell" id="shell" data-rail="open" data-chat="closed">
+  <header class="pm-topbar">
+    <span class="pm-brand">PUPPET&nbsp;MASTER</span>
+    <button class="d5-topbtn d5-narrowbtn" id="navToggle" aria-label="Open Settings navigation"></button>
+    <nav class="d5-crumb" id="crumb" aria-label="Settings location"></nav>
+    <span class="pm-spacer"></span>
+    <div class="d5-mini-search" id="miniSearchWrap" hidden>
+      <span id="miniSearchIcon"></span>
+      <input id="miniSearch" type="search" placeholder="Search all settings" aria-label="Search all settings" autocomplete="off">
+    </div>
+    <span class="d5-projchip" id="projChip" title="All editable settings apply to the current Project"></span>
+    <button class="d5-topbtn" id="themeBtn"></button>
+    <button class="d5-topbtn" id="closeBtn"></button>
+  </header>
+  <nav class="pm-activity" aria-label="Activity Bar" id="activity"></nav>
+  <aside class="pm-rail" id="rail" data-hidden></aside>
+  <main class="pm-stage" id="stage">
+    <a data-concept-model="GLM-5.2" href="index.html" title="GLM-5.2 settings concept" style="position:absolute; opacity:0; pointer-events:none;" aria-hidden="true">GLM-5.2</a>
+    <div class="d5" id="app"></div>
+    <div class="d5-drawer" id="drawer" data-open="0" role="dialog" aria-modal="false">
+      <div class="d5-drawer-head"><h4 id="drawerTitle">Details</h4><span class="pm-spacer"></span><button class="d5-topbtn" id="drawerClose"></button></div>
+      <div class="d5-drawer-body v2-surface" id="drawerBody"></div>
+    </div>
+    <div id="menuHost"></div>
+  </main>
+  <aside class="pm-chat" data-hidden></aside>
+  <footer class="pm-footer" id="footer"></footer>
+</div>
+<script>
+(function () {
+  "use strict";
+  var PM2 = window.PM2, STORE = new PM2.Store("c05");
+  var NS = "concept-05-directory-take-1";
+  var el = function (id) { return document.getElementById(id); };
+  var app = el("app"), stage = el("stage");
+  var NAV = new PM2.routes.Nav({ domain: null });
+
+  /* ============ URL params for deterministic tests ============ */
+  var QP = new URLSearchParams(location.search);
+  if (QP.get("theme")) document.documentElement.setAttribute("data-theme", QP.get("theme"));
+  if (QP.get("reduced") === "1") document.documentElement.setAttribute("data-reduced-motion", "1");
+
+  /* ============ shell chrome ============ */
+  var ICONS = { general: "settings", ai: "pam", safety: "shield", code: "code", memory: "memory", planning: "compass", branching: "crew", media: "map", web: "search", personas: "users", extensions: "stack", system: "grid" };
+  el("projChip").innerHTML = '<span class="sdot ok"></span><b>' + PM2.currentProject.name + "</b>&nbsp;· current project";
+  el("closeBtn").innerHTML = PM2.svg("close", 14) + "Close Settings";
+  el("navToggle").innerHTML = PM2.svg("list", 14) + "Settings";
+  el("miniSearchIcon").innerHTML = PM2.svg("search", 14);
+  el("themeBtn").innerHTML = PM2.svg("settings", 14) + "Friendly Dark";
+  el("activity").innerHTML = ["home", "settings", "terminal", "stack", "users", "search"].map(function (i, n) {
+    return '<button class="pm-act" data-act="' + n + '" title="' + i + '" aria-label="' + i + '">' + PM2.svg(i, 18) + "</button>";
+  }).join("");
+  el("footer").innerHTML = '<span class="pm-crumb"><b>Settings</b> · ' + NS + "</span><span class='pm-spacer'></span><span>828 settings · 12 categories</span>";
+
+  /* ============ popup menu (PM standard) ============ */
+  var menu = null;
+  function openMenu(anchor, items, onPick) {
+    closeMenu();
+    var m = document.createElement("div");
+    m.className = "v2menu"; m.setAttribute("role", "menu");
+    m.innerHTML = items.map(function (it, i) {
+      return it.sep ? '<div class="v2menu-sep"></div>' :
+        '<button class="v2menu-item" role="menuitem" data-i="' + i + '"' + (it.dis ? ' aria-disabled="true"' : "") + ">" +
+        (it.icon ? PM2.svg(it.icon, 14) : "") + '<span class="v2menu-label">' + it.label + '</span>' + (it.hint ? '<span class="v2menu-hint">' + it.hint + "</span>" : "") + "</button>";
+    }).join("");
+    el("menuHost").appendChild(m);
+    var r = anchor.getBoundingClientRect(), sr = stage.getBoundingClientRect();
+    var top = r.bottom - sr.top + 6, left = Math.min(Math.max(0, r.left - sr.left), sr.width - 220);
+    if (r.bottom + 300 > window.innerHeight) top = Math.max(4, r.top - sr.top - 300); /* collision: flip up */
+    m.style.top = top + "px"; m.style.left = left + "px";
+    m.addEventListener("click", function (e) {
+      var b = e.target.closest(".v2menu-item"); if (!b || b.getAttribute("aria-disabled")) return;
+      closeMenu(); onPick(items[+b.dataset.i]);
+    });
+    menu = m;
+  }
+  function closeMenu() { if (menu) { menu.remove(); menu = null; return true; } return false; }
+  document.addEventListener("click", function (e) { if (menu && !menu.contains(e.target)) closeMenu(); }, true);
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") { if (closeMenu()) return; if (drawer.dataset.open === "1") { closeDrawer(); return; } if (COPY.open) { copyClose(); return; } if (NAV.canBack()) { navBack(); return; } if (state.view !== "home") goHome(); } });
+
+  /* theme menu */
+  el("themeBtn").addEventListener("click", function () {
+    var themes = PM2.mgrById["mgr.appearance"].themes;
+    openMenu(el("themeBtn"), themes.map(function (t) { return { label: t, icon: "settings", dis: false }; }).concat([{ sep: 1 }, { label: "Reduced motion: " + (RM() ? "on" : "off"), icon: "bolt", hint: "toggle" }]), function (it) {
+      if (it.label.indexOf("Reduced motion") === 0) { document.documentElement.setAttribute("data-reduced-motion", RM() ? "0" : "1"); return; }
+      document.documentElement.setAttribute("data-theme", it.label);
+      document.documentElement.style.colorScheme = /-dark$/.test(it.label) ? "dark" : "light";
+      el("themeBtn").innerHTML = PM2.svg("settings", 14) + it.label;
+    });
+  });
+  function RM() { return document.documentElement.getAttribute("data-reduced-motion") === "1"; }
+  el("closeBtn").addEventListener("click", function () { goHome(true); });
+  el("navToggle").addEventListener("click", function () { var r = el("rail"); r.dataset.hidden = r.dataset.hidden ? "" : "hidden"; });
+
+  /* ============ state ============ */
+  var state = { view: "home", domain: null, section: null, manager: null, object: null, tab: 0, hydratedManagers: {}, lastQuery: "", lastRid: null };
+  var DRAWER = el("drawer");
+
+  /* ============ navigation ============ */
+  var lastRendered = "";
+  var pendingRestore = null;
+  NAV.on(function (route, depth, extra) {
+    var s = PM2.routes.str(route);
+    if (extra && extra.returnedFrom && extra.returnedFrom.query) pendingRestore = { query: extra.returnedFrom.query, resultId: extra.returnedFrom.resultId };
+    if (s === lastRendered) return; /* replace-routes to the same destination never re-render */
+    lastRendered = s;
+    location.hash = s;
+    render(route);
+  });
+  window.addEventListener("hashchange", function () {
+    var r = PM2.routes.parse(location.hash);
+    if (PM2.routes.str(r) !== PM2.routes.str(NAV.top())) NAV.go(r, { replace: false });
+  });
+  function navBack() { NAV.back(); }
+  function goHome() {
+    state.view = "home"; state.domain = null; state.section = null; state.manager = null;
+    NAV.reset({ domain: null });
+    render({ domain: null });
+  }
+
+  /* ============ search (home hero + persistent mini) ============ */
+  var drop = null, dropSel = -1, dropToken = 0;
+  function searchAttach(input, isHome) {
+    var wrap = input.parentElement;
+    input.addEventListener("input", function () {
+      var q = input.value;
+      state.lastQuery = q;
+      var res = PM2.search.query(q);
+      if (res.token < dropToken) return; dropToken = res.token;
+      showDrop(wrap, res, isHome);
+    });
+    input.addEventListener("keydown", function (e) {
+      if (!drop) { if (e.key === "Escape" && !isHome) goHome(); return; }
+      var rows = drop.querySelectorAll(".d5-res");
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        dropSel = e.key === "ArrowDown" ? Math.min(rows.length - 1, dropSel + 1) : Math.max(0, dropSel - 1);
+        rows.forEach(function (r, i) { r.setAttribute("aria-selected", i === dropSel ? "true" : "false"); });
+        rows[dropSel] && rows[dropSel].scrollIntoView({ block: "nearest" });
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        if (dropSel >= 0 && rows[dropSel]) pickResult(rows[dropSel].dataset.rid);
+        else if (rows[0]) pickResult(rows[0].dataset.rid);
+      } else if (e.key === "Escape") { hideDrop(); input.blur(); }
+    });
+    input.addEventListener("focus", function () { if (input.value && !drop) { var res = PM2.search.query(input.value); showDrop(wrap, res, isHome); } });
+  }
+  function showDrop(wrap, res, isHome) {
+    hideDrop();
+    if (!res.query) return;
+    drop = document.createElement("div");
+    drop.className = "d5-drop v2-surface"; drop.setAttribute("role", "listbox");
+    var html = "";
+    if (!res.results.length) {
+      html = '<div class="d5-drop-empty">No results for <b>' + esc(res.query) + "</b>" + (res.suggestion ? " — did you mean <b>" + esc(res.suggestion) + "</b>?" : "") + "</div>";
+      if (res.suggestion) html += '<div class="d5-res" data-rid="suggest:' + esc(res.suggestion) + '"><span class="kind">suggestion</span><span class="lbl">Search for “' + esc(res.suggestion) + "” instead</span></div>";
+    } else {
+      html += '<div class="d5-drop-head"><span>Results</span><span class="n">' + res.results.length + " shown" + (res.truncated ? " · " + res.total + " total" : "") + "</span></div>";
+      res.results.forEach(function (r) {
+        html += '<div class="d5-res" role="option" data-rid="' + esc(r.rid) + '" data-dest="' + esc(JSON.stringify(r.dest)) + '">' +
+          '<span class="kind">' + r.type.replace(/_/g, " ") + "</span>" +
+          '<span style="min-width:0;flex:1"><span class="lbl">' + esc(r.label) + '</span><br><span class="path">' + esc(r.path.join(" › ")) + "</span></span>" +
+          (r.availability ? '<span class="why">' + esc(r.availability) + "</span>" : "") + "</div>";
+      });
+    }
+    drop.innerHTML = html;
+    wrap.appendChild(drop); dropSel = -1;
+    drop.addEventListener("mousedown", function (e) {
+      var row = e.target.closest(".d5-res"); if (!row) return;
+      e.preventDefault();
+      if (row.dataset.rid.indexOf("suggest:") === 0) {
+        var q = row.dataset.rid.slice(8);
+        var inp = wrap.querySelector("input"); inp.value = q; state.lastQuery = q;
+        showDrop(wrap, PM2.search.query(q), isHome); return;
+      }
+      pickResult(row.dataset.rid);
+    });
+  }
+  function hideDrop() { if (drop) { drop.remove(); drop = null; } }
+  document.addEventListener("click", function (e) { if (drop && !e.target.closest(".d5-searchwrap") && !e.target.closest(".d5-mini-search")) hideDrop(); });
+
+  function pickResult(rid) {
+    var entry = PM2.search.byRid(rid); if (!entry) return;
+    state.lastQuery = (document.getElementById("homeSearch") || document.getElementById("miniSearch") || {}).value || state.lastQuery;
+    state.lastRid = rid;
+    hideDrop();
+    var plan = PM2.routes.planFor(entry.dest);
+    var route = Object.assign({}, entry.dest, { query: state.lastQuery, resultId: rid });
+    if (entry.type === "intentional_help_result" && entry.dest.mode === "copy") { openCopy(); NAV.go({ mode: "copy" }); return; }
+    NAV.go(route);
+    afterNavPlan(plan, entry);
+  }
+  function afterNavPlan(plan, entry) {
+    /* executed natively: focus + calm highlight land after render */
+    /* waits for render + lazy manager hydration so focus/highlight always land */
+    var tries = 0;
+    (function land() {
+      var target = null;
+      if (plan.route.row) target = stage.querySelector('[data-row="' + plan.route.row + '"]');
+      if (!target && plan.route.object) target = stage.querySelector('[data-obj="' + plan.route.object + '"]');
+      if (!target && plan.route.manager) target = stage.querySelector('[data-mgr="' + plan.route.manager + '"]');
+      if (!target && tries++ < 16) { setTimeout(land, 110); return; }
+      if (target) {
+        target.scrollIntoView({ block: "center", behavior: RM() ? "auto" : "smooth" });
+        target.classList.remove("v2-calm"); void target.offsetWidth; target.classList.add("v2-calm");
+        var f = target.querySelector("input,select,button:not(.d5-why button),.d5-switch") || target;
+        try { f.focus({ preventScroll: true }); } catch (err) {}
+      }
+      if (entry && entry.type === "setting") {
+        var row = PM2.inventory.byId[plan.route.row];
+        if (row) openDrawer("Landed on a setting", "<b>" + esc(row.label) + "</b><br>" + esc(row.desc) +
+          "<br><br>Location: " + esc(PM2.routes.crumb(NAV.top()).join(" › ")) + (state.lastQuery ? "<br>From search: “" + esc(state.lastQuery) + "”" : ""));
+      }
+    })();
+  }
+
+  /* ============ render dispatcher ============ */
+  function render(route) {
+    closeDrawer(); hideDrop();
+    if (route.manager && PM2.mgrById[route.manager]) { renderManager(route); }
+    else if (route.domain) { renderDomain(route); }
+    else if (route.mode === "copy") { renderHome(); openCopy(); }
+    else { renderHome(); }
+    renderRail(route); renderCrumb(route);
+    el("miniSearchWrap").hidden = state.view === "home";
+  }
+  function renderCrumb(route) {
+    var parts = PM2.routes.crumb(route);
+    var html = "<b>Settings</b>";
+    parts.forEach(function (p) { html += '<span class="sep">›</span>' + esc(p); });
+    if (NAV.canBack()) html = '<button class="d5-topbtn" id="backBtn" style="margin-right:6px">' + PM2.svg("back", 13) + "Back</button>" + html;
+    el("crumb").innerHTML = html;
+    var bb = el("backBtn"); if (bb) bb.addEventListener("click", navBack);
+  }
+  function renderRail(route) {
+    var html = '<div class="pm-rail-head">Settings</div><div class="pm-rail-body v2-surface">';
+    html += '<div class="pm-side-item" data-nav="home"' + (!route.domain ? ' aria-current="page"' : "") + ">" + PM2.svg("home", 15) + "Settings Home</div>";
+    PM2.inventory.categories.forEach(function (c) {
+      html += '<div class="pm-side-item" data-nav="' + c.id + '"' + (route.domain === c.id ? ' aria-current="page"' : "") + ">" + PM2.svg(ICONS[c.id] || "grid", 15) + esc(c.title) + '<span class="pm-side-cnt">' + PM2.inventory.byCategory[c.id].length + "</span></div>";
+    });
+    html += '<div class="pm-side-item" data-nav="all">' + PM2.svg("list", 15) + "All settings index</div>";
+    html += '<div class="pm-side-item" data-nav="copy">' + PM2.svg("layers", 15) + "Copy settings from…</div>";
+    html += "</div>";
+    el("rail").innerHTML = html;
+    el("rail").querySelectorAll("[data-nav]").forEach(function (n) {
+      n.addEventListener("click", function () {
+        var v = n.dataset.nav;
+        if (v === "home") goHome();
+        else if (v === "all") renderAll();
+        else if (v === "copy") openCopy();
+        else NAV.go({ domain: v });
+        if (window.innerWidth < 900) el("rail").dataset.hidden = "hidden";
+      });
+    });
+  }
+
+  /* ============ HOME ============ */
+  function renderHome() {
+    state.view = "home"; state.manager = null; state.domain = null;
+    /* attention: compact, 2-4 items */
+    var att = [
+      { t: "Codex CLI setup required", why: "Some operations need it — install is explicit, from the official source", go: { manager: "mgr.provider", object: "prov.codex-cli" }, tone: "warn" },
+      { t: "ntfy destination offline", why: "Notifications queued · last good 2026-08-17 09:12", go: { manager: "mgr.notifications", object: "ntf.ntfy" }, tone: "warn" },
+      { t: "1 setting changed elsewhere", why: "Storage vault migration waiting for restart", go: { manager: "mgr.storage", object: "sto.migrate" }, tone: "info" }
+    ];
+    var html = '<div class="d5-home v2-surface"><div class="d5-home-inner">';
+    html += '<div class="d5-eyebrow"><b>05</b> · A1 Directory · Take 1</div>';
+    html += '<h1 class="d5-h1">Settings</h1>';
+    html += '<div class="d5-sub">Everything for <b>' + esc(PM2.currentProject.name) + "</b> — search first, then browse the directory.</div>";
+    html += '<div class="d5-searchwrap"><div class="d5-search">' + PM2.svg("search", 19) +
+      '<input id="homeSearch" type="search" placeholder="Search 828 settings, managers, actions, diagnostics…" aria-label="Universal search" autocomplete="off">' +
+      '<span class="v2kbd">/</span></div></div>';
+    html += '<div class="d5-critical"><span class="sdot warn"></span><div><div class="t">One provider needs setup before some operations can run</div><div class="s">Codex CLI is not installed. Runtime demand will deep-link here; nothing is bundled or auto-installed.</div></div><span class="pm-spacer"></span><button class="d5-topbtn primary" data-dest=\'' + esc(JSON.stringify({ manager: "mgr.provider", object: "prov.codex-cli" })) + "'>" + PM2.svg("plus", 13) + "Set up</button></div>";
+    html += '<div class="d5-attention"><div class="d5-attention-head"><span class="sdot warn"></span>Needs attention<span style="flex:1"></span><span style="font-weight:600;letter-spacing:0;text-transform:none">3 open</span></div>';
+    att.forEach(function (a) {
+      html += '<div class="d5-att-row"><span class="sdot ' + a.tone + '"></span><span>' + esc(a.t) + '</span><span class="why">' + esc(a.why) + '</span><button class="d5-topbtn go" data-dest=\'' + esc(JSON.stringify(a.go)) + "'>Open</button></div>";
+    });
+    html += "</div>";
+    html += '<div class="d5-section-title">Settings directory</div><div class="d5-dir-grid" id="dirGrid">';
+    PM2.inventory.categories.forEach(function (c, i) {
+      var mgrs = PM2.managers.filter(function (m) { return m.domain === c.id; });
+      var changed = 0; PM2.inventory.byCategory[c.id].forEach(function (s) { if (STORE.get(s.id).status === "custom") changed++; });
+      html += '<div class="d5-card" data-domain="' + c.id + '" tabindex="0" role="link" aria-label="' + esc(c.title) + '">' +
+        '<div class="top"><span class="ic">' + PM2.svg(ICONS[c.id] || "grid", 20) + '</span><div><h3>' + esc(c.title) + '</h3><span class="cnt">' + PM2.inventory.byCategory[c.id].length + " settings · " + changed + " changed" + (mgrs.length ? " · " + mgrs.length + " managers" : "") + "</span></div></div>" +
+        "<p>" + esc(c.subgroups.map(function (s) { return s.title || s.id; }).join(" · ")) + "</p>" +
+        '<div class="foot"><span class="mgrs">' + (mgrs.length ? esc(mgrs.slice(0, 3).map(function (m) { return m.title; }).join(", ")) + (mgrs.length > 3 ? ", +" + (mgrs.length - 3) : "") : "—") + '</span><span class="go">' + PM2.svg("chevron", 15) + "</span></div></div>";
+    });
+    html += "</div>";
+    html += '<div class="d5-utils">' +
+      '<button class="d5-util" data-nav="all">' + PM2.svg("list", 13) + "All settings index (828)</button>" +
+      '<button class="d5-util" data-nav="copy">' + PM2.svg("layers", 13) + "Copy settings from another project…</button>" +
+      '<button class="d5-util" data-nav="recent">' + PM2.svg("refresh", 13) + "Recent changes (" + STORE.changedCount() + ")</button>" +
+      "</div></div></div>";
+    app.innerHTML = html;
+    searchAttach(el("homeSearch"), true);
+    var restoreQ = pendingRestore ? pendingRestore.query : NAV.top().query;
+    if (restoreQ) { el("homeSearch").value = restoreQ; state.lastQuery = restoreQ; if (pendingRestore && pendingRestore.resultId) state.lastRid = pendingRestore.resultId; pendingRestore = null; }
+    document.addEventListener("keydown", function (e) { if (e.key === "/" && document.activeElement.tagName !== "INPUT" && state.view === "home") { e.preventDefault(); el("homeSearch").focus(); } });
+    app.querySelectorAll("[data-domain]").forEach(function (card) {
+      card.addEventListener("click", function () { NAV.go({ domain: card.dataset.domain }); });
+      card.addEventListener("keydown", function (e) { if (e.key === "Enter") NAV.go({ domain: card.dataset.domain }); });
+    });
+    app.querySelectorAll("[data-dest]").forEach(function (b) {
+      b.addEventListener("click", function (e) { e.stopPropagation(); var d = JSON.parse(b.dataset.dest); NAV.go(d); afterNavPlan(PM2.routes.planFor(d)); });
+    });
+    app.querySelectorAll(".d5-util,[data-nav]").forEach(function (b) {
+      if (b.classList.contains("d5-card")) return;
+      b.addEventListener("click", function () {
+        var v = b.dataset.nav;
+        if (v === "all") renderAll(); else if (v === "copy") openCopy();
+        else if (v === "recent") openDrawer("Recent changes", "Values changed in this project: <b>" + STORE.changedCount() + "</b>. Each change applies to <b>" + esc(PM2.currentProject.name) + "</b> only. Projects never stay linked.");
+      });
+    });
+  }
+
+  /* ============ DOMAIN PAGE ============ */
+  function renderDomain(route) {
+    state.view = "domain"; state.domain = route.domain; state.manager = null;
+    var c = PM2.inventory.categories.filter(function (x) { return x.id === route.domain; })[0];
+    var mgrs = PM2.managers.filter(function (m) { return m.domain === route.domain; });
+    var html = '<div class="d5-ws"><div class="d5-ws-head">' +
+      '<button class="d5-topbtn" id="wsBack">' + PM2.svg("back", 13) + "Back to Home</button>" +
+      '<span class="ic">' + PM2.svg(ICONS[c.id] || "grid", 21) + "</span><div><h2>" + esc(c.title) + '</h2><div class="meta">' + PM2.inventory.byCategory[c.id].length + " settings · " + mgrs.length + " managers · changes apply to " + esc(PM2.currentProject.name) + "</div></div><span class='sp'></span></div>";
+    html += '<div class="d5-ws-body v2-surface"><div class="d5-ws-inner">';
+    html += '<div class="d5-section-title">Managers</div>';
+    mgrs.forEach(function (m) {
+      html += '<div class="d5-destrow mgr" data-mgr="' + m.id + '" tabindex="0"><span class="ic">' + PM2.svg(m.icon, 17) + '</span><div style="flex:1;min-width:0"><div class="t">' + esc(m.title) + '</div><div class="d">' + esc(m.blurb) + "</div></div>" +
+        '<span class="v2badge ' + (m.health.kind === "ok" ? "ok" : m.health.kind) + '">' + esc(m.health.text) + "</span>" + PM2.svg("chevron", 15) + "</div>";
+    });
+    if (route.domain === "system") {
+      PM2.owners.forEach(function (o) {
+        html += '<div class="d5-destrow" data-owner="' + o.id + '" tabindex="0"><span class="ic">' + PM2.svg("plug", 17) + '</span><div style="flex:1;min-width:0"><div class="t">' + esc(o.title) + '</div><div class="d">Owner module: ' + esc(o.owner) + " · " + esc(o.contract) + "</div></div>" + '<span class="v2badge info">insertion point</span>' + PM2.svg("chevron", 15) + "</div>";
+      });
+    }
+    html += '<div class="d5-section-title">Pages</div>';
+    c.subgroups.forEach(function (sg) {
+      var sid = sg.id || sg, srows = PM2.inventory.subgroups[route.domain + "." + sid] || [];
+      html += '<div class="d5-destrow" data-section="' + sid + '" tabindex="0"><span class="ic">' + PM2.svg("stack", 17) + '</span><div style="flex:1;min-width:0"><div class="t">' + esc(sg.title || sid) + '</div><div class="d">' + srows.length + " settings</div></div>" + '<span class="cnt">' + srows.length + "</span>" + PM2.svg("chevron", 15) + "</div>";
+    });
+    html += "</div></div></div>";
+    app.innerHTML = html;
+    el("wsBack").addEventListener("click", navBack);
+    app.querySelectorAll("[data-mgr]").forEach(function (r) {
+      r.addEventListener("click", function () { NAV.go({ domain: route.domain, manager: r.dataset.mgr }); });
+    });
+    app.querySelectorAll("[data-owner]").forEach(function (r) {
+      r.addEventListener("click", function () {
+        var o = PM2.owners.filter(function (x) { return x.id === r.dataset.owner; })[0];
+        openDrawer(o.title, "<b>Owner module:</b> " + esc(o.owner) + "<br><b>Insertion contract:</b> " + esc(o.contract) + "<br><b>Return deep link:</b> " + esc(o.returnRoute) + "<br>" + esc(o.note) + "<br><br>No fabricated backend — this destination hands off to its named owner when that module lands.");
+      });
+    });
+    app.querySelectorAll("[data-section]").forEach(function (r) {
+      r.addEventListener("click", function () { renderSection(route.domain, r.dataset.section); });
+    });
+    if (route.page && !route.manager) { /* deep link into a page */
+      var sec = route.section || route.page;
+      if (route.row) { renderSection(route.domain, sec, route.row); return; }
+    }
+  }
+
+  /* ============ SECTION (settings rows, virtualized) ============ */
+  function renderSection(domainId, sectionId, focusRow) {
+    var c = PM2.inventory.categories.filter(function (x) { return x.id === domainId; })[0];
+    var sg = (c.subgroups || []).filter(function (s) { return (s.id || s) === sectionId; })[0];
+    var rows = PM2.inventory.subgroups[domainId + "." + sectionId] || [];
+    state.view = "section"; state.section = sectionId; state.manager = null;
+    NAV.go({ domain: domainId, page: sectionId, section: sectionId, query: state.lastQuery || undefined, resultId: state.lastRid || undefined }, { replace: true });
+    var html = '<div class="d5-ws"><div class="d5-ws-head">' +
+      '<button class="d5-topbtn" id="wsBack">' + PM2.svg("back", 13) + "Back to " + esc(c.title) + "</button>" +
+      '<span class="ic">' + PM2.svg("stack", 21) + "</span><div><h2>" + esc(sg ? (sg.title || sectionId) : sectionId) + '</h2><div class="meta">' + rows.length + " settings · " + esc(c.title) + "</div></div><span class='sp'></span></div>";
+    html += '<div class="d5-ws-body v2-surface"><div class="d5-ws-inner" id="secList"></div></div></div>';
+    app.innerHTML = html;
+    el("wsBack").addEventListener("click", navBack);
+    var list = el("secList");
+    rows.forEach(function (s) { list.appendChild(settingRow(s)); });
+    if (focusRow) {
+      requestAnimationFrame(function () {
+        var t = list.querySelector('[data-row="' + focusRow + '"]');
+        if (t) { t.scrollIntoView({ block: "center" }); t.classList.add("v2-calm"); var f = t.querySelector("input,select,.d5-switch,button"); f && f.focus({ preventScroll: true }); }
+      });
+    }
+  }
+
+  /* setting row — form grammar, 9 states */
+  function settingRow(s) {
+    var st = STORE.get(s.id);
+    var d = document.createElement("div");
+    d.className = "d5-setrow"; d.dataset.row = s.id; d.dataset.status = st.status;
+    var meta = PM2.statusMeta[st.status];
+    var val = st.value;
+    var ctl = "";
+    switch (s.type) {
+      case "toggle": ctl = '<div class="d5-ctl"><button class="d5-switch" role="switch" aria-checked="' + (val === true) + '" aria-label="' + esc(s.label) + '"></button></div>'; break;
+      case "select": case "radio": ctl = '<div class="d5-ctl"><select class="d5-sel" aria-label="' + esc(s.label) + '">' + (s.options || []).map(function (o) { return "<option" + (o === val ? " selected" : "") + ">" + esc(o) + "</option>"; }).join("") + "</select></div>"; break;
+      case "slider": ctl = '<div class="d5-ctl"><input class="d5-range" type="range" min="0" max="100" step="10" value="' + (typeof val === "number" ? val : 50) + '" aria-label="' + esc(s.label) + '"><span class="v2kbd" style="min-width:38px">' + (typeof val === "number" ? val : 50) + "</span></div>"; break;
+      case "number": ctl = '<div class="d5-ctl"><input class="field" type="number" value="' + esc(String(val)) + '" aria-label="' + esc(s.label) + '"></div>'; break;
+      case "text": case "path": ctl = '<div class="d5-ctl"><input class="field" type="text" value="' + esc(String(val)) + '" aria-label="' + esc(s.label) + '"></div>'; break;
+      case "action": ctl = '<div class="d5-ctl"><button class="d5-topbtn primary" data-do-action="' + esc(s.id) + '">' + PM2.svg("bolt", 13) + "Run</button></div>"; break;
+      case "multiselect": ctl = '<div class="d5-ctl"><select class="d5-sel" multiple size="2" aria-label="' + esc(s.label) + '">' + (s.options || []).map(function (o) { return "<option" + ((val || []).indexOf(o) >= 0 ? " selected" : "") + ">" + esc(o) + "</option>"; }).join("") + "</select></div>"; break;
+      default: ctl = '<div class="d5-ctl"><span class="v2badge">' + esc(JSON.stringify(val)) + "</span></div>";
+    }
+    var badge = s.type === "action" ? "" : '<span class="v2badge ' + (meta.tone === "neutral" ? "" : meta.tone) + '">' + esc(meta.label) + "</span>";
+    if ((s.badges || []).indexOf("restart") >= 0 || st.status === "restart") badge += '<span class="v2badge warn">Restart</span>';
+    d.innerHTML = '<div class="info"><div class="lbl">' + esc(s.label) + badge + '</div><div class="desc">' + esc(s.desc) + '</div>' +
+      (st.status === "validation" ? "" : "") +
+      '<div class="d5-why"><button data-why="' + esc(s.id) + '">Why this value?</button></div><div class="d5-details" hidden></div></div>' +
+      '<div class="ctl">' + ctl + '<div class="err" hidden></div></div>';
+    var whyBtn = d.querySelector("[data-why]");
+    whyBtn.addEventListener("click", function () {
+      var dd = d.querySelector(".d5-details");
+      if (!dd.hidden) { dd.hidden = true; return; }
+      dd.hidden = false;
+      dd.innerHTML = "<b>Status:</b> " + esc(meta.label) +
+        "<br><b>Default:</b> " + esc(JSON.stringify(s.default)) +
+        (s.recommended !== undefined ? "<br><b>Recommended:</b> " + esc(JSON.stringify(s.recommended)) : "") +
+        "<br><b>Applies to:</b> " + esc(PM2.currentProject.name) + " (this project only)" +
+        "<br><b>Effect timing:</b> immediate" + (st.status === "restart" ? " — restart required to finish applying" : "") +
+        (st.status === "managed" ? "<br><b>Origin:</b> organization policy — control is read-only here" : "") +
+        (st.status === "unavailable" ? "<br><b>Why unavailable:</b> a dependency for this row is not set up" : "") +
+        (st.status === "changed-elsewhere" ? "<br><b>Changed:</b> " + esc(st.changedAt || "recently") + " from another surface — review before editing" : "") +
+        (st.status === "import-conflict" ? "<br><b>Conflict:</b> imported value differs — choose yours or theirs" : "") +
+        "<br><b>Registry scope (diagnostic only):</b> " + esc((s.scope || []).join(", ")) +
+        "<br><b>ID:</b> <code>" + esc(s.id) + "</code>";
+    });
+    var sw = d.querySelector(".d5-switch");
+    if (sw) sw.addEventListener("click", function () {
+      if (st.status === "managed") return;
+      var nv = !(sw.getAttribute("aria-checked") === "true");
+      sw.setAttribute("aria-checked", nv); STORE.set(s.id, nv, "custom");
+    });
+    var sel = d.querySelector("select.d5-sel");
+    if (sel && !sel.multiple) sel.addEventListener("change", function () { STORE.set(s.id, sel.value, "custom"); });
+    var num = d.querySelector('input[type="number"]');
+    if (num) num.addEventListener("change", function () {
+      var err = d.querySelector(".err");
+      var v = parseFloat(num.value);
+      if (isNaN(v) || v < 0 || v > 100000) { err.hidden = false; err.textContent = "Enter a number between 0 and 100,000."; return; }
+      err.hidden = true; STORE.set(s.id, v, "custom");
+    });
+    var txt = d.querySelector('input[type="text"]');
+    if (txt) txt.addEventListener("change", function () { STORE.set(s.id, txt.value, "custom"); });
+    var rng = d.querySelector('input[type="range"]');
+    if (rng) rng.addEventListener("change", function () { STORE.set(s.id, parseInt(rng.value, 10), "custom"); d.querySelector(".v2kbd").textContent = rng.value; });
+    return d;
+  }
+
+  /* ============ ALL SETTINGS INDEX ============ */
+  function renderAll() {
+    state.view = "all"; state.manager = null;
+    NAV.go({ domain: "all" }, { replace: true });
+    var html = '<div class="d5-ws"><div class="d5-ws-head">' +
+      '<button class="d5-topbtn" id="wsBack">' + PM2.svg("back", 13) + "Back</button>" +
+      '<span class="ic">' + PM2.svg("list", 21) + '</span><div><h2>All settings index</h2><div class="meta">828 settings · long-tail index · virtualized</div></div><span class="sp"></span>' +
+      '<input class="field" id="allFilter" type="search" placeholder="Filter…" aria-label="Filter all settings" style="min-width:160px"></div>';
+    html += '<div class="d5-ws-body v2-surface"><div class="d5-ws-inner">';
+    html += '<div class="d5-utils" id="allFacets" style="margin:0 0 12px"></div><div id="allList"></div></div></div></div>';
+    app.innerHTML = html;
+    el("wsBack").addEventListener("click", navBack);
+    var facet = "all";
+    var facets = [["all", "All"], ["changed", "Changed"], ["managed", "Managed"], ["unavailable", "Unavailable"], ["restart", "Restart required"], ["advanced", "Advanced tier"], ["simple", "Simple tier"]];
+    var fwrap = el("allFacets");
+    function drawFacets() {
+      fwrap.innerHTML = facets.map(function (f) { return '<button class="d5-util" data-facet="' + f[0] + '"' + (facet === f[0] ? ' style="border-color:var(--accent-line);color:var(--ink)"' : "") + ">" + f[1] + "</button>"; }).join("");
+      fwrap.querySelectorAll("[data-facet]").forEach(function (b) { b.addEventListener("click", function () { facet = b.dataset.facet; drawFacets(); draw(); }); });
+    }
+    var list = el("allList"); var ROWH = 76; var all = [];
+    function draw() {
+      var q = (el("allFilter").value || "").toLowerCase();
+      all = PM2.inventory.categories.flatMap(function (c) { return PM2.inventory.byCategory[c.id]; }).filter(function (s) {
+        var st = STORE.get(s.id);
+        if (facet === "changed" && st.status !== "custom") return false;
+        if (facet === "managed" && st.status !== "managed") return false;
+        if (facet === "unavailable" && st.status !== "unavailable") return false;
+        if (facet === "restart" && st.status !== "restart") return false;
+        if (facet === "advanced" && s.tier !== "advanced") return false;
+        if (facet === "simple" && s.tier !== "simple") return false;
+        if (q && (s.label + " " + s.id).toLowerCase().indexOf(q) < 0) return false;
+        return true;
+      });
+      drawWindow(0);
+      info.textContent = all.length + " of 828 shown";
+    }
+    var info = document.createElement("div"); info.style.cssText = "font-size:11.5px;color:var(--ink-3);margin:0 0 8px";
+    list.parentElement.insertBefore(info, list);
+    var win = document.createElement("div"); win.className = "d5-virt v2-virt"; win.style.height = "min(560px, calc(100vh - 320px))";
+    var pad = document.createElement("div"); pad.className = "v2-virt-pad";
+    var winEl = document.createElement("div"); winEl.className = "v2-virt-win";
+    win.append(pad, winEl); list.appendChild(win);
+    function drawWindow(scrollTop) {
+      var w = PM2.window({ scrollTop: scrollTop, viewportHeight: win.clientHeight, rowHeight: ROWH, total: all.length });
+      pad.style.height = w.padTop + "px"; winEl.style.transform = "translateY(" + w.padTop + "px)"; winEl.style.position = "relative";
+      winEl.innerHTML = "";
+      var frag = document.createDocumentFragment();
+      for (var i = w.first; i < w.first + w.count; i++) {
+        var s = all[i]; if (!s) break;
+        var holder = document.createElement("div"); holder.style.height = ROWH + "px";
+        var row = settingRow(s); row.style.margin = "0 0 2px"; row.querySelector(".desc").style.display = "-webkit-box";
+        holder.appendChild(row); frag.appendChild(holder);
+      }
+      winEl.appendChild(frag);
+      PM2.telemetry.domRows = [winEl.children.length];
+    }
+    win.addEventListener("scroll", function () { drawWindow(win.scrollTop); });
+    el("allFilter").addEventListener("input", draw);
+    drawFacets(); draw();
+  }
+
+  /* ============ MANAGER (roster + detail form) ============ */
+  function renderManager(route) {
+    var m = PM2.mgrById[route.manager];
+    state.view = "manager"; state.manager = m.id; state.tab = route.tab ? Math.max(0, route.tab|0) : 0;
+    var html = '<div class="d5-mgr"><div class="d5-mgr-head">' +
+      '<button class="d5-topbtn" id="mgrBack">' + PM2.svg("back", 13) + "Back to " + esc(PM2.categoryTitle(m.domain)) + "</button>" +
+      '<span class="ic">' + PM2.svg(m.icon, 19) + "</span><div><h2>" + esc(m.title) + '</h2><div class="sum">' + esc(m.blurb) + "</div></div><span class='sp'></span>" +
+      '<span class="v2badge ' + (m.health.kind === "ok" ? "ok" : m.health.kind) + '">' + esc(m.health.text) + "</span></div>";
+    html += '<div class="d5-tabs" role="tablist">' + (m.tabs || ["Overview"]).map(function (t, i) { return '<button class="d5-tab" role="tab" aria-selected="' + (i === state.tab) + '" data-tab="' + i + '">' + esc(t) + "</button>"; }).join("") + "</div>";
+    html += '<div class="d5-mgr-body" id="mgrBody"><div class="d5-hyd"><span class="v2-skel v2-skel-line" style="width:120px;display:inline-block"></span> Hydrating ' + esc(m.title.toLowerCase()) + "…</div></div></div>";
+    app.innerHTML = html;
+    el("mgrBack").addEventListener("click", navBack);
+    app.querySelectorAll(".d5-tab").forEach(function (t) {
+      t.addEventListener("click", function () {
+        state.tab = +t.dataset.tab;
+        app.querySelectorAll(".d5-tab").forEach(function (x) { x.setAttribute("aria-selected", x === t ? "true" : "false"); });
+        hydrate(m, route);
+      });
+    });
+    /* lazy hydration: skeleton first, content after a tick (truthful, cached) */
+    if (!state.hydratedManagers[m.id]) {
+      setTimeout(function () { state.hydratedManagers[m.id] = true; PM2.telemetry.managersHydrated.push(m.id); hydrate(m, route); }, 260);
+    } else hydrate(m, route);
+  }
+  function hydrate(m, route) {
+    var body = el("mgrBody"); if (!body) return;
+    var tab = (m.tabs || ["Overview"])[state.tab] || "Overview";
+    var sel = route.object || (m.records && m.records[0] && m.records[0].id);
+    var rosterHTML = "", detailHTML = "";
+    if (m.id === "mgr.provider") { rosterHTML = providerRoster(m, sel); detailHTML = providerDetail(m, sel, tab); }
+    else {
+      (m.groups || []).forEach(function (g) {
+        rosterHTML += '<div class="d5-roster-group">' + esc(g.label) + "</div>";
+        m.records.filter(function (r) { return r.group === g.id; }).forEach(function (r) { rosterHTML += rrow(r, sel); });
+      });
+      if (!m.groups) m.records.forEach(function (r) { rosterHTML += rrow(r, sel); });
+      detailHTML = genericDetail(m, m.records.filter(function (r) { return r.id === sel; })[0] || m.records[0], tab);
+    }
+    body.innerHTML = '<div class="d5-roster v2-surface">' + rosterHTML + '</div><div class="d5-detail v2-surface"><div class="d5-detail-inner" id="mgrDetail">' + detailHTML + "</div></div>";
+    body.querySelectorAll("[data-obj]").forEach(function (r) {
+      r.addEventListener("click", function () {
+        body.querySelectorAll("[data-obj]").forEach(function (x) { x.setAttribute("aria-selected", x === r ? "true" : "false"); });
+        var rec = m.records.filter(function (x) { return x.id === r.dataset.obj; })[0];
+        el("mgrDetail").innerHTML = (m.id === "mgr.provider") ? providerDetail(m, r.dataset.obj, tab) : genericDetail(m, rec, tab);
+        NAV.go({ domain: m.domain, manager: m.id, object: r.dataset.obj, tab: state.tab }, { replace: true });
+        wireDetail(m);
+      });
+    });
+    wireDetail(m);
+  }
+  function rrow(r, sel) {
+    var tone = r.status === "ok" ? "ok" : r.status === "bad" ? "bad" : "warn";
+    return '<div class="d5-rrow" data-obj="' + r.id + '" aria-selected="' + (r.id === sel) + '" tabindex="0">' +
+      '<div style="min-width:0;flex:1"><div class="lbl">' + esc(r.label) + '</div><div class="sub">' + esc(r.statusLabel || r.desc || "") + "</div></div>" +
+      '<span class="sdot ' + tone + '" title="' + esc(r.statusLabel || "") + '"></span></div>';
+  }
+  function chipsHTML(r) { return (r.chips || []).map(function (c) { return '<span class="v2badge">' + esc(c[0]) + ": " + esc(String(c[1])) + "</span>"; }).join(""); }
+  function actionsHTML(m, r) {
+    return '<div class="d5-actions">' + (r.actions || []).map(function (a) {
+      return '<button class="d5-topbtn' + (a.kind === "primary" ? " primary" : "") + '" data-action="' + esc(a.id) + '" data-owner="' + esc(r.id) + '">' + esc(a.label) + "</button>";
+    }).join("") + (m.ops ? m.ops.map(function (a) { return '<button class="d5-topbtn" data-op="' + esc(a.id) + '">' + esc(a.label) + "</button>"; }).join("") : "") + "</div>";
+  }
+  function wireDetail(m) {
+    var root = el("mgrDetail"); if (!root) return;
+    root.querySelectorAll("[data-action]").forEach(function (b) {
+      b.addEventListener("click", function () { runManagerAction(m, b.dataset.owner, b.dataset.action, b); });
+    });
+    root.querySelectorAll("[data-op]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        if (b.dataset.op === "a.rebuild" || b.dataset.op === "a.dry" || b.dataset.op === "a.backup" || b.dataset.op === "a.export") startWorkInline(b, m);
+        else openDrawer(m.title, "Operation <b>" + esc(b.textContent) + "</b> runs through its canonical owner with a receipt. This demo records the intent and shows the truthful ObservableWork projection.");
+      });
+    });
+    root.querySelectorAll("[data-op-toggle]").forEach(function (b) {
+      b.addEventListener("click", function () { b.setAttribute("aria-checked", b.getAttribute("aria-checked") === "true" ? "false" : "true"); });
+    });
+  }
+  function startWorkInline(btn, m) {
+    var w = STORE.work({ kind: "lifecycle", label: btn.textContent.trim(), denominator: 12408, fast: true, receipt: { summary: btn.textContent.trim() + " — completed with receipt" } });
+    var host = btn.parentElement;
+    var box = document.createElement("div"); box.className = "d5-work";
+    host.appendChild(box);
+    function draw() {
+      box.innerHTML = "<b>" + esc(w.label) + "</b> — " + esc(w.note) +
+        (w.progress !== null ? ' <span class="v2kbd">' + w.done + "/" + w.denominator + "</span>" : "") +
+        '<div class="bar"><div style="width:' + (w.progress || 0) + '%"></div></div>';
+      if (w.state === "done" || w.state === "recovered") setTimeout(function () { box.remove(); }, 1400);
+    }
+    draw();
+    var un = STORE.subscribe("work", function () { draw(); if (w.state === "done" || w.state === "recovered") un(); });
+  }
+  function runManagerAction(m, ownerId, actionId, btn) {
+    if (actionId === "a.install") { providerInstallFlow(btn); return; }
+    if (actionId === "a.refresh") { startWorkInline(btn, m); return; }
+    var rec = m.records.filter(function (r) { return r.id === ownerId; })[0] || { label: m.title };
+    openDrawer(rec.label, "Action <b>" + esc(btn.textContent.trim()) + "</b> on <b>" + esc(rec.label) + "</b> routes to its canonical owner with: typed payload/result, availability reason, revision + idempotency, permission check, receipt, ObservableWork link, cancel/rollback, and a route/focus effect. The demo records intent truthfully — no fabricated backend.");
+  }
+  function providerInstallFlow(btn) {
+    var s = PM2.mgrById["mgr.provider"].records.filter(function (r) { return r.id === "prov.codex-cli"; })[0];
+    openDrawer("Install Codex CLI — explicit, official source only",
+      "<b>Source:</b> " + esc(s.setup.source) + "<br><b>Host / Environment:</b> " + esc(s.setup.host) +
+      "<br><br>Puppet Master never bundles, pre-seeds, or silently installs provider CLIs. <b>Authentication is a separate step</b> after installation." +
+      '<div class="d5-actions" style="margin-top:10px"><button class="d5-topbtn primary" id="doInstall">' + PM2.svg("plus", 13) + 'Install from official source</button></div><div id="installWork"></div>');
+    el("doInstall").addEventListener("click", function () {
+      var host = el("installWork");
+      var w = STORE.work({ kind: "install", label: "Install Codex CLI", phases: ["download", "verify publisher", "install", "verify launch", "done"], steps: 12, fast: true, receipt: { summary: "Codex CLI installed from official npm source — authentication still required" } });
+      var box = document.createElement("div"); box.className = "d5-work"; host.appendChild(box);
+      var un = STORE.subscribe("work", function () {
+        box.innerHTML = "<b>" + esc(w.label) + "</b> — " + esc(w.note) + '<div class="bar"><div style="width:' + Math.round((w.phaseI + 1) / w.phases.length * 100) + '%"></div></div>';
+        if (w.state === "done") { box.innerHTML += '<div class="d5-receipt" style="margin-top:8px">Installed. <b>Next: authenticate separately</b> — the CLI owns its OAuth flow.</div>'; un(); }
+      });
+    });
+  }
+  function providerRoster(m, sel) {
+    var html = "";
+    m.groups.forEach(function (g) {
+      html += '<div class="d5-roster-group">' + esc(g.label) + "</div>";
+      m.records.filter(function (r) { return r.group === g.id; }).forEach(function (r) { html += rrow(r, sel); });
+    });
+    return html;
+  }
+  function providerDetail(m, rid, tab) {
+    var r = m.records.filter(function (x) { return x.id === rid; })[0] || m.records[0];
+    var h = "<h3>" + esc(r.label) + "</h3><div class='dsub'>" + esc(r.desc) + "</div>";
+    h += '<div class="d5-chips">' + chipsHTML(r) + "</div>";
+    if (tab === "Installations" || rid === "prov.codex-cli") {
+      h += '<table class="d5-table"><tr><th>Installation</th><th>Version</th><th>Owner · confidence</th><th>State</th></tr>';
+      m.installations.forEach(function (i) {
+        h += "<tr><td>" + esc(i.label) + "</td><td>" + esc(i.version || "—") + "</td><td class='mut'>" + esc((i.owner || "—") + " · " + (i.confidence || "")) + "</td><td>" +
+          '<span class="v2badge ' + (i.state === "selected" ? "ok" : i.state === "shadowed" ? "info" : i.state === "manual-only" ? "warn" : "") + '">' + esc(i.state) + "</span> <span style='font-size:11.5px;color:var(--ink-2)'>" + esc(i.health || i.note || "") + "</span></td></tr>";
+      });
+      h += "</table>";
+      h += '<div class="d5-offline" style="margin-top:10px"><span class="sdot warn"></span>Multiple installations: <b>one selected</b>, others shadowed. Unknown owner ⇒ manual-only — never guessed.</div>';
+    }
+    if (r.setup) {
+      h += '<div class="d5-setup"><h4>Setup — explicit, official source, exact host</h4><ol>' + r.setup.steps.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") + "</ol></div>";
+      h += actionsHTML(m, r);
+    } else if (tab === "Models" && r.models) {
+      h += '<table class="d5-table"><tr><th>Model</th><th>Capabilities</th><th>Context</th><th>Modes · effort</th></tr>';
+      r.models.forEach(function (mm) {
+        h += "<tr><td><b>" + esc(mm.label) + "</b>" + (mm.selected ? ' <span class="v2badge ok">selected</span>' : "") + "</td><td class='mut'>" + esc(mm.caps.join(" · ")) + "</td><td class='mut'>" + esc(mm.ctx) + "</td><td class='mut'>" + esc(mm.mode.join("/")) + " · " + esc(mm.effort.join("/")) + "</td></tr>";
+      });
+      h += "</table>";
+      h += '<div style="font-size:11.5px;color:var(--ink-3);margin-top:6px">Capabilities keep evidence and freshness — Fast mode and modalities are never inferred from names.</div>';
+    } else if (tab === "Routing & fallback") {
+      h += '<table class="d5-table"><tr><th>Route</th><th>Requested</th><th>Effective</th><th>Why</th></tr>';
+      m.routing.rows.forEach(function (rr) { h += "<tr><td><b>" + esc(rr.label) + "</b></td><td>" + esc(rr.requested) + "</td><td>" + esc(rr.effective) + "</td><td class='mut'>" + esc(rr.why || "—") + "</td></tr>"; });
+      h += "</table><div class='d5-kv' style='margin-top:10px'>" + m.routing.policy.map(function (p) { return "<span class='k'>policy</span><span class='v'>" + esc(p) + "</span>"; }).join("") + "</div>";
+    } else if (tab === "Usage") {
+      if (rid === "prov.deepseek-key") h += '<div class="d5-offline"><span class="sdot warn"></span>Provider ready — Usage endpoint unavailable (503). Costs below are the last-known-good read from 2026-08-16.</div>';
+      h += '<table class="d5-table"><tr><th>Connection</th><th>Usage</th></tr>' + m.usage.rows.map(function (u) { return "<tr><td><b>" + esc(u[0]) + "</b></td><td class='mut'>" + esc(u[1]) + "</td></tr>"; }).join("") + "</table>";
+    } else if (tab === "Diagnostics") {
+      h += '<div class="d5-kv"><span class="k">Update</span><span class="v">' + esc(m.update.version) + " available — policy: " + esc(m.update.policy) + ". " + esc(m.update.note) + "</span>" +
+        '<span class="k">Verification</span><span class="v">' + esc(m.verify.story) + ' <span class="v2badge ok">receipt ' + esc(m.verify.receipt) + "</span></span></div>";
+    } else {
+      (r.detail || []).forEach(function (d) { h += '<div class="d5-kv"><span class="k">' + esc(d[0]) + "</span><span class='v'>" + esc(d[1]) + "</span></div>"; });
+      h += actionsHTML(m, r);
+      if (rid === "prov.free-models") h += '<div class="d5-offline"><span class="sdot info"></span>Free Models is a wrapper — it never owns credentials, quota, switching, or Usage. Underlying routes are set up individually.</div>';
+    }
+    return h;
+  }
+  function genericDetail(m, r, tab) {
+    if (!r) return "<div class='d5-drop-empty'>No records</div>";
+    var h = "<h3>" + esc(r.label) + "</h3><div class='dsub'>" + esc(r.desc || m.blurb) + "</div>";
+    h += '<div class="d5-chips">' + chipsHTML(r) + "</div>";
+    if (tab === "ELI5" && m.id === "mgr.permissions") {
+      h += "<div class='d5-kv'><span class='k'>In plain words</span><span class='v'>Rules are checked from top to bottom and the <b>last match wins</b>. FileSafe is a hard floor that none of the rules can lower.</span></div>";
+    }
+    if (r.palette) h += '<div style="display:flex;gap:6px;margin:8px 0">' + r.palette.map(function (c) { return '<span style="width:26px;height:26px;border-radius:6px;border:1px solid var(--line);background:' + c + '"></span>'; }).join("") + "</div>";
+    if (r.detail) r.detail.forEach(function (d) { h += '<div class="d5-kv"><span class="k">' + esc(d[0]) + "</span><span class='v'>" + esc(d[1]) + "</span></div>"; });
+    if (m.filesafe && m.id === "mgr.permissions") {
+      h += '<div class="d5-kv"><span class="k">FileSafe</span><span class="v">Boundary <b>' + esc(m.filesafe.boundary) + "</b> · protected: " + esc(m.filesafe.protected.join(", ")) + " · health " + esc(m.filesafe.health) + "</span></div>";
+    }
+    if (m.receipt && tab !== "Overview") h += '<div class="d5-section-title" style="margin-top:14px">Receipts</div><div class="d5-kv">' + m.receipt.rows.map(function (x) { return '<span class="k">' + esc(x[0]) + "</span><span class='v'>" + esc(x[1]) + "</span>"; }).join("") + "</div>";
+    if (m.note && tab === "Overview") h += '<div class="d5-offline" style="border-color:var(--line)"><span class="sdot info"></span>' + esc(m.note) + "</div>";
+    h += actionsHTML(m, r);
+    if (r.work) h += '<button class="d5-topbtn primary" data-op="a.rebuild" style="margin-top:8px">' + PM2.svg("refresh", 13) + " " + esc(r.work.kind === "rebuild" ? "Rebuild now" : "Run") + " <span class='v2kbd'>" + esc(r.work.denominator) + "</span></button>";
+    return h;
+  }
+
+  /* ============ DRAWER ============ */
+  function openDrawer(title, html) {
+    el("drawerTitle").textContent = title;
+    el("drawerBody").innerHTML = html;
+    DRAWER.dataset.open = "1";
+    el("drawerClose").innerHTML = PM2.svg("close", 13) + "Close";
+  }
+  function closeDrawer() { DRAWER.dataset.open = "0"; }
+  el("drawerClose").addEventListener("click", closeDrawer);
+
+  /* ============ COPY SETTINGS FROM ANOTHER PROJECT ============ */
+  var COPY = { open: false, step: 0, src: null, cats: [], preview: null, result: null };
+  function openCopy() {
+    COPY.open = true; COPY.step = 0; COPY.src = null; COPY.cats = PM2.copyCategories.map(function (c) { return c.id; }); COPY.preview = null; COPY.result = null;
+    var veil = document.createElement("div"); veil.className = "d5-copyveil"; veil.id = "copyVeil";
+    veil.innerHTML = '<div class="d5-copy" role="dialog" aria-modal="true" aria-label="Copy settings from another project"><div class="d5-copy-head"><h3>Copy settings from another project</h3><span class="pm-spacer"></span><button class="d5-topbtn" id="copyX">' + PM2.svg("close", 13) + "Close</button></div>" +
+      '<div class="d5-copy-body v2-surface" id="copyBody"></div><div class="d5-copy-foot" id="copyFoot"></div></div>';
+    app.appendChild(veil);
+    el("copyX").addEventListener("click", copyClose);
+    drawCopy();
+  }
+  function copyClose() { COPY.open = false; var v = el("copyVeil"); if (v) v.remove(); }
+  function drawCopy() {
+    var b = el("copyBody"), f = el("copyFoot"); if (!b) return;
+    if (COPY.step === 0) {
+      b.innerHTML = '<div class="d5-cp-step">Step 1 of 4 · Choose source project</div>' +
+        '<div class="d5-offline" style="border-color:var(--line)"><span class="sdot info"></span>A <b>one-time copy</b>. Projects stay independent afterward — no link, no sync, no profiles.</div>' +
+        PM2.projects.filter(function (p) { return !p.current; }).map(function (p) {
+          return '<div class="d5-src" data-src="' + p.id + '" role="radio" aria-selected="' + (COPY.src === p.id) + '"><div style="flex:1"><div class="nm">' + esc(p.name) + '</div><div class="meta">' + esc(p.path) + " · " + p.changedCount + " changed · last backup " + esc(p.lastBackup || "never") + '</div></div><span class="v2badge">' + p.attention + " attention</span></div>";
+        }).join("");
+      f.innerHTML = '<span style="font-size:12px;color:var(--ink-3)">Destination: <b>' + esc(PM2.currentProject.name) + "</b> (current)</span><span class='sp'></span><button class='d5-topbtn primary' id='copyNext' " + (COPY.src ? "" : "disabled style='opacity:.5'") + ">Choose categories</button>";
+      b.querySelectorAll("[data-src]").forEach(function (s) { s.addEventListener("click", function () { COPY.src = s.dataset.src; drawCopy(); }); });
+      var n = el("copyNext"); if (n) n.addEventListener("click", function () { COPY.step = 1; drawCopy(); });
+    } else if (COPY.step === 1) {
+      b.innerHTML = '<div class="d5-cp-step">Step 2 of 4 · Choose categories</div><div class="d5-cats">' +
+        PM2.copyCategories.map(function (c) {
+          return '<div class="d5-cat" data-cat="' + c.id + '" aria-selected="' + (COPY.cats.indexOf(c.id) >= 0) + '"><span class="d5-check"></span><div><div class="t">' + esc(c.title) + '</div><div class="d">' + esc(c.includes) + "</div></div></div>";
+        }).join("") + "</div>";
+      f.innerHTML = '<button class="d5-topbtn" id="copyBack">Back</button><span class="sp"></span><button class="d5-topbtn primary" id="copyNext">Preview copy</button>';
+      b.querySelectorAll("[data-cat]").forEach(function (c) {
+        c.addEventListener("click", function () {
+          var id = c.dataset.cat, i = COPY.cats.indexOf(id);
+          if (i >= 0) COPY.cats.splice(i, 1); else COPY.cats.push(id);
+          c.setAttribute("aria-selected", COPY.cats.indexOf(id) >= 0);
+        });
+      });
+      el("copyBack").addEventListener("click", function () { COPY.step = 0; drawCopy(); });
+      el("copyNext").addEventListener("click", function () { COPY.preview = PM2.copyPreview(COPY.src, COPY.cats); COPY.step = 2; drawCopy(); });
+    } else if (COPY.step === 2) {
+      var pv = COPY.preview, t = pv.totals;
+      b.innerHTML = '<div class="d5-cp-step">Step 3 of 4 · Preview — what will and will not change</div>' +
+        '<div class="d5-counts">' +
+        '<div class="d5-count add"><div class="n">' + t.additions + '</div><div class="l">additions</div></div>' +
+        '<div class="d5-count rep"><div class="n">' + t.replacements + '</div><div class="l">replacements</div></div>' +
+        '<div class="d5-count"><div class="n">' + t.unchanged + '</div><div class="l">unchanged</div></div>' +
+        '<div class="d5-count"><div class="n">' + t.unavailable + '</div><div class="l">not copyable</div></div>' +
+        '<div class="d5-count conf"><div class="n">' + t.conflicts + '</div><div class="l">conflicts — skipped</div></div></div>' +
+        '<div class="d5-offline" style="border-color:var(--line)"><span class="sdot info"></span>' + esc(pv.credentialNote) + "</div>" +
+        '<div class="d5-cpvirt v2-surface v2-virt" id="cpList" style="position:relative;overflow:auto"></div>';
+      var list = el("cpList"); var ROWH2 = 34; var rows = pv.rows;
+      var pad2 = document.createElement("div"); pad2.className = "v2-virt-pad"; var win2 = document.createElement("div"); win2.className = "v2-virt-win"; win2.style.position = "relative";
+      list.append(pad2, win2);
+      function draw2(st) {
+        var w = PM2.window({ scrollTop: st, viewportHeight: 220, rowHeight: ROWH2, total: rows.length });
+        pad2.style.height = w.padTop + "px"; win2.style.transform = "translateY(" + w.padTop + "px)";
+        var h = "";
+        for (var i = w.first; i < w.first + w.count; i++) {
+          var rr = rows[i]; if (!rr) break;
+          var s = PM2.inventory.byId[rr.settingId];
+          var kindCls = rr.kind === "additions" ? "ok" : rr.kind === "replacements" ? "info" : rr.kind === "conflicts" ? "warn" : rr.kind === "unavailable" ? "bad" : "";
+          h += '<div style="height:' + ROWH2 + 'px;display:flex;align-items:center;gap:8px;font-size:12px;border-bottom:1px solid var(--line)">' +
+            '<span class="v2badge ' + kindCls + '">' + rr.kind.replace(/s$/, "") + '</span><span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + esc(s ? s.label : rr.settingId) + "</span>" +
+            (rr.credentialRef ? '<span class="v2badge managed">credential ref</span>' : "") + '<span style="color:var(--ink-3);font-size:11px">' + esc(PM2.copyCategories.filter(function (c) { return c.id === rr.category; })[0].title) + "</span></div>";
+        }
+        win2.innerHTML = h;
+      }
+      draw2(0); list.addEventListener("scroll", function () { draw2(list.scrollTop); });
+      f.innerHTML = '<button class="d5-topbtn" id="copyBack">Back</button><span class="sp"></span><span style="font-size:11.5px;color:var(--ink-3)">A restore point is created before anything changes.</span><button class="d5-topbtn primary" id="copyGo">' + PM2.svg("bolt", 13) + "Create restore point & apply</button>";
+      el("copyBack").addEventListener("click", function () { COPY.step = 1; drawCopy(); });
+      el("copyGo").addEventListener("click", function () {
+        COPY.step = 3;
+        b.innerHTML = '<div class="d5-cp-step">Step 4 of 4 · Applying atomically…</div><div class="d5-work" id="cpWork"></div>';
+        f.innerHTML = "";
+        var box = el("cpWork");
+        var w = STORE.work({ kind: "copy", label: "Copy settings", phases: ["restore point", "apply", "verify"], steps: 10, fast: true });
+        var un = STORE.subscribe("work", function () {
+          box.innerHTML = "<b>" + esc(w.label) + "</b> — " + esc(w.note) + '<div class="bar"><div style="width:' + ((w.phaseI + 1) / 3 * 100) + '%"></div></div>';
+          if (w.state === "done") {
+            un();
+            COPY.result = STORE.applyCopy(COPY.preview, COPY.cats);
+            b.innerHTML = '<div class="d5-cp-step">Done — verified, receipted, rollback available</div>' +
+              '<div class="d5-receipt"><b>' + COPY.result.counts.applied + " values copied</b> · " + COPY.result.counts.skipped + " skipped (unavailable/conflict)<br>" +
+              "Verified against preview: " + COPY.result.verify.checked + " checked, " + COPY.result.verify.mismatches + " mismatches.<br>" +
+              "Receipt <b>" + esc(COPY.result.receipt.id) + "</b> · restore point <b>" + esc(COPY.result.restorePoint.label) + "</b><br>" +
+              COPY.result.verify.note + "</div>" +
+              '<div class="d5-offline" style="border-color:var(--line);margin-top:10px"><span class="sdot ok"></span><b>' + esc(PM2.currentProject.name) + "</b> and <b>" + esc(COPY.preview.source.name) + "</b> are now fully independent. Future changes in either project never propagate.</div>";
+            f.innerHTML = '<button class="d5-topbtn" id="copyRollback">' + PM2.svg("back", 13) + "Rollback</button><span class='sp'></span><button class='d5-topbtn primary' id='copyDone'>Done</button>";
+            el("copyRollback").addEventListener("click", function () {
+              STORE.rollback(COPY.result.restorePoint.id);
+              openDrawer("Rollback complete", "Copied values were rolled back to the restore point. Receipt recorded. <b>" + esc(PM2.currentProject.name) + "</b> is back to its pre-copy values.");
+              copyClose();
+            });
+            el("copyDone").addEventListener("click", copyClose);
+          }
+        });
+      });
+    }
+  }
+
+  /* ============ boot ============ */
+  function esc(x) { return String(x == null ? "" : x).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  var initial = PM2.routes.parse(location.hash);
+  if (initial.domain || initial.manager || initial.mode) { NAV.stack = [Object.assign({ domain: null }, initial)]; }
+  render(NAV.top());
+  if (initial.row || initial.object || initial.query) {
+    afterNavPlan(PM2.routes.planFor(initial), PM2.search.byRid(initial.resultId || "") || null);
+  }
+  searchAttach(el("miniSearch"), false);
+  window.__C5 = { PM2: PM2, STORE: STORE, NAV: NAV, state: state, pickResult: pickResult, search: function (q) { return PM2.search.query(q); } };
+})();
+</script>
+</body>
+</html>

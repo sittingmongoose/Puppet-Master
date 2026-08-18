@@ -1,0 +1,47 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "concept_id": "concept-09-tome-tabs",
+  "model": "Qwen 5.8",
+  "plan_owner_impacts": [
+    { "owner": "Settings IA owner", "impact": "Chapter-tab navigation (12 persistent edge tabs + Home/All) is a candidate primary geometry; chapter pages keep stable scroll position per route (scroll memory) which implies a route-keyed view-state contract in the Settings shell plan." },
+    { "owner": "Provider Lifecycle owner", "impact": "Provider detail tabs (overview/accounts/models/install/limits/logs) propose a canonical sectioning for the provider card; deferred insertion for Installation stays inside the install tab." }
+  ],
+  "settings_inventory_impacts": [
+    { "impact": "No new inventory rows introduced; the concept renders the verbatim 828-row inventory (PMInventoryData) plus manager-local fixture rows that are demo-only and must not enter the inventory." }
+  ],
+  "settings_schema_impacts": [
+    { "impact": "Legacy scope metadata (e.g. scope: [\"global\"]) is preserved for provenance but never rendered as an editable scope; project-only presentation is the concept's contract (see plan-owner-delta.md)." }
+  ],
+  "command_id_impacts": [
+    { "impact": "See candidate-command-delta.json; all IDs provisional census reuse/alias/candidate against authority/base_packet/CANDIDATE_COMMAND_ID_REGISTER.json." }
+  ],
+  "wiring_impacts": [
+    { "impact": "See candidate-wiring-delta.json." }
+  ],
+  "dry_component_impacts": [
+    { "impact": "See candidate-dry-delta.json; presentation-only reuse of headless modules (PMState2/PMSearch2/PMCopy2/PMManagers2); no second state owner created." }
+  ],
+  "schema_event_storage_impacts": [
+    { "impact": "Concept persists demo state under localStorage key pm.settings-demo2.concept-09-tome-tabs (PMState2) and manager fixture values under pm.tt9.fx; both namespaced, no shared storage keys." }
+  ],
+  "migration_supersession_impacts": [
+    { "impact": "Supersedes legacy assumptions listed in machine_readable/supersessions.json (four concepts; collective coverage; editable scopes); concepts 01-04 frozen and untouched." }
+  ],
+  "slint_port_impacts": [],
+  "test_fixtures": [
+    { "fixture": "search 'rate limit' grouped duplicate labels with back-restore", "status": "verified in headless browser" },
+    { "fixture": "42 manager routes with data-manager/back/breadcrumb", "status": "verified in headless browser" },
+    { "fixture": "virtualized compendium data-window updates at 828 and 2828 rows", "status": "verified in headless browser" },
+    { "fixture": "copy flow 4 steps with restore point and rollback", "status": "verified in headless browser" },
+    { "fixture": "squeezed tier push navigation (rail hidden, roster pushes)", "status": "verified in headless browser" }
+  ],
+  "deferred_named_owners": [
+    "Product Onboarding plan owner",
+    "Provider Lifecycle owner",
+    "Server Backbone",
+    "Project Syncing and Updates"
+  ],
+  "unresolved_questions": [
+    "Whether the persistent right-edge chapter tab rail should become the product-wide Settings geometry or remain one of several concept options (bakeoff decision pending)."
+  ]
+}
