@@ -1,34 +1,128 @@
 {
- "schema_id": "pm.settings_bakeoff.test_evidence.v1",
- "concept": "concept-11-tabbed-organizer",
- "static_checks": {
-  "evidence-json-parse": "pass (generated and parsed at build time)",
-  "coverage-families-verbatim": "pass (42 required family strings named exactly)",
-  "coverage-forbidden-statuses": "pass (no shared_grammar, no missing)",
-  "concept-js-syntax": "pending (node --check by concept builder)"
- },
- "search_cases": "see search-route-matrix.json",
- "manager_routes": "see manager-route-matrix.json",
- "theme_width_matrix": {
-  "themes": [
-   "Friendly Dark",
-   "Friendly Light",
-   "Glass Dark",
-   "Glass Light",
-   "Retro Dark",
-   "Retro Light",
-   "Basic Dark",
-   "Basic Light"
-  ],
-  "widths": [
-   760,
-   900,
-   1280,
-   1700,
-   2200,
-   2500
-  ],
-  "result": "pending-verification-phase"
- },
- "notes": "Browser/interaction evidence appended by the verification phase."
+  "schema_id": "pm.settings_bakeoff.test_evidence.v1",
+  "concept": "concept-11-tabbed-organizer",
+  "static_checks": {
+    "evidence-json-parse": "pass (generated and parsed at build time)",
+    "coverage-families-verbatim": "pass (42 required family strings named exactly)",
+    "coverage-forbidden-statuses": "pass (no shared_grammar, no missing)",
+    "concept-js-syntax": "pass (node --check clean, verification phase 2026-08-19)"
+  },
+  "search_cases": "see search-route-matrix.json",
+  "manager_routes": "see manager-route-matrix.json",
+  "theme_width_matrix": {
+    "themes": [
+      "Friendly Dark",
+      "Friendly Light",
+      "Glass Dark",
+      "Glass Light",
+      "Retro Dark",
+      "Retro Light",
+      "Basic Dark",
+      "Basic Light"
+    ],
+    "widths": [
+      760,
+      900,
+      1280,
+      1700,
+      2200,
+      2500
+    ],
+    "result": "pass — 48/48 combos: data-theme applied, no .pmx-stage horizontal overflow, Home search + 12/12 domain cards visible, zero console errors. FIXED 2026-08-19 (tab f11): PMShell.init() now runs at startup; shell theme/width/motion selects verified live (glass-dark select -> data-theme=glass-dark; 760 width select -> frame 760px + pmx-squeezed; motion button toggles data-motion)."
+  },
+  "notes": "Browser/interaction evidence appended by the verification phase (2026-08-19, tab v6).",
+  "browser_checks": {
+    "load": "pass — zero console/page errors across reload; 13 tabs (Home + 12 domains); PMBridge/PMShell present",
+    "reduced_motion": "pass — data-motion=reduced renders identical Home (12 cards) and AI manager content; no errors",
+    "search_exactness": "14/14 pass (re-verified 2026-08-19, tab f11, after fixes); see search-route-matrix.json per-case focus_highlight/back_restores/verification_note",
+    "manager_isolation": "48/48 pass — URL constant, no iframe, shell retained, crumb Back works, real content, no errors; owner-* routes open via data-owner-id chips (registry ids unprefixed). Post-fix spot re-verification (providers, memory, files managers): subpage tab strips render, tab clicks switch selection, roster content intact, zero errors",
+    "copy_flow": "pass (FIXED 2026-08-19, tab f11) — full wizard verified in-browser: 5 steps render; source pick (4 sources) + 2 category picks enable Build preview; preview totals 57 add / 58 replace / 47 unchanged / 4 unavailable / 22 conflicts; apply runs restore-point/apply/verify/receipt phases; receipt 'Copy complete' shows; Rollback -> 'Rolled back' (disabled); Done pops back to base layer; zero console errors. Root cause was openCopy calling paint() inside the pushLayer build callback before stage/stepsEl were assigned",
+    "scenarios": "pass (FIXED 2026-08-19, tab f11) — drawer opens (18 choices); banner now includes store.projection()'s truthful message: offline -> 'You are offline. Changes will apply when the connection returns.', managed -> 'Managed by organization policy. You can view but not change this.', loading-cached -> 'Refreshing… showing last known values.'; re-clicking the active scenario toggles it off; Reset clears (data-on=false)",
+    "concept_specific": {
+      "per_tab_state_preservation": "pass — code tab kept subtab 'editing' + Terminal manager layer (depth 2) + scrollTop 240 across A->B->A; media tab kept subtab 'capabilities'",
+      "overflow_tab_menu_narrow": "pass — at 900 tab strip collapses to 'Tabs' menu listing all 13 tabs; pick activates tab and closes menu; named one-pane Back ('Back to Home' / 'Back to Memory & Context') works",
+      "overflow_tab_menu_wide": "pass (FIXED 2026-08-19, tab f11) — 'All tabs' overflow button/menu (13 items) works; a ResizeObserver on the root now recomputes overflow/narrowbar/indicator state on width-only CSS-var changes (verified: narrow bar flex at 760, none at 1280/full, overflow button state fresh without window resize)"
+    },
+    "screenshots": {
+      "friendly-dark_760": "C:\\Users\\sitti\\AppData\\Local\\Temp\\omp-sshots-155d58d6b5f1f7f5.webp",
+      "friendly-dark_1280": "C:\\Users\\sitti\\AppData\\Local\\Temp\\omp-sshots-155d58d72431f7f6.webp",
+      "friendly-dark_2500": "C:\\Users\\sitti\\AppData\\Local\\Temp\\omp-sshots-155d58d79271f7f7.webp",
+      "glass-dark_760": "C:\\Users\\sitti\\AppData\\Local\\Temp\\omp-sshots-155d58d81331f7f8.webp",
+      "glass-dark_1280": "C:\\Users\\sitti\\AppData\\Local\\Temp\\omp-sshots-155d58d89a71f7f9.webp",
+      "glass-dark_2500": "C:\\Users\\sitti\\AppData\\Local\\Temp\\omp-sshots-155d58d92231f7fa.webp"
+    },
+    "findings": [],
+    "fixes_applied": [
+      "critical RESOLVED: copy wizard — openCopy() now assigns stage/stepsEl before the first paint() (paint call moved out of the pushLayer build callback); full flow source -> categories -> preview -> confirm/apply -> receipt -> rollback -> done verified in-browser",
+      "high RESOLVED: shell controls — misplaced PMShell.init() removed from the .tbo-close handler; exactly one startup call at the init tail; theme/width/motion controls verified live",
+      "high RESOLVED: scenarios — banner now appends store.projection('settings').message (offline/managed/loading-cached truthful text); re-clicking the active scenario toggles it off; Reset still clears",
+      "medium RESOLVED: managed_object landings — locate/focus scoped to the active top layer, so the OpenAI detail layer (not the hidden parent roster row) receives highlight+focus",
+      "medium RESOLVED: search dest.page honored with manager present — dest.section || dest.page validated against manager subpage slugs and applied as the manager subpage tab (rate-limits -> Rate Limits, retention -> Retention); page->manager resolution skipped when it would strand a base-page setting row (shortcut-hints row located on the extensions base page)",
+      "minor RESOLVED: ResizeObserver on the root recomputes tab overflow/narrowbar/indicators on width-only changes",
+      "blocker RESOLVED (2026-08-19, tab fv2, visual-audit): [object Object] inputs — currentValue() passed the whole setting object as store.value() baseValue, so every setting without an override stringified to '[object Object]'; now called with no baseValue, plus object values (keyvalue/list fixtures) summarize truthfully via formatVal in controlHtml/formatVal. Verified 0 '[object Object]' in text and input values across all 13 tabs x every subgroup, all 6 provider detail tabs, fresh load",
+      "blocker RESOLVED (2026-08-19, tab fv2, visual-audit): Home composition — notices filter never matched data kinds (attention/setup/recommended), so no banner/list rendered. Home now shows one .pm-notice banner (first unresolved attention notice, chip+headline+consequence+Review/Dismiss, dismissal persisted via store doc) and a compact Needs-attention list (4 rows) above the domain cards, search still first; every banner action and row routes to its real destination (permissions/terminal/source-control/context/providers managers inside their own domain tabs) — all 5 routes verified in-browser",
+      "major RESOLVED (2026-08-19, tab fv2, visual-audit): raw auth-model identifiers — AUTH_MODEL_LABELS lookup maps cli-profile-oauth -> 'Signed in via the provider\\'s own CLI profile', pm-direct-oauth, api-token, none, mixed; applied to roster subtitles, detail head, and Overview 'Auth model'; 0 raw tokens in manager text",
+      "minor RESOLVED (2026-08-19, tab fv2): breadcrumb duplicate segment ('Settings > AI Brains & Providers > AI Brains & Providers') — updateCrumb drops a trailing part equal to the current layer title",
+      "minor RESOLVED (2026-08-19, tab fv2): .pm-notice accent-bar override appended (border-inline-start: none) per packet no-accent-bar Home rule; computed style verified 0px/none in friendly-dark and glass-dark"
+    ],
+    "visual_audit_reverification": {
+      "date": "2026-08-19",
+      "tab": "fv2",
+      "scope": "visual-audit.json concept-11 findings (blocker verdict)",
+      "checks": {
+        "object_object_sweep": "pass — 0 occurrences in innerText and input values across Home + all 12 domain tabs x every subgroup, providers manager roster, and all 6 provider detail tabs (Overview/Credentials/Models/Rate Limits/Usage/Advanced); fresh load; Accounts & Sign-in 21 inputs all truthful (empty fixtures show 'Not configured' placeholder)",
+        "home_composition": "pass — search visually first; 1 banner (FileSafe sandbox coverage, Attention chip, no accent bar); 4 compact Needs-attention rows above the domain cards; Dismiss removes banner and persists",
+        "notice_routing": "pass — banner -> Permissions & FileSafe (safety); verifier -> Providers (ai); terminal setup -> Terminal (code); forge -> Source Control & Worktrees (branching); compaction -> Context & Instructions (memory)",
+        "human_labels": "pass — 9 provider subtitles all human labels; no cli-profile-oauth/pm-direct-oauth/api-token raw tokens anywhere",
+        "state_preservation": "pass — A->B->A kept depth-3 stack (AI > Providers > Anthropic detail) with crumb intact",
+        "widths_themes": "pass — friendly-dark 1280 + 760 (no h-scroll), glass-dark 1280 (banner/list/manager all correct)",
+        "console": "pass — zero console/page errors across reload, routing, dismiss, drill, search"
+      },
+      "screenshots": {
+        "home_1280_friendly_dark": "C:\\Users\\sitti\\AppData\\Local\\Temp\\omp-sshots-155db3c09ac9160c.webp",
+        "home_760_friendly_dark": "C:\\Users\\sitti\\AppData\\Local\\Temp\\omp-sshots-155db387de891609.webp",
+        "home_1280_glass_dark": "C:\\Users\\sitti\\AppData\\Local\\Temp\\omp-sshots-155db398ae09160a.webp",
+        "providers_manager_glass_dark": "C:\\Users\\sitti\\AppData\\Local\\Temp\\omp-sshots-155db3995e49160b.webp",
+        "home_final_fresh_load": "C:\\Users\\sitti\\AppData\\Local\\Temp\\omp-sshots-155db4fc9989160d.webp"
+      }
+    },
+    "verified_at": "2026-08-19",
+    "verified_in_tab": "v6",
+    "reverified_at": "2026-08-19",
+    "reverified_in_tab": "f11",
+    "reverification_scope": "all 5 previously-failed probes + regression spot-check (fresh reload: 0 console errors, Home at 1280 friendly-dark with 12 cards, providers/memory/files managers, theme-row search landing, per-tab state preservation A->B->A with subtab+scroll+layer intact)"
+  },
+  "scale_stress": {
+    "scope": "shared headless search/index layer + concept-native virtualized lists",
+    "synthetic_records_injected": 2400,
+    "total_index_entries": 3478,
+    "real_inventory_records": 828,
+    "synthetic_replaces_product_data": false,
+    "results_bounded": {
+      "limit": 30,
+      "bounded_flag_observed": true
+    },
+    "query_latency_ms_observed": [
+      13.9,
+      17.2,
+      13.2,
+      12.7
+    ],
+    "managers_instantiated_during_search": 0,
+    "list_rendering": "virtualized/windowed per concept compendium (browser-verified)",
+    "method": "node headless probe of PM_V2_SEARCH over the real index + injected synthetic rows, isolated sessions per query",
+    "result": "pass"
+  },
+  "audit_2026_08_19_second_pass": {
+    "scope": "independent audit of the seven-new-concepts work; narrow-width shell top bar clipping",
+    "result": "pass",
+    "detail": "Second-pass independent audit 2026-08-19 (browser-measured, ConceptHub-served pages): at 760/900px page widths the shared shell top bar content (~962px) exceeded the frame and clipped the demo control cluster (Scenarios, theme select, motion, panel toggles). Fixed concept-locally: @container pmx (max-width: 990px) wraps .pmx-topbar to two rows and hides decorative .pmx-model chips; shared pm-shell.css is untouched (frozen with concepts 01-04). Re-verified at exactly 760px and 900px page width: scrollWidth==clientWidth, all six shell controls inside the frame rect, theme select exposes all 8 themes and is clickable, topbar height 60.5px with no overlap of stage content, zero console errors. Standalone narrow (625px frame) also passes with the width select reachable.",
+    "widths_verified": [
+      760,
+      900,
+      625
+    ],
+    "console_errors": 0,
+    "shell_toggle_icon_fix": "User-reported blank top-bar buttons: the shell demo toggles (reduced motion, side/chat/bottom panel) carry bare SVGs with no intrinsic size and no shared CSS rule sizes them, so they painted 0x0 (pre-existing shared-shell markup issue, identical in 01-04). Fixed concept-locally: .pmx-controls [data-shell-motion] > svg, .pmx-controls [data-shell-toggle] > svg { inline-size: 14px; block-size: 14px; }. Browser-verified on all seven concepts: rule live in CSSOM, all four icons 14x14, Scenarios icon unchanged (14x14), toggle buttons still function, zero console errors."
+  }
 }

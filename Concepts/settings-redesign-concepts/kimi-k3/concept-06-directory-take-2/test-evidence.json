@@ -1,34 +1,107 @@
 {
- "schema_id": "pm.settings_bakeoff.test_evidence.v1",
- "concept": "concept-06-directory-take-2",
- "static_checks": {
-  "evidence-json-parse": "pass (generated and parsed at build time)",
-  "coverage-families-verbatim": "pass (42 required family strings named exactly)",
-  "coverage-forbidden-statuses": "pass (no shared_grammar, no missing)",
-  "concept-js-syntax": "pending (node --check by concept builder)"
- },
- "search_cases": "see search-route-matrix.json",
- "manager_routes": "see manager-route-matrix.json",
- "theme_width_matrix": {
-  "themes": [
-   "Friendly Dark",
-   "Friendly Light",
-   "Glass Dark",
-   "Glass Light",
-   "Retro Dark",
-   "Retro Light",
-   "Basic Dark",
-   "Basic Light"
-  ],
-  "widths": [
-   760,
-   900,
-   1280,
-   1700,
-   2200,
-   2500
-  ],
-  "result": "pending-verification-phase"
- },
- "notes": "Browser/interaction evidence appended by the verification phase."
+  "schema_id": "pm.settings_bakeoff.test_evidence.v1",
+  "concept": "concept-06-directory-take-2",
+  "static_checks": {
+    "evidence-json-parse": "pass (generated and parsed at build time)",
+    "coverage-families-verbatim": "pass (42 required family strings named exactly)",
+    "coverage-forbidden-statuses": "pass (no shared_grammar, no missing)",
+    "concept-js-syntax": "pass (node --check concept-06.js, 2026-08-19)"
+  },
+  "search_cases": "see search-route-matrix.json (14/14 pass, browser-verified 2026-08-19)",
+  "manager_routes": "see manager-route-matrix.json (48/48 pass, browser-verified 2026-08-19)",
+  "theme_width_matrix": {
+    "themes": [
+      "Friendly Dark",
+      "Friendly Light",
+      "Glass Dark",
+      "Glass Light",
+      "Retro Dark",
+      "Retro Light",
+      "Basic Dark",
+      "Basic Light"
+    ],
+    "widths": [
+      760,
+      900,
+      1280,
+      1700,
+      2200,
+      2500
+    ],
+    "result": "pass — 48/48 theme×width cells: no horizontal overflow in .pmx-stage (scrollWidth ≤ clientWidth+1), Home search and destination rows visible, zero new console errors. Screenshots taken at 760/1280/2500 in Friendly Dark + Glass Dark."
+  },
+  "browser_checks": {
+    "verified_at": "2026-08-19",
+    "browser": "headless Chromium (omp browser tool), viewport 1400×900, tab v3",
+    "load": "pass — 0 page errors, 0 console errors (re-verified 2026-08-19, tab r1: the malformed SVG rect x=\"4 4\" was corrected to x=\"4\" y=\"4\"; the previous Chromium parse error no longer occurs on load)",
+    "shell_controls": "pass (re-verified 2026-08-19, tab r1) — PMShell.init() now runs at startup: theme select switches data-theme (friendly-dark → friendly-light), width select sets --hub-page-width/--hub-test-width (760px observed), motion button toggles data-motion (full → reduced); all live via real change/click dispatch",
+    "demo_drawer_guard": "RESOLVED (re-verified 2026-08-19, tab r1) — concept CSS now carries .pm-drawer[hidden]{display:none!important}; #dt2-demo computes display:none on load, opens via [data-demo-open] (display:flex, 19 scenario buttons), and returns to display:none when toggled closed",
+    "reduced_motion": "pass — data-motion=reduced renders Home and the Providers manager with identical state; 0 console errors",
+    "search_exactness": "14/14 pass — every case landed on its expected destination (hash, located element, focus, in-viewport verified); Back restored the query into #pmv2-search and re-marked the chosen result row active (data-active=true) in all 13 routing cases plus the session case. Spot re-verified 2026-08-19 (tab r1) after the shell/SVG fixes: cases 1-3 ('openai api key' → ai.accounts.openai-api-key at #/ai/s/accounts; 'openai api key' → openai object at #/ai/providers; 'theem' → general.visual.theme at #/general/s/visual) all still pass — located, focused, in viewport, Back restores query + data-active=true, zero errors",
+    "manager_isolation": "48/48 pass — hash routes only, pathname never changed, no iframes, shell retained, real content, 0 console errors",
+    "copy_flow": "pass — source (proj-atlas-agency) → 2 of 11 categories → preview totals (Add 57, Replace 58, Unchanged 47, Unavailable 4, Conflicts 22) with 141 drill-down items → apply → receipt 'Restore point rp-1-mszimrr4 · verified' → Roll back → 'Rolled back' → dialog closed",
+    "scenarios": "pass — drawer opens via [data-demo-open]; Offline ('You are offline. Changes will apply when the connection returns.' / 'Showing cached values.'), Managed ('Managed by organization policy.'), Loading Cached ('Loading' / 'Showing cached values.') all render truthfully on the Providers manager with aria-pressed=true; Normal state restores",
+    "visual_audit_fixes": "RESOLVED 2026-08-19 — attention rows overflow at 1280 fixed (.dt2-attn-row grid: text truncates inside column, action in bounds); manager breadcrumb wraps; .pm-notice accent-bar override applied. Browser-verified 1280/760 friendly-dark + 1280 glass-dark by fix agent fv3: no clipping, no h-scroll, zero console errors."
+  },
+  "polish_pass": {
+    "verified_at": "2026-08-19",
+    "agent": "Polish06 (tab polish06)",
+    "scope": "concept-06.js + concept-06.css only",
+    "changes": [
+      "Banner/attention duplication hardened: attention list now excludes the banner notice by id (n.id !== critical.id), not object identity; live DOM probe confirms the banner headline never appears in the Needs attention list",
+      "First-viewport composition: hero rhythm tightened (title 26→28px weight 700 tracking -.018em, lede 13.5px margin 14, project strip margin 14, measure top pad 30→22), banner compressed 135→104px (headline row, one clamped body line, actions bottom-end), attention rows single-line at ~32px (block 153px ≤ 180px target); directory header + first destination row now start at y≈670-695 in the 900px viewport (was 798/825)",
+      "Hierarchy/depth: destination icon tiles carry var(--pm-shadow-1) at rest, translateY(-1px) + var(--pm-shadow-2) on hover; caret slides 2px on hover; count meta uses tabular numerals; rows have background-settle hover and calm :active deepen; focus-visible outlines unchanged",
+      "Rail active state: calm token-based pill (var(--pm-bg-raised) + var(--pm-shadow-1), accent-tinted icon) replacing the accent-wash treatment",
+      "Search dropdown (signature surface): rises into place on open (dt2-rise, reduced-motion off), active row gets an accent hairline ring, mark highlight is token-based with an accent ring for light-theme legibility, label/path/type-chip line-heights aligned, results count uses tabular numerals",
+      "Stacking fix: stagger/rise/sink animations now fill backwards only — the previous forwards fill pinned an identity transform on every staggered child, keeping stacking contexts that painted later sections OVER the open dropdown (dropdown appeared transparent/under content); verified via elementFromPoint that .dt2-result is topmost",
+      "Glass themes: dropdown carries the sanctioned .pm-blur-raised utility (single blurred overlay layer) so the translucent --pm-bg-raised panel stays legible",
+      "Narrow reading measure (≤620px container): destination rows switch to a two-line grid (icon + name + meta on line 1, description full-width on line 2 via display:contents on .dt2-dest-mid) so the ~160px meta column no longer squeezes descriptions into a ragged ~25ch wrap"
+    ],
+    "verification": {
+      "node_check": "pass (concept-06.js)",
+      "console_errors": "0 across reload, home, search open, landing, back-restore, domain page, manager page, copy dialog open/close",
+      "duplication_probe": "banner 'FileSafe sandbox coverage is incomplete' absent from attention items at 1280/760 friendly-dark and 1280 glass-dark",
+      "first_viewport_1280x900_friendly_dark": "bannerH 104, attn block 153, directory header y 670, first destination row y 695; no horizontal overflow",
+      "matrix": "760 friendly-dark (no h-scroll, single-line attention rows), 1280 glass-dark (blurred opaque dropdown, no bleed-through), 1280 basic-light (mark highlight legible: accent 26% bg + ring on ink), 1800px viewport full-width (container query off: single-row layout, no h-scroll)",
+      "hover_settle": "destination row height identical at rest and under real pointer hover (108.5px both); icon transform translateY(-1px) and shadow-2 observed",
+      "reduced_motion": "data-motion=reduced renders identical state (title/banner/counts/positions byte-identical snapshot); rise animations and hover transforms disabled",
+      "search_landing": "'theem' → Theme row at #/general/s/visual: located, focused, in viewport; Back twice restores query 'theem' into #pmv2-search with results open and data-active=true on the chosen row",
+      "copy_view": "opens ('Copy settings from another project', 4 source projects) and closes via Cancel"
+    }
+  },
+  "notes": "Browser/interaction evidence appended by the verification phase. Re-verification 2026-08-19 (tab r1): all three previously-failed/shared anomalies are resolved — PMShell.init() wired (shell controls live), .pm-drawer[hidden] guard applied (drawer hidden until opened), and the SVG rect attribute fixed (zero load console errors). Search spot cases 1-3 re-run and still pass. Polish pass 2026-08-19 (tab polish06): see polish_pass.",
+  "scale_stress": {
+    "scope": "shared headless search/index layer + concept-native virtualized lists",
+    "synthetic_records_injected": 2400,
+    "total_index_entries": 3478,
+    "real_inventory_records": 828,
+    "synthetic_replaces_product_data": false,
+    "results_bounded": {
+      "limit": 30,
+      "bounded_flag_observed": true
+    },
+    "query_latency_ms_observed": [
+      13.9,
+      17.2,
+      13.2,
+      12.7
+    ],
+    "managers_instantiated_during_search": 0,
+    "list_rendering": "virtualized/windowed per concept compendium (browser-verified)",
+    "method": "node headless probe of PM_V2_SEARCH over the real index + injected synthetic rows, isolated sessions per query",
+    "result": "pass"
+  },
+  "known_issues": [],
+  "audit_2026_08_19_second_pass": {
+    "scope": "independent audit of the seven-new-concepts work; narrow-width shell top bar clipping",
+    "result": "pass",
+    "detail": "Second-pass independent audit 2026-08-19 (browser-measured, ConceptHub-served pages): at 760/900px page widths the shared shell top bar content (~962px) exceeded the frame and clipped the demo control cluster (Scenarios, theme select, motion, panel toggles). Fixed concept-locally: @container pmx (max-width: 990px) wraps .pmx-topbar to two rows and hides decorative .pmx-model chips; shared pm-shell.css is untouched (frozen with concepts 01-04). Re-verified at exactly 760px and 900px page width: scrollWidth==clientWidth, all six shell controls inside the frame rect, theme select exposes all 8 themes and is clickable, topbar height 60.5px with no overlap of stage content, zero console errors. Standalone narrow (625px frame) also passes with the width select reachable.",
+    "widths_verified": [
+      760,
+      900,
+      625
+    ],
+    "console_errors": 0,
+    "shell_toggle_icon_fix": "User-reported blank top-bar buttons: the shell demo toggles (reduced motion, side/chat/bottom panel) carry bare SVGs with no intrinsic size and no shared CSS rule sizes them, so they painted 0x0 (pre-existing shared-shell markup issue, identical in 01-04). Fixed concept-locally: .pmx-controls [data-shell-motion] > svg, .pmx-controls [data-shell-toggle] > svg { inline-size: 14px; block-size: 14px; }. Browser-verified on all seven concepts: rule live in CSSOM, all four icons 14x14, Scenarios icon unchanged (14x14), toggle buttons still function, zero console errors."
+  }
 }

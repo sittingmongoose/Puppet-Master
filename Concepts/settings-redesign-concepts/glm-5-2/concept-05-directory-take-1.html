@@ -268,6 +268,16 @@
   .d5-roster { width: 400px; }
   .d5-detail-inner { max-width: 900px; }
 }
+
+/* ===== squeeze: 760-999px topbar survival (added by verification pass; extended to cover the 900px matrix width) ===== */
+@media (max-width: 999px) {
+  .pm-topbar .pm-brand { display: none; }
+  .pm-topbar { gap: 6px; }
+  #themeBtn, #closeBtn, #navToggle { font-size: 0; gap: 0; padding: 0 9px; }
+  #themeBtn svg, #closeBtn svg, #navToggle svg { margin-right: 0; }
+  #projChip, .d5-projchip, .e6-proj, .c7-proj, .t8-proj, .n9-proj, .m10-proj, .o11-proj { max-width: 130px; overflow: hidden; white-space: nowrap; }
+  .d5-mini-search, .e6-minis, .c7-minis, .t8-minis, .n9-minis, .m10-cmdinput, .o11-search { min-width: 90px !important; }
+}
 </style>
 </head>
 <body>
@@ -491,6 +501,7 @@
   function render(route) {
     closeDrawer(); hideDrop();
     if (route.manager && PM2.mgrById[route.manager]) { renderManager(route); }
+    else if (route.domain === "all") { renderAll(); }
     else if (route.domain) { renderDomain(route); }
     else if (route.mode === "copy") { renderHome(); openCopy(); }
     else { renderHome(); }
@@ -519,9 +530,9 @@
       n.addEventListener("click", function () {
         var v = n.dataset.nav;
         if (v === "home") goHome();
-        else if (v === "all") renderAll();
+        else if (v === "all") NAV.go({ domain: "all" });
         else if (v === "copy") openCopy();
-        else NAV.go({ domain: v });
+        else NAV.jump({ domain: v });
         if (window.innerWidth < 900) el("rail").dataset.hidden = "hidden";
       });
     });
@@ -570,8 +581,8 @@
     if (restoreQ) { el("homeSearch").value = restoreQ; state.lastQuery = restoreQ; if (pendingRestore && pendingRestore.resultId) state.lastRid = pendingRestore.resultId; pendingRestore = null; }
     document.addEventListener("keydown", function (e) { if (e.key === "/" && document.activeElement.tagName !== "INPUT" && state.view === "home") { e.preventDefault(); el("homeSearch").focus(); } });
     app.querySelectorAll("[data-domain]").forEach(function (card) {
-      card.addEventListener("click", function () { NAV.go({ domain: card.dataset.domain }); });
-      card.addEventListener("keydown", function (e) { if (e.key === "Enter") NAV.go({ domain: card.dataset.domain }); });
+      card.addEventListener("click", function () { NAV.jump({ domain: card.dataset.domain }); });
+      card.addEventListener("keydown", function (e) { if (e.key === "Enter") NAV.jump({ domain: card.dataset.domain }); });
     });
     app.querySelectorAll("[data-dest]").forEach(function (b) {
       b.addEventListener("click", function (e) { e.stopPropagation(); var d = JSON.parse(b.dataset.dest); NAV.go(d); afterNavPlan(PM2.routes.planFor(d)); });
@@ -580,7 +591,7 @@
       if (b.classList.contains("d5-card")) return;
       b.addEventListener("click", function () {
         var v = b.dataset.nav;
-        if (v === "all") renderAll(); else if (v === "copy") openCopy();
+        if (v === "all") NAV.go({ domain: "all" }); else if (v === "copy") openCopy();
         else if (v === "recent") openDrawer("Recent changes", "Values changed in this project: <b>" + STORE.changedCount() + "</b>. Each change applies to <b>" + esc(PM2.currentProject.name) + "</b> only. Projects never stay linked.");
       });
     });
@@ -720,7 +731,6 @@
   /* ============ ALL SETTINGS INDEX ============ */
   function renderAll() {
     state.view = "all"; state.manager = null;
-    NAV.go({ domain: "all" }, { replace: true });
     var html = '<div class="d5-ws"><div class="d5-ws-head">' +
       '<button class="d5-topbtn" id="wsBack">' + PM2.svg("back", 13) + "Back</button>" +
       '<span class="ic">' + PM2.svg("list", 21) + '</span><div><h2>All settings index</h2><div class="meta">828 settings · long-tail index · virtualized</div></div><span class="sp"></span>' +
@@ -761,7 +771,7 @@
     win.append(pad, winEl); list.appendChild(win);
     function drawWindow(scrollTop) {
       var w = PM2.window({ scrollTop: scrollTop, viewportHeight: win.clientHeight, rowHeight: ROWH, total: all.length });
-      pad.style.height = w.padTop + "px"; winEl.style.transform = "translateY(" + w.padTop + "px)"; winEl.style.position = "relative";
+      pad.style.height = (w.padTop + w.count * ROWH + w.padBottom) + "px"; winEl.style.transform = "translateY(" + w.padTop + "px)"; winEl.style.position = "relative";
       winEl.innerHTML = "";
       var frag = document.createDocumentFragment();
       for (var i = w.first; i < w.first + w.count; i++) {
@@ -1022,7 +1032,7 @@
       list.append(pad2, win2);
       function draw2(st) {
         var w = PM2.window({ scrollTop: st, viewportHeight: 220, rowHeight: ROWH2, total: rows.length });
-        pad2.style.height = w.padTop + "px"; win2.style.transform = "translateY(" + w.padTop + "px)";
+        pad2.style.height = (w.padTop + w.count * ROWH2 + w.padBottom) + "px"; win2.style.transform = "translateY(" + w.padTop + "px)";
         var h = "";
         for (var i = w.first; i < w.first + w.count; i++) {
           var rr = rows[i]; if (!rr) break;

@@ -205,6 +205,16 @@
   .pm-shell { grid-template-columns: 60px 1fr var(--chat-w, 0px); grid-template-areas: "topbar topbar topbar" "activity stage chat" "footer footer footer"; }
 }
 @media (min-width: 1800px) { .e6-page { max-width: 980px; } .e6-rail { width: 248px; } }
+
+/* ===== squeeze: 760px topbar survival (added by verification pass) ===== */
+@media (max-width: 899px) {
+  .pm-topbar .pm-brand { display: none; }
+  .pm-topbar { gap: 6px; }
+  #themeBtn, #closeBtn, #navToggle { font-size: 0; gap: 0; padding: 0 9px; }
+  #themeBtn svg, #closeBtn svg, #navToggle svg { margin-right: 0; }
+  #projChip, .d5-projchip, .e6-proj, .c7-proj, .t8-proj, .n9-proj, .m10-proj, .o11-proj { max-width: 130px; overflow: hidden; white-space: nowrap; }
+  .d5-mini-search, .e6-minis, .c7-minis, .t8-minis, .n9-minis, .m10-cmdinput, .o11-search { min-width: 90px !important; }
+}
 </style>
 </head>
 <body>
@@ -405,7 +415,7 @@
       n.addEventListener("click", function () {
         var v = n.dataset.nav;
         if (v === "home") goHome(); else if (v === "all") NAV.go({ domain: "all" }); else if (v === "copy") openCopy();
-        else NAV.go({ domain: v });
+        else NAV.jump({ domain: v });
         if (window.innerWidth < 1024) rail.style.display = "none";
       });
     });
@@ -440,8 +450,8 @@
     var rq = pendingRestore ? pendingRestore.query : NAV.top().query;
     if (rq) { el("homeSearch").value = rq; state.lastQuery = rq; if (pendingRestore && pendingRestore.resultId) state.lastRid = pendingRestore.resultId; pendingRestore = null; }
     sheet.querySelectorAll("[data-domain]").forEach(function (d) {
-      d.addEventListener("click", function () { NAV.go({ domain: d.dataset.domain }); });
-      d.addEventListener("keydown", function (e) { if (e.key === "Enter") NAV.go({ domain: d.dataset.domain }); });
+      d.addEventListener("click", function () { NAV.jump({ domain: d.dataset.domain }); });
+      d.addEventListener("keydown", function (e) { if (e.key === "Enter") NAV.jump({ domain: d.dataset.domain }); });
     });
     sheet.querySelectorAll("[data-dest]").forEach(function (b) { b.addEventListener("click", function (e) { e.stopPropagation(); var dd = JSON.parse(b.dataset.dest); NAV.go(dd); land(PM2.routes.planFor(dd)); }); });
     sheet.querySelectorAll(".e6-util").forEach(function (b) {
@@ -582,7 +592,7 @@
     virt.append(pad, win);
     function drawW() {
       var w = PM2.window({ scrollTop: virt.scrollTop, viewportHeight: virt.clientHeight, rowHeight: ROWH, total: all.length });
-      pad.style.height = w.padTop + "px"; win.style.transform = "translateY(" + w.padTop + "px)";
+      pad.style.height = (w.padTop + w.count * ROWH + w.padBottom) + "px"; win.style.transform = "translateY(" + w.padTop + "px)";
       win.innerHTML = "";
       for (var i = w.first; i < w.first + w.count; i++) {
         var s = all[i]; if (!s) break;
@@ -789,7 +799,7 @@
       pad2.className = "v2-virt-pad"; win2.style.position = "relative"; list.append(pad2, win2);
       function draw2() {
         var w = PM2.window({ scrollTop: list.scrollTop, viewportHeight: 200, rowHeight: RH, total: rows.length });
-        pad2.style.height = w.padTop + "px"; win2.style.transform = "translateY(" + w.padTop + "px)";
+        pad2.style.height = (w.padTop + w.count * RH + w.padBottom) + "px"; win2.style.transform = "translateY(" + w.padTop + "px)";
         var h = "";
         for (var i = w.first; i < w.first + w.count; i++) {
           var rr = rows[i]; if (!rr) break;

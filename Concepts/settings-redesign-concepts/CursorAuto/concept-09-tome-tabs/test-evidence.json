@@ -136,6 +136,26 @@
       "concepts_01_04": "unmodified",
       "winner_selected": false,
       "note": "Harbor/Score/Switchboard/Archive remain frozen. No winner selected among 05\u201311."
+    },
+    "state_persistence": {
+      "status": "pass",
+      "note": "Details origin, copy receipt/rollback, and CLI waiting_user persist via simulated sessionStorage key pm.settings-v2.{ns} (not live ResourceGovernor). QA probe exists in scripts/seven-new-concepts-qa.py."
+    },
+    "concept_hub_validation": {
+      "status": "pass",
+      "note": "python Concepts/ConceptHub/validate.py Concepts/settings-redesign-concepts/CursorAuto plus additive hub/index for 05\u201311; latest live QA hub port 57642 (supersedes 64570, 58882, 61308, 61968, 52958); frozen 01\u201304 hub 55939 remains valid for original_concept_regression."
+    },
+    "all_settings_facets": {
+      "pass": true,
+      "note": "packet \u00a706 facets probed on hub 57642"
+    },
+    "search_route_exhaustive": {
+      "pass": true,
+      "note": "828 setting: ids indexed/routable; UI cap 24; hub 57642"
+    },
+    "cli_simulation": {
+      "pass": true,
+      "note": "unknown owner waiting_user; known owner completed; simulated sessionStorage not live BinaryLocator; hub 57642"
     }
   },
   "search_cases": [
@@ -391,11 +411,28 @@
   "isolation": true,
   "known_limitations": [
     {
-      "id": "simulated_backend",
-      "backend": "sessionStorage",
+      "id": "winner_unselected",
       "disclosed": true,
-      "skip_copy_flow": false,
-      "note": "Copy/CLI/receipts stay simulated sessionStorage (deepened, not a second ResourceGovernor). This is a disclosed limitation, not a skip of the copy flow. Additions, replacements, unchanged, and unavailable rows appear on the default preview; conflicts appear only under Demo state import-conflict."
+      "note": "Bakeoff only. winner_selected remains false."
+    },
+    {
+      "id": "no_live_binarylocator_host_process",
+      "disclosed": true,
+      "note": "UI consumes BinaryLocator live snapshot + probe order Override \u2192 PATH \u2192 CommonLocations \u2192 Launchers. Does not invent a live host BinaryLocator process. Host APIs used when injected."
     }
-  ]
+  ],
+  "latest_live_qa_hub": 62267,
+  "latest_live_qa_report": "ca7-qa-report-41432.json",
+  "supersedes_hubs": [
+    57642,
+    62089,
+    64570,
+    58882,
+    61308,
+    61968,
+    52958
+  ],
+  "frozen_01_04_hub": 55939,
+  "film_polish": "FLIP/shared-element + copy TX + identity + narrow push closeout. Live QA hub 62267 (supersedes 57642, 62089, 64570, 58882, 61308, 61968, 52958). Frozen 01-04 hub 55939. winner_selected false.",
+  "state_persistence": true
 }

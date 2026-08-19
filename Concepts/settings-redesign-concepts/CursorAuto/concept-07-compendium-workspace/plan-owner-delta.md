@@ -39,7 +39,7 @@ Candidate IDs are NOT_MINTED.
 - compendium motion
 
 ## Simulated backend
-- Copy, provider CLI, receipts, and Details origin are **sessionStorage** projections, not live RuntimeResourceGovernor / BinaryLocator / secret store.
+- Copy and CLI operations admit through the RuntimeResourceGovernor client; BinaryLocator provides installation identity from live Override→PATH→CommonLocations→Launchers probes. Project values persist in the project store (localStorage). ObservableWork owns progress. No second ResourceGovernor.
 - ObservableWork is a truthful projection only.
 - Deepen the existing simulated backend; do not invent a second ResourceGovernor.
 

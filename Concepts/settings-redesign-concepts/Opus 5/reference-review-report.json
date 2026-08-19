@@ -253,10 +253,10 @@
       "opened_originally": false,
       "why_missed": "The packet's SOURCE_AND_PRECEDENCE_MAP summarised the performance decision in one clause; the summary was read and the authority was not.",
       "controlling_for": [
-        "manager performance model §4",
-        "resource Settings §9",
-        "ObservableWork §12",
-        "performance test matrix §16"
+        "manager performance model \u00a74",
+        "resource Settings \u00a79",
+        "ObservableWork \u00a712",
+        "performance test matrix \u00a716"
       ]
     },
     {
@@ -277,44 +277,44 @@
       "opened_originally": false,
       "why_missed": "Absent from the original packet entirely.",
       "controlling_for": [
-        "seven execution lanes §2.2",
-        "sole resource owner §2.3",
-        "startup §7",
-        "memory byte contracts §8",
-        "ObservableWork §11",
-        "provisioning §12",
-        "provider onboarding §13",
-        "Settings canon §20",
-        "benchmark matrix §23"
+        "seven execution lanes \u00a72.2",
+        "sole resource owner \u00a72.3",
+        "startup \u00a77",
+        "memory byte contracts \u00a78",
+        "ObservableWork \u00a711",
+        "provisioning \u00a712",
+        "provider onboarding \u00a713",
+        "Settings canon \u00a720",
+        "benchmark matrix \u00a723"
       ]
     },
     {
       "reference": "reference/PM_CROSS_SYSTEM_COMPLETENESS_AUDIT.md",
       "opened_originally": false,
       "controlling_for": [
-        "record kinds §6",
-        "scope vocabulary §6",
-        "secret/auth classes §6",
-        "DRY families §7",
-        "coverage gate §9"
+        "record kinds \u00a76",
+        "scope vocabulary \u00a76",
+        "secret/auth classes \u00a76",
+        "DRY families \u00a77",
+        "coverage gate \u00a79"
       ]
     },
     {
       "reference": "reference/EGOLITE_SETTINGS_RETURN.md",
       "opened_originally": false,
       "controlling_for": [
-        "humanized state vocabulary §10",
-        "no raw enum strings in normal GUI §12",
-        "install vs connect §3",
-        "exact Host/Environment §4"
+        "humanized state vocabulary \u00a710",
+        "no raw enum strings in normal GUI \u00a712",
+        "install vs connect \u00a73",
+        "exact Host/Environment \u00a74"
       ]
     },
     {
       "reference": "reference/SERVER_BACKBONE_SETTINGS_RETURN.md",
       "opened_originally": false,
       "controlling_for": [
-        "per-tool acquisition and readiness states §6",
-        "Copy Settings From… contract §2"
+        "per-tool acquisition and readiness states \u00a76",
+        "Copy Settings From\u2026 contract \u00a72"
       ]
     },
     {
@@ -345,7 +345,7 @@
   "defects": [
     {
       "id": 1,
-      "source": "register §2.3, PERFORMANCE §9",
+      "source": "register \u00a72.3, PERFORMANCE \u00a79",
       "defect": "No resource/performance manager existed in any concept; 37 builders, none matching perf/resource/governor.",
       "affected_concepts": [
         "atlas",
@@ -362,8 +362,8 @@
     },
     {
       "id": 2,
-      "source": "register §11",
-      "defect": "No ObservableWork projection. pm-sim.js advanced phases on a private timer with five outcome words, no wait reason, no cancel/background/retry, no progress source — the register's definition of fake progress.",
+      "source": "register \u00a711",
+      "defect": "No ObservableWork projection. pm-sim.js advanced phases on a private timer with five outcome words, no wait reason, no cancel/background/retry, no progress source \u2014 the register's definition of fake progress.",
       "affected_concepts": [
         "atlas",
         "console",
@@ -381,7 +381,7 @@
     },
     {
       "id": 3,
-      "source": "PERFORMANCE §12",
+      "source": "PERFORMANCE \u00a712",
       "defect": "onPhase was plumbed through the kit and consumed by no concept, so every operation showed a generic spinner that concealed what was being waited on.",
       "affected_concepts": [
         "atlas",
@@ -397,7 +397,7 @@
     },
     {
       "id": 4,
-      "source": "register §7.3, §20.2",
+      "source": "register \u00a77.3, \u00a720.2",
       "defect": "No virtualization anywhere; every row of every list was rendered.",
       "affected_concepts": [
         "atlas",
@@ -414,7 +414,7 @@
     },
     {
       "id": 5,
-      "source": "PERFORMANCE §16, register §23",
+      "source": "PERFORMANCE \u00a716, register \u00a723",
       "defect": "Fixtures below the packet's own performance matrix: 274 settings, 7 installations, 6 MCP items.",
       "affected_concepts": [
         "atlas",
@@ -431,7 +431,7 @@
     },
     {
       "id": 6,
-      "source": "register §8.2",
+      "source": "register \u00a78.2",
       "defect": "Receipts were bounded by item count only; 'item counts alone are insufficient'.",
       "affected_concepts": [
         "atlas",
@@ -448,7 +448,7 @@
     },
     {
       "id": 7,
-      "source": "register §3.1",
+      "source": "register \u00a73.1",
       "defect": "No low-resource/legacy profile and no metered-network, battery or thermal behaviour.",
       "affected_concepts": [
         "atlas",
@@ -465,7 +465,7 @@
     },
     {
       "id": 8,
-      "source": "01_CORE_ARCHITECTURE, audit §6",
+      "source": "01_CORE_ARCHITECTURE, audit \u00a76",
       "defect": "Search exposed 9 record kinds but not setup_workflow or unavailable capability.",
       "affected_concepts": [
         "atlas",
@@ -481,8 +481,8 @@
     },
     {
       "id": 9,
-      "source": "EGOLITE §10, §12",
-      "defect": "Raw enum strings rendered in normal GUI (channel_not_found, homebrew_formula, pull_request) — 9 occurrences.",
+      "source": "EGOLITE \u00a710, \u00a712",
+      "defect": "Raw enum strings rendered in normal GUI (channel_not_found, homebrew_formula, pull_request) \u2014 9 occurrences.",
       "affected_concepts": [
         "console",
         "ledger",
@@ -496,15 +496,15 @@
     },
     {
       "id": 10,
-      "source": "EGOLITE §3",
+      "source": "EGOLITE \u00a73",
       "defect": "Suspected Install-vs-Connect vocabulary error.",
       "affected_concepts": [],
-      "correction": "DISPROVEN — no correction needed. Census showed 'Connect a destination' for hosted services and 'Install a skill/plugin' for real tools; no 'Install <forge>' string exists.",
+      "correction": "DISPROVEN \u2014 no correction needed. Census showed 'Connect a destination' for hosted services and 'Install a skill/plugin' for real tools; no 'Install <forge>' string exists.",
       "files": []
     },
     {
       "id": 11,
-      "source": "EGOLITE §4",
+      "source": "EGOLITE \u00a74",
       "defect": "Raw environment IDs possibly rendered in ordinary copy.",
       "affected_concepts": [
         "atlas",
@@ -520,7 +520,7 @@
     },
     {
       "id": 12,
-      "source": "SERVER_BACKBONE §6 vs PROVIDER_CLI_FINAL_ADJUDICATION",
+      "source": "SERVER_BACKBONE \u00a76 vs PROVIDER_CLI_FINAL_ADJUDICATION",
       "defect": "No per-tool acquisition/readiness state family, and the two references conflict over 'Included with this Server'.",
       "affected_concepts": [
         "atlas",
@@ -536,17 +536,17 @@
     },
     {
       "id": 13,
-      "source": "01, SERVER_BACKBONE §2",
-      "defect": "Copy Settings From… lacked the restore point / atomic apply / verification contract.",
+      "source": "01, SERVER_BACKBONE \u00a72",
+      "defect": "Copy Settings From\u2026 lacked the restore point / atomic apply / verification contract.",
       "affected_concepts": [
         "ledger"
       ],
-      "correction": "Recorded as an unresolved item rather than silently invented — see unresolved_defects. The existing preview and rollback actions remain; the ten-category transactional contract belongs to the settings lifecycle owner.",
+      "correction": "Recorded as an unresolved item rather than silently invented \u2014 see unresolved_defects. The existing preview and rollback actions remain; the ten-category transactional contract belongs to the settings lifecycle owner.",
       "files": []
     },
     {
       "id": 14,
-      "source": "audit §6",
+      "source": "audit \u00a76",
       "defect": "Scope vocabulary was 3 of 12 (global, project, thread).",
       "affected_concepts": [
         "atlas",
@@ -562,7 +562,7 @@
     },
     {
       "id": 15,
-      "source": "audit §6",
+      "source": "audit \u00a76",
       "defect": "Secret/auth classes were 4 of 7.",
       "affected_concepts": [
         "atlas",
@@ -577,8 +577,8 @@
     },
     {
       "id": 16,
-      "source": "PROVIDER_CLI_FINAL_ADJUDICATION §Runtime demand",
-      "defect": "The runtime-demand flow (Provider Setup Required → deep link → continuation token → explicit install → separate auth) was never modelled.",
+      "source": "PROVIDER_CLI_FINAL_ADJUDICATION \u00a7Runtime demand",
+      "defect": "The runtime-demand flow (Provider Setup Required \u2192 deep link \u2192 continuation token \u2192 explicit install \u2192 separate auth) was never modelled.",
       "affected_concepts": [
         "atlas",
         "console",
@@ -761,8 +761,8 @@
   "unresolved_defects": [
     {
       "id": "copy-settings-transaction",
-      "summary": "Copy Settings From… still exposes preview and rollback but not the full ten-category transactional contract (pre-copy restore point, atomic apply, verification receipt).",
-      "why_not_corrected": "01_CORE_ARCHITECTURE and SERVER_BACKBONE §2 both assign the transaction to the settings lifecycle owner. Inventing the ten-category split inside a concept would create a second owner for a canonical flow.",
+      "summary": "Copy Settings From\u2026 still exposes preview and rollback but not the full ten-category transactional contract (pre-copy restore point, atomic apply, verification receipt).",
+      "why_not_corrected": "01_CORE_ARCHITECTURE and SERVER_BACKBONE \u00a72 both assign the transaction to the settings lifecycle owner. Inventing the ten-category split inside a concept would create a second owner for a canonical flow.",
       "owner": "Settings lifecycle owner"
     },
     {
@@ -793,5 +793,37 @@
     "Slow-network load is ~19 s at 400 kbps with 6x CPU throttle. The page ships ~928 KB of uncompressed JS+CSS; that is asset weight, not a runtime defect, and no bundler is in scope.",
     "Old-hardware behaviour is approximated by CPU throttling. This is not Ivy Bridge or Xeon E5 evidence.",
     "Everything network, filesystem or provider touching remains simulated; every ObservableWork projection carries simulated:true."
+  ],
+  "subsequent_passes": [
+    {
+      "pass": "seven-new-concepts-2026-08-18",
+      "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+      "generated": "2026-08-18",
+      "scope": "added concepts 05-11; concepts 01-04 and shared/** left byte-identical",
+      "references_opened_count": 42,
+      "snapshot_file": "REFERENCE_REVIEW_2026-08-18.json",
+      "summary": "The 2026-08-13 correction pass is unchanged above. This pass did not repair concepts 01-04; the packet freezes them. Every omission the new packet identifies is answered in new concepts and new shared2 modules: the real 828-record inventory replaces the authored fixture, per-concept manager coverage replaces collective coverage and shared_grammar, Project-only replaces every scope and inheritance affordance, and search routes by immutable result id rather than by rendered position.",
+      "what_this_pass_did_not_touch": [
+        "shared/**",
+        "opus-5-atlas.html",
+        "opus-5-console.html",
+        "opus-5-stack.html",
+        "opus-5-ledger.html",
+        "concepts/**",
+        "TEST_REPORT.md",
+        "FINDINGS.md",
+        "IMPACT_REGISTER.json"
+      ]
+    },
+    {
+      "pass": "seven-new-concepts-compliance-re-read-2026-08-19",
+      "date": "2026-08-19",
+      "scope": "concepts 05-11 and shared2/**; concepts 01-04 and shared/** untouched",
+      "summary": "Re-read the authority line by line against the running concepts, after the full harness was already green. Twelve named requirements were unmet. The largest was that a deep link to a manager's object landed on a not-found page: 633 of 786 roster items were unroutable because the roster and the search index named the same object two different ways, and because the router reported 'cannot verify' as 'does not exist'.",
+      "requirements_fixed": 12,
+      "detail": "REFERENCE_REVIEW_2026-08-18.json subsequent_passes[0]; SEVEN_NEW_CONCEPTS_FINDINGS.md section 1c",
+      "verification": "786/786 manager objects routable; section-level deep links land and are marked in all seven; scroll-driven nav highlight in all seven with a jump pin released by reader input; submenus open beside their parent in all seven with correct layering; menu animation 0s under retro-dark in all seven; no clipped text under long-label or long-explanation at four themes x two widths, except concept 10's row subtitle, which is deliberate.",
+      "lesson": "A passing suite proves only what it was written to check. Every defect in this pass was inside behaviour the suites exercised and none of them failed, because the suites asserted that a page rendered rather than that the reader arrived where the link said they would."
+    }
   ]
 }

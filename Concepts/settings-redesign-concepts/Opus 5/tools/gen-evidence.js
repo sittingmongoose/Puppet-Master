@@ -134,8 +134,15 @@ async function main() {
   const browser = await Browser.launch(profile);
   const generated = new Date().toISOString().slice(0, 10);
 
+  const only = arg("concepts", null);
+  const wanted = only ? only.split(",") : null;
+
+  var written = 0;
+
   try {
     for (const concept of CONCEPTS) {
+      if (wanted && wanted.indexOf(concept.stem) < 0) continue;
+      written += 1;
       const { coverage, surfaces } = await coverageFor(browser, concept.stem);
 
       /* ---------------------------------------------------- manager-coverage */
@@ -301,7 +308,7 @@ async function main() {
     await browser.close();
   }
 
-  process.stdout.write("evidence written for " + CONCEPTS.length + " concepts\n");
+  process.stdout.write("evidence written for " + written + " concepts\n");
 }
 
 main().catch((err) => { console.error(err); process.exit(2); });

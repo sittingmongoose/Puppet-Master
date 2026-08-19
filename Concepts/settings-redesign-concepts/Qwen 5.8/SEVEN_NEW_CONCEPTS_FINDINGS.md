@@ -38,3 +38,16 @@ Scope: concepts 05–11 added to `Concepts/settings-redesign-concepts/Qwen 5.8/`
 ## Temporary material
 
 All screenshots, browser profiles, harness scripts, and intermediate results live in `%TEMP%\pm-qwen58-seven\` and are deleted at cleanup; only requested reports/evidence remain in the model folder.
+
+## Completeness sweep (2026-08-18, independent read-only subagent)
+
+Full packet cross-check (all 12 packet files + machine-readable contracts vs repo): verdict **PASS**, zero dropped requirements. Residuals found and closed:
+
+- 08 deferred-family display names realigned to packet canon (`Installation / Deployment`, `Server Claim / Bootstrap`, `Servers / Execution Hosts / Clients`, `Project Sync / Move`, `Puppet Master application/content updates`, `Full Server backup owner flow`).
+- 06 search matrix gained an explicit `grouped_results` case (verified live: 2 type groups, 18 rows, rid routing).
+- Cumulative impact register count corrected (05: 42 demonstrated).
+- `slint_port_impacts` notes filled in 05/07/09/10 registers.
+- Runtime-demand → setup deep-link + continuation validation added to 05/08/09/10/11 (receipt names originating operation, token, resume-only-if-current).
+- Concept-07 copy-step text glyph replaced with SVG icon.
+- Concept-10 scroll-position persistence added.
+- 05/08 All Settings gained record-kind + attention facets over the virtualized list.

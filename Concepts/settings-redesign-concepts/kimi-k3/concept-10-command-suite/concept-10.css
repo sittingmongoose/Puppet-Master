@@ -14,7 +14,7 @@
 
 .cs {
   display: grid;
-  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  grid-template-rows: auto auto auto auto minmax(0, 1fr) auto;
   block-size: 100%;
   background: var(--pm-bg);
   color: var(--pm-ink);
@@ -22,6 +22,15 @@
   font-size: 13px;
   overflow: hidden;
 }
+
+/* explicit row placement: collapsible strips ([hidden] → display:none) leave
+   their auto rows at 0, and the pane stack always owns the flexible row. */
+.cs-topbar { grid-row: 1; }
+.cs-searchrow { grid-row: 2; }
+.cs-help { grid-row: 3; }
+.cs-scenario-strip { grid-row: 4; }
+.cs-panes { grid-row: 5; }
+.cs-hints { grid-row: 6; }
 
 .cs button { font: inherit; }
 
@@ -216,6 +225,52 @@
   color: var(--pm-ink-dim);
 }
 .cs-help b { color: var(--pm-ink); font-weight: 600; }
+/* author display:grid would otherwise beat the UA [hidden] rule and leave a
+   ghost row overlapping the pane stack */
+.cs-help[hidden] { display: none; }
+
+/* ---------- scenario strip (truthful demo-state banner) --------------------- */
+.cs-scenario-strip {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--pm-line);
+  background: color-mix(in srgb, var(--pm-info) 10%, var(--pm-bg));
+  color: var(--pm-ink);
+  font-size: 12.5px;
+}
+.cs-scenario-strip[hidden] { display: none; }
+.cs-scenario-strip[data-state="offline"],
+.cs-scenario-strip[data-state="restart-required"],
+.cs-scenario-strip[data-state="reconnect-required"],
+.cs-scenario-strip[data-state="changed-elsewhere"] {
+  background: color-mix(in srgb, var(--pm-warn) 12%, var(--pm-bg));
+}
+.cs-scenario-strip[data-state="error"],
+.cs-scenario-strip[data-state="validation-error"],
+.cs-scenario-strip[data-state="unavailable"] {
+  background: color-mix(in srgb, var(--pm-danger) 10%, var(--pm-bg));
+}
+.cs-scenario-strip[data-state="loading"] {
+  background: color-mix(in srgb, var(--pm-accent) 10%, var(--pm-bg));
+}
+.cs-scenario-strip strong { font-weight: 650; flex: none; }
+.cs-scenario-badge {
+  flex: none;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--pm-ink-dim);
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-s);
+  padding: 2px 7px;
+  background: var(--pm-bg-raised);
+}
+.cs-scenario-msg { color: var(--pm-ink-dim); min-inline-size: 0; }
+.cs-scenario-clear { margin-inline-start: auto; flex: none; }
 
 /* ---------- pane stack ------------------------------------------------------ */
 .cs-panes {
@@ -512,3 +567,23 @@
   animation-duration: 0.01ms !important;
   transition-duration: 0.01ms !important;
 }
+
+/* hidden-attribute guards: shared .pm-drawer/.pm-scrim set display, which would
+   otherwise beat the UA [hidden] rule and leave overlays visible. */
+.pm-drawer[hidden], .pm-scrim[hidden] { display: none !important; }
+
+/* Narrow shell frames (the 760/900 page widths): let the shell top bar wrap
+   to two rows and drop the decorative model chips, so the demo control
+   cluster (Scenarios, theme, motion, panel toggles, width) is never clipped.
+   Concept-local: shared pm-shell.css is frozen with concepts 01–04. */
+@container pmx (max-width: 990px) {
+  .pmx-topbar { flex-wrap: wrap; row-gap: 2px; padding-block: 4px; }
+  .pmx-model { display: none; }
+}
+
+/* Shell demo toggles (reduced motion, side/chat/bottom panels) carry bare SVGs
+   with no intrinsic size and no shared rule sizes them, so they painted 0x0.
+   Size them like the Scenarios button's icon. Concept-local: shared CSS and
+   concepts 01-04 are frozen. */
+.pmx-controls [data-shell-motion] > svg,
+.pmx-controls [data-shell-toggle] > svg { inline-size: 14px; block-size: 14px; }

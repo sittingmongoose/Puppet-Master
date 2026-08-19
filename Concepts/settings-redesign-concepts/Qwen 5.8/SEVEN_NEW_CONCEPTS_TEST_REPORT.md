@@ -46,3 +46,13 @@ Generated: 2026-08-18. Harness: `harness.py` (Playwright pip Chromium, headless)
 - Prototypes: ObservableWork/ResourceGovernor/BinaryLocator are truthful simulations; candidate IDs provisional.
 - Harness uses synthetic `.click()` (detail 0) for result rows; real-pointer path uses mousedown (both covered).
 - Synthetic stress rows labeled synthetic; real inventory = 828 rows only.
+
+## Post-fix final sweep (2026-08-18, after all fixes and index polish)
+
+Independent read-only sweep of all seven concepts (home at 1280/760/2200 + `#/mgr/providers` + `#/all` at 1280, friendly-dark): **all seven PASS, zero medium-or-higher issues, zero low notes** — status bar unoccluded everywhere, tray clear of content, no clipping/overflow, home contract intact. `ConceptHub validate.py` re-run after index polish: passed.
+
+## Packet completeness sweep (independent read-only cross-check, closed 2026-08-18)
+
+A separate read-only subagent walked all 12 packet files + machine-readable contracts against the repo: verdict PASS with 7 narrow residuals, all subsequently closed and re-verified: runtime-demand → setup deep-link + continuation validation added to 05/08/09/10/11 (receipt names originating operation, token, resume-only-if-current, truthful stale note); 08 deferred names realigned to packet canon; 06 search matrix gained explicit grouped_results case; cumulative register count corrected (05: 42); slint_port_impacts notes filled (05/07/09/10); 07 copy-step glyph replaced with SVG; 10 scroll persistence added; 05/08 All Settings gained record-kind + attention facets. A latent 08 crash (no-preferred-account fixture) found during this work was guarded.
+
+Final state evidence: harness 256/256 PASS (zero page errors, 7 concepts + 4 regression); `validate_seven_new_concepts.py` status=pass; `ConceptHub validate.py` passed; residual probes 93/93 + regression probes 56/56 (ResidualFix). Temp artifacts in `%TEMP%\pm-qwen58-seven\` deleted after final runs.

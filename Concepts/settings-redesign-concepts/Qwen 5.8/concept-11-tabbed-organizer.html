@@ -179,6 +179,34 @@
   /* ---------------- routing ---------------- */
   var scrollMem = {}, vlist = null, openDrop = null, pendingLocate = null;
   var copyState = { step: 1, source: null, cats: [], preview: null, applied: null };
+  // ---------------- runtime-demand continuation (packet 08) ----------------
+  var demand = null, staleDemand = {}, installedLocal = {};
+  function demandToken() { return "cont-" + Date.now().toString(36) + "-" + Math.floor(Math.random() * 46656).toString(36); }
+  function provReady(p) {
+    if (installedLocal[p.id]) return true;
+    return p.readiness.indexOf("not-installed") < 0 && (p.readiness.indexOf("authenticated") >= 0 || p.readiness.indexOf("probe-ok") >= 0);
+  }
+  function demandBlockHTML(p) {
+    var html = '<div class="t11-sec-cap">Runtime demand</div>' +
+      '<div class="t11-objcard"><b>Simulate a runtime demand for this CLI</b>' +
+      '<p class="pm-note" style="margin:6px 0">A chat run requests this provider; the originating operation is preserved with a continuation token until setup completes.</p>' +
+      '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-sm" data-provact="demand-simulate" data-prov="' + esc(p.id) + '">Simulate…</button></div>';
+    var d = demand && demand.id === p.id ? demand : null;
+    if (d) {
+      if (provReady(p)) {
+        html += '<div class="pm-mgr-actions" style="margin-top:8px"><span class="pm-badge pm-badge-ok">token ' + esc(d.token) + ' — current</span>' +
+          '<button class="pm-btn pm-btn-sm pm-btn-primary" data-provact="demand-resume" data-prov="' + esc(p.id) + '">Resume originating operation</button></div>' +
+          '<p class="pm-note" style="margin:6px 0">' + esc(d.op) + ': the stored token still matches this demand, so the resume is honored.</p>';
+      } else {
+        html += '<p class="pm-note" style="margin:6px 0">' + esc(d.op) + ' holds token ' + esc(d.token) + '; resume unlocks when ' + esc(p.name) + ' reports installed + authenticated.</p>';
+      }
+      html += '<div class="pm-mgr-actions"><button class="pm-btn pm-btn-quiet pm-btn-sm" data-provact="demand-open" data-prov="' + esc(p.id) + '">Open the exact install row</button></div>' +
+        '<p class="pm-note" style="margin:4px 0 0">Deep link: #/mgr/providers/' + esc(p.id) + '?sec=install</p>';
+    } else if (staleDemand[p.id]) {
+      html += '<p class="pm-note" style="margin:6px 0">Continuation stale: "' + esc(staleDemand[p.id].op) + '" (token ' + esc(staleDemand[p.id].token) + ') was superseded by a newer runtime demand; the stored token no longer matches. Simulate again to preserve a new operation.</p>';
+    }
+    return html + "</div>";
+  }
 
   function parseHash() {
     var h = location.hash.replace(/^#\/?/, "");
@@ -548,6 +576,7 @@
           (x.owner === "unknown" ? '<p class="pm-note">Owner unknown — manual management only. Updates and repairs stay with you.</p>' : "") + "</div>";
       });
       html += '<p class="pm-note">CLI acquisition is explicit user install from the official source for the exact Host/Environment. Puppet Master never installs one on its own.</p>';
+      html += demandBlockHTML(p);
     } else if (sec === "models" || sec === "catalog") {
       if (p.readiness.indexOf("catalog-last-known-good") >= 0) html += '<div class="t11-banner" style="margin:0 0 10px">' + ico("info", 14) + " Offline: serving the last-known-good catalog. Refresh becomes available when connectivity returns.</div>";
       if (p.readiness.indexOf("underlying-setup-required") >= 0) html += '<div class="pm2-empty" style="margin-bottom:10px">Free model rows need an underlying provider connection first. No credentials or quota are owned here.</div>';
@@ -856,13 +885,30 @@
         var act = b.getAttribute("data-provact");
         if (act === "install") {
           var op = S2.beginOp({ title: "Install " + p.name, phase: "Waiting for explicit confirmation", determinate: false, wait: "explicit user approval" });
-          setTimeout(function () { S2.finishOp(op, "completed", "Verified"); S2.receipt("Installation verified", p.name + " installed from the official source for this Host/Environment and selected. Simulated.", "ok"); }, 900);
+          setTimeout(function () { installedLocal[p.id] = true; S2.finishOp(op, "completed", "Verified"); S2.receipt("Installation verified", p.name + " installed from the official source for this Host/Environment and selected. Simulated.", "ok"); render(); }, 900);
         } else if (act === "approve-update" || act === "schedule-update") {
           var op2 = S2.beginOp({ title: "Update " + p.name, phase: act === "approve-update" ? "Downloading signed build" : "Scheduled for next idle window", determinate: act === "approve-update", total: 3 });
           var n = 0;
           var t = setInterval(function () { n++; S2.advanceOp(op2, { completed: n }); if (n >= 3) { clearInterval(t); S2.finishOp(op2, "completed", "Updated"); S2.receipt("Update complete", p.name + " updated after explicit approval; verification passed.", "ok"); } }, 300);
         } else if (act === "defer-update") S2.receipt("Update deferred", p.name + " stays on the current generation. Ask-first policy respected.", "info");
         else if (act === "test") { var op3 = S2.beginOp({ title: "Probe " + p.name, phase: "Probing", determinate: false }); setTimeout(function () { S2.finishOp(op3, "completed", "Probe ok"); S2.receipt("Probe complete", p.name + " connection verified.", "ok"); }, 600); }
+        else if (act === "demand-simulate" || act === "demand-resume" || act === "demand-open") {
+          if (act === "demand-simulate") {
+            if (demand && demand.id !== p.id) staleDemand[demand.id] = demand;
+            demand = { id: p.id, op: "Chat run requesting " + p.name, token: demandToken() };
+            S2.receipt("Provider Setup Required", p.name + " is not ready for the originating operation (" + demand.op + "). The operation is preserved with continuation token " + demand.token + ". Deep link: #/mgr/providers/" + p.id + "?sec=install. Resume only while the continuation is still current.", "info");
+            render();
+          } else if (act === "demand-resume") {
+            if (demand && demand.id === p.id && provReady(p)) {
+              S2.receipt("Operation resumed", demand.op + " resumes on " + p.name + "; continuation token " + demand.token + " matched the stored demand.", "ok");
+              demand = null;
+              render();
+            }
+          } else {
+            nav("mgr/providers/" + p.id + "?sec=installations");
+          }
+          return;
+        }
         else S2.receipt("Logs", (p.logs || []).join(" · ") || "No log entries.", "info");
       });
     });

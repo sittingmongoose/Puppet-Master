@@ -61,7 +61,16 @@
 .dt3-rail-util { margin-block-start: 14px; border-block-start: 1px solid var(--pm-line); padding-block-start: 8px; }
 
 /* ---------- workspace pane ------------------------------------------------ */
-.dt3-pane { display: flex; flex-direction: column; min-inline-size: 0; min-block-size: 0; }
+/* dt3p container: the shell's side/chat panels can squeeze the stage far
+   below the frame width, so content breakpoints key on the pane, not pmx. */
+.dt3-pane {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+  min-block-size: 0;
+  container-type: inline-size;
+  container-name: dt3p;
+}
 .dt3-head {
   flex: none;
   display: flex;
@@ -128,8 +137,8 @@
   padding: 1px 6px;
 }
 .dt3[data-view="home"] .dt3-search { max-inline-size: 640px; }
-.dt3[data-view="home"] .dt3-search-box { padding: 13px 17px; }
-.dt3[data-view="home"] .dt3-search-box > input { font-size: 15.5px; }
+.dt3[data-view="home"] .dt3-search-box { padding: 13px 18px; box-shadow: var(--pm-shadow-1); }
+.dt3[data-view="home"] .dt3-search-box > input { font-size: 16px; }
 
 .dt3-close {
   flex: none;
@@ -224,42 +233,57 @@
 :root:not([data-motion="reduced"]) .dt3-anim-settle { animation: dt3-settle calc(.2s * var(--pm-motion-scale)) ease-out 1; }
 
 /* ---------- Home ---------------------------------------------------------- */
-.dt3-hello { margin-block-end: 20px; }
-.dt3-hello h1 { margin: 0 0 6px; font-size: 26px; font-weight: 700; letter-spacing: -0.01em; }
-.dt3-hello p { margin: 0; color: var(--pm-ink-dim); font-size: 14px; max-inline-size: 68ch; }
+.dt3-hello { margin-block-end: 14px; }
+.dt3-hello h1 { margin: 0 0 4px; font-size: 24px; font-weight: 750; letter-spacing: -0.015em; }
+.dt3-hello p { margin: 0; color: var(--pm-ink-dim); font-size: 13.5px; max-inline-size: 68ch; }
 .dt3-hello .dt3-project { color: var(--pm-accent); font-weight: 600; }
 
-.dt3-attn-banner { margin-block-end: 18px; }
-.dt3-attn-list { display: grid; gap: 10px; margin-block-end: 26px; }
+/* one critical banner, compact: chip + headline + one consequence + actions */
+.dt3-attn-banner { margin-block-end: 12px; }
+.dt3-attn-banner .pm-notice { padding: 11px 16px; }
+.dt3-attn-banner .pm-notice-head { font-size: 13.5px; }
+.dt3-attn-banner .pm-notice-body { font-size: 12px; }
+.dt3-attn-banner .pm-notice-actions { margin-block-start: 2px; }
+
+/* remaining attention: single-line rows (title + clamped detail + quiet act) */
+.dt3-attn-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; margin-block-end: 20px; }
 .dt3-attn-row {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   border: 1px solid var(--pm-line);
-  border-radius: var(--pm-radius-m);
-  background: var(--pm-bg-raised);
-  padding: 12px 16px;
+  border-radius: var(--pm-radius-s);
+  background: transparent;
+  padding: 6px 10px 6px 13px;
+  transition:
+    background calc(.15s * var(--pm-motion-scale)) ease,
+    border-color calc(.15s * var(--pm-motion-scale)) ease;
 }
-.dt3-attn-row svg { inline-size: 17px; block-size: 17px; flex: none; color: var(--pm-warn); }
+.dt3-attn-row:hover { background: var(--pm-bg-raised); border-color: color-mix(in srgb, var(--pm-ink-faint) 45%, var(--pm-line)); }
+.dt3-attn-row:focus-within { background: var(--pm-bg-raised); }
+.dt3-attn-row svg { inline-size: 15px; block-size: 15px; flex: none; color: var(--pm-warn); }
 .dt3-attn-row[data-kind="setup"] svg { color: var(--pm-info); }
-.dt3-attn-main { flex: 1 1 auto; min-inline-size: 0; }
-.dt3-attn-head { font-weight: 600; font-size: 13.5px; }
-.dt3-attn-sub { font-size: 12.5px; color: var(--pm-ink-dim); }
+.dt3-attn-row[data-kind="recommended"] svg { color: var(--pm-rec); }
+.dt3-attn-main { flex: 1 1 auto; min-inline-size: 0; display: flex; align-items: baseline; gap: 12px; }
+.dt3-attn-head { flex: 0 1 auto; min-inline-size: 0; font-weight: 600; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dt3-attn-sub { flex: 1 3 auto; min-inline-size: 0; font-size: 12px; color: var(--pm-ink-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .dt3-attn-act { flex: none; }
+.dt3-attn-act .pm-btn { padding: 4px 10px; font-size: 12px; }
 
 .dt3-section-h {
   display: flex;
   align-items: baseline;
   gap: 10px;
-  margin: 4px 0 14px;
+  margin: 2px 0 12px;
 }
-.dt3-section-h h2 { margin: 0; font-size: 17px; font-weight: 700; }
+.dt3-section-h h2 { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -0.005em; }
 .dt3-section-h .dt3-section-sub { color: var(--pm-ink-faint); font-size: 12.5px; }
 
-/* FEWER, LARGER domain cards — dominant Home destination */
+/* FEWER, LARGER domain cards — dominant Home destination. Base is one
+   column; the dt3p queries below add columns only when cards stay ≥ ~300px. */
 .dt3-domains {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--dt3-gap);
 }
 .dt3-domain-card {
@@ -273,36 +297,64 @@
   border: 1px solid var(--pm-line);
   border-radius: var(--pm-radius-l);
   background: var(--pm-bg-raised);
-  padding: 22px 22px;
+  padding: 20px 22px;
   font: inherit;
   color: inherit;
   text-align: start;
   cursor: pointer;
   transition:
-    transform calc(.2s * var(--pm-motion-scale)) ease,
-    box-shadow calc(.2s * var(--pm-motion-scale)) ease,
+    transform calc(.16s * var(--pm-motion-scale)) ease-out,
+    box-shadow calc(.24s * var(--pm-motion-scale)) ease-out,
     border-color calc(.2s * var(--pm-motion-scale)) ease;
 }
-/* cards lift-and-open */
+/* cards lift-and-open; the shadow settles a beat after the lift (calm) */
 .dt3-domain-card:hover, .dt3-domain-card:focus-visible {
   transform: translateY(-3px);
   box-shadow: var(--pm-shadow-2);
   border-color: color-mix(in srgb, var(--pm-accent) 38%, var(--pm-line));
 }
+.dt3-domain-card:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: 2px; }
+.dt3-domain-card:active { transform: translateY(-1px); box-shadow: var(--pm-shadow-1); transition-duration: calc(.06s * var(--pm-motion-scale)); }
+/* staggered rise on Home — transform/opacity only, ≤240ms x motion scale */
+:root:not([data-motion="reduced"]) .dt3-domains .dt3-domain-card {
+  animation: dt3-rise calc(.22s * var(--pm-motion-scale)) ease-out backwards;
+  animation-delay: calc(var(--dt3-i, 0) * 22ms);
+}
 .dt3-domain-icon {
   grid-area: icon;
   display: grid;
   place-items: center;
-  inline-size: 52px;
-  block-size: 52px;
+  inline-size: 56px;
+  block-size: 56px;
   border-radius: var(--pm-radius-m);
-  background: color-mix(in srgb, var(--pm-accent) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--pm-accent) 26%, var(--pm-line));
+  background: color-mix(in srgb, var(--pm-accent) 14%, var(--pm-bg-sunken));
+  box-shadow: var(--pm-shadow-1);
   color: var(--pm-accent);
 }
-.dt3-domain-icon svg { inline-size: 26px; block-size: 26px; }
-.dt3-domain-title { grid-area: title; font-size: 17px; font-weight: 700; letter-spacing: -0.005em; }
-.dt3-domain-blurb { grid-area: blurb; font-size: 13px; color: var(--pm-ink-dim); line-height: 1.45; }
-.dt3-domain-meta { grid-area: meta; font-size: 12px; color: var(--pm-ink-faint); }
+.dt3-domain-icon svg { inline-size: 27px; block-size: 27px; }
+.dt3-domain-title { grid-area: title; font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+.dt3-domain-blurb {
+  grid-area: blurb;
+  font-size: 13px;
+  color: var(--pm-ink-dim);
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.dt3-domain-meta { grid-area: meta; display: flex; flex-wrap: wrap; gap: 6px; padding-block-start: 2px; }
+.dt3-domain-chip {
+  border: 1px solid var(--pm-line);
+  border-radius: 999px;
+  background: var(--pm-bg-sunken);
+  color: var(--pm-ink-faint);
+  font-size: 11px;
+  padding: 2px 9px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
 .dt3-domain-chev {
   grid-area: chev;
   display: grid;
@@ -387,31 +439,37 @@
   box-shadow: var(--pm-shadow-2);
   border-color: color-mix(in srgb, var(--pm-accent) 32%, var(--pm-line));
 }
+.dt3-mgr-row:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: 2px; }
+.dt3-mgr-row:active { transform: translateY(0); box-shadow: var(--pm-shadow-1); transition-duration: calc(.06s * var(--pm-motion-scale)); }
 .dt3-mgr-icon {
   display: grid;
   place-items: center;
   inline-size: 44px;
   block-size: 44px;
   border-radius: var(--pm-radius-m);
-  background: color-mix(in srgb, var(--pm-accent) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--pm-accent) 22%, var(--pm-line));
+  background: color-mix(in srgb, var(--pm-accent) 12%, var(--pm-bg-sunken));
+  box-shadow: var(--pm-shadow-1);
   color: var(--pm-accent);
 }
 .dt3-mgr-icon svg { inline-size: 22px; block-size: 22px; }
-.dt3-mgr-main { min-inline-size: 0; }
-.dt3-mgr-title { font-size: 15.5px; font-weight: 700; }
+.dt3-mgr-main { min-inline-size: 0; display: flex; flex-direction: column; }
+.dt3-mgr-title { font-size: 15.5px; font-weight: 700; letter-spacing: -0.005em; }
 .dt3-mgr-sum { font-size: 12.5px; color: var(--pm-ink-dim); margin-block-start: 2px; }
 .dt3-mgr-count {
   font-size: 12px;
   color: var(--pm-ink-faint);
   border: 1px solid var(--pm-line);
   border-radius: 999px;
+  background: var(--pm-bg-sunken);
   padding: 3px 10px;
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 .dt3-mgr-chev { color: var(--pm-ink-faint); display: grid; place-items: center; }
 .dt3-mgr-chev svg { inline-size: 16px; block-size: 16px; }
 .dt3-mgr-row:hover .dt3-mgr-chev { color: var(--pm-accent); }
-.dt3-mgr-row[data-deferred="true"] .dt3-mgr-icon { background: var(--pm-bg-sunken); color: var(--pm-ink-faint); }
+.dt3-mgr-row[data-deferred="true"] .dt3-mgr-icon { background: var(--pm-bg-sunken); border-color: var(--pm-line); box-shadow: none; color: var(--pm-ink-faint); }
 
 /* subgroup destinations on a domain page */
 .dt3-sub-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
@@ -427,10 +485,29 @@
   color: inherit;
   text-align: start;
   cursor: pointer;
-  transition: border-color calc(.18s * var(--pm-motion-scale)) ease, box-shadow calc(.18s * var(--pm-motion-scale)) ease;
+  transition:
+    transform calc(.16s * var(--pm-motion-scale)) ease-out,
+    box-shadow calc(.2s * var(--pm-motion-scale)) ease-out,
+    border-color calc(.18s * var(--pm-motion-scale)) ease;
 }
-.dt3-sub-row:hover { border-color: color-mix(in srgb, var(--pm-accent) 30%, var(--pm-line)); box-shadow: var(--pm-shadow-1); }
-.dt3-sub-main { flex: 1 1 auto; min-inline-size: 0; }
+.dt3-sub-row:hover { transform: translateY(-1px); border-color: color-mix(in srgb, var(--pm-accent) 30%, var(--pm-line)); box-shadow: var(--pm-shadow-1); }
+.dt3-sub-row:active { transform: none; box-shadow: none; }
+
+/* focus ring + press feedback on every other interactive row */
+.dt3-sub-row:focus-visible,
+.dt3-src:focus-visible,
+.dt3-cat:focus-visible,
+.dt3-roster-item:focus-visible,
+.dt3-recent-chip:focus-visible,
+.dt3-util-link:focus-visible,
+.dt3-demo-btn:focus-visible,
+.dt3-rail-link:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: 2px; }
+.dt3-roster-item:focus-visible, .dt3-rail-link:focus-visible { outline-offset: -2px; }
+.dt3-src:hover, .dt3-cat:hover { border-color: color-mix(in srgb, var(--pm-accent) 30%, var(--pm-line)); }
+.dt3-src:active, .dt3-cat:active { background: var(--pm-bg-raised); }
+.dt3-rail-link:active { background: var(--pm-bg-raised); }
+.dt3-recent-chip:active { transform: translateY(1px); }
+.dt3-sub-main { flex: 1 1 auto; min-inline-size: 0; display: flex; flex-direction: column; }
 .dt3-sub-title { font-weight: 600; font-size: 13.5px; }
 .dt3-sub-desc { font-size: 12px; color: var(--pm-ink-faint); margin-block-start: 2px; }
 .dt3-sub-count { flex: none; font-size: 12px; color: var(--pm-ink-faint); }
@@ -527,7 +604,7 @@
 .dt3-roster-item:last-child { border-block-end: 0; }
 .dt3-roster-item:hover { background: var(--pm-bg-sunken); }
 .dt3-roster-item[aria-selected="true"] { background: var(--pm-bg-sunken); box-shadow: inset 2px 0 0 var(--pm-accent); }
-.dt3-roster-item-main { flex: 1 1 auto; min-inline-size: 0; }
+.dt3-roster-item-main { flex: 1 1 auto; min-inline-size: 0; display: flex; flex-direction: column; }
 .dt3-roster-item-label { font-weight: 600; font-size: 13px; }
 .dt3-roster-item-sub { font-size: 11.5px; color: var(--pm-ink-faint); }
 .dt3-detail {
@@ -538,21 +615,50 @@
   min-block-size: 280px;
 }
 
-/* ---------- provider summary: high-value STATUS CARDS --------------------- */
+/* ---------- provider summary: status chip + big model identity ------------ */
+.dt3-prov-head { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-block-end: 3px; }
+.dt3-prov-head h3 { margin: 0; font-size: 18px; font-weight: 750; letter-spacing: -0.01em; }
+.dt3-status-chip {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--pm-line);
+  border-radius: 999px;
+  background: var(--pm-bg-sunken);
+  padding: 3px 11px 3px 9px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--pm-ink-dim);
+}
+.dt3-status-chip[data-state="ok"] { color: var(--pm-ok); border-color: color-mix(in srgb, var(--pm-ok) 40%, var(--pm-line)); }
+.dt3-status-chip[data-state="warn"] { color: var(--pm-warn); border-color: color-mix(in srgb, var(--pm-warn) 45%, var(--pm-line)); }
+.dt3-status-chip[data-state="info"] { color: var(--pm-info); border-color: color-mix(in srgb, var(--pm-info) 40%, var(--pm-line)); }
+.dt3-model-hero {
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-l);
+  background: var(--pm-bg-sunken);
+  box-shadow: var(--pm-shadow-1);
+  padding: 14px 18px;
+  margin-block-end: 16px;
+}
+.dt3-model-hero-h { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--pm-ink-faint); margin-block-end: 4px; }
+.dt3-model-hero-v { font-size: 19px; font-weight: 750; letter-spacing: -0.01em; }
+.dt3-model-hero-sub { font-size: 12px; color: var(--pm-ink-dim); margin-block-start: 3px; }
+
+/* quiet stat grid — hairline cells, no fill */
 .dt3-stat-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-  margin-block-end: 20px;
+  gap: 10px;
+  margin-block-end: 18px;
 }
 .dt3-stat {
   border: 1px solid var(--pm-line);
   border-radius: var(--pm-radius-m);
-  background: var(--pm-bg-sunken);
-  padding: 14px 16px;
+  background: transparent;
+  padding: 11px 14px;
 }
-.dt3-stat-h { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--pm-ink-faint); margin-block-end: 5px; }
-.dt3-stat-v { font-size: 16px; font-weight: 700; }
+.dt3-stat-h { font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--pm-ink-faint); margin-block-end: 4px; }
+.dt3-stat-v { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .dt3-stat-sub { font-size: 11.5px; color: var(--pm-ink-dim); margin-block-start: 3px; }
 
 .dt3-quick { display: flex; flex-wrap: wrap; gap: 10px; margin-block-end: 8px; }
@@ -672,7 +778,7 @@
   cursor: pointer;
 }
 .dt3-src[aria-pressed="true"] { border-color: var(--pm-accent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--pm-accent) 25%, transparent); }
-.dt3-src-main { flex: 1 1 auto; }
+.dt3-src-main { flex: 1 1 auto; min-inline-size: 0; display: flex; flex-direction: column; }
 .dt3-src-name { font-weight: 700; font-size: 14px; }
 .dt3-src-sub { font-size: 12px; color: var(--pm-ink-faint); }
 .dt3-cat-list { display: grid; gap: 8px; margin-block: 14px 20px; }
@@ -720,7 +826,6 @@
 .dt3-preview-groups details { margin-block-end: 8px; }
 .dt3-copy-note {
   border: 1px solid var(--pm-line);
-  border-inline-start: 3px solid var(--pm-info);
   border-radius: var(--pm-radius-s);
   background: var(--pm-bg-sunken);
   padding: 12px 14px;
@@ -743,7 +848,6 @@
   max-inline-size: 720px;
 }
 .dt3-owner h1 { margin: 0 0 8px; font-size: 20px; }
-.dt3-owner .dt3-copy-note { border-inline-start-color: var(--pm-rec); }
 
 /* ---------- scenario banner + projections ---------------------------------- */
 .dt3-scenario-banner {
@@ -751,7 +855,6 @@
   align-items: center;
   gap: 10px;
   border: 1px solid var(--pm-line);
-  border-inline-start: 3px solid var(--pm-info);
   border-radius: var(--pm-radius-s);
   background: var(--pm-bg-sunken);
   padding: 10px 14px;
@@ -809,16 +912,45 @@
 @container pmx (min-width: 1700px) {
   .dt3 { --dt3-gap: 24px; --dt3-pad: 36px; }
   .dt3-canvas { max-inline-size: 1400px; }
-  .dt3-domains { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .dt3-stat-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @container pmx (min-width: 2200px) {
   .dt3 { --dt3-gap: 28px; --dt3-pad: 44px; }
   .dt3-canvas { max-inline-size: 1780px; }
   .dt3-canvas[data-wide="true"] { max-inline-size: 1980px; }
-  .dt3-domains { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .dt3-sub-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .dt3-stat-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+
+/* ---------- pane-width breakpoints (dt3p) ----------------------------------
+   The stage's real width, not the frame's, decides density: cards never cram
+   below ~300px, and narrow panes stack split layouts so nothing clips. */
+@container dt3p (min-width: 700px) {
+  .dt3-domains { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@container dt3p (min-width: 1060px) {
+  .dt3-domains { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@container dt3p (min-width: 1500px) {
+  .dt3-domains { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@container dt3p (max-width: 760px) {
+  .dt3-roster { grid-template-columns: minmax(0, 1fr); }
+  .dt3-sub-list { grid-template-columns: minmax(0, 1fr); }
+  .dt3-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dt3-health-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@container dt3p (max-width: 560px) {
+  /* very squeezed pane (shell panels open at ~1280): the count chip drops
+     below the title/summary so neither wraps per-word */
+  .dt3-mgr-row {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: "icon main chev" "icon meta chev";
+  }
+  .dt3-mgr-row .dt3-mgr-icon { grid-area: icon; }
+  .dt3-mgr-row .dt3-mgr-main { grid-area: main; }
+  .dt3-mgr-row .dt3-mgr-count { grid-area: meta; justify-self: start; margin-block-start: 8px; }
+  .dt3-mgr-row .dt3-mgr-chev { grid-area: chev; }
 }
 
 /* ---------- reduced motion: everything instant, state unchanged ----------- */
@@ -830,4 +962,33 @@
   transition-duration: 0.01ms !important;
 }
 :root[data-motion="reduced"] .dt3-domain-card:hover,
-:root[data-motion="reduced"] .dt3-mgr-row:hover { transform: none; }
+:root[data-motion="reduced"] .dt3-domain-card:active,
+:root[data-motion="reduced"] .dt3-mgr-row:hover,
+:root[data-motion="reduced"] .dt3-mgr-row:active,
+:root[data-motion="reduced"] .dt3-sub-row:hover,
+:root[data-motion="reduced"] .dt3-sub-row:active,
+:root[data-motion="reduced"] .dt3-recent-chip:active { transform: none; }
+
+/* hidden-attribute guards: shared .pm-drawer/.pm-scrim set display, which would
+   otherwise beat the UA [hidden] rule and leave overlays visible. */
+.pm-drawer[hidden], .pm-scrim[hidden] { display: none !important; }
+
+/* Home lens: no colored left accent bars — the critical banner's kind chip
+   and text already carry the meaning. */
+.pm-notice { border-inline-start: none; }
+
+/* Narrow shell frames (the 760/900 page widths): let the shell top bar wrap
+   to two rows and drop the decorative model chips, so the demo control
+   cluster (Scenarios, theme, motion, panel toggles, width) is never clipped.
+   Concept-local: shared pm-shell.css is frozen with concepts 01–04. */
+@container pmx (max-width: 990px) {
+  .pmx-topbar { flex-wrap: wrap; row-gap: 2px; padding-block: 4px; }
+  .pmx-model { display: none; }
+}
+
+/* Shell demo toggles (reduced motion, side/chat/bottom panels) carry bare SVGs
+   with no intrinsic size and no shared rule sizes them, so they painted 0x0.
+   Size them like the Scenarios button's icon. Concept-local: shared CSS and
+   concepts 01-04 are frozen. */
+.pmx-controls [data-shell-motion] > svg,
+.pmx-controls [data-shell-toggle] > svg { inline-size: 14px; block-size: 14px; }

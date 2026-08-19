@@ -1,0 +1,122 @@
+{
+ "schema_id": "pm.settings_bakeoff.reference_review_snapshot.v1",
+ "model": "GLM-5.2",
+ "date": "2026-08-18",
+ "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+ "snapshot_note": "Immutable snapshot for the seven-new-concepts pass (concepts 05-11). The additive history covering concepts 01-04 and the 2026-08-15 correction pass lives in reference-review-report.json and is preserved there unchanged.",
+ "packet_files_opened": [
+  { "ref": "00_START_HERE.md", "use": "read order, precedence chain, frozen-surface list, seven new concept ids" },
+  { "ref": "01_ASSIGNMENT_AND_PRECEDENCE.md", "use": "packet-over-repo precedence; model folder assignment (glm-5-2); no-winner rule" },
+  { "ref": "02_SEVEN_CONCEPT_BLUEPRINTS.md", "use": "per-concept core qualities + differentiation gate; reference-board interpretation boundaries (borrow-only lists for 09-11)" },
+  { "ref": "03_HOME_SEARCH_AND_NAVIGATION.md", "use": "Home composition rules (search first, one critical banner, compact attention, dominant destinations, no CTA wall/shelves), search routing contract, §03 tabstrip-vs-shelf distinction" },
+  { "ref": "04_PROJECT_ONLY_SETTINGS_AND_COPY.md", "use": "project-only application, no scope selectors/inheritance/profiles/sync; one-time copy transaction shape (preview, restore point, atomic, verify, receipt, rollback)" },
+  { "ref": "05_COMPLETE_MANAGER_INTEGRATION.md", "use": "required manager families, no shared_grammar coverage, manager must open inside its own concept" },
+  { "ref": "06_INFORMATION_ARCHITECTURE_AND_DENSITY.md", "use": "828-setting long-tail density, virtualization requirement, All-settings index expectations" },
+  { "ref": "07_THEME_MOTION_RESPONSIVE_AND_SLINT.md", "use": "8 themes, reduced motion, widths 760-2500, PM popup/scrollbar standards, Slint 1.17.1 portability" },
+  { "ref": "08_DATA_PERFORMANCE_AND_TRUTHFUL_STATE.md", "use": "lazy manager hydration, bounded search, cached refresh, truthful ObservableWork, deterministic state fixtures" },
+  { "ref": "09_COMMAND_WIRING_DRY_AND_PLAN_IMPACT.md", "use": "candidate command/wiring/DRY/plan-owner impact file expectations" },
+  { "ref": "10_TESTING_EVIDENCE_AND_ACCEPTANCE.md", "use": "test matrix definition, evidence file schemas, acceptance gates" },
+  { "ref": "11_REQUIRED_FILES_AND_REPORTS.md", "use": "required evidence files per concept, model-folder reports list, additive reference-review-report.json rule, final-response contents" },
+  { "ref": "12_REPO_BASELINE_AND_KNOWN_FAILURES.md", "use": "repo baseline, known failures to avoid reintroducing" },
+  { "ref": "PACKET_MANIFEST.json", "use": "packet inventory, authority chain (base packet 2026-08-08 + correction 2026-08-13), 7 reference images" },
+  { "ref": "AUDIT_PROMPT.md / GOAL_PROMPT.md / PROMPT_USAGE.md / SHA256SUMS.txt", "use": "pass structure (audit then build), goal scope, usage rules, integrity list" },
+  { "ref": "machine_readable/concept_blueprints.json", "use": "machine-readable blueprint core qualities" },
+  { "ref": "machine_readable/manager_coverage_required.json", "use": "required_demonstrated manager list enforced by the packet validator" },
+  { "ref": "machine_readable/search_contract.json", "use": "universal search contract v2: 8 result types, required result fields, route steps, forbidden routing (visual array index / grouped position / label-only), required cases" },
+  { "ref": "machine_readable/test_matrix.json / model_folder_map.json / repo_baseline.json / supersessions.json", "use": "matrix dimensions, folder mapping, baseline, supersession registry" },
+  { "ref": "tools/validate_seven_new_concepts.py", "use": "completion gate: evidence files per concept, manager coverage content rules (no shared_grammar, no missing), model reports, iframe/cross-concept/crumb static checks" },
+  { "ref": "authority/README.md + authority/base_packet/* + authority/correction_packet/* (as processed in the 2026-08-15 pass recorded in reference-review-report.json)", "use": "August 8 base packet + August 13 correction remain controlling authority; their decisions (ObservableWork, lazy hydration, provider-CLI adjudication, Performance register) carry into the seven new concepts" },
+  { "ref": "authority/repo_reference/CONCEPT_RULES.md", "use": "concept folder rules snapshot (naming, self-containment, evidence expectations)" }
+ ],
+ "reference_images_opened": [
+  {
+   "image": "reference/selected_concepts/01_A1_Directory_Take_1_LAYOUT_RECONSTRUCTION.png",
+   "concept": "concept-05-directory-take-1",
+   "interpretation": "layout reconstruction only — hierarchy/composition: directory-first Home, large universal search above content, one compact attention block, two-column destination cards at wide widths, destination-row domain pages, provider list/detail workspace, exact search landing highlighted in form, copy as focused review flow. Synthetic names/counts/provider facts from the board were never adopted; all data comes from the shared inventory projection."
+  },
+  {
+   "image": "reference/selected_concepts/02_A1_Directory_Take_2.png",
+   "concept": "concept-06-directory-take-2",
+   "interpretation": "layout, hierarchy, navigation, density: editorial list-led Home (not card dashboard), narrow stable domain rail, large single-column destination rows, compact anchored search dropdown, provider roster + restrained detail sheet, nested subnavigation visibly inside Settings, quiet copy dialog."
+  },
+  {
+   "image": "reference/selected_concepts/03_A2_Compendium_Workspace_Take_1.png",
+   "concept": "concept-07-compendium-workspace",
+   "interpretation": "layout, compendium architecture, manager integration: first-class All-Settings compendium (faceted, searchable, readable long-tail index over all 828 rows), domain pages combining overview + key settings + related managers, manager as integrated list/detail workspace, exact-result landing with contextual explanation, copy preview with counts/additions/replacements/unchanged/diff. Inspect-only compendium table with editable Key-settings panels per domain is this build's reading of the board."
+  },
+  {
+   "image": "reference/selected_concepts/04_A1_Directory_Take_3.png",
+   "concept": "concept-08-directory-take-3",
+   "interpretation": "layout, hierarchy, spacious directory, provider summary: bright spacious Home, search + attention at top, fewer/larger domain cards with strong icon/title/purpose hierarchy, domain overview made of unmistakable manager destinations, provider summary with high-value status cards + explicit quick actions, exact credential result highlighted in place, full-width copy flow with selectable categories."
+  },
+  {
+   "image": "reference/selected_concepts/05_Tome_Tabs_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+   "concept": "concept-09-tome-tabs",
+   "interpretation": "LAYOUT ONLY, rethemed: borrowed persistent edge/chapter tabs for major domains, layered page depth with stable location, broad central reading canvas, domain tabs + manager-local tabs, list/detail manager composition, stepwise copy flow. All steampunk/tome skin removed — no parchment, brass, gears, medieval/fantasy copy, book ornament, skeuomorphic paper, or sepia; re-expressed in current Puppet Master theme materials, typography, spacing, icons, menus, motion. Edge tabs use short chapter labels with full-name tooltips (this pass's legibility fix)."
+  },
+  {
+   "image": "reference/selected_concepts/06_Command_Suite_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+   "concept": "concept-10-command-suite",
+   "interpretation": "LAYOUT ONLY, rethemed: borrowed command-index navigation, keyboard-first movement, multi-pane left-to-right drill-down, compact legible data tables, direct path/status visibility, exact setting editor beside context, transactional copy panels. No fake terminal, no green monochrome, no CRT effects, no code-only labels, no monospace body — rendered as a polished Puppet Master command workspace. Universal search lives on the Home hero; the topbar field is a command-index filter (deliberate differentiation, not a second universal search)."
+  },
+  {
+   "image": "reference/selected_concepts/07_Tabbed_Organizer_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+   "concept": "concept-11-tabbed-organizer",
+   "interpretation": "LAYOUT ONLY, rethemed: borrowed category tabs like a well-organized file system, layered sheets/pages preserving location, compact Home categories + recent changes, domain-level tabs + related-manager strip, provider roster with detail tabs, exact deep-link result nested in the same page stack, copy categories + source project in adjacent panes. No literal paper, folders, binder rings, staples, parchment, or office-supply decoration; translated into Puppet Master tabs/panels/surfaces/motion. The domain tabstrip is navigation tabs (packet-permitted), not a scrolling shelf."
+  },
+  {
+   "image": "reference/selected_concepts/README.md",
+   "concept": "all",
+   "interpretation": "authority boundaries for every board: six anchor screens do not limit coverage; never copy synthetic names, counts, provider facts, global scope controls, inherited settings, fantasy terminology, or visual ornament when they conflict with the packet or current repository."
+  }
+ ],
+ "superseded_legacy_assumptions": [
+  {
+   "assumption": "Deep links are in-app only with no URL-hash routing (recorded as unresolved in the 2026-08-15 correction-pass review of concepts 01-04)",
+   "superseded_by": "the seven new concepts route through pm-routes.js with URL-hash parse/str (#/d/<domain>/p/<page>/m/<manager>/o/<object>/s/<section>/r/<row>?q=<query>&res=<rid>); deep links load from a cold page and land calm+focused (28/28 probes)",
+   "scope": "concepts 05-11 only; concepts 01-04 unchanged"
+  },
+  {
+   "assumption": "Virtualization proven only on a dedicated 100-installation fixture (correction-pass limitation)",
+   "superseded_by": "all primary lists and copy previews in the seven concepts are windowed virtualized lists (13 sites; PM2.window math) covering the full 828-row inventory with full-range scroll extent verified per concept",
+   "scope": "concepts 05-11"
+  },
+  {
+   "assumption": "Shared visible manager renderer (assets/managers.js) used by concepts 01-04",
+   "superseded_by": "the seven new concepts share only HEADLESS semantics (assets/v2: inventory projection, search index, route objects, store); every visible surface — Home, navigation, search dropdown, manager, copy, motion — is concept-native",
+   "scope": "concepts 05-11; concepts 01-04 keep their shared visible renderer"
+  },
+  {
+   "assumption": "Fuzzy search over the earlier concept-01-04 catalog scale",
+   "superseded_by": "1126-entry universal index (828 settings + 38 managers + managed objects + actions + workflows + diagnostics + unavailable capabilities) with immutable rid routing and bounded results",
+   "scope": "concepts 05-11"
+  },
+  {
+   "assumption": "Board-provided global/scope controls and inherited settings (visible in some reference boards)",
+   "rejected": "never adopted anywhere: all editable settings apply to the current Project only; no Global/Project/Goal/Host scope selectors, inheritance, linked projects, profiles, or ongoing sync in any of the seven concepts",
+   "scope": "concepts 05-11"
+  }
+ ],
+ "no_cross_concept_manager_routing_evidence": {
+  "static": [
+   "validator gate: no <iframe> anywhere in the seven concept pages (packet validator foreign_renderer check — passes)",
+   "validator gate: no href/src referencing concept-0[1-4] pages (packet validator cross_concept_route check — passes)",
+   "each concept page is a single self-contained HTML document instantiating its own Nav instance and its own render functions; assets/v2 modules contain no DOM code and render nothing",
+   "manager-coverage.json per concept: native_implementation states all managers render through the concept's own shell/navigation/layout grammar; coverage_scope is each_new_concept_individually; no shared_grammar entries"
+  ],
+  "dynamic": [
+   "manager isolation crawl (final functional run, all 7 concepts): every one of the 38 manager routes per concept opened with state.manager === expected, rendered inside the same page, PM shell retained (topbar, project chip, close, breadcrumb), 0 iframes, 0 location changes — 266 manager-route openings, 0 cross-concept",
+   "deep-link loads from cold pages never left the concept document (deeplink probes: pathname constant, 0 errors)",
+   "theme × width matrix: 336 cells × zero console/page errors — a cross-concept navigation would surface as a load error or missing shell in at least one cell"
+  ],
+  "architecture": "Concepts 05-11 route exclusively through their own Nav instance over immutable route data (pm-routes.js); a route can only address domain/page/manager/object/section/row within the same document. There is no mechanism by which one concept's manager surface could be reached from another concept's page."
+ },
+ "verification_pass_summary": {
+  "matrix": "336/336 effective (272 direct + 16 squeeze cells fixed and re-verified + 48 c11 cells cleared by refined probe)",
+  "functional_layers": "all green on all 7 concepts (search exactness 10 probes, 38/38 manager crawl, copy transaction, lazy hydration, bounded search, 9 state kinds, reduced motion, narrow 760)",
+  "deep_links": "28/28 calm + focus",
+  "defects_fixed": "c09 edge-tab labels; c05+c07 760/900 squeeze; shared padBottom virtualization bug (13 sites); c05 dispatcher all-index crash; c07 compendium deep links (virtualization clamp, calm persistence, scroll-to-row, circular redirect); c07 back-restore redirect loop",
+  "reports": "SEVEN_NEW_CONCEPTS_TEST_REPORT.md (methods + results), SEVEN_NEW_CONCEPTS_FINDINGS.md (defects + limitations), SEVEN_NEW_CONCEPTS_IMPACT_REGISTER.json (aggregate candidate impacts), this snapshot; reference-review-report.json updated additively",
+  "winner": "none chosen"
+ }
+}

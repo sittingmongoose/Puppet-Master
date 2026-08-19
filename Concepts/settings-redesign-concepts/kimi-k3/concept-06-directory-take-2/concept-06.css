@@ -57,11 +57,14 @@
   transition: background var(--dt2-dur) ease, color var(--dt2-dur) ease;
 }
 .dt2-rail-item:hover { background: color-mix(in srgb, var(--pm-ink) 6%, transparent); color: var(--pm-ink); }
+.dt2-rail-item:active { background: color-mix(in srgb, var(--pm-ink) 8%, transparent); }
 .dt2-rail-item[aria-current="true"] {
-  background: color-mix(in srgb, var(--pm-accent) 16%, transparent);
+  background: var(--pm-bg-raised);
   color: var(--pm-ink);
   font-weight: 620;
+  box-shadow: var(--pm-shadow-1);
 }
+.dt2-rail-item[aria-current="true"] svg { opacity: 1; color: var(--pm-accent); }
 .dt2-rail-item svg { inline-size: 15px; block-size: 15px; opacity: .8; }
 .dt2-rail-sect {
   margin: 14px 10px 5px;
@@ -101,14 +104,13 @@
 .dt2-crumb {
   display: flex;
   align-items: center;
-  gap: 7px;
+  flex-wrap: wrap;
+  gap: 3px 7px;
   min-inline-size: 0;
   font-size: 12.5px;
   color: var(--pm-ink-faint);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
+.dt2-crumb > * { flex: none; white-space: nowrap; }
 .dt2-crumb button {
   border: 0;
   background: none;
@@ -126,7 +128,8 @@
   position: relative;
   margin-inline-start: auto;
   inline-size: min(380px, 44%);
-  flex: none;
+  flex: 0 1 auto;
+  min-inline-size: 150px;
 }
 .dt2-search-box {
   display: flex;
@@ -138,7 +141,7 @@
   border: 1px solid var(--pm-line);
   border-radius: var(--pm-radius-s);
   background: var(--pm-bg-raised);
-  transition: border-color var(--dt2-dur) ease;
+  transition: border-color var(--dt2-dur) ease, box-shadow var(--dt2-dur) ease;
 }
 .dt2-search-box:focus-within { border-color: var(--pm-focus); }
 .dt2-search-box svg { inline-size: 15px; block-size: 15px; color: var(--pm-ink-faint); }
@@ -184,8 +187,10 @@
   padding: 6px 10px 4px;
   font-size: 11px;
   color: var(--pm-ink-faint);
+  font-variant-numeric: tabular-nums;
 }
 .dt2-results-head button { border: 0; background: none; color: var(--pm-accent); cursor: pointer; font-size: 11px; padding: 0; }
+:root:not([data-motion="reduced"]) .dt2-results:not([hidden]) { animation: dt2-rise var(--dt2-dur) ease both; }
 .dt2-result {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -197,11 +202,22 @@
   background: transparent;
   padding: 8px 10px;
   cursor: pointer;
+  transition: background var(--dt2-dur) ease;
 }
-.dt2-result:hover, .dt2-result[data-active="true"] { background: color-mix(in srgb, var(--pm-ink) 6%, transparent); }
-.dt2-result-label { font-size: 13px; font-weight: 600; color: var(--pm-ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.dt2-result-label mark { background: color-mix(in srgb, var(--pm-accent) 28%, transparent); color: inherit; border-radius: 2px; padding: 0 1px; }
-.dt2-result-path { grid-column: 1; font-size: 11.5px; color: var(--pm-ink-faint); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dt2-result:hover { background: color-mix(in srgb, var(--pm-ink) 6%, transparent); }
+.dt2-result[data-active="true"] {
+  background: color-mix(in srgb, var(--pm-ink) 7%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pm-accent) 35%, transparent);
+}
+.dt2-result-label { font-size: 13px; font-weight: 600; line-height: 1.35; color: var(--pm-ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dt2-result-label mark {
+  background: color-mix(in srgb, var(--pm-accent) 26%, transparent);
+  color: var(--pm-ink);
+  border-radius: 3px;
+  padding: 0 2px;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pm-accent) 34%, transparent);
+}
+.dt2-result-path { grid-column: 1; font-size: 11.5px; line-height: 1.4; color: var(--pm-ink-faint); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .dt2-result-type {
   grid-row: 1 / span 2;
   grid-column: 2;
@@ -238,16 +254,18 @@
 .dt2-measure {
   max-inline-size: var(--dt2-measure);
   margin-inline: auto;
-  padding: 30px 28px 80px;
+  padding: 22px 28px 80px;
 }
 @media (min-width: 1700px) { .dt2 { --dt2-measure: 880px; } }
 
-/* rise/sink motion */
+/* rise/sink motion — fill "backwards" only: forwards fill would pin an identity
+   transform on every staggered child, keeping stacking contexts that paint over
+   the anchored search dropdown. */
 @keyframes dt2-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 @keyframes dt2-sink { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
-.dt2-view[data-dir="deeper"] { animation: dt2-rise var(--dt2-dur) ease both; }
-.dt2-view[data-dir="back"] { animation: dt2-sink var(--dt2-dur) ease both; }
-.dt2-stagger > * { animation: dt2-rise var(--dt2-dur) ease both; }
+.dt2-view[data-dir="deeper"] { animation: dt2-rise var(--dt2-dur) ease backwards; }
+.dt2-view[data-dir="back"] { animation: dt2-sink var(--dt2-dur) ease backwards; }
+.dt2-stagger > * { animation: dt2-rise var(--dt2-dur) ease backwards; }
 .dt2-stagger > *:nth-child(2) { animation-delay: 30ms; }
 .dt2-stagger > *:nth-child(3) { animation-delay: 60ms; }
 .dt2-stagger > *:nth-child(4) { animation-delay: 90ms; }
@@ -264,51 +282,91 @@
   color: var(--pm-ink-faint);
   margin: 0 0 6px;
 }
-.dt2-title { font-size: 26px; font-weight: 680; letter-spacing: -.01em; margin: 0 0 6px; }
-.dt2-lede { font-size: 14px; line-height: 1.55; color: var(--pm-ink-dim); margin: 0 0 22px; max-inline-size: 60ch; }
+.dt2-title { font-size: 28px; font-weight: 700; letter-spacing: -.018em; line-height: 1.15; margin: 0 0 8px; }
+.dt2-lede { font-size: 13.5px; line-height: 1.5; color: var(--pm-ink-dim); margin: 0 0 14px; max-inline-size: 62ch; }
 .dt2-project {
   display: flex;
   align-items: baseline;
   gap: 10px;
   font-size: 12.5px;
   color: var(--pm-ink-faint);
-  margin-block-end: 24px;
+  margin-block-end: 14px;
 }
 .dt2-project strong { color: var(--pm-ink); font-size: 13px; }
 
 /* big home search */
-.dt2-home-search { position: relative; margin-block-end: 26px; }
+/* big home search — z-index keeps its anchored dropdown above later sections */
+.dt2-home-search { position: relative; z-index: 40; margin-block-end: 18px; }
 .dt2-home-search .dt2-search-box { block-size: 46px; padding: 0 16px; border-radius: var(--pm-radius-m); }
+.dt2-home-search .dt2-search-box:focus-within { box-shadow: var(--pm-shadow-1); }
 .dt2-home-search .dt2-search-box input { font-size: 15px; }
 .dt2-home-search .dt2-search-box svg { inline-size: 17px; block-size: 17px; }
 .dt2-home-search .dt2-results { inset-inline: 0; inline-size: 100%; }
 
-/* single critical banner */
-.dt2-banner { margin-block-end: 20px; }
+/* single critical banner — compressed: headline row, one clamped body line,
+   actions bottom-end; full consequence lives at the destination */
+.dt2-banner {
+  margin-block-end: 16px;
+  grid-template-areas:
+    "head chip"
+    "body body"
+    "actions actions";
+  gap: 3px 14px;
+  padding: 11px 14px 9px;
+}
+.dt2-banner .pm-notice-chip { align-self: center; justify-self: end; }
+.dt2-banner .pm-notice-body {
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dt2-banner .pm-notice-actions { margin-block-start: 3px; justify-self: end; }
+.dt2-banner .pm-notice-actions .pm-btn { font-size: 12px; }
 
-/* attention list — compact */
-.dt2-attn { margin-block-end: 30px; }
-.dt2-attn h2, .dt2-h { font-size: 13px; font-weight: 680; letter-spacing: .02em; margin: 0 0 8px; }
+/* attention list — compact single-line rows, quiet action at the end */
+.dt2-attn { margin-block-end: 22px; }
+.dt2-attn h2, .dt2-h { font-size: 13px; font-weight: 680; letter-spacing: .02em; margin: 0 0 6px; }
 .dt2-attn-row {
   display: flex;
   align-items: center;
   gap: 12px;
   inline-size: 100%;
-  padding: 8px 4px;
+  padding: 6px 4px;
   border: 0;
   border-block-start: 1px solid var(--pm-line);
   background: none;
   text-align: start;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 12.5px;
+  transition: background var(--dt2-dur) ease;
 }
+.dt2-attn-row:hover { background: color-mix(in srgb, var(--pm-ink) 3.5%, transparent); }
+.dt2-attn-row:active { background: color-mix(in srgb, var(--pm-ink) 5.5%, transparent); }
 .dt2-attn-row:hover .dt2-attn-label { color: var(--pm-accent); }
 .dt2-attn-row:last-child { border-block-end: 1px solid var(--pm-line); }
 .dt2-attn-dot { inline-size: 7px; block-size: 7px; border-radius: 50%; background: var(--pm-warn); flex: none; }
 .dt2-attn-dot[data-kind="setup"] { background: var(--pm-info); }
 .dt2-attn-dot[data-kind="recommended"] { background: var(--pm-rec); }
-.dt2-attn-label { color: var(--pm-ink); font-weight: 600; transition: color var(--dt2-dur) ease; }
-.dt2-attn-sub { color: var(--pm-ink-faint); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dt2-attn-label {
+  flex: 1 1 0%;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--pm-ink);
+  font-weight: 600;
+  transition: color var(--dt2-dur) ease;
+}
+.dt2-attn-sub {
+  flex: 0 1 auto;
+  min-inline-size: 0;
+  color: var(--pm-ink-faint);
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 /* destination rows — the DOMINANT editorial list */
 .dt2-dests { margin-block-end: 34px; }
@@ -328,6 +386,7 @@
 }
 .dt2-dest-row:last-child { border-block-end: 1px solid var(--pm-line); }
 .dt2-dest-row:hover { background: color-mix(in srgb, var(--pm-ink) 3.5%, transparent); }
+.dt2-dest-row:active { background: color-mix(in srgb, var(--pm-ink) 5.5%, transparent); }
 .dt2-dest-icon {
   inline-size: 34px;
   block-size: 34px;
@@ -337,14 +396,38 @@
   border-radius: var(--pm-radius-s);
   color: var(--pm-ink-dim);
   background: var(--pm-bg-raised);
+  box-shadow: var(--pm-shadow-1);
+  transition: transform var(--dt2-dur) ease, box-shadow var(--dt2-dur) ease;
+}
+.dt2-dest-row:hover .dt2-dest-icon {
+  transform: translateY(-1px);
+  box-shadow: var(--pm-shadow-2);
+  color: var(--pm-ink);
 }
 .dt2-dest-icon svg { inline-size: 17px; block-size: 17px; }
 .dt2-dest-name { display: block; font-size: 15.5px; font-weight: 640; color: var(--pm-ink); margin-block-end: 2px; }
-.dt2-dest-desc { display: block; font-size: 12.5px; line-height: 1.5; color: var(--pm-ink-dim); max-inline-size: 62ch; }
-.dt2-dest-meta { display: flex; align-items: center; gap: 10px; color: var(--pm-ink-faint); font-size: 11.5px; white-space: nowrap; }
+.dt2-dest-desc { display: block; font-size: 12.5px; line-height: 1.5; color: var(--pm-ink-dim); max-inline-size: 64ch; }
+.dt2-dest-meta { display: flex; align-items: center; gap: 10px; color: var(--pm-ink-faint); font-size: 11.5px; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .dt2-dest-meta .pm-badge { font-size: 10px; }
-.dt2-caret { color: var(--pm-ink-faint); }
-.dt2-dest-row:hover .dt2-caret { color: var(--pm-ink); }
+.dt2-caret { flex: none; color: var(--pm-ink-faint); transition: transform var(--dt2-dur) ease, color var(--dt2-dur) ease; }
+.dt2-dest-row:hover .dt2-caret { color: var(--pm-ink); transform: translateX(2px); }
+
+/* narrow reading measure: the description drops to its own full-width line so
+   the meta column can't squeeze it into a ragged 25ch wrap */
+.dt2-body { container-type: inline-size; }
+@container (max-width: 620px) {
+  .dt2-dest-row {
+    grid-template-areas:
+      "icon name meta"
+      ".    desc desc";
+    row-gap: 1px;
+  }
+  .dt2-dest-mid { display: contents; }
+  .dt2-dest-icon { grid-area: icon; align-self: start; margin-block-start: 1px; }
+  .dt2-dest-name { grid-area: name; align-self: center; margin-block-end: 0; }
+  .dt2-dest-desc { grid-area: desc; }
+  .dt2-dest-meta { grid-area: meta; }
+}
 
 /* secondary utilities — smaller, quieter */
 .dt2-utils { border-block-start: 1px solid var(--pm-line); padding-block-start: 16px; }
@@ -363,6 +446,13 @@
 }
 .dt2-util-row:hover { color: var(--pm-ink); }
 .dt2-util-row svg { inline-size: 14px; block-size: 14px; }
+.dt2-util-mid {
+  flex: 1 1 0%;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .dt2-util-row .dt2-caret { margin-inline-start: auto; }
 .dt2-recents { display: flex; flex-wrap: wrap; gap: 6px; margin-block-start: 6px; }
 
@@ -697,6 +787,13 @@
   .dt2-vrow-sub { display: none; }
 }
 :root[data-motion="reduced"] .dt2-rail, :root[data-motion="reduced"] .dt2-rail-scrim { transition: none; }
+:root[data-motion="reduced"] .dt2-dest-icon,
+:root[data-motion="reduced"] .dt2-caret,
+:root[data-motion="reduced"] .dt2-result,
+:root[data-motion="reduced"] .dt2-attn-row,
+:root[data-motion="reduced"] .dt2-search-box { transition: none !important; }
+:root[data-motion="reduced"] .dt2-dest-row:hover .dt2-dest-icon,
+:root[data-motion="reduced"] .dt2-dest-row:hover .dt2-caret { transform: none; }
 
 /* inbox rows */
 .dt2-inbox-row { display: block; padding: 8px 10px; border-block-start: 1px solid var(--pm-line); font-size: 12px; }
@@ -746,3 +843,26 @@
 .dt2-copy-item-name { font-weight: 600; color: var(--pm-ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .dt2-copy-item-note { color: var(--pm-ink-faint); line-height: 1.5; }
 .dt2-logs pre { margin: 0; font: inherit; white-space: pre-wrap; overflow-wrap: anywhere; }
+
+/* hidden-attribute guards: shared .pm-drawer/.pm-scrim set display, which would
+   otherwise beat the UA [hidden] rule and leave overlays visible. */
+.pm-drawer[hidden], .pm-scrim[hidden] { display: none !important; }
+
+/* packet: no colored left accent bar on banners */
+.pm-notice { border-inline-start: none; }
+
+/* Narrow shell frames (the 760/900 page widths): let the shell top bar wrap
+   to two rows and drop the decorative model chips, so the demo control
+   cluster (Scenarios, theme, motion, panel toggles, width) is never clipped.
+   Concept-local: shared pm-shell.css is frozen with concepts 01–04. */
+@container pmx (max-width: 990px) {
+  .pmx-topbar { flex-wrap: wrap; row-gap: 2px; padding-block: 4px; }
+  .pmx-model { display: none; }
+}
+
+/* Shell demo toggles (reduced motion, side/chat/bottom panels) carry bare SVGs
+   with no intrinsic size and no shared rule sizes them, so they painted 0x0.
+   Size them like the Scenarios button's icon. Concept-local: shared CSS and
+   concepts 01-04 are frozen. */
+.pmx-controls [data-shell-motion] > svg,
+.pmx-controls [data-shell-toggle] > svg { inline-size: 14px; block-size: 14px; }

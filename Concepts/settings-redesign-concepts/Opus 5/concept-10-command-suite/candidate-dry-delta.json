@@ -1,0 +1,122 @@
+{
+ "schema_id": "pm.settings_candidate_dry_delta.v2",
+ "concept_id": "concept-10-command-suite",
+ "model": "Opus 5",
+ "generated": "2026-08-19",
+ "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+ "principle": "Share what a thing MEANS. Never share what it LOOKS like. A shared visible renderer would turn seven concepts into one application in seven skins, which is the failure this pass exists to remove.",
+ "concept_specific": {
+  "presentation_roles_this_concept_owns": [
+   "Home composition — a left command index of the twelve areas with keyboard hints, a project context block, an at-a-glance panel and a recently accessed list",
+   "Navigation geometry — multi-pane left-to-right drill-down, up to four panes at the widest widths, each pane separately scrollable",
+   "Manager composition — a compact but legible table with real column headers and the selected row's detail beneath it in the same pane",
+   "Exact-result reveal — the row is selected in the table and its editor opens directly beneath it, with the full path shown once above",
+   "Narrow-width transformation — panes collapse to one with breadcrumb chips standing in for the panes that are off-screen",
+   "Motion metaphor — horizontal pane slide with the leftmost pane holding position",
+   "Density and typography — compact tabular, 13px body, 32px rows, tabular numerals, vertical rules between panes"
+  ],
+  "shared_headless_modules_consumed": [
+   "shared2/pm2-inventory.js",
+   "shared2/pm2-model.js",
+   "shared2/pm2-index.js",
+   "shared2/pm2-route.js",
+   "shared2/pm2-managers.js",
+   "shared2/pm2-managers-extra.js",
+   "shared2/pm2-copy.js",
+   "shared2/pm2-states.js",
+   "shared2/pm2-scale.js",
+   "shared2/pm2-store.js",
+   "shared/pm-manager-kit.js and shared/pm-data*.js (ManagerSpec sources only)",
+   "shared/pm-work.js (ObservableWork and the one governor)",
+   "shared/pm-sim.js",
+   "shared/pm-virtual.js",
+   "shared/pm-icons.js",
+   "shared/pm-themes.css",
+   "shared/pm-shell.css and shared/pm-shell.js (PM application chrome only)"
+  ],
+  "no_second_owner": "This concept creates no scheduler, no progress owner, no balance calculator, no binary resolver and no second Project identity."
+ },
+ "components": [
+  {
+   "role": "RuntimeResourceGovernor",
+   "disposition": "preserved singular owner",
+   "detail": "Every operation the concepts open asks the one governor for a permit and renders the answer. No concept schedules, queues or admits work."
+  },
+  {
+   "role": "ObservableWork",
+   "disposition": "preserved singular owner",
+   "detail": "The only progress and wait projection. Determinate progress appears solely with a real denominator; otherwise an honest indeterminate state with a named wait reason."
+  },
+  {
+   "role": "BinaryLocator and installation lifecycle",
+   "disposition": "preserved singular owner",
+   "detail": "Detection, identity, binding, staging, verification and rollback of provider installations. Settings shows its answers and starts its operations; it never resolves a binary itself."
+  },
+  {
+   "role": "Provider readiness and Usage",
+   "disposition": "preserved singular owner",
+   "detail": "Readiness comes from the provider lifecycle, balances from Usage. Settings configures the boundary — what happens when included usage ends — and computes neither."
+  },
+  {
+   "role": "Project identity",
+   "disposition": "preserved singular owner",
+   "detail": "One Project is the subject of every editable value. The concepts show it as context and never as a selector."
+  },
+  {
+   "role": "AuthBrowserSession",
+   "disposition": "preserved singular owner",
+   "detail": "Human-only. No concept renders, drives or automates a sign-in surface; authentication is handed to the provider's own login."
+  },
+  {
+   "role": "SettingsInventoryProjection",
+   "disposition": "candidate shared headless component",
+   "detail": "The projection of the canonical inventory into domain, page, section, exposure and record kind. Data and semantics only — it draws nothing. Implemented here as shared2/pm2-inventory.js plus pm2-model.js."
+  },
+  {
+   "role": "SettingsSearchIndex",
+   "disposition": "candidate shared headless component",
+   "detail": "Immutable result ids, grouped bounded results, typo tolerance and destination objects. One index, seven completely different dropdowns."
+  },
+  {
+   "role": "SettingsDestination / route grammar",
+   "disposition": "candidate shared headless component",
+   "detail": "A destination is an object — domain, page, section, row, manager, object, subpage — not a string. Every concept parses and writes the same grammar and renders it differently."
+  },
+  {
+   "role": "ManagerSpec",
+   "disposition": "candidate shared headless component",
+   "detail": "What a manager contains, what each row means, which word describes a status, what an action claims to do. Each concept writes exactly one renderer against it, which is what stops forty-four managers becoming three hundred hand-written screens."
+  },
+  {
+   "role": "ProjectCopyTransaction",
+   "disposition": "candidate shared headless component",
+   "detail": "Preview, restore point, atomic apply, verification, receipt and rollback, with the credential-reference policy stated once."
+  },
+  {
+   "role": "SettingsStateFixtures",
+   "disposition": "candidate shared headless component",
+   "detail": "The nineteen deterministic situations, addressable from the route so a screen can be handed to someone else exactly."
+  },
+  {
+   "role": "SettingRow / ValueSourceBadge / AvailabilityReason",
+   "disposition": "concept-native presentation",
+   "detail": "The vocabulary is shared; the row is not. Each concept lays out title, explanation, control and status in its own rhythm."
+  },
+  {
+   "role": "SettingsWorkspaceShell / CategoryNavigation / SettingsSearch dropdown",
+   "disposition": "concept-native presentation",
+   "detail": "Deliberately seven different answers. Sharing these would collapse the bakeoff into one application in seven skins, which is the failure this pass exists to avoid."
+  },
+  {
+   "role": "ManagerShell / ResourceList / Detail",
+   "disposition": "concept-native presentation",
+   "detail": "Composition, entry, exit and motion are the concept's. Only the spec beneath them is shared."
+  },
+  {
+   "role": "SecretField / SecretReference",
+   "disposition": "candidate shared contract, concept-native rendering",
+   "detail": "The contract is absolute — secret material is never read, rendered or exported — and every concept renders the reference in its own idiom."
+  }
+ ],
+ "verification": "The manager-route matrix records, per manager, that the surface rendered is this concept's own and that no string in any spec names another concept page. The static suite fails the build if a concept file references opus-5-atlas/console/stack/ledger, another concept-NN page, or an iframe."
+}

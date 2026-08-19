@@ -62,7 +62,12 @@
     { id: "rollback-complete", group: "Transactions", label: "Rollback complete",
       note: "A transaction that was rolled back, with the restore point and the receipt still available." },
     { id: "verify-failed-rollback", group: "Transactions", label: "Verification failed, rolled back",
-      note: "An apply that verified badly and undid itself. The Project is exactly as it was." }
+      note: "An apply that verified badly and undid itself. The Project is exactly as it was." },
+
+    { id: "long-label", group: "Text", label: "Long localized label",
+      note: "Every setting name at the length German or Finnish reaches. Names are identity text: they may wrap, they may never be cut." },
+    { id: "long-explanation", group: "Text", label: "Long explanation",
+      note: "Every explanation at the length a translated sentence reaches, with the names left alone, so the two failures are told apart." }
   ];
 
   var BY_ID = {};
@@ -90,7 +95,9 @@
     "update-available": { updateAvailable: true },
     "import-conflict": { importConflict: true },
     "rollback-complete": { rollbackComplete: true },
-    "verify-failed-rollback": { verifyFailed: true }
+    "verify-failed-rollback": { verifyFailed: true },
+    "long-label": { longLabels: true },
+    "long-explanation": { longDescs: true }
   };
 
   /* At most one critical full-width notice, and only when it is genuinely critical.
@@ -128,12 +135,18 @@
       { id: "att-openai-key", tone: "attention", label: "The OpenAI API key was rejected",
         detail: "Requests routed to OpenAI are failing. The key may have been rotated.",
         actionLabel: "Fix", destination: { managerId: "manager-providers", objectId: "openai", sectionKey: "credentials" } },
-      { id: "att-index-stale", tone: "setup", label: "The Project search index is 6 days stale",
+      { id: "att-index-stale", tone: "attention", group: "attention", label: "The Project search index is 6 days stale",
         detail: "Files changed since the last build will not be found by name.",
         actionLabel: "Rebuild", destination: { managerId: "manager-index" } },
-      { id: "att-mcp-down", tone: "setup", label: "One MCP server is not responding",
+      { id: "att-mcp-down", tone: "attention", group: "attention", label: "One MCP server is not responding",
         detail: "The filesystem server has not answered since 08:14.",
-        actionLabel: "Open", destination: { managerId: "manager-mcp", objectId: "mcp-filesystem" } }
+        actionLabel: "Open", destination: { managerId: "manager-mcp", objectId: "mcp-filesystem" } },
+      { id: "att-finish-crew", tone: "setup", group: "setup", label: "Crew is half configured",
+        detail: "Two of four roles have a model. The rest fall back to the default.",
+        actionLabel: "Continue", destination: { managerId: "manager-crew" } },
+      { id: "att-recommend-retention", tone: "info", group: "recommended", label: "Shorten evidence retention",
+        detail: "This Project keeps 90 days of run evidence. 30 is the usual choice for a pipeline.",
+        actionLabel: "Review", destination: { domainId: "planning", pageId: "planning.verification" } }
     ],
     "empty": [],
     "offline": [
@@ -183,7 +196,92 @@
     return base;
   }
 
+  /* The PM shell ships its own "Demo state" select and a Reset button, both wired to
+   * window.PMData.demoStates — the fixture list belonging to concepts 01-04. On a page
+   * that uses THESE fixtures the shell control is not merely redundant, it is wrong:
+   * it offers situations this concept does not implement and its Reset clears a
+   * storage namespace this concept does not own. Two controls that look identical and
+   * do different things is worse than one, so the stale pair is removed from the
+   * review strip once the concept has mounted its own.
+   *
+   * Nothing in shared/ is modified; this only detaches nodes from the live shell. */
+  function removeShellControl(shell) {
+    if (!shell || !shell.review || !shell.review.querySelectorAll) return false;
+    var removed = false;
+    var selects = shell.review.querySelectorAll("select");
+    for (var i = 0; i < selects.length; i++) {
+      if (String(selects[i].id).indexOf("pm-demo-") !== 0) continue;
+      var group = selects[i].parentNode;
+      while (group && group !== shell.review && !/pm-review-group/.test(group.className || "")) {
+        group = group.parentNode;
+      }
+      if (group && group !== shell.review && group.parentNode) { group.parentNode.removeChild(group); removed = true; }
+    }
+    var buttons = shell.review.querySelectorAll("button");
+    for (var j = 0; j < buttons.length; j++) {
+      var text = (buttons[j].textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
+      if (text === "reset demo state" || text === "reset") {
+        if (buttons[j].parentNode) { buttons[j].parentNode.removeChild(buttons[j]); removed = true; }
+      }
+    }
+    return removed;
+  }
+
+  /* The long-label fixture rewrites what the model hands out, rather than asking seven
+   * concepts to remember a special case. `08_CONCEPT_COVERAGE_AND_FIXTURES` requires a
+   * long explanation and a long localised label, and it is the only fixture that can
+   * honestly test "no clipped text, no squashed titles" across eight themes and six
+   * widths — the assertion is untestable against comfortable English strings.
+   *
+   * German is used because it is the realistic worst case for a Latin-script build:
+   * long compounds that cannot be hyphenated at will. */
+  var GERMAN_TAIL = " \u2014 Benutzeroberfl\u00e4chen-Konfigurationseinstellung f\u00fcr Arbeitsbereichsverwaltung";
+  var LONG_DESC = " Diese Einstellung steuert das Verhalten der Anwendung in allen Arbeitsbereichen " +
+    "und wird bei jedem Start ausgewertet, einschlie\u00dflich der Wiederherstellung nach einem " +
+    "unerwarteten Beenden; sie gilt ausschlie\u00dflich f\u00fcr das aktuelle Projekt.";
+
+  /* Kept as two independent stretches. A row that clips its NAME and a row that clips
+   * its explanation are different defects with different fixes, and one fixture that
+   * lengthens both cannot tell you which one you are looking at. */
+  function stretched() {
+    var e = effects();
+    return !!(e.longLabels || e.longDescs);
+  }
+
+  function stretch(rec) {
+    if (!rec || !stretched()) return rec;
+    var e = effects();
+    var out = {};
+    for (var k in rec) if (Object.prototype.hasOwnProperty.call(rec, k)) out[k] = rec[k];
+    if (e.longLabels) out.label = rec.label + GERMAN_TAIL;
+    if (e.longDescs) out.desc = (rec.desc || "") + LONG_DESC;
+    return out;
+  }
+
+  /* Wrapped once, here, because this file loads after the model and before any concept. */
+  if (window.PM2Model && !window.PM2Model.__stretched) {
+    var M = window.PM2Model;
+    M.__stretched = true;
+    var rawRows = M.rowsInSection, rawSetting = M.setting, rawAll = M.settings;
+    M.rowsInSection = function (id) {
+      var rows = rawRows.call(M, id);
+      return stretched() ? rows.map(stretch) : rows;
+    };
+    M.setting = function (id) {
+      var rec = rawSetting.call(M, id);
+      return stretched() ? stretch(rec) : rec;
+    };
+    M.rowsInPage = (function (raw) {
+      return function (id) {
+        var rows = raw.call(M, id);
+        return stretched() ? rows.map(stretch) : rows;
+      };
+    })(M.rowsInPage);
+  }
+
   window.PM2States = {
+    stretch: stretch,
+    removeShellControl: removeShellControl,
     FIXTURES: FIXTURES,
     list: function () { return FIXTURES; },
     grouped: function () {
@@ -207,6 +305,45 @@
     attention: function () {
       var id = activeId();
       return ATTENTION[id] || ATTENTION.normal;
+    },
+
+    /* The same three groups as a single ordered list, with `groupLabel` set on the first
+     * item of each run. A concept that draws one notice panel keeps its panel and only
+     * has to draw a label where a run begins — separation without seven new layouts. */
+    attentionFlat: function () {
+      var out = [];
+      this.attentionGroups().forEach(function (g) {
+        g.items.forEach(function (item, i) {
+          var copy = {};
+          for (var k in item) if (Object.prototype.hasOwnProperty.call(item, k)) copy[k] = item[k];
+          copy.groupLabel = i === 0 ? g.label : null;
+          out.push(copy);
+        });
+      });
+      return out;
+    },
+
+    /* `01_CORE_ARCHITECTURE` § Notices separates three things a reader treats
+     * differently: what is broken, what is half-finished, and what is merely advice.
+     * One toned list makes an unfinished setup look like a fault. Groups are returned in
+     * priority order and an empty group is omitted, so a concept never draws an empty
+     * heading. */
+    attentionGroups: function () {
+      var items = (ATTENTION[activeId()] || ATTENTION.normal);
+      var order = [
+        { id: "attention", label: "Needs attention" },
+        { id: "setup", label: "Continue setup" },
+        { id: "recommended", label: "Recommended" }
+      ];
+      var out = [];
+      order.forEach(function (g) {
+        var members = items.filter(function (i) {
+          var grp = i.group || (i.tone === "info" ? "recommended" : (i.tone === "setup" ? "setup" : "attention"));
+          return grp === g.id;
+        });
+        if (members.length) out.push({ id: g.id, label: g.label, items: members });
+      });
+      return out;
     },
 
     /* Applied to a manager spec so an offline page does not claim a healthy server. */

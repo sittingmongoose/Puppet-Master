@@ -1,34 +1,82 @@
 {
- "schema_id": "pm.settings_bakeoff.test_evidence.v1",
- "concept": "concept-07-compendium-workspace",
- "static_checks": {
-  "evidence-json-parse": "pass (generated and parsed at build time)",
-  "coverage-families-verbatim": "pass (42 required family strings named exactly)",
-  "coverage-forbidden-statuses": "pass (no shared_grammar, no missing)",
-  "concept-js-syntax": "pending (node --check by concept builder)"
- },
- "search_cases": "see search-route-matrix.json",
- "manager_routes": "see manager-route-matrix.json",
- "theme_width_matrix": {
-  "themes": [
-   "Friendly Dark",
-   "Friendly Light",
-   "Glass Dark",
-   "Glass Light",
-   "Retro Dark",
-   "Retro Light",
-   "Basic Dark",
-   "Basic Light"
-  ],
-  "widths": [
-   760,
-   900,
-   1280,
-   1700,
-   2200,
-   2500
-  ],
-  "result": "pending-verification-phase"
- },
- "notes": "Browser/interaction evidence appended by the verification phase."
+  "schema_id": "pm.settings_bakeoff.test_evidence.v1",
+  "concept": "concept-07-compendium-workspace",
+  "static_checks": {
+    "evidence-json-parse": "pass (generated and parsed at build time)",
+    "coverage-families-verbatim": "pass (42 required family strings named exactly)",
+    "coverage-forbidden-statuses": "pass (no shared_grammar, no missing)",
+    "concept-js-syntax": "pass (node --check concept-07.js, 2026-08-19)"
+  },
+  "search_cases": "see search-route-matrix.json (14/14 pass — the 5 domain-row landings re-verified 2026-08-19, tab r1)",
+  "manager_routes": "see manager-route-matrix.json (48/48 pass — the 9 deferred owner shells re-verified 2026-08-19, tab r1)",
+  "theme_width_matrix": {
+    "themes": [
+      "Friendly Dark",
+      "Friendly Light",
+      "Glass Dark",
+      "Glass Light",
+      "Retro Dark",
+      "Retro Light",
+      "Basic Dark",
+      "Basic Light"
+    ],
+    "widths": [
+      760,
+      900,
+      1280,
+      1700,
+      2200,
+      2500
+    ],
+    "result": "pass — 48/48 theme×width cells: no horizontal overflow in .pmx-stage, Home search and destinations visible, zero new console errors. Screenshots at 760/1280/2500 in Friendly Dark + Glass Dark. Earlier anomalies resolved and re-verified 2026-08-19 (tab r1): (1) the .pm-drawer[hidden]{display:none!important} guard hides the demo drawer until opened; (2) below the 940px breakpoint the .cdw-nav drawer now starts CLOSED on fresh load (computed display:none at 760px stage width; no overlap of the 'Settings — Puppet Master' hero; .cdw-navtoggle opens/closes it on demand)."
+  },
+  "browser_checks": {
+    "verified_at": "2026-08-19",
+    "browser": "headless Chromium (omp browser tool), viewport 1400×900, tab v3 (initial pass) + tab r1 (re-verification)",
+    "load": "pass — 0 console errors, 0 page errors, all hooks present (re-verified 2026-08-19, tab r1)",
+    "shell_controls": "pass (re-verified 2026-08-19, tab r1) — PMShell.init() now runs at startup: theme select switches data-theme (friendly-dark → friendly-light), width select sets --hub-page-width/--hub-test-width (760px observed), motion button toggles data-motion (full → reduced); all live via real change/click dispatch",
+    "demo_drawer_guard": "RESOLVED (re-verified 2026-08-19, tab r1) — concept CSS now carries .pm-drawer[hidden]{display:none!important}; #cdw-demo computes display:none on load, opens via [data-demo-open] (display:flex), and #cdw-demo-close returns it to hidden/display:none",
+    "narrow_nav": "pass (re-verified 2026-08-19, tab r1) — at 760px shell width (stage 796px, below the 940px breakpoint) the .cdw-nav drawer starts CLOSED on fresh load (computed display:none; zero geometric overlap with the 'Settings — Puppet Master' hero); .cdw-navtoggle opens and closes it on demand",
+    "reduced_motion": "pass — data-motion=reduced renders Home and the Providers manager with identical state; 0 console errors",
+    "search_exactness": "14/14 pass (re-verified 2026-08-19, tab r1) — the row-cap reveal fix expands the subgroup on landing, so all 5 previously-failing domain-ROW landings now render the exact target row with pmv2-locate applied, focused, and in viewport: ai.accounts.openai-api-key, general.visual.theme ('theem' and 'theme'), ai.accounts.cooldown-policy, extensions.commands.shortcut-hints. Zero console/page errors across the re-runs.",
+    "manager_isolation": "48/48 pass (re-verified 2026-08-19, tab r1) — all 39 regular managers unchanged; the 9 deferred owner shells (owner-onboarding, owner-install-deploy, owner-server-claim, owner-servers, owner-hosting, owner-remote-access, owner-project-sync, owner-app-updates, owner-server-backup) now render the truthful owner + insertion-point + return-contract pane instead of 'Unknown area.' (renderAll now reads route.defId || route.deferredId)",
+    "copy_flow": "pass — source → 2 of 11 categories → preview totals (Additions 57, Replacements 58, Unchanged 47, Unavailable 4, Conflicts 22) WITH the detailed diff pane (5 .cdw-diff groups, 188 diff rows, 137 current→incoming arrow rows) → apply → receipt with restore point + 'Destination verified.' → 'Roll back this copy' → 'Copy rolled back'",
+    "scenarios": "pass — [data-demo-open] opens the drawer (aria-expanded toggles, 18 scenario buttons, Close works); Offline / Managed / Loading Cached each render truthful state text on the Providers manager; 'Clear scenario' restores normal state (transient 'Scenario: <name>' toasts linger a few seconds)",
+    "visual_audit_fixes": "RESOLVED 2026-08-19 — unconstrained manager header SVG fixed (.cdw-mhead h1 svg 30px); arrival-strip icon constrained (.cdw-arrive svg 15px); .pm-notice accent-bar override applied. Browser-verified 1280/760 friendly-dark by fv3, plus main-session probe 2026-08-19: glass-dark theme switch live, 'theem'->Theme exact landing with .pmv2-locate on general.visual.theme, providers manager zero oversized SVGs, roster above fold, zero console errors."
+  },
+  "notes": "Browser/interaction evidence appended by the verification phase. Re-verification 2026-08-19 (tab r1): all previously-failed probes now pass — 9/9 deferred owner shells render truthful content, 5/5 domain-row search landings locate the exact row, the narrow nav starts closed, PMShell.init() makes the shell controls live, and the .pm-drawer[hidden] guard hides the demo drawer until opened. Zero console/page errors observed in any re-run.",
+  "scale_stress": {
+    "scope": "shared headless search/index layer + concept-native virtualized lists",
+    "synthetic_records_injected": 2400,
+    "total_index_entries": 3478,
+    "real_inventory_records": 828,
+    "synthetic_replaces_product_data": false,
+    "results_bounded": {
+      "limit": 30,
+      "bounded_flag_observed": true
+    },
+    "query_latency_ms_observed": [
+      13.9,
+      17.2,
+      13.2,
+      12.7
+    ],
+    "managers_instantiated_during_search": 0,
+    "list_rendering": "virtualized/windowed per concept compendium (browser-verified)",
+    "method": "node headless probe of PM_V2_SEARCH over the real index + injected synthetic rows, isolated sessions per query",
+    "result": "pass"
+  },
+  "known_issues": [],
+  "audit_2026_08_19_second_pass": {
+    "scope": "independent audit of the seven-new-concepts work; narrow-width shell top bar clipping",
+    "result": "pass",
+    "detail": "Second-pass independent audit 2026-08-19 (browser-measured, ConceptHub-served pages): at 760/900px page widths the shared shell top bar content (~962px) exceeded the frame and clipped the demo control cluster (Scenarios, theme select, motion, panel toggles). Fixed concept-locally: @container pmx (max-width: 990px) wraps .pmx-topbar to two rows and hides decorative .pmx-model chips; shared pm-shell.css is untouched (frozen with concepts 01-04). Re-verified at exactly 760px and 900px page width: scrollWidth==clientWidth, all six shell controls inside the frame rect, theme select exposes all 8 themes and is clickable, topbar height 60.5px with no overlap of stage content, zero console errors. Standalone narrow (625px frame) also passes with the width select reachable.",
+    "widths_verified": [
+      760,
+      900,
+      625
+    ],
+    "console_errors": 0,
+    "shell_toggle_icon_fix": "User-reported blank top-bar buttons: the shell demo toggles (reduced motion, side/chat/bottom panel) carry bare SVGs with no intrinsic size and no shared CSS rule sizes them, so they painted 0x0 (pre-existing shared-shell markup issue, identical in 01-04). Fixed concept-locally: .pmx-controls [data-shell-motion] > svg, .pmx-controls [data-shell-toggle] > svg { inline-size: 14px; block-size: 14px; }. Browser-verified on all seven concepts: rule live in CSSOM, all four icons 14x14, Scenarios icon unchanged (14x14), toggle buttons still function, zero console errors."
+  }
 }

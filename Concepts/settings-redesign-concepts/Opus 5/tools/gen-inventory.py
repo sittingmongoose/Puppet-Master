@@ -219,6 +219,15 @@ CHANGED_WHEN = [
     "on 4 August", "on 28 July", "this morning",
 ]
 
+# Why an effective value can differ from what the Project asked for. Every one of these
+# is intrinsic — a floor, a host limit, a run override — never "a wider scope won".
+WHY_DIFFERS = [
+    "A workspace policy sets a floor this Project cannot go under.",
+    "This host cannot provide the requested value, so the nearest supported one is used.",
+    "A run override in the current thread is taking precedence until the run ends.",
+    "The installation owner pins this value for every Project on the machine.",
+]
+
 MANAGED_BY = [
     "Workspace policy", "Host policy", "Security baseline", "Installation owner",
 ]
@@ -321,6 +330,17 @@ def demo_state(rec: dict) -> dict:
     elif source == "managed":
         state["managedBy"] = MANAGED_BY[(seed >> 12) % len(MANAGED_BY)]
         state["managedNote"] = "Set by %s. Details explain where this came from." % state["managedBy"]
+        # Some managed rows are the "effective value differs" case the manager grammar
+        # requires: the Project asked for one thing and something intrinsic produced
+        # another. This is NOT inheritance — nothing here comes from a wider scope; a
+        # policy floor, a host that cannot honour the value, or a run override decided
+        # the result, and the row says which.
+        if (seed >> 20) % 100 < 45:
+            asked = alternate_value(rec, seed >> 6)
+            if asked != base:
+                state["requested"] = asked
+                state["effective"] = base
+                state["effectiveWhy"] = WHY_DIFFERS[(seed >> 24) % len(WHY_DIFFERS)]
     elif source == "unavailable":
         state["reason"] = UNAVAILABLE_WHY[(seed >> 16) % len(UNAVAILABLE_WHY)]
 

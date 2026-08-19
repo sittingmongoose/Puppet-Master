@@ -24,10 +24,10 @@
     "section": "accounts",
     "row": "ai.accounts.openai-api-key"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass (re-verified 2026-08-19, tab r1: subgroup expanded, row rendered, pmv2-locate on [data-setting-id='ai.accounts.openai-api-key'], focused, in viewport)",
+   "back_restores": "pass (Back restores the query into #pmv2-search; selected result re-marked active)",
    "case": "deep setting row into provider credentials",
-   "pass": "pending-verification-phase"
+   "pass": "pass (re-verified 2026-08-19, tab r1 — the row-cap reveal fix expands the subgroup so the target row renders and is located)"
   },
   {
    "query": "openai api key",
@@ -50,10 +50,10 @@
     "section": "overview",
     "row": null
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass (pmv2-locate applied; destination focused and scrolled into view)",
+   "back_restores": "pass (Back restores the query into #pmv2-search)",
    "case": "manager object (provider)",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "theem",
@@ -76,10 +76,10 @@
     "section": "visual",
     "row": "general.visual.theme"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass (re-verified 2026-08-19, tab r1: subgroup expanded, row rendered, pmv2-locate on [data-setting-id='general.visual.theme'], focused, in viewport)",
+   "back_restores": "pass (Back restores the query into #pmv2-search; selected result re-marked active)",
    "case": "typo tolerance (theem → Theme)",
-   "pass": "pending-verification-phase"
+   "pass": "pass (re-verified 2026-08-19, tab r1 — the row-cap reveal fix expands the subgroup so the target row renders and is located)"
   },
   {
    "query": "rate limit",
@@ -102,10 +102,10 @@
     "section": "accounts",
     "row": "ai.accounts.cooldown-policy"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass (re-verified 2026-08-19, tab r1: subgroup expanded, row rendered, pmv2-locate on [data-setting-id='ai.accounts.cooldown-policy'], focused, in viewport)",
+   "back_restores": "pass (Back restores the query into #pmv2-search; selected result re-marked active)",
    "case": "grouped results case",
-   "pass": "pending-verification-phase"
+   "pass": "pass (re-verified 2026-08-19, tab r1 — the row-cap reveal fix expands the subgroup so the target row renders and is located)"
   },
   {
    "query": "rate limit",
@@ -128,10 +128,10 @@
     "section": null,
     "row": null
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "n/a (manager-page landing; pane renders with correct breadcrumb)",
+   "back_restores": "pass (Back restores the query into #pmv2-search)",
    "case": "duplicate/similar label lands on a different destination",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "copy settings",
@@ -154,10 +154,10 @@
     "section": "copy",
     "row": null
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "n/a (manager-page landing; pane renders with correct breadcrumb)",
+   "back_restores": "pass (Back restores the query into #pmv2-search)",
    "case": "action result",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "copy settings",
@@ -180,10 +180,10 @@
     "section": "help",
     "row": null
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "n/a (manager-page landing; pane renders with correct breadcrumb)",
+   "back_restores": "pass (Back restores the query into #pmv2-search)",
    "case": "intentional help result",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "doctor",
@@ -206,10 +206,10 @@
     "section": null,
     "row": null
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "n/a (manager-page landing; pane renders with correct breadcrumb)",
+   "back_restores": "pass (Back restores the query into #pmv2-search)",
    "case": "diagnostic / read-only status",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "install claude",
@@ -232,10 +232,10 @@
     "section": "advanced",
     "row": "system.advanced.cli-path-claude"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass (pmv2-locate applied; destination focused and scrolled into view)",
+   "back_restores": "pass (Back restores the query into #pmv2-search)",
    "case": "setup/repair workflow (explicit official-source CLI setup)",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "theme",
@@ -258,10 +258,10 @@
     "section": "visual",
     "row": "general.visual.theme"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass (re-verified 2026-08-19, tab r1: subgroup expanded, row rendered, pmv2-locate on [data-setting-id='general.visual.theme'], focused, in viewport)",
+   "back_restores": "pass (Back restores the query into #pmv2-search; selected result re-marked active)",
    "case": "ordinary setting row",
-   "pass": "pending-verification-phase"
+   "pass": "pass (re-verified 2026-08-19, tab r1 — the row-cap reveal fix expands the subgroup so the target row renders and is located)"
   },
   {
    "query": "memory retention",
@@ -284,10 +284,10 @@
     "section": null,
     "row": null
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "n/a (manager-page landing; pane renders with correct breadcrumb)",
+   "back_restores": "pass (Back restores the query into #pmv2-search)",
    "case": "memory domain deep row",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "worktree",
@@ -310,10 +310,10 @@
     "section": null,
     "row": null
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "n/a (manager-page landing; pane renders with correct breadcrumb)",
+   "back_restores": "pass (Back restores the query into #pmv2-search)",
    "case": "branching domain result",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "shortcut",
@@ -336,10 +336,10 @@
     "section": "commands",
     "row": "extensions.commands.shortcut-hints"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass (re-verified 2026-08-19, tab r1: subgroup expanded, row rendered, pmv2-locate on [data-setting-id='extensions.commands.shortcut-hints'], focused, in viewport)",
+   "back_restores": "pass (Back restores the query into #pmv2-search; selected result re-marked active)",
    "case": "extensions domain result",
-   "pass": "pending-verification-phase"
+   "pass": "pass (re-verified 2026-08-19, tab r1 — the row-cap reveal fix expands the subgroup so the target row renders and is located)"
   },
   {
    "query": "theem",
@@ -349,9 +349,9 @@
    "expected_destination": null,
    "actual_destination": null,
    "focus_highlight": "n/a",
-   "back_restores": "pending-verification-phase",
+   "back_restores": "pass (Back restores the query into #pmv2-search and re-marks the selected result .is-active in the dropdown)",
    "case": "Back restores the query and the selected result in the dropdown",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   }
  ]
 }

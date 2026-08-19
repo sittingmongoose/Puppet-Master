@@ -1,0 +1,75 @@
+{
+ "schema_id": "pm.settings_bakeoff_test_evidence.v2",
+ "concept_id": "concept-11-tabbed-organizer",
+ "model": "Opus 5",
+ "generated": "2026-08-19",
+ "environment": {
+  "browser": "Chromium (Playwright build 1234), headless, driven over raw CDP",
+  "protocol": "file://",
+  "note": "The ConceptHub server route is not used to DRIVE the pages: headless Chromium in this sandbox hangs on every http:// request. The Hub manifest is validated separately by Concepts/ConceptHub/validate.py.",
+  "themes": 8,
+  "widths": [
+   760,
+   900,
+   1280,
+   1700,
+   2200,
+   2500
+  ]
+ },
+ "suites": {
+  "static_code": {
+   "pass": true,
+   "failures": []
+  },
+  "load": {
+   "pass": true,
+   "surface": "home",
+   "inventory_records": 828,
+   "console_errors": 0
+  },
+  "responsive_theme_matrix": {
+   "cells": 48,
+   "passed": 48,
+   "failures": [],
+   "reduced_motion": {
+    "reducedNodes": 596,
+    "normalNodes": 596,
+    "pass": true
+   },
+   "pass": true
+  },
+  "search_route_exactness": {
+   "cases": 64,
+   "passed": 64,
+   "pass": true
+  },
+  "manager_route_isolation": {
+   "managers": 50,
+   "passed": 50,
+   "pass": true
+  },
+  "state_persistence": {
+   "fixtures": 21,
+   "passed": 21,
+   "pass": true
+  },
+  "inventory_and_scale": {
+   "canonical_records": 828,
+   "indexed": 828,
+   "routed_sample": 64,
+   "routed_passed": 64,
+   "pass": true
+  },
+  "performance_hydration": {
+   "managers_hydrated_at_load": [],
+   "managers_hydrated_by_search": [],
+   "scale_records_indexed": 3665,
+   "all_settings_rows_in_dom": 25,
+   "search_at_scale_ms": 53.6,
+   "pass": true,
+   "reason": null
+  }
+ },
+ "pass": true
+}

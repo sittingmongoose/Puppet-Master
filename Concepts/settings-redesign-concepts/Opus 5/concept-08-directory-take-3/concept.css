@@ -1,0 +1,1137 @@
+/* Opus 5 — Broadside (concept 08).
+ *
+ * Thesis: Settings is broad and approachable. The geometry this file owns is a
+ * left rail of areas, a breadcrumb bar, and a small number of LARGE destinations
+ * — cards on Home, wide status rows inside an area — that stay large at every
+ * tested width instead of collapsing into pills.
+ *
+ * Density is deliberately spacious: 15px body, 1.55 line height, a 24px block
+ * rhythm and 44px minimum targets. Every colour, radius, shadow and duration is
+ * a theme token, so all eight themes read correctly with no second rule set, and
+ * reduced motion is expressed by multiplying distances by --pm-motion-transform.
+ */
+
+/* The identity header sits above the app frame, so it is kept to one compact
+ * line: every pixel it takes is a pixel the Settings surface loses. */
+.pm-concept-id {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 10px 20px 0;
+  font-family: var(--pm-font);
+  color: var(--pm-text-3);
+  font-size: 12px;
+  line-height: 1.4;
+}
+.pm-concept-id-model { font-weight: 700; color: var(--pm-text-2); letter-spacing: .04em; text-transform: uppercase; }
+.pm-concept-id-sep { color: var(--pm-border-strong); }
+.pm-concept-id-name { margin: 0; font-size: 14px; font-weight: var(--pm-title-weight); color: var(--pm-text-1); }
+.pm-concept-id-thesis { margin: 0; flex: 1 1 340px; min-width: 0; }
+
+/* ============================================================ the concept */
+
+.b8 {
+  --b8-rail: 248px;
+  --b8-gutter: var(--pm-space-5);
+  --b8-block: 24px;
+  --b8-measure: 82ch;
+  font-family: var(--pm-font);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--pm-text-1);
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.b8 *, .b8 *::before, .b8 *::after { box-sizing: border-box; }
+.b8 h1, .b8 h2, .b8 h3, .b8 h4 { margin: 0; font-weight: var(--pm-title-weight); letter-spacing: var(--pm-letter); }
+.b8 p { margin: 0; }
+/* :where() so the reset carries ZERO specificity. As a plain descendant selector
+ * it scored (0,1,1) and outranked every single-class modifier — a primary button's
+ * own colour lost to `color: inherit`, which in Retro Dark painted pale text on the
+ * pale accent fill at 1.34:1. A reset must never outrank the components it resets. */
+:where(.b8) :where(button){ font: inherit; color: inherit; background: none; border: 0; padding: 0; text-align: left; cursor: pointer; }
+.b8 code { font-family: var(--pm-font-mono); font-size: .92em; }
+.b8 :focus-visible { outline: 2px solid var(--pm-focus); outline-offset: 2px; border-radius: var(--pm-radius-1); }
+
+/* The PM custom scrollbar, authored here because shared/ does not ship one. */
+.b8-scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--pm-border-strong) transparent;
+}
+.b8-scroll::-webkit-scrollbar { width: 10px; height: 10px; }
+.b8-scroll::-webkit-scrollbar-track { background: transparent; }
+.b8-scroll::-webkit-scrollbar-thumb {
+  background: var(--pm-border-2);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.b8-scroll::-webkit-scrollbar-thumb:hover { background: var(--pm-border-strong); background-clip: padding-box; }
+
+/* ------------------------------------------------------------------ rail */
+
+.b8-rail {
+  width: var(--b8-rail);
+  flex: 0 0 var(--b8-rail);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--pm-surface-1);
+  border-right: var(--pm-border-w) solid var(--pm-border-1);
+}
+
+.b8-rail-head {
+  padding: var(--pm-space-4) var(--pm-space-4) var(--pm-space-3);
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.b8-rail-eyebrow {
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--pm-text-3);
+}
+.b8-rail-project { font-size: 15px; font-weight: var(--pm-title-weight); color: var(--pm-text-1); }
+.b8-rail-path { font-size: 12px; color: var(--pm-text-3); word-break: break-word; }
+
+.b8-rail-list { flex: 1 1 auto; min-height: 0; padding: var(--pm-space-3) var(--pm-space-2); }
+
+.b8-rail-group {
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--pm-text-3);
+  padding: var(--pm-space-3) var(--pm-space-3) var(--pm-space-1);
+}
+
+.b8-rail-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 10px;
+  border-radius: var(--pm-radius-2);
+  color: var(--pm-text-2);
+  font-size: 14px;
+}
+.b8-rail-item > span:first-of-type { flex: 1 1 auto; min-width: 0; }
+.b8-rail-item svg { flex: 0 0 auto; opacity: .85; }
+.b8-rail-item:hover { background: var(--pm-surface-2); color: var(--pm-text-1); }
+.b8-rail-item[aria-current="true"] {
+  background: var(--pm-accent-soft);
+  color: var(--pm-text-1);
+  font-weight: 600;
+}
+.b8-rail-n { font-size: 12px; color: var(--pm-text-3); font-variant-numeric: tabular-nums; }
+
+.b8-rail-foot {
+  padding: var(--pm-space-3);
+  border-top: var(--pm-border-w) solid var(--pm-border-1);
+}
+
+/* ------------------------------------------------------------------ main */
+
+.b8-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--pm-bg);
+}
+
+.b8-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--pm-space-3);
+  padding: 10px var(--b8-gutter);
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+  background: var(--pm-surface-1);
+  min-height: 56px;
+  min-width: 0;
+}
+.b8-bar-spacer { flex: 1 1 auto; }
+
+.b8-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 6px 12px;
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-2);
+  background: var(--pm-surface-2);
+  color: var(--pm-text-2);
+  font-size: 13px;
+  white-space: nowrap;
+}
+.b8-btn:hover { background: var(--pm-surface-3); color: var(--pm-text-1); }
+.b8-btn[disabled] { opacity: .5; cursor: not-allowed; }
+.b8-btn.is-primary {
+  background: var(--pm-accent);
+  color: var(--pm-accent-text);
+  border-color: var(--pm-accent);
+  font-weight: 600;
+}
+.b8-btn.is-primary:hover { background: var(--pm-accent); color: var(--pm-accent-text); }
+.b8-btn.is-quiet { background: transparent; border-color: transparent; }
+.b8-btn.is-quiet:hover { background: var(--pm-surface-2); }
+
+.b8-crumbs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  min-width: 0;
+  font-size: 13px;
+  color: var(--pm-text-3);
+}
+.b8-crumb { color: var(--pm-text-3); padding: 2px 4px; border-radius: var(--pm-radius-1); }
+.b8-crumb:hover { color: var(--pm-text-1); background: var(--pm-surface-2); }
+.b8-crumb[aria-current="page"] { color: var(--pm-text-1); font-weight: 600; }
+.b8-crumb-sep { color: var(--pm-border-strong); }
+
+/* ------------------------------------------------------------- state strip */
+
+.b8-fixture {
+  display: flex;
+  align-items: center;
+  gap: var(--pm-space-3);
+  flex-wrap: wrap;
+  padding: 8px var(--b8-gutter);
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+  background: var(--pm-surface-sunken);
+  font-size: 12px;
+  color: var(--pm-text-3);
+  min-width: 0;
+}
+.b8-fixture select {
+  font: inherit;
+  font-size: 13px;
+  padding: 5px 8px;
+  min-height: 32px;
+  border-radius: var(--pm-radius-1);
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  background: var(--pm-surface-2);
+  color: var(--pm-text-1);
+  max-width: 260px;
+}
+.b8-fixture-note { flex: 1 1 220px; min-width: 0; }
+
+/* ----------------------------------------------------------------- stage */
+
+.b8-stage { flex: 1 1 auto; min-height: 0; position: relative; }
+.b8-inner {
+  padding: var(--pm-space-6) var(--b8-gutter) var(--pm-space-7);
+  max-width: 1500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--b8-block);
+  min-width: 0;
+}
+
+/* Scale-and-settle: the surface arrives slightly small and settles, so the card
+ * that was pressed reads as having grown into the page underneath it. */
+@keyframes b8-settle {
+  from { transform: scale(calc(1 - 0.012 * var(--pm-motion-transform))); opacity: .55; }
+  to { transform: scale(1); opacity: 1; }
+}
+.b8-inner.is-arriving { animation: b8-settle var(--pm-dur-2) var(--pm-ease-out) both; }
+
+/* ------------------------------------------------------------ page header */
+
+.b8-head { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.b8-head-top { display: flex; align-items: flex-start; gap: var(--pm-space-4); min-width: 0; }
+.b8-head-body { min-width: 0; flex: 1 1 auto; }
+.b8-title { font-size: 30px; line-height: 1.2; }
+.b8-title-sm { font-size: 24px; line-height: 1.25; }
+.b8-purpose {
+  margin-top: 6px;
+  color: var(--pm-text-2);
+  max-width: var(--b8-measure);
+}
+.b8-meta { margin-top: 8px; font-size: 13px; color: var(--pm-text-3); }
+
+.b8-iconblock {
+  flex: 0 0 auto;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--pm-radius-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pm-accent-soft);
+  color: var(--pm-accent);
+  border: var(--pm-border-w) solid var(--pm-border-1);
+}
+.b8-iconblock.is-sm { width: 44px; height: 44px; }
+
+/* ----------------------------------------------------------------- search */
+
+.b8-searchwrap { position: relative; min-width: 0; }
+.b8-searchwrap.is-hero { max-width: 860px; width: 100%; }
+.b8-searchwrap.is-bar { width: clamp(180px, 32vw, 380px); flex: 0 1 auto; }
+
+.b8-searchfield {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-2);
+  background: var(--pm-surface-2);
+  color: var(--pm-text-3);
+  min-width: 0;
+}
+.b8-searchwrap.is-hero .b8-searchfield { min-height: 56px; border-radius: var(--pm-radius-3); }
+.b8-searchwrap.is-bar .b8-searchfield { min-height: 36px; }
+.b8-searchfield:focus-within { border-color: var(--pm-accent); box-shadow: 0 0 0 3px var(--pm-accent-soft); }
+.b8-searchfield input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: var(--pm-text-1);
+  font: inherit;
+  padding: 8px 0;
+}
+.b8-searchwrap.is-hero .b8-searchfield input { font-size: 17px; }
+.b8-searchwrap.is-bar .b8-searchfield input { font-size: 13px; }
+.b8-searchfield input::placeholder { color: var(--pm-text-3); }
+.b8-searchclear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--pm-radius-1);
+  color: var(--pm-text-3);
+}
+.b8-searchclear:hover { background: var(--pm-surface-3); color: var(--pm-text-1); }
+
+.b8-drop {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  margin-top: 0;
+  background: var(--pm-surface-2);
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-2);
+  box-shadow: var(--pm-shadow-2);
+  overflow: hidden;
+}
+.b8-drop[hidden] { display: none; }
+.b8-drop-scroll { max-height: 46vh; padding: var(--pm-space-2); }
+.b8-drop-group + .b8-drop-group { margin-top: var(--pm-space-2); }
+.b8-drop-label {
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--pm-text-3);
+  padding: 8px 10px 4px;
+}
+.b8-result {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--pm-radius-2);
+  min-width: 0;
+}
+.b8-result:hover, .b8-result.is-active { background: var(--pm-surface-3); }
+.b8-result-top { display: flex; align-items: baseline; gap: var(--pm-space-3); min-width: 0; }
+.b8-result-label { flex: 1 1 auto; min-width: 0; font-size: 15px; color: var(--pm-text-1); }
+.b8-result-type { flex: 0 0 auto; font-size: 12px; color: var(--pm-text-3); }
+.b8-result-path { font-size: 12.5px; color: var(--pm-text-3); margin-top: 2px; }
+.b8-result-why { font-size: 12.5px; color: var(--pm-setup); margin-top: 2px; }
+.b8-drop-empty { padding: var(--pm-space-4); color: var(--pm-text-2); }
+.b8-drop-empty p { margin-top: 6px; color: var(--pm-text-3); font-size: 13px; }
+.b8-drop-foot {
+  display: flex;
+  align-items: center;
+  gap: var(--pm-space-3);
+  padding: 8px 12px;
+  border-top: var(--pm-border-w) solid var(--pm-border-1);
+  background: var(--pm-surface-1);
+  font-size: 12.5px;
+  color: var(--pm-text-3);
+  min-width: 0;
+}
+.b8-drop-foot > span { flex: 1 1 auto; min-width: 0; }
+
+/* ---------------------------------------------------------------- notices */
+
+.b8-notice {
+  display: flex;
+  gap: var(--pm-space-4);
+  padding: var(--pm-space-4) var(--pm-space-5);
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-2);
+  background: var(--pm-surface-2);
+  min-width: 0;
+}
+.b8-notice[data-tone="attention"] { background: var(--pm-attention-bg); border-color: var(--pm-attention); }
+.b8-notice[data-tone="info"] { background: var(--pm-accent-soft); border-color: var(--pm-border-2); }
+.b8-notice-icon { flex: 0 0 auto; color: var(--pm-attention); }
+.b8-notice[data-tone="info"] .b8-notice-icon { color: var(--pm-accent); }
+.b8-notice-body { flex: 1 1 auto; min-width: 0; }
+.b8-notice-head { font-weight: var(--pm-title-weight); }
+.b8-notice-detail { color: var(--pm-text-2); margin-top: 4px; max-width: var(--b8-measure); }
+.b8-notice-acts { display: flex; gap: var(--pm-space-2); align-items: center; flex-wrap: wrap; margin-top: 10px; }
+
+.b8-fixtureline {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
+  border: var(--pm-border-w) dashed var(--pm-border-2);
+  border-radius: var(--pm-radius-2);
+  background: var(--pm-surface-1);
+  color: var(--pm-text-2);
+  font-size: 13px;
+  min-width: 0;
+}
+.b8-fixtureline svg { flex: 0 0 auto; margin-top: 3px; color: var(--pm-text-3); }
+
+/* -------------------------------------------------------- attention panel */
+
+.b8-panel {
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-3);
+  background: var(--pm-surface-1);
+  overflow: hidden;
+  min-width: 0;
+}
+.b8-panel-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px var(--pm-space-5);
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+  background: var(--pm-surface-2);
+  min-width: 0;
+}
+.b8-panel-title { flex: 1 1 auto; min-width: 0; font-size: 16px; }
+.b8-panel-count { font-size: 12.5px; color: var(--pm-text-3); }
+
+.b8-attn {
+  display: flex;
+  align-items: center;
+  gap: var(--pm-space-4);
+  padding: 16px var(--pm-space-5);
+  min-width: 0;
+}
+.b8-attn + .b8-attn { border-top: var(--pm-border-w) solid var(--pm-border-1); }
+.b8-attn-mark { flex: 0 0 auto; display: flex; }
+.b8-attn[data-tone="attention"] .b8-attn-mark { color: var(--pm-attention); }
+.b8-attn[data-tone="setup"] .b8-attn-mark { color: var(--pm-setup); }
+.b8-attn[data-tone="info"] .b8-attn-mark { color: var(--pm-accent); }
+.b8-attn-body { flex: 1 1 auto; min-width: 0; }
+.b8-attn-label { font-weight: 600; }
+.b8-attn-detail { color: var(--pm-text-2); font-size: 13.5px; margin-top: 2px; max-width: var(--b8-measure); }
+.b8-attn-fix { flex: 0 0 auto; }
+.b8-empty {
+  padding: 18px var(--pm-space-5);
+  color: var(--pm-text-2);
+}
+
+/* -------------------------------------------------------------- the cards */
+
+.b8-section-title { font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--pm-text-3); }
+
+.b8-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--pm-space-4);
+  min-width: 0;
+}
+.b8[data-cols="3"] .b8-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.b8[data-cols="1"] .b8-cards { grid-template-columns: minmax(0, 1fr); }
+
+/* A destination card is large everywhere, including narrow: it never becomes a
+ * pill. The minimum height is what keeps two lines of purpose readable. */
+.b8-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 148px;
+  padding: var(--pm-space-5);
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-3);
+  background: var(--pm-surface-1);
+  box-shadow: var(--pm-shadow-1);
+  min-width: 0;
+  transition: transform var(--pm-dur-1) var(--pm-ease), border-color var(--pm-dur-1) var(--pm-ease),
+    background var(--pm-dur-1) var(--pm-ease);
+}
+.b8-card:hover { background: var(--pm-surface-2); border-color: var(--pm-border-strong); }
+.b8-card:active { transform: scale(calc(1 + 0.012 * var(--pm-motion-transform))); }
+.b8-card-top { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.b8-card-title { flex: 1 1 auto; min-width: 0; font-size: 18px; font-weight: var(--pm-title-weight); }
+.b8-card-purpose { color: var(--pm-text-2); font-size: 14px; flex: 1 1 auto; }
+.b8-card-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--pm-text-3);
+  min-width: 0;
+}
+.b8-card-foot > span:first-child { flex: 1 1 auto; min-width: 0; }
+
+/* ------------------------------------------------------------- wide rows */
+
+/* The one geometry for "a destination that has a status": icon, title, purpose,
+ * figure on the right. Areas, managers and pages all use it, so a reader learns
+ * one shape rather than four. */
+.b8-rows {
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-3);
+  background: var(--pm-surface-1);
+  overflow: hidden;
+  min-width: 0;
+}
+.b8-dest {
+  display: flex;
+  align-items: center;
+  gap: var(--pm-space-4);
+  width: 100%;
+  min-height: 76px;
+  padding: 16px var(--pm-space-5);
+  min-width: 0;
+  transition: background var(--pm-dur-1) var(--pm-ease), transform var(--pm-dur-1) var(--pm-ease);
+}
+.b8-dest + .b8-dest { border-top: var(--pm-border-w) solid var(--pm-border-1); }
+.b8-dest:hover { background: var(--pm-surface-2); }
+.b8-dest:active { transform: scale(calc(1 + 0.008 * var(--pm-motion-transform))); }
+.b8-dest-body { flex: 1 1 auto; min-width: 0; }
+.b8-dest-title { font-size: 16px; font-weight: 600; }
+.b8-dest-purpose { color: var(--pm-text-2); font-size: 13.5px; margin-top: 2px; max-width: var(--b8-measure); }
+.b8-dest-figure {
+  flex: 0 0 auto;
+  text-align: right;
+  min-width: 0;
+}
+.b8-dest-figure-value { font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.b8-dest-figure-label { font-size: 12px; color: var(--pm-text-3); }
+.b8-dest-chevron { flex: 0 0 auto; color: var(--pm-text-3); display: flex; }
+
+/* --------------------------------------------------------------- utility */
+
+.b8-util {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pm-space-3);
+  align-items: center;
+  min-width: 0;
+}
+.b8-util-note { font-size: 13px; color: var(--pm-text-3); flex: 1 1 220px; min-width: 0; }
+
+.b8-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: var(--pm-surface-3);
+  color: var(--pm-text-2);
+  white-space: nowrap;
+}
+.b8-tag[data-tone="ok"] { background: var(--pm-recommended-bg); color: var(--pm-recommended); }
+.b8-tag[data-tone="attention"] { background: var(--pm-attention-bg); color: var(--pm-attention); }
+.b8-tag[data-tone="setup"] { background: var(--pm-setup-bg); color: var(--pm-setup); }
+.b8-tag[data-tone="managed"] { background: var(--pm-managed-bg); color: var(--pm-managed); }
+.b8-tag[data-tone="unavailable"] { background: var(--pm-unavailable-bg); color: var(--pm-unavailable); }
+.b8-tag[data-tone="changed"] { background: var(--pm-accent-soft); color: var(--pm-accent); }
+.b8-tag[data-tone="risky"] { background: var(--pm-risky-bg); color: var(--pm-risky); }
+
+/* ------------------------------------------------------------- the halo */
+
+/* The arrival reveal: a soft halo in place plus a one-line caption above the
+ * thing that was found. It never blinks and it never moves the destination. */
+.b8-foundvia {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: var(--pm-accent);
+  min-width: 0;
+}
+.b8-foundvia svg { flex: 0 0 auto; }
+
+[data-pm-locator] {
+  position: relative;
+  border-radius: var(--pm-radius-2);
+  background: var(--pm-accent-soft);
+  box-shadow: 0 0 0 2px var(--pm-accent), 0 0 0 10px var(--pm-accent-soft);
+  animation: b8-halo var(--pm-dur-3) var(--pm-ease-out) both;
+}
+@keyframes b8-halo {
+  from { box-shadow: 0 0 0 2px var(--pm-accent), 0 0 0 0 var(--pm-accent-soft); }
+  to { box-shadow: 0 0 0 2px var(--pm-accent), 0 0 0 10px var(--pm-accent-soft); }
+}
+
+/* ------------------------------------------------------------- narrow */
+
+.b8[data-narrow="true"] { --b8-gutter: var(--pm-space-4); }
+.b8[data-narrow="true"] .b8-rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 40;
+  box-shadow: var(--pm-shadow-2);
+  transform: translateX(calc(-100% * var(--pm-motion-transform)));
+  transition: transform var(--pm-dur-2) var(--pm-ease-out);
+}
+.b8[data-narrow="true"][data-rail="open"] .b8-rail { transform: translateX(0); }
+.b8[data-narrow="true"][data-rail="closed"] .b8-rail { visibility: hidden; }
+.b8-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 35;
+  background: var(--pm-surface-sunken);
+  opacity: .6;
+}
+.b8-scrim[hidden] { display: none; }
+.b8[data-narrow="true"] .b8-title { font-size: 25px; }
+
+/* ---------------------------------------------------------- groups of rows */
+
+.b8-group {
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-3);
+  background: var(--pm-surface-1);
+  overflow: hidden;
+  min-width: 0;
+}
+.b8-group-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--pm-space-3);
+  padding: 14px var(--pm-space-5);
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+  background: var(--pm-surface-2);
+  min-width: 0;
+}
+.b8-group-title { flex: 1 1 auto; min-width: 0; font-size: 16px; }
+.b8-group-count { font-size: 12.5px; color: var(--pm-text-3); white-space: nowrap; }
+.b8-group-rows { display: block; min-width: 0; }
+
+.b8-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--pm-space-5);
+  padding: 18px var(--pm-space-5);
+  min-width: 0;
+}
+.b8-row + .b8-row { border-top: var(--pm-border-w) solid var(--pm-border-1); }
+.b8-row:hover { background: var(--pm-surface-2); }
+.b8-row[data-locked="true"] { background: var(--pm-surface-sunken); }
+.b8-row-body { flex: 1 1 auto; min-width: 0; }
+.b8-row-title { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; min-width: 0; }
+.b8-row-name { font-size: 15.5px; font-weight: 600; }
+.b8-row-desc { color: var(--pm-text-2); font-size: 13.5px; margin-top: 4px; max-width: var(--b8-measure); }
+.b8-row-error { color: var(--pm-attention); font-size: 13px; margin-top: 6px; max-width: var(--b8-measure); }
+.b8-row-control {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 0;
+  max-width: 46%;
+  padding-top: 2px;
+}
+
+.b8-why {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: var(--pm-text-3);
+  min-height: 28px;
+}
+.b8-why:hover { color: var(--pm-accent); }
+
+.b8-details {
+  margin-top: 10px;
+  padding: 14px var(--pm-space-4);
+  border: var(--pm-border-w) solid var(--pm-border-1);
+  border-radius: var(--pm-radius-2);
+  background: var(--pm-surface-sunken);
+  min-width: 0;
+}
+.b8-detail { display: flex; gap: var(--pm-space-4); font-size: 13px; padding: 3px 0; min-width: 0; }
+.b8-detail-k { flex: 0 0 190px; color: var(--pm-text-3); }
+.b8-detail-v { flex: 1 1 auto; min-width: 0; color: var(--pm-text-1); word-break: break-word; }
+.b8-detail-acts { display: flex; gap: var(--pm-space-2); flex-wrap: wrap; margin-top: 10px; }
+
+.b8-disclose {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 46px;
+  padding: 12px var(--pm-space-5);
+  border-top: var(--pm-border-w) solid var(--pm-border-1);
+  background: var(--pm-surface-2);
+  color: var(--pm-text-2);
+  font-size: 13.5px;
+}
+.b8-disclose:hover { color: var(--pm-text-1); background: var(--pm-surface-3); }
+
+/* ------------------------------------------------------------- controls */
+
+.b8-select, .b8-number, .b8-text, .b8-textarea {
+  font: inherit;
+  font-size: 14px;
+  color: var(--pm-text-1);
+  background: var(--pm-surface-2);
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-2);
+  padding: 8px 10px;
+  min-height: 40px;
+  min-width: 0;
+  max-width: 100%;
+}
+.b8-select { max-width: 280px; }
+.b8-number { width: 120px; }
+.b8-text { width: min(320px, 40vw); }
+.b8-textarea { width: 100%; resize: vertical; font-family: var(--pm-font-mono); font-size: 13px; }
+
+.b8-numberwrap { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.b8-range { width: 180px; accent-color: var(--pm-accent); }
+.b8-range-value { font-size: 13px; color: var(--pm-text-2); font-variant-numeric: tabular-nums; }
+
+.b8-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 4px 8px;
+  border-radius: var(--pm-radius-2);
+}
+.b8-switch:hover { background: var(--pm-surface-3); }
+.b8-switch-track {
+  width: 46px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--pm-surface-3);
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  display: inline-flex;
+  align-items: center;
+  padding: 2px;
+  transition: background var(--pm-dur-1) var(--pm-ease);
+}
+.b8-switch-knob {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--pm-text-3);
+  transition: transform var(--pm-dur-1) var(--pm-ease), background var(--pm-dur-1) var(--pm-ease);
+}
+.b8-switch[aria-checked="true"] .b8-switch-track { background: var(--pm-accent); border-color: var(--pm-accent); }
+.b8-switch[aria-checked="true"] .b8-switch-knob { background: var(--pm-accent-text); transform: translateX(20px); }
+.b8-switch-word { font-size: 13px; color: var(--pm-text-2); min-width: 26px; }
+
+.b8-readonly, .b8-listbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  max-width: 100%;
+  padding: 8px 12px;
+  border-radius: var(--pm-radius-2);
+  border: var(--pm-border-w) dashed var(--pm-border-2);
+  background: var(--pm-surface-2);
+  color: var(--pm-text-2);
+  font-size: 13.5px;
+}
+.b8-listbtn { border-style: solid; }
+.b8-listbtn:hover { background: var(--pm-surface-3); color: var(--pm-text-1); }
+.b8-readonly span, .b8-listbtn span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.b8[data-narrow="true"] .b8-row { flex-direction: column; align-items: stretch; gap: var(--pm-space-3); }
+.b8[data-narrow="true"] .b8-row-control { max-width: 100%; justify-content: flex-start; }
+
+/* --------------------------------------------------------------- managers */
+
+.b8-panel-summary { padding: 12px var(--pm-space-5) 0; color: var(--pm-text-2); font-size: 13.5px; max-width: var(--b8-measure); }
+.b8-note { font-size: 12.5px; color: var(--pm-text-3); }
+.b8-notes { display: flex; flex-direction: column; gap: 6px; }
+
+/* Big, legible figures: the point of this concept is that the numbers that
+ * matter can be read from a step back rather than squinted at in a table. */
+.b8-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: var(--pm-space-3);
+  min-width: 0;
+}
+.b8-stat {
+  padding: 16px var(--pm-space-4);
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-2);
+  background: var(--pm-surface-2);
+  min-width: 0;
+}
+.b8-stat-label { font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: var(--pm-text-3); }
+.b8-stat-value { font-size: 19px; font-weight: var(--pm-title-weight); margin-top: 4px; word-break: break-word; }
+.b8-stat-note { font-size: 12.5px; color: var(--pm-text-3); margin-top: 4px; }
+
+.b8-split { display: grid; grid-template-columns: minmax(0, 320px) minmax(0, 1fr); gap: var(--pm-space-4); min-width: 0; }
+.b8[data-narrow="true"] .b8-split, .b8[data-cols="1"] .b8-split { grid-template-columns: minmax(0, 1fr); }
+
+.b8-rosterpane { display: flex; flex-direction: column; min-width: 0; }
+.b8-rosterlist { flex: 1 1 auto; max-height: 520px; min-width: 0; }
+.b8-rosterfoot { padding: var(--pm-space-3) var(--pm-space-4); border-top: var(--pm-border-w) solid var(--pm-border-1); }
+
+.b8-rosterrow {
+  display: flex;
+  align-items: center;
+  gap: var(--pm-space-3);
+  width: 100%;
+  min-height: 68px;
+  padding: 14px var(--pm-space-4);
+  min-width: 0;
+  transition: background var(--pm-dur-1) var(--pm-ease), transform var(--pm-dur-1) var(--pm-ease);
+}
+.b8-rosterrow + .b8-rosterrow { border-top: var(--pm-border-w) solid var(--pm-border-1); }
+.b8-rosterrow:hover { background: var(--pm-surface-2); }
+.b8-rosterrow:active { transform: scale(calc(1 + 0.008 * var(--pm-motion-transform))); }
+.b8-rosterrow.is-selected { background: var(--pm-accent-soft); }
+.b8-rosterrow .b8-tag { flex: 0 0 auto; }
+
+.b8-sheet { display: flex; flex-direction: column; gap: var(--b8-block); min-width: 0; }
+.b8-sheet-head { display: flex; align-items: flex-start; gap: var(--pm-space-4); min-width: 0; }
+.b8-sheetbody { padding: var(--pm-space-5); display: flex; flex-direction: column; gap: var(--pm-space-4); min-width: 0; }
+
+.b8-quick { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.b8-quick-strip { display: flex; flex-wrap: wrap; gap: var(--pm-space-2); min-width: 0; }
+.b8-quick-strip .b8-btn { min-height: 44px; padding: 8px 16px; font-size: 13.5px; }
+
+.b8-itemrow { display: flex; gap: var(--pm-space-4); padding: 16px var(--pm-space-5); min-width: 0; }
+.b8-itemrow + .b8-itemrow { border-top: var(--pm-border-w) solid var(--pm-border-1); }
+
+.b8-step { display: flex; gap: var(--pm-space-4); padding: 16px var(--pm-space-5); min-width: 0; }
+.b8-step + .b8-step { border-top: var(--pm-border-w) solid var(--pm-border-1); }
+.b8-step-n {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pm-accent-soft);
+  color: var(--pm-accent);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.b8-drawer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 52px;
+  padding: 12px var(--pm-space-5);
+  min-width: 0;
+}
+.b8-drawer + .b8-drawer, .b8-details + .b8-drawer { border-top: var(--pm-border-w) solid var(--pm-border-1); }
+.b8-drawer:hover { background: var(--pm-surface-2); }
+.b8-drawer .b8-dest-title { flex: 1 1 auto; min-width: 0; }
+
+.b8-prose { padding: var(--pm-space-4) var(--pm-space-5); display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.b8-prose-p { color: var(--pm-text-2); max-width: var(--b8-measure); }
+
+.b8-catfilter { display: flex; min-width: 0; }
+.b8-catfilter .b8-searchfield { min-height: 44px; width: min(460px, 100%); }
+.b8-catinput { flex: 1 1 auto; min-width: 0; border: 0; background: transparent; color: var(--pm-text-1); font: inherit; font-size: 14px; padding: 8px 0; }
+.b8-catlist { max-height: 520px; min-width: 0; }
+.b8-spacer { width: 100%; }
+
+.b8-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.b8-field-label { font-size: 13px; color: var(--pm-text-2); font-weight: 600; }
+.b8-secret {
+  padding: 12px var(--pm-space-4);
+  border: var(--pm-border-w) dashed var(--pm-border-2);
+  border-radius: var(--pm-radius-2);
+  background: var(--pm-surface-sunken);
+  color: var(--pm-text-2);
+  font-size: 13.5px;
+  min-width: 0;
+}
+.b8-ownerbody { padding: var(--pm-space-5); display: flex; flex-direction: column; gap: var(--pm-space-3); min-width: 0; }
+.b8-section-acts { padding: 0 var(--pm-space-5) var(--pm-space-4); }
+
+/* ------------------------------------------------------------ all settings */
+
+.b8-allsplit { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: var(--pm-space-4); min-width: 0; }
+.b8[data-narrow="true"] .b8-allsplit, .b8[data-cols="1"] .b8-allsplit { grid-template-columns: minmax(0, 1fr); }
+
+.b8-facets {
+  /* Fills the window rather than stopping at a fixed 560px. On a tall display the
+   * hard cap left ~800px of dead space under both columns and made the facet list
+   * look truncated at its second heading — it was scrollable, but it read as cut. */
+  max-height: clamp(420px, calc(100vh - 320px), 1100px);
+  padding: var(--pm-space-3);
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-3);
+  background: var(--pm-surface-1);
+  min-width: 0;
+}
+.b8-facet + .b8-facet { margin-top: var(--pm-space-4); }
+.b8-facet-head { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--pm-text-3); padding: 4px 8px 6px; }
+.b8-facet-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 36px;
+  padding: 6px 8px;
+  border-radius: var(--pm-radius-1);
+  color: var(--pm-text-2);
+  font-size: 13.5px;
+}
+.b8-facet-item > span:first-child { flex: 1 1 auto; min-width: 0; }
+.b8-facet-item:hover { background: var(--pm-surface-2); color: var(--pm-text-1); }
+.b8-facet-item[aria-pressed="true"] { background: var(--pm-accent-soft); color: var(--pm-text-1); font-weight: 600; }
+.b8-facet-item[aria-disabled="true"] { cursor: default; }
+.b8-facet-n { flex: 0 0 auto; font-size: 12px; color: var(--pm-text-3); font-variant-numeric: tabular-nums; }
+
+.b8-alllist {
+  /* Fills the window rather than stopping at a fixed 560px. On a tall display the
+   * hard cap left ~800px of dead space under both columns and made the facet list
+   * look truncated at its second heading — it was scrollable, but it read as cut. */
+  max-height: clamp(420px, calc(100vh - 320px), 1100px);
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-3);
+  background: var(--pm-surface-1);
+  min-width: 0;
+}
+.b8-allrow {
+  display: flex;
+  align-items: center;
+  gap: var(--pm-space-4);
+  width: 100%;
+  min-height: 62px;
+  padding: 12px var(--pm-space-4);
+  min-width: 0;
+}
+.b8-allrow + .b8-allrow { border-top: var(--pm-border-w) solid var(--pm-border-1); }
+.b8-allrow:hover { background: var(--pm-surface-2); }
+.b8-allrow-label { font-size: 14.5px; font-weight: 600; }
+.b8-allrow-path { font-size: 12.5px; color: var(--pm-text-3); margin-top: 2px; }
+.b8-allrow .b8-tag { flex: 0 0 auto; }
+
+/* -------------------------------------------------------------------- copy */
+
+.b8-steps { display: flex; flex-wrap: wrap; gap: var(--pm-space-3); list-style: none; margin: 0; padding: 0; min-width: 0; }
+.b8-steps-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-2);
+  background: var(--pm-surface-1);
+  color: var(--pm-text-3);
+  font-size: 13.5px;
+  min-width: 0;
+}
+.b8-steps-item[data-done="true"] { color: var(--pm-text-2); }
+.b8-steps-item[aria-current="step"] {
+  background: var(--pm-accent-soft);
+  border-color: var(--pm-accent);
+  color: var(--pm-text-1);
+  font-weight: 600;
+}
+
+.b8-check {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--pm-radius-1);
+  border: var(--pm-border-w) solid var(--pm-border-strong);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--pm-accent);
+}
+.b8-rosterrow[aria-pressed="true"] .b8-check { background: var(--pm-accent-soft); border-color: var(--pm-accent); }
+
+.b8-diffrow { padding: 12px var(--pm-space-4); min-width: 0; }
+.b8-diffrow + .b8-diffrow { border-top: var(--pm-border-w) solid var(--pm-border-1); }
+
+
+/* ------------------------------------------------------- retro themes snap
+ * Measured Puppet Master motion canon: the Retro families do not ease — their
+ * surfaces snap, the way a phosphor display changes state. Easing them would make
+ * Retro a recoloured Friendly rather than its own material. Reduced motion still
+ * wins, because it is set on the root and collapses these to 1ms anyway. */
+[data-theme^="retro"] .b8,
+[data-theme^="retro"] .b8 * {
+  --pm-dur-1: 0ms;
+  --pm-dur-2: 0ms;
+  --pm-dur-3: 0ms;
+}
+/* Menus are appended to `document.body`, outside this concept's root, so the
+ * root-scoped snap below never reached them: a retro theme that fades its popups
+ * is not a retro theme. Named here explicitly rather than widened to `*`. */
+[data-theme^="retro"] .b8-menu,
+[data-theme^="retro"] .b8-menu *,
+[data-theme^="retro"] .b8 *,
+[data-theme^="retro"] .b8 *::before,
+[data-theme^="retro"] .b8 *::after {
+  animation-duration: 0ms !important;
+  transition-duration: 0ms !important;
+}
+
+
+/* ------------------------------------------------------- the value picker
+ * Puppet Master Model/Mode selector idiom. The menu is fixed-position and placed by
+ * PM2Menu, so it flips above its trigger near the bottom of the page and shifts back
+ * inside the viewport at the right edge instead of running off it. */
+.b8-picker { position: relative; display: inline-flex; }
+.b8-picker-trigger {
+  display: inline-flex; align-items: center; justify-content: space-between; gap: 8px;
+  min-width: 150px; max-width: 260px; min-height: 28px; padding: 3px 8px 3px 10px;
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-1);
+  background: var(--pm-surface-2);
+  color: var(--pm-text-1);
+  font: inherit;
+  cursor: pointer;
+  transition: border-color var(--pm-dur-1) var(--pm-ease), background var(--pm-dur-1) var(--pm-ease);
+}
+.b8-picker-trigger:hover { background: var(--pm-surface-3); border-color: var(--pm-border-strong); }
+.b8-picker-trigger[aria-expanded="true"] { border-color: var(--pm-accent); }
+.b8-picker-trigger:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: 2px; }
+.b8-picker-value { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; }
+.b8-picker-chev { flex: 0 0 auto; display: inline-flex; color: var(--pm-text-3); }
+
+.b8-menu {
+  position: fixed; z-index: 200;
+  min-width: 150px; padding: 4px;
+  overflow-y: auto;
+  background: var(--pm-surface-2);
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-2);
+  box-shadow: var(--pm-shadow-2);
+  /* The glass themes make every surface token translucent, so a menu drawn on one
+   * alone lets the page read through it. `shared/pm-shell.css` solves this the same
+   * way for the app's own popups: the theme's blur, which is `none` everywhere else. */
+  backdrop-filter: var(--pm-surface-blur);
+  scrollbar-width: thin;
+  scrollbar-color: var(--pm-border-2) transparent;
+  animation: b8-menu-in var(--pm-dur-1) var(--pm-ease-out) both;
+}
+.b8-menu::-webkit-scrollbar { width: 10px; }
+.b8-menu::-webkit-scrollbar-thumb { background: var(--pm-border-2); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+@keyframes b8-menu-in {
+  from { opacity: 0; transform: translateY(calc(-4px * var(--pm-motion-transform))); }
+  to   { opacity: 1; transform: none; }
+}
+.b8-menu[data-side="above"] { animation-name: b8-menu-in-up; }
+@keyframes b8-menu-in-up {
+  from { opacity: 0; transform: translateY(calc(4px * var(--pm-motion-transform))); }
+  to   { opacity: 1; transform: none; }
+}
+.b8-menu-item {
+  display: flex; align-items: center; gap: 8px;
+  width: 100%; text-align: left;
+  padding: 6px 8px;
+  border: 0; background: none; border-radius: var(--pm-radius-1);
+  color: var(--pm-text-1); font: inherit; cursor: pointer;
+}
+.b8-menu-item:hover { background: var(--pm-surface-3); }
+.b8-menu-item[aria-selected="true"] { background: var(--pm-accent-soft); }
+.b8-menu-item:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: -2px; }
+.b8-menu-check { flex: 0 0 auto; width: 14px; display: inline-flex; color: var(--pm-accent); }
+.b8-menu-label { min-width: 0; overflow-wrap: break-word; }
+
+
+/* ------------------------------------------------------------ on-page index */
+.b8-onpage {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 4px;
+  padding: var(--pm-space-2) 0 var(--pm-space-3);
+  margin-bottom: var(--pm-space-3);
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+}
+.b8-onpage-label { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--pm-text-3); margin-right: var(--pm-space-2); }
+.b8-onpage-item {
+  padding: 3px 8px; border: 0; background: none; border-radius: var(--pm-radius-1);
+  color: var(--pm-text-3); cursor: pointer; font: inherit;
+  transition: color var(--pm-dur-1) var(--pm-ease), background var(--pm-dur-1) var(--pm-ease);
+}
+.b8-onpage-item:hover { color: var(--pm-text-1); background: var(--pm-surface-2); }
+.b8-onpage-item[aria-current="true"] { color: var(--pm-text-1); background: var(--pm-accent-soft); }
+.b8-onpage-item:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: 2px; }
+
+
+/* ---------------------------------------------------------------- notice groups */
+/* `01_CORE_ARCHITECTURE` § Notices asks for three separated runs — Needs attention,
+ * Continue setup, Recommended. The label is deliberately quieter than the notices it
+ * introduces: it orients, it does not compete with the thing that needs doing. */
+.b8-attn-group {
+  /* The notice rows here are full-bleed with their own inner padding, so the run label
+   * has to carry the same inset or it sits on the panel border. */
+  margin: 20px 0 10px; padding: 0 var(--pm-space-5);
+  font-size: 13px; font-weight: 600; color: var(--pm-text-2);
+}
+.b8-attn-group:first-of-type { margin-top: 6px; }
+
+
+/* ------------------------------------------------------------------- submenus */
+/* `07_THEME_MOTION_RESPONSIVE_AND_SLINT` line 19: the Model/Mode selector family
+ * "including collision handling, layering, submenus, and open/close behavior". The
+ * second level opens beside the panel on its own layer. Deliberately the SAME menu
+ * family across the seven concepts — a product-wide control that changed shape per
+ * concept would be a different product each time — with each concept's own tokens,
+ * radius and shadow doing the visual work. */
+/* An open parent has to stay legible as open in all eight themes. The glass
+ * palettes put surface-3 within a few percent of surface-2, so the background
+ * alone disappears there; the inset hairline is what actually reads. */
+.b8-menu-item.is-parent[aria-expanded="true"] {
+  background: var(--pm-surface-3);
+  box-shadow: inset 0 0 0 var(--pm-border-w) var(--pm-border-2);
+}
+.b8-menu-more {
+  flex: 0 0 auto; margin-left: auto; display: inline-flex;
+  color: var(--pm-text-3);
+}
+.b8-menu-item.is-parent:hover .b8-menu-more,
+.b8-menu-item.is-parent[aria-expanded="true"] .b8-menu-more { color: var(--pm-text-2); }
+
+.b8-submenu { z-index: 201; }
+/* It arrives from the side it opens on, so the direction of travel matches the
+ * direction the reader's eye is already moving. 150ms, no overshoot. */
+.b8-submenu { animation: b8-submenu-in var(--pm-dur-1) var(--pm-ease-out) both; }
+@keyframes b8-submenu-in {
+  from { opacity: 0; transform: translateX(calc(-5px * var(--pm-motion-transform))); }
+  to   { opacity: 1; transform: none; }
+}
+.b8-submenu[data-side="left"] { animation-name: b8-submenu-in-left; }
+@keyframes b8-submenu-in-left {
+  from { opacity: 0; transform: translateX(calc(5px * var(--pm-motion-transform))); }
+  to   { opacity: 1; transform: none; }
+}

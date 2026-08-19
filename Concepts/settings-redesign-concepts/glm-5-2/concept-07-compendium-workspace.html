@@ -203,6 +203,16 @@
   .c7-crumb { display: none; }
 }
 @media (min-width: 1900px) { .c7-wrap { max-width: 1380px; } .c7-detail { width: 420px; } .c7-mgr-list { width: 460px; } }
+
+/* ===== squeeze: 760-999px topbar survival (added by verification pass; extended to cover the 900px matrix width) ===== */
+@media (max-width: 999px) {
+  .pm-topbar .pm-brand { display: none; }
+  .pm-topbar { gap: 6px; }
+  #themeBtn, #closeBtn, #navToggle { font-size: 0; gap: 0; padding: 0 9px; }
+  #themeBtn svg, #closeBtn svg, #navToggle svg { margin-right: 0; }
+  #projChip, .d5-projchip, .e6-proj, .c7-proj, .t8-proj, .n9-proj, .m10-proj, .o11-proj { max-width: 130px; overflow: hidden; white-space: nowrap; }
+  .d5-mini-search, .e6-minis, .c7-minis, .t8-minis, .n9-minis, .m10-cmdinput, .o11-search { min-width: 90px !important; }
+}
 </style>
 </head>
 <body>
@@ -218,7 +228,7 @@
     <button class="c7-tb" id="closeBtn"></button>
   </header>
   <nav class="pm-activity" aria-label="Activity Bar" id="activity"></nav>
-  <aside class="pm-rail" data-hidden></aside>
+  <aside class="pm-rail" id="rail" data-hidden></aside>
   <main class="pm-stage" id="stage" style="position:relative;">
     <a data-concept-model="GLM-5.2" href="index.html" title="GLM-5.2 settings concept" style="position:absolute;opacity:0;pointer-events:none;" aria-hidden="true">GLM-5.2</a>
     <div class="c7" id="app"></div>
@@ -289,13 +299,14 @@
 
   var state = { view: "home", domain: null, section: null, manager: null, object: null, tab: 0, hydrated: {}, lastQuery: "", lastRid: null, facet: "all", compSel: null };
   var lastRendered = "", pendingRestore = null;
+  var appHash = null; /* last hash this app itself wrote; its hashchange echo is ignored (a deep-link render can push a second route before the echo arrives, and re-pushing the stale route would swallow the compendium jump) */
   NAV.on(function (route, depth, extra) {
     var s = PM2.routes.str(route);
     if (extra && extra.returnedFrom && extra.returnedFrom.query) pendingRestore = { query: extra.returnedFrom.query, resultId: extra.returnedFrom.resultId };
     if (s === lastRendered) return;
-    lastRendered = s; location.hash = s; render(route);
+    lastRendered = s; appHash = location.hash = s; render(route);
   });
-  window.addEventListener("hashchange", function () { var r = PM2.routes.parse(location.hash); if (PM2.routes.str(r) !== PM2.routes.str(NAV.top())) NAV.go(r); });
+  window.addEventListener("hashchange", function () { if (location.hash === appHash) return; var r = PM2.routes.parse(location.hash); if (PM2.routes.str(r) !== PM2.routes.str(NAV.top())) NAV.go(r); });
   function goHome() { state.view = "home"; state.domain = state.section = state.manager = null; NAV.reset({ domain: null }); render({ domain: null }); }
 
   /* search */
@@ -354,6 +365,7 @@
       if (!target && plan.route.row) target = stage.querySelector('[data-row="' + plan.route.row + '"]');
       if (!target && tries++ < 16) { setTimeout(go, 110); return; }
       if (target) {
+        if (plan.route.row) state.calmRow = plan.route.row; /* virtualized compendium redraws its rows on scroll; drawRows re-applies the calm highlight + focus */
         target.scrollIntoView({ block: "center", behavior: RM() ? "auto" : "smooth" });
         target.classList.remove("v2-calm"); void target.offsetWidth; target.classList.add("v2-calm");
         if (target.classList.contains("c7-row")) selectRow(target.dataset.row);
@@ -397,7 +409,7 @@
     el("rail").querySelectorAll("[data-nav]").forEach(function (n) {
       n.addEventListener("click", function () {
         var v = n.dataset.nav;
-        if (v === "home") goHome(); else if (v === "copy") openCopy(); else NAV.go({ domain: v });
+        if (v === "home") goHome(); else if (v === "copy") openCopy(); else NAV.jump({ domain: v });
         if (window.innerWidth < 900) el("rail").dataset.hidden = "hidden";
       });
     });
@@ -411,7 +423,7 @@
     html += '<h1 class="c7-h1">The whole of Settings, one compendium</h1>';
     html += '<div class="c7-sub">Browse by area, or open the <b>All Settings</b> index — every one of 828 settings, faceted and searchable, for <b>' + esc(PM2.currentProject.name) + "</b>.</div>";
     html += '<div class="c7-searchwrap"><div class="c7-search">' + PM2.svg("search", 17) + '<input id="homeSearch" type="search" placeholder="Search all settings, managers, objects, actions…" aria-label="Universal search" autocomplete="off"><span class="v2kbd">/</span></div></div>';
-    html += '<div class="c7-note"><span class="sdot warn"></span><span><b>One provider needs setup</b> — Codex CLI installs only explicitly, from the official source.</span><span style="flex:1"></span><button class="c7-tb" data-dest=\'' + esc(JSON.stringify({ manager: "mgr.provider", object: "prov.codex-cli" })) + '">Open</button></div>';
+    html += '<div class="c7-note"><span class="sdot warn"></span><span><b>One provider needs setup</b> — Codex CLI installs only explicitly, from the official source.</span><span style="flex:1"></span><button class="c7-tb" data-dest=\'' + esc(JSON.stringify({ manager: "mgr.provider", object: "prov.codex-cli" })) + '\'>Open</button></div>';
     html += '<div class="c7-grid">';
     html += '<div class="c7-col"><h3 class="lt">Browse by area</h3><div class="c7-area">';
     PM2.inventory.categories.forEach(function (c) {
@@ -436,8 +448,8 @@
     var rq = pendingRestore ? pendingRestore.query : NAV.top().query;
     if (rq) { el("homeSearch").value = rq; state.lastQuery = rq; if (pendingRestore && pendingRestore.resultId) state.lastRid = pendingRestore.resultId; pendingRestore = null; }
     app.querySelectorAll("[data-domain]").forEach(function (c) {
-      c.addEventListener("click", function () { NAV.go({ domain: c.dataset.domain }); });
-      c.addEventListener("keydown", function (e) { if (e.key === "Enter") NAV.go({ domain: c.dataset.domain }); });
+      c.addEventListener("click", function () { NAV.jump({ domain: c.dataset.domain }); });
+      c.addEventListener("keydown", function (e) { if (e.key === "Enter") NAV.jump({ domain: c.dataset.domain }); });
     });
     app.querySelectorAll("[data-dest]").forEach(function (b) { b.addEventListener("click", function (e) { e.stopPropagation(); var d = JSON.parse(b.dataset.dest); NAV.go(d); land(PM2.routes.planFor(d)); }); });
     app.querySelectorAll(".c7-util").forEach(function (b) { b.addEventListener("click", function () { var v = b.dataset.nav; if (v === "all") NAV.go({ domain: "all" }); else if (v === "copy") openCopy(); }); });
@@ -494,9 +506,9 @@
     var ab = app.querySelector("[data-all-of]");
     if (ab) ab.addEventListener("click", function () { state.facet = "domain:" + route.domain; NAV.go({ domain: "all" }); });
     if (route.page && route.row) {
-      var pr = app.querySelector('[data-page="' + route.page + '"]');
-      if (pr) pr.click();
-      setTimeout(function () { var t = app.querySelector('[data-row="' + route.row + '"]'); if (t) { t.scrollIntoView({ block: "center" }); t.classList.add("v2-calm"); } }, 350);
+      /* deep-link straight through to the compendium carrying the exact row; its virtualized list scrolls to the row and calm-highlights it there. replace:true keeps the domain entry from being re-pushed so Back still reaches the previous view */
+      state.facet = "domain:" + route.domain;
+      NAV.go({ domain: "all", page: route.page, section: route.section, row: route.row }, { replace: true });
     }
   }
   function jumpToPage(domainId, pageId) {
@@ -563,23 +575,33 @@
     function drawRows() {
       all = filtered();
       var w = PM2.window({ scrollTop: virt.scrollTop, viewportHeight: virt.clientHeight, rowHeight: ROWH, total: all.length });
-      pad.style.height = w.padTop + "px"; win.style.transform = "translateY(" + w.padTop + "px)";
+      pad.style.height = (w.padTop + w.count * ROWH + w.padBottom) + "px"; win.style.transform = "translateY(" + w.padTop + "px)";
       var h = "";
       for (var i = w.first; i < w.first + w.count; i++) {
         var s = all[i]; if (!s) break;
         var st = STORE.get(s.id), meta = PM2.statusMeta[st.status];
-        h += '<div class="c7-row" data-row="' + s.id + '" data-virt="' + i + '"><span class="id">' + esc(s.label) + '</span><span class="ds">' + esc(s.desc.slice(0, 110)) + (s.desc.length > 110 ? "…" : "") + '</span><span class="dom">' + esc(PM2.categoryTitle(s.id.split(".")[0])) + '</span><span class="st"><span class="v2badge ' + (meta.tone === "neutral" ? "" : meta.tone) + '">' + esc(meta.label) + "</span>" + (s.tier === "advanced" ? '<span class="v2badge">adv</span>' : "") + "</span></div>";
+        h += '<div class="c7-row" tabindex="-1" aria-selected="' + (state.compSel === s.id ? "true" : "false") + '" data-row="' + s.id + '" data-virt="' + i + '"><span class="id">' + esc(s.label) + '</span><span class="ds">' + esc(s.desc.slice(0, 110)) + (s.desc.length > 110 ? "…" : "") + '</span><span class="dom">' + esc(PM2.categoryTitle(s.id.split(".")[0])) + '</span><span class="st"><span class="v2badge ' + (meta.tone === "neutral" ? "" : meta.tone) + '">' + esc(meta.label) + "</span>" + (s.tier === "advanced" ? '<span class="v2badge">adv</span>' : "") + "</span></div>";
       }
       win.innerHTML = h;
       win.querySelectorAll(".c7-row").forEach(function (r) { r.addEventListener("click", function () { selectRow(r.dataset.row); }); });
+      if (state.calmRow) { /* re-apply the calm highlight + focus after a virtualization redraw; cleared shortly after landing */
+        var cr = win.querySelector('[data-row="' + state.calmRow + '"]');
+        if (cr) {
+          cr.classList.add("v2-calm");
+          try { cr.focus({ preventScroll: true }); } catch (e) {}
+          var crid = state.calmRow;
+          setTimeout(function () { if (state.calmRow === crid) state.calmRow = null; }, 700);
+        }
+      }
       PM2.telemetry.domRows = [win.children.length];
     }
     window.selectRow = selectRow;
     function selectRow(sid) {
+      var cd = el("compDetail"); if (!cd) return; /* a later route may have replaced the compendium DOM */
       state.compSel = sid;
       virt.querySelectorAll(".c7-row").forEach(function (r) { r.setAttribute("aria-selected", r.dataset.row === sid ? "true" : "false"); });
       var s = PM2.inventory.byId[sid]; var st = STORE.get(sid); var meta = PM2.statusMeta[st.status];
-      el("compDetail").innerHTML = '<h3>' + esc(s.label) + '</h3><div class="dd">' + esc(s.desc) + "</div>" +
+      cd.innerHTML = '<h3>' + esc(s.label) + '</h3><div class="dd">' + esc(s.desc) + "</div>" +
         '<div class="c7-kv"><span class="k">Value</span><span class="v">' + esc(JSON.stringify(st.value)) + "</span>" +
         '<span class="k">Status</span><span class="v">' + esc(meta.label) + "</span>" +
         '<span class="k">Type</span><span class="v">' + esc(s.type) + (s.tier === "advanced" ? " · advanced tier" : "") + "</span>" +
@@ -588,16 +610,27 @@
         '<span class="k">Place</span><span class="v">' + esc(PM2.categoryTitle(s.id.split(".")[0])) + " › " + esc(PM2.subgroupTitle(s.id.split(".")[0], s.id.split(".")[1])) + "</span>" +
         '<span class="k">Registry scope</span><span class="v" style="color:var(--ink-3)">' + esc((s.scope || []).join(", ")) + " (diagnostic only)</span>" +
         '<span class="k">ID</span><span class="v" style="font-family:var(--mono);font-size:11px">' + esc(s.id) + "</span></div>" +
-        '<div class="c7-actions"><button class="c7-btn" data-goto-page="' + s.id.split(".")[1] + '">' + PM2.svg("chevron", 12) + "Open in domain page</button><button class=\"c7-btn\" data-why="' + s.id + '">Why this value?</button></div>' +
+        '<div class="c7-actions"><button class="c7-btn" data-goto-page="' + s.id.split(".")[1] + '">' + PM2.svg("chevron", 12) + 'Open in domain page</button><button class="c7-btn" data-why="' + s.id + '">Why this value?</button></div>' +
         (st.status === "managed" ? '<div class="c7-offline"><span class="sdot info"></span>Managed by organization policy — read-only here. Origin lives in Details.</div>' : "") +
         (st.status === "restart" ? '<div class="c7-offline"><span class="sdot warn"></span>Takes full effect after restart.</div>' : "");
-      el("compDetail").querySelector("[data-why]").addEventListener("click", function () { openDrawer("Why this value", "<b>" + esc(s.label) + "</b><br>Status " + esc(meta.label) + " · default " + esc(JSON.stringify(s.default)) + " · applies to " + esc(PM2.currentProject.name) + " only.<br>Registry scope (diagnostic): " + esc((s.scope || []).join(", "))); });
-      el("compDetail").querySelector("[data-goto-page]").addEventListener("click", function () { NAV.go({ domain: s.id.split(".")[0], page: s.id.split(".")[1], row: s.id }); });
+      cd.querySelector("[data-why]").addEventListener("click", function () { openDrawer("Why this value", "<b>" + esc(s.label) + "</b><br>Status " + esc(meta.label) + " · default " + esc(JSON.stringify(s.default)) + " · applies to " + esc(PM2.currentProject.name) + " only.<br>Registry scope (diagnostic): " + esc((s.scope || []).join(", "))); });
+      cd.querySelector("[data-goto-page]").addEventListener("click", function () { NAV.go({ domain: s.id.split(".")[0], page: s.id.split(".")[1], row: s.id }); });
     }
     virt.addEventListener("scroll", drawRows);
     el("compFilter").addEventListener("input", drawRows);
     drawFacets(); drawRows();
-    if (route.row) setTimeout(function () { selectRow(route.row); var t = virt.querySelector('[data-row="' + route.row + '"]'); if (t) { t.scrollIntoView({ block: "center" }); t.classList.add("v2-calm"); } }, 200);
+    /* deep link: scroll the virtualized window to the exact row's index, then select + calm-highlight it (drawRows re-applies if the scroll redraws) */
+    if (route.row) setTimeout(function () {
+      if (state.view !== "compendium") return;
+      state.calmRow = route.row;
+      if (!virt.querySelector('[data-row="' + route.row + '"]')) {
+        var idx = -1;
+        for (var i = 0; i < all.length; i++) if (all[i].id === route.row) { idx = i; break; }
+        if (idx >= 0) virt.scrollTop = Math.max(0, idx * ROWH - Math.floor(virt.clientHeight / 2));
+      }
+      drawRows();
+      selectRow(route.row);
+    }, 200);
   }
 
   /* MANAGER list/detail */
@@ -606,7 +639,7 @@
     state.view = "manager"; state.manager = m.id; state.tab = route.tab ? Math.max(0, route.tab | 0) : 0;
     var html = '<div class="c7-mgr">';
     html += '<div class="c7-mgr-list v2-surface"><div class="c7-mgr-head"><button class="c7-tb" id="mgrBack">' + PM2.svg("back", 12) + "Back</button><h2>" + PM2.svg(m.icon, 16) + " " + esc(m.title) + '</h2><div class="sum">' + esc(m.health.text) + "</div></div><div id=\"mgrRows\">";
-    html += '<div class="c7-skel" style="height:34px;margin:10px 14px"></div><div class="c7-skel" style="height:34px;margin:10px 14px;width:80%"></div><div style="font-size:11px;color:var(--ink-3);padding:6px 16px">Hydrating…</div></div></div>";
+    html += '<div class="c7-skel" style="height:34px;margin:10px 14px"></div><div class="c7-skel" style="height:34px;margin:10px 14px;width:80%"></div><div style="font-size:11px;color:var(--ink-3);padding:6px 16px">Hydrating…</div></div></div>';
     html += '<div class="c7-mgr-detail v2-surface" id="mgrDetail"><div style="color:var(--ink-3);font-size:12.5px">Select a record.</div></div></div>';
     app.innerHTML = html;
     el("mgrBack").addEventListener("click", function () { NAV.back(); });

@@ -1,0 +1,142 @@
+{
+ "schema_id": "pm.settings_bakeoff.test_evidence.v1",
+ "concept_id": "concept-10-command-suite",
+ "date": "2026-08-18",
+ "static": {
+  "inline_script_syntax": "node --check OK (checkconcept pass)",
+  "no_iframe": true,
+  "no_cross_concept_refs": true,
+  "model_label": "data-concept-model=GLM-5.2 present"
+ },
+ "browser_pass": {
+  "method": "Playwright 1.63-alpha headless Chromium (chrome-headless-shell 1234) against local HTTP server; probe definitions and raw JSON in SEVEN_NEW_CONCEPTS_TEST_REPORT.md",
+  "theme_width_matrix": {
+   "cells": 48,
+   "themes": 8,
+   "widths_px": [
+    760,
+    900,
+    1280,
+    1700,
+    2200,
+    2500
+   ],
+   "checks": [
+    "zero console/page errors",
+    "no true horizontal overflow",
+    "no clipped text (scroll vs client geometry probe)",
+    "no Activity Bar overlap of stage",
+    "PM scrollbar presence",
+    "Home composition sanity (search first, destinations dominant, no CTA wall)"
+   ],
+   "result": "48/48 pass on first pass"
+  },
+  "functional_layers": {
+   "search_exactness": {
+    "deep_setting_row": {
+     "pass": true,
+     "detail": "res.set.general.visual.theme → row general.visual.theme rendered, v2-calm highlight, focused"
+    },
+    "duplicate_labels": {
+     "pass": true,
+     "detail": "two \"playground\" results routed by rid to distinct objects prov.openrouter-key / prov.free-models"
+    },
+    "typo_fuzzy": {
+     "pass": true,
+     "detail": "\"aproval\" → 29 fuzzy results"
+    },
+    "manager_result": {
+     "pass": true,
+     "detail": "res.mgr.mgr.terminal → mgr.terminal opens (view manager)"
+    },
+    "managed_object": {
+     "pass": true,
+     "detail": "res.obj.prov.claude-cli → mgr.provider with prov.claude-cli selected + calm"
+    },
+    "unavailable_result": {
+     "pass": true,
+     "detail": "res.obj.med.video shown with reason \"Unavailable\""
+    },
+    "workflow_result": {
+     "pass": true,
+     "detail": "setup workflow → mgr.provider / prov.codex-cli"
+    },
+    "back_restores_query_result": {
+     "pass": true,
+     "detail": "Back → Home with lastRid res.set.general.visual.theme and Home search input restored"
+    },
+    "grouped_results": {
+     "pass": true,
+     "detail": "7 results across 2 grouped types; selection by rid"
+    },
+    "keyboard_nav": {
+     "pass": true,
+     "detail": "ArrowDown + Enter from Home search routes to manager (24 results before keypress)"
+    }
+   },
+   "manager_isolation_crawl": {
+    "managers_visited": "38/38",
+    "fails": 0,
+    "detail": "every manager route opens inside this concept; PM shell retained (topbar, project chip, close, breadcrumb); 0 iframes; 0 cross-concept navigations; state labels observed during crawl: 29"
+   },
+   "copy_settings_flow": {
+    "pass": true,
+    "detail": "dialog → source select → category preview (additions/replacements/unchanged/conflicts + reference/never credentials) → apply → receipt with restore point → rollback"
+   },
+   "lazy_hydration": {
+    "managers_hydrated_at_load": 0,
+    "search_hydrates_managers": false,
+    "results_bounded": true
+   },
+   "state_fixtures": {
+    "status_kinds": [
+     "default",
+     "custom",
+     "managed",
+     "unavailable",
+     "restart",
+     "reconnect",
+     "changed-elsewhere",
+     "import-conflict",
+     "rollback-complete"
+    ],
+    "note": "all 9 demo status kinds (default, custom, managed, unavailable, restart, reconnect, changed-elsewhere, import-conflict, rollback-complete) present in shared demo data and rendered as fixtures during the manager crawl"
+   },
+   "reduced_motion": {
+    "pass": true,
+    "detail": "manager surface + toggle parity under prefers-reduced-motion"
+   },
+   "narrow_760": {
+    "pass": true,
+    "detail": "push navigation, no horizontal overflow on Home or manager, Back works"
+   },
+   "console_page_errors": 0
+  },
+  "deep_links": {
+   "probes": 4,
+   "pass": "4/4",
+   "detail": "each probe loaded the exact deep-link hash route; row rendered + v2-calm + focused",
+   "rows": [
+    "general.visual.theme-preview",
+    "memory.retention.half-life-by-kind",
+    "system.advanced.log-verbosity",
+    "general.interaction.sound-management"
+   ]
+  },
+  "virtualization": {
+   "pass": true,
+   "detail": "one programmatic jump reaches full scroll extent: scrollTop 32602 / scrollHeight 33391 (828 rows, last row system.advanced.inspect-holds-quarantine, 19 DOM rows)"
+  }
+ },
+ "smoke_verified": [
+  "home renders",
+  "search to deep row landing with calm highlight",
+  "duplicate-label routing by rid",
+  "back restores query/result",
+  "manager hydration + roster",
+  "copy transaction to receipt + rollback"
+ ],
+ "defects_found_and_fixed_this_pass": [
+  "virtualized list + copy-preview pad heights omitted padBottom (2 sites); fixed to (padTop + count*rowH + padBottom) — full-range scroll verified"
+ ]
+}

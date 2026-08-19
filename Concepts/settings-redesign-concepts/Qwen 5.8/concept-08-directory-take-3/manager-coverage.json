@@ -311,7 +311,7 @@
       "note": "Reachable insertion shell rendered concept-natively; no backend state fabricated."
     },
     {
-      "name": "Provider CLI Installation",
+      "name": "Installation / Deployment",
       "status": "deferred_named_owner",
       "family_id": "installation",
       "owner": "Provider Lifecycle owner",
@@ -321,7 +321,7 @@
       "note": "Reachable insertion shell rendered concept-natively; no backend state fabricated."
     },
     {
-      "name": "Server Claim",
+      "name": "Server Claim / Bootstrap",
       "status": "deferred_named_owner",
       "family_id": "server-claim",
       "owner": "Server Backbone",
@@ -331,7 +331,7 @@
       "note": "Reachable insertion shell rendered concept-natively; no backend state fabricated."
     },
     {
-      "name": "Servers",
+      "name": "Servers / Execution Hosts / Clients",
       "status": "deferred_named_owner",
       "family_id": "servers",
       "owner": "Server Backbone",
@@ -361,7 +361,7 @@
       "note": "Reachable insertion shell rendered concept-natively; no backend state fabricated."
     },
     {
-      "name": "Sync & Move",
+      "name": "Project Sync / Move",
       "status": "deferred_named_owner",
       "family_id": "sync-move",
       "owner": "Project Syncing and Updates",
@@ -371,7 +371,7 @@
       "note": "Reachable insertion shell rendered concept-natively; no backend state fabricated."
     },
     {
-      "name": "App & Content Updates",
+      "name": "Puppet Master application/content updates",
       "status": "deferred_named_owner",
       "family_id": "updates",
       "owner": "Project Syncing and Updates",
@@ -381,7 +381,7 @@
       "note": "Reachable insertion shell rendered concept-natively; no backend state fabricated."
     },
     {
-      "name": "Full Server Backup",
+      "name": "Full Server backup owner flow",
       "status": "deferred_named_owner",
       "family_id": "server-backup",
       "owner": "Server Backbone",

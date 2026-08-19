@@ -50,19 +50,112 @@
     },
     "evidence_json_parse": {
       "files": [
-        "manager-coverage.json", "manager-route-matrix.json", "search-route-matrix.json",
-        "impact-register.json", "candidate-command-delta.json",
-        "candidate-wiring-delta.json", "candidate-dry-delta.json", "test-evidence.json"
+        "manager-coverage.json",
+        "manager-route-matrix.json",
+        "search-route-matrix.json",
+        "impact-register.json",
+        "candidate-command-delta.json",
+        "candidate-wiring-delta.json",
+        "candidate-dry-delta.json",
+        "test-evidence.json"
       ],
       "result": "all parse via JSON.parse (manager-coverage: 42 unique family strings, all 'demonstrated'; 9 deferred_named_owner)"
     }
   },
-  "search_cases": "see search-route-matrix.json (16 cases, real immutable result IDs harvested from the built index; all verified resolvable and returned inside the dropdown limit)",
+  "search_cases": "see search-route-matrix.json (17 cases, real immutable result IDs harvested from the built index; all verified resolvable and returned inside the dropdown limit; 17/17 browser-verified 2026-08-19, tab r1)",
   "theme_width_matrix": {
-    "themes": ["friendly-dark", "friendly-light", "glass-dark", "glass-light", "retro-dark", "retro-light", "basic-dark", "basic-light"],
-    "widths": [760, 900, 1280, 1700, 2200, 2500],
-    "result": "pending-verification-phase",
+    "themes": [
+      "friendly-dark",
+      "friendly-light",
+      "glass-dark",
+      "glass-light",
+      "retro-dark",
+      "retro-light",
+      "basic-dark",
+      "basic-light"
+    ],
+    "widths": [
+      760,
+      900,
+      1280,
+      1700,
+      2200,
+      2500
+    ],
+    "result": "pass — 48/48 theme×width combos browser-verified 2026-08-18: zero new console errors (main-world CDP capture), zero horizontal overflow in .pmx-stage (scrollWidth ≤ clientWidth+1), search field and all 12 directory destinations visible at Home in every combo, no clipped text detected at 760 or 2500; screenshots taken at 760/1280/2500 in friendly-dark and glass-dark",
     "design_notes": "container queries on .d05: single-column directory + one-pane push navigation at <=900px; two-column directory to 1700px+; bounded measures at 2200/2500; reduced-motion kill switch on :root[data-motion='reduced']; all colors via var(--pm-*) tokens"
   },
-  "notes": "No console errors by construction: the concept touches only the shared headless v2 APIs, guards every optional page element, and was executed end-to-end (boot + navigation + search + copy + scenarios) in the scripted harness with zero handler errors. Browser-based visual verification belongs to the verification phase."
+  "browser_checks": {
+    "method": "Chromium headless via CDP, 2026-08-18; main-world error collectors (injected via Page.addScriptToEvaluateOnNewDocument) because the harness page.evaluate runs in an isolated world and page.on('console'/'pageerror') never fires there",
+    "load": "pass — no console errors, no page errors, no failed requests; all probe hooks present",
+    "reduced_motion": "pass — Home (335 elements / 12 destination hooks) and Providers manager (215 / 11) render identically under data-motion=reduced; zero errors",
+    "search_exactness": "17/17 pass (re-verified 2026-08-19, tab r1). All landing cases: exact immutable data-result-id clicked, destination hooks present and visible, .pmv2-locate on the expected target, Back restores the query and re-selects the result (aria-selected=true). The previously-failing 'copy settings' action case now renders the copy view ([data-section-id='copy'], 6-step wizard) with zero errors.",
+    "manager_isolation": "48/48 pass — every manager visited through Home → domain → manager row; URL unchanged, zero iframes, shell retained (Back + breadcrumb + bar search), content rendered, zero console errors; includes 9 deferred owner-* shells",
+    "copy_flow": "pass (re-verified end-to-end in Chromium 2026-08-19, tab r1): search action result → copy view → source proj-atlas-agency → 2 of 11 categories → preview totals (57 add / 58 replace / 47 unchanged / 4 unavailable / 22 conflicts) → 'Create restore point and apply' → receipt (restore point rp-1-mszvjxjq, Verified Yes) → 'Roll back this copy' → 'The copy was rolled back' (Rolled back: Yes) → Done returns Home. Zero console/page errors across the whole transaction.",
+    "scenarios": "pass — offline ('You are offline… Showing cached values.'), managed ('Managed by organization policy…'), loading-cached ('Refreshing… showing last known values…') banners render truthfully inside the Providers manager; Default fixtures restores; zero errors",
+    "demo_drawer_guard": "RESOLVED (re-verified 2026-08-19, tab r1) — concept CSS now carries .pm-drawer[hidden]{display:none!important}; the demo drawer computes display:none on load, opens via [data-demo-open] (display:flex, 19 scenario buttons), and returns to display:none when toggled closed",
+    "shell_controls": "pass (re-verified 2026-08-19, tab r1) — PMShell.init was already wired: theme select switches data-theme (friendly-dark → friendly-light), width select sets --hub-page-width/--hub-test-width (760px observed), motion button toggles data-motion (full → reduced)",
+    "banner_accent_bar": "RESOLVED (2026-08-19, tab fv1) — visual-audit flagged the .pm-notice critical banner's 3px colored left accent bar; concept-05.css now appends .pm-notice{border-inline-start:none}. Browser-verified at 1280 friendly-dark, 760 friendly-dark, and 1280 glass-dark: computed border-inline-start-width 0px, kind chip + text still carry meaning, zero horizontal overflow (body and .pmx-stage), zero console errors, no other regression observed"
+  },
+  "known_issues": [],
+  "polish_pass": {
+    "date": "2026-08-19",
+    "tab": "p1",
+    "scope": "concept-05-directory-take-1/concept-05.css + concept-05.js only",
+    "changes": [
+      "dedupe: the critical banner's notice is now excluded from the Needs-attention list (attentionItems(critical.id)); previously the FileSafe item appeared literally twice",
+      "attention block compressed to single-line rows (title strong + one clamped detail line + quiet action at end); block height 218px -> 162px at 1280, under the ~180px budget",
+      "critical banner compacted from 3 grid rows to 2 (headline+chip / body+actions) via concept-scoped .pm-notice override; 116px -> 90px; chip kept hugging content (justify-self:end); no accent bar retained",
+      "destination cards given presence: 40px icon tile with hairline var(--pm-line) border + var(--pm-shadow-1) on var(--pm-bg-sunken), 14px/650 title with -0.005em tracking, meta as quiet count chips (settings/managers, tabular numerals, var(--pm-bg-sunken) pills)",
+      "card states: hover lift translateY(-1px)+var(--pm-shadow-2) settle, focus-visible 2px accent-mix ring with 2px offset (cards and destination rows), active press scale(.99)+shadow drop, chevron nudge transition",
+      "hero refinements: home project identity elevated (uppercase quiet label + 14.5px/700 project name), domain hero title 21px -> 23px with -0.016em tracking, hero icon tile 46px with shadow",
+      "card-to-workspace expansion made perceptible but calm: d05-head-expand now scale(.94)+translateY(10px) over 230ms (was scale(.965)/8px/240ms); still transform/opacity only, gated on data-motion",
+      "directory breakpoint tuned: two-column now engages at container >=760px (decoupled from the 900px nav-collapse), so it is genuinely two-column at 1280-shell realistic stage widths (976px with assistant closed: 2x349px; 852px at 900 page width: 2x405px) and one column at 760 (696-712px stage)",
+      "back button given white-space:nowrap (was wrapping to three lines at narrow widths)"
+    ],
+    "verification": {
+      "node_check": "pass (2026-08-19)",
+      "console_errors": "zero across all probes (main-world collector via evaluateOnNewDocument)",
+      "duplication": "banner shows FileSafe notice; attention list starts at 'No verifier route' — no shared item",
+      "search_landing": "query 'theem' -> Theme result r_0fb731e11753ac25 clicked -> lands on data-setting-id=general.visual.theme with .pmv2-locate, zero errors",
+      "copy_view": "opens via utility button ([data-section-id=copy], 6-step wizard header), zero errors",
+      "reduced_motion": "Home renders identically (357 elements, 12 data-domain-id hooks), computed transition-duration 0.001s",
+      "matrix": "760 friendly-dark (1 col, no overflow), 1280 friendly-dark all panels (1 col, 676px stage), 1280 assistant-closed (2 col, 976px stage), 900 page width (2 col, 852px stage), 1280 glass-dark and 1280 basic-light (legible, no horizontal overflow, zero errors)",
+      "screenshots": "before/after captured at 1280 friendly-dark all-panels and assistant-closed, 760 friendly-dark, 1280 glass-dark, 1280 basic-light, domain page, copy view"
+    }
+  },
+  "notes": "Re-verification 2026-08-19 (tab r1, headless Chromium): the single-argument addEventListener fixes (old concept-05.js:2577/2692) resolve the copy transaction — the search action case and the full copy flow (source → 2 categories → preview → apply → receipt → rollback → Done) now pass in a real browser with zero console/page errors. The .pm-drawer[hidden] guard removes the shared drawer visibility defect on this page. node --check concept-05.js passes (2026-08-19). Earlier note: the concept touches only the shared headless v2 APIs and guards every optional page element.",
+  "scale_stress": {
+    "scope": "shared headless search/index layer + concept-native virtualized lists",
+    "synthetic_records_injected": 2400,
+    "total_index_entries": 3478,
+    "real_inventory_records": 828,
+    "synthetic_replaces_product_data": false,
+    "results_bounded": {
+      "limit": 30,
+      "bounded_flag_observed": true
+    },
+    "query_latency_ms_observed": [
+      13.9,
+      17.2,
+      13.2,
+      12.7
+    ],
+    "managers_instantiated_during_search": 0,
+    "list_rendering": "virtualized/windowed per concept compendium (browser-verified)",
+    "method": "node headless probe of PM_V2_SEARCH over the real index + injected synthetic rows, isolated sessions per query",
+    "result": "pass"
+  },
+  "audit_2026_08_19_second_pass": {
+    "scope": "independent audit of the seven-new-concepts work; narrow-width shell top bar clipping",
+    "result": "pass",
+    "detail": "Second-pass independent audit 2026-08-19 (browser-measured, ConceptHub-served pages): at 760/900px page widths the shared shell top bar content (~962px) exceeded the frame and clipped the demo control cluster (Scenarios, theme select, motion, panel toggles). Fixed concept-locally: @container pmx (max-width: 990px) wraps .pmx-topbar to two rows and hides decorative .pmx-model chips; shared pm-shell.css is untouched (frozen with concepts 01-04). Re-verified at exactly 760px and 900px page width: scrollWidth==clientWidth, all six shell controls inside the frame rect, theme select exposes all 8 themes and is clickable, topbar height 60.5px with no overlap of stage content, zero console errors. Standalone narrow (625px frame) also passes with the width select reachable. Additionally: Home attention rows ellipsize at narrow widths by design; the full text was not reachable, so the row paragraph now carries a title attribute with the complete text (concept-05.js). Verified rendering and zero console errors after the change.",
+    "widths_verified": [
+      760,
+      900,
+      625
+    ],
+    "console_errors": 0,
+    "shell_toggle_icon_fix": "User-reported blank top-bar buttons: the shell demo toggles (reduced motion, side/chat/bottom panel) carry bare SVGs with no intrinsic size and no shared CSS rule sizes them, so they painted 0x0 (pre-existing shared-shell markup issue, identical in 01-04). Fixed concept-locally: .pmx-controls [data-shell-motion] > svg, .pmx-controls [data-shell-toggle] > svg { inline-size: 14px; block-size: 14px; }. Browser-verified on all seven concepts: rule live in CSSOM, all four icons 14x14, Scenarios icon unchanged (14x14), toggle buttons still function, zero console errors."
+  }
 }

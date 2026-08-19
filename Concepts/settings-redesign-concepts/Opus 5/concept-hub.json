@@ -12,7 +12,14 @@
     "max": 2600,
     "step": 10,
     "default": 1280,
-    "presets": [760, 900, 1280, 1700, 2200, 2500],
+    "presets": [
+      760,
+      900,
+      1280,
+      1700,
+      2200,
+      2500
+    ],
     "previewWidth": "test"
   },
   "workspace": {
@@ -22,7 +29,10 @@
     "openPath": "index.html",
     "openActions": "both",
     "controlMode": "internal",
-    "tags": ["index", "comparison"],
+    "tags": [
+      "index",
+      "comparison"
+    ],
     "order": 1
   },
   "entries": [
@@ -33,7 +43,12 @@
       "openPath": "opus-5-atlas.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["settings", "directory", "outline", "place"],
+      "tags": [
+        "settings",
+        "directory",
+        "outline",
+        "place"
+      ],
       "order": 10
     },
     {
@@ -43,7 +58,12 @@
       "openPath": "opus-5-console.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["settings", "search-first", "contents", "question"],
+      "tags": [
+        "settings",
+        "search-first",
+        "contents",
+        "question"
+      ],
       "order": 20
     },
     {
@@ -53,7 +73,12 @@
       "openPath": "opus-5-stack.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["settings", "columns", "drill-down", "route"],
+      "tags": [
+        "settings",
+        "columns",
+        "drill-down",
+        "route"
+      ],
       "order": 30
     },
     {
@@ -63,8 +88,118 @@
       "openPath": "opus-5-ledger.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["settings", "table", "mini-map", "record"],
+      "tags": [
+        "settings",
+        "table",
+        "mini-map",
+        "record"
+      ],
       "order": 40
+    },
+    {
+      "id": "concept-05-directory-take-1",
+      "title": "Opus 5 — Directory",
+      "path": "concept-05-directory-take-1.html",
+      "openPath": "concept-05-directory-take-1.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "directory",
+        "cards",
+        "rail"
+      ],
+      "order": 50
+    },
+    {
+      "id": "concept-06-directory-take-2",
+      "title": "Opus 5 — Editorial",
+      "path": "concept-06-directory-take-2.html",
+      "openPath": "concept-06-directory-take-2.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "editorial",
+        "list",
+        "sheet"
+      ],
+      "order": 60
+    },
+    {
+      "id": "concept-07-compendium-workspace",
+      "title": "Opus 5 — Compendium",
+      "path": "concept-07-compendium-workspace.html",
+      "openPath": "concept-07-compendium-workspace.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "compendium",
+        "facets",
+        "index"
+      ],
+      "order": 70
+    },
+    {
+      "id": "concept-08-directory-take-3",
+      "title": "Opus 5 — Broadside",
+      "path": "concept-08-directory-take-3.html",
+      "openPath": "concept-08-directory-take-3.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "spacious",
+        "cards",
+        "managers"
+      ],
+      "order": 80
+    },
+    {
+      "id": "concept-09-tome-tabs",
+      "title": "Opus 5 — Codex",
+      "path": "concept-09-tome-tabs.html",
+      "openPath": "concept-09-tome-tabs.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "edge-tabs",
+        "layers",
+        "rethemed"
+      ],
+      "order": 90
+    },
+    {
+      "id": "concept-10-command-suite",
+      "title": "Opus 5 — Command",
+      "path": "concept-10-command-suite.html",
+      "openPath": "concept-10-command-suite.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "panes",
+        "keyboard",
+        "rethemed"
+      ],
+      "order": 100
+    },
+    {
+      "id": "concept-11-tabbed-organizer",
+      "title": "Opus 5 — Folio",
+      "path": "concept-11-tabbed-organizer.html",
+      "openPath": "concept-11-tabbed-organizer.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "tabs",
+        "sheets",
+        "rethemed"
+      ],
+      "order": 110
     }
   ]
 }

@@ -1,34 +1,85 @@
 {
- "schema_id": "pm.settings_bakeoff.test_evidence.v1",
- "concept": "concept-10-command-suite",
- "static_checks": {
-  "evidence-json-parse": "pass (generated and parsed at build time)",
-  "coverage-families-verbatim": "pass (42 required family strings named exactly)",
-  "coverage-forbidden-statuses": "pass (no shared_grammar, no missing)",
-  "concept-js-syntax": "pending (node --check by concept builder)"
- },
- "search_cases": "see search-route-matrix.json",
- "manager_routes": "see manager-route-matrix.json",
- "theme_width_matrix": {
-  "themes": [
-   "Friendly Dark",
-   "Friendly Light",
-   "Glass Dark",
-   "Glass Light",
-   "Retro Dark",
-   "Retro Light",
-   "Basic Dark",
-   "Basic Light"
-  ],
-  "widths": [
-   760,
-   900,
-   1280,
-   1700,
-   2200,
-   2500
-  ],
-  "result": "pending-verification-phase"
- },
- "notes": "Browser/interaction evidence appended by the verification phase."
+  "schema_id": "pm.settings_bakeoff.test_evidence.v1",
+  "concept": "concept-10-command-suite",
+  "static_checks": {
+    "evidence-json-parse": "pass (generated and parsed at build time)",
+    "coverage-families-verbatim": "pass (42 required family strings named exactly)",
+    "coverage-forbidden-statuses": "pass (no shared_grammar, no missing)",
+    "concept-js-syntax": "pass (node --check concept-10.js, verification phase 2026-08-19)"
+  },
+  "search_cases": "see search-route-matrix.json",
+  "manager_routes": "see manager-route-matrix.json",
+  "theme_width_matrix": {
+    "themes": [
+      "Friendly Dark",
+      "Friendly Light",
+      "Glass Dark",
+      "Glass Light",
+      "Retro Dark",
+      "Retro Light",
+      "Basic Dark",
+      "Basic Light"
+    ],
+    "widths": [
+      760,
+      900,
+      1280,
+      1700,
+      2200,
+      2500
+    ],
+    "result": "pass — 48/48 theme×width combos clean: each combo verified settled (--hub-page-width + data-theme read back before measuring; shell width applies ~700ms after select change), zero console/page errors, .pmx-stage scrollWidth == clientWidth and zero document horizontal overflow, #pmv2-search visible, 14 destination hooks visible at every combo. Shell controls are live in this concept (concept-10.js calls PMShell.init())."
+  },
+  "notes": "Browser verification completed 2026-08-19 by verification phase (tab v5). Previously-failed probes re-verified 2026-08-19 by the fix phase (tab f10, viewport 2600x1100) after concept-10.js/concept-10.css fixes; see browser_checks. See search-route-matrix.json and manager-route-matrix.json for per-case records.",
+  "browser_checks": {
+    "date": "2026-08-19",
+    "browser": "headless Chromium (omp browser tool), tab v5, viewport 1400x900",
+    "load": "pass — zero console errors, zero page errors on load (page.on console/pageerror + persistent in-page collector); no SVG attribute errors",
+    "theme_width_matrix": "pass — 48/48 combos clean (see theme_width_matrix.result). Screenshots of Home at 760/1280/2500 in friendly-dark + glass-dark captured to tool temp dir; DOM state confirmed settled for each (fullPage captures in this environment lag one state change in the compositor, so DOM assertions are authoritative). No clipping/overlap observed in verified captures.",
+    "reduced_motion": "pass — button[data-shell-motion] sets data-motion=reduced; Home render signature (text, pane count, search) identical before/after; drill-down to Providers manager works under reduced motion; zero console errors",
+    "search_exactness": "pass — 13/13 navigable cases exact-destination pass (re-verified 2026-08-19, tab f10, viewport 2600x1100). Previously-failed 4 now pass: rate limit→Providers selects the Rate Limits subpage chip (slug-normalized subpage ids); memory retention→Memory selects the Retention subpage chip; copy settings action→dedicated Copy Settings pane; copy help→Settings Lifecycle manager overview with .pmv2-locate highlight + focus on the manager header (no separate help section exists; overview header is the truthful fallback target). Back (Esc) restores query + highlighted result 13/13; session case pass. Zero console errors across all cases.",
+    "manager_isolation": "pass — 48/48 manager routes visited via concept UI (domain pane → manager item); URL never changes (hash stays empty; routes are logical), no iframes, shell retained (named 'Back to <domain>' button + universal search visible), real content in every manager (owner-* routes render their truthful 'Owned elsewhere' insertion-point surfaces; UI exposes these with bare data-manager-id values — e.g. onboarding, server-claim — without the matrix's owner- prefix), zero console errors",
+    "copy_flow": "pass (re-verified 2026-08-19, tab f10) — Home → Copy Settings From Another Project: engine constructs (new PM_V2_COPY.CopyEngine), source 'Atlas Agency' selected, 2 of 11 categories checked, Build preview enables on category change (fix: its disabled state was render-time only and never re-enabled), preview renders truthful totals (57 add / 58 replace / 47 unchanged / 4 unavailable / 22 conflict + credential policy), Continue to confirm → Apply copy → receipt 'Copied settings from Proj atlas agency into Puppet Master.' with restore point recorded → Roll back this copy → rolled-back receipt. Zero console errors.",
+    "scenarios": "pass (re-verified 2026-08-19, tab f10) — drawer lists 18 scenarios. Applying Offline / Managed / Loading cached renders a truthful scenario strip at the top of the pane stack carrying the store.projection message ('You are offline. Changes will apply when the connection returns.' / 'Managed by organization policy. You can view but not change this.' / 'Refreshing… showing last known values.'), a 'Cached values' badge where cached, and a Clear scenario button; the statusbar label updates; scenario subscribe events re-render the whole pane stack (other store events keep the lightweight statusline refresh so in-flight progress UI is not destroyed). Re-clicking the active scenario clears it (setScenario(null), aria-pressed flips, strip hides); the Clear button also clears. Zero console errors, including after the re-click path (in-page collector read).",
+    "keyboard_navigation": "pass at 1280 — ↑/↓ move .cs-cursor between rows in the active pane (General→AI→Safety→AI observed); → drills into the highlighted domain (cursor lands in the domain pane); Enter opens the highlighted row (Accounts & Sign-in pane); Esc steps back one level and restores the cursor on the originating row; '/' focuses #pmv2-search; '?' shows the keyboard-help strip. Zero console errors.",
+    "pane_behavior": "pass (re-verified 2026-08-19, tab f10, viewport 2600x1100) — miller columns engage on concept (stage) width with the specified 940/1560 thresholds: 1 pane at 852px (shell 900) and 692px (shell 1280 — shell chrome takes 588px, so 1280 correctly stays one-pane), 2 panes at 1112px (shell 1700), 3 panes index→list→detail at 1912px (shell 2500). Root cause of the earlier all-widths '1 pane' reading: ResizeObserver callbacks are frame-delivered and starve in throttled/headless contexts, so the column count never recomputed after width changes (compounded by the verifier's 1400px viewport clamping the frame). Fixed: 600ms poll fallback alongside RO + window resize, and the bogus 1280px zero-measurement fallback removed. Keyboard ←→ moves focus across visible panes (2→1→0→1→2) and → at the deepest pane opens the highlighted row; one-pane push navigation with named Back intact at ≤900. Also fixed: .cs-help[hidden] was overridden by author display:grid (ghost row overlapping the pane stack, hints bar clipped below the fold); grid rows are now explicit so collapsible strips collapse to 0 and the pane stack always owns the flexible row.",
+    "known_issues": [
+      "owner-* matrix routes are exposed in the UI with bare data-manager-id values (onboarding, install-deploy, server-claim, servers, hosting, remote-access, project-sync, app-updates, server-backup)",
+      "scenario re-click path re-verified error-clean 2026-08-19 (tab f10): the earlier probe-side crash reading PM_V2_STORE internals ('s.operations.map is not a function') was a probe artifact, not page code",
+      "fullPage screenshots in this environment lag one state change (compositor); DOM assertions used as authoritative evidence"
+    ]
+  },
+  "scale_stress": {
+    "scope": "shared headless search/index layer + concept-native virtualized lists",
+    "synthetic_records_injected": 2400,
+    "total_index_entries": 3478,
+    "real_inventory_records": 828,
+    "synthetic_replaces_product_data": false,
+    "results_bounded": {
+      "limit": 30,
+      "bounded_flag_observed": true
+    },
+    "query_latency_ms_observed": [
+      13.9,
+      17.2,
+      13.2,
+      12.7
+    ],
+    "managers_instantiated_during_search": 0,
+    "list_rendering": "virtualized/windowed per concept compendium (browser-verified)",
+    "method": "node headless probe of PM_V2_SEARCH over the real index + injected synthetic rows, isolated sessions per query",
+    "result": "pass"
+  },
+  "audit_2026_08_19_second_pass": {
+    "scope": "independent audit of the seven-new-concepts work; narrow-width shell top bar clipping",
+    "result": "pass",
+    "detail": "Second-pass independent audit 2026-08-19 (browser-measured, ConceptHub-served pages): at 760/900px page widths the shared shell top bar content (~962px) exceeded the frame and clipped the demo control cluster (Scenarios, theme select, motion, panel toggles). Fixed concept-locally: @container pmx (max-width: 990px) wraps .pmx-topbar to two rows and hides decorative .pmx-model chips; shared pm-shell.css is untouched (frozen with concepts 01-04). Re-verified at exactly 760px and 900px page width: scrollWidth==clientWidth, all six shell controls inside the frame rect, theme select exposes all 8 themes and is clickable, topbar height 60.5px with no overlap of stage content, zero console errors. Standalone narrow (625px frame) also passes with the width select reachable.",
+    "widths_verified": [
+      760,
+      900,
+      625
+    ],
+    "console_errors": 0,
+    "shell_toggle_icon_fix": "User-reported blank top-bar buttons: the shell demo toggles (reduced motion, side/chat/bottom panel) carry bare SVGs with no intrinsic size and no shared CSS rule sizes them, so they painted 0x0 (pre-existing shared-shell markup issue, identical in 01-04). Fixed concept-locally: .pmx-controls [data-shell-motion] > svg, .pmx-controls [data-shell-toggle] > svg { inline-size: 14px; block-size: 14px; }. Browser-verified on all seven concepts: rule live in CSSOM, all four icons 14x14, Scenarios icon unchanged (14x14), toggle buttons still function, zero console errors."
+  }
 }

@@ -33,6 +33,17 @@
     .gal-section h2 { margin: 0 0 8px; font-size: 15px; color: var(--pm-ink); }
     .gal-section ul { margin: 0; padding-inline-start: 18px; display: grid; gap: 5px; font-size: 12.5px; color: var(--pm-ink-dim); }
     .gal-section code { font-family: var(--pm-font-mono); font-size: 11.5px; background: var(--pm-bg-sunken); border-radius: var(--pm-radius-s); padding: 1px 5px; }
+    /* Shell demo toggles carry bare SVGs with no intrinsic size and no shared
+       rule sizes them (they painted 0x0); size them like the Scenarios icon.
+       Gallery-local: shared CSS and concepts 01–04 are frozen. */
+    .pmx-controls [data-shell-motion] > svg,
+    .pmx-controls [data-shell-toggle] > svg { inline-size: 14px; block-size: 14px; }
+    /* Narrow shell frames: wrap the top bar to two rows instead of clipping
+       the demo control cluster (same concept-local fix as 05–11). */
+    @container pmx (max-width: 990px) {
+      .pmx-topbar { flex-wrap: wrap; row-gap: 2px; padding-block: 4px; }
+      .pmx-model { display: none; }
+    }
   </style>
 </head>
 <body>

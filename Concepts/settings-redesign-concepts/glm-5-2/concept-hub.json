@@ -12,7 +12,14 @@
     "max": 2500,
     "step": 10,
     "default": 1280,
-    "presets": [760, 900, 1280, 1700, 2200, 2500],
+    "presets": [
+      760,
+      900,
+      1280,
+      1700,
+      2200,
+      2500
+    ],
     "previewWidth": "test"
   },
   "entries": [
@@ -23,7 +30,17 @@
       "openPath": "concept-01-control-room.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["control-room", "book-toc", "context", "memory", "personas", "goal", "crew", "permissions", "bsd"],
+      "tags": [
+        "control-room",
+        "book-toc",
+        "context",
+        "memory",
+        "personas",
+        "goal",
+        "crew",
+        "permissions",
+        "bsd"
+      ],
       "order": 10
     },
     {
@@ -33,7 +50,16 @@
       "openPath": "concept-02-atlas.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["atlas", "minimap", "notifications", "sounds", "appearance", "spellcheck", "desktop", "teacher"],
+      "tags": [
+        "atlas",
+        "minimap",
+        "notifications",
+        "sounds",
+        "appearance",
+        "spellcheck",
+        "desktop",
+        "teacher"
+      ],
       "order": 20
     },
     {
@@ -43,7 +69,18 @@
       "openPath": "concept-03-stack.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["stack", "expand-in-place", "filemanager", "terminal", "lsp", "formatters", "commands", "mcp", "skills", "testing"],
+      "tags": [
+        "stack",
+        "expand-in-place",
+        "filemanager",
+        "terminal",
+        "lsp",
+        "formatters",
+        "commands",
+        "mcp",
+        "skills",
+        "testing"
+      ],
       "order": 30
     },
     {
@@ -53,8 +90,128 @@
       "openPath": "concept-04-stream.html",
       "openActions": "both",
       "controlMode": "standard",
-      "tags": ["stream", "landmark-river", "storage", "backup", "lifecycle", "history", "artifacts", "sourcecontrol", "github", "containers", "webfetch", "searchindex", "cleanup", "server"],
+      "tags": [
+        "stream",
+        "landmark-river",
+        "storage",
+        "backup",
+        "lifecycle",
+        "history",
+        "artifacts",
+        "sourcecontrol",
+        "github",
+        "containers",
+        "webfetch",
+        "searchindex",
+        "cleanup",
+        "server"
+      ],
       "order": 40
+    },
+    {
+      "id": "concept-05-directory-take-1",
+      "title": "05 A1 Directory / Take 1 — GLM-5.2",
+      "path": "concept-05-directory-take-1.html",
+      "openPath": "concept-05-directory-take-1.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "directory",
+        "cards",
+        "roster-form",
+        "push-nav"
+      ],
+      "order": 50
+    },
+    {
+      "id": "concept-06-directory-take-2",
+      "title": "06 A1 Directory / Take 2 — GLM-5.2",
+      "path": "concept-06-directory-take-2.html",
+      "openPath": "concept-06-directory-take-2.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "editorial",
+        "rail",
+        "sheet",
+        "detail-sheet"
+      ],
+      "order": 60
+    },
+    {
+      "id": "concept-07-compendium-workspace",
+      "title": "07 A2 Compendium Workspace / Take 1 — GLM-5.2",
+      "path": "concept-07-compendium-workspace.html",
+      "openPath": "concept-07-compendium-workspace.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "compendium",
+        "facets",
+        "virtualized",
+        "overview"
+      ],
+      "order": 70
+    },
+    {
+      "id": "concept-08-directory-take-3",
+      "title": "08 A1 Directory / Take 3 — GLM-5.2",
+      "path": "concept-08-directory-take-3.html",
+      "openPath": "concept-08-directory-take-3.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "directory",
+        "large-cards",
+        "provider-summary",
+        "full-width-copy"
+      ],
+      "order": 80
+    },
+    {
+      "id": "concept-09-tome-tabs",
+      "title": "09 Rethemed Tome Tabs — GLM-5.2",
+      "path": "concept-09-tome-tabs.html",
+      "openPath": "concept-09-tome-tabs.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "edge-tabs",
+        "layered-pages",
+        "chapters",
+        "retheme"
+      ],
+      "order": 90
+    },
+    {
+      "id": "concept-10-command-suite",
+      "title": "10 Rethemed Command Suite — GLM-5.2",
+      "path": "concept-10-command-suite.html",
+      "openPath": "concept-10-command-suite.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "command-index",
+        "keyboard-first",
+        "three-pane",
+        "retheme"
+      ],
+      "order": 100
+    },
+    {
+      "id": "concept-11-tabbed-organizer",
+      "title": "11 Rethemed Tabbed Organizer — GLM-5.2",
+      "path": "concept-11-tabbed-organizer.html",
+      "openPath": "concept-11-tabbed-organizer.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "tab-strip",
+        "sheets",
+        "organizer",
+        "retheme"
+      ],
+      "order": 110
     }
   ],
   "workspace": {
@@ -63,7 +220,11 @@
     "openActions": "both",
     "controlMode": "internal",
     "previewWidth": 1440,
-    "tags": ["gallery", "comparison", "index"],
+    "tags": [
+      "gallery",
+      "comparison",
+      "index"
+    ],
     "order": 5
   }
 }

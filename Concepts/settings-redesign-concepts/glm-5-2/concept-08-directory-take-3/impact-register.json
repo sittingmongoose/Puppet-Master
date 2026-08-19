@@ -1,0 +1,67 @@
+{
+ "schema_id": "pm.settings_concept_impact_register.v1",
+ "concept_id": "concept-08-directory-take-3",
+ "model": "GLM-5.2",
+ "date": "2026-08-18",
+ "plan_owner_impacts": [
+  "FinalGUISpec: Settings surface grammar per A1 Directory / Take 3",
+  "settings inventory: legacy scope metadata must not surface as editing scope (project-only decision)",
+  "settings schema: exposure/attention facets need first-class fields"
+ ],
+ "settings_inventory_impacts": [
+  "828 records projected verbatim; legacy scope retained as diagnostic only",
+  "copy preview requires per-category diff metadata"
+ ],
+ "settings_schema_impacts": [
+  "add attention-state derivation",
+  "add copy-preview kind enum (additions/replacements/unchanged/unavailable/conflicts)"
+ ],
+ "command_id_impacts": [
+  "candidate navigation/search/copy command families (see candidate-command-delta.json); provisional only"
+ ],
+ "wiring_impacts": [
+  "search select to route plan to focus/highlight to back-restore chain needs canonical wiring",
+  "copy transaction wiring (restore point, atomic apply, verify, receipt, rollback)"
+ ],
+ "dry_component_impacts": [
+  "concept-native Home/Nav/Search/Manager compositions are candidates; shared headless core (data/search/routes/store) is the DRY reuse boundary"
+ ],
+ "slint_port_impacts": [
+  "explicit route/menu/drawer state machines; virtualized lists via row-height windowing; no DOM-only magic in core behavior"
+ ],
+ "test_fixtures": [
+  "loading-cached",
+  "empty",
+  "no-results",
+  "typo",
+  "validation-error",
+  "offline",
+  "managed",
+  "unavailable",
+  "restart-required",
+  "reconnect-required",
+  "changed-elsewhere",
+  "import-conflict",
+  "rollback-complete",
+  "usage-unavailable",
+  "multi-install",
+  "unknown-owner",
+  "update-ask",
+  "verify-fail-rollback"
+ ],
+ "deferred_named_owners": [
+  "Product Onboarding",
+  "Installation / Deployment",
+  "Server Claim / Bootstrap",
+  "Servers / Execution Hosts / Clients",
+  "Project Hosting & Files",
+  "Remote Access",
+  "Project Sync / Move",
+  "Puppet Master application/content updates",
+  "Full Server backup owner flow"
+ ],
+ "unresolved_questions": [
+  "exact canonical command IDs await catalog census",
+  "compendium facet vocabulary needs owner adjudication"
+ ]
+}

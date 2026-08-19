@@ -987,7 +987,7 @@
     var id = el("div", "d05-home-id");
     var pr = el("span", "d05-proj");
     pr.appendChild(icon("folder"));
-    pr.appendChild(el("span", null, "Current project: "));
+    pr.appendChild(el("span", "d05-proj-label", "Current project"));
     pr.appendChild(el("strong", null, proj.name));
     id.appendChild(pr);
     id.appendChild(el("span", "pm-faint", proj.path + " · " + proj.settings + " settings · updated " + proj.updated));
@@ -1041,8 +1041,8 @@
       p.appendChild(notice);
     }
 
-    /* one compact attention block */
-    var attn = attentionItems();
+    /* one compact attention block — never repeats the banner's item */
+    var attn = attentionItems(critical ? critical.id : null);
     if (attn.length) {
       var ab = el("div", "d05-attn");
       var ah = el("div", "d05-attn-h");
@@ -1053,9 +1053,12 @@
         var row = el("div", "d05-attn-item");
         var txt = el("p");
         txt.appendChild(el("strong", null, it.title));
-        txt.appendChild(document.createTextNode(" — " + it.detail));
+        txt.appendChild(el("span", "d05-attn-detail", " — " + it.detail));
+        /* narrow widths ellipsize the line; keep the full text reachable */
+        txt.setAttribute("title", it.title + " — " + it.detail);
         row.appendChild(txt);
         var b = btn("pm-btn", it.action);
+        b.setAttribute("data-variant", "quiet");
         b.addEventListener("click", it.go);
         row.appendChild(b);
         ab.appendChild(row);
@@ -1077,7 +1080,10 @@
       var main = el("span", "d05-card-main");
       main.appendChild(el("span", "d05-card-title", d.title));
       main.appendChild(el("span", "d05-card-sub", d.blurb));
-      main.appendChild(el("span", "d05-card-meta", settingCount(d.id) + " settings · " + managers.length + (managers.length === 1 ? " manager" : " managers")));
+      var meta = el("span", "d05-card-meta");
+      meta.appendChild(el("span", "d05-chip", settingCount(d.id) + " settings"));
+      meta.appendChild(el("span", "d05-chip", managers.length + (managers.length === 1 ? " manager" : " managers")));
+      main.appendChild(meta);
       card.appendChild(main);
       var chev = el("span", "d05-card-chev");
       chev.appendChild(icon("chevron-r"));
@@ -1114,10 +1120,11 @@
     p.appendChild(utils);
   }
 
-  function attentionItems() {
+  function attentionItems(excludeId) {
     var out = [];
     var dismissed = store.doc("dismissedNotices", {});
     (CORE.notices || []).forEach(function (n) {
+      if (n.id === excludeId) return;
       if (n.kind === "attention" && !dismissed[n.id] && out.length < 2) {
         out.push({
           title: n.headline, detail: n.consequence, action: n.actionLabel || "Review",
@@ -2574,7 +2581,7 @@
       card.appendChild(b);
     });
     var cancel = btn("pm-btn", "Cancel");
-    cancel.addEventListener(goBack);
+    cancel.addEventListener("click", goBack);
     copyFoot(card, [cancel]);
   }
   function copyCategoriesStep(eng, card) {
@@ -2689,7 +2696,7 @@
     }
     var done = btn("pm-btn", "Done");
     done.setAttribute("data-variant", "primary");
-    done.addEventListener(goBack);
+    done.addEventListener("click", goBack);
     btns.push(done);
     copyFoot(card, btns);
   }

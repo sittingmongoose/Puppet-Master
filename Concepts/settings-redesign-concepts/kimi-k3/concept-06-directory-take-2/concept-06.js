@@ -430,7 +430,7 @@
     clear.hidden = true;
     box.appendChild(input);
     box.appendChild(clear);
-    var results = el("div", "dt2-results pmv2-scroll");
+    var results = el("div", "dt2-results pmv2-scroll pm-blur-raised");
     results.hidden = true;
     results.setAttribute("role", "listbox");
     results.setAttribute("aria-label", "Search results");
@@ -850,7 +850,7 @@
     stag.appendChild(el("p", "dt2-kicker", "Settings"));
     stag.appendChild(el("h1", "dt2-title", "Set up " + project.name + " the way you work"));
     stag.appendChild(el("p", "dt2-lede",
-      "Every control below applies to this project only. Browse the directory, or search across " +
+      "Every control applies to this project only. Browse the directory, or search " +
       INV.meta.settingsCount + " settings, " + REG.MANAGERS.length + " managers, objects, and workflows."));
     var proj = el("div", "dt2-project");
     proj.appendChild(el("span", null, "Current project"));
@@ -876,10 +876,11 @@
     if (critical) {
       stag.appendChild(noticeEl(critical, true));
     }
-    /* Needs attention: 2–4 items, compact rows routing to their setting. */
+    /* Needs attention: 2–4 items, compact rows routing to their setting.
+       The banner's notice is excluded by id — never duplicated below. */
     var attn = el("section", "dt2-attn");
     attn.appendChild(el("h2", null, "Needs attention"));
-    var items = notices.filter(function (n) { return n !== critical; }).slice(0, 4);
+    var items = notices.filter(function (n) { return !critical || n.id !== critical.id; }).slice(0, 4);
     if (!items.length) {
       attn.appendChild(el("div", "dt2-attn-empty", "Nothing needs attention right now."));
     }
@@ -898,7 +899,7 @@
       var ic = el("span", "dt2-dest-icon");
       ic.appendChild(svgEl(c.icon));
       row.appendChild(ic);
-      var mid = el("span");
+      var mid = el("span", "dt2-dest-mid");
       mid.appendChild(el("span", "dt2-dest-name", c.title));
       mid.appendChild(el("span", "dt2-dest-desc", (REG.domainById(c.id) || {}).blurb || c.description || ""));
       row.appendChild(mid);
@@ -944,7 +945,7 @@
     var b = el("button", "dt2-util-row");
     b.type = "button";
     b.appendChild(svgEl(iconName));
-    var mid = el("span");
+    var mid = el("span", "dt2-util-mid");
     mid.appendChild(el("span", null, label));
     mid.appendChild(el("span", "dt2-attn-sub", " " + sub));
     b.appendChild(mid);
@@ -1047,7 +1048,7 @@
         var ic = el("span", "dt2-dest-icon");
         ic.appendChild(svgEl(m.icon));
         row.appendChild(ic);
-        var mid = el("span");
+        var mid = el("span", "dt2-dest-mid");
         mid.appendChild(el("span", "dt2-dest-name", m.title));
         mid.appendChild(el("span", "dt2-dest-desc", m.summary));
         row.appendChild(mid);
@@ -1073,7 +1074,7 @@
         var ic = el("span", "dt2-dest-icon");
         ic.appendChild(svgEl("index"));
         row.appendChild(ic);
-        var mid = el("span");
+        var mid = el("span", "dt2-dest-mid");
         mid.appendChild(el("span", "dt2-dest-name", sub.title));
         mid.appendChild(el("span", "dt2-dest-desc", sub.description || ""));
         row.appendChild(mid);
@@ -1099,7 +1100,7 @@
         var ic = el("span", "dt2-dest-icon");
         ic.appendChild(svgEl("plug"));
         row.appendChild(ic);
-        var mid = el("span");
+        var mid = el("span", "dt2-dest-mid");
         mid.appendChild(el("span", "dt2-dest-name", o.family));
         mid.appendChild(el("span", "dt2-dest-desc", o.insertion + ". Owned by the " + o.owner + "."));
         row.appendChild(mid);
@@ -2488,6 +2489,7 @@
   });
 
   /* ---------------- boot ------------------------------------------------------------ */
+  if (window.PMShell && window.PMShell.init) window.PMShell.init();
   buildShell();
   buildDemo();
   nav = parseHash();

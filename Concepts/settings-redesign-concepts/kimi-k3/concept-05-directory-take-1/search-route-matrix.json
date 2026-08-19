@@ -122,9 +122,9 @@
       "result_id": "r_8b0c67409da5d3a8",
       "displayed_path": "Settings / System & Advanced / Settings Lifecycle / Copy Settings From Another Project",
       "expected_destination": { "domain": "system", "manager": "lifecycle", "page": "copy", "section": "copy" },
-      "actual_destination": "Centered copy review flow (source → categories → preview → confirm → apply → receipt), the transaction destination of the lifecycle manager",
-      "focus_highlight": "copy panel carries [data-section-id='copy']",
-      "back_restores": true,
+      "actual_destination": "RE-VERIFIED PASS (2026-08-19, tab r1): clicking the exact data-result-id row renders the full copy view — heading 'Copy Settings From Another Project', [data-section-id='copy'] present, 6-step wizard (Source → Categories → Preview → Confirm → Apply → Receipt) with 'Back to Settings Home' retained. The one-argument addEventListener defects (old concept-05.js:2577/2692) are fixed; zero console/page errors during the click and the full transaction.",
+      "focus_highlight": "action landing: the copy panel itself is the destination (no .pmv2-locate row target); focus stays on body, no focus theft — consistent with the other page/manager landings in this matrix",
+      "back_restores": "pass (2026-08-19) — 'Back to Settings Home' returns Home with 'copy settings' restored in #pmv2-search, the dropdown reopened, and r_8b0c67409da5d3a8 aria-selected=true",
       "pass": true
     },
     {
@@ -144,7 +144,7 @@
       "result_id": "r_73f0b93f58506ba3",
       "displayed_path": "Settings / AI Brains & Providers / Providers / Ollama / Installation",
       "expected_destination": { "domain": "ai", "manager": "providers", "object": "ollama", "section": "installation" },
-      "actual_destination": "Providers workspace, Ollama detail, Installation tab with explicit official-source setup",
+      "actual_destination": "Providers workspace, Ollama detail. Browser-verified: not-installed providers have no separate Installation tab — the detail itself shows the truthful 'Not connected' state with the explicit official-source Set up panel (no [data-section-id='installation'] hook exists on this surface)",
       "focus_highlight": "pmv2-locate on [data-object-id='ollama']",
       "back_restores": true,
       "pass": true

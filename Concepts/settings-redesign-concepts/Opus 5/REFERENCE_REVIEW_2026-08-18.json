@@ -1,0 +1,498 @@
+{
+  "schema_id": "pm.settings_reference_review_snapshot.v2",
+  "generated": "2026-08-18",
+  "model": "Opus 5",
+  "model_folder": "Concepts/settings-redesign-concepts/Opus 5",
+  "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+  "pass": "seven new concepts 05-11; concepts 01-04 frozen",
+  "immutable": true,
+  "note": "A snapshot of this pass only, extended additively by later passes recorded in subsequent_passes; no earlier field is rewritten. reference-review-report.json carries the running history across all passes in this model folder.",
+  "references_opened": {
+    "new_packet_top_level": [
+      {
+        "path": "00_START_HERE.md",
+        "opened": true,
+        "bytes": 3490,
+        "sha256": "cc01f1a315487444ddcb96a5263304fd43394a9c295d6b8734a03b7c9dc14432"
+      },
+      {
+        "path": "01_ASSIGNMENT_AND_PRECEDENCE.md",
+        "opened": true,
+        "bytes": 2502,
+        "sha256": "5be6cf60992ade5aa7bdbbc7143506a48c1135314877b7eae511496970ae7f94"
+      },
+      {
+        "path": "02_SEVEN_CONCEPT_BLUEPRINTS.md",
+        "opened": true,
+        "bytes": 4800,
+        "sha256": "f72616804fdf579c730fd4a18a465e0df8af6c2b6e46c1eb0500725ec457efb9"
+      },
+      {
+        "path": "03_HOME_SEARCH_AND_NAVIGATION.md",
+        "opened": true,
+        "bytes": 3190,
+        "sha256": "285f06762ea85e269a8e629b118126b3481669cc1f800a840ecbd997f97fa955"
+      },
+      {
+        "path": "04_PROJECT_ONLY_SETTINGS_AND_COPY.md",
+        "opened": true,
+        "bytes": 2451,
+        "sha256": "1fa7f3991a34731cf58a7edb0e404d9fdbd01306d0a4e66ca80668c1f14dc989"
+      },
+      {
+        "path": "05_COMPLETE_MANAGER_INTEGRATION.md",
+        "opened": true,
+        "bytes": 3766,
+        "sha256": "1364327fc671cc08f7365f0603eb69bb82d340c78a9526d8a7c60bd6ddc95245"
+      },
+      {
+        "path": "06_INFORMATION_ARCHITECTURE_AND_DENSITY.md",
+        "opened": true,
+        "bytes": 2431,
+        "sha256": "0bc7fad69fedfa6a9c51871cc8fb7606f43d64375123df08a293540db7608ac3"
+      },
+      {
+        "path": "07_THEME_MOTION_RESPONSIVE_AND_SLINT.md",
+        "opened": true,
+        "bytes": 2699,
+        "sha256": "de34d47d40915012013d802656951f0a3fb3b69f0d6e6f1d6448018ba4298d5c"
+      },
+      {
+        "path": "08_DATA_PERFORMANCE_AND_TRUTHFUL_STATE.md",
+        "opened": true,
+        "bytes": 2404,
+        "sha256": "da6ccb22e1cf23f375b0973eb04e34aa24ad794c78bcbf594798492b0dcbbefb"
+      },
+      {
+        "path": "09_COMMAND_WIRING_DRY_AND_PLAN_IMPACT.md",
+        "opened": true,
+        "bytes": 1867,
+        "sha256": "7d97655b165418c62cf4bd764143e488d3c1c36f433b314b7a28b3ed50e0e46a"
+      },
+      {
+        "path": "10_TESTING_EVIDENCE_AND_ACCEPTANCE.md",
+        "opened": true,
+        "bytes": 2657,
+        "sha256": "3ef572dbbda0a809eebd28b2b0698db954cf8187e6ec2e2254c5b4b1d8a28c74"
+      },
+      {
+        "path": "11_REQUIRED_FILES_AND_REPORTS.md",
+        "opened": true,
+        "bytes": 2391,
+        "sha256": "5d78fd11a30d372b016ed834d6f076cb44f7c965e18cbc3c38cfb1ade9bd6887"
+      },
+      {
+        "path": "12_REPO_BASELINE_AND_KNOWN_FAILURES.md",
+        "opened": true,
+        "bytes": 1396,
+        "sha256": "d10f0f7884fc135a92c42c86a8aaf0269f6e4edf7c6e60dacb29da1c30377a08"
+      },
+      {
+        "path": "GOAL_PROMPT.md",
+        "opened": true,
+        "bytes": 3894,
+        "sha256": "431182c2aeaf5f3ceb4b0bb4edc0b54d3094968565ac80ddfe9de48b9c4749c1"
+      },
+      {
+        "path": "PROMPT_USAGE.md",
+        "opened": true,
+        "bytes": 1056,
+        "sha256": "57ad34fac5bb209b9a29868bfc20823676656c5058a7473ee2fed39b3fe79916"
+      },
+      {
+        "path": "AUDIT_PROMPT.md",
+        "opened": true,
+        "bytes": 2624,
+        "sha256": "827605879ac8ee425673b02a1e3df71f0efd1ecdfa929ccc153bc4c8b528ca61"
+      },
+      {
+        "path": "PACKET_MANIFEST.json",
+        "opened": true,
+        "bytes": 14760,
+        "sha256": "d288ef001efd16dbeea56e3801fb8f0001adb116e17a8128399df64040a0bf7f"
+      }
+    ],
+    "machine_readable": [
+      {
+        "path": "machine_readable/concept_blueprints.json",
+        "opened": true,
+        "bytes": 4513,
+        "sha256": "50899da7871ffa4ab6701669643dab2a0e85c9e3d5465d592847f1e9a1b639b1"
+      },
+      {
+        "path": "machine_readable/manager_coverage_required.json",
+        "opened": true,
+        "bytes": 2139,
+        "sha256": "5b65fbe0099265ac959c21cec30576c0345559dad91e9b4ec168d48b88633b66"
+      },
+      {
+        "path": "machine_readable/model_folder_map.json",
+        "opened": true,
+        "bytes": 659,
+        "sha256": "73210cfb57b2b00fad78227f3d9fac0f4d7ef607931334b6c55f4091f339f8c2"
+      },
+      {
+        "path": "machine_readable/repo_baseline.json",
+        "opened": true,
+        "bytes": 3104,
+        "sha256": "eb50d2ee34ba552bf56c842634d17f644f74249f507602b318144dd96278d320"
+      },
+      {
+        "path": "machine_readable/search_contract.json",
+        "opened": true,
+        "bytes": 1202,
+        "sha256": "a54290ec00454403817d5579a5a784084f912167b90b56a76e110dc02674605b"
+      },
+      {
+        "path": "machine_readable/supersessions.json",
+        "opened": true,
+        "bytes": 1304,
+        "sha256": "6b3984ad7d91f453791c48fd4d8bd7985a9ea9b8013a902f3055ffd53583bcd3"
+      },
+      {
+        "path": "machine_readable/test_matrix.json",
+        "opened": true,
+        "bytes": 834,
+        "sha256": "45b9e414ee50c437060b7e531889e2adb14111dd130060bd37a5dcee8d356190"
+      }
+    ],
+    "tools": [
+      {
+        "path": "tools/validate_seven_new_concepts.py",
+        "opened": true,
+        "bytes": 4653,
+        "sha256": "bc18722043099b4ab0e5612f117a026a684b46cf3181d18a47eeaba5ecfb5f46"
+      }
+    ],
+    "reference_images": [
+      {
+        "path": "reference/selected_concepts/README.md",
+        "opened": true,
+        "bytes": 1265,
+        "sha256": "e190da5be87d3ccf259985dd60f76263a055ff7d2ab3f8f85c76070edc67dd4d"
+      },
+      {
+        "path": "reference/selected_concepts/01_A1_Directory_Take_1_LAYOUT_RECONSTRUCTION.png",
+        "opened": true,
+        "bytes": 213730,
+        "sha256": "b679df3e6f583b2226e29d983a63037c0491377a09fe26637de1d88b229311c0"
+      },
+      {
+        "path": "reference/selected_concepts/02_A1_Directory_Take_2.png",
+        "opened": true,
+        "bytes": 1637373,
+        "sha256": "6850698121d2948ad1defc7744738083fa276be823167b82e9c447ec561b0d28"
+      },
+      {
+        "path": "reference/selected_concepts/03_A2_Compendium_Workspace_Take_1.png",
+        "opened": true,
+        "bytes": 1370307,
+        "sha256": "7dcc2caaa8758da8b966d9fe64821f653522d873e3f35089297188a77a38643b"
+      },
+      {
+        "path": "reference/selected_concepts/04_A1_Directory_Take_3.png",
+        "opened": true,
+        "bytes": 1212778,
+        "sha256": "d372331eef77095bc3c1420fdbcb98f2ee12e3170628f472f20d5e92ef986920"
+      },
+      {
+        "path": "reference/selected_concepts/05_Tome_Tabs_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+        "opened": true,
+        "bytes": 3656533,
+        "sha256": "4b9b5d30be4f55d236504216c4c23f7e6f4d40dfa2a18921ce762c727daf6450"
+      },
+      {
+        "path": "reference/selected_concepts/06_Command_Suite_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+        "opened": true,
+        "bytes": 2656116,
+        "sha256": "3da8a5bd4aee9dd5d1fad85b108a4d561d343e77435cd28a0361fb46211afeee"
+      },
+      {
+        "path": "reference/selected_concepts/07_Tabbed_Organizer_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+        "opened": true,
+        "bytes": 3216207,
+        "sha256": "9ffc03dcdfc9b4c9d2d8d3de9a1f26e3570bc5e25ba078d63e68841654737f61"
+      }
+    ],
+    "correction_packet": [
+      {
+        "path": "authority/correction_packet/00_READ_ME_FIRST.md",
+        "opened": true,
+        "bytes": 1108,
+        "sha256": "ce842cd19acb419c7b6096e1c4b43725a3006d27f0ec4167b3adc0a2d118e073"
+      },
+      {
+        "path": "authority/correction_packet/REFERENCE_REVIEW_AND_REPAIR_REQUIREMENTS.md",
+        "opened": true,
+        "bytes": 1130,
+        "sha256": "b559fc38f910d18d454aa7ad149fa6f7d6f7384998b3ac0afe7f2e03bccc64f8"
+      },
+      {
+        "path": "authority/correction_packet/PROVIDER_CLI_FINAL_ADJUDICATION.md",
+        "opened": true,
+        "bytes": 4857,
+        "sha256": "9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1"
+      }
+    ],
+    "base_packet": [
+      {
+        "path": "authority/base_packet/CANDIDATE_COMMAND_ID_REGISTER.json",
+        "opened": true,
+        "bytes": 3397,
+        "sha256": "b10393b4c0947faedf96d28243dc1fc134872d3b40083e77cb6253b2a83df25c"
+      },
+      {
+        "path": "authority/base_packet/IMPACT_REGISTER.template.json",
+        "opened": true,
+        "bytes": 465,
+        "sha256": "fe2dcd5d930acfe3e259b92101e651a11aa819f24fd6bd539bb2defdac6fa266"
+      },
+      {
+        "path": "authority/base_packet/10_PLAN_COMMAND_WIRING_DRY_IMPACT.md",
+        "opened": true,
+        "bytes": 2716,
+        "sha256": "5dc4a0999341f50924b0517b1c5d91c0df24680ba10d072a04519743d1b2d6cc"
+      }
+    ],
+    "repository_canon": [
+      {
+        "path": "Plans/settings_inventory.json",
+        "opened": true,
+        "bytes": 432231,
+        "sha256": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3"
+      },
+      {
+        "path": "Concepts/CONCEPT_RULES.md",
+        "opened": true,
+        "bytes": 1978,
+        "sha256": "a4b89d38c828e6e6cdba98a9465e6e0852046eaec636c257c9d1d3ad95725a85"
+      },
+      {
+        "path": "Concepts/ConceptHub/validate.py",
+        "opened": true,
+        "bytes": 10992,
+        "sha256": "30aa6e99db838ff755818a377867a3a293e4ca4e39c84e3e6984281d643547ef"
+      }
+    ]
+  },
+  "references_opened_count": 42,
+  "how_each_selected_image_was_interpreted": [
+    {
+      "concept": "concept-05-directory-take-1",
+      "image": "01_A1_Directory_Take_1_LAYOUT_RECONSTRUCTION.png",
+      "authority": "layout, hierarchy, navigation, density",
+      "taken": "search above content; one compact attention block; a two-column grid of destination cards; a domain page built from destination rows; an integrated provider list/detail workspace; the exact search landing highlighted inside a form; the copy transaction as a focused review flow.",
+      "rejected": "the board's synthetic provider names, counts and API-key strings; its blue-on-white palette; its 'Give Feedback' rail item; its modal copy dialog, which became a full flow so the preview can show real counts."
+    },
+    {
+      "concept": "concept-06-directory-take-2",
+      "image": "02_A1_Directory_Take_2.png",
+      "authority": "layout, hierarchy, navigation, density",
+      "taken": "an editorial single-column destination list rather than a card dashboard; a narrow stable major-domain rail; large single-column rows with concise descriptions; a compact anchored search dropdown; a provider roster with a restrained detail sheet; nested subnavigation that stays visibly inside Settings; a quiet copy dialog.",
+      "rejected": "the warm cream and brown palette entirely \u2014 the concept is built from PM theme tokens and must read in all eight themes; the board's synthetic project names, usage figures and billing limits."
+    },
+    {
+      "concept": "concept-07-compendium-workspace",
+      "image": "03_A2_Compendium_Workspace_Take_1.png",
+      "authority": "layout, compendium architecture, manager integration",
+      "taken": "Settings Home plus a first-class All Settings compendium; a faceted searchable readable long-tail index; domain pages combining overview, key settings and related managers; the manager as an integrated list/detail workspace; an exact search landing with a contextual explanation; a copy preview with counts for additions, replacements, unchanged rows and a detailed diff.",
+      "rejected": "the board's 124/128-setting counts, which are a fraction of the real 828; its provider facts; its 'Settings v1.14.0' footer."
+    },
+    {
+      "concept": "concept-08-directory-take-3",
+      "image": "04_A1_Directory_Take_3.png",
+      "authority": "layout, hierarchy, spacious directory, provider summary",
+      "taken": "a bright spacious directory; search and attention at the top; fewer and larger domain cards with strong icon/title/purpose hierarchy; a domain overview made of unmistakable manager destinations; a provider summary of high-value status cards with explicit quick actions; the exact credential result highlighted in place; a full-width copy flow with selectable categories.",
+      "rejected": "the board's named user and avatar; its dollar figures and request counts; its blue accent as a fixed colour."
+    },
+    {
+      "concept": "concept-09-tome-tabs",
+      "image": "05_Tome_Tabs_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+      "authority": "layout only \u2014 retheme required",
+      "taken": "persistent edge/chapter tabs for major domains; layered page depth with a stable page location; a broad central reading canvas; domain tabs plus manager-local tabs; list/detail manager composition; a stepwise copy flow.",
+      "rejected": "every element of the steampunk tome skin \u2014 parchment and paper texture, brass, gears, sepia, book ornament and rules, skeuomorphic page edges and leaf shadows, medieval and fantasy wording, decorative serif display faces."
+    },
+    {
+      "concept": "concept-10-command-suite",
+      "image": "06_Command_Suite_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+      "authority": "layout only \u2014 retheme required",
+      "taken": "command-index navigation; keyboard-first movement; multi-pane left-to-right drill-down; compact but legible data tables; direct path and status visibility; an exact setting editor beneath its context; transactional copy panels.",
+      "rejected": "the fake terminal entirely \u2014 green monochrome, CRT and scanline effects, monospace body text, code-only and slash-path labels as primary names, ASCII box drawing. Monospace survives only for genuinely literal values such as a file path or a command id."
+    },
+    {
+      "concept": "concept-11-tabbed-organizer",
+      "image": "07_Tabbed_Organizer_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+      "authority": "layout only \u2014 retheme required",
+      "taken": "category tabs resembling a well-organised file system; layered sheets that preserve location; compact home categories with recent changes; domain-level tabs and a related-manager strip; a provider roster with detail tabs; the exact deep-link result nested in the same page stack; copy categories and source project in adjacent panes.",
+      "rejected": "literal paper and manila folders, binder rings, staples, paper clips, physical tab dividers, torn edges, stacked-sheet drop shadows, parchment and office-supply decoration."
+    }
+  ],
+  "legacy_assumptions_superseded": [
+    {
+      "assumption": "Manager coverage may be collective across a model's concepts, and shared_grammar counts as coverage.",
+      "superseded_by": "05_COMPLETE_MANAGER_INTEGRATION.md",
+      "what_changed": "Each of concepts 05-11 demonstrates all 42 required families itself. The four core surfaces that the previous pass recorded as shared_grammar \u2014 Settings Home, Settings Search, Settings Workspace, ordinary setting grammar \u2014 are now proved by routing to them and reading the surface the concept rendered."
+    },
+    {
+      "assumption": "Editable Global/Project/Goal/Host scope and inheritance may be shown.",
+      "superseded_by": "04_PROJECT_ONLY_SETTINGS_AND_COPY.md",
+      "what_changed": "Every editable value belongs to the current Project. No scope selector, no inheritance, no linked Projects, no profiles. The shared vocabulary used by concepts 01-04 still emits 'Inherited \u00b7 <source>'; the new concepts use their own row vocabulary, which has no inherited state at all."
+    },
+    {
+      "assumption": "A generated fixture may stand in for the settings inventory.",
+      "superseded_by": "06_INFORMATION_ARCHITECTURE_AND_DENSITY.md and 12_REPO_BASELINE_AND_KNOWN_FAILURES.md",
+      "what_changed": "All 828 canonical records from Plans/settings_inventory.json are indexed and routable in every new concept. Synthetic volume exists only as a separately marked, off-by-default stress fixture."
+    },
+    {
+      "assumption": "Search may route through a grouped list using visual position.",
+      "superseded_by": "03_HOME_SEARCH_AND_NAVIGATION.md",
+      "what_changed": "Routing is by immutable result id resolved to a destination object. The search-route matrix records, per case, the id clicked and the destination reached."
+    },
+    {
+      "assumption": "The Tome, Command Suite and Tabbed Organizer visual materials may be reproduced.",
+      "superseded_by": "02_SEVEN_CONCEPT_BLUEPRINTS.md",
+      "what_changed": "Those three references are layout-only. Their skins are removed and rebuilt from Puppet Master theme tokens."
+    }
+  ],
+  "current_product_baseline_reviewed": {
+    "file": "Concepts/PMConcept7.html",
+    "settings_surface": "the s4-* family: a hero asking 'What do you want to change?', one large search input with a rotating ghost hint, a category chip rail, a results list, horizontal shelves, and a modal 'bloom' panel where a setting is actually edited; plus a per-project modal that renders 'Inheriting from Global'.",
+    "data": "window.PM_SETTINGS_DATA \u2014 the same 828-record inventory the new concepts consume.",
+    "superseded_here": [
+      "the chip rail plus bloom modal plus no sidebar, which the base packet names as a required supersession and whose command cmd.settings.bloom.open is on the retire/alias list",
+      "the horizontally scrolling shelves, which 03_HOME_SEARCH_AND_NAVIGATION.md forbids",
+      "'Inheriting from Global' in the project settings modal, which the Project-only decision forbids"
+    ],
+    "preserved_here": "general.interaction.settings-search \u2014 'fuzzy-searches every settings row across every tab, including hidden ones' \u2014 is exactly the universal search contract, and the new concepts implement it with an anchored dropdown and exact deep links."
+  },
+  "evidence_that_new_work_does_not_route_through_another_concept": {
+    "static_check": "tools/harness/run.js --suites=static fails a concept whose page, script or stylesheet contains an iframe, the string opus-5-atlas/console/stack/ledger, a reference to another concept-NN page, or a call to PMManagerKit.homeOf / ASSIGNMENT / CONCEPTS / assignedTo.",
+    "runtime_check": "the manager-route matrix crawls every manager destination in every new concept and records, per route, the rendered surface's own data-pm-manager attribute, the retained shell, and whether any cross-concept string appears anywhere in the document.",
+    "shared_layer_guard": "shared2/pm2-managers.js refuses to call PMManagerKit.spec() for an id PMManagerKit.has() reports false for, because that path is the one that renders 'Built in another concept' with a link to opus-5-atlas.html. Every emitted spec is additionally walked and any surviving cross-concept string is rewritten to the concept's own domain destination.",
+    "frozen_originals": "shared/** and the four original pages are untouched; the regression suite loads all four, asserts zero console errors and re-routes into a manager in each."
+  },
+  "subsequent_passes": [
+    {
+      "pass": "compliance re-read of the authority files against the built concepts",
+      "date": "2026-08-19",
+      "why": "The harness was green on every suite. This pass re-read the authority line by line and compared each named behaviour to what was on screen, on the assumption that a passing suite proves only what it was written to check.",
+      "references_opened": [
+        {
+          "path": "authority/base_packet/01_CORE_ARCHITECTURE.md",
+          "opened": true,
+          "bytes": 3362,
+          "sha256": "a4fe99df171e8fc042f32adf12fa4eb92f5e5fdaef9c37f48d9b64b814abcc3d"
+        },
+        {
+          "path": "authority/base_packet/08_CONCEPT_COVERAGE_AND_FIXTURES.md",
+          "opened": true,
+          "bytes": 2898,
+          "sha256": "4806b255783e111a3fea61efd113c5aadd67152b79824ea90907a62d12b4bf72"
+        },
+        {
+          "path": "07_THEME_MOTION_RESPONSIVE_AND_SLINT.md",
+          "opened": true,
+          "bytes": 2699,
+          "sha256": "de34d47d40915012013d802656951f0a3fb3b69f0d6e6f1d6448018ba4298d5c"
+        }
+      ],
+      "requirements_found_unmet_and_fixed": [
+        {
+          "authority": "authority/base_packet/01_CORE_ARCHITECTURE.md:60",
+          "requirement": "The requested subcategory/setting/manager scrolls into view.",
+          "was": "Section-level deep links landed at the top of the page; the requested group sat 1518-2285px below the fold in six of seven concepts.",
+          "now": "Each concept's reveal resolves route.sectionId and scrolls it in, instantly and container-scoped, with the arrival marker on it.",
+          "finding": "SEVEN_NEW_CONCEPTS_FINDINGS.md 1c.2"
+        },
+        {
+          "authority": "authority/base_packet/01_CORE_ARCHITECTURE.md:61",
+          "requirement": "Scrolling updates the active left-nav subcategory.",
+          "was": "Every concept had click-to-jump and none had scroll-to-highlight.",
+          "now": "shared2/pm2-spy.js binds the frozen headless shared/pm-sections.js; each concept paints its own highlight. A controlled jump pins the highlight until the reader's own wheel, touch or scroll key releases it.",
+          "finding": "SEVEN_NEW_CONCEPTS_FINDINGS.md 1c.3"
+        },
+        {
+          "authority": "authority/base_packet/01_CORE_ARCHITECTURE.md:54",
+          "requirement": "The right side is a continuous document of that category's subcategories.",
+          "was": "Concept 10's cascade put one group in the rightmost pane, so it had no continuous document and could not satisfy the scrollspy behaviour at all.",
+          "now": "Its settings pane holds the whole page; the group list beside it is the left-nav that scrolling updates; clicking a group is a controlled jump into the document.",
+          "finding": "SEVEN_NEW_CONCEPTS_FINDINGS.md 1c.4"
+        },
+        {
+          "authority": "authority/base_packet/01_CORE_ARCHITECTURE.md:33-41",
+          "requirement": "Notices separate Needs attention / Continue setup / Recommended.",
+          "was": "One toned list in every concept, which makes an unfinished setup look like a fault.",
+          "now": "PM2States.attentionGroups / attentionFlat supply the three runs; each concept draws the run labels in its own typography.",
+          "finding": "SEVEN_NEW_CONCEPTS_FINDINGS.md 1c.6"
+        },
+        {
+          "authority": "07_THEME_MOTION_RESPONSIVE_AND_SLINT.md:19",
+          "requirement": "Popup menus use the Model/Mode selector family including collision handling, layering, submenus, and open/close behavior.",
+          "was": "Placement, flipping, layering and Escape were built; no concept ever opened a submenu.",
+          "now": "PM2Menu.placeSide and PM2Menu.groupsFor; all seven open a submenu beside its parent, in view, Escape closing one layer.",
+          "finding": "SEVEN_NEW_CONCEPTS_FINDINGS.md 1c.5"
+        },
+        {
+          "authority": "07_THEME_MOTION_RESPONSIVE_AND_SLINT.md:19",
+          "requirement": "All-theme support, including the retro themes' snap.",
+          "was": "Menus are appended to document.body, outside each concept's root, so the root-scoped retro snap never reached them: animationDuration measured 0.12s in all seven under retro-dark.",
+          "now": "The snap rule names the menu classes explicitly; measured 0s in all seven.",
+          "finding": "SEVEN_NEW_CONCEPTS_FINDINGS.md 1c.7"
+        },
+        {
+          "authority": "07_THEME_MOTION_RESPONSIVE_AND_SLINT.md:19",
+          "requirement": "All-theme support, including the two glass palettes.",
+          "was": "Menus set no backdrop filter while --pm-surface-2 is rgba(...,.68) in the glass themes, so page text read through the panel.",
+          "now": "backdrop-filter: var(--pm-surface-blur), the same way shared/pm-shell.css:563 solves it for the app's own popups; plus an inset hairline on an open submenu parent, because glass puts surface-3 within a few percent of surface-2.",
+          "finding": "SEVEN_NEW_CONCEPTS_FINDINGS.md 1c.8"
+        },
+        {
+          "authority": "authority/base_packet/08_CONCEPT_COVERAGE_AND_FIXTURES.md",
+          "requirement": "General fixtures list 'Long explanation' and 'Long localized label' separately.",
+          "was": "One combined fixture, which cannot tell a clipped name from a clipped sentence.",
+          "now": "long-label and long-explanation, each stretching only its own field. 21 fixtures in total.",
+          "finding": "SEVEN_NEW_CONCEPTS_FINDINGS.md 1c.9"
+        },
+        {
+          "authority": "GOAL_PROMPT.md",
+          "requirement": "A result or link routes to the exact domain, page, manager, object, section or row.",
+          "was": "633 of 786 manager roster items were unroutable; 11 of 28 sampled drill-downs landed on a not-found page. Two id vocabularies for one object, and the router treating 'not a search result' as 'does not exist'.",
+          "now": "One vocabulary, and a built spec registers what it contains with the index. 786 of 786 routable; every sampled drill-down lands.",
+          "finding": "SEVEN_NEW_CONCEPTS_FINDINGS.md 1c.1"
+        },
+        {
+          "authority": "03_HOME_SEARCH_AND_NAVIGATION.md - Location and exit",
+          "requirement": "Escape closes the popup first, then moves one Settings level outward, and stops at Settings Home.",
+          "was": "One keypress did both: six of seven concepts closed the theme menu AND navigated away from the row being edited, because a concept's Escape handler sits on document in the same phase as the menu's and stopPropagation does not stop a listener already on that node. The route step also skipped two levels, going from a row straight to the domain.",
+          "now": "pm2-menu.js calls stopImmediatePropagation; every concept's backTarget has a case for a route deeper than a page. All seven walk row to page to domain to Home and stop with Settings open.",
+          "finding": "SEVEN_NEW_CONCEPTS_FINDINGS.md 1c.11"
+        },
+        {
+          "authority": "03_HOME_SEARCH_AND_NAVIGATION.md - Settings Home",
+          "requirement": "A compact Needs attention list with normally two to four unresolved items.",
+          "was": "Splitting the notices into the three required groups left Needs attention holding one item and Continue setup holding three, because a non-responding MCP server and a stale search index were toned as setup.",
+          "now": "Retoned as the faults they are. Home reads 3 / 1 / 1.",
+          "finding": "SEVEN_NEW_CONCEPTS_FINDINGS.md 1c.12"
+        },
+        {
+          "authority": "06_INFORMATION_ARCHITECTURE_AND_DENSITY.md / GOAL_PROMPT.md - no clipped or unreadable text",
+          "requirement": "A setting's own name is legible at every required width.",
+          "was": "Concept 10's continuous document put a whole page in a pane sized for one group; table-layout: fixed subtracts the 208px value and 136px status columns from the name column first, leaving it around 26px, and overflow-wrap on the title let flex shrink it to zero so the name painted over the explanation beside it.",
+          "now": "The settings pane is the wide one; value and status are 190px and 124px; the name cell wraps with an eight-character floor and the row height is a minimum rather than a fixed 32px; the inline explanation is drawn only at four panes, where it has room for a phrase.",
+          "finding": "SEVEN_NEW_CONCEPTS_FINDINGS.md 1c.10b"
+        }
+      ],
+      "superseded_fixture": {
+        "authority": "authority/base_packet/08_CONCEPT_COVERAGE_AND_FIXTURES.md general fixtures list",
+        "item": "Inherited",
+        "ruling": "The 2026-08-18 packet forbids inheritance, scope selectors and linked Projects. The August 8 fixture is superseded; the requested/effective distinction (provider fixture 16) carries the same reader question as a fact about this Project rather than as a scope."
+      },
+      "requirements_fixed": 12,
+      "also_verified_and_already_correct": [
+        "Narrow navigation preserves the route, the selected item, the arrival marker, the search query and the Back destination across a collapse to 760 and back, in all seven concepts; the rail never overlays Settings content.",
+        "No concept exposes global previous/next-manager navigation.",
+        "All 828 canonical inventory records remain indexed and routable in every concept after the object-id convergence."
+      ]
+    }
+  ]
+}

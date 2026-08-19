@@ -106,3 +106,46 @@ with an optional `?demo=<demoStateId>` tail on any of them. Arities are exact: a
 segment is malformed and goes home, while a well-formed route naming something the concept does not
 contain renders home plus an inline notice quoting the link. Those are different failures and they look
 different on purpose.
+
+---
+
+## The seven 2026-08-18 concepts (05–11)
+
+Added under `PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18`. The four concepts above
+are **frozen historical evidence** and were not touched: `shared/**` and their pages are
+byte-identical to their committed state. Everything new lives in `shared2/`, `tools/` and
+the seven directories below.
+
+Under that packet each concept is individually complete — every one carries all 42
+required manager families itself, indexes and routes all **828** canonical records from
+`Plans/settings_inventory.json`, and exposes no scope or inheritance control of any kind.
+
+| Concept | Thesis | Navigation shape |
+|---|---|---|
+| [Directory](concept-05-directory-take-1.html) | a directory you can hold in your head | compact text rail plus a two-column card grid that expands in place |
+| [Editorial](concept-06-directory-take-2.html) | reads like a well-set page | stable narrow rail, single-column rows, sub-navigation nested inside the sheet |
+| [Compendium](concept-07-compendium-workspace.html) | a reference work with a good index | All Settings as a first-class faceted, virtualized destination |
+| [Broadside](concept-08-directory-take-3.html) | broad and approachable | fewer, larger domain cards and unmistakable manager destinations |
+| [Codex](concept-09-tome-tabs.html) | chapter tabs and layered pages | persistent right-edge tab strip over a broad reading canvas |
+| [Command](concept-10-command-suite.html) | keyboard first, panes left to right | multi-pane drill-down with an editor beneath its row |
+| [Folio](concept-11-tabbed-organizer.html) | tabs and sheets that never lose your place | two levels of tabs over cross-sliding sheets |
+
+Concepts 09, 10 and 11 are **rethemes**: their reference boards were a steampunk tome, a
+green terminal and a paper organiser. Only the layout was taken; every surface is built
+from `shared/pm-themes.css` tokens and reads in all eight themes.
+
+```text
+shared2/                        the headless layer these seven share — data, search,
+                                routing, manager semantics, copy, fixtures. It draws nothing.
+  CONTRACT.md                   the API each concept builds against
+  CONCEPT_BRIEF.md              the scope every concept must cover
+  CONCEPT_DIFFERENTIATION.md    how the seven are required to differ
+tools/                          gen-inventory.py, gen-candidates.js, gen-evidence.js,
+                                gen-reports.js, gen-hub.js and the CDP audit harness
+```
+
+Reports for this pass: [test report](SEVEN_NEW_CONCEPTS_TEST_REPORT.md),
+[findings](SEVEN_NEW_CONCEPTS_FINDINGS.md),
+[impact roll-up](SEVEN_NEW_CONCEPTS_IMPACT_REGISTER.json),
+[reference review](REFERENCE_REVIEW_2026-08-18.json). The four older reports at the top of
+this folder belong to the 2026-08-13 pass and are unchanged.

@@ -252,6 +252,15 @@
   var route = { name: "home", a: null, b: null, query: {}, raw: "#/home" };
   var scrollMem = {}, lastQuery = "", lastResults = [], pendingLocate = null, closed = false, lastValidation = null;
   var copyState = { step: 1, source: null, cats: [], preview: null, applied: null };
+  // ---------- runtime-demand continuation (packet 08) ----------
+  var demand = null, staleDemand = {}, installedLocal = {};
+  var ATT_SOURCES = ["managed", "unavailable", "restart", "reconnect", "changed-elsewhere"];
+  function demandToken() { return "cont-" + Date.now().toString(36) + "-" + Math.floor(Math.random() * 46656).toString(36); }
+  function provReady(p) {
+    if (installedLocal[p.id]) return true;
+    return p.readiness.indexOf("not-installed") < 0 && (p.readiness.indexOf("authenticated") >= 0 || p.readiness.indexOf("probe-ok") >= 0);
+  }
+  function destEntries() { return MD.searchEntries(); }
 
   function parseHash() {
     var h = location.hash || "#/home";
@@ -703,6 +712,28 @@
       return '<span class="pm-badge pm-badge-' + (ok ? "ok" : warn ? "warn" : "muted") + '">' + esc(r.replace(/-/g, " ")) + "</span>";
     }).join(" ");
   }
+  function demandBlockHTML(p) {
+    var html = '<div class="d5-sect"><h4>Runtime demand</h4>' +
+      '<div class="pm2-row"><div class="pm2-row-main"><div class="pm2-row-title">Simulate a runtime demand for this CLI</div>' +
+      '<div class="pm2-row-desc">A chat run requests this provider; the originating operation is preserved with a continuation token until setup completes.</div></div>' +
+      '<div class="pm2-row-ctl"><button class="pm-btn pm-btn-sm" data-demandact="simulate" data-prov="' + esc(p.id) + '">Simulate…</button></div></div>';
+    var d = demand && demand.id === p.id ? demand : null;
+    if (d) {
+      if (provReady(p)) {
+        html += '<div class="pm2-row"><div class="pm2-row-main"><div class="pm2-row-title">' + esc(d.op) + ' <span class="pm-badge pm-badge-ok">token ' + esc(d.token) + '</span></div>' +
+          '<div class="pm2-row-desc">Continuation current — the stored token still matches this demand.</div></div>' +
+          '<div class="pm2-row-ctl"><button class="pm-btn pm-btn-primary pm-btn-sm" data-demandact="resume" data-prov="' + esc(p.id) + '">Resume originating operation</button></div></div>';
+      } else {
+        html += '<div class="pm-note" style="margin:4px 2px">' + esc(d.op) + ' holds token ' + esc(d.token) + '; resume unlocks when ' + esc(p.name) + ' reports installed + authenticated.</div>';
+      }
+      html += '<div class="pm2-row"><div class="pm2-row-main"><div class="pm2-row-title">Demand deep link</div>' +
+        '<div class="pm2-row-desc">#/mgr/providers/' + esc(p.id) + '?sec=install — the exact install row for this demand.</div></div>' +
+        '<div class="pm2-row-ctl"><button class="pm-btn pm-btn-sm" data-demandact="open" data-prov="' + esc(p.id) + '">Open install row</button></div></div>';
+    } else if (staleDemand[p.id]) {
+      html += '<div class="pm-note" style="margin:4px 2px">Continuation stale: "' + esc(staleDemand[p.id].op) + '" (token ' + esc(staleDemand[p.id].token) + ') was superseded by a newer runtime demand; the stored token no longer matches. Simulate again to preserve a new operation.</div>';
+    }
+    return html + "</div>";
+  }
   function providerOverview() {
     var ready = MD.providers.filter(function (p) { return p.readiness.indexOf("probe-ok") >= 0 || p.readiness.indexOf("authenticated") >= 0; }).length;
     var refreshing = Object.keys(S2.state.ops).some(function (k) { var o = S2.state.ops[k]; return o.title === "Refresh readiness" && o.state !== "completed" && o.state !== "failed" && o.state !== "cancelled"; });
@@ -778,6 +809,7 @@
         '<div class="pm-note" style="margin:6px 2px">Host: Desktop — Windows 11 · Environment: this Puppet Master install.</div></div>';
       html += '<div class="d5-sect"><h4>Update lifecycle (policy: ' + esc(p.updatePolicy) + ")</h4>" + updateBlock(p) + "</div>";
       html += deferredCard(DEF["installation"]);
+      html += demandBlockHTML(p);
     } else if (sec === "logs") {
       html += '<div class="d5-sect"><h4>Readiness evidence</h4>';
       p.logs.forEach(function (l) { html += '<div class="pm-log">• ' + esc(l) + "</div>"; });
@@ -802,9 +834,10 @@
   }
 
   // ---------- all settings ----------
-  var allState = { cat: "", type: "", tier: "", changed: false, managed: false, syn: false };
+  var allState = { cat: "", type: "", tier: "", kind: "", changed: false, managed: false, attention: false, syn: false };
   var vlist = null;
   function allFiltered() {
+    if (allState.kind === "dest") return destEntries();
     var rows = D.settings.filter(function (s) {
       if (allState.cat && s.id.split(".")[0] !== allState.cat) return false;
       if (allState.type && s.type !== allState.type) return false;
@@ -812,6 +845,7 @@
       var st = S2.getSetting(s.id);
       if (allState.changed && (!st || st.source === "default")) return false;
       if (allState.managed && (!st || (st.source !== "managed" && st.source !== "unavailable"))) return false;
+      if ((allState.attention || allState.kind === "attention") && (!st || ATT_SOURCES.indexOf(st.source) < 0)) return false;
       return true;
     });
     if (allState.syn) {
@@ -832,6 +866,8 @@
       '<select class="pm-select" data-f="cat"><option value="">All categories</option>' + D.categories.map(function (c) { return '<option value="' + c.id + '">' + esc(c.title) + "</option>"; }).join("") + "</select>" +
       '<select class="pm-select" data-f="type"><option value="">All types</option>' + Object.keys(types).map(function (t) { return "<option>" + t + "</option>"; }).join("") + "</select>" +
       '<select class="pm-select" data-f="tier"><option value="">All tiers</option><option>simple</option><option>standard</option><option>advanced</option></select>' +
+      '<select class="pm-select" data-f="kind"><option value="">All record kinds</option><option value="setting">Setting rows</option><option value="dest">Manager/action/diagnostic/workflow destinations</option><option value="attention">Attention (scenario-marked)</option></select>' +
+      '<label class="pm-note" style="display:flex;gap:6px;align-items:center"><input type="checkbox" data-f="attention"> Attention-marked rows</label>' +
       '<label class="pm-note" style="display:flex;gap:6px;align-items:center"><input type="checkbox" data-f="changed"> Changed from default</label>' +
       '<label class="pm-note" style="display:flex;gap:6px;align-items:center"><input type="checkbox" data-f="managed"> Managed / unavailable</label>' +
       '<label class="pm-note" style="display:flex;gap:6px;align-items:center"><input type="checkbox" data-f="syn"> Synthetic stress +2000</label>' +
@@ -843,6 +879,7 @@
   function bindAll() {
     var host = content.querySelector("[data-test='vlist']");
     if (!host) return;
+    vlist = null; // fresh host per mount; a stale list points at a detached node
     function apply() {
       var data = allFiltered();
       content.querySelector("[data-allcount]").textContent = data.length + " rows" + (allState.syn ? " (incl. synthetic)" : "");
@@ -851,6 +888,10 @@
           host: host, rowHeight: 64,
           data: data,
           render: function (s) {
+            if (s.rid) {
+              return '<div class="d5-vrow d5-vdest" data-row="' + esc(s.rid) + '" data-rdest="1"><div><b>' + esc(s.label) + ' <span class="pm-badge pm-badge-' + (s.type === "unavailable" ? "muted" : "info") + '">' + esc((s.type || "").replace(/_/g, " ")) + '</span></b><div class="p">' + esc((s.path || []).join("  ›  ")) + (s.note ? " — " + esc(s.note) : "") + '</div></div>' +
+                '<div><span class="pm-note">' + (s.dest ? "opens destination" : "not available") + "</span></div></div>";
+            }
             var st = S2.getSetting(s.id);
             var si = s.id.split(".");
             var cat = D.byCategory(si[0]);
@@ -861,6 +902,14 @@
         });
       } else vlist.set(data);
       if (!host.__d5hook) { host.__d5hook = 1; host.addEventListener("scroll", function () { setTimeout(function () { if (vlist) vlist.refresh(); }, 0); }); }
+      if (!host.__d5rhook) { host.__d5rhook = 1; host.addEventListener("click", function (e) {
+        var row = e.target.closest("[data-rdest]");
+        if (!row) return;
+        var entry = SR.byRid(row.getAttribute("data-row"));
+        if (!entry) return;
+        if (!entry.dest) { S2.receipt("Not available in this product", entry.label + ": " + (entry.note || "no destination."), "info"); return; }
+        routeToDest(entry.dest);
+      }); }
     }
     content.querySelectorAll("[data-f]").forEach(function (el) {
       el.addEventListener("change", function () {
@@ -868,6 +917,7 @@
         if (f === "changed") allState.changed = el.checked;
         else if (f === "managed") allState.managed = el.checked;
         else if (f === "syn") allState.syn = el.checked;
+        else if (f === "attention") allState.attention = el.checked;
         else allState[f] = el.value;
         apply();
       });
@@ -1066,7 +1116,7 @@
       var op = S2.beginOp({ title: "Install " + p.name, phase: "Downloading from official source", determinate: true, total: 4, wait: "waiting for package signature check" });
       setTimeout(function () { S2.advanceOp(op, { completed: 2, human_phase: "Verifying signature" }); }, 400);
       setTimeout(function () { S2.advanceOp(op, { completed: 4, human_phase: "Probing" }); }, 800);
-      setTimeout(function () { S2.finishOp(op, "completed", "Installed"); S2.receipt("Install complete", p.name + " installed from the official source for Desktop — Windows 11.", "ok"); }, 1200);
+      setTimeout(function () { installedLocal[p.id] = true; S2.finishOp(op, "completed", "Installed"); S2.receipt("Install complete", p.name + " installed from the official source for Desktop — Windows 11.", "ok"); }, 1200);
     }); });
     content.querySelectorAll("[data-upd]").forEach(function (b) { b.addEventListener("click", function () {
       var p = PROV[b.getAttribute("data-upd")];
@@ -1102,6 +1152,26 @@
         S2.receipt("Validation passed", p.name + " passed CLI, sign-in, and probe checks.", "ok");
       }
       render();
+    }); });
+    content.querySelectorAll("[data-demandact]").forEach(function (b) { b.addEventListener("click", function () {
+      var pid = b.getAttribute("data-prov");
+      var p = PROV[pid];
+      if (!p) return;
+      var act = b.getAttribute("data-demandact");
+      if (act === "simulate") {
+        if (demand && demand.id !== pid) staleDemand[demand.id] = demand;
+        demand = { id: pid, op: "Chat run requesting " + p.name, token: demandToken() };
+        S2.receipt("Provider Setup Required", p.name + " is not ready for the originating operation (" + demand.op + "). The operation is preserved with continuation token " + demand.token + ". Deep link: #/mgr/providers/" + pid + "?sec=install. Resume only while the continuation is still current.", "info");
+        render();
+      } else if (act === "resume") {
+        if (demand && demand.id === pid && provReady(p)) {
+          S2.receipt("Operation resumed", demand.op + " resumes on " + p.name + "; continuation token " + demand.token + " matched the stored demand.", "ok");
+          demand = null;
+          render();
+        }
+      } else if (act === "open") {
+        go("mgr", "providers", pid, { sec: "install" });
+      }
     }); });
     M2.bindRows(content);
     bindLocal(content);

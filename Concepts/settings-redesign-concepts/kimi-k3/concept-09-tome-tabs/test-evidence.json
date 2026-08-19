@@ -1,34 +1,85 @@
 {
- "schema_id": "pm.settings_bakeoff.test_evidence.v1",
- "concept": "concept-09-tome-tabs",
- "static_checks": {
-  "evidence-json-parse": "pass (generated and parsed at build time)",
-  "coverage-families-verbatim": "pass (42 required family strings named exactly)",
-  "coverage-forbidden-statuses": "pass (no shared_grammar, no missing)",
-  "concept-js-syntax": "pending (node --check by concept builder)"
- },
- "search_cases": "see search-route-matrix.json",
- "manager_routes": "see manager-route-matrix.json",
- "theme_width_matrix": {
-  "themes": [
-   "Friendly Dark",
-   "Friendly Light",
-   "Glass Dark",
-   "Glass Light",
-   "Retro Dark",
-   "Retro Light",
-   "Basic Dark",
-   "Basic Light"
-  ],
-  "widths": [
-   760,
-   900,
-   1280,
-   1700,
-   2200,
-   2500
-  ],
-  "result": "pending-verification-phase"
- },
- "notes": "Browser/interaction evidence appended by the verification phase."
+  "schema_id": "pm.settings_bakeoff.test_evidence.v1",
+  "concept": "concept-09-tome-tabs",
+  "static_checks": {
+    "evidence-json-parse": "pass (generated and parsed at build time)",
+    "coverage-families-verbatim": "pass (42 required family strings named exactly)",
+    "coverage-forbidden-statuses": "pass (no shared_grammar, no missing)",
+    "concept-js-syntax": "pass (node --check concept-09.js, verification phase 2026-08-18)"
+  },
+  "search_cases": "see search-route-matrix.json",
+  "manager_routes": "see manager-route-matrix.json",
+  "theme_width_matrix": {
+    "themes": [
+      "Friendly Dark",
+      "Friendly Light",
+      "Glass Dark",
+      "Glass Light",
+      "Retro Dark",
+      "Retro Light",
+      "Basic Dark",
+      "Basic Light"
+    ],
+    "widths": [
+      760,
+      900,
+      1280,
+      1700,
+      2200,
+      2500
+    ],
+    "result": "pass — 48/48 themexwidth combos: zero console errors, no horizontal overflow in .pmx-stage (scrollWidth <= clientWidth+1), Home search and all 24 destination cards visible at every combo"
+  },
+  "notes": "Browser verification completed 2026-08-18 by verification phase (tab v4). See search-route-matrix.json and manager-route-matrix.json for per-case records.",
+  "browser_checks": {
+    "date": "2026-08-18",
+    "browser": "headless Chromium (omp browser tool), tab v4, viewport 1400x900",
+    "load": "pass — re-verified 2026-08-19: zero console errors, zero page errors on load and during full exercise (reload + search + manager + copy view + demo drawer)",
+    "theme_width_matrix": "pass — 48/48 combos clean (see theme_width_matrix.result). Screenshots at 760/1280/2500 in friendly-dark + glass-dark captured (tool temp dir); no clipping/overlap in concept content. NOTE: shell controls are LIVE as of 2026-08-19 (PMShell.init() wired at startup): theme select switches data-theme (friendly-dark→friendly-light observed), width select applies --hub-page-width via PMBridge.applyLocal, motion button toggles data-motion full→reduced.",
+    "reduced_motion": "pass — data-motion=reduced renders Home and Providers manager identically; concept CSS has :root[data-motion=reduced] guards; zero console errors",
+    "search_exactness": "pass — re-verified 2026-08-19 (tab r3) after the navigateToEntry subpage-resolution/copy-route fixes: 13/13 navigable cases fully pass. The four previously failing cases now land correctly: r_6bfe03cb909de537 (providers Rate Limits local tab aria-selected=true, manager content located via .pmv2-locate — header + local tabs + roster + detail, not header-only), r_5a0b8b4fda639a03 (memory Retention local tab aria-selected=true, manager content located), r_8b0c67409da5d3a8 (copy action opens the dedicated stepwise Copy Settings view — numbered steps 1 Select Source / 2 Select Categories / 3 Review & Confirm / 4 Complete visible), r_773d3ba5904888a1 (lifecycle help result lands on the Settings Lifecycle manager; the locate fallback chain highlights the manager container data-manager-id=\"lifecycle\" — header + tabs + content — and moves focus to it). Back restores query + highlighted result in all 13; session case 13 pass.",
+    "manager_isolation": "pass — 48/48 manager routes visited via concept UI; URL never changes, no iframes, shell retained (Back + breadcrumbs + search), real content, zero console errors",
+    "copy_flow": "pass — re-verified 2026-08-19 end-to-end: CopyEngine constructed correctly (new fixed); numbered steps render (1 Select Source / 2 Select Categories / 3 Review & Confirm → 4 Complete). Source proj-atlas-agency + categories ai+general → review totals 57 Add / 58 Replace / 47 Unchanged / 4 Unavailable / 22 Conflict → Confirm and apply → receipt with restore-point reference (\"Restore point: Before copy from proj-atlas-agency\") → Roll back this copy → \"Rolled back copy from proj-atlas-agency\"",
+    "scenarios": "pass — re-verified 2026-08-19 (tab r3): truthful .ct-scenario-strip renders the active scenario projection message (Offline: \"You are offline. Changes will apply when the connection returns. Cached values remain visible while refreshing.\"; Managed: \"Managed by organization policy. You can view but not change this.\"; Loading Cached: \"Refreshing… showing last known values. Cached values remain visible while refreshing.\"). The strip's Clear button clears the scenario. Re-clicking the active scenario button in the drawer now clears it (stale-closure fix): Offline applied → aria-pressed=true + strip shown; re-click → aria-pressed=false + strip removed while the drawer stays open. Drawer close + reopen syncs pressed state with reality: verified both after an in-drawer clear and after clearing via the strip Clear button while the drawer was closed — on reopen zero of the 18 scenario buttons are aria-pressed=true.",
+    "edge_tab_strip": "pass — persistent .ct-edge chapter tab strip (15 tabs: Home + 12 chapters + All Settings + Copy Settings) visible and functional at 1280/1700/2500; collapses to .ct-chapters-btn push navigation (.ct-pushmenu) at <=900; push menu navigates and closes correctly",
+    "vocabulary": "pass — no steampunk/parchment/brass/sepia/tome/fantasy vocabulary in visible copy or class names (classes are ct-*); all colors from var(--pm-*) tokens per concept-09.css contract; computed styles change per theme",
+    "known_issues": [],
+    "drawer_guard": "pass — re-verified 2026-08-19: #ct-demo.pm-drawer computes display:none while hidden (shared .pm-drawer[hidden]{display:none!important} guard); opens on Scenarios click, closes back to display:none (scrim too)",
+    "shell_controls": "pass — re-verified 2026-08-19: PMShell.init() called at startup; theme/width/motion shell controls all live (see theme_width_matrix note)",
+    "visual_audit_fixes": "pass — 2026-08-19 (tab fv4): all five visual-audit findings fixed in concept-09.js/concept-09.css and re-verified in-browser. (1) Home attention rows rebuilt as .ct-attn-row grid (auto minmax(0,1fr), max-inline-size 100%, overflow-wrap anywhere): rows now wrap to two lines inside the container — rowW 516 == list width, scrollWidth 514 <= clientWidth at 1280; at 760 rowW 658, scrollWidth 656, zero .pmx-stage overflow (was 763px-in-500px and 121px overflow). (2) Manager local tabs deduplicated: subpages with id/title 'overview' are filtered and their selection maps onto the explicit Overview tab — Providers strip renders exactly one Overview tab (Overview/Models/Credentials/Rate Limits/Usage/Installation/Logs) at 1280+760, friendly-dark + glass-dark. (3) Roster name/count collision fixed: .ct-obj-label/.ct-obj-sub now display block — 'Anthropic' label and '2 accounts · …' sub stack on separate lines (labelBottom == subTop, no overlap). (4) Breadcrumb no longer truncated: .ct-crumbs wraps (nowrap/overflow/180px caps removed; narrow 110px cap removed) — full 'Settings › AI Brains & Providers › Providers' visible, wrapping to a second line when the search box needs room. (5) .pm-notice { border-inline-start: none } appended — computed borderInlineStartWidth 0px on the Home critical banner. Regression: search landing ('rate limits' → Providers manager, Rate Limits local tab aria-selected=true, content located) and stepwise Copy Settings view (4 numbered steps render; source+category selection advances to step 2) both still fine; zero console/page errors across reload + all exercises; zero horizontal stage overflow at 1280 and 760 friendly-dark and 1280 glass-dark. Screenshots in tool temp dir.",
+    "reverification": "2026-08-19 (tab r2): all previously-failed probes re-run after fixes (PMShell.init wiring, result-row data-arg delegation, CopyEngine new, scenario strip, drawer [hidden] guard). search_exactness and scenarios flipped from fail to partial with exact remaining reasons; copy_flow flipped to pass; drawer guard + shell controls confirmed. 2026-08-19 (tab r3): the four remaining defects re-verified after fixes — navigateToEntry now resolves dest.section||dest.page against manager subpage ids and label slugs (providers Rate Limits, memory Retention both aria-selected with content located), the copy action result routes to view=copy (stepwise numbered steps visible), the lifecycle help result lands on the manager with the locate fallback chain highlighting the manager container, and the scenario drawer re-click toggles off (aria-pressed=false, strip gone) with pressed state re-synced on drawer open. search_exactness and scenarios flipped from partial to pass (13/13); known_issues cleared; zero console/page errors observed during the r3 pass."
+  },
+  "scale_stress": {
+    "scope": "shared headless search/index layer + concept-native virtualized lists",
+    "synthetic_records_injected": 2400,
+    "total_index_entries": 3478,
+    "real_inventory_records": 828,
+    "synthetic_replaces_product_data": false,
+    "results_bounded": {
+      "limit": 30,
+      "bounded_flag_observed": true
+    },
+    "query_latency_ms_observed": [
+      13.9,
+      17.2,
+      13.2,
+      12.7
+    ],
+    "managers_instantiated_during_search": 0,
+    "list_rendering": "virtualized/windowed per concept compendium (browser-verified)",
+    "method": "node headless probe of PM_V2_SEARCH over the real index + injected synthetic rows, isolated sessions per query",
+    "result": "pass"
+  },
+  "audit_2026_08_19_second_pass": {
+    "scope": "independent audit of the seven-new-concepts work; narrow-width shell top bar clipping",
+    "result": "pass",
+    "detail": "Second-pass independent audit 2026-08-19 (browser-measured, ConceptHub-served pages): at 760/900px page widths the shared shell top bar content (~962px) exceeded the frame and clipped the demo control cluster (Scenarios, theme select, motion, panel toggles). Fixed concept-locally: @container pmx (max-width: 990px) wraps .pmx-topbar to two rows and hides decorative .pmx-model chips; shared pm-shell.css is untouched (frozen with concepts 01-04). Re-verified at exactly 760px and 900px page width: scrollWidth==clientWidth, all six shell controls inside the frame rect, theme select exposes all 8 themes and is clickable, topbar height 60.5px with no overlap of stage content, zero console errors. Standalone narrow (625px frame) also passes with the width select reachable.",
+    "widths_verified": [
+      760,
+      900,
+      625
+    ],
+    "console_errors": 0,
+    "shell_toggle_icon_fix": "User-reported blank top-bar buttons: the shell demo toggles (reduced motion, side/chat/bottom panel) carry bare SVGs with no intrinsic size and no shared CSS rule sizes them, so they painted 0x0 (pre-existing shared-shell markup issue, identical in 01-04). Fixed concept-locally: .pmx-controls [data-shell-motion] > svg, .pmx-controls [data-shell-toggle] > svg { inline-size: 14px; block-size: 14px; }. Browser-verified on all seven concepts: rule live in CSSOM, all four icons 14x14, Scenarios icon unchanged (14x14), toggle buttons still function, zero console errors."
+  }
 }
