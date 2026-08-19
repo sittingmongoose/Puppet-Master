@@ -1,0 +1,2665 @@
+{
+ "schema_id": "pm.settings_bakeoff_search_route_matrix.v2",
+ "concept_id": "concept-09-tome-tabs",
+ "model": "Opus 5",
+ "generated": "2026-08-19",
+ "method": "Each query was typed into this concept's own search field; results were clicked by their immutable result id and the landing surface, selected object, section, row, focus target and locator highlight were read from the live DOM.",
+ "routing_rule": "PM2Index.byId(resultId).destination — never a rendered array index.",
+ "summary": {
+  "cases": 64,
+  "passed": 64,
+  "duplicate_label_cases": 2,
+  "duplicates_distinct": true,
+  "pass": true
+ },
+ "duplicate_labels": [
+  {
+   "label": "ImageMagick",
+   "ids": [
+    "r:object:manager-providers/installations/scale-inst-72",
+    "r:object:manager-providers/installations/scale-inst-97",
+    "r:object:manager-providers/installations/scale-inst-22",
+    "r:object:manager-providers/installations/scale-inst-47"
+   ],
+   "paths": [
+    "AI Brains & Providers › Providers, accounts and models › Home TrueNAS › Installations › scale-inst-72",
+    "AI Brains & Providers › Providers, accounts and models › Home TrueNAS › Installations › scale-inst-97",
+    "AI Brains & Providers › Providers, accounts and models › Home TrueNAS › Installations › scale-inst-22",
+    "AI Brains & Providers › Providers, accounts and models › Home TrueNAS › Installations › scale-inst-47"
+   ]
+  },
+  {
+   "label": "uv",
+   "ids": [
+    "r:object:manager-providers/installations/scale-inst-7",
+    "r:object:manager-providers/installations/scale-inst-32"
+   ],
+   "paths": [
+    "AI Brains & Providers › Providers, accounts and models › Home TrueNAS › Installations › scale-inst-7",
+    "AI Brains & Providers › Providers, accounts and models › Home TrueNAS › Installations › scale-inst-32"
+   ]
+  }
+ ],
+ "cases": [
+  {
+   "query": "theme",
+   "note": null,
+   "result_id": "r:setting:general.visual.theme",
+   "displayed_path": "General & Appearance › Visual Style › Theme",
+   "expected_destination": {
+    "domainId": "general",
+    "pageId": "general.visual",
+    "sectionId": "general.visual.s01",
+    "settingId": "general.visual.theme",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/general/general.visual/general.visual.s01/general.visual.theme",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsGeneral & AppearanceVisual Style",
+    "hasBack": true,
+    "backLabel": "Back to Visual Style",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Visual Style"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "general.visual.theme",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "general.visual.theme",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 520
+   },
+   "back_restores_query": "theme",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "theme",
+   "note": null,
+   "result_id": "r:setting:general.visual.theme-mode",
+   "displayed_path": "General & Appearance › Visual Style › Theme",
+   "expected_destination": {
+    "domainId": "general",
+    "pageId": "general.visual",
+    "sectionId": "general.visual.s01",
+    "settingId": "general.visual.theme-mode",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/general/general.visual/general.visual.s01/general.visual.theme-mode",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsGeneral & AppearanceVisual Style",
+    "hasBack": true,
+    "backLabel": "Back to Visual Style",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Visual Style"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "general.visual.theme-mode",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "general.visual.theme-mode",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 560
+   },
+   "back_restores_query": "theme",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "theme",
+   "note": null,
+   "result_id": "r:help:commands-and-shortcuts",
+   "displayed_path": "Skills, Plugins & Commands › Commands and shortcuts",
+   "expected_destination": {
+    "domainId": "extensions",
+    "pageId": null,
+    "sectionId": null,
+    "settingId": null,
+    "managerId": "manager-commands",
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/m/manager-commands",
+    "surface": "manager",
+    "managerId": "manager-commands",
+    "objectId": "cmd-deploy",
+    "breadcrumb": "SettingsSkills, Plugins & CommandsCommands and shortcuts",
+    "hasBack": true,
+    "backLabel": "Back to Skills, Plugins & Commands",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Commands and shortcuts"
+   },
+   "focus": {
+    "tag": "body",
+    "row": null,
+    "isBody": true
+   },
+   "locator_highlight": null,
+   "back_restores_query": "theme",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "notifcations",
+   "note": "typo tolerance",
+   "result_id": "r:setting:safety.approvals.alert-channel",
+   "displayed_path": "Permissions & Safety › Approvals & Gates › Approval",
+   "expected_destination": {
+    "domainId": "safety",
+    "pageId": "safety.approvals",
+    "sectionId": "safety.approvals.s03",
+    "settingId": "safety.approvals.alert-channel",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/safety/safety.approvals/safety.approvals.s03/safety.approvals.alert-channel",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsPermissions & SafetyApprovals & Gates",
+    "hasBack": true,
+    "backLabel": "Back to Approvals & Gates",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Approvals & Gates"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "safety.approvals.alert-channel",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "safety.approvals.alert-channel",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 588
+   },
+   "back_restores_query": "notifcations",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "notifcations",
+   "note": "typo tolerance",
+   "result_id": "r:setting:general.interaction.notification-method",
+   "displayed_path": "General & Appearance › Interaction & Defaults › Sound effects",
+   "expected_destination": {
+    "domainId": "general",
+    "pageId": "general.interaction",
+    "sectionId": "general.interaction.s02",
+    "settingId": "general.interaction.notification-method",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/general/general.interaction/general.interaction.s02/general.interaction.notification-method",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsGeneral & AppearanceInteraction & Defaults",
+    "hasBack": true,
+    "backLabel": "Back to Interaction & Defaults",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Interaction & Defaults"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "general.interaction.notification-method",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "general.interaction.notification-method",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 592
+   },
+   "back_restores_query": "notifcations",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "notifcations",
+   "note": "typo tolerance",
+   "result_id": "r:help:install-a-provider-cli",
+   "displayed_path": "AI Brains & Providers › Providers, accounts and models",
+   "expected_destination": {
+    "domainId": "ai",
+    "pageId": null,
+    "sectionId": null,
+    "settingId": null,
+    "managerId": "manager-providers",
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/m/manager-providers",
+    "surface": "manager",
+    "managerId": "manager-providers",
+    "objectId": "claude",
+    "breadcrumb": "SettingsAI Brains & ProvidersProviders, accounts and models",
+    "hasBack": true,
+    "backLabel": "Back to AI Brains & Providers",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Providers, accounts and models"
+   },
+   "focus": {
+    "tag": "body",
+    "row": null,
+    "isBody": true
+   },
+   "locator_highlight": null,
+   "back_restores_query": "notifcations",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "api key",
+   "note": "duplicate labels across providers",
+   "result_id": "r:setting:ai.accounts.cursor-api-key",
+   "displayed_path": "AI Brains & Providers › Accounts & Sign-in › API keys and tokens",
+   "expected_destination": {
+    "domainId": "ai",
+    "pageId": "ai.accounts",
+    "sectionId": "ai.accounts.s03",
+    "settingId": "ai.accounts.cursor-api-key",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/ai/ai.accounts/ai.accounts.s03/ai.accounts.cursor-api-key",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsAI Brains & ProvidersAccounts & Sign-in",
+    "hasBack": true,
+    "backLabel": "Back to Accounts & Sign-in",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Accounts & Sign-in"
+   },
+   "focus": {
+    "tag": "input",
+    "row": "ai.accounts.cursor-api-key",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "ai.accounts.cursor-api-key",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 595
+   },
+   "back_restores_query": "api key",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "api key",
+   "note": "duplicate labels across providers",
+   "result_id": "r:setting:ai.accounts.openai-api-key",
+   "displayed_path": "AI Brains & Providers › Accounts & Sign-in › API keys and tokens",
+   "expected_destination": {
+    "domainId": "ai",
+    "pageId": "ai.accounts",
+    "sectionId": "ai.accounts.s03",
+    "settingId": "ai.accounts.openai-api-key",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/ai/ai.accounts/ai.accounts.s03/ai.accounts.openai-api-key",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsAI Brains & ProvidersAccounts & Sign-in",
+    "hasBack": true,
+    "backLabel": "Back to Accounts & Sign-in",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Accounts & Sign-in"
+   },
+   "focus": {
+    "tag": "input",
+    "row": "ai.accounts.openai-api-key",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "ai.accounts.openai-api-key",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 594
+   },
+   "back_restores_query": "api key",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "api key",
+   "note": "duplicate labels across providers",
+   "result_id": "r:help:why-read-only",
+   "displayed_path": "System & Advanced › Export, import, copy and reset settings",
+   "expected_destination": {
+    "domainId": "system",
+    "pageId": null,
+    "sectionId": null,
+    "settingId": null,
+    "managerId": "manager-settings-lifecycle",
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/m/manager-settings-lifecycle",
+    "surface": "manager",
+    "managerId": "manager-settings-lifecycle",
+    "objectId": null,
+    "breadcrumb": "SettingsSystem & AdvancedExport, import, copy and reset settings",
+    "hasBack": true,
+    "backLabel": "Back to System & Advanced",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Export, import, copy and reset settings"
+   },
+   "focus": {
+    "tag": "body",
+    "row": null,
+    "isBody": true
+   },
+   "locator_highlight": null,
+   "back_restores_query": "api key",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "rate limit",
+   "note": "grouped results",
+   "result_id": "r:setting:ai.accounts.cooldown-policy",
+   "displayed_path": "AI Brains & Providers › Accounts & Sign-in › Quota profile",
+   "expected_destination": {
+    "domainId": "ai",
+    "pageId": "ai.accounts",
+    "sectionId": "ai.accounts.s07",
+    "settingId": "ai.accounts.cooldown-policy",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/ai/ai.accounts/ai.accounts.s07/ai.accounts.cooldown-policy",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsAI Brains & ProvidersAccounts & Sign-in",
+    "hasBack": true,
+    "backLabel": "Back to Accounts & Sign-in",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Accounts & Sign-in"
+   },
+   "focus": {
+    "tag": "input",
+    "row": "ai.accounts.cooldown-policy",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "ai.accounts.cooldown-policy",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 601
+   },
+   "back_restores_query": "rate limit",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "rate limit",
+   "note": "grouped results",
+   "result_id": "r:setting:general.interaction.tray-notifications",
+   "displayed_path": "General & Appearance › Interaction & Defaults › Sound effects",
+   "expected_destination": {
+    "domainId": "general",
+    "pageId": "general.interaction",
+    "sectionId": "general.interaction.s02",
+    "settingId": "general.interaction.tray-notifications",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/general/general.interaction/general.interaction.s02/general.interaction.tray-notifications",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsGeneral & AppearanceInteraction & Defaults",
+    "hasBack": true,
+    "backLabel": "Back to Interaction & Defaults",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Interaction & Defaults"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "general.interaction.tray-notifications",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "general.interaction.tray-notifications",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 585
+   },
+   "back_restores_query": "rate limit",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "rate limit",
+   "note": "grouped results",
+   "result_id": "r:help:connect-a-provider",
+   "displayed_path": "AI Brains & Providers › Providers, accounts and models",
+   "expected_destination": {
+    "domainId": "ai",
+    "pageId": null,
+    "sectionId": null,
+    "settingId": null,
+    "managerId": "manager-providers",
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/m/manager-providers",
+    "surface": "manager",
+    "managerId": "manager-providers",
+    "objectId": "claude",
+    "breadcrumb": "SettingsAI Brains & ProvidersProviders, accounts and models",
+    "hasBack": true,
+    "backLabel": "Back to AI Brains & Providers",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Providers, accounts and models"
+   },
+   "focus": {
+    "tag": "body",
+    "row": null,
+    "isBody": true
+   },
+   "locator_highlight": null,
+   "back_restores_query": "rate limit",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "openai",
+   "note": null,
+   "result_id": "r:setting:ai.accounts.openai-api-key",
+   "displayed_path": "AI Brains & Providers › Accounts & Sign-in › API keys and tokens",
+   "expected_destination": {
+    "domainId": "ai",
+    "pageId": "ai.accounts",
+    "sectionId": "ai.accounts.s03",
+    "settingId": "ai.accounts.openai-api-key",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/ai/ai.accounts/ai.accounts.s03/ai.accounts.openai-api-key",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsAI Brains & ProvidersAccounts & Sign-in",
+    "hasBack": true,
+    "backLabel": "Back to Accounts & Sign-in",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Accounts & Sign-in"
+   },
+   "focus": {
+    "tag": "input",
+    "row": "ai.accounts.openai-api-key",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "ai.accounts.openai-api-key",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 594
+   },
+   "back_restores_query": "openai",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "openai",
+   "note": null,
+   "result_id": "r:setting:ai.models.system-role-name",
+   "displayed_path": "AI Brains & Providers › Models & Defaults › Role name",
+   "expected_destination": {
+    "domainId": "ai",
+    "pageId": "ai.models",
+    "sectionId": "ai.models.s08",
+    "settingId": "ai.models.system-role-name",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/ai/ai.models/ai.models.s08/ai.models.system-role-name",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsAI Brains & ProvidersModels & Defaults",
+    "hasBack": true,
+    "backLabel": "Back to Models & Defaults",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Models & Defaults"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "ai.models.system-role-name",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "ai.models.system-role-name",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 595
+   },
+   "back_restores_query": "openai",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "openai",
+   "note": null,
+   "result_id": "r:help:where-notifications-go",
+   "displayed_path": "General & Appearance › Notifications, destinations and event routing",
+   "expected_destination": {
+    "domainId": "general",
+    "pageId": null,
+    "sectionId": null,
+    "settingId": null,
+    "managerId": "manager-notifications",
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/m/manager-notifications",
+    "surface": "manager",
+    "managerId": "manager-notifications",
+    "objectId": "dest-inbox",
+    "breadcrumb": "SettingsGeneral & AppearanceNotifications, destinations and event routing",
+    "hasBack": true,
+    "backLabel": "Back to General & Appearance",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Notifications, destinations and event routing"
+   },
+   "focus": {
+    "tag": "body",
+    "row": null,
+    "isBody": true
+   },
+   "locator_highlight": null,
+   "back_restores_query": "openai",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "context window",
+   "note": "duplicate labels",
+   "result_id": "r:setting:general.interaction.context-usage",
+   "displayed_path": "General & Appearance › Interaction & Defaults › Context usage",
+   "expected_destination": {
+    "domainId": "general",
+    "pageId": "general.interaction",
+    "sectionId": "general.interaction.s05",
+    "settingId": "general.interaction.context-usage",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/general/general.interaction/general.interaction.s05/general.interaction.context-usage",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsGeneral & AppearanceInteraction & Defaults",
+    "hasBack": true,
+    "backLabel": "Back to Interaction & Defaults",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Interaction & Defaults"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "general.interaction.context-usage",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "general.interaction.context-usage",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 598
+   },
+   "back_restores_query": "context window",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "context window",
+   "note": "duplicate labels",
+   "result_id": "r:setting:memory.limits.memory-context-window",
+   "displayed_path": "Memory & Context › Limits & Budgets › Token budget",
+   "expected_destination": {
+    "domainId": "memory",
+    "pageId": "memory.limits",
+    "sectionId": "memory.limits.s01",
+    "settingId": "memory.limits.memory-context-window",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/memory/memory.limits/memory.limits.s01/memory.limits.memory-context-window",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsMemory & ContextLimits & Budgets",
+    "hasBack": true,
+    "backLabel": "Back to Limits & Budgets",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Limits & Budgets"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "memory.limits.memory-context-window",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "memory.limits.memory-context-window",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 582
+   },
+   "back_restores_query": "context window",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "context window",
+   "note": "duplicate labels",
+   "result_id": "r:object:manager-providers/installations/inst-codex-standalone",
+   "displayed_path": "AI Brains & Providers › Providers, accounts and models › This computer · macOS 15.4 › Installations",
+   "expected_destination": {
+    "domainId": "ai",
+    "pageId": null,
+    "sectionId": null,
+    "settingId": null,
+    "managerId": "manager-providers",
+    "objectId": "inst-codex-standalone",
+    "sectionKey": "installations",
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/m/manager-providers/inst-codex-standalone/installations",
+    "surface": "manager",
+    "managerId": "manager-providers",
+    "objectId": "claude",
+    "breadcrumb": "SettingsAI Brains & ProvidersProviders, accounts and models/usr/local/bin/codex",
+    "hasBack": true,
+    "backLabel": "Back to Providers, accounts and models",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Providers, accounts and models"
+   },
+   "focus": {
+    "tag": "body",
+    "row": null,
+    "isBody": true
+   },
+   "locator_highlight": {
+    "row": null,
+    "object": "inst-codex-standalone",
+    "manager": null,
+    "inViewport": true,
+    "top": 619
+   },
+   "back_restores_query": "context window",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "backup",
+   "note": null,
+   "result_id": "r:setting:media.io.vision-fallback-model",
+   "displayed_path": "Media & Output › Media In & Out › Source",
+   "expected_destination": {
+    "domainId": "media",
+    "pageId": "media.io",
+    "sectionId": "media.io.s02",
+    "settingId": "media.io.vision-fallback-model",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/media/media.io/media.io.s02/media.io.vision-fallback-model",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsMedia & OutputMedia In & Out",
+    "hasBack": true,
+    "backLabel": "Back to Media In & Out",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Media In & Out"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "media.io.vision-fallback-model",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "media.io.vision-fallback-model",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 585
+   },
+   "back_restores_query": "backup",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "backup",
+   "note": null,
+   "result_id": "r:setting:safety.protection.safe-point-restore",
+   "displayed_path": "Permissions & Safety › Files & Tools Protection › Redaction",
+   "expected_destination": {
+    "domainId": "safety",
+    "pageId": "safety.protection",
+    "sectionId": "safety.protection.s04",
+    "settingId": "safety.protection.safe-point-restore",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/safety/safety.protection/safety.protection.s04/safety.protection.safe-point-restore",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsPermissions & SafetyFiles & Tools Protection",
+    "hasBack": true,
+    "backLabel": "Back to Files & Tools Protection",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Files & Tools Protection"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "safety.protection.safe-point-restore",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "safety.protection.safe-point-restore",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 587
+   },
+   "back_restores_query": "backup",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "backup",
+   "note": null,
+   "result_id": "r:help:something-is-broken",
+   "displayed_path": "System & Advanced › Doctor",
+   "expected_destination": {
+    "domainId": "system",
+    "pageId": null,
+    "sectionId": null,
+    "settingId": null,
+    "managerId": "manager-doctor",
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/m/manager-doctor",
+    "surface": "manager",
+    "managerId": "manager-doctor",
+    "objectId": null,
+    "breadcrumb": "SettingsSystem & AdvancedDoctor",
+    "hasBack": true,
+    "backLabel": "Back to System & Advanced",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Doctor"
+   },
+   "focus": {
+    "tag": "body",
+    "row": null,
+    "isBody": true
+   },
+   "locator_highlight": null,
+   "back_restores_query": "backup",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "doctor",
+   "note": null,
+   "result_id": "r:setting:system.health.doctor-summary",
+   "displayed_path": "System & Advanced › Health & Doctor › Capability provisioning",
+   "expected_destination": {
+    "domainId": "system",
+    "pageId": "system.health",
+    "sectionId": "system.health.s01",
+    "settingId": "system.health.doctor-summary",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/system/system.health/system.health.s01/system.health.doctor-summary",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsSystem & AdvancedHealth & Doctor",
+    "hasBack": true,
+    "backLabel": "Back to Health & Doctor",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Health & Doctor"
+   },
+   "focus": {
+    "tag": "input",
+    "row": "system.health.doctor-summary",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "system.health.doctor-summary",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 580
+   },
+   "back_restores_query": "doctor",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "doctor",
+   "note": null,
+   "result_id": "r:setting:system.health.auto-run",
+   "displayed_path": "System & Advanced › Health & Doctor › Capability provisioning",
+   "expected_destination": {
+    "domainId": "system",
+    "pageId": "system.health",
+    "sectionId": "system.health.s01",
+    "settingId": "system.health.auto-run",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/system/system.health/system.health.s01/system.health.auto-run",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsSystem & AdvancedHealth & Doctor",
+    "hasBack": true,
+    "backLabel": "Back to Health & Doctor",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Health & Doctor"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "system.health.auto-run",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "system.health.auto-run",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 581
+   },
+   "back_restores_query": "doctor",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "doctor",
+   "note": null,
+   "result_id": "r:help:where-notifications-go",
+   "displayed_path": "General & Appearance › Notifications, destinations and event routing",
+   "expected_destination": {
+    "domainId": "general",
+    "pageId": null,
+    "sectionId": null,
+    "settingId": null,
+    "managerId": "manager-notifications",
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/m/manager-notifications",
+    "surface": "manager",
+    "managerId": "manager-notifications",
+    "objectId": "dest-inbox",
+    "breadcrumb": "SettingsGeneral & AppearanceNotifications, destinations and event routing",
+    "hasBack": true,
+    "backLabel": "Back to General & Appearance",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Notifications, destinations and event routing"
+   },
+   "focus": {
+    "tag": "body",
+    "row": null,
+    "isBody": true
+   },
+   "locator_highlight": null,
+   "back_restores_query": "doctor",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "kubernetes",
+   "note": "deep row",
+   "result_id": "r:setting:code.execution.k8s-context",
+   "displayed_path": "Code & Execution › Execution Environment › Kubernetes",
+   "expected_destination": {
+    "domainId": "code",
+    "pageId": "code.execution",
+    "sectionId": "code.execution.s10",
+    "settingId": "code.execution.k8s-context",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/code/code.execution/code.execution.s10/code.execution.k8s-context",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsCode & ExecutionExecution Environment",
+    "hasBack": true,
+    "backLabel": "Back to Execution Environment",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Execution Environment"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "code.execution.k8s-context",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "code.execution.k8s-context",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 596
+   },
+   "back_restores_query": "kubernetes",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "kubernetes",
+   "note": "deep row",
+   "result_id": "r:setting:code.execution.k8s-namespace",
+   "displayed_path": "Code & Execution › Execution Environment › Kubernetes",
+   "expected_destination": {
+    "domainId": "code",
+    "pageId": "code.execution",
+    "sectionId": "code.execution.s10",
+    "settingId": "code.execution.k8s-namespace",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/code/code.execution/code.execution.s10/code.execution.k8s-namespace",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsCode & ExecutionExecution Environment",
+    "hasBack": true,
+    "backLabel": "Back to Execution Environment",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Execution Environment"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "code.execution.k8s-namespace",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "code.execution.k8s-namespace",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 603
+   },
+   "back_restores_query": "kubernetes",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "kubernetes",
+   "note": "deep row",
+   "result_id": "r:help:why-read-only",
+   "displayed_path": "System & Advanced › Export, import, copy and reset settings",
+   "expected_destination": {
+    "domainId": "system",
+    "pageId": null,
+    "sectionId": null,
+    "settingId": null,
+    "managerId": "manager-settings-lifecycle",
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/m/manager-settings-lifecycle",
+    "surface": "manager",
+    "managerId": "manager-settings-lifecycle",
+    "objectId": null,
+    "breadcrumb": "SettingsSystem & AdvancedExport, import, copy and reset settings",
+    "hasBack": true,
+    "backLabel": "Back to System & Advanced",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Export, import, copy and reset settings"
+   },
+   "focus": {
+    "tag": "body",
+    "row": null,
+    "isBody": true
+   },
+   "locator_highlight": null,
+   "back_restores_query": "kubernetes",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "retention",
+   "note": "many domains",
+   "result_id": "r:setting:memory.retention.history-retention",
+   "displayed_path": "Memory & Context › Memory & Retention › Memories",
+   "expected_destination": {
+    "domainId": "memory",
+    "pageId": "memory.retention",
+    "sectionId": "memory.retention.s01",
+    "settingId": "memory.retention.history-retention",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/memory/memory.retention/memory.retention.s01/memory.retention.history-retention",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsMemory & ContextMemory & Retention",
+    "hasBack": true,
+    "backLabel": "Back to Memory & Retention",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Memory & Retention"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "memory.retention.history-retention",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "memory.retention.history-retention",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 580
+   },
+   "back_restores_query": "retention",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "retention",
+   "note": "many domains",
+   "result_id": "r:setting:system.advanced.runtime-history-days",
+   "displayed_path": "System & Advanced › Advanced & Debug › History days",
+   "expected_destination": {
+    "domainId": "system",
+    "pageId": "system.advanced",
+    "sectionId": "system.advanced.s05",
+    "settingId": "system.advanced.runtime-history-days",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/system/system.advanced/system.advanced.s05/system.advanced.runtime-history-days",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsSystem & AdvancedAdvanced & Debug",
+    "hasBack": true,
+    "backLabel": "Back to Advanced & Debug",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Advanced & Debug"
+   },
+   "focus": {
+    "tag": "input",
+    "row": "system.advanced.runtime-history-days",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "system.advanced.runtime-history-days",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 568
+   },
+   "back_restores_query": "retention",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "retention",
+   "note": "many domains",
+   "result_id": "r:help:what-did-i-change",
+   "displayed_path": "System & Advanced › Export, import, copy and reset settings",
+   "expected_destination": {
+    "domainId": "system",
+    "pageId": null,
+    "sectionId": null,
+    "settingId": null,
+    "managerId": "manager-settings-lifecycle",
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/m/manager-settings-lifecycle",
+    "surface": "manager",
+    "managerId": "manager-settings-lifecycle",
+    "objectId": null,
+    "breadcrumb": "SettingsSystem & AdvancedExport, import, copy and reset settings",
+    "hasBack": true,
+    "backLabel": "Back to System & Advanced",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Export, import, copy and reset settings"
+   },
+   "focus": {
+    "tag": "body",
+    "row": null,
+    "isBody": true
+   },
+   "locator_highlight": null,
+   "back_restores_query": "retention",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "spellcheck",
+   "note": null,
+   "result_id": "r:setting:planning.verification.quality-preference",
+   "displayed_path": "Planning & Verification › Verification & Goal Mode › Check",
+   "expected_destination": {
+    "domainId": "planning",
+    "pageId": "planning.verification",
+    "sectionId": "planning.verification.s01",
+    "settingId": "planning.verification.quality-preference",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/planning/planning.verification/planning.verification.s01/planning.verification.quality-preference",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsPlanning & VerificationVerification & Goal Mode",
+    "hasBack": true,
+    "backLabel": "Back to Verification & Goal Mode",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Verification & Goal Mode"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "planning.verification.quality-preference",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "planning.verification.quality-preference",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 567
+   },
+   "back_restores_query": "spellcheck",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "spellcheck",
+   "note": null,
+   "result_id": "r:setting:safety.rules.rule-editor",
+   "displayed_path": "Permissions & Safety › Rules & Presets › Rules",
+   "expected_destination": {
+    "domainId": "safety",
+    "pageId": "safety.rules",
+    "sectionId": "safety.rules.s02",
+    "settingId": "safety.rules.rule-editor",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/safety/safety.rules/safety.rules.s02/safety.rules.rule-editor",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsPermissions & SafetyRules & Presets",
+    "hasBack": true,
+    "backLabel": "Back to Rules & Presets",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Rules & Presets"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "safety.rules.rule-editor",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "safety.rules.rule-editor",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 582
+   },
+   "back_restores_query": "spellcheck",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "spellcheck",
+   "note": null,
+   "result_id": "r:action:system.advanced.inspect-holds-quarantine",
+   "displayed_path": "System & Advanced › Advanced & Debug › Terminal runs",
+   "expected_destination": {
+    "domainId": "system",
+    "pageId": "system.advanced",
+    "sectionId": "system.advanced.s06",
+    "settingId": "system.advanced.inspect-holds-quarantine",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/system/system.advanced/system.advanced.s06/system.advanced.inspect-holds-quarantine",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsSystem & AdvancedAdvanced & Debug",
+    "hasBack": true,
+    "backLabel": "Back to Advanced & Debug",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Advanced & Debug"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "system.advanced.inspect-holds-quarantine",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "system.advanced.inspect-holds-quarantine",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 737
+   },
+   "back_restores_query": "spellcheck",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "worktree",
+   "note": "deep row",
+   "result_id": "r:setting:branching.worktrees.worktree-filter",
+   "displayed_path": "Branching & Collaboration › Worktrees & Git › Repo",
+   "expected_destination": {
+    "domainId": "branching",
+    "pageId": "branching.worktrees",
+    "sectionId": "branching.worktrees.s03",
+    "settingId": "branching.worktrees.worktree-filter",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/branching/branching.worktrees/branching.worktrees.s03/branching.worktrees.worktree-filter",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsBranching & CollaborationWorktrees & Git",
+    "hasBack": true,
+    "backLabel": "Back to Worktrees & Git",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Worktrees & Git"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "branching.worktrees.worktree-filter",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "branching.worktrees.worktree-filter",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 588
+   },
+   "back_restores_query": "worktree",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "worktree",
+   "note": "deep row",
+   "result_id": "r:setting:branching.worktrees.worktree-cleanup",
+   "displayed_path": "Branching & Collaboration › Worktrees & Git › Clean workspace",
+   "expected_destination": {
+    "domainId": "branching",
+    "pageId": "branching.worktrees",
+    "sectionId": "branching.worktrees.s02",
+    "settingId": "branching.worktrees.worktree-cleanup",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/branching/branching.worktrees/branching.worktrees.s02/branching.worktrees.worktree-cleanup",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsBranching & CollaborationWorktrees & Git",
+    "hasBack": true,
+    "backLabel": "Back to Worktrees & Git",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Worktrees & Git"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "branching.worktrees.worktree-cleanup",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "branching.worktrees.worktree-cleanup",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 584
+   },
+   "back_restores_query": "worktree",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "worktree",
+   "note": "deep row",
+   "result_id": "r:unavailable:planning.verification.validators-by-node",
+   "displayed_path": "Planning & Verification › Verification & Goal Mode › Language server gate",
+   "expected_destination": {
+    "domainId": "planning",
+    "pageId": "planning.verification",
+    "sectionId": "planning.verification.s06",
+    "settingId": "planning.verification.validators-by-node",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/planning/planning.verification/planning.verification.s06/planning.verification.validators-by-node",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsPlanning & VerificationVerification & Goal Mode",
+    "hasBack": true,
+    "backLabel": "Back to Verification & Goal Mode",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Verification & Goal Mode"
+   },
+   "focus": {
+    "tag": "div",
+    "row": "planning.verification.validators-by-node",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "planning.verification.validators-by-node",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 576
+   },
+   "back_restores_query": "worktree",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "mcp server",
+   "note": null,
+   "result_id": "r:setting:system.mcp.launch-config",
+   "displayed_path": "System & Advanced › MCP Servers › Server",
+   "expected_destination": {
+    "domainId": "system",
+    "pageId": "system.mcp",
+    "sectionId": "system.mcp.s02",
+    "settingId": "system.mcp.launch-config",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/system/system.mcp/system.mcp.s02/system.mcp.launch-config",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsSystem & AdvancedMCP Servers",
+    "hasBack": true,
+    "backLabel": "Back to MCP Servers",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "MCP Servers"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "system.mcp.launch-config",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "system.mcp.launch-config",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 587
+   },
+   "back_restores_query": "mcp server",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "mcp server",
+   "note": null,
+   "result_id": "r:setting:system.mcp.timeout",
+   "displayed_path": "System & Advanced › MCP Servers › Tool",
+   "expected_destination": {
+    "domainId": "system",
+    "pageId": "system.mcp",
+    "sectionId": "system.mcp.s04",
+    "settingId": "system.mcp.timeout",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/system/system.mcp/system.mcp.s04/system.mcp.timeout",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsSystem & AdvancedMCP Servers",
+    "hasBack": true,
+    "backLabel": "Back to MCP Servers",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "MCP Servers"
+   },
+   "focus": {
+    "tag": "input",
+    "row": "system.mcp.timeout",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "system.mcp.timeout",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 590
+   },
+   "back_restores_query": "mcp server",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "mcp server",
+   "note": null,
+   "result_id": "r:help:install-a-provider-cli",
+   "displayed_path": "AI Brains & Providers › Providers, accounts and models",
+   "expected_destination": {
+    "domainId": "ai",
+    "pageId": null,
+    "sectionId": null,
+    "settingId": null,
+    "managerId": "manager-providers",
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/m/manager-providers",
+    "surface": "manager",
+    "managerId": "manager-providers",
+    "objectId": "claude",
+    "breadcrumb": "SettingsAI Brains & ProvidersProviders, accounts and models",
+    "hasBack": true,
+    "backLabel": "Back to AI Brains & Providers",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Providers, accounts and models"
+   },
+   "focus": {
+    "tag": "body",
+    "row": null,
+    "isBody": true
+   },
+   "locator_highlight": null,
+   "back_restores_query": "mcp server",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "sound",
+   "note": "grouped",
+   "result_id": "r:setting:general.interaction.sound-effects",
+   "displayed_path": "General & Appearance › Interaction & Defaults › Sound effects",
+   "expected_destination": {
+    "domainId": "general",
+    "pageId": "general.interaction",
+    "sectionId": "general.interaction.s02",
+    "settingId": "general.interaction.sound-effects",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/general/general.interaction/general.interaction.s02/general.interaction.sound-effects",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsGeneral & AppearanceInteraction & Defaults",
+    "hasBack": true,
+    "backLabel": "Back to Interaction & Defaults",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Interaction & Defaults"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "general.interaction.sound-effects",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "general.interaction.sound-effects",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 587
+   },
+   "back_restores_query": "sound",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "sound",
+   "note": "grouped",
+   "result_id": "r:setting:general.interaction.sound-mapping",
+   "displayed_path": "General & Appearance › Interaction & Defaults › Sound",
+   "expected_destination": {
+    "domainId": "general",
+    "pageId": "general.interaction",
+    "sectionId": "general.interaction.s11",
+    "settingId": "general.interaction.sound-mapping",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/general/general.interaction/general.interaction.s11/general.interaction.sound-mapping",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsGeneral & AppearanceInteraction & Defaults",
+    "hasBack": true,
+    "backLabel": "Back to Interaction & Defaults",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Interaction & Defaults"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "general.interaction.sound-mapping",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "general.interaction.sound-mapping",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 624
+   },
+   "back_restores_query": "sound",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "sound",
+   "note": "grouped",
+   "result_id": "r:help:usage-runs-out",
+   "displayed_path": "AI Brains & Providers › Usage",
+   "expected_destination": {
+    "domainId": "ai",
+    "pageId": null,
+    "sectionId": null,
+    "settingId": null,
+    "managerId": "manager-usage",
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/m/manager-usage",
+    "surface": "manager",
+    "managerId": "manager-usage",
+    "objectId": null,
+    "breadcrumb": "SettingsAI Brains & ProvidersUsage",
+    "hasBack": true,
+    "backLabel": "Back to AI Brains & Providers",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Usage"
+   },
+   "focus": {
+    "tag": "body",
+    "row": null,
+    "isBody": true
+   },
+   "locator_highlight": null,
+   "back_restores_query": "sound",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "cleanup",
+   "note": null,
+   "result_id": "r:setting:code.execution.cleanup-scan-cadence",
+   "displayed_path": "Code & Execution › Execution Environment › Cleanup",
+   "expected_destination": {
+    "domainId": "code",
+    "pageId": "code.execution",
+    "sectionId": "code.execution.s09",
+    "settingId": "code.execution.cleanup-scan-cadence",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/code/code.execution/code.execution.s09/code.execution.cleanup-scan-cadence",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsCode & ExecutionExecution Environment",
+    "hasBack": true,
+    "backLabel": "Back to Execution Environment",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Execution Environment"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "code.execution.cleanup-scan-cadence",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "code.execution.cleanup-scan-cadence",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 602
+   },
+   "back_restores_query": "cleanup",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "cleanup",
+   "note": null,
+   "result_id": "r:setting:planning.verification.prune-on-cleanup",
+   "displayed_path": "Planning & Verification › Verification & Goal Mode › Evidence",
+   "expected_destination": {
+    "domainId": "planning",
+    "pageId": "planning.verification",
+    "sectionId": "planning.verification.s09",
+    "settingId": "planning.verification.prune-on-cleanup",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/planning/planning.verification/planning.verification.s09/planning.verification.prune-on-cleanup",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsPlanning & VerificationVerification & Goal Mode",
+    "hasBack": true,
+    "backLabel": "Back to Verification & Goal Mode",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Verification & Goal Mode"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "planning.verification.prune-on-cleanup",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "planning.verification.prune-on-cleanup",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 688
+   },
+   "back_restores_query": "cleanup",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "cleanup",
+   "note": null,
+   "result_id": "r:help:where-notifications-go",
+   "displayed_path": "General & Appearance › Notifications, destinations and event routing",
+   "expected_destination": {
+    "domainId": "general",
+    "pageId": null,
+    "sectionId": null,
+    "settingId": null,
+    "managerId": "manager-notifications",
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/m/manager-notifications",
+    "surface": "manager",
+    "managerId": "manager-notifications",
+    "objectId": "dest-inbox",
+    "breadcrumb": "SettingsGeneral & AppearanceNotifications, destinations and event routing",
+    "hasBack": true,
+    "backLabel": "Back to General & Appearance",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Notifications, destinations and event routing"
+   },
+   "focus": {
+    "tag": "body",
+    "row": null,
+    "isBody": true
+   },
+   "locator_highlight": null,
+   "back_restores_query": "cleanup",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "usage",
+   "note": "deferred owner",
+   "result_id": "r:setting:ai.usage.chart-type",
+   "displayed_path": "AI Brains & Providers › Status, Usage & Costs › Cost",
+   "expected_destination": {
+    "domainId": "ai",
+    "pageId": "ai.usage",
+    "sectionId": "ai.usage.s03",
+    "settingId": "ai.usage.chart-type",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/ai/ai.usage/ai.usage.s03/ai.usage.chart-type",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsAI Brains & ProvidersStatus, Usage & Costs",
+    "hasBack": true,
+    "backLabel": "Back to Status, Usage & Costs",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Status, Usage & Costs"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "ai.usage.chart-type",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "ai.usage.chart-type",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 581
+   },
+   "back_restores_query": "usage",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "usage",
+   "note": "deferred owner",
+   "result_id": "r:setting:ai.usage.usage-windows",
+   "displayed_path": "AI Brains & Providers › Status, Usage & Costs › Usage windows",
+   "expected_destination": {
+    "domainId": "ai",
+    "pageId": "ai.usage",
+    "sectionId": "ai.usage.s02",
+    "settingId": "ai.usage.usage-windows",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/ai/ai.usage/ai.usage.s02/ai.usage.usage-windows",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsAI Brains & ProvidersStatus, Usage & Costs",
+    "hasBack": true,
+    "backLabel": "Back to Status, Usage & Costs",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Status, Usage & Costs"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "ai.usage.usage-windows",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "ai.usage.usage-windows",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 569
+   },
+   "back_restores_query": "usage",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "usage",
+   "note": "deferred owner",
+   "result_id": "r:help:where-notifications-go",
+   "displayed_path": "General & Appearance › Notifications, destinations and event routing",
+   "expected_destination": {
+    "domainId": "general",
+    "pageId": null,
+    "sectionId": null,
+    "settingId": null,
+    "managerId": "manager-notifications",
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/m/manager-notifications",
+    "surface": "manager",
+    "managerId": "manager-notifications",
+    "objectId": "dest-inbox",
+    "breadcrumb": "SettingsGeneral & AppearanceNotifications, destinations and event routing",
+    "hasBack": true,
+    "backLabel": "Back to General & Appearance",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Notifications, destinations and event routing"
+   },
+   "focus": {
+    "tag": "body",
+    "row": null,
+    "isBody": true
+   },
+   "locator_highlight": null,
+   "back_restores_query": "usage",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "zzhqx",
+   "note": "no results",
+   "result_id": null,
+   "displayed_path": null,
+   "expected_destination": null,
+   "actual_destination": null,
+   "focus": null,
+   "locator_highlight": null,
+   "back_restores_query": null,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "reduce animations",
+   "note": "exact label",
+   "result_id": "r:setting:general.visual.reduce-animations",
+   "displayed_path": "General & Appearance › Visual Style › Chat layout",
+   "expected_destination": {
+    "domainId": "general",
+    "pageId": "general.visual",
+    "sectionId": "general.visual.s03",
+    "settingId": "general.visual.reduce-animations",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/general/general.visual/general.visual.s03/general.visual.reduce-animations",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsGeneral & AppearanceVisual Style",
+    "hasBack": true,
+    "backLabel": "Back to Visual Style",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Visual Style"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "general.visual.reduce-animations",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "general.visual.reduce-animations",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 570
+   },
+   "back_restores_query": "reduce animations",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "reduce animations",
+   "note": "exact label",
+   "result_id": "r:setting:code.terminal.performance-mode",
+   "displayed_path": "Code & Execution › Terminal & Shell › Second pane",
+   "expected_destination": {
+    "domainId": "code",
+    "pageId": "code.terminal",
+    "sectionId": "code.terminal.s06",
+    "settingId": "code.terminal.performance-mode",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/code/code.terminal/code.terminal.s06/code.terminal.performance-mode",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsCode & ExecutionTerminal & Shell",
+    "hasBack": true,
+    "backLabel": "Back to Terminal & Shell",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Terminal & Shell"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "code.terminal.performance-mode",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "code.terminal.performance-mode",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 579
+   },
+   "back_restores_query": "reduce animations",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "reduce animations",
+   "note": "exact label",
+   "result_id": "r:help:install-a-provider-cli",
+   "displayed_path": "AI Brains & Providers › Providers, accounts and models",
+   "expected_destination": {
+    "domainId": "ai",
+    "pageId": null,
+    "sectionId": null,
+    "settingId": null,
+    "managerId": "manager-providers",
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/m/manager-providers",
+    "surface": "manager",
+    "managerId": "manager-providers",
+    "objectId": "claude",
+    "breadcrumb": "SettingsAI Brains & ProvidersProviders, accounts and models",
+    "hasBack": true,
+    "backLabel": "Back to AI Brains & Providers",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Providers, accounts and models"
+   },
+   "focus": {
+    "tag": "body",
+    "row": null,
+    "isBody": true
+   },
+   "locator_highlight": null,
+   "back_restores_query": "reduce animations",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "docker hub",
+   "note": "multi-word",
+   "result_id": "r:setting:code.execution.dockerhub-namespace",
+   "displayed_path": "Code & Execution › Execution Environment › Docker",
+   "expected_destination": {
+    "domainId": "code",
+    "pageId": "code.execution",
+    "sectionId": "code.execution.s01",
+    "settingId": "code.execution.dockerhub-namespace",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/code/code.execution/code.execution.s01/code.execution.dockerhub-namespace",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsCode & ExecutionExecution Environment",
+    "hasBack": true,
+    "backLabel": "Back to Execution Environment",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Execution Environment"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "code.execution.dockerhub-namespace",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "code.execution.dockerhub-namespace",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 585
+   },
+   "back_restores_query": "docker hub",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "docker hub",
+   "note": "multi-word",
+   "result_id": "r:setting:code.execution.dockerhub-repository",
+   "displayed_path": "Code & Execution › Execution Environment › Docker",
+   "expected_destination": {
+    "domainId": "code",
+    "pageId": "code.execution",
+    "sectionId": "code.execution.s01",
+    "settingId": "code.execution.dockerhub-repository",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/code/code.execution/code.execution.s01/code.execution.dockerhub-repository",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsCode & ExecutionExecution Environment",
+    "hasBack": true,
+    "backLabel": "Back to Execution Environment",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Execution Environment"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "code.execution.dockerhub-repository",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "code.execution.dockerhub-repository",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 587
+   },
+   "back_restores_query": "docker hub",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "docker hub",
+   "note": "multi-word",
+   "result_id": "r:help:commands-and-shortcuts",
+   "displayed_path": "Skills, Plugins & Commands › Commands and shortcuts",
+   "expected_destination": {
+    "domainId": "extensions",
+    "pageId": null,
+    "sectionId": null,
+    "settingId": null,
+    "managerId": "manager-commands",
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/m/manager-commands",
+    "surface": "manager",
+    "managerId": "manager-commands",
+    "objectId": "cmd-deploy",
+    "breadcrumb": "SettingsSkills, Plugins & CommandsCommands and shortcuts",
+    "hasBack": true,
+    "backLabel": "Back to Skills, Plugins & Commands",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Commands and shortcuts"
+   },
+   "focus": {
+    "tag": "body",
+    "row": null,
+    "isBody": true
+   },
+   "locator_highlight": null,
+   "back_restores_query": "docker hub",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "persona",
+   "note": "grouped",
+   "result_id": "r:setting:personas.library.persona-name",
+   "displayed_path": "Personas › Library › More library",
+   "expected_destination": {
+    "domainId": "personas",
+    "pageId": "personas.library",
+    "sectionId": "personas.library.s03",
+    "settingId": "personas.library.persona-name",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/personas/personas.library/personas.library.s03/personas.library.persona-name",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsPersonasLibrary",
+    "hasBack": true,
+    "backLabel": "Back to Library",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Library"
+   },
+   "focus": {
+    "tag": "input",
+    "row": "personas.library.persona-name",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "personas.library.persona-name",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 586
+   },
+   "back_restores_query": "persona",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "persona",
+   "note": "grouped",
+   "result_id": "r:setting:personas.library.persona-description",
+   "displayed_path": "Personas › Library › More library",
+   "expected_destination": {
+    "domainId": "personas",
+    "pageId": "personas.library",
+    "sectionId": "personas.library.s03",
+    "settingId": "personas.library.persona-description",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/personas/personas.library/personas.library.s03/personas.library.persona-description",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsPersonasLibrary",
+    "hasBack": true,
+    "backLabel": "Back to Library",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Library"
+   },
+   "focus": {
+    "tag": "input",
+    "row": "personas.library.persona-description",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "personas.library.persona-description",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 587
+   },
+   "back_restores_query": "persona",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "persona",
+   "note": "grouped",
+   "result_id": "r:help:install-a-provider-cli",
+   "displayed_path": "AI Brains & Providers › Providers, accounts and models",
+   "expected_destination": {
+    "domainId": "ai",
+    "pageId": null,
+    "sectionId": null,
+    "settingId": null,
+    "managerId": "manager-providers",
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/m/manager-providers",
+    "surface": "manager",
+    "managerId": "manager-providers",
+    "objectId": "claude",
+    "breadcrumb": "SettingsAI Brains & ProvidersProviders, accounts and models",
+    "hasBack": true,
+    "backLabel": "Back to AI Brains & Providers",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Providers, accounts and models"
+   },
+   "focus": {
+    "tag": "body",
+    "row": null,
+    "isBody": true
+   },
+   "locator_highlight": null,
+   "back_restores_query": "persona",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "restore point",
+   "note": "action",
+   "result_id": "r:setting:safety.protection.safe-point-restore",
+   "displayed_path": "Permissions & Safety › Files & Tools Protection › Redaction",
+   "expected_destination": {
+    "domainId": "safety",
+    "pageId": "safety.protection",
+    "sectionId": "safety.protection.s04",
+    "settingId": "safety.protection.safe-point-restore",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/safety/safety.protection/safety.protection.s04/safety.protection.safe-point-restore",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsPermissions & SafetyFiles & Tools Protection",
+    "hasBack": true,
+    "backLabel": "Back to Files & Tools Protection",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Files & Tools Protection"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "safety.protection.safe-point-restore",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "safety.protection.safe-point-restore",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 587
+   },
+   "back_restores_query": "restore point",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "restore point",
+   "note": "action",
+   "result_id": "r:setting:general.startup.crash-restore",
+   "displayed_path": "General & Appearance › Startup & Recovery › Sessions",
+   "expected_destination": {
+    "domainId": "general",
+    "pageId": "general.startup",
+    "sectionId": "general.startup.s02",
+    "settingId": "general.startup.crash-restore",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/general/general.startup/general.startup.s02/general.startup.crash-restore",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsGeneral & AppearanceStartup & Recovery",
+    "hasBack": true,
+    "backLabel": "Back to Startup & Recovery",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Startup & Recovery"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "general.startup.crash-restore",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "general.startup.crash-restore",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 569
+   },
+   "back_restores_query": "restore point",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "restore point",
+   "note": "action",
+   "result_id": "r:help:why-read-only",
+   "displayed_path": "System & Advanced › Export, import, copy and reset settings",
+   "expected_destination": {
+    "domainId": "system",
+    "pageId": null,
+    "sectionId": null,
+    "settingId": null,
+    "managerId": "manager-settings-lifecycle",
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/m/manager-settings-lifecycle",
+    "surface": "manager",
+    "managerId": "manager-settings-lifecycle",
+    "objectId": null,
+    "breadcrumb": "SettingsSystem & AdvancedExport, import, copy and reset settings",
+    "hasBack": true,
+    "backLabel": "Back to System & Advanced",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Export, import, copy and reset settings"
+   },
+   "focus": {
+    "tag": "body",
+    "row": null,
+    "isBody": true
+   },
+   "locator_highlight": null,
+   "back_restores_query": "restore point",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "index rebuild",
+   "note": "action",
+   "result_id": "r:setting:extensions.commands.override-builtin",
+   "displayed_path": "Skills, Plugins & Commands › Commands & Shortcuts › Command",
+   "expected_destination": {
+    "domainId": "extensions",
+    "pageId": "extensions.commands",
+    "sectionId": "extensions.commands.s03",
+    "settingId": "extensions.commands.override-builtin",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/extensions/extensions.commands/extensions.commands.s03/extensions.commands.override-builtin",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsSkills, Plugins & CommandsCommands & Shortcuts",
+    "hasBack": true,
+    "backLabel": "Back to Commands & Shortcuts",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Commands & Shortcuts"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "extensions.commands.override-builtin",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "extensions.commands.override-builtin",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 659
+   },
+   "back_restores_query": "index rebuild",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "index rebuild",
+   "note": "action",
+   "result_id": "r:setting:ai.models.overseer-model",
+   "displayed_path": "AI Brains & Providers › Models & Defaults › Model",
+   "expected_destination": {
+    "domainId": "ai",
+    "pageId": "ai.models",
+    "sectionId": "ai.models.s01",
+    "settingId": "ai.models.overseer-model",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/ai/ai.models/ai.models.s01/ai.models.overseer-model",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsAI Brains & ProvidersModels & Defaults",
+    "hasBack": true,
+    "backLabel": "Back to Models & Defaults",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Models & Defaults"
+   },
+   "focus": {
+    "tag": "button",
+    "row": "ai.models.overseer-model",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "ai.models.overseer-model",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 581
+   },
+   "back_restores_query": "index rebuild",
+   "pass": true,
+   "reason": null
+  },
+  {
+   "query": "index rebuild",
+   "note": "action",
+   "result_id": "r:diagnostic:system.advanced.diagnostic-history-days",
+   "displayed_path": "System & Advanced › Advanced & Debug › History days",
+   "expected_destination": {
+    "domainId": "system",
+    "pageId": "system.advanced",
+    "sectionId": "system.advanced.s05",
+    "settingId": "system.advanced.diagnostic-history-days",
+    "managerId": null,
+    "objectId": null,
+    "sectionKey": null,
+    "rowId": null
+   },
+   "actual_destination": {
+    "hash": "#/d/system/system.advanced/system.advanced.s05/system.advanced.diagnostic-history-days",
+    "surface": "page",
+    "managerId": null,
+    "objectId": null,
+    "breadcrumb": "SettingsSystem & AdvancedAdvanced & Debug",
+    "hasBack": true,
+    "backLabel": "Back to Advanced & Debug",
+    "hasClose": true,
+    "project": "Orion Data Pipeline",
+    "title": "Advanced & Debug"
+   },
+   "focus": {
+    "tag": "input",
+    "row": "system.advanced.diagnostic-history-days",
+    "isBody": false
+   },
+   "locator_highlight": {
+    "row": "system.advanced.diagnostic-history-days",
+    "object": null,
+    "manager": null,
+    "inViewport": true,
+    "top": 570
+   },
+   "back_restores_query": "index rebuild",
+   "pass": true,
+   "reason": null
+  }
+ ]
+}

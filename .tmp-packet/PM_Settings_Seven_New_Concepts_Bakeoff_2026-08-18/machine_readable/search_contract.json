@@ -1,0 +1,48 @@
+{
+  "schema_id": "pm.settings_bakeoff.universal_search_contract.v2",
+  "placement": "prominent_on_home_and_reachable_throughout_settings",
+  "presentation": "dropdown_anchored_below_field",
+  "result_types": [
+    "setting",
+    "manager",
+    "managed_object",
+    "action",
+    "setup_or_repair_workflow",
+    "diagnostic_or_read_only_status",
+    "unavailable_capability",
+    "intentional_help_result"
+  ],
+  "required_result_fields": [
+    "immutable_result_id",
+    "human_label",
+    "result_type",
+    "complete_settings_path",
+    "destination_object",
+    "availability_or_reason_when_useful"
+  ],
+  "route_steps": [
+    "load_domain",
+    "load_page",
+    "open_manager_if_applicable",
+    "select_exact_object",
+    "select_subpage_or_section",
+    "scroll_exact_row",
+    "focus_destination",
+    "calm_non_flashing_highlight",
+    "preserve_back_to_query_and_selected_result"
+  ],
+  "forbidden_routing": [
+    "visual_array_index",
+    "grouped_list_position",
+    "display_label_only"
+  ],
+  "required_cases": [
+    "grouped_results",
+    "duplicate_labels",
+    "typo_fuzzy_match",
+    "unavailable_result",
+    "manager_object",
+    "deep_setting_row",
+    "back_restores_query"
+  ]
+}

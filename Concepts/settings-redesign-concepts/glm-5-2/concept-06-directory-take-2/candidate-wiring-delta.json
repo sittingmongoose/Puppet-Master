@@ -1,0 +1,24 @@
+{
+ "schema_id": "pm.settings_candidate_wiring_delta.v1.concept",
+ "concept_id": "concept-06-directory-take-2",
+ "date": "2026-08-18",
+ "traces": [
+  {
+   "action": "select search result",
+   "chain": "search input -> headless index -> route plan (immutable id) -> concept renderer -> focus + calm highlight -> back-stack entry (query+rid)"
+  },
+  {
+   "action": "change a setting",
+   "chain": "row control -> project store set -> persistence -> value event -> row status update"
+  },
+  {
+   "action": "copy settings",
+   "chain": "source select -> categories -> preview (headless diff) -> restore point -> atomic apply -> verify -> receipt -> rollback link"
+  },
+  {
+   "action": "provider CLI install",
+   "chain": "explicit Install -> ObservableWork (phases, verify) -> separate authentication -> catalog refresh"
+  }
+ ],
+ "no_second_owner": "RuntimeResourceGovernor/ObservableWork remain sole owners; concepts only project their state"
+}

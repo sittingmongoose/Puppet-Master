@@ -1,0 +1,534 @@
+{
+ "schema_id": "pm.settings_candidate_command_delta.v2",
+ "concept_id": "concept-11-tabbed-organizer",
+ "concept_title": "Opus 5 — Folio",
+ "model": "Opus 5",
+ "generated": "2026-08-19",
+ "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+ "censused_against": "authority/base_packet/CANDIDATE_COMMAND_ID_REGISTER.json",
+ "discipline": "Every interaction in this concept was matched to an existing candidate family before an id was proposed. Statuses are reuse, alias, retire, supersede, preserve and candidate. Nothing here is canon; the exact names are adjudicated later against the real Command Catalog.",
+ "note_on_sameness": "This adjudication is intentionally the same across concepts 05-11. The seven designs invoke the same semantic operations against the same canon; proposing seven different command sets would be invention, not a finding. What differs per concept is the ROUTE payload and the surface that raises the command, both recorded below.",
+ "summary": {
+  "actions_censused": 85,
+  "reuse": 73,
+  "alias": 2,
+  "retire": 1,
+  "supersede": 1,
+  "preserve": 1,
+  "new_candidates": 7
+ },
+ "concept_specific": {
+  "route_grammar": [
+   "#/home",
+   "#/q/<query>[/<resultId>]",
+   "#/d/<domainId>[/<pageId>[/<sectionId>[/<settingId>]]]",
+   "#/m/<managerId>[/<objectId>[/<sectionKey>[/<rowId>]]]",
+   "#/copy[/<step>]",
+   "#/all[/<facetQuery>]",
+   "optional ?s=<stateFixtureId> on any of them"
+  ],
+  "navigate_payload": "cmd.settings.navigate carries the destination object this concept parsed from the route, never a rendered index",
+  "raising_surfaces": {
+   "home": "a compact grid of category tiles above a Recent changes list showing what changed, where, when and by whom",
+   "navigation": "top category tabs for the domains and a second row of sub-tabs inside a domain, ranked by size and weight",
+   "manager": "roster on the left and a detail on the right with its own third-level tab row",
+   "exact_result": "the correct tab and sub-tab auto-select and the sheet slides in with the row ringed, inside the existing tab stack"
+  }
+ },
+ "families": [
+  {
+   "family": "navigation",
+   "commands": [
+    {
+     "id": "cmd.settings.open",
+     "status": "reuse",
+     "note": "Opening Settings is already a product command; the concepts are a surface for it, not a second entry point."
+    },
+    {
+     "id": "cmd.settings.navigate",
+     "status": "reuse",
+     "note": "One command carrying the destination object, not one per level. The concepts' route grammar is its payload."
+    },
+    {
+     "id": "cmd.settings.search.focus",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.settings.search.select_result",
+     "status": "reuse",
+     "note": "Payload must be the immutable result id and the resolved destination object. Routing by rendered position is the defect this pass exists to remove."
+    },
+    {
+     "id": "cmd.settings.category.select",
+     "status": "alias",
+     "note": "Candidate alias of cmd.settings.navigate with a domain destination; kept only if the catalog census finds existing callers."
+    },
+    {
+     "id": "cmd.settings.subcategory.select",
+     "status": "alias",
+     "note": "Same: an alias of navigate with a page destination."
+    },
+    {
+     "id": "cmd.settings.setting.focus",
+     "status": "reuse",
+     "note": "Focus and the locator highlight are one effect, not two commands."
+    },
+    {
+     "id": "cmd.settings.manager.open",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.settings.bloom.open",
+     "status": "retire",
+     "note": "The chip/bloom modal is the Settings contract these concepts supersede. Retire, keeping a compatibility alias to cmd.settings.navigate only if live callers exist."
+    },
+    {
+     "id": "cmd.settings.owner.open",
+     "status": "candidate",
+     "note": "The single hand-off used by all ten deferred named owners, carrying the owner name, the originating Settings destination and the return contract."
+    },
+    {
+     "id": "cmd.settings.close",
+     "status": "reuse",
+     "note": "Returns to the surface that opened Settings, which is the origin the deep link recorded."
+    }
+   ]
+  },
+  {
+   "family": "values",
+   "commands": [
+    {
+     "id": "cmd.settings.value.set",
+     "status": "reuse",
+     "note": "Needs expected-revision fencing: two windows editing one Project is the changed-elsewhere fixture."
+    },
+    {
+     "id": "cmd.settings.default.restore",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.settings.scope.inspect",
+     "status": "supersede",
+     "note": "There is no user-facing scope in a Project-only design. What survives is an inspector for WHY a value is what it is — candidate cmd.settings.value.explain — covering managed, unavailable, automatic and not-configured. Recorded as a rename, not a new capability."
+    },
+    {
+     "id": "cmd.settings.value.explain",
+     "status": "candidate",
+     "note": "Backs `Why this value?`. Read-only; returns origin, default, recommendation, restart requirement and availability reason."
+    }
+   ]
+  },
+  {
+   "family": "lifecycle",
+   "commands": [
+    {
+     "id": "cmd.settings.export",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.settings.import.preview",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.settings.import.apply",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.settings.import.rollback",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.settings.reset.preview",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.settings.reset.apply",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.settings.copy_from_project.preview",
+     "status": "reuse",
+     "note": "Result must carry additions, replacements, unchanged, unavailable, conflicts and re-pointed account references as separate counts."
+    },
+    {
+     "id": "cmd.settings.copy_from_project.apply",
+     "status": "reuse",
+     "note": "Atomic, restore-pointed, verified, receipted. No synchronisation follows it — there is deliberately no cmd.settings.link_projects."
+    },
+    {
+     "id": "cmd.settings.copy_from_project.rollback",
+     "status": "candidate",
+     "note": "The register has import.rollback but no copy rollback. The copy receipt is rollback-capable, so the candidate is needed or copy.apply must reuse the restore-point command."
+    },
+    {
+     "id": "cmd.settings.restore_point.create",
+     "status": "candidate",
+     "note": "Taken before any transaction. May resolve to an existing storage/backup owner command; flagged for census rather than assumed new."
+    }
+   ]
+  },
+  {
+   "family": "providers",
+   "commands": [
+    {
+     "id": "cmd.provider.installation.scan",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.provider.installation.select",
+     "status": "reuse",
+     "note": "Binds by installation identity, never by PATH order."
+    },
+    {
+     "id": "cmd.provider.installation.install",
+     "status": "reuse",
+     "note": "Explicit user-triggered first acquisition from the official source for the exact host. Auto/On is not consent."
+    },
+    {
+     "id": "cmd.provider.installation.update",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.provider.installation.repair",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.provider.installation.rollback",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.provider.installation.verify",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.provider.installation.adopt",
+     "status": "candidate",
+     "note": "Adopting a detected installation. Must refuse when ownership cannot be established — the unknown-owner fixture is manual-only."
+    },
+    {
+     "id": "cmd.provider.connection.add",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.provider.connection.authenticate",
+     "status": "reuse",
+     "note": "Separate from installation, always."
+    },
+    {
+     "id": "cmd.provider.connection.reconnect",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.provider.catalog.refresh",
+     "status": "reuse",
+     "note": "Cached catalogue stays visible while refreshing; latest request wins."
+    },
+    {
+     "id": "cmd.model.favorite.set",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.model.alias.set",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.model.priority.set",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.model.visibility.set",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.usage.refresh",
+     "status": "preserve",
+     "note": "Owned by Usage. Settings calls it and renders the answer; it never computes a balance."
+    }
+   ]
+  },
+  {
+   "family": "memory_persona_crew",
+   "commands": [
+    {
+     "id": "cmd.memory.open",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.memory.verify",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.memory.edit",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.memory.delete",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.memory.restore",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.persona.manage",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.crew.template.create",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.crew.template.update",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.crew.template.delete",
+     "status": "reuse",
+     "note": null
+    }
+   ]
+  },
+  {
+   "family": "permissions",
+   "commands": [
+    {
+     "id": "cmd.permissions.rule.add",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.permissions.rule.update",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.permissions.rule.reorder",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.permissions.rule.delete",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.permissions.rule.test",
+     "status": "reuse",
+     "note": null
+    }
+   ]
+  },
+  {
+   "family": "notifications",
+   "commands": [
+    {
+     "id": "cmd.notifications.sound.upload",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.notifications.sound.import_pack",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.notifications.sound.preview",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.notifications.sound.delete",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.notifications.sound.export",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.notifications.destination.test",
+     "status": "reuse",
+     "note": null
+    }
+   ]
+  },
+  {
+   "family": "appearance",
+   "commands": [
+    {
+     "id": "cmd.theme.create",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.theme.import",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.theme.export",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.theme.preview",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.theme.apply",
+     "status": "reuse",
+     "note": null
+    }
+   ]
+  },
+  {
+   "family": "commands_shortcuts",
+   "commands": [
+    {
+     "id": "cmd.commands.custom.create",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.commands.custom.update",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.commands.custom.delete",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.commands.custom.dry_run",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.shortcuts.bind",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.shortcuts.reset",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.shortcuts.import",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.shortcuts.export",
+     "status": "reuse",
+     "note": null
+    }
+   ]
+  },
+  {
+   "family": "resources",
+   "commands": [
+    {
+     "id": "cmd.mcp.server.add",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.mcp.server.restart",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.lsp.server.add",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.lsp.server.restart",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.formatter.add",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.formatter.test",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.storage.backup.open",
+     "status": "reuse",
+     "note": null
+    },
+    {
+     "id": "cmd.artifact.manager.open",
+     "status": "reuse",
+     "note": null
+    }
+   ]
+  },
+  {
+   "family": "diagnostics",
+   "commands": [
+    {
+     "id": "cmd.doctor.check.run",
+     "status": "candidate",
+     "note": "Doctor has no command in the register and is a required family. Read-only projection plus named repairs; each repair is an existing owner command, not a new one."
+    },
+    {
+     "id": "cmd.doctor.repair.start",
+     "status": "candidate",
+     "note": "Dispatches to the owning subsystem's repair command. Must never silently fix; it opens an ObservableWork operation."
+    }
+   ]
+  }
+ ],
+ "every_action_needs": [
+  "canonical command id and owner",
+  "typed payload, result and error",
+  "current Project and object identity",
+  "availability and disabled reason",
+  "expected revision, idempotency, fencing and stale-result handling",
+  "permission, FileSafe and confirmation",
+  "persistence, event and receipt effect",
+  "ObservableWork operation link",
+  "cancellation, rollback, recovery and reconnect",
+  "route, deep-link and focus effect",
+  "GUI, natural-language, command-palette and automation equivalence",
+  "production wiring evidence and a regression fixture"
+ ]
+}

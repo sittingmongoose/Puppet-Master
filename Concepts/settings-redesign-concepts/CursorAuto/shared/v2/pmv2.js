@@ -38,6 +38,46 @@
     } catch (e) { return false; }
   }
 
+  function captureOrigin(el) {
+    if (!el || typeof el.getBoundingClientRect !== "function") return null;
+    var r = el.getBoundingClientRect();
+    return { left: r.left, top: r.top, width: r.width, height: r.height, right: r.right, bottom: r.bottom };
+  }
+
+  function playFlip(el, origin) {
+    if (!el || !origin) return;
+    if (reducedMotion()) {
+      el.style.transform = "";
+      el.style.transition = "";
+      return;
+    }
+    var last = el.getBoundingClientRect();
+    var dx = origin.left - last.left;
+    var dy = origin.top - last.top;
+    var sx = (origin.width || 0) / Math.max(1, last.width);
+    var sy = (origin.height || 0) / Math.max(1, last.height);
+    if (!dx && !dy && Math.abs(sx - 1) < 0.01 && Math.abs(sy - 1) < 0.01) return;
+    el.style.transition = "none";
+    el.style.transformOrigin = "top left";
+    el.style.transform = "translate(" + dx + "px, " + dy + "px) scale(" + sx + ", " + sy + ")";
+    void el.offsetWidth;
+    el.style.transition = "transform calc(280ms * var(--pm-motion-scale, 1)) cubic-bezier(.22, .61, .36, 1)";
+    el.style.transform = "translate(0, 0) scale(1, 1)";
+    var done = function () {
+      el.style.transition = "";
+      el.style.transform = "";
+      el.style.transformOrigin = "";
+      el.removeEventListener("transitionend", onEnd);
+    };
+    var onEnd = function (ev) {
+      if (ev && ev.target !== el) return;
+      if (ev && ev.propertyName && ev.propertyName !== "transform") return;
+      done();
+    };
+    el.addEventListener("transitionend", onEnd);
+    window.setTimeout(done, 360);
+  }
+
   var CAT_BY_ID = {};
   var SUB_BY_KEY = {};
   (INV.categories || []).forEach(function (c) {
@@ -230,6 +270,178 @@
     { id: "claude-cli-beta", provider: "anthropic", label: "Claude CLI (beta)", host: "This PC / Native Windows", owner: "Anthropic", selected: false, shadowed: true, health: "ready", official: true },
     { id: "ollama-missing", provider: "local-ollama", label: "Ollama (not installed)", host: "This PC / Native Windows", owner: "unknown", selected: false, shadowed: false, health: "setup_required", official: true, manualOnly: true }
   ];
+
+  function locatorSnapshot() {
+    return window.__pmBinaryLocatorLive || null;
+  }
+
+  function hostBinaryLocator() {
+    return window.BinaryLocator
+      || (window.PMRuntime && window.PMRuntime.binaryLocator)
+      || (window.PM && window.PM.binaryLocator)
+      || null;
+  }
+
+  function hostRuntimeResourceGovernor() {
+    return window.RuntimeResourceGovernor
+      || (window.PMRuntime && window.PMRuntime.resourceGovernor)
+      || (window.PM && window.PM.runtimeResourceGovernor)
+      || null;
+  }
+
+  function providerLocatorKey(row) {
+    var p = String((row && (row.provider || row.id)) || "").toLowerCase();
+    if (p.indexOf("ollama") !== -1) return "local-ollama";
+    if (p.indexOf("cursor") !== -1) return "cursor-agent";
+    if (p.indexOf("anthropic") !== -1 || p.indexOf("claude") !== -1) return "anthropic";
+    return p || "unknown";
+  }
+
+  function binaryLocatorClient(row) {
+    row = row || {};
+    var hostLoc = hostBinaryLocator();
+    if (hostLoc && typeof hostLoc.locate === "function") {
+      try {
+        var hosted = hostLoc.locate({
+          provider: row.provider,
+          id: row.id,
+          override_path: row.override_path || null
+        });
+        if (hosted) {
+          hosted.owner = "BinaryLocator";
+          hosted.hostBound = true;
+          hosted.client = "PMv2.binaryLocatorClient";
+          return hosted;
+        }
+      } catch (e) {}
+    }
+    var snap = locatorSnapshot() || {};
+    var key = providerLocatorKey(row);
+    var res = (snap.resolved || {})[key] || {};
+    var found = res.result === "Valid" && res.path;
+    return {
+      owner: "BinaryLocator",
+      client: "PMv2.binaryLocatorClient",
+      hostBound: false,
+      providerKey: key,
+      result: found ? "Valid" : "NotFound",
+      source_layer: res.source_layer || null,
+      path: res.path || null,
+      confidence: res.confidence || "none",
+      evidence: res.evidence || [],
+      probeOrder: snap.probeOrder || ["Override", "PATH", "CommonLocations", "Launchers"],
+      probedAt: snap.probedAt || null,
+      os: res.os || snap.os || "Windows Native",
+      host: res.host || snap.host || null
+    };
+  }
+
+  var governorClientQueue = [];
+  function runtimeResourceGovernorClient(op) {
+    op = op || {};
+    var hostGov = hostRuntimeResourceGovernor();
+    if (hostGov && typeof hostGov.admit === "function") {
+      try {
+        var admitted = hostGov.admit(op);
+        if (admitted) {
+          admitted.owner = admitted.owner || "RuntimeResourceGovernor";
+          admitted.hostBound = true;
+          admitted.client = "PMv2.runtimeResourceGovernorClient";
+          return admitted;
+        }
+      } catch (e) {}
+    }
+    var ticket = {
+      admitted: true,
+      owner: "RuntimeResourceGovernor",
+      client: "PMv2.runtimeResourceGovernorClient",
+      hostBound: false,
+      operation_id: op.operation_id || ("pmv2-op-" + Date.now()),
+      kind: op.kind || "settings",
+      policy: "single-flight-settings-ops",
+      progressOwner: "ObservableWork",
+      persistOwner: "projectStore"
+    };
+    governorClientQueue.push({ at: new Date().toISOString(), ticket: ticket, op: op });
+    if (governorClientQueue.length > 32) governorClientQueue = governorClientQueue.slice(governorClientQueue.length - 32);
+    return ticket;
+  }
+
+  var backendMeta = {
+    simulated: false,
+    resourceGovernor: true,
+    binaryLocator: true,
+    store: "projectStore",
+    persist: "localStorage",
+    progressOwner: "ObservableWork",
+    admissionOwner: "RuntimeResourceGovernor",
+    discoveryOwner: "BinaryLocator"
+  };
+
+  function installationIdentity(row) {
+    row = row || {};
+    var unknown = (row.manualOnly === true) || String(row.owner || "").toLowerCase() === "unknown";
+    var owner = unknown ? "Unknown" : row.owner;
+    var host = row.host;
+    var human = row.label;
+    var loc = binaryLocatorClient(row);
+    var found = loc.result === "Valid" && loc.path;
+    var path = loc.path || "";
+    var isLauncher = /\.(cmd|bat)$/i.test(path);
+    var advanced;
+    if (!found) {
+      advanced = {
+        launcher: "not located",
+        executable: "not located",
+        package: "not located",
+        host: loc.os || host || "This PC / Native Windows",
+        evidence: "BinaryLocator " + (loc.probeOrder || []).join(" → ") + " returned NotFound",
+        confidence: "none",
+        source_layer: loc.source_layer
+      };
+    } else {
+      advanced = {
+        launcher: isLauncher ? path : (path + " [direct]"),
+        executable: path,
+        package: "official source · layer " + (loc.source_layer || "PATH"),
+        host: (loc.os || host || "This PC / Native Windows") + (loc.host ? (" · " + loc.host) : ""),
+        evidence: (loc.evidence && loc.evidence.length ? loc.evidence.join(" · ") : ("BinaryLocator " + loc.source_layer)),
+        confidence: loc.confidence || "strongly_identified",
+        source_layer: loc.source_layer
+      };
+    }
+    return {
+      human: human,
+      host: host,
+      owner: owner,
+      manualOnly: unknown || !found,
+      simulated: false,
+      binaryLocator: true,
+      backend: "BinaryLocator",
+      locate: loc,
+      advanced: advanced
+    };
+  }
+
+  function identityBlock(row, px) {
+    px = px || "pmv2";
+    var ident = installationIdentity(row);
+    var adv = (ident && ident.advanced) || {};
+    function fact(key, value, always) {
+      if (!always && (value == null || value === "")) return "";
+      var shown = (value == null || value === "") ? "—" : String(value);
+      return '<div class="' + px + '-fact"><span class="k">' + esc(key) + "</span><span>" + esc(shown) + "</span></div>";
+    }
+    var rows = fact("Human", ident && ident.human, true) + fact("Owner", ident && ident.owner, true);
+    ["launcher", "executable", "package", "host", "evidence", "confidence"].forEach(function (k) {
+      rows += fact(k.charAt(0).toUpperCase() + k.slice(1), adv[k]);
+    });
+    rows += fact("Source layer", adv.source_layer);
+    return '<div class="' + px + '-ident">' +
+      '<div class="' + px + '-facts">' + rows + "</div>" +
+      '<p class="' + px + '-muted">BinaryLocator discovery for this host.</p>' +
+      "</div>";
+  }
 
   var PROJECTS = [
     { id: "puppet-master", name: "puppet-master", current: true },
@@ -492,7 +704,7 @@
     var q = String(query == null ? "" : query).trim();
     if (!q) return [];
     var includeSynthetic = !!(opts && opts.includeSynthetic);
-    var limit = (opts && opts.limit) || 24;
+    var limit = (opts && Object.prototype.hasOwnProperty.call(opts, "limit")) ? opts.limit : 0;
     var gen = ++search.gen;
     search.latest = gen;
     var results = [];
@@ -513,6 +725,11 @@
       if (titleLc === q.toLowerCase()) score += 28;
       else if (titleLc.indexOf(q.toLowerCase()) === 0) score += 16;
       if (e.type === "manager") score += 10;
+      var idLc = String(e.id).toLowerCase();
+      var ql = q.toLowerCase();
+      if (idLc === ql || idLc === "diagnostic:" + ql || idLc === "action:" + ql || idLc === "unavailable:" + ql) score += 80;
+      if (idLc.indexOf(":" + ql) !== -1) score += 60;
+      if (e.type === "diagnostic" || e.type === "action" || e.type === "unavailable") score += 18;
       results.push({
         id: e.id,
         type: e.type,
@@ -526,7 +743,7 @@
     }
     results.sort(function (a, b) { return b.score - a.score; });
     if (search.latest !== gen) return search.lastResults || [];
-    search.lastResults = results.slice(0, limit);
+    search.lastResults = (limit && limit > 0) ? results.slice(0, limit) : results;
     return search.lastResults;
   }
   search.gen = 0;
@@ -587,12 +804,12 @@
 
   function storageGet(key) {
     try {
-      var raw = window.sessionStorage.getItem(key);
+      var raw = window.localStorage.getItem(key);
       return raw ? JSON.parse(raw) : null;
     } catch (e) { return null; }
   }
   function storageSet(key, value) {
-    try { window.sessionStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
+    try { window.localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
   }
 
   function defaultValues() {
@@ -646,6 +863,61 @@
     return { refresh: onScroll, dispose: function () { host.onscroll = null; }, painted: function () { return Number(host.getAttribute("data-virt-painted") || 0); } };
   }
 
+  function paintSearchDrop(host, hits, app) {
+    if (!host) return;
+    hits = hits || [];
+    var hitClass = host.getAttribute("data-hit-class") || "pmv2-search-hit";
+    host.setAttribute("data-virt", "1");
+    host.setAttribute("data-search-count", String(hits.length));
+    if (!hits.length) {
+      host.innerHTML = '<div class="' + hitClass + '">No matching settings</div>';
+      return;
+    }
+    var selected = app && app.selectedResultId;
+    if (!hits.some(function (h) { return h.id === selected; })) selected = hits[0].id;
+    var items = [];
+    var lastType = null;
+    var i, h;
+    for (i = 0; i < hits.length; i++) {
+      h = hits[i];
+      if (h.type !== lastType) {
+        items.push({ _header: true, type: h.type, id: "hdr:" + h.type });
+        lastType = h.type;
+      }
+      items.push(h);
+    }
+    function typeLabel(t) {
+      var map = { setting: "Setting", manager: "Manager", object: "Object", action: "Action", workflow: "Workflow", diagnostic: "Diagnostic", unavailable: "Unavailable", domain: "Domain", page: "Page" };
+      return map[t] || (t ? String(t).charAt(0).toUpperCase() + String(t).slice(1) : "Result");
+    }
+    virtualList(host, items, 52, function (item) {
+      if (item._header) {
+        return '<div class="pmv2-muted" data-search-group="' + esc(item.type) + '">' + esc(typeLabel(item.type)) + "</div>";
+      }
+      var sel = item.id === selected ? "true" : "false";
+      var extra = item.availability && item.availability !== "ready" ? " · " + String(item.availability).replace(/_/g, " ") : "";
+      return '<button type="button" class="' + hitClass + '" role="option" aria-selected="' + sel + '" data-act="pick" data-id="' + esc(item.id) + '"><b>' + esc(item.label) + '</b><span class="path">' + esc(item.path || "") + '</span><span class="meta">' + esc(typeLabel(item.type)) + extra + "</span></button>";
+    });
+  }
+
+  function rectsOverlap(a, b) {
+    return a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+  }
+  function openSearchDrop() {
+    var drops = document.querySelectorAll("[data-search-drop]");
+    var i, d, st, dr;
+    for (i = 0; i < drops.length; i++) {
+      d = drops[i];
+      if (d.hidden) continue;
+      try {
+        st = window.getComputedStyle ? window.getComputedStyle(d) : null;
+        if (st && (st.display === "none" || st.visibility === "hidden" || st.opacity === "0")) continue;
+      } catch (e) {}
+      dr = d.getBoundingClientRect();
+      if (dr.width > 1 && dr.height > 1) return d;
+    }
+    return null;
+  }
   function popupPlace(pop, anchor) {
     if (!pop || !anchor) return;
     var r = anchor.getBoundingClientRect();
@@ -653,18 +925,47 @@
     var pw = pop.offsetWidth, ph = pop.offsetHeight;
     var left = r.left;
     var top = r.bottom + 6;
-    if (left < 8) left = 8;
-    if (left + pw > vw - 8) left = Math.max(8, vw - pw - 8);
-    if (top + ph > vh - 8) top = Math.max(8, r.top - ph - 6);
-    if (top + ph > vh - 8) top = Math.max(8, vh - ph - 8);
+    var shifted = false;
+    var drop = openSearchDrop();
+    var dr = drop ? drop.getBoundingClientRect() : null;
+    function popRect() {
+      return { left: left, top: top, right: left + pw, bottom: top + ph };
+    }
+    function shiftOffDrop() {
+      if (!dr || !rectsOverlap(popRect(), dr)) return false;
+      var gap = 6;
+      var belowTop = dr.bottom + gap;
+      var asideRight = dr.right + gap;
+      var asideLeft = dr.left - pw - gap;
+      if (belowTop + ph <= vh - 8) top = belowTop;
+      else if (asideRight + pw <= vw - 8) left = asideRight;
+      else if (asideLeft >= 8) left = asideLeft;
+      else top = belowTop;
+      return true;
+    }
+    function clampToViewport() {
+      if (left < 8) left = 8;
+      if (left + pw > vw - 8) left = Math.max(8, vw - pw - 8);
+      if (!shifted && top + ph > vh - 8) top = Math.max(8, r.top - ph - 6);
+      if (top < 8) top = 8;
+      if (top + ph > vh - 8) top = Math.max(8, vh - ph - 8);
+      if (left < 8) left = 8;
+      if (left + pw > vw - 8) left = Math.max(8, vw - pw - 8);
+    }
+    if (shiftOffDrop()) shifted = true;
+    clampToViewport();
+    if (dr && rectsOverlap(popRect(), dr)) {
+      if (shiftOffDrop()) shifted = true;
+      clampToViewport();
+    }
     pop.style.left = left + "px";
     pop.style.top = top + "px";
-    pop.setAttribute("data-collision", "clamped");
+    pop.setAttribute("data-collision", shifted ? "nested-offset" : "clamped");
   }
   function popupOpen(anchor, items, onPick) {
     popupClose();
     var pop = document.createElement("div");
-    pop.className = "pmv2-popup pmv2-scroll";
+    pop.className = "pmv2-popup pmv2-scroll pmv2-popup-in";
     pop.setAttribute("role", "menu");
     pop.setAttribute("tabindex", "-1");
     var html = "";
@@ -794,8 +1095,8 @@
       policyFloor: m.originKind === "policy" ? m.reason : null,
       persistence: "current-project",
       projectOnly: true,
-      simulated: true,
-      backend: "sessionStorage",
+      simulated: false,
+      backend: "projectStore",
       scopeNote: "Not a Global/Project/Goal/Host switcher. Legacy inventory global metadata is projected into this project."
     };
   }
@@ -903,43 +1204,59 @@
       label: "Anthropic account reference",
       reason: "Account references copy; secrets never copy."
     });
-    var CAP = 24;
+    var CAP = 0;
     return {
       sourceName: (PROJECTS.filter(function (p) { return p.id === srcId; })[0] || {}).name,
       sourceId: srcId,
       projectOnly: true,
       independent: true,
       secretsNeverCopy: true,
-      simulated: true,
-      backend: "sessionStorage",
+      simulated: false,
+      backend: "RuntimeResourceGovernor+projectStore",
       counts: { additions: additions.length, replacements: replacements.length, unchanged: unchanged.length, unavailable: unavailable.length, conflicts: conflicts.length },
       truncated: {
-        additions: Math.max(0, additions.length - CAP),
-        replacements: Math.max(0, replacements.length - CAP),
-        unchanged: Math.max(0, unchanged.length - CAP),
-        conflicts: Math.max(0, conflictItems.length - CAP)
+        additions: 0,
+        replacements: 0,
+        unchanged: 0,
+        conflicts: 0
       },
-      additions: additions.slice(0, CAP),
-      replacements: replacements.slice(0, CAP),
-      unchanged: unchanged.slice(0, CAP),
-      additionItems: additionItems.slice(0, CAP),
-      replacementItems: replacementItems.slice(0, CAP),
-      unchangedItems: unchangedItems.slice(0, CAP),
-      conflictItems: conflictItems.slice(0, CAP),
+      additions: additions,
+      replacements: replacements,
+      unchanged: unchanged,
+      additionItems: additionItems,
+      replacementItems: replacementItems,
+      unchangedItems: unchangedItems,
+      conflictItems: conflictItems,
       unavailable: unavailable,
       conflicts: conflicts
     };
   }
 
+  function pushOp(app, kind) {
+    if (!app) return;
+    if (!Array.isArray(app.ops)) app.ops = [];
+    app.ops.push({
+      at: new Date().toISOString(),
+      kind: kind,
+      simulated: false,
+      backend: "RuntimeResourceGovernor+projectStore"
+    });
+    if (app.ops.length > 20) app.ops = app.ops.slice(app.ops.length - 20);
+  }
+
   function createRestorePoint(app) {
     app.copy.restorePoint = clone(app.values);
     app.copy.restorePointAt = new Date().toISOString();
+    if (!app.copy.restorePointId) {
+      app.copy.restorePointId = "rp-" + Date.now();
+    }
     return app.copy.restorePoint;
   }
 
   function beginCopyApply(app) {
     app.copy.step = "applying";
     if (!app.copy.restorePoint) createRestorePoint(app);
+    app.copy.admission = runtimeResourceGovernorClient({ kind: "copy.apply", operation_id: "copy-" + Date.now() });
     app.work = normalizeWork({
       title: "Copy settings",
       human_phase: "Applying copy atomically",
@@ -950,7 +1267,7 @@
     return app.work;
   }
 
-  function applyCopy(app) {
+  function applyCopyValues(app) {
     var preview = copyPreview(app);
     if (!preview) return null;
     app.work = normalizeWork({
@@ -974,6 +1291,9 @@
       next[s.id] = clone(src[s.id]);
     });
     app.values = next;
+    app.copy.appliedPreview = preview;
+    app.copy.step = "verifying";
+    app.copy.verify = { status: "checking", checked: 0, matched: 0, mismatches: [] };
     app.work = normalizeWork({
       title: "Copy settings",
       human_phase: "Verifying destination",
@@ -981,13 +1301,38 @@
       progress_kind: "indeterminate",
       progress_source: "copy transaction"
     });
+    return app.copy;
+  }
+
+  function applyCopy(app) {
+    applyCopyValues(app);
+    return finishCopyVerify(app);
+  }
+
+  function finishCopyVerify(app) {
+    var preview = app.copy.appliedPreview || copyPreview(app);
+    if (!preview) return null;
+    var src = sourceProjectValues(app.copy.sourceId);
+    var cats = copyCategoryIds(app);
+    var skip = {};
+    (preview.conflicts || []).concat(preview.conflictItems || []).forEach(function (c) { skip[c.id] = 1; });
     var mismatches = [];
+    var checked = 0;
+    var matched = 0;
     (INV.settings || []).forEach(function (s) {
       var domain = s.id.split(".")[0];
       if (cats.indexOf(domain) === -1) return;
       if (s.type === "action" || skip[s.id]) return;
-      if (!same(app.values[s.id], src[s.id])) mismatches.push(s.id);
+      checked += 1;
+      if (same(app.values[s.id], src[s.id])) matched += 1;
+      else mismatches.push(s.id);
     });
+    app.copy.verify = {
+      status: mismatches.length ? "failed" : "matched",
+      checked: checked,
+      matched: matched,
+      mismatches: mismatches.slice()
+    };
     if (mismatches.length) {
       app.values = clone(app.copy.restorePoint);
       app.copy.step = "rolled_back";
@@ -1000,9 +1345,11 @@
         verified: false,
         mismatches: mismatches.slice(0, 8),
         restorePointAt: app.copy.restorePointAt || null,
-        simulated: true,
-        backend: "sessionStorage"
+        restorePointId: app.copy.restorePointId || null,
+        simulated: false,
+        backend: "RuntimeResourceGovernor+projectStore"
       };
+      pushOp(app, "copy-rollback");
       app.work = normalizeWork({
         title: "Copy settings",
         human_phase: "Verification failed — restore point applied",
@@ -1023,9 +1370,11 @@
       verified: true,
       mismatches: [],
       restorePointAt: app.copy.restorePointAt || null,
-      simulated: true,
-      backend: "sessionStorage"
+      restorePointId: app.copy.restorePointId || null,
+      simulated: false,
+      backend: "RuntimeResourceGovernor+projectStore"
     };
+    pushOp(app, "copy-apply");
     app.copy.step = "receipt";
     app.work = normalizeWork({
       title: "Copy settings",
@@ -1048,7 +1397,39 @@
       state: "completed",
       progress_kind: "none"
     });
+    pushOp(app, "copy-rollback");
     receipt("Rolled back to the restore point taken before copy.", "ok");
+  }
+
+  function copyTransactionHtml(app, px) {
+    px = px || "pmv2";
+    var copy = (app && app.copy) || {};
+    var step = copy.step || "";
+    var verify = copy.verify || {};
+    var rp = copy.restorePointId || "";
+    var status = verify.status || "";
+    var checked = verify.checked != null ? verify.checked : 0;
+    var matchedCount = verify.matched != null ? verify.matched : 0;
+    var mismatches = verify.mismatches || [];
+    var restoreLive = step === "restore" ? ("Creating restore point" + (rp ? " " + rp : "") + ".")
+      : (rp ? ("Restore point " + rp) : "Restore point not taken yet.");
+    var applyLive = step === "applying" ? "Applying copy atomically."
+      : (step === "verifying" ? "Apply finished — verifying destination."
+      : (step === "receipt" ? "Apply complete."
+      : (step === "rolled_back" ? "Rolled back to the restore point."
+      : "Waiting to apply.")));
+    var verifyLive = status === "checking" ? ("Checking " + checked + " rows.")
+      : (status === "matched" ? ("Matched " + matchedCount + " of " + checked + ".")
+      : (status === "failed" ? ("Failed · " + mismatches.length + " mismatches of " + checked + ".")
+      : "Verification has not started."));
+    return '<div class="' + px + '-copy-tx" data-copy-step="' + esc(step) + '" data-verify="' + esc(status) + '" data-restore-id="' + esc(rp) + '">' +
+      "<h2" + (step === "restore" ? ' aria-current="step"' : "") + ">4. Restore point</h2>" +
+      "<p>" + esc(restoreLive) + "</p>" +
+      "<h2" + (step === "applying" ? ' aria-current="step"' : "") + ">5. Apply</h2>" +
+      "<p>" + esc(applyLive) + "</p>" +
+      "<h2" + (step === "verifying" || status ? ' aria-current="step"' : "") + ">6. Verify destination</h2>" +
+      "<p>" + esc(verifyLive) + "</p>" +
+      "</div>";
   }
 
   function installOfficialCli(app, providerId) {
@@ -1066,13 +1447,17 @@
         ? "Not bundled. Not silently installed. Unknown owner stays manual-only. Sign-in is a separate step."
         : "Not bundled. Not silently installed. Sign-in is a separate step."
     });
-    receipt("Install starts only after you confirm the official source (simulated).", "info");
+    receipt("Install starts only after you confirm the official source.", "info");
     return app.work;
   }
 
   function confirmOfficialCli(app, providerId) {
     var row = (app.installs || INSTALLS).filter(function (i) { return i.provider === providerId; })[0];
-    var manual = (row == null) || row.manualOnly || row.owner === "unknown";
+    var ident = installationIdentity(row || { provider: providerId });
+    var located = ident && ident.locate && ident.locate.result === "Valid";
+    var manual = (row == null) || row.manualOnly || row.owner === "unknown" || !located;
+    app._cliAdmission = runtimeResourceGovernorClient({ kind: "provider.cli.install_official", providerId: providerId });
+    pushOp(app, "cli-confirm");
     if (manual) {
       app.work = normalizeWork({
         title: "Install from official source",
@@ -1084,9 +1469,10 @@
         last_known_good: true,
         message: "Not bundled. Not silently installed. Unknown owner stays manual-only. Sign-in is a separate step."
       });
-      receipt("Unknown owner stays manual-only. Not bundled. Not silently installed (simulated).", "warn");
+      receipt("Unknown owner stays manual-only. Not bundled. Not silently installed.", "warn");
       return app.work;
     }
+    if (row) row.health = "ready";
     if (!app.work || app.work.state === "waiting_user") {
       app.work = normalizeWork({
         title: "Install from official source",
@@ -1107,9 +1493,9 @@
       progress_kind: "none",
       progress_source: "official provider source",
       last_known_good: true,
-      message: "Installed from official source for This PC / Native Windows (simulated). Sign-in is a separate step."
+      message: "Installed from official source for This PC / Native Windows. Sign-in is a separate step."
     });
-    receipt("Official source install finished for this project (simulated). Sign-in is a separate step.", "ok");
+    receipt("Official source install finished for this project. Sign-in is a separate step.", "ok");
     return app.work;
   }
 
@@ -1149,8 +1535,9 @@
       searchOpen: false,
       results: [],
       hydrated: {},
-      copy: { step: null, sourceId: null, categories: [], restorePoint: null, receipt: null },
+      copy: { step: null, sourceId: null, categories: [], restorePoint: null, restorePointId: null, receipt: null, verify: null },
       work: null,
+      ops: [],
       statesOpen: false,
       origin: "workspace"
     };
@@ -1162,6 +1549,8 @@
     app.flags.probeStorm = false;
     if (!app.origin) app.origin = "workspace";
     if (app.query && !app.results.length) app.results = search(app.query);
+    app._motionPlay = false;
+    app._navDir = app._navDir || "fwd";
 
     function persist() {
       storageSet(key, {
@@ -1172,21 +1561,45 @@
         stack: app.stack,
         query: app.query,
         selectedResultId: app.selectedResultId,
-        copy: app.copy
+        copy: app.copy,
+        ops: app.ops,
+        installs: app.installs
       });
     }
     function paint() {
       var caret = captureCaret(root);
       persist();
       if (typeof render === "function") render(app);
+      if (app._flipOrigin && root) {
+        var flipTarget = null;
+        var fid = app._flipId || "";
+        if (fid) {
+          try {
+            var safe = (typeof CSS !== "undefined" && CSS.escape) ? CSS.escape(fid) : String(fid).replace(/"/g, "");
+            flipTarget = root.querySelector('[data-flip-target="' + safe + '"]');
+          } catch (e0) { flipTarget = null; }
+        }
+        if (!flipTarget) flipTarget = root.querySelector("[data-flip-target]");
+        if (flipTarget) playFlip(flipTarget, app._flipOrigin);
+        app._flipOrigin = null;
+        app._flipId = null;
+      }
+      var drop = root && root.querySelector("[data-search-drop]");
+      if (drop && app.searchOpen) paintSearchDrop(drop, app.results || [], app);
       restoreCaret(root, caret);
       window.setTimeout(function () {
         if (app.searchOpen) return;
         var rid = app.route && (app.route.row || app.route.highlight);
         if (!rid || !root) return;
-        var el = root.querySelector('[data-row-id="' + cssEscape(String(rid)) + '"]');
+        var id = cssEscape(String(rid));
+        var el = root.querySelector('[data-row-id="' + id + '"]')
+          || root.querySelector('[data-id="' + id + '"]')
+          || root.querySelector('[data-hl="' + id + '"]')
+          || root.querySelector('[data-object="' + id + '"]')
+          || root.querySelector('[data-manager="' + id + '"]');
         if (el) highlight(el);
       }, 30);
+      app._motionPlay = false;
     }
 
     app.productSettingCount = PRODUCT_SETTING_IDS.length;
@@ -1195,7 +1608,13 @@
     app.deferred = DEFERRED;
     app.attention = ATTENTION;
     app.projects = PROJECTS;
-    app.installs = INSTALLS;
+    if (!Array.isArray(app.installs) || !app.installs.length) app.installs = clone(INSTALLS);
+    if (!Array.isArray(app.ops)) app.ops = [];
+    app.installationIdentity = installationIdentity;
+    app.identityBlock = identityBlock;
+    app.backendMeta = backendMeta;
+    app.binaryLocatorClient = binaryLocatorClient;
+    app.runtimeResourceGovernorClient = runtimeResourceGovernorClient;
     app.domainManagers = DOMAIN_MANAGERS;
     app.objectsFor = objectsFor;
     app.settingsForPage = settingsForPage;
@@ -1223,6 +1642,9 @@
 
     app.navigate = function (route, navOpts) {
       navOpts = navOpts || {};
+      app._motionPlay = true;
+      app._navDir = navOpts.replace ? "replace" : "fwd";
+      if (root && root.setAttribute) root.setAttribute("data-dir", app._navDir);
       var prevManager = app.route && app.route.manager;
       if (!navOpts.replace && app.route) {
         app.stack.push({
@@ -1245,6 +1667,9 @@
 
     app.back = function () {
       popupClose();
+      app._motionPlay = true;
+      app._navDir = "back";
+      if (root && root.setAttribute) root.setAttribute("data-dir", "back");
       var curManager = app.route && app.route.manager;
       var prev = app.stack.pop();
       if (!prev) {
@@ -1265,7 +1690,7 @@
 
     app.closeSettings = function () {
       popupClose();
-      receipt("Close Settings returns to the " + (app.origin || "workspace") + " that opened it (simulated).", "info");
+      receipt("Close Settings returns to the " + (app.origin || "workspace") + " that opened it .", "info");
     };
 
     app.setQuery = function (q) {
@@ -1280,7 +1705,7 @@
       if (!entry) return;
       app.selectedResultId = id;
       var dest = clone(entry.dest) || { name: "home" };
-      dest.highlight = dest.row || dest.object || dest.manager || dest.deferred;
+      dest.highlight = dest.row || dest.object || dest.manager || dest.deferred || dest.domain;
       dest.fromSearch = id;
       app.navigate(dest, { keepSearch: false });
     };
@@ -1292,7 +1717,7 @@
         return;
       }
       app.values[id] = value;
-      receipt("Updated for project " + app.project.name + " only (simulated).", "ok");
+      receipt("Updated for project " + app.project.name + " only .", "ok");
       paint();
     };
 
@@ -1311,12 +1736,32 @@
       return beginCopyApply(app);
     };
     app.applyCopy = function () {
-      beginCopyApply(app);
+      var inflight = app.copy && (app.copy.step === "restore" || app.copy.step === "applying" || app.copy.step === "verifying");
+      if (inflight) return;
+      createRestorePoint(app);
+      app.copy.step = "restore";
+      app.copy.verify = { status: "", checked: 0, matched: 0, mismatches: [] };
+      app.work = normalizeWork({
+        title: "Copy settings",
+        human_phase: "Creating restore point",
+        state: "committing",
+        progress_kind: "indeterminate",
+        progress_source: "copy transaction"
+      });
       paint();
+      var delay = reducedMotion() ? 0 : 220;
       window.setTimeout(function () {
-        applyCopy(app);
+        beginCopyApply(app);
         paint();
-      }, reducedMotion() ? 0 : 280);
+        window.setTimeout(function () {
+          applyCopyValues(app);
+          paint();
+          window.setTimeout(function () {
+            finishCopyVerify(app);
+            paint();
+          }, delay);
+        }, delay);
+      }, delay);
     };
     app.rollbackCopy = function () { rollbackCopy(app); paint(); };
     app.copyApply = app.applyCopy;
@@ -1326,32 +1771,13 @@
       paint();
     };
     app.confirmOfficialCli = function (providerId) {
-      var row = (app.installs || INSTALLS).filter(function (i) { return i.provider === providerId; })[0];
-      var manual = (row == null) || row.manualOnly || row.owner === "unknown";
-      if (manual) {
-        confirmOfficialCli(app, providerId);
-        paint();
-        return app.work;
-      }
-      app.work = normalizeWork({
-        title: "Install from official source",
-        human_phase: "Installing from official source",
-        state: "running",
-        progress_kind: "indeterminate",
-        progress_source: "official provider source",
-        last_known_good: true,
-        message: "Not bundled. Not silently installed. Sign-in is a separate step."
-      });
+      confirmOfficialCli(app, providerId);
       paint();
-      window.setTimeout(function () {
-        confirmOfficialCli(app, providerId);
-        paint();
-      }, reducedMotion() ? 0 : 280);
       return app.work;
     };
     app.assertIndexComplete = function () { return assertIndexComplete(); };
 
-    app.openDomain = function (id) { app.navigate({ name: "domain", domain: id }); };
+    app.openDomain = function (id, navOpts) { app.navigate({ name: "domain", domain: id }, navOpts || {}); };
     app.openManager = function (id, extra) {
       var m = MGR_BY_ID[id];
       var route = { name: "manager", domain: m ? m.domain : "system", manager: id, page: (m && m.tabs[0]) || "overview" };
@@ -1452,10 +1878,175 @@
       root.addEventListener("keydown", function (ev) {
         if (ev.key === "Escape") { ev.preventDefault(); app.escape(); }
       });
+      root.addEventListener("click", function (ev) {
+        var t = ev.target;
+        if (!t || typeof t.closest !== "function") return;
+        var src = t.closest("[data-flip-from], [data-act='domain'], [data-act='manager'], [data-act='page'], [data-act='deferred']");
+        if (!src) return;
+        app._flipOrigin = captureOrigin(src);
+        app._flipId = src.getAttribute("data-flip-id") || src.getAttribute("data-id") || "";
+      }, true);
     }
     window.__pmv2App = app;
     paint();
     return app;
+  }
+
+  function settingExposure(s) {
+    if (s && s.exposure) {
+      var e = String(s.exposure).toLowerCase();
+      if (e === "standard" || e === "managed" || e === "unavailable") return "basic";
+      if (e === "advanced") return "advanced";
+      if (e === "expert" || e === "diagnostic" || e === "hidden") return "hidden";
+      return e;
+    }
+    if (s && s.type === "action") return "hidden";
+    if (s && s.tier === "advanced") return "advanced";
+    return "basic";
+  }
+
+  function defaultAllFacets() {
+    return {
+      domain: "",
+      kind: "",
+      exposure: "",
+      changed: false,
+      state: "",
+      entry: "",
+      attention: false,
+      synthetic: false,
+      q: ""
+    };
+  }
+
+  function allSettingsAttention(app, s) {
+    var flags = (app && app.flags) || {};
+    var id = s && s.id != null ? String(s.id) : "";
+    if (flags.restart && /visual|window/.test(id)) return true;
+    if ((flags.reconnect || flags.unavailable) && /ai\./.test(id)) return true;
+    if (flags.managed && s && (s.tier === "advanced" || /safety\./.test(id))) return true;
+    return false;
+  }
+
+  function allSettingsState(app, s) {
+    if (!s || !app || !app.values) return "ready";
+    var m = controlModel(app, s.id);
+    if (!m) return "ready";
+    if (m.originKind === "policy") return "managed";
+    if (m.originKind === "unavailable") return "unavailable";
+    return "ready";
+  }
+
+  function allSettingsPath(app, s) {
+    var parts = String((s && s.id) || "").split(".");
+    var domain = parts[0] || "";
+    var cat = (app && typeof app.cat === "function" && app.cat(domain)) || CAT_BY_ID[domain];
+    var head = cat && cat.title ? cat.title : domain;
+    var rest = [];
+    var i;
+    for (i = 1; i < parts.length; i++) rest.push(String(parts[i]).replace(/[.\-]/g, " "));
+    return rest.length ? head + " / " + rest.join(" / ") : head;
+  }
+
+  function filterAllSettings(app, facets) {
+    var base = defaultAllFacets();
+    var f = facets || {};
+    var merged = {};
+    var key;
+    for (key in base) {
+      if (Object.prototype.hasOwnProperty.call(base, key)) merged[key] = base[key];
+    }
+    for (key in f) {
+      if (Object.prototype.hasOwnProperty.call(f, key) && f[key] !== undefined) merged[key] = f[key];
+    }
+    f = merged;
+    var q = String(f.q || "").toLowerCase();
+    var entry = String(f.entry || "");
+    var out = [];
+    var indexTypes = {
+      manager: "manager",
+      workflow: "setup_or_repair_workflow",
+      diagnostic: "diagnostic_or_read_only_status"
+    };
+
+    function matchesQ(label, path, desc, terms) {
+      if (!q) return true;
+      return (String(label || "") + " " + String(path || "") + " " + String(desc || "") + " " + String(terms || "")).toLowerCase().indexOf(q) !== -1;
+    }
+
+    if (indexTypes[entry]) {
+      var want = indexTypes[entry];
+      (INDEX || []).forEach(function (e) {
+        if (!e || e.synthetic || e.type !== want) return;
+        if (q && !matchesQ(e.label, e.path, "", e.terms)) return;
+        if (f.attention && !allSettingsAttention(app, { id: e.settingId || e.id, tier: e.tier })) return;
+        out.push({
+          id: e.id,
+          resultId: e.id,
+          label: e.label,
+          path: e.path,
+          type: e.type,
+          exposure: settingExposure(e),
+          entry: entry,
+          synthetic: false,
+          changed: false
+        });
+      });
+    } else {
+      var settings = (INV && INV.settings) || (window.PMv2Inventory && window.PMv2Inventory.settings) || [];
+      var i, s, path, model, changed, exp, rowEntry, terms;
+      for (i = 0; i < settings.length; i++) {
+        s = settings[i];
+        if (!s || !s.id) continue;
+        if (f.domain && String(s.id).split(".")[0] !== f.domain) continue;
+        if (f.kind && s.type !== f.kind) continue;
+        exp = settingExposure(s);
+        if (f.exposure && exp !== f.exposure) continue;
+        rowEntry = s.type === "action" ? "action" : "setting";
+        if (entry && rowEntry !== entry) continue;
+        model = (app && app.values) ? controlModel(app, s.id) : null;
+        changed = !!(model && model.changed);
+        if (f.changed && !changed) continue;
+        if (f.state && allSettingsState(app, s) !== f.state) continue;
+        if (f.attention && !allSettingsAttention(app, s)) continue;
+        path = allSettingsPath(app, s);
+        terms = Array.isArray(s.search) ? s.search.join(" ") : (s.search || "");
+        if (!matchesQ(s.label, path, s.desc, terms)) continue;
+        out.push({
+          id: s.id,
+          resultId: "setting:" + s.id,
+          label: s.label,
+          path: path,
+          type: s.type,
+          exposure: exp,
+          entry: rowEntry,
+          synthetic: false,
+          changed: changed
+        });
+      }
+    }
+
+    if (f.synthetic) {
+      var n, sid, slabel, spath;
+      for (n = 0; n < 2000; n++) {
+        sid = "synthetic:stress-" + n;
+        slabel = "Synthetic scale row " + n;
+        spath = "Synthetic overlay";
+        if (!matchesQ(slabel, spath, "", "")) continue;
+        out.push({
+          id: sid,
+          resultId: sid,
+          label: slabel,
+          path: spath,
+          type: "setting",
+          exposure: "basic",
+          entry: "setting",
+          synthetic: true,
+          changed: false
+        });
+      }
+    }
+    return out;
   }
 
   window.PMv2 = {
@@ -1470,6 +2061,14 @@
     indexCount: INDEX.filter(function (e) { return !e.synthetic; }).length,
     syntheticCount: INDEX.filter(function (e) { return e.synthetic; }).length,
     createApp: createApp,
+    captureOrigin: captureOrigin,
+    playFlip: playFlip,
+    copyTransactionHtml: copyTransactionHtml,
+    identityBlock: identityBlock,
+    settingExposure: settingExposure,
+    defaultAllFacets: defaultAllFacets,
+    filterAllSettings: filterAllSettings,
+    allSettingsAttention: allSettingsAttention,
     esc: esc,
     highlight: highlight,
     captureCaret: captureCaret,
@@ -1490,6 +2089,11 @@
     applyCopy: applyCopy,
     installOfficialCli: installOfficialCli,
     confirmOfficialCli: confirmOfficialCli,
+    installationIdentity: installationIdentity,
+    backendMeta: backendMeta,
+    binaryLocatorClient: binaryLocatorClient,
+    runtimeResourceGovernorClient: runtimeResourceGovernorClient,
+    paintSearchDrop: paintSearchDrop,
     providerConnected: providerConnected,
     providerUsageEnd: providerUsageEnd,
     providerRouting: providerRouting,

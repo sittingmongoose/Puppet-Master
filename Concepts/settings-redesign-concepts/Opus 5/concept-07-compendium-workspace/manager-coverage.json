@@ -1,0 +1,505 @@
+{
+ "schema_id": "pm.settings_bakeoff_manager_coverage_result.v2",
+ "concept_id": "concept-07-compendium-workspace",
+ "concept_title": "Opus 5 — Compendium",
+ "source_family": "A2 Compendium Workspace / Take 1",
+ "model": "Opus 5",
+ "generated": "2026-08-19",
+ "matrix_source": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18/machine_readable/manager_coverage_required.json",
+ "coverage_scope": "this_concept_individually",
+ "note": "Generated from a live run: every row below was produced by building the spec in this concept's own page and reading the surface it rendered. No status is asserted by hand.",
+ "summary": {
+  "families_total": 54,
+  "demonstrated": 44,
+  "deferred_named_owner": 10,
+  "missing": 0
+ },
+ "families": [
+  {
+   "family": "Settings Home",
+   "status": "demonstrated",
+   "managerId": null,
+   "archetype": "directory",
+   "domain": null,
+   "route": "#/home",
+   "evidence": "Concept-native surface at #/home (data-pm-surface=\"home\", 0 rows rendered)."
+  },
+  {
+   "family": "Settings Search",
+   "status": "demonstrated",
+   "managerId": null,
+   "archetype": "finder",
+   "domain": null,
+   "route": "#/q/theme",
+   "evidence": "Concept-native surface at #/q/theme (data-pm-surface=\"search\", 0 rows rendered)."
+  },
+  {
+   "family": "Settings Workspace",
+   "status": "demonstrated",
+   "managerId": null,
+   "archetype": "preference document",
+   "domain": null,
+   "route": "#/d/ai",
+   "evidence": "Concept-native surface at #/d/ai (data-pm-surface=\"domain\", 0 rows rendered)."
+  },
+  {
+   "family": "Ordinary setting grammar",
+   "status": "demonstrated",
+   "managerId": null,
+   "archetype": "preference document",
+   "domain": null,
+   "route": "#/d/general/general.visual",
+   "evidence": "Concept-native surface at #/d/general/general.visual (data-pm-surface=\"page\", 13 rows rendered)."
+  },
+  {
+   "family": "Provider / Account / Model / Installation",
+   "status": "demonstrated",
+   "managerId": "manager-providers",
+   "archetype": "resource roster and detail sheet",
+   "domain": "ai",
+   "route": "#/m/manager-providers",
+   "evidence": "Concept-native manager at #/m/manager-providers: 6 sections, 34 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Context & Instructions",
+   "status": "demonstrated",
+   "managerId": "manager-context",
+   "archetype": "preference document",
+   "domain": "memory",
+   "route": "#/m/manager-context",
+   "evidence": "Concept-native manager at #/m/manager-context: 7 sections, 30 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Memory",
+   "status": "demonstrated",
+   "managerId": "manager-memory",
+   "archetype": "inventory catalogue",
+   "domain": "memory",
+   "route": "#/m/manager-memory",
+   "evidence": "Concept-native manager at #/m/manager-memory: 6 sections, 17 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Personas",
+   "status": "demonstrated",
+   "managerId": "manager-personas",
+   "archetype": "resource roster and detail sheet",
+   "domain": "personas",
+   "route": "#/m/manager-personas",
+   "evidence": "Concept-native manager at #/m/manager-personas: 7 sections, 30 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Goal & Automation",
+   "status": "demonstrated",
+   "managerId": "manager-goal",
+   "archetype": "preference document",
+   "domain": "planning",
+   "route": "#/m/manager-goal",
+   "evidence": "Concept-native manager at #/m/manager-goal: 6 sections, 17 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Crew",
+   "status": "demonstrated",
+   "managerId": "manager-crew",
+   "archetype": "resource roster and detail sheet",
+   "domain": "branching",
+   "route": "#/m/manager-crew",
+   "evidence": "Concept-native manager at #/m/manager-crew: 6 sections, 26 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Permissions & FileSafe",
+   "status": "demonstrated",
+   "managerId": "manager-filesafe",
+   "archetype": "preference document",
+   "domain": "safety",
+   "route": "#/m/manager-filesafe",
+   "evidence": "Concept-native manager at #/m/manager-filesafe: 11 sections, 34 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Back Seat Driver",
+   "status": "demonstrated",
+   "managerId": "manager-bsd",
+   "archetype": "preference document",
+   "domain": "planning",
+   "route": "#/m/manager-bsd",
+   "evidence": "Concept-native manager at #/m/manager-bsd: 6 sections, 19 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Notifications & Sounds",
+   "status": "demonstrated",
+   "managerId": "manager-notifications",
+   "archetype": "inventory catalogue",
+   "domain": "general",
+   "route": "#/m/manager-notifications",
+   "evidence": "Concept-native manager at #/m/manager-notifications: 5 sections, 20 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Sound Library / Uploads / Packs",
+   "status": "demonstrated",
+   "managerId": "manager-sounds",
+   "archetype": "inventory catalogue",
+   "domain": "general",
+   "route": "#/m/manager-sounds",
+   "evidence": "Concept-native manager at #/m/manager-sounds: 6 sections, 15 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Appearance / themes / fonts / motion",
+   "status": "demonstrated",
+   "managerId": "manager-appearance",
+   "archetype": "preference document",
+   "domain": "general",
+   "route": "#/m/manager-appearance",
+   "evidence": "Concept-native manager at #/m/manager-appearance: 7 sections, 19 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Spellcheck & Dictionaries",
+   "status": "demonstrated",
+   "managerId": "manager-dictionaries",
+   "archetype": "inventory catalogue",
+   "domain": "general",
+   "route": "#/m/manager-dictionaries",
+   "evidence": "Concept-native manager at #/m/manager-dictionaries: 7 sections, 10 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Desktop / Tray / Window",
+   "status": "demonstrated",
+   "managerId": "manager-desktop",
+   "archetype": "preference document",
+   "domain": "general",
+   "route": "#/m/manager-desktop",
+   "evidence": "Concept-native manager at #/m/manager-desktop: 7 sections, 14 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Teacher / Help",
+   "status": "demonstrated",
+   "managerId": "manager-teacher",
+   "archetype": "setup or repair sequence",
+   "domain": "system",
+   "route": "#/m/manager-teacher",
+   "evidence": "Concept-native manager at #/m/manager-teacher: 4 sections, 7 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Doctor",
+   "status": "demonstrated",
+   "managerId": "manager-doctor",
+   "archetype": "read-only health projection",
+   "domain": "system",
+   "route": "#/m/manager-doctor",
+   "evidence": "Concept-native manager at #/m/manager-doctor: 5 sections, 18 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "File Manager / Editor",
+   "status": "demonstrated",
+   "managerId": "manager-files",
+   "archetype": "preference document",
+   "domain": "code",
+   "route": "#/m/manager-files",
+   "evidence": "Concept-native manager at #/m/manager-files: 4 sections, 8 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Terminal",
+   "status": "demonstrated",
+   "managerId": "manager-terminal",
+   "archetype": "resource roster and detail sheet",
+   "domain": "code",
+   "route": "#/m/manager-terminal",
+   "evidence": "Concept-native manager at #/m/manager-terminal: 4 sections, 6 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "LSP",
+   "status": "demonstrated",
+   "managerId": "manager-lsp",
+   "archetype": "resource roster and detail sheet",
+   "domain": "code",
+   "route": "#/m/manager-lsp",
+   "evidence": "Concept-native manager at #/m/manager-lsp: 3 sections, 6 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Formatters",
+   "status": "demonstrated",
+   "managerId": "manager-formatters",
+   "archetype": "inventory catalogue",
+   "domain": "code",
+   "route": "#/m/manager-formatters",
+   "evidence": "Concept-native manager at #/m/manager-formatters: 3 sections, 6 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Commands & Shortcuts",
+   "status": "demonstrated",
+   "managerId": "manager-commands",
+   "archetype": "inventory catalogue",
+   "domain": "extensions",
+   "route": "#/m/manager-commands",
+   "evidence": "Concept-native manager at #/m/manager-commands: 4 sections, 11 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "MCP",
+   "status": "demonstrated",
+   "managerId": "manager-mcp",
+   "archetype": "resource roster and detail sheet",
+   "domain": "system",
+   "route": "#/m/manager-mcp",
+   "evidence": "Concept-native manager at #/m/manager-mcp: 3 sections, 56 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Skills",
+   "status": "demonstrated",
+   "managerId": "manager-skills",
+   "archetype": "inventory catalogue",
+   "domain": "extensions",
+   "route": "#/m/manager-skills",
+   "evidence": "Concept-native manager at #/m/manager-skills: 2 sections, 6 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Plugins",
+   "status": "demonstrated",
+   "managerId": "manager-plugins",
+   "archetype": "inventory catalogue",
+   "domain": "extensions",
+   "route": "#/m/manager-plugins",
+   "evidence": "Concept-native manager at #/m/manager-plugins: 2 sections, 4 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Tools",
+   "status": "demonstrated",
+   "managerId": "manager-tools",
+   "archetype": "inventory catalogue",
+   "domain": "extensions",
+   "route": "#/m/manager-tools",
+   "evidence": "Concept-native manager at #/m/manager-tools: 3 sections, 9 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Testing & Debug",
+   "status": "demonstrated",
+   "managerId": "manager-testing",
+   "archetype": "diagnostic drawer",
+   "domain": "planning",
+   "route": "#/m/manager-testing",
+   "evidence": "Concept-native manager at #/m/manager-testing: 3 sections, 16 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Storage & Retention",
+   "status": "demonstrated",
+   "managerId": "manager-storage",
+   "archetype": "read-only health projection",
+   "domain": "system",
+   "route": "#/m/manager-storage",
+   "evidence": "Concept-native manager at #/m/manager-storage: 4 sections, 10 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Backup & Restore",
+   "status": "demonstrated",
+   "managerId": "manager-backup",
+   "archetype": "preview and confirmation transaction",
+   "domain": "system",
+   "route": "#/m/manager-backup",
+   "evidence": "Concept-native manager at #/m/manager-backup: 3 sections, 7 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Settings Lifecycle",
+   "status": "demonstrated",
+   "managerId": "manager-settings-lifecycle",
+   "archetype": "preview and confirmation transaction",
+   "domain": "system",
+   "route": "#/m/manager-settings-lifecycle",
+   "evidence": "Concept-native manager at #/m/manager-settings-lifecycle: 6 sections, 19 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "History & Sessions",
+   "status": "demonstrated",
+   "managerId": "manager-history",
+   "archetype": "inventory catalogue",
+   "domain": "memory",
+   "route": "#/m/manager-history",
+   "evidence": "Concept-native manager at #/m/manager-history: 4 sections, 7 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Runtime Artifacts / Project Outputs",
+   "status": "demonstrated",
+   "managerId": "manager-artifacts",
+   "archetype": "inventory catalogue",
+   "domain": "media",
+   "route": "#/m/manager-artifacts",
+   "evidence": "Concept-native manager at #/m/manager-artifacts: 3 sections, 5 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Source Control / Worktrees",
+   "status": "demonstrated",
+   "managerId": "manager-sourcecontrol",
+   "archetype": "resource roster and detail sheet",
+   "domain": "branching",
+   "route": "#/m/manager-sourcecontrol",
+   "evidence": "Concept-native manager at #/m/manager-sourcecontrol: 5 sections, 10 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "GitHub Actions",
+   "status": "demonstrated",
+   "managerId": "manager-gh-actions",
+   "archetype": "read-only health projection",
+   "domain": "branching",
+   "route": "#/m/manager-gh-actions",
+   "evidence": "Concept-native manager at #/m/manager-gh-actions: 4 sections, 7 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Containers & Registries",
+   "status": "demonstrated",
+   "managerId": "manager-containers",
+   "archetype": "resource roster and detail sheet",
+   "domain": "code",
+   "route": "#/m/manager-containers",
+   "evidence": "Concept-native manager at #/m/manager-containers: 4 sections, 7 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Web / Search / Fetch / Crawl",
+   "status": "demonstrated",
+   "managerId": "manager-web",
+   "archetype": "resource roster and detail sheet",
+   "domain": "web",
+   "route": "#/m/manager-web",
+   "evidence": "Concept-native manager at #/m/manager-web: 4 sections, 7 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Project Search Index",
+   "status": "demonstrated",
+   "managerId": "manager-index",
+   "archetype": "read-only health projection",
+   "domain": "web",
+   "route": "#/m/manager-index",
+   "evidence": "Concept-native manager at #/m/manager-index: 5 sections, 7 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Workspace Cleanup",
+   "status": "demonstrated",
+   "managerId": "manager-cleanup",
+   "archetype": "preview and confirmation transaction",
+   "domain": "system",
+   "route": "#/m/manager-cleanup",
+   "evidence": "Concept-native manager at #/m/manager-cleanup: 3 sections, 7 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Media & Output",
+   "status": "demonstrated",
+   "managerId": "manager-media",
+   "archetype": "preference document",
+   "domain": "media",
+   "route": "#/m/manager-media",
+   "evidence": "Concept-native manager at #/m/manager-media: 2 sections, 6 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "DRY Method visible state where exposed",
+   "status": "demonstrated",
+   "managerId": "manager-dry",
+   "archetype": "read-only health projection",
+   "domain": "system",
+   "route": "#/m/manager-dry",
+   "evidence": "Concept-native manager at #/m/manager-dry: 4 sections, 16 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Resource use and performance",
+   "status": "demonstrated",
+   "managerId": "manager-performance",
+   "archetype": "read-only health projection",
+   "domain": "system",
+   "route": "#/m/manager-performance",
+   "evidence": "Concept-native manager at #/m/manager-performance: 7 sections, 115 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Copy Settings From Another Project",
+   "status": "demonstrated",
+   "managerId": "manager-copy",
+   "archetype": "preview and confirmation transaction",
+   "domain": "system",
+   "route": "#/m/manager-copy",
+   "evidence": "Concept-native manager at #/m/manager-copy: 7 sections, 33 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Product Onboarding",
+   "status": "deferred_named_owner",
+   "managerId": "owner-onboarding",
+   "archetype": "named owner insertion point",
+   "domain": "system",
+   "route": "#/m/owner-onboarding",
+   "evidence": "Concept-native manager at #/m/owner-onboarding: 2 sections, 7 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Installation / Deployment",
+   "status": "deferred_named_owner",
+   "managerId": "owner-installation",
+   "archetype": "named owner insertion point",
+   "domain": "system",
+   "route": "#/m/owner-installation",
+   "evidence": "Concept-native manager at #/m/owner-installation: 2 sections, 7 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Server Claim / Bootstrap",
+   "status": "deferred_named_owner",
+   "managerId": "owner-server-claim",
+   "archetype": "named owner insertion point",
+   "domain": "system",
+   "route": "#/m/owner-server-claim",
+   "evidence": "Concept-native manager at #/m/owner-server-claim: 2 sections, 7 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Servers / Execution Hosts / Clients",
+   "status": "deferred_named_owner",
+   "managerId": "manager-server",
+   "archetype": "named owner insertion point",
+   "domain": "system",
+   "route": "#/m/manager-server",
+   "evidence": "Concept-native manager at #/m/manager-server: 5 sections, 23 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Project Hosting & Files",
+   "status": "deferred_named_owner",
+   "managerId": "owner-project-hosting",
+   "archetype": "named owner insertion point",
+   "domain": "system",
+   "route": "#/m/owner-project-hosting",
+   "evidence": "Concept-native manager at #/m/owner-project-hosting: 2 sections, 7 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Remote Access",
+   "status": "deferred_named_owner",
+   "managerId": "owner-remote-access",
+   "archetype": "named owner insertion point",
+   "domain": "system",
+   "route": "#/m/owner-remote-access",
+   "evidence": "Concept-native manager at #/m/owner-remote-access: 2 sections, 7 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Project Sync / Move",
+   "status": "deferred_named_owner",
+   "managerId": "owner-project-move",
+   "archetype": "named owner insertion point",
+   "domain": "system",
+   "route": "#/m/owner-project-move",
+   "evidence": "Concept-native manager at #/m/owner-project-move: 2 sections, 7 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Puppet Master application/content updates",
+   "status": "deferred_named_owner",
+   "managerId": "owner-updates",
+   "archetype": "named owner insertion point",
+   "domain": "system",
+   "route": "#/m/owner-updates",
+   "evidence": "Concept-native manager at #/m/owner-updates: 2 sections, 7 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Full Server backup owner flow",
+   "status": "deferred_named_owner",
+   "managerId": "owner-server-backup",
+   "archetype": "named owner insertion point",
+   "domain": "system",
+   "route": "#/m/owner-server-backup",
+   "evidence": "Concept-native manager at #/m/owner-server-backup: 2 sections, 7 items, rendered by this concept's own renderManager."
+  },
+  {
+   "family": "Usage",
+   "status": "deferred_named_owner",
+   "managerId": "manager-usage",
+   "archetype": "named owner insertion point",
+   "domain": "ai",
+   "route": "#/m/manager-usage",
+   "evidence": "Concept-native manager at #/m/manager-usage: 2 sections, 6 items, rendered by this concept's own renderManager."
+  }
+ ]
+}

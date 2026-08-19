@@ -1,0 +1,226 @@
+{
+ "schema_id": "pm.settings_concept_impact_register.v2",
+ "concept_id": "concept-09-tome-tabs",
+ "concept_title": "Opus 5 — Codex",
+ "source_family": "Rethemed Tome Tabs",
+ "model": "Opus 5",
+ "generated": "2026-08-19",
+ "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+ "thesis": "Settings is a bound volume with chapter tabs, expressed entirely in Puppet Master's own materials.",
+ "reference_authority": "layout only — the reference's visual skin is removed and rethemed to current Puppet Master",
+ "retheme": {
+  "reference": "05_Tome_Tabs_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+  "borrowed": [
+   "persistent edge/chapter tabs for major domains",
+   "layered page depth and stable page location",
+   "a broad central reading canvas",
+   "domain tabs plus manager-local tabs",
+   "list/detail manager composition",
+   "a stepwise copy flow"
+  ],
+  "removed": [
+   "parchment and paper texture",
+   "brass and gears",
+   "sepia palette",
+   "book ornament and rules",
+   "skeuomorphic page edges and drop-shadow leaves",
+   "medieval and fantasy wording",
+   "decorative serif display faces"
+  ]
+ },
+ "plan_owner_impacts": [
+  {
+   "owner": "FinalGUISpec",
+   "impact": "Settings gains a directory-and-workspace contract in place of the chip/bloom modal; the navigation, breadcrumb, Back and Close grammar all change with it."
+  },
+  {
+   "owner": "settings inventory and schema",
+   "impact": "Legacy `scope` metadata is projected to the current Project and is no longer an editing axis. `general.interaction.scope-labels` describes a capability a Project-only design does not have."
+  },
+  {
+   "owner": "Models System / Multi-Account / CLI Bridged Providers / Provider OpenCode",
+   "impact": "Provider manager density: connected state, selected account, models, usage-end behaviour, routing and setup answered first; credentials, installations, catalogues, limits and logs as coordinated subpages."
+  },
+  {
+   "owner": "Binary Locator and installation lifecycle",
+   "impact": "Installations are addressable objects with human identity first and resolved launcher, real path, owner and confidence in advanced detail. Unknown ownership is manual-only."
+  },
+  {
+   "owner": "Assistant Memory / Personas / Goal Runtime / Orchestrator / Planning Wizard / PRD Builder",
+   "impact": "Each is a manager family reachable from its owning domain and from search, with a concept-native archetype rather than a wall of rows."
+  },
+  {
+   "owner": "Permissions / FileSafe",
+   "impact": "Rule editing lives in a manager, and permission gates apply to setting writes that govern tool reach."
+  },
+  {
+   "owner": "Commands / UI Command Catalog",
+   "impact": "`cmd.settings.bloom.open` retires; navigation collapses onto one destination-carrying command; search selection must route by immutable result id."
+  },
+  {
+   "owner": "MCP / Skills / Plugins / Tools / LSP / Formatters / File Manager / Testing",
+   "impact": "Catalogue and roster archetypes, lazily hydrated and virtualized."
+  },
+  {
+   "owner": "Worktrees / Git / GitHub / Containers / Registries",
+   "impact": "Roster and read-only health projections inside Settings; the owning subsystems keep their operations."
+  },
+  {
+   "owner": "Storage / Runtime Artifacts / Outputs",
+   "impact": "Retention and cleanup are preview-and-confirm transactions with receipts."
+  },
+  {
+   "owner": "Release / updates owner",
+   "impact": "Application and content updates stay a named owner with a reachable insertion point and a stated return contract."
+  },
+  {
+   "owner": "Usage",
+   "impact": "Read-only snapshot in Settings; measurement, history and projection stay with Usage."
+  }
+ ],
+ "settings_inventory_impacts": [
+  {
+   "id": "legacy-scope-metadata",
+   "records": "308 records carry scope [global]; a further 246 carry mixed global/project/run/persona/account/provider",
+   "finding": "The current Project-only decision makes `scope` a provenance fact rather than an editing axis. The concepts project every record into the current Project and never render the field.",
+   "proposal": "Future schema pass: retain scope as non-user-facing provenance, or drop it, and remove the implication that a reader may choose one."
+  },
+  {
+   "id": "scope-labels-setting",
+   "records": "general.interaction.scope-labels — 'Show Where Settings Apply'",
+   "finding": "The record describes labelling each setting with Global/Project/Persona and which layer wins. In a Project-only design that capability has no surface.",
+   "proposal": "Adjudicate: retire the record, or restate it as 'explain why this value is what it is', which is the `Why this value?` affordance the concepts do implement."
+  },
+  {
+   "id": "settings-search-record",
+   "records": "general.interaction.settings-search — 'Search All Settings'",
+   "finding": "Already promises fuzzy search across every row including hidden ones. The concepts implement exactly that, plus the anchored dropdown and exact deep links the packet requires.",
+   "proposal": "No change to the record. Its description is the universal search contract and should be treated as canonical."
+  },
+  {
+   "id": "section-structure",
+   "records": "all 828",
+   "finding": "The inventory has 12 categories and 36 subgroups, but a subgroup can hold 75 records — too many for one readable page. The concepts cut each subgroup into 180 sections of four to eight adjacent related rows, derived from the record ids themselves.",
+   "proposal": "Future schema pass: carry a section id per record so the grouping is canon rather than derived, and so two surfaces cannot derive it differently."
+  },
+  {
+   "id": "exposure-ladder",
+   "records": "546 records are tier 'advanced', 282 'simple'",
+   "finding": "Two tiers are not enough to separate an advanced-but-ordinary option from a diagnostic switch. The concepts derive a four-step ladder — standard, advanced, expert, diagnostic — from the tier plus the record id.",
+   "proposal": "Future schema pass: make exposure explicit rather than inferred."
+  }
+ ],
+ "settings_schema_impacts": [
+  {
+   "id": "section-id",
+   "proposal": "Add a stable section id per record so page grouping is canon rather than derived."
+  },
+  {
+   "id": "exposure",
+   "proposal": "Replace the two-value tier with an explicit exposure ladder: standard, advanced, expert, diagnostic."
+  },
+  {
+   "id": "scope",
+   "proposal": "Demote scope to non-user-facing provenance, or drop it, now that every editable value belongs to the current Project."
+  },
+  {
+   "id": "record-kind",
+   "proposal": "Distinguish a persistent setting from a one-shot action; the inventory currently types both as records with `type: action` mixed among values."
+  }
+ ],
+ "command_id_impacts": {
+  "see": "candidate-command-delta.json",
+  "censused": 85
+ },
+ "wiring_impacts": {
+  "see": "candidate-wiring-delta.json",
+  "traces": 8
+ },
+ "dry_component_impacts": {
+  "see": "candidate-dry-delta.json",
+  "roles": 16
+ },
+ "schema_event_storage_impacts": [
+  {
+   "id": "settings-changed-event",
+   "note": "A value write must emit an event carrying Project, setting id, previous and next value and revision, so a second window can show the changed-elsewhere state rather than silently overwriting."
+  },
+  {
+   "id": "copy-receipt",
+   "note": "The copy transaction needs a durable receipt with its restore point, counts and rollback capability. It is not an import receipt: the sources are two Projects, not a file."
+  },
+  {
+   "id": "restore-point",
+   "note": "Restore points taken by Settings transactions need a retention policy of their own, bounded and visible."
+  }
+ ],
+ "migration_supersession_impacts": [
+  {
+   "id": "chip-bloom-contract",
+   "supersedes": "the PMConcept7 s4 chip rail, horizontal shelves and bloom modal",
+   "note": "Replaced by Home -> domain -> page -> manager inside one Settings shell, with a breadcrumb, Back and Close."
+  },
+  {
+   "id": "inherited-from-global",
+   "supersedes": "the 'Inheriting from Global' affordance in the current project settings modal",
+   "note": "No inheritance is exposed. Intrinsic managed and unavailable states remain, with their origin in Details."
+  },
+  {
+   "id": "collective-coverage",
+   "supersedes": "the August 8 rule that manager coverage could be collective across concepts and that shared_grammar counted",
+   "note": "Every concept demonstrates every non-deferred family itself."
+  },
+  {
+   "id": "index-position-routing",
+   "supersedes": "search that routes by grouped-array position",
+   "note": "Routing is by immutable result id and a resolved destination object only."
+  }
+ ],
+ "slint_port_impacts": [
+  {
+   "id": "stable-ids",
+   "note": "Every model row, manager object and destination has a stable id; no view depends on array position."
+  },
+  {
+   "id": "virtualization",
+   "note": "Long lists go through a windowing helper that measures nothing itself and returns an index window plus two spacer heights — the same shape a Slint ListView viewport callback provides."
+  },
+  {
+   "id": "explicit-state-machines",
+   "note": "Routes, menus, drawers and transitions are explicit states, not CSS-only behaviour."
+  },
+  {
+   "id": "bounded-effects",
+   "note": "Blur and shadow are bounded and token-driven; reduced motion multiplies translate distances by zero rather than needing a second rule set."
+  },
+  {
+   "id": "no-dom-derived-semantics",
+   "note": "Layout is measured only to scroll an arrival into view; nothing about what a setting MEANS is read back out of the DOM."
+  }
+ ],
+ "test_fixtures": [
+  "19 deterministic state fixtures, addressable as ?s=<id> on any route",
+  "828 canonical inventory records with a seeded per-row demo state",
+  "a provenance-marked synthetic fixture of 2,400 settings and large installation, tool, server and model rosters, off by default",
+  "duplicate-label and typo search cases",
+  "a copy transaction whose verification fails and rolls back"
+ ],
+ "deferred_named_owners": [
+  "Product Onboarding",
+  "Installation / Deployment",
+  "Server Claim / Bootstrap",
+  "Servers / Execution Hosts / Clients",
+  "Project Hosting & Files",
+  "Remote Access",
+  "Project Sync / Move",
+  "Puppet Master application/content updates",
+  "Full Server backup owner flow",
+  "Usage"
+ ],
+ "unresolved_questions": [
+  "Whether the derived 180-section grouping should become canon, and if so who owns it.",
+  "Whether `general.interaction.scope-labels` is retired or restated once Project-only is settled.",
+  "Whether a copy rollback reuses the restore-point command or needs its own id.",
+  "Whether Doctor is a Settings surface over other owners' checks, or an owner in its own right with its own catalogue."
+ ]
+}

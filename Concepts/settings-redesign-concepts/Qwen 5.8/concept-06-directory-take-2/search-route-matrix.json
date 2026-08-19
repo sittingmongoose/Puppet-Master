@@ -183,6 +183,16 @@
       "focus_highlight": "dropdown restored",
       "pass": true,
       "note": "back-restores-query"
+    },
+    {
+      "query": "theme",
+      "rid": "sr:setting:general.visual.theme",
+      "displayed_path": "General & Appearance › Visual Style",
+      "expected_dest": "grouped dropdown (Settings group + Managers group; 18 results) → #/cat/general/visual?row=general.visual.theme",
+      "actual_dest": "#/cat/general/visual?row=general.visual.theme",
+      "focus_highlight": "row focused + pm2-locate; group captions rendered per TYPE_ORDER",
+      "pass": true,
+      "note": "grouped_results: 2 type groups, 18 rows, rid routing"
     }
   ]
 }

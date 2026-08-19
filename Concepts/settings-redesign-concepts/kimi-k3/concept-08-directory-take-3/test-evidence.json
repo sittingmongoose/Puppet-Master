@@ -1,34 +1,82 @@
 {
- "schema_id": "pm.settings_bakeoff.test_evidence.v1",
- "concept": "concept-08-directory-take-3",
- "static_checks": {
-  "evidence-json-parse": "pass (generated and parsed at build time)",
-  "coverage-families-verbatim": "pass (42 required family strings named exactly)",
-  "coverage-forbidden-statuses": "pass (no shared_grammar, no missing)",
-  "concept-js-syntax": "pending (node --check by concept builder)"
- },
- "search_cases": "see search-route-matrix.json",
- "manager_routes": "see manager-route-matrix.json",
- "theme_width_matrix": {
-  "themes": [
-   "Friendly Dark",
-   "Friendly Light",
-   "Glass Dark",
-   "Glass Light",
-   "Retro Dark",
-   "Retro Light",
-   "Basic Dark",
-   "Basic Light"
+  "schema_id": "pm.settings_bakeoff.test_evidence.v1",
+  "concept": "concept-08-directory-take-3",
+  "static_checks": {
+    "evidence-json-parse": "pass (generated and parsed at build time)",
+    "coverage-families-verbatim": "pass (42 required family strings named exactly)",
+    "coverage-forbidden-statuses": "pass (no shared_grammar, no missing)",
+    "concept-js-syntax": "pending (node --check by concept builder)"
+  },
+  "search_cases": "see search-route-matrix.json",
+  "manager_routes": "see manager-route-matrix.json",
+  "theme_width_matrix": {
+    "themes": [
+      "Friendly Dark",
+      "Friendly Light",
+      "Glass Dark",
+      "Glass Light",
+      "Retro Dark",
+      "Retro Light",
+      "Basic Dark",
+      "Basic Light"
+    ],
+    "widths": [
+      760,
+      900,
+      1280,
+      1700,
+      2200,
+      2500
+    ],
+    "result": "pass with anomalies — 48/48 combos (8 themes x 6 widths): no horizontal overflow in .pmx-stage (scrollWidth <= clientWidth+1), search field and destinations visible at Home, zero new console errors. Anomaly: demo-scenarios drawer (#dt3-demo.pm-drawer) renders visibly pinned right in every combo despite the hidden attribute (.pm-drawer{display:flex} overrides UA [hidden]; no [hidden] guard in shared CSS). Screenshots: friendly-dark + glass-dark at 760/1280/2500 (temp screenshot dir)."
+  },
+  "notes": "Browser/interaction evidence appended by the verification phase.",
+  "browser_checks": {
+    "load": "pass — re-verified 2026-08-19: 0 console errors, 0 page errors on load (malformed SVG <rect> x=\"4 4\" fixed to x=\"4\" y=\"4\")",
+    "reduced_motion": "pass — data-motion=reduced applied; Home identical; providers manager renders fully; 0 errors",
+    "search": "pass — re-verified 2026-08-19: 14/14 cases pass. The 6 previously-failing cases now pass: r_6bfe03cb909de537 (providers/rate-limits subtab selected, roster highlighted+focused), r_8b0c67409da5d3a8 (opens full-width Copy Settings view), r_773d3ba5904888a1 (lifecycle manager with steps highlight+focus), r_f4803ff143073acd (doctor health-grid highlight+focus), r_5a0b8b4fda639a03 (memory/retention subtab selected, roster highlight+focus), r_0c414eed895de3f1 (source-control group highlight+focus). back_restores pass on all 14 (query restored, prior result re-highlighted in dropdown).",
+    "manager_isolation": "pass — 48/48 manager routes visited through the concept UI; URL unchanged, no iframes, shell (back+breadcrumb+search) retained, content rendered; 0 console errors",
+    "copy_flow": "pass — source proj-atlas-agency, 2 categories, totals preview (57 add/58 replace/47 match/4 unavailable/22 conflict), applied+verified, receipt with restore-point reference, rollback toast \"Rolled back to the pre-copy restore point.\" Note: Review button label does not update on category toggle (stale \"Review 11 categorys\", grammar)",
+    "scenarios": "pass — offline/managed/loading-cached banners render truthful state text; Clear scenario restores default fixtures",
+    "drawer_guard": "pass — re-verified 2026-08-19: #dt3-demo.pm-drawer carries hidden and computes display:none (shared .pm-drawer[hidden]{display:none!important} guard present); drawer not visible until opened",
+    "shell_controls": "pass — re-verified 2026-08-19: PMShell.init() wired at startup; select[data-shell-theme] switches data-theme (friendly-dark→friendly-light observed), select[data-shell-width] applies --hub-page-width/--hub-test-width via PMBridge.applyLocal, [data-shell-motion] toggles data-motion full→reduced",
+    "reverification": "2026-08-19 (tab r2): all previously-failed probes re-run after fixes (drawer [hidden] guard, PMShell.init() startup wiring, SVG x attr fix); results flipped above",
+    "visual_audit_fixes": "RESOLVED 2026-08-19 (tab fv1, headless Chromium, cache disabled) — all four visual-audit findings fixed and re-observed in-browser: (1) Desktop Home grid: .dt3-pane is now an inline-size container (dt3p) and the domain grid keys on the pane's real width instead of the pmx frame — base 1 column, +1 column at 700/1060/1500px pane; at 1280 (pane 440px with shell side+chat open) cards render 384px single-column (was 182px two-column with per-word wraps and mid-sentence chevrons); chevron sits at the row end, text start-aligned; 1700 = 2x392px, 2500 = 4x372px (no deserts); 760 unchanged (rail folded, 660px single column). Manager detail panel: roster/sub-list/stat-grid/health-grid stack under 760px pane, so the Providers detail panel renders fully inside the stage (detail right edge 944 <= stage 972, zero clipped descendants, 160px stat cards). Manager rows get a compact chip-below layout under 560px pane. (2) Stale search prefill: boot-time restoreSearch IIFE removed from concept-08.js — fresh loads show an empty search box (verified '\"\"' after reload at 1280/1700/760); in-session Back still restores the query and re-selects the prior hit (verified: query 'provider' -> result -> Back -> dropdown open, aria-selected=true). node --check passes. (3) Title/subtitle run-together: .dt3-mgr-main/.dt3-sub-main/.dt3-roster-item-main/.dt3-src-main are now flex columns, so 'Providers'/'Connect providers…' and 'Anthropic'/'Installed Tools' stack on separate lines (geometry-verified: sum top >= title bottom). (4) Banner accent bar: .pm-notice{border-inline-start:none} appended — computed border-inline-start-width 0px at 1280 friendly-dark, 760, and 1280 glass-dark. Copy flow re-run end-to-end after fixes: source Atlas Agency -> categories -> preview totals (156 add/145 replace/184 match/32 unavailable/54 conflicts) -> applied+verified receipt -> rollback toast 'Rolled back to the pre-copy restore point.'; zero console/page errors across all checks"
+  },
+  "known_issues": [
+    "Copy-flow Review button label does not update on category toggle and reads 'Review 11 categorys' (stale count + grammar; pre-existing, out of visual-audit scope)"
   ],
-  "widths": [
-   760,
-   900,
-   1280,
-   1700,
-   2200,
-   2500
-  ],
-  "result": "pending-verification-phase"
- },
- "notes": "Browser/interaction evidence appended by the verification phase."
+  "scale_stress": {
+    "scope": "shared headless search/index layer + concept-native virtualized lists",
+    "synthetic_records_injected": 2400,
+    "total_index_entries": 3478,
+    "real_inventory_records": 828,
+    "synthetic_replaces_product_data": false,
+    "results_bounded": {
+      "limit": 30,
+      "bounded_flag_observed": true
+    },
+    "query_latency_ms_observed": [
+      13.9,
+      17.2,
+      13.2,
+      12.7
+    ],
+    "managers_instantiated_during_search": 0,
+    "list_rendering": "virtualized/windowed per concept compendium (browser-verified)",
+    "method": "node headless probe of PM_V2_SEARCH over the real index + injected synthetic rows, isolated sessions per query",
+    "result": "pass"
+  },
+  "audit_2026_08_19_second_pass": {
+    "scope": "independent audit of the seven-new-concepts work; narrow-width shell top bar clipping",
+    "result": "pass",
+    "detail": "Second-pass independent audit 2026-08-19 (browser-measured, ConceptHub-served pages): at 760/900px page widths the shared shell top bar content (~962px) exceeded the frame and clipped the demo control cluster (Scenarios, theme select, motion, panel toggles). Fixed concept-locally: @container pmx (max-width: 990px) wraps .pmx-topbar to two rows and hides decorative .pmx-model chips; shared pm-shell.css is untouched (frozen with concepts 01-04). Re-verified at exactly 760px and 900px page width: scrollWidth==clientWidth, all six shell controls inside the frame rect, theme select exposes all 8 themes and is clickable, topbar height 60.5px with no overlap of stage content, zero console errors. Standalone narrow (625px frame) also passes with the width select reachable.",
+    "widths_verified": [
+      760,
+      900,
+      625
+    ],
+    "console_errors": 0,
+    "shell_toggle_icon_fix": "User-reported blank top-bar buttons: the shell demo toggles (reduced motion, side/chat/bottom panel) carry bare SVGs with no intrinsic size and no shared CSS rule sizes them, so they painted 0x0 (pre-existing shared-shell markup issue, identical in 01-04). Fixed concept-locally: .pmx-controls [data-shell-motion] > svg, .pmx-controls [data-shell-toggle] > svg { inline-size: 14px; block-size: 14px; }. Browser-verified on all seven concepts: rule live in CSSOM, all four icons 14x14, Scenarios icon unchanged (14x14), toggle buttons still function, zero console errors."
+  }
 }

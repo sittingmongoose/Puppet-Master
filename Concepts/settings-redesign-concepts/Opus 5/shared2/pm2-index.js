@@ -1062,9 +1062,59 @@
       } catch (e2) {}
     }
 
+    disambiguateCollisions();
+
     IX.built = true;
     IX.builtAt = new Date().toISOString();
     cacheClear();
+  }
+
+  /* Two results that show the same label AND the same path are not two results to a
+   * reader — they are one result rendered twice, and choosing between them is a
+   * guess. Distinct ids are enough for ROUTING, but not for deciding. So after the
+   * index is built, any label+path collision is given a visible distinguishing
+   * detail drawn from the record itself: its own identity, never a counter.
+   *
+   * This runs once per build over the whole index rather than per query, because
+   * whether a label collides is a property of the index, not of the search. */
+  function disambiguateCollisions() {
+    var buckets = {};
+    var i, rec;
+    for (i = 0; i < IX.records.length; i++) {
+      rec = IX.records[i];
+      var key = norm(rec.label) + "|" + norm(rec.path);
+      (buckets[key] || (buckets[key] = [])).push(rec);
+    }
+    for (var k in buckets) {
+      if (!Object.prototype.hasOwnProperty.call(buckets, k)) continue;
+      var group = buckets[k];
+      if (group.length < 2) continue;
+      for (i = 0; i < group.length; i++) {
+        rec = group[i];
+        var detail = distinguishingDetail(rec);
+        if (!detail) continue;
+        rec.disambiguator = detail;
+        rec.path = rec.path + " › " + detail;
+        rec.fullPath = rec.path + " › " + rec.label;
+        rec._path = norm(rec.path);
+        rec._syn = rec._syn + " " + norm(detail);
+      }
+    }
+  }
+
+  /* The most human thing that tells two identical-looking records apart. Version and
+   * host come first because that is what actually differs between two installations
+   * of the same tool; the object's own identifier is the last resort and is shown as
+   * the literal it is. */
+  function distinguishingDetail(rec) {
+    var o = rec.object || {};
+    if (o.version) return "version " + o.version;
+    if (o.host) return o.host;
+    if (o.path) return o.path;
+    if (rec.objectId) return rec.objectId;
+    if (rec.destination && rec.destination.objectId) return rec.destination.objectId;
+    if (rec.destination && rec.destination.settingId) return rec.destination.settingId;
+    return null;
   }
 
   function ensure() {
@@ -1496,9 +1546,26 @@
     return IX.byId[String(id)] || null;
   }
 
+  /* Objects a manager holds but the index does not carry as SEARCH results — a
+   * subpage card, an acquisition-mode explainer, a roster whose contents are not
+   * worth a search hit. They are registered by whoever built the spec, which only
+   * happens because that manager was already open, so nothing here hydrates
+   * anything to find out. Without this, a route to a visible object is rejected as
+   * "does not exist", which is how a reader clicking a row in a manager ends up on a
+   * not-found page. */
+  var SEEN = Object.create(null);
+
+  function registerObjects(managerId, ids) {
+    if (!managerId || !ids || !ids.length) return;
+    var set = SEEN[managerId] || (SEEN[managerId] = Object.create(null));
+    for (var i = 0; i < ids.length; i++) if (ids[i]) set[String(ids[i])] = true;
+  }
+
   function objectExists(managerId, objectId) {
     ensure();
     if (!managerId || !objectId) return false;
+    var seen = SEEN[managerId];
+    if (seen && seen[String(objectId)]) return true;
     var recs = IX.records;
     for (var i = 0; i < recs.length; i++) {
       var d = recs[i].destination;
@@ -1557,6 +1624,7 @@
 
     byDestination: byDestination,
     objectExists: objectExists,
+    registerObjects: registerObjects,
     parseQuery: parseQuery,
 
     /* Building is lazy so that loading the page costs nothing; a concept that

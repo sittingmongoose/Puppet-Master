@@ -1,0 +1,413 @@
+{
+ "schema_id": "pm.settings_bakeoff.manager_coverage.v2.concept_pass",
+ "concept_id": "concept-09-tome-tabs",
+ "model": "GLM-5.2",
+ "date": "2026-08-18",
+ "coverage_scope": "each_new_concept_individually",
+ "native_implementation": "All managers render through this concept's own shell, navigation, and layout grammar inside its page. Shared HEADLESS semantics only (assets/v2): inventory projection, search index, route objects, state store. No iframe, no cross-concept route, no shared visible renderer.",
+ "thesis": "persistent chapter edge tabs; layered pages; roster+tabbed detail (PM materials only)",
+ "coverage": [
+  {
+   "family": "Settings Home",
+   "status": "demonstrated",
+   "where": "concept-native Home surface — implemented natively in this concept's page"
+  },
+  {
+   "family": "Settings Search",
+   "status": "demonstrated",
+   "where": "concept-native universal search surface — implemented natively in this concept's page"
+  },
+  {
+   "family": "Settings Workspace",
+   "status": "demonstrated",
+   "where": "concept-native workspace surface — implemented natively in this concept's page"
+  },
+  {
+   "family": "Ordinary setting grammar",
+   "status": "demonstrated",
+   "where": "concept-native setting-row grammar — implemented natively in this concept's page"
+  },
+  {
+   "family": "Provider / Account / Model / Installation",
+   "status": "demonstrated",
+   "manager_id": "mgr.provider",
+   "records": 9,
+   "tabs": 7,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Context & Instructions",
+   "status": "demonstrated",
+   "manager_id": "mgr.context",
+   "records": 6,
+   "tabs": 3,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Memory",
+   "status": "demonstrated",
+   "manager_id": "mgr.memory",
+   "records": 5,
+   "tabs": 3,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Personas",
+   "status": "demonstrated",
+   "manager_id": "mgr.personas",
+   "records": 5,
+   "tabs": 3,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Goal & Automation",
+   "status": "demonstrated",
+   "manager_id": "mgr.goal",
+   "records": 5,
+   "tabs": 3,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Crew",
+   "status": "demonstrated",
+   "manager_id": "mgr.crew",
+   "records": 3,
+   "tabs": 2,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Permissions & FileSafe",
+   "status": "demonstrated",
+   "manager_id": "mgr.permissions",
+   "records": 5,
+   "tabs": 4,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Back Seat Driver",
+   "status": "demonstrated",
+   "manager_id": "mgr.bsd",
+   "records": 4,
+   "tabs": 3,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Notifications & Sounds",
+   "status": "demonstrated",
+   "manager_id": "mgr.notifications",
+   "records": 5,
+   "tabs": 4,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Sound Library / Uploads / Packs",
+   "status": "demonstrated",
+   "manager_id": "mgr.sounds",
+   "records": 5,
+   "tabs": 3,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Appearance / themes / fonts / motion",
+   "status": "demonstrated",
+   "manager_id": "mgr.appearance",
+   "records": 5,
+   "tabs": 4,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Spellcheck & Dictionaries",
+   "status": "demonstrated",
+   "manager_id": "mgr.spellcheck",
+   "records": 6,
+   "tabs": 3,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Desktop / Tray / Window",
+   "status": "demonstrated",
+   "manager_id": "mgr.desktop",
+   "records": 6,
+   "tabs": 3,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Teacher / Help",
+   "status": "demonstrated",
+   "manager_id": "mgr.teacher",
+   "records": 3,
+   "tabs": 2,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Doctor",
+   "status": "demonstrated",
+   "manager_id": "mgr.doctor",
+   "records": 5,
+   "tabs": 3,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "File Manager / Editor",
+   "status": "demonstrated",
+   "manager_id": "mgr.filemanager",
+   "records": 5,
+   "tabs": 4,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Terminal",
+   "status": "demonstrated",
+   "manager_id": "mgr.terminal",
+   "records": 5,
+   "tabs": 3,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "LSP",
+   "status": "demonstrated",
+   "manager_id": "mgr.lsp",
+   "records": 5,
+   "tabs": 3,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Formatters",
+   "status": "demonstrated",
+   "manager_id": "mgr.formatters",
+   "records": 5,
+   "tabs": 2,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Commands & Shortcuts",
+   "status": "demonstrated",
+   "manager_id": "mgr.commands",
+   "records": 4,
+   "tabs": 3,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "MCP",
+   "status": "demonstrated",
+   "manager_id": "mgr.mcp",
+   "records": 4,
+   "tabs": 3,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Skills",
+   "status": "demonstrated",
+   "manager_id": "mgr.skills",
+   "records": 4,
+   "tabs": 3,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Plugins",
+   "status": "demonstrated",
+   "manager_id": "mgr.plugins",
+   "records": 3,
+   "tabs": 0,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Tools",
+   "status": "demonstrated",
+   "manager_id": "mgr.tools",
+   "records": 6,
+   "tabs": 3,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Testing & Debug",
+   "status": "demonstrated",
+   "manager_id": "mgr.testing",
+   "records": 6,
+   "tabs": 3,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Storage & Retention",
+   "status": "demonstrated",
+   "manager_id": "mgr.storage",
+   "records": 6,
+   "tabs": 3,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Backup & Restore",
+   "status": "demonstrated",
+   "manager_id": "mgr.backup",
+   "records": 5,
+   "tabs": 3,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Settings Lifecycle",
+   "status": "demonstrated",
+   "manager_id": "mgr.lifecycle",
+   "records": 5,
+   "tabs": 4,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "History & Sessions",
+   "status": "demonstrated",
+   "manager_id": "mgr.history",
+   "records": 4,
+   "tabs": 3,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Runtime Artifacts / Project Outputs",
+   "status": "demonstrated",
+   "manager_id": "mgr.artifacts",
+   "records": 4,
+   "tabs": 3,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Source Control / Worktrees",
+   "status": "demonstrated",
+   "manager_id": "mgr.sourcecontrol",
+   "records": 5,
+   "tabs": 4,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "GitHub Actions",
+   "status": "demonstrated",
+   "manager_id": "mgr.github",
+   "records": 4,
+   "tabs": 3,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Containers & Registries",
+   "status": "demonstrated",
+   "manager_id": "mgr.containers",
+   "records": 4,
+   "tabs": 4,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Web / Search / Fetch / Crawl",
+   "status": "demonstrated",
+   "manager_id": "mgr.web",
+   "records": 5,
+   "tabs": 4,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Project Search Index",
+   "status": "demonstrated",
+   "manager_id": "mgr.searchindex",
+   "records": 4,
+   "tabs": 3,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Workspace Cleanup",
+   "status": "demonstrated",
+   "manager_id": "mgr.cleanup",
+   "records": 3,
+   "tabs": 3,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Media & Output",
+   "status": "demonstrated",
+   "manager_id": "mgr.media",
+   "records": 4,
+   "tabs": 3,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "DRY Method visible state where exposed",
+   "status": "demonstrated",
+   "manager_id": "mgr.dry",
+   "records": 4,
+   "tabs": 2,
+   "where": "concept-native manager surface (lazy hydration, roster/detail, states)"
+  },
+  {
+   "family": "Product Onboarding",
+   "status": "deferred_named_owner",
+   "owner": "Onboarding Wizard owner module",
+   "insertion_contract": "Settings provides destination + return deep link; wizard keeps its own flow",
+   "return_route": "system/advanced",
+   "no_fabricated_backend": true
+  },
+  {
+   "family": "Installation / Deployment",
+   "status": "deferred_named_owner",
+   "owner": "Installer & deployment owner",
+   "insertion_contract": "package/image deployment, OS prerequisites, rollback",
+   "return_route": "system/health",
+   "no_fabricated_backend": true
+  },
+  {
+   "family": "Server Claim / Bootstrap",
+   "status": "deferred_named_owner",
+   "owner": "Server bootstrap owner",
+   "insertion_contract": "owner claim, secure bind, trusted-client pairing",
+   "return_route": "system/advanced",
+   "no_fabricated_backend": true
+  },
+  {
+   "family": "Servers / Execution Hosts / Clients",
+   "status": "deferred_named_owner",
+   "owner": "Server-first architecture owner",
+   "insertion_contract": "Home Server, Execution Hosts, Clients cards with human labels",
+   "return_route": "system/advanced",
+   "no_fabricated_backend": true
+  },
+  {
+   "family": "Project Hosting & Files",
+   "status": "deferred_named_owner",
+   "owner": "Project Vault owner",
+   "insertion_contract": "Hosted On / Project Files / Run Work projections",
+   "return_route": "system/advanced",
+   "no_fabricated_backend": true
+  },
+  {
+   "family": "Remote Access",
+   "status": "deferred_named_owner",
+   "owner": "Remote access owner",
+   "insertion_contract": "enable/keys/ingress — no raw kubeconfig or realms by default",
+   "return_route": "system/advanced",
+   "no_fabricated_backend": true
+  },
+  {
+   "family": "Project Sync / Move",
+   "status": "deferred_named_owner",
+   "owner": "Project Move owner",
+   "insertion_contract": "move/sync flows accept Settings deep links; no state machine here",
+   "return_route": "system/advanced",
+   "no_fabricated_backend": true
+  },
+  {
+   "family": "Puppet Master application/content updates",
+   "status": "deferred_named_owner",
+   "owner": "Release/updates owner",
+   "insertion_contract": "update channel + restart plan cards",
+   "return_route": "system/health",
+   "no_fabricated_backend": true
+  },
+  {
+   "family": "Full Server backup owner flow",
+   "status": "deferred_named_owner",
+   "owner": "Full Server backup owner",
+   "insertion_contract": "Settings Backup & Restore links out; full-server flow stays with its owner",
+   "return_route": "mgr.backup",
+   "no_fabricated_backend": true
+  }
+ ],
+ "summary": {
+  "demonstrated": 42,
+  "deferred_named_owner": 9,
+  "missing": 0,
+  "note": "every family demonstrated in this concept natively; headless assets/v2 semantics shared, visible implementation concept-native"
+ }
+}

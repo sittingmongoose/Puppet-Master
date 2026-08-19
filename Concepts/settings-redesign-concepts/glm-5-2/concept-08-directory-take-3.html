@@ -1,0 +1,863 @@
+<!doctype html>
+<html lang="en" data-theme="friendly-light" data-reduced-motion="0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="data:,">
+<title>08 A1 Directory / Take 3 — GLM-5.2 Settings</title>
+<link rel="stylesheet" href="assets/themes.css">
+<link rel="stylesheet" href="assets/shell.css">
+<link rel="stylesheet" href="assets/v2/pm-std.css">
+<script src="assets/icons.svg.js"></script>
+<script src="assets/v2/pm-inventory.js"></script>
+<script src="assets/v2/pm-data.js"></script>
+<script src="assets/v2/pm-managers.js"></script>
+<script src="assets/v2/pm-search.js"></script>
+<script src="assets/v2/pm-routes.js"></script>
+<script src="assets/v2/pm-store.js"></script>
+<script src="concept-hub-bridge.js"></script>
+<style>
+/* ===== CONCEPT 08 — A1 DIRECTORY / TAKE 3 (GLM-5.2) =====
+   Native geometry: bright, spacious directory. FEWER, LARGER domain cards with strong
+   icon/title/purpose hierarchy. Domain overview = manager destinations + key groups.
+   Provider summary as high-value status cards with explicit quick actions.
+   Full-width copy flow with selectable categories. Card lift motion. */
+.t8 { height: 100%; overflow: auto; }
+.t8-inner { max-width: 1280px; margin: 0 auto; padding: clamp(20px, 3.4vw, 52px) clamp(18px, 3vw, 44px) 70px; }
+.t8-eyebrow { font-size: 11px; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-3); }
+.t8-eyebrow b { color: var(--accent); }
+.t8-h1 { font-size: clamp(28px, 3.8vw, 42px); font-weight: 850; letter-spacing: -.025em; margin: 6px 0 6px; }
+.t8-sub { font-size: 14.5px; color: var(--ink-2); max-width: 60ch; margin-bottom: 22px; line-height: 1.6; }
+.t8-searchwrap { position: relative; margin-bottom: 20px; }
+.t8-search { display: flex; align-items: center; gap: 14px; height: 62px; padding: 0 22px; background: var(--surface-elev); border: 1.5px solid var(--line); border-radius: 99px; box-shadow: var(--sh-1); }
+.t8-search:focus-within { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+.t8-search input { flex: 1; min-width: 0; background: none; border: none; outline: none; font-size: 17px; color: var(--ink); }
+.t8-drop { position: absolute; top: calc(100% + 10px); left: 10px; right: 10px; z-index: 30; background: var(--surface-elev); border: 1px solid var(--line-2); border-radius: var(--r-lg); box-shadow: var(--sh-3); max-height: 400px; overflow: auto; padding: 8px; }
+.t8-res { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: var(--r); cursor: pointer; }
+.t8-res:hover, .t8-res[aria-selected="true"] { background: var(--surface-2); }
+.t8-res .lbl { font-size: 14px; font-weight: 700; }
+.t8-res .path { font-size: 12px; color: var(--ink-3); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.t8-res .k { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; color: var(--ink-4); flex: none; }
+.t8-res .why { font-size: 11px; color: var(--warn); flex: none; }
+.t8-drop-empty { padding: 20px; text-align: center; color: var(--ink-2); font-size: 13px; }
+.t8-note { display: flex; align-items: center; gap: 12px; padding: 14px 18px; margin-bottom: 22px; border-radius: var(--r-lg); border: 1.5px solid color-mix(in srgb, var(--warn) 45%, var(--line)); background: color-mix(in srgb, var(--warn-soft) 55%, var(--surface)); }
+.t8-note .t { font-size: 14.5px; font-weight: 750; }
+.t8-note .d { font-size: 12.5px; color: var(--ink-2); margin-top: 1px; }
+/* attention — compact */
+.t8-att { display: flex; gap: 10px; margin-bottom: 26px; flex-wrap: wrap; }
+.t8-att-item { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid var(--line); border-radius: var(--r-pill); background: var(--surface); font-size: 12.5px; color: var(--ink); }
+.t8-att-item .d { color: var(--ink-3); font-size: 11.5px; }
+.t8-att-item button { border: none; background: none; color: var(--accent); font-weight: 700; font-size: 12px; cursor: pointer; }
+/* LARGE domain cards */
+.t8-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.t8-card { position: relative; display: flex; flex-direction: column; gap: 12px; padding: 26px; border-radius: var(--r-lg); border: 1px solid var(--line); background: var(--surface); cursor: pointer; transition: transform var(--t-mid) var(--ease), box-shadow var(--t-mid) var(--ease), border-color var(--t-fast) var(--ease); }
+.t8-card:hover { transform: translateY(-3px); box-shadow: var(--sh-2); border-color: var(--line-2); }
+.t8-card .ic { width: 52px; height: 52px; border-radius: var(--r); background: var(--surface-2); color: var(--accent); display: grid; place-items: center; }
+.t8-card h3 { margin: 0; font-size: 20px; font-weight: 800; letter-spacing: -.015em; }
+.t8-card .purpose { font-size: 13.5px; color: var(--ink-2); line-height: 1.6; max-width: 56ch; }
+.t8-card .meta { display: flex; gap: 14px; font-size: 12px; color: var(--ink-3); font-weight: 650; }
+.t8-card .go { position: absolute; top: 22px; right: 22px; color: var(--ink-4); }
+.t8-utils { display: flex; gap: 10px; margin-top: 26px; flex-wrap: wrap; }
+.t8-util { display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 16px; border-radius: 99px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); font-size: 13px; font-weight: 650; cursor: pointer; }
+.t8-util:hover { border-color: var(--accent-line); color: var(--ink); }
+/* domain overview: manager destinations + key groups */
+.t8-dom { min-height: 100%; }
+.t8-dom-head { padding: clamp(20px, 3vw, 40px) clamp(18px, 3vw, 44px) 4px; max-width: 1280px; margin: 0 auto; }
+.t8-dom-head .back { margin-bottom: 12px; }
+.t8-dom-head h2 { margin: 0; font-size: clamp(24px, 3vw, 32px); font-weight: 850; letter-spacing: -.02em; display: flex; align-items: center; gap: 14px; }
+.t8-dom-head h2 .ic { width: 46px; height: 46px; border-radius: var(--r); background: var(--surface-2); color: var(--accent); display: grid; place-items: center; }
+.t8-dom-head .lede { color: var(--ink-2); font-size: 13.5px; margin-top: 6px; }
+.t8-dom-body { max-width: 1280px; margin: 0 auto; padding: 12px clamp(18px, 3vw, 44px) 60px; }
+.t8-sec-h { font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin: 22px 0 12px; }
+.t8-mgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.t8-mcard { display: flex; flex-direction: column; gap: 8px; padding: 18px; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); cursor: pointer; transition: border-color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease); }
+.t8-mcard:hover { border-color: var(--accent-line); transform: translateY(-2px); }
+.t8-mcard .t { font-size: 15.5px; font-weight: 750; display: flex; align-items: center; gap: 9px; }
+.t8-mcard .d { font-size: 12.5px; color: var(--ink-2); line-height: 1.55; }
+.t8-grouplist { display: grid; gap: 8px; }
+.t8-grouprole { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); cursor: pointer; }
+.t8-grouprole:hover { border-color: var(--accent-line); }
+.t8-grouprole .t { font-size: 14px; font-weight: 700; flex: 1; }
+.t8-grouprole .cnt { font-size: 12px; color: var(--ink-3); font-weight: 650; }
+/* provider summary: status cards + quick actions */
+.t8-provgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+.t8-prov { border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+.t8-prov .hd { display: flex; align-items: center; gap: 10px; }
+.t8-prov .nm { font-size: 16px; font-weight: 800; }
+.t8-prov .rows { display: grid; gap: 6px; font-size: 12.5px; color: var(--ink-2); }
+.t8-prov .rows b { color: var(--ink); font-weight: 650; }
+.t8-prov .qa { display: flex; gap: 8px; flex-wrap: wrap; }
+/* setting rows */
+.t8-setrow { display: flex; gap: 18px; padding: 15px 18px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); margin-bottom: 10px; align-items: flex-start; }
+.t8-setrow .info { flex: 1; min-width: 0; }
+.t8-setrow .lbl { font-size: 14.5px; font-weight: 750; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.t8-setrow .desc { font-size: 12.5px; color: var(--ink-2); line-height: 1.6; margin-top: 4px; max-width: 68ch; }
+.t8-setrow .ctl { flex: none; width: 220px; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.t8-setrow[data-status="managed"] .ctl { opacity: .55; }
+.t8-setrow[data-status="unavailable"] { opacity: .62; }
+.t8-switch { position: relative; width: 44px; height: 24px; border-radius: 99px; background: var(--surface-3); border: 1px solid var(--line); cursor: pointer; flex: none; }
+.t8-switch[aria-checked="true"] { background: var(--accent); border-color: var(--accent); }
+.t8-switch::after { content: ""; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: var(--surface-elev); transition: transform var(--t-fast) var(--ease); }
+.t8-switch[aria-checked="true"]::after { transform: translateX(20px); }
+.t8-sel { height: 32px; padding: 0 10px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 99px; color: var(--ink); font: inherit; font-size: 12.5px; max-width: 100%; }
+.t8-range { width: 100%; accent-color: var(--accent); }
+.t8-btn { display: inline-flex; align-items: center; gap: 7px; height: 34px; padding: 0 15px; border-radius: 99px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); font-size: 12.5px; font-weight: 700; cursor: pointer; }
+.t8-btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.t8-btn.sm { height: 28px; padding: 0 12px; font-size: 11.5px; }
+.t8-why button { font-size: 12px; color: var(--ink-3); background: none; border: none; cursor: pointer; font-weight: 650; padding: 0; }
+.t8-details { margin-top: 8px; padding: 11px 13px; border: 1px dashed var(--line-2); border-radius: var(--r-sm); font-size: 12px; color: var(--ink-2); line-height: 1.65; }
+.t8-details b { color: var(--ink); }
+.t8-err { font-size: 11.5px; color: var(--bad); }
+/* manager view */
+.t8-mgr { min-height: 100%; }
+.t8-mgr-head { display: flex; align-items: center; gap: 14px; padding: clamp(18px, 2.8vw, 34px) clamp(18px, 3vw, 44px) 10px; max-width: 1280px; margin: 0 auto; }
+.t8-mgr-head h2 { margin: 0; font-size: 24px; font-weight: 850; letter-spacing: -.02em; display: flex; gap: 11px; align-items: center; }
+.t8-mgr-head .sum { font-size: 13px; color: var(--ink-2); }
+.t8-tabs { display: flex; gap: 6px; padding: 0 clamp(18px, 3vw, 44px) 12px; max-width: 1280px; margin: 0 auto; flex-wrap: wrap; }
+.t8-tab { height: 32px; padding: 0 15px; border-radius: 99px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); font-size: 12.5px; font-weight: 650; cursor: pointer; }
+.t8-tab[aria-selected="true"] { background: var(--ink); color: var(--surface-elev); border-color: var(--ink); }
+.t8-mgr-body { max-width: 1280px; margin: 0 auto; padding: 0 clamp(18px, 3vw, 44px) 60px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 18px; align-items: start; }
+.t8-listcard { border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); overflow: hidden; }
+.t8-lrow { display: flex; align-items: center; gap: 11px; padding: 13px 16px; border-bottom: 1px solid var(--line); cursor: pointer; }
+.t8-lrow:last-child { border-bottom: none; }
+.t8-lrow:hover { background: var(--surface-2); }
+.t8-lrow[aria-selected="true"] { background: var(--surface-2); }
+.t8-lrow .t { font-size: 14px; font-weight: 700; }
+.t8-lrow .d { font-size: 11.5px; color: var(--ink-3); }
+.t8-detail { border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); padding: 20px; }
+.t8-detail h3 { margin: 0 0 3px; font-size: 18px; font-weight: 800; }
+.t8-detail .dsub { font-size: 13px; color: var(--ink-2); line-height: 1.6; margin-bottom: 12px; }
+.t8-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.t8-kv { display: grid; grid-template-columns: 150px 1fr; gap: 5px 14px; font-size: 12.5px; margin-bottom: 14px; }
+.t8-kv .k { color: var(--ink-3); font-weight: 650; }
+.t8-kv .v { color: var(--ink); line-height: 1.55; overflow-wrap: anywhere; }
+.t8-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+.t8-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.t8-table th { text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-3); padding: 7px 9px; border-bottom: 1px solid var(--line); }
+.t8-table td { padding: 8px 9px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.t8-table td.mut { color: var(--ink-2); }
+.t8-offline { display: flex; gap: 10px; padding: 11px 14px; margin: 8px 0; border-radius: var(--r-sm); border: 1px solid color-mix(in srgb, var(--warn) 40%, var(--line)); background: color-mix(in srgb, var(--warn-soft) 45%, var(--surface)); font-size: 12.5px; }
+.t8-work { border: 1px solid var(--line); border-radius: var(--r-sm); padding: 12px 14px; margin: 8px 0; font-size: 12.5px; }
+.t8-work .bar { height: 6px; border-radius: 99px; background: var(--surface-3); overflow: hidden; margin-top: 8px; }
+.t8-work .bar > div { height: 100%; background: var(--accent); border-radius: 99px; transition: width var(--t-mid) var(--ease); }
+.t8-setup { border: 1px solid var(--line-2); border-radius: var(--r-sm); padding: 13px 15px; margin: 8px 0; }
+.t8-setup ol { margin: 6px 0 0; padding-left: 18px; font-size: 12px; color: var(--ink-2); line-height: 1.7; }
+/* full-width copy */
+.t8-copy { position: absolute; inset: 0; z-index: 50; background: var(--bg); display: flex; flex-direction: column; }
+.t8-copy-head { display: flex; align-items: center; gap: 12px; padding: 18px clamp(18px, 3vw, 44px); border-bottom: 1px solid var(--line); background: var(--surface); }
+.t8-copy-head h3 { margin: 0; font-size: 20px; font-weight: 850; }
+.t8-copy-body { flex: 1; min-height: 0; overflow: auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); }
+.t8-copy-left { padding: 22px clamp(18px, 2.6vw, 34px); border-right: 1px solid var(--line); overflow: auto; }
+.t8-copy-right { padding: 22px clamp(18px, 2.6vw, 34px); overflow: auto; }
+.t8-copy-foot { display: flex; gap: 10px; padding: 14px clamp(18px, 3vw, 44px); border-top: 1px solid var(--line); background: var(--surface); }
+.t8-copy-foot .sp { flex: 1; }
+.t8-step { font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+.t8-src { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 1.5px solid var(--line); border-radius: var(--r-lg); margin-bottom: 10px; cursor: pointer; background: var(--surface); }
+.t8-src[aria-selected="true"] { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.t8-cat { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border: 1.5px solid var(--line); border-radius: var(--r); margin-bottom: 9px; cursor: pointer; background: var(--surface); }
+.t8-cat[aria-selected="true"] { border-color: var(--accent); background: var(--surface-2); }
+.t8-check { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--line-2); flex: none; display: grid; place-items: center; margin-top: 1px; }
+.t8-cat[aria-selected="true"] .t8-check { background: var(--accent); border-color: var(--accent); }
+.t8-counts { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 14px; }
+.t8-count { padding: 14px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); text-align: center; }
+.t8-count .n { font-size: 24px; font-weight: 850; display: block; }
+.t8-count .l { font-size: 11px; color: var(--ink-3); }
+.t8-cplist { border: 1px solid var(--line); border-radius: var(--r); height: 300px; overflow: auto; }
+.t8-receipt { border: 1.5px solid color-mix(in srgb, var(--ok) 45%, var(--line)); background: color-mix(in srgb, var(--ok-soft) 40%, var(--surface)); border-radius: var(--r); padding: 16px; font-size: 13.5px; }
+/* drawer */
+.t8-drawer { position: absolute; right: 0; top: 0; bottom: 0; width: min(440px, 94%); z-index: 45; background: var(--surface-elev); border-left: 1px solid var(--line-2); box-shadow: var(--sh-3); transform: translateX(102%); transition: transform var(--t-mid) var(--ease); display: flex; flex-direction: column; }
+.t8-drawer[data-open="1"] { transform: none; }
+.t8-drawer-head { display: flex; align-items: center; gap: 8px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+.t8-drawer-head h4 { margin: 0; font-size: 15px; flex: 1; }
+.t8-drawer-body { flex: 1; overflow: auto; padding: 14px 16px; font-size: 13px; line-height: 1.65; color: var(--ink-2); }
+.t8-drawer-body b { color: var(--ink); }
+/* topbar */
+.t8-crumb { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-3); min-width: 0; overflow: hidden; }
+.t8-crumb b { color: var(--ink); white-space: nowrap; }
+.t8-proj { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 99px; border: 1px solid var(--line); font-size: 12px; color: var(--ink-2); background: var(--surface); }
+.t8-proj b { color: var(--ink); }
+.t8-minis { display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px; min-width: 190px; max-width: 320px; flex: 1; border: 1px solid var(--line); border-radius: 99px; background: var(--surface); }
+.t8-minis input { flex: 1; min-width: 0; background: none; border: none; outline: none; color: var(--ink); font-size: 13px; }
+.t8-skel { border-radius: var(--r-sm); background: var(--surface-2); animation: v2-shimmer 1.4s ease-in-out infinite; }
+.t8-virt { position: relative; overflow: auto; }
+@media (max-width: 1023px) {
+  .t8-grid { grid-template-columns: 1fr; }
+  .t8-mgr-body { grid-template-columns: 1fr; }
+  .t8-copy-body { grid-template-columns: 1fr; }
+  .t8-copy-left { border-right: none; border-bottom: 1px solid var(--line); }
+  .t8-setrow { flex-direction: column; }
+  .t8-setrow .ctl { width: 100%; align-items: flex-start; }
+}
+@media (max-width: 899px) {
+  .pm-shell { grid-template-columns: 60px 1fr var(--chat-w, 0px); grid-template-areas: "topbar topbar topbar" "activity stage chat" "footer footer footer"; }
+  .pm-rail { position: absolute; z-index: 44; top: var(--shell-h); bottom: var(--footer-h); left: 60px; width: 260px; box-shadow: var(--sh-3); background: var(--surface-elev); }
+  .t8-crumb { display: none; }
+}
+@media (min-width: 1900px) { .t8-inner, .t8-dom-body, .t8-mgr-body, .t8-dom-head, .t8-mgr-head, .t8-tabs { max-width: 1520px; } .t8-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+/* ===== squeeze: 760px topbar survival (added by verification pass) ===== */
+@media (max-width: 899px) {
+  .pm-topbar .pm-brand { display: none; }
+  .pm-topbar { gap: 6px; }
+  #themeBtn, #closeBtn, #navToggle { font-size: 0; gap: 0; padding: 0 9px; }
+  #themeBtn svg, #closeBtn svg, #navToggle svg { margin-right: 0; }
+  #projChip, .d5-projchip, .e6-proj, .c7-proj, .t8-proj, .n9-proj, .m10-proj, .o11-proj { max-width: 130px; overflow: hidden; white-space: nowrap; }
+  .d5-mini-search, .e6-minis, .c7-minis, .t8-minis, .n9-minis, .m10-cmdinput, .o11-search { min-width: 90px !important; }
+}
+</style>
+</head>
+<body>
+<div class="pm-shell" id="shell" data-rail="closed" data-chat="closed">
+  <header class="pm-topbar">
+    <span class="pm-brand">PUPPET&nbsp;MASTER</span>
+    <button class="t8-btn sm" id="navToggle" aria-label="Settings navigation"></button>
+    <nav class="t8-crumb" id="crumb" aria-label="Settings location"></nav>
+    <span class="pm-spacer"></span>
+    <div class="t8-minis" id="miniWrap" hidden><span id="miniIcon"></span><input id="miniSearch" type="search" placeholder="Search settings" aria-label="Search settings" autocomplete="off"></div>
+    <span class="t8-proj" id="projChip"></span>
+    <button class="t8-btn sm" id="themeBtn"></button>
+    <button class="t8-btn sm" id="closeBtn"></button>
+  </header>
+  <nav class="pm-activity" aria-label="Activity Bar" id="activity"></nav>
+  <aside class="pm-rail" id="rail" data-hidden></aside>
+  <main class="pm-stage" id="stage" style="position:relative;">
+    <a data-concept-model="GLM-5.2" href="index.html" title="GLM-5.2 settings concept" style="position:absolute;opacity:0;pointer-events:none;" aria-hidden="true">GLM-5.2</a>
+    <div class="t8" id="app"></div>
+    <div class="t8-drawer v2-surface" id="drawer" data-open="0"><div class="t8-drawer-head"><h4 id="drawerTitle">Details</h4><button class="t8-btn sm" id="drawerClose"></button></div><div class="t8-drawer-body" id="drawerBody"></div></div>
+    <div id="menuHost"></div>
+  </main>
+  <aside class="pm-chat" data-hidden></aside>
+  <footer class="pm-footer" id="footer"></footer>
+</div>
+<script>
+(function () {
+  "use strict";
+  var PM2 = window.PM2, STORE = new PM2.Store("c08");
+  var NS = "concept-08-directory-take-3";
+  var el = function (id) { return document.getElementById(id); };
+  var app = el("app"), stage = el("stage");
+  var NAV = new PM2.routes.Nav({ domain: null });
+  var QP = new URLSearchParams(location.search);
+  if (QP.get("theme")) document.documentElement.setAttribute("data-theme", QP.get("theme"));
+  if (QP.get("reduced") === "1") document.documentElement.setAttribute("data-reduced-motion", "1");
+  var ICONS = { general: "settings", ai: "pam", safety: "shield", code: "code", memory: "memory", planning: "compass", branching: "crew", media: "map", web: "search", personas: "users", extensions: "stack", system: "grid" };
+  var PURPOSES = {
+    general: "How Puppet Master looks and feels — themes, fonts, motion, notifications, sounds, and how the app lives on your desktop.",
+    ai: "Who builds your responses — providers, accounts, models, routing, fallback, and the CLIs behind them.",
+    safety: "What is allowed without asking — permission rules, approvals, FileSafe boundary, and the Back Seat Driver.",
+    code: "How code gets written and run — editors, terminals, language servers, formatters, and execution defaults.",
+    memory: "What goes into every request — context assembly, memory policy, and token budgets.",
+    planning: "How work is planned and verified — interviews, testing policy, and Goal defaults.",
+    branching: "How parallel work happens — worktrees, crews, source control, and GitHub Actions.",
+    media: "Images, audio, and generated media in and out.",
+    web: "Searching, fetching, and crawling the web — providers, limits, and the project search index.",
+    personas: "Behavioral profiles — the persona library and its boundaries.",
+    extensions: "Skills, plugins, custom commands, and MCP servers.",
+    system: "Health and plumbing — Doctor, storage, backups, history, artifacts, containers, and cleanup."
+  };
+  function esc(x) { return String(x == null ? "" : x).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  el("projChip").innerHTML = '<span class="sdot ok"></span><b>' + PM2.currentProject.name + "</b>&nbsp;· current project";
+  el("closeBtn").innerHTML = PM2.svg("close", 13) + "Close";
+  el("navToggle").innerHTML = PM2.svg("list", 13) + "Settings";
+  el("miniIcon").innerHTML = PM2.svg("search", 13);
+  el("themeBtn").innerHTML = PM2.svg("settings", 13) + "Friendly Light";
+  el("drawerClose").innerHTML = PM2.svg("close", 12) + "Close";
+  el("activity").innerHTML = ["home", "settings", "terminal", "stack", "users", "search"].map(function (i) { return '<button class="pm-act" aria-label="' + i + '">' + PM2.svg(i, 18) + "</button>"; }).join("");
+  el("footer").innerHTML = "<span><b>Settings</b> · " + NS + "</span><span class='pm-spacer'></span><span>828 settings · 12 categories</span>";
+
+  var menu = null;
+  function openMenu(anchor, items, onPick) {
+    closeMenu();
+    var m = document.createElement("div"); m.className = "v2menu";
+    m.innerHTML = items.map(function (it, i) { return it.sep ? '<div class="v2menu-sep"></div>' : '<button class="v2menu-item" data-i="' + i + '">' + (it.icon ? PM2.svg(it.icon, 14) : "") + '<span class="v2menu-label">' + it.label + "</span></button>"; }).join("");
+    el("menuHost").appendChild(m);
+    var r = anchor.getBoundingClientRect(), sr = stage.getBoundingClientRect();
+    var top = r.bottom - sr.top + 6, left = Math.min(Math.max(0, r.left - sr.left), sr.width - 230);
+    if (r.bottom + 280 > window.innerHeight) top = Math.max(4, r.top - sr.top - 280);
+    m.style.top = top + "px"; m.style.left = left + "px";
+    m.addEventListener("click", function (e) { var b = e.target.closest(".v2menu-item"); if (!b) return; closeMenu(); onPick(items[+b.dataset.i]); });
+    menu = m;
+  }
+  function closeMenu() { if (menu) { menu.remove(); menu = null; return true; } return false; }
+  document.addEventListener("click", function (e) { if (menu && !menu.contains(e.target)) closeMenu(); }, true);
+  el("themeBtn").addEventListener("click", function () {
+    var themes = PM2.mgrById["mgr.appearance"].themes;
+    openMenu(el("themeBtn"), themes.map(function (t) { return { label: t }; }).concat([{ sep: 1 }, { label: "Reduced motion: " + (RM() ? "on" : "off") }]), function (it) {
+      if (it.label.indexOf("Reduced") === 0) { document.documentElement.setAttribute("data-reduced-motion", RM() ? "0" : "1"); return; }
+      document.documentElement.setAttribute("data-theme", it.label);
+      document.documentElement.style.colorScheme = /-dark$/.test(it.label) ? "dark" : "light";
+      el("themeBtn").innerHTML = PM2.svg("settings", 13) + it.label;
+    });
+  });
+  function RM() { return document.documentElement.getAttribute("data-reduced-motion") === "1"; }
+  el("closeBtn").addEventListener("click", goHome);
+  el("navToggle").addEventListener("click", function () { var r = el("rail"); r.dataset.hidden = r.dataset.hidden ? "" : "hidden"; });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      if (closeMenu()) return;
+      if (el("drawer").dataset.open === "1") { closeDrawer(); return; }
+      if (COPY.open) { copyClose(); return; }
+      if (NAV.canBack()) { NAV.back(); return; }
+      if (state.view !== "home") goHome();
+    }
+  });
+
+  var state = { view: "home", domain: null, section: null, manager: null, object: null, tab: 0, hydrated: {}, lastQuery: "", lastRid: null };
+  var lastRendered = "", pendingRestore = null;
+  NAV.on(function (route, depth, extra) {
+    var s = PM2.routes.str(route);
+    if (extra && extra.returnedFrom && extra.returnedFrom.query) pendingRestore = { query: extra.returnedFrom.query, resultId: extra.returnedFrom.resultId };
+    if (s === lastRendered) return;
+    lastRendered = s; location.hash = s; render(route);
+  });
+  window.addEventListener("hashchange", function () { var r = PM2.routes.parse(location.hash); if (PM2.routes.str(r) !== PM2.routes.str(NAV.top())) NAV.go(r); });
+  function goHome() { state.view = "home"; state.domain = state.section = state.manager = null; NAV.reset({ domain: null }); render({ domain: null }); }
+
+  /* search */
+  var drop = null, dropSel = -1;
+  function searchAttach(input) {
+    var wrap = input.parentElement;
+    input.addEventListener("input", function () { state.lastQuery = input.value; showDrop(wrap, PM2.search.query(input.value)); });
+    input.addEventListener("keydown", function (e) {
+      if (!drop) { if (e.key === "Escape" && state.view !== "home") goHome(); return; }
+      var rows = drop.querySelectorAll(".t8-res");
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); dropSel = e.key === "ArrowDown" ? Math.min(rows.length - 1, dropSel + 1) : Math.max(0, dropSel - 1); rows.forEach(function (r, i) { r.setAttribute("aria-selected", i === dropSel ? "true" : "false"); }); rows[dropSel] && rows[dropSel].scrollIntoView({ block: "nearest" }); }
+      else if (e.key === "Enter") { e.preventDefault(); var rid = dropSel >= 0 && rows[dropSel] ? rows[dropSel].dataset.rid : (rows[0] && rows[0].dataset.rid); if (rid) pickResult(rid); }
+      else if (e.key === "Escape") hideDrop();
+    });
+  }
+  function showDrop(wrap, res) {
+    hideDrop();
+    if (!res.query) return;
+    drop = document.createElement("div"); drop.className = "t8-drop v2-surface";
+    var html = "";
+    if (!res.results.length) {
+      html = '<div class="t8-drop-empty">No results' + (res.suggestion ? " — did you mean <b>" + esc(res.suggestion) + "</b>?" : "") + "</div>";
+      if (res.suggestion) html += '<div class="t8-res" data-rid="suggest:' + esc(res.suggestion) + '"><span class="lbl">“' + esc(res.suggestion) + "”</span></div>";
+    } else {
+      res.results.forEach(function (r) {
+        html += '<div class="t8-res" data-rid="' + esc(r.rid) + '"><span class="k">' + r.type.replace(/_/g, " ").slice(0, 10) + '</span><span class="lbl">' + esc(r.label) + '</span><span class="path">' + esc(r.path.join(" › ")) + "</span>" + (r.availability ? '<span class="why">' + esc(r.availability) + "</span>" : "") + "</div>";
+      });
+    }
+    drop.innerHTML = html; wrap.appendChild(drop); dropSel = -1;
+    drop.addEventListener("mousedown", function (e) {
+      var row = e.target.closest(".t8-res"); if (!row) return; e.preventDefault();
+      if (row.dataset.rid.indexOf("suggest:") === 0) { var q = row.dataset.rid.slice(8); var inp = wrap.querySelector("input"); inp.value = q; state.lastQuery = q; showDrop(wrap, PM2.search.query(q)); return; }
+      pickResult(row.dataset.rid);
+    });
+  }
+  function hideDrop() { if (drop) { drop.remove(); drop = null; } }
+  document.addEventListener("click", function (e) { if (drop && !e.target.closest(".t8-searchwrap") && !e.target.closest(".t8-minis")) hideDrop(); });
+  function pickResult(rid) {
+    var entry = PM2.search.byRid(rid); if (!entry) return;
+    state.lastRid = rid; hideDrop();
+    if (entry.type === "intentional_help_result" && entry.dest.mode === "copy") { NAV.go({ mode: "copy" }); openCopy(); return; }
+    var plan = PM2.routes.planFor(entry.dest);
+    NAV.go(Object.assign({}, entry.dest, { query: state.lastQuery, resultId: rid }));
+    land(plan, entry);
+  }
+  function land(plan, entry) {
+    var tries = 0;
+    (function go() {
+      var target = null;
+      if (plan.route.row) target = stage.querySelector('[data-row="' + plan.route.row + '"]');
+      if (!target && plan.route.object) target = stage.querySelector('[data-obj="' + plan.route.object + '"]');
+      if (!target && plan.route.manager) target = stage.querySelector('[data-mgr="' + plan.route.manager + '"]');
+      if (!target && tries++ < 16) { setTimeout(go, 110); return; }
+      if (target) {
+        target.scrollIntoView({ block: "center", behavior: RM() ? "auto" : "smooth" });
+        target.classList.remove("v2-calm"); void target.offsetWidth; target.classList.add("v2-calm");
+        var f = target.querySelector("input,select,button,.t8-switch") || target;
+        try { f.focus({ preventScroll: true }); } catch (e) {}
+      }
+      if (entry && entry.type === "setting") {
+        var s = PM2.inventory.byId[plan.route.row];
+        if (s) openDrawer("Landed on a setting", "<b>" + esc(s.label) + "</b><br>" + esc(s.desc) + "<br><br>Location: " + esc(PM2.routes.crumb(NAV.top()).join(" › ")) + (state.lastQuery ? "<br>From search: “" + esc(state.lastQuery) + "”" : ""));
+      }
+    })();
+  }
+
+  function render(route) {
+    closeDrawer(); hideDrop();
+    if (route.manager && PM2.mgrById[route.manager]) renderManager(route);
+    else if (route.domain === "all") renderAll();
+    else if (route.domain) renderDomain(route);
+    else if (route.mode === "copy") { renderHome(); openCopy(); }
+    else renderHome();
+    renderRail(route); renderCrumb(route);
+    el("miniWrap").hidden = state.view === "home";
+  }
+  function renderCrumb(route) {
+    var html = "<b>Settings</b>";
+    if (route.domain === "all") html += ' <span>›</span> All settings';
+    else PM2.routes.crumb(route).forEach(function (p) { html += ' <span>›</span> ' + esc(p); });
+    if (NAV.canBack()) html = '<button class="t8-btn sm" id="backBtn">' + PM2.svg("back", 12) + "Back</button>" + html;
+    el("crumb").innerHTML = html;
+    var b = el("backBtn"); if (b) b.addEventListener("click", function () { NAV.back(); });
+  }
+  function renderRail(route) {
+    var html = '<div class="pm-rail-head">Settings</div><div class="pm-rail-body v2-surface">';
+    html += '<div class="pm-side-item" data-nav="home"' + (!route.domain ? ' aria-current="page"' : "") + ">" + PM2.svg("home", 15) + "Home</div>";
+    PM2.inventory.categories.forEach(function (c) {
+      html += '<div class="pm-side-item" data-nav="' + c.id + '"' + (route.domain === c.id ? ' aria-current="page"' : "") + ">" + PM2.svg(ICONS[c.id] || "grid", 15) + esc(c.title) + '<span class="pm-side-cnt">' + PM2.inventory.byCategory[c.id].length + "</span></div>";
+    });
+    html += '<div class="pm-side-item" data-nav="all">' + PM2.svg("list", 15) + "All settings</div>";
+    html += '<div class="pm-side-item" data-nav="copy">' + PM2.svg("layers", 15) + "Copy from…</div></div>";
+    el("rail").innerHTML = html;
+    el("rail").querySelectorAll("[data-nav]").forEach(function (n) {
+      n.addEventListener("click", function () {
+        var v = n.dataset.nav;
+        if (v === "home") goHome(); else if (v === "copy") openCopy(); else NAV.jump({ domain: v });
+        if (window.innerWidth < 900) el("rail").dataset.hidden = "hidden";
+      });
+    });
+  }
+
+  /* HOME — bright, spacious, LARGE cards */
+  function renderHome() {
+    state.view = "home"; state.domain = state.section = state.manager = null;
+    var html = '<div class="t8 v2-surface" style="height:100%"><div class="t8-inner">';
+    html += '<div class="t8-eyebrow"><b>08</b> · A1 Directory · Take 3</div>';
+    html += '<h1 class="t8-h1">Settings</h1>';
+    html += '<div class="t8-sub">A bright, calm directory for <b>' + esc(PM2.currentProject.name) + "</b>. Every change applies to this project only.</div>";
+    html += '<div class="t8-searchwrap"><div class="t8-search">' + PM2.svg("search", 19) + '<input id="homeSearch" type="search" placeholder="Search settings, managers, actions…" aria-label="Universal search" autocomplete="off"><span class="v2kbd">/</span></div></div>';
+    html += '<div class="t8-note"><span class="sdot warn"></span><div style="flex:1"><div class="t">One provider needs setup before some operations run</div><div class="d">Codex CLI — explicit install from the official source. Nothing is bundled or automatic.</div></div><button class="t8-btn primary" id="noteGo">Set up</button></div>';
+    html += '<div class="t8-att">' +
+      '<span class="t8-att-item"><span class="sdot warn"></span>Codex CLI setup <span class="d">explicit</span><button data-dest="d1">Open</button></span>' +
+      '<span class="t8-att-item"><span class="sdot warn"></span>ntfy offline <span class="d">since 08-17</span><button data-dest="d2">Open</button></span>' +
+      '<span class="t8-att-item"><span class="sdot info"></span>Vault migration <span class="d">restart pending</span><button data-dest="d3">Open</button></span>' +
+      "</div>";
+    html += '<div class="t8-grid">';
+    PM2.inventory.categories.forEach(function (c) {
+      var mgrs = PM2.managers.filter(function (m) { return m.domain === c.id; });
+      var changed = 0; PM2.inventory.byCategory[c.id].forEach(function (s) { if (STORE.get(s.id).status === "custom") changed++; });
+      html += '<div class="t8-card" data-domain="' + c.id + '" tabindex="0" role="link">' +
+        '<span class="go">' + PM2.svg("chevron", 18) + "</span>" +
+        '<span class="ic">' + PM2.svg(ICONS[c.id] || "grid", 26) + "</span>" +
+        "<div><h3>" + esc(c.title) + "</h3></div>" +
+        '<div class="purpose">' + esc(PURPOSES[c.id] || "") + "</div>" +
+        '<div class="meta"><span>' + PM2.inventory.byCategory[c.id].length + " settings</span><span>" + mgrs.length + " managers</span><span>" + changed + " changed</span></div></div>";
+    });
+    html += "</div>";
+    html += '<div class="t8-utils"><button class="t8-util" data-nav="all">' + PM2.svg("list", 14) + 'All settings index</button><button class="t8-util" data-nav="copy">' + PM2.svg("layers", 14) + 'Copy settings from another project</button></div>';
+    html += "</div></div>";
+    app.innerHTML = html;
+    searchAttach(el("homeSearch"));
+    var rq = pendingRestore ? pendingRestore.query : NAV.top().query;
+    if (rq) { el("homeSearch").value = rq; state.lastQuery = rq; if (pendingRestore && pendingRestore.resultId) state.lastRid = pendingRestore.resultId; pendingRestore = null; }
+    var DESTS = { d1: { manager: "mgr.provider", object: "prov.codex-cli" }, d2: { manager: "mgr.notifications", object: "ntf.ntfy" }, d3: { manager: "mgr.storage", object: "sto.migrate" } };
+    el("noteGo").addEventListener("click", function () { NAV.go(DESTS.d1); land(PM2.routes.planFor(DESTS.d1)); });
+    app.querySelectorAll("[data-dest]").forEach(function (b) { b.addEventListener("click", function () { var d = DESTS[b.dataset.dest]; NAV.go(d); land(PM2.routes.planFor(d)); }); });
+    app.querySelectorAll("[data-domain]").forEach(function (card) {
+      card.addEventListener("click", function () { NAV.jump({ domain: card.dataset.domain }); });
+      card.addEventListener("keydown", function (e) { if (e.key === "Enter") NAV.jump({ domain: card.dataset.domain }); });
+    });
+    app.querySelectorAll(".t8-util").forEach(function (b) { b.addEventListener("click", function () { var v = b.dataset.nav; if (v === "all") NAV.go({ domain: "all" }); else if (v === "copy") openCopy(); }); });
+  }
+
+  /* DOMAIN — manager destinations + key groups */
+  function renderDomain(route) {
+    state.view = "domain"; state.domain = route.domain; state.manager = null;
+    var c = PM2.inventory.categories.filter(function (x) { return x.id === route.domain; })[0];
+    var mgrs = PM2.managers.filter(function (m) { return m.domain === route.domain; });
+    var html = '<div class="t8-dom v2-surface"><div class="t8-dom-head"><div class="back"><button class="t8-btn sm" id="domBack">' + PM2.svg("back", 12) + "Back</button></div>";
+    html += "<h2>" + PM2.svg(ICONS[c.id] || "grid", 24) + " " + esc(c.title) + '</h2><div class="lede">' + esc(PURPOSES[c.id] || "") + " · " + PM2.inventory.byCategory[c.id].length + " settings · changes apply to " + esc(PM2.currentProject.name) + " only.</div></div>";
+    html += '<div class="t8-dom-body">';
+    if (route.domain === "ai") {
+      html += '<div class="t8-sec-h">Provider summary</div><div class="t8-provgrid" id="provGrid"></div>';
+    }
+    html += '<div class="t8-sec-h">Managers</div><div class="t8-mgrid">';
+    mgrs.forEach(function (m) {
+      html += '<div class="t8-mcard" data-mgr="' + m.id + '" tabindex="0"><div class="t">' + PM2.svg(m.icon, 18) + esc(m.title) + '</div><div class="d">' + esc(m.blurb) + '</div><div><span class="v2badge ' + (m.health.kind === "ok" ? "ok" : m.health.kind) + '">' + esc(m.health.text) + "</span></div></div>";
+    });
+    if (route.domain === "system") {
+      PM2.owners.forEach(function (o) {
+        html += '<div class="t8-mcard" data-owner="' + o.id + '" tabindex="0"><div class="t">' + PM2.svg("plug", 18) + esc(o.title) + '</div><div class="d">' + esc(o.owner) + " · " + esc(o.contract) + '</div><div><span class="v2badge info">insertion point</span></div></div>';
+      });
+    }
+    html += "</div>";
+    html += '<div class="t8-sec-h">Setting groups</div><div class="t8-grouplist">';
+    c.subgroups.forEach(function (sg) {
+      var sid = sg.id || sg, srows = PM2.inventory.subgroups[route.domain + "." + sid] || [];
+      html += '<div class="t8-grouprole" data-page="' + sid + '"><span style="color:var(--ink-2)">' + PM2.svg("stack", 16) + '</span><span class="t">' + esc(sg.title || sid) + '</span><span class="cnt">' + srows.length + " settings</span>" + PM2.svg("chevron", 15) + "</div>";
+    });
+    html += "</div>";
+    html += '<div id="pageHost" style="margin-top:18px"></div>';
+    html += "</div></div>";
+    app.innerHTML = html;
+    el("domBack").addEventListener("click", function () { NAV.back(); });
+    if (route.domain === "ai") drawProvSummary();
+    app.querySelectorAll("[data-mgr]").forEach(function (r) { r.addEventListener("click", function () { NAV.go({ domain: route.domain, manager: r.dataset.mgr }); }); });
+    app.querySelectorAll("[data-owner]").forEach(function (r) {
+      r.addEventListener("click", function () {
+        var o = PM2.owners.filter(function (x) { return x.id === r.dataset.owner; })[0];
+        openDrawer(o.title, "<b>Owner:</b> " + esc(o.owner) + "<br><b>Contract:</b> " + esc(o.contract) + "<br><b>Return:</b> " + esc(o.returnRoute));
+      });
+    });
+    app.querySelectorAll("[data-page]").forEach(function (p) {
+      p.addEventListener("click", function () {
+        app.querySelectorAll(".t8-grouprole").forEach(function (x) { x.style.borderColor = "var(--line)"; });
+        p.style.borderColor = "var(--accent)";
+        drawGroup(route.domain, p.dataset.page);
+      });
+    });
+    if (route.page && route.row) {
+      var pr = app.querySelector('[data-page="' + route.page + '"]');
+      if (pr) pr.click();
+      setTimeout(function () { var t = app.querySelector('[data-row="' + route.row + '"]'); if (t) { t.scrollIntoView({ block: "center" }); t.classList.add("v2-calm"); } }, 320);
+    } else if (route.row) {
+      var pg = (PM2.inventory.byId[route.row] || { id: "" }).id.split(".")[1];
+      var pr2 = app.querySelector('[data-page="' + pg + '"]');
+      if (pr2) pr2.click();
+      setTimeout(function () { var t = app.querySelector('[data-row="' + route.row + '"]'); if (t) { t.scrollIntoView({ block: "center" }); t.classList.add("v2-calm"); } }, 320);
+    }
+  }
+  function drawProvSummary() {
+    var m = PM2.mgrById["mgr.provider"];
+    var host = el("provGrid");
+    m.records.slice(0, 6).forEach(function (r) {
+      var tone = r.status === "ok" ? "ok" : r.status === "bad" ? "bad" : "warn";
+      var qa = (r.actions || []).slice(0, 2).map(function (a) {
+        return '<button class="t8-btn sm' + (a.kind === "primary" ? " primary" : "") + '" data-paction="' + esc(a.id) + '" data-pobj="' + esc(r.id) + '">' + esc(a.label) + "</button>";
+      }).join("");
+      host.innerHTML += '<div class="t8-prov" data-obj="' + r.id + '"><div class="hd"><span class="sdot ' + tone + '"></span><span class="nm">' + esc(r.label) + '</span><span style="flex:1"></span><span class="v2badge ' + tone + '">' + esc(r.statusLabel || "Ready") + "</span></div>" +
+        '<div class="rows">' + (r.chips || []).slice(0, 3).map(function (ch) { return "<span>" + esc(ch[0]) + ": <b>" + esc(String(ch[1])) + "</b></span>"; }).join("") + "</div>" +
+        '<div class="qa">' + qa + "</div></div>";
+    });
+    host.querySelectorAll("[data-obj]").forEach(function (card) {
+      card.addEventListener("click", function (e) {
+        if (e.target.closest("[data-paction]")) return;
+        NAV.go({ domain: "ai", manager: "mgr.provider", object: card.dataset.obj });
+      });
+    });
+    host.querySelectorAll("[data-paction]").forEach(function (b) {
+      b.addEventListener("click", function (e) {
+        e.stopPropagation();
+        if (b.dataset.paction === "a.install") { NAV.go({ domain: "ai", manager: "mgr.provider", object: b.dataset.pobj }); var t = stage.querySelector('[data-obj="' + b.dataset.pobj + '"]'); setTimeout(function () { t && t.click(); }, 500); return; }
+        openDrawer("Provider action", "<b>" + esc(b.textContent.trim()) + "</b> routes to its canonical owner with receipt, truthful operation state, and cancel/rollback semantics.");
+      });
+    });
+  }
+  function drawGroup(domainId, pageId) {
+    var host = el("pageHost"); if (!host) return;
+    var rows = PM2.inventory.subgroups[domainId + "." + pageId] || [];
+    NAV.stack[NAV.stack.length - 1] = Object.assign({}, NAV.top(), { domain: domainId, page: pageId }); location.hash = PM2.routes.str(NAV.top()); /* quiet: no re-render, rows stay */
+    host.innerHTML = '<div class="t8-sec-h" style="margin-top:0">' + esc(PM2.subgroupTitle(domainId, pageId)) + ' · ' + rows.length + ' settings</div><div id="groupRows"></div>';
+    var gr = host.querySelector("#groupRows");
+    rows.forEach(function (s) { gr.appendChild(setRow(s)); });
+  }
+
+  /* setting row */
+  function setRow(s) {
+    var st = STORE.get(s.id), meta = PM2.statusMeta[st.status], val = st.value;
+    var d = document.createElement("div");
+    d.className = "t8-setrow"; d.dataset.row = s.id; d.dataset.status = st.status;
+    var ctl = "";
+    switch (s.type) {
+      case "toggle": ctl = '<button class="t8-switch" role="switch" aria-checked="' + (val === true) + '" aria-label="' + esc(s.label) + '"></button>'; break;
+      case "select": case "radio": ctl = '<select class="t8-sel" aria-label="' + esc(s.label) + '">' + (s.options || []).map(function (o) { return "<option" + (o === val ? " selected" : "") + ">" + esc(o) + "</option>"; }).join("") + "</select>"; break;
+      case "slider": ctl = '<div style="width:180px"><input class="t8-range" type="range" min="0" max="100" step="10" value="' + (typeof val === "number" ? val : 50) + '" aria-label="' + esc(s.label) + '"><div style="text-align:right"><span class="v2kbd">' + (typeof val === "number" ? val : 50) + "</span></div></div>"; break;
+      case "number": ctl = '<input class="field" type="number" style="width:110px" value="' + esc(String(val)) + '" aria-label="' + esc(s.label) + '">'; break;
+      case "text": case "path": ctl = '<input class="field" type="text" style="width:210px" value="' + esc(String(val)) + '" aria-label="' + esc(s.label) + '">'; break;
+      case "action": ctl = '<button class="t8-btn primary" data-run="1">' + PM2.svg("bolt", 13) + "Run</button>"; break;
+      default: ctl = '<span class="v2badge">' + esc(JSON.stringify(val)).slice(0, 26) + "</span>";
+    }
+    var badge = s.type === "action" ? "" : '<span class="v2badge ' + (meta.tone === "neutral" ? "" : meta.tone) + '">' + esc(meta.label) + "</span>";
+    d.innerHTML = '<div class="info"><div class="lbl">' + esc(s.label) + badge + '</div><div class="desc">' + esc(s.desc) + '</div><div class="t8-why"><button data-why="1">Why this value?</button></div><div class="t8-details" hidden></div></div><div class="ctl">' + ctl + '<div class="t8-err" hidden></div></div>';
+    d.querySelector("[data-why]").addEventListener("click", function () {
+      var dd = d.querySelector(".t8-details");
+      dd.hidden = !dd.hidden;
+      dd.innerHTML = "<b>Status</b> " + esc(meta.label) + " · <b>Default</b> " + esc(JSON.stringify(s.default)) + " · <b>Applies to</b> " + esc(PM2.currentProject.name) + " only" +
+        (st.status === "managed" ? " · <b>Origin</b> organization policy — read-only" : "") +
+        (st.status === "restart" ? " · <b>Timing</b> completes after restart" : "") +
+        (st.status === "changed-elsewhere" ? " · <b>Changed</b> " + esc(st.changedAt || "recently") + " elsewhere" : "") +
+        (st.status === "import-conflict" ? " · <b>Conflict</b> resolve before it applies" : "") +
+        " · <b>Registry scope (diagnostic)</b> " + esc((s.scope || []).join(", ")) + " · <b>ID</b> " + esc(s.id);
+    });
+    var sw = d.querySelector(".t8-switch");
+    if (sw) sw.addEventListener("click", function () { if (st.status === "managed") return; var nv = !(sw.getAttribute("aria-checked") === "true"); sw.setAttribute("aria-checked", nv); STORE.set(s.id, nv, "custom"); });
+    var se = d.querySelector("select.t8-sel");
+    if (se) se.addEventListener("change", function () { STORE.set(s.id, se.value, "custom"); });
+    var nu = d.querySelector('input[type="number"]');
+    if (nu) nu.addEventListener("change", function () {
+      var err = d.querySelector(".t8-err"); var v = parseFloat(nu.value);
+      if (isNaN(v) || v < 0 || v > 100000) { err.hidden = false; err.textContent = "Enter a number between 0 and 100,000."; return; }
+      err.hidden = true; STORE.set(s.id, v, "custom");
+    });
+    var tx = d.querySelector('input[type="text"]');
+    if (tx) tx.addEventListener("change", function () { STORE.set(s.id, tx.value, "custom"); });
+    var rg = d.querySelector('input[type="range"]');
+    if (rg) rg.addEventListener("change", function () { STORE.set(s.id, parseInt(rg.value, 10), "custom"); var k = d.querySelector(".v2kbd"); if (k) k.textContent = rg.value; });
+    var rn = d.querySelector("[data-run]");
+    if (rn) rn.addEventListener("click", function () { openDrawer("Action", "<b>" + esc(s.label) + "</b> runs through its canonical owner with receipt and truthful operation state."); });
+    return d;
+  }
+
+  /* ALL SETTINGS (virtualized) */
+  function renderAll() {
+    state.view = "all"; state.manager = null;
+    var html = '<div class="t8-inner" style="height:100%;padding-top:20px">';
+    html += '<div><button class="t8-btn sm" id="allBack">' + PM2.svg("back", 12) + "Back</button></div>";
+    html += '<h2 style="margin:12px 0 4px;font-size:26px;font-weight:850">All settings</h2>';
+    html += '<div style="color:var(--ink-2);font-size:13px;margin-bottom:14px">828 settings · virtualized long-tail index.</div>';
+    html += '<input class="field" id="allFilter" type="search" placeholder="Filter…" aria-label="Filter" style="max-width:320px;margin-bottom:10px">';
+    html += '<div class="t8-utils" id="facets" style="margin:0 0 12px"></div>';
+    html += '<div class="v2-virt v2-surface" id="virt" style="height:min(620px, calc(100vh - 380px));position:relative;overflow:auto;border:1px solid var(--line);border-radius:var(--r-lg)"></div>';
+    html += '<div id="info" style="font-size:11.5px;color:var(--ink-3);margin-top:8px"></div></div>';
+    app.innerHTML = html;
+    el("allBack").addEventListener("click", function () { NAV.back(); });
+    var facet = "all";
+    var facets = [["all", "All"], ["changed", "Changed"], ["managed", "Managed"], ["unavailable", "Unavailable"], ["restart", "Restart"], ["advanced", "Advanced"], ["simple", "Simple"]];
+    var fw = el("facets");
+    function drawF() {
+      fw.innerHTML = facets.map(function (f) { return '<button class="t8-util" data-f="' + f[0] + '"' + (facet === f[0] ? ' style="border-color:var(--accent);color:var(--accent)"' : "") + ">" + f[1] + "</button>"; }).join("");
+      fw.querySelectorAll("[data-f]").forEach(function (b) { b.addEventListener("click", function () { facet = b.dataset.f; drawF(); draw(); }); });
+    }
+    var all = [], ROWH = 74, virt = el("virt");
+    var pad = document.createElement("div"); pad.className = "v2-virt-pad";
+    var win = document.createElement("div"); win.className = "v2-virt-win"; win.style.position = "relative";
+    virt.append(pad, win);
+    function draw() {
+      var q = (el("allFilter").value || "").toLowerCase();
+      all = PM2.inventory.categories.flatMap(function (c) { return PM2.inventory.byCategory[c.id]; }).filter(function (s) {
+        var st = STORE.get(s.id);
+        if (facet === "changed" && st.status !== "custom") return false;
+        if (facet === "managed" && st.status !== "managed") return false;
+        if (facet === "unavailable" && st.status !== "unavailable") return false;
+        if (facet === "restart" && st.status !== "restart") return false;
+        if (facet === "advanced" && s.tier !== "advanced") return false;
+        if (facet === "simple" && s.tier !== "simple") return false;
+        if (q && (s.label + s.id).toLowerCase().indexOf(q) < 0) return false;
+        return true;
+      });
+      var w = PM2.window({ scrollTop: virt.scrollTop, viewportHeight: virt.clientHeight, rowHeight: ROWH, total: all.length });
+      pad.style.height = (w.padTop + w.count * ROWH + w.padBottom) + "px"; win.style.transform = "translateY(" + w.padTop + "px)";
+      win.innerHTML = "";
+      for (var i = w.first; i < w.first + w.count; i++) {
+        var s = all[i]; if (!s) break;
+        var holder = document.createElement("div"); holder.style.height = ROWH + "px";
+        var row = setRow(s); row.style.margin = "0 0 4px";
+        holder.appendChild(row); win.appendChild(holder);
+      }
+      el("info").textContent = all.length + " of 828 shown · " + win.children.length + " rows in DOM";
+      PM2.telemetry.domRows = [win.children.length];
+    }
+    virt.addEventListener("scroll", draw);
+    el("allFilter").addEventListener("input", draw);
+    drawF(); draw();
+  }
+
+  /* MANAGER */
+  function renderManager(route) {
+    var m = PM2.mgrById[route.manager];
+    state.view = "manager"; state.manager = m.id; state.tab = route.tab ? Math.max(0, route.tab | 0) : 0;
+    var html = '<div class="t8-mgr v2-surface" data-mgr="' + m.id + '"><div class="t8-mgr-head"><button class="t8-btn sm" id="mgrBack">' + PM2.svg("back", 12) + "Back</button><h2>" + PM2.svg(m.icon, 22) + " " + esc(m.title) + '</h2><span class="sum">' + esc(m.blurb) + '</span><span style="flex:1"></span><span class="v2badge ' + (m.health.kind === "ok" ? "ok" : m.health.kind) + '">' + esc(m.health.text) + "</span></div>";
+    html += '<div class="t8-tabs">' + (m.tabs || ["Overview"]).map(function (t, i) { return '<button class="t8-tab" aria-selected="' + (i === state.tab) + '" data-tab="' + i + '">' + esc(t) + "</button>"; }).join("") + "</div>";
+    html += '<div class="t8-mgr-body"><div class="t8-listcard v2-surface" id="mgrList"><div class="t8-skel" style="height:40px;margin:12px"></div><div class="t8-skel" style="height:40px;margin:12px;width:75%"></div><div style="padding:10px 16px;font-size:11.5px;color:var(--ink-3)">Hydrating ' + esc(m.title.toLowerCase()) + "…</div></div>";
+    html += '<div class="t8-detail v2-surface" id="mgrDetail"><div style="color:var(--ink-3);font-size:13px;padding:6px 2px">Select a record to open it here.</div></div></div>';
+    app.innerHTML = html;
+    el("mgrBack").addEventListener("click", function () { NAV.back(); });
+    app.querySelectorAll(".t8-tab").forEach(function (t) {
+      t.addEventListener("click", function () {
+        state.tab = +t.dataset.tab;
+        app.querySelectorAll(".t8-tab").forEach(function (x) { x.setAttribute("aria-selected", x === t ? "true" : "false"); });
+        hydrate(m, route);
+      });
+    });
+    if (!state.hydrated[m.id]) setTimeout(function () { state.hydrated[m.id] = true; PM2.telemetry.managersHydrated.push(m.id); hydrate(m, route); }, 260);
+    else hydrate(m, route);
+  }
+  function hydrate(m, route) {
+    var list = el("mgrList"); if (!list) return;
+    var html = "";
+    (m.groups || []).forEach(function (g) {
+      html += '<div style="padding:12px 16px 4px;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)">' + esc(g.label) + "</div>";
+      m.records.filter(function (r) { return r.group === g.id; }).forEach(function (r) { html += lrow(r); });
+    });
+    if (!m.groups) m.records.forEach(function (r) { html += lrow(r); });
+    list.innerHTML = html;
+    list.querySelectorAll("[data-obj]").forEach(function (r) {
+      r.addEventListener("click", function () {
+        list.querySelectorAll("[data-obj]").forEach(function (x) { x.setAttribute("aria-selected", x === r ? "true" : "false"); });
+        var rec = m.records.filter(function (x) { return x.id === r.dataset.obj; })[0];
+        el("mgrDetail").innerHTML = detailHTML(m, rec);
+        NAV.go({ domain: m.domain, manager: m.id, object: r.dataset.obj, tab: state.tab }, { replace: true });
+        wireDetail(m);
+      });
+    });
+    if (route.object) { var r0 = list.querySelector('[data-obj="' + route.object + '"]'); if (r0) r0.click(); }
+  }
+  function lrow(r) {
+    var tone = r.status === "ok" ? "ok" : r.status === "bad" ? "bad" : "warn";
+    return '<div class="t8-lrow" data-obj="' + r.id + '" aria-selected="false" tabindex="0"><span class="sdot ' + tone + '"></span><div style="flex:1;min-width:0"><div class="t">' + esc(r.label) + '</div><div class="d">' + esc(r.statusLabel || r.desc || "") + "</div></div>" + PM2.svg("chevron", 15) + "</div>";
+  }
+  function chipsHTML(r) { return '<div class="t8-chips">' + (r.chips || []).map(function (c) { return '<span class="v2badge">' + esc(c[0]) + ": " + esc(String(c[1])) + "</span>"; }).join("") + "</div>"; }
+  function actsHTML(m, r) {
+    return '<div class="t8-actions">' + (r.actions || []).map(function (a) { return '<button class="t8-btn' + (a.kind === "primary" ? " primary" : "") + '" data-action="' + esc(a.id) + '" data-owner="' + esc(r.id) + '">' + esc(a.label) + "</button>"; }).join("") + (m.ops || []).map(function (a) { return '<button class="t8-btn" data-op="' + esc(a.id) + '">' + esc(a.label) + "</button>"; }).join("") + "</div>";
+  }
+  function detailHTML(m, r) {
+    if (!r) return "<div style='color:var(--ink-3)'>No records</div>";
+    var tab = (m.tabs || ["Overview"])[state.tab] || "Overview";
+    var h = "<h3>" + esc(r.label) + "</h3><div class='dsub'>" + esc(r.desc || m.blurb) + "</div>" + chipsHTML(r);
+    if (m.id === "mgr.provider") {
+      if (tab === "Installations" || r.setup) {
+        h += '<table class="t8-table"><tr><th>Installation</th><th>Version</th><th>Owner · confidence</th><th>State</th></tr>' + m.installations.map(function (i) { return "<tr><td>" + esc(i.label) + "</td><td>" + esc(i.version || "—") + "</td><td class='mut'>" + esc((i.owner || "—") + " · " + (i.confidence || "")) + "</td><td><span class=\"v2badge " + (i.state === "selected" ? "ok" : i.state === "shadowed" ? "info" : "warn") + '">' + esc(i.state) + "</span></td></tr>"; }).join("") + "</table>";
+        if (r.setup) h += '<div class="t8-setup"><b style="font-size:13.5px">Setup — explicit, official source, exact host</b><ol>' + r.setup.steps.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ol></div>";
+      } else if (tab === "Models" && r.models) {
+        h += '<table class="t8-table"><tr><th>Model</th><th>Capabilities</th><th>Context</th><th>Modes · effort</th></tr>' + r.models.map(function (mm) { return "<tr><td><b>" + esc(mm.label) + "</b>" + (mm.selected ? ' <span class="v2badge ok">selected</span>' : "") + "</td><td class='mut'>" + esc(mm.caps.join(" · ")) + "</td><td class='mut'>" + esc(mm.ctx) + "</td><td class='mut'>" + esc(mm.mode.join("/") + " · " + mm.effort.join("/")) + "</td></tr>"; }).join("") + "</table>";
+      } else if (tab === "Routing & fallback") {
+        h += '<table class="t8-table"><tr><th>Route</th><th>Requested</th><th>Effective</th><th>Why</th></tr>' + m.routing.rows.map(function (x) { return "<tr><td><b>" + esc(x.label) + "</b></td><td>" + esc(x.requested) + "</td><td>" + esc(x.effective) + "</td><td class='mut'>" + esc(x.why || "—") + "</td></tr>"; }).join("") + "</table>";
+      } else if (tab === "Usage") {
+        if (r.id === "prov.deepseek-key") h += '<div class="t8-offline"><span class="sdot warn"></span>Provider ready — Usage unavailable (503). Last-known-good read shown.</div>';
+        h += '<table class="t8-table"><tr><th>Connection</th><th>Usage</th></tr>' + m.usage.rows.map(function (u) { return "<tr><td><b>" + esc(u[0]) + "</b></td><td class='mut'>" + esc(u[1]) + "</td></tr>"; }).join("") + "</table>";
+      } else {
+        (r.detail || []).forEach(function (x) { h += '<div class="t8-kv"><span class="k">' + esc(x[0]) + "</span><span class='v'>" + esc(x[1]) + "</span></div>"; });
+      }
+    } else {
+      (r.detail || []).forEach(function (x) { h += '<div class="t8-kv"><span class="k">' + esc(x[0]) + "</span><span class='v'>" + esc(x[1]) + "</span></div>"; });
+      if (m.filesafe && m.id === "mgr.permissions") h += '<div class="t8-kv"><span class="k">FileSafe</span><span class="v">Boundary <b>' + esc(m.filesafe.boundary) + "</b> · protected " + esc(m.filesafe.protected.join(", ")) + "</span></div>";
+      if (m.note) h += '<div class="t8-offline" style="border-color:var(--line)"><span class="sdot info"></span>' + esc(m.note) + "</div>";
+      if (r.work) h += '<button class="t8-btn primary" data-op="a.rebuild" style="margin-top:4px">' + PM2.svg("refresh", 12) + " Run with truthful progress <span class='v2kbd'>" + esc(r.work.denominator) + "</span></button>";
+    }
+    h += actsHTML(m, r);
+    return h;
+  }
+  function wireDetail(m) {
+    var root = el("mgrDetail"); if (!root) return;
+    root.querySelectorAll("[data-action]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        if (b.dataset.action === "a.install") {
+          var s = PM2.mgrById["mgr.provider"].records.filter(function (x) { return x.id === "prov.codex-cli"; })[0];
+          openDrawer("Install Codex CLI — explicit", "<b>Source:</b> " + esc(s.setup.source) + "<br><b>Host:</b> " + esc(s.setup.host) + "<br>Never bundled, never silently installed. Authentication is a separate step.<div class='t8-actions' style='margin-top:8px'><button class='t8-btn primary' id='doInst'>Install from official source</button></div><div id='iw'></div>");
+          el("doInst").addEventListener("click", function () {
+            var w = STORE.work({ kind: "install", label: "Install Codex CLI", phases: ["download", "verify", "install", "verify launch", "done"], steps: 12, fast: true, receipt: { summary: "Codex CLI installed — authenticate separately" } });
+            var box = document.createElement("div"); box.className = "t8-work"; el("iw").appendChild(box);
+            var un = STORE.subscribe("work", function () {
+              box.innerHTML = "<b>" + esc(w.label) + "</b> — " + esc(w.note) + '<div class="bar"><div style="width:' + Math.round((w.phaseI + 1) / w.phases.length * 100) + '%"></div></div>';
+              if (w.state === "done") { box.innerHTML += '<div class="t8-receipt" style="margin-top:6px">Installed. Authenticate separately next.</div>'; un(); }
+            });
+          });
+          return;
+        }
+        openDrawer("Action", "<b>" + esc(b.textContent.trim()) + "</b> routes to its canonical owner: typed payload, availability, revision + idempotency, permission, receipt, ObservableWork, cancel/rollback, route/focus effect.");
+      });
+    });
+    root.querySelectorAll("[data-op]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var w = STORE.work({ kind: "lifecycle", label: b.textContent.trim().split(" ")[0], denominator: 12408, fast: true, receipt: { summary: "Operation completed with receipt" } });
+        var box = document.createElement("div"); box.className = "t8-work"; b.parentElement.appendChild(box);
+        function dd() { box.innerHTML = "<b>" + esc(w.label) + "</b> — " + esc(w.note) + (w.progress !== null ? ' <span class="v2kbd">' + w.done + "/" + w.denominator + "</span>" : "") + '<div class="bar"><div style="width:' + (w.progress || 0) + '%"></div></div>'; if (w.state === "done") setTimeout(function () { box.remove(); }, 1500); }
+        dd();
+        var un = STORE.subscribe("work", function () { dd(); if (w.state === "done") un(); });
+      });
+    });
+  }
+
+  /* drawer */
+  function openDrawer(title, html) { el("drawerTitle").textContent = title; el("drawerBody").innerHTML = html; el("drawer").dataset.open = "1"; }
+  function closeDrawer() { el("drawer").dataset.open = "0"; }
+  el("drawerClose").addEventListener("click", closeDrawer);
+
+  /* FULL-WIDTH COPY */
+  var COPY = { open: false, step: 0, src: null, cats: [], preview: null, result: null };
+  function openCopy() {
+    COPY.open = true; COPY.step = 0; COPY.src = null; COPY.cats = PM2.copyCategories.map(function (c) { return c.id; }); COPY.preview = null; COPY.result = null;
+    var veil = document.createElement("div"); veil.className = "t8-copy"; veil.id = "copyVeil";
+    veil.innerHTML = '<div class="t8-copy-head"><button class="t8-btn sm" id="copyX">' + PM2.svg("close", 12) + 'Close</button><h3>Copy settings from another project</h3><span style="flex:1"></span><span style="font-size:12.5px;color:var(--ink-3)">Destination: <b>' + esc(PM2.currentProject.name) + '</b> (current project)</span></div>' +
+      '<div class="t8-copy-body v2-surface"><div class="t8-copy-left v2-surface" id="copyLeft"></div><div class="t8-copy-right v2-surface" id="copyRight"></div></div>' +
+      '<div class="t8-copy-foot" id="copyFoot"></div>';
+    stage.appendChild(veil);
+    el("copyX").addEventListener("click", copyClose);
+    drawCopy();
+  }
+  function copyClose() { COPY.open = false; var v = el("copyVeil"); if (v) v.remove(); }
+  function drawCopy() {
+    var L = el("copyLeft"), R = el("copyRight"), f = el("copyFoot"); if (!L) return;
+    if (COPY.step === 0) {
+      L.innerHTML = '<div class="t8-step">Step 1 · Source project</div><div style="font-size:13px;color:var(--ink-2);margin-bottom:12px;line-height:1.6">A one-time copy. Projects stay independent — no link, no sync, no profiles.</div>' +
+        PM2.projects.filter(function (p) { return !p.current; }).map(function (p) {
+          return '<div class="t8-src" data-src="' + p.id + '" aria-selected="' + (COPY.src === p.id) + '"><div style="flex:1"><div style="font-size:15px;font-weight:800">' + esc(p.name) + '</div><div style="font-size:12px;color:var(--ink-3)">' + esc(p.path) + " · " + p.changedCount + " changed · backup " + esc(p.lastBackup || "never") + '</div></div><span class="v2badge">' + p.attention + " attention</span></div>";
+        }).join("");
+      R.innerHTML = '<div class="t8-step">What copying means</div><div class="t8-kv"><span class="k">One-time</span><span class="v">Values are copied once. Future changes never propagate.</span><span class="k">Credentials</span><span class="v">Account and credential references carry over by reference — raw secrets are never copied, shown, or exported.</span><span class="k">Safety</span><span class="v">A restore point is created first; apply is atomic, verified, and rollback-capable.</span></div>';
+      f.innerHTML = '<button class="t8-btn" id="copyAll">All settings index</button><span class="sp"></span><button class="t8-btn primary" id="copyNext"' + (COPY.src ? "" : " disabled style='opacity:.5'") + ">Choose categories</button>";
+      L.querySelectorAll("[data-src]").forEach(function (s) { s.addEventListener("click", function () { COPY.src = s.dataset.src; drawCopy(); }); });
+      var n = el("copyNext"); if (n) n.addEventListener("click", function () { COPY.step = 1; drawCopy(); });
+    } else if (COPY.step === 1) {
+      L.innerHTML = '<div class="t8-step">Step 2 · Categories</div>' + PM2.copyCategories.map(function (c) {
+        return '<div class="t8-cat" data-cat="' + c.id + '" aria-selected="' + (COPY.cats.indexOf(c.id) >= 0) + '"><span class="t8-check">' + (COPY.cats.indexOf(c.id) >= 0 ? PM2.svg("close", 0) : "") + '</span><div><div style="font-size:14px;font-weight:750">' + esc(c.title) + '</div><div style="font-size:12px;color:var(--ink-2);margin-top:2px">' + esc(c.includes) + "</div></div></div>";
+      }).join("");
+      R.innerHTML = '<div class="t8-step">Selected</div><div id="catSummary" style="font-size:13.5px;color:var(--ink-2);line-height:1.7"></div>';
+      function sum() { el("catSummary").innerHTML = COPY.cats.length + " of 10 categories selected<br>" + COPY.cats.map(function (id) { return esc(PM2.copyCategories.filter(function (c) { return c.id === id; })[0].title); }).join("<br>"); }
+      L.querySelectorAll("[data-cat]").forEach(function (c) {
+        c.addEventListener("click", function () {
+          var id = c.dataset.cat, i = COPY.cats.indexOf(id);
+          if (i >= 0) COPY.cats.splice(i, 1); else COPY.cats.push(id);
+          c.setAttribute("aria-selected", COPY.cats.indexOf(id) >= 0);
+          sum();
+        });
+      });
+      sum();
+      f.innerHTML = '<button class="t8-btn" id="copyBack">Back</button><span class="sp"></span><button class="t8-btn primary" id="copyNext">Preview copy</button>';
+      el("copyBack").addEventListener("click", function () { COPY.step = 0; drawCopy(); });
+      el("copyNext").addEventListener("click", function () { COPY.preview = PM2.copyPreview(COPY.src, COPY.cats); COPY.step = 2; drawCopy(); });
+    } else if (COPY.step === 2) {
+      var t = COPY.preview.totals;
+      L.innerHTML = '<div class="t8-step">Step 3 · Preview</div><div class="t8-counts">' +
+        '<div class="t8-count"><span class="n">' + t.additions + '</span><span class="l">additions</span></div>' +
+        '<div class="t8-count"><span class="n">' + t.replacements + '</span><span class="l">replacements</span></div>' +
+        '<div class="t8-count"><span class="n">' + t.unchanged + '</span><span class="l">unchanged</span></div>' +
+        '<div class="t8-count"><span class="n">' + t.unavailable + '</span><span class="l">not copyable</span></div>' +
+        '<div class="t8-count"><span class="n">' + t.conflicts + '</span><span class="l">conflicts skipped</span></div></div>' +
+        '<div class="t8-offline" style="border-color:var(--line)"><span class="sdot info"></span>' + esc(COPY.preview.credentialNote) + "</div>";
+      R.innerHTML = '<div class="t8-step">Item-level preview</div><div class="t8-cplist v2-surface" id="cpList"></div>';
+      var list = el("cpList"), rows = COPY.preview.rows, RH = 34;
+      var pad2 = document.createElement("div"); pad2.className = "v2-virt-pad";
+      var win2 = document.createElement("div"); win2.style.position = "relative";
+      list.append(pad2, win2);
+      function draw2() {
+        var w = PM2.window({ scrollTop: list.scrollTop, viewportHeight: 300, rowHeight: RH, total: rows.length });
+        pad2.style.height = (w.padTop + w.count * RH + w.padBottom) + "px"; win2.style.transform = "translateY(" + w.padTop + "px)";
+        var h = "";
+        for (var i = w.first; i < w.first + w.count; i++) {
+          var rr = rows[i]; if (!rr) break;
+          var s = PM2.inventory.byId[rr.settingId];
+          h += '<div style="height:' + RH + 'px;display:flex;align-items:center;gap:9px;font-size:12.5px;border-bottom:1px solid var(--line)"><span class="v2badge ' + (rr.kind === "additions" ? "ok" : rr.kind === "replacements" ? "info" : rr.kind === "conflicts" ? "warn" : rr.kind === "unavailable" ? "bad" : "") + '">' + rr.kind.replace(/s$/, "") + '</span><span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + esc(s ? s.label : rr.settingId) + "</span></div>";
+        }
+        win2.innerHTML = h;
+      }
+      draw2(); list.addEventListener("scroll", draw2);
+      f.innerHTML = '<button class="t8-btn" id="copyBack">Back</button><span class="sp"></span><span style="font-size:12px;color:var(--ink-3);align-self:center">Restore point is created before anything changes.</span><button class="t8-btn primary" id="copyGo">Restore point & apply</button>';
+      el("copyBack").addEventListener("click", function () { COPY.step = 1; drawCopy(); });
+      el("copyGo").addEventListener("click", function () {
+        COPY.step = 3;
+        R.innerHTML = '<div class="t8-step">Step 4 · Applying atomically</div><div class="t8-work" id="cw"></div>';
+        f.innerHTML = "";
+        var box = el("cw");
+        var w = STORE.work({ kind: "copy", label: "Copy settings", phases: ["restore point", "apply", "verify"], steps: 10, fast: true });
+        var un = STORE.subscribe("work", function () {
+          box.innerHTML = "<b>" + esc(w.label) + "</b> — " + esc(w.note) + '<div class="bar"><div style="width:' + ((w.phaseI + 1) / 3 * 100) + '%"></div></div>';
+          if (w.state === "done") {
+            un();
+            COPY.result = STORE.applyCopy(COPY.preview, COPY.cats);
+            R.innerHTML = '<div class="t8-step">Done — verified, receipted, rollback available</div><div class="t8-receipt"><b>' + COPY.result.counts.applied + " values copied</b> · " + COPY.result.counts.skipped + " skipped (unavailable/conflict).<br>Verified " + COPY.result.verify.checked + " rows · " + COPY.result.verify.mismatches + " mismatches. Receipt <b>" + esc(COPY.result.receipt.id) + "</b> · restore point <b>" + esc(COPY.result.restorePoint.label) + "</b>.<br>" + COPY.result.verify.note + "</div>" +
+              '<div class="t8-offline" style="border-color:var(--line);margin-top:10px"><span class="sdot ok"></span><b>' + esc(PM2.currentProject.name) + "</b> and <b>" + esc(COPY.preview.source.name) + "</b> are independent from here on.</div>";
+            f.innerHTML = '<button class="t8-btn" id="copyRoll">' + PM2.svg("back", 12) + "Rollback</button><span class=\"sp\"></span><button class=\"t8-btn primary\" id=\"copyDone\">Done</button>";
+            el("copyRoll").addEventListener("click", function () { STORE.rollback(COPY.result.restorePoint.id); openDrawer("Rollback complete", "Restored to the pre-copy restore point. Receipt recorded."); copyClose(); });
+            el("copyDone").addEventListener("click", copyClose);
+          }
+        });
+      });
+    }
+  }
+
+  /* boot */
+  var initial = PM2.routes.parse(location.hash);
+  if (initial.domain || initial.manager || initial.mode) NAV.stack = [Object.assign({ domain: null }, initial)];
+  render(NAV.top());
+  if (initial.row || initial.object || initial.query) land(PM2.routes.planFor(initial), PM2.search.byRid(initial.resultId || "") || null);
+  searchAttach(el("miniSearch"));
+  window.__C8 = { PM2: PM2, STORE: STORE, NAV: NAV, state: state, pickResult: pickResult };
+})();
+</script>
+</body>
+</html>

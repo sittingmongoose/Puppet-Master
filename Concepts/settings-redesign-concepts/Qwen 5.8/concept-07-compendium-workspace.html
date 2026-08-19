@@ -960,7 +960,7 @@ details.cw-drawer .body { padding: 4px 13px 12px; }
     html += '<p class="cw-sub">A one-time transactional copy. Source and destination stay independent afterwards.</p>';
     html += '<div class="cw-steps">';
     steps.forEach(function (s, i) {
-      html += '<span class="cw-step' + (c.step === i + 1 ? " active" : c.step > i + 1 ? " done" : "") + '"><span class="bub">' + (c.step > i + 1 ? "✓" : s[0]) + "</span>" + s[1] + "</span>";
+      html += '<span class="cw-step' + (c.step === i + 1 ? " active" : c.step > i + 1 ? " done" : "") + '"><span class="bub">' + (c.step > i + 1 ? ico("check", 12) : s[0]) + "</span>" + s[1] + "</span>";
       if (i < 2) html += '<span class="cw-step-line"></span>';
     });
     html += "</div>";

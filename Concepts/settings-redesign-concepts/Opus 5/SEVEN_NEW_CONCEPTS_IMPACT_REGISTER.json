@@ -1,0 +1,117 @@
+{
+ "schema_id": "pm.settings_seven_concepts_impact_rollup.v1",
+ "generated": "2026-08-18",
+ "model": "Opus 5",
+ "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+ "note": "A roll-up across the seven per-concept registers. Every id here is a CANDIDATE; the exact canonical names are adjudicated later against the real Command Catalog, Wiring Matrix and DRY owners. Nothing in this pass edits canon.",
+ "concepts": [
+  {
+   "id": "concept-05-directory-take-1",
+   "title": "Opus 5 — Directory",
+   "source_family": "A1 Directory / Take 1",
+   "families_demonstrated": 44,
+   "families_deferred": 10,
+   "families_missing": 0,
+   "evidence_complete": true
+  },
+  {
+   "id": "concept-06-directory-take-2",
+   "title": "Opus 5 — Editorial",
+   "source_family": "A1 Directory / Take 2",
+   "families_demonstrated": 44,
+   "families_deferred": 10,
+   "families_missing": 0,
+   "evidence_complete": true
+  },
+  {
+   "id": "concept-07-compendium-workspace",
+   "title": "Opus 5 — Compendium",
+   "source_family": "A2 Compendium Workspace / Take 1",
+   "families_demonstrated": 44,
+   "families_deferred": 10,
+   "families_missing": 0,
+   "evidence_complete": true
+  },
+  {
+   "id": "concept-08-directory-take-3",
+   "title": "Opus 5 — Broadside",
+   "source_family": "A1 Directory / Take 3",
+   "families_demonstrated": 44,
+   "families_deferred": 10,
+   "families_missing": 0,
+   "evidence_complete": true
+  },
+  {
+   "id": "concept-09-tome-tabs",
+   "title": "Opus 5 — Codex",
+   "source_family": "Rethemed Tome Tabs",
+   "families_demonstrated": 44,
+   "families_deferred": 10,
+   "families_missing": 0,
+   "evidence_complete": true
+  },
+  {
+   "id": "concept-10-command-suite",
+   "title": "Opus 5 — Command",
+   "source_family": "Rethemed Command Suite",
+   "families_demonstrated": 44,
+   "families_deferred": 10,
+   "families_missing": 0,
+   "evidence_complete": true
+  },
+  {
+   "id": "concept-11-tabbed-organizer",
+   "title": "Opus 5 — Folio",
+   "source_family": "Rethemed Tabbed Organizer",
+   "families_demonstrated": 44,
+   "families_deferred": 10,
+   "families_missing": 0,
+   "evidence_complete": true
+  }
+ ],
+ "shared_findings": {
+  "command_ids": {
+   "actions_censused": 85,
+   "reuse": 73,
+   "alias": 2,
+   "retire": 1,
+   "supersede": 1,
+   "preserve": 1,
+   "new_candidates": 7
+  },
+  "retire": [
+   "cmd.settings.bloom.open — the chip/bloom Settings contract these concepts supersede"
+  ],
+  "supersede": [
+   "cmd.settings.scope.inspect — there is no user-facing scope in a Project-only design; what survives is cmd.settings.value.explain, an explanation of why a value is what it is"
+  ],
+  "new_candidates": [
+   "cmd.settings.value.explain",
+   "cmd.settings.copy_from_project.rollback",
+   "cmd.settings.restore_point.create",
+   "cmd.provider.installation.adopt",
+   "cmd.doctor.check.run",
+   "cmd.doctor.repair.start",
+   "cmd.settings.owner.open"
+  ],
+  "inventory_impacts": [
+   "legacy scope metadata on 554 records becomes provenance, never an editing axis",
+   "general.interaction.scope-labels describes a capability a Project-only design does not have",
+   "the 36 canonical subgroups need a section layer: one holds 75 records, which is not a readable page",
+   "the two-value tier is too coarse; an explicit exposure ladder is needed",
+   "the inventory types one-shot actions and persistent settings identically"
+  ],
+  "dry_position": "Shared: inventory projection, search index, route grammar, ManagerSpec, copy transaction, state fixtures, ObservableWork, the one governor, BinaryLocator, Usage, Project identity. Concept-native: Home, navigation, manager composition, search dropdown, exact-result reveal, narrow behaviour, motion, density. No concept creates a second owner of anything."
+ },
+ "frozen": {
+  "concepts": [
+   "opus-5-atlas.html",
+   "opus-5-console.html",
+   "opus-5-stack.html",
+   "opus-5-ledger.html",
+   "concepts/**",
+   "shared/**"
+  ],
+  "verification": "git status --porcelain over those paths prints nothing; the regression suite loads all four and re-routes into a manager in each."
+ }
+}

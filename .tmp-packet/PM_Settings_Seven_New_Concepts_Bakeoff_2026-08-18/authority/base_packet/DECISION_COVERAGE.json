@@ -1,0 +1,1587 @@
+{
+  "schema_id": "pm.packet_decision_coverage.v1",
+  "packet": "settings",
+  "topics": [
+    {
+      "id": "SET-001",
+      "title": "Search-centric Settings Home",
+      "requirement": "Preserve the current cross-category search behavior while restyling/repositioning it; search remains the primary entry point and deep-links to exact categories, subcategories, settings, or managers.",
+      "packets": [
+        "settings",
+        "onboarding"
+      ],
+      "category": "settings_architecture",
+      "status": "fixed"
+    },
+    {
+      "id": "SET-002",
+      "title": "Destination controls replace category pills",
+      "requirement": "Primary Settings areas must look like important destinations, not filter pills. Include title, purpose, health/setup summary, and a clear navigation affordance.",
+      "packets": [
+        "settings"
+      ],
+      "category": "settings_architecture",
+      "status": "fixed"
+    },
+    {
+      "id": "SET-003",
+      "title": "Compact actionable notices",
+      "requirement": "Needs Attention, Continue Setup, and Recommended are separate semantic groups. Cards use one concise headline, one reason, stable status treatment, and at most one primary plus one quiet action.",
+      "packets": [
+        "settings"
+      ],
+      "category": "settings_architecture",
+      "status": "fixed"
+    },
+    {
+      "id": "SET-004",
+      "title": "Full Settings Workspace",
+      "requirement": "Selecting a category opens a full workspace showing one category at a time, with a continuous subcategory document, left navigation, scrollspy, top-left search, deep links, and a brief focus treatment.",
+      "packets": [
+        "settings"
+      ],
+      "category": "settings_architecture",
+      "status": "fixed"
+    },
+    {
+      "id": "SET-005",
+      "title": "Responsive Settings navigation",
+      "requirement": "The left category/subcategory navigation collapses to an appropriate drawer/header at narrow widths instead of forcing text clipping or unusably narrow forms.",
+      "packets": [
+        "settings"
+      ],
+      "category": "settings_architecture",
+      "status": "fixed"
+    },
+    {
+      "id": "SET-006",
+      "title": "Dedicated managers",
+      "requirement": "Complex resources\u2014providers/accounts/models, media, memory, MCP, LSP, formatters, skills, plugins, tools, commands, terminal, Personas, Crew, notifications, appearance, permissions, storage, testing, source control, containers, and artifacts\u2014use manager surfaces rather than scalar rows.",
+      "packets": [
+        "settings"
+      ],
+      "category": "settings_architecture",
+      "status": "fixed"
+    },
+    {
+      "id": "SET-007",
+      "title": "Setting-state grammar",
+      "requirement": "Every setting distinguishes Default, Recommended, Inherited, Auto, Not configured, Managed, Custom, Unavailable, and effective/requested differences. Blank strings are used only when literal empty text is meaningful.",
+      "packets": [
+        "settings"
+      ],
+      "category": "settings_architecture",
+      "status": "fixed"
+    },
+    {
+      "id": "SET-008",
+      "title": "Exposure levels",
+      "requirement": "The registry and GUI distinguish Standard, Advanced, Expert/Risky, Managed/Read-only, Diagnostic, and Unavailable settings; search remains able to find them.",
+      "packets": [
+        "settings"
+      ],
+      "category": "settings_architecture",
+      "status": "fixed"
+    },
+    {
+      "id": "SET-009",
+      "title": "Help is not hover-only",
+      "requirement": "Every setting explanation is available by hover, keyboard focus, explicit help/details affordance, and accessibility semantics; it states effect, default, activation timing, side effects, and unavailable reason.",
+      "packets": [
+        "settings"
+      ],
+      "category": "settings_architecture",
+      "status": "fixed"
+    },
+    {
+      "id": "SET-010",
+      "title": "Settings inventory reconciliation",
+      "requirement": "Do not treat the embedded PMConcept7 inventory as authoritative. Reconcile inventory counts, missing rows, invalid option/default pairs, actions mixed with values, scope gaps, secret types, stale modes, and manager destinations.",
+      "packets": [
+        "settings",
+        "runtime"
+      ],
+      "category": "settings_architecture",
+      "status": "fixed"
+    },
+    {
+      "id": "SET-011",
+      "title": "One left Activity Bar and side-panel slot",
+      "requirement": "The Activity Bar is the narrow left navigation rail; it controls one adjacent left side-panel slot. Settings concepts must use the latest left-placement canon and not resurrect old right-side language.",
+      "packets": [
+        "settings",
+        "chat",
+        "onboarding"
+      ],
+      "category": "shell",
+      "status": "fixed"
+    },
+    {
+      "id": "SET-012",
+      "title": "Project settings are concrete",
+      "requirement": "Each Project owns one concrete settings set. Copy Settings From\u2026 is a one-time copy with restore point, preview, atomic apply, verification, and rollback\u2014not a universal inheritance system.",
+      "packets": [
+        "settings",
+        "runtime"
+      ],
+      "category": "settings_architecture",
+      "status": "fixed"
+    },
+    {
+      "id": "SET-013",
+      "title": "Settings lifecycle",
+      "requirement": "Settings import/export/backup/reset/migration must support preview, merge versus replace, validation, legacy-key migration, scope differences, restart/reconnect effects, rollback, and receipts.",
+      "packets": [
+        "settings",
+        "runtime"
+      ],
+      "category": "settings_architecture",
+      "status": "fixed"
+    },
+    {
+      "id": "SET-014",
+      "title": "Manager coverage gate",
+      "requirement": "The bakeoff must prove every canonical manager family through a traceable coverage matrix; a concept cannot pass merely by showing Provider plus two optional managers.",
+      "packets": [
+        "settings"
+      ],
+      "category": "settings_architecture",
+      "status": "fixed"
+    },
+    {
+      "id": "SET-015",
+      "title": "Creative bakeoff independence",
+      "requirement": "Each model produces four genuinely distinct concepts. Requirements constrain outcomes and behavior, not exact card shape, layout, motion, typography, or surface materials.",
+      "packets": [
+        "settings"
+      ],
+      "category": "settings_architecture",
+      "status": "fixed"
+    },
+    {
+      "id": "VIS-001",
+      "title": "No AI-design tells",
+      "requirement": "No left-side color accent bars, emoji, uneven/cutoff text, decorative filler, or pill controls that imply the wrong interaction.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "onboarding"
+      ],
+      "category": "visual",
+      "status": "fixed"
+    },
+    {
+      "id": "VIS-002",
+      "title": "Eight themes",
+      "requirement": "Friendly, Glass, Retro, and Basic in light and dark are supported, with consistent information architecture and semantics.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "onboarding"
+      ],
+      "category": "visual",
+      "status": "fixed"
+    },
+    {
+      "id": "VIS-003",
+      "title": "Film-level motion",
+      "requirement": "Motion clarifies spatial continuity and state change; it never causes clipping, uncontrolled jumps, indefinite pulsing, or layout before content is stable. Reduced motion has a complete static/opacity alternative.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "onboarding"
+      ],
+      "category": "visual",
+      "status": "fixed"
+    },
+    {
+      "id": "VIS-004",
+      "title": "Slint 1.17.1 portability",
+      "requirement": "Concepts may use HTML/CSS but cannot depend on browser-only filters, arbitrary DOM measurement, unbounded nested scrolling, or nonportable physics. Long lists must map to virtualized/segmented Slint models.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "onboarding"
+      ],
+      "category": "visual",
+      "status": "fixed"
+    },
+    {
+      "id": "VIS-005",
+      "title": "Deterministic demo triggers",
+      "requirement": "Every major state has a trigger/reset path for automated visual and interaction testing without adding production toolbar clutter.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "onboarding"
+      ],
+      "category": "visual",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-001",
+      "title": "Canonical provider hierarchy",
+      "requirement": "Use Provider family \u2192 Account/Profile \u2192 Connection \u2192 Product/Entitlement \u2192 Models/Capabilities. Provider installation is a separate host/environment resource.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-002",
+      "title": "T3 discovery reference",
+      "requirement": "Use T3-style provider-specific CLI, profile, auth, account, plan, model, skill, and readiness probes as the primary discovery reference.",
+      "packets": [
+        "settings",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-003",
+      "title": "OMP onboarding reference",
+      "requirement": "Use OMP-style provider-specific setup manifests, exact official sign-in/API-key URLs, browser/device-code/paste-code/API-key choreography, validation, model refresh, and return to the originating row.",
+      "packets": [
+        "settings",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-004",
+      "title": "Installation Resolver",
+      "requirement": "Inventory all plausible installations, trace shims/symlinks/wrappers, record configured/resolved/real path, host/environment, version, architecture, owner, package identity, and evidence confidence.",
+      "packets": [
+        "settings",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-005",
+      "title": "Proof-based installation ownership",
+      "requirement": "Package databases/native metadata outrank path heuristics. Unknown or ambiguous ownership is manual-only; never assume npm/Homebrew from a bare command or path shape.",
+      "packets": [
+        "settings",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-006",
+      "title": "Humanized installation cards",
+      "requirement": "Normal GUI collapses internal identities into product, host/environment, version, account/profile, readiness, and primary action. Launcher/real path/package root/provenance stay in Details.",
+      "packets": [
+        "settings",
+        "onboarding"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-007",
+      "title": "Duplicate/shadow detection",
+      "requirement": "Show Used by PM, Found but not selected, Shadowed, Older duplicate, Broken, Different host, Unknown owner, and Organization managed states.",
+      "packets": [
+        "settings",
+        "onboarding",
+        "runtime"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-008",
+      "title": "Explicit provider CLI acquisition",
+      "requirement": "Provider CLIs are not bundled in PM core/default baselines, not pre-seeded, and never silently acquired from Project/model/Goal/agent demand. Initial Install/Setup is explicit, official-source-based, and host/environment-specific.",
+      "packets": [
+        "settings",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-009",
+      "title": "Post-consent lifecycle management",
+      "requirement": "After explicit acquisition, PM may manage the exact installation: updates, repair, verification, rollback, profiles, and generations according to policy.",
+      "packets": [
+        "settings",
+        "runtime",
+        "usage"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-010",
+      "title": "Transactional provider updates",
+      "requirement": "Discover/identify \u2192 preflight \u2192 wait for idle/authority \u2192 stage/update \u2192 verify exact executable/auth/models/adapter \u2192 activate or rollback. Exit code zero and version string are insufficient.",
+      "packets": [
+        "settings",
+        "runtime",
+        "usage"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-011",
+      "title": "Provider update defaults",
+      "requirement": "Check automatically; install updates Ask first by default; optional Automatically when idle only with proven ownership, compatibility, idle state, permissions, and recovery; target Latest compatible; rollback where supported.",
+      "packets": [
+        "settings",
+        "runtime"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-012",
+      "title": "Failure-loop suppression",
+      "requirement": "Fingerprint repeated update failures, suppress identical retry/toast loops, and offer Retry, Repair, Manual instructions, Snooze, Stop checking, Keep current, Pin, logs, or installation selection.",
+      "packets": [
+        "settings",
+        "runtime",
+        "usage"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-013",
+      "title": "Installation and authentication are separate",
+      "requirement": "Track Installed, executable healthy, Auth known, Authenticated, account identity, product/plan, models, adapter handshake, generation readiness, and Usage availability independently.",
+      "packets": [
+        "settings",
+        "usage",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-014",
+      "title": "Claude and Antigravity auth boundary",
+      "requirement": "Claude CLI and Antigravity CLI OAuth are CLI-owned. PM may isolate profiles and launch native login, but does not present PM-direct OAuth. Direct API connections remain separate.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-015",
+      "title": "PM-direct OAuth allowlist",
+      "requirement": "Supported direct OAuth may include OpenAI/Codex, GitHub, and GitHub Copilot. Provider adapters must truthfully identify the owning product/billing route.",
+      "packets": [
+        "settings",
+        "usage",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-016",
+      "title": "Multi-account isolation strategies",
+      "requirement": "Support native profiles, isolated homes, auth-only profiles, credential pools, PM-managed connections, and single-active-login limitations. Do not fake concurrency where a CLI cannot isolate accounts.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "runtime"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-017",
+      "title": "Requested/effective route",
+      "requirement": "Every request retains requested provider/account/connection/model and effective provider/account/connection/model plus reason, product/plan, and settlement route.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "runtime"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-018",
+      "title": "OpenCode server distinction",
+      "requirement": "Distinguish PM-managed versus external OpenCode servers, server health, auth realm, catalog refresh, reflected MCP/skills, and effective route.",
+      "packets": [
+        "settings",
+        "runtime",
+        "usage"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-019",
+      "title": "Free Models wrapper",
+      "requirement": "Free Models is a catalog/routing grouping over underlying providers; setup, quotas, switching, Usage, and history remain keyed to the underlying provider/account/model.",
+      "packets": [
+        "settings",
+        "usage",
+        "onboarding"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-020",
+      "title": "Continuous catalogs",
+      "requirement": "Models.dev and Free Coding Models are continuously refreshed inputs with source version, check/import/activation times, validation, last-known-good fallback, change history, and no arbitrary credential/runtime import.",
+      "packets": [
+        "settings",
+        "usage",
+        "runtime"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-021",
+      "title": "Provider setup manifests",
+      "requirement": "Each provider declares supported sign-in methods, recommended method, exact official setup URL, scopes, storage owner, identity/readiness probes, quota discovery, regional caveats, and return destination.",
+      "packets": [
+        "settings",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-022",
+      "title": "Capability evidence layers",
+      "requirement": "Merge catalog declaration, provider discovery, authenticated-account discovery, safe probe, observed use, and admin/user override. Expose supported, unsupported, likely, unverified, temporary unavailable, PM transformed, or alternate route.",
+      "packets": [
+        "settings",
+        "chat",
+        "runtime",
+        "usage"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-023",
+      "title": "Docker/Podman/Kubernetes lifecycle reuse",
+      "requirement": "Docker, Podman, Kubernetes, Helm, source-control tools, LSP/DAP, formatters, testing, and media helpers reuse the shared discovery/installation/update/repair lifecycle while retaining domain-specific adapters.",
+      "packets": [
+        "settings",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-025",
+      "title": "Search provider onboarding",
+      "requirement": "First-run and Settings use one search-provider service; Automatic selects the first ready route by priority and clearly separates API, subscription-backed, browser-backed, and credential-free routes.",
+      "packets": [
+        "settings",
+        "onboarding",
+        "usage"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-026",
+      "title": "Provider plan clarity",
+      "requirement": "Separate reference API price, active plan/product, included usage, extra balance/packs, actual settlement, connection used, freshness, and confidence. Do not imply a plan-included call was billed at catalog API price.",
+      "packets": [
+        "settings",
+        "usage",
+        "chat",
+        "onboarding"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "PROV-027",
+      "title": "Usage telemetry is optional readiness",
+      "requirement": "A provider can be ready while usage details are unavailable. Prefer official APIs/CLI/headers/receipts; cookie telemetry is optional, experimental, encrypted, scoped, expiring, revocable, and never required.",
+      "packets": [
+        "settings",
+        "usage",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "providers",
+      "status": "fixed"
+    },
+    {
+      "id": "CTX-006",
+      "title": "Memory tiers",
+      "requirement": "Separate transcript/history, degrading evidence-backed Assistant Gists, Goal/run state, planning/spec ledger, tool/artifact memory, and ephemeral working context.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "category": "memory",
+      "status": "fixed"
+    },
+    {
+      "id": "CTX-007",
+      "title": "Degrading memory semantics",
+      "requirement": "Half-life affects retrieval activation, not truth or deletion. Faded Gists remain searchable, evidence-backed, editable, and recoverable.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt"
+      ],
+      "category": "memory",
+      "status": "fixed"
+    },
+    {
+      "id": "CTX-008",
+      "title": "Assistant-only hidden memory",
+      "requirement": "Assistant Gists remain Assistant-only. PRD, Planning, Orchestrator, Crew, and subagents use explicit thread/ledger/Goal/artifact retrieval, not hidden personal memory.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "category": "memory",
+      "status": "fixed"
+    },
+    {
+      "id": "CTX-010",
+      "title": "Persona capsule",
+      "requirement": "Separate durable Persona definition, runtime metadata/preferences, and a bounded model-facing behavior capsule. Full Persona bodies do not enter every request.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "category": "personas",
+      "status": "fixed"
+    },
+    {
+      "id": "CTX-011",
+      "title": "Persona cannot grant authority",
+      "requirement": "Persona may request capabilities/preferences but cannot widen Permissions, FileSafe, access profile, mode ceiling, provider availability, or route.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "category": "personas",
+      "status": "fixed"
+    },
+    {
+      "id": "CTX-012",
+      "title": "Persona skills are eligible, not eager",
+      "requirement": "Default skill references nominate candidates; full skill instructions load only when selected for the task.",
+      "packets": [
+        "settings",
+        "prompt",
+        "runtime"
+      ],
+      "category": "personas",
+      "status": "fixed"
+    },
+    {
+      "id": "CTX-013",
+      "title": "Persona scope and thread locality",
+      "requirement": "Persona/model/account/effort/speed/access/Crew/context/worktree changes in Chat default to the current thread; project/global defaults affect future threads unless explicitly bulk-applied.",
+      "packets": [
+        "settings",
+        "chat",
+        "runtime"
+      ],
+      "category": "personas",
+      "status": "fixed"
+    },
+    {
+      "id": "CTX-015",
+      "title": "Progressive tools/skills/MCP",
+      "requirement": "Track installed, enabled, available, selected for this turn, and invoked. Only selected schemas enter context.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime"
+      ],
+      "category": "tools",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-004",
+      "title": "High-quality planning conversation",
+      "requirement": "PRD Builder and Planning Wizard user discussion, architecture, research judgment, tradeoffs, and final synthesis default to a high-quality planning agent.",
+      "packets": [
+        "settings",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "agents",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-013",
+      "title": "Cross-project grants",
+      "requirement": "Cross-project access is off by default; grants distinguish read/write and Once/Thread/Goal/persistent project pair. One-time grants never silently persist.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "category": "threads",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-015",
+      "title": "Worktree mediation",
+      "requirement": "Agents may request worktree provisioning; Worktree Manager performs it under policy, records ownership/lease/base/cleanup, and preserves patches after failed integration.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "category": "agents",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-017",
+      "title": "Testing and debug awareness",
+      "requirement": "Agents can inspect and, under policy, use browser, LSP, DAP, eval, simulators/emulators/devices, logs, traces, screenshots, console, and network evidence.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "category": "agents",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-018",
+      "title": "Crew as execution strategy",
+      "requirement": "Crew is an Orchestrator-owned composition of child runs, not a Persona, mode, provider, permission grant, or hidden memory. It has explicit board, roles, routes, budgets, worktrees, and reducer.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime",
+        "usage"
+      ],
+      "category": "agents",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-019",
+      "title": "Adaptive Crew composition",
+      "requirement": "Crew member count and waves adapt to provider, Usage, host resources, and isolation while preserving required roles and independent evidence.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "runtime"
+      ],
+      "category": "agents",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-020",
+      "title": "Back Seat Driver",
+      "requirement": "BSD is a bounded delta-only advisor with Off, Auto default, and On. Auto is risk/phase-triggered; On can evaluate every turn; it cannot widen authority or block primary work when unavailable.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime"
+      ],
+      "category": "agents",
+      "status": "fixed"
+    },
+    {
+      "id": "AGT-021",
+      "title": "BSD UI override",
+      "requirement": "Assistant Chat has a BSD selector/monogram. Auto glows only while active; manual On uses a different semantic treatment. Override scopes are one turn or current thread.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage"
+      ],
+      "category": "agents",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-001",
+      "title": "Provider/model picker",
+      "requirement": "Provider icon rail, provider/account filtering, favorites, recents, search, disabled reasons, and explicit active account/connection.",
+      "packets": [
+        "chat",
+        "settings"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-003",
+      "title": "Access selector",
+      "requirement": "Use Ask for approval, Auto accept edits, Auto, Full Access. Conversation mode and access profile are separate; effective policy shows stricter mode/project/FileSafe constraints.",
+      "packets": [
+        "chat",
+        "settings",
+        "runtime"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-004",
+      "title": "Plan/Review tool access",
+      "requirement": "Plan and Review may use read files, search, web search/fetch, browser inspection, screenshots, logs, diagnostics, static analysis, and safe sandboxed tests; consequential effects still require elevation.",
+      "packets": [
+        "chat",
+        "settings",
+        "runtime"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-007",
+      "title": "Attachment resolver",
+      "requirement": "Classify Native, PM transformed, Alternate model, or Unsupported. ZIPs are safely unpacked by PM; media can be transcribed/sampled/routed with consent and lineage.",
+      "packets": [
+        "chat",
+        "usage",
+        "runtime",
+        "settings"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-014",
+      "title": "Passive spellcheck",
+      "requirement": "Subtle underlines and context-menu suggestions only; no toolbar button or autocorrect. Skip code, URLs, paths, commands, hashes, identifiers, structured data, and known PM/provider names.",
+      "packets": [
+        "chat",
+        "settings"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-015",
+      "title": "Spellcheck sources",
+      "requirement": "Automatic prefers OS service then PM local; System-only and PM-local-only are Advanced. Support language, personal dictionary, project dictionary, technical prose, unknown names, and thread override.",
+      "packets": [
+        "settings",
+        "chat"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-020",
+      "title": "No Playwright terminology",
+      "requirement": "Use PM BrowserWorkspace, Browser Program, and PM-native Expert Browser Program only. No Playwright runtime, facade, compatibility vocabulary, port, MCP route, or command family.",
+      "packets": [
+        "chat",
+        "settings",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "CHAT-021",
+      "title": "Notification boundary",
+      "requirement": "Important in-app notifications use the canonical title-bar stack/inbox, not a new Chat notification panel or permanent bottom-right stack.",
+      "packets": [
+        "chat",
+        "settings"
+      ],
+      "category": "chat",
+      "status": "fixed"
+    },
+    {
+      "id": "USE-001",
+      "title": "Usage reports; Settings configures",
+      "requirement": "Usage is the measured/history/forecast domain and deep-links to canonical Settings. It does not create a second provider, account, model, or policy system.",
+      "packets": [
+        "usage",
+        "settings"
+      ],
+      "category": "usage",
+      "status": "fixed"
+    },
+    {
+      "id": "USE-006",
+      "title": "Data quality states",
+      "requirement": "Every value is Provider reported, CLI reported, PM observed, Derived, Estimated, Unknown, Partial, or Stale. Missing is never displayed as zero.",
+      "packets": [
+        "usage",
+        "settings"
+      ],
+      "category": "usage",
+      "status": "fixed"
+    },
+    {
+      "id": "USE-014",
+      "title": "Free Models underlying identity",
+      "requirement": "Never aggregate Free Models without underlying provider/account/model; preserve historical models as no longer free/available.",
+      "packets": [
+        "usage",
+        "settings"
+      ],
+      "category": "usage",
+      "status": "fixed"
+    },
+    {
+      "id": "USE-015",
+      "title": "Provider maintenance is not model usage",
+      "requirement": "CLI checks/install/update/repair/rollback, app/content updates, backups, moves, sync, notifications, and local sound previews are operational/maintenance\u2014not token usage. Model-backed validation is separate validation usage.",
+      "packets": [
+        "usage",
+        "settings",
+        "runtime"
+      ],
+      "category": "usage",
+      "status": "fixed"
+    },
+    {
+      "id": "USE-019",
+      "title": "Accounts shown only when configured",
+      "requirement": "Unconfigured accounts and free-provider routes do not appear as normal Usage rows; setup-needed state belongs in Settings/Free Models manager.",
+      "packets": [
+        "usage",
+        "settings"
+      ],
+      "category": "usage",
+      "status": "fixed"
+    },
+    {
+      "id": "USE-022",
+      "title": "Provider-plan nuance",
+      "requirement": "Represent Codex overage/saved resets, Alibaba Coding/Token plans and packs, Claude API continuation, free quota versus PAYG, and other provider-specific next-action choices through adapter schemas.",
+      "packets": [
+        "usage",
+        "settings"
+      ],
+      "category": "usage",
+      "status": "fixed"
+    },
+    {
+      "id": "USE-023",
+      "title": "No universal budget control",
+      "requirement": "Separate provider allowance, optional extra usage, API spend, and PM spending/token/run safety guards; move automation limits to Goal/Run/Orchestrator owners.",
+      "packets": [
+        "usage",
+        "settings",
+        "runtime"
+      ],
+      "category": "usage",
+      "status": "fixed"
+    },
+    {
+      "id": "PRM-010",
+      "title": "DAP DebugSession",
+      "requirement": "Typed durable launch/attach, breakpoints, stepping, threads, stack, scopes, variables, evaluate, modules/sources/disassembly/memory/output/termination.",
+      "packets": [
+        "settings",
+        "runtime",
+        "chat",
+        "usage"
+      ],
+      "category": "runtime",
+      "status": "fixed"
+    },
+    {
+      "id": "PRM-011",
+      "title": "Persistent EvalSession",
+      "requirement": "Sandboxed Python/JS/Ruby/Julia-style sessions retain variables, stream output, spill artifacts, distinguish local compute from external waits, and allow controlled nested calls.",
+      "packets": [
+        "settings",
+        "runtime",
+        "chat",
+        "usage"
+      ],
+      "category": "runtime",
+      "status": "fixed"
+    },
+    {
+      "id": "PRM-013",
+      "title": "MCP lifecycle hardening",
+      "requirement": "Stable tool order, parallel background connections, cached catalogs, deferred proxies, separate auth/transport/catalog/resource states, reconnect breakers, epoch guards, deterministic name collision ownership, bounded retry.",
+      "packets": [
+        "settings",
+        "runtime",
+        "usage",
+        "prompt"
+      ],
+      "category": "runtime",
+      "status": "fixed"
+    },
+    {
+      "id": "PRM-020",
+      "title": "ResourceGovernor and ObservableWork",
+      "requirement": "RuntimeResourceGovernor is the sole DRY policy/admission owner with host-local enforcement; ObservableWork is the truthful shared phase/wait/progress projection.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "runtime",
+      "status": "fixed"
+    },
+    {
+      "id": "PRM-023",
+      "title": "WSL optional and environment-specific",
+      "requirement": "Native Windows is complete without WSL. WSL2 is optional; user-owned and PM-managed distributions, paths, tools, profiles, and resource budgets remain distinct.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "runtime",
+      "status": "fixed"
+    },
+    {
+      "id": "PRM-024",
+      "title": "Container server capability",
+      "requirement": "Docker/TrueNAS/Unraid/Kubernetes deployments are full Servers/Execution Hosts with immutable signed baseline and persistent Tool Store/profile volumes; no desktop worker is required.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime",
+        "onboarding",
+        "usage"
+      ],
+      "category": "runtime",
+      "status": "fixed"
+    },
+    {
+      "id": "PRM-025",
+      "title": "No Playwright facade",
+      "requirement": "PM uses its native Browser Program API. User projects may run Playwright as an external test dependency, but PM core has no Playwright runtime, facade, compatibility promise, packages, ports, MCP, commands, or capture engine.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt",
+        "runtime",
+        "onboarding",
+        "usage"
+      ],
+      "category": "runtime",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-001",
+      "title": "Notifications & Sounds manager",
+      "requirement": "General \u2192 Notifications & Sounds covers master delivery, event routing, quiet/focus, destinations, sound mappings, upload/import/export/preview, explicit test-send, metadata/provenance, and non-audio equivalents.",
+      "packets": [
+        "settings",
+        "runtime",
+        "usage",
+        "onboarding"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-002",
+      "title": "PeonPing/OpenPeon packs",
+      "requirement": "Support compatible pack import only after format/license checks; do not bundle unverified voice packs. Preview is local; test-send is explicit, masked, rate-limited, and receipted.",
+      "packets": [
+        "settings",
+        "runtime",
+        "usage"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-003",
+      "title": "Canonical notification surface",
+      "requirement": "Title-bar stack/count/sprout inbox is the sole in-app notification affordance; no permanent bottom-right stack, status-bar bell, Activity Bar shortcut, or separate notification side panel.",
+      "packets": [
+        "settings",
+        "chat",
+        "runtime"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-004",
+      "title": "Appearance manager",
+      "requirement": "Theme family/mode/Auto OS following, custom TOML themes, inheritance, validation, live reload/fallback, create/import/export/folder, fonts, scale, restart markers, and theme-specific availability.",
+      "packets": [
+        "settings",
+        "runtime"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-005",
+      "title": "General desktop behavior",
+      "requirement": "Tray/quit behavior, active Orchestrator tray state, launch destination, window/panel/tab restore, crash recovery, unsaved buffers, Activity Bar reorder/hide, side-panel restore, editor limits, history/archive.",
+      "packets": [
+        "settings",
+        "runtime"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-006",
+      "title": "Permissions & FileSafe manager",
+      "requirement": "Global wildcard, per-tool overrides, ordered granular rules, last-match explanation, reordering, presets, scope, external-directory allowlist, doom-loop policy, Persona profiles, requested/effective origin, ELI5/Expert.",
+      "packets": [
+        "settings",
+        "runtime",
+        "chat"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-007",
+      "title": "Commands & shortcuts manager",
+      "requirement": "Global/Project commands, CRUD, schema, variables/includes, shell injection, dry-run preview, keyboard search/conflicts/remap/reset/import/export/cheat sheet.",
+      "packets": [
+        "settings",
+        "runtime",
+        "chat"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-008",
+      "title": "Storage & recovery manager",
+      "requirement": "Writer/viewer/blocked modes, migration, snapshots, root relocation, retention anchors/minima, legal holds, pressure, compaction, project/data deletion, quarantine, recovery, fail-closed authority state.",
+      "packets": [
+        "settings",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-009",
+      "title": "File Manager/editor settings",
+      "requirement": "Tree, drag/drop, large files, tabs, recovery, changed-on-disk, hidden/ignored, split groups, transient reasons, and limits.",
+      "packets": [
+        "settings",
+        "runtime"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-010",
+      "title": "Formatter manager",
+      "requirement": "Global enable, built-in/custom table, detected/not found/disabled, command/env/extensions, add/remove/reset, Global/Project scope, health/test.",
+      "packets": [
+        "settings",
+        "runtime"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-011",
+      "title": "LSP manager",
+      "requirement": "Searchable registry/catalog/provenance, command/env/init/config, requested/effective attachment, custom CRUD, limits, remote degradation, restart, logs, verification.",
+      "packets": [
+        "settings",
+        "runtime",
+        "chat"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-012",
+      "title": "Source Control/Worktree manager",
+      "requirement": "Changes/History/Graph/Worktrees, lifecycle/recovery/cleanup, branch/push/force-push/test-before-merge, leases/write authority, host/environment and tool readiness.",
+      "packets": [
+        "settings",
+        "runtime",
+        "chat",
+        "usage"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-013",
+      "title": "GitHub Actions manager",
+      "requirement": "Pinned workflows, refresh, branch readiness, run/job/log browsing, starter workflow, account capability, tool/host state.",
+      "packets": [
+        "settings",
+        "runtime"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-014",
+      "title": "Containers & Registry manager",
+      "requirement": "Docker/Podman/Compose/Buildx, registries, Kubernetes, SSH remotes, Unraid publishing/template, typed unavailable states, shared tool lifecycle.",
+      "packets": [
+        "settings",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-015",
+      "title": "Web/Search/Fetch manager",
+      "requirement": "Provider priority plus search/fetch/crawl/map/extract limits, credit guards, caches, browser sessions, proxies, certificates, and air-gap mode.",
+      "packets": [
+        "settings",
+        "runtime",
+        "usage",
+        "onboarding"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-016",
+      "title": "Project search index manager",
+      "requirement": "Enable/rebuild, disk usage, exclusions, file-size limits, symlinks, remote cache, clear cache, state, and progress.",
+      "packets": [
+        "settings",
+        "runtime"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-017",
+      "title": "Testing & Debug manager",
+      "requirement": "Global/Project Auto/On/Off by capability; browser/native/mobile/device/API/DB/security/performance; session controls, visible evidence, hot reload, DAP, eval.",
+      "packets": [
+        "settings",
+        "runtime",
+        "chat",
+        "usage"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-018",
+      "title": "History & Sessions manager",
+      "requirement": "Project/all-project scope, approved-only, archived, compare, export, rebuild, auto-archive, deletion retention, and queue behavior.",
+      "packets": [
+        "settings",
+        "chat",
+        "runtime"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-019",
+      "title": "Runtime artifacts/output manager",
+      "requirement": "Artifact identities/types, locations, retention, versions, logs, receipts, open/reveal/export/cleanup, redaction, PM-owned versus provider-native.",
+      "packets": [
+        "settings",
+        "chat",
+        "runtime",
+        "usage"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-020",
+      "title": "Workspace cleanup manager",
+      "requirement": "Dry-run cleanup plan, safe cleanup, exclusions, build outputs, worktree safety, evidence retention, rollback/receipts.",
+      "packets": [
+        "settings",
+        "runtime"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-021",
+      "title": "Memory manager",
+      "requirement": "Search/filter by scope/source, inspect provenance, verify/edit/pin/delete, version/restore, half-life, capsule preview, index rebuild, dedupe, summarize, archive, redaction.",
+      "packets": [
+        "settings"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-022",
+      "title": "Persona manager",
+      "requirement": "Core/custom/imported Personas, bounded capsule preview, source/version, role boundaries, eligible skills, capability requests, thread/project defaults, import trust/diff/scan.",
+      "packets": [
+        "settings",
+        "chat",
+        "runtime"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-023",
+      "title": "Crew manager",
+      "requirement": "Templates, roles, Persona/capability routes, diversity, member ranges, adaptive sizing, usage reserve, waves, write/worktree policy, board, reducer, failure/stop.",
+      "packets": [
+        "settings",
+        "chat",
+        "runtime",
+        "usage"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-024",
+      "title": "Context & Instructions manager",
+      "requirement": "History/code/log retrieval toggles, scoped rules, effective instruction sources, included/omitted last request, Persona footprint, tools selected, compaction/cache, receipts.",
+      "packets": [
+        "settings",
+        "chat",
+        "prompt"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-025",
+      "title": "MCP/Skills/Plugins/Tools managers",
+      "requirement": "Catalog/filter/provenance/trust/install/update/compatibility/unload; MCP auth/transport/catalog/resources/logs; unified admission states without conflating domains.",
+      "packets": [
+        "settings",
+        "runtime",
+        "prompt"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-026",
+      "title": "Terminal manager",
+      "requirement": "Profiles, shell, font/rendering, colors/background/palette, opacity/readability, cursor/selection, copy/paste, CWD, transcripts/retention, performance, diagnostics, preview.",
+      "packets": [
+        "settings",
+        "runtime"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-027",
+      "title": "Media manager",
+      "requirement": "Input modalities, screenshots/redaction, image/audio/video/TTS/music routes, requested/effective connection, output destination, retention, alternate-route consent.",
+      "packets": [
+        "settings",
+        "chat",
+        "runtime",
+        "usage"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-028",
+      "title": "Teacher/help system",
+      "requirement": "Help icon opens Teacher context, explains current screen, offers guided overlay, and safely transitions into real actions; it is more than setting hover text.",
+      "packets": [
+        "settings",
+        "onboarding",
+        "chat"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-029",
+      "title": "DRY Method setting",
+      "requirement": "Expose exact default and human state for applied/degraded/disabled/missing/stale/owner-found/unresolved/mutation-blocked; runtime remains canonical owner.",
+      "packets": [
+        "settings",
+        "runtime"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "MGR-030",
+      "title": "Accessibility & input manager",
+      "requirement": "UI scale, fonts, contrast-related state, reduced motion, focus/input behavior, spellcheck, dictionaries, and local-versus-provider writing assistance.",
+      "packets": [
+        "settings",
+        "chat",
+        "onboarding"
+      ],
+      "category": "managers",
+      "status": "fixed"
+    },
+    {
+      "id": "ONB-006",
+      "title": "Provider setup sequence",
+      "requirement": "Reuse verified existing credentials/profiles first; otherwise exact setup flow. Keep paid-provider setup before optional Free Models unless the onboarding design explicitly re-adjudicates with evidence.",
+      "packets": [
+        "onboarding",
+        "settings"
+      ],
+      "category": "onboarding",
+      "status": "fixed"
+    },
+    {
+      "id": "ONB-007",
+      "title": "Search setup in onboarding",
+      "requirement": "Configure search providers in first run using the shared provider service and show Ready versus Needs credentials.",
+      "packets": [
+        "onboarding",
+        "settings"
+      ],
+      "category": "onboarding",
+      "status": "fixed"
+    },
+    {
+      "id": "ONB-008",
+      "title": "Free Models setup",
+      "requirement": "Show source freshness, ready/needs setup/limited/no longer free states and delegate setup to underlying providers.",
+      "packets": [
+        "onboarding",
+        "settings",
+        "usage"
+      ],
+      "category": "onboarding",
+      "status": "fixed"
+    },
+    {
+      "id": "ONB-014",
+      "title": "Fresh shell result",
+      "requirement": "Fresh default is Basic Dark, Chat open, Editor 1 only, seven tabs, localhost preview, hidden auto test-runner, up to four panels available.",
+      "packets": [
+        "onboarding",
+        "settings",
+        "chat"
+      ],
+      "category": "onboarding",
+      "status": "fixed"
+    },
+    {
+      "id": "ONB-016",
+      "title": "Doctor is aggregator/router",
+      "requirement": "Doctor consumes normalized owner projections and deep-links to canonical remediation; it does not rediscover everything, own repairs, or create duplicate commands.",
+      "packets": [
+        "onboarding",
+        "runtime",
+        "settings"
+      ],
+      "category": "doctor",
+      "status": "fixed"
+    },
+    {
+      "id": "ONB-026",
+      "title": "Doctor remediation actions",
+      "requirement": "Each item has one narrow owner action such as Open Settings, Install, Sign In, Repair, Verify Source, Review Host Key, Open Receipt, or Retry probe; no duplicate handlers.",
+      "packets": [
+        "onboarding",
+        "settings",
+        "runtime"
+      ],
+      "category": "doctor",
+      "status": "fixed"
+    },
+    {
+      "id": "PROC-001",
+      "title": "One implementation prompt per topic",
+      "requirement": "Each topic packet contains one cumulative implementation prompt. It instructs the agent to present its platform plan first, wait for user approval, then continue under the same prompt.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "process",
+      "status": "fixed"
+    },
+    {
+      "id": "PROC-002",
+      "title": "One audit prompt per topic",
+      "requirement": "Each topic packet contains one audit-only prompt used after implementation/concept work. No separate Plan and Build prompts are supplied.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "process",
+      "status": "fixed"
+    },
+    {
+      "id": "PROC-003",
+      "title": "Concept scope",
+      "requirement": "Settings, Chat, Usage, and Onboarding/Doctor concept agents do not edit PMConcept7, Plans, command catalogs, wiring, or DRY owners unless separately authorized; they maintain traceable impact registers.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "onboarding"
+      ],
+      "category": "process",
+      "status": "fixed"
+    },
+    {
+      "id": "PROC-005",
+      "title": "Command ID discipline",
+      "requirement": "Reuse canonical IDs where they exist; provide alias/supersession for old IDs; do not mint duplicates. Candidate IDs in packets are provisional until catalog audit.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "process",
+      "status": "fixed"
+    },
+    {
+      "id": "PROC-006",
+      "title": "Wiring closure",
+      "requirement": "Every user action maps UI source \u2192 command \u2192 canonical owner \u2192 payload/validation \u2192 state/event/receipt \u2192 UI projection \u2192 Usage/diagnostics \u2192 recovery.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "process",
+      "status": "fixed"
+    },
+    {
+      "id": "PROC-007",
+      "title": "DRY closure",
+      "requirement": "Shared components and services are reused across Settings, Chat, Onboarding, Doctor, Usage, and runtime; no parallel manager, auth, Usage, notification, progress, or install systems.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "process",
+      "status": "fixed"
+    },
+    {
+      "id": "PROC-008",
+      "title": "Plan supersession",
+      "requirement": "Later work must identify and retire stale bloom/chip/right-panel/yolo/regular/Playwright/provider-bundling/local-first clauses rather than leaving contradictory active canon.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "process",
+      "status": "fixed"
+    },
+    {
+      "id": "PROC-009",
+      "title": "Audit source completeness",
+      "requirement": "Audit must compare concepts/code against this decision register, source Plans, current PMConcept7, current commands/wiring/DRY, and latest owner handoffs; absence from demo is not proof of deferral.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "process",
+      "status": "fixed"
+    },
+    {
+      "id": "PROC-010",
+      "title": "No silent packet drift",
+      "requirement": "The final cumulative packets supersede unused intermediate packets. Agents must not merge old Plan/Build prompts or obsolete provider/browser/onboarding policies back in.",
+      "packets": [
+        "settings",
+        "chat",
+        "usage",
+        "prompt",
+        "runtime",
+        "onboarding"
+      ],
+      "category": "process",
+      "status": "fixed"
+    }
+  ]
+}

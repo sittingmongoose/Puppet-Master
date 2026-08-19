@@ -1,0 +1,532 @@
+{
+  "schema_id": "pm.settings_bakeoff.test_family_coverage_audit.v1",
+  "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+  "packet_section": "10_TESTING_EVIDENCE_AND_ACCEPTANCE.md",
+  "test_matrix_schema": "pm.settings_bakeoff.test_matrix.v2",
+  "model_folder": "Concepts/settings-redesign-concepts/CursorAuto",
+  "audit_type": "read_only_test_family_coverage",
+  "generated": "2026-08-18T19:48:23Z",
+  "winner_selected": false,
+  "verdict": "pass_with_should_findings",
+  "live_qa": {
+    "re_run": false,
+    "reason": "Parent pass on hub 61968; read-only audit of existing artifacts",
+    "hub_port_current": 61968,
+    "hub_port_superseded": [
+      52958
+    ],
+    "hub_port_frozen_01_04_ok": 55939,
+    "report": "C:/Users/sitti/AppData/Local/Temp/ca7-qa-report-4908.json",
+    "status": "pass",
+    "failures": []
+  },
+  "required_test_families": [
+    "static_code",
+    "concept_hub_validation",
+    "interaction_smoke",
+    "search_route_exactness",
+    "manager_route_isolation",
+    "state_persistence",
+    "responsive_theme_matrix",
+    "performance_hydration",
+    "independent_visual_audit",
+    "original_concept_regression"
+  ],
+  "extra_test_report_families": [
+    "index_complete",
+    "copy_depth",
+    "details_origin",
+    "provider_density",
+    "cli_install",
+    "reduced_motion_probe",
+    "hydration_probe",
+    "escape_smoke_probe"
+  ],
+  "families": [
+    {
+      "family": "static_code",
+      "required_by_packet": true,
+      "qa_script": {
+        "qa_script": "scripts/seven-new-concepts-qa.py",
+        "functions": [
+          "frozen_ok()",
+          "run() isolation grep (iframe/cross_concept)",
+          "run() console error capture"
+        ],
+        "external": [
+          "tools/validate_seven_new_concepts.py",
+          "node --check pmv2.js + concept JS"
+        ]
+      },
+      "test_evidence_json": {
+        "present_all_stems": true,
+        "stems_with_family": [
+          "concept-05-directory-take-1",
+          "concept-06-directory-take-2",
+          "concept-07-compendium-workspace",
+          "concept-08-directory-take-3",
+          "concept-09-tome-tabs",
+          "concept-10-command-suite",
+          "concept-11-tabbed-organizer"
+        ],
+        "note": null
+      },
+      "test_report_row": "static_code | pass | Packet validator pass. node --check pass. Validator is structural only.",
+      "evidence_status": "covered",
+      "live_report_hub_61968": {
+        "status": "pass",
+        "hub_port": 61968,
+        "path": "C:/Users/sitti/AppData/Local/Temp/ca7-qa-report-4908.json"
+      }
+    },
+    {
+      "family": "concept_hub_validation",
+      "required_by_packet": true,
+      "qa_script": {
+        "qa_script": null,
+        "functions": [],
+        "external": [
+          "Concepts/ConceptHub/validate.py"
+        ]
+      },
+      "test_evidence_json": {
+        "present_all_stems": false,
+        "stems_with_family": [],
+        "note": "external/model-level only"
+      },
+      "test_report_row": "concept_hub_validation | pass | python Concepts/ConceptHub/validate.py ...",
+      "evidence_status": "covered",
+      "live_report_hub_61968": null
+    },
+    {
+      "family": "interaction_smoke",
+      "required_by_packet": true,
+      "qa_script": {
+        "qa_script": "scripts/seven-new-concepts-qa.py",
+        "functions": [
+          "run() orchestration",
+          "go_home()",
+          "ensure_search_query()",
+          "Escape peel via probe_escape"
+        ]
+      },
+      "test_evidence_json": {
+        "present_all_stems": true,
+        "stems_with_family": [
+          "concept-05-directory-take-1",
+          "concept-06-directory-take-2",
+          "concept-07-compendium-workspace",
+          "concept-08-directory-take-3",
+          "concept-09-tome-tabs",
+          "concept-10-command-suite",
+          "concept-11-tabbed-organizer"
+        ],
+        "note": null
+      },
+      "test_report_row": "interaction_smoke | pass | scripts/seven-new-concepts-qa.py status pass",
+      "evidence_status": "covered",
+      "live_report_hub_61968": {
+        "status": "pass",
+        "hub_port": 61968,
+        "path": "C:/Users/sitti/AppData/Local/Temp/ca7-qa-report-4908.json"
+      }
+    },
+    {
+      "family": "search_route_exactness",
+      "required_by_packet": true,
+      "qa_script": {
+        "qa_script": "scripts/seven-new-concepts-qa.py",
+        "functions": [
+          "run() search-route-matrix.json loop",
+          "click_rendered_results() for Theme/Default/Copy/Ollama",
+          "INDEX_COMPLETE_JS / assertIndexComplete"
+        ]
+      },
+      "test_evidence_json": {
+        "present_all_stems": true,
+        "stems_with_family": [
+          "concept-05-directory-take-1",
+          "concept-06-directory-take-2",
+          "concept-07-compendium-workspace",
+          "concept-08-directory-take-3",
+          "concept-09-tome-tabs",
+          "concept-10-command-suite",
+          "concept-11-tabbed-organizer"
+        ],
+        "note": null
+      },
+      "test_report_row": "search_route_exactness | pass | 16 matrix cases per concept + rendered pickResult clicks",
+      "evidence_status": "covered",
+      "live_report_hub_61968": {
+        "status": "pass",
+        "hub_port": 61968,
+        "path": "C:/Users/sitti/AppData/Local/Temp/ca7-qa-report-4908.json"
+      }
+    },
+    {
+      "family": "manager_route_isolation",
+      "required_by_packet": true,
+      "qa_script": {
+        "qa_script": "scripts/seven-new-concepts-qa.py",
+        "functions": [
+          "run() PMv2.managers crawl",
+          "manager-route-matrix.json match",
+          "deferred owner checks"
+        ]
+      },
+      "test_evidence_json": {
+        "present_all_stems": true,
+        "stems_with_family": [
+          "concept-05-directory-take-1",
+          "concept-06-directory-take-2",
+          "concept-07-compendium-workspace",
+          "concept-08-directory-take-3",
+          "concept-09-tome-tabs",
+          "concept-10-command-suite",
+          "concept-11-tabbed-organizer"
+        ],
+        "note": null
+      },
+      "test_report_row": "manager_route_isolation | pass | 47/47 managers each concept",
+      "evidence_status": "covered",
+      "live_report_hub_61968": {
+        "status": "pass",
+        "hub_port": 61968,
+        "path": "C:/Users/sitti/AppData/Local/Temp/ca7-qa-report-4908.json"
+      }
+    },
+    {
+      "family": "state_persistence",
+      "required_by_packet": true,
+      "qa_script": {
+        "qa_script": "scripts/seven-new-concepts-qa.py",
+        "functions": [
+          "run() sessionStorage pm.settings-v2.* probe \u2192 concept['persistence']"
+        ]
+      },
+      "test_evidence_json": {
+        "present_all_stems": false,
+        "stems_with_family": [],
+        "note": "root persistence:true"
+      },
+      "test_report_row": null,
+      "evidence_status": "covered",
+      "live_report_hub_61968": {
+        "status": "pass",
+        "hub_port": 61968,
+        "path": "C:/Users/sitti/AppData/Local/Temp/ca7-qa-report-4908.json"
+      }
+    },
+    {
+      "family": "responsive_theme_matrix",
+      "required_by_packet": true,
+      "qa_script": {
+        "qa_script": "scripts/seven-new-concepts-qa.py",
+        "functions": [
+          "run() THEMES\u00d7WIDTHS evaluate metrics \u2192 report['matrix']"
+        ]
+      },
+      "test_evidence_json": {
+        "present_all_stems": true,
+        "stems_with_family": [
+          "concept-05-directory-take-1",
+          "concept-06-directory-take-2",
+          "concept-07-compendium-workspace",
+          "concept-08-directory-take-3",
+          "concept-09-tome-tabs",
+          "concept-10-command-suite",
+          "concept-11-tabbed-organizer"
+        ],
+        "note": null
+      },
+      "test_report_row": "responsive_theme_matrix | pass | 336/336 cells",
+      "evidence_status": "covered",
+      "live_report_hub_61968": {
+        "status": "pass",
+        "hub_port": 61968,
+        "path": "C:/Users/sitti/AppData/Local/Temp/ca7-qa-report-4908.json"
+      }
+    },
+    {
+      "family": "performance_hydration",
+      "required_by_packet": true,
+      "qa_script": {
+        "qa_script": "scripts/seven-new-concepts-qa.py",
+        "functions": [
+          "run() hydration probe (before/after hydrate count, searchCapOk)",
+          "openAll virtBounded probe"
+        ]
+      },
+      "test_evidence_json": {
+        "present_all_stems": true,
+        "stems_with_family": [
+          "concept-05-directory-take-1",
+          "concept-06-directory-take-2",
+          "concept-07-compendium-workspace",
+          "concept-08-directory-take-3",
+          "concept-09-tome-tabs",
+          "concept-10-command-suite",
+          "concept-11-tabbed-organizer"
+        ],
+        "note": null
+      },
+      "test_report_row": "performance_hydration | pass | Runtime index + hydration probes (also hydration_probe row)",
+      "evidence_status": "covered",
+      "live_report_hub_61968": {
+        "status": "pass",
+        "hub_port": 61968,
+        "path": "C:/Users/sitti/AppData/Local/Temp/ca7-qa-report-4908.json"
+      }
+    },
+    {
+      "family": "independent_visual_audit",
+      "required_by_packet": true,
+      "qa_script": {
+        "qa_script": null,
+        "functions": [],
+        "external": [
+          "SEVEN_NEW_CONCEPTS_VISUAL_AUDIT.json",
+          "C:/Users/sitti/AppData/Local/Temp/ca7-visual-15760/shots (14 PNG, not shipped)"
+        ]
+      },
+      "test_evidence_json": {
+        "present_all_stems": true,
+        "stems_with_family": [
+          "concept-05-directory-take-1",
+          "concept-06-directory-take-2",
+          "concept-07-compendium-workspace",
+          "concept-08-directory-take-3",
+          "concept-09-tome-tabs",
+          "concept-10-command-suite",
+          "concept-11-tabbed-organizer"
+        ],
+        "note": null
+      },
+      "test_report_row": "independent_visual_audit | pass | Homes 1280/760 in ca7-visual-15760/shots",
+      "evidence_status": "covered",
+      "live_report_hub_61968": {
+        "status": "pass",
+        "hub_port": 61968,
+        "path": "C:/Users/sitti/AppData/Local/Temp/ca7-qa-report-4908.json"
+      }
+    },
+    {
+      "family": "original_concept_regression",
+      "required_by_packet": true,
+      "qa_script": {
+        "qa_script": "scripts/seven-new-concepts-qa.py",
+        "functions": [
+          "frozen_ok() SHA-256 54 files"
+        ],
+        "external": [
+          "scripts/ca-interactive-qa.py (01\u201304, hub 55939)"
+        ]
+      },
+      "test_evidence_json": {
+        "present_all_stems": true,
+        "stems_with_family": [
+          "concept-05-directory-take-1",
+          "concept-06-directory-take-2",
+          "concept-07-compendium-workspace",
+          "concept-08-directory-take-3",
+          "concept-09-tome-tabs",
+          "concept-10-command-suite",
+          "concept-11-tabbed-organizer"
+        ],
+        "note": null
+      },
+      "test_report_row": "original_concept_regression | pass | 54 frozen + 01\u201304 QA hub 55939",
+      "evidence_status": "covered",
+      "live_report_hub_61968": null
+    }
+  ],
+  "theme_matrix": {
+    "dimensions": {
+      "concepts": 7,
+      "themes": 8,
+      "widths": 6,
+      "cells_total": 336
+    },
+    "live_cells_pass": 336,
+    "required_cell_fields": [
+      "overflow",
+      "clipControls",
+      "scrollbar",
+      "popupOk",
+      "searchDropOk",
+      "searchEscClosed",
+      "reducedOk"
+    ],
+    "fields_present_in_live_report": [
+      "overflow",
+      "clipControls",
+      "scrollbar",
+      "popupOk",
+      "searchDropOk",
+      "searchEscClosed",
+      "reducedOk"
+    ],
+    "visual_audit_cross_ref": "SEVEN_NEW_CONCEPTS_VISUAL_AUDIT.json qa_matrix.cells_pass 336"
+  },
+  "performance_hydration": {
+    "historically_missing": false,
+    "runtime_probes_in_live_report": true,
+    "probe_kinds": [
+      "hydration",
+      "reduced_motion",
+      "escape_smoke"
+    ],
+    "all_concepts_pass": true
+  },
+  "independent_visual_audit": {
+    "historically_missing": false,
+    "artifact": "Concepts/settings-redesign-concepts/CursorAuto/SEVEN_NEW_CONCEPTS_VISUAL_AUDIT.json",
+    "screenshot_dir": "C:/Users/sitti/AppData/Local/Temp/ca7-visual-15760/shots",
+    "screenshot_count": 14,
+    "screenshots_readable": true,
+    "shipped": false
+  },
+  "search_route_sampling": {
+    "matrix_cases_per_concept": 16,
+    "live_rendered_queries": [
+      "Theme",
+      "Default",
+      "Copy",
+      "Ollama"
+    ],
+    "exhaustive_index_click_required": false,
+    "disclosed_in_test_report": true
+  },
+  "validator_semantic_blindness": {
+    "tool": "tools/validate_seven_new_concepts.py",
+    "structural_only": true,
+    "disclosed": true,
+    "behavioral_authority": "scripts/seven-new-concepts-qa.py"
+  },
+  "winner_selected_checks": {
+    "Concepts/settings-redesign-concepts/CursorAuto/SEVEN_NEW_CONCEPTS_TEST_REPORT.md": true,
+    "Concepts/settings-redesign-concepts/CursorAuto/SEVEN_NEW_CONCEPTS_VISUAL_AUDIT.json": false,
+    "Concepts/settings-redesign-concepts/CursorAuto/SEVEN_NEW_CONCEPTS_IMPACT_REGISTER.json": false,
+    "Concepts/settings-redesign-concepts/CursorAuto/REFERENCE_REVIEW_2026-08-18.json": false,
+    "Concepts/settings-redesign-concepts/CursorAuto/concept-05-directory-take-1/test-evidence.json": false,
+    "Concepts/settings-redesign-concepts/CursorAuto/concept-06-directory-take-2/test-evidence.json": false,
+    "Concepts/settings-redesign-concepts/CursorAuto/concept-07-compendium-workspace/test-evidence.json": false,
+    "Concepts/settings-redesign-concepts/CursorAuto/concept-08-directory-take-3/test-evidence.json": false,
+    "Concepts/settings-redesign-concepts/CursorAuto/concept-09-tome-tabs/test-evidence.json": false,
+    "Concepts/settings-redesign-concepts/CursorAuto/concept-10-command-suite/test-evidence.json": false,
+    "Concepts/settings-redesign-concepts/CursorAuto/concept-11-tabbed-organizer/test-evidence.json": false
+  },
+  "stale_artifacts_in_model_folder": [
+    {
+      "path": "Concepts/settings-redesign-concepts/CursorAuto/TEST_REPORT.md",
+      "issue": "Pre-05\u201311 cumulative report; references missing qa-last-run.json"
+    },
+    {
+      "path": "Concepts/settings-redesign-concepts/CursorAuto/REFERENCE_REVIEW_2026-08-18.json",
+      "issue": "Immutable snapshot cites superseded hub 52958 for 05\u201311"
+    },
+    {
+      "path": "Concepts/settings-redesign-concepts/CursorAuto/reference-review-report.json",
+      "issue": "Additive history cites superseded hub 52958 alongside 55939 (01\u201304 OK)"
+    }
+  ],
+  "findings": [
+    {
+      "id": "te-missing-concept_hub_validation",
+      "severity": "should",
+      "family": "concept_hub_validation",
+      "summary": "Per-stem test-evidence.json lacks concept_hub_validation family key; evidence only in model TEST_REPORT and external validate.py run."
+    },
+    {
+      "id": "te-missing-state_persistence",
+      "severity": "should",
+      "family": "state_persistence",
+      "summary": "Per-stem test-evidence.json lacks state_persistence family key; runtime probe sets root persistence:true and live report concept.persistence=true."
+    },
+    {
+      "id": "report-no-state_persistence-row",
+      "severity": "should",
+      "family": "state_persistence",
+      "summary": "SEVEN_NEW_CONCEPTS_TEST_REPORT.md has no dedicated state_persistence row (probe exists in QA script)."
+    },
+    {
+      "id": "stale-hub-52958",
+      "severity": "should",
+      "summary": "REFERENCE_REVIEW_2026-08-18.json and reference-review-report.json cite hub 52958 for 05\u201311 QA; current pass uses hub 61968 (ca7-qa-report-4908.json). Hub 55939 for 01\u201304 frozen regression is correct.",
+      "details": [
+        {
+          "file": "Concepts/settings-redesign-concepts/CursorAuto/REFERENCE_REVIEW_2026-08-18.json",
+          "hub_port": 52958,
+          "superseded_by": 61968
+        },
+        {
+          "file": "Concepts/settings-redesign-concepts/CursorAuto/reference-review-report.json",
+          "hub_port": 52958,
+          "superseded_by": 61968
+        }
+      ]
+    },
+    {
+      "id": "stale-TEST_REPORT-md",
+      "severity": "should",
+      "summary": "TEST_REPORT.md (2026-08-11\u201313) is a pre-05\u201311 Harbor/Score/Switchboard/Archive artifact; cites missing scripts/qa-last-run.json and old hub ports; not disclosed as superseded by SEVEN_NEW_CONCEPTS_TEST_REPORT.md.",
+      "path": "Concepts/settings-redesign-concepts/CursorAuto/TEST_REPORT.md",
+      "referenced_missing_artifacts": [
+        "scripts/qa-last-run.json",
+        "scripts/search-continuity-last.json"
+      ]
+    },
+    {
+      "id": "search-rendered-sampling",
+      "severity": "info",
+      "summary": "Packet \u00a7Search exactness requires every rendered search result by immutable ID, not exhaustive click of all 1007 index IDs. Live QA: 16 matrix cases + all rendered Theme/Default/Copy/Ollama picks (cap 24). Disclosed in TEST_REPORT limitation #2.",
+      "exhaustive_required_by_packet": false,
+      "indexed_ids": 828,
+      "product_index": 1007,
+      "search_cap": 24
+    },
+    {
+      "id": "validator-structural-only",
+      "severity": "info",
+      "summary": "validate_seven_new_concepts.py is structural-only (files, managers, evidence presence). TEST_REPORT and FINDINGS disclose; behavioral proof is seven-new-concepts-qa.py.",
+      "disclosed": true,
+      "must_not_claim_behavior_proof": true
+    },
+    {
+      "id": "theme-matrix-partial-coverage",
+      "severity": "should",
+      "summary": "336/336 Playwright cells pass with required metric fields; packet matrix also lists console errors, home-destination visibility, and full keyboard/back/close checks beyond cell fields.",
+      "cells_total": 336,
+      "cells_pass": 336,
+      "required_cell_fields": [
+        "overflow",
+        "clipControls",
+        "scrollbar",
+        "popupOk",
+        "searchDropOk",
+        "searchEscClosed",
+        "reducedOk"
+      ],
+      "cell_fields_present": [
+        "overflow",
+        "clipControls",
+        "scrollbar",
+        "popupOk",
+        "searchDropOk",
+        "searchEscClosed",
+        "reducedOk"
+      ],
+      "packet_gaps": [
+        "console/page errors (checked per-concept errors[], not matrix cell field)",
+        "home destinations visible without CTA wall (partial: visual audit Home 1280/760 friendly-dark only, not all 336 cells)",
+        "keyboard/back/close coherence (escape_smoke probe per concept, not per matrix cell)",
+        "nested submenu popup collision (limitation #4: search dropdown in-viewport only)"
+      ]
+    }
+  ],
+  "finding_counts": {
+    "must": 0,
+    "should": 6,
+    "info": 2
+  }
+}

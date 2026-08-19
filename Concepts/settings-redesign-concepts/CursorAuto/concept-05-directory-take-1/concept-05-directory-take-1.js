@@ -7,9 +7,16 @@
   var esc = window.PMv2.esc;
   var virt = null;
   var showMore = {};
-  var allFacet = null;
-  var includeSynth = false;
   var restoreFocus = null;
+  var SETTING_KINDS = ["action", "keyvalue", "list", "multiselect", "number", "path", "radio", "select", "slider", "text", "toggle"];
+  var EXTRA_RESULT_IDS = [
+    "action:copy-from-project",
+    "action:open-all-settings",
+    "action:retry-default-account",
+    "workflow:provider-cli-setup",
+    "diagnostic:usage-stale",
+    "help:copy-policy"
+  ];
 
   function ico() {
     return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3" fill="none" stroke="currentColor"/><path d="M8 12h8" fill="none" stroke="currentColor"/></svg>';
@@ -30,21 +37,62 @@
     });
     return order.map(function (k) { return { type: k, items: buckets[k] }; });
   }
-  function runOfficialCli(app, providerId) {
-    var id = providerId || "local-ollama";
-    if (app && typeof app.confirmOfficialCli === "function") { app.confirmOfficialCli(id); return true; }
-    if (window.PMv2 && typeof window.PMv2.confirmOfficialCli === "function") {
-      window.PMv2.confirmOfficialCli(app, id);
-      if (app.paint) app.paint();
+  function officialProviderId(app, providerId) {
+    return providerId || (app && app._officialProviderId) || (app && app.route && app.route.object) || "local-ollama";
+  }
+  function awaitingOfficial(app) {
+    var w = app && app.work;
+    if (!w || w.state !== "waiting_user") return false;
+    var blob = [w.title, w.wait_reason, w.progress_source, w.human_phase, w.message].join(" ");
+    return /official|user consent|unknown owner|provider setup/i.test(blob);
+  }
+  function installOfficial(app, providerId) {
+    var id = officialProviderId(app, providerId);
+    if (app) app._officialProviderId = id;
+    if (app && typeof app.installOfficialCli === "function") {
+      app.installOfficialCli(id);
       return true;
     }
-    if (app && typeof app.installOfficialCli === "function") { app.installOfficialCli(id); return true; }
     if (window.PMv2 && typeof window.PMv2.installOfficialCli === "function") {
       window.PMv2.installOfficialCli(app, id);
+      if (app && app.paint) app.paint();
+      return true;
+    }
+    if (app) {
+      app.work = { title: "Install from official source", human_phase: "Waiting for explicit Install confirmation", state: "waiting_user", wait_reason: "Official provider source for This PC / Native Windows", progress_kind: "none", progress_source: "user consent", last_known_good: true, message: "Not bundled. Not silently installed." };
+      if (app.paint) app.paint();
+    }
+    return true;
+  }
+  function confirmOfficial(app, providerId) {
+    var id = (app && app._officialProviderId) || officialProviderId(app, providerId);
+    if (app && typeof app.confirmOfficialCli === "function") {
+      app.confirmOfficialCli(id);
       if (app.paint) app.paint();
       return true;
     }
+    if (window.PMv2 && typeof window.PMv2.confirmOfficialCli === "function") {
+      window.PMv2.confirmOfficialCli(app, id);
+      if (app && app.paint) app.paint();
+      return true;
+    }
+    if (app && app.paint) app.paint();
     return false;
+  }
+  function confirmOfficialControls(app) {
+    if (!awaitingOfficial(app)) return "";
+    var id = (app && app._officialProviderId) || officialProviderId(app);
+    var reason = (app.work && app.work.wait_reason) ? '<p class="' + PX + '-muted">' + esc(app.work.wait_reason) + "</p>" : "";
+    return reason + '<p><button type="button" data-act="confirm-official" data-id="' + esc(id) + '">Confirm official source</button></p>';
+  }
+  function identityBlock(row) {
+    return window.PMv2.identityBlock(row, PX);
+  }
+  function flipHeading(kicker, title, flipId) {
+    return '<div data-flip-target' + (flipId ? '="' + esc(flipId) + '"' : "") + '>' +
+      '<p class="' + PX + '-kicker">' + kicker + "</p>" +
+      '<h1 class="' + PX + '-h1">' + title + "</h1>" +
+      "</div>";
   }
   function humanAvail(a) {
     if (!a || a === "ready") return "";
@@ -53,7 +101,7 @@
   function fmtCopyVal(v) {
     if (v == null || v === "") return "—";
     if (typeof v === "boolean") return v ? "On" : "Off";
-    if (Array.isArray(v)) return v.join(", ");
+    if (Array.isArray(v)) return v.length ? v.join(", ") : "None";
     return String(v);
   }
 
@@ -88,6 +136,10 @@
     if (prev.domain && app.cat(prev.domain)) return "Back to " + app.cat(prev.domain).title;
     if (prev.name === "all") return "Back to All Settings";
     if (prev.name === "copy") return "Back to Copy from another project";
+    if (prev.name === "deferred") {
+      var d = (app.deferred || []).filter(function (x) { return x.id === prev.deferred; })[0];
+      return "Back to " + ((d && d.title) || "Owner module");
+    }
     return "Back";
   }
 
@@ -95,13 +147,13 @@
     var q = esc(app.query || "");
     var drop = "";
     if (app.searchOpen) {
-      var hits = (app.results || []).slice(0, 24);
+      var hits = (app.results || []);
       if (!hits.length && app.query) {
-        drop = '<div class="' + PX + '-drop pmv2-scroll" role="listbox" id="d1-drop"><div class="' + PX + '-hit">No matching settings</div></div>';
+        drop = '<div class="' + PX + '-drop pmv2-scroll" data-search-drop data-hit-class="' + PX + '-hit" role="listbox" id="d1-drop"><div class="' + PX + '-hit">No matching settings</div></div>';
       } else if (hits.length) {
         var selected = app.selectedResultId;
         if (!hits.some(function (h) { return h.id === selected; })) selected = hits[0].id;
-        drop = '<div class="' + PX + '-drop pmv2-scroll" role="listbox" id="d1-drop">' + groupHits(hits).map(function (g) {
+        drop = '<div class="' + PX + '-drop pmv2-scroll" data-search-drop data-hit-class="' + PX + '-hit" role="listbox" id="d1-drop">' + groupHits(hits).map(function (g) {
           return '<div class="' + PX + '-muted">' + esc(humanType(g.type)) + "</div>" + g.items.map(function (h) {
             var sel = h.id === selected ? "true" : "false";
             var extra = humanAvail(h.availability);
@@ -139,7 +191,7 @@
     var bar = "";
     if (w.progress_kind === "determinate") bar = "<div>" + esc(w.completed) + " / " + esc(w.total) + " · " + esc(w.progress_source) + "</div>";
     else if (w.progress_kind && w.progress_kind !== "none") bar = "<div>Progress unknown · " + esc(w.progress_source) + "</div>";
-    return '<div class="' + PX + '-work" data-ow-state="' + esc(w.state) + '"><strong>' + esc(w.title) + "</strong> — " + esc(w.human_phase) + (w.wait_reason ? " (waiting: " + esc(w.wait_reason) + ")" : "") + bar + (w.message ? "<div>" + esc(w.message) + "</div>" : "") + "</div>";
+    return '<div class="' + PX + '-work" data-ow-state="' + esc(w.state) + '"><strong>' + esc(w.title) + "</strong> — " + esc(w.human_phase) + (w.wait_reason ? " (waiting: " + esc(w.wait_reason) + ")" : "") + bar + (w.message ? "<div>" + esc(w.message) + "</div>" : "") + confirmOfficialControls(app) + "</div>";
   }
 
   function control(app, id) {
@@ -194,9 +246,9 @@
   function home(app) {
     var cats = app.categories || [];
     var dest = '<div class="' + PX + '-cards">' + cats.map(function (c) {
-      return '<button type="button" class="' + PX + '-card" data-act="domain" data-id="' + esc(c.id) + '">' + ico() + "<strong>" + esc(c.title) + "</strong><span>" + esc(c.description) + "</span></button>";
+      return '<button type="button" class="' + PX + '-card" data-act="domain" data-id="' + esc(c.id) + '" data-row-id="' + esc(c.id) + '" data-flip-id="' + esc(c.id) + '">' + ico() + "<strong>" + esc(c.title) + "</strong><span>" + esc(c.description) + "</span></button>";
     }).join("") + "</div>";
-    return '<div class="' + PX + "-home " + PX + '-scroll pmv2-scroll ' + PX + '-expand">' +
+    return '<div class="' + PX + "-home " + PX + '-scroll pmv2-scroll ' + (app._motionPlay ? (PX + '-expand') : '') + '">' +
       '<p class="' + PX + '-kicker">Directory</p>' +
       '<h1 class="' + PX + '-h1">Settings</h1>' +
       '<p class="' + PX + '-lede">Twelve destinations for this project. Search first; copy from another project is a one-time action, not a live link.</p>' +
@@ -211,6 +263,260 @@
     var more = extra || "";
     return '<button type="button" class="' + PX + '-dest" data-act="' + act + '" data-id="' + esc(id) + '"' + more + cur + "><strong>" + esc(title) + "</strong>" +
       (hint ? "<span>" + esc(hint) + "</span>" : "") + "</button>";
+  }
+  function defaultAllFacets() {
+    if (window.PMv2 && typeof window.PMv2.defaultAllFacets === "function") {
+      return window.PMv2.defaultAllFacets();
+    }
+    return {
+      domain: "",
+      kind: "",
+      exposure: "",
+      state: "",
+      entry: "",
+      changed: false,
+      attention: false,
+      synthetic: false
+    };
+  }
+  function ensureFacets(app) {
+    if (!app.allFacets) app.allFacets = defaultAllFacets();
+    var f = app.allFacets;
+    if (f.domain == null) f.domain = "";
+    if (f.kind == null) f.kind = "";
+    if (f.exposure == null) f.exposure = "";
+    if (f.state == null) f.state = "";
+    if (f.entry == null) f.entry = "";
+    if (f.changed == null) f.changed = false;
+    if (f.attention == null) f.attention = false;
+    if (f.synthetic == null) f.synthetic = false;
+    return f;
+  }
+  function facetsActive(f) {
+    if (!f) return false;
+    return !!(f.domain || f.kind || f.exposure || f.state || f.entry || f.changed || f.attention || f.synthetic);
+  }
+  function settingExposure(s) {
+    if (!s) return "basic";
+    if (s.exposure) {
+      var e = String(s.exposure).toLowerCase();
+      if (e === "standard" || e === "managed" || e === "unavailable") return "basic";
+      if (e === "advanced") return "advanced";
+      if (e === "expert" || e === "diagnostic" || e === "hidden") return "hidden";
+      if (e === "basic") return "basic";
+      return e;
+    }
+    if (s.type === "action") return "hidden";
+    if (s.tier === "advanced") return "advanced";
+    return "basic";
+  }
+  function mapAvailability(raw) {
+    var a = String(raw || "ready").toLowerCase().replace(/-/g, "_");
+    if (a === "managed" || a === "policy") return "managed";
+    if (a === "unavailable" || a === "setup_required" || a === "reconnect_required" || a === "unknown") return "unavailable";
+    return "ready";
+  }
+  function itemState(app, settingId, availability) {
+    if (settingId && app && typeof app.controlModel === "function") {
+      var model = app.controlModel(settingId);
+      if (model) {
+        if (model.originKind === "policy") return "managed";
+        if (model.originKind === "unavailable") return "unavailable";
+        if (model.disabled && /managed/i.test(model.reason || "")) return "managed";
+        if (model.disabled && /unavailable/i.test(model.reason || "")) return "unavailable";
+      }
+    }
+    return mapAvailability(availability);
+  }
+  function entryOfType(type) {
+    var t = String(type || "setting");
+    if (t === "setup_or_repair_workflow" || t === "workflow") return "workflow";
+    if (t === "diagnostic_or_read_only_status" || t === "diagnostic" || t === "intentional_help_result") return "diagnostic";
+    if (t === "manager" || t === "managed_object") return "manager";
+    if (t === "action") return "action";
+    if (t === "unavailable_capability") return "diagnostic";
+    return "setting";
+  }
+  function itemAttention(app, item) {
+    var list = (app && app.attention) || [];
+    var i, d, rid, model;
+    rid = String(item.resultId || item.id || "");
+    for (i = 0; i < list.length; i++) {
+      d = String(list[i].destId || "");
+      if (!d) continue;
+      if (rid === d || String(item.id) === d) return true;
+      if (rid.indexOf(d) === 0 || d.indexOf(rid) === 0) return true;
+    }
+    if (item.settingId || (item.entry === "setting" && String(item.id).indexOf(":") === -1)) {
+      model = app.controlModel(item.settingId || item.id);
+      if (model && model.disabled) return true;
+    }
+    return false;
+  }
+  function kindOptions() {
+    var seen = {};
+    var out = [];
+    var list = (window.PMv2 && window.PMv2.inventory && window.PMv2.inventory.settings) || [];
+    var i, t;
+    for (i = 0; i < list.length; i++) {
+      t = list[i].type || "setting";
+      if (!seen[t]) { seen[t] = 1; out.push(t); }
+    }
+    if (!out.length) out = SETTING_KINDS.slice();
+    out.sort();
+    return out;
+  }
+  function getResult(id) {
+    if (window.PMv2 && typeof window.PMv2.getResult === "function") return window.PMv2.getResult(id);
+    return null;
+  }
+  function matchesFacets(app, f, item) {
+    if (f.domain && item.domain !== f.domain) return false;
+    if (f.kind && item.kind !== f.kind) return false;
+    if (f.exposure && item.exposure !== f.exposure) return false;
+    if (f.state && item.state !== f.state) return false;
+    if (f.entry && item.entry !== f.entry) return false;
+    if (f.changed && !item.changed) return false;
+    if (f.attention && !itemAttention(app, item)) return false;
+    return true;
+  }
+  function filterAllSettingsLocal(app, facets) {
+    var f = facets || ensureFacets(app);
+    var items = [];
+    var inv = (window.PMv2 && window.PMv2.inventory && window.PMv2.inventory.settings) || [];
+    var i, s, cat, model, item, m, objs, o, d, extra, e, n, label;
+    for (i = 0; i < inv.length; i++) {
+      s = inv[i];
+      cat = app.cat(s.id.split(".")[0]);
+      model = app.controlModel(s.id);
+      item = {
+        id: s.id,
+        resultId: "setting:" + s.id,
+        settingId: s.id,
+        label: s.label,
+        path: (cat && cat.title) || s.id.split(".")[0],
+        type: s.type,
+        kind: s.type,
+        entry: "setting",
+        domain: s.id.split(".")[0],
+        exposure: settingExposure(s),
+        state: itemState(app, s.id, "ready"),
+        changed: !!(model && model.changed),
+        synthetic: false
+      };
+      if (matchesFacets(app, f, item)) items.push(item);
+    }
+    (app.managers || (window.PMv2 && window.PMv2.managers) || []).forEach(function (mgr) {
+      m = mgr;
+      extra = getResult("manager:" + m.id);
+      item = {
+        id: "manager:" + m.id,
+        resultId: "manager:" + m.id,
+        label: (extra && extra.label) || m.title,
+        path: (extra && extra.path) || ((app.cat(m.domain) || {}).title || m.domain),
+        type: "manager",
+        kind: "",
+        entry: "manager",
+        domain: m.domain,
+        exposure: "basic",
+        state: mapAvailability((extra && extra.availability) || "ready"),
+        changed: false,
+        synthetic: false
+      };
+      if (matchesFacets(app, f, item)) items.push(item);
+      objs = app.objectsFor ? app.objectsFor(m.id) : [];
+      for (i = 0; i < objs.length; i++) {
+        o = objs[i];
+        extra = getResult("object:" + m.id + ":" + o.id);
+        item = {
+          id: "object:" + m.id + ":" + o.id,
+          resultId: "object:" + m.id + ":" + o.id,
+          label: (extra && extra.label) || o.label,
+          path: (extra && extra.path) || (m.title + " / " + o.label),
+          type: "managed_object",
+          kind: o.kind || "",
+          entry: "manager",
+          domain: m.domain,
+          exposure: "basic",
+          state: mapAvailability(o.availability || (extra && extra.availability) || "ready"),
+          changed: false,
+          synthetic: false
+        };
+        if (matchesFacets(app, f, item)) items.push(item);
+      }
+    });
+    (app.deferred || []).forEach(function (def) {
+      d = def;
+      extra = getResult("unavailable:" + d.id);
+      item = {
+        id: "unavailable:" + d.id,
+        resultId: extra ? extra.id : ("unavailable:" + d.id),
+        label: d.title,
+        path: (extra && extra.path) || "System & Advanced",
+        type: "unavailable_capability",
+        kind: "",
+        entry: "diagnostic",
+        domain: d.domain || "system",
+        exposure: "hidden",
+        state: "unavailable",
+        changed: false,
+        synthetic: false
+      };
+      if (matchesFacets(app, f, item)) items.push(item);
+    });
+    for (i = 0; i < EXTRA_RESULT_IDS.length; i++) {
+      extra = getResult(EXTRA_RESULT_IDS[i]);
+      e = extra || {
+        id: EXTRA_RESULT_IDS[i],
+        label: EXTRA_RESULT_IDS[i],
+        type: EXTRA_RESULT_IDS[i].split(":")[0],
+        path: "Settings",
+        availability: "ready"
+      };
+      item = {
+        id: e.id,
+        resultId: e.id,
+        label: e.label,
+        path: e.path || "Settings",
+        type: e.type,
+        kind: "",
+        entry: entryOfType(e.type),
+        domain: (e.dest && e.dest.domain) || "",
+        exposure: entryOfType(e.type) === "diagnostic" ? "hidden" : (entryOfType(e.type) === "setting" ? "basic" : "advanced"),
+        state: mapAvailability(e.availability),
+        changed: false,
+        synthetic: false
+      };
+      if (matchesFacets(app, f, item)) items.push(item);
+    }
+    if (f.synthetic) {
+      n = (app && app.syntheticCount) || 2000;
+      for (i = 0; i < n; i++) {
+        label = "Synthetic scale row " + i;
+        item = {
+          id: "synthetic:stress-" + i,
+          resultId: "synthetic:stress-" + i,
+          label: label,
+          path: "Synthetic overlay",
+          type: "setting",
+          kind: "",
+          entry: "setting",
+          domain: "",
+          exposure: "basic",
+          state: "ready",
+          changed: false,
+          synthetic: true
+        };
+        if (matchesFacets(app, f, item)) items.push(item);
+      }
+    }
+    return items;
+  }
+  function facetGroup(title, html) {
+    return "<h2>" + esc(title) + '</h2><div class="' + PX + '-facetlist">' + html + "</div>";
+  }
+  function toggleBtn(act, on, title) {
+    return destBtn(act, "", false, title, "", on ? ' aria-pressed="true"' : ' aria-pressed="false"');
   }
 
   function domain(app) {
@@ -236,14 +542,13 @@
       (defNav ? "<h2>Owner modules</h2>" + defNav : "") +
       "</aside>";
     var main = '<div class="' + PX + "-workspace " + PX + '-scroll pmv2-scroll">' +
-      '<p class="' + PX + '-kicker">' + esc(c.title) + "</p>" +
-      '<h1 class="' + PX + '-h1">' + esc(pageTitle) + "</h1>" +
+      flipHeading(esc(c.title), esc(pageTitle), c.id) +
       '<p class="' + PX + '-lede">' + esc(c.description) + "</p>" +
       workBox(app) +
       "<h2>Settings for this project</h2>" +
       settingBlock(app, rows, c.id + "." + page) +
       "</div>";
-    return '<div class="' + PX + "-dir " + PX + '-expand">' + side + main + "</div>";
+    return '<div class="' + PX + '-dir">' + side + main + "</div>";
   }
 
   function factRow(key, value, rowId) {
@@ -302,13 +607,16 @@
     if (obj.id === "google") {
       extra += '<p class="' + PX + '-muted">Usage projection is stale until reconnect. Cached catalog remains visible.</p>';
     }
+    extra += confirmOfficialControls(app);
     if (page === "installations") {
-      extra += "<h2>Installations</h2>" + app.installs.filter(function (i) {
-        return i.provider === obj.id || obj.id === "anthropic";
+      extra += "<h2>Installations</h2>" + (app.installs || []).filter(function (i) {
+        return i.provider === obj.id;
       }).map(function (i) {
-        return '<div class="' + PX + '-step" data-row-id="' + esc(i.id) + '">' + esc(i.label) + " · " + esc(i.host) + " · " +
-          (i.selected ? "Selected" : (i.shadowed ? "Shadowed" : "Available")) +
-          (i.manualOnly ? " · Unknown owner — manual only" : "") + "</div>";
+        var unknown = i.manualOnly || i.owner === "unknown";
+        return '<div class="' + PX + '-step" data-row-id="' + esc(i.id) + '"><strong>' + esc(i.label) + "</strong>" +
+          '<div class="' + PX + '-muted">' + esc(i.host) + (unknown ? " · Unknown owner — manual only" : "") + "</div>" +
+          identityBlock(i) +
+          "</div>";
       }).join("");
     }
     if (page === "usage") {
@@ -324,7 +632,7 @@
         '<p data-row-id="account-default">Selected account: ' + esc(obj.account || "—") + " · " + esc(obj.product || "—") + "</p>" +
         '<p class="' + PX + '-muted">Credentials stay on the account. Switching route does not copy secrets. Limits, logs, and catalogs stay on their own subpages.</p>';
     }
-    return '<h1 class="' + PX + '-h1">' + esc(obj.label) + "</h1>" +
+    return flipHeading("Provider", esc(obj.label)) +
       '<p class="' + PX + '-lede">Connected state, selected account, models, usage-end behavior, routing/fallback, and setup — for this project only.</p>' +
       facts + extra;
   }
@@ -348,27 +656,27 @@
     if (m.id === "providers") {
       detail = providerDetail(app, obj);
     } else if (type === "health-projection") {
-      detail = '<h1 class="' + PX + '-h1">' + esc(m.title) + "</h1><p class=\"" + PX + '-lede">' + esc(m.purpose) + "</p>" +
+      detail = flipHeading(esc((app.cat(m.domain) || {}).title || "Manager"), esc(m.title)) + '<p class="' + PX + '-lede">' + esc(m.purpose) + "</p>" +
         '<div class="' + PX + '-health">' +
         '<div class="' + PX + '-check" data-row-id="' + esc(obj ? obj.id : m.id) + '">Last known good — cached projection</div>' +
         '<div class="' + PX + '-check">Repair opens the owner check, not a fabricated backend.</div>' +
         "</div>";
     } else if (type === "setup-sequence") {
-      detail = '<h1 class="' + PX + '-h1">' + esc(m.title) + "</h1><p class=\"" + PX + '-lede">' + esc(m.purpose) + "</p>" +
+      detail = flipHeading(esc((app.cat(m.domain) || {}).title || "Manager"), esc(m.title)) + '<p class="' + PX + '-lede">' + esc(m.purpose) + "</p>" +
         '<div class="' + PX + '-steps">' +
         '<div class="' + PX + '-step">1. Review current state</div>' +
         '<div class="' + PX + '-step">2. Confirm the official source or restore point</div>' +
         '<div class="' + PX + '-step">3. Apply once — this project only</div>' +
         "</div>";
     } else if (type === "preview-transaction") {
-      detail = '<h1 class="' + PX + '-h1">' + esc(m.title) + "</h1><p class=\"" + PX + '-lede">' + esc(m.purpose) + "</p>" +
+      detail = flipHeading(esc((app.cat(m.domain) || {}).title || "Manager"), esc(m.title)) + '<p class="' + PX + '-lede">' + esc(m.purpose) + "</p>" +
         "<p>Import, export, reset, and migration preview here. Copy from another project is a separate one-time flow.</p>" +
         '<p><button type="button" data-act="copy">Open copy preview</button></p>';
     } else if (type === "inventory-catalog") {
-      detail = '<h1 class="' + PX + '-h1">' + esc(m.title) + "</h1><p class=\"" + PX + '-lede">' + esc(m.purpose) + "</p>" +
+      detail = flipHeading(esc((app.cat(m.domain) || {}).title || "Manager"), esc(m.title)) + '<p class="' + PX + '-lede">' + esc(m.purpose) + "</p>" +
         (obj ? '<div class="' + PX + '-step" data-row-id="' + esc(obj.id) + '"><strong>' + esc(obj.label) + "</strong> · " + esc(humanType(obj.kind)) + "</div>" : "");
     } else {
-      detail = '<h1 class="' + PX + '-h1">' + esc(m.title) + "</h1><p class=\"" + PX + '-lede">' + esc(m.purpose) + "</p>" +
+      detail = flipHeading(esc((app.cat(m.domain) || {}).title || "Manager"), esc(m.title)) + '<p class="' + PX + '-lede">' + esc(m.purpose) + "</p>" +
         (obj ? '<div data-row-id="' + esc(obj.id) + '"><strong>' + esc(obj.label) + "</strong> · " + esc(humanType(obj.kind)) + "</div>" : "");
     }
     var side = '<aside class="' + PX + '-destcol pmv2-scroll"><h2>Sections</h2>' + tabNav +
@@ -376,16 +684,46 @@
     var main = '<div class="' + PX + "-workspace " + PX + '-scroll pmv2-scroll">' + workBox(app) + detail +
       "<h2>Related project settings</h2>" + related.map(function (s) { return control(app, s.id); }).join("") +
       "</div>";
-    return '<div class="' + PX + "-dir " + PX + '-expand">' + side + main + "</div>";
+    return '<div class="' + PX + '-dir">' + side + main + "</div>";
   }
 
   function allSettings(app) {
-    var facets = '<aside class="' + PX + '-facets pmv2-scroll"><h2>Filters</h2>' +
-      destBtn("facet", "", !allFacet, "All domains", app.productSettingCount + " product settings") +
+    var f = ensureFacets(app);
+    var kinds = kindOptions();
+    var catBtns = destBtn("facet-domain", "", !f.domain, "All domains", app.productSettingCount + " product settings") +
       (app.categories || []).map(function (c) {
-        return destBtn("facet", c.id, allFacet === c.id, c.title, "");
-      }).join("") +
-      '<p class="' + PX + '-muted"><button type="button" data-act="synth">' + (includeSynth ? "Hide synthetic overlay" : "Include synthetic overlay") + "</button></p></aside>";
+        return destBtn("facet-domain", c.id, f.domain === c.id, c.title, "");
+      }).join("");
+    var kindBtns = destBtn("facet-kind", "", !f.kind, "All kinds", "Type") +
+      kinds.map(function (k) {
+        return destBtn("facet-kind", k, f.kind === k, humanType(k), "");
+      }).join("");
+    var expBtns = destBtn("facet-exposure", "", !f.exposure, "All", "") +
+      destBtn("facet-exposure", "basic", f.exposure === "basic", "Basic", "") +
+      destBtn("facet-exposure", "advanced", f.exposure === "advanced", "Advanced", "") +
+      destBtn("facet-exposure", "hidden", f.exposure === "hidden", "Hidden", "");
+    var stateBtns = destBtn("facet-state", "", !f.state, "All", "") +
+      destBtn("facet-state", "ready", f.state === "ready", "Ready", "") +
+      destBtn("facet-state", "managed", f.state === "managed", "Managed", "") +
+      destBtn("facet-state", "unavailable", f.state === "unavailable", "Unavailable", "");
+    var entryBtns = destBtn("facet-entry", "", !f.entry, "All", "") +
+      destBtn("facet-entry", "setting", f.entry === "setting", "Setting", "") +
+      destBtn("facet-entry", "action", f.entry === "action", "Action", "") +
+      destBtn("facet-entry", "manager", f.entry === "manager", "Manager", "") +
+      destBtn("facet-entry", "workflow", f.entry === "workflow", "Workflow", "") +
+      destBtn("facet-entry", "diagnostic", f.entry === "diagnostic", "Diagnostic", "");
+    var projBtns = toggleBtn("facet-changed", f.changed, "Changed from default") +
+      toggleBtn("facet-attention", f.attention, "Needs attention") +
+      toggleBtn("facet-synth", f.synthetic, "Include synthetic overlay") +
+      destBtn("facet-clear", "", false, "Clear filters", "");
+    var facets = '<aside class="' + PX + '-facets pmv2-scroll">' +
+      facetGroup("Category", catBtns) +
+      facetGroup("Kind", kindBtns) +
+      facetGroup("Exposure", expBtns) +
+      facetGroup("Availability", stateBtns) +
+      facetGroup("Entry", entryBtns) +
+      facetGroup("This project", projBtns) +
+      "</aside>";
     return '<div class="' + PX + '-all">' + facets +
       '<div class="' + PX + '-list pmv2-scroll" data-all-list="1"></div></div>';
   }
@@ -432,10 +770,26 @@
       factRow("Applied", r.at) +
       factRow("Source", r.source) +
       factRow("Restore point", r.restorePointAt) +
+      (r.restorePointId ? factRow("Restore point id", r.restorePointId) : "") +
       factRow("Verified", r.verified ? "Yes" : "No") +
       factRow("Counts", "Additions " + (c.additions || 0) + " · Replacements " + (c.replacements || 0) + " · Unchanged " + (c.unchanged || 0) + " · Unavailable " + (c.unavailable || 0) + " · Conflicts " + (c.conflicts || 0)) +
-      factRow("Backend", (r.simulated ? "Simulated · " : "") + (r.backend || "sessionStorage")) +
-      "</div>";
+      factRow("Backend", (r.backend || "RuntimeResourceGovernor+projectStore")) +
+      "</div>" +
+      '<p class="' + PX + '-muted">RuntimeResourceGovernor admits this copy. Project store persists this project only.</p>';
+  }
+
+  function detailsInstallIdentity(app) {
+    var installs = app.installs || [];
+    var row = null;
+    if (app.detailsId) {
+      row = installs.filter(function (i) { return i.id === app.detailsId; })[0] || null;
+    }
+    if (!row && app.route && app.route.page === "installations") {
+      var objId = app.route.object;
+      row = installs.filter(function (i) { return i.provider === objId; })[0] || null;
+    }
+    if (!row) return "";
+    return "<h3>Installation identity</h3>" + identityBlock(row);
   }
 
   function detailsDrawer(app) {
@@ -457,8 +811,8 @@
       factRow("Policy floor", d.policyFloor || "—") +
       factRow("Persistence", d.persistence || "current-project") +
       factRow("Scope", d.scopeNote) +
-      factRow("Backend", (d.simulated ? "Simulated · " : "") + (d.backend || "sessionStorage")) +
-      "</div></aside>";
+      factRow("Backend", (d.backend || "projectStore")) +
+      "</div>" + detailsInstallIdentity(app) + "</aside>";
   }
 
   function copyView(app) {
@@ -474,7 +828,7 @@
     if (p) {
       prev = "<p>Additions " + p.counts.additions + " · Replacements " + p.counts.replacements + " · Unchanged " + p.counts.unchanged + " · Unavailable " + p.counts.unavailable + " · Conflicts " + p.counts.conflicts + "</p>" +
         '<p class="' + PX + '-muted">Account and credential references copy. Secrets never copy. Projects stay independent — no sync, profiles, or inheritance.</p>' +
-        '<p class="' + PX + '-muted">' + (p.simulated ? "Simulated · " : "") + esc(p.backend || "sessionStorage") + "</p>" +
+        '<p class="' + PX + '-muted">' + esc(p.backend || "RuntimeResourceGovernor+projectStore") + ". RuntimeResourceGovernor admits this copy. Project store persists this project only.</p>" +
         copyPreviewLists(p);
     }
     var actions = "";
@@ -482,26 +836,26 @@
       actions = copyReceiptFacts(app.copy.receipt) + "<button type='button' data-act='copy-rollback'>Roll back to restore point</button>";
     } else if (app.copy.step === "rolled_back") {
       actions = "<p>Rollback complete. This project’s previous values were restored.</p>";
+    } else if (app.copy.step === "restore" || app.copy.step === "applying" || app.copy.step === "verifying") {
+      actions = "";
     } else {
       actions = "<button type='button' data-act='copy-apply'>Create restore point and copy</button>";
     }
-    return '<div class="' + PX + "-copy " + PX + '-scroll pmv2-scroll ' + PX + '-expand">' +
-      '<p class="' + PX + '-kicker">One-time copy</p>' +
-      '<h1 class="' + PX + '-h1">Copy Settings From Another Project</h1>' +
+    return '<div class="' + PX + "-copy " + PX + '-scroll pmv2-scroll">' +
+      flipHeading("One-time copy", "Copy Settings From Another Project") +
       "<p>Copies into <strong>" + esc(app.project.name) + "</strong>. No ongoing sync.</p>" +
       "<h2>1. Source project</h2><div class='" + PX + "-copy-src'>" + srcs + "</div>" +
       "<h2>2. Categories</h2><div class='" + PX + "-copy-cats'>" + cats + "</div>" +
       "<h2>3. Preview</h2>" + prev +
-      "<h2>4. Apply</h2>" + actions + workBox(app) +
+      window.PMv2.copyTransactionHtml(app, PX) + actions + workBox(app) +
       "</div>";
   }
 
   function deferredView(app) {
     var d = (app.deferred || []).filter(function (x) { return x.id === app.route.deferred; })[0];
     if (!d) return "<div>Unknown owner module</div>";
-    return '<div class="' + PX + "-workspace " + PX + '-scroll pmv2-scroll ' + PX + '-expand">' +
-      '<p class="' + PX + '-kicker">Named owner</p>' +
-      '<h1 class="' + PX + '-h1">' + esc(d.title) + "</h1>" +
+    return '<div class="' + PX + "-workspace " + PX + '-scroll pmv2-scroll">' +
+      flipHeading("Named owner", esc(d.title)) +
       "<p>This destination is owned by <strong>" + esc(d.owner) + "</strong>. Settings does not invent a backend for it.</p>" +
       "<p>Return contract: Back restores the previous Settings location. Close Settings returns to the opening surface.</p>" +
       "<button type='button' data-act='back'>Return to Settings</button></div>";
@@ -521,15 +875,30 @@
   function fillAll(app, root) {
     var host = root.querySelector("[data-all-list]");
     if (!host) { virt = null; return; }
-    var items = (window.PMv2.inventory.settings || []).filter(function (s) {
-      if (allFacet && s.id.split(".")[0] !== allFacet) return false;
-      return true;
-    }).map(function (s) {
-      var cat = app.cat(s.id.split(".")[0]);
-      return { id: s.id, label: s.label, path: (cat && cat.title) || s.id.split(".")[0], type: s.type };
-    });
+    var f = ensureFacets(app);
+    var facets = {
+      domain: f.domain,
+      kind: f.kind,
+      exposure: f.exposure,
+      changed: f.changed,
+      state: f.state,
+      entry: f.entry,
+      attention: f.attention,
+      synthetic: f.synthetic
+    };
+    var items;
+    if (window.PMv2 && typeof window.PMv2.filterAllSettings === "function") {
+      items = window.PMv2.filterAllSettings(app, facets);
+    } else {
+      items = filterAllSettingsLocal(app, facets);
+    }
     virt = window.PMv2.virtualList(host, items, 52, function (item) {
-      return '<button type="button" class="' + PX + '-hit" data-act="row" data-id="' + esc(item.id) + '" data-row-id="' + esc(item.id) + '"><b>' + esc(item.label) + "</b><span class='path'>" + esc(item.path) + "</span><span class='meta'>" + esc(humanType(item.type)) + "</span></button>";
+      var meta = humanType(item.kind || item.type || item.entry);
+      if (item.synthetic) meta = meta ? meta + " · synthetic overlay" : "synthetic overlay";
+      return '<button type="button" class="' + PX + '-hit" data-act="row" data-id="' + esc(item.id) + '" data-row-id="' + esc(item.id) + '"' +
+        (item.resultId ? ' data-result-id="' + esc(item.resultId) + '"' : "") +
+        (item.synthetic ? ' data-synthetic="1"' : "") +
+        "><b>" + esc(item.label) + "</b><span class='path'>" + esc(item.path) + "</span><span class='meta'>" + esc(meta) + "</span></button>";
     });
   }
 
@@ -644,35 +1013,48 @@
       else if (act === "copy") app.openCopy();
       else if (act === "pick") app.pickResult(id);
       else if (act === "row") {
-        if (app.routeSettingRow) app.routeSettingRow(id);
-        else app.pickResult("setting:" + id);
+        var resultId = el.getAttribute("data-result-id") || "";
+        if (resultId.indexOf("setting:") === 0) {
+          if (app.routeSettingRow) app.routeSettingRow(id);
+          else app.pickResult(resultId);
+        } else if (resultId) {
+          app.pickResult(resultId);
+        } else if (app.routeSettingRow) {
+          app.routeSettingRow(id);
+        } else {
+          app.pickResult("setting:" + id);
+        }
       }
-      else if (act === "facet") { allFacet = id || null; app.paint(); }
+      else if (act === "facet" || act === "facet-domain") { ensureFacets(app).domain = id || ""; app.paint(); }
+      else if (act === "facet-kind") { ensureFacets(app).kind = id || ""; app.paint(); }
+      else if (act === "facet-exposure") { ensureFacets(app).exposure = id || ""; app.paint(); }
+      else if (act === "facet-state") { ensureFacets(app).state = id || ""; app.paint(); }
+      else if (act === "facet-entry") { ensureFacets(app).entry = id || ""; app.paint(); }
+      else if (act === "facet-changed") { ensureFacets(app).changed = !ensureFacets(app).changed; app.paint(); }
+      else if (act === "facet-attention") { ensureFacets(app).attention = !ensureFacets(app).attention; app.paint(); }
+      else if (act === "facet-synth" || act === "synth") {
+        ensureFacets(app).synthetic = !ensureFacets(app).synthetic;
+        app.receipt("Synthetic overlay is labeled and excluded from product inventory search by default.", "info");
+        app.paint();
+      } else if (act === "facet-clear") { app.allFacets = defaultAllFacets(); app.paint(); }
       else if (act === "more") { showMore[id] = !showMore[id]; app.paint(); }
       else if (act === "toggle") {
         var cur = app.controlModel(id);
         app.setValue(id, !(cur && cur.value));
-      } else if (act === "do") app.receipt("Ran " + id + " for this project (simulated).", "info");
+      } else if (act === "do") app.receipt("Ran " + id + " for this project.", "info");
       else if (act === "why") app.openDetails(id);
       else if (act === "details-close") app.closeDetails();
       else if (act === "install-official") {
-        if (!runOfficialCli(app, id || "local-ollama")) {
-          app.work = { title: "Install Ollama", human_phase: "Waiting for explicit Install", state: "waiting_user", wait_reason: "Official source confirmation", progress_kind: "none", progress_source: "provider setup", last_known_good: true, message: "Not bundled. Not silently installed." };
-          app.receipt("Install starts only after you confirm the official source (simulated).", "info");
-          app.paint();
-        }
+        installOfficial(app, id || "local-ollama");
+      } else if (act === "confirm-official") {
+        confirmOfficial(app, (app && app._officialProviderId) || id || "local-ollama");
       } else if (act === "usage-refresh") {
         app.work = { title: "Refresh usage", human_phase: "Refreshing", state: "running", progress_kind: "indeterminate", progress_source: "usage", last_known_good: true, message: "Cached usage stays visible." };
-        app.receipt("Usage refresh requested for this project (simulated).", "info");
+        app.receipt("Usage refresh requested for this project.", "info");
         app.paint();
       } else if (act === "copy-src") { app.copy.sourceId = id; app.copy.step = "preview"; app.paint(); }
       else if (act === "copy-apply") app.applyCopy();
       else if (act === "copy-rollback") app.rollbackCopy();
-      else if (act === "synth") {
-        includeSynth = !includeSynth;
-        app.receipt("Synthetic overlay is labeled and excluded from product inventory search by default.", "info");
-        app.paint();
-      }
     };
   }
 
@@ -682,6 +1064,8 @@
     root.className = PX;
     root.setAttribute("data-layout", LAYOUT);
     root.setAttribute("data-route", (app.route && app.route.name) || "home");
+    root.setAttribute("data-dir", app._navDir || "fwd");
+    root.setAttribute("data-pane", app.detailsId ? "details" : ((app.route && app.route.name) || "main"));
     var snap = restoreFocus || captureFocus(root);
     restoreFocus = null;
     root.innerHTML = chrome(app) + '<div class="' + PX + '-body">' + body(app) + detailsDrawer(app) + "</div>";
@@ -703,7 +1087,7 @@
       if (app.detailsId) { app.closeDetails(); return; }
       if (app.statesOpen) { app.statesOpen = false; app.paint(); return; }
       if (app.searchOpen) { app.searchOpen = false; app.paint(); return; }
-      if (allFacet) { allFacet = null; app.paint(); return; }
+      if (facetsActive(app.allFacets)) { app.allFacets = defaultAllFacets(); app.paint(); return; }
       if (app.route && app.route.row) {
         var was = app.route.row;
         delete app.route.row;

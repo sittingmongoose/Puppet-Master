@@ -1,0 +1,1244 @@
+/* Identity and orientation text never truncates. A provider whose name reads
+ * "Open…", a status cut mid-word, or a breadcrumb that loses its own step are all
+ * cases where the truncation destroys the thing the element exists to say. */
+/* Opus 5 — Codex (concept 09).
+ *
+ * The reference this concept answers is a leather-and-parchment drawing. Only its
+ * LAYOUT survives here: persistent edge tabs down one side, a broad reading canvas,
+ * pages that stack, manager-local tabs inside a page. Everything the reference used
+ * to say "book" — texture, brass, sepia, ornament, page curl, drop-shadow leaves —
+ * is gone. The geometry is drawn in Puppet Master's own materials, which means every
+ * colour, radius, shadow, duration and space below is a --pm-* theme token and the
+ * page has to read correctly in all eight themes, light ones included.
+ *
+ * Depth is the one visual idea. It is carried by surface level and a bounded shadow,
+ * never by a gradient, a texture or an image. Reduced motion is expressed by
+ * multiplying distances (and the one scale) by --pm-motion-transform, so there is no
+ * second set of rules to keep in step.
+ */
+
+.cx {
+  --cx-strip-w: 216px;
+  --cx-edge-w: 18px;
+  --cx-pad: var(--pm-space-6);
+  --cx-measure: 68ch;
+  --cx-canvas: 1180px;
+  --cx-row-y: 14px;
+  font-family: var(--pm-font);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--pm-text-1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  background: var(--pm-bg);
+}
+
+.cx *, .cx *::before, .cx *::after { box-sizing: border-box; }
+.cx h1, .cx h2, .cx h3, .cx h4 { margin: 0; font-weight: var(--pm-title-weight); letter-spacing: var(--pm-letter); }
+.cx p { margin: 0; }
+/* :where() so the reset carries ZERO specificity. As a plain descendant selector
+ * it scored (0,1,1) and outranked every single-class modifier — a primary button's
+ * own colour lost to `color: inherit`, which in Retro Dark painted pale text on the
+ * pale accent fill at 1.34:1. A reset must never outrank the components it resets. */
+:where(.cx) :where(button){ font: inherit; color: inherit; }
+.cx dl, .cx dd { margin: 0; }
+.cx code { font-family: var(--pm-font-mono); font-size: .92em; }
+
+.cx[data-w="mid"] { --cx-strip-w: 54px; --cx-pad: var(--pm-space-5); }
+.cx[data-w="compact"] { --cx-strip-w: 0px; --cx-edge-w: 10px; --cx-pad: var(--pm-space-4); }
+
+/* --------------------------------------------------------------- scrollbars */
+
+.cx-scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--pm-border-strong) transparent;
+}
+.cx-scroll::-webkit-scrollbar { width: 10px; height: 10px; }
+.cx-scroll::-webkit-scrollbar-track { background: transparent; }
+.cx-scroll::-webkit-scrollbar-thumb {
+  background: var(--pm-border-2);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.cx-scroll::-webkit-scrollbar-thumb:hover { background: var(--pm-border-strong); background-clip: padding-box; }
+
+/* ------------------------------------------------------------------ topline */
+
+/* One persistent line of context above the canvas: where Back goes, where you are,
+ * whose Project this is, the search field once Home no longer owns it, and the way
+ * out. It never scrolls away, because losing it is how a deep link starts to feel
+ * like a different application. */
+.cx-topline {
+  display: flex;
+  align-items: center;
+  gap: var(--pm-space-2);
+  padding: var(--pm-space-2) var(--pm-space-4);
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+  background: var(--pm-surface-1);
+  position: relative;
+  z-index: 6;
+  min-height: 46px;
+  flex: 0 0 auto;
+}
+
+.cx-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border: var(--pm-border-w) solid var(--pm-border-1);
+  border-radius: var(--pm-radius-1);
+  background: var(--pm-surface-2);
+  color: var(--pm-text-2);
+  cursor: pointer;
+  white-space: nowrap;
+  max-width: 100%;
+  transition: background var(--pm-dur-1) var(--pm-ease), color var(--pm-dur-1) var(--pm-ease), border-color var(--pm-dur-1) var(--pm-ease);
+}
+.cx-btn:hover { background: var(--pm-surface-3); color: var(--pm-text-1); border-color: var(--pm-border-2); }
+.cx-btn:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: 1px; }
+.cx-btn[disabled] { opacity: .5; cursor: default; }
+.cx-btn--primary { background: var(--pm-accent); border-color: var(--pm-accent); color: var(--pm-accent-text); font-weight: var(--pm-title-weight); }
+.cx-btn--primary:hover { background: var(--pm-accent); border-color: var(--pm-accent); color: var(--pm-accent-text); filter: brightness(1.06); }
+.cx-btn--quiet { background: transparent; border-color: transparent; }
+.cx-btn--quiet:hover { background: var(--pm-surface-2); }
+.cx-btn-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.cx-topline-spacer { flex: 1 1 auto; min-width: var(--pm-space-2); }
+
+.cx-topline [data-pm-back] .cx-btn-label { max-width: 30ch; }
+.cx[data-w="mid"] [data-pm-close] .cx-btn-label,
+.cx[data-w="compact"] [data-pm-close] .cx-btn-label { display: none; }
+
+/* The breadcrumb sits at the top of the canvas, where there is room for it. */
+.cx-crumbs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  flex-wrap: wrap;
+  margin-bottom: 2px;
+}
+.cx-crumb {
+  border: 0;
+  background: none;
+  padding: 2px 4px;
+  margin-left: -4px;
+  border-radius: var(--pm-radius-1);
+  color: var(--pm-text-3);
+  cursor: pointer;
+  font-size: 12px;
+  letter-spacing: .02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 40ch;
+}
+.cx-crumb + .cx-crumb-sep + .cx-crumb { margin-left: 0; }
+.cx-crumb:hover { color: var(--pm-text-1); background: var(--pm-surface-2); }
+.cx-crumb[aria-current="page"] { color: var(--pm-text-1); font-weight: var(--pm-title-weight); }
+.cx-crumb-sep { color: var(--pm-text-3); font-size: 11px; flex: 0 0 auto; }
+
+.cx-project {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: var(--pm-border-w) solid var(--pm-border-1);
+  background: var(--pm-surface-2);
+  color: var(--pm-text-2);
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 26ch;
+  flex: 0 0 auto;
+}
+.cx-project b { color: var(--pm-text-1); font-weight: var(--pm-title-weight); }
+
+/* --------------------------------------------------------------- the stage */
+
+.cx-viewport {
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.cx-pushrow {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  width: 100%;
+  transition: transform var(--pm-dur-2) var(--pm-ease-out);
+}
+.cx[data-nav="open"] .cx-pushrow { transform: translateX(calc(-100% * var(--pm-motion-transform))); }
+.cx[data-nav="open"][data-w="compact"] .cx-pushrow { transform: translateX(-100%); }
+
+.cx-frame {
+  flex: 0 0 100%;
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  height: 100%;
+}
+
+/* ------------------------------------------------------------- layer edges */
+
+/* The stack's memory. Each layer you left behind keeps a sliver on screen, and the
+ * sliver is a real control: pressing it walks back to that layer. Nothing here
+ * imitates the edge of a sheet of paper — it is the same surface ladder the rest of
+ * the application uses, one step down per layer. */
+.cx-edges { display: flex; height: 100%; min-height: 0; }
+
+.cx-edge {
+  width: var(--cx-edge-w);
+  flex: 0 0 var(--cx-edge-w);
+  border: 0;
+  border-right: var(--pm-border-w) solid var(--pm-border-1);
+  border-radius: var(--pm-radius-2) 0 0 var(--pm-radius-2);
+  background: var(--pm-surface-1);
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  transition: background var(--pm-dur-1) var(--pm-ease);
+}
+.cx-edge:nth-child(2) { background: var(--pm-surface-2); border-radius: 0; }
+.cx-edge:hover { background: var(--pm-surface-3); }
+.cx-edge:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: -2px; }
+.cx-edge::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2px;
+  height: 26px;
+  margin: -13px 0 0 -1px;
+  border-radius: 999px;
+  background: var(--pm-border-2);
+}
+
+/* ------------------------------------------------------------------- layer */
+
+.cx-layer {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--pm-surface-2);
+  border-left: var(--pm-border-w) solid var(--pm-border-1);
+  position: relative;
+  z-index: 2;
+}
+.cx[data-depth="0"] .cx-layer { border-left: 0; }
+
+/* Bounded, single-step depth. Two tokens' worth of shadow and no more: the layer
+ * reads as lifted, not as a card floating over a desk. */
+.cx[data-depth="1"] .cx-layer { box-shadow: var(--pm-shadow-1); }
+.cx[data-depth="2"] .cx-layer { box-shadow: var(--pm-shadow-2); }
+
+.cx-layer[data-move="in"] { animation: cx-layer-in var(--pm-dur-2) var(--pm-ease-out) both; }
+.cx-layer[data-move="out"] { animation: cx-layer-out var(--pm-dur-2) var(--pm-ease-out) both; }
+
+@keyframes cx-layer-in {
+  from {
+    opacity: .3;
+    transform: scale(calc(1 - .012 * var(--pm-motion-transform))) translateY(calc(10px * var(--pm-motion-transform)));
+  }
+  to { opacity: 1; transform: none; }
+}
+@keyframes cx-layer-out {
+  from {
+    opacity: .4;
+    transform: scale(calc(1 + .010 * var(--pm-motion-transform))) translateY(calc(-6px * var(--pm-motion-transform)));
+  }
+  to { opacity: 1; transform: none; }
+}
+
+/* The arrival's second beat. The tab has already moved; the layer answers it. */
+.cx-layer[data-arrive="1"] { animation: cx-layer-arrive var(--pm-dur-3) var(--pm-ease-out) 90ms both; }
+@keyframes cx-layer-arrive {
+  from { transform: scale(calc(1 - .008 * var(--pm-motion-transform))); }
+  to { transform: none; }
+}
+
+.cx-layer-head {
+  flex: 0 0 auto;
+  padding: var(--pm-space-5) var(--cx-pad) var(--pm-space-3);
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+  position: relative;
+  z-index: 4;
+  background: var(--pm-surface-2);
+  border-radius: var(--pm-radius-2) 0 0 0;
+}
+.cx-layer-head:not(:first-child) { border-radius: 0; }
+.cx[data-depth="0"] .cx-layer-head { border-radius: 0; }
+.cx-head-inner { max-width: var(--cx-canvas); margin: 0 auto; }
+
+.cx-eyebrow {
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--pm-text-3);
+  margin-bottom: 2px;
+}
+.cx-title { font-size: 23px; line-height: 1.25; }
+.cx-title--small { font-size: 18px; }
+.cx-lede { color: var(--pm-text-2); max-width: var(--cx-measure); margin-top: 4px; }
+.cx-meta { color: var(--pm-text-3); font-size: 12.5px; margin-top: 6px; }
+
+.cx-layer-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: var(--pm-space-5) var(--cx-pad) var(--pm-space-7);
+}
+.cx-body-inner { max-width: var(--cx-canvas); margin: 0 auto; }
+
+/* --------------------------------------------------------------- edge tabs */
+
+/* The signature. Twelve area tabs plus Home and the two utilities, standing on the
+ * right edge for the whole session. The current tab is joined to the canvas: the
+ * hairline that separates strip from canvas is drawn by the tabs themselves, and the
+ * current tab simply does not draw its share of it. */
+.cx-strip {
+  width: var(--cx-strip-w);
+  flex: 0 0 var(--cx-strip-w);
+  display: flex;
+  flex-direction: column;
+  background: var(--pm-bg);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  padding: 0 0 var(--pm-space-3);
+  gap: 1px;
+}
+.cx-strip::-webkit-scrollbar { width: 0; height: 0; }
+.cx[data-w="compact"] .cx-strip { display: none; }
+
+.cx-strip-cap {
+  flex: 1 1 auto;
+  min-height: var(--pm-space-4);
+  border-left: var(--pm-border-w) solid var(--pm-border-1);
+}
+.cx-strip-gap {
+  flex: 0 0 auto;
+  height: var(--pm-space-3);
+  border-left: var(--pm-border-w) solid var(--pm-border-1);
+}
+.cx-strip-rule {
+  flex: 0 0 auto;
+  height: var(--pm-space-4);
+  border-left: var(--pm-border-w) solid var(--pm-border-1);
+  position: relative;
+}
+.cx-strip-rule::after {
+  content: "";
+  position: absolute;
+  left: var(--pm-space-3);
+  right: var(--pm-space-3);
+  top: 50%;
+  height: 1px;
+  background: var(--pm-border-1);
+}
+
+.cx-tab {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex: 0 0 auto;
+  min-height: 38px;
+  padding: 7px 10px 7px 12px;
+  border: 0;
+  border-left: var(--pm-border-w) solid var(--pm-border-1);
+  border-radius: 0 var(--pm-radius-1) var(--pm-radius-1) 0;
+  background: transparent;
+  color: var(--pm-text-2);
+  cursor: pointer;
+  text-align: left;
+  min-width: 0;
+  transition: background var(--pm-dur-1) var(--pm-ease), color var(--pm-dur-1) var(--pm-ease);
+}
+.cx-tab:hover { background: var(--pm-surface-1); color: var(--pm-text-1); }
+.cx-tab:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: -2px; }
+.cx-tab .pm-icon { flex: 0 0 auto; opacity: .85; }
+.cx-tab-label {
+  min-width: 0;
+  flex: 1 1 auto;
+  font-size: 12.5px;
+  line-height: 1.25;
+  /* Wraps rather than cutting to "Skills, Plugins & Com…". These tabs are the entire
+   * navigation of this concept; a tab whose name is cut is not a tab. */
+  overflow-wrap: break-word;
+}
+.cx-tab-n {
+  flex: 0 0 auto;
+  font-size: 10.5px;
+  color: var(--pm-text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Joined to the canvas: same surface, no hairline on the canvas side. */
+.cx-tab[aria-current="true"] {
+  background: var(--pm-surface-2);
+  color: var(--pm-text-1);
+  font-weight: var(--pm-title-weight);
+  border-left-color: transparent;
+}
+.cx-tab[aria-current="true"] .cx-tab-n { color: var(--pm-text-2); }
+
+/* The arrival's first beat: the tab that owns the destination announces itself
+ * before the layer moves, so the reader sees WHERE they were taken, then what. */
+.cx-tab[data-arrive="1"] { animation: cx-tab-arrive var(--pm-dur-3) var(--pm-ease-out) both; }
+@keyframes cx-tab-arrive {
+  0%   { background: var(--pm-accent-soft); }
+  55%  { background: var(--pm-accent-soft); }
+  100% { background: var(--pm-surface-2); }
+}
+
+.cx[data-w="mid"] .cx-tab { justify-content: center; padding: 9px 0; gap: 0; }
+.cx[data-w="mid"] .cx-tab-label,
+.cx[data-w="mid"] .cx-tab-n { display: none; }
+
+/* -------------------------------------------------------- compact push nav */
+
+/* At the narrowest width the edge tabs cannot stand beside the canvas, so they
+ * become a page of their own that pushes the canvas aside. Nothing is lost: the
+ * canvas keeps its scroll position, its selection and its Back target. */
+.cx-navpage {
+  flex: 0 0 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--pm-surface-1);
+  border-left: var(--pm-border-w) solid var(--pm-border-1);
+}
+.cx-navpage-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pm-space-2);
+  padding: var(--pm-space-3) var(--pm-space-4);
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+}
+.cx-navpage-list { flex: 1 1 auto; min-height: 0; padding: var(--pm-space-2); }
+.cx-navitem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  padding: 10px var(--pm-space-3);
+  border: 0;
+  background: none;
+  border-radius: var(--pm-radius-1);
+  color: var(--pm-text-2);
+  cursor: pointer;
+}
+.cx-navitem:hover { background: var(--pm-surface-2); color: var(--pm-text-1); }
+.cx-navitem[aria-current="true"] { background: var(--pm-accent-soft); color: var(--pm-text-1); font-weight: var(--pm-title-weight); }
+.cx-navitem-body { min-width: 0; flex: 1 1 auto; }
+/* Area names wrap rather than being cut to "Planning & Verificat…". The edge strip
+ * is the whole navigation of this concept; a tab whose name cannot be read is not
+ * a tab. */
+.cx-navitem-title { overflow-wrap: break-word; }
+.cx-navitem-sub { font-size: 12px; color: var(--pm-text-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ------------------------------------------------------------------ search */
+
+.cx-searchwrap { position: relative; z-index: 20; }
+.cx-searchwrap--canvas { margin-top: var(--pm-space-4); max-width: 720px; }
+.cx-searchwrap--bar { flex: 0 1 340px; min-width: 150px; }
+
+.cx-searchfield {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-2);
+  background: var(--pm-surface-1);
+  padding: 0 10px;
+  min-width: 0;
+}
+.cx-searchwrap--canvas .cx-searchfield { padding: 4px 12px; border-radius: var(--pm-radius-2); }
+.cx-searchfield:focus-within { border-color: var(--pm-focus); }
+.cx-searchfield .pm-icon { flex: 0 0 auto; color: var(--pm-text-3); }
+.cx-searchfield input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  background: none;
+  color: var(--pm-text-1);
+  font: inherit;
+  padding: 7px 0;
+  outline: none;
+}
+.cx-searchwrap--canvas .cx-searchfield input { font-size: 16px; padding: 9px 0; }
+.cx-searchfield input::placeholder { color: var(--pm-text-3); }
+.cx-searchclear {
+  flex: 0 0 auto;
+  border: 0;
+  background: none;
+  color: var(--pm-text-3);
+  cursor: pointer;
+  padding: 2px;
+  border-radius: var(--pm-radius-1);
+}
+.cx-searchclear:hover { color: var(--pm-text-1); background: var(--pm-surface-3); }
+
+.cx-drop {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  min-width: 0;
+  background: var(--pm-surface-1);
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-2);
+  box-shadow: var(--pm-shadow-2);
+  z-index: 30;
+  overflow: hidden;
+}
+.cx-searchwrap--bar .cx-drop { left: auto; right: 0; width: min(460px, 92vw); }
+.cx-drop-scroll { max-height: min(52vh, 460px); padding: var(--pm-space-2); }
+.cx-drop-group + .cx-drop-group { margin-top: var(--pm-space-2); }
+.cx-drop-label {
+  font-size: 10.5px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--pm-text-3);
+  padding: 4px 8px;
+}
+.cx-result {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: none;
+  padding: 7px 8px;
+  border-radius: var(--pm-radius-1);
+  cursor: pointer;
+  color: var(--pm-text-2);
+}
+.cx-result:hover, .cx-result.is-active { background: var(--pm-surface-3); color: var(--pm-text-1); }
+.cx-result-top { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+.cx-result-label { color: var(--pm-text-1); font-weight: var(--pm-title-weight); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cx-result-type { flex: 0 0 auto; font-size: 11px; color: var(--pm-text-3); }
+.cx-result-path { font-size: 12px; color: var(--pm-text-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cx-result-avail { font-size: 12px; color: var(--pm-setup); }
+.cx-drop-empty { padding: var(--pm-space-4); color: var(--pm-text-2); }
+.cx-drop-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pm-space-2);
+  padding: 7px 10px;
+  border-top: var(--pm-border-w) solid var(--pm-border-1);
+  font-size: 12px;
+  color: var(--pm-text-3);
+}
+.cx-drop-more { border: 0; background: none; color: var(--pm-accent); cursor: pointer; padding: 2px 4px; border-radius: var(--pm-radius-1); }
+.cx-drop-more:hover { background: var(--pm-surface-3); }
+
+/* -------------------------------------------------------------------- home */
+
+.cx-block + .cx-block { margin-top: var(--pm-space-6); }
+.cx-blockhead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--pm-space-3);
+  padding-bottom: var(--pm-space-2);
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+  margin-bottom: var(--pm-space-3);
+}
+.cx-blockhead h3 { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--pm-text-3); font-weight: var(--pm-title-weight); }
+.cx-blockhead-n { font-size: 12px; color: var(--pm-text-3); font-variant-numeric: tabular-nums; }
+
+.cx-notice {
+  display: flex;
+  gap: var(--pm-space-3);
+  align-items: flex-start;
+  padding: var(--pm-space-3) var(--pm-space-4);
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-top: 2px solid var(--pm-attention);
+  border-radius: var(--pm-radius-2);
+  background: var(--pm-attention-bg);
+  margin-bottom: var(--pm-space-5);
+}
+.cx-notice[data-tone="info"] { border-top-color: var(--pm-setup); background: var(--pm-setup-bg); }
+.cx-notice .pm-icon { flex: 0 0 auto; margin-top: 3px; color: var(--pm-text-1); }
+.cx-notice-body { flex: 1 1 auto; min-width: 0; }
+.cx-notice-head { font-weight: var(--pm-title-weight); }
+.cx-notice-detail { color: var(--pm-text-2); font-size: 13px; max-width: var(--cx-measure); }
+.cx-notice-acts { display: flex; gap: var(--pm-space-2); align-items: center; flex: 0 0 auto; }
+
+.cx-attn {
+  display: flex;
+  align-items: center;
+  gap: var(--pm-space-3);
+  width: 100%;
+  text-align: left;
+  border: 0;
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+  background: none;
+  padding: 10px var(--pm-space-2);
+  cursor: pointer;
+  color: inherit;
+}
+.cx-attn:hover { background: var(--pm-surface-3); }
+.cx-attn-dot { flex: 0 0 auto; width: 7px; height: 7px; border-radius: 999px; background: var(--pm-text-3); }
+.cx-attn-dot[data-tone="attention"] { background: var(--pm-attention); }
+.cx-attn-dot[data-tone="setup"] { background: var(--pm-setup); }
+.cx-attn-dot[data-tone="info"] { background: var(--pm-accent); }
+.cx-attn-body { flex: 1 1 auto; min-width: 0; }
+.cx-attn-label { font-weight: var(--pm-title-weight); }
+.cx-attn-detail { font-size: 12.5px; color: var(--pm-text-3); }
+.cx-attn-act { flex: 0 0 auto; font-size: 12px; color: var(--pm-accent); white-space: nowrap; }
+.cx-attn-empty { color: var(--pm-text-3); padding: var(--pm-space-2); max-width: var(--cx-measure); }
+
+/* The 12 areas as a two-column reading list — rules between entries, not cards. */
+.cx-readlist {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--pm-space-7);
+}
+.cx[data-w="mid"] .cx-readlist { column-gap: var(--pm-space-5); }
+.cx[data-w="compact"] .cx-readlist { grid-template-columns: minmax(0, 1fr); }
+
+.cx-read {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--pm-space-3);
+  width: 100%;
+  text-align: left;
+  border: 0;
+  border-top: var(--pm-border-w) solid var(--pm-border-1);
+  background: none;
+  padding: var(--pm-space-3) var(--pm-space-2);
+  cursor: pointer;
+  color: inherit;
+  transition: background var(--pm-dur-1) var(--pm-ease);
+}
+.cx-read:hover { background: var(--pm-surface-3); }
+.cx-read:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: -2px; }
+.cx-read .pm-icon { flex: 0 0 auto; margin-top: 3px; color: var(--pm-text-3); }
+.cx-read-body { flex: 1 1 auto; min-width: 0; }
+.cx-read-title { font-weight: var(--pm-title-weight); font-size: 15px; }
+.cx-read-sub { color: var(--pm-text-2); font-size: 13px; max-width: var(--cx-measure); }
+.cx-read-meta { color: var(--pm-text-3); font-size: 12px; margin-top: 2px; }
+.cx-read-chev { flex: 0 0 auto; color: var(--pm-text-3); margin-top: 4px; }
+
+.cx-utils { display: flex; flex-wrap: wrap; gap: var(--pm-space-2); }
+
+/* ------------------------------------------------------------ generic rows */
+
+.cx-section { margin-bottom: var(--pm-space-6); }
+.cx-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--pm-space-3);
+  padding-bottom: 6px;
+  border-bottom: var(--pm-border-w) solid var(--pm-border-2);
+}
+.cx-section-title { font-size: 15px; }
+.cx-section-n { font-size: 12px; color: var(--pm-text-3); white-space: nowrap; }
+
+.cx-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--pm-space-4);
+  padding: var(--cx-row-y) var(--pm-space-2);
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+  scroll-margin: var(--pm-space-5);
+}
+.cx-row:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: -2px; }
+.cx-row[data-locked="true"] { background: var(--pm-surface-sunken); }
+.cx-row-main { flex: 1 1 auto; min-width: 0; max-width: var(--cx-measure); }
+.cx-row-label { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.cx-row-title { font-weight: var(--pm-title-weight); }
+.cx-row-desc { color: var(--pm-text-2); font-size: 13px; }
+.cx-row-control { flex: 0 0 auto; display: flex; align-items: center; gap: var(--pm-space-2); justify-content: flex-end; min-width: 0; max-width: 46%; }
+.cx[data-w="compact"] .cx-row { flex-direction: column; align-items: stretch; gap: var(--pm-space-2); }
+.cx[data-w="compact"] .cx-row-control { justify-content: flex-start; max-width: 100%; }
+
+/* The arrival's third beat. One ring, applied once, no blink and no loop. */
+[data-pm-locator="1"] {
+  position: relative;
+  border-radius: var(--pm-radius-1);
+  animation: cx-ring var(--pm-dur-3) var(--pm-ease-out) 220ms both;
+  box-shadow: 0 0 0 2px var(--pm-focus) inset;
+  background: var(--pm-accent-soft);
+}
+@keyframes cx-ring {
+  from { box-shadow: 0 0 0 0 var(--pm-focus) inset; background: transparent; }
+  to { box-shadow: 0 0 0 2px var(--pm-focus) inset; background: var(--pm-accent-soft); }
+}
+
+.cx-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: 11px;
+  border: var(--pm-border-w) solid var(--pm-border-1);
+  background: var(--pm-surface-3);
+  color: var(--pm-text-2);
+  white-space: nowrap;
+}
+.cx-tag[data-tone="changed"] { background: var(--pm-accent-soft); color: var(--pm-text-1); border-color: transparent; }
+.cx-tag[data-tone="managed"] { background: var(--pm-managed-bg); color: var(--pm-managed); border-color: transparent; }
+.cx-tag[data-tone="unavailable"] { background: var(--pm-unavailable-bg); color: var(--pm-unavailable); border-color: transparent; }
+.cx-tag[data-tone="setup"] { background: var(--pm-setup-bg); color: var(--pm-setup); border-color: transparent; }
+.cx-tag[data-tone="attention"] { background: var(--pm-attention-bg); color: var(--pm-attention); border-color: transparent; }
+.cx-tag[data-tone="ok"] { background: var(--pm-recommended-bg); color: var(--pm-recommended); border-color: transparent; }
+.cx-tag[data-tone="recommended"] { background: var(--pm-recommended-bg); color: var(--pm-recommended); border-color: transparent; }
+.cx-tag[data-tone="risky"] { background: var(--pm-risky-bg); color: var(--pm-risky); border-color: transparent; }
+
+.cx-why {
+  border: 0;
+  background: none;
+  padding: 2px 0;
+  margin-top: 4px;
+  color: var(--pm-accent);
+  font-size: 12.5px;
+  cursor: pointer;
+  text-align: left;
+}
+.cx-why:hover { text-decoration: underline; }
+
+.cx-details {
+  margin-top: var(--pm-space-2);
+  padding: var(--pm-space-3);
+  border: var(--pm-border-w) solid var(--pm-border-1);
+  border-radius: var(--pm-radius-1);
+  background: var(--pm-surface-1);
+  font-size: 12.5px;
+  color: var(--pm-text-2);
+}
+.cx-details dl { display: grid; grid-template-columns: minmax(0, 12em) minmax(0, 1fr); gap: 3px var(--pm-space-3); margin-top: var(--pm-space-2); }
+.cx-details dt { color: var(--pm-text-3); }
+.cx-details dd { color: var(--pm-text-1); overflow-wrap: anywhere; }
+
+.cx-err {
+  margin-top: 6px;
+  padding: 6px 9px;
+  border-radius: var(--pm-radius-1);
+  background: var(--pm-risky-bg);
+  color: var(--pm-risky);
+  font-size: 12.5px;
+}
+
+/* ---------------------------------------------------------------- controls */
+
+.cx-toggle {
+  width: 40px;
+  height: 22px;
+  border-radius: 999px;
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  background: var(--pm-surface-3);
+  position: relative;
+  cursor: pointer;
+  padding: 0;
+  transition: background var(--pm-dur-1) var(--pm-ease);
+}
+.cx-toggle::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: var(--pm-text-2);
+  transition: transform var(--pm-dur-1) var(--pm-ease), background var(--pm-dur-1) var(--pm-ease);
+}
+.cx-toggle[aria-checked="true"] { background: var(--pm-accent); border-color: var(--pm-accent); }
+.cx-toggle[aria-checked="true"]::after { transform: translateX(18px); background: var(--pm-accent-text); }
+.cx-toggle:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: 2px; }
+
+.cx-select, .cx-input {
+  font: inherit;
+  color: var(--pm-text-1);
+  background: var(--pm-surface-1);
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-1);
+  padding: 5px 8px;
+  max-width: 100%;
+  min-width: 0;
+}
+.cx-select { max-width: 22ch; }
+.cx-input { width: 20ch; }
+.cx-select:focus-visible, .cx-input:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: 1px; }
+.cx-range { width: 150px; accent-color: var(--pm-accent); }
+.cx-rangeval { font-variant-numeric: tabular-nums; color: var(--pm-text-2); font-size: 12.5px; min-width: 3ch; }
+.cx-valuetext { color: var(--pm-text-2); font-size: 13px; text-align: right; overflow-wrap: anywhere; }
+.cx-valuetext--empty { color: var(--pm-text-3); font-style: normal; }
+
+/* ----------------------------------------------------------------- manager */
+
+.cx-mgr {
+  display: grid;
+  grid-template-columns: minmax(0, 272px) minmax(0, 1fr);
+  gap: var(--pm-space-5);
+  align-items: start;
+}
+.cx[data-w="compact"] .cx-mgr { grid-template-columns: minmax(0, 1fr); }
+.cx[data-w="compact"] .cx-mgr[data-pane="detail"] .cx-mgr-roster { display: none; }
+.cx[data-w="compact"] .cx-mgr[data-pane="roster"] .cx-mgr-detail { display: none; }
+
+.cx-mgr-roster {
+  border: var(--pm-border-w) solid var(--pm-border-1);
+  border-radius: var(--pm-radius-2);
+  background: var(--pm-surface-1);
+  overflow: hidden;
+}
+.cx-mgr-roster-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pm-space-2);
+  padding: 8px var(--pm-space-3);
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--pm-text-3);
+}
+.cx-mgr-roster-list { max-height: 520px; }
+.cx-obj {
+  display: flex;
+  align-items: center;
+  gap: var(--pm-space-2);
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: none;
+  padding: 9px var(--pm-space-3);
+  cursor: pointer;
+  color: inherit;
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+}
+.cx-obj:hover { background: var(--pm-surface-2); }
+.cx-obj[aria-selected="true"] { background: var(--pm-accent-soft); }
+.cx-obj-body { flex: 1 1 auto; min-width: 0; }
+.cx-obj-name { font-weight: var(--pm-title-weight); overflow-wrap: break-word;}
+.cx-obj-sub { font-size: 12px; color: var(--pm-text-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.cx-mgr-detail { min-width: 0; }
+
+/* Manager-local tabs sit INSIDE the page and are deliberately a different shape
+ * from the edge tabs: horizontal, pill-shaped, underlined by the page rule. */
+.cx-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding-bottom: var(--pm-space-2);
+  border-bottom: var(--pm-border-w) solid var(--pm-border-2);
+  margin-bottom: var(--pm-space-4);
+}
+.cx-ltab {
+  border: var(--pm-border-w) solid var(--pm-border-1);
+  background: none;
+  color: var(--pm-text-3);
+  padding: 4px 11px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.cx-ltab:hover { background: var(--pm-surface-3); color: var(--pm-text-1); }
+.cx-ltab[aria-selected="true"] { background: var(--pm-surface-3); border-color: var(--pm-border-2); color: var(--pm-text-1); font-weight: var(--pm-title-weight); }
+.cx-ltab:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: 1px; }
+
+.cx-health {
+  display: flex;
+  gap: var(--pm-space-3);
+  align-items: flex-start;
+  padding: var(--pm-space-3) var(--pm-space-4);
+  border: var(--pm-border-w) solid var(--pm-border-1);
+  border-radius: var(--pm-radius-2);
+  background: var(--pm-surface-1);
+  margin-bottom: var(--pm-space-4);
+}
+.cx-health .pm-icon { flex: 0 0 auto; margin-top: 3px; }
+.cx-health-word { font-weight: var(--pm-title-weight); }
+.cx-health-detail { color: var(--pm-text-2); font-size: 13px; max-width: var(--cx-measure); }
+.cx-health-counts { display: flex; flex-wrap: wrap; gap: var(--pm-space-4); margin-top: var(--pm-space-2); }
+.cx-count-k { display: block; font-size: 11px; color: var(--pm-text-3); text-transform: uppercase; letter-spacing: .06em; }
+.cx-count-v { display: block; font-size: 17px; font-variant-numeric: tabular-nums; }
+
+.cx-owner {
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-2);
+  background: var(--pm-surface-1);
+  padding: var(--pm-space-4);
+  margin-bottom: var(--pm-space-4);
+}
+.cx-owner-k { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--pm-text-3); margin-top: var(--pm-space-3); }
+.cx-owner-k:first-child { margin-top: 0; }
+.cx-owner p { color: var(--pm-text-2); font-size: 13px; max-width: var(--cx-measure); }
+
+.cx-fields { display: grid; grid-template-columns: minmax(0, 14em) minmax(0, 1fr); gap: 4px var(--pm-space-4); margin: var(--pm-space-2) 0; font-size: 13px; }
+.cx-fields dt { color: var(--pm-text-3); }
+.cx-fields dd { color: var(--pm-text-1); overflow-wrap: anywhere; }
+
+.cx-actions { display: flex; flex-wrap: wrap; gap: var(--pm-space-2); margin-top: var(--pm-space-3); align-items: center; }
+
+.cx-empty {
+  border: var(--pm-border-w) dashed var(--pm-border-2);
+  border-radius: var(--pm-radius-2);
+  padding: var(--pm-space-4);
+  color: var(--pm-text-2);
+  background: var(--pm-surface-1);
+}
+.cx-empty-head { font-weight: var(--pm-title-weight); color: var(--pm-text-1); }
+
+.cx-prose { color: var(--pm-text-2); max-width: var(--cx-measure); }
+.cx-prose p + p { margin-top: var(--pm-space-2); }
+
+.cx-tablewrap { overflow-x: auto; overflow-y: hidden; border: var(--pm-border-w) solid var(--pm-border-1); border-radius: var(--pm-radius-2); }
+.cx-table { border-collapse: collapse; width: 100%; font-size: 13px; }
+.cx-table th, .cx-table td { text-align: left; padding: 7px var(--pm-space-3); border-bottom: var(--pm-border-w) solid var(--pm-border-1); white-space: nowrap; }
+.cx-table th { color: var(--pm-text-3); font-weight: var(--pm-title-weight); font-size: 11.5px; text-transform: uppercase; letter-spacing: .06em; }
+
+/* ----------------------------------------------------------- all settings */
+
+.cx-all { display: grid; grid-template-columns: minmax(0, 232px) minmax(0, 1fr); gap: var(--pm-space-5); align-items: start; }
+.cx[data-w="compact"] .cx-all { grid-template-columns: minmax(0, 1fr); }
+.cx-facets { display: flex; flex-direction: column; gap: var(--pm-space-4); }
+.cx-facet { border: var(--pm-border-w) solid var(--pm-border-1); border-radius: var(--pm-radius-2); background: var(--pm-surface-1); padding: var(--pm-space-2); }
+.cx-facet-head { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--pm-text-3); padding: 4px 8px; }
+.cx-facet-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pm-space-2);
+  width: 100%;
+  border: 0;
+  background: none;
+  padding: 4px 8px;
+  border-radius: var(--pm-radius-1);
+  cursor: pointer;
+  color: var(--pm-text-2);
+  font-size: 12.5px;
+  text-align: left;
+}
+.cx-facet-item:hover { background: var(--pm-surface-3); color: var(--pm-text-1); }
+.cx-facet-item[aria-pressed="true"] { background: var(--pm-accent-soft); color: var(--pm-text-1); }
+.cx-facet-item span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cx-facet-n { flex: 0 0 auto; font-variant-numeric: tabular-nums; color: var(--pm-text-3); }
+
+.cx-allhead { display: flex; align-items: center; justify-content: space-between; gap: var(--pm-space-3); margin-bottom: var(--pm-space-2); flex-wrap: wrap; }
+.cx-allcount { color: var(--pm-text-3); font-size: 12.5px; }
+.cx-alllist { border: var(--pm-border-w) solid var(--pm-border-1); border-radius: var(--pm-radius-2); background: var(--pm-surface-1); }
+.cx-allrow {
+  display: flex;
+  align-items: center;
+  gap: var(--pm-space-3);
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: none;
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+  padding: 6px var(--pm-space-3);
+  height: 44px;
+  cursor: pointer;
+  color: inherit;
+}
+.cx-allrow:hover { background: var(--pm-surface-3); }
+.cx-allrow-body { flex: 1 1 auto; min-width: 0; }
+.cx-allrow-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cx-allrow-path { font-size: 11.5px; color: var(--pm-text-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cx-vspacer { width: 100%; }
+
+/* -------------------------------------------------------------------- copy */
+
+.cx-steps { display: flex; align-items: center; flex-wrap: wrap; gap: var(--pm-space-2); margin-bottom: var(--pm-space-5); }
+.cx-step { display: flex; align-items: center; gap: 8px; padding: 5px 12px; border-radius: 999px; border: var(--pm-border-w) solid var(--pm-border-1); color: var(--pm-text-3); font-size: 12.5px; }
+.cx-step[data-state="current"] { border-color: var(--pm-accent); background: var(--pm-accent-soft); color: var(--pm-text-1); font-weight: var(--pm-title-weight); }
+.cx-step[data-state="done"] { color: var(--pm-text-2); background: var(--pm-surface-3); }
+.cx-step-n { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 999px; background: var(--pm-surface-3); font-size: 11px; font-variant-numeric: tabular-nums; }
+.cx-step[data-state="current"] .cx-step-n { background: var(--pm-accent); color: var(--pm-accent-text); }
+.cx-step-arrow { color: var(--pm-text-3); }
+
+.cx-src, .cx-cat {
+  display: flex;
+  align-items: center;
+  gap: var(--pm-space-3);
+  width: 100%;
+  text-align: left;
+  border: 0;
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+  background: none;
+  padding: 10px var(--pm-space-2);
+  cursor: pointer;
+  color: inherit;
+}
+.cx-src:hover, .cx-cat:hover { background: var(--pm-surface-3); }
+.cx-src[aria-pressed="true"], .cx-cat[aria-pressed="true"] { background: var(--pm-accent-soft); }
+.cx-src-body, .cx-cat-body { flex: 1 1 auto; min-width: 0; }
+.cx-src-name { font-weight: var(--pm-title-weight); }
+.cx-src-sub { font-size: 12.5px; color: var(--pm-text-3); }
+.cx-src-meta { flex: 0 0 auto; font-size: 12.5px; color: var(--pm-text-3); white-space: nowrap; }
+.cx-cat-box {
+  flex: 0 0 auto;
+  width: 16px; height: 16px;
+  border-radius: 4px;
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--pm-accent-text);
+}
+.cx-cat[aria-pressed="true"] .cx-cat-box { background: var(--pm-accent); border-color: var(--pm-accent); }
+.cx-cats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--pm-space-5); }
+.cx[data-w="compact"] .cx-cats { grid-template-columns: minmax(0, 1fr); }
+
+.cx-tiles { display: flex; flex-wrap: wrap; gap: var(--pm-space-3); margin-bottom: var(--pm-space-4); }
+.cx-tile { border: var(--pm-border-w) solid var(--pm-border-1); border-radius: var(--pm-radius-2); background: var(--pm-surface-1); padding: var(--pm-space-3) var(--pm-space-4); min-width: 120px; }
+.cx-tile-v { font-size: 21px; font-variant-numeric: tabular-nums; }
+.cx-tile-k { font-size: 11.5px; color: var(--pm-text-3); }
+
+.cx-difflist { border: var(--pm-border-w) solid var(--pm-border-1); border-radius: var(--pm-radius-2); background: var(--pm-surface-1); }
+.cx-diffrow { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr); gap: var(--pm-space-3); align-items: center; padding: 8px var(--pm-space-3); border-bottom: var(--pm-border-w) solid var(--pm-border-1); height: 52px; }
+.cx-diff-label { min-width: 0; }
+.cx-diff-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cx-diff-path { font-size: 11.5px; color: var(--pm-text-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cx-diff-from { color: var(--pm-text-3); font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cx-diff-to { color: var(--pm-text-1); font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.cx-note { border: var(--pm-border-w) solid var(--pm-border-1); border-radius: var(--pm-radius-2); background: var(--pm-surface-1); padding: var(--pm-space-3) var(--pm-space-4); margin-top: var(--pm-space-4); }
+.cx-note p { color: var(--pm-text-2); font-size: 13px; max-width: var(--cx-measure); }
+
+.cx-phase { display: flex; align-items: center; justify-content: space-between; gap: var(--pm-space-3); padding: 8px var(--pm-space-2); border-bottom: var(--pm-border-w) solid var(--pm-border-1); }
+.cx-phase-state { font-size: 12.5px; color: var(--pm-text-3); }
+.cx-progress { height: 6px; border-radius: 999px; background: var(--pm-surface-3); overflow: hidden; margin: var(--pm-space-3) 0; }
+.cx-progress i { display: block; height: 100%; background: var(--pm-accent); transition: width var(--pm-dur-2) var(--pm-ease); }
+
+/* ------------------------------------------------------- situation + notice */
+
+/* Which deterministic situation is being shown, stated inside Settings so a
+ * screenshot explains itself instead of leaving the reader to guess. */
+.cx-situation {
+  display: flex;
+  align-items: center;
+  gap: var(--pm-space-2);
+  padding: 6px var(--pm-space-4);
+  background: var(--pm-surface-3);
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+  border-radius: var(--pm-radius-2) 0 0 0;
+  color: var(--pm-text-2);
+  font-size: 12.5px;
+  flex: 0 0 auto;
+}
+.cx[data-depth="0"] .cx-situation { border-radius: 0; }
+.cx-situation b { color: var(--pm-text-1); }
+.cx-situation .pm-icon { flex: 0 0 auto; color: var(--pm-text-3); }
+.cx-situation-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.cx-linknotice {
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-top: 2px solid var(--pm-setup);
+  border-radius: var(--pm-radius-2);
+  background: var(--pm-setup-bg);
+  padding: var(--pm-space-3) var(--pm-space-4);
+  margin-bottom: var(--pm-space-5);
+}
+.cx-linknotice p { color: var(--pm-text-2); font-size: 13px; max-width: var(--cx-measure); overflow-wrap: anywhere; }
+
+.cx-foundvia {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--pm-text-3);
+  padding: 4px var(--pm-space-2);
+}
+.cx-foundvia .pm-icon { flex: 0 0 auto; }
+
+/* ----------------------------------------------------------------- footbar */
+
+.cx-footbar {
+  display: flex;
+  align-items: center;
+  gap: var(--pm-space-2);
+  flex-wrap: wrap;
+  padding: 6px var(--pm-space-4);
+  border-top: var(--pm-border-w) solid var(--pm-border-1);
+  background: var(--pm-surface-1);
+  font-size: 12px;
+  color: var(--pm-text-3);
+  flex: 0 0 auto;
+}
+.cx-footbar select {
+  font: inherit;
+  font-size: 12px;
+  color: var(--pm-text-1);
+  background: var(--pm-surface-2);
+  border: var(--pm-border-w) solid var(--pm-border-1);
+  border-radius: var(--pm-radius-1);
+  padding: 3px 6px;
+  max-width: 240px;
+}
+.cx-footbar-note { min-width: 0; flex: 1 1 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+
+/* ------------------------------------------------------- retro themes snap
+ * Measured Puppet Master motion canon: the Retro families do not ease — their
+ * surfaces snap, the way a phosphor display changes state. Easing them would make
+ * Retro a recoloured Friendly rather than its own material. Reduced motion still
+ * wins, because it is set on the root and collapses these to 1ms anyway. */
+[data-theme^="retro"] .cx,
+[data-theme^="retro"] .cx * {
+  --pm-dur-1: 0ms;
+  --pm-dur-2: 0ms;
+  --pm-dur-3: 0ms;
+}
+/* Menus are appended to `document.body`, outside this concept's root, so the
+ * root-scoped snap below never reached them: a retro theme that fades its popups
+ * is not a retro theme. Named here explicitly rather than widened to `*`. */
+[data-theme^="retro"] .cx-menu,
+[data-theme^="retro"] .cx-menu *,
+[data-theme^="retro"] .cx *,
+[data-theme^="retro"] .cx *::before,
+[data-theme^="retro"] .cx *::after {
+  animation-duration: 0ms !important;
+  transition-duration: 0ms !important;
+}
+
+
+/* ------------------------------------------------------- the value picker
+ * Puppet Master Model/Mode selector idiom. The menu is fixed-position and placed by
+ * PM2Menu, so it flips above its trigger near the bottom of the page and shifts back
+ * inside the viewport at the right edge instead of running off it. */
+.cx-picker { position: relative; display: inline-flex; }
+.cx-picker-trigger {
+  display: inline-flex; align-items: center; justify-content: space-between; gap: 8px;
+  min-width: 150px; max-width: 260px; min-height: 28px; padding: 3px 8px 3px 10px;
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-1);
+  background: var(--pm-surface-2);
+  color: var(--pm-text-1);
+  font: inherit;
+  cursor: pointer;
+  transition: border-color var(--pm-dur-1) var(--pm-ease), background var(--pm-dur-1) var(--pm-ease);
+}
+.cx-picker-trigger:hover { background: var(--pm-surface-3); border-color: var(--pm-border-strong); }
+.cx-picker-trigger[aria-expanded="true"] { border-color: var(--pm-accent); }
+.cx-picker-trigger:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: 2px; }
+.cx-picker-value { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; }
+.cx-picker-chev { flex: 0 0 auto; display: inline-flex; color: var(--pm-text-3); }
+
+.cx-menu {
+  position: fixed; z-index: 200;
+  min-width: 150px; padding: 4px;
+  overflow-y: auto;
+  background: var(--pm-surface-2);
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-2);
+  box-shadow: var(--pm-shadow-2);
+  /* The glass themes make every surface token translucent, so a menu drawn on one
+   * alone lets the page read through it. `shared/pm-shell.css` solves this the same
+   * way for the app's own popups: the theme's blur, which is `none` everywhere else. */
+  backdrop-filter: var(--pm-surface-blur);
+  scrollbar-width: thin;
+  scrollbar-color: var(--pm-border-2) transparent;
+  animation: cx-menu-in var(--pm-dur-1) var(--pm-ease-out) both;
+}
+.cx-menu::-webkit-scrollbar { width: 10px; }
+.cx-menu::-webkit-scrollbar-thumb { background: var(--pm-border-2); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+@keyframes cx-menu-in {
+  from { opacity: 0; transform: translateY(calc(-4px * var(--pm-motion-transform))); }
+  to   { opacity: 1; transform: none; }
+}
+.cx-menu[data-side="above"] { animation-name: cx-menu-in-up; }
+@keyframes cx-menu-in-up {
+  from { opacity: 0; transform: translateY(calc(4px * var(--pm-motion-transform))); }
+  to   { opacity: 1; transform: none; }
+}
+.cx-menu-item {
+  display: flex; align-items: center; gap: 8px;
+  width: 100%; text-align: left;
+  padding: 6px 8px;
+  border: 0; background: none; border-radius: var(--pm-radius-1);
+  color: var(--pm-text-1); font: inherit; cursor: pointer;
+}
+.cx-menu-item:hover { background: var(--pm-surface-3); }
+.cx-menu-item[aria-selected="true"] { background: var(--pm-accent-soft); }
+.cx-menu-item:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: -2px; }
+.cx-menu-check { flex: 0 0 auto; width: 14px; display: inline-flex; color: var(--pm-accent); }
+.cx-menu-label { min-width: 0; overflow-wrap: break-word; }
+
+
+/* ------------------------------------------------------------ on-page index */
+.cx-onpage {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 4px;
+  padding: var(--pm-space-2) 0 var(--pm-space-3);
+  margin-bottom: var(--pm-space-3);
+  border-bottom: var(--pm-border-w) solid var(--pm-border-1);
+}
+.cx-onpage-label { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--pm-text-3); margin-right: var(--pm-space-2); }
+.cx-onpage-item {
+  padding: 3px 8px; border: 0; background: none; border-radius: var(--pm-radius-1);
+  color: var(--pm-text-3); cursor: pointer; font: inherit;
+  transition: color var(--pm-dur-1) var(--pm-ease), background var(--pm-dur-1) var(--pm-ease);
+}
+.cx-onpage-item:hover { color: var(--pm-text-1); background: var(--pm-surface-2); }
+.cx-onpage-item[aria-current="true"] { color: var(--pm-text-1); background: var(--pm-accent-soft); }
+.cx-onpage-item:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: 2px; }
+
+
+/* ---------------------------------------------------------------- notice groups */
+/* `01_CORE_ARCHITECTURE` § Notices asks for three separated runs — Needs attention,
+ * Continue setup, Recommended. The label is deliberately quieter than the notices it
+ * introduces: it orients, it does not compete with the thing that needs doing. */
+.cx-attn-group {
+  margin: 16px 0 7px; font-size: 12px; font-weight: 600; letter-spacing: .02em;
+  color: var(--pm-text-2);
+}
+.cx-attn-group:first-of-type { margin-top: 4px; }
+
+
+/* ------------------------------------------------------------------- submenus */
+/* `07_THEME_MOTION_RESPONSIVE_AND_SLINT` line 19: the Model/Mode selector family
+ * "including collision handling, layering, submenus, and open/close behavior". The
+ * second level opens beside the panel on its own layer. Deliberately the SAME menu
+ * family across the seven concepts — a product-wide control that changed shape per
+ * concept would be a different product each time — with each concept's own tokens,
+ * radius and shadow doing the visual work. */
+/* An open parent has to stay legible as open in all eight themes. The glass
+ * palettes put surface-3 within a few percent of surface-2, so the background
+ * alone disappears there; the inset hairline is what actually reads. */
+.cx-menu-item.is-parent[aria-expanded="true"] {
+  background: var(--pm-surface-3);
+  box-shadow: inset 0 0 0 var(--pm-border-w) var(--pm-border-2);
+}
+.cx-menu-more {
+  flex: 0 0 auto; margin-left: auto; display: inline-flex;
+  color: var(--pm-text-3);
+}
+.cx-menu-item.is-parent:hover .cx-menu-more,
+.cx-menu-item.is-parent[aria-expanded="true"] .cx-menu-more { color: var(--pm-text-2); }
+
+.cx-submenu { z-index: 201; }
+/* It arrives from the side it opens on, so the direction of travel matches the
+ * direction the reader's eye is already moving. 150ms, no overshoot. */
+.cx-submenu { animation: cx-submenu-in var(--pm-dur-1) var(--pm-ease-out) both; }
+@keyframes cx-submenu-in {
+  from { opacity: 0; transform: translateX(calc(-5px * var(--pm-motion-transform))); }
+  to   { opacity: 1; transform: none; }
+}
+.cx-submenu[data-side="left"] { animation-name: cx-submenu-in-left; }
+@keyframes cx-submenu-in-left {
+  from { opacity: 0; transform: translateX(calc(5px * var(--pm-motion-transform))); }
+  to   { opacity: 1; transform: none; }
+}

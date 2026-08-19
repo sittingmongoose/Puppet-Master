@@ -100,7 +100,14 @@
   --ed-rhythm: 20px;
   --ed-row-h: 44px;
   --ed-gutter: 22px;
-  --ed-slide: var(--pm-dur-2);
+  /* The search field and the crumb strip are held to the measure of the sheet
+   * underneath them, so every left edge in the column lines up. All settings is
+   * the one surface that runs wider, and it widens the strip with it. */
+  --ed-strip-w: var(--ed-sheet-w);
+  /* The one duration this concept owns: a page turn is 180ms, between the theme's
+   * 120ms micro-transition and its 220ms surface change. Reduced motion still wins,
+   * because the theme file clamps every animation and zeroes --pm-motion-transform. */
+  --ed-slide: 180ms;
 
   display: flex;
   flex-direction: column;
@@ -112,6 +119,10 @@
   font-size: var(--pm-font-size);
   line-height: 1.6;
 }
+
+/* A concept that gives everything an explicit display value has to say what the
+ * hidden attribute means, or a control the renderer has hidden goes on showing. */
+.ed [hidden] { display: none !important; }
 
 .ed-body {
   flex: 1 1 auto;
@@ -161,7 +172,7 @@
 
 .ed-nav-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
   width: 100%;
   padding: 7px var(--pm-space-2);
@@ -172,7 +183,7 @@
   line-height: 1.35;
   transition: background var(--pm-dur-1) var(--pm-ease), color var(--pm-dur-1) var(--pm-ease);
 }
-.ed-nav-item .pm-icon { color: var(--pm-text-3); }
+.ed-nav-item .pm-icon { color: var(--pm-text-3); flex: none; margin-top: 1px; }
 .ed-nav-item:hover { background: var(--pm-surface-2); color: var(--pm-text-1); }
 .ed-nav-item:hover .pm-icon { color: var(--pm-text-2); }
 /* Current is weight plus surface — never a coloured edge bar. */
@@ -182,14 +193,22 @@
   font-weight: 600;
 }
 .ed-nav-item[aria-current="page"] .pm-icon { color: var(--pm-accent); }
+/* Area names wrap onto a second line rather than ending in an ellipsis: a rail
+ * that abbreviates the destination is a rail the reader has to decode. */
 .ed-nav-text {
   min-width: 0;
   flex: 1 1 auto;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
 }
-.ed-nav-count { flex: none; font-size: 11px; color: var(--pm-text-3); font-variant-numeric: tabular-nums; }
+.ed-nav-count {
+  flex: none;
+  margin-top: 1px;
+  font-size: 11px;
+  color: var(--pm-text-3);
+  font-variant-numeric: tabular-nums;
+}
 
 .ed-rail-rule {
   height: var(--pm-border-w);
@@ -224,6 +243,14 @@
   background: var(--pm-surface-1);
 }
 .ed[data-ed-width="narrow"] .ed-top { padding: var(--pm-space-3) var(--pm-space-4); }
+/* Held to the measure of the widest sheet: on a 2500px screen a search field
+ * two thousand pixels long is a stretched control, not a generous one. */
+.ed-top > .ed-top-line,
+.ed-top > .ed-search {
+  max-width: var(--ed-strip-w);
+  margin-left: auto;
+  margin-right: auto;
+}
 
 .ed-top-line {
   display: flex;
@@ -376,14 +403,19 @@
 
 .ed-crumbs {
   flex: none;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: var(--pm-space-2) var(--pm-space-3);
   padding: var(--pm-space-2) var(--pm-space-5);
   border-bottom: var(--pm-border-w) solid var(--pm-border-1);
   background: var(--pm-surface-1);
   min-width: 0;
+}
+.ed-crumbs-inner {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--pm-space-2) var(--pm-space-3);
+  min-width: 0;
+  max-width: var(--ed-strip-w);
+  margin: 0 auto;
 }
 .ed[data-ed-width="narrow"] .ed-crumbs { padding: var(--pm-space-2) var(--pm-space-4); }
 
@@ -443,9 +475,13 @@
 }
 .ed[data-ed-dir="back"] .ed-sheet { animation-name: ed-backward; }
 .ed[data-ed-width="narrow"] .ed-sheet { padding: var(--pm-space-5) var(--pm-space-4) 88px; }
-.ed[data-ed-width="wide"] .ed-sheet { --ed-sheet-w: 1080px; }
+.ed[data-ed-width="wide"] { --ed-sheet-w: 1080px; }
 .ed-sheet.is-wide { max-width: 1180px; }
 .ed[data-ed-width="wide"] .ed-sheet.is-wide { max-width: 1380px; }
+/* All settings is the one surface that runs past the reading measure, so the
+ * strip above it grows to the same width rather than sitting inside it. */
+.ed[data-pm-surface="all"] { --ed-strip-w: 1180px; }
+.ed[data-ed-width="wide"][data-pm-surface="all"] { --ed-strip-w: 1380px; }
 
 /* Forward is downward, the direction of reading; Back reverses it. */
 @keyframes ed-forward {
@@ -1184,4 +1220,138 @@
 .ed-sr {
   position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+
+/* ------------------------------------------------------- retro themes snap
+ * Measured Puppet Master motion canon: the Retro families do not ease — their
+ * surfaces snap, the way a phosphor display changes state. Easing them would make
+ * Retro a recoloured Friendly rather than its own material. Reduced motion still
+ * wins, because it is set on the root and collapses these to 1ms anyway. */
+[data-theme^="retro"] .ed,
+[data-theme^="retro"] .ed * {
+  --pm-dur-1: 0ms;
+  --pm-dur-2: 0ms;
+  --pm-dur-3: 0ms;
+}
+/* Menus are appended to `document.body`, outside this concept's root, so the
+ * root-scoped snap below never reached them: a retro theme that fades its popups
+ * is not a retro theme. Named here explicitly rather than widened to `*`. */
+[data-theme^="retro"] .ed-menu,
+[data-theme^="retro"] .ed-menu *,
+[data-theme^="retro"] .ed *,
+[data-theme^="retro"] .ed *::before,
+[data-theme^="retro"] .ed *::after {
+  animation-duration: 0ms !important;
+  transition-duration: 0ms !important;
+}
+
+
+/* ------------------------------------------------------- the value picker
+ * Puppet Master Model/Mode selector idiom. The menu is fixed-position and placed by
+ * PM2Menu, so it flips above its trigger near the bottom of the page and shifts back
+ * inside the viewport at the right edge instead of running off it. */
+.ed-picker { position: relative; display: inline-flex; }
+.ed-picker-trigger {
+  display: inline-flex; align-items: center; justify-content: space-between; gap: 8px;
+  min-width: 150px; max-width: 260px; min-height: 28px; padding: 3px 8px 3px 10px;
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-1);
+  background: var(--pm-surface-2);
+  color: var(--pm-text-1);
+  font: inherit;
+  cursor: pointer;
+  transition: border-color var(--pm-dur-1) var(--pm-ease), background var(--pm-dur-1) var(--pm-ease);
+}
+.ed-picker-trigger:hover { background: var(--pm-surface-3); border-color: var(--pm-border-strong); }
+.ed-picker-trigger[aria-expanded="true"] { border-color: var(--pm-accent); }
+.ed-picker-trigger:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: 2px; }
+.ed-picker-value { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; }
+.ed-picker-chev { flex: 0 0 auto; display: inline-flex; color: var(--pm-text-3); }
+
+.ed-menu {
+  position: fixed; z-index: 200;
+  min-width: 150px; padding: 4px;
+  overflow-y: auto;
+  background: var(--pm-surface-2);
+  border: var(--pm-border-w) solid var(--pm-border-2);
+  border-radius: var(--pm-radius-2);
+  box-shadow: var(--pm-shadow-2);
+  /* The glass themes make every surface token translucent, so a menu drawn on one
+   * alone lets the page read through it. `shared/pm-shell.css` solves this the same
+   * way for the app's own popups: the theme's blur, which is `none` everywhere else. */
+  backdrop-filter: var(--pm-surface-blur);
+  scrollbar-width: thin;
+  scrollbar-color: var(--pm-border-2) transparent;
+  animation: ed-menu-in var(--pm-dur-1) var(--pm-ease-out) both;
+}
+.ed-menu::-webkit-scrollbar { width: 10px; }
+.ed-menu::-webkit-scrollbar-thumb { background: var(--pm-border-2); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+@keyframes ed-menu-in {
+  from { opacity: 0; transform: translateY(calc(-4px * var(--pm-motion-transform))); }
+  to   { opacity: 1; transform: none; }
+}
+.ed-menu[data-side="above"] { animation-name: ed-menu-in-up; }
+@keyframes ed-menu-in-up {
+  from { opacity: 0; transform: translateY(calc(4px * var(--pm-motion-transform))); }
+  to   { opacity: 1; transform: none; }
+}
+.ed-menu-item {
+  display: flex; align-items: center; gap: 8px;
+  width: 100%; text-align: left;
+  padding: 6px 8px;
+  border: 0; background: none; border-radius: var(--pm-radius-1);
+  color: var(--pm-text-1); font: inherit; cursor: pointer;
+}
+.ed-menu-item:hover { background: var(--pm-surface-3); }
+.ed-menu-item[aria-selected="true"] { background: var(--pm-accent-soft); }
+.ed-menu-item:focus-visible { outline: 2px solid var(--pm-focus); outline-offset: -2px; }
+.ed-menu-check { flex: 0 0 auto; width: 14px; display: inline-flex; color: var(--pm-accent); }
+.ed-menu-label { min-width: 0; overflow-wrap: break-word; }
+
+
+/* ---------------------------------------------------------------- notice groups */
+/* `01_CORE_ARCHITECTURE` § Notices asks for three separated runs — Needs attention,
+ * Continue setup, Recommended. The label is deliberately quieter than the notices it
+ * introduces: it orients, it does not compete with the thing that needs doing. */
+.ed-att-group {
+  margin: 20px 0 10px; padding-top: 16px; border-top: 1px solid var(--pm-line);
+  font-size: 12px; font-weight: 600; color: var(--pm-text-2); letter-spacing: .01em;
+}
+.ed-att-group:first-of-type { margin-top: 6px; padding-top: 0; border-top: 0; }
+
+
+/* ------------------------------------------------------------------- submenus */
+/* `07_THEME_MOTION_RESPONSIVE_AND_SLINT` line 19: the Model/Mode selector family
+ * "including collision handling, layering, submenus, and open/close behavior". The
+ * second level opens beside the panel on its own layer. Deliberately the SAME menu
+ * family across the seven concepts — a product-wide control that changed shape per
+ * concept would be a different product each time — with each concept's own tokens,
+ * radius and shadow doing the visual work. */
+/* An open parent has to stay legible as open in all eight themes. The glass
+ * palettes put surface-3 within a few percent of surface-2, so the background
+ * alone disappears there; the inset hairline is what actually reads. */
+.ed-menu-item.is-parent[aria-expanded="true"] {
+  background: var(--pm-surface-3);
+  box-shadow: inset 0 0 0 var(--pm-border-w) var(--pm-border-2);
+}
+.ed-menu-more {
+  flex: 0 0 auto; margin-left: auto; display: inline-flex;
+  color: var(--pm-text-3);
+}
+.ed-menu-item.is-parent:hover .ed-menu-more,
+.ed-menu-item.is-parent[aria-expanded="true"] .ed-menu-more { color: var(--pm-text-2); }
+
+.ed-submenu { z-index: 201; }
+/* It arrives from the side it opens on, so the direction of travel matches the
+ * direction the reader's eye is already moving. 150ms, no overshoot. */
+.ed-submenu { animation: ed-submenu-in var(--pm-dur-1) var(--pm-ease-out) both; }
+@keyframes ed-submenu-in {
+  from { opacity: 0; transform: translateX(calc(-5px * var(--pm-motion-transform))); }
+  to   { opacity: 1; transform: none; }
+}
+.ed-submenu[data-side="left"] { animation-name: ed-submenu-in-left; }
+@keyframes ed-submenu-in-left {
+  from { opacity: 0; transform: translateX(calc(5px * var(--pm-motion-transform))); }
+  to   { opacity: 1; transform: none; }
 }

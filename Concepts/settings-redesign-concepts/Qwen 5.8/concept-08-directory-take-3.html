@@ -200,6 +200,30 @@
   var pendingFocus = null;      // {row, sec, object}
   var synState = {};            // concept-local values for family fixture rows
   var viewCache = {};           // routeKey -> html (loading-with-cache)
+  // ---------------------------------------------------------------- runtime-demand continuation (packet 08)
+  var demand = null, staleDemand = {}, installedLocal = {};
+  var ATT_SOURCES = ["managed", "unavailable", "restart", "reconnect", "changed-elsewhere"];
+  function demandToken() { return "cont-" + Date.now().toString(36) + "-" + Math.floor(Math.random() * 46656).toString(36); }
+  function provReady(p) {
+    if (installedLocal[p.id]) return true;
+    return p.readiness.indexOf("not-installed") < 0 && (p.readiness.indexOf("authenticated") >= 0 || p.readiness.indexOf("probe-ok") >= 0);
+  }
+  function destEntries() { return MD.searchEntries(); }
+  function demandBlockHTML(p) {
+    var html = '<div class="d3-kv" style="margin-top:8px"><span class="k">Runtime demand<small>a chat run requests this CLI; the originating operation is preserved with a continuation token</small></span>' +
+      '<button class="pm-btn pm-btn-sm" data-act="demand-simulate" data-prov="' + esc(p.id) + '">Simulate a runtime demand for this CLI</button></div>';
+    var d = demand && demand.id === p.id ? demand : null;
+    if (d) {
+      html += '<div class="d3-kv"><span class="k">' + esc(d.op) + '<small>continuation token ' + esc(d.token) + (provReady(p) ? " — current" : " — waiting for installed + authenticated") + '</small></span>' +
+        (provReady(p)
+          ? '<button class="pm-btn pm-btn-primary pm-btn-sm" data-act="demand-resume" data-prov="' + esc(p.id) + '">Resume originating operation</button>'
+          : '<button class="pm-btn pm-btn-sm" data-act="demand-open" data-prov="' + esc(p.id) + '">Open install row</button>') + "</div>";
+      html += '<div class="pm-note">Deep link: #/mgr/providers/' + esc(p.id) + '?sec=install — resumes only while the stored token still matches this demand.</div>';
+    } else if (staleDemand[p.id]) {
+      html += '<div class="pm-note">Continuation stale: "' + esc(staleDemand[p.id].op) + '" (token ' + esc(staleDemand[p.id].token) + ') was superseded by a newer runtime demand; the stored token no longer matches. Simulate again to preserve a new operation.</div>';
+    }
+    return html;
+  }
 
   function go(h) { if (location.hash === h) render(currentRoute(), true); else location.hash = h; }
 
@@ -543,7 +567,7 @@
     var sel = p.installations.filter(function (i) { return i.selected; })[0];
     var status = '<dl class="d3-statgrid">' +
       stat("Status", p.state) + stat("Auth", authLabel) +
-      stat("Accounts", p.accounts.length ? p.accounts.filter(function (a) { return a.preferred; })[0].label : "None connected", p.accounts.length + " account" + (p.accounts.length === 1 ? "" : "s")) +
+      stat("Accounts", p.accounts.length ? ((p.accounts.filter(function (a) { return a.preferred; })[0] || p.accounts[0]).label) : "None connected", p.accounts.length + " account" + (p.accounts.length === 1 ? "" : "s")) +
       stat("Installation", sel ? sel.label : "Not installed", sel ? sel.confidence + " confidence · " + sel.host : "explicit install required") +
       stat("Models", p.models.length + " available", p.models.slice(0, 2).map(function (m) { return m.label; }).join(", ")) +
       stat("Usage", p.limits.used === "unavailable" ? "Unavailable" : p.limits.used + " of plan", p.limits.rpm ? p.limits.rpm + " rpm · " + (p.limits.tpm / 1e6).toFixed(0) + "M tpm" : "provider exposes no meters") +
@@ -612,13 +636,13 @@
     if (p.readiness.indexOf("not-installed") >= 0)
       return '<div class="pm-note">Not installed. Installation is explicit, user-triggered, from the official source, for the exact Host/Environment.</div>' +
         '<div class="d3-kv"><span class="k">Target host<small>' + host + "</small></span><span class=\"pm-badge pm-badge-info\">official source only</span></div>" +
-        '<div class="d3-qa"><button class="pm-btn pm-btn-primary pm-btn-sm" data-act="install-official">' + ic("download", 12) + " Install from official source</button></div>";
+        '<div class="d3-qa"><button class="pm-btn pm-btn-primary pm-btn-sm" data-act="install-official" data-prov="' + esc(p.id) + '">' + ic("download", 12) + " Install from official source</button></div>" + demandBlockHTML(p);
     var line = "";
     if (p.readiness.indexOf("update-available") >= 0) line = '<div class="d3-kv"><span class="k">Update available<small>policy: ask first — nothing happens until you approve</small></span><button class="pm-btn pm-btn-primary pm-btn-sm" data-act="update-now">Update now</button></div>';
     if (p.readiness.indexOf("update-scheduled") >= 0) line = '<div class="d3-kv"><span class="k">Update scheduled<small>applies in the next idle window</small></span><span class="pm-badge pm-badge-info">scheduled-when-idle</span></div>';
     if (p.readiness.indexOf("rolled-back") >= 0) line = '<div class="d3-kv"><span class="k">Rolled back<small>verification failed after update; previous generation restored, receipt kept</small></span><span class="pm-badge pm-badge-warn">verification-failed → rolled-back</span></div>';
     var pol = synVal("providers.update-policy", "Ask first");
-    return '<div class="d3-kv"><span class="k">Update policy<small>' + esc(p.updatePolicy) + "</small></span><select class=\"pm-select\" data-syn=\"providers.update-policy\" data-synt=\"select\">" + ["Ask first", "Schedule when idle", "Install automatically"].map(function (o) { return "<option" + (pol === o ? " selected" : "") + ">" + o + "</option>"; }).join("") + "</select></div>" + line;
+    return '<div class="d3-kv"><span class="k">Update policy<small>' + esc(p.updatePolicy) + "</small></span><select class=\"pm-select\" data-syn=\"providers.update-policy\" data-synt=\"select\">" + ["Ask first", "Schedule when idle", "Install automatically"].map(function (o) { return "<option" + (pol === o ? " selected" : "") + ">" + o + "</option>"; }).join("") + "</select></div>" + line + demandBlockHTML(p);
   }
 
   // ---------------------------------------------------------------- deferred shell page
@@ -636,7 +660,7 @@
   }
 
   // ---------------------------------------------------------------- ALL SETTINGS
-  var allState = { cat: "all", type: "all", tier: "all", changed: false, managed: false, stress: false, vlist: null };
+  var allState = { cat: "all", type: "all", tier: "all", kind: "all", changed: false, managed: false, attention: false, stress: false, vlist: null };
   function allView() {
     return chrome(currentRoute(), { crumbs: [{ label: "All Settings" }], back: { hash: "#/home", label: "Back to Settings Home" } }) +
       '<div data-test="all"><h2 style="font-size:21px;margin:2px 0 12px;color:var(--text-1)">All Settings</h2>' +
@@ -644,6 +668,8 @@
       '<select class="pm-select" data-facet="cat"><option value="all">All categories</option>' + D.categories.map(function (c) { return '<option value="' + c.id + '">' + esc(c.title) + "</option>"; }).join("") + "</select>" +
       '<select class="pm-select" data-facet="type"><option value="all">All types</option>' + ["toggle", "select", "number", "text", "action", "slider", "radio", "list", "multiselect", "keyvalue", "path"].map(function (t) { return "<option>" + t + "</option>"; }).join("") + "</select>" +
       '<select class="pm-select" data-facet="tier"><option value="all">All tiers</option><option>simple</option><option>advanced</option></select>' +
+      '<select class="pm-select" data-facet="kind"><option value="all">All record kinds</option><option value="setting">Setting rows</option><option value="dest">Manager/action/diagnostic/workflow destinations</option><option value="attention">Attention (scenario-marked)</option></select>' +
+      '<label class="pm-note" style="display:flex;gap:6px;align-items:center"><input type="checkbox" data-facet="attention"> attention-marked rows</label>' +
       '<label class="pm-note" style="display:flex;gap:6px;align-items:center"><input type="checkbox" data-facet="changed"> changed from default</label>' +
       '<label class="pm-note" style="display:flex;gap:6px;align-items:center"><input type="checkbox" data-facet="managed"> managed / unavailable</label>' +
       '<label class="pm-note" style="display:flex;gap:6px;align-items:center"><input type="checkbox" data-facet="stress"> Synthetic stress +2000</label>' +
@@ -657,6 +683,7 @@
     allState.vlist = null; // fresh host per mount; old list references a detached node
     var count = root.querySelector("[data-count]");
     function data() {
+      if (allState.kind === "dest") return destEntries();
       var list = D.settings.filter(function (s) {
         if (allState.cat !== "all" && s.id.indexOf(allState.cat + ".") !== 0) return false;
         if (allState.type !== "all" && s.type !== allState.type) return false;
@@ -664,12 +691,14 @@
         var st = S2.getSetting(s.id);
         if (allState.changed && !(st && st.source === "custom")) return false;
         if (allState.managed && !(st && (st.source === "managed" || st.source === "unavailable"))) return false;
+        if ((allState.attention || allState.kind === "attention") && !(st && ATT_SOURCES.indexOf(st.source) >= 0)) return false;
         return true;
       });
       if (allState.stress) for (var i = 1; i <= 2000; i++) list.push(synthRow(i));
       return list;
     }
     function renderRow(s) {
+      if (s.rid) return '<div class="pm2-row" data-row="' + esc(s.rid) + '" data-rdest="1"><div class="pm2-row-main"><div class="pm2-row-title">' + esc(s.label) + ' <span class="pm-badge pm-badge-' + (s.type === "unavailable" ? "muted" : "info") + '">' + esc((s.type || "").replace(/_/g, " ")) + '</span></div><div class="pm2-row-desc">' + esc((s.path || []).join("  ›  ")) + (s.note ? " — " + esc(s.note) : "") + '</div></div><div class="pm2-row-ctl"><span class="pm-note">' + (s.dest ? "opens destination" : "not available") + "</span></div></div>";
       if (s.synthetic) return '<div class="pm2-row" data-row="' + s.id + '"><div class="pm2-row-main"><div class="pm2-row-title">' + esc(s.label) + ' <span class="pm-badge pm-badge-muted">Synthetic</span></div><div class="pm2-row-desc">' + esc(s.desc) + '</div></div><div class="pm2-row-ctl"><span class="pm-toggle" aria-disabled="true"><span class="pm-toggle-knob"></span></span></div></div>';
       return M2.row(s, S2.getSetting(s.id));
     }
@@ -854,6 +883,14 @@
         if (dest && dest.hash) go(dest.hash); else if (dest && dest.manager) go(destHash(dest));
         return;
       }
+      var rd = e.target.closest ? e.target.closest("[data-rdest]") : null;
+      if (rd) {
+        var entry = SR.byRid(rd.getAttribute("data-row"));
+        if (!entry) return;
+        if (!entry.dest) { S2.receipt("Not available in this product", entry.label + ": " + (entry.note || "no alternative surface."), "info"); return; }
+        go(destHash(entry.dest));
+        return;
+      }
       var sec = e.target.closest ? e.target.closest("[data-sec]") : null;
       if (sec) { var el = root.querySelector("#sec-" + sec.getAttribute("data-sec")); if (el) el.scrollIntoView({ block: "start" }); return; }
       var a = e.target.closest ? e.target.closest("[data-act]") : null;
@@ -910,7 +947,9 @@
   }
 
   function handleAct(btn) {
+    var host = "Desktop — Windows 11";
     var act = btn.getAttribute("data-act");
+    var pid = btn.getAttribute("data-prov") || currentRoute().object;
     if (act === "close") { S2.receipt("Settings closed", "Return to the Dashboard; every change here was receipted for this Project.", "info"); return; }
     if (act === "catalog-refresh") {
       var op = S2.beginOp({ title: "Catalog refresh", phase: "Contacting models.dev", determinate: false, wait: "network round-trip" });
@@ -924,7 +963,40 @@
       setTimeout(function () { S2.finishOp(u, "completed", "Update ready"); S2.receipt("Update applied", "Verification passed; the new generation is active. Ask-first policy honored.", "ok"); }, 1500);
       return;
     }
-    if (act === "install-official" || act === "install-select" || act === "cli-signin" || act === "cred-rotate" || act === "model-default") {
+    if (act === "install-official") {
+      var pp = provider(pid);
+      var iop = S2.beginOp({ title: "Install " + (pp ? pp.name : pid), phase: "Downloading from official source", determinate: true, total: 3 });
+      setTimeout(function () { S2.advanceOp(iop, { completed: 2, human_phase: "Verifying signature" }); }, 400);
+      setTimeout(function () {
+        installedLocal[pid] = true;
+        S2.finishOp(iop, "completed", "Installed");
+        S2.receipt("Install complete", (pp ? pp.name : pid) + " installed from the official source for " + host + ".", "ok");
+        viewCache = {};
+        render(currentRoute(), true);
+      }, 1000);
+      return;
+    }
+    if (act === "demand-simulate" || act === "demand-resume" || act === "demand-open") {
+      var dp = provider(btn.getAttribute("data-prov"));
+      if (!dp) return;
+      if (act === "demand-simulate") {
+        if (demand && demand.id !== dp.id) staleDemand[demand.id] = demand;
+        demand = { id: dp.id, op: "Chat run requesting " + dp.name, token: demandToken() };
+        S2.receipt("Provider Setup Required", dp.name + " is not ready for the originating operation (" + demand.op + "). The operation is preserved with continuation token " + demand.token + ". Deep link: #/mgr/providers/" + dp.id + "?sec=install. Resume only while the continuation is still current.", "info");
+      } else if (act === "demand-resume") {
+        if (demand && demand.id === dp.id && provReady(dp)) {
+          S2.receipt("Operation resumed", demand.op + " resumes on " + dp.name + "; continuation token " + demand.token + " matched the stored demand.", "ok");
+          demand = null;
+        }
+      } else {
+        go("#/mgr/providers/" + dp.id + "?sec=install");
+        return;
+      }
+      viewCache = {};
+      render(currentRoute(), true);
+      return;
+    }
+    if (act === "install-select" || act === "cli-signin" || act === "cred-rotate" || act === "model-default") {
       S2.receipt("Demo action", act + " is a simulated, receipted demo action in this concept; production wiring is described in candidate-wiring-delta.json.", "sim");
     }
   }

@@ -51,7 +51,9 @@
       "impact": "Honors machine_readable/supersessions.json (seven concepts; per-concept coverage; no editable scopes; rid-only search routing). Concepts 01-04 frozen, untouched."
     }
   ],
-  "slint_port_impacts": [],
+  "slint_port_impacts": [
+    "Web prototype maps to Slint 1.17.1 via stable model ids (category/subgroup/setting/rid), windowed virtual lists (PMManagers2.virtualList), hash-route state machines with narrow incremental re-render, bounded 2px blur on modal overlays only, and reduced-motion static states; no DOM-only core behavior."
+  ],
   "test_fixtures": [
     {
       "fixture": "search grouped + duplicate labels with #/q back-restore",

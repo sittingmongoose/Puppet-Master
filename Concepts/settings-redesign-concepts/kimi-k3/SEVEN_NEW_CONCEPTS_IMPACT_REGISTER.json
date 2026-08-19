@@ -1,0 +1,123 @@
+{
+  "schema_id": "pm.settings_bakeoff.model_impact_register.v1",
+  "model": "kimi-k3",
+  "date": "2026-08-18",
+  "canon_mutated": false,
+  "concepts": {
+    "concept-05-directory-take-1": {
+      "impact_rows": 16,
+      "candidate_actions": 36,
+      "statuses": [
+        "reuse"
+      ],
+      "files": [
+        "impact-register.json",
+        "candidate-command-delta.json",
+        "candidate-wiring-delta.json",
+        "candidate-dry-delta.json",
+        "plan-owner-delta.md"
+      ]
+    },
+    "concept-06-directory-take-2": {
+      "impact_rows": 13,
+      "candidate_actions": 27,
+      "statuses": [
+        "new-candidate",
+        "reuse"
+      ],
+      "files": [
+        "impact-register.json",
+        "candidate-command-delta.json",
+        "candidate-wiring-delta.json",
+        "candidate-dry-delta.json",
+        "plan-owner-delta.md"
+      ]
+    },
+    "concept-07-compendium-workspace": {
+      "impact_rows": 13,
+      "candidate_actions": 27,
+      "statuses": [
+        "new-candidate",
+        "reuse"
+      ],
+      "files": [
+        "impact-register.json",
+        "candidate-command-delta.json",
+        "candidate-wiring-delta.json",
+        "candidate-dry-delta.json",
+        "plan-owner-delta.md"
+      ]
+    },
+    "concept-08-directory-take-3": {
+      "impact_rows": 13,
+      "candidate_actions": 27,
+      "statuses": [
+        "new-candidate",
+        "reuse"
+      ],
+      "files": [
+        "impact-register.json",
+        "candidate-command-delta.json",
+        "candidate-wiring-delta.json",
+        "candidate-dry-delta.json",
+        "plan-owner-delta.md"
+      ]
+    },
+    "concept-09-tome-tabs": {
+      "impact_rows": 13,
+      "candidate_actions": 27,
+      "statuses": [
+        "new-candidate",
+        "reuse"
+      ],
+      "files": [
+        "impact-register.json",
+        "candidate-command-delta.json",
+        "candidate-wiring-delta.json",
+        "candidate-dry-delta.json",
+        "plan-owner-delta.md"
+      ]
+    },
+    "concept-10-command-suite": {
+      "impact_rows": 13,
+      "candidate_actions": 27,
+      "statuses": [
+        "new-candidate",
+        "reuse"
+      ],
+      "files": [
+        "impact-register.json",
+        "candidate-command-delta.json",
+        "candidate-wiring-delta.json",
+        "candidate-dry-delta.json",
+        "plan-owner-delta.md"
+      ]
+    },
+    "concept-11-tabbed-organizer": {
+      "impact_rows": 13,
+      "candidate_actions": 27,
+      "statuses": [
+        "new-candidate",
+        "reuse"
+      ],
+      "files": [
+        "impact-register.json",
+        "candidate-command-delta.json",
+        "candidate-wiring-delta.json",
+        "candidate-dry-delta.json",
+        "plan-owner-delta.md"
+      ]
+    }
+  },
+  "totals": {
+    "candidate_actions": 51,
+    "reuse": 37,
+    "new-candidate": 14,
+    "alias": 0
+  },
+  "notes": [
+    "All candidate IDs provisional; canonical Command Catalog/Wiring Matrix/DRY registries untouched.",
+    "Shared v2 layer is headless data/semantics only; every visible surface is concept-native.",
+    "Legacy inventory scope metadata projected into current-Project UX; schema impact recorded per concept in plan-owner-delta.md."
+  ]
+}

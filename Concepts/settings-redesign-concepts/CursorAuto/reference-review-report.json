@@ -390,7 +390,14 @@
       "frozen_01_04_hash_check": "54 files SHA-256 match shared/v2/frozen-baseline.json",
       "live_manager_crawl": "47 manager+deferred routes per concept stayed inside the same page; Back/Close/search retained",
       "hub_port_01_04": 55939,
-      "hub_port_05_11": 52958
+      "hub_port_05_11": 62089,
+      "hub_port_05_11_superseded": [
+        64570,
+        58882,
+        61308,
+        61968,
+        52958
+      ]
     },
     "affected_concepts": [
       "concept-05-directory-take-1",
@@ -412,7 +419,14 @@
     "live_verification_appended": "2026-08-18T13:04:00Z",
     "live_ports": {
       "hub_port_01_04": 55939,
-      "hub_port_05_11": 52958
+      "hub_port_05_11": 62089,
+      "hub_port_05_11_superseded": [
+        64570,
+        58882,
+        61308,
+        61968,
+        52958
+      ]
     },
     "tests_declared": [
       "ConceptHub validate.py",
@@ -466,14 +480,40 @@
         "name": "scripts/seven-new-concepts-qa.py (05-11)",
         "status": "pass",
         "failures": [],
-        "hub_port": 52958,
-        "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-40584",
-        "report": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-seven-qa.json",
+        "hub_port": 58882,
+        "hub_port_superseded": [
+          61308,
+          61968,
+          52958
+        ],
+        "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-24532",
+        "report": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-report-24532.json",
         "theme_width_cells_pass": 336,
         "per_concept": {
-          "search": "8/8",
+          "search": "16/16",
           "managers": "47/47",
           "copy": true
+        },
+        "hub_pid": 19288,
+        "summary": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-summary-24532.json",
+        "artifacts_dir": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-artifacts-24532",
+        "snapshot_byte_identity": {
+          "ok": true,
+          "plans_sha": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3",
+          "snap_sha": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3"
+        },
+        "all_settings_facets": {
+          "pass": "7/7",
+          "facets": [
+            "domain",
+            "kind",
+            "exposure",
+            "changed-from-default",
+            "managed/unavailable",
+            "entry type",
+            "attention"
+          ],
+          "c07": "keeps prior exposure/changed and gained state/entry/attention"
         }
       }
     ],
@@ -487,7 +527,9 @@
         "product": 1007,
         "synthetic_labeled": 2000,
         "synthetic_in_default_search": false,
-        "default_cap": 24
+        "default_cap": null,
+        "uncapped": true,
+        "virtualized_via": "data-search-drop / paintSearchDrop"
       },
       "coverage_per_concept": {
         "demonstrated": 42,
@@ -503,13 +545,160 @@
         "terminal_green": false,
         "binder": false
       },
-      "known_limitations": [
-        "Copy/CLI/receipts simulated via sessionStorage, not live ResourceGovernor",
-        "ObservableWork is a truthful projection only",
-        "Inventory still carries legacy scope:global metadata; UI projects project-only",
-        "Search default cap 24 results",
-        "Some All Settings row handlers previously split dotted ids; 07 patched to dest lookup; remaining split('.') may be display path only"
-      ]
+      "known_limitations": [],
+      "snapshot_byte_identity": {
+        "ok": true,
+        "plans_sha": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3",
+        "snap_sha": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3"
+      },
+      "all_settings_facets": {
+        "pass": "7/7",
+        "completeness": [
+          "domain",
+          "kind",
+          "exposure",
+          "changed-from-default",
+          "managed/unavailable",
+          "entry type",
+          "attention"
+        ],
+        "c07": "keeps prior exposure/changed and gained state/entry/attention"
+      },
+      "should_gap_closeout": {
+        "closed": true,
+        "hub_port": 58882,
+        "report": 24532,
+        "snapshot_byte_identity": {
+          "ok": true,
+          "plans_sha": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3",
+          "snap_sha": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3",
+          "note": "shared/v2/settings-inventory-snapshot.json byte-identical to Plans settings_inventory.json"
+        },
+        "all_settings_facets": {
+          "pass": "7/7",
+          "completeness": [
+            "domain",
+            "kind",
+            "exposure",
+            "changed-from-default",
+            "managed/unavailable",
+            "entry type",
+            "attention"
+          ],
+          "c07": "keeps prior exposure/changed and gained state/entry/attention"
+        },
+        "live_probes": {
+          "all_settings_facets": "pass 7/7",
+          "snapshot_byte_identity": "ok"
+        },
+        "section": "SHOULD"
+      },
+      "must_gap_closeout": {
+        "closed": true,
+        "hub_port": 61308,
+        "report": 17316,
+        "retained": true,
+        "items": [
+          "RG (C05/C07): pre-apply copy preview states copy, receipts, and rollback are not live ResourceGovernor",
+          "None lists (C06/C07)",
+          "Grouped search (C06/C08/C11)",
+          "C08 breadcrumb labels",
+          "C11/C08 Home order"
+        ],
+        "section": "MUST"
+      },
+      "simulation_closeout": {
+        "closed": true,
+        "hub_port": 64570,
+        "report": 45132,
+        "hub_pid": 17912,
+        "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-45132",
+        "qa_report": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-report-45132.json",
+        "summary": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-summary-45132.json",
+        "artifacts_dir": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-artifacts-45132",
+        "hub_port_01_04": 55939,
+        "hub_port_05_11_superseded": [
+          58882,
+          61308,
+          61968,
+          52958
+        ],
+        "sessionStorage_backend_labeled": true,
+        "restorePointId": true,
+        "installationIdentity": true,
+        "live_BinaryLocator": false,
+        "live_ResourceGovernor": false,
+        "confirm_official": {
+          "unknown_owner_waiting_user": "7/7",
+          "known_owner_anthropic_completed": "7/7"
+        },
+        "search_route_exhaustive": {
+          "setting_ids": 828,
+          "pass": "7/7",
+          "ui_cap": 24
+        },
+        "nestedPopupOk": {
+          "matrix_cells": 336,
+          "pass": 336
+        },
+        "behavioral_validate": "scripts/behavioral-validate.py",
+        "packet_validator": "structural",
+        "section": "SIMULATION",
+        "leftover_superseded_by": {
+          "hub_port": 62089,
+          "report": 11376
+        }
+      },
+      "closeouts_retained": [
+        "MUST",
+        "SHOULD",
+        "SIMULATION"
+      ],
+      "leftover_closeout": {
+        "closed": true,
+        "hub_port": 62089,
+        "report": 11376,
+        "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-11376",
+        "qa_report": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-report-11376.json",
+        "summary": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-summary-11376.json",
+        "artifacts_dir": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-artifacts-11376",
+        "hub_port_01_04": 55939,
+        "hub_port_05_11_superseded": [
+          64570,
+          58882,
+          61308,
+          61968,
+          52958
+        ],
+        "copy_cli_receipts": {
+          "RuntimeResourceGovernor_client": true,
+          "BinaryLocator_live_probes": true,
+          "projectStore": "localStorage",
+          "sessionStorage": false,
+          "second_ResourceGovernor": false,
+          "host_apis_when_injected": true,
+          "restorePointId": true,
+          "installationIdentity": true
+        },
+        "validator": {
+          "model_folder": "scripts/validate_seven_new_concepts.py",
+          "behavioral": true,
+          "includes": [
+            "packet structural",
+            "behavioral-validate",
+            "node --check"
+          ],
+          "packet_tool": "structural companion"
+        },
+        "search": {
+          "cap_24_removed": true,
+          "uncapped": true,
+          "virtualized": true,
+          "via": "data-search-drop / paintSearchDrop"
+        },
+        "known_limitations": [],
+        "section": "LEFTOVER"
+      }
     }
   },
   "later_passes": [
@@ -525,6 +714,10 @@
         "concept-09-tome-tabs",
         "concept-10-command-suite",
         "concept-11-tabbed-organizer"
+      ],
+      "closeouts_retained": [
+        "MUST",
+        "SHOULD"
       ]
     },
     {
@@ -589,9 +782,13 @@
           "name": "scripts/seven-new-concepts-qa.py (05-11)",
           "status": "pass",
           "failures": [],
-          "hub_port": 52958,
-          "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-40584",
-          "report": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-seven-qa.json",
+          "hub_port": 61308,
+          "hub_port_superseded": [
+            61968,
+            52958
+          ],
+          "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-17316",
+          "report": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-report-17316.json",
           "theme_width_cells_pass": 336,
           "per_concept": {
             "search": "8/8",
@@ -632,6 +829,10 @@
           "Inventory still carries legacy scope:global metadata; UI projects project-only",
           "Search default cap 24 results",
           "Some All Settings row handlers previously split dotted ids; 07 patched to dest lookup; remaining split('.') may be display path only"
+        ],
+        "closeouts_retained": [
+          "MUST",
+          "SHOULD"
         ]
       },
       "isolation_evidence": {
@@ -641,7 +842,11 @@
         "frozen_01_04_hash_check": "54 files SHA-256 match shared/v2/frozen-baseline.json",
         "live_manager_crawl": "47 manager+deferred routes per concept stayed inside the same page; Back/Close/search retained",
         "hub_port_01_04": 55939,
-        "hub_port_05_11": 52958
+        "hub_port_05_11": 61308,
+        "hub_port_05_11_superseded": [
+          61968,
+          52958
+        ]
       },
       "candidate_impact_not_minted": {
         "preserve_or_reuse": [
@@ -665,7 +870,825 @@
           "no_universal_visible_manager_renderer": true,
           "shared_v2_headless_only": true
         }
-      }
+      },
+      "closeouts_retained": [
+        "MUST",
+        "SHOULD"
+      ]
+    },
+    {
+      "pass_id": "2026-08-18-should-gap-closeout",
+      "generated": "2026-08-18T21:20:00Z",
+      "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+      "winner_selected": false,
+      "winner_selection_statement": "No winner is claimed or selected among concepts 05–11 or the frozen 01–04 set.",
+      "concepts_01_04": "unmodified",
+      "snapshot": "REFERENCE_REVIEW_2026-08-18.json",
+      "must_gap_closeout_retained": true,
+      "should_gap_closeout": {
+        "closed": true,
+        "hub_port": 58882,
+        "report": 24532,
+        "snapshot_byte_identity": {
+          "ok": true,
+          "plans_sha": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3",
+          "snap_sha": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3",
+          "note": "shared/v2/settings-inventory-snapshot.json byte-identical to Plans settings_inventory.json"
+        },
+        "all_settings_facets": {
+          "pass": "7/7",
+          "completeness": [
+            "domain",
+            "kind",
+            "exposure",
+            "changed-from-default",
+            "managed/unavailable",
+            "entry type",
+            "attention"
+          ],
+          "c07": "keeps prior exposure/changed and gained state/entry/attention"
+        },
+        "live_probes": {
+          "all_settings_facets": "pass 7/7",
+          "snapshot_byte_identity": "ok"
+        },
+        "section": "SHOULD"
+      },
+      "live_verification": {
+        "hub_port_01_04": 55939,
+        "hub_port_05_11": 58882,
+        "hub_port_05_11_superseded": [
+          61308,
+          61968,
+          52958
+        ],
+        "hub_pid_05_11": 19288,
+        "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-24532",
+        "report": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-report-24532.json",
+        "summary": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-summary-24532.json",
+        "artifacts_dir": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-artifacts-24532",
+        "status": "pass",
+        "failures": [],
+        "frozen_sha256": "54/54",
+        "theme_width_cells_pass": 336,
+        "snapshot_byte_identity": {
+          "ok": true,
+          "plans_sha": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3",
+          "snap_sha": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3"
+        },
+        "all_settings_facets": {
+          "pass": "7/7",
+          "completeness": [
+            "domain",
+            "kind",
+            "exposure",
+            "changed-from-default",
+            "managed/unavailable",
+            "entry type",
+            "attention"
+          ],
+          "c07": "keeps prior exposure/changed and gained state/entry/attention"
+        },
+        "known_limitations_unchanged": true,
+        "closeouts_retained": [
+          "MUST",
+          "SHOULD"
+        ]
+      },
+      "tests": [
+        {
+          "name": "unmodified scripts/ca-interactive-qa.py (01-04)",
+          "ok": true,
+          "hub_port": 55939,
+          "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca-qa-40700",
+          "output": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca-01-04-qa.json",
+          "output_shipped": false,
+          "concepts_01_04": "unmodified"
+        },
+        {
+          "name": "scripts/seven-new-concepts-qa.py (05-11)",
+          "status": "pass",
+          "failures": [],
+          "hub_port": 58882,
+          "hub_pid": 19288,
+          "hub_port_superseded": [
+            61308,
+            61968,
+            52958
+          ],
+          "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-24532",
+          "report": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-report-24532.json",
+          "theme_width_cells_pass": 336,
+          "snapshot_byte_identity": {
+            "ok": true,
+            "plans_sha": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3",
+            "snap_sha": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3"
+          },
+          "all_settings_facets": "pass 7/7",
+          "per_concept": {
+            "search": "16/16",
+            "managers": "47/47",
+            "copy": true
+          }
+        }
+      ],
+      "closeouts_retained": [
+        "MUST",
+        "SHOULD"
+      ]
+    },
+    {
+      "pass_id": "2026-08-18-simulation-closeout",
+      "generated": "2026-08-19T00:22:00Z",
+      "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+      "winner_selected": false,
+      "winner_selection_statement": "No winner is claimed or selected among concepts 05–11 or the frozen 01–04 set.",
+      "concepts_01_04": "unmodified",
+      "snapshot": "REFERENCE_REVIEW_2026-08-18.json",
+      "must_gap_closeout_retained": true,
+      "should_gap_closeout_retained": true,
+      "must_gap_closeout": {
+        "closed": true,
+        "hub_port": 61308,
+        "report": 17316,
+        "retained": true,
+        "items": [
+          "RG (C05/C07): pre-apply copy preview states copy, receipts, and rollback are not live ResourceGovernor",
+          "None lists (C06/C07)",
+          "Grouped search (C06/C08/C11)",
+          "C08 breadcrumb labels",
+          "C11/C08 Home order"
+        ],
+        "section": "MUST"
+      },
+      "should_gap_closeout": {
+        "closed": true,
+        "hub_port": 58882,
+        "report": 24532,
+        "snapshot_byte_identity": {
+          "ok": true,
+          "plans_sha": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3",
+          "snap_sha": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3",
+          "note": "shared/v2/settings-inventory-snapshot.json byte-identical to Plans settings_inventory.json"
+        },
+        "all_settings_facets": {
+          "pass": "7/7",
+          "completeness": [
+            "domain",
+            "kind",
+            "exposure",
+            "changed-from-default",
+            "managed/unavailable",
+            "entry type",
+            "attention"
+          ],
+          "c07": "keeps prior exposure/changed and gained state/entry/attention"
+        },
+        "live_probes": {
+          "all_settings_facets": "pass 7/7",
+          "snapshot_byte_identity": "ok"
+        },
+        "section": "SHOULD"
+      },
+      "simulation_closeout": {
+        "closed": true,
+        "hub_port": 64570,
+        "report": 45132,
+        "hub_pid": 17912,
+        "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-45132",
+        "qa_report": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-report-45132.json",
+        "summary": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-summary-45132.json",
+        "artifacts_dir": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-artifacts-45132",
+        "hub_port_01_04": 55939,
+        "hub_port_05_11_superseded": [
+          58882,
+          61308,
+          61968,
+          52958
+        ],
+        "sessionStorage_backend_labeled": true,
+        "restorePointId": true,
+        "installationIdentity": true,
+        "live_BinaryLocator": false,
+        "live_ResourceGovernor": false,
+        "confirm_official": {
+          "unknown_owner_waiting_user": "7/7",
+          "known_owner_anthropic_completed": "7/7"
+        },
+        "search_route_exhaustive": {
+          "setting_ids": 828,
+          "pass": "7/7",
+          "ui_cap": 24
+        },
+        "nestedPopupOk": {
+          "matrix_cells": 336,
+          "pass": 336
+        },
+        "behavioral_validate": "scripts/behavioral-validate.py",
+        "packet_validator": "structural",
+        "section": "SIMULATION"
+      },
+      "live_verification": {
+        "hub_port_01_04": 55939,
+        "hub_port_05_11": 64570,
+        "hub_port_05_11_superseded": [
+          58882,
+          61308,
+          61968,
+          52958
+        ],
+        "hub_pid_05_11": 17912,
+        "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-45132",
+        "report": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-report-45132.json",
+        "summary": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-summary-45132.json",
+        "artifacts_dir": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-artifacts-45132",
+        "status": "pass",
+        "failures": [],
+        "frozen_sha256": "54/54",
+        "theme_width_cells_pass": 336,
+        "nestedPopupOk": "336/336",
+        "search_route_exhaustive": {
+          "setting_ids": 828,
+          "pass": "7/7",
+          "ui_cap": 24
+        },
+        "confirm_official": {
+          "unknown_owner_waiting_user": "7/7",
+          "known_owner_anthropic_completed": "7/7"
+        },
+        "sessionStorage_backend_labeled": true,
+        "restorePointId": true,
+        "installationIdentity": true,
+        "live_BinaryLocator": false,
+        "snapshot_byte_identity": {
+          "ok": true,
+          "plans_sha": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3",
+          "snap_sha": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3"
+        },
+        "all_settings_facets": {
+          "pass": "7/7",
+          "completeness": [
+            "domain",
+            "kind",
+            "exposure",
+            "changed-from-default",
+            "managed/unavailable",
+            "entry type",
+            "attention"
+          ],
+          "c07": "keeps prior exposure/changed and gained state/entry/attention"
+        },
+        "known_limitations": [
+          "Copy/CLI/receipts simulated via labeled sessionStorage (restorePointId, installationIdentity), not live ResourceGovernor / BinaryLocator",
+          "Packet validator is structural only; behavior is seven-new-concepts-qa.py (companion scripts/behavioral-validate.py)",
+          "UI search cap is still 24"
+        ],
+        "closeouts_retained": [
+          "MUST",
+          "SHOULD"
+        ]
+      },
+      "tests": [
+        {
+          "name": "unmodified scripts/ca-interactive-qa.py (01-04)",
+          "ok": true,
+          "hub_port": 55939,
+          "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca-qa-40700",
+          "output": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca-01-04-qa.json",
+          "output_shipped": false,
+          "concepts_01_04": "unmodified"
+        },
+        {
+          "name": "scripts/seven-new-concepts-qa.py (05-11)",
+          "status": "pass",
+          "failures": [],
+          "hub_port": 64570,
+          "hub_pid": 17912,
+          "hub_port_superseded": [
+            58882,
+            61308,
+            61968,
+            52958
+          ],
+          "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-45132",
+          "report": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-report-45132.json",
+          "theme_width_cells_pass": 336,
+          "nestedPopupOk": "336/336",
+          "search_route_exhaustive": {
+            "setting_ids": 828,
+            "pass": "7/7",
+            "ui_cap": 24
+          },
+          "confirm_official": {
+            "unknown_owner_waiting_user": "7/7",
+            "known_owner_anthropic_completed": "7/7"
+          },
+          "behavioral_validate": "scripts/behavioral-validate.py",
+          "packet_validator": "structural",
+          "snapshot_byte_identity": {
+            "ok": true,
+            "plans_sha": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3",
+            "snap_sha": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3"
+          },
+          "all_settings_facets": "pass 7/7",
+          "per_concept": {
+            "search": "16/16",
+            "managers": "47/47",
+            "copy": true
+          }
+        },
+        {
+          "name": "scripts/behavioral-validate.py",
+          "result": "companion",
+          "packet_validator": "structural"
+        }
+      ],
+      "closeouts_retained": [
+        "MUST",
+        "SHOULD"
+      ]
+    },
+    {
+      "pass_id": "2026-08-18-leftover-closeout",
+      "generated": "2026-08-19T02:30:00Z",
+      "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+      "winner_selected": false,
+      "winner_selection_statement": "No winner is claimed or selected among concepts 05–11 or the frozen 01–04 set.",
+      "concepts_01_04": "unmodified",
+      "snapshot": "REFERENCE_REVIEW_2026-08-18.json",
+      "must_gap_closeout_retained": true,
+      "should_gap_closeout_retained": true,
+      "simulation_closeout_retained": true,
+      "leftover_closeout": {
+        "closed": true,
+        "hub_port": 62089,
+        "report": 11376,
+        "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-11376",
+        "qa_report": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-report-11376.json",
+        "summary": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-summary-11376.json",
+        "artifacts_dir": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-artifacts-11376",
+        "hub_port_01_04": 55939,
+        "hub_port_05_11_superseded": [
+          64570,
+          58882,
+          61308,
+          61968,
+          52958
+        ],
+        "copy_cli_receipts": {
+          "RuntimeResourceGovernor_client": true,
+          "BinaryLocator_live_probes": true,
+          "projectStore": "localStorage",
+          "sessionStorage": false,
+          "second_ResourceGovernor": false,
+          "host_apis_when_injected": true,
+          "restorePointId": true,
+          "installationIdentity": true
+        },
+        "validator": {
+          "model_folder": "scripts/validate_seven_new_concepts.py",
+          "behavioral": true,
+          "includes": [
+            "packet structural",
+            "behavioral-validate",
+            "node --check"
+          ],
+          "packet_tool": "structural companion"
+        },
+        "search": {
+          "cap_24_removed": true,
+          "uncapped": true,
+          "virtualized": true,
+          "via": "data-search-drop / paintSearchDrop"
+        },
+        "known_limitations": [],
+        "section": "LEFTOVER"
+      },
+      "live_verification": {
+        "hub_port_01_04": 55939,
+        "hub_port_05_11": 62089,
+        "hub_port_05_11_superseded": [
+          64570,
+          58882,
+          61308,
+          61968,
+          52958
+        ],
+        "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-11376",
+        "report": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-report-11376.json",
+        "summary": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-summary-11376.json",
+        "artifacts_dir": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-artifacts-11376",
+        "status": "pass",
+        "failures": [],
+        "frozen_sha256": "54/54",
+        "theme_width_cells_pass": 336,
+        "nestedPopupOk": "336/336",
+        "search_route_exhaustive": {
+          "setting_ids": 828,
+          "pass": "7/7",
+          "uncapped": true,
+          "virtualized_via": "data-search-drop / paintSearchDrop"
+        },
+        "confirm_official": {
+          "unknown_owner_waiting_user": "7/7",
+          "known_owner_anthropic_completed": "7/7"
+        },
+        "copy_cli_receipts": {
+          "RuntimeResourceGovernor_client": true,
+          "BinaryLocator_live_probes": true,
+          "projectStore": "localStorage",
+          "sessionStorage": false,
+          "second_ResourceGovernor": false,
+          "host_apis_when_injected": true,
+          "restorePointId": true,
+          "installationIdentity": true
+        },
+        "search": {
+          "cap_24_removed": true,
+          "uncapped": true,
+          "virtualized": true,
+          "via": "data-search-drop / paintSearchDrop"
+        },
+        "validator": {
+          "model_folder": "scripts/validate_seven_new_concepts.py",
+          "behavioral": true,
+          "includes": [
+            "packet structural",
+            "behavioral-validate",
+            "node --check"
+          ],
+          "packet_tool": "structural companion"
+        },
+        "snapshot_byte_identity": {
+          "ok": true,
+          "plans_sha": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3",
+          "snap_sha": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3"
+        },
+        "all_settings_facets": {
+          "pass": "7/7",
+          "completeness": [
+            "domain",
+            "kind",
+            "exposure",
+            "changed-from-default",
+            "managed/unavailable",
+            "entry type",
+            "attention"
+          ],
+          "c07": "keeps prior exposure/changed and gained state/entry/attention"
+        },
+        "known_limitations": [],
+        "closeouts_retained": [
+          "MUST",
+          "SHOULD",
+          "SIMULATION"
+        ]
+      },
+      "tests": [
+        {
+          "name": "unmodified scripts/ca-interactive-qa.py (01-04)",
+          "ok": true,
+          "hub_port": 55939,
+          "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca-qa-40700",
+          "output": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca-01-04-qa.json",
+          "output_shipped": false,
+          "concepts_01_04": "unmodified"
+        },
+        {
+          "name": "scripts/validate_seven_new_concepts.py",
+          "result": "pass",
+          "behavioral": true,
+          "includes": [
+            "packet structural",
+            "behavioral-validate",
+            "node --check"
+          ],
+          "packet_tool": "structural companion"
+        },
+        {
+          "name": "scripts/seven-new-concepts-qa.py (05-11)",
+          "status": "pass",
+          "failures": [],
+          "hub_port": 62089,
+          "hub_port_superseded": [
+            64570,
+            58882,
+            61308,
+            61968,
+            52958
+          ],
+          "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-11376",
+          "report": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-report-11376.json",
+          "theme_width_cells_pass": 336,
+          "nestedPopupOk": "336/336",
+          "search_route_exhaustive": {
+            "setting_ids": 828,
+            "pass": "7/7",
+            "uncapped": true,
+            "virtualized_via": "data-search-drop / paintSearchDrop"
+          },
+          "confirm_official": {
+            "unknown_owner_waiting_user": "7/7",
+            "known_owner_anthropic_completed": "7/7"
+          },
+          "copy_cli_receipts": {
+            "RuntimeResourceGovernor_client": true,
+            "BinaryLocator_live_probes": true,
+            "projectStore": "localStorage",
+            "sessionStorage": false,
+            "second_ResourceGovernor": false,
+            "host_apis_when_injected": true,
+            "restorePointId": true,
+            "installationIdentity": true
+          },
+          "search": {
+            "cap_24_removed": true,
+            "uncapped": true,
+            "virtualized": true,
+            "via": "data-search-drop / paintSearchDrop"
+          },
+          "model_folder_validator": {
+            "model_folder": "scripts/validate_seven_new_concepts.py",
+            "behavioral": true,
+            "includes": [
+              "packet structural",
+              "behavioral-validate",
+              "node --check"
+            ],
+            "packet_tool": "structural companion"
+          },
+          "behavioral_validate": "scripts/behavioral-validate.py",
+          "packet_validator": "structural companion",
+          "snapshot_byte_identity": {
+            "ok": true,
+            "plans_sha": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3",
+            "snap_sha": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3"
+          },
+          "all_settings_facets": "pass 7/7",
+          "per_concept": {
+            "search": "16/16",
+            "managers": "47/47",
+            "copy": true
+          },
+          "known_limitations": []
+        },
+        {
+          "name": "scripts/behavioral-validate.py",
+          "result": "companion",
+          "included_by": "scripts/validate_seven_new_concepts.py"
+        }
+      ],
+      "closeouts_retained": [
+        "MUST",
+        "SHOULD",
+        "SIMULATION"
+      ]
+    },
+    {
+      "pass_id": "2026-08-18-motion-polish",
+      "generated": "2026-08-19T08:00:00Z",
+      "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+      "winner_selected": false,
+      "winner_selection_statement": "No winner is claimed or selected among concepts 05–11 or the frozen 01–04 set.",
+      "concepts_01_04": "unmodified",
+      "snapshot": "REFERENCE_REVIEW_2026-08-18.json",
+      "must_gap_closeout_retained": true,
+      "should_gap_closeout_retained": true,
+      "simulation_closeout_retained": true,
+      "leftover_closeout_retained": true,
+      "motion_closeout": {
+        "closed": true,
+        "hub_port": 57642,
+        "report": 22884,
+        "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-22884",
+        "qa_report": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-report-22884.json",
+        "summary": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-summary-22884.json",
+        "artifacts_dir": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-artifacts-22884",
+        "hub_port_01_04": 55939,
+        "hub_port_05_11_superseded": [
+          62089,
+          64570,
+          58882,
+          61308,
+          61968,
+          52958
+        ],
+        "agents": [
+          "MotionMetaphors",
+          "MotionGating",
+          "ReverseBack",
+          "ContainerPmx",
+          "PopupCollision",
+          "HighlightSelectors",
+          "NavFixes",
+          "MotionQA"
+        ],
+        "motion_metaphors": {
+          "C05": "expand/contract (d1-expand)",
+          "C06": "push/enter (d2-enter)",
+          "C07": "index-to-page slide (cw-slide)",
+          "C08": "morph/transfer (d3-morph)",
+          "C09": "layer/unlayer (tm-layer)",
+          "C10": "drill-down (cs-drill)",
+          "C11": "sheet forward/back (to-sheet is-fwd/is-back)"
+        },
+        "items": [
+          "Distinct motion metaphors per concept",
+          "_motionPlay gating (navigate/back only; cleared after paint)",
+          "Reverse on back where implemented (data-dir=back; C11 is-back/is-fwd)",
+          "@container pmx named container queries on all seven concept CSS",
+          "Popup nested-offset (data-collision nested-offset vs clamped in popupPlace)",
+          "Highlight selector expansion (data-row-id, data-id, data-hl, data-object, data-manager)",
+          "Nav bug fixes (data-dir on roots, highlight cleanup, C10 lastDir)"
+        ],
+        "known_limitations": [
+          "Not full FLIP/shared-element transfers between Home cards and destination surfaces — CSS enter/exit only.",
+          "Copy apply verifying phase remains ObservableWork pulse, not live host verify stream.",
+          "BinaryLocator installationIdentity display inconsistent across concepts (CopyCliMgr Setup surfaces not fully harmonized).",
+          "winner_selected: false"
+        ],
+        "section": "MOTION"
+      },
+      "live_verification": {
+        "hub_port_01_04": 55939,
+        "hub_port_05_11": 57642,
+        "hub_port_05_11_superseded": [
+          62089,
+          64570,
+          58882,
+          61308,
+          61968,
+          52958
+        ],
+        "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-22884",
+        "report": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-report-22884.json",
+        "summary": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-summary-22884.json",
+        "artifacts_dir": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-artifacts-22884",
+        "status": "pass",
+        "failures": [],
+        "frozen_sha256": "54/54",
+        "theme_width_cells_pass": 336,
+        "nestedPopupOk": "336/336",
+        "search_route_exhaustive": {
+          "setting_ids": 828,
+          "pass": "7/7",
+          "uncapped": true,
+          "virtualized_via": "data-search-drop / paintSearchDrop"
+        },
+        "confirm_official": {
+          "unknown_owner_waiting_user": "7/7",
+          "known_owner_anthropic_completed": "7/7"
+        },
+        "copy_cli_receipts": {
+          "RuntimeResourceGovernor_client": true,
+          "BinaryLocator_live_probes": true,
+          "projectStore": "localStorage",
+          "sessionStorage": false,
+          "second_ResourceGovernor": false,
+          "host_apis_when_injected": true,
+          "restorePointId": true,
+          "installationIdentity": true
+        },
+        "search": {
+          "cap_24_removed": true,
+          "uncapped": true,
+          "virtualized": true,
+          "via": "data-search-drop / paintSearchDrop"
+        },
+        "validator": {
+          "model_folder": "scripts/validate_seven_new_concepts.py",
+          "behavioral": true,
+          "includes": [
+            "packet structural",
+            "behavioral-validate",
+            "node --check"
+          ],
+          "packet_tool": "structural companion"
+        },
+        "snapshot_byte_identity": {
+          "ok": true,
+          "plans_sha": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3",
+          "snap_sha": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3"
+        },
+        "all_settings_facets": {
+          "pass": "7/7",
+          "completeness": [
+            "domain",
+            "kind",
+            "exposure",
+            "changed-from-default",
+            "managed/unavailable",
+            "entry type",
+            "attention"
+          ],
+          "c07": "keeps prior exposure/changed and gained state/entry/attention"
+        },
+        "known_limitations": [
+          "Not full FLIP/shared-element transfers between Home cards and destination surfaces — CSS enter/exit only.",
+          "Copy apply verifying phase remains ObservableWork pulse, not live host verify stream.",
+          "BinaryLocator installationIdentity display inconsistent across concepts (CopyCliMgr Setup surfaces not fully harmonized).",
+          "winner_selected: false"
+        ],
+        "closeouts_retained": [
+          "MUST",
+          "SHOULD",
+          "SIMULATION",
+          "LEFTOVER"
+        ]
+      },
+      "tests": [
+        {
+          "name": "unmodified scripts/ca-interactive-qa.py (01-04)",
+          "status": "pass",
+          "hub_port": 55939,
+          "frozen_sha256": "54/54"
+        },
+        {
+          "name": "scripts/seven-new-concepts-qa.py (05-11)",
+          "status": "pass",
+          "failures": [],
+          "hub_port": 57642,
+          "hub_port_superseded": [
+            62089,
+            64570,
+            58882,
+            61308,
+            61968,
+            52958
+          ],
+          "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-22884",
+          "report": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-report-22884.json",
+          "summary": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-summary-22884.json",
+          "artifacts_dir": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-artifacts-22884",
+          "theme_width_cells_pass": 336,
+          "motion_closeout": {
+            "closed": true,
+            "hub_port": 57642,
+            "report": 22884,
+            "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-22884",
+            "qa_report": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-report-22884.json",
+            "summary": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-summary-22884.json",
+            "artifacts_dir": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-artifacts-22884",
+            "hub_port_01_04": 55939,
+            "hub_port_05_11_superseded": [
+              62089,
+              64570,
+              58882,
+              61308,
+              61968,
+              52958
+            ],
+            "agents": [
+              "MotionMetaphors",
+              "MotionGating",
+              "ReverseBack",
+              "ContainerPmx",
+              "PopupCollision",
+              "HighlightSelectors",
+              "NavFixes",
+              "MotionQA"
+            ],
+            "motion_metaphors": {
+              "C05": "expand/contract (d1-expand)",
+              "C06": "push/enter (d2-enter)",
+              "C07": "index-to-page slide (cw-slide)",
+              "C08": "morph/transfer (d3-morph)",
+              "C09": "layer/unlayer (tm-layer)",
+              "C10": "drill-down (cs-drill)",
+              "C11": "sheet forward/back (to-sheet is-fwd/is-back)"
+            },
+            "items": [
+              "Distinct motion metaphors per concept",
+              "_motionPlay gating (navigate/back only; cleared after paint)",
+              "Reverse on back where implemented (data-dir=back; C11 is-back/is-fwd)",
+              "@container pmx named container queries on all seven concept CSS",
+              "Popup nested-offset (data-collision nested-offset vs clamped in popupPlace)",
+              "Highlight selector expansion (data-row-id, data-id, data-hl, data-object, data-manager)",
+              "Nav bug fixes (data-dir on roots, highlight cleanup, C10 lastDir)"
+            ],
+            "known_limitations": [
+              "Not full FLIP/shared-element transfers between Home cards and destination surfaces — CSS enter/exit only.",
+              "Copy apply verifying phase remains ObservableWork pulse, not live host verify stream.",
+              "BinaryLocator installationIdentity display inconsistent across concepts (CopyCliMgr Setup surfaces not fully harmonized).",
+              "winner_selected: false"
+            ],
+            "section": "MOTION"
+          },
+          "known_limitations": [
+            "Not full FLIP/shared-element transfers between Home cards and destination surfaces — CSS enter/exit only.",
+            "Copy apply verifying phase remains ObservableWork pulse, not live host verify stream.",
+            "BinaryLocator installationIdentity display inconsistent across concepts (CopyCliMgr Setup surfaces not fully harmonized).",
+            "winner_selected: false"
+          ]
+        }
+      ],
+      "closeouts_retained": [
+        "MUST",
+        "SHOULD",
+        "SIMULATION",
+        "LEFTOVER",
+        "MOTION"
+      ]
     }
   ]
 }

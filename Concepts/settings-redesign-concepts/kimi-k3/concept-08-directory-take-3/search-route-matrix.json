@@ -24,10 +24,10 @@
     "section": "accounts",
     "row": "ai.accounts.openai-api-key"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass",
+   "back_restores": "pass",
    "case": "deep setting row into provider credentials",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "openai api key",
@@ -50,10 +50,10 @@
     "section": "overview",
     "row": null
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass",
+   "back_restores": "pass",
    "case": "manager object (provider)",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "theem",
@@ -76,10 +76,10 @@
     "section": "visual",
     "row": "general.visual.theme"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass",
+   "back_restores": "pass",
    "case": "typo tolerance (theem → Theme)",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "rate limit",
@@ -102,10 +102,10 @@
     "section": "accounts",
     "row": "ai.accounts.cooldown-policy"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass",
+   "back_restores": "pass",
    "case": "grouped results case",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "rate limit",
@@ -126,12 +126,13 @@
     "manager": "providers",
     "object": null,
     "section": null,
-    "row": null
+    "row": null,
+    "note": "re-verified 2026-08-19: Providers manager opens with Rate Limits subtab aria-selected=true; painted subpage roster (.dt3-roster) gets .pmv2-locate and focus (activeElement=.dt3-roster.pmv2-locate, out of search input)"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass",
+   "back_restores": "pass",
    "case": "duplicate/similar label lands on a different destination",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "copy settings",
@@ -149,15 +150,16 @@
    "actual_destination": {
     "domain": "system",
     "page": "copy",
-    "manager": "lifecycle",
+    "manager": null,
     "object": null,
     "section": "copy",
-    "row": null
+    "row": null,
+    "note": "re-verified 2026-08-19: action result opens the full-width Copy Settings view (h1 \"Copy Settings from Another Project\", stepped select-source view); the whole copy view is the destination so no separate .pmv2-locate target; focus remains in search input"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass",
+   "back_restores": "pass",
    "case": "action result",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "copy settings",
@@ -178,12 +180,13 @@
     "manager": "lifecycle",
     "object": null,
     "section": "help",
-    "row": null
+    "row": null,
+    "note": "re-verified 2026-08-19: lands on Settings Lifecycle manager; help is not a lifecycle subtab so the manager falls back to the Import subtab and highlights the painted steps element (.dt3-steps gets .pmv2-locate, tabindex=-1, receives focus); batch fix criterion (lands on the manager with highlight, focus out of search) met"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass",
+   "back_restores": "pass",
    "case": "intentional help result",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "doctor",
@@ -204,12 +207,13 @@
     "manager": "doctor",
     "object": null,
     "section": null,
-    "row": null
+    "row": null,
+    "note": "re-verified 2026-08-19: Doctor manager opens (Checks subtab selected); .dt3-health-grid gets .pmv2-locate and focus (activeElement out of search input)"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass",
+   "back_restores": "pass",
    "case": "diagnostic / read-only status",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "install claude",
@@ -232,10 +236,10 @@
     "section": "advanced",
     "row": "system.advanced.cli-path-claude"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass",
+   "back_restores": "pass",
    "case": "setup/repair workflow (explicit official-source CLI setup)",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "theme",
@@ -258,10 +262,10 @@
     "section": "visual",
     "row": "general.visual.theme"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass",
+   "back_restores": "pass",
    "case": "ordinary setting row",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "memory retention",
@@ -282,12 +286,13 @@
     "manager": "memory",
     "object": null,
     "section": null,
-    "row": null
+    "row": null,
+    "note": "re-verified 2026-08-19: Memory manager opens with Retention subtab aria-selected=true; painted roster (.dt3-roster) gets .pmv2-locate and focus"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass",
+   "back_restores": "pass",
    "case": "memory domain deep row",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "worktree",
@@ -308,12 +313,13 @@
     "manager": "source-control",
     "object": null,
     "section": null,
-    "row": null
+    "row": null,
+    "note": "re-verified 2026-08-19: Source Control & Worktrees manager opens (Git subtab selected); .dt3-group \"Worktrees & Git\" gets .pmv2-locate and focus"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass",
+   "back_restores": "pass",
    "case": "branching domain result",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "shortcut",
@@ -336,10 +342,10 @@
     "section": "commands",
     "row": "extensions.commands.shortcut-hints"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass",
+   "back_restores": "pass",
    "case": "extensions domain result",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "theem",
@@ -347,11 +353,13 @@
    "result_type": "session",
    "displayed_path": null,
    "expected_destination": null,
-   "actual_destination": null,
+   "actual_destination": {
+    "note": "Back from general.visual.theme restored query \"theem\" and re-opened the dropdown with r_0fb731e11753ac25 aria-selected=true"
+   },
    "focus_highlight": "n/a",
-   "back_restores": "pending-verification-phase",
+   "back_restores": "pass",
    "case": "Back restores the query and the selected result in the dropdown",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   }
  ]
 }

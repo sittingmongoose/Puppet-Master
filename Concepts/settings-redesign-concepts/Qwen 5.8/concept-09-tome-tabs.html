@@ -349,6 +349,50 @@
 
   var pendingLocate = null; // {row, sec, object}
   var lastQuery = "";
+  // ---------- runtime-demand continuation (packet 08) ----------
+  var demand = null, staleDemand = {}, installedLocal = {};
+  function demandToken() { return "cont-" + Date.now().toString(36) + "-" + Math.floor(Math.random() * 46656).toString(36); }
+  function provReady(p) {
+    if (installedLocal[p.id]) return true;
+    return p.readiness.indexOf("not-installed") < 0 && (p.readiness.indexOf("authenticated") >= 0 || p.readiness.indexOf("probe-ok") >= 0);
+  }
+  function demandBlockHTML(p) {
+    var html = '<div class="tt-cap">Runtime demand</div>' +
+      '<div class="pm2-row"><div class="pm2-row-main"><div class="pm2-row-title">Simulate a runtime demand for this CLI</div>' +
+      '<div class="pm2-row-desc">A chat run requests this provider; the originating operation is preserved with a continuation token until setup completes.</div></div>' +
+      '<div class="pm2-row-ctl"><button class="pm-btn pm-btn-sm" data-demandact="simulate" data-prov="' + esc(p.id) + '">Simulate…</button></div></div>';
+    var d = demand && demand.id === p.id ? demand : null;
+    if (d) {
+      if (provReady(p)) {
+        html += '<div class="tt-notice">' + ico("checkCircle", 14) + '<div class="tt-notice-body"><strong>' + esc(d.op) + '</strong><span>Continuation current — stored token ' + esc(d.token) + ' still matches this demand.</span></div>' +
+          '<button class="pm-btn pm-btn-primary pm-btn-sm" data-demandact="resume" data-prov="' + esc(p.id) + '">Resume originating operation</button></div>';
+      } else {
+        html += '<div class="pm-note" style="margin:4px 2px">' + esc(d.op) + ' holds token ' + esc(d.token) + '; resume unlocks when ' + esc(p.name) + ' reports installed + authenticated.</div>';
+      }
+      html += '<div class="pm-note" style="margin:4px 2px">Deep link: #/mgr/providers/' + esc(p.id) + '?sec=install — <button class="pm-btn pm-btn-quiet pm-btn-sm" data-demandact="open" data-prov="' + esc(p.id) + '">open the exact install row</button></div>';
+    } else if (staleDemand[p.id]) {
+      html += '<div class="pm-note" style="margin:4px 2px">Continuation stale: "' + esc(staleDemand[p.id].op) + '" (token ' + esc(staleDemand[p.id].token) + ') was superseded by a newer runtime demand; the stored token no longer matches. Simulate again to preserve a new operation.</div>';
+    }
+    return html;
+  }
+  function demandAction(act, pid) {
+    var p = null; MD.providers.forEach(function (x) { if (x.id === pid) p = x; });
+    if (!p) return;
+    if (act === "simulate") {
+      if (demand && demand.id !== pid) staleDemand[demand.id] = demand;
+      demand = { id: pid, op: "Chat run requesting " + p.name, token: demandToken() };
+      S2.receipt("Provider Setup Required", p.name + " is not ready for the originating operation (" + demand.op + "). The operation is preserved with continuation token " + demand.token + ". Deep link: #/mgr/providers/" + pid + "?sec=install. Resume only while the continuation is still current.", "info");
+      render({ noturn: true });
+    } else if (act === "resume") {
+      if (demand && demand.id === pid && provReady(p)) {
+        S2.receipt("Operation resumed", demand.op + " resumes on " + p.name + "; continuation token " + demand.token + " matched the stored demand.", "ok");
+        demand = null;
+        render({ noturn: true });
+      }
+    } else if (act === "open") {
+      go("#/mgr/providers/" + pid + "?sec=install");
+    }
+  }
 
   function go(hash) { if (window.location.hash === hash) render({ noturn: false }); else window.location.hash = hash; }
 
@@ -588,6 +632,8 @@
     el.addEventListener("click", function (e) {
       var tog = e.target.closest("[data-fxctl='toggle']");
       if (tog) { var r1 = findFx(tog.getAttribute("data-fxrow")); if (r1) { FX[r1.id] = !fxVal(r1); fxSave(); tog.setAttribute("aria-checked", FX[r1.id] ? "true" : "false"); S2.receipt("Manager preference changed", r1.label + " → " + (FX[r1.id] ? "On" : "Off") + " (manager demo value).", "ok"); } return; }
+      var dem = e.target.closest("[data-demandact]");
+      if (dem) { demandAction(dem.getAttribute("data-demandact"), dem.getAttribute("data-prov")); return; }
       var act = e.target.closest("[data-fxact]");
       if (act) { runAction(act.getAttribute("data-fxact")); return; }
       var g = e.target.closest("[data-go]");
@@ -622,6 +668,21 @@
     if (id === "memory.restore" || id === "memory.rebuild") {
       var op2 = S2.beginOp({ title: label, phase: "Working", determinate: false });
       setTimeout(function () { S2.finishOp(op2, "completed", "Done"); S2.receipt(label + " complete", "Faded memories stay recoverable at full fidelity.", "ok"); }, 800);
+      return;
+    }
+    if (id === "provider.install") {
+      var r0 = parseHash();
+      var pid0 = r0.seg[2] || null;
+      var prov0 = null; MD.providers.forEach(function (x) { if (x.id === pid0) prov0 = x; });
+      var nm0 = prov0 ? prov0.name : "provider";
+      var op4 = S2.beginOp({ title: "Install " + nm0, phase: "Downloading from official source", determinate: true, total: 3 });
+      setTimeout(function () { S2.advanceOp(op4, { completed: 2, human_phase: "Verifying signature" }); }, 380);
+      setTimeout(function () {
+        if (pid0) installedLocal[pid0] = true;
+        S2.finishOp(op4, "completed", "Installed");
+        S2.receipt("Install complete", nm0 + " installed from the official source for Desktop — Windows 11.", "ok");
+        render({ noturn: true });
+      }, 900);
       return;
     }
     var op3 = S2.beginOp({ title: label, phase: "Running", determinate: false });
@@ -949,6 +1010,7 @@
         if (p.readiness.indexOf("update-available") >= 0) html += '<div class="tt-notice">' + ico("download", 14) + '<div class="tt-notice-body"><strong>Update 0.9.5 verified</strong><span>Nothing happens until you approve; verification runs after install and rolls back on failure.</span></div><button class="pm-btn pm-btn-primary pm-btn-sm" data-fxact="provider.update">Review update</button></div>';
         if (p.readiness.indexOf("rolled-back") >= 0) html += '<div class="tt-banner">' + ico("history", 14) + "<div><b>Verification failed after update; previous generation restored.</b> Receipt kept; rollback complete.</div></div>";
       }
+      html += demandBlockHTML(p);
     } else if (sec === "limits") {
       var un = p.limits.used === "unavailable" || p.limits.used === "n/a";
       html += '<div class="tt-kv"><div><dt>Requests/min</dt><dd>' + (p.limits.rpm || "—") + '</dd></div><div><dt>Tokens/min</dt><dd>' + (p.limits.tpm ? p.limits.tpm.toLocaleString() : "—") + '</dd></div><div><dt>Requests/day</dt><dd>' + (p.limits.rpd || "—") + '</dd></div><div><dt>Usage</dt><dd>' + (un ? "Unavailable from provider" : esc(p.limits.used)) + "</dd></div></div>";

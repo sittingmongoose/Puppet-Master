@@ -77,6 +77,13 @@
     this.emit(this.top(), 0);
     return this.top();
   };
+  /* jump(): go to a destination that replaces any current manager/object context
+     while PRESERVING the home/history below it (unlike reset). */
+  Nav.prototype.jump = function (route) {
+    this.stack = this.stack.slice(0, 1).concat([route]);
+    this.emit(this.top(), this.stack.length - 1);
+    return this.top();
+  };
   Nav.prototype.emit = function (route, depth, extra) {
     var self = this;
     if (this._raf) return; /* coalesce */

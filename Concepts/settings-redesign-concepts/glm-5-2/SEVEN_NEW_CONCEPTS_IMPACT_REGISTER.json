@@ -1,0 +1,524 @@
+{
+ "schema_id": "pm.settings_seven_concepts_impact_register.v1",
+ "model": "GLM-5.2",
+ "date": "2026-08-18",
+ "scope": "cumulative candidate impact register aggregating the seven per-concept impact registers (concepts 05-11); every entry is a candidate for the named canonical owner — nothing here is applied",
+ "concepts": {
+  "concept-05-directory-take-1": {
+   "title": "05 A1 Directory / Take 1",
+   "impact_register": "concept-05-directory-take-1/impact-register.json",
+   "plan_owner_impacts": [
+    "FinalGUISpec: Settings surface grammar per A1 Directory / Take 1",
+    "settings inventory: legacy scope metadata must not surface as editing scope (project-only decision)",
+    "settings schema: exposure/attention facets need first-class fields"
+   ],
+   "settings_inventory_impacts": [
+    "828 records projected verbatim; legacy scope retained as diagnostic only",
+    "copy preview requires per-category diff metadata"
+   ],
+   "settings_schema_impacts": [
+    "add attention-state derivation",
+    "add copy-preview kind enum (additions/replacements/unchanged/unavailable/conflicts)"
+   ],
+   "command_id_impacts": [
+    "candidate navigation/search/copy command families (see candidate-command-delta.json); provisional only"
+   ],
+   "wiring_impacts": [
+    "search select to route plan to focus/highlight to back-restore chain needs canonical wiring",
+    "copy transaction wiring (restore point, atomic apply, verify, receipt, rollback)"
+   ],
+   "dry_component_impacts": [
+    "concept-native Home/Nav/Search/Manager compositions are candidates; shared headless core (data/search/routes/store) is the DRY reuse boundary"
+   ],
+   "slint_port_impacts": [
+    "explicit route/menu/drawer state machines; virtualized lists via row-height windowing; no DOM-only magic in core behavior"
+   ],
+   "test_fixtures": [
+    "loading-cached",
+    "empty",
+    "no-results",
+    "typo",
+    "validation-error",
+    "offline",
+    "managed",
+    "unavailable",
+    "restart-required",
+    "reconnect-required",
+    "changed-elsewhere",
+    "import-conflict",
+    "rollback-complete",
+    "usage-unavailable",
+    "multi-install",
+    "unknown-owner",
+    "update-ask",
+    "verify-fail-rollback"
+   ],
+   "deferred_named_owners": [
+    "Product Onboarding",
+    "Installation / Deployment",
+    "Server Claim / Bootstrap",
+    "Servers / Execution Hosts / Clients",
+    "Project Hosting & Files",
+    "Remote Access",
+    "Project Sync / Move",
+    "Puppet Master application/content updates",
+    "Full Server backup owner flow"
+   ],
+   "unresolved_questions": [
+    "exact canonical command IDs await catalog census",
+    "compendium facet vocabulary needs owner adjudication"
+   ]
+  },
+  "concept-06-directory-take-2": {
+   "title": "06 A1 Directory / Take 2",
+   "impact_register": "concept-06-directory-take-2/impact-register.json",
+   "plan_owner_impacts": [
+    "FinalGUISpec: Settings surface grammar per A1 Directory / Take 2",
+    "settings inventory: legacy scope metadata must not surface as editing scope (project-only decision)",
+    "settings schema: exposure/attention facets need first-class fields"
+   ],
+   "settings_inventory_impacts": [
+    "828 records projected verbatim; legacy scope retained as diagnostic only",
+    "copy preview requires per-category diff metadata"
+   ],
+   "settings_schema_impacts": [
+    "add attention-state derivation",
+    "add copy-preview kind enum (additions/replacements/unchanged/unavailable/conflicts)"
+   ],
+   "command_id_impacts": [
+    "candidate navigation/search/copy command families (see candidate-command-delta.json); provisional only"
+   ],
+   "wiring_impacts": [
+    "search select to route plan to focus/highlight to back-restore chain needs canonical wiring",
+    "copy transaction wiring (restore point, atomic apply, verify, receipt, rollback)"
+   ],
+   "dry_component_impacts": [
+    "concept-native Home/Nav/Search/Manager compositions are candidates; shared headless core (data/search/routes/store) is the DRY reuse boundary"
+   ],
+   "slint_port_impacts": [
+    "explicit route/menu/drawer state machines; virtualized lists via row-height windowing; no DOM-only magic in core behavior"
+   ],
+   "test_fixtures": [
+    "loading-cached",
+    "empty",
+    "no-results",
+    "typo",
+    "validation-error",
+    "offline",
+    "managed",
+    "unavailable",
+    "restart-required",
+    "reconnect-required",
+    "changed-elsewhere",
+    "import-conflict",
+    "rollback-complete",
+    "usage-unavailable",
+    "multi-install",
+    "unknown-owner",
+    "update-ask",
+    "verify-fail-rollback"
+   ],
+   "deferred_named_owners": [
+    "Product Onboarding",
+    "Installation / Deployment",
+    "Server Claim / Bootstrap",
+    "Servers / Execution Hosts / Clients",
+    "Project Hosting & Files",
+    "Remote Access",
+    "Project Sync / Move",
+    "Puppet Master application/content updates",
+    "Full Server backup owner flow"
+   ],
+   "unresolved_questions": [
+    "exact canonical command IDs await catalog census",
+    "compendium facet vocabulary needs owner adjudication"
+   ]
+  },
+  "concept-07-compendium-workspace": {
+   "title": "07 A2 Compendium Workspace / Take 1",
+   "impact_register": "concept-07-compendium-workspace/impact-register.json",
+   "plan_owner_impacts": [
+    "FinalGUISpec: Settings surface grammar per A2 Compendium Workspace / Take 1",
+    "settings inventory: legacy scope metadata must not surface as editing scope (project-only decision)",
+    "settings schema: exposure/attention facets need first-class fields"
+   ],
+   "settings_inventory_impacts": [
+    "828 records projected verbatim; legacy scope retained as diagnostic only",
+    "copy preview requires per-category diff metadata"
+   ],
+   "settings_schema_impacts": [
+    "add attention-state derivation",
+    "add copy-preview kind enum (additions/replacements/unchanged/unavailable/conflicts)"
+   ],
+   "command_id_impacts": [
+    "candidate navigation/search/copy command families (see candidate-command-delta.json); provisional only"
+   ],
+   "wiring_impacts": [
+    "search select to route plan to focus/highlight to back-restore chain needs canonical wiring",
+    "copy transaction wiring (restore point, atomic apply, verify, receipt, rollback)"
+   ],
+   "dry_component_impacts": [
+    "concept-native Home/Nav/Search/Manager compositions are candidates; shared headless core (data/search/routes/store) is the DRY reuse boundary"
+   ],
+   "slint_port_impacts": [
+    "explicit route/menu/drawer state machines; virtualized lists via row-height windowing; no DOM-only magic in core behavior"
+   ],
+   "test_fixtures": [
+    "loading-cached",
+    "empty",
+    "no-results",
+    "typo",
+    "validation-error",
+    "offline",
+    "managed",
+    "unavailable",
+    "restart-required",
+    "reconnect-required",
+    "changed-elsewhere",
+    "import-conflict",
+    "rollback-complete",
+    "usage-unavailable",
+    "multi-install",
+    "unknown-owner",
+    "update-ask",
+    "verify-fail-rollback"
+   ],
+   "deferred_named_owners": [
+    "Product Onboarding",
+    "Installation / Deployment",
+    "Server Claim / Bootstrap",
+    "Servers / Execution Hosts / Clients",
+    "Project Hosting & Files",
+    "Remote Access",
+    "Project Sync / Move",
+    "Puppet Master application/content updates",
+    "Full Server backup owner flow"
+   ],
+   "unresolved_questions": [
+    "exact canonical command IDs await catalog census",
+    "compendium facet vocabulary needs owner adjudication"
+   ]
+  },
+  "concept-08-directory-take-3": {
+   "title": "08 A1 Directory / Take 3",
+   "impact_register": "concept-08-directory-take-3/impact-register.json",
+   "plan_owner_impacts": [
+    "FinalGUISpec: Settings surface grammar per A1 Directory / Take 3",
+    "settings inventory: legacy scope metadata must not surface as editing scope (project-only decision)",
+    "settings schema: exposure/attention facets need first-class fields"
+   ],
+   "settings_inventory_impacts": [
+    "828 records projected verbatim; legacy scope retained as diagnostic only",
+    "copy preview requires per-category diff metadata"
+   ],
+   "settings_schema_impacts": [
+    "add attention-state derivation",
+    "add copy-preview kind enum (additions/replacements/unchanged/unavailable/conflicts)"
+   ],
+   "command_id_impacts": [
+    "candidate navigation/search/copy command families (see candidate-command-delta.json); provisional only"
+   ],
+   "wiring_impacts": [
+    "search select to route plan to focus/highlight to back-restore chain needs canonical wiring",
+    "copy transaction wiring (restore point, atomic apply, verify, receipt, rollback)"
+   ],
+   "dry_component_impacts": [
+    "concept-native Home/Nav/Search/Manager compositions are candidates; shared headless core (data/search/routes/store) is the DRY reuse boundary"
+   ],
+   "slint_port_impacts": [
+    "explicit route/menu/drawer state machines; virtualized lists via row-height windowing; no DOM-only magic in core behavior"
+   ],
+   "test_fixtures": [
+    "loading-cached",
+    "empty",
+    "no-results",
+    "typo",
+    "validation-error",
+    "offline",
+    "managed",
+    "unavailable",
+    "restart-required",
+    "reconnect-required",
+    "changed-elsewhere",
+    "import-conflict",
+    "rollback-complete",
+    "usage-unavailable",
+    "multi-install",
+    "unknown-owner",
+    "update-ask",
+    "verify-fail-rollback"
+   ],
+   "deferred_named_owners": [
+    "Product Onboarding",
+    "Installation / Deployment",
+    "Server Claim / Bootstrap",
+    "Servers / Execution Hosts / Clients",
+    "Project Hosting & Files",
+    "Remote Access",
+    "Project Sync / Move",
+    "Puppet Master application/content updates",
+    "Full Server backup owner flow"
+   ],
+   "unresolved_questions": [
+    "exact canonical command IDs await catalog census",
+    "compendium facet vocabulary needs owner adjudication"
+   ]
+  },
+  "concept-09-tome-tabs": {
+   "title": "09 Rethemed Tome Tabs",
+   "impact_register": "concept-09-tome-tabs/impact-register.json",
+   "plan_owner_impacts": [
+    "FinalGUISpec: Settings surface grammar per Rethemed Tome Tabs",
+    "settings inventory: legacy scope metadata must not surface as editing scope (project-only decision)",
+    "settings schema: exposure/attention facets need first-class fields"
+   ],
+   "settings_inventory_impacts": [
+    "828 records projected verbatim; legacy scope retained as diagnostic only",
+    "copy preview requires per-category diff metadata"
+   ],
+   "settings_schema_impacts": [
+    "add attention-state derivation",
+    "add copy-preview kind enum (additions/replacements/unchanged/unavailable/conflicts)"
+   ],
+   "command_id_impacts": [
+    "candidate navigation/search/copy command families (see candidate-command-delta.json); provisional only"
+   ],
+   "wiring_impacts": [
+    "search select to route plan to focus/highlight to back-restore chain needs canonical wiring",
+    "copy transaction wiring (restore point, atomic apply, verify, receipt, rollback)"
+   ],
+   "dry_component_impacts": [
+    "concept-native Home/Nav/Search/Manager compositions are candidates; shared headless core (data/search/routes/store) is the DRY reuse boundary"
+   ],
+   "slint_port_impacts": [
+    "explicit route/menu/drawer state machines; virtualized lists via row-height windowing; no DOM-only magic in core behavior"
+   ],
+   "test_fixtures": [
+    "loading-cached",
+    "empty",
+    "no-results",
+    "typo",
+    "validation-error",
+    "offline",
+    "managed",
+    "unavailable",
+    "restart-required",
+    "reconnect-required",
+    "changed-elsewhere",
+    "import-conflict",
+    "rollback-complete",
+    "usage-unavailable",
+    "multi-install",
+    "unknown-owner",
+    "update-ask",
+    "verify-fail-rollback"
+   ],
+   "deferred_named_owners": [
+    "Product Onboarding",
+    "Installation / Deployment",
+    "Server Claim / Bootstrap",
+    "Servers / Execution Hosts / Clients",
+    "Project Hosting & Files",
+    "Remote Access",
+    "Project Sync / Move",
+    "Puppet Master application/content updates",
+    "Full Server backup owner flow"
+   ],
+   "unresolved_questions": [
+    "exact canonical command IDs await catalog census",
+    "compendium facet vocabulary needs owner adjudication"
+   ]
+  },
+  "concept-10-command-suite": {
+   "title": "10 Rethemed Command Suite",
+   "impact_register": "concept-10-command-suite/impact-register.json",
+   "plan_owner_impacts": [
+    "FinalGUISpec: Settings surface grammar per Rethemed Command Suite",
+    "settings inventory: legacy scope metadata must not surface as editing scope (project-only decision)",
+    "settings schema: exposure/attention facets need first-class fields"
+   ],
+   "settings_inventory_impacts": [
+    "828 records projected verbatim; legacy scope retained as diagnostic only",
+    "copy preview requires per-category diff metadata"
+   ],
+   "settings_schema_impacts": [
+    "add attention-state derivation",
+    "add copy-preview kind enum (additions/replacements/unchanged/unavailable/conflicts)"
+   ],
+   "command_id_impacts": [
+    "candidate navigation/search/copy command families (see candidate-command-delta.json); provisional only"
+   ],
+   "wiring_impacts": [
+    "search select to route plan to focus/highlight to back-restore chain needs canonical wiring",
+    "copy transaction wiring (restore point, atomic apply, verify, receipt, rollback)"
+   ],
+   "dry_component_impacts": [
+    "concept-native Home/Nav/Search/Manager compositions are candidates; shared headless core (data/search/routes/store) is the DRY reuse boundary"
+   ],
+   "slint_port_impacts": [
+    "explicit route/menu/drawer state machines; virtualized lists via row-height windowing; no DOM-only magic in core behavior"
+   ],
+   "test_fixtures": [
+    "loading-cached",
+    "empty",
+    "no-results",
+    "typo",
+    "validation-error",
+    "offline",
+    "managed",
+    "unavailable",
+    "restart-required",
+    "reconnect-required",
+    "changed-elsewhere",
+    "import-conflict",
+    "rollback-complete",
+    "usage-unavailable",
+    "multi-install",
+    "unknown-owner",
+    "update-ask",
+    "verify-fail-rollback"
+   ],
+   "deferred_named_owners": [
+    "Product Onboarding",
+    "Installation / Deployment",
+    "Server Claim / Bootstrap",
+    "Servers / Execution Hosts / Clients",
+    "Project Hosting & Files",
+    "Remote Access",
+    "Project Sync / Move",
+    "Puppet Master application/content updates",
+    "Full Server backup owner flow"
+   ],
+   "unresolved_questions": [
+    "exact canonical command IDs await catalog census",
+    "compendium facet vocabulary needs owner adjudication"
+   ]
+  },
+  "concept-11-tabbed-organizer": {
+   "title": "11 Rethemed Tabbed Organizer",
+   "impact_register": "concept-11-tabbed-organizer/impact-register.json",
+   "plan_owner_impacts": [
+    "FinalGUISpec: Settings surface grammar per Rethemed Tabbed Organizer",
+    "settings inventory: legacy scope metadata must not surface as editing scope (project-only decision)",
+    "settings schema: exposure/attention facets need first-class fields"
+   ],
+   "settings_inventory_impacts": [
+    "828 records projected verbatim; legacy scope retained as diagnostic only",
+    "copy preview requires per-category diff metadata"
+   ],
+   "settings_schema_impacts": [
+    "add attention-state derivation",
+    "add copy-preview kind enum (additions/replacements/unchanged/unavailable/conflicts)"
+   ],
+   "command_id_impacts": [
+    "candidate navigation/search/copy command families (see candidate-command-delta.json); provisional only"
+   ],
+   "wiring_impacts": [
+    "search select to route plan to focus/highlight to back-restore chain needs canonical wiring",
+    "copy transaction wiring (restore point, atomic apply, verify, receipt, rollback)"
+   ],
+   "dry_component_impacts": [
+    "concept-native Home/Nav/Search/Manager compositions are candidates; shared headless core (data/search/routes/store) is the DRY reuse boundary"
+   ],
+   "slint_port_impacts": [
+    "explicit route/menu/drawer state machines; virtualized lists via row-height windowing; no DOM-only magic in core behavior"
+   ],
+   "test_fixtures": [
+    "loading-cached",
+    "empty",
+    "no-results",
+    "typo",
+    "validation-error",
+    "offline",
+    "managed",
+    "unavailable",
+    "restart-required",
+    "reconnect-required",
+    "changed-elsewhere",
+    "import-conflict",
+    "rollback-complete",
+    "usage-unavailable",
+    "multi-install",
+    "unknown-owner",
+    "update-ask",
+    "verify-fail-rollback"
+   ],
+   "deferred_named_owners": [
+    "Product Onboarding",
+    "Installation / Deployment",
+    "Server Claim / Bootstrap",
+    "Servers / Execution Hosts / Clients",
+    "Project Hosting & Files",
+    "Remote Access",
+    "Project Sync / Move",
+    "Puppet Master application/content updates",
+    "Full Server backup owner flow"
+   ],
+   "unresolved_questions": [
+    "exact canonical command IDs await catalog census",
+    "compendium facet vocabulary needs owner adjudication"
+   ]
+  }
+ },
+ "aggregate": {
+  "plan_owner_impacts": [
+   "FinalGUISpec: Settings surface grammar per A1 Directory / Take 1",
+   "settings inventory: legacy scope metadata must not surface as editing scope (project-only decision)",
+   "settings schema: exposure/attention facets need first-class fields",
+   "FinalGUISpec: Settings surface grammar per A1 Directory / Take 2",
+   "FinalGUISpec: Settings surface grammar per A2 Compendium Workspace / Take 1",
+   "FinalGUISpec: Settings surface grammar per A1 Directory / Take 3",
+   "FinalGUISpec: Settings surface grammar per Rethemed Tome Tabs",
+   "FinalGUISpec: Settings surface grammar per Rethemed Command Suite",
+   "FinalGUISpec: Settings surface grammar per Rethemed Tabbed Organizer"
+  ],
+  "settings_inventory_impacts": [
+   "828 records projected verbatim; legacy scope retained as diagnostic only",
+   "copy preview requires per-category diff metadata"
+  ],
+  "settings_schema_impacts": [
+   "add attention-state derivation",
+   "add copy-preview kind enum (additions/replacements/unchanged/unavailable/conflicts)"
+  ],
+  "command_id_impacts": [
+   "candidate navigation/search/copy command families (see candidate-command-delta.json); provisional only"
+  ],
+  "wiring_impacts": [
+   "search select to route plan to focus/highlight to back-restore chain needs canonical wiring",
+   "copy transaction wiring (restore point, atomic apply, verify, receipt, rollback)"
+  ],
+  "dry_component_impacts": [
+   "concept-native Home/Nav/Search/Manager compositions are candidates; shared headless core (data/search/routes/store) is the DRY reuse boundary"
+  ],
+  "slint_port_impacts": [
+   "explicit route/menu/drawer state machines; virtualized lists via row-height windowing; no DOM-only magic in core behavior"
+  ],
+  "counts": {
+   "concepts": 7,
+   "per_concept_registers": 7,
+   "plan_owner_unique": 9,
+   "settings_inventory_unique": 2,
+   "settings_schema_unique": 2,
+   "command_id_unique": 1,
+   "wiring_unique": 2,
+   "dry_unique": 1,
+   "slint_unique": 1
+  }
+ },
+ "verification_pass_addenda": {
+  "note": "impacts surfaced by the 2026-08-18 verification pass (defects found + fixed; see SEVEN_NEW_CONCEPTS_FINDINGS.md)",
+  "wiring_impacts": [
+   "virtualization window must expose padBottom to the pad height computation — 13 windowed sites shared one bug class; the Slint port should make scroll-extent derivation structural, not hand-computed per list",
+   "nav redirects inside a render pass must replace the current stack entry, not push — push-redirects create back-stack loops (c07)",
+   "search deep-link landing needs an explicit scroll-to-row step before selection when the target lives outside the rendered window (virtualized lists)"
+  ],
+  "test_fixture_impacts": [
+   "virtualization full-range probe (single programmatic jump to scrollHeight) belongs in the standard suite — the padBottom bug class was invisible to manual-scroll testing",
+   "back-stack integrity probe: deep-link landing then Back must return to the pre-landing view with query/result restored",
+   "dispatcher smoke for every rail/index destination (the c05 all-index TypeError survived because the crash left stale-but-alive DOM)"
+  ],
+  "dry_component_impacts": [
+   "the calm-highlight persistence pattern (state.calmRow re-applied after virtualized redraw, 700ms window, tabindex on rows) is a shared-candidate across all virtualized tables"
+  ]
+ }
+}

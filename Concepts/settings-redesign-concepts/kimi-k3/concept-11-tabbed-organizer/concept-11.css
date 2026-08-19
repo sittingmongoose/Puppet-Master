@@ -314,14 +314,18 @@
 .tbo-attn-list { display: grid; gap: 7px; }
 .tbo-attn-row {
   display: flex; align-items: center; gap: 10px;
+  inline-size: 100%;
   padding: 9px 12px;
   border: 1px solid var(--pm-line); border-radius: var(--pm-radius-s);
   background: var(--pm-bg-raised);
+  color: var(--pm-ink); font: inherit; text-align: start; cursor: pointer;
 }
+.tbo-attn-row:hover { border-color: color-mix(in srgb, var(--pm-accent) 40%, var(--pm-line)); }
+.tbo-attn-row .tbo-chev { flex: none; inline-size: 14px; block-size: 14px; color: var(--pm-ink-faint); }
 .tbo-attn-row .pm-healthdot { flex: none; }
 .tbo-attn-main { min-inline-size: 0; flex: 1 1 auto; }
-.tbo-attn-title { font-size: 12.5px; font-weight: 560; }
-.tbo-attn-sub { color: var(--pm-ink-faint); font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tbo-attn-title { display: block; font-size: 12.5px; font-weight: 560; }
+.tbo-attn-sub { display: block; color: var(--pm-ink-faint); font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 .tbo-util-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .tbo-recent { display: grid; gap: 4px; }
@@ -426,6 +430,7 @@
 
 /* ---------- manager frame --------------------------------------------------- */
 .tbo-mgr-head { margin-block-end: 12px; }
+.tbo-mgr .tbo-subtabs { margin-block: -4px 0 14px; padding: 0; border-radius: 8px 8px 0 0; }
 .tbo-mgr-head h2 { margin: 0 0 3px; font-size: 18px; font-weight: 660; display: flex; align-items: center; gap: 9px; }
 .tbo-mgr-head h2 svg { color: var(--pm-accent); inline-size: 19px; block-size: 19px; }
 .tbo-mgr-head p { margin: 0; color: var(--pm-ink-dim); font-size: 12.5px; max-inline-size: 76ch; }
@@ -666,3 +671,27 @@
 :root[data-motion="reduced"] .tbo-related-chip {
   transition: none !important;
 }
+
+/* hidden-attribute guards: shared .pm-drawer/.pm-scrim set display, which would
+   otherwise beat the UA [hidden] rule and leave overlays visible. */
+.pm-drawer[hidden], .pm-scrim[hidden] { display: none !important; }
+
+/* Home lens: no colored left accent bars — the critical banner's kind chip
+   and text already carry the meaning. */
+.pm-notice { border-inline-start: none; }
+
+/* Narrow shell frames (the 760/900 page widths): let the shell top bar wrap
+   to two rows and drop the decorative model chips, so the demo control
+   cluster (Scenarios, theme, motion, panel toggles, width) is never clipped.
+   Concept-local: shared pm-shell.css is frozen with concepts 01–04. */
+@container pmx (max-width: 990px) {
+  .pmx-topbar { flex-wrap: wrap; row-gap: 2px; padding-block: 4px; }
+  .pmx-model { display: none; }
+}
+
+/* Shell demo toggles (reduced motion, side/chat/bottom panels) carry bare SVGs
+   with no intrinsic size and no shared rule sizes them, so they painted 0x0.
+   Size them like the Scenarios button's icon. Concept-local: shared CSS and
+   concepts 01-04 are frozen. */
+.pmx-controls [data-shell-motion] > svg,
+.pmx-controls [data-shell-toggle] > svg { inline-size: 14px; block-size: 14px; }

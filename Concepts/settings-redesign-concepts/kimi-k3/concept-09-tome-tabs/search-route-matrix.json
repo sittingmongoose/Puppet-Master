@@ -24,10 +24,10 @@
     "section": "accounts",
     "row": "ai.accounts.openai-api-key"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
-   "case": "deep setting row into provider credentials",
-   "pass": "pending-verification-phase"
+   "focus_highlight": "pass (re-verified 2026-08-19 via click): Accounts & Sign-in subgroup auto-expands (row-cap reveal fixed), row ai.accounts.openai-api-key rendered in viewport, .pmv2-locate applied, focus moved to the row (.ct-row.pmv2-locate)",
+   "back_restores": "pass (re-verified 2026-08-19 via working result-row click): concept Back returns to the previous surface, #pmv2-search restored to the query, previously chosen result re-highlighted in the dropdown (data-active=true)",
+   "case": "deep setting row into provider credentials [re-verified 2026-08-19: result-row click now works — delegation uses data-result-id; no inert-click toast]",
+   "pass": "pass"
   },
   {
    "query": "openai api key",
@@ -50,10 +50,10 @@
     "section": "overview",
     "row": null
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
-   "case": "manager object (provider)",
-   "pass": "pending-verification-phase"
+   "focus_highlight": "pass (re-verified 2026-08-19 via click): Providers manager opens, OpenAI object row (.ct-obj) gets .pmv2-locate and focus; edge tab AI Brains & Providers selected",
+   "back_restores": "pass (re-verified 2026-08-19 via working result-row click): concept Back returns to the previous surface, #pmv2-search restored to the query, previously chosen result re-highlighted in the dropdown (data-active=true)",
+   "case": "manager object (provider) [re-verified 2026-08-19: result-row click now works — delegation uses data-result-id; no inert-click toast]",
+   "pass": "pass"
   },
   {
    "query": "theem",
@@ -76,10 +76,10 @@
     "section": "visual",
     "row": "general.visual.theme"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
-   "case": "typo tolerance (theem → Theme)",
-   "pass": "pending-verification-phase"
+   "focus_highlight": "pass (re-verified 2026-08-19 via click, both theem and theme queries): Visual Style subgroup auto-expands, row general.visual.theme rendered, .pmv2-locate applied, focus moved to the row",
+   "back_restores": "pass (re-verified 2026-08-19 via working result-row click): concept Back returns to the previous surface, #pmv2-search restored to the query, previously chosen result re-highlighted in the dropdown (data-active=true)",
+   "case": "typo tolerance (theem â Theme) [re-verified 2026-08-19: result-row click now works — delegation uses data-result-id; no inert-click toast]",
+   "pass": "pass"
   },
   {
    "query": "rate limit",
@@ -102,10 +102,10 @@
     "section": "accounts",
     "row": "ai.accounts.cooldown-policy"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
-   "case": "grouped results case",
-   "pass": "pending-verification-phase"
+   "focus_highlight": "pass (re-verified 2026-08-19 via click): Accounts & Sign-in subgroup auto-expands, row ai.accounts.cooldown-policy rendered, .pmv2-locate applied, focus moved to the row",
+   "back_restores": "pass (re-verified 2026-08-19 via working result-row click): concept Back returns to the previous surface, #pmv2-search restored to the query, previously chosen result re-highlighted in the dropdown (data-active=true)",
+   "case": "grouped results case [re-verified 2026-08-19: result-row click now works — delegation uses data-result-id; no inert-click toast]",
+   "pass": "pass"
   },
   {
    "query": "rate limit",
@@ -126,12 +126,13 @@
     "manager": "providers",
     "object": null,
     "section": null,
-    "row": null
+    "row": null,
+    "view": "Providers manager with Rate Limits local tab selected"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
-   "case": "duplicate/similar label lands on a different destination",
-   "pass": "pending-verification-phase"
+   "focus_highlight": "pass (re-verified 2026-08-19 tab r3 after navigateToEntry subpage-resolution fix): Providers manager opens, Rate Limits local tab is aria-selected=true (Overview no longer selected); .pmv2-locate applied to the whole manager content container (header + local tabs + roster list + detail, 613 chars), focus moved to it — content located, not header-only",
+   "back_restores": "pass (re-verified 2026-08-19 via working result-row click): concept Back returns to the previous surface, #pmv2-search restored to the query, previously chosen result re-highlighted in the dropdown (data-active=true)",
+   "case": "duplicate/similar label lands on a different destination [re-verified 2026-08-19: result-row click now works — delegation uses data-result-id; no inert-click toast]",
+   "pass": "pass"
   },
   {
    "query": "copy settings",
@@ -152,18 +153,19 @@
     "manager": "lifecycle",
     "object": null,
     "section": "copy",
-    "row": null
+    "row": null,
+    "view": "Copy Settings stepwise view (route view=copy)"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
-   "case": "action result",
-   "pass": "pending-verification-phase"
+   "focus_highlight": "pass (re-verified 2026-08-19 tab r3 after navigateToEntry copy-route fix): click opens the dedicated full-width Copy Settings view — h1 \"Copy Settings\", numbered steps visible (1 Select Source / 2 Select Categories / 3 Review & Confirm / 4 Complete) and step 1 source-project picker rendered; no longer lands on the lifecycle manager root",
+   "back_restores": "pass (re-verified 2026-08-19 via working result-row click): concept Back returns to the previous surface, #pmv2-search restored to the query, previously chosen result re-highlighted in the dropdown (data-active=true)",
+   "case": "action result [re-verified 2026-08-19: result-row click now works — delegation uses data-result-id; no inert-click toast]",
+   "pass": "pass"
   },
   {
    "query": "copy settings",
    "result_id": "r_773d3ba5904888a1",
    "result_type": "intentional_help_result",
-   "displayed_path": "Settings / System & Advanced / Settings Lifecycle — Help",
+   "displayed_path": "Settings / System & Advanced / Settings Lifecycle â Help",
    "expected_destination": {
     "domain": "system",
     "page": null,
@@ -177,13 +179,14 @@
     "page": null,
     "manager": "lifecycle",
     "object": null,
-    "section": "help",
-    "row": null
+    "section": null,
+    "row": null,
+    "view": "Settings Lifecycle manager root (Overview local tab)"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
-   "case": "intentional help result",
-   "pass": "pending-verification-phase"
+   "focus_highlight": "pass (re-verified 2026-08-19 tab r3 after locate fallback fix): lands on the Settings Lifecycle manager (h1 \"Settings Lifecycle\"); no \"help\" subpage exists, so the locate fallback chain highlights the manager container (data-manager-id=\"lifecycle\" — header + local tabs + Overview content, 674 chars, not header-only) and moves focus to it",
+   "back_restores": "pass (re-verified 2026-08-19 via working result-row click): concept Back returns to the previous surface, #pmv2-search restored to the query, previously chosen result re-highlighted in the dropdown (data-active=true)",
+   "case": "intentional help result [re-verified 2026-08-19: result-row click now works — delegation uses data-result-id; no inert-click toast]",
+   "pass": "pass"
   },
   {
    "query": "doctor",
@@ -206,10 +209,10 @@
     "section": null,
     "row": null
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
-   "case": "diagnostic / read-only status",
-   "pass": "pending-verification-phase"
+   "focus_highlight": "pass (re-verified 2026-08-19 via click): Doctor manager opens, header block gets .pmv2-locate and focus; destination matches (no subpage expected)",
+   "back_restores": "pass (re-verified 2026-08-19 via working result-row click): concept Back returns to the previous surface, #pmv2-search restored to the query, previously chosen result re-highlighted in the dropdown (data-active=true)",
+   "case": "diagnostic / read-only status [re-verified 2026-08-19: result-row click now works — delegation uses data-result-id; no inert-click toast]",
+   "pass": "pass"
   },
   {
    "query": "install claude",
@@ -232,10 +235,10 @@
     "section": "advanced",
     "row": "system.advanced.cli-path-claude"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
-   "case": "setup/repair workflow (explicit official-source CLI setup)",
-   "pass": "pending-verification-phase"
+   "focus_highlight": "pass (re-verified 2026-08-19 via click): Advanced & Debug subgroup auto-expands, row system.advanced.cli-path-claude rendered, .pmv2-locate applied, focus moved to the row",
+   "back_restores": "pass (re-verified 2026-08-19 via working result-row click): concept Back returns to the previous surface, #pmv2-search restored to the query, previously chosen result re-highlighted in the dropdown (data-active=true)",
+   "case": "setup/repair workflow (explicit official-source CLI setup) [re-verified 2026-08-19: result-row click now works — delegation uses data-result-id; no inert-click toast]",
+   "pass": "pass"
   },
   {
    "query": "theme",
@@ -258,10 +261,10 @@
     "section": "visual",
     "row": "general.visual.theme"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
-   "case": "ordinary setting row",
-   "pass": "pending-verification-phase"
+   "focus_highlight": "pass (re-verified 2026-08-19 via click, both theem and theme queries): Visual Style subgroup auto-expands, row general.visual.theme rendered, .pmv2-locate applied, focus moved to the row",
+   "back_restores": "pass (re-verified 2026-08-19 via working result-row click): concept Back returns to the previous surface, #pmv2-search restored to the query, previously chosen result re-highlighted in the dropdown (data-active=true)",
+   "case": "ordinary setting row [re-verified 2026-08-19: result-row click now works — delegation uses data-result-id; no inert-click toast]",
+   "pass": "pass"
   },
   {
    "query": "memory retention",
@@ -282,12 +285,13 @@
     "manager": "memory",
     "object": null,
     "section": null,
-    "row": null
+    "row": null,
+    "view": "Memory manager with Retention local tab selected"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
-   "case": "memory domain deep row",
-   "pass": "pending-verification-phase"
+   "focus_highlight": "pass (re-verified 2026-08-19 tab r3 after navigateToEntry subpage-resolution fix): Memory manager opens, Retention local tab is aria-selected=true (Overview/Stored Memories/Recall Behavior all false); .pmv2-locate applied to the manager content container (header + local tabs + items list, 451 chars) with focus moved to it — content located, not header-only",
+   "back_restores": "pass (re-verified 2026-08-19 via working result-row click): concept Back returns to the previous surface, #pmv2-search restored to the query, previously chosen result re-highlighted in the dropdown (data-active=true)",
+   "case": "memory domain deep row [re-verified 2026-08-19: result-row click now works — delegation uses data-result-id; no inert-click toast]",
+   "pass": "pass"
   },
   {
    "query": "worktree",
@@ -310,10 +314,10 @@
     "section": null,
     "row": null
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
-   "case": "branching domain result",
-   "pass": "pending-verification-phase"
+   "focus_highlight": "pass (re-verified 2026-08-19 via click): Source Control & Worktrees manager opens, header block gets .pmv2-locate and focus; destination matches (no subpage expected)",
+   "back_restores": "pass (re-verified 2026-08-19 via working result-row click): concept Back returns to the previous surface, #pmv2-search restored to the query, previously chosen result re-highlighted in the dropdown (data-active=true)",
+   "case": "branching domain result [re-verified 2026-08-19: result-row click now works — delegation uses data-result-id; no inert-click toast]",
+   "pass": "pass"
   },
   {
    "query": "shortcut",
@@ -336,10 +340,10 @@
     "section": "commands",
     "row": "extensions.commands.shortcut-hints"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
-   "case": "extensions domain result",
-   "pass": "pending-verification-phase"
+   "focus_highlight": "pass (re-verified 2026-08-19 via click): Commands & Shortcuts subgroup auto-expands, row extensions.commands.shortcut-hints rendered, .pmv2-locate applied, focus moved to the row",
+   "back_restores": "pass (re-verified 2026-08-19 via working result-row click): concept Back returns to the previous surface, #pmv2-search restored to the query, previously chosen result re-highlighted in the dropdown (data-active=true)",
+   "case": "extensions domain result [re-verified 2026-08-19: result-row click now works — delegation uses data-result-id; no inert-click toast]",
+   "pass": "pass"
   },
   {
    "query": "theem",
@@ -349,9 +353,9 @@
    "expected_destination": null,
    "actual_destination": null,
    "focus_highlight": "n/a",
-   "back_restores": "pending-verification-phase",
+   "back_restores": "pass — re-verified 2026-08-19 via the now-working click path: Back from every search destination restores #pmv2-search to the query and re-highlights the previously selected result in the dropdown (verified across all 13 cases)",
    "case": "Back restores the query and the selected result in the dropdown",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   }
  ]
 }

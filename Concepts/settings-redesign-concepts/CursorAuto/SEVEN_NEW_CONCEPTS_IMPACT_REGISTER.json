@@ -58,12 +58,12 @@
       "script": "scripts/seven-new-concepts-qa.py",
       "status": "pass",
       "failures": [],
-      "hub_port": 55050,
-      "hub_pid": 43564,
-      "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-42200",
-      "report": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-report-42200.json",
-      "summary": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-summary-42200.json",
-      "artifacts_dir": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-artifacts-42200",
+      "hub_port": 61968,
+      "hub_pid": 5872,
+      "profile": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-4908",
+      "report": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-report-4908.json",
+      "summary": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-summary-4908.json",
+      "artifacts_dir": "C:\\Users\\sitti\\AppData\\Local\\Temp\\ca7-qa-artifacts-4908",
       "theme_width_cells_pass": 336,
       "matrix_checks": [
         "overflow",
@@ -113,11 +113,6 @@
       },
       "provider_density_probed": [
         "concept-05-directory-take-1",
-        "concept-07-compendium-workspace",
-        "concept-10-command-suite"
-      ],
-      "provider_density_code": [
-        "concept-05-directory-take-1",
         "concept-06-directory-take-2",
         "concept-07-compendium-workspace",
         "concept-08-directory-take-3",
@@ -128,13 +123,16 @@
       "frozen_sha256_matched": 54,
       "provider_density": {
         "code_on_all_seven": true,
-        "report_42200_live_probed": [
+        "live_probed": [
           "concept-05-directory-take-1",
+          "concept-06-directory-take-2",
           "concept-07-compendium-workspace",
-          "concept-10-command-suite"
+          "concept-08-directory-take-3",
+          "concept-09-tome-tabs",
+          "concept-10-command-suite",
+          "concept-11-tabbed-organizer"
         ],
-        "qa_updated_to_probe_all_seven": true,
-        "note": "QA updated to probe all seven. Report 42200 live-probed 05/07/10; 06/08/09/11 code verified, live probe lands on next rerun."
+        "note": "Live-probed on all seven at hub 61968 / ca7-qa-report-4908.json."
       }
     },
     "inventory": {
@@ -298,12 +296,16 @@
     },
     "provider_density_all_seven_code": {
       "status": "fixed",
-      "live_qa_report_42200_probed": [
-        "05",
-        "07",
-        "10"
-      ],
-      "qa_updated_to_probe_all_seven": true
+      "qa_updated_to_probe_all_seven": true,
+      "live_qa_report_4908_probed": [
+        "concept-05-directory-take-1",
+        "concept-06-directory-take-2",
+        "concept-07-compendium-workspace",
+        "concept-08-directory-take-3",
+        "concept-09-tome-tabs",
+        "concept-10-command-suite",
+        "concept-11-tabbed-organizer"
+      ]
     }
   }
 }

@@ -1,0 +1,83 @@
+{
+ "schema_id": "pm.settings_bakeoff.search_route_matrix.v1",
+ "concept_id": "concept-11-tabbed-organizer",
+ "date": "2026-08-18",
+ "routing_rule": "route resolved from PM2.routes.planFor(destination object on the result); never by rendered array index or grouped position",
+ "cases": [
+  {
+   "case": "deep_setting_row",
+   "query": "theme",
+   "result_id": "res.set.general.visual.theme",
+   "expected": "general/visual row general.visual.theme focused + calm highlight",
+   "route_by": "immutable_result_id",
+   "actual_destination": "row general.visual.theme rendered at its exact destination (section view; compendium table for c07), focused",
+   "focus_highlight": "true + v2-calm",
+   "pass": true
+  },
+  {
+   "case": "duplicate_labels",
+   "query": "playground",
+   "result_id": "res.obj.prov.play-a & res.obj.prov.play-b",
+   "expected": "two distinct objects (prov.openrouter-key / prov.free-models); never routed by index",
+   "route_by": "immutable_result_id",
+   "actual_destination": "routed by immutable rid to prov.openrouter-key and prov.free-models — two distinct objects",
+   "pass": true
+  },
+  {
+   "case": "typo_fuzzy",
+   "query": "aproval",
+   "expected": "fuzzy matches found; zero-result path suggests 'approval'",
+   "actual_destination": "\"aproval\" → 29 fuzzy results, zero-result path carries suggestion copy",
+   "pass": true
+  },
+  {
+   "case": "manager_result",
+   "query": "terminal",
+   "result_id": "res.mgr.mgr.terminal",
+   "expected": "domain code, mgr.terminal opens; manager surface + calm",
+   "route_by": "immutable_result_id",
+   "actual_destination": "mgr.terminal opened (view manager)",
+   "focus_highlight": "manager surface calm-highlighted",
+   "pass": true
+  },
+  {
+   "case": "managed_object",
+   "query": "claude",
+   "result_id": "res.obj.prov.claude-cli",
+   "expected": "mgr.provider opens with prov.claude-cli selected",
+   "route_by": "immutable_result_id",
+   "actual_destination": "mgr.provider opened with prov.claude-cli selected + calm",
+   "pass": true
+  },
+  {
+   "case": "unavailable_result",
+   "query": "video generation",
+   "expected": "unavailable_capability result shown with reason",
+   "actual_destination": "res.obj.med.video listed with reason \"Unavailable\"",
+   "pass": true
+  },
+  {
+   "case": "workflow_result",
+   "query": "install codex",
+   "result_id": "res.flow.flow.provider-install",
+   "expected": "setup workflow destination in mgr.provider/prov.codex-cli",
+   "route_by": "immutable_result_id",
+   "actual_destination": "mgr.provider / prov.codex-cli destination reached",
+   "pass": true
+  },
+  {
+   "case": "back_restores_query",
+   "expected": "Back returns to Home with query text and selected result id restored",
+   "actual_destination": "Back returned to Home; Home search input + lastRid res.set.general.visual.theme restored",
+   "pass": true
+  },
+  {
+   "case": "grouped_results",
+   "query": "notifications",
+   "expected": "grouped by type; selection by rid",
+   "actual_destination": "7 results grouped by type (2 groups); every row selectable by rid",
+   "pass": true
+  }
+ ],
+ "verification": "browser-driven per concept on 2026-08-18 (Playwright headless Chromium over local HTTP): all 9 cases pass with the measured outcomes recorded per case above; raw probe output in the model folder verification scratch (search exactness layers of the final functional run + supplementary manager/managed-object/grouped-results probes); summary in SEVEN_NEW_CONCEPTS_TEST_REPORT.md"
+}

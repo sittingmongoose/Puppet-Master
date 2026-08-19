@@ -206,8 +206,20 @@
    * a value in this Project came from the product default, from the reader, from
    * what the host reports, from a policy that genuinely overrides it, or it is not
    * set at all. Anything else would be an inheritance system in disguise. */
+  /* "Effective value differs" is its own state, not a flavour of managed.
+   * `02_MANAGER_GRAMMAR_AND_SETTING_MODEL` lists it among the explicit value states, and
+   * the provider fixtures require a requested-versus-effective route. It is NOT
+   * inheritance: nothing here says a value was inherited from a wider scope. It says the
+   * Project asked for one thing and something intrinsic — a policy floor, a host that
+   * cannot honour it, a run override — produced another, and names which. */
+  function differs(state) {
+    return !!(state && state.requested !== undefined && state.effective !== undefined &&
+      String(state.requested) !== String(state.effective));
+  }
+
   function stateLabel(state) {
     if (!state) return "Default";
+    if (differs(state)) return "In effect: " + String(state.effective);
     switch (state.source) {
       case "unavailable": return "Unavailable";
       case "managed": return "Managed";
@@ -221,6 +233,7 @@
 
   function stateTone(state) {
     if (!state) return "quiet";
+    if (differs(state)) return "managed";
     switch (state.source) {
       case "unavailable": return "unavailable";
       case "managed": return "managed";
@@ -234,6 +247,11 @@
    * Concepts put this behind "Why this value?" rather than on every row. */
   function stateReason(state) {
     if (!state) return null;
+    if (differs(state)) {
+      return "This Project asked for " + String(state.requested) + ". " +
+        (state.effectiveWhy || "Something outside this Project decided the result.") +
+        " What runs is " + String(state.effective) + ".";
+    }
     if (state.source === "unavailable") return state.reason || "Not available on this host.";
     if (state.source === "managed") return state.managedNote || null;
     if (state.source === "auto") return state.autoNote || null;
@@ -343,6 +361,7 @@
 
     stateLabel: stateLabel,
     stateTone: stateTone,
+    differs: differs,
     stateReason: stateReason,
     isEditable: isEditable,
 

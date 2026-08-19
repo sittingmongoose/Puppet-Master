@@ -1,3161 +1,2080 @@
-/* Opus 5 — Directory · Take 1
+/* Opus 5 — Directory (concept 05).
  *
- * Settings is a directory you can hold in your head.
+ * Thesis: Settings is a directory you can hold in your head. One quiet grid of
+ * destinations over a compact rail of the twelve areas, and every card expands in
+ * place into the area it names rather than throwing the reader somewhere new.
  *
- * The whole design follows from one claim: a reader who has opened Settings
- * three times should be able to picture it. So there is exactly one way in (a
- * two-column grid of destinations under a full-width search field), exactly one
- * persistent index (a text rail of the twelve areas), and exactly one shape for
- * everything deeper (a roster on the left, the selected thing's form on the
- * right, its subpages as a quiet strip above the form). Nothing is presented
- * twice in two different grammars, because two grammars are what makes a
- * settings app unmemorable.
+ * What this file owns: every pixel. Home composition, the rail, the card grid, the
+ * domain and page workspaces, the roster-and-form manager, the search dropdown, the
+ * arrival highlight, the narrow-width push, and the motion that ties them together.
+ * What it does not own: any fact. Domains, pages, sections, the 828 settings, manager
+ * specs, search results, routes, the copy transaction and the state fixtures all come
+ * from shared2, which draws nothing.
  *
- * Four decisions are worth stating because they are not obvious from the code:
- *
- * 1. Routing is by identity, never by position. A search result is opened
- *    through `PM2Index.byId(id).destination` and nothing else, and the arrival
- *    (scroll, focus, locator) is driven by the ROUTE rather than by the click.
- *    That way a deep link pasted into the address bar and a result chosen from
- *    the dropdown produce the identical screen, and there is no second code
- *    path that can drift.
- *
- * 2. Managers hydrate on entry and never before. Home, the rail, the domain
- *    pages and the search dropdown are built from the model and the index only
- *    -- `PM2Managers.spec()` is called from one function, `openManager`, so
- *    "typing did not instantiate forty managers" is a property of the file's
- *    shape rather than a promise.
- *
- * 3. The screen is rebuilt per route, but a control is never rebuilt under the
- *    reader's fingers. Editing patches the one row it belongs to, so focus,
- *    selection and caret survive; only navigation replaces a surface.
- *
- * 4. Semantic state lives in the store and the route, never in the DOM. Nothing
- *    here reads state back out of an attribute, which is what makes the design
- *    portable to a property-graph toolkit like Slint.
+ * Portability note (Slint 1.17.1): the route is an explicit state machine, every list
+ * that can grow is windowed through PMVirtual, and nothing here reads layout to decide
+ * what a thing MEANS — geometry is measured only to scroll an arrival into view.
  */
 (function () {
   "use strict";
 
+  var CONCEPT_ID = "concept-05-directory-take-1";
   var M = window.PM2Model;
   var IX = window.PM2Index;
   var RT = window.PM2Route;
-  var STATES = window.PM2States;
-  var MGR = window.PM2Managers;
-  var COPY = window.PM2Copy;
-  var VIRT = window.PMVirtual;
-  var WORK = window.PMWork;
-  var ICON = window.PMIcons.icon;
-  var ESC = window.PMShell.escapeHtml;
-
-  var CONCEPT_ID = "concept-05-directory-take-1";
-  var ROW_RHYTHM = 34;          /* the virtualized row height, in px */
-  var GROUP_INLINE_MAX = 12;    /* object groups longer than this get a table */
+  var MG = window.PM2Managers;
+  var ST = window.PM2States;
+  var CP = window.PM2Copy;
 
   var store = window.PM2Store.create(CONCEPT_ID);
-  COPY.attach(store);
+  CP.attach(store);
 
-  /* Session state. None of this is persisted: a half-open disclosure or a
-   * half-finished transaction restored from storage would be a claim about what
-   * happened while the page was closed. */
+  var shell = null;
+  var root = null;      /* .d5 */
+  var railEl = null;
+  var barEl = null;
+  var stageEl = null;
+  var stageInner = null;
+
+  /* Presentation state. Deliberately NOT in the store: none of it is a fact about
+   * the Project, and restoring an open dropdown after a reload would be a lie. */
   var ui = {
     query: "",
     results: null,
     dropOpen: false,
     activeResult: -1,
-    selectedResult: null,
-    openSections: {},
-    openWhy: {},
-    drawer: false,
-    pane: "roster",
-    entry: {},          /* managerId -> selected roster entry key */
-    tab: {},            /* managerId + entry -> selected subpage */
-    transfer: null,     /* the rect of the thing that was pressed */
-    back: false,
-    suppress: false,
-    drafts: {},         /* settingId -> text the reader typed but that is not valid */
-    copy: null,
-    allScroll: 0
+    railOpen: false,
+    pane: "roster",          /* narrow-width manager pane */
+    tab: {},                 /* managerId -> section id */
+    selected: {},            /* managerId -> objectId */
+    openDetails: {},         /* settingId -> true */
+    openAdvanced: {},        /* sectionId -> true */
+    facets: { domains: [], kinds: [], exposures: [], changedOnly: false },
+    allScroll: 0,
+    copy: { step: 1, source: null, domains: null, preview: null, run: null, receipt: null },
+    errors: {},              /* settingId -> message */
+    pending: null            /* the arrival to reveal after the next paint */
   };
 
-  var shell, root, railEl, drawerEl, colEl, topEl, canvasEl, searchInput, dropEl,
-      titleEl, crumbEl, backEl, closeEl, projectEl, browseBtn;
-  var release = VIRT.releasePool();
-  var searchGen = VIRT.generations("search");
+  var narrow = false;
+  var lastFixture = null;
+  /* True while the concept is writing the route for its own bookkeeping rather
+   * than navigating. See the RT.onChange subscription in boot(). */
+  var quiet = false;
 
-  /* ------------------------------------------------------------------ DOM */
+  function withoutRender(fn) {
+    quiet = true;
+    try { fn(); } finally { quiet = false; }
+  }
 
-  function el(tag, cls, text) {
+  /* ------------------------------------------------------------------ helpers */
+
+  function el(tag, cls, html) {
     var n = document.createElement(tag);
     if (cls) n.className = cls;
-    if (text != null) n.textContent = String(text);
+    if (html != null) n.innerHTML = html;
     return n;
   }
 
-  function html(tag, cls, markup) {
-    var n = document.createElement(tag);
-    if (cls) n.className = cls;
-    if (markup != null) n.innerHTML = markup;
-    return n;
+  function esc(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   }
 
-  function on(node, type, fn) {
-    node.addEventListener(type, fn);
-    return node;
+  function icon(name, size) {
+    return window.PMIcons.has(name) ? window.PMIcons.icon(name, size) : window.PMIcons.icon("dot", size);
   }
 
-  function clear(node) {
-    while (node.firstChild) node.removeChild(node.firstChild);
-    return node;
-  }
+  function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
 
-  function add(parent) {
-    for (var i = 1; i < arguments.length; i++) {
-      if (arguments[i]) parent.appendChild(arguments[i]);
-    }
-    return parent;
-  }
+  function on(node, type, fn) { node.addEventListener(type, fn); return node; }
 
-  function iconNode(name, size) {
-    return html("span", "pm-icon-wrap", ICON(name, size || 14));
-  }
-
-  /* --------------------------------------------------------------- words */
-
-  /* Internal names are never printed as prose. Roster keys, enum values and
-   * option ids all pass through here before a reader sees them. */
-  function human(value) {
-    var s = String(value == null ? "" : value);
-    if (!s) return "";
-    if (/^[a-z0-9]+([-_.][a-z0-9]+)+$/i.test(s) || /^[a-z]+[A-Z]/.test(s)) {
-      s = s.replace(/[-_.]+/g, " ").replace(/([a-z0-9])([A-Z])/g, "$1 $2");
-      return s.charAt(0).toUpperCase() + s.slice(1);
-    }
-    return s;
-  }
-
-  function plural(word, n) {
-    var w = String(word || "item").toLowerCase();
-    if (n === 1) return w;
-    if (/s$/.test(w)) return w;
-    if (/y$/.test(w)) return w.slice(0, -1) + "ies";
-    return w + "s";
-  }
-
-  function count(n, word) {
-    return n + " " + plural(word, n);
-  }
-
-  function displayValue(value) {
-    if (value == null || value === "") return "Not set";
-    if (value === true) return "On";
-    if (value === false) return "Off";
-    if (Object.prototype.toString.call(value) === "[object Array]") {
-      return value.length ? value.map(human).join(", ") : "Empty";
-    }
-    if (typeof value === "object") {
-      var keys = Object.keys(value);
-      return keys.length ? count(keys.length, "pair") : "Empty";
-    }
-    return human(value);
-  }
-
-  /* ------------------------------------------------------------- routing */
-
-  /* Every link carries the fixture in force, so a deep link a reviewer copies
-   * reproduces the exact screen they were looking at rather than the happy one. */
-  function dest(d) {
-    var out = RT.normalise(d);
-    out.state = RT.state();
-    out.demo = out.state;
-    return out;
-  }
-
-  function href(d) { return RT.href(dest(d)); }
-
-  function go(d, opts) { return RT.go(dest(d), opts); }
-
-  function link(d, cls, opts) {
-    var a = el("a", cls);
-    a.href = href(d);
-    if (opts && opts.transfer) {
-      on(a, "click", function () { rememberTransfer(a); });
-    }
-    return a;
-  }
-
-  function button(cls, label) {
-    var b = el("button", cls, label);
+  function button(cls, html, fn) {
+    var b = el("button", cls, html);
     b.type = "button";
+    if (fn) on(b, "click", fn);
     return b;
   }
 
-  /* Expand-and-transfer needs to know where the pressed thing was. The rect is
-   * captured at press time and consumed by the next render; if the reader
-   * arrives some other way it is simply absent and the surface fades in. */
-  function rememberTransfer(node) {
-    if (!node || !canvasEl) return;
-    var a = node.getBoundingClientRect();
-    var b = canvasEl.getBoundingClientRect();
-    ui.transfer = { x: Math.round(a.left - b.left), y: Math.round(a.top - b.top) };
+  function plural(n, one, many) { return n + " " + (n === 1 ? one : (many || one + "s")); }
+
+  /* ---------------------------------------------------------------- the shell */
+
+  function boot() {
+    shell = window.PMShell.mount({
+      rootId: "pm-root",
+      concept: "Directory · a place for everything",
+      conceptId: CONCEPT_ID,
+      theme: document.documentElement.getAttribute("data-theme") || "friendly-dark",
+      defaultTheme: "friendly-dark",
+      onLayout: measureNarrow,
+      onWidthMode: function () { measureNarrow(); render(); }
+    });
+    /* The shell's own Demo state select and Reset belong to the fixture list of
+     * concepts 01-04. This concept ships its own, so the stale pair is removed
+     * rather than left offering situations it does not implement. */
+    PM2States.removeShellControl(shell);
+
+
+    root = el("div", "d5");
+    root.setAttribute("data-concept", CONCEPT_ID);
+
+    railEl = el("aside", "d5-rail");
+    railEl.setAttribute("aria-label", "Settings areas");
+
+    var main = el("div", "d5-main");
+    barEl = el("div", "d5-bar");
+    var stateBar = el("div", "d5-statebar");
+    stateBar.id = "d5-statebar";
+    stageEl = el("div", "d5-stage d5-scroll");
+    stageInner = el("div", "d5-stage-inner");
+    stageEl.appendChild(stageInner);
+
+    main.appendChild(barEl);
+    main.appendChild(stateBar);
+    main.appendChild(stageEl);
+
+    var scrim = el("div", "d5-scrim");
+    scrim.hidden = true;
+    on(scrim, "click", function () { ui.railOpen = false; render(); });
+
+    root.appendChild(railEl);
+    root.appendChild(main);
+    root.appendChild(scrim);
+    shell.main.appendChild(root);
+
+    document.addEventListener("keydown", onKeydown, true);
+    on(stageEl, "scroll", function () {
+      if (RT.current().kind === "all") ui.allScroll = stageEl.scrollTop;
+    });
+    RT.onChange(function () {
+      /* A route write made while the reader is typing is bookkeeping, not
+       * navigation: re-rendering there would rebuild the field under the cursor
+       * and throw the caret away. */
+      if (quiet) return;
+      ui.dropOpen = false;
+      render();
+    });
+    window.addEventListener("pm-concept-state-applied", function () { measureNarrow(); render(); });
+
+    measureNarrow();
+    applyFixtureQuery();
+    render();
   }
 
-  /* --------------------------------------------------------- fixtures */
-
-  function effects() { return STATES.effects() || {}; }
-
-  function rowState(rec) { return STATES.rowState(rec); }
-
-  /* ------------------------------------------------------------- objects */
-
-  /* Everything inside a manager, read from the search index rather than from a
-   * manager spec. This is what lets a roster be drawn -- and a deep link to an
-   * installation or a theme be honoured -- without waking a single manager up. */
-  var objectCache = null;
-  var objectScale = null;
-
-  function objectModel() {
-    var sig = window.PM2Scale && window.PM2Scale.active() ? "scale" : "base";
-    if (objectCache && objectScale === sig) return objectCache;
-    var byManager = {};
-    var records = IX.records();
-    for (var i = 0; i < records.length; i++) {
-      var rec = records[i];
-      var d = rec.destination;
-      if (!d.managerId || !d.objectId) continue;
-      var m = byManager[d.managerId] ||
-        (byManager[d.managerId] = { order: [], groups: {}, objects: {} });
-      var key = d.sectionKey || "items";
-      var group = m.groups[key];
-      if (!group) {
-        group = m.groups[key] = { key: key, label: "", objects: [] };
-        m.order.push(key);
-      }
-      var obj = m.objects[d.objectId];
-      if (!obj) {
-        obj = m.objects[d.objectId] = {
-          id: d.objectId, label: d.objectId, desc: "", typeLabel: "Item",
-          availability: null, group: null, rows: {}, rowOrder: [], record: null
-        };
-      }
-      if (d.rowId) {
-        /* A row inside an object: the object's own name is the row's
-         * disambiguator, which is exactly the parent label the index recorded. */
-        var bucket = obj.rows[key] || (obj.rows[key] = (obj.rowOrder.push(key), []));
-        bucket.push(rec);
-        if (obj.label === obj.id && rec.disambiguator) obj.label = rec.disambiguator;
-      } else {
-        obj.label = rec.label;
-        obj.desc = rec.desc;
-        obj.typeLabel = rec.typeLabel;
-        obj.availability = rec.availability;
-        obj.record = rec;
-        if (!obj.group) obj.group = key;
-        group.objects.push(d.objectId);
-        if (!group.label) group.label = plural(rec.typeLabel, 2);
-      }
+  /* Width mode is presentation, derived at explicit checkpoints — never per frame,
+   * and never the source of anything semantic. */
+  function measureNarrow() {
+    var w = (shell && shell.main ? shell.main.clientWidth : window.innerWidth) || window.innerWidth;
+    var next = w < 900;
+    if (next !== narrow) {
+      narrow = next;
+      if (!narrow) ui.railOpen = false;
     }
-    /* A group that only ever held rows still needs a name for its tab. */
-    Object.keys(byManager).forEach(function (id) {
-      var m = byManager[id];
-      m.order.forEach(function (k) {
-        if (!m.groups[k].label) m.groups[k].label = human(k);
+    root.setAttribute("data-narrow", narrow ? "true" : "false");
+    root.setAttribute("data-rail", ui.railOpen ? "open" : "closed");
+  }
+
+  /* --------------------------------------------------------------- the router */
+
+  function render() {
+    var route = RT.current();
+    var check = RT.resolve(route);
+
+    measureNarrow();
+    /* A fixture reached by deep link rather than by the control still has to take
+     * effect, so the forced query is applied here rather than only on change. */
+    var fixture = ST.active();
+    if (fixture !== lastFixture) {
+      lastFixture = fixture;
+      MG.invalidate();
+      applyFixtureQuery();
+    }
+
+    renderRail(route);
+    renderBar(route, check);
+    renderStateBar();
+
+    if (window.PM2Spy) window.PM2Spy.release();
+    clear(stageInner);
+    var wrap = el("div", "d5-wrap");
+    stageInner.appendChild(wrap);
+    if (fixture !== "normal") wrap.appendChild(fixtureLine());
+
+    if (!check.ok) {
+      stageInner.setAttribute("data-pm-surface", "notice");
+      wrap.appendChild(brokenLink(check));
+      renderHome(wrap, route);
+      return;
+    }
+
+    var kind = route.kind;
+    if (kind === "home" || kind === "query") {
+      stageInner.setAttribute("data-pm-surface", kind === "query" ? "search" : "home");
+      renderHome(wrap, route);
+    } else if (kind === "domain") {
+      if (route.pageId) {
+        stageInner.setAttribute("data-pm-surface", "page");
+        renderPage(wrap, route);
+      } else {
+        stageInner.setAttribute("data-pm-surface", "domain");
+        renderDomain(wrap, route);
+      }
+    } else if (kind === "manager") {
+      stageInner.setAttribute("data-pm-surface", "manager");
+      stageInner.setAttribute("data-pm-manager", route.managerId);
+      renderManagerSurface(wrap, route);
+    } else if (kind === "all") {
+      stageInner.setAttribute("data-pm-surface", "all");
+      renderAll(wrap, route);
+    } else if (kind === "copy") {
+      stageInner.setAttribute("data-pm-surface", "copy");
+      renderCopy(wrap, route);
+    }
+    if (kind !== "manager") stageInner.removeAttribute("data-pm-manager");
+
+    revealPending();
+  }
+
+  /* Which deterministic situation is on screen, stated inside the Settings surface
+   * so a screenshot is self-describing and a reader is never guessing why a roster
+   * is empty or a value is locked. */
+  function fixtureLine() {
+    var f = ST.activeFixture();
+    var box = el("div", "d5-foundvia");
+    box.innerHTML = icon("beaker", 12) +
+      "<span><b>" + esc(f.label) + "</b> — " + esc(f.note) + "</span>";
+    return box;
+  }
+
+  function brokenLink(check) {
+    var box = el("div", "d5-linknotice");
+    box.appendChild(el("div", "d5-notice-head", esc(
+      check.reason === "malformed" ? "That link is not a Settings location" : "That link points somewhere this Project does not have")));
+    box.appendChild(el("p", "d5-notice-detail", esc(check.detail || "")));
+    box.appendChild(el("p", "d5-notice-detail", "The link was <code>" + esc(check.quoted || location.hash) + "</code>. Settings Home is shown below."));
+    return box;
+  }
+
+  /* -------------------------------------------------------------------- rail */
+
+  function renderRail(route) {
+    clear(railEl);
+
+    var head = el("div", "d5-rail-head");
+    head.appendChild(el("div", "d5-rail-eyebrow", "Settings for"));
+    var project = el("span", "d5-rail-project", esc(M.project.name));
+    project.setAttribute("data-pm-project", "");
+    head.appendChild(project);
+    head.appendChild(el("span", "d5-rail-project-kind", esc(M.project.kind + " · " + M.project.path)));
+    railEl.appendChild(head);
+
+    var list = el("nav", "d5-rail-list d5-scroll");
+
+    var home = button("d5-rail-item", icon("map") + "<span>Settings Home</span>", function () { RT.go({ kind: "home" }); });
+    if (route.kind === "home" || route.kind === "query") home.setAttribute("aria-current", "true");
+    list.appendChild(home);
+    list.appendChild(el("div", "d5-rail-sep"));
+
+    M.domains.forEach(function (d) {
+      var b = button("d5-rail-item",
+        icon(d.icon) + "<span>" + esc(d.title) + "</span><span class='d5-rail-item-count'>" + d.count + "</span>",
+        function () { RT.go({ kind: "domain", domainId: d.id }); ui.railOpen = false; });
+      b.setAttribute("data-pm-domain", d.id);
+      if (route.domainId === d.id || (route.managerId && managerDomain(route.managerId) === d.id)) {
+        b.setAttribute("aria-current", "true");
+      }
+      list.appendChild(b);
+    });
+
+    list.appendChild(el("div", "d5-rail-sep"));
+    var all = button("d5-rail-item", icon("list") + "<span>All settings</span><span class='d5-rail-item-count'>" + M.counts.settings + "</span>",
+      function () { RT.go({ kind: "all" }); ui.railOpen = false; });
+    if (route.kind === "all") all.setAttribute("aria-current", "true");
+    list.appendChild(all);
+
+    var copy = button("d5-rail-item", icon("download") + "<span>Copy from another Project</span>",
+      function () { RT.go({ kind: "copy", step: "source" }); ui.railOpen = false; });
+    if (route.kind === "copy") copy.setAttribute("aria-current", "true");
+    list.appendChild(copy);
+
+    railEl.appendChild(list);
+
+    var close = button("d5-iconbtn d5-rail-close", icon("chevronLeft") + "<span>Hide areas</span>", function () {
+      ui.railOpen = false; render();
+    });
+    railEl.appendChild(close);
+  }
+
+  function managerDomain(managerId) {
+    var f = M.familyOf(managerId);
+    return f ? f.domainId : null;
+  }
+
+  /* --------------------------------------------------------------------- bar */
+
+  function renderBar(route, check) {
+    clear(barEl);
+
+    if (narrow) {
+      barEl.appendChild(button("d5-iconbtn", icon("panelLeft") + "<span>Areas</span>", function () {
+        ui.railOpen = !ui.railOpen; render();
+      }));
+    }
+
+    var back = backTarget(route);
+    var backBtn = button("d5-iconbtn", icon("chevronLeft") + "<span>Back to " + esc(back.label) + "</span>", function () {
+      RT.go(back.dest);
+    });
+    backBtn.setAttribute("data-pm-back", "");
+    backBtn.hidden = route.kind === "home" || route.kind === "query";
+    barEl.appendChild(backBtn);
+
+    var crumbs = el("nav", "d5-crumbs");
+    crumbs.setAttribute("data-pm-breadcrumb", "");
+    crumbs.setAttribute("aria-label", "Breadcrumb");
+    trail(route).forEach(function (step, i, arr) {
+      if (i) crumbs.appendChild(el("span", "d5-crumb-sep", "/"));
+      var b = button("d5-crumb", esc(step.label), step.dest ? function () { RT.go(step.dest); } : null);
+      if (i === arr.length - 1) b.setAttribute("aria-current", "page");
+      crumbs.appendChild(b);
+    });
+    barEl.appendChild(crumbs);
+
+    barEl.appendChild(el("div", "d5-bar-spacer"));
+
+    /* Exactly one search field exists at a time: the hero owns it on Home, the bar
+     * owns it everywhere else. Two would make "the search field" ambiguous. */
+    if (route.kind !== "home" && route.kind !== "query") {
+      barEl.appendChild(searchField("bar"));
+    }
+
+    var close = button("d5-iconbtn", icon("ban") + "<span>Close Settings</span>", function () {
+      shell.announce("Close Settings would return to the surface that opened Settings.");
+      window.PMSim.run({
+        label: "Close Settings",
+        detail: "Returns to the surface that opened Settings — in this prototype, the shell stays put.",
+        realCall: "cmd.settings.close"
       });
     });
-    objectCache = byManager;
-    objectScale = sig;
-    return objectCache;
+    close.setAttribute("data-pm-close", "");
+    barEl.appendChild(close);
   }
 
-  function objectsOf(managerId) {
-    return objectModel()[managerId] || { order: [], groups: {}, objects: {} };
-  }
-
-  /* The one-line figure a destination row carries. Honest and cheap: it counts
-   * what the index already knows, and it never opens the manager to find out. */
-  function managerFigure(managerId) {
-    var model = objectsOf(managerId);
-    var best = null;
-    for (var i = 0; i < model.order.length; i++) {
-      var g = model.groups[model.order[i]];
-      if (!g.objects.length) continue;
-      if (!best || g.objects.length > best.objects.length) best = g;
+  function backTarget(route) {
+    if (route.kind === "domain" && route.pageId) {
+      /* `03_HOME_SEARCH_AND_NAVIGATION.md` § Location and exit: "`Back` returns one
+       * Settings level", and the Escape order moves "one Settings level outward". A
+       * link into a row is one level deeper than the page that holds it, so leaving a
+       * row lands on its page — dropping straight to the domain skips the level the
+       * reader was actually reading. */
+      if (route.settingId || route.sectionId) {
+        var pg = M.page(route.pageId);
+        return { label: (pg && pg.title) || "this page",
+          dest: { kind: "domain", domainId: route.domainId, pageId: route.pageId } };
+      }
+      return { label: (M.domain(route.domainId) || {}).title || "Settings", dest: { kind: "domain", domainId: route.domainId } };
     }
-    if (!best) return null;
-    return best.objects.length + " " + plural(best.label, best.objects.length);
+    if (route.kind === "domain") return { label: "Settings Home", dest: { kind: "home" } };
+    if (route.kind === "manager") {
+      var d = managerDomain(route.managerId);
+      var dom = d ? M.domain(d) : null;
+      if (route.objectId && narrow && ui.pane === "detail") {
+        return { label: (MG.record(route.managerId) || {}).title || "the list", dest: { kind: "manager", managerId: route.managerId } };
+      }
+      return dom ? { label: dom.title, dest: { kind: "domain", domainId: dom.id } } : { label: "Settings Home", dest: { kind: "home" } };
+    }
+    return { label: "Settings Home", dest: { kind: "home" } };
   }
 
-  /* -------------------------------------------------------------- shell */
+  function trail(route) {
+    var out = [{ label: "Settings", dest: { kind: "home" } }];
+    if (route.kind === "all") out.push({ label: "All settings", dest: null });
+    if (route.kind === "copy") out.push({ label: "Copy settings from another Project", dest: null });
+    if (route.kind === "query") out.push({ label: "Search", dest: null });
+    if (route.kind === "domain") {
+      var d = M.domain(route.domainId);
+      if (d) out.push({ label: d.title, dest: route.pageId ? { kind: "domain", domainId: d.id } : null });
+      if (route.pageId) {
+        var p = M.page(route.pageId);
+        if (p) out.push({ label: p.title, dest: null });
+      }
+    }
+    if (route.kind === "manager") {
+      var dom = managerDomain(route.managerId);
+      var domain = dom ? M.domain(dom) : null;
+      if (domain) out.push({ label: domain.title, dest: { kind: "domain", domainId: domain.id } });
+      var rec = MG.record(route.managerId);
+      out.push({ label: (rec && rec.title) || route.managerId, dest: route.objectId ? { kind: "manager", managerId: route.managerId } : null });
+      if (route.objectId) {
+        var sel = objectName(route.managerId, route.objectId);
+        if (sel) out.push({ label: sel, dest: null });
+      }
+    }
+    return out;
+  }
 
-  function stateControl() {
-    var wrap = el("div", "dr-state-control");
-    var id = "dr-state-fixture";
-    var label = el("label", null, "Situation");
-    label.setAttribute("for", id);
-    var select = el("select");
-    select.id = id;
-    select.setAttribute("data-pm-state-control", "1");
-    STATES.grouped().forEach(function (group) {
-      var og = document.createElement("optgroup");
-      og.label = group.group;
+  var objectNameCache = {};
+  function objectName(managerId, objectId) {
+    var key = managerId + "/" + objectId;
+    if (objectNameCache[key]) return objectNameCache[key];
+    var spec = MG.spec(managerId, store.get());
+    var found = null;
+    (spec.sections || []).forEach(function (s) {
+      (s.items || []).forEach(function (it) { if (it.id === objectId) found = it.name; });
+    });
+    objectNameCache[key] = found;
+    return found;
+  }
+
+  /* --------------------------------------------------------- state fixtures */
+
+  function renderStateBar() {
+    var bar = document.getElementById("d5-statebar");
+    clear(bar);
+    var active = ST.activeFixture();
+
+    bar.appendChild(el("span", null, "Demo state"));
+    var sel = el("select");
+    sel.setAttribute("data-pm-state-control", "");
+    sel.setAttribute("aria-label", "Deterministic demo state");
+    ST.grouped().forEach(function (group) {
+      var g = document.createElement("optgroup");
+      g.label = group.group;
       group.items.forEach(function (f) {
         var o = document.createElement("option");
-        o.value = f.id;
-        o.textContent = f.label;
-        o.title = f.note;
-        og.appendChild(o);
+        o.value = f.id; o.textContent = f.label; o.title = f.note;
+        g.appendChild(o);
       });
-      select.appendChild(og);
+      sel.appendChild(g);
     });
-    select.value = STATES.active();
-    on(select, "change", function () {
-      var next = RT.normalise(RT.current());
-      next.state = select.value === "normal" ? null : select.value;
-      next.demo = next.state;
-      store.set({ stateFixture: next.state });
-      RT.go(next);
-    });
-    var reset = button("pm-toggle", "Reset this concept");
-    reset.title = "Clear the values, edits and receipts this concept saved";
-    on(reset, "click", function () {
-      store.reset();
-      MGR.invalidate();
-      ui.drafts = {};
-      ui.copy = null;
+    sel.value = active.id;
+    on(sel, "change", function () {
+      var dest = RT.withState(RT.current(), sel.value === "normal" ? null : sel.value);
+      ui.query = ""; ui.results = null; ui.dropOpen = false;
+      MG.invalidate();
+      withoutRender(function () { RT.replace(dest); });
+      applyFixtureQuery();
       render();
-      shell.announce("Saved values, manager edits and receipts were cleared.");
+      shell.announce("Demo state: " + sel.options[sel.selectedIndex].textContent);
     });
-    add(wrap, label, select, reset);
+    bar.appendChild(sel);
+    var note = el("span", "d5-statebar-note", esc(active.note));
+    note.title = active.note;
+    bar.appendChild(note);
+
+    var reset = button("d5-iconbtn d5-statebar-reset", icon("undo") + "<span>Reset this concept</span>", function () {
+      store.reset();
+      MG.invalidate();
+      ui.openDetails = {}; ui.openAdvanced = {}; ui.errors = {};
+      ui.copy = { step: 1, source: null, domains: null, preview: null, run: null, receipt: null };
+      render();
+      shell.announce("Every change made in this concept was cleared.");
+    });
+    bar.appendChild(reset);
+  }
+
+  /* A fixture that is about search puts its query in the field, so the situation it
+   * names is the one on screen rather than one the reader has to reproduce. */
+  function applyFixtureQuery() {
+    var forced = ST.effects().forceQuery;
+    if (forced) {
+      ui.query = forced;
+      ui.results = IX.query(forced, { limit: 40 });
+      ui.dropOpen = true;
+    }
+  }
+
+  /* ------------------------------------------------------------------ search */
+
+  function searchField(where) {
+    var wrap = el("div", "d5-searchwrap d5-searchwrap--" + where);
+    var field = el("div", "d5-searchfield");
+    field.innerHTML = icon("search", 16);
+
+    var input = document.createElement("input");
+    input.type = "text";
+    input.spellcheck = false;
+    input.autocomplete = "off";
+    input.placeholder = "Search settings, managers, providers and actions";
+    input.setAttribute("data-pm-search-field", "");
+    input.setAttribute("aria-label", "Search all settings");
+    input.value = ui.query;
+    field.appendChild(input);
+
+    if (ui.query) {
+      field.appendChild(button("d5-searchclear", icon("ban", 14), function () {
+        ui.query = ""; ui.results = null; ui.dropOpen = false;
+        withoutRender(function () { RT.replace({ kind: "home" }); });
+        render();
+      }));
+    }
+    wrap.appendChild(field);
+
+    var drop = el("div", "d5-drop");
+    drop.setAttribute("data-pm-search-dropdown", "");
+    drop.hidden = !(ui.dropOpen && ui.results);
+    wrap.appendChild(drop);
+    if (!drop.hidden) fillDropdown(drop);
+
+    on(input, "input", function () {
+      ui.query = input.value;
+      ui.activeResult = -1;
+      if (!ui.query.trim()) {
+        ui.results = null; ui.dropOpen = false;
+        drop.hidden = true;
+        withoutRender(function () { RT.replace({ kind: "home" }); });
+        return;
+      }
+      ui.results = IX.query(ui.query, { limit: 40 });
+      ui.dropOpen = true;
+      drop.hidden = false;
+      fillDropdown(drop);
+      /* The query lives in the route, so Back from a chosen result returns to the
+       * query AND the result that was chosen rather than to a blank Home. */
+      withoutRender(function () { RT.replace({ kind: "query", query: ui.query }); });
+    });
+
+    on(input, "keydown", function (e) {
+      if (e.key === "Escape" && ui.dropOpen) { e.stopPropagation(); ui.dropOpen = false; drop.hidden = true; return; }
+      if (!ui.results) return;
+      var flat = flatResults(ui.results);
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        ui.activeResult += (e.key === "ArrowDown" ? 1 : -1);
+        if (ui.activeResult < 0) ui.activeResult = flat.length - 1;
+        if (ui.activeResult >= flat.length) ui.activeResult = 0;
+        fillDropdown(drop);
+      } else if (e.key === "Enter" && ui.activeResult >= 0 && flat[ui.activeResult]) {
+        e.preventDefault();
+        chooseResult(flat[ui.activeResult].id);
+      }
+    });
+
     return wrap;
   }
 
-  shell = window.PMShell.mount({
-    rootId: "pm-root",
-    concept: "Directory · Take 1 — Settings as a directory you can hold in your head",
-    conceptId: CONCEPT_ID,
-    theme: "friendly-dark",
-    widthChoice: 1280,
-    railOpen: true,
-    panelOpen: false,
-    extraControls: stateControl(),
-    onWidthMode: function () { applyMode(); },
-    onLayout: function () { applyMode(); }
-  });
-
-  /* ---------------------------------------------------------- chrome */
-
-  function buildChrome() {
-    root = el("div", "dr");
-    root.setAttribute("data-mode", "wide");
-    root.setAttribute("data-drawer", "closed");
-
-    railEl = buildRail("dr-rail");
-    colEl = el("div", "dr-col");
-
-    topEl = el("div", "dr-top");
-    var line = el("div", "dr-top-line");
-
-    browseBtn = button("dr-btn is-quiet", null);
-    add(browseBtn, iconNode("list"), el("span", null, "Areas"));
-    browseBtn.hidden = true;
-    on(browseBtn, "click", function () { setDrawer(!ui.drawer); });
-
-    backEl = button("dr-btn", null);
-    backEl.setAttribute("data-pm-back", "1");
-    on(backEl, "click", function () { goBack(); });
-
-    crumbEl = el("nav", "dr-crumbs");
-    crumbEl.setAttribute("data-pm-breadcrumb", "1");
-    crumbEl.setAttribute("aria-label", "Settings location");
-
-    projectEl = html("span", "dr-project", ICON("folder", 13) +
-      "<span>Project</span> <strong>" + ESC(M.project.name) + "</strong>");
-    projectEl.setAttribute("data-pm-project", "1");
-    projectEl.title = M.project.path;
-
-    closeEl = button("dr-btn", null);
-    closeEl.setAttribute("data-pm-close", "1");
-    add(closeEl, iconNode("ban"), el("span", null, "Close Settings"));
-    on(closeEl, "click", closeSettings);
-
-    add(line, browseBtn, backEl, crumbEl, projectEl, closeEl);
-
-    titleEl = el("h1", "dr-title", "Settings");
-
-    var searchWrap = el("div", "dr-search-wrap");
-    var field = el("div", "dr-search-field");
-    searchInput = el("input");
-    searchInput.type = "search";
-    searchInput.setAttribute("data-pm-search-field", "1");
-    searchInput.setAttribute("aria-label", "Search all of Settings");
-    searchInput.setAttribute("autocomplete", "off");
-    searchInput.placeholder = "Search settings, providers, models and tools";
-    on(searchInput, "input", function () { ui.query = searchInput.value; runSearch(); });
-    on(searchInput, "focus", function () { if (ui.query) runSearch(); });
-    on(searchInput, "keydown", onSearchKey);
-    add(field, iconNode("search"), searchInput, el("span", "dr-search-hint", "828 settings"));
-    dropEl = el("div", "dr-drop dr-scroll");
-    dropEl.setAttribute("data-pm-search-dropdown", "1");
-    dropEl.hidden = true;
-    add(searchWrap, field, dropEl);
-
-    add(topEl, line, titleEl, searchWrap);
-
-    canvasEl = el("div", "dr-canvas dr-scroll");
-    add(colEl, topEl, canvasEl);
-
-    drawerEl = buildRail("dr-drawer");
-    var scrim = el("div", "dr-scrim");
-    on(scrim, "click", function () { setDrawer(false); });
-
-    add(root, railEl, colEl);
-    add(colEl, scrim, drawerEl);
-    add(shell.main, root);
-  }
-
-  function buildRail(cls) {
-    var rail = el("div", cls);
-    var head = el("div", "dr-rail-head", "Settings");
-    var list = el("div", "dr-rail-list dr-scroll");
-    var foot = el("div", "dr-rail-foot");
-
-    var home = link({ kind: "home" }, "dr-rail-item");
-    home.textContent = "Home";
-    home.setAttribute("data-rail", "home");
-    add(list, home);
-
-    add(list, el("div", "dr-rail-group", "Areas"));
-    M.domains.forEach(function (d) {
-      var a = link({ kind: "domain", domainId: d.id }, "dr-rail-item");
-      a.textContent = d.title;
-      a.title = d.purpose;
-      a.setAttribute("data-rail", d.id);
-      a.setAttribute("data-pm-domain", d.id);
-      add(list, a);
-    });
-
-    var all = link({ kind: "all" }, "dr-rail-item");
-    all.textContent = "All settings";
-    all.setAttribute("data-rail", "all");
-    var copy = link({ kind: "copy" }, "dr-rail-item");
-    copy.textContent = "Copy from another Project";
-    copy.setAttribute("data-rail", "copy");
-    add(foot, all, copy);
-
-    add(rail, head, list, foot);
-    if (cls === "dr-drawer") {
-      on(rail, "click", function (e) {
-        if (e.target && e.target.closest && e.target.closest("a")) setDrawer(false);
-      });
-    }
-    return rail;
-  }
-
-  function setDrawer(open) {
-    ui.drawer = !!open;
-    root.setAttribute("data-drawer", ui.drawer ? "open" : "closed");
-    if (ui.drawer) {
-      var first = drawerEl.querySelector(".dr-rail-item");
-      if (first) first.focus();
-    } else if (browseBtn && !browseBtn.hidden) {
-      browseBtn.focus();
-    }
-  }
-
-  function applyMode() {
-    if (!root) return;
-    var narrow = shell.widthMode() !== "normal";
-    root.setAttribute("data-mode", narrow ? "narrow" : "wide");
-    browseBtn.hidden = !narrow;
-    if (!narrow && ui.drawer) setDrawer(false);
-  }
-
-  function markRail(key) {
-    [railEl, drawerEl].forEach(function (rail) {
-      var items = rail.querySelectorAll(".dr-rail-item");
-      for (var i = 0; i < items.length; i++) {
-        var it = items[i];
-        if (it.getAttribute("data-rail") === key) it.setAttribute("aria-current", "true");
-        else it.removeAttribute("aria-current");
-      }
-    });
-  }
-
-  /* ----------------------------------------------------------- search */
-
-  function runSearch() {
-    var text = String(ui.query || "").trim();
-    if (!text) { closeDrop(); return; }
-    var token = searchGen.next();
-    var res = IX.query(text, { limit: 40, perGroup: 8 });
-    if (!searchGen.isCurrent(token)) return;
-    ui.results = res;
-    ui.activeResult = -1;
-    renderDrop(res);
-  }
-
-  function renderDrop(res) {
-    clear(dropEl);
-    dropEl.hidden = false;
-    ui.dropOpen = true;
-
-    if (!res.total) {
-      var empty = el("div", "dr-drop-empty");
-      add(empty,
-        el("strong", null, "Nothing in Settings matches “" + res.query + "”"),
-        el("div", null, "Try a shorter word, or browse the areas in the rail. Every setting is also listed in All settings."));
-      var allLink = link({ kind: "all" }, "dr-btn is-quiet");
-      allLink.textContent = "Open All settings";
-      add(empty, allLink);
-      add(dropEl, empty);
-      return;
-    }
-
-    res.groups.forEach(function (group) {
-      add(dropEl, el("div", "dr-drop-group", group.label));
-      group.results.forEach(function (rec) {
-        add(dropEl, resultButton(rec));
-      });
-      if (group.truncated) {
-        add(dropEl, el("div", "dr-drop-foot",
-          group.total - group.shown + " more in " + group.label.toLowerCase() +
-          " — press Enter for the full list."));
-      }
-    });
-
-    add(dropEl, el("div", "dr-drop-foot",
-      res.shown + " of " + res.total + " results. Press Enter to see every one of them."));
-  }
-
-  function resultButton(rec) {
-    var b = button("dr-result", null);
-    b.setAttribute("data-pm-result", rec.id);
-    if (ui.selectedResult === rec.id) b.setAttribute("aria-selected", "true");
-    var main = el("div", "dr-result-main");
-    add(main, el("div", "dr-result-label", rec.label));
-    add(main, el("div", "dr-result-path", rec.path || "Settings"));
-    if (rec.availability) {
-      add(main, el("div", "dr-result-path", rec.availability));
-    }
-    add(b, main, el("span", "dr-result-type", rec.typeLabel));
-    on(b, "click", function () { openResult(rec.id); });
-    return b;
-  }
-
-  /* The only route out of a search result. `byId` is the whole contract: a
-   * result's position in the list, its label and its group are all irrelevant. */
-  function openResult(resultId) {
-    var rec = IX.byId(resultId);
-    if (!rec) return;
-    ui.selectedResult = resultId;
-    closeDrop();
-    store.remember({ id: rec.id, label: rec.label, path: rec.path });
-
-    /* Two pushes: the query first, so Back lands on the search that found it
-     * with both the text and the chosen result restored, then the destination. */
-    ui.suppress = true;
-    RT.go(dest({ kind: "query", query: ui.query, resultId: resultId }));
-    ui.suppress = false;
-    go(rec.destination);
-    shell.announce("Opened " + rec.label + " in " + (rec.path || "Settings") + ".");
-  }
-
-  function closeDrop() {
-    ui.dropOpen = false;
-    dropEl.hidden = true;
-    clear(dropEl);
-  }
-
-  function onSearchKey(e) {
-    if (e.key === "Escape") {
-      if (ui.dropOpen) { closeDrop(); e.stopPropagation(); }
-      return;
-    }
-    if (e.key === "Enter") {
-      e.preventDefault();
-      if (ui.activeResult >= 0) {
-        var nodes = dropEl.querySelectorAll("[data-pm-result]");
-        if (nodes[ui.activeResult]) { nodes[ui.activeResult].click(); return; }
-      }
-      if (String(ui.query || "").trim()) go({ kind: "query", query: ui.query });
-      return;
-    }
-    if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
-    var list = dropEl.querySelectorAll("[data-pm-result]");
-    if (!list.length) return;
-    e.preventDefault();
-    ui.activeResult += (e.key === "ArrowDown" ? 1 : -1);
-    if (ui.activeResult < 0) ui.activeResult = list.length - 1;
-    if (ui.activeResult >= list.length) ui.activeResult = 0;
-    for (var i = 0; i < list.length; i++) list[i].classList.remove("is-active");
-    list[ui.activeResult].classList.add("is-active");
-    list[ui.activeResult].scrollIntoView({ block: "nearest" });
-  }
-
-  /* ------------------------------------------------------------ chrome up */
-
-  function setCrumbs(parts) {
-    clear(crumbEl);
-    parts.forEach(function (part, i) {
-      if (i) add(crumbEl, html("span", "dr-crumb-sep", ICON("chevronRight", 11)));
-      var node;
-      if (part.dest && i < parts.length - 1) {
-        node = link(part.dest, "dr-crumb");
-        node.textContent = part.label;
-      } else {
-        node = el("span", "dr-crumb" + (i === parts.length - 1 ? " is-last" : ""), part.label);
-      }
-      add(crumbEl, node);
-    });
-  }
-
-  function setBack(target) {
-    clear(backEl);
-    if (!target) {
-      backEl.hidden = true;
-      backEl.removeAttribute("data-back-dest");
-      return;
-    }
-    backEl.hidden = false;
-    add(backEl, iconNode("chevronLeft"), el("span", null, "Back to " + target.label));
-    backEl.__dest = target.dest;
-  }
-
-  function goBack() {
-    ui.back = true;
-    if (backEl.__dest) go(backEl.__dest);
-    else go({ kind: "home" });
-  }
-
-  function closeSettings() {
-    store.set({ closed: true });
-    shell.announce("Close Settings returns to the surface that opened it.");
-    shell.notify({
-      id: "dr-close-" + Date.now(),
-      title: "Close Settings",
-      reason: "In the application this returns to Threads, the surface that opened Settings. Nothing was changed.",
-      at: "just now"
-    });
-    ui.back = true;
-    go({ kind: "home" });
-  }
-
-  /* ================================================================ HOME */
-
-  function renderHome() {
-    var s = el("div", "dr-surface dr-home");
-    s.setAttribute("data-pm-surface", "home");
-
-    var e = effects();
-    var notice = STATES.notice();
-    if (notice && !store.isDismissed(notice.id)) add(s, noticeBlock(notice));
-
-    /* At most one critical notice, then the compact attention list. Anything
-     * longer than four lines is a wall, and a wall is not a list. */
-    var items = (STATES.attention() || []).slice();
-    situations(e).forEach(function (x) { items.push(x); });
-
-    var att = el("div", "dr-block");
-    var head = el("div", "dr-block-head");
-    add(head, el("div", "dr-block-title", "Needs attention"));
-    if (items.length) add(head, el("div", "dr-block-note", count(items.length, "item")));
-    add(att, head);
-    var list = el("div", "dr-att");
-    if (!items.length) {
-      add(list, el("div", "dr-att-empty",
-        e.noAttention
-          ? "Nothing has been set up in this Project yet, so nothing is failing."
-          : "Nothing needs attention in this Project."));
-    } else {
-      items.slice(0, 4).forEach(function (item) { add(list, attentionRow(item)); });
-    }
-    add(att, list);
-    add(s, att);
-
-    if (e.forceQuery) add(s, forcedSearchBlock(e));
-
-    /* The directory itself: the twelve areas, each with its one-line purpose. */
-    var browse = el("div", "dr-block");
-    var bh = el("div", "dr-block-head");
-    add(bh, el("div", "dr-block-title", "Browse settings"));
-    add(bh, el("div", "dr-block-note",
-      M.counts.settings + " settings in " + M.counts.domains + " areas, " +
-      M.counts.pages + " pages and " + (M.FAMILIES.length + M.EXTRA_MANAGERS.length) + " managers"));
-    add(browse, bh);
-
-    var grid = el("div", "dr-grid");
-    M.domains.forEach(function (d) { add(grid, domainCard(d)); });
-    add(browse, grid);
-    add(s, browse);
-
-    add(s, utilities());
-    return s;
-  }
-
-  function domainCard(d) {
-    var a = link({ kind: "domain", domainId: d.id }, "dr-card", { transfer: true });
-    a.setAttribute("data-pm-domain", d.id);
-    add(a, html("span", "dr-card-icon", ICON(d.icon, 15)));
-    var main = el("div", "dr-card-main");
-    add(main, el("div", "dr-card-title", d.title));
-    add(main, el("div", "dr-card-purpose", d.purpose));
-    add(a, main);
-    add(a, el("span", "dr-card-meta", d.count + " settings"));
-    add(a, html("span", "dr-card-chev", ICON("chevronRight", 14)));
-    return a;
-  }
-
-  function noticeBlock(notice) {
-    var n = el("div", "dr-notice");
-    n.setAttribute("data-tone", notice.tone === "info" ? "info" : "attention");
-    n.setAttribute("data-pm-notice", notice.id);
-    add(n, html("span", "dr-notice-icon", ICON(notice.tone === "info" ? "info" : "alert", 15)));
-    var body = el("div", "dr-notice-body");
-    add(body, el("div", "dr-notice-head", notice.headline));
-    add(body, el("div", "dr-notice-detail", notice.detail));
-    add(n, body);
-    var acts = el("div", "dr-notice-acts");
-    if (notice.action) {
-      var a = link(notice.action.destination, "dr-btn is-primary");
-      a.textContent = notice.action.label;
-      add(acts, a);
-    }
-    var dismiss = button("dr-btn is-quiet", "Dismiss");
-    on(dismiss, "click", function () { store.dismiss(notice.id); render(); });
-    add(acts, dismiss);
-    add(n, acts);
-    return n;
-  }
-
-  function attentionRow(item) {
-    var row = el("div", "dr-att-item");
-    add(row, html("span", "dr-notice-icon",
-      ICON(item.tone === "attention" ? "alert" : (item.tone === "setup" ? "wrench" : "info"), 14)));
-    var main = el("div", "dr-att-main");
-    add(main, el("div", "dr-att-label", item.label));
-    add(main, el("div", "dr-att-detail", item.detail));
-    add(row, main);
-    if (item.destination) {
-      var a = link(item.destination, "dr-btn");
-      a.textContent = item.actionLabel || "Open";
-      add(row, a);
-    }
-    return row;
-  }
-
-  /* What the fixture in force actually means for this Project, as items a
-   * reader can act on rather than a badge that says which demo is running. */
-  function situations(e) {
+  function flatResults(res) {
     var out = [];
-    function push(tone, label, detail, actionLabel, destination) {
-      out.push({ tone: tone, label: label, detail: detail, actionLabel: actionLabel, destination: destination });
-    }
-    if (e.refreshing) {
-      push("info", "Settings are being read again from this host",
-        "Everything below is the last value that was read. It stays on screen until the refresh finishes.",
-        "Open Doctor", { managerId: "manager-doctor" });
-    }
-    if (e.emptyRosters) {
-      push("setup", "Nothing is configured in this Project yet",
-        "There is no provider, no persona and no tool set up, so most rosters are empty.",
-        "Set up a provider", { managerId: "manager-providers" });
-    }
-    if (e.validationError) {
-      push("attention", "A text size you entered was not accepted",
-        "The value you typed is still in the field, with the reason beside it.",
-        "Fix it", { settingId: "general.visual.font-size" });
-    }
-    if (e.changedElsewhere) {
-      push("info", "Two values changed in another window",
-        "This Project was edited somewhere else while this page was open. The rows say which values moved.",
-        "Review", { settingId: "general.visual.theme" });
-    }
-    if (e.usageUnavailable) {
-      push("info", "One provider is ready but reports no balance",
-        "Being able to answer and being able to measure are separate facts, and only the second is missing.",
-        "Open providers", { managerId: "manager-providers" });
-    }
-    if (e.managedOverride) {
-      push("info", "Some values here are set by Workspace policy",
-        "They are readable and explained, and they cannot be changed in this Project.",
-        "See them", { kind: "all", facet: encodeFacet({ states: ["managed"] }) });
-    }
-    if (e.unavailableOverride) {
-      push("info", "Some capabilities are not provided by this host",
-        "Those settings stay findable and say why, rather than disappearing from the directory.",
-        "See them", { kind: "all", facet: encodeFacet({ states: ["unavailable"] }) });
-    }
-    if (e.multiInstall) {
-      push("setup", "Two installations answer for one provider family",
-        "The one this Project uses is bound by identity; the other is shadowed and named.",
-        "Open installations", providerInstallationDest());
-    }
-    if (e.unknownOwner) {
-      push("setup", "One installation has an owner that cannot be named",
-        "Puppet Master will not adopt, update or repair something it cannot identify, so it stays manual only.",
-        "Open installations", providerInstallationDest());
-    }
-    if (e.importConflict) {
-      push("attention", "An import disagrees with values this Project already has",
-        "Every disagreement is itemised before anything is applied.",
-        "Review the preview", { kind: "copy", step: "preview" });
-    }
-    if (e.rollbackComplete) {
-      push("info", "The last transaction was rolled back",
-        "The restore point and the receipt are both still available.",
-        "Open the receipt", { managerId: "manager-copy" });
-    }
+    (res.groups || []).forEach(function (g) { g.results.forEach(function (r) { out.push(r); }); });
     return out;
   }
 
-  /* The installations subpage is addressed through the first installation the
-   * index knows about, because the route grammar names an object, not a tab. */
-  function providerInstallationDest() {
-    var model = objectsOf("manager-providers");
-    var group = model.groups.installations;
-    if (group && group.objects.length) {
-      return { managerId: "manager-providers", objectId: group.objects[0], sectionKey: "installations" };
-    }
-    return { managerId: "manager-providers" };
-  }
+  function fillDropdown(drop) {
+    clear(drop);
+    var res = ui.results;
+    if (!res) return;
 
-  function forcedSearchBlock(e) {
-    var res = IX.query(e.forceQuery, { limit: 6, perGroup: 3 });
-    var block = el("div", "dr-block");
-    var head = el("div", "dr-block-head");
-    add(head, el("div", "dr-block-title", "Search"));
-    add(head, el("div", "dr-block-note", "“" + e.forceQuery + "”"));
-    add(block, head);
-    var box = el("div", "dr-att");
     if (!res.total) {
-      var empty = el("div", "dr-att-empty");
-      empty.textContent = "Nothing in Settings matches “" + e.forceQuery +
-        "”. Every setting is still listed in All settings, and shorter words match more.";
-      add(box, empty);
-    } else {
-      add(box, el("div", "dr-att-empty",
-        "The closest matches for “" + e.forceQuery + "”, including ones spelled differently:"));
-      res.groups.forEach(function (group) {
-        group.results.forEach(function (rec) {
-          var row = el("div", "dr-att-item");
-          var main = el("div", "dr-att-main");
-          add(main, el("div", "dr-att-label", rec.label));
-          add(main, el("div", "dr-att-detail", rec.path || rec.typeLabel));
-          add(row, main);
-          var b = button("dr-btn", "Open");
-          b.setAttribute("data-pm-result", rec.id);
-          on(b, "click", function () { ui.query = e.forceQuery; searchInput.value = e.forceQuery; openResult(rec.id); });
-          add(row, b);
-          add(box, row);
-        });
-      });
+      var empty = el("div", "d5-drop-empty");
+      empty.innerHTML = "Nothing matches <b>" + esc(ui.query) + "</b>.";
+      empty.appendChild(el("p", "d5-result-path", "Try a shorter word, or browse the areas on the left. Search covers every one of the " + M.counts.settings + " settings in this Project, including the ones that are unavailable here."));
+      drop.appendChild(empty);
+      return;
     }
-    add(block, box);
-    return block;
-  }
 
-  function utilities() {
-    var block = el("div", "dr-block");
-    add(block, el("div", "dr-block-head", null));
-    var head = block.firstChild;
-    add(head, el("div", "dr-block-title", "Also here"));
-    var util = el("div", "dr-util");
-
-    var all = link({ kind: "all" }, "dr-util-link");
-    add(all, iconNode("list"), el("span", null, "All settings"),
-      el("span", "dr-util-count", M.counts.settings + " records"));
-    var copy = link({ kind: "copy" }, "dr-util-link");
-    add(copy, iconNode("columns"), el("span", null, "Copy settings from another Project"));
-    var changed = link({ kind: "all", facet: encodeFacet({ changed: true }) }, "dr-util-link");
-    add(changed, iconNode("history"), el("span", null, "Changed in this Project"),
-      el("span", "dr-util-count", String(store.changedCount())));
-    var receipts = link({ managerId: "manager-settings-lifecycle" }, "dr-util-link");
-    add(receipts, iconNode("archive"), el("span", null, "Export, import and reset"));
-    add(util, all, copy, changed, receipts);
-    add(block, util);
-
-    var recent = (store.get().recent || []).slice(0, 4);
-    if (recent.length) {
-      var rec = el("div", "dr-recent");
-      add(rec, el("div", "dr-block-title", "Recently opened"));
-      recent.forEach(function (entry) {
-        var record = IX.byId(entry.id);
-        if (!record) return;
-        var a = link(record.destination, "dr-recent-item");
-        add(a, el("span", null, record.label), el("span", "dr-recent-path", record.path || ""));
-        add(rec, a);
+    var scroll = el("div", "d5-drop-scroll d5-scroll");
+    var index = 0;
+    res.groups.forEach(function (group) {
+      var g = el("div", "d5-drop-group");
+      g.appendChild(el("div", "d5-drop-label", esc(group.label)));
+      group.results.forEach(function (r) {
+        var my = index++;
+        var b = button("d5-result" + (my === ui.activeResult ? " is-active" : ""), null, function () { chooseResult(r.id); });
+        b.setAttribute("data-pm-result", r.id);
+        var top = el("div", "d5-result-top");
+        top.appendChild(el("span", "d5-result-label", esc(r.label)));
+        top.appendChild(el("span", "d5-result-type", esc(r.typeLabel)));
+        b.appendChild(top);
+        b.appendChild(el("div", "d5-result-path", esc(r.path)));
+        if (r.availability) b.appendChild(el("div", "d5-result-why", esc(r.availability)));
+        g.appendChild(b);
       });
-      add(block, rec);
-    }
-    return block;
-  }
-
-  /* ============================================================== DOMAIN */
-
-  function renderDomain(domainId) {
-    var d = M.domain(domainId);
-    var s = el("div", "dr-surface");
-    s.setAttribute("data-pm-surface", "domain");
-    s.setAttribute("data-pm-domain", d.id);
-
-    var head = el("div", "dr-head");
-    if (ui.transfer) head.classList.add("dr-transfer");
-    var h1 = el("h1", null, d.title);
-    add(head, h1);
-    add(head, el("div", "dr-head-purpose", d.purpose));
-    add(head, el("div", "dr-head-meta",
-      d.count + " settings across " + count(d.pages.length, "page") +
-      " and " + count(d.families.length, "manager") + " in this area."));
-    add(s, head);
-
-    var pages = el("div", "dr-block");
-    add(pages, el("div", "dr-block-head", null));
-    add(pages.firstChild, el("div", "dr-block-title", "Pages"));
-    var list = el("div", "dr-list");
-    d.pages.forEach(function (p) {
-      var a = link({ kind: "domain", domainId: d.id, pageId: p.id }, "dr-dest", { transfer: true });
-      a.setAttribute("data-pm-page", p.id);
-      var main = el("div", "dr-dest-main");
-      add(main, el("div", "dr-dest-title", p.title));
-      add(main, el("div", "dr-dest-purpose", p.summary || ""));
-      add(a, main);
-      add(a, el("span", "dr-dest-meta", p.count + " settings"));
-      add(a, html("span", "dr-card-chev", ICON("chevronRight", 14)));
-      add(list, a);
+      scroll.appendChild(g);
     });
-    add(pages, list);
-    add(s, pages);
+    drop.appendChild(scroll);
+
+    var foot = el("div", "d5-drop-foot");
+    foot.appendChild(el("span", null, esc(res.shown + " of " + res.total + " matches")));
+    if (res.truncated) {
+      foot.appendChild(button("d5-drop-more", "See all in All settings", function () {
+        ui.dropOpen = false;
+        RT.go({ kind: "all", facet: ui.query });
+      }));
+    }
+    drop.appendChild(foot);
+  }
+
+  /* Routing is only ever done from the immutable result id. The rendered list is a
+   * view; its order is never an address. */
+  function chooseResult(resultId) {
+    var result = IX.byId(resultId);
+    if (!result) return;
+    ui.dropOpen = false;
+    /* Record the query AND the chosen result before leaving, so the browser Back
+     * button lands on the search the reader actually performed. */
+    withoutRender(function () { RT.replace({ kind: "query", query: ui.query, resultId: resultId }); });
+    ui.pending = { result: result };
+    RT.go(destinationRoute(result.destination));
+  }
+
+  function destinationRoute(d) {
+    if (d.managerId) {
+      return { kind: "manager", managerId: d.managerId, objectId: d.objectId || null,
+        sectionKey: d.sectionKey || null, rowId: d.rowId || null };
+    }
+    return { kind: "domain", domainId: d.domainId, pageId: d.pageId, sectionId: d.sectionId, settingId: d.settingId };
+  }
+
+  /* ------------------------------------------------------------------- home */
+
+  function renderHome(wrap, route) {
+    var fx = ST.effects();
+
+    wrap.appendChild(el("h2", "d5-hero-title", "Settings"));
+    wrap.appendChild(el("p", "d5-hero-sub",
+      "Everything below applies to " + esc(M.project.name) + ". Changing something here changes it for this Project only."));
+
+    wrap.appendChild(searchField("hero"));
+
+    var notice = ST.notice();
+    if (notice && !store.isDismissed(notice.id)) wrap.appendChild(renderNotice(notice));
+
+    wrap.appendChild(renderAttention(fx));
+
+    wrap.appendChild(el("div", "d5-secttitle", "Areas"));
+    var grid = el("div", "d5-grid");
+    M.domains.forEach(function (d) {
+      var card = button("d5-card", null, function () { RT.go({ kind: "domain", domainId: d.id }); });
+      card.setAttribute("data-pm-domain", d.id);
+      card.appendChild(el("span", "d5-card-ico", icon(d.icon, 17)));
+      var body = el("div", "d5-card-body");
+      body.appendChild(el("div", "d5-card-title", esc(d.title)));
+      body.appendChild(el("div", "d5-card-purpose", esc(d.purpose)));
+      var managers = d.families.length;
+      body.appendChild(el("div", "d5-card-meta",
+        plural(d.count, "setting") + " · " + plural(d.pages.length, "page") +
+        (managers ? " · " + plural(managers, "manager") : "") +
+        (fx.refreshing ? " · refreshing" : "")));
+      card.appendChild(body);
+      card.appendChild(el("span", "d5-card-chev", icon("chevronRight", 14)));
+      grid.appendChild(card);
+    });
+    wrap.appendChild(grid);
+
+    var utils = el("div", "d5-utils");
+    utils.appendChild(button("d5-util", icon("list") + "<span>All settings</span>", function () { RT.go({ kind: "all" }); }));
+    utils.appendChild(button("d5-util", icon("download") + "<span>Copy settings from another Project</span>", function () { RT.go({ kind: "copy", step: "source" }); }));
+    utils.appendChild(button("d5-util", icon("history") + "<span>Recently changed</span>", function () {
+      ui.facets = { domains: [], kinds: [], exposures: [], changedOnly: true };
+      RT.go({ kind: "all" });
+    }));
+    utils.appendChild(button("d5-util", icon("beaker") + "<span>Doctor</span>", function () { RT.go({ kind: "manager", managerId: "manager-doctor" }); }));
+    wrap.appendChild(utils);
+  }
+
+  function renderNotice(notice) {
+    var box = el("div", "d5-notice");
+    box.innerHTML = icon("alert", 16);
+    var body = el("div");
+    body.appendChild(el("div", "d5-notice-head", esc(notice.headline)));
+    body.appendChild(el("p", "d5-notice-detail", esc(notice.detail)));
+    box.appendChild(body);
+    var acts = el("div", "d5-notice-act");
+    if (notice.action) {
+      acts.appendChild(button("d5-btn", esc(notice.action.label), function () {
+        RT.go(destinationRoute(notice.action.destination));
+      }));
+    }
+    acts.appendChild(button("d5-iconbtn", icon("ban", 14), function () {
+      store.dismiss(notice.id); render();
+    }));
+    box.appendChild(acts);
+    return box;
+  }
+
+  function renderAttention(fx) {
+    var items = ST.attentionFlat().filter(function (a) { return !store.isDismissed(a.id); });
+    var box = el("section", "d5-attention");
+    var head = el("div", "d5-attention-head");
+    head.appendChild(el("span", null, "Notices"));
+    head.appendChild(el("span", "d5-attention-count", items.length ? String(items.length) : ""));
+    box.appendChild(head);
+
+    if (!items.length) {
+      box.appendChild(el("p", "d5-attention-empty", fx.noAttention
+        ? "Nothing is configured yet, so there is nothing to fix. Start with AI Brains & Providers."
+        : "Nothing needs attention in this Project right now."));
+      return box;
+    }
+    items.forEach(function (a) {
+      /* `01_CORE_ARCHITECTURE` § Notices: three separated runs. What is broken, what
+       * is half-finished and what is only advice are read differently, and one toned
+       * list makes an unfinished setup look like a fault. */
+      if (a.groupLabel) box.appendChild(el("div", "d5-attn-group", esc(a.groupLabel)));
+      var b = button("d5-attn", null, function () { RT.go(destinationRoute(a.destination)); });
+      var dot = el("span", "d5-attn-dot");
+      dot.setAttribute("data-tone", a.tone);
+      b.appendChild(dot);
+      var body = el("div", "d5-attn-body");
+      body.appendChild(el("div", "d5-attn-label", esc(a.label)));
+      body.appendChild(el("div", "d5-attn-detail", esc(a.detail)));
+      b.appendChild(body);
+      b.appendChild(el("span", "d5-attn-act", esc(a.actionLabel)));
+      box.appendChild(b);
+    });
+    return box;
+  }
+
+  /* ----------------------------------------------------------------- domain */
+
+  function renderDomain(wrap, route) {
+    var d = M.domain(route.domainId);
+    if (!d) return;
+
+    var head = el("header", "d5-pagehead");
+    head.appendChild(el("h2", "d5-pagehead-title", esc(d.title)));
+    head.appendChild(el("p", "d5-pagehead-purpose", esc(d.purpose)));
+    head.appendChild(el("div", "d5-pagehead-counts",
+      plural(d.count, "setting") + " across " + plural(d.pages.length, "page") +
+      (d.families.length ? ", plus " + plural(d.families.length, "manager") : "")));
+    wrap.appendChild(head);
+
+    var pages = el("section", "d5-group");
+    pages.appendChild(el("div", "d5-secttitle", "Pages"));
+    d.pages.forEach(function (p) {
+      var b = button("d5-dest", null, function () { RT.go({ kind: "domain", domainId: d.id, pageId: p.id }); });
+      b.setAttribute("data-pm-page", p.id);
+      b.appendChild(el("span", "d5-dest-ico", icon("fileText", 15)));
+      var body = el("div", "d5-dest-body");
+      body.appendChild(el("div", "d5-dest-title", esc(p.title)));
+      body.appendChild(el("div", "d5-dest-sub", esc(p.summary)));
+      b.appendChild(body);
+      b.appendChild(el("span", "d5-dest-meta", plural(p.count, "setting")));
+      b.appendChild(el("span", "d5-dest-chev", icon("chevronRight", 14)));
+      pages.appendChild(b);
+    });
+    wrap.appendChild(pages);
 
     if (d.families.length) {
-      var mans = el("div", "dr-block");
-      add(mans, el("div", "dr-block-head", null));
-      add(mans.firstChild, el("div", "dr-block-title", "Managers in this area"));
-      add(mans.firstChild, el("div", "dr-block-note",
-        "Places with their own roster, rather than pages of rows."));
-      var mlist = el("div", "dr-list");
-      d.families.forEach(function (f) { add(mlist, managerDestination(f)); });
-      add(mans, mlist);
-      add(s, mans);
+      var mgrs = el("section", "d5-group");
+      mgrs.appendChild(el("div", "d5-secttitle", "Managers in this area"));
+      d.families.forEach(function (f) {
+        var rec = MG.record(f.managerId) || {};
+        var b = button("d5-dest", null, function () { RT.go({ kind: "manager", managerId: f.managerId }); });
+        b.setAttribute("data-pm-manager", f.managerId);
+        b.appendChild(el("span", "d5-dest-ico", icon(rec.icon || "sliders", 15)));
+        var body = el("div", "d5-dest-body");
+        body.appendChild(el("div", "d5-dest-title", esc(rec.title || f.family)));
+        body.appendChild(el("div", "d5-dest-sub", esc(rec.purpose || f.family)));
+        b.appendChild(body);
+        b.appendChild(el("span", "d5-dest-meta", f.deferred ? "Owned by " + esc(f.owner) : archetypeWord(f.archetype)));
+        b.appendChild(el("span", "d5-dest-chev", icon("chevronRight", 14)));
+        mgrs.appendChild(b);
+      });
+      wrap.appendChild(mgrs);
     }
-    return s;
   }
 
-  /* A destination link, built from the registry record only. Opening it is what
-   * hydrates the manager; naming it must not. */
-  function managerDestination(family) {
-    var rec = MGR.record(family.managerId);
-    var a = link({ managerId: family.managerId }, "dr-dest", { transfer: true });
-    a.setAttribute("data-pm-manager", family.managerId);
-    var main = el("div", "dr-dest-main");
-    add(main, el("div", "dr-dest-title", rec.title || family.family));
-    add(main, el("div", "dr-dest-purpose",
-      family.deferred ? ("Owned by " + family.owner + ". " + (rec.purpose || "")) : (rec.purpose || "")));
-    add(a, main);
-    var figure = family.deferred ? "Separate owner" : managerFigure(family.managerId);
-    if (figure) add(a, el("span", "dr-dest-meta", figure));
-    add(a, html("span", "dr-card-chev", ICON("chevronRight", 14)));
-    return a;
+  function archetypeWord(a) {
+    if (a === "resource roster and detail sheet") return "List and detail";
+    if (a === "inventory catalogue") return "Catalogue";
+    if (a === "read-only health projection") return "Read-only";
+    if (a === "preview and confirmation transaction") return "Transaction";
+    if (a === "setup or repair sequence") return "Setup";
+    if (a === "diagnostic drawer") return "Diagnostics";
+    if (a === "named owner insertion point") return "Separate owner";
+    return "Settings";
   }
 
-  /* ================================================================ PAGE */
+  /* ------------------------------------------------------------------- page */
 
-  function renderPage(route) {
-    var page = M.page(route.pageId);
-    var domain = M.domain(page.domainId);
-    var s = el("div", "dr-surface");
-    s.setAttribute("data-pm-surface", "page");
-    s.setAttribute("data-pm-page", page.id);
-    s.setAttribute("data-pm-domain", domain.id);
+  function renderPage(wrap, route) {
+    var d = M.domain(route.domainId);
+    var p = M.page(route.pageId);
+    if (!d || !p) return;
 
-    var rows = M.rowsInPage(page.id);
-    var advanced = rows.filter(function (r) { return r.exposure !== "standard"; }).length;
+    var head = el("header", "d5-pagehead");
+    head.appendChild(el("h2", "d5-pagehead-title", esc(p.title)));
+    head.appendChild(el("p", "d5-pagehead-purpose", esc(p.summary)));
+    head.appendChild(el("div", "d5-pagehead-counts", plural(p.count, "setting") + " in " + plural(p.sections.length, "group")));
+    wrap.appendChild(head);
 
-    var head = el("div", "dr-head");
-    if (ui.transfer) head.classList.add("dr-transfer");
-    add(head, el("h1", null, page.title));
-    if (page.summary) add(head, el("div", "dr-head-purpose", page.summary));
-    add(head, el("div", "dr-head-meta",
-      count(rows.length, "setting") + " in " + count(page.sections.length, "group") +
-      (advanced ? ". " + advanced + " of them are advanced and each group opens its own." : ".")));
-    add(s, head);
-
-    if (effects().restartPending) {
-      add(s, inlineNote("info", "Two changes on this page take effect after a restart. They are saved already."));
+    /* A deep link to an advanced row must open the disclosure that holds it —
+     * landing on a collapsed section would be a link that lies. */
+    if (route.settingId) {
+      var target = M.setting(route.settingId);
+      if (target) ui.openAdvanced[target.sectionId] = true;
     }
 
-    /* A section is the unit of density: four to eight rows, everyday ones
-     * visible, the rest one press away inside the same group. */
-    page.sections.forEach(function (section) {
-      add(s, renderSection(section, route));
+    /* An index of the page's own groups, which highlights as the reader scrolls — not
+     * only when they click it. `01_CORE_ARCHITECTURE` asks for exactly this and it is
+     * the half of the contract a jump-only index quietly omits: it can say where you
+     * asked to go but never where you are. */
+    var index = el("nav", "d5-onpage");
+    index.setAttribute("aria-label", "On this page");
+    index.appendChild(el("span", "d5-onpage-label", "On this page"));
+    var built = [];
+    p.sections.forEach(function (section) {
+      var link = button("d5-onpage-item", esc(section.title), function () {
+        var target = stageInner.querySelector('[data-pm-section="' + cssEscape(section.id) + '"]');
+        if (target) {
+          var box = target.getBoundingClientRect();
+          var stageBox = stageEl.getBoundingClientRect();
+          stageEl.scrollTop += box.top - stageBox.top - 24;
+        }
+      });
+      link.setAttribute("data-onpage", section.id);
+      index.appendChild(link);
     });
-    return s;
+    if (p.sections.length > 1) wrap.appendChild(index);
+
+    p.sections.forEach(function (section) {
+      var node = renderSection(section, route);
+      wrap.appendChild(node);
+      built.push({ id: section.id, title: section.title, pageId: p.id, el: node });
+    });
+
+    bindSpy(built, index);
+  }
+
+  /* Binds the headless scrollspy and paints this concept's own highlight. */
+  function bindSpy(sections, index) {
+    if (!window.PM2Spy || !sections.length) return;
+    window.PM2Spy.bind({
+      scroller: stageEl,
+      sections: sections,
+      inset: 96,
+      onActive: function (id) {
+        var items = index.querySelectorAll("[data-onpage]");
+        for (var i = 0; i < items.length; i++) {
+          items[i].setAttribute("aria-current", items[i].getAttribute("data-onpage") === id ? "true" : "false");
+        }
+      }
+    });
   }
 
   function renderSection(section, route) {
-    var block = el("div", "dr-section");
-    block.setAttribute("data-pm-section", section.id);
+    var box = el("section", "d5-section");
+    box.setAttribute("data-pm-section", section.id);
+
+    var head = el("div", "d5-section-head");
+    head.appendChild(el("h3", "d5-section-title", esc(section.title)));
+    head.appendChild(el("span", "d5-section-count", plural(section.count, "setting")));
+    box.appendChild(head);
 
     var rows = M.rowsInSection(section.id);
-    var everyday = rows.filter(function (r) { return r.exposure === "standard"; });
-    var deeper = rows.filter(function (r) { return r.exposure !== "standard"; });
-    var open = !!ui.openSections[section.id];
+    var standard = [];
+    var deeper = [];
+    rows.forEach(function (r) {
+      if (M.exposureRank(r.exposure) === 0) standard.push(r); else deeper.push(r);
+    });
 
-    var head = el("div", "dr-section-head");
-    add(head, el("h2", "dr-section-title", section.title));
-    add(head, el("span", "dr-section-count", count(rows.length, "setting")));
-    add(block, head);
-
-    var visible = open ? rows : everyday;
-    visible.forEach(function (rec) { add(block, renderRow(rec)); });
-
-    if (!visible.length) {
-      add(block, el("div", "dr-att-empty",
-        "Every setting in this group is advanced. Open it to see " + count(deeper.length, "setting") + "."));
-    }
+    standard.forEach(function (r) { box.appendChild(renderRow(r, route)); });
 
     if (deeper.length) {
-      var toggle = button("dr-disclose", null);
-      add(toggle, html("span", null, ICON(open ? "chevronUp" : "chevronDown", 12)));
-      add(toggle, el("span", null, open
-        ? "Show only the everyday settings in this group"
-        : "Show " + count(deeper.length, "advanced setting") + " in this group"));
-      toggle.setAttribute("aria-expanded", open ? "true" : "false");
-      /* The group is replaced in place rather than through a re-render: opening
-       * a disclosure must not move the page under the reader. */
-      on(toggle, "click", function () {
-        ui.openSections[section.id] = !open;
-        store.set({ exposure: open ? "standard" : "all" });
-        var current = canvasEl.querySelector('[data-pm-section="' + section.id + '"]');
-        if (!current) return;
-        var fresh = renderSection(section, route);
-        current.parentNode.replaceChild(fresh, current);
-        var again = fresh.querySelector(".dr-disclose");
-        if (again) again.focus();
+      var open = !!ui.openAdvanced[section.id];
+      if (open) {
+        deeper.forEach(function (r) { box.appendChild(renderRow(r, route)); });
+      }
+      var toggle = button("d5-why", (open ? "Hide" : "Show") + " " + plural(deeper.length, "advanced setting"), function () {
+        ui.openAdvanced[section.id] = !open;
+        render();
       });
-      add(block, toggle);
+      toggle.style.marginTop = "8px";
+      box.appendChild(toggle);
     }
-    return block;
+    return box;
   }
 
-  /* ================================================================= ROWS */
-
-  function renderRow(rec) {
-    var state = rowState(rec);
-    var editable = M.isEditable(state);
-    var row = el("div", "dr-row");
+  function renderRow(rec, route) {
+    var state = ST.rowState(rec);
+    var row = el("div", "d5-row");
     row.setAttribute("data-pm-row", rec.id);
-    row.setAttribute("tabindex", "-1");
+    row.tabIndex = -1;
+    var editable = M.isEditable(state);
+    if (!editable) row.setAttribute("data-locked", "true");
 
-    var main = el("div", "dr-row-main");
-    var label = el("div", "dr-row-label");
-    add(label, el("span", null, rec.label));
+    var main = el("div", "d5-row-main");
+    var label = el("div", "d5-row-label");
+    label.appendChild(el("span", "d5-row-title", esc(rec.label)));
+
     var tone = M.stateTone(state);
     if (tone !== "quiet") {
-      add(label, chip(M.stateLabel(state), tone));
+      var tag = el("span", "d5-tag", esc(M.stateLabel(state)));
+      tag.setAttribute("data-tone", tone);
+      label.appendChild(tag);
+    } else if (store.changed(rec.id)) {
+      var ch = el("span", "d5-tag", "Changed");
+      ch.setAttribute("data-tone", "changed");
+      label.appendChild(ch);
     }
-    if (rec.exposure !== "standard") add(label, chip(exposureWord(rec.exposure), "quiet"));
-    if (state && state.restart === "required") add(label, chip("Restart to take effect", "setup"));
-    if (effects().changedElsewhere && rec.id === "general.visual.theme") {
-      add(label, chip("Changed in another window", "attention"));
+    if (state.restart === "required") {
+      var rs = el("span", "d5-tag", "Restart");
+      rs.setAttribute("data-tone", "setup");
+      label.appendChild(rs);
     }
-    add(main, label);
-    add(main, el("div", "dr-row-desc", rec.desc));
+    main.appendChild(label);
+    main.appendChild(el("p", "d5-row-desc", esc(rec.desc)));
 
-    var foot = el("div", "dr-row-foot");
     var reason = M.stateReason(state);
-    var why = button("dr-why", "Why this value?");
-    why.setAttribute("aria-expanded", ui.openWhy[rec.id] ? "true" : "false");
-    on(why, "click", function () {
-      ui.openWhy[rec.id] = !ui.openWhy[rec.id];
-      patchRow(rec.id);
-    });
-    add(foot, why);
-    if (store.changed(rec.id) && editable) {
-      var reset = button("dr-btn is-quiet", "Reset to default");
-      on(reset, "click", function () {
-        store.clearValue(rec.id);
-        delete ui.drafts[rec.id];
-        patchRow(rec.id);
-        shell.announce(rec.label + " is back to its default.");
-      });
-      add(foot, reset);
+    if (reason || rec.badges.length || rec.legacyScope.length) {
+      var openDet = !!ui.openDetails[rec.id];
+      main.appendChild(button("d5-why", openDet ? "Hide details" : "Why this value?", function () {
+        ui.openDetails[rec.id] = !openDet; render();
+      }));
+      if (openDet) main.appendChild(rowDetails(rec, state, reason));
     }
-    add(main, foot);
+    if (ui.errors[rec.id]) main.appendChild(el("div", "d5-err", esc(ui.errors[rec.id])));
 
-    if (ui.openWhy[rec.id]) add(main, whyBody(rec, state, reason));
-
-    var side = el("div", "dr-row-side");
-    var built = controlFor(rec, state, editable);
-    add(side, built.node);
-    if (built.note) add(side, el("div", "dr-field-help", built.note));
-    var draft = ui.drafts[rec.id];
-    if (draft && draft.message) {
-      add(side, add(el("div", "dr-err"), html("span", null, ICON("alert", 12)), el("span", null, draft.message)));
-    }
-
-    add(row, main, side);
+    row.appendChild(main);
+    row.appendChild(renderControl(rec, state, editable));
     return row;
   }
 
-  function whyBody(rec, state, reason) {
-    var body = el("div", "dr-why-body");
-    add(body, el("div", null, reason ||
-      "This is the product default for a new Project. Nothing has changed it."));
+  function rowDetails(rec, state, reason) {
+    var box = el("div", "d5-details");
+    if (reason) box.appendChild(el("p", null, esc(reason)));
     var dl = el("dl");
-    function fact(term, value) {
-      if (value == null || value === "") return;
-      add(dl, el("dt", null, term), el("dd", null, value));
+    function pair(k, v) {
+      dl.appendChild(el("dt", null, esc(k)));
+      dl.appendChild(el("dd", null, esc(v)));
     }
-    fact("Now", displayValue(store.valueOf(rec.id)));
-    fact("Default", displayValue(rec.state.defaultValue));
-    if (rec.recommended != null && rec.recommended !== "") fact("Recommended", displayValue(rec.recommended));
-    fact("Where it lives", pathOf(rec));
-    fact("Level", exposureWord(rec.exposure));
-    fact("Restart", state && state.restart === "required" ? "Needed before it applies" : "Not needed");
-    if (state && state.managedBy) fact("Set by", state.managedBy);
-    fact("Kind", human(rec.kind));
-    add(body, dl);
-    return body;
+    pair("Applies to", M.project.name + " (this Project)");
+    pair("Default", String(state.defaultValue === "" ? "not set" : state.defaultValue));
+    if (rec.recommended != null && rec.recommended !== "") pair("Recommended", String(rec.recommended));
+    pair("Exposure", exposureWord(rec.exposure));
+    if (state.restart === "required") pair("Takes effect", "after the next restart");
+    if (state.managedBy) pair("Set by", state.managedBy);
+    pair("Setting id", rec.id);
+    box.appendChild(dl);
+    return box;
   }
 
-  function pathOf(rec) {
-    var d = M.domain(rec.domainId), p = M.page(rec.pageId), s = M.section(rec.sectionId);
-    return [d && d.title, p && p.title, s && s.title].filter(Boolean).join(" › ");
+  function exposureWord(e) {
+    for (var i = 0; i < M.EXPOSURE.length; i++) if (M.EXPOSURE[i].id === e) return M.EXPOSURE[i].label;
+    return "Advanced";
   }
 
-  function exposureWord(id) {
-    for (var i = 0; i < M.EXPOSURE.length; i++) if (M.EXPOSURE[i].id === id) return M.EXPOSURE[i].label;
-    return human(id);
-  }
-
-  function chip(text, tone) {
-    var c = el("span", "dr-chip", text);
-    if (tone) c.setAttribute("data-tone", tone);
-    return c;
-  }
-
-  function inlineNote(tone, text) {
-    var n = el("div", "dr-notice");
-    n.setAttribute("data-tone", tone);
-    add(n, html("span", "dr-notice-icon", ICON(tone === "attention" ? "alert" : "info", 15)));
-    add(n, add(el("div", "dr-notice-body"), el("div", "dr-notice-detail", text)));
-    return n;
-  }
-
-  /* Repaint exactly one row. Editing must never rebuild the page under the
-   * reader's hands: the caret, the selection and the scroll position are all
-   * part of what they are doing. */
-  function patchRow(settingId) {
-    var existing = canvasEl.querySelector('[data-pm-row="' + settingId + '"]');
-    if (!existing) return;
-    var rec = M.setting(settingId);
-    if (!rec) return;
-    var locator = existing.hasAttribute("data-pm-locator");
-    var next = renderRow(rec);
-    if (locator) next.setAttribute("data-pm-locator", "1");
-    existing.parentNode.replaceChild(next, existing);
-  }
-
-  /* --------------------------------------------------------- controls */
-
-  /* Every control writes through store.setValue and reads back through
-   * store.valueOf, so a value shown anywhere in the concept is the same value.
-   * Each returns the node plus the element that should take focus when a deep
-   * link lands on this row. */
-  function controlFor(rec, state, editable) {
+  /* Controls do real work: every change lands in the store, which is what makes the
+   * "Changed" tag and the copy preview truthful rather than decorative. */
+  function renderControl(rec, state, editable) {
+    var box = el("div", "d5-row-control");
     var value = store.valueOf(rec.id);
-    var kind = rec.kind;
-    var out;
+    if (value === undefined) value = state.value;
 
-    if (kind === "toggle") out = toggleControl(rec, value, editable);
-    else if (kind === "select") out = selectControl(rec, value, editable);
-    else if (kind === "radio") out = radioControl(rec, value, editable);
-    else if (kind === "multiselect") out = multiControl(rec, value, editable);
-    else if (kind === "slider") out = sliderControl(rec, value, editable);
-    else if (kind === "number") out = numberControl(rec, value, editable);
-    else if (kind === "list") out = listControl(rec, value, editable);
-    else if (kind === "keyvalue") out = keyValueControl(rec, value, editable);
-    else if (kind === "action") out = actionControl(rec, editable);
-    else out = textControl(rec, value, editable, kind === "path");
+    function commit(next) {
+      store.setValue(rec.id, next);
+      delete ui.errors[rec.id];
+      MG.invalidate();
+      render();
+    }
 
-    out.node.setAttribute("data-pm-control-host", rec.id);
-    (out.focus || out.node).setAttribute("data-pm-control", rec.id);
     if (!editable) {
-      out.note = state && state.source === "managed"
-        ? "Set by " + (state.managedBy || "policy") + ". Readable here, changed there."
-        : (state && state.reason) || "Not available on this host.";
+      box.appendChild(el("span", "d5-listval d5-listval-empty",
+        state.source === "unavailable" ? "Not available here" : esc(String(value === "" ? "not set" : value))));
+      return box;
     }
-    return out;
-  }
 
-  function commit(rec, value, opts) {
-    store.setValue(rec.id, value);
-    if (!opts || opts.repaint !== false) patchRow(rec.id);
-    shell.announce(rec.label + " is now " + displayValue(value) + ".");
-  }
-
-  function toggleControl(rec, value, editable) {
-    var b = button("dr-switch", null);
-    b.setAttribute("role", "switch");
-    b.setAttribute("aria-checked", value ? "true" : "false");
-    b.disabled = !editable;
-    add(b, el("span", "dr-switch-track"), el("span", null, value ? "On" : "Off"));
-    on(b, "click", function () { commit(rec, !store.valueOf(rec.id)); });
-    return { node: b, focus: b };
-  }
-
-  function selectControl(rec, value, editable) {
-    var sel = el("select", "dr-ctl");
-    sel.disabled = !editable;
-    var options = rec.options && rec.options.length ? rec.options : [rec.state.defaultValue];
-    var seen = false;
-    options.forEach(function (opt) {
-      var o = document.createElement("option");
-      o.value = String(opt);
-      o.textContent = human(opt);
-      if (String(opt) === String(value)) { o.selected = true; seen = true; }
-      sel.appendChild(o);
-    });
-    if (!seen && value != null && value !== "") {
-      var extra = document.createElement("option");
-      extra.value = String(value);
-      extra.textContent = human(value);
-      extra.selected = true;
-      sel.appendChild(extra);
+    if (rec.kind === "toggle") {
+      var t = button("d5-toggle", "", function () { commit(!value); });
+      t.setAttribute("role", "switch");
+      t.setAttribute("aria-checked", value ? "true" : "false");
+      t.setAttribute("aria-label", rec.label);
+      t.setAttribute("data-pm-control", rec.id);
+      box.appendChild(t);
+      return box;
     }
-    on(sel, "change", function () { commit(rec, sel.value, { repaint: false }); refreshStatus(rec); });
-    return { node: sel, focus: sel };
-  }
 
-  function radioControl(rec, value, editable) {
-    var group = el("div", "dr-seg");
-    group.setAttribute("role", "radiogroup");
-    group.setAttribute("aria-label", rec.label);
-    var focus = null;
-    (rec.options || []).forEach(function (opt) {
-      var b = button("dr-seg-btn", human(opt));
-      b.setAttribute("role", "radio");
-      var checked = String(opt) === String(value);
-      b.setAttribute("aria-checked", checked ? "true" : "false");
-      b.disabled = !editable;
-      if (checked || !focus) focus = b;
-      on(b, "click", function () { commit(rec, opt); });
-      add(group, b);
-    });
-    return { node: group, focus: focus || group };
-  }
+    if (rec.kind === "select" || rec.kind === "radio") {
+      var opts = rec.options.slice();
+      if (!opts.length) opts = [String(value)];
+      if (state.source === "notConfigured") opts = ["Not set"].concat(opts);
+      box.appendChild(picker(rec, opts, value, commit));
+      return box;
+    }
 
-  function multiControl(rec, value, editable) {
-    var current = Object.prototype.toString.call(value) === "[object Array]" ? value.slice() : [];
-    var group = el("div", "dr-seg");
-    group.setAttribute("role", "group");
-    group.setAttribute("aria-label", rec.label);
-    var focus = null;
-    (rec.options || []).forEach(function (opt) {
-      var b = button("dr-seg-btn", human(opt));
-      var chosen = current.indexOf(opt) >= 0;
-      b.setAttribute("aria-pressed", chosen ? "true" : "false");
-      b.disabled = !editable;
-      if (!focus) focus = b;
-      on(b, "click", function () {
-        var next = (store.valueOf(rec.id) || []).slice();
-        var at = next.indexOf(opt);
-        if (at >= 0) next.splice(at, 1); else next.push(opt);
-        commit(rec, next);
+    if (rec.kind === "number") {
+      var n = el("input", "d5-input");
+      n.type = "number";
+      n.value = value === "" ? "" : String(value);
+      n.setAttribute("data-pm-control", rec.id);
+      n.setAttribute("aria-label", rec.label);
+      on(n, "change", function () {
+        var num = Number(n.value);
+        if (n.value === "" || isNaN(num)) {
+          ui.errors[rec.id] = "That needs to be a number. The previous value is still in use.";
+          render();
+          return;
+        }
+        if (ST.effects().validationError && num < 0) {
+          ui.errors[rec.id] = "This cannot be negative. Nothing was saved.";
+          render();
+          return;
+        }
+        commit(num);
       });
-      add(group, b);
-    });
-    return { node: group, focus: focus || group };
-  }
-
-  function sliderControl(rec, value, editable) {
-    var wrap = el("div", "dr-slider-row");
-    var base = typeof rec.state.defaultValue === "number" ? rec.state.defaultValue : 1;
-    var now = typeof value === "number" ? value : base;
-    var top = Math.max(base * 2, now, 1);
-    var step = top <= 2 ? 0.05 : 1;
-    var input = el("input", "dr-ctl");
-    input.type = "range";
-    input.min = "0";
-    input.max = String(Math.round(top * 100) / 100);
-    input.step = String(step);
-    input.value = String(now);
-    input.disabled = !editable;
-    var out = el("span", "dr-slider-val", String(now));
-    on(input, "input", function () {
-      out.textContent = input.value;
-      store.setValue(rec.id, parseFloat(input.value));
-      refreshStatus(rec);
-    });
-    add(wrap, input, out);
-    return { node: wrap, focus: input };
-  }
-
-  function numberControl(rec, value, editable) {
-    var input = el("input", "dr-ctl");
-    input.type = "number";
-    input.value = value == null ? "" : String(value);
-    input.disabled = !editable;
-    var invalid = effects().validationError && rec.id === "general.visual.font-size";
-    if (invalid) {
-      input.value = "28pt";
-      input.type = "text";
-      input.setAttribute("aria-invalid", "true");
-      ui.drafts[rec.id] = { message: "Text size is a whole number of points between 9 and 24. What you typed is kept until you change it." };
+      box.appendChild(n);
+      return box;
     }
-    on(input, "input", function () {
-      var raw = input.value;
-      if (raw === "") { store.clearValue(rec.id); refreshStatus(rec); return; }
-      var n = Number(raw);
-      if (isNaN(n)) {
-        ui.drafts[rec.id] = { message: "That is not a number. What you typed is kept until you change it." };
-        input.setAttribute("aria-invalid", "true");
-      } else {
-        delete ui.drafts[rec.id];
-        input.removeAttribute("aria-invalid");
-        store.setValue(rec.id, n);
-      }
-      refreshStatus(rec);
-    });
-    return { node: input, focus: input };
-  }
 
-  function textControl(rec, value, editable, isPath) {
-    var wrap = el("div", "dr-kv-row");
-    var input = el("input", "dr-ctl");
-    input.type = "text";
-    input.value = value == null ? "" : String(value);
-    input.disabled = !editable;
-    input.spellcheck = !isPath;
-    input.placeholder = isPath ? "No path set" : "Not set";
-    on(input, "input", function () {
-      store.setValue(rec.id, input.value);
-      refreshStatus(rec);
-    });
-    add(wrap, input);
-    if (isPath) {
-      var pick = button("dr-btn", "Choose");
-      pick.disabled = !editable;
-      on(pick, "click", function () {
-        MGR.act({ managerId: "rows" }, { id: "settings.path.choose", label: "Choose a location for " + rec.label },
-          { id: rec.id });
+    if (rec.kind === "slider") {
+      var r = el("input", "d5-range");
+      r.type = "range";
+      r.min = "0"; r.max = String(Math.max(100, Number(state.defaultValue) * 2 || 100));
+      r.value = String(Number(value) || 0);
+      r.setAttribute("data-pm-control", rec.id);
+      r.setAttribute("aria-label", rec.label);
+      var out = el("span", "d5-rangeval", esc(String(value)));
+      on(r, "input", function () { out.textContent = r.value; });
+      on(r, "change", function () { commit(Number(r.value)); });
+      box.appendChild(r);
+      box.appendChild(out);
+      return box;
+    }
+
+    if (rec.kind === "text" || rec.kind === "path") {
+      var i = el("input", "d5-input");
+      i.type = "text";
+      i.value = value == null ? "" : String(value);
+      i.placeholder = state.source === "notConfigured" ? "Not set" : "";
+      i.setAttribute("data-pm-control", rec.id);
+      i.setAttribute("aria-label", rec.label);
+      if (window.PMSpellcheck && rec.kind === "text") window.PMSpellcheck.attach && window.PMSpellcheck.attach(i);
+      on(i, "change", function () {
+        if (ST.effects().validationError && rec.kind === "path" && i.value && i.value.indexOf("/") !== 0) {
+          ui.errors[rec.id] = "That is not a path this host can reach. What you typed was kept.";
+          render();
+          return;
+        }
+        commit(i.value);
       });
-      add(wrap, pick);
+      box.appendChild(i);
+      return box;
     }
-    return { node: wrap, focus: input };
-  }
 
-  function listControl(rec, value, editable) {
-    var items = Object.prototype.toString.call(value) === "[object Array]" ? value.slice() : [];
-    var wrap = el("div", "dr-kv");
-    var chips = el("div", "dr-chips");
-    items.forEach(function (item, i) {
-      var c = el("span", "dr-chip-val", String(item));
-      if (editable) {
-        var x = button("dr-chip-x", null);
-        x.setAttribute("aria-label", "Remove " + item);
-        add(x, html("span", null, ICON("minus", 11)));
-        on(x, "click", function () {
-          var next = (store.valueOf(rec.id) || []).slice();
-          next.splice(i, 1);
-          commit(rec, next);
+    if (rec.kind === "action") {
+      var a = button("d5-btn", esc(state.setupLabel || "Run"), function () {
+        window.PMSim.run({
+          label: rec.label,
+          detail: rec.desc,
+          realCall: "cmd.settings.action.run",
+          payload: { settingId: rec.id, project: M.project.id }
         });
-        add(c, x);
-      }
-      add(chips, c);
-    });
-    if (!items.length) add(chips, el("span", "dr-field-help", "Nothing in this list yet."));
-    add(wrap, chips);
-    var row = el("div", "dr-kv-row");
-    var input = el("input", "dr-ctl");
-    input.type = "text";
-    input.placeholder = "Add an entry";
-    input.disabled = !editable;
-    var addBtn = button("dr-btn", "Add");
-    addBtn.disabled = !editable;
-    function commitEntry() {
-      if (!input.value) return;
-      var next = (store.valueOf(rec.id) || []).slice();
-      next.push(input.value);
-      commit(rec, next);
-    }
-    on(addBtn, "click", commitEntry);
-    on(input, "keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); commitEntry(); } });
-    add(row, input, addBtn);
-    add(wrap, row);
-    return { node: wrap, focus: input };
-  }
-
-  function keyValueControl(rec, value, editable) {
-    var pairs = value && typeof value === "object" && !(value instanceof Array) ? value : {};
-    var keys = Object.keys(pairs);
-    var wrap = el("div", "dr-kv");
-    var focus = null;
-    keys.forEach(function (k) {
-      var row = el("div", "dr-kv-row");
-      var keyIn = el("input", "dr-ctl");
-      keyIn.type = "text";
-      keyIn.value = k;
-      keyIn.disabled = true;
-      var valIn = el("input", "dr-ctl");
-      valIn.type = "text";
-      valIn.value = String(pairs[k]);
-      valIn.disabled = !editable;
-      if (!focus) focus = valIn;
-      on(valIn, "input", function () {
-        var next = {};
-        var live = store.valueOf(rec.id) || {};
-        Object.keys(live).forEach(function (x) { next[x] = live[x]; });
-        next[k] = valIn.value;
-        store.setValue(rec.id, next);
-        refreshStatus(rec);
       });
-      var drop = button("dr-btn", null);
-      drop.setAttribute("aria-label", "Remove " + k);
-      drop.disabled = !editable;
-      add(drop, html("span", null, ICON("minus", 11)));
-      on(drop, "click", function () {
-        var next = {};
-        var live = store.valueOf(rec.id) || {};
-        Object.keys(live).forEach(function (x) { if (x !== k) next[x] = live[x]; });
-        commit(rec, next);
-      });
-      add(row, keyIn, valIn, drop);
-      add(wrap, row);
-    });
-    if (!keys.length) add(wrap, el("span", "dr-field-help", "No pairs are routed yet."));
-    var addRow = el("div", "dr-kv-row");
-    var nk = el("input", "dr-ctl");
-    nk.type = "text";
-    nk.placeholder = "Name";
-    nk.disabled = !editable;
-    var nv = el("input", "dr-ctl");
-    nv.type = "text";
-    nv.placeholder = "Value";
-    nv.disabled = !editable;
-    var addBtn = button("dr-btn", "Add");
-    addBtn.disabled = !editable;
-    on(addBtn, "click", function () {
-      if (!nk.value) return;
-      var next = {};
-      var live = store.valueOf(rec.id) || {};
-      Object.keys(live).forEach(function (x) { next[x] = live[x]; });
-      next[nk.value] = nv.value;
-      commit(rec, next);
-    });
-    add(addRow, nk, nv, addBtn);
-    add(wrap, addRow);
-    return { node: wrap, focus: focus || nk };
-  }
-
-  function actionControl(rec, editable) {
-    var b = button("dr-btn", rec.label);
-    b.disabled = !editable;
-    on(b, "click", function () {
-      b.disabled = true;
-      MGR.act({ managerId: "rows" }, { id: "settings.row.action", label: rec.label, detail: rec.desc },
-        { id: rec.id }).then(function () {
-        b.disabled = !editable;
-        shell.announce(rec.label + " finished. The receipt is in the notification inbox.");
-      });
-    });
-    return { node: b, focus: b };
-  }
-
-  /* A value changed: only the status chips and the footer need to move, and
-   * rebuilding them costs one row rather than one page. */
-  function refreshStatus(rec) {
-    var row = canvasEl.querySelector('[data-pm-row="' + rec.id + '"]');
-    if (!row) return;
-    var active = document.activeElement;
-    if (active && row.contains(active) && active.tagName === "INPUT") {
-      var label = row.querySelector(".dr-row-label");
-      if (!label) return;
-      var state = rowState(rec);
-      var tone = store.changed(rec.id) ? "changed" : M.stateTone(state);
-      var word = store.changed(rec.id) ? "Changed" : M.stateLabel(state);
-      var chipEl = label.querySelector(".dr-chip");
-      if (tone === "quiet") { if (chipEl) chipEl.remove(); return; }
-      if (!chipEl) { chipEl = chip(word, tone); label.appendChild(chipEl); }
-      chipEl.textContent = word;
-      chipEl.setAttribute("data-tone", tone);
-      return;
+      a.setAttribute("data-pm-control", rec.id);
+      box.appendChild(a);
+      return box;
     }
-    patchRow(rec.id);
-  }
 
-  /* ======================================================== ALL SETTINGS */
-
-  function encodeFacet(f) {
-    var parts = [];
-    if (f.domains && f.domains.length) parts.push("d=" + f.domains.join("+"));
-    if (f.kinds && f.kinds.length) parts.push("k=" + f.kinds.join("+"));
-    if (f.exposures && f.exposures.length) parts.push("e=" + f.exposures.join("+"));
-    if (f.states && f.states.length) parts.push("s=" + f.states.join("+"));
-    if (f.changed) parts.push("c=1");
-    if (f.text) parts.push("t=" + f.text);
-    return parts.join(";");
-  }
-
-  function decodeFacet(raw) {
-    var f = { domains: [], kinds: [], exposures: [], states: [], changed: false, text: "" };
-    String(raw || "").split(";").forEach(function (part) {
-      var at = part.indexOf("=");
-      if (at < 0) return;
-      var key = part.slice(0, at), value = part.slice(at + 1);
-      if (key === "d") f.domains = value.split("+").filter(Boolean);
-      else if (key === "k") f.kinds = value.split("+").filter(Boolean);
-      else if (key === "e") f.exposures = value.split("+").filter(Boolean);
-      else if (key === "s") f.states = value.split("+").filter(Boolean);
-      else if (key === "c") f.changed = value === "1";
-      else if (key === "t") f.text = value;
+    /* list / multiselect / keyvalue: a summary plus an editor, so a page of these
+     * does not become a wall of text areas. */
+    var list = Array.isArray(value) ? value : (value ? [String(value)] : []);
+    var summary = el("span", "d5-listval" + (list.length ? "" : " d5-listval-empty"),
+      list.length ? esc(list.slice(0, 2).join(", ") + (list.length > 2 ? " +" + (list.length - 2) + " more" : "")) : "Nothing set");
+    box.appendChild(summary);
+    var edit = button("d5-btn", "Edit", function () {
+      var next = window.prompt("One entry per line — " + rec.label, list.join("\n"));
+      if (next == null) return;
+      commit(next.split("\n").map(function (x) { return x.trim(); }).filter(function (x) { return !!x; }));
     });
-    return f;
+    edit.setAttribute("data-pm-control", rec.id);
+    box.appendChild(edit);
+    return box;
   }
 
-  function toggleFacet(f, field, value) {
-    var next = {
-      domains: f.domains.slice(), kinds: f.kinds.slice(), exposures: f.exposures.slice(),
-      states: f.states.slice(), changed: f.changed, text: f.text
-    };
-    if (field === "changed") next.changed = !next.changed;
-    else {
-      var list = next[field];
-      var at = list.indexOf(value);
-      if (at >= 0) list.splice(at, 1); else list.push(value);
+  /* A value picker in the Puppet Master Model/Mode idiom: a trigger showing the current
+   * value, and a menu that hangs beneath it — or flips above it when the row is near the
+   * bottom of the page, which is the behaviour the model picker in the bottom bar shows.
+   * Placement and layering come from PM2Menu; every pixel here is this concept's own. */
+  function picker(rec, options, value, commit) {
+    var wrap = el("div", "d5-picker");
+    var trigger = button("d5-picker-trigger", null, function () { toggle(); });
+    trigger.setAttribute("data-pm-control", rec.id);
+    trigger.setAttribute("aria-haspopup", "listbox");
+    trigger.setAttribute("aria-expanded", "false");
+    trigger.setAttribute("aria-label", rec.label);
+    trigger.appendChild(el("span", "d5-picker-value", esc(String(value === "" || value == null ? "Not set" : value))));
+    trigger.innerHTML += icon("chevronDown", 13);
+    wrap.appendChild(trigger);
+
+    var panel = null;
+    var entry = null;
+    /* What the FIRST level shows: the options themselves, or one row per group when the
+     * list genuinely has two levels. Keyboard movement walks whichever of the two it is. */
+    var top = options;
+    var active = Math.max(0, options.indexOf(value));
+
+    function shut() {
+      if (panel && panel.parentNode) panel.parentNode.removeChild(panel);
+      panel = null; entry = null;
+      trigger.setAttribute("aria-expanded", "false");
     }
-    go({ kind: "all", facet: encodeFacet(next) }, { replace: true });
-  }
 
-  function renderAll(route) {
-    var f = decodeFacet(route.facet);
-    var s = el("div", "dr-surface dr-all");
-    s.setAttribute("data-pm-surface", "all");
-
-    var query = {
-      domainIds: f.domains, kinds: f.kinds, exposures: f.exposures, states: f.states,
-      changedOnly: f.changed, text: f.text, limit: "all", sort: "path"
-    };
-    var result = IX.all(query);
-
-    /* Facets first, because the count beside each one is how a reader decides
-     * what to press. They are live: every count comes from this same answer. */
-    var facets = el("div", "dr-facets");
-    var fhead = el("div", "dr-roster-head");
-    add(fhead, el("div", "dr-roster-title", "Filter"));
-    add(fhead, el("div", "dr-roster-sub", result.total + " of " + IX.stats().records + " records"));
-    add(facets, fhead);
-    var flist = el("div", "dr-facets-list dr-scroll");
-
-    facetGroup(flist, "Area", result.facets.domains, f.domains, function (id) { toggleFacet(f, "domains", id); });
-    facetGroup(flist, "Kind of record", result.facets.kinds, f.kinds, function (id) { toggleFacet(f, "kinds", id); });
-    facetGroup(flist, "Level", result.facets.exposures, f.exposures, function (id) { toggleFacet(f, "exposures", id); });
-    facetGroup(flist, "State", result.facets.states, f.states, function (id) { toggleFacet(f, "states", id); });
-    add(flist, el("div", "dr-facet-group", "Changed"));
-    var changedBtn = button("dr-facet", null);
-    changedBtn.setAttribute("aria-pressed", f.changed ? "true" : "false");
-    add(changedBtn, el("span", "dr-facet-name", "Changed in this Project"),
-      el("span", "dr-facet-count", String(result.facets.changed)));
-    on(changedBtn, "click", function () { toggleFacet(f, "changed"); });
-    add(flist, changedBtn);
-    add(facets, flist);
-
-    var main = el("div", "dr-allmain");
-    var bar = el("div", "dr-allbar");
-    add(bar, el("span", "dr-allcount", result.total + " records"));
-    var textIn = el("input", "dr-ctl");
-    textIn.type = "search";
-    textIn.placeholder = "Narrow this list";
-    textIn.value = f.text || "";
-    textIn.style.maxWidth = "260px";
-    var typing = 0;
-    on(textIn, "input", function () {
-      window.clearTimeout(typing);
-      typing = window.setTimeout(function () {
-        var next = decodeFacet(encodeFacet(f));
-        next.text = textIn.value.replace(/[;=+]/g, " ");
-        go({ kind: "all", facet: encodeFacet(next) }, { replace: true });
-      }, 180);
-    });
-    add(bar, textIn);
-    if (f.domains.length || f.kinds.length || f.exposures.length || f.states.length || f.changed || f.text) {
-      var clearBtn = button("dr-btn is-quiet", "Clear filters");
-      on(clearBtn, "click", function () { go({ kind: "all" }, { replace: true }); });
-      add(bar, clearBtn);
-    }
-    add(bar, el("span", "dr-block-note",
-      "Everything Settings knows about, including managers, the things inside them and capabilities this host cannot provide."));
-    add(main, bar);
-
-    /* Virtualized: the list is the same shape at 828 records and at 3,228, and
-     * the DOM never holds more than one screen of rows plus its overscan. */
-    var scroller = el("div", "dr-allscroll dr-scroll");
-    var viewport = el("div", "dr-vport");
-    add(scroller, viewport);
-    add(main, scroller);
-    add(s, facets, main);
-
-    var rows = result.rows;
     function paint() {
-      var win = VIRT.windowFor({
-        total: rows.length,
-        rowHeight: ROW_RHYTHM,
-        viewport: scroller.clientHeight,
-        scrollTop: scroller.scrollTop,
-        overscan: 8,
-        firstPage: 30
+      if (!panel) return;
+      var rows = panel.querySelectorAll("[data-opt]");
+      for (var i = 0; i < rows.length; i++) {
+        rows[i].setAttribute("aria-selected", i === active ? "true" : "false");
+        if (i === active) rows[i].focus({ preventScroll: false });
+      }
+    }
+
+    function choose(v) {
+      window.PM2Menu.closeAll();
+      commit(v === "Not set" ? "" : v);
+    }
+
+    /* One option row. The check mark is the only thing saying "this is the current
+     * value" — a menu that decorates every row stops telling you anything. */
+    function optionRow(o, i) {
+      var row = button("d5-menu-item", null, function () { choose(o); });
+      row.setAttribute("role", "option");
+      row.setAttribute("data-opt", String(i));
+      row.setAttribute("aria-selected", o === value ? "true" : "false");
+      row.appendChild(el("span", "d5-menu-check", o === value ? icon("check", 12) : ""));
+      row.appendChild(el("span", "d5-menu-label", esc(o)));
+      return row;
+    }
+
+    /* A submenu parent. `07_THEME_MOTION_RESPONSIVE_AND_SLINT` asks for the Model/Mode
+     * selector family including submenus: the second level opens BESIDE the panel on its
+     * own layer, so the first level stays visible and Escape closes the second only. */
+    function groupRow(g, i) {
+      var row = button("d5-menu-item is-parent", null, null);
+      row.setAttribute("role", "option");
+      row.setAttribute("data-opt", String(i));
+      row.setAttribute("aria-haspopup", "menu");
+      row.setAttribute("aria-expanded", "false");
+      row.appendChild(el("span", "d5-menu-check", g.options.indexOf(value) >= 0 ? icon("check", 12) : ""));
+      row.appendChild(el("span", "d5-menu-label", esc(g.label)));
+      row.appendChild(el("span", "d5-menu-more", icon("chevronRight", 12)));
+
+      var sub = null;
+      var subActive = 0;
+
+      function shutSub() {
+        if (sub && sub.parentNode) sub.parentNode.removeChild(sub);
+        sub = null;
+        row.setAttribute("aria-expanded", "false");
+      }
+
+      function paintSub() {
+        if (!sub) return;
+        var rows = sub.querySelectorAll("[data-opt]");
+        for (var z = 0; z < rows.length; z++) {
+          rows[z].setAttribute("aria-selected", z === subActive ? "true" : "false");
+          if (z === subActive) rows[z].focus({ preventScroll: false });
+        }
+      }
+
+      function openSub() {
+        if (sub) return;
+        sub = el("div", "d5-menu d5-submenu");
+        sub.setAttribute("role", "listbox");
+        g.options.forEach(function (o, k) { sub.appendChild(optionRow(o, k)); });
+
+        on(sub, "keydown", function (e) {
+          if (e.key === "ArrowLeft") {
+            /* Left goes back one level rather than out of the menu entirely. */
+            e.preventDefault(); e.stopPropagation();
+            window.PM2Menu.closeTop();
+            row.focus({ preventScroll: true });
+          } else if (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "Home" || e.key === "End") {
+            e.preventDefault(); e.stopPropagation();
+            subActive = window.PM2Menu.move(g.options, subActive, e.key);
+            paintSub();
+          } else if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault(); e.stopPropagation();
+            choose(g.options[subActive]);
+          }
+        });
+
+        document.body.appendChild(sub);
+        var spot = window.PM2Menu.placeSide(
+          panel.getBoundingClientRect(), row.getBoundingClientRect(),
+          { width: sub.offsetWidth, height: sub.offsetHeight },
+          { width: window.innerWidth, height: window.innerHeight });
+        sub.style.left = spot.left + "px";
+        sub.style.top = spot.top + "px";
+        sub.style.maxHeight = spot.maxHeight + "px";
+        sub.setAttribute("data-side", spot.side);
+        row.setAttribute("aria-expanded", "true");
+        window.PM2Menu.open({ close: shutSub, element: sub, parent: entry });
+        subActive = Math.max(0, g.options.indexOf(value));
+        paintSub();
+      }
+
+      on(row, "click", function (e) {
+        e.stopPropagation();
+        if (sub) window.PM2Menu.closeTop(); else openSub();
       });
-      clear(viewport);
-      var before = el("div");
-      before.style.height = win.before + "px";
-      add(viewport, before);
-      for (var i = win.start; i < win.end; i++) add(viewport, allRow(rows[i]));
-      var after = el("div");
-      after.style.height = win.after + "px";
-      add(viewport, after);
-    }
-    var pending = false;
-    release.add(function () { pending = true; });
-    on(scroller, "scroll", function () {
-      if (pending) return;
-      pending = true;
-      window.requestAnimationFrame(function () { pending = false; paint(); });
-    });
-    paint();
-    window.requestAnimationFrame(function () {
-      if (scroller.isConnected) { scroller.scrollTop = ui.allScroll || 0; paint(); }
-    });
-    if (!rows.length) {
-      add(main, el("div", "dr-empty",
-        "No record matches these filters. Clearing one of them will bring some back."));
-    }
-    return s;
-  }
-
-  function facetGroup(parent, label, facets, active, onPick) {
-    if (!facets || !facets.length) return;
-    add(parent, el("div", "dr-facet-group", label));
-    facets.forEach(function (facet) {
-      var b = button("dr-facet", null);
-      b.setAttribute("aria-pressed", active.indexOf(facet.id) >= 0 ? "true" : "false");
-      add(b, el("span", "dr-facet-name", facet.label), el("span", "dr-facet-count", String(facet.count)));
-      on(b, "click", function () { onPick(facet.id); });
-      add(parent, b);
-    });
-  }
-
-  function allRow(rec) {
-    var a = link(rec.destination, "dr-arow");
-    if (rec.destination.settingId) a.setAttribute("data-pm-row", rec.destination.settingId);
-    else if (rec.destination.objectId) a.setAttribute("data-pm-object", rec.destination.objectId);
-    else if (rec.destination.managerId) a.setAttribute("data-pm-manager", rec.destination.managerId);
-    add(a, el("span", "dr-arow-label", rec.label));
-    add(a, el("span", "dr-arow-path", rec.path || ""));
-    add(a, el("span", "dr-arow-type", rec.stateLabel && rec.changed ? "Changed" : rec.typeLabel));
-    on(a, "click", function () { ui.allScroll = 0; });
-    return a;
-  }
-
-  /* ============================================================= SEARCH */
-
-  function renderSearchSurface(route) {
-    var s = el("div", "dr-surface");
-    s.setAttribute("data-pm-surface", "search");
-    var text = route.query || "";
-    var res = IX.query(text, { limit: 120, perGroup: 40 });
-
-    var head = el("div", "dr-head");
-    add(head, el("h1", null, "Results for “" + text + "”"));
-    add(head, el("div", "dr-head-meta", res.total
-      ? res.total + " records match, grouped by what they are."
-      : "Nothing in Settings matches that. Every record is still listed in All settings."));
-    add(s, head);
-
-    if (!res.total) {
-      var empty = el("div", "dr-empty");
-      add(empty, el("strong", null, "No match"));
-      add(empty, el("div", null,
-        "Shorter words match more. Spelling is forgiven: a query one or two letters out still finds its destination."));
-      var all = link({ kind: "all" }, "dr-btn");
-      all.textContent = "Open All settings";
-      add(empty, all);
-      add(s, empty);
-      return s;
-    }
-
-    res.groups.forEach(function (group) {
-      var block = el("div", "dr-block");
-      var bh = el("div", "dr-block-head");
-      add(bh, el("div", "dr-block-title", group.label));
-      add(bh, el("div", "dr-block-note", count(group.total, "match")));
-      add(block, bh);
-      var list = el("div", "dr-list");
-      group.results.forEach(function (rec) {
-        var a = link(rec.destination, "dr-dest");
-        a.setAttribute("data-pm-result", rec.id);
-        if (route.resultId === rec.id) a.setAttribute("aria-selected", "true");
-        var main = el("div", "dr-dest-main");
-        add(main, el("div", "dr-dest-title", rec.label));
-        add(main, el("div", "dr-dest-purpose", rec.path || rec.desc || ""));
-        add(a, main);
-        add(a, el("span", "dr-dest-meta", rec.availability || rec.typeLabel));
-        on(a, "click", function () { ui.selectedResult = rec.id; });
-        add(list, a);
+      on(row, "keydown", function (e) {
+        if (e.key === "ArrowRight" || e.key === "Enter" || e.key === " ") {
+          e.preventDefault(); e.stopPropagation();
+          openSub();
+        }
       });
-      add(block, list);
-      add(s, block);
-    });
-    return s;
+      return row;
+    }
+
+    function toggle() {
+      if (panel) { window.PM2Menu.closeAll(); return; }
+
+      panel = el("div", "d5-menu");
+      panel.setAttribute("role", "listbox");
+
+      var groups = window.PM2Menu.groupsFor(rec.id, options);
+      top = groups || options;
+      if (groups) groups.forEach(function (g, i) { panel.appendChild(groupRow(g, i)); });
+      else options.forEach(function (o, i) { panel.appendChild(optionRow(o, i)); });
+
+      on(panel, "keydown", function (e) {
+        if (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "Home" || e.key === "End") {
+          e.preventDefault();
+          active = window.PM2Menu.move(top, active, e.key);
+          paint();
+        } else if ((e.key === "Enter" || e.key === " ") && !groups) {
+          e.preventDefault();
+          choose(options[active]);
+        }
+      });
+
+      document.body.appendChild(panel);
+      var a = trigger.getBoundingClientRect();
+      var box2 = panel.getBoundingClientRect();
+      var spot = window.PM2Menu.place(
+        { left: a.left, right: a.right, top: a.top, bottom: a.bottom, width: a.width },
+        { width: Math.max(box2.width, a.width), height: box2.height },
+        { width: window.innerWidth, height: window.innerHeight },
+        { align: "start" });
+      panel.style.left = spot.left + "px";
+      panel.style.top = spot.top + "px";
+      panel.style.minWidth = Math.round(a.width) + "px";
+      panel.style.maxHeight = spot.maxHeight + "px";
+      panel.setAttribute("data-side", spot.side);
+
+      trigger.setAttribute("aria-expanded", "true");
+      entry = window.PM2Menu.open({ close: shut, element: panel });
+      active = 0;
+      if (groups) groups.forEach(function (g, i) { if (g.options.indexOf(value) >= 0) active = i; });
+      else active = Math.max(0, options.indexOf(value));
+      paint();
+    }
+
+    return wrap;
   }
 
-  /* ============================================================ MANAGERS */
+  /* ---------------------------------------------------------------- manager */
 
-  /* The one place a manager is ever built. Everything else names managers
-   * through the registry, which is what keeps `data-pm-hydrated` honest. */
-  function openManager(route) {
-    var managerId = route.managerId;
-    var family = M.familyOf(managerId);
-    var spec;
-    try {
-      spec = MGR.spec(managerId, {
-        demoState: STATES.active(),
-        values: store.get().values,
-        managerEdits: store.get().managerEdits
-      });
-    } catch (err) {
-      return absentSurface("This manager is not part of this Project.", RT.href(dest(route)));
+  function renderManagerSurface(wrap, route) {
+    var spec = ST.decorate(MG.spec(route.managerId, store.get()));
+    var family = M.familyOf(route.managerId) || {};
+
+    var head = el("header", "d5-mgr-head");
+    head.appendChild(el("h2", "d5-mgr-title", esc(spec.title)));
+    head.appendChild(el("p", "d5-mgr-purpose", esc(spec.purpose)));
+    wrap.appendChild(head);
+
+    if (family.deferred && spec.owner) {
+      wrap.appendChild(ownerBlock(spec.owner, route.managerId));
     }
-    spec = STATES.decorate(spec) || spec;
+    if (spec.health) wrap.appendChild(healthBlock(spec.health));
 
-    var ctx = {
-      managerId: managerId,
-      archetype: spec.archetype || (family && family.archetype) || "preference document",
-      family: family,
-      objectId: route.objectId,
-      sectionKey: route.sectionKey,
-      rowId: route.rowId,
-      objects: objectsOf(managerId)
-    };
-    return renderManager(spec, ctx);
-  }
-
-  /* One renderer, seven shapes. A roster is never flattened into preference
-   * rows and a read-only projection never grows an editing affordance, because
-   * the archetype decides what the left column contains and what the form is
-   * allowed to do. */
-  function renderManager(spec, ctx) {
-    if (ctx.managerId === "manager-providers") return providerManager(spec, ctx);
-
-    var entries = [];
-    entries.push({ key: "overview", label: "Overview", meta: spec.health.statusWord, kind: "overview" });
-
-    var objectGroups = ctx.objects.order.filter(function (k) { return ctx.objects.groups[k].objects.length; });
-
-    if (ctx.archetype === "resource roster and detail sheet" || ctx.archetype === "inventory catalogue") {
-      objectGroups.forEach(function (key) { pushObjectEntries(entries, ctx, key); });
-    }
-
-    spec.sections.forEach(function (section) {
-      entries.push({
-        key: "section:" + section.id,
-        label: section.label,
-        meta: sectionMeta(section),
-        kind: "section",
-        section: section,
-        group: sectionGroupLabel(ctx.archetype)
-      });
+    var listSections = (spec.sections || []).filter(function (s) {
+      return (s.kind === "list" || s.kind === "cards") && (s.items || []).length;
     });
+    var roster = pickRoster(spec, listSections);
 
-    if (ctx.archetype !== "resource roster and detail sheet" && ctx.archetype !== "inventory catalogue") {
-      objectGroups.forEach(function (key) { pushObjectEntries(entries, ctx, key); });
-    }
+    if (roster) renderRosterManager(wrap, spec, roster, route);
+    else renderDocumentManager(wrap, spec, route);
 
     if (spec.diagnostics && spec.diagnostics.length) {
-      entries.push({ key: "diagnostics", label: "Evidence and logs", kind: "diagnostics",
-        meta: count(spec.diagnostics.length, "report"), group: "Evidence" });
-    }
-
-    return workbench(spec, ctx, entries);
-  }
-
-  function sectionGroupLabel(archetype) {
-    if (archetype === "setup or repair sequence") return "Steps";
-    if (archetype === "read-only health projection") return "Checks";
-    if (archetype === "diagnostic drawer") return "Drawers";
-    if (archetype === "preview and confirmation transaction") return "The transaction";
-    if (archetype === "named owner insertion point") return "The contract";
-    return "In this manager";
-  }
-
-  function sectionMeta(section) {
-    if (section.items && section.items.length) return count(section.items.length, "item");
-    if (section.settings && section.settings.length) return count(section.settings.length, "setting");
-    return "";
-  }
-
-  function pushObjectEntries(entries, ctx, key) {
-    var group = ctx.objects.groups[key];
-    var label = group.label || human(key);
-    if (group.objects.length > GROUP_INLINE_MAX) {
-      entries.push({
-        key: "group:" + key, label: label, kind: "group", groupKey: key,
-        meta: count(group.objects.length, singularOf(label)), group: label
+      var diag = el("section", "d5-group");
+      diag.appendChild(el("div", "d5-secttitle", "Diagnostics"));
+      var acts = el("div", "d5-actions");
+      spec.diagnostics.forEach(function (d) {
+        acts.appendChild(button("d5-btn", esc(d.label), function () { runAction(route.managerId, d); }));
       });
-      return;
+      diag.appendChild(acts);
+      wrap.appendChild(diag);
     }
-    group.objects.forEach(function (objectId) {
-      var obj = ctx.objects.objects[objectId];
-      entries.push({
-        key: "object:" + objectId, label: obj.label, kind: "object", objectId: objectId,
-        meta: obj.availability || obj.typeLabel, group: label, object: obj
+  }
+
+  /* A roster is only a roster when the archetype says the manager is about objects.
+   * A preference document with one incidental list must not be forced into a
+   * two-pane layout it does not want. */
+  function pickRoster(spec, listSections) {
+    var wantsRoster = spec.archetype === "resource roster and detail sheet" ||
+      spec.archetype === "inventory catalogue";
+    if (!wantsRoster) return null;
+    /* The FIRST such section, not the biggest. A manager's sections are written in
+     * importance order, so the subject of the manager leads — for providers that is the
+     * provider family. Picking the longest list instead put the installations roster in
+     * front and titled the detail sheet with a raw executable path, which is precisely
+     * what the provider adjudication says must never be the normal identity. */
+    var first = listSections.length ? listSections[0] : null;
+    return first && (first.items || []).length > 1 ? first : null;
+  }
+
+  function renderRosterManager(wrap, spec, roster, route) {
+    var mgr = el("div", "d5-mgr");
+
+    /* A routed object may live on a subpage rather than in the roster. When it does,
+     * the roster keeps its own selection and the subpage that holds the object is
+     * the one opened, so the link lands on the row it named. */
+    var elsewhere = route.objectId && !roster.items.some(function (i) { return i.id === route.objectId; })
+      ? sectionHolding(spec, route.objectId) : null;
+    var selectedId = (elsewhere ? null : route.objectId) || ui.selected[route.managerId] || roster.items[0].id;
+    if (!roster.items.some(function (i) { return i.id === selectedId; })) selectedId = roster.items[0].id;
+    ui.selected[route.managerId] = selectedId;
+    root.setAttribute("data-pane", narrow ? (route.objectId ? "detail" : "roster") : "both");
+
+    var side = el("div", "d5-mgr-roster");
+    var rh = el("div", "d5-mgr-roster-head");
+    rh.appendChild(el("span", null, esc(roster.label)));
+    rh.appendChild(el("span", "d5-mgr-roster-count", String(roster.items.length)));
+    side.appendChild(rh);
+
+    var list = el("div", "d5-mgr-roster-list d5-scroll");
+    roster.items.forEach(function (item) {
+      var b = button("d5-obj", null, function () {
+        ui.selected[route.managerId] = item.id;
+        RT.go({ kind: "manager", managerId: route.managerId, objectId: item.id });
       });
-    });
-  }
-
-  function singularOf(label) {
-    var w = String(label || "item").toLowerCase();
-    return /ies$/.test(w) ? w.slice(0, -3) + "y" : (/s$/.test(w) ? w.slice(0, -1) : w);
-  }
-
-  /* ------------------------------------------------------- the workbench */
-
-  /* Roster left at a fixed 280px, the selected thing's form filling the rest,
-   * subpages as a quiet strip above the form. Every manager in the concept has
-   * this shape, which is the point: one geometry to learn, fifty places to use
-   * it. */
-  function workbench(spec, ctx, entries) {
-    var selected = pickEntry(entries, ctx);
-    ui.entry[ctx.managerId] = selected.key;
-
-    var surface = el("div", "dr-surface dr-mgr");
-    surface.setAttribute("data-pm-surface", "manager");
-    surface.setAttribute("data-pm-manager", ctx.managerId);
-    surface.setAttribute("data-pane", ui.pane);
-
-    var roster = el("div", "dr-roster");
-    var rhead = el("div", "dr-roster-head");
-    add(rhead, el("div", "dr-roster-title", spec.title));
-    add(rhead, el("div", "dr-roster-sub", ctx.family ? ctx.family.family : human(ctx.archetype)));
-    add(roster, rhead);
-    var rlist = el("div", "dr-roster-list dr-scroll");
-    var lastGroup = null;
-    entries.forEach(function (entry) {
-      if (entry.group && entry.group !== lastGroup) {
-        add(rlist, el("div", "dr-roster-group", entry.group));
-        lastGroup = entry.group;
+      b.setAttribute("data-pm-object", item.id);
+      b.setAttribute("aria-selected", item.id === selectedId ? "true" : "false");
+      var body = el("div", "d5-obj-body");
+      body.appendChild(el("div", "d5-obj-name", esc(item.name)));
+      if (item.secondary) body.appendChild(el("div", "d5-obj-sub", esc(item.secondary)));
+      b.appendChild(body);
+      if (item.statusWord) {
+        var st = el("span", "d5-obj-status", esc(item.statusWord));
+        st.setAttribute("data-tone", item.status || "ok");
+        b.appendChild(st);
       }
-      add(rlist, rosterItem(entry, ctx, entry.key === selected.key));
+      list.appendChild(b);
     });
-    add(roster, rlist);
+    side.appendChild(list);
+    mgr.appendChild(side);
 
-    var detail = el("div", "dr-detail");
-    var dhead = el("div", "dr-detail-head");
-    if (ui.pane === "detail") {
-      var back = button("dr-btn is-quiet", null);
-      add(back, iconNode("chevronLeft"), el("span", null, "Back to " + spec.title));
-      on(back, "click", function () { ui.pane = "roster"; render(); });
-      back.style.marginBottom = "8px";
-      add(dhead, back);
-    }
-    add(dhead, el("div", "dr-detail-title", selected.label));
-    var sub = detailSubtitle(spec, ctx, selected);
-    if (sub) add(dhead, el("div", "dr-detail-sub", sub));
-    add(detail, dhead);
+    var detail = el("div", "d5-mgr-detail");
+    var item = roster.items.filter(function (i) { return i.id === selectedId; })[0];
+    if (item) {
+      detail.appendChild(el("h3", "d5-mgr-title", esc(item.name)));
+      if (item.secondary) detail.appendChild(el("p", "d5-mgr-purpose", esc(item.secondary)));
 
-    var tabs = tabsFor(spec, ctx, selected);
-    var activeTab = pickTab(ctx, selected, tabs);
-    if (tabs.length > 1) {
-      var strip = el("div", "dr-tabs");
+      /* Subpages, not a wall: the object's own facts first, then everything the
+       * manager holds about it as quiet tabs. */
+      var tabs = (spec.sections || []).filter(function (s) { return s !== roster; });
+      var current = (elsewhere && elsewhere.id) || route.sectionKey || ui.tab[route.managerId] || "overview";
+      if (current !== "overview" && !tabs.some(function (t) { return t.id === current; })) current = "overview";
+      ui.tab[route.managerId] = current;
+
+      var strip = el("div", "d5-tabs");
       strip.setAttribute("role", "tablist");
-      tabs.forEach(function (tab) {
-        var b = button("dr-tab", tab.label);
-        b.setAttribute("role", "tab");
-        b.setAttribute("aria-selected", tab.key === activeTab.key ? "true" : "false");
-        on(b, "click", function () {
-          ui.tab[ctx.managerId + "|" + selected.key] = tab.key;
-          render();
-        });
-        add(strip, b);
+      strip.appendChild(tabButton("Overview", current === "overview", function () {
+        RT.go({ kind: "manager", managerId: route.managerId, objectId: selectedId, sectionKey: "overview" });
+      }));
+      tabs.forEach(function (t) {
+        strip.appendChild(tabButton(t.label, current === t.id, function () {
+          RT.go({ kind: "manager", managerId: route.managerId, objectId: selectedId, sectionKey: t.id });
+        }));
       });
-      add(detail, strip);
-    }
+      detail.appendChild(strip);
 
-    var form = el("div", "dr-form dr-scroll");
-    var inner = el("div", "dr-form-inner");
-    add(form, inner);
-    renderEntryDetail(inner, spec, ctx, selected, activeTab);
-    add(detail, form);
-
-    add(surface, roster, detail);
-    return surface;
-  }
-
-  function pickEntry(entries, ctx) {
-    var i;
-    if (ctx.objectId) {
-      for (i = 0; i < entries.length; i++) {
-        if (entries[i].kind === "object" && entries[i].objectId === ctx.objectId) return entries[i];
-      }
-      for (i = 0; i < entries.length; i++) {
-        if (entries[i].kind === "group" &&
-            ctx.objects.groups[entries[i].groupKey].objects.indexOf(ctx.objectId) >= 0) return entries[i];
+      if (current === "overview") detail.appendChild(objectOverview(item, route.managerId));
+      else {
+        var section = tabs.filter(function (t) { return t.id === current; })[0];
+        if (section) detail.appendChild(renderSpecSection(section, route.managerId));
       }
     }
-    var remembered = ui.entry[ctx.managerId];
-    if (remembered) {
-      for (i = 0; i < entries.length; i++) if (entries[i].key === remembered) return entries[i];
-    }
-    return entries[0];
+    mgr.appendChild(detail);
+    wrap.appendChild(mgr);
   }
 
-  function pickTab(ctx, entry, tabs) {
-    var i;
-    if (ctx.sectionKey) {
-      for (i = 0; i < tabs.length; i++) if (tabs[i].key === ctx.sectionKey) return tabs[i];
-    }
-    var remembered = ui.tab[ctx.managerId + "|" + entry.key];
-    if (remembered) {
-      for (i = 0; i < tabs.length; i++) if (tabs[i].key === remembered) return tabs[i];
-    }
-    return tabs[0];
-  }
-
-  function rosterItem(entry, ctx, selected) {
-    var node;
-    if (entry.kind === "object" || entry.kind === "group") {
-      node = link(entryDest(entry, ctx), "dr-roster-item");
-    } else {
-      node = button("dr-roster-item", null);
-      on(node, "click", function () {
-        ui.entry[ctx.managerId] = entry.key;
-        ui.pane = "detail";
-        render();
-      });
-    }
-    if (entry.objectId) node.setAttribute("data-pm-object", entry.objectId);
-    node.setAttribute("aria-selected", selected ? "true" : "false");
-    var main = el("div", "dr-roster-main");
-    add(main, el("div", "dr-roster-name", entry.label));
-    if (entry.meta) add(main, el("div", "dr-roster-meta", entry.meta));
-    add(node, main);
-    if (entry.kind === "object" || entry.kind === "group") {
-      add(node, html("span", "dr-card-chev", ICON("chevronRight", 12)));
-    }
-    on(node, "click", function () { ui.pane = "detail"; });
-    return node;
-  }
-
-  function entryDest(entry, ctx) {
-    if (entry.kind === "object") {
-      return { managerId: ctx.managerId, objectId: entry.objectId,
-        sectionKey: ctx.objects.objects[entry.objectId].group === "items"
-          ? null : ctx.objects.objects[entry.objectId].group };
-    }
-    if (entry.kind === "group") {
-      var group = ctx.objects.groups[entry.groupKey];
-      return { managerId: ctx.managerId, objectId: group.objects[0], sectionKey: entry.groupKey };
-    }
-    return { managerId: ctx.managerId };
-  }
-
-  function detailSubtitle(spec, ctx, entry) {
-    if (entry.kind === "overview") return spec.purpose;
-    if (entry.kind === "section") return entry.section.summary;
-    if (entry.kind === "object") return entry.object.desc || entry.object.availability || "";
-    if (entry.kind === "group") return "Everything in this manager's " + entry.label.toLowerCase() + ", newest resolution first.";
-    if (entry.kind === "diagnostics") return "Read-only evidence behind the words on this screen.";
-    return "";
-  }
-
-  function tabsFor(spec, ctx, entry) {
-    var tabs = [];
-    if (entry.kind === "object") {
-      tabs.push({ key: "overview", label: "Overview" });
-      var obj = entry.object;
-      obj.rowOrder.forEach(function (key) {
-        tabs.push({ key: key, label: human(key), rows: obj.rows[key] });
-      });
-      if (specItemFor(spec, entry.objectId)) tabs.push({ key: "settings", label: "Settings" });
-      return tabs;
-    }
-    if (entry.kind === "section" && entry.section.settings && entry.section.settings.length &&
-        entry.section.items && entry.section.items.length) {
-      return [{ key: "items", label: "Items" }, { key: "settings", label: "Settings" }];
-    }
-    return [{ key: "overview", label: "Details" }];
-  }
-
-  function specItemFor(spec, objectId) {
+  /* Which section of a manager spec holds a given item id, or null. */
+  function sectionHolding(spec, objectId) {
     var found = null;
-    spec.sections.forEach(function (section) {
-      (section.items || []).forEach(function (item) {
-        if (found) return;
-        if (item.id === objectId || item.id === "prov-" + objectId) found = item;
-      });
+    (spec.sections || []).forEach(function (s) {
+      if (found) return;
+      (s.items || []).forEach(function (it) { if (it.id === objectId) found = s; });
     });
     return found;
   }
 
-  function renderEntryDetail(host, spec, ctx, entry, tab) {
-    if (entry.kind === "overview") return renderOverview(host, spec, ctx);
-    if (entry.kind === "section") return renderSpecSection(host, spec, ctx, entry.section, tab);
-    if (entry.kind === "group") return renderObjectGroup(host, spec, ctx, entry);
-    if (entry.kind === "diagnostics") return renderDiagnostics(host, spec, ctx);
-    return renderObject(host, spec, ctx, entry, tab);
-  }
-
-  function renderOverview(host, spec, ctx) {
-    var health = spec.health;
-    var block = el("div");
-    var status = el("div", "dr-row-label");
-    add(status, chip(health.statusWord, healthTone(health.status)));
-    if (ctx.family && ctx.family.deferred) add(status, chip("Separate owner", "managed"));
-    if (ctx.archetype === "read-only health projection") add(status, chip("Read-only", "quiet"));
-    add(block, status);
-    if (health.headline) add(block, el("div", "dr-head-purpose", health.headline));
-    if (health.detail) add(block, el("div", "dr-row-desc", health.detail));
-
-    if (health.counts && health.counts.length) {
-      var counts = el("div", "dr-counts");
-      health.counts.forEach(function (c) {
-        var box = el("div", "dr-count");
-        add(box, el("div", "dr-count-value", String(c.value)));
-        add(box, el("div", "dr-count-label", c.label));
-        add(counts, box);
-      });
-      add(block, counts);
-    }
-
-    if (spec.owner) {
-      var owner = el("div", "dr-panel");
-      add(owner, el("h2", null, "Owned by " + spec.owner.name));
-      add(owner, el("div", "dr-row-desc", spec.owner.why));
-      var dl = el("dl", "dr-facts");
-      add(dl, el("dt", null, "Where it opens"), el("dd", null, ctx.family.insertion || ""));
-      add(dl, el("dt", null, "How control returns"), el("dd", null, ctx.family.returns || ""));
-      add(dl, el("dt", null, "Built here"), el("dd", null,
-        "Nothing. This screen is the destination and the contract; the owner runs its own flow."));
-      add(owner, dl);
-      add(block, owner);
-    }
-
-    if (spec.primary) {
-      var acts = el("div", "dr-item-acts");
-      add(acts, actionButton(spec.primary, ctx, null, true));
-      add(block, acts);
-    }
-
-    if (spec.notes && spec.notes.length) {
-      var notes = el("ul", "dr-prose");
-      notes.style.marginTop = "12px";
-      spec.notes.forEach(function (note) { add(notes, el("li", null, note)); });
-      add(block, notes);
-    }
-
-    add(host, block);
-    if (effects().offline) {
-      add(host, inlineNote("attention",
-        "There is no network connection, so nothing on this screen was checked just now. Every figure is the last one read."));
-    }
-  }
-
-  function healthTone(status) {
-    if (status === "attention" || status === "risky") return "attention";
-    if (status === "managed") return "managed";
-    if (status === "unavailable") return "unavailable";
-    if (status === "setup") return "setup";
-    return "ok";
-  }
-
-  function renderSpecSection(host, spec, ctx, section, tab) {
-    if (tab && tab.key === "settings" && section.settings && section.settings.length) {
-      return renderSettingRows(host, section.settings);
-    }
-    if (section.kind === "rows" && section.settings && section.settings.length) {
-      return renderSettingRows(host, section.settings);
-    }
-    if (section.kind === "prose") {
-      var list = el("ul", "dr-prose");
-      (section.items || []).forEach(function (item) { add(list, el("li", null, item.name)); });
-      add(host, list);
-      return;
-    }
-    if (!section.items || !section.items.length) {
-      var empty = el("div", "dr-empty");
-      add(empty, el("strong", null, (section.empty && section.empty.headline) || "Nothing here yet"));
-      add(empty, el("div", null, (section.empty && section.empty.detail) ||
-        "When something is added it appears here with its status and the actions it supports."));
-      if (section.empty && section.empty.action) {
-        add(empty, actionButton(section.empty.action, ctx, null, true));
-      }
-      add(host, empty);
-      return;
-    }
-    if (section.kind === "table" && section.columns && section.columns.length) {
-      return renderTableSection(host, ctx, section);
-    }
-    var box = el("div", "dr-list");
-    section.items.forEach(function (item) { add(box, renderSpecItem(item, ctx)); });
-    add(host, box);
-    if (section.actions && section.actions.length) {
-      var acts = el("div", "dr-item-acts");
-      section.actions.forEach(function (a) { add(acts, actionButton(a, ctx, null)); });
-      add(host, acts);
-    }
-  }
-
-  function renderTableSection(host, ctx, section) {
-    var table = el("div", "dr-list");
-    var head = el("div", "dr-table-head");
-    add(head, el("div", "dr-cell is-name", "Name"));
-    section.columns.forEach(function (col) { add(head, el("div", "dr-cell", col.label)); });
-    add(table, head);
-    section.items.forEach(function (item) {
-      var row = el("div", "dr-table-row");
-      var name = el("div", "dr-cell is-name");
-      add(name, el("div", null, item.name));
-      if (item.secondary) add(name, el("div", "dr-roster-meta", item.secondary));
-      add(row, name);
-      section.columns.forEach(function (col) {
-        add(row, el("div", "dr-cell", String(item.fields[col.key] == null ? "" : item.fields[col.key])));
-      });
-      add(table, row);
-    });
-    add(host, table);
-  }
-
-  function renderSpecItem(item, ctx) {
-    var node = el("div", "dr-item");
-    if (item.id) node.setAttribute("data-item", item.id);
-    var head = el("div", "dr-item-head");
-    add(head, el("div", "dr-item-name", item.name));
-    if (item.statusWord) add(head, chip(item.statusWord, healthTone(item.status)));
-    (item.badges || []).forEach(function (badge) {
-      if (!badge.text) return;
-      var b = chip(badge.text, "quiet");
-      if (badge.title) b.title = badge.title;
-      add(head, b);
-    });
-    add(node, head);
-    if (item.secondary) add(node, el("div", "dr-item-sub", item.secondary));
-    if (item.availability && item.availability.available === false) {
-      add(node, el("div", "dr-item-sub", item.availability.reason +
-        (item.availability.owner ? " Owned by " + item.availability.owner + "." : "")));
-    }
-    var fieldKeys = item.fields ? Object.keys(item.fields) : [];
-    if (fieldKeys.length) {
-      var dl = el("dl", "dr-facts");
-      dl.className = "dr-facts dr-item-fields";
-      fieldKeys.forEach(function (key) {
-        add(dl, el("dt", null, human(key)), el("dd", null, String(item.fields[key])));
-      });
-      add(node, dl);
-    }
-    (item.editable || []).forEach(function (field) {
-      add(node, editableField(field, item, ctx));
-    });
-    (item.detail || []).forEach(function (detail) {
-      var box = el("details");
-      var sum = el("summary", "dr-why", detail.label);
-      add(box, sum);
-      var dl2 = el("dl", "dr-facts");
-      (detail.rows || []).forEach(function (r) {
-        add(dl2, el("dt", null, r.label), el("dd", null, String(r.value) + (r.hint ? " — " + r.hint : "")));
-      });
-      add(box, dl2);
-      add(node, box);
-    });
-    if (item.actions && item.actions.length) {
-      var acts = el("div", "dr-item-acts");
-      item.actions.forEach(function (a) { add(acts, actionButton(a, ctx, item)); });
-      add(node, acts);
-    }
-    return node;
-  }
-
-  /* Manager fields round-trip through the store under a key the manager owns,
-   * so an edit survives leaving the manager and coming back to it. */
-  function editableField(field, item, ctx) {
-    var wrap = el("div", "dr-field");
-    add(wrap, el("div", "dr-field-label", field.label));
-    var value = store.edit(ctx.managerId, item.id, field.key, field.value);
-    var input;
-    if (field.kind === "select" && field.options && field.options.length) {
-      input = el("select", "dr-ctl");
-      field.options.forEach(function (opt) {
-        var o = document.createElement("option");
-        o.value = String(opt);
-        o.textContent = human(opt);
-        if (String(opt) === String(value)) o.selected = true;
-        input.appendChild(o);
-      });
-      on(input, "change", function () { store.setEdit(ctx.managerId, item.id, field.key, input.value); });
-    } else if (field.kind === "toggle") {
-      input = button("dr-switch", null);
-      input.setAttribute("role", "switch");
-      input.setAttribute("aria-checked", value ? "true" : "false");
-      add(input, el("span", "dr-switch-track"), el("span", null, value ? "On" : "Off"));
-      on(input, "click", function () {
-        var next = !(store.edit(ctx.managerId, item.id, field.key, field.value));
-        store.setEdit(ctx.managerId, item.id, field.key, next);
-        input.setAttribute("aria-checked", next ? "true" : "false");
-        input.lastChild.textContent = next ? "On" : "Off";
-      });
-    } else if (field.secretKind) {
-      /* No secret material is ever rendered. The row says who holds it and
-       * offers the owner's own flow; it does not show, mask or export a key. */
-      input = el("div", "dr-field-help",
-        "Held by the provider's own tool inside its profile. Puppet Master neither reads nor displays it.");
-    } else {
-      input = el("input", "dr-ctl");
-      input.type = "text";
-      input.value = value == null ? "" : String(value);
-      on(input, "input", function () { store.setEdit(ctx.managerId, item.id, field.key, input.value); });
-    }
-    add(wrap, input);
-    if (field.help) add(wrap, el("div", "dr-field-help", field.help));
-    return wrap;
-  }
-
-  function actionButton(action, ctx, item, primary) {
-    var b = button("dr-btn" + (primary || action.kind === "primary" || action.kind === "create" ? " is-primary" : ""), action.label);
-    on(b, "click", function () {
-      b.disabled = true;
-      var payload = item ? { id: item.id } : { id: ctx.managerId };
-      var result = MGR.act({ managerId: ctx.managerId }, action, payload);
-      shell.announce(action.label + " started.");
-      if (result && result.then) {
-        result.then(function () {
-          b.disabled = false;
-          MGR.invalidate(ctx.managerId);
-          shell.announce(action.label + " finished. The receipt is in the notification inbox.");
-          render();
-        });
-      } else {
-        b.disabled = false;
-      }
-    });
+  function tabButton(label, selected, fn) {
+    var b = button("d5-tab", esc(label), fn);
+    b.setAttribute("role", "tab");
+    b.setAttribute("aria-selected", selected ? "true" : "false");
     return b;
   }
 
-  function renderSettingRows(host, ids) {
-    var box = el("div", "dr-section");
-    ids.forEach(function (id) {
-      var rec = M.setting(id);
-      if (rec) add(box, renderRow(rec));
-    });
-    if (!box.firstChild) {
-      add(box, el("div", "dr-att-empty", "These rows are not part of this Project."));
-    }
-    add(host, box);
-  }
-
-  function renderObject(host, spec, ctx, entry, tab) {
-    var obj = entry.object;
-    var item = specItemFor(spec, entry.objectId);
-
-    if (tab && tab.rows) return renderObjectRows(host, ctx, entry, tab);
-    if (tab && tab.key === "settings" && item) {
-      var box = el("div", "dr-list");
-      add(box, renderSpecItem(item, ctx));
-      add(host, box);
-      return;
-    }
-
-    var head = el("div", "dr-row-label");
-    if (obj.availability) add(head, chip(obj.availability, obj.record && obj.record.kind === "unavailable" ? "unavailable" : "ok"));
-    add(head, chip(obj.typeLabel, "quiet"));
-    add(host, head);
-    if (obj.desc) add(host, el("div", "dr-head-purpose", obj.desc));
-
-    if (item) {
-      var list = el("div", "dr-list");
-      add(list, renderSpecItem(item, ctx));
-      add(host, list);
-    } else {
-      /* The manager spec does not describe this object, so the honest answer is
-       * what Settings actually knows about it plus where it lives. */
-      var dl = el("dl", "dr-facts");
-      add(dl, el("dt", null, "Kind"), el("dd", null, obj.typeLabel));
-      add(dl, el("dt", null, "Where it lives"), el("dd", null, obj.record ? obj.record.path : spec.title));
-      if (obj.availability) add(dl, el("dt", null, "Reported"), el("dd", null, obj.availability));
-      add(dl, el("dt", null, "Changed here"), el("dd", null,
-        "How this Project uses it. What it is and where it comes from belong to the host."));
-      add(host, dl);
-    }
-  }
-
-  function renderObjectRows(host, ctx, entry, tab) {
-    var box = el("div", "dr-list");
-    tab.rows.forEach(function (rec) {
-      var row = el("div", "dr-item");
-      row.setAttribute("data-row-id", rec.destination.rowId || rec.id);
-      var head = el("div", "dr-item-head");
-      add(head, el("div", "dr-item-name", rec.label));
-      if (rec.availability) add(head, chip(rec.availability, rec.kind === "unavailable" ? "unavailable" : "ok"));
-      add(row, head);
-      if (rec.desc) add(row, el("div", "dr-item-sub", rec.desc));
-      add(box, row);
-    });
-    add(host, box);
-  }
-
-  /* A group too long to sit in the roster becomes a bounded table. Above the
-   * windowing threshold it is virtualized, so a hundred installations and two
-   * hundred cost the same DOM. */
-  function renderObjectGroup(host, spec, ctx, entry) {
-    var group = ctx.objects.groups[entry.groupKey];
-    var ids = group.objects;
-    var scroller = el("div", "dr-diff-scroll dr-scroll");
-    scroller.style.maxHeight = "none";
-    var viewport = el("div");
-    add(scroller, viewport);
-
-    function paint() {
-      var win = VIRT.windowFor({
-        total: ids.length, rowHeight: 30, viewport: scroller.clientHeight,
-        scrollTop: scroller.scrollTop, overscan: 6, firstPage: 30
+  function objectOverview(item, managerId) {
+    var box = el("div");
+    if (item.fields && Object.keys(item.fields).length) {
+      var dl = el("dl", "d5-fields");
+      Object.keys(item.fields).forEach(function (k) {
+        dl.appendChild(el("dt", null, esc(k)));
+        dl.appendChild(el("dd", null, esc(String(item.fields[k]))));
       });
-      clear(viewport);
-      var before = el("div");
-      before.style.height = win.before + "px";
-      add(viewport, before);
-      for (var i = win.start; i < win.end; i++) {
-        var obj = ctx.objects.objects[ids[i]];
-        var row = link({ managerId: ctx.managerId, objectId: obj.id, sectionKey: entry.groupKey }, "dr-diff-row");
-        row.setAttribute("data-pm-object", obj.id);
-        add(row, el("span", "dr-diff-label", obj.label));
-        add(row, el("span", "dr-diff-path", obj.desc || (obj.record ? obj.record.path : "")));
-        add(row, el("span", "dr-diff-out", obj.availability || obj.typeLabel));
-        add(viewport, row);
-      }
-      var after = el("div");
-      after.style.height = win.after + "px";
-      add(viewport, after);
+      box.appendChild(dl);
     }
-    var pending = false;
-    on(scroller, "scroll", function () {
-      if (pending) return;
-      pending = true;
-      window.requestAnimationFrame(function () { pending = false; paint(); });
-    });
-    paint();
-    window.requestAnimationFrame(function () { if (scroller.isConnected) paint(); });
-
-    add(host, el("div", "dr-row-desc",
-      count(ids.length, singularOf(group.label)) +
-      " found. This Project uses the one bound by identity, so a change in search order cannot move it."));
-    add(host, add(el("div", "dr-diff"), scroller));
+    if (item.badges && item.badges.length) {
+      var tags = el("div", "d5-actions");
+      item.badges.forEach(function (b) {
+        var t = el("span", "d5-tag", esc(b.text));
+        if (b.title) t.title = b.title;
+        tags.appendChild(t);
+      });
+      box.appendChild(tags);
+    }
+    if (item.editable && item.editable.length) box.appendChild(editableFields(item, managerId));
+    if (item.actions && item.actions.length) {
+      var acts = el("div", "d5-actions");
+      item.actions.forEach(function (a) {
+        acts.appendChild(button("d5-btn" + (a.primary ? " d5-btn--primary" : ""), esc(a.label), function () {
+          runAction(managerId, a, item);
+        }));
+      });
+      box.appendChild(acts);
+    }
+    if (!box.childNodes.length) box.appendChild(el("p", "d5-prose", esc(item.name + " has nothing further to configure here.")));
+    return box;
   }
 
-  function renderDiagnostics(host, spec, ctx) {
-    var box = el("div", "dr-list");
-    spec.diagnostics.forEach(function (d) {
-      var row = el("div", "dr-item");
-      add(row, add(el("div", "dr-item-head"), el("div", "dr-item-name", d.label), chip(human(d.kind), "quiet")));
-      add(row, el("div", "dr-item-sub",
-        "Read-only evidence. Opening it records who looked and when, and changes nothing."));
-      var acts = el("div", "dr-item-acts");
-      add(acts, actionButton({ id: d.id, label: "Open", kind: "quiet" }, ctx, { id: d.id }));
-      add(row, acts);
-      add(box, row);
-    });
-    add(host, box);
-  }
+  function editableFields(item, managerId) {
+    var box = el("div");
+    item.editable.forEach(function (f) {
+      var row = el("div", "d5-row");
+      var main = el("div", "d5-row-main");
+      main.appendChild(el("div", "d5-row-title", esc(f.label)));
+      if (f.help) main.appendChild(el("p", "d5-row-desc", esc(f.help)));
+      row.appendChild(main);
 
-  /* ------------------------------------------------------ the provider */
-
-  /* The flagship, built by hand rather than through the generic workbench. The
-   * default view answers the six questions people actually arrive with --
-   * connected, which account, which models, what happens when usage ends, how
-   * it routes, and what to do if it is broken -- and everything else is a
-   * subpage rather than another column. */
-  function providerManager(spec, ctx) {
-    var sections = {};
-    spec.sections.forEach(function (s) { sections[s.id] = s; });
-    var families = sections.families || { items: [] };
-
-    var entries = [{ key: "overview", label: "All providers", kind: "overview",
-      meta: spec.health.statusWord, group: "This manager" }];
-
-    families.items.forEach(function (item) {
-      var objectId = item.id.replace(/^prov-/, "");
-      var obj = ctx.objects.objects[objectId];
-      entries.push({
-        key: "object:" + objectId, kind: "object", objectId: objectId,
-        label: item.name, meta: item.statusWord || (obj && obj.availability) || "",
-        group: "Providers", object: obj || { id: objectId, label: item.name, rows: {}, rowOrder: [], typeLabel: "Provider" },
-        item: item
-      });
-    });
-
-    ctx.objects.order.forEach(function (key) {
-      if (key === "items" || key === "accounts" || key === "models") return;
-      var group = ctx.objects.groups[key];
-      if (!group.objects.length) return;
-      entries.push({
-        key: "group:" + key, kind: "group", groupKey: key, label: group.label,
-        meta: count(group.objects.length, singularOf(group.label)), group: "On this machine"
-      });
-    });
-
-    entries.push({ key: "section:usage-end", kind: "section", label: "When included usage ends",
-      section: sections["usage-end"], meta: "Project policy", group: "Across all providers" });
-    entries.push({ key: "section:acquisition", kind: "section", label: "How a provider tool arrives",
-      section: sections.acquisition, meta: "The rule", group: "Across all providers" });
-    entries.push({ key: "section:provider-rows", kind: "section", label: "Model defaults",
-      section: sections["provider-rows"], meta: sectionMeta(sections["provider-rows"] || {}), group: "Across all providers" });
-
-    var selected = pickEntry(entries, ctx);
-    ui.entry[ctx.managerId] = selected.key;
-
-    var surface = el("div", "dr-surface dr-mgr");
-    surface.setAttribute("data-pm-surface", "manager");
-    surface.setAttribute("data-pm-manager", ctx.managerId);
-    surface.setAttribute("data-pane", ui.pane);
-
-    var roster = el("div", "dr-roster");
-    var rhead = el("div", "dr-roster-head");
-    add(rhead, el("div", "dr-roster-title", spec.title));
-    add(rhead, el("div", "dr-roster-sub", spec.health.statusWord));
-    add(roster, rhead);
-    var rlist = el("div", "dr-roster-list dr-scroll");
-    var lastGroup = null;
-    entries.forEach(function (entry) {
-      if (entry.group !== lastGroup) {
-        add(rlist, el("div", "dr-roster-group", entry.group));
-        lastGroup = entry.group;
-      }
-      add(rlist, rosterItem(entry, ctx, entry.key === selected.key));
-    });
-    add(roster, rlist);
-    if (spec.primary) {
-      var foot = el("div", "dr-roster-head");
-      add(foot, actionButton(spec.primary, ctx, null, true));
-      add(roster, foot);
-    }
-
-    var detail = el("div", "dr-detail");
-    var dhead = el("div", "dr-detail-head");
-    if (ui.pane === "detail") {
-      var back = button("dr-btn is-quiet", null);
-      add(back, iconNode("chevronLeft"), el("span", null, "Back to providers"));
-      on(back, "click", function () { ui.pane = "roster"; render(); });
-      back.style.marginBottom = "8px";
-      add(dhead, back);
-    }
-    add(dhead, el("div", "dr-detail-title", selected.label));
-    add(detail, dhead);
-
-    var tabs = providerTabs(selected, ctx);
-    var activeTab = pickTab(ctx, selected, tabs);
-    if (tabs.length > 1) {
-      var strip = el("div", "dr-tabs");
-      strip.setAttribute("role", "tablist");
-      tabs.forEach(function (tab) {
-        var b = button("dr-tab", tab.label);
-        b.setAttribute("role", "tab");
-        b.setAttribute("aria-selected", tab.key === activeTab.key ? "true" : "false");
-        on(b, "click", function () { ui.tab[ctx.managerId + "|" + selected.key] = tab.key; render(); });
-        add(strip, b);
-      });
-      add(detail, strip);
-    }
-
-    var form = el("div", "dr-form dr-scroll");
-    var inner = el("div", "dr-form-inner");
-    add(form, inner);
-    providerDetail(inner, spec, ctx, selected, activeTab, sections);
-    add(detail, form);
-
-    add(surface, roster, detail);
-    return surface;
-  }
-
-  function providerTabs(entry, ctx) {
-    if (entry.kind !== "object") return [{ key: "overview", label: "Details" }];
-    var tabs = [{ key: "overview", label: "Overview" }];
-    var obj = entry.object;
-    if (obj.rows.accounts) tabs.push({ key: "accounts", label: "Accounts", rows: obj.rows.accounts });
-    if (obj.rows.models) tabs.push({ key: "models", label: "Models", rows: obj.rows.models });
-    tabs.push({ key: "credentials", label: "Credentials" });
-    tabs.push({ key: "installations", label: "Installations" });
-    tabs.push({ key: "limits", label: "Limits and routing" });
-    tabs.push({ key: "logs", label: "Logs and diagnostics" });
-    return tabs;
-  }
-
-  function providerDetail(host, spec, ctx, entry, tab, sections) {
-    if (entry.kind === "overview") {
-      renderOverview(host, spec, ctx);
-      add(host, el("div", "dr-block-title", "One card per family"));
-      var box = el("div", "dr-list");
-      (sections.families.items || []).forEach(function (item) {
-        var objectId = item.id.replace(/^prov-/, "");
-        var node = renderSpecItem(item, ctx);
-        var openIt = link({ managerId: ctx.managerId, objectId: objectId }, "dr-btn");
-        openIt.textContent = "Open " + item.name;
-        add(node, add(el("div", "dr-item-acts"), openIt));
-        add(box, node);
-      });
-      add(host, box);
-      return;
-    }
-    if (entry.kind === "group") return renderObjectGroup(host, spec, ctx, entry);
-    if (entry.kind === "section") {
-      if (!entry.section) { add(host, el("div", "dr-att-empty", "Nothing to show here.")); return; }
-      return renderSpecSection(host, spec, ctx, entry.section, tab);
-    }
-
-    var item = entry.item || specItemFor(spec, entry.objectId);
-    var sub = sections.subpages || { items: [] };
-    function subItem(id) {
-      var found = null;
-      (sub.items || []).forEach(function (x) { if (x.id === id) found = x; });
-      return found;
-    }
-
-    if (tab.key === "overview") {
-      if (item) {
-        var list = el("div", "dr-list");
-        add(list, renderSpecItem(item, ctx));
-        add(host, list);
-      }
-      var usage = sections["usage-end"];
-      if (usage && usage.items && usage.items.length) {
-        add(host, el("div", "dr-block-title", "When included usage ends"));
-        add(host, el("div", "dr-row-desc", usage.summary));
-        renderTableSection(host, ctx, {
-          columns: usage.columns,
-          items: usage.items.filter(function (x) {
-            return !item || String(x.name).indexOf(item.name) === 0;
-          })
+      var ctl = el("div", "d5-row-control");
+      var current = store.edit(managerId, item.id, f.key, f.value);
+      if (f.secretKind) {
+        /* Secret material is never rendered. The reference is shown, and the only
+         * action offered is one that replaces it. */
+        ctl.appendChild(el("span", "d5-listval", "Stored — never shown"));
+        ctl.appendChild(button("d5-btn", "Replace", function () {
+          window.PMSim.run({ label: "Replace " + f.label, detail: "Opens the credential entry flow. No existing secret is read or displayed.", realCall: "cmd.provider.connection.authenticate" });
+        }));
+      } else if (f.kind === "toggle") {
+        var t = button("d5-toggle", "", function () {
+          store.setEdit(managerId, item.id, f.key, !current);
+          MG.invalidate(managerId); render();
         });
+        t.setAttribute("role", "switch");
+        t.setAttribute("aria-checked", current ? "true" : "false");
+        t.setAttribute("aria-label", f.label);
+        ctl.appendChild(t);
+      } else if (f.kind === "select" && f.options.length) {
+        var s = el("select", "d5-select");
+        s.setAttribute("aria-label", f.label);
+        f.options.forEach(function (o) {
+          var op = document.createElement("option");
+          op.value = o; op.textContent = o;
+          s.appendChild(op);
+        });
+        s.value = String(current == null ? f.options[0] : current);
+        on(s, "change", function () { store.setEdit(managerId, item.id, f.key, s.value); MG.invalidate(managerId); render(); });
+        ctl.appendChild(s);
+      } else {
+        var i = el("input", "d5-input");
+        i.type = "text";
+        i.value = current == null ? "" : String(current);
+        i.setAttribute("aria-label", f.label);
+        on(i, "change", function () { store.setEdit(managerId, item.id, f.key, i.value); MG.invalidate(managerId); render(); });
+        ctl.appendChild(i);
       }
-      return;
-    }
-    if (tab.rows) return renderObjectRows(host, ctx, entry, tab);
-
-    var map = { credentials: "sub-credentials", installations: "sub-installations",
-      limits: "sub-limits", logs: "sub-logs" };
-    var record = subItem(map[tab.key]);
-    if (record) {
-      var box2 = el("div", "dr-list");
-      add(box2, renderSpecItem(record, ctx));
-      add(host, box2);
-    }
-    if (tab.key === "credentials") {
-      add(host, inlineNote("info",
-        "No key, token or profile file is read, rendered or exported here. Signing in runs the provider's own login inside its own profile, and it is a separate step from installing anything."));
-    }
-    if (tab.key === "installations") {
-      var group = ctx.objects.groups.installations;
-      if (group && group.objects.length) {
-        var openAll = link({ managerId: ctx.managerId, objectId: group.objects[0], sectionKey: "installations" }, "dr-btn");
-        openAll.textContent = "Open all " + group.objects.length + " installations";
-        add(host, add(el("div", "dr-item-acts"), openAll));
-      }
-      var acq = sections.acquisition;
-      if (acq) {
-        add(host, el("div", "dr-block-title", "How a provider tool gets onto this machine"));
-        renderSpecSection(host, spec, ctx, acq, null);
-      }
-    }
-    if (tab.key === "logs") {
-      renderDiagnostics(host, spec, ctx);
-    }
-  }
-
-  /* ================================================================ COPY */
-
-  var COPY_STEPS = [
-    { key: "source", label: "Choose a source" },
-    { key: "categories", label: "Choose what to copy" },
-    { key: "preview", label: "Review the change" },
-    { key: "apply", label: "Apply and receipt" }
-  ];
-
-  function copyState() {
-    if (!ui.copy) {
-      ui.copy = { sourceId: null, domains: {}, preview: null, run: null, phases: [], receipt: null, running: false };
-      M.domains.forEach(function (d) { ui.copy.domains[d.id] = true; });
-    }
-    return ui.copy;
-  }
-
-  function renderCopy(route) {
-    var c = copyState();
-    var step = route.step || "source";
-    if (step === "categories" && !c.sourceId) step = "source";
-    if ((step === "preview" || step === "apply") && !c.preview) step = c.sourceId ? "categories" : "source";
-
-    var s = el("div", "dr-surface");
-    s.setAttribute("data-pm-surface", "copy");
-
-    var head = el("div", "dr-head");
-    add(head, el("h1", null, "Copy settings from another Project"));
-    add(head, el("div", "dr-head-purpose", COPY.independence));
-    add(s, head);
-
-    var steps = el("div", "dr-steps");
-    var current = 0;
-    COPY_STEPS.forEach(function (st, i) { if (st.key === step) current = i; });
-    COPY_STEPS.forEach(function (st, i) {
-      var node = el("div", "dr-step" + (i < current ? " is-done" : ""));
-      if (i === current) node.setAttribute("aria-current", "step");
-      add(node, el("span", "dr-step-num", String(i + 1)), el("span", null, st.label));
-      add(steps, node);
+      row.appendChild(ctl);
+      box.appendChild(row);
     });
-    add(s, steps);
-
-    if (step === "source") add(s, copySource(c));
-    else if (step === "categories") add(s, copyCategories(c));
-    else if (step === "preview") add(s, copyPreview(c));
-    else add(s, copyApply(c));
-    return s;
+    return box;
   }
 
-  function copySource(c) {
-    var panel = el("div", "dr-panel");
-    add(panel, el("h2", null, "Which Project should this one copy from?"));
-    add(panel, el("div", "dr-row-desc",
-      "The source is only read. Nothing is written back to it, and after this finishes the two Projects are unrelated."));
-    COPY.sources().forEach(function (source) {
-      var b = button("dr-pick", null);
-      b.setAttribute("aria-checked", c.sourceId === source.id ? "true" : "false");
-      b.setAttribute("role", "radio");
-      var main = el("div", "dr-pick-main");
-      add(main, el("div", "dr-pick-name", source.name));
-      add(main, el("div", "dr-pick-note", source.updated + " · " + source.note));
-      add(b, main);
-      add(b, el("span", "dr-pick-meta", source.settings + " settings in " + count(source.categories, "area")));
-      on(b, "click", function () {
-        c.sourceId = source.id;
-        c.preview = null;
-        go({ kind: "copy", step: "categories" });
+  function renderDocumentManager(wrap, spec, route) {
+    root.setAttribute("data-pane", "both");
+    (spec.sections || []).forEach(function (section) {
+      wrap.appendChild(renderSpecSection(section, route.managerId));
+    });
+  }
+
+  function renderSpecSection(section, managerId) {
+    var box = el("section", "d5-section");
+    var head = el("div", "d5-section-head");
+    head.appendChild(el("h3", "d5-section-title", esc(section.label)));
+    if ((section.items || []).length) head.appendChild(el("span", "d5-section-count", String(section.items.length)));
+    box.appendChild(head);
+    if (section.summary) box.appendChild(el("p", "d5-row-desc", esc(section.summary)));
+
+    var items = section.items || [];
+    if (!items.length) {
+      var e = section.empty || {};
+      var empty = el("div", "d5-empty");
+      empty.appendChild(el("div", "d5-empty-head", esc(e.headline || "Nothing here yet")));
+      if (e.detail) empty.appendChild(el("p", null, esc(e.detail)));
+      box.appendChild(empty);
+      return box;
+    }
+
+    if (section.kind === "prose") {
+      var prose = el("div", "d5-prose");
+      items.forEach(function (i) { prose.appendChild(el("p", null, esc(i.name))); });
+      box.appendChild(prose);
+      return box;
+    }
+
+    if (section.kind === "matrix") {
+      var keys = [];
+      items.forEach(function (i) {
+        Object.keys(i.fields || {}).forEach(function (k) { if (keys.indexOf(k) < 0) keys.push(k); });
       });
-      add(panel, b);
+      var wrapT = el("div", "d5-tablewrap");
+      var table = el("table", "d5-table");
+      var thead = el("thead");
+      var tr = el("tr");
+      tr.appendChild(el("th", null, "Item"));
+      keys.forEach(function (k) { tr.appendChild(el("th", null, esc(k))); });
+      thead.appendChild(tr);
+      table.appendChild(thead);
+      var tbody = el("tbody");
+      items.forEach(function (i) {
+        var r = el("tr");
+        r.appendChild(el("td", null, esc(i.name)));
+        keys.forEach(function (k) { r.appendChild(el("td", null, esc(String((i.fields || {})[k] == null ? "—" : i.fields[k])))); });
+        tbody.appendChild(r);
+      });
+      table.appendChild(tbody);
+      wrapT.appendChild(table);
+      box.appendChild(wrapT);
+      return box;
+    }
+
+    items.forEach(function (item) {
+      var row = el("div", "d5-row");
+      /* Every item a manager holds is addressable, not just the ones that happen to
+       * be in the roster — a search result may point at an installation that lives
+       * on a subpage, and it must be able to land on exactly that row. */
+      row.setAttribute("data-pm-object", item.id);
+      var main = el("div", "d5-row-main");
+      var label = el("div", "d5-row-label");
+      label.appendChild(el("span", "d5-row-title", esc(item.name)));
+      if (item.statusWord) {
+        var t = el("span", "d5-tag", esc(item.statusWord));
+        t.setAttribute("data-tone", item.status === "attention" ? "changed" : (item.status || "quiet"));
+        label.appendChild(t);
+      }
+      main.appendChild(label);
+      if (item.secondary) main.appendChild(el("p", "d5-row-desc", esc(item.secondary)));
+      if (item.fields && Object.keys(item.fields).length) {
+        var dl = el("dl", "d5-fields");
+        Object.keys(item.fields).forEach(function (k) {
+          dl.appendChild(el("dt", null, esc(k)));
+          dl.appendChild(el("dd", null, esc(String(item.fields[k]))));
+        });
+        main.appendChild(dl);
+      }
+      row.appendChild(main);
+
+      var ctl = el("div", "d5-row-control");
+      if (item.editable && item.editable.length) {
+        row.appendChild(el("div"));
+        main.appendChild(editableFields(item, managerId));
+      }
+      (item.actions || []).forEach(function (a) {
+        ctl.appendChild(button("d5-btn" + (a.primary ? " d5-btn--primary" : ""), esc(a.label), function () {
+          runAction(managerId, a, item);
+        }));
+      });
+      row.appendChild(ctl);
+      box.appendChild(row);
     });
-    var acts = el("div", "dr-acts");
-    var cancel = link({ kind: "home" }, "dr-btn is-quiet");
-    cancel.textContent = "Cancel";
-    add(acts, cancel);
-    add(panel, acts);
-    return panel;
+    return box;
   }
 
-  function copyCategories(c) {
-    var panel = el("div", "dr-panel");
-    var source = COPY.sources().filter(function (s) { return s.id === c.sourceId; })[0];
-    add(panel, el("h2", null, "What should come across from " + source.name + "?"));
-    add(panel, el("div", "dr-row-desc",
-      "Whole areas, not individual rows: a half-copied area is how two Projects end up disagreeing with themselves."));
-    COPY.categories().forEach(function (cat) {
-      var b = button("dr-pick", null);
-      b.setAttribute("aria-pressed", c.domains[cat.id] ? "true" : "false");
-      var main = el("div", "dr-pick-main");
-      add(main, el("div", "dr-pick-name", cat.title));
-      add(main, el("div", "dr-pick-note", cat.purpose));
-      add(b, main);
-      add(b, el("span", "dr-pick-meta", cat.count + " settings"));
-      on(b, "click", function () {
-        c.domains[cat.id] = !c.domains[cat.id];
-        c.preview = null;
+  function healthBlock(health) {
+    var box = el("div", "d5-health");
+    box.innerHTML = icon(health.status === "ok" ? "checkCircle" : "info", 16);
+    var body = el("div");
+    var word = el("div", "d5-health-word", esc(health.statusWord || health.status || ""));
+    word.setAttribute("data-tone", health.status || "ok");
+    body.appendChild(word);
+    if (health.headline) body.appendChild(el("div", null, esc(health.headline)));
+    if (health.detail) body.appendChild(el("p", "d5-health-detail", esc(health.detail)));
+    if (health.counts && health.counts.length) {
+      var counts = el("div", "d5-health-counts");
+      health.counts.forEach(function (c) {
+        var cell = el("div");
+        cell.appendChild(el("span", "d5-count-k", esc(c.label)));
+        cell.appendChild(el("span", "d5-count-v", esc(String(c.value))));
+        counts.appendChild(cell);
+      });
+      body.appendChild(counts);
+    }
+    box.appendChild(body);
+    return box;
+  }
+
+  function ownerBlock(owner, managerId) {
+    var box = el("div", "d5-owner");
+    box.appendChild(el("div", "d5-owner-k", "Owned by"));
+    box.appendChild(el("div", null, esc(owner.name)));
+    box.appendChild(el("div", "d5-owner-k", "Why it is separate"));
+    box.appendChild(el("p", null, esc(owner.why)));
+    box.appendChild(el("div", "d5-owner-k", "How it is entered"));
+    box.appendChild(el("p", null, esc(owner.insertionContract)));
+    box.appendChild(el("div", "d5-owner-k", "How it hands back"));
+    box.appendChild(el("p", null, esc(owner.returnContract)));
+    var acts = el("div", "d5-actions");
+    acts.appendChild(button("d5-btn d5-btn--primary", "Open " + esc(owner.name), function () {
+      window.PMSim.run({
+        label: "Open " + owner.name,
+        detail: owner.returnContract,
+        realCall: "cmd.settings.owner.open",
+        payload: { owner: owner.name, from: managerId, project: M.project.id }
+      });
+    }));
+    box.appendChild(acts);
+    return box;
+  }
+
+  function runAction(managerId, action, item) {
+    var result = MG.act({ managerId: managerId, project: M.project.id }, action, item ? { objectId: item.id } : null);
+    if (!result) {
+      window.PMSim.run({ label: action.label, detail: "Simulated in this prototype.", realCall: "cmd.settings.manager.action" });
+    }
+    shell.announce(action.label + " — a receipt is in the notification inbox.");
+  }
+
+  /* ----------------------------------------------------------- all settings */
+
+  function renderAll(wrap, route) {
+    var head = el("header", "d5-pagehead");
+    head.appendChild(el("h2", "d5-pagehead-title", "All settings"));
+    head.appendChild(el("p", "d5-pagehead-purpose",
+      "Every setting in " + esc(M.project.name) + ", including the ones that are managed or unavailable on this host."));
+    wrap.appendChild(head);
+
+    var box = el("div", "d5-all");
+    var facetCol = el("div", "d5-facets");
+    var main = el("div", "d5-allmain");
+
+    var filter = {
+      domainIds: ui.facets.domains,
+      kinds: ui.facets.kinds,
+      exposures: ui.facets.exposures,
+      changedOnly: ui.facets.changedOnly,
+      text: route.facet || "",
+      limit: 0
+    };
+    var result = IX.all(filter);
+
+    var allHead = el("div", "d5-allhead");
+    allHead.appendChild(el("span", "d5-allcount", plural(result.total, "match", "matches") + " of " + IX.stats().records + " indexed records"));
+    if (ui.facets.domains.length || ui.facets.kinds.length || ui.facets.exposures.length || ui.facets.changedOnly) {
+      allHead.appendChild(button("d5-iconbtn", "Clear filters", function () {
+        ui.facets = { domains: [], kinds: [], exposures: [], changedOnly: false };
         render();
-      });
-      add(panel, b);
-    });
-    var acts = el("div", "dr-acts");
-    var back = link({ kind: "copy", step: "source" }, "dr-btn is-quiet");
-    back.textContent = "Back to sources";
-    var next = button("dr-btn is-primary", "Preview the change");
-    var chosen = Object.keys(c.domains).filter(function (k) { return c.domains[k]; });
-    next.disabled = !chosen.length;
-    on(next, "click", function () {
-      c.preview = COPY.preview(c.sourceId, chosen);
-      go({ kind: "copy", step: "preview" });
-    });
-    add(acts, back, next, el("span", "dr-panel-note", count(chosen.length, "area") + " selected"));
-    add(panel, acts);
-    return panel;
-  }
-
-  function copyPreview(c) {
-    var p = c.preview;
-    var panel = el("div", "dr-panel");
-    add(panel, el("h2", null, "What copying from " + p.source.name + " would do"));
-    add(panel, el("div", "dr-row-desc", "Nothing has been changed yet. This is the whole plan."));
-
-    var tally = el("div", "dr-tally");
-    [["Added", p.counts.additions], ["Replaced", p.counts.replacements],
-     ["Left alone", p.counts.unchanged], ["Re-pointed references", p.counts.references],
-     ["Not available here", p.counts.unavailable], ["Policy conflicts", p.counts.conflicts]
-    ].forEach(function (pair) {
-      var box = el("div", "dr-tally-item");
-      add(box, el("div", "dr-tally-value", String(pair[1])));
-      add(box, el("div", "dr-tally-label", pair[0]));
-      add(tally, box);
-    });
-    add(panel, tally);
-
-    add(panel, el("div", "dr-panel-note", COPY.secretPolicy()));
-    if (effects().importConflict) {
-      add(panel, inlineNote("attention",
-        "Some of these values disagree with what this Project already has. Every disagreement is listed below before anything is applied."));
+      }));
     }
+    main.appendChild(allHead);
 
-    var changing = p.items.filter(function (i) {
-      return i.outcome === "addition" || i.outcome === "replacement" ||
-        i.outcome === "reference" || i.outcome === "conflict" || i.outcome === "unavailable";
+    facetCol.appendChild(facetGroup("Area", result.facets.domains, ui.facets.domains, "domains"));
+    facetCol.appendChild(facetGroup("Kind", result.facets.kinds, ui.facets.kinds, "kinds"));
+    facetCol.appendChild(facetGroup("Exposure", result.facets.exposures, ui.facets.exposures, "exposures"));
+
+    var changedGroup = el("div", "d5-facet");
+    changedGroup.appendChild(el("div", "d5-facet-head", "State"));
+    var chg = button("d5-facet-item", "<span>Changed for this Project</span><span class='d5-facet-n'>" + result.facets.changed + "</span>", function () {
+      ui.facets.changedOnly = !ui.facets.changedOnly; render();
     });
-    add(panel, el("div", "dr-block-title", "Itemised — " + count(changing.length, "row")));
+    chg.setAttribute("aria-pressed", ui.facets.changedOnly ? "true" : "false");
+    changedGroup.appendChild(chg);
+    facetCol.appendChild(changedGroup);
 
-    var box2 = el("div", "dr-diff");
-    var scroller = el("div", "dr-diff-scroll dr-scroll");
-    var viewport = el("div");
-    add(scroller, viewport);
-    add(box2, scroller);
+    /* Virtualized: 828 records plus a 2,400-row stress fixture must not become
+     * 3,200 DOM nodes, so only the visible window exists. */
+    var listBox = el("div", "d5-alllist d5-scroll");
+    var rowHeight = 44;
+    /* Scales with the window instead of stopping at 660px. On a tall display the fixed
+     * ceiling left most of the page empty under a list of 1,265 records. */
+    var viewport = Math.max(320, Math.round(window.innerHeight - 340));
 
     function paint() {
-      var win = VIRT.windowFor({
-        total: changing.length, rowHeight: 30, viewport: scroller.clientHeight,
-        scrollTop: scroller.scrollTop, overscan: 6, firstPage: 24
+      var win = window.PMVirtual.windowFor({
+        total: result.total, rowHeight: rowHeight,
+        viewport: viewport, scrollTop: listBox.scrollTop, overscan: 6, firstPage: 20
       });
-      clear(viewport);
-      var before = el("div");
+      clear(listBox);
+      var before = el("div", "d5-vspacer");
       before.style.height = win.before + "px";
-      add(viewport, before);
+      listBox.appendChild(before);
       for (var i = win.start; i < win.end; i++) {
-        var it = changing[i];
-        var row = el("div", "dr-diff-row");
-        add(row, el("span", "dr-diff-label", it.label));
-        add(row, el("span", "dr-diff-path", it.path));
-        add(row, el("span", "dr-diff-out", copyOutcomeWord(it)));
-        add(viewport, row);
+        var rec = result.rows[i];
+        if (!rec) continue;
+        listBox.appendChild(allRow(rec));
       }
-      var after = el("div");
+      var after = el("div", "d5-vspacer");
       after.style.height = win.after + "px";
-      add(viewport, after);
+      listBox.appendChild(after);
     }
-    var pending = false;
-    on(scroller, "scroll", function () {
-      if (pending) return;
-      pending = true;
-      window.requestAnimationFrame(function () { pending = false; paint(); });
-    });
+    listBox.style.height = viewport + "px";
+    on(listBox, "scroll", paint);
+    main.appendChild(listBox);
+    box.appendChild(facetCol);
+    box.appendChild(main);
+    wrap.appendChild(box);
     paint();
-    add(panel, box2);
+  }
 
-    var excluded = el("dl", "dr-facts");
-    p.excluded.forEach(function (x) {
-      add(excluded, el("dt", null, x.label), el("dd", null, x.count + (x.note ? " — " + x.note : "")));
+  function allRow(rec) {
+    var b = button("d5-allrow", null, function () {
+      var r = IX.byId(rec.id);
+      if (!r) return;
+      ui.pending = { result: r };
+      RT.go(destinationRoute(r.destination));
     });
-    add(panel, el("div", "dr-block-title", "Deliberately left out"));
-    add(panel, excluded);
-
-    var acts = el("div", "dr-acts");
-    var back = link({ kind: "copy", step: "categories" }, "dr-btn is-quiet");
-    back.textContent = "Back to categories";
-    var apply = button("dr-btn is-primary", "Take a restore point and copy " + p.willChange + " values");
-    on(apply, "click", function () { startCopy(c); });
-    add(acts, back, apply);
-    add(panel, acts);
-    return panel;
+    b.setAttribute("data-pm-result", rec.id);
+    var body = el("div", "d5-allrow-body");
+    body.appendChild(el("div", "d5-allrow-label", esc(rec.label)));
+    body.appendChild(el("div", "d5-allrow-path", esc(rec.path)));
+    b.appendChild(body);
+    var tag = el("span", "d5-tag d5-allrow-tag", esc(rec.typeLabel || IX.kindLabel(rec.kind)));
+    if (rec.changed) tag.setAttribute("data-tone", "changed");
+    b.appendChild(tag);
+    return b;
   }
 
-  function copyOutcomeWord(item) {
-    if (item.outcome === "addition") return "Added: " + displayValue(item.incoming);
-    if (item.outcome === "replacement") return displayValue(item.current) + " → " + displayValue(item.incoming);
-    if (item.outcome === "reference") return "Reference re-pointed";
-    if (item.outcome === "conflict") return "Excluded — policy owns it here";
-    if (item.outcome === "unavailable") return "Excluded — not available here";
-    return "Unchanged";
-  }
-
-  function startCopy(c) {
-    c.run = COPY.apply(c.preview);
-    c.phases = [];
-    c.receipt = null;
-    c.running = true;
-    go({ kind: "copy", step: "apply" });
-    step();
-
-    /* Driven one phase at a time so the restore point, the apply and the
-     * verification are each visible facts rather than a bar against a clock. */
-    function step() {
-      var out = c.run.next();
-      if (out.phase) c.phases.push(out.phase);
-      if (out.done) {
-        c.receipt = out.receipt;
-        c.running = false;
-        render();
-        return;
-      }
-      render();
-      window.setTimeout(step, 520);
-    }
-  }
-
-  function copyApply(c) {
-    var panel = el("div", "dr-panel");
-    add(panel, el("h2", null, c.receipt
-      ? (c.receipt.outcome === "applied" ? "Copied" : "Rolled back")
-      : "Copying"));
-
-    var op = c.run && c.run.get ? c.run.get() : null;
-    if (op) {
-      add(panel, el("div", "dr-row-desc", op.title + " — " + WORK.stateWord(op.state) +
-        (op.progress_kind === "fraction" && op.total
-          ? " (" + (op.completed || 0) + " of " + op.total + ")"
-          : (op.wait_reason ? " — " + op.wait_reason : ""))));
-    }
-
-    var list = el("div");
-    var expected = c.run ? c.run.steps : [];
-    expected.forEach(function (phase, i) {
-      var done = c.phases.indexOf(phase) >= 0;
-      var now = c.phases.length - 1 === i && c.running;
-      var row = el("div", "dr-phase" + (done && !now ? " is-done" : (now ? " is-now" : "")));
-      add(row, el("span", "dr-phase-dot"), el("span", null, phase));
-      add(list, row);
-    });
-    if (c.receipt) {
-      var last = el("div", "dr-phase is-done");
-      add(last, el("span", "dr-phase-dot"), el("span", null,
-        c.receipt.outcome === "applied"
-          ? "Verified and receipted"
-          : "Verification failed, so the whole transaction was undone"));
-      add(list, last);
-    }
-    add(panel, list);
-
-    if (c.receipt) {
-      var dl = el("dl", "dr-facts");
-      add(dl, el("dt", null, "Receipt"), el("dd", null, c.receipt.id));
-      add(dl, el("dt", null, "When"), el("dd", null, c.receipt.at));
-      add(dl, el("dt", null, "From"), el("dd", null, c.receipt.source.name));
-      add(dl, el("dt", null, "Into"), el("dd", null, c.receipt.destination.name));
-      add(dl, el("dt", null, "Values applied"), el("dd", null, String(c.receipt.applied)));
-      add(dl, el("dt", null, "Restore point"), el("dd", null,
-        c.receipt.restorePoint.label + " · " + c.receipt.restorePoint.takenAt));
-      add(dl, el("dt", null, "Would call"), el("dd", null, c.receipt.realCall));
-      if (c.receipt.note) add(dl, el("dt", null, "Outcome"), el("dd", null, c.receipt.note));
-      add(panel, dl);
-      add(panel, el("div", "dr-panel-note", COPY.independence));
-
-      var acts = el("div", "dr-acts");
-      if (c.receipt.canRollback) {
-        var undo = button("dr-btn", "Undo this copy");
-        on(undo, "click", function () {
-          COPY.rollback(c.receipt.id);
-          c.receipt = COPY.receipts().filter(function (r) { return r.id === c.receipt.id; })[0] || c.receipt;
+  /* The index hands back facets as an ordered array of { id, label, count } — it has
+   * already decided the order and the human label, so the concept renders them rather
+   * than re-deriving either. */
+  function facetGroup(title, facets, selected, key) {
+    var g = el("div", "d5-facet");
+    g.appendChild(el("div", "d5-facet-head", esc(title)));
+    (facets || []).slice(0, 12).forEach(function (f) {
+      var b = button("d5-facet-item",
+        "<span>" + esc(f.label) + "</span><span class='d5-facet-n'>" + f.count + "</span>",
+        function () {
+          var list = ui.facets[key];
+          var at = list.indexOf(f.id);
+          if (at >= 0) list.splice(at, 1); else list.push(f.id);
           render();
-          shell.announce("The copy was undone. This Project is exactly as it was.");
         });
-        add(acts, undo);
-      }
-      var done = link({ kind: "home" }, "dr-btn is-primary");
-      done.textContent = "Done";
-      var again = link({ kind: "copy", step: "source" }, "dr-btn is-quiet");
-      again.textContent = "Copy from another Project";
-      on(again, "click", function () { ui.copy = null; });
-      add(acts, done, again);
-      add(panel, acts);
-    }
+      b.setAttribute("aria-pressed", selected.indexOf(f.id) >= 0 ? "true" : "false");
+      g.appendChild(b);
+    });
+    return g;
+  }
 
-    var receipts = COPY.receipts();
+  /* ------------------------------------------------------------------- copy */
+
+  function renderCopy(wrap, route) {
+    var c = ui.copy;
+    var head = el("header", "d5-pagehead");
+    head.appendChild(el("h2", "d5-pagehead-title", "Copy settings from another Project"));
+    head.appendChild(el("p", "d5-pagehead-purpose", CP.independence));
+    wrap.appendChild(head);
+
+    var box = el("div", "d5-copy");
+    var steps = el("div", "d5-steps");
+    ["Choose a source", "Choose what to copy", "Review", "Apply"].forEach(function (label, i) {
+      if (i) steps.appendChild(el("span", "d5-step-arrow", icon("chevronRight", 12)));
+      var s = el("div", "d5-step");
+      s.setAttribute("data-state", (i + 1) === c.step ? "current" : ((i + 1) < c.step ? "done" : "todo"));
+      s.appendChild(el("span", "d5-step-n", String(i + 1)));
+      s.appendChild(el("span", null, esc(label)));
+      steps.appendChild(s);
+    });
+    box.appendChild(steps);
+
+    if (c.step === 1) copyStepSource(box);
+    else if (c.step === 2) copyStepCategories(box);
+    else if (c.step === 3) copyStepReview(box);
+    else copyStepApply(box);
+
+    var receipts = CP.receipts();
     if (receipts.length) {
-      add(panel, el("div", "dr-block-title", "Earlier transactions"));
-      var box = el("div", "dr-list");
+      var hist = el("section", "d5-group");
+      hist.appendChild(el("div", "d5-secttitle", "Receipts"));
       receipts.forEach(function (r) {
-        var row = el("div", "dr-item");
-        add(row, add(el("div", "dr-item-head"),
-          el("div", "dr-item-name", r.source.name + " → " + r.destination.name),
-          chip(r.outcome === "applied" ? "Applied" : "Rolled back", r.outcome === "applied" ? "ok" : "attention")));
-        add(row, el("div", "dr-item-sub", r.at + " · " + count(r.applied, "value") + " · " + r.restorePoint.label));
-        add(box, row);
+        var row = el("div", "d5-row");
+        var main = el("div", "d5-row-main");
+        main.appendChild(el("div", "d5-row-title", esc("Copied from " + r.source.name + " · " + r.at)));
+        main.appendChild(el("p", "d5-row-desc", esc(
+          r.outcome === "applied" ? plural(r.applied, "value") + " applied. Restore point: " + r.restorePoint.label
+            : (r.note || "Rolled back."))));
+        row.appendChild(main);
+        var ctl = el("div", "d5-row-control");
+        if (r.canRollback) {
+          ctl.appendChild(button("d5-btn", "Roll back", function () {
+            CP.rollback(r.id);
+            MG.invalidate();
+            render();
+            shell.announce("The copy was rolled back. This Project is exactly as it was.");
+          }));
+        } else {
+          ctl.appendChild(el("span", "d5-tag", esc(r.outcome === "applied" ? "Applied" : "Rolled back")));
+        }
+        row.appendChild(ctl);
+        hist.appendChild(row);
       });
-      add(panel, box);
+      box.appendChild(hist);
     }
-    return panel;
+
+    wrap.appendChild(box);
   }
 
-  /* ============================================================== NOTICE */
-
-  function absentSurface(reason, quoted) {
-    var s = el("div", "dr-surface");
-    s.setAttribute("data-pm-surface", "notice");
-    var panel = el("div", "dr-panel");
-    add(panel, el("h2", null, "That link does not lead anywhere in this Project"));
-    add(panel, el("div", "dr-row-desc", reason));
-    var dl = el("dl", "dr-facts");
-    add(dl, el("dt", null, "The link"), el("dd", null, quoted));
-    add(dl, el("dt", null, "This Project"), el("dd", null, M.project.name + " · " + M.project.path));
-    add(panel, dl);
-    var acts = el("div", "dr-acts");
-    var home = link({ kind: "home" }, "dr-btn is-primary");
-    home.textContent = "Go to Settings Home";
-    var all = link({ kind: "all" }, "dr-btn");
-    all.textContent = "Search all settings";
-    add(acts, home, all);
-    add(panel, acts);
-    add(s, panel);
-    return s;
+  function copyStepSource(box) {
+    box.appendChild(el("div", "d5-secttitle", "Which Project should this one copy from?"));
+    CP.sources().forEach(function (s) {
+      var b = button("d5-src", null, function () {
+        ui.copy.source = s.id;
+        ui.copy.domains = M.domains.map(function (d) { return d.id; });
+        ui.copy.step = 2;
+        render();
+      });
+      b.setAttribute("aria-pressed", ui.copy.source === s.id ? "true" : "false");
+      var body = el("div");
+      body.appendChild(el("div", "d5-src-name", esc(s.name)));
+      body.appendChild(el("div", "d5-src-sub", esc(s.updated + " · " + s.note)));
+      b.appendChild(body);
+      b.appendChild(el("span", "d5-src-meta", plural(s.settings, "setting")));
+      box.appendChild(b);
+    });
+    box.appendChild(el("p", "d5-note", CP.secretPolicy()));
   }
 
-  /* =============================================================== RENDER */
+  function copyStepCategories(box) {
+    var chosen = ui.copy.domains || [];
+    box.appendChild(el("div", "d5-secttitle", "Which areas should come across?"));
+    var grid = el("div", "d5-cats");
+    CP.categories().forEach(function (cat) {
+      var picked = chosen.indexOf(cat.id) >= 0;
+      var b = button("d5-cat", null, function () {
+        var at = chosen.indexOf(cat.id);
+        if (at >= 0) chosen.splice(at, 1); else chosen.push(cat.id);
+        ui.copy.domains = chosen;
+        render();
+      });
+      b.setAttribute("aria-pressed", picked ? "true" : "false");
+      b.appendChild(el("span", "d5-cat-box", picked ? icon("check", 11) : ""));
+      var body = el("div");
+      body.appendChild(el("div", null, esc(cat.title)));
+      body.appendChild(el("div", "d5-src-sub", esc(cat.purpose)));
+      b.appendChild(body);
+      b.appendChild(el("span", "d5-cat-n", String(cat.count)));
+      grid.appendChild(b);
+    });
+    box.appendChild(grid);
 
-  function render() {
-    if (ui.suppress) return;
-    var route = RT.current();
-    release.releaseAll();
-
-    var resolved = RT.resolve(route);
-    var surface, fill = false;
-
-    if (route.malformed) {
-      RT.replace({ kind: "home", state: route.state });
-      return;
-    }
-
-    if (!resolved.ok) {
-      surface = absentSurface(resolved.reason, resolved.quoted);
-      setCrumbs([{ label: "Settings", dest: { kind: "home" } }, { label: "Broken link" }]);
-      setBack({ label: "Settings Home", dest: { kind: "home" } });
-      markRail(null);
-      titleEl.hidden = true;
-    } else if (route.kind === "home") {
-      surface = renderHome();
-      setCrumbs([{ label: "Settings" }]);
-      setBack(null);
-      markRail("home");
-      titleEl.hidden = false;
-    } else if (route.kind === "domain" && route.pageId) {
-      var page = M.page(route.pageId);
-      var domain = M.domain(page.domainId);
-      surface = renderPage(route);
-      setCrumbs([
-        { label: "Settings", dest: { kind: "home" } },
-        { label: domain.title, dest: { kind: "domain", domainId: domain.id } },
-        { label: page.title }
-      ]);
-      setBack({ label: domain.title, dest: { kind: "domain", domainId: domain.id } });
-      markRail(domain.id);
-      titleEl.hidden = true;
-    } else if (route.kind === "domain") {
-      surface = renderDomain(route.domainId);
-      setCrumbs([{ label: "Settings", dest: { kind: "home" } }, { label: M.domain(route.domainId).title }]);
-      setBack({ label: "Settings Home", dest: { kind: "home" } });
-      markRail(route.domainId);
-      titleEl.hidden = true;
-    } else if (route.kind === "manager") {
-      surface = openManager(route);
-      var family = M.familyOf(route.managerId);
-      var mdomain = family && family.domainId ? M.domain(family.domainId) : null;
-      var record = MGR.record(route.managerId);
-      var crumbs = [{ label: "Settings", dest: { kind: "home" } }];
-      if (mdomain) crumbs.push({ label: mdomain.title, dest: { kind: "domain", domainId: mdomain.id } });
-      crumbs.push({ label: record.title || family.family });
-      if (route.objectId) {
-        var obj = objectsOf(route.managerId).objects[route.objectId];
-        if (obj) crumbs.push({ label: obj.label });
-      }
-      setCrumbs(crumbs);
-      setBack(mdomain
-        ? { label: mdomain.title, dest: { kind: "domain", domainId: mdomain.id } }
-        : { label: "Settings Home", dest: { kind: "home" } });
-      markRail(mdomain ? mdomain.id : null);
-      titleEl.hidden = true;
-      fill = true;
-    } else if (route.kind === "all") {
-      surface = renderAll(route);
-      setCrumbs([{ label: "Settings", dest: { kind: "home" } }, { label: "All settings" }]);
-      setBack({ label: "Settings Home", dest: { kind: "home" } });
-      markRail("all");
-      titleEl.hidden = true;
-      fill = true;
-    } else if (route.kind === "copy") {
-      surface = renderCopy(route);
-      setCrumbs([{ label: "Settings", dest: { kind: "home" } }, { label: "Copy from another Project" }]);
-      setBack({ label: "Settings Home", dest: { kind: "home" } });
-      markRail("copy");
-      titleEl.hidden = true;
-    } else if (route.kind === "query") {
-      surface = renderSearchSurface(route);
-      setCrumbs([{ label: "Settings", dest: { kind: "home" } }, { label: "Search" }]);
-      setBack({ label: "Settings Home", dest: { kind: "home" } });
-      markRail(null);
-      titleEl.hidden = true;
-      searchInput.value = route.query || "";
-      ui.query = route.query || "";
-      ui.selectedResult = route.resultId || ui.selectedResult;
-      runSearch();
-    } else {
-      surface = renderHome();
-      setCrumbs([{ label: "Settings" }]);
-      setBack(null);
-      markRail("home");
-      titleEl.hidden = false;
-    }
-
-    if (route.kind !== "query" && ui.dropOpen) closeDrop();
-
-    canvasEl.setAttribute("data-fill", fill ? "1" : "0");
-    surface.classList.add(ui.back ? "dr-enter-back" : "dr-enter");
-    if (ui.transfer && surface.querySelector(".dr-transfer")) {
-      var head = surface.querySelector(".dr-transfer");
-      head.style.setProperty("--dr-from-x", ui.transfer.x + "px");
-      head.style.setProperty("--dr-from-y", ui.transfer.y + "px");
-    }
-    clear(canvasEl);
-    add(canvasEl, surface);
-    ui.transfer = null;
-    ui.back = false;
-    root.setAttribute("data-surface", route.kind === "home" ? "home" : route.kind);
-
-    applyArrival(route);
-    store.set({ route: RT.href(route), stateFixture: RT.state() });
-  }
-
-  /* One arrival path for a deep link and for a chosen search result: load, open,
-   * select, scroll, focus, then one calm ring that fades. */
-  function applyArrival(route) {
-    clearLocator();
-    if (route.kind === "domain" && route.settingId) {
-      var section = M.setting(route.settingId);
-      if (section && !ui.openSections[section.sectionId]) {
-        /* A row that is only reachable behind a disclosure is still reachable:
-         * the group that holds it opens itself when a link names it. */
-        ui.openSections[section.sectionId] = true;
-        var block = canvasEl.querySelector('[data-pm-section="' + section.sectionId + '"]');
-        if (block) {
-          var fresh = renderSection(M.section(section.sectionId), route);
-          block.parentNode.replaceChild(fresh, block);
-        }
-      }
-      var row = canvasEl.querySelector('[data-pm-row="' + route.settingId + '"]');
-      if (row) {
-        setLocator(row);
-        var control = row.querySelector("[data-pm-control]:not([disabled])");
-        try { (control || row).focus({ preventScroll: true }); } catch (e) { (control || row).focus(); }
-        scrollIntoCanvas(row);
-        shell.announce(M.setting(route.settingId).label + ", found in " + pathOf(M.setting(route.settingId)) + ".");
-        return;
-      }
-    }
-    if (route.kind === "manager" && route.objectId) {
-      var node = canvasEl.querySelector('[data-pm-object="' + route.objectId + '"]');
-      if (node) {
-        setLocator(node);
-        scrollIntoScroller(node);
-        if (route.rowId) {
-          var deep = canvasEl.querySelector('[data-row-id="' + route.rowId + '"]');
-          if (deep) { deep.classList.add("dr-arrive"); scrollIntoScroller(deep); }
-        }
-        return;
-      }
-    }
-    if (route.kind === "manager") {
-      var title = canvasEl.querySelector(".dr-detail-title");
-      if (title) setLocator(title);
-      return;
-    }
-    canvasEl.scrollTop = 0;
-  }
-
-  function clearLocator() {
-    var old = document.querySelectorAll("[data-pm-locator]");
-    for (var i = 0; i < old.length; i++) {
-      old[i].removeAttribute("data-pm-locator");
-      old[i].classList.remove("dr-arrive");
-    }
-  }
-
-  function setLocator(node) {
-    node.setAttribute("data-pm-locator", "1");
-    node.classList.remove("dr-arrive");
-    /* Reading offsetWidth restarts the animation; without it a second arrival
-     * on the same row would show nothing at all. */
-    void node.offsetWidth;
-    node.classList.add("dr-arrive");
-  }
-
-  function scrollIntoCanvas(node) {
-    var box = node.getBoundingClientRect();
-    var frame = canvasEl.getBoundingClientRect();
-    var target = canvasEl.scrollTop + (box.top - frame.top) - Math.max(0, (frame.height - box.height) / 2);
-    canvasEl.scrollTop = Math.max(0, target);
-  }
-
-  function scrollIntoScroller(node) {
-    var scroller = node.parentNode;
-    while (scroller && scroller !== canvasEl) {
-      var style = window.getComputedStyle(scroller);
-      if (style.overflowY === "auto" || style.overflowY === "scroll") break;
-      scroller = scroller.parentNode;
-    }
-    if (!scroller || scroller === canvasEl) { scrollIntoCanvas(node); return; }
-    var box = node.getBoundingClientRect();
-    var frame = scroller.getBoundingClientRect();
-    var target = scroller.scrollTop + (box.top - frame.top) - Math.max(0, (frame.height - box.height) / 2);
-    scroller.scrollTop = Math.max(0, target);
-  }
-
-  /* ============================================================== ESCAPE */
-
-  /* Popup, then drawer or pushed pane, then one level out, and it stops at
-   * Settings Home. Escape never closes Settings. */
-  function onEscape() {
-    if (ui.dropOpen) { closeDrop(); searchInput.focus(); return; }
-    if (ui.drawer) { setDrawer(false); return; }
-    var route = RT.current();
-    if (root.getAttribute("data-mode") === "narrow" && route.kind === "manager" && ui.pane === "detail") {
-      ui.pane = "roster";
+    var acts = el("div", "d5-actions");
+    acts.appendChild(button("d5-btn", "Back", function () { ui.copy.step = 1; render(); }));
+    var next = button("d5-btn d5-btn--primary", "Preview the changes", function () {
+      ui.copy.preview = CP.preview(ui.copy.source, chosen);
+      ui.copy.step = 3;
       render();
-      return;
-    }
-    ui.back = true;
-    if (route.kind === "domain" && route.pageId) {
-      go({ kind: "domain", domainId: route.domainId });
-    } else if (route.kind === "manager") {
-      var family = M.familyOf(route.managerId);
-      if (route.objectId) go({ managerId: route.managerId });
-      else if (family && family.domainId) go({ kind: "domain", domainId: family.domainId });
-      else go({ kind: "home" });
-    } else if (route.kind !== "home") {
-      go({ kind: "home" });
-    } else {
-      ui.back = false;
-    }
+    });
+    next.disabled = !chosen.length;
+    acts.appendChild(next);
+    box.appendChild(acts);
   }
 
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") { onEscape(); return; }
-    if ((e.ctrlKey || e.metaKey) && (e.key === "k" || e.key === "K")) {
-      e.preventDefault();
-      searchInput.focus();
-      searchInput.select();
+  function copyStepReview(box) {
+    var p = ui.copy.preview;
+    if (!p) { ui.copy.step = 1; return; }
+
+    var tiles = el("div", "d5-tiles");
+    [["Will be added", p.counts.additions], ["Will be replaced", p.counts.replacements],
+     ["Already the same", p.counts.unchanged], ["Account references re-pointed", p.counts.references],
+     ["Cannot be copied", p.counts.unavailable + p.counts.conflicts]].forEach(function (pair) {
+      var t = el("div", "d5-tile");
+      t.appendChild(el("div", "d5-tile-v", String(pair[1])));
+      t.appendChild(el("div", "d5-tile-k", esc(pair[0])));
+      tiles.appendChild(t);
+    });
+    box.appendChild(tiles);
+
+    box.appendChild(el("div", "d5-secttitle", "What will change"));
+    var changes = p.items.filter(function (i) {
+      return i.outcome === "addition" || i.outcome === "replacement" || i.outcome === "reference";
+    });
+    var listBox = el("div", "d5-alllist d5-scroll");
+    listBox.style.height = "320px";
+    changes.slice(0, 400).forEach(function (item) {
+      var row = el("div", "d5-diffrow");
+      var lab = el("div", "d5-diff-label");
+      lab.appendChild(el("div", null, esc(item.label)));
+      lab.appendChild(el("div", "d5-diff-path", esc(item.path)));
+      row.appendChild(lab);
+      row.appendChild(el("div", "d5-diff-from", esc(String(item.current === "" ? "not set" : item.current))));
+      row.appendChild(el("div", "d5-diff-to", esc(String(item.incoming))));
+      listBox.appendChild(row);
+    });
+    box.appendChild(listBox);
+
+    var excluded = el("div", "d5-note");
+    excluded.appendChild(el("div", "d5-row-title", "What is not copied"));
+    p.excluded.forEach(function (x) {
+      excluded.appendChild(el("p", "d5-row-desc", esc(x.label + ": " + x.count + (x.note ? " — " + x.note : ""))));
+    });
+    box.appendChild(excluded);
+
+    var acts = el("div", "d5-actions");
+    acts.appendChild(button("d5-btn", "Back", function () { ui.copy.step = 2; render(); }));
+    acts.appendChild(button("d5-btn d5-btn--primary", "Take a restore point and copy", function () {
+      ui.copy.run = CP.apply(p);
+      ui.copy.step = 4;
+      render();
+    }));
+    box.appendChild(acts);
+  }
+
+  function copyStepApply(box) {
+    var run = ui.copy.run;
+    if (!run) { ui.copy.step = 1; return; }
+    var op = run.get();
+
+    box.appendChild(el("div", "d5-secttitle", "Applying"));
+    run.steps.forEach(function (phase, i) {
+      var row = el("div", "d5-phase");
+      row.appendChild(el("span", null, esc(phase)));
+      row.appendChild(el("span", "d5-phase-state", esc(op.phase === phase ? window.PMWork.stateWord(op.state) : (i < run.steps.indexOf(op.phase) || op.terminal ? "done" : "waiting"))));
+      box.appendChild(row);
+    });
+
+    if (op.progress_kind === "fraction" && op.total) {
+      var bar = el("div", "d5-progress");
+      var fill = el("i");
+      fill.style.width = Math.round((op.completed / op.total) * 100) + "%";
+      bar.appendChild(fill);
+      box.appendChild(bar);
+      box.appendChild(el("p", "d5-row-desc", op.completed + " of " + op.total + " values"));
+    } else {
+      box.appendChild(el("p", "d5-row-desc", esc(window.PMWork.stateWord(op.state) + (op.wait_reason ? " — " + op.wait_reason : ""))));
     }
-  });
 
-  document.addEventListener("mousedown", function (e) {
-    if (!ui.dropOpen) return;
-    if (topEl.contains(e.target)) return;
-    closeDrop();
-  });
+    var acts = el("div", "d5-actions");
+    if (!ui.copy.receipt) {
+      acts.appendChild(button("d5-btn d5-btn--primary", "Continue", function () {
+        var out = run.next();
+        if (out.done) { ui.copy.receipt = out.receipt; MG.invalidate(); }
+        render();
+      }));
+      acts.appendChild(button("d5-btn", "Run the rest", function () {
+        var out = run.run();
+        ui.copy.receipt = out.receipt;
+        MG.invalidate();
+        render();
+      }));
+      acts.appendChild(button("d5-btn", "Cancel", function () {
+        run.cancel(); ui.copy = { step: 1, source: null, domains: null, preview: null, run: null, receipt: null }; render();
+      }));
+    } else {
+      var r = ui.copy.receipt;
+      var note = el("div", "d5-note");
+      note.appendChild(el("div", "d5-row-title", r.outcome === "applied" ? "Copied" : "Rolled back"));
+      note.appendChild(el("p", "d5-row-desc", esc(
+        r.outcome === "applied"
+          ? plural(r.applied, "value") + " were applied to " + M.project.name + ". The restore point taken first is " + r.restorePoint.label + "."
+          : r.note)));
+      note.appendChild(el("p", "d5-row-desc", esc("The two Projects are independent from here. Nothing in " + r.source.name + " will reach this Project again.")));
+      box.appendChild(note);
+      acts.appendChild(button("d5-btn", "Done", function () {
+        ui.copy = { step: 1, source: null, domains: null, preview: null, run: null, receipt: null };
+        RT.go({ kind: "home" });
+      }));
+      if (r.canRollback) {
+        acts.appendChild(button("d5-btn", "Roll back", function () {
+          CP.rollback(r.id); MG.invalidate();
+          ui.copy = { step: 1, source: null, domains: null, preview: null, run: null, receipt: null };
+          render();
+        }));
+      }
+    }
+    box.appendChild(acts);
+  }
 
-  /* ================================================================ START */
+  /* --------------------------------------------------------------- arrivals */
 
-  buildChrome();
-  applyMode();
+  /* The highlight starts at the row that was landed on, is applied once, and never
+   * blinks. Focus moves with it so a keyboard reader is in the same place as the eye. */
+  function revealPending() {
+    var pending = ui.pending;
+    var route = RT.current();
+    ui.pending = null;
 
-  RT.onChange(function () { render(); });
+    var targetId = null;
+    if (pending && pending.result) {
+      var d = pending.result.destination;
+      targetId = d.settingId || d.objectId || d.sectionId || d.managerId;
+    } else if (route.settingId) targetId = route.settingId;
+    else if (route.objectId) targetId = route.objectId;
+    /* `01_CORE_ARCHITECTURE` § Settings Workspace item 3: "The requested
+     * subcategory/setting/manager scrolls into view." A section-level link names no
+     * row, so without this branch it landed at the top of the page and the group the
+     * reader asked for sat a screen and a half below the fold. */
+    else if (route.sectionId) targetId = route.sectionId;
+    if (!targetId) return;
 
-  if (RT.current().malformed) RT.replace({ kind: "home" });
-  render();
+    var node = stageInner.querySelector('[data-pm-row="' + cssEscape(targetId) + '"]') ||
+      stageInner.querySelector('[data-pm-object="' + cssEscape(targetId) + '"]') ||
+      stageInner.querySelector('[data-pm-section="' + cssEscape(targetId) + '"]') ||
+      stageInner.querySelector('[data-pm-manager="' + cssEscape(targetId) + '"]');
+    if (!node) return;
 
-  /* The index is built once, deliberately, after the first screen exists: the
-   * rail and the directory need no index, and paying for it here keeps the
-   * first search instant without hydrating a single manager. */
-  window.setTimeout(function () { IX.ensure(); }, 0);
+    Array.prototype.forEach.call(stageInner.querySelectorAll("[data-pm-locator]"), function (n) {
+      n.removeAttribute("data-pm-locator");
+    });
+    node.setAttribute("data-pm-locator", "1");
+    /* A jump asked for this group: hold the on-page index on it until the reader
+     * scrolls, rather than letting the measurement name a neighbour. */
+    if (window.PM2Spy && window.PM2Spy.pinNode) window.PM2Spy.pinNode(node);
+
+    /* The scroll is instant, not smoothed. Every arrival follows a full re-render,
+     * so a smooth scroll would animate from the top of a page the reader never saw
+     * — motion that explains nothing and leaves the row off-screen while it runs.
+     * The locator highlight is what carries the explanation here. */
+    var box = node.getBoundingClientRect();
+    var stageBox = stageEl.getBoundingClientRect();
+    var delta = box.top - stageBox.top - Math.max(24, (stageBox.height - box.height) / 3);
+    if (Math.abs(delta) > 4) stageEl.scrollTop += delta;
+
+    var focusTarget = node.querySelector("[data-pm-control]") || node;
+    if (focusTarget.focus) focusTarget.focus({ preventScroll: true });
+
+    if (pending && pending.result) {
+      var via = el("div", "d5-foundvia");
+      via.innerHTML = icon("search", 12) + "<span>Found from your search for &ldquo;" + esc(pending.result.query || ui.query) + "&rdquo;</span>";
+      if (node.parentNode) node.parentNode.insertBefore(via, node);
+    }
+    shell.announce("Opened " + (node.textContent || "").replace(/\s+/g, " ").trim().slice(0, 80));
+  }
+
+  function cssEscape(v) {
+    if (window.CSS && window.CSS.escape) return window.CSS.escape(v);
+    return String(v).replace(/([^\w-])/g, "\\$1");
+  }
+
+  /* -------------------------------------------------------------- keyboard */
+
+  /* Escape closes the innermost thing and stops at Settings Home. It never closes
+   * Settings, because a reader pressing Escape twice should not lose the whole page. */
+  function onKeydown(e) {
+    if (e.key !== "Escape") return;
+    if (ui.dropOpen) { ui.dropOpen = false; render(); e.stopPropagation(); return; }
+    if (narrow && ui.railOpen) { ui.railOpen = false; render(); e.stopPropagation(); return; }
+    var openDetail = Object.keys(ui.openDetails).filter(function (k) { return ui.openDetails[k]; });
+    if (openDetail.length) { ui.openDetails = {}; render(); e.stopPropagation(); return; }
+    var route = RT.current();
+    if (route.kind === "home") return;
+    var back = backTarget(route);
+    RT.go(back.dest);
+    e.stopPropagation();
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
 })();

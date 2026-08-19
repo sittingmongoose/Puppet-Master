@@ -76,6 +76,22 @@
     return "[" + name + '="' + String(value).replace(/\\/g, "\\\\").replace(/"/g, '\\"') + '"]';
   }
 
+  /* The archetype is an internal contract word. "Resource roster and detail sheet" is
+   * how the spec describes a shape to a renderer, not how a reader should be told what
+   * a page is — capitalising it just puts developer vocabulary on screen. */
+  var ARCHETYPE_WORD = {
+    "resource roster and detail sheet": "List and detail",
+    "inventory catalogue": "Catalogue",
+    "preference document": "Settings",
+    "read-only health projection": "Read-only",
+    "preview and confirmation transaction": "Transaction",
+    "setup or repair sequence": "Setup",
+    "diagnostic drawer": "Diagnostics",
+    "named owner insertion point": "Separate owner"
+  };
+
+  function archetypeWord(a) { return ARCHETYPE_WORD[a] || "Settings"; }
+
   function humanise(id) {
     return String(id || "")
       .replace(/[-_.]+/g, " ")
@@ -136,6 +152,7 @@
     mgrFilter: {},
     all: { domains: [], kinds: [], exposures: [], states: [], changed: false, attention: false, text: "" },
     allScroll: 0,
+    allSig: "",
     copy: { sourceId: null, domainIds: null, preview: null, runner: null, log: [], receipt: null },
     drafts: {},
     invalid: {},
@@ -167,6 +184,11 @@
     onLayout: function () { measure(); },
     onWidthMode: function () { measure(); }
   });
+  /* The shell's own Demo state select and Reset belong to the fixture list of
+   * concepts 01-04. This concept ships its own, so the stale pair is removed
+   * rather than left offering situations it does not implement. */
+  PM2States.removeShellControl(shell);
+
 
   /* ============================================================ the chrome */
 
@@ -174,7 +196,6 @@
    * place gets thrown away; here only the current marker and the crumb move. */
   function buildChrome() {
     root = el("div", "ed");
-    root.setAttribute("data-pm-surface", "home");
     root.setAttribute("data-ed-width", "normal");
     root.setAttribute("data-ed-dir", "forward");
 
@@ -315,14 +336,19 @@
 
     /* --------------------------------------------------------- crumb strip */
     crumbEl = el("div", "ed-crumbs");
+    /* The rule that runs under the crumbs is full width; what it carries is held to
+     * the same measure as the sheet below it, so the column reads as one page
+     * rather than as a masthead stretched over a narrower body. */
+    var crumbInner = el("div", "ed-crumbs-inner");
     backEl = btn("ed-back", ICON("chevronLeft", 14));
     backEl.setAttribute("data-pm-back", "1");
     backEl.appendChild(text("span", "ed-back-text", "Back"));
     on(backEl, "click", function () { goUp(); });
-    crumbEl.appendChild(backEl);
+    crumbInner.appendChild(backEl);
     var crumbList = el("div", "ed-crumb-list");
     crumbList.setAttribute("data-pm-breadcrumb", "1");
-    crumbEl.appendChild(crumbList);
+    crumbInner.appendChild(crumbList);
+    crumbEl.appendChild(crumbInner);
     col.appendChild(crumbEl);
 
     scrollEl = el("div", "ed-scroll");
@@ -616,17 +642,21 @@
   /* ================================================================= render */
 
   function render() {
+    if (window.PM2Spy) window.PM2Spy.release();
     var r = ui.route;
     var kind = surfaceKindOf(r);
-    root.setAttribute("data-pm-surface", kind);
     root.setAttribute("data-ed-dir", ui.dir);
-    if (kind === "manager" && r.managerId) root.setAttribute("data-pm-manager", r.managerId);
-    else root.removeAttribute("data-pm-manager");
 
     updateRail(r, kind);
     updateCrumbs(r, kind);
 
     var sheet = el("div", "ed-sheet");
+    /* The surface marker sits on the sheet rather than on the whole application. The
+     * rail is chrome that never changes; conflating it with the surface inflated every
+     * node and text measurement taken of a manager and made "does the rail overlap the
+     * content" compare the content against itself. */
+    sheet.setAttribute("data-pm-surface", kind);
+    if (kind === "manager" && r.managerId) sheet.setAttribute("data-pm-manager", r.managerId);
     if (kind === "notice") renderAbsent(sheet);
     else if (kind === "manager") renderManagerSurface(sheet, r);
     else if (kind === "page") renderPage(sheet, r);
@@ -706,7 +736,11 @@
     });
 
     if (kind === "home") {
+      /* Home is the top of Settings, so there is nothing to go back to and the
+       * control says nothing rather than naming where it last came from. */
       backEl.hidden = true;
+      backEl.querySelector(".ed-back-text").textContent = "Back";
+      backEl.removeAttribute("title");
     } else {
       backEl.hidden = false;
       backEl.querySelector(".ed-back-text").textContent = "Back to " + parentLabel(r);
@@ -729,6 +763,11 @@
     if (r.kind === "domain" && r.settingId) {
       target = scrollEl.querySelector(attrSel("data-pm-row", r.settingId));
       if (target) focusEl = target.querySelector("[data-pm-control]") || target;
+    } else if (r.kind === "domain" && r.sectionId) {
+      /* `01_CORE_ARCHITECTURE` § Settings Workspace item 3: the requested
+       * SUBCATEGORY scrolls into view too. A section link names no row, so without
+       * this the group the reader asked for stayed below the fold. */
+      target = scrollEl.querySelector(attrSel("data-pm-section", r.sectionId));
     } else if (r.kind === "manager" && r.objectId) {
       target = root.querySelector(attrSel("data-pm-object", r.objectId));
       if (r.rowId) secondary = root.querySelector(attrSel("data-ed-rowid", r.rowId));
@@ -736,6 +775,9 @@
 
     if (!target) return;
     target.setAttribute("data-pm-locator", "1");
+    /* A jump asked for this group: hold the on-page index on it until the reader
+     * scrolls, rather than letting the measurement name a neighbour. */
+    if (window.PM2Spy && window.PM2Spy.pinNode) window.PM2Spy.pinNode(target);
     if (focusEl && focusEl.focus) focusEl.focus({ preventScroll: true });
     scrollNear(target);
     if (secondary) {
@@ -745,9 +787,26 @@
     }
   }
 
+  /* Instant, and only the surfaces that are meant to scroll. A smooth scroll would
+   * still be travelling when the reveal is read, and scrollIntoView would also drag
+   * the window itself, which moves the shell out from under the reader. Each
+   * scrolling ancestor up to the sheet is centred on the target in turn. */
   function scrollNear(node) {
-    if (!node || !node.scrollIntoView) return;
-    node.scrollIntoView({ block: "center", inline: "nearest" });
+    if (!node || !node.getBoundingClientRect) return;
+    var parent = node.parentNode;
+    var guard = 0;
+    while (parent && parent.nodeType === 1 && guard < 24) {
+      guard += 1;
+      var style = window.getComputedStyle(parent);
+      var flow = style.overflowY;
+      if ((flow === "auto" || flow === "scroll") && parent.scrollHeight > parent.clientHeight + 1) {
+        var pRect = parent.getBoundingClientRect();
+        var nRect = node.getBoundingClientRect();
+        parent.scrollTop += (nRect.top + nRect.height / 2) - (pRect.top + pRect.height / 2);
+      }
+      if (parent === scrollEl) return;
+      parent = parent.parentNode;
+    }
   }
 
   /* ========================================================== shared pieces */
@@ -895,10 +954,10 @@
 
     /* Needs attention: a short list, never a wall, and each item names the place
      * that can fix it rather than describing it twice. */
-    var attention = FX.attention() || [];
+    var attention = FX.attentionFlat() || [];
     var att = el("div", "ed-att");
     var attHead = el("div", "ed-block-head");
-    attHead.appendChild(text("div", "ed-block-title", "Needs attention"));
+    attHead.appendChild(text("div", "ed-block-title", "Notices"));
     attHead.appendChild(text("div", "ed-block-note",
       attention.length ? attention.length + " " + plural(attention.length, "item") : "Nothing right now"));
     att.appendChild(attHead);
@@ -909,6 +968,10 @@
           : "Nothing in this Project is waiting on you."));
     } else {
       attention.forEach(function (item) {
+        /* `01_CORE_ARCHITECTURE` § Notices: three separated runs. What is broken, what
+         * is half-finished and what is only advice are read differently, and one toned
+         * list makes an unfinished setup look like a fault. */
+        if (item.groupLabel) att.appendChild(text("div", "ed-att-group", item.groupLabel));
         var b = btn("ed-att-item", "");
         var ic = el("div", "ed-att-icon", ICON(STATUS_ICON(item.tone) || "dot", 14));
         ic.setAttribute("data-tone", item.tone);
@@ -1121,6 +1184,7 @@
     sheet.appendChild(nested);
 
     var shownTotal = 0;
+    var __spySections = [];
     page.sections.forEach(function (sec) {
       var all = M.rowsInSection(sec.id);
       var visible = all.filter(function (rec) { return M.exposureRank(rec.exposure) <= limit; });
@@ -1129,6 +1193,7 @@
       var item = btn("ed-idx-item", "");
       item.appendChild(text("span", "ed-idx-text", sec.title));
       item.appendChild(text("span", "ed-idx-count", String(visible.length)));
+      item.setAttribute("data-onpage", sec.id);
       if (r.sectionId === sec.id) item.classList.add("is-current");
       on(item, "click", function () {
         var node = body.querySelector(attrSel("data-pm-section", sec.id));
@@ -1155,6 +1220,26 @@
         visible.forEach(function (rec) { secEl.appendChild(settingRow(rec)); });
       }
       body.appendChild(secEl);
+      __spySections.push({ id: sec.id, title: sec.title, pageId: page.id, el: secEl });
+    });
+
+    /* The index existed already; what it lacked was any idea where the reader actually
+     * is. `01_CORE_ARCHITECTURE` item 4 and the navigation video both require the
+     * highlight to move with the scroll, not only with a click. */
+    if (window.PM2Spy && __spySections.length) window.requestAnimationFrame(function () {
+      window.PM2Spy.bind({
+        from: __spySections[0].el,
+        sections: __spySections,
+        inset: 96,
+        onActive: function (id) {
+          var items = idxScroll.querySelectorAll("[data-onpage]");
+          for (var i = 0; i < items.length; i++) {
+            var isOn = items[i].getAttribute("data-onpage") === id;
+            if (isOn) items[i].classList.add("is-current"); else items[i].classList.remove("is-current");
+            items[i].setAttribute("aria-current", isOn ? "true" : "false");
+          }
+        }
+      });
     });
 
     if (shownTotal > VIRT.THRESHOLD) {
@@ -1333,22 +1418,13 @@
     }
 
     if (rec.kind === "select" || rec.kind === "radio") {
-      var sel = el("select", "ed-select");
-      sel.setAttribute("aria-label", rec.label);
-      var opts = rec.options && rec.options.length ? rec.options : [rec.state.defaultValue];
-      opts.forEach(function (o) {
-        var opt = document.createElement("option");
-        opt.value = String(o);
-        opt.textContent = valueWords(o);
-        sel.appendChild(opt);
-      });
-      sel.value = String(value);
-      on(sel, "change", function () {
-        store.setValue(rec.id, sel.value);
+      var opts = (rec.options && rec.options.length ? rec.options : [rec.state.defaultValue]).map(String);
+      var pick = pmPicker(rec, opts, String(value), function (v) {
+        store.setValue(rec.id, v);
         replaceRow(row, rec);
-        announce(rec.label + " set to " + valueWords(sel.value) + ".");
+        announce(rec.label + " set to " + valueWords(v) + ".");
       });
-      return markControl(sel, rec);
+      return pick;
     }
 
     if (rec.kind === "number" || rec.kind === "slider") {
@@ -1607,11 +1683,14 @@
     });
     facetScroll.appendChild(clearBtn);
 
+    /* Committed on Enter or on leaving the field, not on every keystroke: the
+     * filter is part of the route, and rewriting the route mid-word would rebuild
+     * this field and take the caret with it. */
     var filter = el("input", "ed-input");
     filter.type = "text";
     filter.value = f.text;
-    filter.setAttribute("placeholder", "Filter this index");
-    filter.setAttribute("aria-label", "Filter the index");
+    filter.setAttribute("placeholder", "Filter this index, then press Enter");
+    filter.setAttribute("aria-label", "Filter the index. Press Enter to apply.");
     on(filter, "change", function () {
       ui.all.text = filter.value;
       replace({ kind: "all", facet: facetToRoute() });
@@ -1646,8 +1725,18 @@
       ui.allScroll = viewport.scrollTop;
       paint();
     });
+
+    /* Where the reader had got to survives a re-render — a value changing, a
+     * situation being chosen, a pane collapsing at a narrow width. Changing what
+     * the list contains is the one thing that honestly starts again at the top. */
+    var facetSig = facetToRoute();
+    if (ui.allSig !== facetSig) ui.allScroll = 0;
     paint();
-    window.setTimeout(paint, 0);
+    window.setTimeout(function () {
+      if (ui.allScroll) viewport.scrollTop = ui.allScroll;
+      paint();
+      ui.allSig = facetSig;
+    }, 0);
 
     if (!rows.length) {
       body.appendChild(text("div", "ed-empty-line",
@@ -2058,7 +2147,7 @@
       eyebrow: fam.domainId ? (M.domain(fam.domainId) || {}).title : "Settings",
       title: spec.title,
       lede: spec.purpose,
-      meta: [humanise(archetype)]
+      meta: [archetypeWord(archetype)]
     });
     situationNote(sheet);
 
@@ -2331,34 +2420,48 @@
     var roster = el("div", "ed-roster");
     if (tab.section && tab.section.summary) roster.appendChild(text("div", "ed-quiet", tab.section.summary));
 
-    var filterText = (ui.mgrFilter[spec.id] || "").toLowerCase();
     if (entries.length > 12) {
       var filter = el("input", "ed-input ed-roster-filter");
       filter.type = "text";
       filter.value = ui.mgrFilter[spec.id] || "";
       filter.setAttribute("placeholder", "Filter this list");
       filter.setAttribute("aria-label", "Filter " + tab.label);
-      on(filter, "input", function () { ui.mgrFilter[spec.id] = filter.value; render(); });
+      /* Only the list below is repainted while someone types. Re-rendering the
+       * whole sheet on a keystroke would rebuild this very field and throw the
+       * caret away between one letter and the next. */
+      on(filter, "input", function () {
+        ui.mgrFilter[spec.id] = filter.value;
+        paintRoster();
+      });
       roster.appendChild(filter);
     }
 
-    var shown = entries.filter(function (e) {
-      if (!filterText) return true;
-      var name = (e.item && e.item.name) || (e.rec && e.rec.label) || e.objectId;
-      return String(name).toLowerCase().indexOf(filterText) >= 0;
-    });
-
     var scroll = el("div", "ed-roster-scroll");
+
     /* Windowed once the roster passes the shared threshold; the volume fixture
      * puts several hundred installations and models through this same list. */
-    var cap = VIRT.shouldVirtualize(shown.length) ? 40 : shown.length;
-    shown.slice(0, cap).forEach(function (entry) {
-      scroll.appendChild(rosterRow(spec, entry, selected));
-    });
-    if (shown.length > cap) {
-      scroll.appendChild(text("div", "ed-roster-more",
-        "Showing " + cap + " of " + shown.length + ". Filter above to reach the rest."));
+    function paintRoster() {
+      var filterText = (ui.mgrFilter[spec.id] || "").toLowerCase();
+      var shown = entries.filter(function (e) {
+        if (!filterText) return true;
+        var name = (e.item && e.item.name) || (e.rec && e.rec.label) || e.objectId;
+        return String(name).toLowerCase().indexOf(filterText) >= 0;
+      });
+      scroll.innerHTML = "";
+      var cap = VIRT.shouldVirtualize(shown.length) ? 40 : shown.length;
+      shown.slice(0, cap).forEach(function (entry) {
+        scroll.appendChild(rosterRow(spec, entry, selected));
+      });
+      if (!shown.length) {
+        scroll.appendChild(text("div", "ed-roster-more",
+          "Nothing in this list is called that. Clearing the filter brings the "
+          + entries.length + " entries back."));
+      } else if (shown.length > cap) {
+        scroll.appendChild(text("div", "ed-roster-more",
+          "Showing " + cap + " of " + shown.length + ". Filter above to reach the rest."));
+      }
     }
+    paintRoster();
     roster.appendChild(scroll);
     split.appendChild(roster);
 
@@ -2763,7 +2866,9 @@
     var out = null;
     (spec.sections || []).forEach(function (sec) {
       (sec.items || []).forEach(function (item) {
-        if (item.id === "prov-" + providerId) out = item;
+        /* Accept the provider's own id and the older prefixed form: a saved link
+         * written before the two vocabularies converged still has to land. */
+        if (item.id === providerId || item.id === "prov-" + providerId) out = item;
       });
     });
     return out;
@@ -3106,4 +3211,217 @@
   measure();
   window.setTimeout(measure, 60);
   window.setTimeout(measure, 240);
+
+  /* The Puppet Master Model/Mode selector idiom: a trigger carrying the current value,
+   * and a menu that hangs beneath it — or flips above when the row sits near the bottom
+   * of the page, which is what the model picker in the bottom bar does. Placement,
+   * layering and one-layer-at-a-time Escape come from PM2Menu; every pixel is this
+   * concept's own. */
+  function pmPicker(rec, options, value, onPick) {
+    var wrap = el("div", "ed-picker");
+    var trigger = document.createElement("button");
+    trigger.type = "button";
+    trigger.className = "ed-picker-trigger";
+    trigger.setAttribute("data-pm-control", rec.id);
+    trigger.setAttribute("aria-haspopup", "listbox");
+    trigger.setAttribute("aria-expanded", "false");
+    trigger.setAttribute("aria-label", rec.label);
+    var valueEl = document.createElement("span");
+    valueEl.className = "ed-picker-value";
+    valueEl.textContent = String(value === "" || value == null ? "Not set" : value);
+    trigger.appendChild(valueEl);
+    var chev = document.createElement("span");
+    chev.className = "ed-picker-chev";
+    chev.innerHTML = window.PMIcons.icon("chevronDown", 13);
+    trigger.appendChild(chev);
+    wrap.appendChild(trigger);
+
+    var panel = null;
+    var entry = null;
+    /* What the FIRST level shows: the options themselves, or one row per group when the
+     * list genuinely has two levels. Keyboard movement walks whichever of the two it is. */
+    var top = options;
+    var active = Math.max(0, options.indexOf(value));
+
+    function shut() {
+      if (panel && panel.parentNode) panel.parentNode.removeChild(panel);
+      panel = null; entry = null;
+      trigger.setAttribute("aria-expanded", "false");
+    }
+
+    function paint() {
+      if (!panel) return;
+      var rows = panel.querySelectorAll("[data-opt]");
+      for (var i = 0; i < rows.length; i++) {
+        rows[i].setAttribute("aria-selected", i === active ? "true" : "false");
+        if (i === active && rows[i].focus) rows[i].focus({ preventScroll: false });
+      }
+    }
+
+    function choose(v) {
+      window.PM2Menu.closeAll();
+      onPick(v === "Not set" ? "" : v);
+    }
+
+    /* One option row. The check mark is the only thing saying "this is the current
+     * value" — a menu that decorates every row stops telling you anything. */
+    function optionRow(o, i) {
+      var row = document.createElement("button");
+      row.type = "button";
+      row.className = "ed-menu-item";
+      row.setAttribute("role", "option");
+      row.setAttribute("data-opt", String(i));
+      row.setAttribute("aria-selected", o === value ? "true" : "false");
+      var mark = document.createElement("span");
+      mark.className = "ed-menu-check";
+      mark.innerHTML = o === value ? window.PMIcons.icon("check", 12) : "";
+      row.appendChild(mark);
+      var lab = document.createElement("span");
+      lab.className = "ed-menu-label";
+      lab.textContent = String(o);
+      row.appendChild(lab);
+      row.addEventListener("click", function () { choose(o); });
+      return row;
+    }
+
+    /* A submenu parent. `07_THEME_MOTION_RESPONSIVE_AND_SLINT` asks for the Model/Mode
+     * selector family including submenus: the second level opens BESIDE the panel on its
+     * own layer, so the first level stays visible and Escape closes the second only. */
+    function groupRow(g, i) {
+      var row = document.createElement("button");
+      row.type = "button";
+      row.className = "ed-menu-item is-parent";
+      row.setAttribute("role", "option");
+      row.setAttribute("data-opt", String(i));
+      row.setAttribute("aria-haspopup", "menu");
+      row.setAttribute("aria-expanded", "false");
+      var mark = document.createElement("span");
+      mark.className = "ed-menu-check";
+      mark.innerHTML = g.options.indexOf(value) >= 0 ? window.PMIcons.icon("check", 12) : "";
+      row.appendChild(mark);
+      var lab = document.createElement("span");
+      lab.className = "ed-menu-label";
+      lab.textContent = String(g.label);
+      row.appendChild(lab);
+      var more = document.createElement("span");
+      more.className = "ed-menu-more";
+      more.innerHTML = window.PMIcons.icon("chevronRight", 12);
+      row.appendChild(more);
+
+      var sub = null;
+      var subActive = 0;
+
+      function shutSub() {
+        if (sub && sub.parentNode) sub.parentNode.removeChild(sub);
+        sub = null;
+        row.setAttribute("aria-expanded", "false");
+      }
+
+      function paintSub() {
+        if (!sub) return;
+        var rows = sub.querySelectorAll("[data-opt]");
+        for (var z = 0; z < rows.length; z++) {
+          rows[z].setAttribute("aria-selected", z === subActive ? "true" : "false");
+          if (z === subActive && rows[z].focus) rows[z].focus({ preventScroll: false });
+        }
+      }
+
+      function openSub() {
+        if (sub) return;
+        sub = document.createElement("div");
+        sub.className = "ed-menu ed-submenu";
+        sub.setAttribute("role", "listbox");
+        g.options.forEach(function (o, k) { sub.appendChild(optionRow(o, k)); });
+
+        sub.addEventListener("keydown", function (e) {
+          if (e.key === "ArrowLeft") {
+            /* Left goes back one level rather than out of the menu entirely. */
+            e.preventDefault(); e.stopPropagation();
+            window.PM2Menu.closeTop();
+            if (row.focus) row.focus({ preventScroll: true });
+          } else if (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "Home" || e.key === "End") {
+            e.preventDefault(); e.stopPropagation();
+            subActive = window.PM2Menu.move(g.options, subActive, e.key);
+            paintSub();
+          } else if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault(); e.stopPropagation();
+            choose(g.options[subActive]);
+          }
+        });
+
+        document.body.appendChild(sub);
+        var spot = window.PM2Menu.placeSide(
+          panel.getBoundingClientRect(), row.getBoundingClientRect(),
+          { width: sub.offsetWidth, height: sub.offsetHeight },
+          { width: window.innerWidth, height: window.innerHeight });
+        sub.style.left = spot.left + "px";
+        sub.style.top = spot.top + "px";
+        sub.style.maxHeight = spot.maxHeight + "px";
+        sub.setAttribute("data-side", spot.side);
+        row.setAttribute("aria-expanded", "true");
+        window.PM2Menu.open({ close: shutSub, element: sub, parent: entry });
+        subActive = Math.max(0, g.options.indexOf(value));
+        paintSub();
+      }
+
+      row.addEventListener("click", function (e) {
+        e.stopPropagation();
+        if (sub) window.PM2Menu.closeTop(); else openSub();
+      });
+      row.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowRight" || e.key === "Enter" || e.key === " ") {
+          e.preventDefault(); e.stopPropagation();
+          openSub();
+        }
+      });
+      return row;
+    }
+
+    trigger.addEventListener("click", function () {
+      if (panel) { window.PM2Menu.closeAll(); return; }
+      panel = document.createElement("div");
+      panel.className = "ed-menu";
+      panel.setAttribute("role", "listbox");
+
+      var groups = window.PM2Menu.groupsFor(rec.id, options);
+      top = groups || options;
+      if (groups) groups.forEach(function (g, i) { panel.appendChild(groupRow(g, i)); });
+      else options.forEach(function (o, i) { panel.appendChild(optionRow(o, i)); });
+
+      panel.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "Home" || e.key === "End") {
+          e.preventDefault();
+          active = window.PM2Menu.move(top, active, e.key);
+          paint();
+        } else if ((e.key === "Enter" || e.key === " ") && !groups) {
+          e.preventDefault();
+          choose(options[active]);
+        }
+      });
+
+      document.body.appendChild(panel);
+      var a = trigger.getBoundingClientRect();
+      var pb = panel.getBoundingClientRect();
+      var spot = window.PM2Menu.place(
+        { left: a.left, right: a.right, top: a.top, bottom: a.bottom, width: a.width },
+        { width: Math.max(pb.width, a.width), height: pb.height },
+        { width: window.innerWidth, height: window.innerHeight },
+        { align: "start" });
+      panel.style.left = spot.left + "px";
+      panel.style.top = spot.top + "px";
+      panel.style.minWidth = Math.round(a.width) + "px";
+      panel.style.maxHeight = spot.maxHeight + "px";
+      panel.setAttribute("data-side", spot.side);
+
+      trigger.setAttribute("aria-expanded", "true");
+      entry = window.PM2Menu.open({ close: shut, element: panel });
+      active = 0;
+      if (groups) groups.forEach(function (g, i) { if (g.options.indexOf(value) >= 0) active = i; });
+      else active = Math.max(0, options.indexOf(value));
+      paint();
+    });
+
+    return wrap;
+  }
+
 })();

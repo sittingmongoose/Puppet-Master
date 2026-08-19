@@ -2,7 +2,7 @@
   "schema_id": "pm.settings_concept_impact_register.v1",
   "concept_id": "concept-05-directory-take-1",
   "model": "Qwen 5.8",
-  "title": "Directory \u2014 Take 1 \u2014 Qwen 5.8",
+  "title": "Directory — Take 1 — Qwen 5.8",
   "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
   "plan_owner_impacts": [
     {
@@ -11,7 +11,7 @@
     },
     {
       "owner": "settings inventory and schema",
-      "impact": "12 inventory categories become directory destinations; a category\u2192destination mapping is intrinsic (1:1); tier vocabulary migration still required; ids keep inventory roots in this concept."
+      "impact": "12 inventory categories become directory destinations; a category→destination mapping is intrinsic (1:1); tier vocabulary migration still required; ids keep inventory roots in this concept."
     },
     {
       "owner": "Models System",
@@ -144,7 +144,7 @@
     "Bloom/shelves/right-panel language superseded by directory navigation; cmd.settings.bloom.open retire/alias flag carried from catalog census."
   ],
   "slint_port_impacts": [
-    "None; concept is web-only prototype."
+    "Web prototype maps to Slint 1.17.1 via stable model ids (category/subgroup/setting/rid), windowed virtual lists (PMManagers2.virtualList), hash-route state machines with narrow incremental re-render, bounded 2px blur on modal overlays only, and reduced-motion static states; no DOM-only core behavior."
   ],
   "test_fixtures": [
     "search-route-matrix.json (16 cases), manager-route-matrix.json (42 rows), test-evidence.json static checks."

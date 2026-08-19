@@ -150,5 +150,55 @@
     "Spellcheck demo still uses the browser spellcheck attribute; production needs the Slint-portable spelling-service abstraction (pre-existing, unchanged)",
     "Deep links are in-app only (no URL-hash routing) — flagged for the Slint build (FINDINGS.md §14)"
   ],
-  "materiality": "material — the omitted Performance register and mispathed adjudication produced real compliance defects (startup manager hydration, simulated progress, no offline state, no virtualization, unreachable runtime-demand flow) plus a broken shell-toggle interaction and advertised motion that did not exist; the correction also produced the previously-missing required deliverable (this report). No winner is recommended."
+  "materiality": "material — the omitted Performance register and mispathed adjudication produced real compliance defects (startup manager hydration, simulated progress, no offline state, no virtualization, unreachable runtime-demand flow) plus a broken shell-toggle interaction and advertised motion that did not exist; the correction also produced the previously-missing required deliverable (this report). No winner is recommended.",
+  "seven_new_concepts_pass_2026_08_18": {
+    "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+    "concepts": [
+      "concept-05-directory-take-1 (A1 Directory / Take 1)",
+      "concept-06-directory-take-2 (A1 Directory / Take 2)",
+      "concept-07-compendium-workspace (A2 Compendium Workspace / Take 1)",
+      "concept-08-directory-take-3 (A1 Directory / Take 3)",
+      "concept-09-tome-tabs (Rethemed Tome Tabs)",
+      "concept-10-command-suite (Rethemed Command Suite)",
+      "concept-11-tabbed-organizer (Rethemed Tabbed Organizer)"
+    ],
+    "authority_chain": "The 2026-08-18 packet is the complete cumulative authority for concepts 05-11. The 2026-08-08 base packet and 2026-08-13 correction recorded above remain controlling for concepts 01-04, and their decisions (ObservableWork, lazy hydration, provider-CLI adjudication, Performance register) carry into the seven new concepts unchanged.",
+    "reference_snapshot": "Every packet and reference file opened for this pass, per-board interpretation boundaries (layout-only rethemes for concepts 09-11, layout/hierarchy reconstruction for 05-08), superseded legacy assumptions, and the no-cross-concept-manager-routing evidence are recorded immutably in REFERENCE_REVIEW_2026-08-18.json. This entry adds the pass to the review history without altering any prior entry above.",
+    "prior_unresolved_defects_status": [
+      {
+        "defect": "Deep links are in-app only (no URL-hash routing) — 2026-08-15 unresolved list",
+        "status_for_concepts_05_11": "resolved — pm-routes.js provides URL-hash parse/str (#/d/<domain>/p/<page>/m/<manager>/o/<object>/s/<section>/r/<row>?q=&res=); 28/28 cold-load deep links land calm + focused",
+        "status_for_concepts_01_04": "unchanged (frozen surfaces; still flagged for the Slint build)"
+      },
+      {
+        "defect": "Virtualization proven only on the dedicated 100-installation fixture — 2026-08-15 unresolved list",
+        "status_for_concepts_05_11": "resolved — 13 windowed sites across the seven concepts cover the full 828-row inventory; full-range scroll extent verified per concept (e.g. c05 scrollTop 62368 / scrollHeight 63003 over 828 rows)",
+        "status_for_concepts_01_04": "unchanged"
+      },
+      {
+        "defect": "Backend interactions are simulations (concept scope) — 2026-08-15 unresolved list",
+        "status_for_concepts_05_11": "still true and disclosed (SEVEN_NEW_CONCEPTS_FINDINGS.md §3.1); the ObservableWork projection contract is the deliverable",
+        "status_for_concepts_01_04": "unchanged"
+      },
+      {
+        "defect": "Fuzzy search is heuristic, not ranked language-model relevance — 2026-08-15 unresolved list",
+        "status_for_concepts_05_11": "still true and disclosed (SEVEN_NEW_CONCEPTS_FINDINGS.md §3.5), now over the 1126-entry universal index",
+        "status_for_concepts_01_04": "unchanged"
+      },
+      {
+        "defect": "Spellcheck demo uses the browser spellcheck attribute — 2026-08-15 unresolved list",
+        "status_for_concepts_05_11": "not applicable — no spellcheck surface exists in concepts 05-11 (verified by grep)",
+        "status_for_concepts_01_04": "unchanged (pre-existing)"
+      }
+    ],
+    "verification_pass_summary": {
+      "matrix": "336/336 effective (7 concepts x 8 themes x 6 widths; 272 direct + 16 squeeze cells fixed and re-verified + 48 c11 cells cleared by a refined probe)",
+      "functional_layers": "all green on all 7 concepts (search exactness 10 probes, 38/38 manager isolation crawl, copy transaction with rollback, lazy hydration, bounded search, 9 state kinds, reduced motion, narrow 760)",
+      "deep_links": "28/28 calm + focus",
+      "defects_fixed_in_pass": "c09 edge-tab label clipping; c05+c07 760/900 squeeze; shared padBottom virtualization bug (13 sites); c05 all-index dispatcher crash; c07 compendium deep links (virtualization clamp, calm persistence, scroll-to-row, circular redirect); c07 back-restore redirect loop",
+      "reports": "SEVEN_NEW_CONCEPTS_TEST_REPORT.md, SEVEN_NEW_CONCEPTS_FINDINGS.md, SEVEN_NEW_CONCEPTS_IMPACT_REGISTER.json, REFERENCE_REVIEW_2026-08-18.json"
+    },
+    "materiality": "material — the interrupted build's verification pass was completed: defects found by the matrix and functional runs (clipped c09 edge tabs, 16 squeeze cells, the shared padBottom virtualization clamp, the c05 dispatcher crash, c07's deep-link and back-restore failures) were fixed and re-verified; per-concept evidence files were refreshed with measured outcomes; the four missing model-folder reports were written. No prior review entry above was altered.",
+    "winner": "none chosen"
+  }
 }

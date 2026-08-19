@@ -151,7 +151,24 @@
     if (cache[key]) return cache[key];
     var built = build(managerId, state);
     cache[key] = built;
+    announce(managerId, built);
     return built;
+  }
+
+  /* Tell the index which objects this manager actually contains, so a link naming one
+   * of them resolves. This runs only after a spec has been built for a manager the
+   * reader opened — it is a consequence of hydration, never a cause of it, which is
+   * what keeps search from instantiating managers. */
+  function announce(managerId, built) {
+    if (!built || !window.PM2Index || typeof window.PM2Index.registerObjects !== "function") return;
+    var ids = [];
+    (built.sections || []).forEach(function (sec) {
+      [sec.items, sec.cards, sec.rows].forEach(function (list) {
+        if (!list || !list.length) return;
+        list.forEach(function (it) { if (it && it.id) ids.push(it.id); });
+      });
+    });
+    if (ids.length) window.PM2Index.registerObjects(managerId, ids);
   }
 
   function invalidate(managerId) {

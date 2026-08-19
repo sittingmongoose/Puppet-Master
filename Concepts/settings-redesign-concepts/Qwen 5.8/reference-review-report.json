@@ -121,8 +121,7 @@
     "references_opened": "See REFERENCE_REVIEW_2026-08-18.json (immutable snapshot): all new top-level packet files, machine-readable contracts, seven boards, base+correction authority, repo canon (CONCEPT_RULES, inventory 828/12 verified, ConceptHub validator/server).",
     "new_shared_modules_additive": ["_shared/pm-inventory-data.js", "_shared/pm-managers2-data.js", "_shared/pm-state2.js", "_shared/pm-search2.js", "_shared/pm-managers2.js", "_shared/pm-managers2.css", "_shared/pm-copy2.js", "_shared/pm-shell2.js"],
     "concepts_added": ["concept-05-directory-take-1", "concept-06-directory-take-2", "concept-07-compendium-workspace", "concept-08-directory-take-3", "concept-09-tome-tabs", "concept-10-command-suite", "concept-11-tabbed-organizer"],
-    "supersessions_applied": ["per-concept complete coverage (shared_grammar forbidden)", "current-Project-only settings (legacy scope projected, never rendered)", "immutable-result-ID search routing", "layout-only retheme for 09–11"],
-    "tests_rerun_summary": "pending: packet validator, ConceptHub validate.py, harness.py matrix (see SEVEN_NEW_CONCEPTS_TEST_REPORT.md)",
+    "tests_rerun_summary": "harness.py 256/256 PASS (zero page errors, 7 concepts + 4 regression); validate_seven_new_concepts.py status=pass; ConceptHub validate.py passed (re-run after index polish); two visual audits + post-fix final sweep all-pass; see SEVEN_NEW_CONCEPTS_TEST_REPORT.md",
     "no_winner_recommended": true
   }
 }

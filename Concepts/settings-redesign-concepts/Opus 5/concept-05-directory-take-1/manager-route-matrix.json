@@ -1,0 +1,1098 @@
+{
+ "schema_id": "pm.settings_bakeoff_manager_route_matrix.v2",
+ "concept_id": "concept-05-directory-take-1",
+ "model": "Opus 5",
+ "generated": "2026-08-19",
+ "method": "Every manager destination was routed to in this concept's own page; the rendered surface, its manager attribute, the retained shell (Back, Close, breadcrumb, Project), node and text volume, and cross-concept text were read from the live DOM.",
+ "summary": {
+  "managers": 50,
+  "passed": 50,
+  "pass": true,
+  "escape_lands_on": "domain"
+ },
+ "key_states": {
+  "fixtures": 21,
+  "passed": 21,
+  "pass": true,
+  "rows": [
+   {
+    "fixture": "normal",
+    "applied": true,
+    "differs_from_normal": true,
+    "pass": true
+   },
+   {
+    "fixture": "loading-cached",
+    "applied": true,
+    "differs_from_normal": true,
+    "pass": true
+   },
+   {
+    "fixture": "empty",
+    "applied": true,
+    "differs_from_normal": true,
+    "pass": true
+   },
+   {
+    "fixture": "no-results",
+    "applied": true,
+    "differs_from_normal": true,
+    "pass": true
+   },
+   {
+    "fixture": "typo-search",
+    "applied": true,
+    "differs_from_normal": true,
+    "pass": true
+   },
+   {
+    "fixture": "validation-error",
+    "applied": true,
+    "differs_from_normal": true,
+    "pass": true
+   },
+   {
+    "fixture": "changed-elsewhere",
+    "applied": true,
+    "differs_from_normal": true,
+    "pass": true
+   },
+   {
+    "fixture": "restart-required",
+    "applied": true,
+    "differs_from_normal": true,
+    "pass": true
+   },
+   {
+    "fixture": "offline",
+    "applied": true,
+    "differs_from_normal": true,
+    "pass": true
+   },
+   {
+    "fixture": "reconnect-required",
+    "applied": true,
+    "differs_from_normal": true,
+    "pass": true
+   },
+   {
+    "fixture": "usage-unavailable",
+    "applied": true,
+    "differs_from_normal": true,
+    "pass": true
+   },
+   {
+    "fixture": "managed",
+    "applied": true,
+    "differs_from_normal": true,
+    "pass": true
+   },
+   {
+    "fixture": "unavailable",
+    "applied": true,
+    "differs_from_normal": true,
+    "pass": true
+   },
+   {
+    "fixture": "multi-install-shadowed",
+    "applied": true,
+    "differs_from_normal": true,
+    "pass": true
+   },
+   {
+    "fixture": "unknown-install-owner",
+    "applied": true,
+    "differs_from_normal": true,
+    "pass": true
+   },
+   {
+    "fixture": "update-available",
+    "applied": true,
+    "differs_from_normal": true,
+    "pass": true
+   },
+   {
+    "fixture": "import-conflict",
+    "applied": true,
+    "differs_from_normal": true,
+    "pass": true
+   },
+   {
+    "fixture": "rollback-complete",
+    "applied": true,
+    "differs_from_normal": true,
+    "pass": true
+   },
+   {
+    "fixture": "verify-failed-rollback",
+    "applied": true,
+    "differs_from_normal": true,
+    "pass": true
+   },
+   {
+    "fixture": "long-label",
+    "applied": true,
+    "differs_from_normal": true,
+    "pass": true
+   },
+   {
+    "fixture": "long-explanation",
+    "applied": true,
+    "differs_from_normal": true,
+    "pass": true
+   }
+  ]
+ },
+ "managers": [
+  {
+   "family": "Provider / Account / Model / Installation",
+   "manager_id": "manager-providers",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › ai domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-providers"
+   ],
+   "concept_local_route": "#/m/manager-providers",
+   "shell_retained": true,
+   "back_target": "Back to AI Brains & Providers",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 106,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Context & Instructions",
+   "manager_id": "manager-context",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › memory domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-context"
+   ],
+   "concept_local_route": "#/m/manager-context",
+   "shell_retained": true,
+   "back_target": "Back to Memory & Context",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 425,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Memory",
+   "manager_id": "manager-memory",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › memory domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-memory"
+   ],
+   "concept_local_route": "#/m/manager-memory",
+   "shell_retained": true,
+   "back_target": "Back to Memory & Context",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 137,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Personas",
+   "manager_id": "manager-personas",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › personas domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-personas"
+   ],
+   "concept_local_route": "#/m/manager-personas",
+   "shell_retained": true,
+   "back_target": "Back to Personas",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 137,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Goal & Automation",
+   "manager_id": "manager-goal",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › planning domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-goal"
+   ],
+   "concept_local_route": "#/m/manager-goal",
+   "shell_retained": true,
+   "back_target": "Back to Planning & Verification",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 381,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Crew",
+   "manager_id": "manager-crew",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › branching domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-crew"
+   ],
+   "concept_local_route": "#/m/manager-crew",
+   "shell_retained": true,
+   "back_target": "Back to Branching & Collaboration",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 137,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Permissions & FileSafe",
+   "manager_id": "manager-filesafe",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › safety domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-filesafe"
+   ],
+   "concept_local_route": "#/m/manager-filesafe",
+   "shell_retained": true,
+   "back_target": "Back to Permissions & Safety",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 680,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Back Seat Driver",
+   "manager_id": "manager-bsd",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › planning domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-bsd"
+   ],
+   "concept_local_route": "#/m/manager-bsd",
+   "shell_retained": true,
+   "back_target": "Back to Planning & Verification",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 397,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Notifications & Sounds",
+   "manager_id": "manager-notifications",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › general domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-notifications"
+   ],
+   "concept_local_route": "#/m/manager-notifications",
+   "shell_retained": true,
+   "back_target": "Back to General & Appearance",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 117,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Sound Library / Uploads / Packs",
+   "manager_id": "manager-sounds",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › general domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-sounds"
+   ],
+   "concept_local_route": "#/m/manager-sounds",
+   "shell_retained": true,
+   "back_target": "Back to General & Appearance",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 94,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Appearance / themes / fonts / motion",
+   "manager_id": "manager-appearance",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › general domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-appearance"
+   ],
+   "concept_local_route": "#/m/manager-appearance",
+   "shell_retained": true,
+   "back_target": "Back to General & Appearance",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 409,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Spellcheck & Dictionaries",
+   "manager_id": "manager-dictionaries",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › general domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-dictionaries"
+   ],
+   "concept_local_route": "#/m/manager-dictionaries",
+   "shell_retained": true,
+   "back_target": "Back to General & Appearance",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 202,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Desktop / Tray / Window",
+   "manager_id": "manager-desktop",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › general domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-desktop"
+   ],
+   "concept_local_route": "#/m/manager-desktop",
+   "shell_retained": true,
+   "back_target": "Back to General & Appearance",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 339,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Teacher / Help",
+   "manager_id": "manager-teacher",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › system domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-teacher"
+   ],
+   "concept_local_route": "#/m/manager-teacher",
+   "shell_retained": true,
+   "back_target": "Back to System & Advanced",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 121,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Doctor",
+   "manager_id": "manager-doctor",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › system domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-doctor"
+   ],
+   "concept_local_route": "#/m/manager-doctor",
+   "shell_retained": true,
+   "back_target": "Back to System & Advanced",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 255,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "File Manager / Editor",
+   "manager_id": "manager-files",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › code domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-files"
+   ],
+   "concept_local_route": "#/m/manager-files",
+   "shell_retained": true,
+   "back_target": "Back to Code & Execution",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 186,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Terminal",
+   "manager_id": "manager-terminal",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › code domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-terminal"
+   ],
+   "concept_local_route": "#/m/manager-terminal",
+   "shell_retained": true,
+   "back_target": "Back to Code & Execution",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 128,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "LSP",
+   "manager_id": "manager-lsp",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › code domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-lsp"
+   ],
+   "concept_local_route": "#/m/manager-lsp",
+   "shell_retained": true,
+   "back_target": "Back to Code & Execution",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 104,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Formatters",
+   "manager_id": "manager-formatters",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › code domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-formatters"
+   ],
+   "concept_local_route": "#/m/manager-formatters",
+   "shell_retained": true,
+   "back_target": "Back to Code & Execution",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 294,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Commands & Shortcuts",
+   "manager_id": "manager-commands",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › extensions domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-commands"
+   ],
+   "concept_local_route": "#/m/manager-commands",
+   "shell_retained": true,
+   "back_target": "Back to Skills, Plugins & Commands",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 104,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "MCP",
+   "manager_id": "manager-mcp",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › system domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-mcp"
+   ],
+   "concept_local_route": "#/m/manager-mcp",
+   "shell_retained": true,
+   "back_target": "Back to System & Advanced",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 121,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Skills",
+   "manager_id": "manager-skills",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › extensions domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-skills"
+   ],
+   "concept_local_route": "#/m/manager-skills",
+   "shell_retained": true,
+   "back_target": "Back to Skills, Plugins & Commands",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 102,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Plugins",
+   "manager_id": "manager-plugins",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › extensions domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-plugins"
+   ],
+   "concept_local_route": "#/m/manager-plugins",
+   "shell_retained": true,
+   "back_target": "Back to Skills, Plugins & Commands",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 83,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Tools",
+   "manager_id": "manager-tools",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › extensions domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-tools"
+   ],
+   "concept_local_route": "#/m/manager-tools",
+   "shell_retained": true,
+   "back_target": "Back to Skills, Plugins & Commands",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 224,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Testing & Debug",
+   "manager_id": "manager-testing",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › planning domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-testing"
+   ],
+   "concept_local_route": "#/m/manager-testing",
+   "shell_retained": true,
+   "back_target": "Back to Planning & Verification",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 122,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Storage & Retention",
+   "manager_id": "manager-storage",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › system domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-storage"
+   ],
+   "concept_local_route": "#/m/manager-storage",
+   "shell_retained": true,
+   "back_target": "Back to System & Advanced",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 224,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Backup & Restore",
+   "manager_id": "manager-backup",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › system domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-backup"
+   ],
+   "concept_local_route": "#/m/manager-backup",
+   "shell_retained": true,
+   "back_target": "Back to System & Advanced",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 146,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Settings Lifecycle",
+   "manager_id": "manager-settings-lifecycle",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › system domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-settings-lifecycle"
+   ],
+   "concept_local_route": "#/m/manager-settings-lifecycle",
+   "shell_retained": true,
+   "back_target": "Back to System & Advanced",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 331,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "History & Sessions",
+   "manager_id": "manager-history",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › memory domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-history"
+   ],
+   "concept_local_route": "#/m/manager-history",
+   "shell_retained": true,
+   "back_target": "Back to Memory & Context",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 113,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Runtime Artifacts / Project Outputs",
+   "manager_id": "manager-artifacts",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › media domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-artifacts"
+   ],
+   "concept_local_route": "#/m/manager-artifacts",
+   "shell_retained": true,
+   "back_target": "Back to Media & Output",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 130,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Source Control / Worktrees",
+   "manager_id": "manager-sourcecontrol",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › branching domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-sourcecontrol"
+   ],
+   "concept_local_route": "#/m/manager-sourcecontrol",
+   "shell_retained": true,
+   "back_target": "Back to Branching & Collaboration",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 60,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "GitHub Actions",
+   "manager_id": "manager-gh-actions",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › branching domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-gh-actions"
+   ],
+   "concept_local_route": "#/m/manager-gh-actions",
+   "shell_retained": true,
+   "back_target": "Back to Branching & Collaboration",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 150,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Containers & Registries",
+   "manager_id": "manager-containers",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › code domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-containers"
+   ],
+   "concept_local_route": "#/m/manager-containers",
+   "shell_retained": true,
+   "back_target": "Back to Code & Execution",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 77,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Web / Search / Fetch / Crawl",
+   "manager_id": "manager-web",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › web domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-web"
+   ],
+   "concept_local_route": "#/m/manager-web",
+   "shell_retained": true,
+   "back_target": "Back to Web & Search",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 74,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Project Search Index",
+   "manager_id": "manager-index",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › web domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-index"
+   ],
+   "concept_local_route": "#/m/manager-index",
+   "shell_retained": true,
+   "back_target": "Back to Web & Search",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 146,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Workspace Cleanup",
+   "manager_id": "manager-cleanup",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › system domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-cleanup"
+   ],
+   "concept_local_route": "#/m/manager-cleanup",
+   "shell_retained": true,
+   "back_target": "Back to System & Advanced",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 94,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Media & Output",
+   "manager_id": "manager-media",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › media domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-media"
+   ],
+   "concept_local_route": "#/m/manager-media",
+   "shell_retained": true,
+   "back_target": "Back to Media & Output",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 130,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "DRY Method visible state where exposed",
+   "manager_id": "manager-dry",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › system domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-dry"
+   ],
+   "concept_local_route": "#/m/manager-dry",
+   "shell_retained": true,
+   "back_target": "Back to System & Advanced",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 160,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Resource use and performance",
+   "manager_id": "manager-performance",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › system domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-performance"
+   ],
+   "concept_local_route": "#/m/manager-performance",
+   "shell_retained": true,
+   "back_target": "Back to System & Advanced",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 1641,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Copy Settings From Another Project",
+   "manager_id": "manager-copy",
+   "classification": "demonstrated",
+   "entry_points": [
+    "Settings › system domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-copy"
+   ],
+   "concept_local_route": "#/m/manager-copy",
+   "shell_retained": true,
+   "back_target": "Back to System & Advanced",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 382,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Product Onboarding",
+   "manager_id": "owner-onboarding",
+   "classification": "deferred_named_owner",
+   "entry_points": [
+    "Settings › system domain destination list",
+    "Universal search (manager result)",
+    "#/m/owner-onboarding"
+   ],
+   "concept_local_route": "#/m/owner-onboarding",
+   "shell_retained": true,
+   "back_target": "Back to System & Advanced",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 89,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Installation / Deployment",
+   "manager_id": "owner-installation",
+   "classification": "deferred_named_owner",
+   "entry_points": [
+    "Settings › system domain destination list",
+    "Universal search (manager result)",
+    "#/m/owner-installation"
+   ],
+   "concept_local_route": "#/m/owner-installation",
+   "shell_retained": true,
+   "back_target": "Back to System & Advanced",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 89,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Server Claim / Bootstrap",
+   "manager_id": "owner-server-claim",
+   "classification": "deferred_named_owner",
+   "entry_points": [
+    "Settings › system domain destination list",
+    "Universal search (manager result)",
+    "#/m/owner-server-claim"
+   ],
+   "concept_local_route": "#/m/owner-server-claim",
+   "shell_retained": true,
+   "back_target": "Back to System & Advanced",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 89,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Servers / Execution Hosts / Clients",
+   "manager_id": "manager-server",
+   "classification": "deferred_named_owner",
+   "entry_points": [
+    "Settings › system domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-server"
+   ],
+   "concept_local_route": "#/m/manager-server",
+   "shell_retained": true,
+   "back_target": "Back to System & Advanced",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 261,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Project Hosting & Files",
+   "manager_id": "owner-project-hosting",
+   "classification": "deferred_named_owner",
+   "entry_points": [
+    "Settings › system domain destination list",
+    "Universal search (manager result)",
+    "#/m/owner-project-hosting"
+   ],
+   "concept_local_route": "#/m/owner-project-hosting",
+   "shell_retained": true,
+   "back_target": "Back to System & Advanced",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 89,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Remote Access",
+   "manager_id": "owner-remote-access",
+   "classification": "deferred_named_owner",
+   "entry_points": [
+    "Settings › system domain destination list",
+    "Universal search (manager result)",
+    "#/m/owner-remote-access"
+   ],
+   "concept_local_route": "#/m/owner-remote-access",
+   "shell_retained": true,
+   "back_target": "Back to System & Advanced",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 89,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Project Sync / Move",
+   "manager_id": "owner-project-move",
+   "classification": "deferred_named_owner",
+   "entry_points": [
+    "Settings › system domain destination list",
+    "Universal search (manager result)",
+    "#/m/owner-project-move"
+   ],
+   "concept_local_route": "#/m/owner-project-move",
+   "shell_retained": true,
+   "back_target": "Back to System & Advanced",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 89,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Puppet Master application/content updates",
+   "manager_id": "owner-updates",
+   "classification": "deferred_named_owner",
+   "entry_points": [
+    "Settings › system domain destination list",
+    "Universal search (manager result)",
+    "#/m/owner-updates"
+   ],
+   "concept_local_route": "#/m/owner-updates",
+   "shell_retained": true,
+   "back_target": "Back to System & Advanced",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 89,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Full Server backup owner flow",
+   "manager_id": "owner-server-backup",
+   "classification": "deferred_named_owner",
+   "entry_points": [
+    "Settings › system domain destination list",
+    "Universal search (manager result)",
+    "#/m/owner-server-backup"
+   ],
+   "concept_local_route": "#/m/owner-server-backup",
+   "shell_retained": true,
+   "back_target": "Back to System & Advanced",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 89,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  },
+  {
+   "family": "Usage",
+   "manager_id": "manager-usage",
+   "classification": "deferred_named_owner",
+   "entry_points": [
+    "Settings › ai domain destination list",
+    "Universal search (manager result)",
+    "#/m/manager-usage"
+   ],
+   "concept_local_route": "#/m/manager-usage",
+   "shell_retained": true,
+   "back_target": "Back to AI Brains & Providers",
+   "close_target": "the surface that opened Settings",
+   "narrow_behaviour": "push navigation; selection, scroll position and Back target preserved",
+   "rendered_nodes": 96,
+   "cross_concept_reference": false,
+   "pass": true,
+   "reason": null
+  }
+ ]
+}

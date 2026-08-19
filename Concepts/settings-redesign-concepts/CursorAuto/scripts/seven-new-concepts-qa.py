@@ -95,6 +95,66 @@ INDEX_COMPLETE_JS = """() => {
   };
 }"""
 
+SEARCH_ROUTE_EXHAUSTIVE_JS = """() => {
+  const P = window.PMv2 || {};
+  const app = window.__pmv2App;
+  const ids = P.productSettingIds || [];
+  const getResult = (rid) => {
+    if (P && typeof P.getResult === "function") {
+      const hit = P.getResult(rid);
+      if (hit) return hit;
+    }
+    if (app && typeof app.getResult === "function") return app.getResult(rid);
+    return null;
+  };
+  const missing = [];
+  for (let i = 0; i < ids.length; i++) {
+    const id = ids[i];
+    if (!getResult("setting:" + id)) missing.push(id);
+  }
+  function pick(rid) {
+    const found = Boolean(getResult(rid));
+    if (found && app && typeof app.pickResult === "function") app.pickResult(rid);
+    const root = document.querySelector("[data-pmv2-root]");
+    const dest = root ? root.getAttribute("data-route") : null;
+    const highlighted = Boolean(document.querySelector('.pmv2-hl, [data-highlight="true"]'));
+    if (app && typeof app.back === "function") app.back();
+    return { result_id: rid, found, dest, highlighted };
+  }
+  const samples = [];
+  if (ids.length) {
+    samples.push(Object.assign({ kind: "first" }, pick("setting:" + ids[0])));
+    samples.push(Object.assign({ kind: "middle" }, pick("setting:" + ids[Math.floor(ids.length / 2)])));
+    samples.push(Object.assign({ kind: "last" }, pick("setting:" + ids[ids.length - 1])));
+  }
+  const typeSpecs = [
+    { kind: "manager", type: "manager", ids: (P.managers || []).map((m) => "manager:" + m.id) },
+    { kind: "setup_or_repair_workflow", type: "setup_or_repair_workflow", ids: ["workflow:provider-cli-setup"] },
+    { kind: "diagnostic_or_read_only_status", type: "diagnostic_or_read_only_status", ids: ["diagnostic:usage-stale"] },
+    { kind: "unavailable", type: "unavailable_capability", ids: (P.deferred || []).map((d) => "unavailable:" + d.id) }
+  ];
+  typeSpecs.forEach((spec) => {
+    let rid = null;
+    for (let i = 0; i < spec.ids.length; i++) {
+      if (getResult(spec.ids[i])) { rid = spec.ids[i]; break; }
+    }
+    if (!rid && typeof P.search === "function") {
+      const hits = P.search(spec.kind) || [];
+      const hit = hits.find((h) => h && (h.type === spec.type || (spec.kind === "unavailable" && String(h.type || "").indexOf("unavailable") >= 0)));
+      if (hit) rid = hit.id;
+    }
+    if (rid) samples.push(Object.assign({ kind: spec.kind, present: true }, pick(rid)));
+    else if (spec.kind !== "unavailable") samples.push({ kind: spec.kind, result_id: null, found: false, dest: null, highlighted: false, present: false });
+  });
+  return {
+    settingCount: ids.length,
+    missingCount: missing.length,
+    missingSettingIds: missing.slice(0, 24),
+    samples,
+    pass: missing.length === 0
+  };
+}"""
+
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -164,12 +224,38 @@ def frozen_ok() -> dict:
     return {"ok": not mismatches, "mismatches": mismatches, "checked": len(baseline["hashes"])}
 
 
+def _plans_inventory_path() -> Path | None:
+    direct = Path("P:/Plans/settings_inventory.json")
+    if direct.exists():
+        return direct
+    for parent in [CURSOR_AUTO, *CURSOR_AUTO.parents]:
+        candidate = parent / "Plans" / "settings_inventory.json"
+        if candidate.exists():
+            return candidate
+    return None
+
+
+def snapshot_byte_identity() -> dict:
+    snap = CURSOR_AUTO / "shared" / "v2" / "settings-inventory-snapshot.json"
+    snap_sha = sha256(snap) if snap.exists() else None
+    plans = _plans_inventory_path()
+    if plans is None:
+        return {"ok": True, "plans_sha": None, "snap_sha": snap_sha}
+    plans_sha = sha256(plans)
+    return {"ok": snap_sha == plans_sha, "plans_sha": plans_sha, "snap_sha": snap_sha}
+
+
 def run() -> int:
     report: dict = {"status": "pass", "failures": [], "concepts": {}, "matrix": [], "probes": [], "frozen": None}
     frozen = frozen_ok()
     report["frozen"] = frozen
     if not frozen["ok"]:
         report["failures"].append({"kind": "frozen_regression", "detail": frozen["mismatches"][:8]})
+
+    snap_id = snapshot_byte_identity()
+    report["snapshot_byte_identity"] = snap_id
+    if not snap_id["ok"]:
+        report["failures"].append({"kind": "snapshot_byte_identity", "detail": snap_id})
 
     from playwright.sync_api import sync_playwright
 
@@ -607,7 +693,7 @@ def run() -> int:
                         page.locator('[data-act="copy-src"]').first.click()
                         page.wait_for_timeout(80)
                     copy_depth = page.evaluate(
-                    """() => {
+                    r"""() => {
                       const kinds = ['addition', 'replacement', 'unchanged', 'unavailable', 'conflict'];
                       const found = {};
                       kinds.forEach((k) => {
@@ -617,7 +703,8 @@ def run() -> int:
                       found.conflicts = Boolean(document.querySelector('[data-kind="conflicts"], [data-kind="conflict"], [data-blueprint="conflicts"]'));
                       found.itemRows = document.querySelectorAll('[data-kind], [class*="coprev-row"], [class*="copy-row"]').length;
                       const text = (document.body.innerText || '').toLowerCase();
-                      found.simulated = text.indexOf('sessionstorage') !== -1 || text.indexOf('simulated') !== -1;
+                      found.simulated = text.indexOf('sessionstorage') !== -1 || /simulated(?!\s*:\s*false)/i.test(text);
+                      found.liveBackend = /resourcegovernor|project store|binarylocator/i.test(text);
                       found.hasCounts = text.indexOf('additions') !== -1 && text.indexOf('replacements') !== -1;
                       const app = window.__pmv2App;
                       found.importConflictDemo = !!(app && app.flags && app.flags.importConflict);
@@ -636,8 +723,8 @@ def run() -> int:
                     copy_depth["replacements"] = (preview_counts.get("replacements", 0) >= 1) or bool(copy_depth.get("replacement"))
                     copy_depth["ok"] = all(
                         copy_depth.get(k)
-                        for k in ("additions", "replacements", "unchanged", "unavailable", "conflicts", "simulated")
-                    )
+                        for k in ("additions", "replacements", "unchanged", "unavailable", "conflicts", "liveBackend")
+                    ) and not copy_depth.get("simulated")
                     concept["copy_depth"] = copy_depth
                     if (copy_depth.get("itemRows") or 0) < 1 and not copy_depth.get("hasCounts"):
                         report["failures"].append({"stem": stem, "kind": "copy_depth", "detail": copy_depth})
@@ -653,11 +740,11 @@ def run() -> int:
                     copy_depth["conflicts"] = bool(copy_depth.get("conflicts") or copy_depth.get("conflict") or (copy_depth.get("previewConflictCount") or 0) >= 1)
                     if not conflict_ok:
                         report["failures"].append({"stem": stem, "kind": "copy_depth_conflicts", "detail": copy_depth})
-                    if not copy_depth.get("simulated"):
-                        report["failures"].append({"stem": stem, "kind": "copy_depth_simulated", "detail": copy_depth})
+                    if copy_depth.get("simulated") or not copy_depth.get("liveBackend"):
+                        report["failures"].append({"stem": stem, "kind": "copy_depth_backend", "detail": copy_depth})
                     if page.locator('[data-act="copy-apply"]').count():
                         page.locator('[data-act="copy-apply"]').click()
-                        page.wait_for_timeout(500)
+                        page.wait_for_selector('[data-act="copy-rollback"]', timeout=10000)
                     concept["copy"] = page.locator('[data-act="copy-rollback"]').count() > 0
                 except Exception as exc:
                     concept["copy"] = False
@@ -760,8 +847,8 @@ def run() -> int:
 
                 persist = page.evaluate(
                     """() => {
-                      const keys = Object.keys(sessionStorage).filter(k => k.startsWith('pm.settings-v2.'));
-                      return { keys, sample: keys[0] ? sessionStorage.getItem(keys[0]).slice(0, 80) : null };
+                      const keys = Object.keys(localStorage).filter(k => k.startsWith('pm.settings-v2.'));
+                      return { store: 'localStorage', keys, sample: keys[0] ? localStorage.getItem(keys[0]).slice(0, 80) : null };
                     }"""
                 )
                 concept["persistence"] = bool(persist.get("keys"))
@@ -818,7 +905,8 @@ def run() -> int:
                         managerTotal,
                         results: cap,
                         broad,
-                        searchCapOk: broad > 0 && broad <= 24,
+                        searchCapOk: broad > 24,
+                        searchUncapped: broad > 24,
                         route: root && root.getAttribute('data-route'),
                       };
                     }"""
@@ -840,11 +928,177 @@ def run() -> int:
                 )
                 hydration.update(virt)
                 hydration_ok = bool(hydration_ok and virt.get("virtBounded"))
+
+                exhaustive = page.evaluate(SEARCH_ROUTE_EXHAUSTIVE_JS) or {}
+                exhaustive_ok = bool(exhaustive.get("pass")) and int(exhaustive.get("missingCount") or 0) == 0
+                concept["probes"]["search_route_exhaustive"] = {"pass": bool(exhaustive_ok), **exhaustive}
+                if not exhaustive_ok:
+                    report["failures"].append(
+                        {"stem": stem, "kind": "probe_search_route_exhaustive", "detail": exhaustive}
+                    )
+                go_home()
+
+                try:
+                    unknown_cli = page.evaluate(
+                        """const app = window.__pmv2App;
+                            const P = window.PMv2 || {};
+                            if (app && typeof app.installOfficialCli === "function") app.installOfficialCli("local-ollama");
+                            else if (typeof P.installOfficialCli === "function") P.installOfficialCli(app, "local-ollama");
+                            if (app && typeof app.confirmOfficialCli === "function") app.confirmOfficialCli("local-ollama");
+                            else if (typeof P.confirmOfficialCli === "function") P.confirmOfficialCli(app, "local-ollama");
+                            const w = (app && app.work) || {};
+                            const state = w.state || null;
+                            ({
+                              state,
+                              wait_reason: w.wait_reason || "",
+                              autoCompleted: state === "completed" || state === "running",
+                              pass: state === "waiting_user"
+                            })"""
+                    ) or {}
+                except Exception as exc:
+                    unknown_cli = {
+                        "state": None,
+                        "wait_reason": "",
+                        "autoCompleted": False,
+                        "pass": False,
+                        "error": str(exc)[:400],
+                    }
+                unknown_ok = bool(unknown_cli.get("pass")) and not unknown_cli.get("autoCompleted")
+                concept["probes"]["cli_unknown_owner"] = {"pass": bool(unknown_ok), **unknown_cli}
+                if not unknown_ok:
+                    report["failures"].append(
+                        {"stem": stem, "kind": "probe_cli_unknown_owner", "detail": unknown_cli}
+                    )
+
+                try:
+                    known_cli = page.evaluate(
+                        """const app = window.__pmv2App;
+                            const P = window.PMv2 || {};
+                            const installs = (app && app.installs) || [];
+                            const row = installs.filter(function (i) { return i.provider === "anthropic"; })[0];
+                            const rowPresent = Boolean(row);
+                            if (app && typeof app.confirmOfficialCli === "function") app.confirmOfficialCli("anthropic");
+                            else if (typeof P.confirmOfficialCli === "function") P.confirmOfficialCli(app, "anthropic");
+                            const w = (app && app.work) || {};
+                            ({
+                              state: w.state || null,
+                              rowPresent,
+                              wait_reason: w.wait_reason || "",
+                              human_phase: w.human_phase || ""
+                            })"""
+                    ) or {}
+                except Exception as exc:
+                    known_cli = {
+                        "state": None,
+                        "rowPresent": False,
+                        "wait_reason": "",
+                        "human_phase": "",
+                        "error": str(exc)[:400],
+                    }
+                known_state = known_cli.get("state")
+                if known_state == "running":
+                    try:
+                        page.wait_for_function(
+                            """() => {
+                              const w = (window.__pmv2App && window.__pmv2App.work) || {};
+                              return w.state === "completed" || w.state === "waiting_user";
+                            }""",
+                            timeout=2000,
+                        )
+                    except Exception:
+                        page.wait_for_timeout(320)
+                    known_cli["state"] = page.evaluate(
+                        """((window.__pmv2App && window.__pmv2App.work) || {}).state || null"""
+                    )
+                    known_state = known_cli.get("state")
+                    known_cli["was_running"] = True
+                if known_cli.get("error"):
+                    known_ok = False
+                elif known_state == "completed" or (known_cli.get("was_running") and known_state == "completed"):
+                    known_ok = True
+                elif not known_cli.get("rowPresent") and known_state != "waiting_user":
+                    known_ok = True
+                else:
+                    known_ok = known_state == "completed"
+                concept["probes"]["cli_known_owner"] = {"pass": bool(known_ok), **known_cli}
+                if not known_ok:
+                    report["failures"].append(
+                        {"stem": stem, "kind": "probe_cli_known_owner", "detail": known_cli}
+                    )
+                go_home()
+
+                facets = page.evaluate(
+                    """() => {
+                      const app = window.__pmv2App;
+                      if (app && app.openAll) app.openAll();
+                      const root = document.querySelector('[data-pmv2-root]');
+                      const bodyText = ((root && root.innerText) || '') + ' ' + ((document.body && document.body.innerText) || '');
+                      const hasExposure = !!document.querySelector('[data-act="facet-exposure"]');
+                      const hasState = !!document.querySelector('[data-act="facet-state"]');
+                      const hasEntry = !!document.querySelector('[data-act="facet-entry"]');
+                      const hasAttentionOrChanged = !!(
+                        document.querySelector('[data-act="facet-attention"]') ||
+                        document.querySelector('[data-act="facet-changed"]')
+                      );
+                      const hasKind = !!(
+                        document.querySelector('[data-act="facet-kind"]') ||
+                        document.querySelector('[data-act="facet-type"]')
+                      );
+                      const hasExposureText = /Exposure/.test(bodyText);
+                      const hasManagedOrUnavailableOrAvailability = /Managed|Unavailable|Availability/.test(bodyText);
+                      let virtRows = document.querySelectorAll('[data-act="row"]').length;
+                      let virtBounded = false;
+                      if (app && app.allFacets) {
+                        app.allFacets.exposure = 'hidden';
+                        if (app.paint) app.paint();
+                        virtRows = document.querySelectorAll('[data-act="row"]').length;
+                        virtBounded = virtRows < 828;
+                        app.allFacets.exposure = '';
+                        if (app.paint) app.paint();
+                      }
+                      return {
+                        route: root && root.getAttribute('data-route'),
+                        hasExposure,
+                        hasState,
+                        hasEntry,
+                        hasAttentionOrChanged,
+                        hasKind,
+                        hasExposureText,
+                        hasManagedOrUnavailableOrAvailability,
+                        virtRows,
+                        virtBounded,
+                      };
+                    }"""
+                )
+                facets_ok = bool(
+                    facets.get("hasExposure")
+                    and facets.get("hasState")
+                    and facets.get("hasEntry")
+                    and facets.get("hasAttentionOrChanged")
+                    and facets.get("virtBounded")
+                )
+                concept["probes"]["all_settings_facets"] = {"pass": bool(facets_ok), **facets}
+                if not facets_ok:
+                    report["failures"].append(
+                        {"stem": stem, "kind": "probe_all_settings_facets", "detail": facets}
+                    )
+
                 go_home()
                 concept["probes"]["hydration"] = {"pass": bool(hydration_ok), **hydration}
                 if not hydration_ok:
                     report["failures"].append({"stem": stem, "kind": "probe_hydration", "detail": hydration})
 
+                page.fill("[data-search]", "")
+                page.evaluate(
+                    """() => {
+                      const app = window.__pmv2App;
+                      if (!app) return;
+                      app.query = "";
+                      app.results = [];
+                      app.searchOpen = false;
+                      app.selectedResultId = null;
+                    }"""
+                )
                 mgr_id = page.evaluate("() => (window.PMv2.managers[0] || {}).id")
                 page.evaluate("(id) => window.__pmv2App && window.__pmv2App.openManager(id)", mgr_id)
                 page.wait_for_timeout(80)
@@ -916,6 +1170,9 @@ def run() -> int:
                               }
                               let popupOk = true;
                               let popupRect = null;
+                              let nestedPopupOk = true;
+                              let nestedPopupRect = null;
+                              let hasPopupFn = false;
                               try {
                                 if (window.PMv2 && window.PMv2.popupOpen && search) {
                                   window.PMv2.popupOpen(search, [{ id: 'ok', label: 'Matrix probe' }], function () {});
@@ -941,6 +1198,32 @@ def run() -> int:
                                     searchDropRect = { left: r.left, right: r.right, top: r.top, bottom: r.bottom, width: r.width, height: r.height };
                                     searchDropOk = r.width > 8 && r.height > 8 && r.left >= -8 && r.right <= vw + 8 && r.top >= -8 && r.bottom <= vh + 8;
                                   }
+                                  hasPopupFn = Boolean(window.PMv2 && typeof window.PMv2.popupOpen === "function");
+                                  if (hasPopupFn && search) {
+                                    try {
+                                      window.PMv2.popupOpen(search, [{ id: "nested", label: "Nested menu" }], function () {});
+                                      const nested = document.querySelector('.pm-popup, .pmv2-popup, [data-popup], [role="menu"]');
+                                      const dropNow = document.querySelector('[role="listbox"]');
+                                      const inView = (rect) => rect && rect.left >= -8 && rect.right <= vw + 8 && rect.top >= -8 && rect.bottom <= vh + 8;
+                                      let dropIn = false;
+                                      let nestedIn = false;
+                                      if (dropNow) {
+                                        const dr = dropNow.getBoundingClientRect();
+                                        dropIn = inView(dr) && dr.width > 8 && dr.height > 8;
+                                      }
+                                      if (nested) {
+                                        const nr = nested.getBoundingClientRect();
+                                        nestedPopupRect = { left: nr.left, right: nr.right, top: nr.top, bottom: nr.bottom };
+                                        nestedIn = inView(nr);
+                                      }
+                                      nestedPopupOk = dropIn && nestedIn;
+                                      if (window.PMv2.popupClose) window.PMv2.popupClose();
+                                    } catch (ne) {
+                                      nestedPopupOk = false;
+                                    }
+                                  } else if (!hasPopupFn) {
+                                    nestedPopupOk = true;
+                                  }
                                   if (typeof app.escape === "function") app.escape();
                                   else root.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true, cancelable: true }));
                                   searchEscClosed = !document.querySelector('[role="listbox"]');
@@ -953,6 +1236,7 @@ def run() -> int:
                                 searchDropOk = false;
                                 searchEscClosed = false;
                               }
+                              if (!hasPopupFn) nestedPopupOk = true;
                               popupOk = popupOk && searchDropOk && searchEscClosed;
                               const prevMotion = document.documentElement.getAttribute('data-motion');
                               document.documentElement.setAttribute('data-motion', 'reduced');
@@ -967,6 +1251,9 @@ def run() -> int:
                                 scrollbar,
                                 popupOk,
                                 popupRect,
+                                nestedPopupOk: hasPopupFn ? nestedPopupOk : true,
+                                nestedPopupRect,
+                                hasPopupOpen: hasPopupFn,
                                 searchDropOk,
                                 searchEscClosed,
                                 searchDropRect,
@@ -988,6 +1275,7 @@ def run() -> int:
                             and metrics.get("searchDropOk")
                             and metrics.get("searchEscClosed")
                             and metrics.get("reducedOk")
+                            and metrics.get("nestedPopupOk")
                         )
                         report["matrix"].append(
                             {
@@ -999,6 +1287,7 @@ def run() -> int:
                                 "clipControls": metrics.get("clipControls"),
                                 "scrollbar": metrics.get("scrollbar"),
                                 "popupOk": metrics.get("popupOk"),
+                                "nestedPopupOk": metrics.get("nestedPopupOk"),
                                 "searchDropOk": metrics.get("searchDropOk"),
                                 "searchEscClosed": metrics.get("searchEscClosed"),
                                 "reducedOk": metrics.get("reducedOk"),
@@ -1050,15 +1339,39 @@ def run() -> int:
     report["status"] = "pass" if not report["failures"] else "fail"
     out = qa_temp / f"ca7-qa-report-{os.getpid()}.json"
     out.write_text(json.dumps(report, indent=2), encoding="utf-8")
+    probes_by_stem = {entry["stem"]: entry["probes"] for entry in report.get("probes", [])}
+    acceptance = {
+        "status": report["status"],
+        "hub_port": report.get("hub_port"),
+        "failure_count": len(report["failures"]),
+        "failures": report["failures"],
+        "frozen_ok": bool((report.get("frozen") or {}).get("ok")),
+        "matrix_cell_count": len(report.get("matrix", [])),
+        "search_route_exhaustive": all(
+            probes_by_stem.get(stem, {}).get("search_route_exhaustive", {}).get("pass", False) for stem in STEMS
+        ),
+        "cli_unknown_owner": all(
+            probes_by_stem.get(stem, {}).get("cli_unknown_owner", {}).get("pass", False) for stem in STEMS
+        ),
+        "cli_known_owner": all(
+            probes_by_stem.get(stem, {}).get("cli_known_owner", {}).get("pass", False) for stem in STEMS
+        ),
+        "searchUncapped": all(
+            probes_by_stem.get(stem, {}).get("hydration", {}).get("searchUncapped", False) for stem in STEMS
+        ),
+        "persistence": all(report.get("concepts", {}).get(stem, {}).get("persistence") for stem in STEMS),
+        "copy": all(report.get("concepts", {}).get(stem, {}).get("copy") for stem in STEMS),
+        "liveBackend": all(
+            (report.get("concepts", {}).get(stem, {}).get("copy_depth") or {}).get("liveBackend") for stem in STEMS
+        ),
+        "report_path": str(out),
+    }
     summary = qa_temp / f"ca7-qa-summary-{os.getpid()}.json"
     summary.write_text(
         json.dumps(
             {
-                "status": report["status"],
-                "failure_count": len(report["failures"]),
-                "failures": report["failures"][:40],
+                **acceptance,
                 "frozen": report["frozen"],
-                "hub_port": report.get("hub_port"),
                 "artifacts_dir": report.get("artifacts_dir"),
                 "probes": report.get("probes", []),
             },
@@ -1066,19 +1379,7 @@ def run() -> int:
         ),
         encoding="utf-8",
     )
-    print(
-        json.dumps(
-            {
-                "status": report["status"],
-                "failures": len(report["failures"]),
-                "hub_port": report.get("hub_port"),
-                "report": str(out),
-                "summary": str(summary),
-                "artifacts_dir": report.get("artifacts_dir"),
-            },
-            indent=2,
-        )
-    )
+    print(json.dumps(acceptance, indent=2))
     return 0 if report["status"] == "pass" else 1
 
 

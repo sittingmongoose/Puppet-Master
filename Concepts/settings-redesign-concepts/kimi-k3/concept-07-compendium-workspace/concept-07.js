@@ -200,6 +200,20 @@
     span.innerHTML = svg;
     return span.firstChild;
   }
+  /* icon set into a small raised tile with hairline + token depth */
+  function iconTile(name, size) {
+    var t = el("span", "cdw-tile");
+    t.appendChild(icon(name, size || 18));
+    return t;
+  }
+  /* count chip: tabular numerals + quiet label */
+  function countChip(n, label, zero) {
+    var c = el("span", "cdw-chip");
+    if (zero) c.setAttribute("data-zero", "true");
+    c.appendChild(el("b", null, String(n)));
+    c.appendChild(document.createTextNode(label));
+    return c;
+  }
 
   /* ---------- toasts -------------------------------------------------------- */
   var toastHost = null;
@@ -466,6 +480,7 @@
     arriveEl.appendChild(el("span", null, " from search"));
     if (entry.path) arriveEl.appendChild(el("span", "cdw-arrive-path", " · " + entry.path));
     var dis = btn("pm-btn", "Dismiss");
+    dis.setAttribute("data-variant", "quiet");
     dis.addEventListener("click", function () { arriveEl.setAttribute("hidden", ""); });
     arriveEl.appendChild(dis);
     arriveEl.removeAttribute("hidden");
@@ -869,9 +884,11 @@
 
     var notices = (CORE.notices || []);
     var critical = notices.filter(function (n) { return n.kind === "attention"; });
+    var bannerId = null;
     if (critical.length) {
       var n0 = critical[0];
-      var notice = el("div", "pm-notice");
+      bannerId = n0.id;
+      var notice = el("div", "pm-notice cdw-banner");
       notice.setAttribute("data-kind", "attention");
       var chip = el("span", "pm-notice-chip", "Needs attention");
       var head = el("span", "pm-notice-head", n0.headline);
@@ -885,14 +902,18 @@
       pane.appendChild(notice);
     }
 
-    var attnList = notices.slice(critical.length ? 1 : 0, 4);
+    /* the banner item never repeats in this list (dedupe by notice id) */
+    var attnList = notices.filter(function (n) { return n.id !== bannerId; })
+      .slice(0, bannerId ? 3 : 4);
     if (attnList.length) {
       pane.appendChild(sectionHead("Needs attention", plural(attnList.length, "item")));
       var attn = el("div", "cdw-attn");
       attnList.forEach(function (n) {
         var r = btn("cdw-attn-row");
         r.appendChild(icon("alert"));
-        var mm = el("span", null, n.headline);
+        var mm = el("span", "cdw-attn-main");
+        mm.appendChild(el("span", "cdw-attn-title", n.headline));
+        if (n.consequence) mm.appendChild(el("span", "cdw-attn-detail", n.consequence));
         r.appendChild(mm);
         r.appendChild(el("span", "cdw-attn-go", n.actionLabel || "Open"));
         r.addEventListener("click", function () { routeNotice(n); });
@@ -901,17 +922,24 @@
       pane.appendChild(attn);
     }
 
-    /* Dominant destination: the compendium */
+    /* Dominant destination: the compendium (live counts from the store) */
+    var ovrCount = store.overrides ? Object.keys(store.overrides()).length : 0;
     var comp = btn("cdw-comp-card");
-    comp.appendChild(icon("book"));
+    comp.appendChild(iconTile("book", 20));
     var cm = el("span", "cdw-area-main");
     cm.appendChild(el("span", "cdw-area-title", "All Settings Compendium"));
     cm.appendChild(el("span", "cdw-area-blurb",
       "The complete long-tail index: every one of the " + SET_LIST.length +
       " settings in this project, faceted by area, exposure, state, and type."));
-    cm.appendChild(el("span", "cdw-area-meta",
-      plural(store.overrides ? Object.keys(store.overrides()).length : 0, "customized value")));
+    var counts = el("span", "cdw-comp-counts");
+    counts.appendChild(countChip(SET_LIST.length, "settings", false));
+    counts.appendChild(countChip(DOMAIN_LIST.length, "areas", false));
+    counts.appendChild(countChip(ovrCount, "customized", ovrCount === 0));
+    cm.appendChild(counts);
     comp.appendChild(cm);
+    var compGo = el("span", "cdw-comp-go");
+    compGo.appendChild(icon("chevron"));
+    comp.appendChild(compGo);
     comp.addEventListener("click", function () { go({ view: "compendium" }); });
     pane.appendChild(comp);
 
@@ -920,7 +948,7 @@
     DOMAIN_LIST.forEach(function (d) {
       var a = btn("cdw-area");
       a.setAttribute("data-domain-id", d.id);
-      a.appendChild(icon(domainIcon(d.id)));
+      a.appendChild(iconTile(domainIcon(d.id), 16));
       var mm = el("span", "cdw-area-main");
       mm.appendChild(el("span", "cdw-area-title", d.title));
       mm.appendChild(el("span", "cdw-area-blurb", d.blurb || ""));
@@ -1063,11 +1091,13 @@
         if (!open) group.setAttribute("hidden", "");
         else {
           group.appendChild(el("div", "cdw-sgroup-h", subgroupTitle(subId)));
-          rows.slice(0, 8).forEach(function (s) {
+          var cap = 8;
+          if (opts.row && rows.some(function (s) { return s.id === opts.row; })) cap = rows.length;
+          rows.slice(0, cap).forEach(function (s) {
             group.appendChild(settingRow(s));
             group.appendChild(whyDetails(s));
           });
-          if (rows.length > 8) {
+          if (rows.length > cap) {
             var more = btn("pm-btn cdw-facets-clear", "Open all " + rows.length + " in the Compendium");
             more.addEventListener("click", function () {
               compState.domain = domainId;
@@ -1126,7 +1156,7 @@
     var c = btn("cdw-mgr");
     c.setAttribute("data-manager-id", m.id);
     var top = el("span", "cdw-mgr-top");
-    top.appendChild(icon(m.icon || "box"));
+    top.appendChild(iconTile(m.icon || "box", 15));
     top.appendChild(el("span", "cdw-mgr-title", m.title));
     top.appendChild(el("span", "cdw-mgr-arch", humanize(m.archetype)));
     c.appendChild(top);
@@ -1335,6 +1365,7 @@
     main.appendChild(detailHost);
 
     /* third detail column (>=1700px) */
+    wrap.appendChild(main);
     var detailCol = el("aside", "cdw-comp-detail-col pmv2-scroll");
     detailCol.setAttribute("aria-label", "Setting detail");
     wrap.appendChild(detailCol);
@@ -2064,6 +2095,303 @@
     if (artifacts.length) host.appendChild(list);
     else host.appendChild(el("p", "pm-muted", "No generated outputs found."));
   }
+
+  
+  /* ---------- context column (visible >= 1700px) -------------------------- */
+  function renderContext() {
+    if (!contextEl) return;
+    contextEl.innerHTML = "";
+    var proj = store.currentProject() || { name: "Puppet Master", path: "P:/" };
+    var card = el("div", "cdw-deferred");
+    card.appendChild(el("strong", null, proj.name));
+    card.appendChild(el("p", "pm-muted", "Current project. Every editable setting on this page applies to this project only."));
+    contextEl.appendChild(card);
+
+    var here = el("div", "cdw-deferred");
+    here.appendChild(el("strong", null, "You are here"));
+    here.appendChild(el("p", "pm-muted", "Settings / " + routeLabel(route)));
+    var sc = store.activeScenario && store.activeScenario();
+    if (sc) {
+      var pr = store.projection("context");
+      var line = el("p", "pm-muted", "Demo scenario: " + humanize(sc) + (pr && pr.message ? " — " + pr.message : ""));
+      here.appendChild(line);
+    }
+    contextEl.appendChild(here);
+  }
+
+  /* ---------- truthful scenario strip ------------------------------------- */
+  function scenarioStrip() {
+    var name = store.activeScenario && store.activeScenario();
+    if (!name) return null;
+    var pr = store.projection("main") || { state: name, message: null, cached: false };
+    var bar = el("div", "cdw-arrive");
+    bar.removeAttribute("hidden");
+    bar.appendChild(icon("alert"));
+    var txt = "Demo scenario — " + humanize(name) + (pr.message ? ". " + pr.message : "");
+    if (pr.cached) txt += " Cached values remain visible while refreshing.";
+    bar.appendChild(el("span", null, txt));
+    return bar;
+  }
+
+  /* ---------- central dispatch (completes the router) ---------------------- */
+  function renderAll(opts) {
+    opts = opts || {};
+    renderChrome();
+    renderNav();
+    mainEl.innerHTML = "";
+    var node = null;
+    if (route.view === "domain") node = renderDomain(route.domainId, route);
+    else if (route.view === "manager") node = renderManager(route.managerId, route);
+    else if (route.view === "deferred") node = renderDeferred(route.defId || route.deferredId);
+    else if (route.view === "compendium") node = renderCompendium();
+    else if (route.view === "copy") node = renderCopyView();
+    else node = renderHome();
+    if (node) mainEl.appendChild(node);
+    var strip = scenarioStrip();
+    if (strip) mainEl.insertBefore(strip, mainEl.firstChild);
+    renderContext();
+    if (!opts.keepScroll) { try { mainEl.scrollTop = 0; } catch (e) { /* noop */ } }
+  }
+
+  /* ---------- Copy Settings From Another Project (one-time transaction) ---- */
+  var COPY_STEPS = [
+    ["source", "Select source"], ["categories", "Select categories"],
+    ["preview", "Review & confirm"], ["receipt", "Complete"]
+  ];
+
+  function copyStepsEl(here) {
+    var ol = el("ol", "cdw-copy-steps");
+    var hereIdx = -1;
+    COPY_STEPS.forEach(function (s, i) { if (s[0] === here) hereIdx = i; });
+    COPY_STEPS.forEach(function (s, i) {
+      if (i > 0) { var sep = el("li", "cdw-copy-sep", "›"); sep.setAttribute("aria-hidden", "true"); ol.appendChild(sep); }
+      var li = el("li", "cdw-copy-step" + (i === hereIdx ? " is-here" : (i < hereIdx ? " is-done" : "")));
+      li.appendChild(el("b", null, String(i + 1)));
+      li.appendChild(el("span", null, s[1]));
+      ol.appendChild(li);
+    });
+    return ol;
+  }
+
+  function renderCopyView() {
+    var pane = el("section", "cdw-pane cdw-pane-wide");
+    pane.setAttribute("data-view", "copy");
+    var wrap = el("div", "cdw-copy");
+    pane.appendChild(sectionHead("Copy Settings From Another Project", "one-time transaction"));
+    wrap.appendChild(el("p", "pm-muted",
+      "Copies values into this project once, behind a restore point. Nothing stays linked: later changes in the source project never propagate here."));
+    if (!copyEngine) { wrap.appendChild(el("p", null, "Copy is unavailable in this demo build.")); pane.appendChild(wrap); return pane; }
+
+    var st = copyState;
+    var step = st.step || "source";
+    wrap.appendChild(copyStepsEl(step === "rolled-back" ? "receipt" : step));
+
+    if (step === "source") {
+      wrap.appendChild(el("h3", null, "Choose the source project"));
+      var list = el("div", "cdw-mlist");
+      copyEngine.sources().forEach(function (pr) {
+        var b = btn("cdw-mobj");
+        b.style.textAlign = "start";
+        var mm = el("span", "cdw-mobj-main");
+        mm.appendChild(el("span", "cdw-mobj-label", pr.name));
+        mm.appendChild(el("span", "cdw-mobj-sub", pr.path + " · " + plural(pr.settings, "setting") + " · updated " + pr.updated));
+        b.appendChild(mm);
+        b.addEventListener("click", function () {
+          if (copyEngine.selectSource(pr.id)) { st.sourceId = pr.id; st.step = "categories"; renderAll({}); }
+        });
+        list.appendChild(b);
+      });
+      wrap.appendChild(list);
+    } else if (step === "categories") {
+      wrap.appendChild(el("h3", null, "Choose what to copy"));
+      var cats = el("div", "cdw-mlist");
+      REG.COPY_CATEGORIES.forEach(function (c) {
+        var row = el("label", "cdw-mobj");
+        row.style.display = "flex"; row.style.gap = "10px"; row.style.alignItems = "flex-start";
+        var cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.checked = st.categories.indexOf(c.id) >= 0;
+        cb.addEventListener("change", function () {
+          var i = st.categories.indexOf(c.id);
+          if (cb.checked && i < 0) st.categories.push(c.id);
+          if (!cb.checked && i >= 0) st.categories.splice(i, 1);
+        });
+        var mm = el("span", "cdw-mobj-main");
+        mm.appendChild(el("span", "cdw-mobj-label", c.title));
+        mm.appendChild(el("span", "cdw-mobj-sub", c.note));
+        row.appendChild(cb); row.appendChild(mm);
+        cats.appendChild(row);
+      });
+      wrap.appendChild(cats);
+      var nav = el("div", null);
+      nav.style.display = "flex"; nav.style.gap = "8px"; nav.style.marginTop = "10px";
+      var back = btn("pm-btn", "Back");
+      back.addEventListener("click", function () { st.step = "source"; renderAll({ keepScroll: true }); });
+      var next = btn("pm-btn", "Preview copy");
+      next.setAttribute("data-variant", "primary");
+      next.addEventListener("click", function () {
+        if (!copyEngine.setCategories(st.categories)) { toast(copyEngine.error || "Select at least one category."); return; }
+        if (copyEngine.buildPreview()) { st.step = "preview"; renderAll({}); }
+      });
+      nav.appendChild(back); nav.appendChild(next);
+      wrap.appendChild(nav);
+    } else if (step === "preview") {
+      var pv = copyEngine.preview;
+      if (!pv) { st.step = "categories"; renderAll({}); return pane; }
+      var totals = el("div", "cdw-copy-totals");
+      [["add", "Additions"], ["replace", "Replacements"], ["unchanged", "Unchanged"], ["unavailable", "Unavailable"], ["conflict", "Conflicts"]].forEach(function (k) {
+        var t = el("div", "cdw-copy-total");
+        t.setAttribute("data-kind", k[0]);
+        t.appendChild(el("b", null, String(pv.totals[k[0]] || 0)));
+        t.appendChild(el("span", null, k[1]));
+        totals.appendChild(t);
+      });
+      wrap.appendChild(totals);
+
+      [["add", "Additions"], ["replace", "Replacements"], ["conflict", "Conflicts — source wins after confirmation"], ["unchanged", "Unchanged"], ["unavailable", "Unavailable — skipped"]].forEach(function (k) {
+        var items = (pv.groups && pv.groups[k[0]]) || [];
+        if (!items.length) return;
+        var diff = el("div", "cdw-diff");
+        var h = el("div", "cdw-diff-h", k[1]);
+        var total = pv.totals[k[0]] || 0;
+        h.appendChild(el("span", "cdw-diff-n", total > items.length ? "showing " + items.length + " of " + total : plural(items.length, "row")));
+        diff.appendChild(h);
+        items.forEach(function (it) {
+          var r = el("div", "cdw-diff-row");
+          var lab = el("span", "cdw-diff-label");
+          lab.appendChild(el("b", null, it.label));
+          lab.appendChild(el("small", null, it.note || it.id));
+          r.appendChild(lab);
+          if (k[0] === "unchanged" || k[0] === "unavailable") {
+            r.appendChild(el("span", "cdw-diff-same", fmtValue(it.incoming)));
+          } else {
+            r.appendChild(el("span", "cdw-diff-val", it.current == null ? "—" : fmtValue(it.current)));
+            r.appendChild(el("span", "cdw-diff-arrow", "→"));
+            var nv = el("span", "cdw-diff-val is-new", fmtValue(it.incoming));
+            r.appendChild(nv);
+          }
+          diff.appendChild(r);
+        });
+        wrap.appendChild(diff);
+      });
+
+      var cred = el("p", "pm-muted", pv.credentialPolicy);
+      wrap.appendChild(cred);
+      wrap.appendChild(el("p", "pm-muted", pv.independence));
+
+      var nav2 = el("div", null);
+      nav2.style.display = "flex"; nav2.style.gap = "8px"; nav2.style.marginTop = "10px";
+      var back2 = btn("pm-btn", "Back");
+      back2.addEventListener("click", function () { st.step = "categories"; renderAll({ keepScroll: true }); });
+      var apply = btn("pm-btn", "Copy settings");
+      apply.setAttribute("data-variant", "primary");
+      apply.addEventListener("click", function () {
+        copyEngine.confirm();
+        var op = copyEngine.apply();
+        st.op = op;
+        st.step = copyEngine.state === "receipt" ? "receipt" : (copyEngine.state === "failed" ? "preview" : "receipt");
+        if (copyEngine.state === "failed") toast(copyEngine.error || "Copy failed safely; nothing was applied.");
+        renderAll({});
+      });
+      nav2.appendChild(back2); nav2.appendChild(apply);
+      wrap.appendChild(nav2);
+    } else { /* receipt / rolled-back */
+      var rc = copyEngine.receipt;
+      if (rc) {
+        var box = el("div", "cdw-deferred");
+        box.appendChild(el("strong", null, (st.step === "rolled-back" || rc.rolledBack) ? "Copy rolled back" : "Copy complete"));
+        box.appendChild(el("p", "pm-muted",
+          rc.title + " — " + (rc.totals ? (rc.totals.add + rc.totals.replace) + " values applied" : "") +
+          ". Restore point " + rc.restorePointId + (rc.verified ? ". Destination verified." : ".")));
+        box.appendChild(el("p", "pm-muted", rc.independence || "Source and destination are independent."));
+        wrap.appendChild(box);
+        if (!(st.step === "rolled-back" || rc.rolledBack)) {
+          var rb = btn("pm-btn", "Roll back this copy");
+          rb.addEventListener("click", function () {
+            if (copyEngine.rollback()) { st.step = "rolled-back"; toast("Rolled back to the restore point."); renderAll({ keepScroll: true }); }
+          });
+          wrap.appendChild(rb);
+        }
+      }
+      var again = btn("pm-btn", "Start another copy");
+      again.addEventListener("click", function () { copyEngine.reset(); copyState = { categories: [] }; renderAll({}); });
+      wrap.appendChild(again);
+    }
+
+    pane.appendChild(wrap);
+    return pane;
+  }
+
+  /* ---------- demo scenario drawer ------------------------------------------ */
+  var scenarioDrawerWired = false;
+  function wireScenarioDrawer() {
+    if (scenarioDrawerWired) return;
+    scenarioDrawerWired = true;
+    var scrim = document.getElementById("cdw-scrim");
+    var drawer = document.getElementById("cdw-demo");
+    var list = document.getElementById("cdw-demo-list");
+    var closeBtn = document.getElementById("cdw-demo-close");
+    var clearBtn = document.getElementById("cdw-demo-clear");
+    var opener = document.querySelector("[data-demo-open]");
+    if (!drawer || !list) return;
+    function openDrawer() {
+      renderScenarioList();
+      if (scrim) scrim.hidden = false;
+      drawer.hidden = false;
+      if (opener) opener.setAttribute("aria-expanded", "true");
+    }
+    function closeDrawer() {
+      if (scrim) scrim.hidden = true;
+      drawer.hidden = true;
+      if (opener) opener.setAttribute("aria-expanded", "false");
+    }
+    function renderScenarioList() {
+      list.innerHTML = "";
+      var cur = store.activeScenario && store.activeScenario();
+      store.scenarios().forEach(function (name) {
+        var b = btn("pm-btn", humanize(name));
+        b.style.justifyContent = "flex-start";
+        b.style.textAlign = "start";
+        if (cur === name) b.setAttribute("data-variant", "primary");
+        b.addEventListener("click", function () {
+          store.setScenario(name);
+          closeDrawer();
+          toast("Scenario: " + humanize(name));
+          renderAll({ keepScroll: true });
+        });
+        list.appendChild(b);
+      });
+    }
+    if (opener) opener.addEventListener("click", openDrawer);
+    if (closeBtn) closeBtn.addEventListener("click", closeDrawer);
+    if (scrim) scrim.addEventListener("click", closeDrawer);
+    if (clearBtn) clearBtn.addEventListener("click", function () {
+      store.setScenario(null);
+      closeDrawer();
+      renderAll({ keepScroll: true });
+    });
+    document.addEventListener("keydown", function (ev) {
+      if (ev.key !== "Escape") return;
+      if (!drawer.hidden) { ev.stopPropagation(); closeDrawer(); return; }
+      if (facetDrawer) { ev.stopPropagation(); closeFacetDrawer(); return; }
+      if (resultsEl && !resultsEl.hasAttribute("hidden")) return; // dropdown handles its own Escape
+      if (backStack.length) { goBack(); }
+    });
+  }
+
+  /* ---------- boot ----------------------------------------------------------- */
+  function boot() {
+  if (window.PMShell && window.PMShell.init) window.PMShell.init();
+    if (!buildChrome()) return;
+    wireSearch();
+    wireScenarioDrawer();
+    try {
+      if (rootEl && rootEl.clientWidth && rootEl.clientWidth <= 940 && navEl) navEl.setAttribute("hidden", "");
+    } catch (e) { /* noop */ }
+    renderAll({});
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
 
   /*__CDW_APPEND__*/
 })();

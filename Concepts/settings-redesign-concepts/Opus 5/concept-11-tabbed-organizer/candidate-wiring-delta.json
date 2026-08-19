@@ -1,0 +1,105 @@
+{
+ "schema_id": "pm.settings_candidate_wiring_delta.v2",
+ "concept_id": "concept-11-tabbed-organizer",
+ "model": "Opus 5",
+ "generated": "2026-08-19",
+ "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+ "rule": "UI source -> command -> canonical owner -> validation/permission -> state mutation or operation -> event/receipt/ObservableWork -> UI projection -> Usage/diagnostic attribution -> recovery/deep link",
+ "honesty_note": "This concept is a prototype. Nothing below is production wiring: local state and seeded receipts stand in for it, and that substitution is stated rather than implied. The traces record what the wiring WOULD have to be.",
+ "concept_specific": {
+  "route_state_machine": "explicit: home | query | domain | manager | copy | all, each with an optional state fixture, parsed into a destination object before anything renders",
+  "persistence_keys": "pm2:concept-11-tabbed-organizer:v2 — changed values, manager edits, dismissed notices, copy receipts, the active fixture and the last route. In-flight operations are deliberately not persisted.",
+  "back_contract": "Back moves one Settings level out and names its destination; Escape closes popup, then detail or drawer, then one level out, and stops at Settings Home",
+  "narrow_contract": "tab rows become a horizontally scrolling chip rail with the current chip pinned into view"
+ },
+ "traces": [
+  {
+   "source": "Universal search result chosen",
+   "command": "cmd.settings.search.select_result",
+   "owner": "Settings navigation",
+   "validation": "the immutable result id must still resolve; an id that no longer exists returns a kept-query notice rather than a guess",
+   "effect": "route change to the resolved destination object",
+   "observable": "none — navigation is synchronous",
+   "projection": "domain, page, manager, object, section and row selected, focus moved, one calm locator highlight",
+   "recovery": "Back restores both the query text and the chosen result"
+  },
+  {
+   "source": "Setting control changed",
+   "command": "cmd.settings.value.set",
+   "owner": "Settings value store",
+   "validation": "type and range check; permission and FileSafe where the value governs tool reach",
+   "effect": "value written for the current Project at an expected revision",
+   "observable": "none for a local write; an ObservableWork operation when the value triggers a restart or a probe",
+   "projection": "row state becomes Changed; the copy preview and All Settings counts move with it",
+   "recovery": "restore the default; a stale revision surfaces as the changed-elsewhere state rather than a silent overwrite"
+  },
+  {
+   "source": "`Why this value?`",
+   "command": "cmd.settings.value.explain",
+   "owner": "Settings value store",
+   "validation": "none — read-only",
+   "effect": "none",
+   "observable": "none",
+   "projection": "origin, default, recommendation, restart requirement and availability reason in Details",
+   "recovery": "n/a"
+  },
+  {
+   "source": "Manager opened",
+   "command": "cmd.settings.manager.open",
+   "owner": "the manager's own domain owner",
+   "validation": "availability of the manager on this host",
+   "effect": "lazy hydration of that manager only",
+   "observable": "hydration is not an operation; any probe it starts is",
+   "projection": "manager surface inside the same Settings shell, Project, breadcrumb, search, Back and Close retained",
+   "recovery": "Back returns to the owning domain"
+  },
+  {
+   "source": "Provider install / set up",
+   "command": "cmd.provider.installation.install",
+   "owner": "BinaryLocator and the shared integration lifecycle",
+   "validation": "explicit user action, exact host or environment, official source, publisher and architecture verification",
+   "effect": "installation staged, verified, activated and bound by identity",
+   "observable": "ObservableWork with named phases and a real denominator only where one exists",
+   "projection": "installation row moves from not present to in use; shadowed candidates named",
+   "recovery": "rollback to the previous generation; an unidentifiable owner stays manual-only"
+  },
+  {
+   "source": "Copy settings from another Project",
+   "command": "cmd.settings.copy_from_project.apply",
+   "owner": "Settings lifecycle",
+   "validation": "source readable, destination writable, preview still current",
+   "effect": "restore point, then one atomic write of the previewed values, then verification",
+   "observable": "ObservableWork with a counted denominator, cancellable before commit",
+   "projection": "receipt with counts and a rollback action; the two Projects remain independent",
+   "recovery": "verification failure rolls the whole transaction back and says so"
+  },
+  {
+   "source": "Deferred owner opened",
+   "command": "cmd.settings.owner.open",
+   "owner": "the named owner module",
+   "validation": "owner availability",
+   "effect": "hand-off with the originating destination and a continuation token",
+   "observable": "the owner's own operation, projected read-only in Settings",
+   "projection": "the owner's surface; Settings keeps the destination that opened it",
+   "recovery": "the owner returns to the exact Settings destination named in its return contract"
+  },
+  {
+   "source": "Doctor repair",
+   "command": "cmd.doctor.repair.start",
+   "owner": "the subsystem being repaired",
+   "validation": "the check must currently be failing; a passing check offers no repair",
+   "effect": "dispatch to the owning subsystem's existing repair command",
+   "observable": "ObservableWork, with a truthful terminal, degraded or recovery-required state",
+   "projection": "the check re-runs and reports its own result; Doctor never asserts success on the owner's behalf",
+   "recovery": "retry, or escalate to the named owner"
+  }
+ ],
+ "notifications_and_receipts": {
+  "inbox": "Every simulated operation emits one receipt into the shell's notification inbox through the single PMSim/PMWork path, so an operation can never appear twice or not at all.",
+  "receipt_contents": "operation, real call a production build would invoke, outcome word, timestamp, and the rollback action where one exists"
+ },
+ "unresolved": [
+  "Whether cmd.settings.copy_from_project.rollback is a new id or a reuse of the restore-point command is a census question, not a design question.",
+  "Whether Doctor's repairs dispatch by command id or by a typed capability handle depends on how the owning subsystems already expose repair."
+ ]
+}

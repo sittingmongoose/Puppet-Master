@@ -24,10 +24,10 @@
     "section": "accounts",
     "row": "ai.accounts.openai-api-key"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass \u2014 row ai.accounts.openai-api-key highlighted (.pmv2-locate, visible) and focused",
+   "back_restores": "n/a \u2014 base-layer result pushes no layer; query persists in input; refocusing search reopens dropdown with this hit active",
    "case": "deep setting row into provider credentials",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "openai api key",
@@ -50,10 +50,11 @@
     "section": "overview",
     "row": null
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass — highlight+focus land in the ACTIVE OpenAI detail layer: .pmv2-locate applied to the visible top-layer scroll host (data-object-id=openai), activeElement is the located node, element visible",
+   "back_restores": "pass — crumb Back restores query 'openai api key', reopens dropdown, hit r_51b49747eae5c2a3 active",
    "case": "manager object (provider)",
-   "pass": "pending-verification-phase"
+   "pass": "pass",
+   "verification_note": "FIXED 2026-08-19 (tab f11): locate is now scoped to the active top layer instead of sheet-wide, so the hidden parent roster row no longer steals highlight/focus. Destination: AI tab > Providers > OpenAI detail layer, Overview section selected (crumb Settings > AI Brains & Providers > Providers > OpenAI)"
   },
   {
    "query": "theem",
@@ -76,10 +77,10 @@
     "section": "visual",
     "row": "general.visual.theme"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
-   "case": "typo tolerance (theem → Theme)",
-   "pass": "pending-verification-phase"
+   "focus_highlight": "pass \u2014 row general.visual.theme highlighted+focused (visual subtab selected); verified for both 'theem' (typo tolerance) and 'theme' queries",
+   "back_restores": "n/a \u2014 base-layer result; query persists in input; refocus reopens dropdown with hit active",
+   "case": "typo tolerance (theem \u2192 Theme)",
+   "pass": "pass"
   },
   {
    "query": "rate limit",
@@ -102,10 +103,10 @@
     "section": "accounts",
     "row": "ai.accounts.cooldown-policy"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass \u2014 row ai.accounts.cooldown-policy highlighted+focused",
+   "back_restores": "n/a \u2014 base-layer result; query persists in input",
    "case": "grouped results case",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "rate limit",
@@ -128,10 +129,11 @@
     "section": null,
     "row": null
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass \u2014 providers manager layer located+focused (visible)",
+   "back_restores": "pass \u2014 Back restores query 'rate limit' + dropdown + active hit",
    "case": "duplicate/similar label lands on a different destination",
-   "pass": "pending-verification-phase"
+   "pass": "pass",
+   "verification_note": "FIXED 2026-08-19 (tab f11): dest.page 'rate-limits' honored — validated against manager subpage slugs and applied as the manager subpage selection; providers manager opens with the 'Rate Limits' tab selected (.tbo-subtab[data-section-id=rate-limits][aria-selected=true], 7 subpage tabs). Back restores query 'rate limit' + dropdown + active hit"
   },
   {
    "query": "copy settings",
@@ -154,16 +156,17 @@
     "section": "copy",
     "row": null
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass \u2014 lifecycle manager located+focused",
+   "back_restores": "pass \u2014 Back restores query 'copy settings' + dropdown + active hit",
    "case": "action result",
-   "pass": "pending-verification-phase"
+   "pass": "pass",
+   "verification_note": "section 'copy' not separately honored; lifecycle manager default view already shows the transaction preview UI"
   },
   {
    "query": "copy settings",
    "result_id": "r_773d3ba5904888a1",
    "result_type": "intentional_help_result",
-   "displayed_path": "Settings / System & Advanced / Settings Lifecycle — Help",
+   "displayed_path": "Settings / System & Advanced / Settings Lifecycle \u2014 Help",
    "expected_destination": {
     "domain": "system",
     "page": null,
@@ -180,10 +183,11 @@
     "section": "help",
     "row": null
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass \u2014 lifecycle manager located+focused",
+   "back_restores": "pass \u2014 Back restores query 'copy settings' + dropdown + active hit",
    "case": "intentional help result",
-   "pass": "pending-verification-phase"
+   "pass": "pass",
+   "verification_note": "help result lands on the identical lifecycle default view as the action result; no distinct help section"
   },
   {
    "query": "doctor",
@@ -206,10 +210,10 @@
     "section": null,
     "row": null
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass \u2014 doctor manager located+focused; read-only status content rendered",
+   "back_restores": "pass \u2014 Back restores query 'doctor' + dropdown + active hit",
    "case": "diagnostic / read-only status",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "install claude",
@@ -232,10 +236,10 @@
     "section": "advanced",
     "row": "system.advanced.cli-path-claude"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass \u2014 row system.advanced.cli-path-claude highlighted+focused (advanced subtab selected)",
+   "back_restores": "n/a \u2014 base-layer result; query persists in input",
    "case": "setup/repair workflow (explicit official-source CLI setup)",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "theme",
@@ -258,10 +262,10 @@
     "section": "visual",
     "row": "general.visual.theme"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass \u2014 row general.visual.theme highlighted+focused (visual subtab selected); verified for both 'theem' (typo tolerance) and 'theme' queries",
+   "back_restores": "n/a \u2014 base-layer result; query persists in input; refocus reopens dropdown with hit active",
    "case": "ordinary setting row",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "memory retention",
@@ -284,10 +288,11 @@
     "section": null,
     "row": null
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass \u2014 memory manager located+focused",
+   "back_restores": "pass \u2014 Back restores query 'memory retention' + dropdown + active hit",
    "case": "memory domain deep row",
-   "pass": "pending-verification-phase"
+   "pass": "pass",
+   "verification_note": "FIXED 2026-08-19 (tab f11): dest.page 'retention' honored — memory manager opens with the 'Retention' subpage tab selected (data-section-id=retention, aria-selected=true, 3 tabs). Back restores query 'memory retention' + dropdown + active hit"
   },
   {
    "query": "worktree",
@@ -310,10 +315,10 @@
     "section": null,
     "row": null
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass \u2014 source-control manager located+focused",
+   "back_restores": "pass \u2014 Back restores query 'worktree' + dropdown + active hit",
    "case": "branching domain result",
-   "pass": "pending-verification-phase"
+   "pass": "pass"
   },
   {
    "query": "shortcut",
@@ -336,10 +341,11 @@
     "section": "commands",
     "row": "extensions.commands.shortcut-hints"
    },
-   "focus_highlight": "pending-verification-phase",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "pass — base-page row extensions.commands.shortcut-hints highlighted+focused (.pmv2-locate, visible); 'commands' subgroup tab selected; NO manager layer pushed",
+   "back_restores": "n/a — base-layer result pushes no layer; query 'shortcut' persists in input; refocus reopens dropdown with hit active",
    "case": "extensions domain result",
-   "pass": "pending-verification-phase"
+   "pass": "pass",
+   "verification_note": "FIXED 2026-08-19 (tab f11): page 'commands' names the domain subgroup that actually contains the row, so the base-page row now wins over the same-named manager (page→manager resolution is skipped when it would strand a base-page setting row)"
   },
   {
    "query": "theem",
@@ -348,10 +354,11 @@
    "displayed_path": null,
    "expected_destination": null,
    "actual_destination": null,
-   "focus_highlight": "n/a",
-   "back_restores": "pending-verification-phase",
+   "focus_highlight": "n/a \u2014 session case",
+   "back_restores": "pass \u2014 after choosing the Theme result, query 'theem' persists in the search input; refocusing reopens the dropdown with r_0fb731e11753ac25 active. For pushed-layer (manager) results, crumb Back restores query + dropdown + active hit (verified on 8 cases)",
    "case": "Back restores the query and the selected result in the dropdown",
-   "pass": "pending-verification-phase"
+   "pass": "pass",
+   "verification_note": "Base-layer (setting row) results have no sheet Back button (no layer pushed); restore happens via search refocus. Session state saved via store.saveSearchState."
   }
  ]
 }

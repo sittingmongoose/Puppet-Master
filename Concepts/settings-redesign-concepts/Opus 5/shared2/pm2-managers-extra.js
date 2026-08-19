@@ -305,7 +305,10 @@
             actions.push({ id: "provider.open_subpage", label: "Accounts and models", kind: "quiet" });
 
             return {
-              id: "prov-" + p.id,
+              /* The provider's own id, not a prefixed one: the search index, this roster and
+               * the route grammar have to name the same object or a deep link into a
+               * provider resolves against nothing. */
+              id: p.id,
               name: p.name,
               secondary: p.summary,
               status: p.status || "ok",
@@ -432,6 +435,54 @@
               actions: [{ id: "provider.open_subpage", label: "Open diagnostics", kind: "quiet" }]
             }
           ]
+        },
+        {
+          /* The installations themselves, not just a pointer at them. Search indexes
+           * every detected installation as its own result, and a result whose
+           * destination has no row to land on is a broken link — so the rows the
+           * index names live here, on the manager's own installations subpage.
+           *
+           * Normal identity first: the human name of the tool and the host it is on.
+           * Resolved launcher, real path, owner and confidence are advanced detail,
+           * which is where the adjudication says they belong. */
+          id: "installations",
+          label: "Installations found on this machine",
+          kind: "list",
+          summary: "What was detected, which candidate this Project uses, and which are shadowed. Nothing here was installed by Puppet Master unless you started it.",
+          items: list(data.installations).map(function (inst) {
+            var shadow = inst.selectionState === "shadowed" || inst.shadowed === true;
+            var unknown = inst.installationOwnerKind === "unknown" || inst.ownerIdentity === "unknown";
+            return {
+              id: inst.installationId,
+              name: inst.resolvedPath || inst.configuredCommand || inst.installationId,
+              secondary: (inst.hostLabel || "This computer") +
+                (inst.currentVersion ? " · version " + inst.currentVersion : ""),
+              status: unknown ? "attention" : (shadow ? "setup" : "ok"),
+              statusWord: unknown ? "Owner cannot be named" : (shadow ? "Shadowed" : "In use"),
+              fields: {
+                "Command": inst.configuredCommand || "—",
+                "Host or environment": inst.hostLabel || "—",
+                "Version": inst.currentVersion || "—",
+                "Owner": unknown ? "Unknown — manual only" : (inst.ownerIdentity || inst.installationOwnerKind || "—"),
+                "Resolved path": inst.resolvedPath || "—",
+                "Real path": inst.realPath || "—",
+                "Architecture": inst.architecture || "—",
+                "Update channel": inst.channel || "—"
+              },
+              badges: [
+                { kind: "source", text: unknown ? "Manual only" : "Detected", title: "Puppet Master will not adopt, update or repair an installation it cannot identify." }
+              ],
+              actions: unknown ? [] : [
+                { id: "installation.select", label: "Use this one for this Project", kind: "quiet" },
+                { id: "installation.check_update", label: "Check for an update", kind: "quiet" }
+              ]
+            };
+          }),
+          empty: {
+            headline: "No provider tool was found on this machine",
+            detail: "Nothing is bundled with Puppet Master. Start a setup from a provider above to install one from its official source.",
+            action: null
+          }
         },
         {
           id: "acquisition",
