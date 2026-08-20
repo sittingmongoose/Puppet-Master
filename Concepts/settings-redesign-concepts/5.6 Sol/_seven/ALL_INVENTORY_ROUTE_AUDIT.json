@@ -1,0 +1,98 @@
+{
+  "schema_id": "pm.settings_all_inventory_route_audit.v1",
+  "started_at": "2026-08-19T20:20:46Z",
+  "model_folder": "Concepts/settings-redesign-concepts/5.6 Sol",
+  "inventory_expected": 828,
+  "concepts": {
+    "concept-05-directory-take-1": {
+      "pass": true,
+      "inventory_count": 828,
+      "routes_rendered": 828,
+      "missing_result_ids": [],
+      "malformed_destinations": [],
+      "wrong_routes": [],
+      "not_rendered": [],
+      "page_errors": [],
+      "console_errors": []
+    },
+    "concept-06-directory-take-2": {
+      "pass": true,
+      "inventory_count": 828,
+      "routes_rendered": 828,
+      "missing_result_ids": [],
+      "malformed_destinations": [],
+      "wrong_routes": [],
+      "not_rendered": [],
+      "page_errors": [],
+      "console_errors": []
+    },
+    "concept-07-compendium-workspace": {
+      "pass": true,
+      "inventory_count": 828,
+      "routes_rendered": 828,
+      "missing_result_ids": [],
+      "malformed_destinations": [],
+      "wrong_routes": [],
+      "not_rendered": [],
+      "page_errors": [],
+      "console_errors": []
+    },
+    "concept-08-directory-take-3": {
+      "pass": true,
+      "inventory_count": 828,
+      "routes_rendered": 828,
+      "missing_result_ids": [],
+      "malformed_destinations": [],
+      "wrong_routes": [],
+      "not_rendered": [],
+      "page_errors": [],
+      "console_errors": []
+    },
+    "concept-09-tome-tabs": {
+      "pass": true,
+      "inventory_count": 828,
+      "routes_rendered": 828,
+      "missing_result_ids": [],
+      "malformed_destinations": [],
+      "wrong_routes": [],
+      "not_rendered": [],
+      "page_errors": [],
+      "console_errors": []
+    },
+    "concept-10-command-suite": {
+      "pass": true,
+      "inventory_count": 828,
+      "routes_rendered": 828,
+      "missing_result_ids": [],
+      "malformed_destinations": [],
+      "wrong_routes": [],
+      "not_rendered": [],
+      "page_errors": [],
+      "console_errors": []
+    },
+    "concept-11-tabbed-organizer": {
+      "pass": true,
+      "inventory_count": 828,
+      "routes_rendered": 828,
+      "missing_result_ids": [],
+      "malformed_destinations": [],
+      "wrong_routes": [],
+      "not_rendered": [],
+      "page_errors": [],
+      "console_errors": []
+    }
+  },
+  "hub": {
+    "os_assigned_port": true,
+    "port": 34605
+  },
+  "completed_at": "2026-08-19T20:21:05Z",
+  "summary": {
+    "concepts": 7,
+    "concepts_pass": 7,
+    "inventory_ids_per_concept": 828,
+    "canonical_routes_rendered": 5796,
+    "expected_canonical_routes": 5796,
+    "pass": true
+  }
+}

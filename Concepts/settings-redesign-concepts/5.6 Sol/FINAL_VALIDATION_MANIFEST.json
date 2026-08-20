@@ -1,0 +1,322 @@
+{
+  "schema_id": "pm.settings_seven_new_concepts_final_validation.v2",
+  "generated_at_utc": "2026-08-19T20:52:10.137071Z",
+  "status": "pass",
+  "verdict": "PASS — showpiece-ready HTML concepts with named certification boundaries",
+  "model": "5.6 Sol",
+  "model_folder": "Concepts/settings-redesign-concepts/5.6 Sol",
+  "winner_selected": false,
+  "validated_tree": {
+    "file_count_including_manifest": 174,
+    "files_hashed_excluding_manifest": 173,
+    "tree_sha256_excluding_manifest": "ae0756d407ee7f491a360c673385202b8b2793de14341844e224e9f9d32973e7",
+    "reason_manifest_excluded": "Avoids a circular self-hash while sealing every other file in the model folder."
+  },
+  "coverage": {
+    "concepts_total": 7,
+    "concepts_pass": 7,
+    "inventory_settings_per_concept": 828,
+    "inventory_categories_per_concept": 12,
+    "product_index_rows_per_concept": 1007,
+    "synthetic_stress_rows_per_concept": 2000,
+    "canonical_inventory_routes_total": 5796,
+    "canonical_inventory_routes_pass": 5796,
+    "search_cases_total": 112,
+    "search_cases_pass": 112,
+    "manager_routes_total": 329,
+    "manager_routes_pass": 329,
+    "coverage_families_total": 357,
+    "coverage_demonstrated_total": 294,
+    "coverage_deferred_total": 63,
+    "coverage_shared_grammar_total": 0,
+    "coverage_missing_total": 0,
+    "theme_width_cells_total": 336,
+    "theme_width_cells_pass": 336,
+    "copy_flows_total": 7,
+    "copy_flows_pass": 7,
+    "persistence_total": 7,
+    "persistence_pass": 7,
+    "synthetic_excluded_total": 7,
+    "synthetic_excluded_pass": 7,
+    "frozen_files_checked": 49,
+    "frozen_mismatches": 0,
+    "visual_destinations_distinct_total": 1904,
+    "responsive_visual_route_renders_total": 3808,
+    "visual_screenshots_reviewed_total": 7173,
+    "manual_route_review_sheets": 56,
+    "representative_theme_surface_captures_total": 1680,
+    "manual_theme_review_sheets": 14,
+    "interaction_cases_total": 63,
+    "interaction_cases_pass": 63,
+    "compositor_sequences_total": 98,
+    "compositor_sequences_pass": 98,
+    "compositor_frames_observed": 2145,
+    "rendered_search_results_exercised": 1344,
+    "manager_tabs_exercised": 714,
+    "manager_objects_exercised": 546,
+    "state_fixtures_total": 126,
+    "state_fixtures_pass": 126,
+    "final_structural_route_width_evaluations": 10584,
+    "post_fix_motion_sequences": 28,
+    "post_fix_motion_sequences_pass": 28,
+    "post_fix_motion_frames": 182
+  },
+  "direct_visual_review": {
+    "manual_review": true,
+    "distinct_destinations_total": 1904,
+    "responsive_renders_total": 3808,
+    "screenshots_reviewed": 7173,
+    "route_contact_sheets_reviewed": 56,
+    "final_structural_route_width_evaluations": 10584,
+    "final_structural_issues": 0,
+    "theme_width_cells": 336,
+    "theme_surface_captures": 1680,
+    "theme_contact_sheets_reviewed": 14,
+    "open_findings": []
+  },
+  "motion_review": {
+    "browser": "Chromium 144.0.7559.96",
+    "primary_capture": "Chrome DevTools Page.startScreencast compositor frames",
+    "primary_sequences_reviewed_before_final_transaction_repair": 98,
+    "primary_frames_observed": 2145,
+    "unaffected_primary_sequences_retained": 84,
+    "post_fix_capture": "Timed normal Playwright/CDP screenshots with animation-state sampling",
+    "post_fix_sequences_passed": 28,
+    "post_fix_sequences_total": 28,
+    "post_fix_frames": 182,
+    "post_fix_blank_frames": 0,
+    "post_fix_console_errors": 0,
+    "post_fix_overlapping_transition_owners": 0,
+    "maximum_authored_locator_endpoint_ms": 820,
+    "reduced_motion_max_duration_ms": 0.001,
+    "open_findings": []
+  },
+  "final_contract_crawl": {
+    "status": "pass",
+    "rendered_search_results_exercised": 1344,
+    "manager_tabs_exercised": 714,
+    "manager_objects_exercised": 546,
+    "state_fixtures_passed": 126,
+    "state_fixtures_total": 126,
+    "evidence": "_seven/FINAL_CONTRACT_AUDIT.json"
+  },
+  "validation_layers": {
+    "static_json_javascript": {
+      "schema_id": "pm.settings_seven_new_concepts_static_validation.v1",
+      "model_folder": "/mnt/data/pm_polish_work/Puppet-Master-main (1)/Puppet-Master-main/Concepts/settings-redesign-concepts/5.6 Sol",
+      "status": "pass",
+      "checks": {
+        "concepts": 7,
+        "evidence_files_per_concept": 9,
+        "frozen_files": 49,
+        "json_files": 91,
+        "javascript_files_checked": 11
+      },
+      "failures": []
+    },
+    "state_contract": {
+      "status": "pass",
+      "passed": 22,
+      "total": 22
+    },
+    "render_contract": {
+      "status": "pass",
+      "passed": 12,
+      "total": 12
+    },
+    "packet_structural_validator": {
+      "model_folder": "/mnt/data/pm_polish_work/Puppet-Master-main (1)/Puppet-Master-main/Concepts/settings-redesign-concepts/5.6 Sol",
+      "status": "pass",
+      "failures": [],
+      "checks": {
+        "new_concepts_expected": 7,
+        "required_manager_names_per_concept": 42,
+        "required_evidence_files_per_concept": 9,
+        "model_reports_expected": 5
+      }
+    },
+    "packet_custody": {
+      "status": "pass",
+      "members_checked": 76,
+      "failures": 0
+    },
+    "concept_hub_model_folder": {
+      "status": "pass"
+    },
+    "concept_hub_repository_tests": {
+      "status": "pass_with_known_baseline",
+      "hard_coded_expected": {
+        "topics": 6,
+        "models": 28,
+        "cards": 136
+      },
+      "original_counts": {
+        "topics": 6,
+        "models": 28,
+        "cards": 157
+      },
+      "updated_counts": {
+        "topics": 6,
+        "models": 28,
+        "cards": 164
+      },
+      "required_card_delta": 7,
+      "updated_test_rc": 1,
+      "original_test_rc": 1,
+      "updated_tests_summary": "16/17 pass",
+      "original_tests_summary": "16/17 pass",
+      "known_failure": "test_live_catalog_inventory_and_authorship"
+    },
+    "browser_qa": {
+      "status": "pass",
+      "evidence": "_seven/SEVEN_NEW_CONCEPTS_QA.json"
+    },
+    "canonical_inventory_route_audit": {
+      "status": "pass",
+      "evidence": "_seven/ALL_INVENTORY_ROUTE_AUDIT.json"
+    },
+    "packet_compliance": {
+      "status": "pass",
+      "evidence": "PACKET_COMPLIANCE_MATRIX.json"
+    },
+    "json_python_parse": {
+      "status": "pass",
+      "json_files": 91,
+      "python_files": 6,
+      "errors": []
+    },
+    "repository_write_scope": {
+      "schema_id": "pm.settings_outside_scope_audit.v1",
+      "source_archive": "/mnt/data/Puppet-Master-main (1798).zip",
+      "working_repo": "/mnt/data/pm_polish_work/Puppet-Master-main (1)/Puppet-Master-main",
+      "excluded_authorized_scope": "Concepts/settings-redesign-concepts/5.6 Sol/",
+      "status": "pass",
+      "summary": {
+        "original_files_outside_scope": 10238,
+        "current_files_outside_scope": 10238,
+        "unchanged_files": 10238,
+        "missing_files": 0,
+        "extra_files": 0,
+        "changed_files": 0
+      },
+      "missing": [],
+      "extra": [],
+      "changed": []
+    }
+  },
+  "known_repository_baseline": {
+    "concept_hub_cardinality_test": {
+      "test": "test_live_catalog_inventory_and_authorship",
+      "hard_coded_expected_cards": 136,
+      "untouched_uploaded_repository_cards": 157,
+      "updated_repository_cards": 164,
+      "required_delta": 7,
+      "available_tests_result": "16/17 pass in both untouched and updated trees; the same single stale assertion fails.",
+      "disposition": "Documented, not edited, because ConceptHub is outside the packet-authorized write scope."
+    },
+    "tests_folder": {
+      "status": "unavailable",
+      "reason": "The user intentionally removed the large /Tests folder from the uploaded repository.",
+      "impact": "Packet-specific browser, contract, ConceptHub, static, inventory, search, manager, state, visual, and motion validation was completed; the absent suite could not be executed."
+    }
+  },
+  "write_scope": {
+    "authorized": "Concepts/settings-redesign-concepts/5.6 Sol/",
+    "outside_scope_files_checked": 10238,
+    "outside_scope_changed": 0,
+    "outside_scope_missing": 0,
+    "outside_scope_extra": 0,
+    "git_diff_check": "not applicable — uploaded archive contains no .git metadata"
+  },
+  "cleanup": {
+    "temporary_profiles_in_model_folder": 0,
+    "raw_screenshots_recordings_traces_in_model_folder": 0,
+    "pycache_or_dependency_directories_in_model_folder": 0,
+    "raw_capture_policy": "Raw browser captures are kept outside the repository only until curated evidence packaging, then deleted before delivery."
+  },
+  "key_file_hashes": [
+    {
+      "path": "README.md",
+      "size_bytes": 12035,
+      "sha256": "e468d211a274d84fe8f4d6dc0b6b3e5f29fcf39bb4be89ad4699e78cf6f62808"
+    },
+    {
+      "path": "PACKET_COMPLIANCE_MATRIX.json",
+      "size_bytes": 7109,
+      "sha256": "04abb4935338e16dc7951e514c07ad124446ca355bbc6225376faf861189ff1d"
+    },
+    {
+      "path": "SEVEN_NEW_CONCEPTS_AUDIT_REPORT.md",
+      "size_bytes": 7016,
+      "sha256": "40a9db8414d264449858821bfd7a8a5140b9486b3c46edc82d36fbe5fbecd7a8"
+    },
+    {
+      "path": "SEVEN_NEW_CONCEPTS_AUDIT_REPORT.json",
+      "size_bytes": 18372,
+      "sha256": "9b97a43b51c470f831dd0f9a1a8059a2d77746160dde41a4686501c0dc8eb644"
+    },
+    {
+      "path": "SEVEN_NEW_CONCEPTS_TEST_REPORT.md",
+      "size_bytes": 3712,
+      "sha256": "a01576c1078296e17fd0ef5ae7fef7f539cf980fb1f6f5f87989718f6049ac2c"
+    },
+    {
+      "path": "SEVEN_NEW_CONCEPTS_FINDINGS.md",
+      "size_bytes": 5809,
+      "sha256": "a5c9987e0133f689f9812e5e737169aa133e0e2c45a792499adda95de04d112c"
+    },
+    {
+      "path": "SEVEN_NEW_CONCEPTS_VISUAL_AUDIT.json",
+      "size_bytes": 12695,
+      "sha256": "2bdfea01f02464e5e54a0f46b2960c926648492bf7cfa032c9b9bf14e4b48151"
+    },
+    {
+      "path": "SEVEN_NEW_CONCEPTS_IMPACT_REGISTER.json",
+      "size_bytes": 17609,
+      "sha256": "259c469bad0634fae9c53e95c88bf3ddf687fb3a61e552b7c5ed869fcc5abce6"
+    },
+    {
+      "path": "REFERENCE_REVIEW_2026-08-18.json",
+      "size_bytes": 45746,
+      "sha256": "3778e14c8204fd965a5f8f53835dd34283dfaeb55ec202f60b4bca94ec462683"
+    },
+    {
+      "path": "reference-review-report.json",
+      "size_bytes": 44629,
+      "sha256": "b93c2758e45f2b7e7fdb096ca47068f12c054a77cb4cdb867eeceabe8cca51fb"
+    },
+    {
+      "path": "_seven/SEVEN_NEW_CONCEPTS_QA.json",
+      "size_bytes": 539487,
+      "sha256": "945198bcab94192e163f044a55c445ae9a9994e3f569f7599ddfa9905d6206df"
+    },
+    {
+      "path": "_seven/ALL_INVENTORY_ROUTE_AUDIT.json",
+      "size_bytes": 2584,
+      "sha256": "9c9648f6f93ab56ecb7a43370c48db11ddaf9b1fdbf5800e3838846530b3a613"
+    },
+    {
+      "path": "_seven/FINAL_CONTRACT_AUDIT.json",
+      "size_bytes": 768513,
+      "sha256": "0bdcbe066e5fc394f973ec69e5e4aa5da663fc3117886545784a601a760f5f2e"
+    },
+    {
+      "path": "_seven/OUTSIDE_SCOPE_AUDIT.json",
+      "size_bytes": 559,
+      "sha256": "72e53855ab6623c9338f7e65c15454e7a9bfc09143912a3855575933cc3626a2"
+    },
+    {
+      "path": "_seven/frozen-baseline.json",
+      "size_bytes": 5506,
+      "sha256": "fd1d065508c8b8f2195d1e33f11d9a6f343a2dc883ee5dd4e20aa8f63c3550c0"
+    }
+  ],
+  "certification_boundaries": [
+    "Deterministic HTML/Chromium design evidence; not native Slint 1.17.1 certification.",
+    "No physical Ivy Bridge-era or other legacy-hardware performance certification.",
+    "Headless compositor and timed-frame review verifies sequencing, reversal, blank-frame avoidance, supersession, and settled endpoints; it is not a production frame-rate benchmark on every target GPU/driver.",
+    "Nine named owner destinations remain intentional insertion contracts and do not fabricate future backends.",
+    "Candidate Plan, Command, Wiring, DRY, data, and test impacts remain provisional; canonical sources were not edited.",
+    "No winner selected."
+  ]
+}

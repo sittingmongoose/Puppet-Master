@@ -1,0 +1,640 @@
+{
+  "schema": "pm2.manager_coverage.v2",
+  "conceptId": "concept-06-directory-take-2",
+  "generated": "2026-08-20",
+  "families": [
+    {
+      "family": "Settings Home",
+      "surface": "home route",
+      "status": "demonstrated",
+      "route": "#/home",
+      "entryPoints": [
+        "initial load",
+        "rail Home entry",
+        "breadcrumb Settings",
+        "escape ladder terminal"
+      ],
+      "evidence": "Editorial list-led Home: project identity kicker, large underline-rule search, at most one scenario-gated banner, compact attention list, twelve full-width destination rows with quiet counts, inline utility links + recent changes."
+    },
+    {
+      "family": "Settings Search",
+      "surface": "search surface",
+      "status": "demonstrated",
+      "route": "#/search/<query>",
+      "entryPoints": [
+        "Home large field",
+        "topbar compact field on every other surface",
+        "Ctrl/Cmd+K",
+        "deep link #/search/<query>"
+      ],
+      "evidence": "Compact anchored typographic dropdown with slim group headers; label + type + full path + availability per result; rid/dest routing with focus param carrying the rid; Back restores query and results (verified in c06-verify suite)."
+    },
+    {
+      "family": "Settings Workspace",
+      "surface": "workspace routes",
+      "status": "demonstrated",
+      "route": "#/dest/<cat>[/<sub>]",
+      "entryPoints": [
+        "Home destination rows",
+        "persistent text-led domain rail",
+        "narrow crumb selector",
+        "breadcrumbs"
+      ],
+      "evidence": "Single reading column with bounded ~76ch measure; subgroup sections with 4-8 row runs, More/Advanced ruled folds; manager destinations listed per domain; rail persists at every depth."
+    },
+    {
+      "family": "Ordinary setting grammar",
+      "surface": "store.resolveRow rendering",
+      "status": "demonstrated",
+      "route": "#/dest/<cat>/<sub> rows + #/setting/<id>",
+      "entryPoints": [
+        "every domain page row",
+        "All Settings index rows",
+        "setting deep links"
+      ],
+      "evidence": "Rows render title + one concise explanation + live control (toggle/select/multiselect/number/slider/text/path/action) + pm-chip-value chips + stateNote; Details drawer holds legacy scope, related, entries; validation errors render inline from store.setValue."
+    },
+    {
+      "family": "Provider / Account / Model / Installation",
+      "managerId": "m.providers",
+      "status": "demonstrated",
+      "route": "#/manager/m.providers",
+      "entryPoints": [
+        "domain page “In this domain” list on AI Brains & Providers",
+        "universal search (m:m.providers and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (roster-detail): sections [overview, roster]; 9 object detail pages open as in-flow sheets with textual tabs; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Context & Instructions",
+      "managerId": "m.context",
+      "status": "demonstrated",
+      "route": "#/manager/m.context",
+      "entryPoints": [
+        "domain page “In this domain” list on Memory & Context",
+        "universal search (m:m.context and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (preference-doc): sections [form, table, table, overview, table, overview]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Memory",
+      "managerId": "m.memory",
+      "status": "demonstrated",
+      "route": "#/manager/m.memory",
+      "entryPoints": [
+        "domain page “In this domain” list on Memory & Context",
+        "universal search (m:m.memory and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (roster-detail): sections [overview, roster, overview]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Personas",
+      "managerId": "m.personas",
+      "status": "demonstrated",
+      "route": "#/manager/m.personas",
+      "entryPoints": [
+        "domain page “In this domain” list on Personas",
+        "universal search (m:m.personas and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (roster-detail): sections [overview, roster, preview, overview]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Goal & Automation",
+      "managerId": "m.goal",
+      "status": "demonstrated",
+      "route": "#/manager/m.goal",
+      "entryPoints": [
+        "domain page “In this domain” list on Planning & Verification",
+        "universal search (m:m.goal and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (preference-doc): sections [form, overview, overview, overview]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Crew",
+      "managerId": "m.crew",
+      "status": "demonstrated",
+      "route": "#/manager/m.crew",
+      "entryPoints": [
+        "domain page “In this domain” list on Branching & Collaboration",
+        "universal search (m:m.crew and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (roster-detail): sections [overview, roster]; 2 object detail pages open as in-flow sheets with textual tabs; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Permissions & FileSafe",
+      "managerId": "m.permissions",
+      "status": "demonstrated",
+      "route": "#/manager/m.permissions",
+      "entryPoints": [
+        "domain page “In this domain” list on Permissions & Safety",
+        "universal search (m:m.permissions and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (preference-doc): sections [form, table, overview, table, health, form]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Back Seat Driver",
+      "managerId": "m.bsd",
+      "status": "demonstrated",
+      "route": "#/manager/m.bsd",
+      "entryPoints": [
+        "domain page “In this domain” list on Permissions & Safety",
+        "universal search (m:m.bsd and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (preference-doc): sections [form, overview, overview, overview, health]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Notifications & Sounds",
+      "managerId": "m.notifications",
+      "status": "demonstrated",
+      "route": "#/manager/m.notifications",
+      "entryPoints": [
+        "domain page “In this domain” list on General & Appearance",
+        "universal search (m:m.notifications and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (roster-detail): sections [form, roster, table, log]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Sound Library / Uploads / Packs",
+      "managerId": "m.sounds",
+      "status": "demonstrated",
+      "route": "#/manager/m.sounds",
+      "entryPoints": [
+        "domain page “In this domain” list on General & Appearance",
+        "universal search (m:m.sounds and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (catalog): sections [overview, table, roster, table]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Appearance / themes / fonts / motion",
+      "managerId": "m.appearance",
+      "status": "demonstrated",
+      "route": "#/manager/m.appearance",
+      "entryPoints": [
+        "domain page “In this domain” list on General & Appearance",
+        "universal search (m:m.appearance and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (preference-doc): sections [form, roster, form, form, overview]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Spellcheck & Dictionaries",
+      "managerId": "m.spellcheck",
+      "status": "demonstrated",
+      "route": "#/manager/m.spellcheck",
+      "entryPoints": [
+        "domain page “In this domain” list on General & Appearance",
+        "universal search (m:m.spellcheck and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (preference-doc): sections [form, table, table, roster]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Desktop / Tray / Window",
+      "managerId": "m.desktop",
+      "status": "demonstrated",
+      "route": "#/manager/m.desktop",
+      "entryPoints": [
+        "domain page “In this domain” list on General & Appearance",
+        "universal search (m:m.desktop and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (preference-doc): sections [form, form, overview, form, form]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Teacher / Help",
+      "managerId": "m.teacher",
+      "status": "demonstrated",
+      "route": "#/manager/m.teacher",
+      "entryPoints": [
+        "domain page “In this domain” list on General & Appearance",
+        "universal search (m:m.teacher and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (catalog): sections [overview, roster]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Doctor",
+      "managerId": "m.doctor",
+      "status": "demonstrated",
+      "route": "#/manager/m.doctor",
+      "entryPoints": [
+        "domain page “In this domain” list on System & Advanced",
+        "universal search (m:m.doctor and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (health): sections [health, log, overview]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "File Manager / Editor",
+      "managerId": "m.files",
+      "status": "demonstrated",
+      "route": "#/manager/m.files",
+      "entryPoints": [
+        "domain page “In this domain” list on Code & Execution",
+        "universal search (m:m.files and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (preference-doc): sections [form, form, roster, health]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Terminal",
+      "managerId": "m.terminal",
+      "status": "demonstrated",
+      "route": "#/manager/m.terminal",
+      "entryPoints": [
+        "domain page “In this domain” list on Code & Execution",
+        "universal search (m:m.terminal and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (roster-detail): sections [roster, overview]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "LSP",
+      "managerId": "m.lsp",
+      "status": "demonstrated",
+      "route": "#/manager/m.lsp",
+      "entryPoints": [
+        "domain page “In this domain” list on Code & Execution",
+        "universal search (m:m.lsp and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (roster-detail): sections [roster, overview]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Formatters",
+      "managerId": "m.formatters",
+      "status": "demonstrated",
+      "route": "#/manager/m.formatters",
+      "entryPoints": [
+        "domain page “In this domain” list on Code & Execution",
+        "universal search (m:m.formatters and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (catalog): sections [form, table, preview]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Commands & Shortcuts",
+      "managerId": "m.commands",
+      "status": "demonstrated",
+      "route": "#/manager/m.commands",
+      "entryPoints": [
+        "domain page “In this domain” list on Skills, Plugins & Commands",
+        "universal search (m:m.commands and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (catalog): sections [table, roster, health]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "MCP",
+      "managerId": "m.mcp",
+      "status": "demonstrated",
+      "route": "#/manager/m.mcp",
+      "entryPoints": [
+        "domain page “In this domain” list on System & Advanced",
+        "universal search (m:m.mcp and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (roster-detail): sections [roster, overview]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Skills",
+      "managerId": "m.skills",
+      "status": "demonstrated",
+      "route": "#/manager/m.skills",
+      "entryPoints": [
+        "domain page “In this domain” list on Skills, Plugins & Commands",
+        "universal search (m:m.skills and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (catalog): sections [roster, overview]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Plugins",
+      "managerId": "m.plugins",
+      "status": "demonstrated",
+      "route": "#/manager/m.plugins",
+      "entryPoints": [
+        "domain page “In this domain” list on Skills, Plugins & Commands",
+        "universal search (m:m.plugins and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (catalog): sections [roster]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Tools",
+      "managerId": "m.tools",
+      "status": "demonstrated",
+      "route": "#/manager/m.tools",
+      "entryPoints": [
+        "domain page “In this domain” list on Skills, Plugins & Commands",
+        "universal search (m:m.tools and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (catalog): sections [table, overview]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Testing & Debug",
+      "managerId": "m.testing",
+      "status": "demonstrated",
+      "route": "#/manager/m.testing",
+      "entryPoints": [
+        "domain page “In this domain” list on System & Advanced",
+        "universal search (m:m.testing and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (preference-doc): sections [table, overview]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Storage & Retention",
+      "managerId": "m.storage",
+      "status": "demonstrated",
+      "route": "#/manager/m.storage",
+      "entryPoints": [
+        "domain page “In this domain” list on System & Advanced",
+        "universal search (m:m.storage and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (health): sections [health, table, table, roster, log]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Backup & Restore",
+      "managerId": "m.backup",
+      "status": "demonstrated",
+      "route": "#/manager/m.backup",
+      "entryPoints": [
+        "domain page “In this domain” list on System & Advanced",
+        "universal search (m:m.backup and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (roster-detail): sections [overview, roster, form, health, overview]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Settings Lifecycle",
+      "managerId": "m.lifecycle",
+      "status": "demonstrated",
+      "route": "#/manager/m.lifecycle",
+      "entryPoints": [
+        "domain page “In this domain” list on System & Advanced",
+        "universal search (m:m.lifecycle and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (transaction): sections [overview, steps, preview, log, form]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "History & Sessions",
+      "managerId": "m.history",
+      "status": "demonstrated",
+      "route": "#/manager/m.history",
+      "entryPoints": [
+        "domain page “In this domain” list on System & Advanced",
+        "universal search (m:m.history and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (roster-detail): sections [roster, form]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Runtime Artifacts / Project Outputs",
+      "managerId": "m.artifacts",
+      "status": "demonstrated",
+      "route": "#/manager/m.artifacts",
+      "entryPoints": [
+        "domain page “In this domain” list on System & Advanced",
+        "universal search (m:m.artifacts and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (roster-detail): sections [roster, overview]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Source Control / Worktrees",
+      "managerId": "m.sourceControl",
+      "status": "demonstrated",
+      "route": "#/manager/m.sourceControl",
+      "entryPoints": [
+        "domain page “In this domain” list on Branching & Collaboration",
+        "universal search (m:m.sourceControl and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (roster-detail): sections [roster, roster, roster, form, roster]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "GitHub Actions",
+      "managerId": "m.actions",
+      "status": "demonstrated",
+      "route": "#/manager/m.actions",
+      "entryPoints": [
+        "domain page “In this domain” list on Branching & Collaboration",
+        "universal search (m:m.actions and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (health): sections [overview, health, log, overview]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Containers & Registries",
+      "managerId": "m.containers",
+      "status": "demonstrated",
+      "route": "#/manager/m.containers",
+      "entryPoints": [
+        "domain page “In this domain” list on Code & Execution",
+        "universal search (m:m.containers and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (roster-detail): sections [roster, roster, roster, overview]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Web / Search / Fetch / Crawl",
+      "managerId": "m.web",
+      "status": "demonstrated",
+      "route": "#/manager/m.web",
+      "entryPoints": [
+        "domain page “In this domain” list on Web & Search",
+        "universal search (m:m.web and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (roster-detail): sections [roster, form, form, overview, form]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Project Search Index",
+      "managerId": "m.searchIndex",
+      "status": "demonstrated",
+      "route": "#/manager/m.searchIndex",
+      "entryPoints": [
+        "domain page “In this domain” list on Web & Search",
+        "universal search (m:m.searchIndex and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (health): sections [health, form, log]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Workspace Cleanup",
+      "managerId": "m.cleanup",
+      "status": "demonstrated",
+      "route": "#/manager/m.cleanup",
+      "entryPoints": [
+        "domain page “In this domain” list on System & Advanced",
+        "universal search (m:m.cleanup and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (transaction): sections [table, steps, preview]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Media & Output",
+      "managerId": "m.media",
+      "status": "demonstrated",
+      "route": "#/manager/m.media",
+      "entryPoints": [
+        "domain page “In this domain” list on Media & Output",
+        "universal search (m:m.media and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (roster-detail): sections [roster]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "DRY Method visible state where exposed",
+      "managerId": "m.dry",
+      "status": "demonstrated",
+      "route": "#/manager/m.dry",
+      "entryPoints": [
+        "domain page “In this domain” list on Planning & Verification",
+        "universal search (m:m.dry and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Rendered from def.model(store) in the Longform reading column (health): sections [health, overview]; actions run through def.actions(store) with truthful op lines."
+    },
+    {
+      "family": "Product Onboarding",
+      "managerId": "m.onboarding",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.onboarding",
+      "entryPoints": [
+        "domain page “In this domain” list on System & Advanced",
+        "universal search (m:m.onboarding and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Read-only insertion shell: owner, deep link, reachable-from, and return contract rendered verbatim; honest read-only sections from the shell model; no fabricated actions.",
+      "owner": "Product Onboarding owner thread (first-run flow owner; separate from Installation/Deployment and Server Claim/Bootstrap)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.onboarding/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Installation / Deployment",
+      "managerId": "m.deployment",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.deployment",
+      "entryPoints": [
+        "domain page “In this domain” list on System & Advanced",
+        "universal search (m:m.deployment and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Read-only insertion shell: owner, deep link, reachable-from, and return contract rendered verbatim; honest read-only sections from the shell model; no fabricated actions.",
+      "owner": "Release_Supply_Chain.md (installer and deployment supply chain)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.deployment/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Server Claim / Bootstrap",
+      "managerId": "m.serverClaim",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.serverClaim",
+      "entryPoints": [
+        "domain page “In this domain” list on System & Advanced",
+        "universal search (m:m.serverClaim and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Read-only insertion shell: owner, deep link, reachable-from, and return contract rendered verbatim; honest read-only sections from the shell model; no fabricated actions.",
+      "owner": "Server Backbone return (Post-Return Reconciliation v6)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.serverClaim/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Servers / Execution Hosts / Clients",
+      "managerId": "m.servers",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.servers",
+      "entryPoints": [
+        "domain page “In this domain” list on System & Advanced",
+        "universal search (m:m.servers and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Read-only insertion shell: owner, deep link, reachable-from, and return contract rendered verbatim; honest read-only sections from the shell model; no fabricated actions.",
+      "owner": "Server Backbone return (Post-Return Reconciliation v6, sections 4-5)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.servers/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Project Hosting & Files",
+      "managerId": "m.hosting",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.hosting",
+      "entryPoints": [
+        "domain page “In this domain” list on System & Advanced",
+        "universal search (m:m.hosting and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Read-only insertion shell: owner, deep link, reachable-from, and return contract rendered verbatim; honest read-only sections from the shell model; no fabricated actions.",
+      "owner": "storage-plan.md",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.hosting/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Remote Access",
+      "managerId": "m.remote",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.remote",
+      "entryPoints": [
+        "domain page “In this domain” list on System & Advanced",
+        "universal search (m:m.remote and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Read-only insertion shell: owner, deep link, reachable-from, and return contract rendered verbatim; honest read-only sections from the shell model; no fabricated actions.",
+      "owner": "Server Backbone return, section 10",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.remote/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Project Sync / Move",
+      "managerId": "m.projectSync",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.projectSync",
+      "entryPoints": [
+        "domain page “In this domain” list on System & Advanced",
+        "universal search (m:m.projectSync and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Read-only insertion shell: owner, deep link, reachable-from, and return contract rendered verbatim; honest read-only sections from the shell model; no fabricated actions.",
+      "owner": "storage-plan.md (Project Sync owner)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.projectSync/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Puppet Master application/content updates",
+      "managerId": "m.appUpdates",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.appUpdates",
+      "entryPoints": [
+        "domain page “In this domain” list on System & Advanced",
+        "universal search (m:m.appUpdates and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Read-only insertion shell: owner, deep link, reachable-from, and return contract rendered verbatim; honest read-only sections from the shell model; no fabricated actions.",
+      "owner": "Release_Supply_Chain.md",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.appUpdates/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Full Server backup owner flow",
+      "managerId": "m.serverBackup",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.serverBackup",
+      "entryPoints": [
+        "domain page “In this domain” list on System & Advanced",
+        "universal search (m:m.serverBackup and its objects)",
+        "breadcrumb + rail (domain persists)"
+      ],
+      "evidence": "Read-only insertion shell: owner, deep link, reachable-from, and return contract rendered verbatim; honest read-only sections from the shell model; no fabricated actions.",
+      "owner": "storage-plan.md",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.serverBackup/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    }
+  ]
+}

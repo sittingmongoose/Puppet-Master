@@ -1,0 +1,477 @@
+{
+  "schema_id": "pm.settings_seven_new_concepts_impact_register.v2",
+  "model": "5.6 Sol",
+  "folder": "Concepts/settings-redesign-concepts/5.6 Sol",
+  "generated_at_utc": "2026-08-19T20:38:49.856499Z",
+  "status": "candidate_only_complete",
+  "winner_selected": false,
+  "authority_boundary": {
+    "concept_only": true,
+    "canonical_plan_docs_modified": false,
+    "canonical_commands_modified": false,
+    "canonical_wiring_modified": false,
+    "canonical_dry_owners_modified": false,
+    "settings_inventory_or_schema_modified": false,
+    "production_wiring_claimed": false,
+    "candidate_ids_minted": false
+  },
+  "summary": {
+    "concepts": 7,
+    "plan_owner_impact_rows": 35,
+    "candidate_command_census_rows": 91,
+    "candidate_wiring_traces": 70,
+    "candidate_dry_reports": 7,
+    "per_concept_evidence_files": 9,
+    "per_concept_evidence_files_total": 63,
+    "unique_new_candidate_commands": 7,
+    "unique_reuse_or_registry_interactions": 6,
+    "retire_or_alias_candidates": 1
+  },
+  "new_candidate_commands_not_minted": [
+    "cmd.settings.search.submit",
+    "cmd.settings.search.pick_result",
+    "cmd.settings.details.open",
+    "cmd.settings.copy_from_project.preview",
+    "cmd.settings.copy_from_project.apply",
+    "cmd.settings.copy_from_project.rollback",
+    "cmd.provider.cli.install_official"
+  ],
+  "preserve_or_reuse": [
+    "cmd.settings.open",
+    "cmd.settings.escape",
+    "cmd.account.select_profile",
+    "cmd.provider.switch_route",
+    "cmd.usage.refresh",
+    "registry-owned non-command mutation"
+  ],
+  "retire_or_alias_candidates": [
+    "cmd.settings.bloom.open"
+  ],
+  "shared_data_and_semantics": [
+    "Settings inventory IDs and schema-derived control models",
+    "Immutable SettingsSearch result IDs and exact destination objects",
+    "ManagerSemantics route/back/close contracts",
+    "ObservableWork projections",
+    "RuntimeResourceGovernor consumption without a second governor",
+    "Current Project identity and one-time copy transaction semantics"
+  ],
+  "concept_native_visible_surfaces": [
+    "Settings Home composition",
+    "primary navigation geometry",
+    "search dropdown presentation and result reveal",
+    "manager roster/detail composition",
+    "narrow-width transformation",
+    "motion metaphor",
+    "density and typography rhythm"
+  ],
+  "concepts": [
+    {
+      "concept_id": "concept-05-directory-take-1",
+      "title": "Meridian Directory / Take 1",
+      "source_family": "A1 Directory / Take 1",
+      "html": "concept-05-directory-take-1.html",
+      "evidence_dir": "concept-05-directory-take-1",
+      "status": "pass",
+      "inventory_settings": 828,
+      "inventory_categories": 12,
+      "product_index_rows": 1007,
+      "synthetic_stress_rows": 2000,
+      "search_cases": 16,
+      "manager_routes": 47,
+      "manager_coverage": {
+        "demonstrated": 42,
+        "deferred_named_owner": 9,
+        "total": 51,
+        "shared_grammar": 0,
+        "missing": 0
+      },
+      "theme_width_cells": 48,
+      "copy_flow": true,
+      "persistence": true,
+      "isolation": true,
+      "console_errors": [],
+      "candidate_command_entries": 13,
+      "candidate_new_command_ids": [
+        "cmd.settings.search.submit",
+        "cmd.settings.search.pick_result",
+        "cmd.settings.details.open",
+        "cmd.settings.copy_from_project.preview",
+        "cmd.settings.copy_from_project.apply",
+        "cmd.settings.copy_from_project.rollback",
+        "cmd.provider.cli.install_official"
+      ],
+      "candidate_wiring_traces": 10,
+      "plan_owner_impacts": 5,
+      "visual_differentiation": {
+        "home": "Search-first two-column destination directory with compact attention and crisp card hierarchy.",
+        "deep": "Directory card expands into a destination-row workspace while preserving stable Settings chrome.",
+        "manager": "Integrated roster and readable detail form; dense enough for operations without becoming a dashboard wall.",
+        "narrow": "Two columns collapse into one deliberate push stack.",
+        "motion": "Directory-to-workspace expansion and restrained row focus."
+      },
+      "open_findings": {
+        "blockers": [],
+        "majors": [],
+        "minors": [
+          "Concept evidence is HTML/Chromium, not native Slint or physical old-hardware certification."
+        ]
+      }
+    },
+    {
+      "concept_id": "concept-06-directory-take-2",
+      "title": "Editorial Directory / Take 2",
+      "source_family": "A1 Directory / Take 2",
+      "html": "concept-06-directory-take-2.html",
+      "evidence_dir": "concept-06-directory-take-2",
+      "status": "pass",
+      "inventory_settings": 828,
+      "inventory_categories": 12,
+      "product_index_rows": 1007,
+      "synthetic_stress_rows": 2000,
+      "search_cases": 16,
+      "manager_routes": 47,
+      "manager_coverage": {
+        "demonstrated": 42,
+        "deferred_named_owner": 9,
+        "total": 51,
+        "shared_grammar": 0,
+        "missing": 0
+      },
+      "theme_width_cells": 48,
+      "copy_flow": true,
+      "persistence": true,
+      "isolation": true,
+      "console_errors": [],
+      "candidate_command_entries": 13,
+      "candidate_new_command_ids": [
+        "cmd.settings.search.submit",
+        "cmd.settings.search.pick_result",
+        "cmd.settings.details.open",
+        "cmd.settings.copy_from_project.preview",
+        "cmd.settings.copy_from_project.apply",
+        "cmd.settings.copy_from_project.rollback",
+        "cmd.provider.cli.install_official"
+      ],
+      "candidate_wiring_traces": 10,
+      "plan_owner_impacts": 5,
+      "visual_differentiation": {
+        "home": "Editorial single-column destination list with stronger reading rhythm and a restrained supporting rail.",
+        "deep": "Stable domain rail with a quiet content sheet rather than a card grid.",
+        "manager": "Compact roster and detail sheet with editorial grouping.",
+        "narrow": "Single-pane editorial push navigation.",
+        "motion": "Sheet arrival, rail continuity, and quiet section transitions."
+      },
+      "open_findings": {
+        "blockers": [],
+        "majors": [],
+        "minors": [
+          "Concept evidence is HTML/Chromium, not native Slint or physical old-hardware certification."
+        ]
+      }
+    },
+    {
+      "concept_id": "concept-07-compendium-workspace",
+      "title": "Atlas Compendium Workspace",
+      "source_family": "A2 Compendium Workspace / Take 1",
+      "html": "concept-07-compendium-workspace.html",
+      "evidence_dir": "concept-07-compendium-workspace",
+      "status": "pass",
+      "inventory_settings": 828,
+      "inventory_categories": 12,
+      "product_index_rows": 1007,
+      "synthetic_stress_rows": 2000,
+      "search_cases": 16,
+      "manager_routes": 47,
+      "manager_coverage": {
+        "demonstrated": 42,
+        "deferred_named_owner": 9,
+        "total": 51,
+        "shared_grammar": 0,
+        "missing": 0
+      },
+      "theme_width_cells": 48,
+      "copy_flow": true,
+      "persistence": true,
+      "isolation": true,
+      "console_errors": [],
+      "candidate_command_entries": 13,
+      "candidate_new_command_ids": [
+        "cmd.settings.search.submit",
+        "cmd.settings.search.pick_result",
+        "cmd.settings.details.open",
+        "cmd.settings.copy_from_project.preview",
+        "cmd.settings.copy_from_project.apply",
+        "cmd.settings.copy_from_project.rollback",
+        "cmd.provider.cli.install_official"
+      ],
+      "candidate_wiring_traces": 10,
+      "plan_owner_impacts": 5,
+      "visual_differentiation": {
+        "home": "Search, browse-by-area, and recent-change entry points arranged as a compendium rather than a directory.",
+        "deep": "Domain overview plus a faceted All Settings workspace.",
+        "manager": "Integrated list/detail view with readable metadata and facets.",
+        "narrow": "Facets become a drawer and detail pushes over the list.",
+        "motion": "Facet refinement, compendium page transitions, and localized focus reveal."
+      },
+      "open_findings": {
+        "blockers": [],
+        "majors": [],
+        "minors": [
+          "Concept evidence is HTML/Chromium, not native Slint or physical old-hardware certification."
+        ]
+      }
+    },
+    {
+      "concept_id": "concept-08-directory-take-3",
+      "title": "Horizon Directory / Take 3",
+      "source_family": "A1 Directory / Take 3",
+      "html": "concept-08-directory-take-3.html",
+      "evidence_dir": "concept-08-directory-take-3",
+      "status": "pass",
+      "inventory_settings": 828,
+      "inventory_categories": 12,
+      "product_index_rows": 1007,
+      "synthetic_stress_rows": 2000,
+      "search_cases": 16,
+      "manager_routes": 47,
+      "manager_coverage": {
+        "demonstrated": 42,
+        "deferred_named_owner": 9,
+        "total": 51,
+        "shared_grammar": 0,
+        "missing": 0
+      },
+      "theme_width_cells": 48,
+      "copy_flow": true,
+      "persistence": true,
+      "isolation": true,
+      "console_errors": [],
+      "candidate_command_entries": 13,
+      "candidate_new_command_ids": [
+        "cmd.settings.search.submit",
+        "cmd.settings.search.pick_result",
+        "cmd.settings.details.open",
+        "cmd.settings.copy_from_project.preview",
+        "cmd.settings.copy_from_project.apply",
+        "cmd.settings.copy_from_project.rollback",
+        "cmd.provider.cli.install_official"
+      ],
+      "candidate_wiring_traces": 10,
+      "plan_owner_impacts": 5,
+      "visual_differentiation": {
+        "home": "Spacious large-domain cards with strong destination emphasis and provider readiness summaries.",
+        "deep": "Manager-destination overview optimized for fast scanning.",
+        "manager": "Provider summary cards with explicit safe next actions.",
+        "narrow": "Large cards form a clear single column with preserved hierarchy.",
+        "motion": "Broad card reveal and destination-focused transitions."
+      },
+      "open_findings": {
+        "blockers": [],
+        "majors": [],
+        "minors": [
+          "Concept evidence is HTML/Chromium, not native Slint or physical old-hardware certification."
+        ]
+      }
+    },
+    {
+      "concept_id": "concept-09-tome-tabs",
+      "title": "Chapter Tabs",
+      "source_family": "Rethemed Tome Tabs",
+      "html": "concept-09-tome-tabs.html",
+      "evidence_dir": "concept-09-tome-tabs",
+      "status": "pass",
+      "inventory_settings": 828,
+      "inventory_categories": 12,
+      "product_index_rows": 1007,
+      "synthetic_stress_rows": 2000,
+      "search_cases": 16,
+      "manager_routes": 47,
+      "manager_coverage": {
+        "demonstrated": 42,
+        "deferred_named_owner": 9,
+        "total": 51,
+        "shared_grammar": 0,
+        "missing": 0
+      },
+      "theme_width_cells": 48,
+      "copy_flow": true,
+      "persistence": true,
+      "isolation": true,
+      "console_errors": [],
+      "candidate_command_entries": 13,
+      "candidate_new_command_ids": [
+        "cmd.settings.search.submit",
+        "cmd.settings.search.pick_result",
+        "cmd.settings.details.open",
+        "cmd.settings.copy_from_project.preview",
+        "cmd.settings.copy_from_project.apply",
+        "cmd.settings.copy_from_project.rollback",
+        "cmd.provider.cli.install_official"
+      ],
+      "candidate_wiring_traces": 10,
+      "plan_owner_impacts": 5,
+      "visual_differentiation": {
+        "home": "Broad central page with persistent chapter tabs and layered page position, rethemed to Puppet Master.",
+        "deep": "Stable category position across layered pages.",
+        "manager": "Roster with tabbed detail page inside the same Settings shell.",
+        "narrow": "Chapter tabs become controlled push navigation.",
+        "motion": "Layered page transfer without book, parchment, brass, fantasy, or steampunk ornament."
+      },
+      "open_findings": {
+        "blockers": [],
+        "majors": [],
+        "minors": [
+          "Concept evidence is HTML/Chromium, not native Slint or physical old-hardware certification."
+        ]
+      }
+    },
+    {
+      "concept_id": "concept-10-command-suite",
+      "title": "Command Suite",
+      "source_family": "Rethemed Command Suite",
+      "html": "concept-10-command-suite.html",
+      "evidence_dir": "concept-10-command-suite",
+      "status": "pass",
+      "inventory_settings": 828,
+      "inventory_categories": 12,
+      "product_index_rows": 1007,
+      "synthetic_stress_rows": 2000,
+      "search_cases": 16,
+      "manager_routes": 47,
+      "manager_coverage": {
+        "demonstrated": 42,
+        "deferred_named_owner": 9,
+        "total": 51,
+        "shared_grammar": 0,
+        "missing": 0
+      },
+      "theme_width_cells": 48,
+      "copy_flow": true,
+      "persistence": true,
+      "isolation": true,
+      "console_errors": [],
+      "candidate_command_entries": 13,
+      "candidate_new_command_ids": [
+        "cmd.settings.search.submit",
+        "cmd.settings.search.pick_result",
+        "cmd.settings.details.open",
+        "cmd.settings.copy_from_project.preview",
+        "cmd.settings.copy_from_project.apply",
+        "cmd.settings.copy_from_project.rollback",
+        "cmd.provider.cli.install_official"
+      ],
+      "candidate_wiring_traces": 10,
+      "plan_owner_impacts": 5,
+      "visual_differentiation": {
+        "home": "Command index with context and attention, optimized for keyboard-first discovery without fake-terminal styling.",
+        "deep": "Multi-pane drill-down with explicit hierarchy.",
+        "manager": "Dense roster/details/limits/models/logs workspace.",
+        "narrow": "One pane at a time with explicit left/right hierarchy.",
+        "motion": "Pane focus transfer and command-result reveal; no CRT, terminal-green, or monospace body skin."
+      },
+      "open_findings": {
+        "blockers": [],
+        "majors": [],
+        "minors": [
+          "Concept evidence is HTML/Chromium, not native Slint or physical old-hardware certification."
+        ]
+      }
+    },
+    {
+      "concept_id": "concept-11-tabbed-organizer",
+      "title": "Layered Tab Organizer",
+      "source_family": "Rethemed Tabbed Organizer",
+      "html": "concept-11-tabbed-organizer.html",
+      "evidence_dir": "concept-11-tabbed-organizer",
+      "status": "pass",
+      "inventory_settings": 828,
+      "inventory_categories": 12,
+      "product_index_rows": 1007,
+      "synthetic_stress_rows": 2000,
+      "search_cases": 16,
+      "manager_routes": 47,
+      "manager_coverage": {
+        "demonstrated": 42,
+        "deferred_named_owner": 9,
+        "total": 51,
+        "shared_grammar": 0,
+        "missing": 0
+      },
+      "theme_width_cells": 48,
+      "copy_flow": true,
+      "persistence": true,
+      "isolation": true,
+      "console_errors": [],
+      "candidate_command_entries": 13,
+      "candidate_new_command_ids": [
+        "cmd.settings.search.submit",
+        "cmd.settings.search.pick_result",
+        "cmd.settings.details.open",
+        "cmd.settings.copy_from_project.preview",
+        "cmd.settings.copy_from_project.apply",
+        "cmd.settings.copy_from_project.rollback",
+        "cmd.provider.cli.install_official"
+      ],
+      "candidate_wiring_traces": 10,
+      "plan_owner_impacts": 5,
+      "visual_differentiation": {
+        "home": "Compact category organization, recent changes, and edge tabs in a clean Puppet Master layer system.",
+        "deep": "Layered sheets and domain tabs.",
+        "manager": "Provider roster and detailed tabbed page.",
+        "narrow": "Tabs and sheets become a one-pane push stack.",
+        "motion": "Layered sheet transitions without paper, binder, folder, staple, or office-supply skeuomorphism."
+      },
+      "open_findings": {
+        "blockers": [],
+        "majors": [],
+        "minors": [
+          "Concept evidence is HTML/Chromium, not native Slint or physical old-hardware certification."
+        ]
+      }
+    }
+  ],
+  "stale_canon_conflicts": [
+    {
+      "source": "Plans/settings_inventory.json",
+      "conflict": "Legacy scope arrays include global.",
+      "resolution_in_concepts": "UI projects editable values into the current Project and exposes no Global/Project/Goal/Host selector or inheritance system.",
+      "canon_edit": false,
+      "candidate_future_owner": "settings inventory/schema"
+    },
+    {
+      "source": "Frozen concepts 01\u201304 reports",
+      "conflict": "Historical shared_grammar/missing classifications remain in frozen evidence.",
+      "resolution_in_concepts": "New 05\u201311 coverage uses demonstrated or deferred_named_owner only; frozen historical evidence is not reused as coverage.",
+      "canon_edit": false
+    }
+  ],
+  "final_polish_pass": {
+    "status": "pass",
+    "presentation_and_verification_changes_only": true,
+    "new_canonical_changes": 0,
+    "plans_edited": false,
+    "inventory_schema_edited": false,
+    "command_canon_edited": false,
+    "wiring_canon_edited": false,
+    "dry_owner_edited": false,
+    "implementation_changes": [
+      "responsive grid/scroll ownership",
+      "adaptive multiline controls",
+      "concept-native motion director",
+      "search locator timing",
+      "Concept 05 routed-row bounded window"
+    ],
+    "candidate_evidence_unchanged": {
+      "plan_owner_rows": 35,
+      "candidate_command_rows": 91,
+      "wiring_traces": 70,
+      "unique_new_candidate_commands": 7
+    },
+    "verification": {
+      "canonical_routes": "5796/5796",
+      "browser_qa": "pass",
+      "motion": "98/98",
+      "theme_width": "336/336"
+    }
+  }
+}

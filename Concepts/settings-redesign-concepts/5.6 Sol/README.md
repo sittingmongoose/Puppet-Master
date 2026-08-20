@@ -1,3 +1,49 @@
+<!-- SEVEN_NEW_CONCEPTS_2026_08_18 -->
+# 5.6 Sol — Settings redesign concepts
+
+This folder contains **eleven unranked Settings concepts**. Concepts **01–04 remain frozen historical work**. Concepts **05–11 are seven complete Settings systems built from the selected reference architectures and finalized by the 2026-08-19 exhaustive visual/motion audit.** No winner is selected.
+
+## Final certification status
+
+- **7/7 new concepts passed** with no open blocker, major, or minor finding.
+- **5,796/5,796 canonical setting destinations** rendered.
+- **112/112 declared search routes**, **1,344 rendered search results**, **329/329 manager routes**, **714 manager-tab renders**, **546 manager-object renders**, and **63/63 browser interaction cases** passed.
+- **1,904 distinct destinations** were reviewed at 760 and 1700 px through **7,173 screenshots** and **56 contact sheets**.
+- **336/336 theme-width cells** passed across eight themes and six widths, with **1,680 representative surface captures**.
+- **98/98 real Chromium compositor sequences** passed across **2,145 observed frames**.
+- Concepts 01–04: **49/49 frozen files unchanged**.
+
+| # | Concept | Distinctive system | Status |
+|---:|---|---|---|
+| 01 | Index House | Frozen original | Frozen |
+| 02 | Switchboard | Frozen original | Frozen |
+| 03 | Wayfinder | Frozen original | Frozen |
+| 04 | Ledger | Frozen original | Frozen |
+| 05 | Meridian Directory / Take 1 | Crisp spatial directory | Final pass |
+| 06 | Editorial Directory / Take 2 | Editorial list and stable rail | Final pass |
+| 07 | Atlas Compendium Workspace | Faceted long-tail compendium | Final pass |
+| 08 | Horizon Directory / Take 3 | Spacious destination dashboard | Final pass |
+| 09 | Chapter Tabs | Rethemed layered chapter system | Final pass |
+| 10 | Command Suite | Rethemed keyboard-first multi-pane system | Final pass |
+| 11 | Layered Tab Organizer | Rethemed tab-and-sheet organizer | Final pass |
+
+The seven new concepts share only headless inventory, search, state, and manager semantics. Their Home composition, navigation, manager presentation, search dropdown, exact-result reveal, narrow transformation, and motion remain concept-native.
+
+Primary final evidence:
+
+- `PACKET_COMPLIANCE_MATRIX.json`
+- `SEVEN_NEW_CONCEPTS_TEST_REPORT.md`
+- `SEVEN_NEW_CONCEPTS_FINDINGS.md`
+- `SEVEN_NEW_CONCEPTS_AUDIT_REPORT.md`
+- `SEVEN_NEW_CONCEPTS_VISUAL_AUDIT.json`
+- `SEVEN_NEW_CONCEPTS_IMPACT_REGISTER.json`
+- `_seven/SEVEN_NEW_CONCEPTS_QA.json`
+- `_seven/ALL_INVENTORY_ROUTE_AUDIT.json`
+- `_seven/FINAL_CONTRACT_AUDIT.json`
+
+The certification is for the HTML/Chromium concept implementation. It does not claim a native Slint build or physical legacy-hardware benchmark.
+<!-- END_SEVEN_NEW_CONCEPTS_2026_08_18 -->
+
 # 5.6 Sol — Puppet Master Settings correction
 
 This folder contains four unranked, concept-only Settings directions for the `5.6 Sol` bakeoff. No winner is selected. Nothing here edits or claims authority over PMConcept7, canonical `Plans/**`, the Settings inventory/schema, the command catalog, production wiring, DRY owners, Usage, Assistant Chat, ConceptHub, or another model folder.

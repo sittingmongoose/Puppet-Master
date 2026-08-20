@@ -1,0 +1,67 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "concept_id": "c11-sheaf",
+  "model": "fable",
+  "generated": "2026-08-20",
+  "concept": "fable · 11 Sheaf — Rethemed Tabbed Organizer (grouped category tabs over layered sheets)",
+  "plan_owner_impacts": [
+    {
+      "owner": "Plans/FinalGUISpec.md",
+      "kind": "extends",
+      "evidence": "Grouped-tab navigation: 9 top-level tabs over the 12 canonical categories with an in-sheet category lens for the three shared tabs (Memory & Planning, Collaboration, Media & Web). The spec must state that a Home reorganization may group categories only with a complete documented mapping and per-category routes preserved (#/dest/<cat> stays canonical; the lens is presentation, not scope)."
+    },
+    {
+      "owner": "Plans/FinalGUISpec.md",
+      "kind": "extends",
+      "evidence": "Sheet-pile location model: deeper navigation lays a sheet inside the same tabbed frame; the crumb-chip pile (Home > Category > Manager > Object) is the location instrument at every width, and stacked-edge affordances on the sheet communicate depth without route replacement beyond the canonical grammar."
+    },
+    {
+      "owner": "Plans/settings_inventory.json",
+      "kind": "conflicts",
+      "evidence": "system.health.diagnostics-verbosity exists in the legacy demo dataset but not in the 828-row v2 inventory; this concept grafts it into System > Health & Doctor as a concept-local row so the canonical deep-link probe lands. The inventory census should either mint the row or retire the probe id."
+    },
+    {
+      "owner": "Plans/Permissions_System.md",
+      "kind": "reuses",
+      "evidence": "Permissions manager rendered from the shared view model (rules, presets, FileSafe floor checks) in Sheaf's line/roster grammar; no new permission semantics were invented."
+    },
+    {
+      "owner": "Plans/CLI_Bridged_Providers.md",
+      "kind": "extends",
+      "evidence": "Provider detail tabs (Overview / Accounts / Models / Usage & limits / Routing / Installations / Setup / Activity / Advanced) render multi-install selected/shadowed flags, unknown-owner manual-only refusal, ask-first update actions, and verification-failed-then-rolled-back history as first-class tab content inside the same sheet pile — the plan should adopt the tabbed detail composition as one sanctioned provider layout."
+    },
+    {
+      "owner": "Plans/Provider_OpenCode.md",
+      "kind": "reuses",
+      "evidence": "Server-connection providers surface the server tab (address, version, reachability, catalog source, scoped token reference) verbatim from shared resolvers."
+    },
+    {
+      "owner": "Plans/Multi-Account.md",
+      "kind": "reuses",
+      "evidence": "Accounts tab renders auth-boundary ownership, priority, sticky/use-next, and health words from PMProvider resolvers without re-deriving state."
+    },
+    {
+      "owner": "Plans/UI_Command_Catalog.md",
+      "kind": "extends",
+      "evidence": "Tab and sheet navigation implies a cmd.settings.navigate {dest} family plus a cmd.settings.sheet.pop (one level out) command; the Escape ladder (popup > drawer > one level > stop at Home) needs a canonical keybinding statement. See candidate-command-delta.json — all provisional."
+    },
+    {
+      "owner": "Plans/assistant-memory-subsystem.md",
+      "kind": "reuses",
+      "evidence": "Memory manager consumed as shared view model in concept grammar; no memory semantics changed."
+    },
+    {
+      "owner": "Wiring matrix owner",
+      "kind": "extends",
+      "evidence": "Ten keystone traces registered in candidate-wiring-delta.json, every one flagged concept_local_state — copy transaction, search landing, tab navigation, advanced disclosure, provider tab selection, installation ask-first update, rollback, facet filtering, escape ladder, category lens."
+    }
+  ],
+  "boundary_confirmations": [
+    "Project-only: no scope selectors anywhere; the frame bar states 'changes apply to this project only'; legacyScope appears only inside the row Details drawer as history.",
+    "Copy is a one-time transaction: restore point > atomic apply > verify > receipt > working rollback; no sync or link language anywhere in the flow.",
+    "Provider CLIs: the Cursor CLI setup tab is explicit, user-triggered, official-source (cursor.com/cli), exact host/environment radio choice, sign-in a separate step; the unknown-owner Ollama installation exposes no update action and returns an honest refusal.",
+    "ObservableWork: the ops strip renders determinate progress only when the op payload carries a real denominator; otherwise indeterminate with phase text; terminal states shown truthfully.",
+    "ResourceGovernor: no second governor — op strips are projections of PM2.states.op events only."
+  ],
+  "concept_local_state": true
+}

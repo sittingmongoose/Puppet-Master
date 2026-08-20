@@ -1,0 +1,444 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "concept_id": "concept-08-directory-take-3",
+  "model": "5.6 Sol",
+  "layout": "directory-take-3",
+  "layout_family": "A1 Directory / Take 3",
+  "winner": null,
+  "concept_only": true,
+  "authority_boundary": {
+    "concept_only": true,
+    "canonical_authorities_modified": false,
+    "candidate_ids_status": "NOT_MINTED",
+    "production_wiring_claimed": false,
+    "winner_selected": false
+  },
+  "plan_owner_impacts": [
+    {
+      "owner": "FinalGUISpec",
+      "layout_family": "A1 Directory / Take 3",
+      "impact": "Spacious large-domain hero/minmax cards and provider summary actions. Distinct from denser Take 1 destination cards. Home remains a directory, not a bloom.",
+      "uncertainty": "low"
+    },
+    {
+      "owner": "settings inventory and schema",
+      "impact": "828 inventory rows remain indexed and routable as setting:{id}. Inventory still has legacy scope:global metadata; the project-only UI projects those rows into the current Project and does not expose Global as an editing scope. Search Default uses product index 1007 (cap 24); synthetic overlay 2000 is excluded. Candidate future change: drop user-facing global/project inheritance.",
+      "uncertainty": "low"
+    },
+    {
+      "owner": "Models System",
+      "impact": "Provider CLI install is explicit official-source only (cmd.provider.cli.install_official candidate). Authentication is a separate step. Runtime demand deep-links to setup. No silent first acquisition. Routing/fallback reuses cmd.provider.switch_route.",
+      "uncertainty": "low"
+    },
+    {
+      "owner": "Commands System",
+      "impact": "Preserve cmd.settings.open, cmd.account.select_profile, cmd.provider.switch_route, cmd.usage.refresh. New candidates (not minted): cmd.settings.search.submit, cmd.settings.copy_from_project.preview/.apply/.rollback, cmd.provider.cli.install_official, cmd.settings.details.open. All Settings rows stay registry-owned mutations addressed by setting:{id}.",
+      "uncertainty": "medium"
+    },
+    {
+      "owner": "DRY / ObservableWork / RuntimeResourceGovernor",
+      "impact": "Consume SettingsSearch, ManagerSemantics, ObservableWork, RuntimeResourceGovernor, Project identity. Do not create a second ResourceGovernor. Copy/CLI/receipts stay simulated sessionStorage.",
+      "uncertainty": "low"
+    }
+  ],
+  "interactions": [
+    {
+      "candidate_id": "cmd.settings.search.submit",
+      "census": "new-candidate",
+      "canonical_owner": "SettingsSearch (preserve; headless owner unchanged)",
+      "not_minted": true,
+      "payload": {
+        "query": "string",
+        "project_id": "current Project",
+        "include_synthetic": false,
+        "limit": 24
+      },
+      "result": {
+        "hits": "<=24 Default-mode hits from product index 1007",
+        "ids": "immutable result ids (setting:|manager:|action:|object:|workflow:|unavailable:)",
+        "excluded_synthetic": 2000
+      },
+      "error": {
+        "code": "no_match",
+        "stale": "dropped when a newer query is in flight"
+      },
+      "project_identity": "Current Project only (demo project id bound in sessionStorage ns for concept-08-directory-take-3). No Global/Project/Goal/Host editing selector. Inventory still carries legacy scope:global metadata; the UI projects those rows into this Project and does not expose global as an editable scope.",
+      "availability": "Enabled whenever the Settings surface is open. Disabled reason shown if the search index is still hydrating. Synthetic overlay 2000 excluded from Default; opt-in only.",
+      "revision_idempotency_fencing_stale": "Latest-request-wins. Query revision is the in-flight token; stale responses are discarded. Idempotent for the same query+project+Default mode. Does not mutate inventory revision.",
+      "permission_filesafe_confirm": "Read-only query. No FileSafe. No confirm. Secrets never appear in hit text.",
+      "persistence_event_receipt": "No inventory write. Query string is view-state only (hash/stack). No receipt. sessionStorage simulated_backend does not store search hits.",
+      "observable_work": "None for Default submit (sync headless SettingsSearch). Hydrate, if shown, is a truthful waiting projection — not a second ObservableWork owner.",
+      "cancel_rollback_recovery_reconnect": "Escape peels the dropdown (no rollback). Reconnect re-runs submit against the restored query; no recovery document.",
+      "route_deeplink_focus": "Does not navigate. Keeps focus in Home search over large-domain cards + dropdown. Back later restores the query from the stack after a pick.",
+      "gui_nl_palette_automation": "GUI: type in Home search over large-domain cards + dropdown (A1 Directory / Take 3). NL: \"search settings for <query>\". Palette: Search Settings…. Automation: submit({query}) → hit list. Same candidate id across GUI/NL/palette/automation; not minted.",
+      "production_wiring_claimed": false,
+      "regression_fixture": "concept-08-directory-take-3/search-route-matrix.json + scripts/seven-new-concepts-qa.py",
+      "demo_note": "concept-08-directory-take-3: SettingsSearch consumed headlessly; presentation is concept-native. sessionStorage is not a second ResourceGovernor."
+    },
+    {
+      "candidate_id": "cmd.settings.search.pick_result",
+      "census": "new-candidate",
+      "canonical_owner": "SettingsSearch (preserve) + Settings workspace routing",
+      "not_minted": true,
+      "payload": {
+        "result_id": "immutable setting:|manager:|action:|object:|workflow:|unavailable:",
+        "query": "string (for Back)"
+      },
+      "result": {
+        "route": "domain|manager|copy|deferred|all",
+        "focused": true,
+        "highlight": "data-id / data-row-id"
+      },
+      "error": {
+        "code": "unknown_id",
+        "detail": "result id missing from index 1007"
+      },
+      "project_identity": "Current Project only (demo project id bound in sessionStorage ns for concept-08-directory-take-3). No Global/Project/Goal/Host editing selector. Inventory still carries legacy scope:global metadata; the UI projects those rows into this Project and does not expose global as an editable scope.",
+      "availability": "Enabled for hits in the current Default result set. Unavailable: prefixed hits route to the named deferred owner shell instead of a silent fail.",
+      "revision_idempotency_fencing_stale": "Pick is keyed by immutable result id, never by visible label or list index. If the id disappeared after a newer submit, error unknown_id. Repeat pick of the same id is idempotent locate.",
+      "permission_filesafe_confirm": "Navigation only. No FileSafe. No confirm. Does not copy or install.",
+      "persistence_event_receipt": "Pushes #/q/<query> then destination onto the concept stack so Back restores the query. No inventory event. No receipt.",
+      "observable_work": "None (routing/locate). Destination hydrate may project waiting.",
+      "cancel_rollback_recovery_reconnect": "Back restores the query dropdown. Escape peels search before Back. Reconnect re-locates the same immutable id.",
+      "route_deeplink_focus": "Route by immutable id from Home search over large-domain cards + dropdown. setting:{id} lands on the owning row (#/all?row=setting:{id} or domain/manager). Highlight data-id; scroll+focus.",
+      "gui_nl_palette_automation": "GUI: click/Enter a hit row (data-id) (A1 Directory / Take 3). NL: \"open setting <id>\". Palette: Open result <immutable id>. Automation: pickResult(result_id). Same candidate id across GUI/NL/palette/automation; not minted.",
+      "production_wiring_claimed": false,
+      "regression_fixture": "concept-08-directory-take-3/search-route-matrix.json (rid routing) + seven-new-concepts-qa.py search probes",
+      "demo_note": "Simulated routing only. Index 1007 / cap 24 / synthetic 2000 excluded from Default."
+    },
+    {
+      "candidate_id": "registry-owned non-command mutation",
+      "census": "reuse",
+      "canonical_owner": "settings inventory/schema (not a Commands-system command)",
+      "not_minted": true,
+      "payload": {
+        "id": "setting:{id}",
+        "value": "typed per schema",
+        "project_id": "current Project"
+      },
+      "result": {
+        "project_values": "updated for this Project only",
+        "source": "custom",
+        "requested_vs_effective": "details drawer can show origin"
+      },
+      "error": {
+        "code": "disabled_reason",
+        "detail": "controlModel.disabled / managed / unavailable / named deferred owner"
+      },
+      "project_identity": "Current Project only (demo project id bound in sessionStorage ns for concept-08-directory-take-3). No Global/Project/Goal/Host editing selector. Inventory still carries legacy scope:global metadata; the UI projects those rows into this Project and does not expose global as an editable scope.",
+      "availability": "Enabled when controlModel allows. Disabled rows show the named reason (managed, unavailable, deferred owner). All Settings and domain rows share this mutation; address is always setting:{id}.",
+      "revision_idempotency_fencing_stale": "Last write wins inside the demo sessionStorage revision for this Project. No fencing token. Stale UI rows re-read after emit. Not a cross-project write.",
+      "permission_filesafe_confirm": "Ordinary setting write; no FileSafe. Secrets stay masked and never round-trip. No extra confirm beyond the control itself.",
+      "persistence_event_receipt": "sessionStorage key pm.settings-v2.{ns} values[id]. Simulated setting event + labeled receipt ('this Project only'). Not a live RuntimeResourceGovernor write.",
+      "observable_work": "None for ordinary typed writes. Long actions use normalizeWork projection.",
+      "cancel_rollback_recovery_reconnect": "Row Details reset-to-default restores schema default for this Project. Copy rollback is a different candidate. Reconnect reloads sessionStorage values.",
+      "route_deeplink_focus": "All Settings row via setting:{id} at All Settings row [data-id='setting:{id}'] (#/all?row=setting:{id}). Focus stays on the row; highlight data-id. Deep link ?row=setting:{id}.",
+      "gui_nl_palette_automation": "GUI: toggle/select/number/text on All Settings row [data-id='setting:{id}'] (A1 Directory / Take 3). NL: \"set <setting id> to <value> in this Project\". Palette: Set setting {id}. Automation: setSetting(setting:{id}, value). Same candidate id across GUI/NL/palette/automation; not minted.",
+      "production_wiring_claimed": false,
+      "regression_fixture": "concept-08-directory-take-3 state_persistence + all-settings row probes in seven-new-concepts-qa.py",
+      "demo_note": "Project-only demo store. Legacy scope:global is display-projected, not an edit scope."
+    },
+    {
+      "candidate_id": "cmd.settings.details.open",
+      "census": "new-candidate",
+      "canonical_owner": "Settings workspace (Details origin projection)",
+      "not_minted": true,
+      "payload": {
+        "id": "setting:{id}",
+        "project_id": "current Project"
+      },
+      "result": {
+        "requested": true,
+        "effective": true,
+        "origin": true,
+        "backend": "sessionStorage (disclosed)"
+      },
+      "error": {
+        "code": "unknown_id"
+      },
+      "project_identity": "Current Project only (demo project id bound in sessionStorage ns for concept-08-directory-take-3). No Global/Project/Goal/Host editing selector. Inventory still carries legacy scope:global metadata; the UI projects those rows into this Project and does not expose global as an editable scope.",
+      "availability": "Always enabled for indexed settings (828). Disabled/managed rows still open Details so the disabled reason and origin can be read.",
+      "revision_idempotency_fencing_stale": "Read-only snapshot of the current demo revision. Re-open refreshes. No fencing. Stale drawer contents refresh on the next setting event.",
+      "permission_filesafe_confirm": "Read-only. No FileSafe. No confirm. Secret fields remain masked references.",
+      "persistence_event_receipt": "No write. No receipt. Drawer is view-state; Escape peels it without a document.",
+      "observable_work": "None.",
+      "cancel_rollback_recovery_reconnect": "Escape peels the details drawer first. Reconnect reopens via ?details=setting:{id} if that view-state is on the stack.",
+      "route_deeplink_focus": "Opens row Details drawer on domain/manager workspace for setting:{id} without leaving the row. Focus moves into the drawer; return focus to the originating row on peel.",
+      "gui_nl_palette_automation": "GUI: Why this value? / Details on the row (A1 Directory / Take 3). NL: \"why is <setting> this value\". Palette: Open setting details. Automation: openDetails(setting:{id}). Same candidate id across GUI/NL/palette/automation; not minted.",
+      "production_wiring_claimed": false,
+      "regression_fixture": "concept-08-directory-take-3 details_origin probe + seven-new-concepts-qa.py",
+      "demo_note": "Requested/effective/origin are sessionStorage projections, not live governor/secret store."
+    },
+    {
+      "candidate_id": "cmd.settings.copy_from_project.preview",
+      "census": "new-candidate",
+      "canonical_owner": "Settings lifecycle (consume ManagerSemantics / copy engine)",
+      "not_minted": true,
+      "payload": {
+        "sourceId": "other Project id",
+        "categories": "~10 copy domains",
+        "target_project_id": "current Project"
+      },
+      "result": {
+        "additionItems": true,
+        "replacementItems": true,
+        "secrets_excluded": true
+      },
+      "error": {
+        "code": "no_source",
+        "alt": "source_changed"
+      },
+      "project_identity": "Current Project only (demo project id bound in sessionStorage ns for concept-08-directory-take-3). No Global/Project/Goal/Host editing selector. Inventory still carries legacy scope:global metadata; the UI projects those rows into this Project and does not expose global as an editable scope.",
+      "availability": "Enabled after a source Project is selected. Disabled until sourceId is set. Categories follow the ~10 copy domains; not a dump of 828 rows.",
+      "revision_idempotency_fencing_stale": "Preview is fenced to source revision. Source change discards stale preview. Repeat preview with same source+categories is idempotent until source mutates.",
+      "permission_filesafe_confirm": "No FileSafe (demo). Secrets never copy and are omitted from preview. Preview itself is not the confirm; apply is.",
+      "persistence_event_receipt": "No inventory write. Preview lives in demo session state until apply/discard. No receipt yet.",
+      "observable_work": "Optional short waiting projection while preview computes. Not a second ObservableWork owner; truthful normalizeWork only.",
+      "cancel_rollback_recovery_reconnect": "Discard preview / Escape peels the copy review without writing. Nothing to roll back until apply creates a restore point.",
+      "route_deeplink_focus": "Stays on copy review from Home Copy destination / lifecycle card. Deep link can reopen preview with sourceId. Focus on the preview list, not the source project list.",
+      "gui_nl_palette_automation": "GUI: Copy Settings From Another Project → preview on copy review from Home Copy destination / lifecycle card (A1 Directory / Take 3). NL: \"preview copy from project <id>\". Palette: Preview copy from project. Automation: copy.preview(sourceId, categories). Same candidate id across GUI/NL/palette/automation; not minted.",
+      "production_wiring_claimed": false,
+      "regression_fixture": "concept-08-directory-take-3 copy + copy_depth probes (preview lists additions/replacements)",
+      "demo_note": "Simulated sessionStorage copy engine. Projects remain independent. No second ResourceGovernor."
+    },
+    {
+      "candidate_id": "cmd.settings.copy_from_project.apply",
+      "census": "new-candidate",
+      "canonical_owner": "Settings lifecycle",
+      "not_minted": true,
+      "payload": {
+        "confirm": true,
+        "sourceId": "other Project id",
+        "preview_revision": "fence",
+        "target_project_id": "current Project"
+      },
+      "result": {
+        "receipt": true,
+        "verified": true,
+        "independent": true,
+        "restorePointAt": "iso"
+      },
+      "error": {
+        "code": "verification-failure",
+        "alt": "stale_preview"
+      },
+      "project_identity": "Current Project only (demo project id bound in sessionStorage ns for concept-08-directory-take-3). No Global/Project/Goal/Host editing selector. Inventory still carries legacy scope:global metadata; the UI projects those rows into this Project and does not expose global as an editable scope.",
+      "availability": "Enabled only with an explicit confirm and a non-stale preview. Disabled while preview is empty or source disappeared.",
+      "revision_idempotency_fencing_stale": "Atomic apply against the preview fence. Stale preview → stale_preview, no partial write. Repeat apply after success is idempotent (already applied) until a new preview is taken.",
+      "permission_filesafe_confirm": "Explicit confirm required. Secrets never copy. FileSafe N/A in demo (simulated_backend sessionStorage).",
+      "persistence_event_receipt": "Writes current-Project values in sessionStorage, emits copy receipt, stores restorePointAt. Source Project unchanged. Labeled simulated.",
+      "observable_work": "Apply is a short determinate projection (restore point → write → verify). Uses existing ObservableWork owner; no second governor.",
+      "cancel_rollback_recovery_reconnect": "In-flight apply can be cancelled before verify; after receipt, rollback is cmd.settings.copy_from_project.rollback. Reconnect reloads the applied values.",
+      "route_deeplink_focus": "Remains on copy review from Home Copy destination / lifecycle card showing the receipt. Focus on Rollback. Deep link does not re-apply.",
+      "gui_nl_palette_automation": "GUI: Apply copy (confirm) (A1 Directory / Take 3). NL: \"apply copy from project <id>\". Palette: Apply copy from project. Automation: copy.apply(confirm, preview_revision). Same candidate id across GUI/NL/palette/automation; not minted.",
+      "production_wiring_claimed": false,
+      "regression_fixture": "concept-08-directory-take-3 copy apply/verify + copy_depth probes",
+      "demo_note": "Atomic simulated apply. Not live RuntimeResourceGovernor."
+    },
+    {
+      "candidate_id": "cmd.settings.copy_from_project.rollback",
+      "census": "new-candidate",
+      "canonical_owner": "Settings lifecycle",
+      "not_minted": true,
+      "payload": {
+        "restorePointAt": "iso",
+        "target_project_id": "current Project"
+      },
+      "result": {
+        "restored": true,
+        "receipt": true
+      },
+      "error": {
+        "code": "no_restore_point"
+      },
+      "project_identity": "Current Project only (demo project id bound in sessionStorage ns for concept-08-directory-take-3). No Global/Project/Goal/Host editing selector. Inventory still carries legacy scope:global metadata; the UI projects those rows into this Project and does not expose global as an editable scope.",
+      "availability": "Enabled while a copy restore point exists for this Project. Disabled after rollback consumes it or if apply never ran.",
+      "revision_idempotency_fencing_stale": "Fenced to restorePointAt. Repeat rollback after success → no_restore_point. Does not invent a second restore stack.",
+      "permission_filesafe_confirm": "Rollback is an explicit action (button). Secrets still never copied. FileSafe N/A.",
+      "persistence_event_receipt": "Restores sessionStorage values from restorePointAt; emits rollback receipt; clears the restore point. Simulated.",
+      "observable_work": "Short determinate restore projection via existing ObservableWork.",
+      "cancel_rollback_recovery_reconnect": "This command IS the recovery path for apply. No further rollback after success. Reconnect loads restored values.",
+      "route_deeplink_focus": "Stays on copy review from Home Copy destination / lifecycle card. Focus returns to source picker after restore.",
+      "gui_nl_palette_automation": "GUI: Rollback copy (A1 Directory / Take 3). NL: \"undo copy from project\". Palette: Rollback copy from project. Automation: copy.rollback(restorePointAt). Same candidate id across GUI/NL/palette/automation; not minted.",
+      "production_wiring_claimed": false,
+      "regression_fixture": "concept-08-directory-take-3 copy rollback probe + seven-new-concepts-qa.py",
+      "demo_note": "Restore point lives in sessionStorage. No second ResourceGovernor."
+    },
+    {
+      "candidate_id": "cmd.provider.cli.install_official",
+      "census": "new-candidate",
+      "canonical_owner": "Models System / BinaryLocator (CLI bridged providers)",
+      "not_minted": true,
+      "payload": {
+        "source": "official",
+        "provider_id": "string",
+        "project_id": "current Project"
+      },
+      "result": {
+        "work.state": "waiting_user",
+        "installed": "after confirm"
+      },
+      "error": {
+        "code": "not_confirmed",
+        "alt": "official_source_unavailable"
+      },
+      "project_identity": "Current Project only (demo project id bound in sessionStorage ns for concept-08-directory-take-3). No Global/Project/Goal/Host editing selector. Inventory still carries legacy scope:global metadata; the UI projects those rows into this Project and does not expose global as an editable scope.",
+      "availability": "Offered when the provider is missing/unofficial. waiting_user until the user confirms official-source install. Auth is a separate step. No silent first acquisition. Runtime demand deep-links here instead of auto-installing.",
+      "revision_idempotency_fencing_stale": "No silent retry. Repeat while waiting_user is the same operation (idempotent fence). After success, repeat is a no-op besides showing installed.",
+      "permission_filesafe_confirm": "Explicit user confirm required. FileSafe N/A in demo. Does not scrape unofficial mirrors.",
+      "persistence_event_receipt": "Simulated install flag + receipt in sessionStorage. Labeled demo. Not a live BinaryLocator write.",
+      "observable_work": "waiting_user → running → done/failed via existing ObservableWork projection. Determinate when the demo can name a denominator.",
+      "cancel_rollback_recovery_reconnect": "Cancel while waiting_user aborts with not_confirmed. Failed install can retry the same official source. Reconnect restores waiting_user if still pending.",
+      "route_deeplink_focus": "Lands on provider summary Install from official source. Runtime-demand deep link focuses Install from official source. Auth remains a later route.",
+      "gui_nl_palette_automation": "GUI: Install from official source (A1 Directory / Take 3). NL: \"install <provider> from official source\". Palette: Install from official source. Automation: cli.install_official(provider_id). Same candidate id across GUI/NL/palette/automation; not minted.",
+      "production_wiring_claimed": false,
+      "regression_fixture": "concept-08-directory-take-3 provider_density + official CLI probes",
+      "demo_note": "Models System candidate only. sessionStorage projection; do not create a second ResourceGovernor."
+    },
+    {
+      "candidate_id": "cmd.provider.switch_route",
+      "census": "reuse",
+      "canonical_owner": "Providers / Models System (preserve)",
+      "not_minted": true,
+      "payload": {
+        "provider_id": "string",
+        "route": "primary|fallback",
+        "project_id": "current Project"
+      },
+      "result": {
+        "usage_end": true,
+        "route": "applied"
+      },
+      "error": {
+        "code": "no_provider",
+        "alt": "route_unavailable"
+      },
+      "project_identity": "Current Project only (demo project id bound in sessionStorage ns for concept-08-directory-take-3). No Global/Project/Goal/Host editing selector. Inventory still carries legacy scope:global metadata; the UI projects those rows into this Project and does not expose global as an editable scope.",
+      "availability": "Enabled when at least one ready provider exists. Fallback is a first-class question, not a hidden default. Disabled with named reason when no route candidates exist.",
+      "revision_idempotency_fencing_stale": "Idempotent per provider+route+project revision. Stale health probes dropped (latest-wins). Does not silently install.",
+      "permission_filesafe_confirm": "No FileSafe. Switching fallback is explicit in the provider UI; not a confirm dialog unless the concept surfaces one.",
+      "persistence_event_receipt": "Simulated route field in sessionStorage + labeled receipt. Usage-end is a first-class provider question on the same surface.",
+      "observable_work": "Optional health/refresh projection. Routing itself is a store write plus usage-end probe, not a second governor.",
+      "cancel_rollback_recovery_reconnect": "Re-select previous route to undo. Reconnect restores the stored route. Failed fallback stays visible with route_unavailable.",
+      "route_deeplink_focus": "Provider routing/fallback controls on provider summary Install from official source. Deep link can focus the fallback row. Does not leave Settings.",
+      "gui_nl_palette_automation": "GUI: Make default / set fallback (A1 Directory / Take 3). NL: \"set fallback provider to <id>\". Palette: Switch provider route. Automation: provider.switch_route({route}). Same candidate id across GUI/NL/palette/automation; not minted.",
+      "production_wiring_claimed": false,
+      "regression_fixture": "concept-08-directory-take-3 provider routing/fallback + usage-end probes",
+      "demo_note": "Reuse cmd.provider.switch_route. Demo sessionStorage only."
+    },
+    {
+      "candidate_id": "cmd.settings.escape",
+      "census": "reuse",
+      "canonical_owner": "PM shell / Settings workspace",
+      "not_minted": true,
+      "payload": {
+        "key": "Escape"
+      },
+      "result": {
+        "peel": "popup > details > search > card workspace > named Back"
+      },
+      "error": {
+        "code": null
+      },
+      "project_identity": "Current Project only (demo project id bound in sessionStorage ns for concept-08-directory-take-3). No Global/Project/Goal/Host editing selector. Inventory still carries legacy scope:global metadata; the UI projects those rows into this Project and does not expose global as an editable scope.",
+      "availability": "Always. Peel is a no-op at Home with nothing overlayed.",
+      "revision_idempotency_fencing_stale": "Peels exactly one layer per keypress. Idempotent at the bottom of the stack.",
+      "permission_filesafe_confirm": "No FileSafe. Does not confirm pending copy apply; if copy review is showing an unconfirmed preview, Escape discards it (preview-only).",
+      "persistence_event_receipt": "No write. No receipt.",
+      "observable_work": "None. Does not cancel in-flight CLI unless that overlay is the top layer and owns cancel.",
+      "cancel_rollback_recovery_reconnect": "Escape peel order for A1 Directory / Take 3: popup > details > search > card workspace > named Back. Close Settings (from Home) returns to the opening origin (simulated).",
+      "route_deeplink_focus": "Named Back after the overlay stack is empty. Focus returns to the control that opened the peeled layer.",
+      "gui_nl_palette_automation": "GUI: Escape / Back / Close (A1 Directory / Take 3). NL: \"go back in settings\". Palette: Back. Automation: escape(). Same candidate id across GUI/NL/palette/automation; not minted.",
+      "production_wiring_claimed": false,
+      "regression_fixture": "concept-08-directory-take-3 escape_smoke + manager/search matrices",
+      "demo_note": "A1 Directory / Take 3 peel is concept-native; shared headless escape helper is consumed, not forked."
+    },
+    {
+      "candidate_id": "cmd.settings.open",
+      "census": "reuse",
+      "canonical_owner": "Commands System (preserve)",
+      "not_minted": true,
+      "payload": {
+        "surface": "Settings",
+        "origin": "opening surface"
+      },
+      "result": {
+        "route": "#/home large-domain cards"
+      },
+      "error": {
+        "code": null
+      },
+      "project_identity": "Current Project only (demo project id bound in sessionStorage ns for concept-08-directory-take-3). No Global/Project/Goal/Host editing selector. Inventory still carries legacy scope:global metadata; the UI projects those rows into this Project and does not expose global as an editable scope.",
+      "availability": "Enabled from the surrounding shell Settings rail/item.",
+      "revision_idempotency_fencing_stale": "Re-open is idempotent: returns to Settings Home of this layout family. Origin is remembered for Close.",
+      "permission_filesafe_confirm": "No FileSafe. No confirm.",
+      "persistence_event_receipt": "View-state only. No inventory event.",
+      "observable_work": "None.",
+      "cancel_rollback_recovery_reconnect": "Close Settings returns to the recorded origin. Reconnect restores last Settings hash for this concept demo.",
+      "route_deeplink_focus": "Opens #/home large-domain cards. Search is focusable as the first Settings control where the layout requires it.",
+      "gui_nl_palette_automation": "GUI: Shell Settings item / Close Settings (A1 Directory / Take 3). NL: \"open settings\". Palette: Open Settings. Automation: settings.open(). Same candidate id across GUI/NL/palette/automation; not minted.",
+      "production_wiring_claimed": false,
+      "regression_fixture": "concept-08-directory-take-3 hub/open smoke + seven-new-concepts-qa.py",
+      "demo_note": "Preserve cmd.settings.open. Concept-native Home only."
+    },
+    {
+      "candidate_id": "cmd.account.select_profile",
+      "census": "reuse",
+      "canonical_owner": "Accounts (preserve)",
+      "not_minted": true,
+      "payload": {
+        "profile": "id",
+        "project_id": "current Project"
+      },
+      "result": {
+        "project_binding": true
+      },
+      "error": {
+        "code": "unavailable"
+      },
+      "project_identity": "Current Project only (demo project id bound in sessionStorage ns for concept-08-directory-take-3). No Global/Project/Goal/Host editing selector. Inventory still carries legacy scope:global metadata; the UI projects those rows into this Project and does not expose global as an editable scope.",
+      "availability": "Enabled for listed accounts on the provider Accounts section. Unavailable accounts show the named reason. This is not a Global/Project/Goal/Host switcher.",
+      "revision_idempotency_fencing_stale": "Idempotent per account id + project. Stale account lists refresh via usage/provider probes (latest-wins).",
+      "permission_filesafe_confirm": "Selecting an account is explicit. Secrets remain references. FileSafe N/A.",
+      "persistence_event_receipt": "Simulated preferred-account field in sessionStorage + labeled receipt.",
+      "observable_work": "None unless the account list is refreshing.",
+      "cancel_rollback_recovery_reconnect": "Re-select previous account. Reconnect restores the stored preference.",
+      "route_deeplink_focus": "Stays on the provider Accounts section. Deep link can focus the account row.",
+      "gui_nl_palette_automation": "GUI: Accounts popup/row (A1 Directory / Take 3). NL: \"use account <id> in this Project\". Palette: Select account. Automation: account.select_profile(id). Same candidate id across GUI/NL/palette/automation; not minted.",
+      "production_wiring_claimed": false,
+      "regression_fixture": "concept-08-directory-take-3 provider Accounts row probes",
+      "demo_note": "Preserve cmd.account.select_profile. Project-bound demo only."
+    },
+    {
+      "candidate_id": "cmd.usage.refresh",
+      "census": "reuse",
+      "canonical_owner": "Usage (preserve)",
+      "not_minted": true,
+      "payload": {
+        "project_id": "current Project",
+        "provider_id": "optional"
+      },
+      "result": {
+        "work": "refresh projection",
+        "cached_visible": true
+      },
+      "error": {
+        "code": "usage-unavailable"
+      },
+      "project_identity": "Current Project only (demo project id bound in sessionStorage ns for concept-08-directory-take-3). No Global/Project/Goal/Host editing selector. Inventory still carries legacy scope:global metadata; the UI projects those rows into this Project and does not expose global as an editable scope.",
+      "availability": "Enabled on provider usage surfaces. Cached values remain visible during refresh. Disabled with usage-unavailable when the named owner is deferred.",
+      "revision_idempotency_fencing_stale": "Latest-request-wins. Stale probes dropped. Repeat refresh is allowed; it does not stack governors.",
+      "permission_filesafe_confirm": "Read-only probe. No FileSafe. No confirm.",
+      "persistence_event_receipt": "Cached usage snapshot in sessionStorage. Receipt only if the probe fails.",
+      "observable_work": "Refresh is a truthful waiting/running projection via existing ObservableWork. Cached numbers stay on screen. Not a second ResourceGovernor.",
+      "cancel_rollback_recovery_reconnect": "Cancel leaves cached values. Reconnect shows cache then may refresh.",
+      "route_deeplink_focus": "Stays on the usage table. Deep link can open the provider usage section.",
+      "gui_nl_palette_automation": "GUI: Usage refresh control (A1 Directory / Take 3). NL: \"refresh usage\". Palette: Refresh usage. Automation: usage.refresh(). Same candidate id across GUI/NL/palette/automation; not minted.",
+      "production_wiring_claimed": false,
+      "regression_fixture": "concept-08-directory-take-3 usage refresh + cached-visible probes",
+      "demo_note": "Preserve cmd.usage.refresh. sessionStorage cache only."
+    }
+  ],
+  "simulated_backend": "sessionStorage",
+  "winner_selected": false
+}

@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.settings.reference_review_report.v1",
-  "generated_at": "2026-08-14T00:19:32Z",
+  "generated_at": "2026-08-19T20:46:09Z",
   "scope": {
     "model_folder": "5.6 Sol",
     "mode": "correction_reference_review_and_final_current_integration_evidence",
@@ -52,32 +52,9 @@
     }
   ],
   "manifest_verification": {
-    "original": {
-      "manifest_path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/PACKET_MANIFEST.json",
-      "listed_members": 33,
-      "substantive_members_including_manifest": 34,
-      "verified_hash_and_size_members": 33,
-      "mismatches": 0,
-      "status": "passed",
-      "manifest_self_listing": false
-    },
-    "correction": {
-      "manifest_path": "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/CORRECTION_PACKET_MANIFEST.json",
-      "listed_members": 5,
-      "substantive_members_including_manifest": 6,
-      "verified_hash_and_size_members": 5,
-      "mismatches": 0,
-      "status": "passed",
-      "manifest_self_listing": false
-    },
-    "provider_adjudication_identity": {
-      "correction_path": "/tmp/pm-settings-closure.TPWc28/correction/PM_Settings_Dependency_and_Work_Correction_2026-08-13/PROVIDER_CLI_FINAL_ADJUDICATION.md",
-      "original_path": "/tmp/pm-settings-closure.TPWc28/original/PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/reference/PROVIDER_CLI_FINAL_ADJUDICATION.md",
-      "bytes_each": 4857,
-      "sha256_each": "9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1",
-      "byte_identical": true,
-      "comparison_status": "passed"
-    }
+    "status": "pass",
+    "members_checked": 76,
+    "mismatches": 0
   },
   "correction_authority_review": [
     {
@@ -708,24 +685,192 @@
   ],
   "unresolved_defects": [
     {
-      "defect": "Server canonical owner unresolved",
-      "status": "unresolved",
-      "impact": "Server-related destinations remain missing-owner, inspect-only insertion points with mutation blocked; no canonical command, runtime owner or backend is minted by these concepts."
+      "id": "CERT-SLINT",
+      "severity": "certification_boundary",
+      "detail": "Native Slint 1.17.1 implementation was not built or certified in this HTML concept pass."
     },
     {
-      "defect": "Native Slint and physical hardware not proven",
-      "status": "unresolved",
-      "impact": "Browser prototype and deterministic pressure fixtures do not certify native Slint rendering, accessibility, startup, memory, motion, input or actual older-hardware/network behavior."
+      "id": "CERT-HARDWARE",
+      "severity": "certification_boundary",
+      "detail": "Physical legacy-hardware performance was not certified."
     },
     {
-      "defect": "Firefox WebDriver session creation blocked by environment sandbox",
-      "status": "blocked_environment",
-      "impact": "ConceptHub and geckodriver bound, but POST /session timed out after Sandbox: CanCreateUserNamespace() unshare(CLONE_NEWPID): EPERM. The attempt reached no concept page, so no browser interaction or layout pass is claimed; the full browser matrix was not run."
+      "id": "OWNER-INSERTIONS",
+      "severity": "intentional_boundary",
+      "detail": "Nine named future owner destinations remain insertion contracts and do not fabricate backend ownership."
     }
   ],
   "materiality_conclusion": {
     "omission_materially_affected_work": true,
     "basis": "Current worktree changes span startup data ownership, lazy hydration, virtualization, subscription lifetime, persistence, rendering, governor/progress projections, provider policy/continuation, candidate reports and test harnesses across all four concepts. This is material correction work, not a no-difference claim.",
     "closure_status": "corrected_with_named_residuals"
+  },
+  "additive_reviews": [
+    {
+      "review_id": "seven-new-concepts-2026-08-18-5.6-sol",
+      "added_at_utc": "2026-08-18T20:34:10Z",
+      "scope": "Concepts 05\u201311 only; concepts 01\u201304 remain frozen.",
+      "status": "pass_with_named_limitations",
+      "immutable_snapshot": "REFERENCE_REVIEW_2026-08-18.json",
+      "immutable_snapshot_sha256": "3778e14c8204fd965a5f8f53835dd34283dfaeb55ec202f60b4bca94ec462683",
+      "previous_report_sha256_before_additive_update": "82d83a664c9f0355eab5967f941f6c17868d4b44d4af9b906b9e41d6f7c23e1a",
+      "winner_selected": false
+    },
+    {
+      "id": "2026-08-19-final-polish-certification",
+      "date": "2026-08-19",
+      "reviewer": "GPT-5.6 Pro",
+      "status": "pass",
+      "assignment": "Exhaustive visual, motion, packet-completeness, and long-tail route certification for concepts 05\u201311.",
+      "sources_opened": {
+        "packet_members": 76,
+        "selected_reference_images": 7,
+        "top_level_authorities": 13,
+        "base_and_correction_authorities": "all required read-order documents",
+        "repo_sources": [
+          "Concepts/CONCEPT_RULES.md",
+          "PMConcept7 Settings sources",
+          "Plans/settings_inventory.json",
+          "5.6 Sol concepts and evidence"
+        ]
+      },
+      "manual_visual_review": {
+        "route_screenshots": 7173,
+        "route_contact_sheets": 56,
+        "theme_contact_sheets": 14,
+        "motion_filmstrips": 14,
+        "motion_reels": 7
+      },
+      "repairs": [
+        "narrow pane overlap",
+        "long-value clipping",
+        "Concept 10 delay",
+        "concept-native motion",
+        "search locator overlap",
+        "Concept 05 long-tail routed-row mount"
+      ],
+      "verification": {
+        "concepts_total": 7,
+        "concepts_pass": 7,
+        "inventory_settings_per_concept": 828,
+        "inventory_categories_per_concept": 12,
+        "product_index_rows_per_concept": 1007,
+        "synthetic_stress_rows_per_concept": 2000,
+        "canonical_inventory_routes_total": 5796,
+        "canonical_inventory_routes_pass": 5796,
+        "search_cases_total": 112,
+        "search_cases_pass": 112,
+        "manager_routes_total": 329,
+        "manager_routes_pass": 329,
+        "coverage_families_total": 357,
+        "coverage_demonstrated_total": 294,
+        "coverage_deferred_total": 63,
+        "coverage_missing_total": 0,
+        "coverage_shared_grammar_total": 0,
+        "distinct_visual_destinations_total": 1904,
+        "responsive_visual_route_renders_total": 3808,
+        "visual_screenshots_reviewed_total": 7173,
+        "manual_route_review_sheets": 56,
+        "theme_width_cells_total": 336,
+        "theme_width_cells_pass": 336,
+        "representative_theme_surface_captures_total": 1680,
+        "manual_theme_review_sheets": 14,
+        "interaction_cases_total": 63,
+        "interaction_cases_pass": 63,
+        "compositor_sequences_total": 98,
+        "compositor_sequences_pass": 98,
+        "compositor_frames_observed": 2145,
+        "copy_flows_total": 7,
+        "copy_flows_pass": 7,
+        "persistence_total": 7,
+        "persistence_pass": 7,
+        "frozen_files_checked": 49,
+        "frozen_mismatches": 0
+      },
+      "reference_interpretation": {
+        "concept-05-directory-take-1": "Confident two-column directory and card-to-workspace transfer",
+        "concept-06-directory-take-2": "Stable domain rail, editorial destination rows, and roster-first narrow push",
+        "concept-07-compendium-workspace": "First-class faceted All Settings index with integrated list/detail managers",
+        "concept-08-directory-take-3": "Spacious high-signal destination cards and provider status summaries",
+        "concept-09-tome-tabs": "Rethemed persistent chapter tabs and layered central reading canvas",
+        "concept-10-command-suite": "Rethemed keyboard-first command index and multi-pane drill-down",
+        "concept-11-tabbed-organizer": "Rethemed domain tabs and layered sheets with stable location"
+      },
+      "cross_concept_renderer_scan": "pass; no iframe, redirect, foreign visible manager, or route into concepts 01\u201304",
+      "winner_selected": false,
+      "certification_boundaries": [
+        "The concepts are deterministic HTML/Chromium design evidence, not native Slint 1.17.1 certification.",
+        "No physical Ivy Bridge-era or other legacy-hardware performance certification was performed.",
+        "Headless Chromium screencast cadence verifies transition sequencing, flash-free composition, reversal, and settled endpoints; it is not a production frame-rate benchmark on every target GPU.",
+        "Nine named owner destinations remain intentional insertion contracts and do not fabricate their future backends.",
+        "Candidate command, wiring, DRY, data, and Plan impacts remain provisional; canonical registries and Plans were not edited."
+      ]
+    },
+    {
+      "id": "2026-08-19-final-transaction-and-structural-closure",
+      "date": "2026-08-19",
+      "reviewer": "GPT-5.6 Pro",
+      "status": "pass",
+      "assignment": "Close the remaining exhaustive visual, structural, packet-completeness, and film-motion work after the initial polish pass.",
+      "packet_custody": {
+        "members_checked": 76,
+        "checksum_status": "pass",
+        "archive_integrity": "pass"
+      },
+      "manual_review": {
+        "route_captures": 7173,
+        "route_review_sheets": 56,
+        "theme_review_sheets": 14,
+        "all_route_families_reviewed": true,
+        "every_manager_tab_object_and_state_reviewed": true
+      },
+      "final_geometry": {
+        "route_width_evaluations": 10584,
+        "widths": [
+          760,
+          900,
+          1280,
+          1700,
+          2200,
+          2500
+        ],
+        "issues": 0
+      },
+      "motion_closure": {
+        "finding": "Copy receipt could overlap a full-stage transition.",
+        "repair": "Anchored local transaction motion plus transition supersession.",
+        "post_fix_sequences": 28,
+        "post_fix_frames": 182,
+        "blank_frames": 0,
+        "status": "pass"
+      },
+      "scope_integrity": {
+        "frozen_files_unchanged": 49,
+        "outside_model_folder_files_unchanged": 10238,
+        "outside_scope_changes": 0
+      },
+      "winner_selected": false,
+      "certification_boundaries": [
+        "The concepts are deterministic HTML/Chromium design evidence, not native Slint 1.17.1 certification.",
+        "No physical Ivy Bridge-era or other legacy-hardware performance certification was performed.",
+        "Headless Chromium compositor and timed-frame review verifies transition sequencing, reversal, blank-frame avoidance, supersession, and settled endpoints; it is not a production frame-rate benchmark on every target GPU/driver.",
+        "Nine named owner destinations remain intentional insertion contracts and do not fabricate their future backends.",
+        "Candidate command, wiring, DRY, data, and Plan impacts remain provisional; canonical registries and Plans were not edited.",
+        "The uploaded repository intentionally omitted its large /Tests folder; packet-specific, browser, state/render, and ConceptHub validations were run, but that absent suite could not be executed.",
+        "One ConceptHub owner test remains stale outside the authorized model-folder write scope: it hard-codes 136 catalog cards; the untouched upload already had 157 and the correctly extended repository has 164."
+      ]
+    }
+  ],
+  "latest_additive_review": "2026-08-19-final-transaction-and-structural-closure",
+  "known_repository_baseline": {
+    "concept_hub_stale_count_test": {
+      "status": "known_outside_scope",
+      "expected_cards": 136,
+      "uploaded_repo_cards": 157,
+      "updated_repo_cards": 164,
+      "tests_passed": 16,
+      "tests_total": 17
+    },
+    "uploaded_tests_folder": "The user intentionally removed the large /Tests folder before upload; it was unavailable."
   }
 }

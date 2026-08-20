@@ -1,0 +1,640 @@
+{
+  "schema": "pm2.manager_coverage.v2",
+  "conceptId": "c11-sheaf",
+  "concept": "fable · 11 Sheaf (concept-11-tabbed-organizer)",
+  "generated": "2026-08-20",
+  "note": "Complete-coverage rule: every non-deferred family demonstrated inside this concept. Grouped-tab map: 9 top tabs over the 12 canonical categories (memory+planning, branching+personas, media+web share tabs via an in-sheet category lens); canonical cat map preserved for search paths, crumbs, and this file.",
+  "families": [
+    {
+      "family": "Settings Home",
+      "surface": "concept surface: Home sheet (compact attention + 12 category tiles + recents + utilities)",
+      "status": "demonstrated",
+      "route": "#/home",
+      "entryPoints": [
+        "Home tab in the category tab row",
+        "Home crumb chip (always first in the pile)",
+        "Escape ladder terminus"
+      ],
+      "evidence": "renderHome() in concept-11-tabbed-organizer.js; boot-check home route PASS; home.png self-check"
+    },
+    {
+      "family": "Settings Search",
+      "surface": "concept surface: persistent bar search + dropdown anchored beneath the field; #/search/<query> restores query and results",
+      "status": "demonstrated",
+      "route": "#/search/<query>",
+      "entryPoints": [
+        "search field in the frame bar (every surface)",
+        "Ctrl/Cmd+K",
+        "deep link #/search/<query>"
+      ],
+      "evidence": "runSearch()/renderDrop()/pickResult(); data-rid on every result; Back restores query+results via the search route"
+    },
+    {
+      "family": "Settings Workspace",
+      "surface": "concept surface: domain sheets with subgroup sub-tabs, category lens on grouped tabs, related-managers strip",
+      "status": "demonstrated",
+      "route": "#/dest/<cat>[/<sub>]",
+      "entryPoints": [
+        "category tab row (9 grouped tabs over 12 categories)",
+        "Home category tiles",
+        "More menu (all destinations)"
+      ],
+      "evidence": "renderDomain(); all 828 rows reachable by browsing (essential + advanced disclosure per subgroup)"
+    },
+    {
+      "family": "Ordinary setting grammar",
+      "surface": "concept surface: c11-row rendered from store.resolveRow (title + one explanation + control + needed status; Details drawer for evidence)",
+      "status": "demonstrated",
+      "route": "#/setting/<settingId>",
+      "entryPoints": [
+        "domain sheets",
+        "All Settings index",
+        "search results",
+        "recent changes"
+      ],
+      "evidence": "rowHtml()/controlHtml()/rowDrawerHtml(); chips use pm-chip-value vocabulary; managed/unavailable/error/restart/reconnect/changed-elsewhere states rendered"
+    },
+    {
+      "family": "Provider / Account / Model / Installation",
+      "managerId": "m.providers",
+      "status": "demonstrated",
+      "route": "#/manager/m.providers",
+      "entryPoints": [
+        "Home tile \"AI Brains & Providers\" > domain sheet Managers strip (data-manager=\"m.providers\")",
+        "universal search (rid m:m.providers)",
+        "deep link #/manager/m.providers"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (roster-detail archetype); crumb pile Home > AI Brains & Providers > AI Providers"
+    },
+    {
+      "family": "Context & Instructions",
+      "managerId": "m.context",
+      "status": "demonstrated",
+      "route": "#/manager/m.context",
+      "entryPoints": [
+        "Home tile \"Memory & Context\" > domain sheet Managers strip (data-manager=\"m.context\")",
+        "universal search (rid m:m.context)",
+        "deep link #/manager/m.context"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (preference-doc archetype); crumb pile Home > Memory & Context > Context & Instructions"
+    },
+    {
+      "family": "Memory",
+      "managerId": "m.memory",
+      "status": "demonstrated",
+      "route": "#/manager/m.memory",
+      "entryPoints": [
+        "Home tile \"Memory & Context\" > domain sheet Managers strip (data-manager=\"m.memory\")",
+        "universal search (rid m:m.memory)",
+        "deep link #/manager/m.memory"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (roster-detail archetype); crumb pile Home > Memory & Context > Memory"
+    },
+    {
+      "family": "Personas",
+      "managerId": "m.personas",
+      "status": "demonstrated",
+      "route": "#/manager/m.personas",
+      "entryPoints": [
+        "Home tile \"Personas\" > domain sheet Managers strip (data-manager=\"m.personas\")",
+        "universal search (rid m:m.personas)",
+        "deep link #/manager/m.personas"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (roster-detail archetype); crumb pile Home > Personas > Personas"
+    },
+    {
+      "family": "Goal & Automation",
+      "managerId": "m.goal",
+      "status": "demonstrated",
+      "route": "#/manager/m.goal",
+      "entryPoints": [
+        "Home tile \"Planning & Verification\" > domain sheet Managers strip (data-manager=\"m.goal\")",
+        "universal search (rid m:m.goal)",
+        "deep link #/manager/m.goal"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (preference-doc archetype); crumb pile Home > Planning & Verification > Goals & Automation"
+    },
+    {
+      "family": "Crew",
+      "managerId": "m.crew",
+      "status": "demonstrated",
+      "route": "#/manager/m.crew",
+      "entryPoints": [
+        "Home tile \"Branching & Collaboration\" > domain sheet Managers strip (data-manager=\"m.crew\")",
+        "universal search (rid m:m.crew)",
+        "deep link #/manager/m.crew"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (roster-detail archetype); crumb pile Home > Branching & Collaboration > Crews"
+    },
+    {
+      "family": "Permissions & FileSafe",
+      "managerId": "m.permissions",
+      "status": "demonstrated",
+      "route": "#/manager/m.permissions",
+      "entryPoints": [
+        "Home tile \"Permissions & Safety\" > domain sheet Managers strip (data-manager=\"m.permissions\")",
+        "universal search (rid m:m.permissions)",
+        "deep link #/manager/m.permissions"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (preference-doc archetype); crumb pile Home > Permissions & Safety > Permissions & FileSafe"
+    },
+    {
+      "family": "Back Seat Driver",
+      "managerId": "m.bsd",
+      "status": "demonstrated",
+      "route": "#/manager/m.bsd",
+      "entryPoints": [
+        "Home tile \"Permissions & Safety\" > domain sheet Managers strip (data-manager=\"m.bsd\")",
+        "universal search (rid m:m.bsd)",
+        "deep link #/manager/m.bsd"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (preference-doc archetype); crumb pile Home > Permissions & Safety > Back Seat Driver"
+    },
+    {
+      "family": "Notifications & Sounds",
+      "managerId": "m.notifications",
+      "status": "demonstrated",
+      "route": "#/manager/m.notifications",
+      "entryPoints": [
+        "Home tile \"General & Appearance\" > domain sheet Managers strip (data-manager=\"m.notifications\")",
+        "universal search (rid m:m.notifications)",
+        "deep link #/manager/m.notifications"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (roster-detail archetype); crumb pile Home > General & Appearance > Notifications & Sounds"
+    },
+    {
+      "family": "Sound Library / Uploads / Packs",
+      "managerId": "m.sounds",
+      "status": "demonstrated",
+      "route": "#/manager/m.sounds",
+      "entryPoints": [
+        "Home tile \"General & Appearance\" > domain sheet Managers strip (data-manager=\"m.sounds\")",
+        "universal search (rid m:m.sounds)",
+        "deep link #/manager/m.sounds"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (catalog archetype); crumb pile Home > General & Appearance > Sound Library"
+    },
+    {
+      "family": "Appearance / themes / fonts / motion",
+      "managerId": "m.appearance",
+      "status": "demonstrated",
+      "route": "#/manager/m.appearance",
+      "entryPoints": [
+        "Home tile \"General & Appearance\" > domain sheet Managers strip (data-manager=\"m.appearance\")",
+        "universal search (rid m:m.appearance)",
+        "deep link #/manager/m.appearance"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (preference-doc archetype); crumb pile Home > General & Appearance > Appearance"
+    },
+    {
+      "family": "Spellcheck & Dictionaries",
+      "managerId": "m.spellcheck",
+      "status": "demonstrated",
+      "route": "#/manager/m.spellcheck",
+      "entryPoints": [
+        "Home tile \"General & Appearance\" > domain sheet Managers strip (data-manager=\"m.spellcheck\")",
+        "universal search (rid m:m.spellcheck)",
+        "deep link #/manager/m.spellcheck"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (preference-doc archetype); crumb pile Home > General & Appearance > Spellcheck & Dictionaries"
+    },
+    {
+      "family": "Desktop / Tray / Window",
+      "managerId": "m.desktop",
+      "status": "demonstrated",
+      "route": "#/manager/m.desktop",
+      "entryPoints": [
+        "Home tile \"General & Appearance\" > domain sheet Managers strip (data-manager=\"m.desktop\")",
+        "universal search (rid m:m.desktop)",
+        "deep link #/manager/m.desktop"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (preference-doc archetype); crumb pile Home > General & Appearance > Desktop & Window"
+    },
+    {
+      "family": "Teacher / Help",
+      "managerId": "m.teacher",
+      "status": "demonstrated",
+      "route": "#/manager/m.teacher",
+      "entryPoints": [
+        "Home tile \"General & Appearance\" > domain sheet Managers strip (data-manager=\"m.teacher\")",
+        "universal search (rid m:m.teacher)",
+        "deep link #/manager/m.teacher"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (catalog archetype); crumb pile Home > General & Appearance > Teacher & Help"
+    },
+    {
+      "family": "Doctor",
+      "managerId": "m.doctor",
+      "status": "demonstrated",
+      "route": "#/manager/m.doctor",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.doctor\")",
+        "universal search (rid m:m.doctor)",
+        "deep link #/manager/m.doctor"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (health archetype); crumb pile Home > System & Advanced > Doctor"
+    },
+    {
+      "family": "File Manager / Editor",
+      "managerId": "m.files",
+      "status": "demonstrated",
+      "route": "#/manager/m.files",
+      "entryPoints": [
+        "Home tile \"Code & Execution\" > domain sheet Managers strip (data-manager=\"m.files\")",
+        "universal search (rid m:m.files)",
+        "deep link #/manager/m.files"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (preference-doc archetype); crumb pile Home > Code & Execution > Files & Editor"
+    },
+    {
+      "family": "Terminal",
+      "managerId": "m.terminal",
+      "status": "demonstrated",
+      "route": "#/manager/m.terminal",
+      "entryPoints": [
+        "Home tile \"Code & Execution\" > domain sheet Managers strip (data-manager=\"m.terminal\")",
+        "universal search (rid m:m.terminal)",
+        "deep link #/manager/m.terminal"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (roster-detail archetype); crumb pile Home > Code & Execution > Terminal"
+    },
+    {
+      "family": "LSP",
+      "managerId": "m.lsp",
+      "status": "demonstrated",
+      "route": "#/manager/m.lsp",
+      "entryPoints": [
+        "Home tile \"Code & Execution\" > domain sheet Managers strip (data-manager=\"m.lsp\")",
+        "universal search (rid m:m.lsp)",
+        "deep link #/manager/m.lsp"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (roster-detail archetype); crumb pile Home > Code & Execution > Language Servers"
+    },
+    {
+      "family": "Formatters",
+      "managerId": "m.formatters",
+      "status": "demonstrated",
+      "route": "#/manager/m.formatters",
+      "entryPoints": [
+        "Home tile \"Code & Execution\" > domain sheet Managers strip (data-manager=\"m.formatters\")",
+        "universal search (rid m:m.formatters)",
+        "deep link #/manager/m.formatters"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (catalog archetype); crumb pile Home > Code & Execution > Formatters"
+    },
+    {
+      "family": "Commands & Shortcuts",
+      "managerId": "m.commands",
+      "status": "demonstrated",
+      "route": "#/manager/m.commands",
+      "entryPoints": [
+        "Home tile \"Skills, Plugins & Commands\" > domain sheet Managers strip (data-manager=\"m.commands\")",
+        "universal search (rid m:m.commands)",
+        "deep link #/manager/m.commands"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (catalog archetype); crumb pile Home > Skills, Plugins & Commands > Commands & Shortcuts"
+    },
+    {
+      "family": "MCP",
+      "managerId": "m.mcp",
+      "status": "demonstrated",
+      "route": "#/manager/m.mcp",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.mcp\")",
+        "universal search (rid m:m.mcp)",
+        "deep link #/manager/m.mcp"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (roster-detail archetype); crumb pile Home > System & Advanced > MCP Servers"
+    },
+    {
+      "family": "Skills",
+      "managerId": "m.skills",
+      "status": "demonstrated",
+      "route": "#/manager/m.skills",
+      "entryPoints": [
+        "Home tile \"Skills, Plugins & Commands\" > domain sheet Managers strip (data-manager=\"m.skills\")",
+        "universal search (rid m:m.skills)",
+        "deep link #/manager/m.skills"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (catalog archetype); crumb pile Home > Skills, Plugins & Commands > Skills"
+    },
+    {
+      "family": "Plugins",
+      "managerId": "m.plugins",
+      "status": "demonstrated",
+      "route": "#/manager/m.plugins",
+      "entryPoints": [
+        "Home tile \"Skills, Plugins & Commands\" > domain sheet Managers strip (data-manager=\"m.plugins\")",
+        "universal search (rid m:m.plugins)",
+        "deep link #/manager/m.plugins"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (catalog archetype); crumb pile Home > Skills, Plugins & Commands > Plugins"
+    },
+    {
+      "family": "Tools",
+      "managerId": "m.tools",
+      "status": "demonstrated",
+      "route": "#/manager/m.tools",
+      "entryPoints": [
+        "Home tile \"Skills, Plugins & Commands\" > domain sheet Managers strip (data-manager=\"m.tools\")",
+        "universal search (rid m:m.tools)",
+        "deep link #/manager/m.tools"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (catalog archetype); crumb pile Home > Skills, Plugins & Commands > Agent Tools"
+    },
+    {
+      "family": "Testing & Debug",
+      "managerId": "m.testing",
+      "status": "demonstrated",
+      "route": "#/manager/m.testing",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.testing\")",
+        "universal search (rid m:m.testing)",
+        "deep link #/manager/m.testing"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (preference-doc archetype); crumb pile Home > System & Advanced > Testing & Debug"
+    },
+    {
+      "family": "Storage & Retention",
+      "managerId": "m.storage",
+      "status": "demonstrated",
+      "route": "#/manager/m.storage",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.storage\")",
+        "universal search (rid m:m.storage)",
+        "deep link #/manager/m.storage"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (health archetype); crumb pile Home > System & Advanced > Storage & Retention"
+    },
+    {
+      "family": "Backup & Restore",
+      "managerId": "m.backup",
+      "status": "demonstrated",
+      "route": "#/manager/m.backup",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.backup\")",
+        "universal search (rid m:m.backup)",
+        "deep link #/manager/m.backup"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (roster-detail archetype); crumb pile Home > System & Advanced > Backup & Restore"
+    },
+    {
+      "family": "Settings Lifecycle",
+      "managerId": "m.lifecycle",
+      "status": "demonstrated",
+      "route": "#/manager/m.lifecycle",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.lifecycle\")",
+        "universal search (rid m:m.lifecycle)",
+        "deep link #/manager/m.lifecycle"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (transaction archetype); crumb pile Home > System & Advanced > Settings Lifecycle"
+    },
+    {
+      "family": "History & Sessions",
+      "managerId": "m.history",
+      "status": "demonstrated",
+      "route": "#/manager/m.history",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.history\")",
+        "universal search (rid m:m.history)",
+        "deep link #/manager/m.history"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (roster-detail archetype); crumb pile Home > System & Advanced > History & Sessions"
+    },
+    {
+      "family": "Runtime Artifacts / Project Outputs",
+      "managerId": "m.artifacts",
+      "status": "demonstrated",
+      "route": "#/manager/m.artifacts",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.artifacts\")",
+        "universal search (rid m:m.artifacts)",
+        "deep link #/manager/m.artifacts"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (roster-detail archetype); crumb pile Home > System & Advanced > Runtime Artifacts"
+    },
+    {
+      "family": "Source Control / Worktrees",
+      "managerId": "m.sourceControl",
+      "status": "demonstrated",
+      "route": "#/manager/m.sourceControl",
+      "entryPoints": [
+        "Home tile \"Branching & Collaboration\" > domain sheet Managers strip (data-manager=\"m.sourceControl\")",
+        "universal search (rid m:m.sourceControl)",
+        "deep link #/manager/m.sourceControl"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (roster-detail archetype); crumb pile Home > Branching & Collaboration > Source Control & Worktrees"
+    },
+    {
+      "family": "GitHub Actions",
+      "managerId": "m.actions",
+      "status": "demonstrated",
+      "route": "#/manager/m.actions",
+      "entryPoints": [
+        "Home tile \"Branching & Collaboration\" > domain sheet Managers strip (data-manager=\"m.actions\")",
+        "universal search (rid m:m.actions)",
+        "deep link #/manager/m.actions"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (health archetype); crumb pile Home > Branching & Collaboration > GitHub Actions"
+    },
+    {
+      "family": "Containers & Registries",
+      "managerId": "m.containers",
+      "status": "demonstrated",
+      "route": "#/manager/m.containers",
+      "entryPoints": [
+        "Home tile \"Code & Execution\" > domain sheet Managers strip (data-manager=\"m.containers\")",
+        "universal search (rid m:m.containers)",
+        "deep link #/manager/m.containers"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (roster-detail archetype); crumb pile Home > Code & Execution > Containers & Registries"
+    },
+    {
+      "family": "Web / Search / Fetch / Crawl",
+      "managerId": "m.web",
+      "status": "demonstrated",
+      "route": "#/manager/m.web",
+      "entryPoints": [
+        "Home tile \"Web & Search\" > domain sheet Managers strip (data-manager=\"m.web\")",
+        "universal search (rid m:m.web)",
+        "deep link #/manager/m.web"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (roster-detail archetype); crumb pile Home > Web & Search > Web & Research"
+    },
+    {
+      "family": "Project Search Index",
+      "managerId": "m.searchIndex",
+      "status": "demonstrated",
+      "route": "#/manager/m.searchIndex",
+      "entryPoints": [
+        "Home tile \"Web & Search\" > domain sheet Managers strip (data-manager=\"m.searchIndex\")",
+        "universal search (rid m:m.searchIndex)",
+        "deep link #/manager/m.searchIndex"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (health archetype); crumb pile Home > Web & Search > Project Search Index"
+    },
+    {
+      "family": "Workspace Cleanup",
+      "managerId": "m.cleanup",
+      "status": "demonstrated",
+      "route": "#/manager/m.cleanup",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.cleanup\")",
+        "universal search (rid m:m.cleanup)",
+        "deep link #/manager/m.cleanup"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (transaction archetype); crumb pile Home > System & Advanced > Workspace Cleanup"
+    },
+    {
+      "family": "Media & Output",
+      "managerId": "m.media",
+      "status": "demonstrated",
+      "route": "#/manager/m.media",
+      "entryPoints": [
+        "Home tile \"Media & Output\" > domain sheet Managers strip (data-manager=\"m.media\")",
+        "universal search (rid m:m.media)",
+        "deep link #/manager/m.media"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (roster-detail archetype); crumb pile Home > Media & Output > Media & Output"
+    },
+    {
+      "family": "DRY Method visible state where exposed",
+      "managerId": "m.dry",
+      "status": "demonstrated",
+      "route": "#/manager/m.dry",
+      "entryPoints": [
+        "Home tile \"Planning & Verification\" > domain sheet Managers strip (data-manager=\"m.dry\")",
+        "universal search (rid m:m.dry)",
+        "deep link #/manager/m.dry"
+      ],
+      "evidence": "renderManager() renders def.model(store) lazily in the sheet pile (health archetype); crumb pile Home > Planning & Verification > Single Owners"
+    },
+    {
+      "family": "Product Onboarding",
+      "managerId": "m.onboarding",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.onboarding",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.onboarding\")",
+        "universal search (rid m:m.onboarding)",
+        "deep link #/manager/m.onboarding"
+      ],
+      "evidence": "renderDeferredShell(): reachable insertion page showing owner, deep-link grammar, reachable-from list, and return contract; read-only, no fabricated backend",
+      "owner": "Product Onboarding owner thread (first-run flow owner; separate from Installation/Deployment and Server Claim/Bootstrap)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.onboarding/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Installation / Deployment",
+      "managerId": "m.deployment",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.deployment",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.deployment\")",
+        "universal search (rid m:m.deployment)",
+        "deep link #/manager/m.deployment"
+      ],
+      "evidence": "renderDeferredShell(): reachable insertion page showing owner, deep-link grammar, reachable-from list, and return contract; read-only, no fabricated backend",
+      "owner": "Release_Supply_Chain.md (installer and deployment supply chain)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.deployment/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Server Claim / Bootstrap",
+      "managerId": "m.serverClaim",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.serverClaim",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.serverClaim\")",
+        "universal search (rid m:m.serverClaim)",
+        "deep link #/manager/m.serverClaim"
+      ],
+      "evidence": "renderDeferredShell(): reachable insertion page showing owner, deep-link grammar, reachable-from list, and return contract; read-only, no fabricated backend",
+      "owner": "Server Backbone return (Post-Return Reconciliation v6)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.serverClaim/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Servers / Execution Hosts / Clients",
+      "managerId": "m.servers",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.servers",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.servers\")",
+        "universal search (rid m:m.servers)",
+        "deep link #/manager/m.servers"
+      ],
+      "evidence": "renderDeferredShell(): reachable insertion page showing owner, deep-link grammar, reachable-from list, and return contract; read-only, no fabricated backend",
+      "owner": "Server Backbone return (Post-Return Reconciliation v6, sections 4-5)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.servers/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Project Hosting & Files",
+      "managerId": "m.hosting",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.hosting",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.hosting\")",
+        "universal search (rid m:m.hosting)",
+        "deep link #/manager/m.hosting"
+      ],
+      "evidence": "renderDeferredShell(): reachable insertion page showing owner, deep-link grammar, reachable-from list, and return contract; read-only, no fabricated backend",
+      "owner": "storage-plan.md",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.hosting/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Remote Access",
+      "managerId": "m.remote",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.remote",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.remote\")",
+        "universal search (rid m:m.remote)",
+        "deep link #/manager/m.remote"
+      ],
+      "evidence": "renderDeferredShell(): reachable insertion page showing owner, deep-link grammar, reachable-from list, and return contract; read-only, no fabricated backend",
+      "owner": "Server Backbone return, section 10",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.remote/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Project Sync / Move",
+      "managerId": "m.projectSync",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.projectSync",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.projectSync\")",
+        "universal search (rid m:m.projectSync)",
+        "deep link #/manager/m.projectSync"
+      ],
+      "evidence": "renderDeferredShell(): reachable insertion page showing owner, deep-link grammar, reachable-from list, and return contract; read-only, no fabricated backend",
+      "owner": "storage-plan.md (Project Sync owner)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.projectSync/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Puppet Master application/content updates",
+      "managerId": "m.appUpdates",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.appUpdates",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.appUpdates\")",
+        "universal search (rid m:m.appUpdates)",
+        "deep link #/manager/m.appUpdates"
+      ],
+      "evidence": "renderDeferredShell(): reachable insertion page showing owner, deep-link grammar, reachable-from list, and return contract; read-only, no fabricated backend",
+      "owner": "Release_Supply_Chain.md",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.appUpdates/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Full Server backup owner flow",
+      "managerId": "m.serverBackup",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.serverBackup",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.serverBackup\")",
+        "universal search (rid m:m.serverBackup)",
+        "deep link #/manager/m.serverBackup"
+      ],
+      "evidence": "renderDeferredShell(): reachable insertion page showing owner, deep-link grammar, reachable-from list, and return contract; read-only, no fabricated backend",
+      "owner": "storage-plan.md",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.serverBackup/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    }
+  ]
+}

@@ -1,0 +1,809 @@
+{
+  "schema": "pm2.manager_route_matrix.v1",
+  "conceptId": "c11-sheaf",
+  "generated": "2026-08-20",
+  "note": "Every manager route walked by tools/boot-check.js route walks plus the interactive self-check driver; shellRetained means titlebar/rail/statusbar plus the concept frame (bar search, tab row, crumb pile) stay mounted.",
+  "managers": [
+    {
+      "managerId": "m.providers",
+      "entryPoints": [
+        "Home tile \"AI Brains & Providers\" > domain sheet Managers strip (data-manager=\"m.providers\")",
+        "universal search (rid m:m.providers)",
+        "deep link #/manager/m.providers"
+      ],
+      "route": "#/manager/m.providers[/<providerId>[/<tab>]]",
+      "shellRetained": true,
+      "backTarget": "#/dest/ai (\"Back to AI Brains & Providers\" + crumb pile Home > AI Brains & Providers)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "below 1020px stage width the roster pane hides; the provider detail is a one-pane push sheet and the crumb pile is the way back",
+      "statesShown": [
+        "fx.loading-cached",
+        "fx.reconnect-required",
+        "fx.rollback-complete",
+        "fx.changed-elsewhere"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.context",
+      "entryPoints": [
+        "Home tile \"Memory & Context\" > domain sheet Managers strip (data-manager=\"m.context\")",
+        "universal search (rid m:m.context)",
+        "deep link #/manager/m.context"
+      ],
+      "route": "#/manager/m.context[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/memory (\"Back to Memory & Context\" + crumb pile Home > Memory & Context)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.loading-cached",
+        "fx.long-text"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.memory",
+      "entryPoints": [
+        "Home tile \"Memory & Context\" > domain sheet Managers strip (data-manager=\"m.memory\")",
+        "universal search (rid m:m.memory)",
+        "deep link #/manager/m.memory"
+      ],
+      "route": "#/manager/m.memory[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/memory (\"Back to Memory & Context\" + crumb pile Home > Memory & Context)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.long-text",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.personas",
+      "entryPoints": [
+        "Home tile \"Personas\" > domain sheet Managers strip (data-manager=\"m.personas\")",
+        "universal search (rid m:m.personas)",
+        "deep link #/manager/m.personas"
+      ],
+      "route": "#/manager/m.personas[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/personas (\"Back to Personas\" + crumb pile Home > Personas)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.import-conflict",
+        "fx.long-text"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.goal",
+      "entryPoints": [
+        "Home tile \"Planning & Verification\" > domain sheet Managers strip (data-manager=\"m.goal\")",
+        "universal search (rid m:m.goal)",
+        "deep link #/manager/m.goal"
+      ],
+      "route": "#/manager/m.goal[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/planning (\"Back to Planning & Verification\" + crumb pile Home > Planning & Verification)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.changed-elsewhere"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.crew",
+      "entryPoints": [
+        "Home tile \"Branching & Collaboration\" > domain sheet Managers strip (data-manager=\"m.crew\")",
+        "universal search (rid m:m.crew)",
+        "deep link #/manager/m.crew"
+      ],
+      "route": "#/manager/m.crew[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/branching (\"Back to Branching & Collaboration\" + crumb pile Home > Branching & Collaboration)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.permissions",
+      "entryPoints": [
+        "Home tile \"Permissions & Safety\" > domain sheet Managers strip (data-manager=\"m.permissions\")",
+        "universal search (rid m:m.permissions)",
+        "deep link #/manager/m.permissions"
+      ],
+      "route": "#/manager/m.permissions[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/safety (\"Back to Permissions & Safety\" + crumb pile Home > Permissions & Safety)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.doom-loop-tripped",
+        "fx.changed-elsewhere"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.bsd",
+      "entryPoints": [
+        "Home tile \"Permissions & Safety\" > domain sheet Managers strip (data-manager=\"m.bsd\")",
+        "universal search (rid m:m.bsd)",
+        "deep link #/manager/m.bsd"
+      ],
+      "route": "#/manager/m.bsd[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/safety (\"Back to Permissions & Safety\" + crumb pile Home > Permissions & Safety)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.changed-elsewhere"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.notifications",
+      "entryPoints": [
+        "Home tile \"General & Appearance\" > domain sheet Managers strip (data-manager=\"m.notifications\")",
+        "universal search (rid m:m.notifications)",
+        "deep link #/manager/m.notifications"
+      ],
+      "route": "#/manager/m.notifications[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/general (\"Back to General & Appearance\" + crumb pile Home > General & Appearance)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.validation-error",
+        "fx.reconnect-required"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.sounds",
+      "entryPoints": [
+        "Home tile \"General & Appearance\" > domain sheet Managers strip (data-manager=\"m.sounds\")",
+        "universal search (rid m:m.sounds)",
+        "deep link #/manager/m.sounds"
+      ],
+      "route": "#/manager/m.sounds[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/general (\"Back to General & Appearance\" + crumb pile Home > General & Appearance)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.import-conflict",
+        "fx.validation-error"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.appearance",
+      "entryPoints": [
+        "Home tile \"General & Appearance\" > domain sheet Managers strip (data-manager=\"m.appearance\")",
+        "universal search (rid m:m.appearance)",
+        "deep link #/manager/m.appearance"
+      ],
+      "route": "#/manager/m.appearance[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/general (\"Back to General & Appearance\" + crumb pile Home > General & Appearance)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.theme-fallback",
+        "fx.restart-required"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.spellcheck",
+      "entryPoints": [
+        "Home tile \"General & Appearance\" > domain sheet Managers strip (data-manager=\"m.spellcheck\")",
+        "universal search (rid m:m.spellcheck)",
+        "deep link #/manager/m.spellcheck"
+      ],
+      "route": "#/manager/m.spellcheck[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/general (\"Back to General & Appearance\" + crumb pile Home > General & Appearance)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.long-text"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.desktop",
+      "entryPoints": [
+        "Home tile \"General & Appearance\" > domain sheet Managers strip (data-manager=\"m.desktop\")",
+        "universal search (rid m:m.desktop)",
+        "deep link #/manager/m.desktop"
+      ],
+      "route": "#/manager/m.desktop[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/general (\"Back to General & Appearance\" + crumb pile Home > General & Appearance)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.restart-required"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.teacher",
+      "entryPoints": [
+        "Home tile \"General & Appearance\" > domain sheet Managers strip (data-manager=\"m.teacher\")",
+        "universal search (rid m:m.teacher)",
+        "deep link #/manager/m.teacher"
+      ],
+      "route": "#/manager/m.teacher[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/general (\"Back to General & Appearance\" + crumb pile Home > General & Appearance)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.long-text"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.doctor",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.doctor\")",
+        "universal search (rid m:m.doctor)",
+        "deep link #/manager/m.doctor"
+      ],
+      "route": "#/manager/m.doctor[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (\"Back to System & Advanced\" + crumb pile Home > System & Advanced)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.storage-pressure",
+        "fx.index-failed",
+        "fx.doom-loop-tripped",
+        "fx.reconnect-required"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.files",
+      "entryPoints": [
+        "Home tile \"Code & Execution\" > domain sheet Managers strip (data-manager=\"m.files\")",
+        "universal search (rid m:m.files)",
+        "deep link #/manager/m.files"
+      ],
+      "route": "#/manager/m.files[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/code (\"Back to Code & Execution\" + crumb pile Home > Code & Execution)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.terminal",
+      "entryPoints": [
+        "Home tile \"Code & Execution\" > domain sheet Managers strip (data-manager=\"m.terminal\")",
+        "universal search (rid m:m.terminal)",
+        "deep link #/manager/m.terminal"
+      ],
+      "route": "#/manager/m.terminal[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/code (\"Back to Code & Execution\" + crumb pile Home > Code & Execution)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.lsp",
+      "entryPoints": [
+        "Home tile \"Code & Execution\" > domain sheet Managers strip (data-manager=\"m.lsp\")",
+        "universal search (rid m:m.lsp)",
+        "deep link #/manager/m.lsp"
+      ],
+      "route": "#/manager/m.lsp[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/code (\"Back to Code & Execution\" + crumb pile Home > Code & Execution)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.formatters",
+      "entryPoints": [
+        "Home tile \"Code & Execution\" > domain sheet Managers strip (data-manager=\"m.formatters\")",
+        "universal search (rid m:m.formatters)",
+        "deep link #/manager/m.formatters"
+      ],
+      "route": "#/manager/m.formatters[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/code (\"Back to Code & Execution\" + crumb pile Home > Code & Execution)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.commands",
+      "entryPoints": [
+        "Home tile \"Skills, Plugins & Commands\" > domain sheet Managers strip (data-manager=\"m.commands\")",
+        "universal search (rid m:m.commands)",
+        "deep link #/manager/m.commands"
+      ],
+      "route": "#/manager/m.commands[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/extensions (\"Back to Skills, Plugins & Commands\" + crumb pile Home > Skills, Plugins & Commands)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.mcp",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.mcp\")",
+        "universal search (rid m:m.mcp)",
+        "deep link #/manager/m.mcp"
+      ],
+      "route": "#/manager/m.mcp[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (\"Back to System & Advanced\" + crumb pile Home > System & Advanced)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.reconnect-required",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.skills",
+      "entryPoints": [
+        "Home tile \"Skills, Plugins & Commands\" > domain sheet Managers strip (data-manager=\"m.skills\")",
+        "universal search (rid m:m.skills)",
+        "deep link #/manager/m.skills"
+      ],
+      "route": "#/manager/m.skills[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/extensions (\"Back to Skills, Plugins & Commands\" + crumb pile Home > Skills, Plugins & Commands)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.plugins",
+      "entryPoints": [
+        "Home tile \"Skills, Plugins & Commands\" > domain sheet Managers strip (data-manager=\"m.plugins\")",
+        "universal search (rid m:m.plugins)",
+        "deep link #/manager/m.plugins"
+      ],
+      "route": "#/manager/m.plugins[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/extensions (\"Back to Skills, Plugins & Commands\" + crumb pile Home > Skills, Plugins & Commands)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.tools",
+      "entryPoints": [
+        "Home tile \"Skills, Plugins & Commands\" > domain sheet Managers strip (data-manager=\"m.tools\")",
+        "universal search (rid m:m.tools)",
+        "deep link #/manager/m.tools"
+      ],
+      "route": "#/manager/m.tools[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/extensions (\"Back to Skills, Plugins & Commands\" + crumb pile Home > Skills, Plugins & Commands)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.testing",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.testing\")",
+        "universal search (rid m:m.testing)",
+        "deep link #/manager/m.testing"
+      ],
+      "route": "#/manager/m.testing[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (\"Back to System & Advanced\" + crumb pile Home > System & Advanced)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.storage",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.storage\")",
+        "universal search (rid m:m.storage)",
+        "deep link #/manager/m.storage"
+      ],
+      "route": "#/manager/m.storage[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (\"Back to System & Advanced\" + crumb pile Home > System & Advanced)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.storage-pressure",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.backup",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.backup\")",
+        "universal search (rid m:m.backup)",
+        "deep link #/manager/m.backup"
+      ],
+      "route": "#/manager/m.backup[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (\"Back to System & Advanced\" + crumb pile Home > System & Advanced)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.lifecycle",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.lifecycle\")",
+        "universal search (rid m:m.lifecycle)",
+        "deep link #/manager/m.lifecycle"
+      ],
+      "route": "#/manager/m.lifecycle[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (\"Back to System & Advanced\" + crumb pile Home > System & Advanced)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.import-conflict",
+        "fx.rollback-complete",
+        "fx.validation-error"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.history",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.history\")",
+        "universal search (rid m:m.history)",
+        "deep link #/manager/m.history"
+      ],
+      "route": "#/manager/m.history[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (\"Back to System & Advanced\" + crumb pile Home > System & Advanced)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.artifacts",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.artifacts\")",
+        "universal search (rid m:m.artifacts)",
+        "deep link #/manager/m.artifacts"
+      ],
+      "route": "#/manager/m.artifacts[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (\"Back to System & Advanced\" + crumb pile Home > System & Advanced)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.loading-cached",
+        "fx.storage-pressure"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.sourceControl",
+      "entryPoints": [
+        "Home tile \"Branching & Collaboration\" > domain sheet Managers strip (data-manager=\"m.sourceControl\")",
+        "universal search (rid m:m.sourceControl)",
+        "deep link #/manager/m.sourceControl"
+      ],
+      "route": "#/manager/m.sourceControl[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/branching (\"Back to Branching & Collaboration\" + crumb pile Home > Branching & Collaboration)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.actions",
+      "entryPoints": [
+        "Home tile \"Branching & Collaboration\" > domain sheet Managers strip (data-manager=\"m.actions\")",
+        "universal search (rid m:m.actions)",
+        "deep link #/manager/m.actions"
+      ],
+      "route": "#/manager/m.actions[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/branching (\"Back to Branching & Collaboration\" + crumb pile Home > Branching & Collaboration)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.containers",
+      "entryPoints": [
+        "Home tile \"Code & Execution\" > domain sheet Managers strip (data-manager=\"m.containers\")",
+        "universal search (rid m:m.containers)",
+        "deep link #/manager/m.containers"
+      ],
+      "route": "#/manager/m.containers[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/code (\"Back to Code & Execution\" + crumb pile Home > Code & Execution)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.web",
+      "entryPoints": [
+        "Home tile \"Web & Search\" > domain sheet Managers strip (data-manager=\"m.web\")",
+        "universal search (rid m:m.web)",
+        "deep link #/manager/m.web"
+      ],
+      "route": "#/manager/m.web[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/web (\"Back to Web & Search\" + crumb pile Home > Web & Search)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.credit-guard",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.searchIndex",
+      "entryPoints": [
+        "Home tile \"Web & Search\" > domain sheet Managers strip (data-manager=\"m.searchIndex\")",
+        "universal search (rid m:m.searchIndex)",
+        "deep link #/manager/m.searchIndex"
+      ],
+      "route": "#/manager/m.searchIndex[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/web (\"Back to Web & Search\" + crumb pile Home > Web & Search)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.index-failed",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.cleanup",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.cleanup\")",
+        "universal search (rid m:m.cleanup)",
+        "deep link #/manager/m.cleanup"
+      ],
+      "route": "#/manager/m.cleanup[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (\"Back to System & Advanced\" + crumb pile Home > System & Advanced)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.media",
+      "entryPoints": [
+        "Home tile \"Media & Output\" > domain sheet Managers strip (data-manager=\"m.media\")",
+        "universal search (rid m:m.media)",
+        "deep link #/manager/m.media"
+      ],
+      "route": "#/manager/m.media[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/media (\"Back to Media & Output\" + crumb pile Home > Media & Output)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.dry",
+      "entryPoints": [
+        "Home tile \"Planning & Verification\" > domain sheet Managers strip (data-manager=\"m.dry\")",
+        "universal search (rid m:m.dry)",
+        "deep link #/manager/m.dry"
+      ],
+      "route": "#/manager/m.dry[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/planning (\"Back to Planning & Verification\" + crumb pile Home > Planning & Verification)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [
+        "fx.doom-loop-tripped"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.onboarding",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.onboarding\")",
+        "universal search (rid m:m.onboarding)",
+        "deep link #/manager/m.onboarding"
+      ],
+      "route": "#/manager/m.onboarding[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (\"Back to System & Advanced\" + crumb pile Home > System & Advanced)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.deployment",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.deployment\")",
+        "universal search (rid m:m.deployment)",
+        "deep link #/manager/m.deployment"
+      ],
+      "route": "#/manager/m.deployment[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (\"Back to System & Advanced\" + crumb pile Home > System & Advanced)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.serverClaim",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.serverClaim\")",
+        "universal search (rid m:m.serverClaim)",
+        "deep link #/manager/m.serverClaim"
+      ],
+      "route": "#/manager/m.serverClaim[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (\"Back to System & Advanced\" + crumb pile Home > System & Advanced)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.servers",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.servers\")",
+        "universal search (rid m:m.servers)",
+        "deep link #/manager/m.servers"
+      ],
+      "route": "#/manager/m.servers[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (\"Back to System & Advanced\" + crumb pile Home > System & Advanced)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.hosting",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.hosting\")",
+        "universal search (rid m:m.hosting)",
+        "deep link #/manager/m.hosting"
+      ],
+      "route": "#/manager/m.hosting[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (\"Back to System & Advanced\" + crumb pile Home > System & Advanced)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.remote",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.remote\")",
+        "universal search (rid m:m.remote)",
+        "deep link #/manager/m.remote"
+      ],
+      "route": "#/manager/m.remote[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (\"Back to System & Advanced\" + crumb pile Home > System & Advanced)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.projectSync",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.projectSync\")",
+        "universal search (rid m:m.projectSync)",
+        "deep link #/manager/m.projectSync"
+      ],
+      "route": "#/manager/m.projectSync[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (\"Back to System & Advanced\" + crumb pile Home > System & Advanced)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.appUpdates",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.appUpdates\")",
+        "universal search (rid m:m.appUpdates)",
+        "deep link #/manager/m.appUpdates"
+      ],
+      "route": "#/manager/m.appUpdates[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (\"Back to System & Advanced\" + crumb pile Home > System & Advanced)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.serverBackup",
+      "entryPoints": [
+        "Home tile \"System & Advanced\" > domain sheet Managers strip (data-manager=\"m.serverBackup\")",
+        "universal search (rid m:m.serverBackup)",
+        "deep link #/manager/m.serverBackup"
+      ],
+      "route": "#/manager/m.serverBackup[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (\"Back to System & Advanced\" + crumb pile Home > System & Advanced)",
+      "closeTarget": "Close Settings button in the frame bar (honest simulated receipt: Returns to Dashboard)",
+      "narrowBehavior": "one-pane sheet; crumb pile + Back chip stay visible; no rail overlay; tab strip condenses with edge fades + More menu",
+      "statesShown": [],
+      "pass": true
+    }
+  ]
+}

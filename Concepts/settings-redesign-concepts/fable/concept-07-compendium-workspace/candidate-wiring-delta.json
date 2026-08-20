@@ -1,0 +1,73 @@
+{
+  "schema_id": "pm.settings_candidate_wiring_delta.v1",
+  "concept_id": "concept-07-compendium-workspace",
+  "model": "fable",
+  "note": "Keystone traces for the compendium concept. Every trace is concept-local demo state and says so; nothing here masquerades as production wiring.",
+  "traces": [
+    {
+      "ui_element_id": "c07.all.facet",
+      "ui_command_id": "cmd.settings.all.filter",
+      "canonical_owner": "Plans/settings_inventory.json",
+      "validation_permission": "read-only over the inventory index",
+      "mutation_or_operation": "recompute filtered list (pure function over records + live row states); re-window the virtual list",
+      "expected_event_types": [],
+      "receipt": "none (view-only)",
+      "ui_projection": "live count line updates; windowed rows re-render; facet button aria-pressed flips",
+      "usage_attribution": "none",
+      "recovery_deep_link": "#/all",
+      "demo_binding": { "interaction": "click facet buttons / chips on #/all", "concept_local_state": true }
+    },
+    {
+      "ui_element_id": "c07.row.control",
+      "ui_command_id": "cmd.settings.value.set",
+      "canonical_owner": "Settings schema/registry",
+      "validation_permission": "store.setValue validates by type/options/bounds; managed and unavailable rows render disabled controls",
+      "mutation_or_operation": "store.values[id] updated; changedFromDefault recomputed; recents prepended",
+      "expected_event_types": ["value", "receipt"],
+      "receipt": "Setting updated — <label> is now <value>",
+      "ui_projection": "row re-renders in place (chip flips to custom), Home recents and counts update; validation failure renders the inline error and keeps focus",
+      "usage_attribution": "none (local mutation)",
+      "recovery_deep_link": "#/setting/<id>",
+      "demo_binding": { "interaction": "toggle/select/number/slider/text controls on domain rows", "concept_local_state": true }
+    },
+    {
+      "ui_element_id": "c07.search.result",
+      "ui_command_id": "cmd.settings.navigate",
+      "canonical_owner": "Plans/FinalGUISpec.md",
+      "validation_permission": "routing strictly by rid/dest object; never index or label",
+      "mutation_or_operation": "push #/search/<q> as a real history entry, then push the dest route; open() performs the landing sequence",
+      "expected_event_types": [],
+      "receipt": "none",
+      "ui_projection": "domain/manager loads, exact row scrolled + focused + pm2-located, About panel opens for settings; browser Back restores the query and result list",
+      "usage_attribution": "none",
+      "recovery_deep_link": "#/search/<query>",
+      "demo_binding": { "interaction": "type in hero/topbar field, click dropdown result", "concept_local_state": true }
+    },
+    {
+      "ui_element_id": "c07.copy.apply",
+      "ui_command_id": "cmd.settings.copy.apply",
+      "canonical_owner": "Project-copy policy",
+      "validation_permission": "requires a staged preview token; add/replace rows only; conflict and unavailable rows are never written",
+      "mutation_or_operation": "PM2.copy.apply: restore point -> atomic write -> verify -> receipt; rollback restores exactly",
+      "expected_event_types": ["op(copy-apply)", "value(batch)", "copy(applied)", "receipt"],
+      "receipt": "Settings copied from <source> — n values applied atomically and verified",
+      "ui_projection": "staged op line with truthful phases (determinate only with a real denominator); receipt step with receiptId + restorePointId + working Rollback",
+      "usage_attribution": "none",
+      "recovery_deep_link": "#/copy",
+      "demo_binding": { "interaction": "copy flow step 4", "concept_local_state": true }
+    },
+    {
+      "ui_element_id": "c07.manager.action",
+      "ui_command_id": "cmd.manager.action.run",
+      "canonical_owner": "per-manager owner plans",
+      "validation_permission": "def.actions(store).available gates the button; unavailable actions render the reason inline and refuse with an honest receipt",
+      "mutation_or_operation": "action.run(store) -> PM2.states.op staged phases or simulated receipt",
+      "expected_event_types": ["op", "receipt"],
+      "receipt": "per action",
+      "ui_projection": "ops strip under the manager header renders queued/running(phase)/terminal truthfully",
+      "usage_attribution": "none",
+      "recovery_deep_link": "#/manager/<id>",
+      "demo_binding": { "interaction": "action buttons on manager headers", "concept_local_state": true }
+    }
+  ]
+}

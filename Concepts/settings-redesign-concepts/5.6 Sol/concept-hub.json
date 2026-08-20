@@ -1,108 +1,212 @@
 {
-    "schemaVersion": 1,
-    "topic": "settings-redesign",
-    "model": "5.6 Sol",
-    "presentation": "hybrid",
-    "order": 100,
-    "widthControl": {
-        "enabled": true,
-        "label": "Settings page width",
-        "role": "page",
-        "min": 520,
-        "max": 2500,
-        "step": 10,
-        "default": 1280,
-        "presets": [
-            520,
-            760,
-            900,
-            1280,
-            1700,
-            2200,
-            2500
-        ],
-        "previewWidth": "test"
+  "schemaVersion": 1,
+  "topic": "settings-redesign",
+  "model": "5.6 Sol",
+  "presentation": "hybrid",
+  "order": 100,
+  "widthControl": {
+    "enabled": true,
+    "label": "Settings page width",
+    "role": "page",
+    "min": 760,
+    "max": 2500,
+    "step": 10,
+    "default": 1280,
+    "presets": [
+      760,
+      900,
+      1280,
+      1700,
+      2200,
+      2500
+    ],
+    "previewWidth": "test"
+  },
+  "workspace": {
+    "id": "workspace",
+    "title": "5.6 Sol \u2014 Settings Bakeoff Workspace",
+    "path": "index.html",
+    "openPath": "index.html",
+    "openActions": "both",
+    "controlMode": "internal",
+    "tags": [
+      "settings",
+      "comparison",
+      "workspace",
+      "eleven-concepts"
+    ],
+    "order": 1,
+    "previewWidth": 1700
+  },
+  "entries": [
+    {
+      "id": "concept-01-index-house",
+      "title": "5.6 Sol \u2014 Index House",
+      "path": "concept-01-index-house.html",
+      "openPath": "concept-01-index-house.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "directory",
+        "provenance",
+        "policy"
+      ],
+      "order": 10,
+      "previewWidth": "test"
     },
-    "workspace": {
-        "id": "workspace",
-        "title": "5.6 Sol — Settings Bakeoff Workspace",
-        "path": "index.html",
-        "openPath": "index.html",
-        "openActions": "both",
-        "controlMode": "internal",
-        "tags": [
-            "settings",
-            "comparison",
-            "workspace",
-            "persistent-fixtures"
-        ],
-        "order": 1,
-        "previewWidth": 1700
+    {
+      "id": "concept-02-switchboard",
+      "title": "5.6 Sol \u2014 Switchboard",
+      "path": "concept-02-switchboard.html",
+      "openPath": "concept-02-switchboard.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "operations",
+        "preview",
+        "notifications"
+      ],
+      "order": 20,
+      "previewWidth": "test"
     },
-    "entries": [
-        {
-            "id": "concept-01-index-house",
-            "title": "5.6 Sol — Index House",
-            "path": "concept-01-index-house.html",
-            "openPath": "concept-01-index-house.html",
-            "openActions": "both",
-            "controlMode": "standard",
-            "tags": [
-                "settings",
-                "directory",
-                "provenance",
-                "policy"
-            ],
-            "order": 10,
-            "previewWidth": "test"
-        },
-        {
-            "id": "concept-02-switchboard",
-            "title": "5.6 Sol — Switchboard",
-            "path": "concept-02-switchboard.html",
-            "openPath": "concept-02-switchboard.html",
-            "openActions": "both",
-            "controlMode": "standard",
-            "tags": [
-                "settings",
-                "operations",
-                "preview",
-                "notifications"
-            ],
-            "order": 20,
-            "previewWidth": "test"
-        },
-        {
-            "id": "concept-03-wayfinder",
-            "title": "5.6 Sol — Wayfinder",
-            "path": "concept-03-wayfinder.html",
-            "openPath": "concept-03-wayfinder.html",
-            "openActions": "both",
-            "controlMode": "standard",
-            "tags": [
-                "settings",
-                "journey",
-                "toolchain",
-                "testing"
-            ],
-            "order": 30,
-            "previewWidth": "test"
-        },
-        {
-            "id": "concept-04-ledger",
-            "title": "5.6 Sol — Ledger",
-            "path": "concept-04-ledger.html",
-            "openPath": "concept-04-ledger.html",
-            "openActions": "both",
-            "controlMode": "standard",
-            "tags": [
-                "settings",
-                "reference",
-                "lifecycle",
-                "dense"
-            ],
-            "order": 40,
-            "previewWidth": "test"
-        }
-    ]
+    {
+      "id": "concept-03-wayfinder",
+      "title": "5.6 Sol \u2014 Wayfinder",
+      "path": "concept-03-wayfinder.html",
+      "openPath": "concept-03-wayfinder.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "journey",
+        "toolchain",
+        "testing"
+      ],
+      "order": 30,
+      "previewWidth": "test"
+    },
+    {
+      "id": "concept-04-ledger",
+      "title": "5.6 Sol \u2014 Ledger",
+      "path": "concept-04-ledger.html",
+      "openPath": "concept-04-ledger.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "reference",
+        "lifecycle",
+        "dense"
+      ],
+      "order": 40,
+      "previewWidth": "test"
+    },
+    {
+      "id": "concept-05-directory-take-1",
+      "title": "5.6 Sol \u2014 Meridian Directory / Take 1",
+      "path": "concept-05-directory-take-1.html",
+      "openPath": "concept-05-directory-take-1.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "directory",
+        "take-1"
+      ],
+      "order": 50,
+      "previewWidth": "test"
+    },
+    {
+      "id": "concept-06-directory-take-2",
+      "title": "5.6 Sol \u2014 Editorial Directory / Take 2",
+      "path": "concept-06-directory-take-2.html",
+      "openPath": "concept-06-directory-take-2.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "directory",
+        "take-2"
+      ],
+      "order": 60,
+      "previewWidth": "test"
+    },
+    {
+      "id": "concept-07-compendium-workspace",
+      "title": "5.6 Sol \u2014 Atlas Compendium Workspace",
+      "path": "concept-07-compendium-workspace.html",
+      "openPath": "concept-07-compendium-workspace.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "compendium",
+        "all-settings"
+      ],
+      "order": 70,
+      "previewWidth": "test"
+    },
+    {
+      "id": "concept-08-directory-take-3",
+      "title": "5.6 Sol \u2014 Horizon Directory / Take 3",
+      "path": "concept-08-directory-take-3.html",
+      "openPath": "concept-08-directory-take-3.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "directory",
+        "take-3"
+      ],
+      "order": 80,
+      "previewWidth": "test"
+    },
+    {
+      "id": "concept-09-tome-tabs",
+      "title": "5.6 Sol \u2014 Chapter Tabs",
+      "path": "concept-09-tome-tabs.html",
+      "openPath": "concept-09-tome-tabs.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "chapter-tabs",
+        "layered"
+      ],
+      "order": 90,
+      "previewWidth": "test"
+    },
+    {
+      "id": "concept-10-command-suite",
+      "title": "5.6 Sol \u2014 Command Suite",
+      "path": "concept-10-command-suite.html",
+      "openPath": "concept-10-command-suite.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "command-suite",
+        "keyboard"
+      ],
+      "order": 100,
+      "previewWidth": "test"
+    },
+    {
+      "id": "concept-11-tabbed-organizer",
+      "title": "5.6 Sol \u2014 Layered Tab Organizer",
+      "path": "concept-11-tabbed-organizer.html",
+      "openPath": "concept-11-tabbed-organizer.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": [
+        "settings",
+        "tabbed-organizer",
+        "layered"
+      ],
+      "order": 110,
+      "previewWidth": "test"
+    }
+  ]
 }

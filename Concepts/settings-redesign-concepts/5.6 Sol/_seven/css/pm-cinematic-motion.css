@@ -1,0 +1,208 @@
+/*
+ * Puppet Master Settings Concepts 05–11 — cinematic interaction polish.
+ * Motion is spatial, bounded, reversible, and disabled by the existing
+ * reduced-motion control. No looping animation is used.
+ */
+:root {
+  --pm-cine-ease-out: cubic-bezier(.16, 1, .3, 1);
+  --pm-cine-ease-inout: cubic-bezier(.65, 0, .35, 1);
+  --pm-cine-fast: 180ms;
+  --pm-cine-route: 460ms;
+  --pm-cine-back: 400ms;
+}
+
+[data-pmv2-root] {
+  isolation: isolate;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Keep explanatory prose readable on wide and ultrawide review surfaces. */
+[data-pmv2-root] p {
+  max-inline-size: min(100%, 80ch);
+}
+
+/* The route surface participates in the browser's old/new snapshot bridge. */
+.d1-body,
+.d2-body,
+.cw-body,
+.d3-body,
+.tm-stage,
+.cs-body,
+.to-body {
+  view-transition-name: pm-settings-stage;
+}
+
+::view-transition-group(pm-settings-stage) {
+  animation-duration: var(--pm-cine-route);
+  animation-timing-function: var(--pm-cine-ease-out);
+}
+
+html[data-pm-motion-direction="forward"]::view-transition-old(pm-settings-stage) {
+  animation: pm-stage-old-forward 250ms var(--pm-cine-ease-inout) both;
+}
+html[data-pm-motion-direction="forward"]::view-transition-new(pm-settings-stage) {
+  animation: pm-stage-new-forward 430ms var(--pm-cine-ease-out) both;
+}
+html[data-pm-motion-direction="back"]::view-transition-old(pm-settings-stage) {
+  animation: pm-stage-old-back 235ms var(--pm-cine-ease-inout) both;
+}
+html[data-pm-motion-direction="back"]::view-transition-new(pm-settings-stage) {
+  animation: pm-stage-new-back 390ms var(--pm-cine-ease-out) both;
+}
+html[data-pm-motion-direction="lateral"]::view-transition-old(pm-settings-stage) {
+  animation: pm-stage-old-lateral 205ms var(--pm-cine-ease-inout) both;
+}
+html[data-pm-motion-direction="lateral"]::view-transition-new(pm-settings-stage) {
+  animation: pm-stage-new-lateral 330ms var(--pm-cine-ease-out) both;
+}
+
+@keyframes pm-stage-old-forward {
+  0%, 10% { opacity: 1; transform: none; }
+  to { opacity: 0; transform: translate3d(-18px, 0, 0) scale(.994); }
+}
+@keyframes pm-stage-new-forward {
+  0%, 10% { opacity: 0; transform: translate3d(24px, 0, 0) scale(.992); }
+  52% { opacity: .92; transform: translate3d(5px, 0, 0) scale(.998); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes pm-stage-old-back {
+  0%, 10% { opacity: 1; transform: none; }
+  to { opacity: 0; transform: translate3d(20px, 0, 0) scale(.995); }
+}
+@keyframes pm-stage-new-back {
+  0%, 10% { opacity: 0; transform: translate3d(-22px, 0, 0) scale(.994); }
+  52% { opacity: .92; transform: translate3d(-4px, 0, 0) scale(.999); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes pm-stage-old-lateral {
+  0%, 8% { opacity: 1; transform: none; }
+  to { opacity: 0; transform: translate3d(0, -6px, 0); }
+}
+@keyframes pm-stage-new-lateral {
+  0%, 9% { opacity: 0; transform: translate3d(0, 10px, 0); }
+  55% { opacity: .94; transform: translate3d(0, 2px, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+
+/* Legacy per-concept entrance keyframes are superseded by the coordinated
+   route director so a surface never receives two competing transforms. */
+[data-pmv2-root] .d1-expand,
+[data-pmv2-root] .d2-enter,
+[data-pmv2-root] .cw-slide,
+[data-pmv2-root] .d3-morph,
+[data-pmv2-root] .tm-layer,
+[data-pmv2-root] .cs-drill,
+[data-pmv2-root] .to-sheet {
+  animation: none;
+}
+
+/* Shared control hardening; each concept still authors its own visible rows. */
+[data-pmv2-root] [data-act="text"],
+[data-pmv2-root] [data-act="select"],
+[data-pmv2-root] [data-act="number"] {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+[data-pmv2-root] textarea[data-act="text"] {
+  min-height: 3.55rem;
+  padding: 7px 9px;
+  resize: vertical;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  line-height: 1.38;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-s, 6px);
+  background: var(--pm-bg-sunken);
+  color: var(--pm-ink);
+  font: inherit;
+  font-size: 12.5px;
+}
+
+/* Polished, tactile surfaces without decorative theatre. */
+[data-pmv2-root] button,
+[data-pmv2-root] select,
+[data-pmv2-root] input,
+[data-pmv2-root] textarea {
+  transition:
+    border-color var(--pm-cine-fast) ease,
+    background-color var(--pm-cine-fast) ease,
+    box-shadow var(--pm-cine-fast) ease,
+    color var(--pm-cine-fast) ease,
+    transform var(--pm-cine-fast) var(--pm-cine-ease-out);
+}
+[data-pmv2-root] button:not(:disabled):active {
+  transform: translateY(1px) scale(.992);
+}
+[data-pmv2-root] button:focus-visible,
+[data-pmv2-root] input:focus-visible,
+[data-pmv2-root] select:focus-visible,
+[data-pmv2-root] textarea:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--pm-accent) 72%, white 8%);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--pm-accent) 15%, transparent);
+}
+[data-pmv2-root] [data-row-id] {
+  scroll-margin-block: 5rem 3rem;
+}
+[data-pmv2-root] [data-row-id][data-motion-emphasis="true"] {
+  position: relative;
+  z-index: 1;
+}
+
+/* Popovers and drawers enter from their physical origin. */
+.d1-states, .d2-states, .cw-states, .d3-states, .tm-states, .cs-states, .to-states,
+.d1-drop, .d2-drop, .cw-drop, .d3-drop, .tm-drop, .cs-drop, .to-drop {
+  transform-origin: 50% 0;
+  animation: pm-popover-in 280ms var(--pm-cine-ease-out) both;
+}
+.d1-details, .d2-details, .cw-details, .d3-details, .tm-details, .cs-details, .cs-drawer, .to-details {
+  animation: pm-drawer-in 420ms var(--pm-cine-ease-out) both;
+}
+@keyframes pm-popover-in {
+  from { opacity: 0; transform: translateY(-8px) scale(.985); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes pm-drawer-in {
+  from { opacity: 0; transform: translate3d(28px, 0, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+html[data-motion="reduced"] ::view-transition-group(pm-settings-stage),
+html[data-motion="reduced"] ::view-transition-old(pm-settings-stage),
+html[data-motion="reduced"] ::view-transition-new(pm-settings-stage),
+html[data-motion="reduced"] [data-pmv2-root] *,
+html[data-motion="reduced"] [data-pmv2-root] *::before,
+html[data-motion="reduced"] [data-pmv2-root] *::after {
+  animation-duration: .001ms !important;
+  animation-delay: 0ms !important;
+  transition-duration: .001ms !important;
+  scroll-behavior: auto !important;
+}
+
+@media (max-width: 900px) {
+  [data-pmv2-root] textarea[data-act="text"] { min-height: 4rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(pm-settings-stage),
+  ::view-transition-old(pm-settings-stage),
+  ::view-transition-new(pm-settings-stage),
+  [data-pmv2-root] *,
+  [data-pmv2-root] *::before,
+  [data-pmv2-root] *::after {
+    animation-duration: .001ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .cw-sum, .d3-sum, .cs-facts, .to-sum {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

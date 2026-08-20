@@ -1,0 +1,902 @@
+{
+  "schema": "pm2.manager_route_matrix.v1",
+  "conceptId": "concept-06-directory-take-2",
+  "generated": "2026-08-20",
+  "managers": [
+    {
+      "managerId": "m.providers",
+      "family": "Provider / Account / Model / Installation",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/ai “In this domain” row (data-manager)",
+        "universal search m:m.providers",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.providers[/<providerId>[/<tab>]]",
+      "shellRetained": true,
+      "backTarget": "#/dest/ai (AI Brains & Providers)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.loading-cached",
+        "fx.reconnect-required",
+        "fx.rollback-complete",
+        "fx.changed-elsewhere"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.context",
+      "family": "Context & Instructions",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/memory “In this domain” row (data-manager)",
+        "universal search m:m.context",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.context[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/memory (Memory & Context)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.loading-cached",
+        "fx.long-text"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.memory",
+      "family": "Memory",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/memory “In this domain” row (data-manager)",
+        "universal search m:m.memory",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.memory[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/memory (Memory & Context)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.long-text",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.personas",
+      "family": "Personas",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/personas “In this domain” row (data-manager)",
+        "universal search m:m.personas",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.personas[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/personas (Personas)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.import-conflict",
+        "fx.long-text"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.goal",
+      "family": "Goal & Automation",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/planning “In this domain” row (data-manager)",
+        "universal search m:m.goal",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.goal[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/planning (Planning & Verification)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.changed-elsewhere"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.crew",
+      "family": "Crew",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/branching “In this domain” row (data-manager)",
+        "universal search m:m.crew",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.crew[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/branching (Branching & Collaboration)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.permissions",
+      "family": "Permissions & FileSafe",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/safety “In this domain” row (data-manager)",
+        "universal search m:m.permissions",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.permissions[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/safety (Permissions & Safety)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.doom-loop-tripped",
+        "fx.changed-elsewhere"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.bsd",
+      "family": "Back Seat Driver",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/safety “In this domain” row (data-manager)",
+        "universal search m:m.bsd",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.bsd[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/safety (Permissions & Safety)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.changed-elsewhere"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.notifications",
+      "family": "Notifications & Sounds",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/general “In this domain” row (data-manager)",
+        "universal search m:m.notifications",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.notifications[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/general (General & Appearance)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.validation-error",
+        "fx.reconnect-required"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.sounds",
+      "family": "Sound Library / Uploads / Packs",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/general “In this domain” row (data-manager)",
+        "universal search m:m.sounds",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.sounds[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/general (General & Appearance)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.import-conflict",
+        "fx.validation-error"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.appearance",
+      "family": "Appearance / themes / fonts / motion",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/general “In this domain” row (data-manager)",
+        "universal search m:m.appearance",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.appearance[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/general (General & Appearance)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.theme-fallback",
+        "fx.restart-required"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.spellcheck",
+      "family": "Spellcheck & Dictionaries",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/general “In this domain” row (data-manager)",
+        "universal search m:m.spellcheck",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.spellcheck[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/general (General & Appearance)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.long-text"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.desktop",
+      "family": "Desktop / Tray / Window",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/general “In this domain” row (data-manager)",
+        "universal search m:m.desktop",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.desktop[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/general (General & Appearance)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.restart-required"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.teacher",
+      "family": "Teacher / Help",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/general “In this domain” row (data-manager)",
+        "universal search m:m.teacher",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.teacher[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/general (General & Appearance)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.long-text"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.doctor",
+      "family": "Doctor",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/system “In this domain” row (data-manager)",
+        "universal search m:m.doctor",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.doctor[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.storage-pressure",
+        "fx.index-failed",
+        "fx.doom-loop-tripped",
+        "fx.reconnect-required"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.files",
+      "family": "File Manager / Editor",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/code “In this domain” row (data-manager)",
+        "universal search m:m.files",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.files[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/code (Code & Execution)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.terminal",
+      "family": "Terminal",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/code “In this domain” row (data-manager)",
+        "universal search m:m.terminal",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.terminal[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/code (Code & Execution)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.lsp",
+      "family": "LSP",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/code “In this domain” row (data-manager)",
+        "universal search m:m.lsp",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.lsp[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/code (Code & Execution)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.formatters",
+      "family": "Formatters",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/code “In this domain” row (data-manager)",
+        "universal search m:m.formatters",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.formatters[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/code (Code & Execution)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.commands",
+      "family": "Commands & Shortcuts",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/extensions “In this domain” row (data-manager)",
+        "universal search m:m.commands",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.commands[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/extensions (Skills, Plugins & Commands)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.mcp",
+      "family": "MCP",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/system “In this domain” row (data-manager)",
+        "universal search m:m.mcp",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.mcp[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.reconnect-required",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.skills",
+      "family": "Skills",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/extensions “In this domain” row (data-manager)",
+        "universal search m:m.skills",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.skills[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/extensions (Skills, Plugins & Commands)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.plugins",
+      "family": "Plugins",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/extensions “In this domain” row (data-manager)",
+        "universal search m:m.plugins",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.plugins[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/extensions (Skills, Plugins & Commands)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.tools",
+      "family": "Tools",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/extensions “In this domain” row (data-manager)",
+        "universal search m:m.tools",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.tools[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/extensions (Skills, Plugins & Commands)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.testing",
+      "family": "Testing & Debug",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/system “In this domain” row (data-manager)",
+        "universal search m:m.testing",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.testing[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.storage",
+      "family": "Storage & Retention",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/system “In this domain” row (data-manager)",
+        "universal search m:m.storage",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.storage[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.storage-pressure",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.backup",
+      "family": "Backup & Restore",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/system “In this domain” row (data-manager)",
+        "universal search m:m.backup",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.backup[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.lifecycle",
+      "family": "Settings Lifecycle",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/system “In this domain” row (data-manager)",
+        "universal search m:m.lifecycle",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.lifecycle[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.import-conflict",
+        "fx.rollback-complete",
+        "fx.validation-error"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.history",
+      "family": "History & Sessions",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/system “In this domain” row (data-manager)",
+        "universal search m:m.history",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.history[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.artifacts",
+      "family": "Runtime Artifacts / Project Outputs",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/system “In this domain” row (data-manager)",
+        "universal search m:m.artifacts",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.artifacts[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.loading-cached",
+        "fx.storage-pressure"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.sourceControl",
+      "family": "Source Control / Worktrees",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/branching “In this domain” row (data-manager)",
+        "universal search m:m.sourceControl",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.sourceControl[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/branching (Branching & Collaboration)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.actions",
+      "family": "GitHub Actions",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/branching “In this domain” row (data-manager)",
+        "universal search m:m.actions",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.actions[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/branching (Branching & Collaboration)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.containers",
+      "family": "Containers & Registries",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/code “In this domain” row (data-manager)",
+        "universal search m:m.containers",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.containers[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/code (Code & Execution)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.web",
+      "family": "Web / Search / Fetch / Crawl",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/web “In this domain” row (data-manager)",
+        "universal search m:m.web",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.web[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/web (Web & Search)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.credit-guard",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.searchIndex",
+      "family": "Project Search Index",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/web “In this domain” row (data-manager)",
+        "universal search m:m.searchIndex",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.searchIndex[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/web (Web & Search)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.index-failed",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.cleanup",
+      "family": "Workspace Cleanup",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/system “In this domain” row (data-manager)",
+        "universal search m:m.cleanup",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.cleanup[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.media",
+      "family": "Media & Output",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/media “In this domain” row (data-manager)",
+        "universal search m:m.media",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.media[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/media (Media & Output)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.dry",
+      "family": "DRY Method visible state where exposed",
+      "status": "demonstrated",
+      "entryPoints": [
+        "#/dest/planning “In this domain” row (data-manager)",
+        "universal search m:m.dry",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.dry[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/planning (Planning & Verification)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [
+        "fx.doom-loop-tripped"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.onboarding",
+      "family": "Product Onboarding",
+      "status": "deferred_named_owner",
+      "entryPoints": [
+        "#/dest/system “In this domain” row (data-manager)",
+        "universal search m:m.onboarding",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.onboarding[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.deployment",
+      "family": "Installation / Deployment",
+      "status": "deferred_named_owner",
+      "entryPoints": [
+        "#/dest/system “In this domain” row (data-manager)",
+        "universal search m:m.deployment",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.deployment[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.serverClaim",
+      "family": "Server Claim / Bootstrap",
+      "status": "deferred_named_owner",
+      "entryPoints": [
+        "#/dest/system “In this domain” row (data-manager)",
+        "universal search m:m.serverClaim",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.serverClaim[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.servers",
+      "family": "Servers / Execution Hosts / Clients",
+      "status": "deferred_named_owner",
+      "entryPoints": [
+        "#/dest/system “In this domain” row (data-manager)",
+        "universal search m:m.servers",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.servers[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.hosting",
+      "family": "Project Hosting & Files",
+      "status": "deferred_named_owner",
+      "entryPoints": [
+        "#/dest/system “In this domain” row (data-manager)",
+        "universal search m:m.hosting",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.hosting[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.remote",
+      "family": "Remote Access",
+      "status": "deferred_named_owner",
+      "entryPoints": [
+        "#/dest/system “In this domain” row (data-manager)",
+        "universal search m:m.remote",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.remote[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.projectSync",
+      "family": "Project Sync / Move",
+      "status": "deferred_named_owner",
+      "entryPoints": [
+        "#/dest/system “In this domain” row (data-manager)",
+        "universal search m:m.projectSync",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.projectSync[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.appUpdates",
+      "family": "Puppet Master application/content updates",
+      "status": "deferred_named_owner",
+      "entryPoints": [
+        "#/dest/system “In this domain” row (data-manager)",
+        "universal search m:m.appUpdates",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.appUpdates[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.serverBackup",
+      "family": "Full Server backup owner flow",
+      "status": "deferred_named_owner",
+      "entryPoints": [
+        "#/dest/system “In this domain” row (data-manager)",
+        "universal search m:m.serverBackup",
+        "direct deep link"
+      ],
+      "route": "#/manager/m.serverBackup[/<objectId>]",
+      "shellRetained": true,
+      "backTarget": "#/dest/system (System & Advanced)",
+      "closeTarget": "Close Settings (simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "single-pane push; rail collapses to topbar crumb selector; sheet fills the reading column",
+      "statesShown": [],
+      "pass": true
+    }
+  ]
+}

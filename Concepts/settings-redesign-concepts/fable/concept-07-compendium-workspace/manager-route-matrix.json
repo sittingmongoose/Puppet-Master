@@ -1,0 +1,818 @@
+{
+  "schema": "pm2.manager_route_matrix.v1",
+  "conceptId": "c07",
+  "generated": "2026-08-20",
+  "method": "every registered manager route opened by the CDP driver; shell columns read from the live DOM. Narrow behavior verified by the 760px spot checks recorded in test-evidence.json.",
+  "managers": [
+    {
+      "managerId": "m.providers",
+      "entryPoints": [
+        "#/dest/ai related-managers panel",
+        "universal search m:m.providers",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.providers",
+      "shellRetained": true,
+      "backTarget": "Back to AI Brains & Providers",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.loading-cached",
+        "fx.reconnect-required",
+        "fx.rollback-complete",
+        "fx.changed-elsewhere"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.context",
+      "entryPoints": [
+        "#/dest/memory related-managers panel",
+        "universal search m:m.context",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.context",
+      "shellRetained": true,
+      "backTarget": "Back to Memory & Context",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.loading-cached",
+        "fx.long-text"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.memory",
+      "entryPoints": [
+        "#/dest/memory related-managers panel",
+        "universal search m:m.memory",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.memory",
+      "shellRetained": true,
+      "backTarget": "Back to Memory & Context",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.long-text",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.personas",
+      "entryPoints": [
+        "#/dest/personas related-managers panel",
+        "universal search m:m.personas",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.personas",
+      "shellRetained": true,
+      "backTarget": "Back to Personas",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.import-conflict",
+        "fx.long-text"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.goal",
+      "entryPoints": [
+        "#/dest/planning related-managers panel",
+        "universal search m:m.goal",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.goal",
+      "shellRetained": true,
+      "backTarget": "Back to Planning & Verification",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.changed-elsewhere"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.crew",
+      "entryPoints": [
+        "#/dest/branching related-managers panel",
+        "universal search m:m.crew",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.crew",
+      "shellRetained": true,
+      "backTarget": "Back to Branching & Collaboration",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.permissions",
+      "entryPoints": [
+        "#/dest/safety related-managers panel",
+        "universal search m:m.permissions",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.permissions",
+      "shellRetained": true,
+      "backTarget": "Back to Permissions & Safety",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.doom-loop-tripped",
+        "fx.changed-elsewhere"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.bsd",
+      "entryPoints": [
+        "#/dest/safety related-managers panel",
+        "universal search m:m.bsd",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.bsd",
+      "shellRetained": true,
+      "backTarget": "Back to Permissions & Safety",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.changed-elsewhere"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.notifications",
+      "entryPoints": [
+        "#/dest/general related-managers panel",
+        "universal search m:m.notifications",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.notifications",
+      "shellRetained": true,
+      "backTarget": "Back to General & Appearance",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.validation-error",
+        "fx.reconnect-required"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.sounds",
+      "entryPoints": [
+        "#/dest/general related-managers panel",
+        "universal search m:m.sounds",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.sounds",
+      "shellRetained": true,
+      "backTarget": "Back to General & Appearance",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.import-conflict",
+        "fx.validation-error"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.appearance",
+      "entryPoints": [
+        "#/dest/general related-managers panel",
+        "universal search m:m.appearance",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.appearance",
+      "shellRetained": true,
+      "backTarget": "Back to General & Appearance",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.theme-fallback",
+        "fx.restart-required"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.spellcheck",
+      "entryPoints": [
+        "#/dest/general related-managers panel",
+        "universal search m:m.spellcheck",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.spellcheck",
+      "shellRetained": true,
+      "backTarget": "Back to General & Appearance",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.long-text"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.desktop",
+      "entryPoints": [
+        "#/dest/general related-managers panel",
+        "universal search m:m.desktop",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.desktop",
+      "shellRetained": true,
+      "backTarget": "Back to General & Appearance",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.restart-required"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.teacher",
+      "entryPoints": [
+        "#/dest/general related-managers panel",
+        "universal search m:m.teacher",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.teacher",
+      "shellRetained": true,
+      "backTarget": "Back to General & Appearance",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.long-text"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.doctor",
+      "entryPoints": [
+        "#/dest/system related-managers panel",
+        "universal search m:m.doctor",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.doctor",
+      "shellRetained": true,
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.storage-pressure",
+        "fx.index-failed",
+        "fx.doom-loop-tripped",
+        "fx.reconnect-required"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.files",
+      "entryPoints": [
+        "#/dest/code related-managers panel",
+        "universal search m:m.files",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.files",
+      "shellRetained": true,
+      "backTarget": "Back to Code & Execution",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.terminal",
+      "entryPoints": [
+        "#/dest/code related-managers panel",
+        "universal search m:m.terminal",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.terminal",
+      "shellRetained": true,
+      "backTarget": "Back to Code & Execution",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.lsp",
+      "entryPoints": [
+        "#/dest/code related-managers panel",
+        "universal search m:m.lsp",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.lsp",
+      "shellRetained": true,
+      "backTarget": "Back to Code & Execution",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.formatters",
+      "entryPoints": [
+        "#/dest/code related-managers panel",
+        "universal search m:m.formatters",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.formatters",
+      "shellRetained": true,
+      "backTarget": "Back to Code & Execution",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.commands",
+      "entryPoints": [
+        "#/dest/extensions related-managers panel",
+        "universal search m:m.commands",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.commands",
+      "shellRetained": true,
+      "backTarget": "Back to Skills, Plugins & Commands",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.mcp",
+      "entryPoints": [
+        "#/dest/system related-managers panel",
+        "universal search m:m.mcp",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.mcp",
+      "shellRetained": true,
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.reconnect-required",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.skills",
+      "entryPoints": [
+        "#/dest/extensions related-managers panel",
+        "universal search m:m.skills",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.skills",
+      "shellRetained": true,
+      "backTarget": "Back to Skills, Plugins & Commands",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.plugins",
+      "entryPoints": [
+        "#/dest/extensions related-managers panel",
+        "universal search m:m.plugins",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.plugins",
+      "shellRetained": true,
+      "backTarget": "Back to Skills, Plugins & Commands",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.tools",
+      "entryPoints": [
+        "#/dest/extensions related-managers panel",
+        "universal search m:m.tools",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.tools",
+      "shellRetained": true,
+      "backTarget": "Back to Skills, Plugins & Commands",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.testing",
+      "entryPoints": [
+        "#/dest/system related-managers panel",
+        "universal search m:m.testing",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.testing",
+      "shellRetained": true,
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.storage",
+      "entryPoints": [
+        "#/dest/system related-managers panel",
+        "universal search m:m.storage",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.storage",
+      "shellRetained": true,
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.storage-pressure",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.backup",
+      "entryPoints": [
+        "#/dest/system related-managers panel",
+        "universal search m:m.backup",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.backup",
+      "shellRetained": true,
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.lifecycle",
+      "entryPoints": [
+        "#/dest/system related-managers panel",
+        "universal search m:m.lifecycle",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.lifecycle",
+      "shellRetained": true,
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.import-conflict",
+        "fx.rollback-complete",
+        "fx.validation-error"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.history",
+      "entryPoints": [
+        "#/dest/system related-managers panel",
+        "universal search m:m.history",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.history",
+      "shellRetained": true,
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.artifacts",
+      "entryPoints": [
+        "#/dest/system related-managers panel",
+        "universal search m:m.artifacts",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.artifacts",
+      "shellRetained": true,
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.loading-cached",
+        "fx.storage-pressure"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.sourceControl",
+      "entryPoints": [
+        "#/dest/branching related-managers panel",
+        "universal search m:m.sourceControl",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.sourceControl",
+      "shellRetained": true,
+      "backTarget": "Back to Branching & Collaboration",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.actions",
+      "entryPoints": [
+        "#/dest/branching related-managers panel",
+        "universal search m:m.actions",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.actions",
+      "shellRetained": true,
+      "backTarget": "Back to Branching & Collaboration",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.containers",
+      "entryPoints": [
+        "#/dest/code related-managers panel",
+        "universal search m:m.containers",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.containers",
+      "shellRetained": true,
+      "backTarget": "Back to Code & Execution",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.web",
+      "entryPoints": [
+        "#/dest/web related-managers panel",
+        "universal search m:m.web",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.web",
+      "shellRetained": true,
+      "backTarget": "Back to Web & Search",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.credit-guard",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.searchIndex",
+      "entryPoints": [
+        "#/dest/web related-managers panel",
+        "universal search m:m.searchIndex",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.searchIndex",
+      "shellRetained": true,
+      "backTarget": "Back to Web & Search",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.index-failed",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.cleanup",
+      "entryPoints": [
+        "#/dest/system related-managers panel",
+        "universal search m:m.cleanup",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.cleanup",
+      "shellRetained": true,
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.media",
+      "entryPoints": [
+        "#/dest/media related-managers panel",
+        "universal search m:m.media",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.media",
+      "shellRetained": true,
+      "backTarget": "Back to Media & Output",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.dry",
+      "entryPoints": [
+        "#/dest/planning related-managers panel",
+        "universal search m:m.dry",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.dry",
+      "shellRetained": true,
+      "backTarget": "Back to Planning & Verification",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [
+        "fx.doom-loop-tripped"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.onboarding",
+      "entryPoints": [
+        "#/dest/system related-managers panel",
+        "universal search m:m.onboarding",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.onboarding",
+      "shellRetained": true,
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [],
+      "ownerShell": true,
+      "pass": true
+    },
+    {
+      "managerId": "m.deployment",
+      "entryPoints": [
+        "#/dest/system related-managers panel",
+        "universal search m:m.deployment",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.deployment",
+      "shellRetained": true,
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [],
+      "ownerShell": true,
+      "pass": true
+    },
+    {
+      "managerId": "m.serverClaim",
+      "entryPoints": [
+        "#/dest/system related-managers panel",
+        "universal search m:m.serverClaim",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.serverClaim",
+      "shellRetained": true,
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [],
+      "ownerShell": true,
+      "pass": true
+    },
+    {
+      "managerId": "m.servers",
+      "entryPoints": [
+        "#/dest/system related-managers panel",
+        "universal search m:m.servers",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.servers",
+      "shellRetained": true,
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [],
+      "ownerShell": true,
+      "pass": true
+    },
+    {
+      "managerId": "m.hosting",
+      "entryPoints": [
+        "#/dest/system related-managers panel",
+        "universal search m:m.hosting",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.hosting",
+      "shellRetained": true,
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [],
+      "ownerShell": true,
+      "pass": true
+    },
+    {
+      "managerId": "m.remote",
+      "entryPoints": [
+        "#/dest/system related-managers panel",
+        "universal search m:m.remote",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.remote",
+      "shellRetained": true,
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [],
+      "ownerShell": true,
+      "pass": true
+    },
+    {
+      "managerId": "m.projectSync",
+      "entryPoints": [
+        "#/dest/system related-managers panel",
+        "universal search m:m.projectSync",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.projectSync",
+      "shellRetained": true,
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [],
+      "ownerShell": true,
+      "pass": true
+    },
+    {
+      "managerId": "m.appUpdates",
+      "entryPoints": [
+        "#/dest/system related-managers panel",
+        "universal search m:m.appUpdates",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.appUpdates",
+      "shellRetained": true,
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [],
+      "ownerShell": true,
+      "pass": true
+    },
+    {
+      "managerId": "m.serverBackup",
+      "entryPoints": [
+        "#/dest/system related-managers panel",
+        "universal search m:m.serverBackup",
+        "All Settings compendium manager row"
+      ],
+      "route": "#/manager/m.serverBackup",
+      "shellRetained": true,
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings receipt (Returns to Dashboard)",
+      "narrowBehavior": "objects list and detail become one-pane push; rail becomes the Browse push pane",
+      "statesShown": [],
+      "ownerShell": true,
+      "pass": true
+    }
+  ]
+}
