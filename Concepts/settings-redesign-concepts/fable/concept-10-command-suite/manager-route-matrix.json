@@ -1,0 +1,901 @@
+{
+  "schema": "pm2.manager_route_matrix.v1",
+  "conceptId": "concept-10-command-suite",
+  "managers": [
+    {
+      "managerId": "m.providers",
+      "family": "Provider / Account / Model / Installation",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.providers",
+      "entryPoints": [
+        "command index -> ai domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.providers"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/ai (objects retreat to #/manager/m.providers first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (ai domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.loading-cached",
+        "fx.reconnect-required",
+        "fx.rollback-complete",
+        "fx.changed-elsewhere"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.context",
+      "family": "Context & Instructions",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.context",
+      "entryPoints": [
+        "command index -> memory domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.context"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/memory (objects retreat to #/manager/m.context first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (memory domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.loading-cached",
+        "fx.long-text"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.memory",
+      "family": "Memory",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.memory",
+      "entryPoints": [
+        "command index -> memory domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.memory"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/memory (objects retreat to #/manager/m.memory first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (memory domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.long-text",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.personas",
+      "family": "Personas",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.personas",
+      "entryPoints": [
+        "command index -> personas domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.personas"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/personas (objects retreat to #/manager/m.personas first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (personas domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.import-conflict",
+        "fx.long-text"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.goal",
+      "family": "Goal & Automation",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.goal",
+      "entryPoints": [
+        "command index -> planning domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.goal"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/planning (objects retreat to #/manager/m.goal first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (planning domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.changed-elsewhere"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.crew",
+      "family": "Crew",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.crew",
+      "entryPoints": [
+        "command index -> branching domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.crew"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/branching (objects retreat to #/manager/m.crew first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (branching domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.permissions",
+      "family": "Permissions & FileSafe",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.permissions",
+      "entryPoints": [
+        "command index -> safety domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.permissions"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/safety (objects retreat to #/manager/m.permissions first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (safety domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.doom-loop-tripped",
+        "fx.changed-elsewhere"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.bsd",
+      "family": "Back Seat Driver",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.bsd",
+      "entryPoints": [
+        "command index -> safety domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.bsd"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/safety (objects retreat to #/manager/m.bsd first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (safety domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.changed-elsewhere"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.notifications",
+      "family": "Notifications & Sounds",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.notifications",
+      "entryPoints": [
+        "command index -> general domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.notifications"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/general (objects retreat to #/manager/m.notifications first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (general domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.validation-error",
+        "fx.reconnect-required"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.sounds",
+      "family": "Sound Library / Uploads / Packs",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.sounds",
+      "entryPoints": [
+        "command index -> general domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.sounds"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/general (objects retreat to #/manager/m.sounds first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (general domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.import-conflict",
+        "fx.validation-error"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.appearance",
+      "family": "Appearance / themes / fonts / motion",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.appearance",
+      "entryPoints": [
+        "command index -> general domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.appearance"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/general (objects retreat to #/manager/m.appearance first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (general domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.theme-fallback",
+        "fx.restart-required"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.spellcheck",
+      "family": "Spellcheck & Dictionaries",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.spellcheck",
+      "entryPoints": [
+        "command index -> general domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.spellcheck"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/general (objects retreat to #/manager/m.spellcheck first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (general domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.long-text"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.desktop",
+      "family": "Desktop / Tray / Window",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.desktop",
+      "entryPoints": [
+        "command index -> general domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.desktop"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/general (objects retreat to #/manager/m.desktop first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (general domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.restart-required"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.teacher",
+      "family": "Teacher / Help",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.teacher",
+      "entryPoints": [
+        "command index -> general domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.teacher"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/general (objects retreat to #/manager/m.teacher first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (general domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.long-text"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.doctor",
+      "family": "Doctor",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.doctor",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.doctor"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/system (objects retreat to #/manager/m.doctor first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (system domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.storage-pressure",
+        "fx.index-failed",
+        "fx.doom-loop-tripped",
+        "fx.reconnect-required"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.files",
+      "family": "File Manager / Editor",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.files",
+      "entryPoints": [
+        "command index -> code domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.files"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/code (objects retreat to #/manager/m.files first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (code domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.terminal",
+      "family": "Terminal",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.terminal",
+      "entryPoints": [
+        "command index -> code domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.terminal"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/code (objects retreat to #/manager/m.terminal first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (code domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.lsp",
+      "family": "LSP",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.lsp",
+      "entryPoints": [
+        "command index -> code domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.lsp"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/code (objects retreat to #/manager/m.lsp first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (code domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.formatters",
+      "family": "Formatters",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.formatters",
+      "entryPoints": [
+        "command index -> code domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.formatters"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/code (objects retreat to #/manager/m.formatters first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (code domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.commands",
+      "family": "Commands & Shortcuts",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.commands",
+      "entryPoints": [
+        "command index -> extensions domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.commands"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/extensions (objects retreat to #/manager/m.commands first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (extensions domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.mcp",
+      "family": "MCP",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.mcp",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.mcp"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/system (objects retreat to #/manager/m.mcp first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (system domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.reconnect-required",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.skills",
+      "family": "Skills",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.skills",
+      "entryPoints": [
+        "command index -> extensions domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.skills"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/extensions (objects retreat to #/manager/m.skills first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (extensions domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.plugins",
+      "family": "Plugins",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.plugins",
+      "entryPoints": [
+        "command index -> extensions domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.plugins"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/extensions (objects retreat to #/manager/m.plugins first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (extensions domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.tools",
+      "family": "Tools",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.tools",
+      "entryPoints": [
+        "command index -> extensions domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.tools"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/extensions (objects retreat to #/manager/m.tools first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (extensions domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.testing",
+      "family": "Testing & Debug",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.testing",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.testing"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/system (objects retreat to #/manager/m.testing first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (system domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.storage",
+      "family": "Storage & Retention",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.storage",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.storage"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/system (objects retreat to #/manager/m.storage first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (system domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.storage-pressure",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.backup",
+      "family": "Backup & Restore",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.backup",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.backup"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/system (objects retreat to #/manager/m.backup first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (system domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.lifecycle",
+      "family": "Settings Lifecycle",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.lifecycle",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.lifecycle"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/system (objects retreat to #/manager/m.lifecycle first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (system domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.import-conflict",
+        "fx.rollback-complete",
+        "fx.validation-error"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.history",
+      "family": "History & Sessions",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.history",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.history"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/system (objects retreat to #/manager/m.history first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (system domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.artifacts",
+      "family": "Runtime Artifacts / Project Outputs",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.artifacts",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.artifacts"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/system (objects retreat to #/manager/m.artifacts first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (system domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.loading-cached",
+        "fx.storage-pressure"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.sourceControl",
+      "family": "Source Control / Worktrees",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.sourceControl",
+      "entryPoints": [
+        "command index -> branching domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.sourceControl"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/branching (objects retreat to #/manager/m.sourceControl first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (branching domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.actions",
+      "family": "GitHub Actions",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.actions",
+      "entryPoints": [
+        "command index -> branching domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.actions"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/branching (objects retreat to #/manager/m.actions first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (branching domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.containers",
+      "family": "Containers & Registries",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.containers",
+      "entryPoints": [
+        "command index -> code domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.containers"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/code (objects retreat to #/manager/m.containers first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (code domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.web",
+      "family": "Web / Search / Fetch / Crawl",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.web",
+      "entryPoints": [
+        "command index -> web domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.web"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/web (objects retreat to #/manager/m.web first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (web domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.credit-guard",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.searchIndex",
+      "family": "Project Search Index",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.searchIndex",
+      "entryPoints": [
+        "command index -> web domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.searchIndex"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/web (objects retreat to #/manager/m.searchIndex first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (web domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.index-failed",
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.cleanup",
+      "family": "Workspace Cleanup",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.cleanup",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.cleanup"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/system (objects retreat to #/manager/m.cleanup first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (system domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.media",
+      "family": "Media & Output",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.media",
+      "entryPoints": [
+        "command index -> media domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.media"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/media (objects retreat to #/manager/m.media first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (media domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.loading-cached"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.dry",
+      "family": "DRY Method visible state where exposed",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.dry",
+      "entryPoints": [
+        "command index -> planning domain pane -> Managers list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.dry"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/planning (objects retreat to #/manager/m.dry first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (planning domain); internal nav column stacks above main",
+      "statesShown": [
+        "fx.doom-loop-tripped"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.onboarding",
+      "family": "Product Onboarding",
+      "status": "deferred_named_owner",
+      "route": "concept-10-command-suite.html#/manager/m.onboarding",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers (Reserved destinations) list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.onboarding"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/system (objects retreat to #/manager/m.onboarding first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (system domain); internal nav column stacks above main",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.deployment",
+      "family": "Installation / Deployment",
+      "status": "deferred_named_owner",
+      "route": "concept-10-command-suite.html#/manager/m.deployment",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers (Reserved destinations) list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.deployment"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/system (objects retreat to #/manager/m.deployment first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (system domain); internal nav column stacks above main",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.serverClaim",
+      "family": "Server Claim / Bootstrap",
+      "status": "deferred_named_owner",
+      "route": "concept-10-command-suite.html#/manager/m.serverClaim",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers (Reserved destinations) list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.serverClaim"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/system (objects retreat to #/manager/m.serverClaim first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (system domain); internal nav column stacks above main",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.servers",
+      "family": "Servers / Execution Hosts / Clients",
+      "status": "deferred_named_owner",
+      "route": "concept-10-command-suite.html#/manager/m.servers",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers (Reserved destinations) list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.servers"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/system (objects retreat to #/manager/m.servers first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (system domain); internal nav column stacks above main",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.hosting",
+      "family": "Project Hosting & Files",
+      "status": "deferred_named_owner",
+      "route": "concept-10-command-suite.html#/manager/m.hosting",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers (Reserved destinations) list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.hosting"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/system (objects retreat to #/manager/m.hosting first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (system domain); internal nav column stacks above main",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.remote",
+      "family": "Remote Access",
+      "status": "deferred_named_owner",
+      "route": "concept-10-command-suite.html#/manager/m.remote",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers (Reserved destinations) list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.remote"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/system (objects retreat to #/manager/m.remote first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (system domain); internal nav column stacks above main",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.projectSync",
+      "family": "Project Sync / Move",
+      "status": "deferred_named_owner",
+      "route": "concept-10-command-suite.html#/manager/m.projectSync",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers (Reserved destinations) list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.projectSync"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/system (objects retreat to #/manager/m.projectSync first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (system domain); internal nav column stacks above main",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.appUpdates",
+      "family": "Puppet Master application/content updates",
+      "status": "deferred_named_owner",
+      "route": "concept-10-command-suite.html#/manager/m.appUpdates",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers (Reserved destinations) list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.appUpdates"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/system (objects retreat to #/manager/m.appUpdates first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (system domain); internal nav column stacks above main",
+      "statesShown": [],
+      "pass": true
+    },
+    {
+      "managerId": "m.serverBackup",
+      "family": "Full Server backup owner flow",
+      "status": "deferred_named_owner",
+      "route": "concept-10-command-suite.html#/manager/m.serverBackup",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers (Reserved destinations) list (data-manager)",
+        "domain overview pane manager rows (data-manager)",
+        "universal search rid m:m.serverBackup"
+      ],
+      "shellRetained": true,
+      "backTarget": "#/dest/system (objects retreat to #/manager/m.serverBackup first)",
+      "closeTarget": "Close Settings (honest simulated receipt: returns to Dashboard)",
+      "narrowBehavior": "one pane at a time; pane header Back names the parent (system domain); internal nav column stacks above main",
+      "statesShown": [],
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "concept_id": "concept-07-compendium-workspace",
+  "model": "fable",
+  "generated": "2026-08-20",
+  "plan_owner_impacts": [
+    {
+      "owner": "Plans/settings_inventory.json",
+      "kind": "extends",
+      "evidence": "The All Settings compendium is the first surface that renders the complete 828-row inventory as a single faceted index (record kind, area, setting type, tier, changed-from-default, live row state). The inventory schema should guarantee the fields the facets depend on (tier, type, curated, search terms) stay populated for every future row, and should add a record-kind discriminator so managers/actions/diagnostics can be indexed without concept-side inference."
+    },
+    {
+      "owner": "Plans/FinalGUISpec.md",
+      "kind": "extends",
+      "evidence": "Compendium workspace grammar: persistent left workspace rail (Home + All Settings + 12 areas) on every Settings surface, domain pages composed as overview fact strip + curated key settings + full subgroup sections + related-managers panel, and an exact-landing contextual explanation panel (About this setting) that opens beside the located row. The spec should adopt the explanation-panel contract for deep-link landings."
+    },
+    {
+      "owner": "Plans/UI_Command_Catalog.md",
+      "kind": "extends",
+      "evidence": "Faceted-index navigation implies a small command family: open All Settings with a facet preset (changed-from-default, managed, per-area), and open a setting with its explanation panel. Registered as candidates in candidate-command-delta.json; no canon minted."
+    },
+    {
+      "owner": "Plans/Performance decision register (2026-08-13)",
+      "kind": "extends",
+      "evidence": "The compendium demonstrates the windowed-virtualization budget the register requires: 828 real + 2,000 synthetic rows render fewer than 40 live DOM rows at any scroll position, facet recounts are O(n) over plain records, and search stays latest-request-wins. The register can cite this as the reference implementation for long-tail Settings lists."
+    },
+    {
+      "owner": "Plans/CLI_Bridged_Providers.md",
+      "kind": "reuses",
+      "evidence": "Provider list/detail renders the shared PMProvider resolver states verbatim (multi-install selected/shadowed, unknown-owner manual-only, ask-first updates with verify checklists, official-source Cursor CLI setup). No new provider semantics were invented; the concept only contributes the list/detail composition."
+    },
+    {
+      "owner": "Plans/Project-copy policy",
+      "kind": "extends",
+      "evidence": "The copy preview showpiece (counts, per-area breakdown, expandable current-to-incoming diff rows, credential-by-reference note, conflict rows that are never applied without a decision) is a concrete UI contract for the one-time-transaction policy; the receipt records both directions and rollback restores exactly."
+    },
+    {
+      "owner": "Settings schema/registry",
+      "kind": "conflicts",
+      "evidence": "The harness deep-link probe setting system.health.diagnostics-verbosity does not exist in pm2-inventory (828 rows); the concept lands honestly on System & Advanced with an explanation instead. The census between the rev-2 dataset and the pm2 inventory should be reconciled before the probe id is treated as canonical."
+    }
+  ],
+  "concept_local_state": [
+    "ui.all facet state, ui.copy transaction state, disclosure maps (advanced/more/details) are concept-local demo state",
+    "action-type inventory rows return simulated receipts; no backend exists",
+    "Close Settings emits a simulated receipt because the concept page has no real app shell behind it"
+  ]
+}

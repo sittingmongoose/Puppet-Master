@@ -1,0 +1,55 @@
+{
+  "schema_id": "pm.settings_candidate_command_delta.v1",
+  "concept_id": "c11-sheaf",
+  "model": "fable",
+  "generated": "2026-08-20",
+  "note": "Everything here is provisional. Canon is never minted in a concept register; the implementation audit censuses Plans/UI_Command_Catalog.md and adjudicates exact ids.",
+  "census": {
+    "canon_source": "Plans/UI_Command_Catalog.md",
+    "approx_ids": 732,
+    "families": 56,
+    "flags": [
+      {
+        "id": "cmd.settings.navigate",
+        "disposition": "reuse-flag",
+        "note": "Sheaf routes every navigation through PM2.route.go with a dest object; the canon family should keep dest-object payloads ({route,cat,sub,managerId,objectId,tab,settingId}) rather than per-destination ids."
+      },
+      {
+        "id": "cmd.settings.sheet.pop",
+        "disposition": "candidate-new",
+        "note": "One-level-out (crumb Back / Escape rung 3). May alias an existing cmd.settings.back if the census finds one; do not mint twice."
+      },
+      {
+        "id": "cmd.settings.tab.select",
+        "disposition": "candidate-new",
+        "note": "Grouped top-tab selection (9 tabs over 12 categories). Payload is the category id, not the tab index — the lens keeps both member categories addressable."
+      },
+      {
+        "id": "cmd.settings.search.open",
+        "disposition": "reuse-flag",
+        "note": "Ctrl/Cmd+K focuses the persistent field; census against the existing search command family before minting."
+      },
+      {
+        "id": "cmd.settings.copy.preview / cmd.settings.copy.apply / cmd.settings.copy.rollback",
+        "disposition": "reuse-flag",
+        "note": "The copy transaction maps 1:1 onto PM2.copy preview/apply/rollback; if the canon already carries settings-transfer ids, alias instead of minting."
+      }
+    ],
+    "preserve": [
+      "cmd.project.open_settings",
+      "cmd.settings.value.set",
+      "cmd.settings.default.restore",
+      "cmd.provider.switch_route",
+      "cmd.usage.refresh"
+    ]
+  },
+  "families_exercised": [
+    "navigation",
+    "values",
+    "providers",
+    "copy_transaction",
+    "search"
+  ],
+  "families_exercised_note": "navigation (tab row, category lens, subgroup sub-tabs, crumb pile, More menu, escape ladder — all via PM2.route.go); values (toggle/select/radio/multiselect/number/slider/text edits through store.setValue with inline validation errors); providers (roster > detail tabs, installation select/update/repair triggers, explicit Cursor CLI setup); copy_transaction (preview/apply/rollback with staged ops and receipts); search (dropdown pick by rid, focus-param landing, back-restores-query).",
+  "concept_local_state": true
+}

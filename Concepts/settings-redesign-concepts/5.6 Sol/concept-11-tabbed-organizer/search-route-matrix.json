@@ -1,0 +1,529 @@
+{
+  "schema_id": "pm.settings_search_route_matrix.v1",
+  "concept_id": "concept-11-tabbed-organizer",
+  "pick_by": "data-id immutable result id",
+  "dropdown": "anchored under search field",
+  "back_restores_query": true,
+  "live_qa_clicks_all_rendered": [
+    "Theme",
+    "Default",
+    "Copy"
+  ],
+  "index": {
+    "inventory_ids": 828,
+    "product_index": 1007,
+    "search_cap": 24,
+    "synthetic_overlay": 2000,
+    "synthetic_excluded_from_default_search": true
+  },
+  "note": "Expected map of smoke + contract cases (Theme, Default duplicates, Workspace grouped, typo thme, Ollama workflow/object, Copy, Remote Access unavailable, diagnostic). Live QA also clicks every rendered Theme/Default/Copy result by immutable id. No winner selected.",
+  "cases": [
+    {
+      "query": "Theme",
+      "result_id": "setting:general.visual.theme",
+      "result_type": "setting",
+      "back_restores_query": true,
+      "dest": {
+        "name": "domain",
+        "domain": "general",
+        "page": "visual",
+        "manager": null,
+        "object": null,
+        "section": "visual",
+        "row": "general.visual.theme"
+      },
+      "expected": {
+        "domain": "general",
+        "page": "visual",
+        "manager": null,
+        "object": null,
+        "section": "visual",
+        "name": "domain",
+        "row": "general.visual.theme",
+        "highlight_data_row_id": "general.visual.theme"
+      },
+      "expected_highlight_data_row_id": "general.visual.theme",
+      "displayed_path": "Settings / General & Appearance / Visual Style / Theme",
+      "actual_destination": "domain",
+      "focus_highlight": true,
+      "restored_query": "Theme",
+      "pass": true,
+      "note": "Primary Theme setting. Live QA also clicks every other rendered Theme result.",
+      "contract": "deep_setting_row"
+    },
+    {
+      "query": "Theme",
+      "result_id": "setting:general.visual.theme-mode",
+      "result_type": "setting",
+      "back_restores_query": true,
+      "dest": {
+        "name": "domain",
+        "domain": "general",
+        "page": "visual",
+        "manager": null,
+        "object": null,
+        "section": "visual",
+        "row": "general.visual.theme-mode"
+      },
+      "expected": {
+        "domain": "general",
+        "page": "visual",
+        "manager": null,
+        "object": null,
+        "section": "visual",
+        "name": "domain",
+        "row": "general.visual.theme-mode",
+        "highlight_data_row_id": "general.visual.theme-mode"
+      },
+      "expected_highlight_data_row_id": "general.visual.theme-mode",
+      "displayed_path": "Settings / General & Appearance / Visual Style / Theme Mode",
+      "actual_destination": "domain",
+      "focus_highlight": true,
+      "restored_query": "Theme",
+      "pass": true,
+      "note": "Second Theme-family setting; routed by immutable id, not list position.",
+      "contract": "duplicate_or_related_label"
+    },
+    {
+      "query": "Theme",
+      "result_id": "manager:appearance",
+      "result_type": "manager",
+      "back_restores_query": true,
+      "dest": {
+        "name": "manager",
+        "domain": "general",
+        "page": "overview",
+        "manager": "appearance",
+        "object": null,
+        "section": "overview"
+      },
+      "expected": {
+        "domain": "general",
+        "page": "overview",
+        "manager": "appearance",
+        "object": null,
+        "section": "overview",
+        "name": "manager"
+      },
+      "expected_highlight_data_row_id": null,
+      "displayed_path": "Settings / General & Appearance / Appearance",
+      "actual_destination": "manager",
+      "focus_highlight": false,
+      "restored_query": "Theme",
+      "pass": true,
+      "note": "Appearance manager matches Theme terms. Manager-level result; no setting row highlight.",
+      "contract": "manager"
+    },
+    {
+      "query": "Default",
+      "result_id": "action:retry-default-account",
+      "result_type": "action",
+      "back_restores_query": true,
+      "dest": {
+        "name": "manager",
+        "domain": "ai",
+        "page": "accounts",
+        "manager": "providers",
+        "object": "anthropic",
+        "section": "accounts",
+        "row": "account-default"
+      },
+      "expected": {
+        "domain": "ai",
+        "page": "accounts",
+        "manager": "providers",
+        "object": "anthropic",
+        "section": "accounts",
+        "name": "manager",
+        "row": "account-default",
+        "highlight_data_row_id": "account-default"
+      },
+      "expected_highlight_data_row_id": "account-default",
+      "displayed_path": "Settings / Providers / Anthropic / Accounts / Default",
+      "actual_destination": "manager",
+      "focus_highlight": true,
+      "restored_query": "Default",
+      "pass": true,
+      "note": "Duplicate label Default vs persona Default \u2014 route by immutable id.",
+      "contract": "action_workflow"
+    },
+    {
+      "query": "Default",
+      "result_id": "object:personas:persona-default",
+      "result_type": "managed_object",
+      "back_restores_query": true,
+      "dest": {
+        "name": "manager",
+        "domain": "personas",
+        "page": "library",
+        "manager": "personas",
+        "object": "persona-default",
+        "section": "library"
+      },
+      "expected": {
+        "domain": "personas",
+        "page": "library",
+        "manager": "personas",
+        "object": "persona-default",
+        "section": "library",
+        "name": "manager",
+        "highlight_data_row_id": "persona-default"
+      },
+      "expected_highlight_data_row_id": "persona-default",
+      "displayed_path": "Settings / Personas / Default",
+      "actual_destination": "manager",
+      "focus_highlight": true,
+      "restored_query": "Default",
+      "pass": true,
+      "note": "Duplicate label Default persona vs account action \u2014 route by immutable id.",
+      "contract": "manager_object"
+    },
+    {
+      "query": "Default",
+      "result_id": "setting:ai.models.default-model",
+      "result_type": "setting",
+      "back_restores_query": true,
+      "dest": {
+        "name": "domain",
+        "domain": "ai",
+        "page": "models",
+        "manager": null,
+        "object": null,
+        "section": "models",
+        "row": "ai.models.default-model"
+      },
+      "expected": {
+        "domain": "ai",
+        "page": "models",
+        "manager": null,
+        "object": null,
+        "section": "models",
+        "name": "domain",
+        "row": "ai.models.default-model",
+        "highlight_data_row_id": "ai.models.default-model"
+      },
+      "expected_highlight_data_row_id": "ai.models.default-model",
+      "displayed_path": "Settings / AI Brains & Providers / Models & Defaults / Default Model",
+      "actual_destination": "domain",
+      "focus_highlight": true,
+      "restored_query": "Default",
+      "pass": true,
+      "note": "Additional rendered Default result. Live QA clicks all Default picks.",
+      "contract": "duplicate_labels"
+    },
+    {
+      "query": "Workspace note",
+      "result_id": "object:memory:mem-style",
+      "result_type": "managed_object",
+      "back_restores_query": true,
+      "dest": {
+        "name": "manager",
+        "domain": "memory",
+        "page": "items",
+        "manager": "memory",
+        "object": "mem-style",
+        "section": "items"
+      },
+      "expected": {
+        "domain": "memory",
+        "page": "items",
+        "manager": "memory",
+        "object": "mem-style",
+        "section": "items",
+        "name": "manager",
+        "highlight_data_row_id": "mem-style"
+      },
+      "expected_highlight_data_row_id": "mem-style",
+      "displayed_path": "Settings / Memory / Workspace note",
+      "actual_destination": "manager",
+      "focus_highlight": true,
+      "restored_query": "Workspace note",
+      "pass": true,
+      "note": "Grouped/duplicate memory labels; this id is mem-style (managed).",
+      "contract": "grouped_results"
+    },
+    {
+      "query": "Workspace note",
+      "result_id": "object:memory:mem-workspace",
+      "result_type": "managed_object",
+      "back_restores_query": true,
+      "dest": {
+        "name": "manager",
+        "domain": "memory",
+        "page": "items",
+        "manager": "memory",
+        "object": "mem-workspace",
+        "section": "items"
+      },
+      "expected": {
+        "domain": "memory",
+        "page": "items",
+        "manager": "memory",
+        "object": "mem-workspace",
+        "section": "items",
+        "name": "manager",
+        "highlight_data_row_id": "mem-workspace"
+      },
+      "expected_highlight_data_row_id": "mem-workspace",
+      "displayed_path": "Settings / Memory / Workspace note",
+      "actual_destination": "manager",
+      "focus_highlight": true,
+      "restored_query": "Workspace note",
+      "pass": true,
+      "note": "Grouped sibling of mem-style; same label, different immutable id.",
+      "contract": "grouped_results"
+    },
+    {
+      "query": "Workspace",
+      "result_id": "manager:cleanup",
+      "result_type": "manager",
+      "back_restores_query": true,
+      "dest": {
+        "name": "manager",
+        "domain": "system",
+        "page": "overview",
+        "manager": "cleanup",
+        "object": null,
+        "section": "overview"
+      },
+      "expected": {
+        "domain": "system",
+        "page": "overview",
+        "manager": "cleanup",
+        "object": null,
+        "section": "overview",
+        "name": "manager"
+      },
+      "expected_highlight_data_row_id": null,
+      "displayed_path": "Settings / System & Advanced / Workspace Cleanup",
+      "actual_destination": "manager",
+      "focus_highlight": false,
+      "restored_query": "Workspace",
+      "pass": true,
+      "note": "Workspace query also surfaces the Workspace Cleanup manager.",
+      "contract": "manager"
+    },
+    {
+      "query": "thme",
+      "result_id": "setting:general.visual.theme",
+      "result_type": "setting",
+      "back_restores_query": true,
+      "dest": {
+        "name": "domain",
+        "domain": "general",
+        "page": "visual",
+        "manager": null,
+        "object": null,
+        "section": "visual",
+        "row": "general.visual.theme"
+      },
+      "expected": {
+        "domain": "general",
+        "page": "visual",
+        "manager": null,
+        "object": null,
+        "section": "visual",
+        "name": "domain",
+        "row": "general.visual.theme",
+        "highlight_data_row_id": "general.visual.theme"
+      },
+      "expected_highlight_data_row_id": "general.visual.theme",
+      "displayed_path": "Settings / General & Appearance / Visual Style / Theme",
+      "actual_destination": "domain",
+      "focus_highlight": true,
+      "restored_query": "thme",
+      "pass": true,
+      "note": "Typo/fuzzy: thme \u2192 Theme.",
+      "contract": "typo_fuzzy_match"
+    },
+    {
+      "query": "Ollama",
+      "result_id": "workflow:provider-cli-setup",
+      "result_type": "setup_or_repair_workflow",
+      "back_restores_query": true,
+      "dest": {
+        "name": "manager",
+        "domain": "ai",
+        "page": "setup",
+        "manager": "providers",
+        "object": "local-ollama",
+        "section": "setup",
+        "row": "install-official"
+      },
+      "expected": {
+        "domain": "ai",
+        "page": "setup",
+        "manager": "providers",
+        "object": "local-ollama",
+        "section": "setup",
+        "name": "manager",
+        "row": "install-official",
+        "highlight_data_row_id": "install-official"
+      },
+      "expected_highlight_data_row_id": "install-official",
+      "displayed_path": "Settings / AI Brains & Providers / Providers / Ollama / Setup",
+      "actual_destination": "manager",
+      "focus_highlight": true,
+      "restored_query": "Ollama",
+      "pass": true,
+      "note": "Ollama official-source setup workflow (not installed).",
+      "contract": "action_workflow"
+    },
+    {
+      "query": "Ollama",
+      "result_id": "object:providers:local-ollama",
+      "result_type": "managed_object",
+      "back_restores_query": true,
+      "dest": {
+        "name": "manager",
+        "domain": "ai",
+        "page": "accounts",
+        "manager": "providers",
+        "object": "local-ollama",
+        "section": "accounts"
+      },
+      "expected": {
+        "domain": "ai",
+        "page": "accounts",
+        "manager": "providers",
+        "object": "local-ollama",
+        "section": "accounts",
+        "name": "manager",
+        "highlight_data_row_id": "local-ollama"
+      },
+      "expected_highlight_data_row_id": "local-ollama",
+      "displayed_path": "Settings / Providers / Ollama (local)",
+      "actual_destination": "manager",
+      "focus_highlight": true,
+      "restored_query": "Ollama",
+      "pass": true,
+      "note": "Ollama managed object; availability setup_required until official install.",
+      "contract": "manager_object"
+    },
+    {
+      "query": "Copy Settings",
+      "result_id": "action:copy-from-project",
+      "result_type": "action",
+      "back_restores_query": true,
+      "dest": {
+        "name": "copy",
+        "domain": null,
+        "page": null,
+        "manager": null,
+        "object": null,
+        "section": null
+      },
+      "expected": {
+        "domain": null,
+        "page": null,
+        "manager": null,
+        "object": null,
+        "section": null,
+        "name": "copy"
+      },
+      "expected_highlight_data_row_id": null,
+      "displayed_path": "Settings / Copy from another project",
+      "actual_destination": "copy",
+      "focus_highlight": false,
+      "restored_query": "Copy Settings",
+      "pass": true,
+      "note": "Copy action. Live QA clicks all rendered Copy results; this is the expected action id.",
+      "contract": "action_workflow"
+    },
+    {
+      "query": "Copy",
+      "result_id": "help:copy-policy",
+      "result_type": "intentional_help_result",
+      "back_restores_query": true,
+      "dest": {
+        "name": "copy",
+        "domain": null,
+        "page": null,
+        "manager": null,
+        "object": null,
+        "section": "help"
+      },
+      "expected": {
+        "domain": null,
+        "page": null,
+        "manager": null,
+        "object": null,
+        "section": "help",
+        "name": "copy"
+      },
+      "expected_highlight_data_row_id": null,
+      "displayed_path": "Settings / Help / Copy Settings",
+      "actual_destination": "copy",
+      "focus_highlight": false,
+      "restored_query": "Copy",
+      "pass": true,
+      "note": "Help result for copy policy. Present under query Copy (cap 24); not required under Copy Settings.",
+      "contract": "help"
+    },
+    {
+      "query": "Remote Access",
+      "result_id": "unavailable:remoteAccess",
+      "result_type": "unavailable_capability",
+      "back_restores_query": true,
+      "dest": {
+        "name": "deferred",
+        "domain": "system",
+        "page": null,
+        "manager": null,
+        "object": null,
+        "section": null,
+        "deferred": "remoteAccess"
+      },
+      "expected": {
+        "domain": "system",
+        "page": null,
+        "manager": null,
+        "object": null,
+        "section": null,
+        "name": "deferred",
+        "deferred": "remoteAccess"
+      },
+      "expected_highlight_data_row_id": null,
+      "displayed_path": "Settings / System & Advanced / Remote Access",
+      "actual_destination": "deferred",
+      "focus_highlight": false,
+      "restored_query": "Remote Access",
+      "pass": true,
+      "note": "Unavailable capability / deferred named owner; no fabricated backend.",
+      "contract": "unavailable_result"
+    },
+    {
+      "query": "usage",
+      "result_id": "diagnostic:usage-stale",
+      "result_type": "diagnostic_or_read_only_status",
+      "back_restores_query": true,
+      "dest": {
+        "name": "manager",
+        "domain": "ai",
+        "page": "usage",
+        "manager": "providers",
+        "object": "google",
+        "section": "usage",
+        "row": "usage-projection"
+      },
+      "expected": {
+        "domain": "ai",
+        "page": "usage",
+        "manager": "providers",
+        "object": "google",
+        "section": "usage",
+        "name": "manager",
+        "row": "usage-projection",
+        "highlight_data_row_id": "usage-projection"
+      },
+      "expected_highlight_data_row_id": "usage-projection",
+      "displayed_path": "Settings / Providers / Google AI / Usage",
+      "actual_destination": "manager",
+      "focus_highlight": true,
+      "restored_query": "usage",
+      "pass": true,
+      "note": "Diagnostic/read-only stale usage projection for Google AI.",
+      "contract": "diagnostic"
+    }
+  ]
+}

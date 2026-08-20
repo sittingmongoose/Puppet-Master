@@ -1,0 +1,636 @@
+{
+  "schema": "pm2.manager_coverage.v2",
+  "conceptId": "concept-10-command-suite",
+  "families": [
+    {
+      "family": "Settings Home",
+      "surface": "home route",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/home",
+      "entryPoints": [
+        "boot default",
+        "breadcrumb Settings crumb",
+        "Escape ladder terminus"
+      ],
+      "evidence": "Project identity as context, large universal search, at most one critical banner (offline/restart), compact 3-item attention list (fixture notices merge in), the 12 categories as the persistent numbered command index (embedded inline at one-pane widths), recents + All Settings/Copy as subordinate utilities."
+    },
+    {
+      "family": "Settings Search",
+      "surface": "search surface",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/search/api key",
+      "entryPoints": [
+        "large Home field",
+        "compact path-bar field on every other surface",
+        "Ctrl/Cmd+K"
+      ],
+      "evidence": "Dropdown anchored beneath the field; grouped kinds with full paths and availability notes; arrows+Enter; routing by rid/dest only; silent #/search history entry so Back restores query AND results; typo probes and the flux-capacitor no-results case handled with guidance."
+    },
+    {
+      "family": "Settings Workspace",
+      "surface": "workspace routes",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/dest/ai/accounts",
+      "entryPoints": [
+        "command index",
+        "domain pane sections",
+        "search results"
+      ],
+      "evidence": "Multi-pane left-to-right drill (index / domain / rows-or-manager) with explicit 3/2/1-pane width state machine; persistent breadcrumb path bar; key-hint status strip; keyboard movement (arrows move, Enter/Right drill, Left/Backspace retreat, Esc ladder)."
+    },
+    {
+      "family": "Ordinary setting grammar",
+      "surface": "store.resolveRow rendering",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/setting/general.visual.font-size",
+      "entryPoints": [
+        "any row in a section table",
+        "deep link #/setting/<id>",
+        "search setting results"
+      ],
+      "evidence": "Compact three-column tables (Setting/Value/State) from resolveRow with pm-chip-value chips; exact editor beneath the context row with per-type controls, inline validation errors, reset-to-default, recommended note, and the technical Details drawer (id/scope/related in mono)."
+    },
+    {
+      "family": "Provider / Account / Model / Installation",
+      "managerId": "m.providers",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.providers",
+      "entryPoints": [
+        "command index -> ai domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.providers)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Context & Instructions",
+      "managerId": "m.context",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.context",
+      "entryPoints": [
+        "command index -> memory domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.context)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Memory",
+      "managerId": "m.memory",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.memory",
+      "entryPoints": [
+        "command index -> memory domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.memory)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Personas",
+      "managerId": "m.personas",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.personas",
+      "entryPoints": [
+        "command index -> personas domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.personas)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Goal & Automation",
+      "managerId": "m.goal",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.goal",
+      "entryPoints": [
+        "command index -> planning domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.goal)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Crew",
+      "managerId": "m.crew",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.crew",
+      "entryPoints": [
+        "command index -> branching domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.crew)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Permissions & FileSafe",
+      "managerId": "m.permissions",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.permissions",
+      "entryPoints": [
+        "command index -> safety domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.permissions)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Back Seat Driver",
+      "managerId": "m.bsd",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.bsd",
+      "entryPoints": [
+        "command index -> safety domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.bsd)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Notifications & Sounds",
+      "managerId": "m.notifications",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.notifications",
+      "entryPoints": [
+        "command index -> general domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.notifications)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Sound Library / Uploads / Packs",
+      "managerId": "m.sounds",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.sounds",
+      "entryPoints": [
+        "command index -> general domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.sounds)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Appearance / themes / fonts / motion",
+      "managerId": "m.appearance",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.appearance",
+      "entryPoints": [
+        "command index -> general domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.appearance)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Spellcheck & Dictionaries",
+      "managerId": "m.spellcheck",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.spellcheck",
+      "entryPoints": [
+        "command index -> general domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.spellcheck)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Desktop / Tray / Window",
+      "managerId": "m.desktop",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.desktop",
+      "entryPoints": [
+        "command index -> general domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.desktop)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Teacher / Help",
+      "managerId": "m.teacher",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.teacher",
+      "entryPoints": [
+        "command index -> general domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.teacher)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Doctor",
+      "managerId": "m.doctor",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.doctor",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.doctor)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "File Manager / Editor",
+      "managerId": "m.files",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.files",
+      "entryPoints": [
+        "command index -> code domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.files)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Terminal",
+      "managerId": "m.terminal",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.terminal",
+      "entryPoints": [
+        "command index -> code domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.terminal)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "LSP",
+      "managerId": "m.lsp",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.lsp",
+      "entryPoints": [
+        "command index -> code domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.lsp)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Formatters",
+      "managerId": "m.formatters",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.formatters",
+      "entryPoints": [
+        "command index -> code domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.formatters)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Commands & Shortcuts",
+      "managerId": "m.commands",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.commands",
+      "entryPoints": [
+        "command index -> extensions domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.commands)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "MCP",
+      "managerId": "m.mcp",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.mcp",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.mcp)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Skills",
+      "managerId": "m.skills",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.skills",
+      "entryPoints": [
+        "command index -> extensions domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.skills)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Plugins",
+      "managerId": "m.plugins",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.plugins",
+      "entryPoints": [
+        "command index -> extensions domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.plugins)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Tools",
+      "managerId": "m.tools",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.tools",
+      "entryPoints": [
+        "command index -> extensions domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.tools)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Testing & Debug",
+      "managerId": "m.testing",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.testing",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.testing)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Storage & Retention",
+      "managerId": "m.storage",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.storage",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.storage)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Backup & Restore",
+      "managerId": "m.backup",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.backup",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.backup)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Settings Lifecycle",
+      "managerId": "m.lifecycle",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.lifecycle",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.lifecycle)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "History & Sessions",
+      "managerId": "m.history",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.history",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.history)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Runtime Artifacts / Project Outputs",
+      "managerId": "m.artifacts",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.artifacts",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.artifacts)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Source Control / Worktrees",
+      "managerId": "m.sourceControl",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.sourceControl",
+      "entryPoints": [
+        "command index -> branching domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.sourceControl)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "GitHub Actions",
+      "managerId": "m.actions",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.actions",
+      "entryPoints": [
+        "command index -> branching domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.actions)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Containers & Registries",
+      "managerId": "m.containers",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.containers",
+      "entryPoints": [
+        "command index -> code domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.containers)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Web / Search / Fetch / Crawl",
+      "managerId": "m.web",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.web",
+      "entryPoints": [
+        "command index -> web domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.web)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Project Search Index",
+      "managerId": "m.searchIndex",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.searchIndex",
+      "entryPoints": [
+        "command index -> web domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.searchIndex)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Workspace Cleanup",
+      "managerId": "m.cleanup",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.cleanup",
+      "entryPoints": [
+        "command index -> system domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.cleanup)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Media & Output",
+      "managerId": "m.media",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.media",
+      "entryPoints": [
+        "command index -> media domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.media)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "DRY Method visible state where exposed",
+      "managerId": "m.dry",
+      "status": "demonstrated",
+      "route": "concept-10-command-suite.html#/manager/m.dry",
+      "entryPoints": [
+        "command index -> planning domain pane -> Managers",
+        "domain overview manager rows",
+        "universal search (m:m.dry)"
+      ],
+      "evidence": "Lazy-hydrated def.model(store) rendered through the Conductor section grammar (Q/A grids, rosters with flags+detail drawers, aligned tables, steps, logs, health checks); actions strip runs def.actions with truthful staged ops; breadcrumb/search/Back/Close retained."
+    },
+    {
+      "family": "Product Onboarding",
+      "managerId": "m.onboarding",
+      "status": "deferred_named_owner",
+      "route": "concept-10-command-suite.html#/manager/m.onboarding",
+      "entryPoints": [
+        "command index -> system domain pane -> Reserved destinations",
+        "domain overview manager rows",
+        "universal search (m:m.onboarding)"
+      ],
+      "evidence": "Reachable insertion shell: owner box with owner name, return contract, mono deep link, honest read-only data sections; no fabricated actions.",
+      "owner": "Product Onboarding owner thread (first-run flow owner; separate from Installation/Deployment and Server Claim/Bootstrap)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.onboarding/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Installation / Deployment",
+      "managerId": "m.deployment",
+      "status": "deferred_named_owner",
+      "route": "concept-10-command-suite.html#/manager/m.deployment",
+      "entryPoints": [
+        "command index -> system domain pane -> Reserved destinations",
+        "domain overview manager rows",
+        "universal search (m:m.deployment)"
+      ],
+      "evidence": "Reachable insertion shell: owner box with owner name, return contract, mono deep link, honest read-only data sections; no fabricated actions.",
+      "owner": "Release_Supply_Chain.md (installer and deployment supply chain)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.deployment/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Server Claim / Bootstrap",
+      "managerId": "m.serverClaim",
+      "status": "deferred_named_owner",
+      "route": "concept-10-command-suite.html#/manager/m.serverClaim",
+      "entryPoints": [
+        "command index -> system domain pane -> Reserved destinations",
+        "domain overview manager rows",
+        "universal search (m:m.serverClaim)"
+      ],
+      "evidence": "Reachable insertion shell: owner box with owner name, return contract, mono deep link, honest read-only data sections; no fabricated actions.",
+      "owner": "Server Backbone return (Post-Return Reconciliation v6)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.serverClaim/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Servers / Execution Hosts / Clients",
+      "managerId": "m.servers",
+      "status": "deferred_named_owner",
+      "route": "concept-10-command-suite.html#/manager/m.servers",
+      "entryPoints": [
+        "command index -> system domain pane -> Reserved destinations",
+        "domain overview manager rows",
+        "universal search (m:m.servers)"
+      ],
+      "evidence": "Reachable insertion shell: owner box with owner name, return contract, mono deep link, honest read-only data sections; no fabricated actions.",
+      "owner": "Server Backbone return (Post-Return Reconciliation v6, sections 4-5)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.servers/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Project Hosting & Files",
+      "managerId": "m.hosting",
+      "status": "deferred_named_owner",
+      "route": "concept-10-command-suite.html#/manager/m.hosting",
+      "entryPoints": [
+        "command index -> system domain pane -> Reserved destinations",
+        "domain overview manager rows",
+        "universal search (m:m.hosting)"
+      ],
+      "evidence": "Reachable insertion shell: owner box with owner name, return contract, mono deep link, honest read-only data sections; no fabricated actions.",
+      "owner": "storage-plan.md",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.hosting/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Remote Access",
+      "managerId": "m.remote",
+      "status": "deferred_named_owner",
+      "route": "concept-10-command-suite.html#/manager/m.remote",
+      "entryPoints": [
+        "command index -> system domain pane -> Reserved destinations",
+        "domain overview manager rows",
+        "universal search (m:m.remote)"
+      ],
+      "evidence": "Reachable insertion shell: owner box with owner name, return contract, mono deep link, honest read-only data sections; no fabricated actions.",
+      "owner": "Server Backbone return, section 10",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.remote/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Project Sync / Move",
+      "managerId": "m.projectSync",
+      "status": "deferred_named_owner",
+      "route": "concept-10-command-suite.html#/manager/m.projectSync",
+      "entryPoints": [
+        "command index -> system domain pane -> Reserved destinations",
+        "domain overview manager rows",
+        "universal search (m:m.projectSync)"
+      ],
+      "evidence": "Reachable insertion shell: owner box with owner name, return contract, mono deep link, honest read-only data sections; no fabricated actions.",
+      "owner": "storage-plan.md (Project Sync owner)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.projectSync/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Puppet Master application/content updates",
+      "managerId": "m.appUpdates",
+      "status": "deferred_named_owner",
+      "route": "concept-10-command-suite.html#/manager/m.appUpdates",
+      "entryPoints": [
+        "command index -> system domain pane -> Reserved destinations",
+        "domain overview manager rows",
+        "universal search (m:m.appUpdates)"
+      ],
+      "evidence": "Reachable insertion shell: owner box with owner name, return contract, mono deep link, honest read-only data sections; no fabricated actions.",
+      "owner": "Release_Supply_Chain.md",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.appUpdates/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Full Server backup owner flow",
+      "managerId": "m.serverBackup",
+      "status": "deferred_named_owner",
+      "route": "concept-10-command-suite.html#/manager/m.serverBackup",
+      "entryPoints": [
+        "command index -> system domain pane -> Reserved destinations",
+        "domain overview manager rows",
+        "universal search (m:m.serverBackup)"
+      ],
+      "evidence": "Reachable insertion shell: owner box with owner name, return contract, mono deep link, honest read-only data sections; no fabricated actions.",
+      "owner": "storage-plan.md",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.serverBackup/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    }
+  ]
+}

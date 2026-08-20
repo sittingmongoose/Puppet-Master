@@ -1,0 +1,487 @@
+/* ============================================================================
+   pm-shell.css — quiet fake Puppet Master app shell (prefix `pmx-`)
+   ----------------------------------------------------------------------------
+   The shell is SPACING CONTEXT, not the star: low-contrast inks, small type,
+   no strong accent usage. The concept under review mounts in `.pmx-stage`.
+
+   Expected markup contract (concept pages replicate this structure; every
+   icon is an inline SVG — absolutely no emoji):
+
+     <div class="pmx-frame">
+       <header class="pmx-topbar">
+         <span class="pmx-brand">[brand SVG]<span class="pmx-wordmark">PUPPET MASTER</span></span>
+         <nav class="pmx-tabs" aria-label="Pages">
+           <a class="pmx-tab">Chat</a><a class="pmx-tab">Editor</a><a class="pmx-tab">Goals</a>
+           <a class="pmx-tab" aria-current="page">Settings</a>
+         </nav>
+         <span class="pmx-search">[search SVG]<span>Search</span></span>   <!-- decorative -->
+         <span class="pmx-model">Claude Opus</span>                        <!-- model label slot -->
+         <span class="pmx-controls">…demo controls slot…</span>
+       </header>
+       <nav class="pmx-rail" aria-label="Activity">
+         <button class="pmx-rail-btn">[Files SVG]</button>
+         <button class="pmx-rail-btn">[Search SVG]</button>
+         <button class="pmx-rail-btn">[Goals SVG]</button>
+         <button class="pmx-rail-btn">[Tools SVG]</button>
+         <button class="pmx-rail-btn" aria-current="true">[Settings SVG]</button>
+       </nav>
+       <aside class="pmx-side">…quiet fake file tree…</aside>
+       <main class="pmx-stage">…CONCEPT CONTENT MOUNTS HERE…</main>
+       <aside class="pmx-chat">…2 fake messages + disabled composer…</aside>
+       <section class="pmx-bottom">…Terminal/Problems/Output tabs + fake lines…</section>
+       <footer class="pmx-status">…branch, sync, usage meter, model…</footer>
+     </div>
+
+   Behavior contracts:
+   - The frame is centered and width-constrained:
+     width: min(100%, var(--hub-page-width, 100%)) — the ConceptHub width
+     control squeezes the WHOLE fake app, not just the concept.
+   - `.pmx-rail`, `.pmx-side`, `.pmx-chat`, `.pmx-bottom` are collapsible via
+     the [hidden] attribute. The grid uses auto tracks, so hiding reshapes
+     cleanly with no JS layout math. NEVER hide `.pmx-topbar` or
+     `.pmx-status` (CONCEPT_RULES rule 5).
+   - Squeezed behavior below ~900px frame width:
+       * preferred: pure CSS container query (`@container pmx`) — the frame
+         declares `container-type: inline-size`, so this responds to the
+         frame's own width, not the viewport;
+       * fallback: JS toggles `.pmx-frame.pmx-squeezed` (same rules).
+     In the squeezed state the side panel hides and the chat panel becomes a
+     right-edge overlay drawer.
+   ========================================================================== */
+
+.pmx-frame {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr) auto;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  grid-template-areas:
+    "topbar topbar topbar topbar"
+    "rail   side   stage  chat"
+    "rail   bottom bottom bottom"
+    "status status status status";
+  width: min(100%, var(--hub-page-width, 100%));
+  height: 100vh;
+  height: 100dvh;
+  margin-inline: auto;
+  container-type: inline-size;
+  container-name: pmx;
+  overflow: clip;
+  background: var(--pm-bg);
+  color: var(--pm-ink);
+  font-family: var(--pm-font);
+  font-size: 13px;
+  line-height: 1.45;
+  text-align: start;
+}
+
+.pmx-frame *,
+.pmx-frame *::before,
+.pmx-frame *::after {
+  box-sizing: border-box;
+}
+
+.pmx-frame svg {
+  display: inline-block;
+  vertical-align: middle;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---------- Top bar (never hidden) ---------- */
+.pmx-topbar {
+  grid-area: topbar;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 40px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--pm-line);
+  background: var(--pm-bg-raised);
+  color: var(--pm-ink-dim);
+  font-size: 12px;
+}
+
+.pmx-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--pm-ink-dim);
+}
+
+.pmx-brand svg {
+  inline-size: 16px;
+  block-size: 16px;
+}
+
+.pmx-wordmark {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+}
+
+.pmx-tabs {
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+  align-self: stretch;
+}
+
+.pmx-tab {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 10px;
+  color: var(--pm-ink-faint);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  cursor: default;
+  white-space: nowrap;
+}
+
+.pmx-tab[aria-current="page"] {
+  color: var(--pm-ink);
+  border-bottom-color: var(--pm-accent);
+}
+
+.pmx-search {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-inline-start: auto;
+  padding: 4px 10px;
+  min-inline-size: 140px;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-s);
+  background: var(--pm-bg-sunken);
+  color: var(--pm-ink-faint);
+  font-size: 11.5px;
+}
+
+.pmx-search svg {
+  inline-size: 12px;
+  block-size: 12px;
+}
+
+.pmx-model {
+  color: var(--pm-ink-faint);
+  font-size: 11.5px;
+  white-space: nowrap;
+}
+
+.pmx-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ---------- Activity rail (collapsible via [hidden]) ---------- */
+.pmx-rail {
+  grid-area: rail;
+  inline-size: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 0;
+  border-right: 1px solid var(--pm-line);
+  background: var(--pm-bg-raised);
+}
+
+.pmx-rail-btn {
+  display: grid;
+  place-items: center;
+  inline-size: 34px;
+  block-size: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--pm-radius-s);
+  background: transparent;
+  color: var(--pm-ink-faint);
+}
+
+.pmx-rail-btn svg {
+  inline-size: 17px;
+  block-size: 17px;
+}
+
+.pmx-rail-btn[aria-current="true"] {
+  background: var(--pm-bg-sunken);
+  color: var(--pm-ink);
+  box-shadow: inset 0 0 0 1px var(--pm-line);
+}
+
+/* ---------- Side panel: quiet fake file tree (collapsible) ---------- */
+.pmx-side {
+  grid-area: side;
+  inline-size: 240px;
+  min-block-size: 0;
+  overflow: auto;
+  padding: 10px 12px;
+  border-right: 1px solid var(--pm-line);
+  background: var(--pm-bg-raised);
+  color: var(--pm-ink-faint);
+  font-size: 12px;
+}
+
+.pmx-side-h {
+  margin: 0 0 8px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  color: var(--pm-ink-faint);
+}
+
+.pmx-tree {
+  display: grid;
+  gap: 2px;
+}
+
+.pmx-tree-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 4px;
+  border-radius: var(--pm-radius-s);
+  white-space: nowrap;
+}
+
+.pmx-tree-row svg {
+  inline-size: 12px;
+  block-size: 12px;
+  flex: none;
+}
+
+.pmx-tree-row[data-depth="1"] { padding-inline-start: 16px; }
+.pmx-tree-row[data-depth="2"] { padding-inline-start: 28px; }
+.pmx-tree-row[data-depth="3"] { padding-inline-start: 40px; }
+
+/* ---------- Stage: the concept mounts here ---------- */
+.pmx-stage {
+  grid-area: stage;
+  position: relative;
+  container-type: inline-size;
+  container-name: pmx-stage;
+  min-inline-size: 0;
+  min-block-size: 0;
+  overflow: auto;
+  background: var(--pm-bg);
+}
+
+/* ---------- Chat panel: quiet fake assistant (collapsible) ---------- */
+.pmx-chat {
+  grid-area: chat;
+  inline-size: 300px;
+  min-block-size: 0;
+  display: flex;
+  flex-direction: column;
+  box-shadow: inset 1px 0 0 0 var(--pm-line);
+  background: var(--pm-bg-raised);
+}
+
+/* Divider via inset box-shadow, not a border: no left-border accents are
+   used anywhere in the shared foundation (CONCEPT_RULES). */
+
+.pmx-chat-h {
+  padding: 10px 12px 6px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  color: var(--pm-ink-faint);
+}
+
+.pmx-chat-log {
+  flex: 1 1 auto;
+  min-block-size: 0;
+  overflow: auto;
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  padding: 4px 12px 10px;
+}
+
+.pmx-msg {
+  max-inline-size: 92%;
+  padding: 7px 10px;
+  border-radius: var(--pm-radius-m);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.pmx-msg[data-from="assistant"] {
+  justify-self: start;
+  background: var(--pm-bg-sunken);
+  color: var(--pm-ink-dim);
+}
+
+.pmx-msg[data-from="user"] {
+  justify-self: end;
+  background: var(--pm-bg-sunken);
+  color: var(--pm-ink-faint);
+}
+
+.pmx-composer {
+  flex: none;
+  margin: 0 12px 12px;
+  padding: 8px 10px;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-m);
+  background: var(--pm-bg-sunken);
+  color: var(--pm-ink-faint);
+  font-size: 12px;
+  opacity: .7;
+}
+
+/* ---------- Bottom panel: fake terminal (collapsible) ---------- */
+.pmx-bottom {
+  grid-area: bottom;
+  block-size: 120px;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--pm-line);
+  background: var(--pm-bg-raised);
+}
+
+.pmx-bottom-tabs {
+  flex: none;
+  display: flex;
+  gap: 2px;
+  padding: 4px 10px 0;
+  font-size: 11px;
+  color: var(--pm-ink-faint);
+}
+
+.pmx-bottom-tab {
+  padding: 3px 8px;
+  border-radius: var(--pm-radius-s) var(--pm-radius-s) 0 0;
+  white-space: nowrap;
+}
+
+.pmx-bottom-tab[aria-selected="true"] {
+  color: var(--pm-ink-dim);
+  background: var(--pm-bg-sunken);
+}
+
+.pmx-bottom-body {
+  flex: 1 1 auto;
+  min-block-size: 0;
+  overflow: hidden;
+  padding: 6px 12px;
+  font-family: var(--pm-font-mono);
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--pm-ink-faint);
+  white-space: pre-wrap;
+}
+
+/* ---------- Status bar (never hidden) ---------- */
+.pmx-status {
+  grid-area: status;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  block-size: 24px;
+  padding: 0 10px;
+  border-top: 1px solid var(--pm-line);
+  background: var(--pm-bg-raised);
+  color: var(--pm-ink-faint);
+  font-size: 10.5px;
+  white-space: nowrap;
+}
+
+.pmx-status-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.pmx-status-item svg {
+  inline-size: 11px;
+  block-size: 11px;
+}
+
+.pmx-status-spacer {
+  flex: 1 1 auto;
+}
+
+.pmx-usage {
+  inline-size: 54px;
+  block-size: 4px;
+  border-radius: 999px;
+  background: var(--pm-bg-sunken);
+  overflow: hidden;
+}
+
+.pmx-usage > span {
+  display: block;
+  block-size: 100%;
+  inline-size: var(--pmx-usage, 40%);
+  border-radius: inherit;
+  background: var(--pm-ink-faint);
+}
+
+/* ---------- Collapse contract ----------
+   [hidden] removes the panel from the grid; the auto track collapses to 0,
+   so neighbors reshape with no JS layout math. Top bar and status bar are
+   NOT collapsible (CONCEPT_RULES rule 5). */
+.pmx-rail[hidden],
+.pmx-side[hidden],
+.pmx-chat[hidden],
+.pmx-bottom[hidden] {
+  display: none;
+}
+
+/* ---------- Squeezed behavior (< ~900px frame width) ----------
+   Preferred path: container query on the frame itself (container-name: pmx).
+   Fallback path: JS toggles `.pmx-squeezed` on the frame. Both apply the
+   same rules: side panel hides, chat becomes a right-edge overlay drawer. */
+@container pmx (max-width: 900px) {
+  .pmx-side:not([data-pmx-keep]) {
+    display: none;
+  }
+
+  .pmx-chat:not([hidden]) {
+    position: absolute;
+    inset: 0 0 0 auto;
+    inline-size: min(320px, 88%);
+    z-index: 30;
+    background: var(--pm-bg-raised);
+    box-shadow: inset 1px 0 0 0 var(--pm-line), var(--pm-shadow-2);
+  }
+}
+
+.pmx-frame.pmx-squeezed .pmx-side:not([data-pmx-keep]) {
+  display: none;
+}
+
+.pmx-frame.pmx-squeezed .pmx-chat:not([hidden]) {
+  position: absolute;
+  inset: 0 0 0 auto;
+  inline-size: min(320px, 88%);
+  z-index: 30;
+  background: var(--pm-bg-raised);
+  box-shadow: inset 1px 0 0 0 var(--pm-line), var(--pm-shadow-2);
+}
+
+/* Narrow frames: let the wordmark and decorative search yield first so
+   nothing clips. */
+@container pmx (max-width: 640px) {
+  .pmx-wordmark,
+  .pmx-search {
+    display: none;
+  }
+}
+
+.pmx-frame.pmx-squeezed .pmx-wordmark,
+.pmx-frame.pmx-squeezed .pmx-search {
+  display: none;
+}
+
+/* Quiet focus treatment for the few focusable shell controls. */
+.pmx-rail-btn:focus-visible,
+.pmx-tab:focus-visible,
+.pmx-bottom-tab:focus-visible {
+  outline: 2px solid var(--pm-focus);
+  outline-offset: -2px;
+}

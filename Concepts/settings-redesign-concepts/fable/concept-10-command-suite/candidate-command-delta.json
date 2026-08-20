@@ -1,0 +1,75 @@
+{
+  "schema_id": "pm.settings_candidate_command_delta.v1",
+  "concept_id": "concept-10-command-suite",
+  "model": "fable",
+  "note": "Provisional. Canon is never minted in a concept register; the implementation audit censuses the catalog and adjudicates exact ids.",
+  "census": {
+    "canon_source": "Plans/UI_Command_Catalog.md",
+    "flags": [
+      {
+        "id": "cmd.settings.navigate",
+        "disposition": "reuse",
+        "note": "Conductor routes every navigation through one dest-object grammar (route/cat/sub/managerId/objectId/tab/settingId). The existing navigate family covers it; no per-destination command ids are needed."
+      },
+      {
+        "id": "cmd.settings.open_<category> aliases",
+        "disposition": "supersede-into-family",
+        "note": "Numbered index entries are data, not commands; each is cmd.settings.navigate {dest}."
+      }
+    ],
+    "preserve": [
+      "cmd.project.open_settings",
+      "cmd.settings.suggestion.dismiss"
+    ]
+  },
+  "candidates": [
+    {
+      "id": "cmd.settings.pane.retreat",
+      "surface": "ArrowLeft / Backspace anywhere in the workspace",
+      "behavior": "Moves exactly one Settings level outward (editor -> section -> domain -> Home) and stops at Home.",
+      "concept_local_state": true
+    },
+    {
+      "id": "cmd.settings.pane.drill",
+      "surface": "Enter / ArrowRight on a focused pane item",
+      "behavior": "Activates the focused item's dest object; identical to clicking it.",
+      "concept_local_state": true
+    },
+    {
+      "id": "cmd.settings.search.focus",
+      "surface": "Ctrl/Cmd+K on every Settings surface",
+      "behavior": "Focuses the visible universal search field (large on Home, compact in the path bar elsewhere) and selects its text.",
+      "concept_local_state": true
+    },
+    {
+      "id": "cmd.settings.editor.open",
+      "surface": "Row activation in a section table",
+      "behavior": "Routes to #/setting/<id>; the exact editor opens beneath the context row, never a modal. Back closes it.",
+      "concept_local_state": true
+    },
+    {
+      "id": "cmd.settings.editor.reset_default",
+      "surface": "Reset to default button in the inline editor",
+      "behavior": "store.setValue(id, inventoryDefault); the recent-change feed and receipt record it.",
+      "concept_local_state": true
+    },
+    {
+      "id": "cmd.settings.advanced.toggle",
+      "surface": "Advanced disclosure bar in each section table",
+      "behavior": "Discloses the advanced tier of the current subgroup; deep links auto-disclose when their target is advanced.",
+      "concept_local_state": true
+    },
+    {
+      "id": "cmd.settings.copy.confirm_typed",
+      "surface": "Typed COPY confirm in the fourth copy panel",
+      "behavior": "Arms the apply button only when the literal word COPY is typed; apply then runs the staged restore-point/apply/verify transaction.",
+      "concept_local_state": true
+    },
+    {
+      "id": "cmd.settings.all.facet",
+      "surface": "All Settings facet bar (category/type/tier/state/changed + text filter)",
+      "behavior": "Filters the virtualized long-tail index without leaving the compendium; the window re-renders, never the whole list.",
+      "concept_local_state": true
+    }
+  ]
+}

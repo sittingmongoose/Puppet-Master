@@ -1,0 +1,213 @@
+{
+  "schema_id": "pm.settings_seven_new_concepts.packet_compliance.v1",
+  "generated_at_utc": "2026-08-19T20:46:03.232940Z",
+  "status": "pass",
+  "checks": [
+    {
+      "id": "custody",
+      "requirement": "All packet members checksum-verified and every top-level/base/correction authority plus seven selected references opened",
+      "status": "pass",
+      "evidence": [
+        "REFERENCE_REVIEW_2026-08-18.json",
+        "reference-review-report.json"
+      ]
+    },
+    {
+      "id": "write_scope",
+      "requirement": "Only the assigned 5.6 Sol folder changed; canonical product/Plans/other concepts untouched",
+      "status": "pass",
+      "evidence": [
+        "_seven/frozen-baseline.json",
+        "FINAL_VALIDATION_MANIFEST.json"
+      ]
+    },
+    {
+      "id": "frozen_01_04",
+      "requirement": "Original concepts 01–04 preserved",
+      "status": "pass",
+      "evidence": [
+        "_seven/frozen-baseline.json",
+        "_seven/SEVEN_NEW_CONCEPTS_QA.json"
+      ]
+    },
+    {
+      "id": "seven_distinct",
+      "requirement": "Concepts 05–11 present and materially differentiated",
+      "status": "pass",
+      "evidence": [
+        "concept-hub.json",
+        "SEVEN_NEW_CONCEPTS_VISUAL_AUDIT.json"
+      ]
+    },
+    {
+      "id": "home_contract",
+      "requirement": "Search first, restrained attention, major destinations dominant",
+      "status": "pass",
+      "evidence": [
+        "SEVEN_NEW_CONCEPTS_VISUAL_AUDIT.json"
+      ]
+    },
+    {
+      "id": "search_contract",
+      "requirement": "Immutable IDs, exact destination/object/section/row, focus/highlight, query restoration",
+      "status": "pass",
+      "evidence": [
+        "*/search-route-matrix.json",
+        "_seven/ALL_INVENTORY_ROUTE_AUDIT.json",
+        "_seven/FINAL_CONTRACT_AUDIT.json"
+      ]
+    },
+    {
+      "id": "project_only",
+      "requirement": "No editable Global/Project/Goal/Host scopes, inheritance, linked projects, or profiles",
+      "status": "pass",
+      "evidence": [
+        "*/test-evidence.json"
+      ]
+    },
+    {
+      "id": "copy_transaction",
+      "requirement": "Preview, restore point, atomic apply, verify, receipt, rollback, independent projects",
+      "status": "pass",
+      "evidence": [
+        "*/test-evidence.json"
+      ]
+    },
+    {
+      "id": "manager_coverage",
+      "requirement": "42 required families demonstrated and nine named owners integrated in every concept",
+      "status": "pass",
+      "evidence": [
+        "*/manager-coverage.json",
+        "*/manager-route-matrix.json",
+        "_seven/FINAL_CONTRACT_AUDIT.json"
+      ]
+    },
+    {
+      "id": "inventory",
+      "requirement": "All 828 current settings and 12 categories retained",
+      "status": "pass",
+      "evidence": [
+        "_seven/ALL_INVENTORY_ROUTE_AUDIT.json"
+      ]
+    },
+    {
+      "id": "scale",
+      "requirement": "1,007 product index plus isolated 2,000-row synthetic stress overlay; virtualized/bounded",
+      "status": "pass",
+      "evidence": [
+        "_seven/SEVEN_NEW_CONCEPTS_QA.json"
+      ]
+    },
+    {
+      "id": "state_fixtures",
+      "requirement": "All required deterministic loading/error/offline/managed/unavailable/restart/reconnect/import/rollback/provider states rendered",
+      "status": "pass",
+      "evidence": [
+        "SEVEN_NEW_CONCEPTS_VISUAL_AUDIT.json",
+        "_seven/FINAL_CONTRACT_AUDIT.json"
+      ]
+    },
+    {
+      "id": "provider_cli",
+      "requirement": "Explicit official-source first acquisition for exact Host/Environment; auth separate; no bundling/silent install",
+      "status": "pass",
+      "evidence": [
+        "*/test-evidence.json"
+      ]
+    },
+    {
+      "id": "performance",
+      "requirement": "Lazy manager hydration, bounded search, cached refresh, inactive disposal, truthful ObservableWork",
+      "status": "pass",
+      "evidence": [
+        "_seven/SEVEN_NEW_CONCEPTS_QA.json",
+        "verify/state.test.mjs"
+      ]
+    },
+    {
+      "id": "themes",
+      "requirement": "Eight named themes certified",
+      "status": "pass",
+      "evidence": [
+        "SEVEN_NEW_CONCEPTS_VISUAL_AUDIT.json"
+      ]
+    },
+    {
+      "id": "responsive",
+      "requirement": "760/900/1280/1700/2200/2500 certified with push navigation and no true overflow",
+      "status": "pass",
+      "evidence": [
+        "SEVEN_NEW_CONCEPTS_VISUAL_AUDIT.json"
+      ]
+    },
+    {
+      "id": "motion",
+      "requirement": "Concept-native forward/back/lateral/drawer/copy choreography and reduced motion certified from compositor output",
+      "status": "pass",
+      "evidence": [
+        "SEVEN_NEW_CONCEPTS_VISUAL_AUDIT.json"
+      ]
+    },
+    {
+      "id": "retheme_09_11",
+      "requirement": "No steampunk, parchment, fantasy, terminal-green, CRT, binder, or office-supply visual skin",
+      "status": "pass",
+      "evidence": [
+        "SEVEN_NEW_CONCEPTS_VISUAL_AUDIT.json"
+      ]
+    },
+    {
+      "id": "slint_portability",
+      "requirement": "Stable IDs, explicit state machines, bounded lists, and GPU-friendly effects plausibly map to Slint 1.17.1",
+      "status": "pass_with_boundary",
+      "evidence": [
+        "SEVEN_NEW_CONCEPTS_AUDIT_REPORT.json"
+      ]
+    },
+    {
+      "id": "candidate_impacts",
+      "requirement": "Per-concept Plan/Command/Wiring/DRY/data/test impact evidence complete without canon edits",
+      "status": "pass",
+      "evidence": [
+        "SEVEN_NEW_CONCEPTS_IMPACT_REGISTER.json",
+        "*/candidate-*.json"
+      ]
+    },
+    {
+      "id": "reports",
+      "requirement": "All required evidence and aggregate reports present",
+      "status": "pass",
+      "evidence": [
+        "SEVEN_NEW_CONCEPTS_TEST_REPORT.md",
+        "SEVEN_NEW_CONCEPTS_FINDINGS.md",
+        "SEVEN_NEW_CONCEPTS_AUDIT_REPORT.md"
+      ]
+    },
+    {
+      "id": "cleanup",
+      "requirement": "Temporary profiles/traces/raw test outputs excluded from deliverables",
+      "status": "pass",
+      "evidence": [
+        "FINAL_VALIDATION_MANIFEST.json"
+      ]
+    }
+  ],
+  "summary": {
+    "total": 22,
+    "pass": 21,
+    "pass_with_boundary": 1,
+    "fail": 0
+  },
+  "certification_boundaries": [
+    "The concepts are deterministic HTML/Chromium design evidence, not native Slint 1.17.1 certification.",
+    "No physical Ivy Bridge-era or other legacy-hardware performance certification was performed.",
+    "Headless Chromium screencast cadence verifies transition sequencing, flash-free composition, reversal, and settled endpoints; it is not a production frame-rate benchmark on every target GPU.",
+    "Nine named owner destinations remain intentional insertion contracts and do not fabricate their future backends.",
+    "Candidate command, wiring, DRY, data, and Plan impacts remain provisional; canonical registries and Plans were not edited."
+  ],
+  "known_repository_baseline": {
+    "concept_hub_stale_count_test": "Original 157 vs hard-coded 136; updated 164 vs hard-coded 136. Model-folder validation passes; no out-of-scope test edit made.",
+    "uploaded_tests_folder": "Absent by user choice; not required by this packet and not run."
+  }
+}

@@ -1,0 +1,1111 @@
+{
+  "schema_id": "pm.settings.reference_review_snapshot.v2",
+  "model": "5.6 Sol",
+  "folder": "Concepts/settings-redesign-concepts/5.6 Sol",
+  "generated_at_utc": "2026-08-18T20:34:10Z",
+  "packet": {
+    "name": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+    "uploaded_zip": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18(1).zip",
+    "uploaded_zip_sha256": "b385f258cb070ee6e2b22b9beb3fa2c10bc84da7850a28a51adf9ea4bd09619c",
+    "members_checked": 76,
+    "checksum_status": "pass",
+    "sha256sums_path": "SHA256SUMS.txt"
+  },
+  "winner_selected": false,
+  "winner_selection_statement": "No winner is claimed or selected among concepts 05–11 or the frozen 01–04 set.",
+  "substantive_authorities_opened": [
+    {
+      "path": "00_START_HERE.md",
+      "opened": true,
+      "sha256": "cc01f1a315487444ddcb96a5263304fd43394a9c295d6b8734a03b7c9dc14432"
+    },
+    {
+      "path": "01_ASSIGNMENT_AND_PRECEDENCE.md",
+      "opened": true,
+      "sha256": "5be6cf60992ade5aa7bdbbc7143506a48c1135314877b7eae511496970ae7f94"
+    },
+    {
+      "path": "02_SEVEN_CONCEPT_BLUEPRINTS.md",
+      "opened": true,
+      "sha256": "f72616804fdf579c730fd4a18a465e0df8af6c2b6e46c1eb0500725ec457efb9"
+    },
+    {
+      "path": "03_HOME_SEARCH_AND_NAVIGATION.md",
+      "opened": true,
+      "sha256": "285f06762ea85e269a8e629b118126b3481669cc1f800a840ecbd997f97fa955"
+    },
+    {
+      "path": "04_PROJECT_ONLY_SETTINGS_AND_COPY.md",
+      "opened": true,
+      "sha256": "1fa7f3991a34731cf58a7edb0e404d9fdbd01306d0a4e66ca80668c1f14dc989"
+    },
+    {
+      "path": "05_COMPLETE_MANAGER_INTEGRATION.md",
+      "opened": true,
+      "sha256": "1364327fc671cc08f7365f0603eb69bb82d340c78a9526d8a7c60bd6ddc95245"
+    },
+    {
+      "path": "06_INFORMATION_ARCHITECTURE_AND_DENSITY.md",
+      "opened": true,
+      "sha256": "0bc7fad69fedfa6a9c51871cc8fb7606f43d64375123df08a293540db7608ac3"
+    },
+    {
+      "path": "07_THEME_MOTION_RESPONSIVE_AND_SLINT.md",
+      "opened": true,
+      "sha256": "de34d47d40915012013d802656951f0a3fb3b69f0d6e6f1d6448018ba4298d5c"
+    },
+    {
+      "path": "08_DATA_PERFORMANCE_AND_TRUTHFUL_STATE.md",
+      "opened": true,
+      "sha256": "da6ccb22e1cf23f375b0973eb04e34aa24ad794c78bcbf594798492b0dcbbefb"
+    },
+    {
+      "path": "09_COMMAND_WIRING_DRY_AND_PLAN_IMPACT.md",
+      "opened": true,
+      "sha256": "7d97655b165418c62cf4bd764143e488d3c1c36f433b314b7a28b3ed50e0e46a"
+    },
+    {
+      "path": "10_TESTING_EVIDENCE_AND_ACCEPTANCE.md",
+      "opened": true,
+      "sha256": "3ef572dbbda0a809eebd28b2b0698db954cf8187e6ec2e2254c5b4b1d8a28c74"
+    },
+    {
+      "path": "11_REQUIRED_FILES_AND_REPORTS.md",
+      "opened": true,
+      "sha256": "5d78fd11a30d372b016ed834d6f076cb44f7c965e18cbc3c38cfb1ade9bd6887"
+    },
+    {
+      "path": "12_REPO_BASELINE_AND_KNOWN_FAILURES.md",
+      "opened": true,
+      "sha256": "d10f0f7884fc135a92c42c86a8aaf0269f6e4edf7c6e60dacb29da1c30377a08"
+    },
+    {
+      "path": "GOAL_PROMPT.md",
+      "opened": true,
+      "sha256": "431182c2aeaf5f3ceb4b0bb4edc0b54d3094968565ac80ddfe9de48b9c4749c1"
+    },
+    {
+      "path": "AUDIT_PROMPT.md",
+      "opened": true,
+      "sha256": "827605879ac8ee425673b02a1e3df71f0efd1ecdfa929ccc153bc4c8b528ca61"
+    },
+    {
+      "path": "authority/base_packet/00_START_HERE.md",
+      "opened": true,
+      "sha256": "6029b97f89429847d0edd1ebd1049faf3a92e8b9ccaa7bc89bf140a3f80be08e"
+    },
+    {
+      "path": "authority/base_packet/SOURCE_AND_PRECEDENCE_MAP.md",
+      "opened": true,
+      "sha256": "f8983850875fda4edbbefb38415465f87545ff1ad96e1457a6ff375b18cb98d4"
+    },
+    {
+      "path": "authority/base_packet/DECISION_COVERAGE.json",
+      "opened": true,
+      "sha256": "befbc67733876d9f03ea2aff526c166692348e629240800fcf7c5925a1dad46d"
+    },
+    {
+      "path": "authority/base_packet/reference/PERFORMANCE_SETTINGS_RETURN.md",
+      "opened": true,
+      "sha256": "259883117d9dbb8d1d65f6568a35a3ce38f9fd1e81806fc0485d4863ca3ab6bb"
+    },
+    {
+      "path": "authority/base_packet/reference/PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "opened": true,
+      "sha256": "9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1"
+    },
+    {
+      "path": "authority/correction_packet/00_READ_ME_FIRST.md",
+      "opened": true,
+      "sha256": "ce842cd19acb419c7b6096e1c4b43725a3006d27f0ec4167b3adc0a2d118e073"
+    },
+    {
+      "path": "authority/correction_packet/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md",
+      "opened": true,
+      "sha256": "3df7ad729c5ea1be0df192d19845e42326b5047de03e9f59fbe4918943e0150d"
+    },
+    {
+      "path": "authority/correction_packet/PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "opened": true,
+      "sha256": "9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1"
+    },
+    {
+      "path": "authority/correction_packet/REFERENCE_REVIEW_AND_REPAIR_REQUIREMENTS.md",
+      "opened": true,
+      "sha256": "b559fc38f910d18d454aa7ad149fa6f7d6f7384998b3ac0afe7f2e03bccc64f8"
+    },
+    {
+      "path": "machine_readable/concept_blueprints.json",
+      "opened": true,
+      "sha256": "50899da7871ffa4ab6701669643dab2a0e85c9e3d5465d592847f1e9a1b639b1"
+    },
+    {
+      "path": "machine_readable/manager_coverage_required.json",
+      "opened": true,
+      "sha256": "5b65fbe0099265ac959c21cec30576c0345559dad91e9b4ec168d48b88633b66"
+    },
+    {
+      "path": "machine_readable/search_contract.json",
+      "opened": true,
+      "sha256": "a54290ec00454403817d5579a5a784084f912167b90b56a76e110dc02674605b"
+    },
+    {
+      "path": "machine_readable/test_matrix.json",
+      "opened": true,
+      "sha256": "45b9e414ee50c437060b7e531889e2adb14111dd130060bd37a5dcee8d356190"
+    },
+    {
+      "path": "tools/validate_seven_new_concepts.py",
+      "opened": true,
+      "sha256": "bc18722043099b4ab0e5612f117a026a684b46cf3181d18a47eeaba5ecfb5f46"
+    }
+  ],
+  "repo_authorities_opened": [
+    {
+      "path": "Concepts/CONCEPT_RULES.md",
+      "purpose": "ConceptHub and model-folder rules",
+      "exists": true,
+      "sha256": "a4b89d38c828e6e6cdba98a9465e6e0852046eaec636c257c9d1d3ad95725a85",
+      "size_bytes": 1978
+    },
+    {
+      "path": "Concepts/PMConcept7.html",
+      "purpose": "Current Puppet Master shell and Settings integration context",
+      "exists": true,
+      "sha256": "213a3ee9946d58ea17c0aa9b824a5c8d496db1fe8484a77444ea41c5797d0b63",
+      "size_bytes": 3619880
+    },
+    {
+      "path": "Concepts/pm7-tools/base/PM7-base.html",
+      "purpose": "PMConcept7 base chrome and Settings surface context",
+      "exists": true,
+      "sha256": "3d82a850dad0e412e3abafe1b3f0717e34071425152efd93d3c49fa6e85408c3",
+      "size_bytes": 3230711
+    },
+    {
+      "path": "Plans/settings_inventory.json",
+      "purpose": "Current 828-row, 12-category settings inventory authority",
+      "exists": true,
+      "sha256": "2f7663ee4b008af8add30e93a4dbb156d358767780eb217556a3aa78fe8c23b3",
+      "size_bytes": 432231
+    },
+    {
+      "path": "Plans/settings_inventory.schema.json",
+      "purpose": "Inventory schema authority",
+      "exists": true,
+      "sha256": "4f3ccd94ec6b6589471de728f318f70756ed6cddcb5e41aecd7060f07d3b8b59",
+      "size_bytes": 5425
+    },
+    {
+      "path": "Concepts/settings-redesign-concepts/5.6 Sol",
+      "purpose": "Assigned model folder and frozen concepts 01–04",
+      "exists": true
+    }
+  ],
+  "packet_member_custody": [
+    {
+      "path": "00_START_HERE.md",
+      "size_bytes": 3490,
+      "expected_sha256": "cc01f1a315487444ddcb96a5263304fd43394a9c295d6b8734a03b7c9dc14432",
+      "actual_sha256": "cc01f1a315487444ddcb96a5263304fd43394a9c295d6b8734a03b7c9dc14432",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "01_ASSIGNMENT_AND_PRECEDENCE.md",
+      "size_bytes": 2502,
+      "expected_sha256": "5be6cf60992ade5aa7bdbbc7143506a48c1135314877b7eae511496970ae7f94",
+      "actual_sha256": "5be6cf60992ade5aa7bdbbc7143506a48c1135314877b7eae511496970ae7f94",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "02_SEVEN_CONCEPT_BLUEPRINTS.md",
+      "size_bytes": 4800,
+      "expected_sha256": "f72616804fdf579c730fd4a18a465e0df8af6c2b6e46c1eb0500725ec457efb9",
+      "actual_sha256": "f72616804fdf579c730fd4a18a465e0df8af6c2b6e46c1eb0500725ec457efb9",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "03_HOME_SEARCH_AND_NAVIGATION.md",
+      "size_bytes": 3190,
+      "expected_sha256": "285f06762ea85e269a8e629b118126b3481669cc1f800a840ecbd997f97fa955",
+      "actual_sha256": "285f06762ea85e269a8e629b118126b3481669cc1f800a840ecbd997f97fa955",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "04_PROJECT_ONLY_SETTINGS_AND_COPY.md",
+      "size_bytes": 2451,
+      "expected_sha256": "1fa7f3991a34731cf58a7edb0e404d9fdbd01306d0a4e66ca80668c1f14dc989",
+      "actual_sha256": "1fa7f3991a34731cf58a7edb0e404d9fdbd01306d0a4e66ca80668c1f14dc989",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "05_COMPLETE_MANAGER_INTEGRATION.md",
+      "size_bytes": 3766,
+      "expected_sha256": "1364327fc671cc08f7365f0603eb69bb82d340c78a9526d8a7c60bd6ddc95245",
+      "actual_sha256": "1364327fc671cc08f7365f0603eb69bb82d340c78a9526d8a7c60bd6ddc95245",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "06_INFORMATION_ARCHITECTURE_AND_DENSITY.md",
+      "size_bytes": 2431,
+      "expected_sha256": "0bc7fad69fedfa6a9c51871cc8fb7606f43d64375123df08a293540db7608ac3",
+      "actual_sha256": "0bc7fad69fedfa6a9c51871cc8fb7606f43d64375123df08a293540db7608ac3",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "07_THEME_MOTION_RESPONSIVE_AND_SLINT.md",
+      "size_bytes": 2699,
+      "expected_sha256": "de34d47d40915012013d802656951f0a3fb3b69f0d6e6f1d6448018ba4298d5c",
+      "actual_sha256": "de34d47d40915012013d802656951f0a3fb3b69f0d6e6f1d6448018ba4298d5c",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "08_DATA_PERFORMANCE_AND_TRUTHFUL_STATE.md",
+      "size_bytes": 2404,
+      "expected_sha256": "da6ccb22e1cf23f375b0973eb04e34aa24ad794c78bcbf594798492b0dcbbefb",
+      "actual_sha256": "da6ccb22e1cf23f375b0973eb04e34aa24ad794c78bcbf594798492b0dcbbefb",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "09_COMMAND_WIRING_DRY_AND_PLAN_IMPACT.md",
+      "size_bytes": 1867,
+      "expected_sha256": "7d97655b165418c62cf4bd764143e488d3c1c36f433b314b7a28b3ed50e0e46a",
+      "actual_sha256": "7d97655b165418c62cf4bd764143e488d3c1c36f433b314b7a28b3ed50e0e46a",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "10_TESTING_EVIDENCE_AND_ACCEPTANCE.md",
+      "size_bytes": 2657,
+      "expected_sha256": "3ef572dbbda0a809eebd28b2b0698db954cf8187e6ec2e2254c5b4b1d8a28c74",
+      "actual_sha256": "3ef572dbbda0a809eebd28b2b0698db954cf8187e6ec2e2254c5b4b1d8a28c74",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "11_REQUIRED_FILES_AND_REPORTS.md",
+      "size_bytes": 2391,
+      "expected_sha256": "5d78fd11a30d372b016ed834d6f076cb44f7c965e18cbc3c38cfb1ade9bd6887",
+      "actual_sha256": "5d78fd11a30d372b016ed834d6f076cb44f7c965e18cbc3c38cfb1ade9bd6887",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "12_REPO_BASELINE_AND_KNOWN_FAILURES.md",
+      "size_bytes": 1396,
+      "expected_sha256": "d10f0f7884fc135a92c42c86a8aaf0269f6e4edf7c6e60dacb29da1c30377a08",
+      "actual_sha256": "d10f0f7884fc135a92c42c86a8aaf0269f6e4edf7c6e60dacb29da1c30377a08",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "AUDIT_PROMPT.md",
+      "size_bytes": 2624,
+      "expected_sha256": "827605879ac8ee425673b02a1e3df71f0efd1ecdfa929ccc153bc4c8b528ca61",
+      "actual_sha256": "827605879ac8ee425673b02a1e3df71f0efd1ecdfa929ccc153bc4c8b528ca61",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "GOAL_PROMPT.md",
+      "size_bytes": 3894,
+      "expected_sha256": "431182c2aeaf5f3ceb4b0bb4edc0b54d3094968565ac80ddfe9de48b9c4749c1",
+      "actual_sha256": "431182c2aeaf5f3ceb4b0bb4edc0b54d3094968565ac80ddfe9de48b9c4749c1",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "PACKET_MANIFEST.json",
+      "size_bytes": 14760,
+      "expected_sha256": "d288ef001efd16dbeea56e3801fb8f0001adb116e17a8128399df64040a0bf7f",
+      "actual_sha256": "d288ef001efd16dbeea56e3801fb8f0001adb116e17a8128399df64040a0bf7f",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "PROMPT_USAGE.md",
+      "size_bytes": 1056,
+      "expected_sha256": "57ad34fac5bb209b9a29868bfc20823676656c5058a7473ee2fed39b3fe79916",
+      "actual_sha256": "57ad34fac5bb209b9a29868bfc20823676656c5058a7473ee2fed39b3fe79916",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/README.md",
+      "size_bytes": 556,
+      "expected_sha256": "6bce1403deb1cf86afd0082f625bcb3bf934a62c4133d7e66ea41a13f5392870",
+      "actual_sha256": "6bce1403deb1cf86afd0082f625bcb3bf934a62c4133d7e66ea41a13f5392870",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/00_START_HERE.md",
+      "size_bytes": 1885,
+      "expected_sha256": "6029b97f89429847d0edd1ebd1049faf3a92e8b9ccaa7bc89bf140a3f80be08e",
+      "actual_sha256": "6029b97f89429847d0edd1ebd1049faf3a92e8b9ccaa7bc89bf140a3f80be08e",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/01_CORE_ARCHITECTURE.md",
+      "size_bytes": 3362,
+      "expected_sha256": "a4fe99df171e8fc042f32adf12fa4eb92f5e5fdaef9c37f48d9b64b814abcc3d",
+      "actual_sha256": "a4fe99df171e8fc042f32adf12fa4eb92f5e5fdaef9c37f48d9b64b814abcc3d",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/02_MANAGER_GRAMMAR_AND_SETTING_MODEL.md",
+      "size_bytes": 2961,
+      "expected_sha256": "d43f60f5d77d2fe20c928d535fb6a5d851da3aa10ab73ca095be2e2425712629",
+      "actual_sha256": "d43f60f5d77d2fe20c928d535fb6a5d851da3aa10ab73ca095be2e2425712629",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/03_PROVIDER_AGENT_MODEL_AND_INSTALLATION.md",
+      "size_bytes": 5207,
+      "expected_sha256": "5d792108c360c5b21220bf52267bc226fe5fb439ba6e9945fd2e30b9c6a63853",
+      "actual_sha256": "5d792108c360c5b21220bf52267bc226fe5fb439ba6e9945fd2e30b9c6a63853",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/04_CONTEXT_MEMORY_PERSONAS_GOAL_CREW_PERMISSIONS.md",
+      "size_bytes": 3894,
+      "expected_sha256": "bcb345c2cada09f956c7db8f4a96f902883a9ad3e0604ff9ca61f584eb658fec",
+      "actual_sha256": "bcb345c2cada09f956c7db8f4a96f902883a9ad3e0604ff9ca61f584eb658fec",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/05_DESKTOP_DEVELOPER_AND_SYSTEM_MANAGERS.md",
+      "size_bytes": 4269,
+      "expected_sha256": "2094e01c46a5ab5609aa0908336cce981236dea63b804c480dd61f86cb89783e",
+      "actual_sha256": "2094e01c46a5ab5609aa0908336cce981236dea63b804c480dd61f86cb89783e",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/06_NOTIFICATIONS_SOUNDS_APPEARANCE_AND_INPUT.md",
+      "size_bytes": 2899,
+      "expected_sha256": "7533b7e79f348fa4f6da9e1c92fb974ae58ab9b0ecd24c58d02f82fe915d8e4a",
+      "actual_sha256": "7533b7e79f348fa4f6da9e1c92fb974ae58ab9b0ecd24c58d02f82fe915d8e4a",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/07_SERVER_HOST_AND_OWNER_BOUNDARIES.md",
+      "size_bytes": 2494,
+      "expected_sha256": "4dd964ed11dcc2fe1700294942efea199d79e818fab94cc0d81d2f13338a9889",
+      "actual_sha256": "4dd964ed11dcc2fe1700294942efea199d79e818fab94cc0d81d2f13338a9889",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/08_CONCEPT_COVERAGE_AND_FIXTURES.md",
+      "size_bytes": 2898,
+      "expected_sha256": "4806b255783e111a3fea61efd113c5aadd67152b79824ea90907a62d12b4bf72",
+      "actual_sha256": "4806b255783e111a3fea61efd113c5aadd67152b79824ea90907a62d12b4bf72",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/09_GUI_MOTION_THEME_SLINT_AND_TESTS.md",
+      "size_bytes": 2326,
+      "expected_sha256": "a81bd5fc778f1831bb7c248b92ac6b03be7217690cd54b8d9fa0ae335e2100fd",
+      "actual_sha256": "a81bd5fc778f1831bb7c248b92ac6b03be7217690cd54b8d9fa0ae335e2100fd",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/10_PLAN_COMMAND_WIRING_DRY_IMPACT.md",
+      "size_bytes": 2716,
+      "expected_sha256": "5dc4a0999341f50924b0517b1c5d91c0df24680ba10d072a04519743d1b2d6cc",
+      "actual_sha256": "5dc4a0999341f50924b0517b1c5d91c0df24680ba10d072a04519743d1b2d6cc",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/AUDIT_PROMPT.md",
+      "size_bytes": 2829,
+      "expected_sha256": "5970e036a4d0e144c96f1ecd72b0c28234cb8da5bf92a019683fe5ec074c46cd",
+      "actual_sha256": "5970e036a4d0e144c96f1ecd72b0c28234cb8da5bf92a019683fe5ec074c46cd",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/CANDIDATE_COMMAND_ID_REGISTER.json",
+      "size_bytes": 3397,
+      "expected_sha256": "b10393b4c0947faedf96d28243dc1fc134872d3b40083e77cb6253b2a83df25c",
+      "actual_sha256": "b10393b4c0947faedf96d28243dc1fc134872d3b40083e77cb6253b2a83df25c",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/DECISION_COVERAGE.json",
+      "size_bytes": 54472,
+      "expected_sha256": "befbc67733876d9f03ea2aff526c166692348e629240800fcf7c5925a1dad46d",
+      "actual_sha256": "befbc67733876d9f03ea2aff526c166692348e629240800fcf7c5925a1dad46d",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/IMPACT_REGISTER.template.json",
+      "size_bytes": 465,
+      "expected_sha256": "fe2dcd5d930acfe3e259b92101e651a11aa819f24fd6bd539bb2defdac6fa266",
+      "actual_sha256": "fe2dcd5d930acfe3e259b92101e651a11aa819f24fd6bd539bb2defdac6fa266",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/IMPLEMENTATION_PROMPT.md",
+      "size_bytes": 2861,
+      "expected_sha256": "5a14fbb336241f1a8a7146456b7079af68c67ec8a0aebe9e1ef7ccdfe4d92fa4",
+      "actual_sha256": "5a14fbb336241f1a8a7146456b7079af68c67ec8a0aebe9e1ef7ccdfe4d92fa4",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/MANAGER_COVERAGE_MATRIX.json",
+      "size_bytes": 1915,
+      "expected_sha256": "b04db01fb7ff6ae8ca91deb32488317f4b6345afa7f33f5c924a75da35bfbfa2",
+      "actual_sha256": "b04db01fb7ff6ae8ca91deb32488317f4b6345afa7f33f5c924a75da35bfbfa2",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/PACKET_MANIFEST.json",
+      "size_bytes": 6014,
+      "expected_sha256": "c0816e0db7d4c66b8e137c412f8bb62f7d4f80bbf5e39892da62b6f2906adb13",
+      "actual_sha256": "c0816e0db7d4c66b8e137c412f8bb62f7d4f80bbf5e39892da62b6f2906adb13",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/PROMPT_USAGE.md",
+      "size_bytes": 431,
+      "expected_sha256": "cd9ca7e82d03ef364a7de01bbf2d7b83aae1b52e66a6a66bb2b4ea6169eaff8c",
+      "actual_sha256": "cd9ca7e82d03ef364a7de01bbf2d7b83aae1b52e66a6a66bb2b4ea6169eaff8c",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/REFERENCE_SUPERSESSIONS.md",
+      "size_bytes": 1254,
+      "expected_sha256": "5f3f1c16ed2f41408503cf36ae60be597a5598833fae5d7fcc2fc5bc429ecdb2",
+      "actual_sha256": "5f3f1c16ed2f41408503cf36ae60be597a5598833fae5d7fcc2fc5bc429ecdb2",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/SHARED_PROCESS_RULES.md",
+      "size_bytes": 2216,
+      "expected_sha256": "0ce29d11481ec4f6c9d15e3b69479d64359c017e6ba27226bc657579a8e82d0c",
+      "actual_sha256": "0ce29d11481ec4f6c9d15e3b69479d64359c017e6ba27226bc657579a8e82d0c",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/SOURCE_AND_PRECEDENCE_MAP.md",
+      "size_bytes": 2846,
+      "expected_sha256": "f8983850875fda4edbbefb38415465f87545ff1ad96e1457a6ff375b18cb98d4",
+      "actual_sha256": "f8983850875fda4edbbefb38415465f87545ff1ad96e1457a6ff375b18cb98d4",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/reference/CONCEPT_RULES.md",
+      "size_bytes": 1519,
+      "expected_sha256": "e59011b56f3321462087cfaad8655a078b82621b7a10605256a5171f494721b1",
+      "actual_sha256": "e59011b56f3321462087cfaad8655a078b82621b7a10605256a5171f494721b1",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/reference/EGOLITE_SETTINGS_RETURN.md",
+      "size_bytes": 6633,
+      "expected_sha256": "aff9e52da7e80f291c1559055c66dd31efb279f1108f869ea1b18aaf4bf3a8b3",
+      "actual_sha256": "aff9e52da7e80f291c1559055c66dd31efb279f1108f869ea1b18aaf4bf3a8b3",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/reference/OMP_PROVIDER_CATALOG_REFERENCE.json",
+      "size_bytes": 15660,
+      "expected_sha256": "7204e5fc96c040c6bc206fb98f0913c1546f328ee97766064ba01767cb038051",
+      "actual_sha256": "7204e5fc96c040c6bc206fb98f0913c1546f328ee97766064ba01767cb038051",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/reference/PERFORMANCE_SETTINGS_RETURN.md",
+      "size_bytes": 19800,
+      "expected_sha256": "259883117d9dbb8d1d65f6568a35a3ce38f9fd1e81806fc0485d4863ca3ab6bb",
+      "actual_sha256": "259883117d9dbb8d1d65f6568a35a3ce38f9fd1e81806fc0485d4863ca3ab6bb",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/reference/PM_CROSS_SYSTEM_COMPLETENESS_AUDIT.md",
+      "size_bytes": 33495,
+      "expected_sha256": "f20af36219e1d7d985a831c974d3008920483c3ee01a5696e49b2ac27888e467",
+      "actual_sha256": "f20af36219e1d7d985a831c974d3008920483c3ee01a5696e49b2ac27888e467",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/reference/PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "size_bytes": 4857,
+      "expected_sha256": "9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1",
+      "actual_sha256": "9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/reference/PROVIDER_IDENTIFICATION_INSTALLATION_AUTH_UPDATE_HANDOFF.md",
+      "size_bytes": 32219,
+      "expected_sha256": "ab29a3fbe7846ae9996ba22d8dbfa97d000cdc78b64a9db927834d4d649758ac",
+      "actual_sha256": "ab29a3fbe7846ae9996ba22d8dbfa97d000cdc78b64a9db927834d4d649758ac",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/reference/SERVER_BACKBONE_SETTINGS_RETURN.md",
+      "size_bytes": 6774,
+      "expected_sha256": "ebc2d28314ede35a94b7aa8830a85ada57300b31701ab6f96d12097859dec018",
+      "actual_sha256": "ebc2d28314ede35a94b7aa8830a85ada57300b31701ab6f96d12097859dec018",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/reference/SETTINGS_NAVIGATION_VIDEO_DESCRIPTION.md",
+      "size_bytes": 2706,
+      "expected_sha256": "670a057f6b410a128a7844dd745b25e51cc9dbffc17222ac512a382c01164fc6",
+      "actual_sha256": "670a057f6b410a128a7844dd745b25e51cc9dbffc17222ac512a382c01164fc6",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/reference/T3_MODEL_PICKER_REFERENCE.png",
+      "size_bytes": 82646,
+      "expected_sha256": "76915ba3abb456415fe1acaf0f76dd84750cf2a9b8f1c6e5ff2efa16022c7963",
+      "actual_sha256": "76915ba3abb456415fe1acaf0f76dd84750cf2a9b8f1c6e5ff2efa16022c7963",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/reference/current_model_picker_reference.png",
+      "size_bytes": 82646,
+      "expected_sha256": "76915ba3abb456415fe1acaf0f76dd84750cf2a9b8f1c6e5ff2efa16022c7963",
+      "actual_sha256": "76915ba3abb456415fe1acaf0f76dd84750cf2a9b8f1c6e5ff2efa16022c7963",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/base_packet/reference/settings_navigation_contact_sheet.jpg",
+      "size_bytes": 594207,
+      "expected_sha256": "f22d0c1e6d715b1317d878d3b983367cab5685e1e8d179bf3cac2b1f4e73b717",
+      "actual_sha256": "f22d0c1e6d715b1317d878d3b983367cab5685e1e8d179bf3cac2b1f4e73b717",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/correction_packet/00_READ_ME_FIRST.md",
+      "size_bytes": 1108,
+      "expected_sha256": "ce842cd19acb419c7b6096e1c4b43725a3006d27f0ec4167b3adc0a2d118e073",
+      "actual_sha256": "ce842cd19acb419c7b6096e1c4b43725a3006d27f0ec4167b3adc0a2d118e073",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/correction_packet/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md",
+      "size_bytes": 47350,
+      "expected_sha256": "3df7ad729c5ea1be0df192d19845e42326b5047de03e9f59fbe4918943e0150d",
+      "actual_sha256": "3df7ad729c5ea1be0df192d19845e42326b5047de03e9f59fbe4918943e0150d",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/correction_packet/CORRECTION_GOAL_PROMPT.md",
+      "size_bytes": 2553,
+      "expected_sha256": "16c78a7db4bd54a6696d5a3a2b6a9ae662a051d955123ff7f40406804b7640a8",
+      "actual_sha256": "16c78a7db4bd54a6696d5a3a2b6a9ae662a051d955123ff7f40406804b7640a8",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/correction_packet/CORRECTION_PACKET_MANIFEST.json",
+      "size_bytes": 1220,
+      "expected_sha256": "cf8588d1714ad389fbf80170d5db06d8ae2b024af7430368fbd96734cc159baa",
+      "actual_sha256": "cf8588d1714ad389fbf80170d5db06d8ae2b024af7430368fbd96734cc159baa",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/correction_packet/PROVIDER_CLI_FINAL_ADJUDICATION.md",
+      "size_bytes": 4857,
+      "expected_sha256": "9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1",
+      "actual_sha256": "9425dce7be384f1364df1af712db36eb2159cbc3761816e829175403b8193dc1",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/correction_packet/REFERENCE_REVIEW_AND_REPAIR_REQUIREMENTS.md",
+      "size_bytes": 1130,
+      "expected_sha256": "b559fc38f910d18d454aa7ad149fa6f7d6f7384998b3ac0afe7f2e03bccc64f8",
+      "actual_sha256": "b559fc38f910d18d454aa7ad149fa6f7d6f7384998b3ac0afe7f2e03bccc64f8",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "authority/repo_reference/CONCEPT_RULES.md",
+      "size_bytes": 1978,
+      "expected_sha256": "a4b89d38c828e6e6cdba98a9465e6e0852046eaec636c257c9d1d3ad95725a85",
+      "actual_sha256": "a4b89d38c828e6e6cdba98a9465e6e0852046eaec636c257c9d1d3ad95725a85",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "machine_readable/concept_blueprints.json",
+      "size_bytes": 4513,
+      "expected_sha256": "50899da7871ffa4ab6701669643dab2a0e85c9e3d5465d592847f1e9a1b639b1",
+      "actual_sha256": "50899da7871ffa4ab6701669643dab2a0e85c9e3d5465d592847f1e9a1b639b1",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "machine_readable/manager_coverage_required.json",
+      "size_bytes": 2139,
+      "expected_sha256": "5b65fbe0099265ac959c21cec30576c0345559dad91e9b4ec168d48b88633b66",
+      "actual_sha256": "5b65fbe0099265ac959c21cec30576c0345559dad91e9b4ec168d48b88633b66",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "machine_readable/model_folder_map.json",
+      "size_bytes": 659,
+      "expected_sha256": "73210cfb57b2b00fad78227f3d9fac0f4d7ef607931334b6c55f4091f339f8c2",
+      "actual_sha256": "73210cfb57b2b00fad78227f3d9fac0f4d7ef607931334b6c55f4091f339f8c2",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "machine_readable/repo_baseline.json",
+      "size_bytes": 3104,
+      "expected_sha256": "eb50d2ee34ba552bf56c842634d17f644f74249f507602b318144dd96278d320",
+      "actual_sha256": "eb50d2ee34ba552bf56c842634d17f644f74249f507602b318144dd96278d320",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "machine_readable/search_contract.json",
+      "size_bytes": 1202,
+      "expected_sha256": "a54290ec00454403817d5579a5a784084f912167b90b56a76e110dc02674605b",
+      "actual_sha256": "a54290ec00454403817d5579a5a784084f912167b90b56a76e110dc02674605b",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "machine_readable/supersessions.json",
+      "size_bytes": 1304,
+      "expected_sha256": "6b3984ad7d91f453791c48fd4d8bd7985a9ea9b8013a902f3055ffd53583bcd3",
+      "actual_sha256": "6b3984ad7d91f453791c48fd4d8bd7985a9ea9b8013a902f3055ffd53583bcd3",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "machine_readable/test_matrix.json",
+      "size_bytes": 834,
+      "expected_sha256": "45b9e414ee50c437060b7e531889e2adb14111dd130060bd37a5dcee8d356190",
+      "actual_sha256": "45b9e414ee50c437060b7e531889e2adb14111dd130060bd37a5dcee8d356190",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "reference/selected_concepts/01_A1_Directory_Take_1_LAYOUT_RECONSTRUCTION.png",
+      "size_bytes": 213730,
+      "expected_sha256": "b679df3e6f583b2226e29d983a63037c0491377a09fe26637de1d88b229311c0",
+      "actual_sha256": "b679df3e6f583b2226e29d983a63037c0491377a09fe26637de1d88b229311c0",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "reference/selected_concepts/02_A1_Directory_Take_2.png",
+      "size_bytes": 1637373,
+      "expected_sha256": "6850698121d2948ad1defc7744738083fa276be823167b82e9c447ec561b0d28",
+      "actual_sha256": "6850698121d2948ad1defc7744738083fa276be823167b82e9c447ec561b0d28",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "reference/selected_concepts/03_A2_Compendium_Workspace_Take_1.png",
+      "size_bytes": 1370307,
+      "expected_sha256": "7dcc2caaa8758da8b966d9fe64821f653522d873e3f35089297188a77a38643b",
+      "actual_sha256": "7dcc2caaa8758da8b966d9fe64821f653522d873e3f35089297188a77a38643b",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "reference/selected_concepts/04_A1_Directory_Take_3.png",
+      "size_bytes": 1212778,
+      "expected_sha256": "d372331eef77095bc3c1420fdbcb98f2ee12e3170628f472f20d5e92ef986920",
+      "actual_sha256": "d372331eef77095bc3c1420fdbcb98f2ee12e3170628f472f20d5e92ef986920",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "reference/selected_concepts/05_Tome_Tabs_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+      "size_bytes": 3656533,
+      "expected_sha256": "4b9b5d30be4f55d236504216c4c23f7e6f4d40dfa2a18921ce762c727daf6450",
+      "actual_sha256": "4b9b5d30be4f55d236504216c4c23f7e6f4d40dfa2a18921ce762c727daf6450",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "reference/selected_concepts/06_Command_Suite_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+      "size_bytes": 2656116,
+      "expected_sha256": "3da8a5bd4aee9dd5d1fad85b108a4d561d343e77435cd28a0361fb46211afeee",
+      "actual_sha256": "3da8a5bd4aee9dd5d1fad85b108a4d561d343e77435cd28a0361fb46211afeee",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "reference/selected_concepts/07_Tabbed_Organizer_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+      "size_bytes": 3216207,
+      "expected_sha256": "9ffc03dcdfc9b4c9d2d8d3de9a1f26e3570bc5e25ba078d63e68841654737f61",
+      "actual_sha256": "9ffc03dcdfc9b4c9d2d8d3de9a1f26e3570bc5e25ba078d63e68841654737f61",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "reference/selected_concepts/README.md",
+      "size_bytes": 1265,
+      "expected_sha256": "e190da5be87d3ccf259985dd60f76263a055ff7d2ab3f8f85c76070edc67dd4d",
+      "actual_sha256": "e190da5be87d3ccf259985dd60f76263a055ff7d2ab3f8f85c76070edc67dd4d",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "tools/__pycache__/validate_seven_new_concepts.cpython-313.pyc",
+      "size_bytes": 6486,
+      "expected_sha256": "6121bfcd588b05d030e7e16f6b91d327aee2aaa928e93a6e691f9bbb112992cc",
+      "actual_sha256": "6121bfcd588b05d030e7e16f6b91d327aee2aaa928e93a6e691f9bbb112992cc",
+      "status": "pass",
+      "custody_read": true
+    },
+    {
+      "path": "tools/validate_seven_new_concepts.py",
+      "size_bytes": 4653,
+      "expected_sha256": "bc18722043099b4ab0e5612f117a026a684b46cf3181d18a47eeaba5ecfb5f46",
+      "actual_sha256": "bc18722043099b4ab0e5612f117a026a684b46cf3181d18a47eeaba5ecfb5f46",
+      "status": "pass",
+      "custody_read": true
+    }
+  ],
+  "images_interpreted": [
+    {
+      "concept_id": "concept-05-directory-take-1",
+      "path": "reference/selected_concepts/01_A1_Directory_Take_1_LAYOUT_RECONSTRUCTION.png",
+      "sha256": "b679df3e6f583b2226e29d983a63037c0491377a09fe26637de1d88b229311c0",
+      "size_bytes": 213730,
+      "width": 1800,
+      "height": 1180,
+      "mode": "RGB",
+      "authority": "layout_hierarchy_navigation_only",
+      "used_for": "layout, hierarchy, navigation geometry, density, and motion metaphor only; not pixel copy or settings/data authority",
+      "retheme_required": false,
+      "implementation": "Meridian Directory / Take 1"
+    },
+    {
+      "concept_id": "concept-06-directory-take-2",
+      "path": "reference/selected_concepts/02_A1_Directory_Take_2.png",
+      "sha256": "6850698121d2948ad1defc7744738083fa276be823167b82e9c447ec561b0d28",
+      "size_bytes": 1637373,
+      "width": 1448,
+      "height": 1086,
+      "mode": "RGB",
+      "authority": "layout_hierarchy_navigation_only",
+      "used_for": "layout, hierarchy, navigation geometry, density, and motion metaphor only; not pixel copy or settings/data authority",
+      "retheme_required": false,
+      "implementation": "Editorial Directory / Take 2"
+    },
+    {
+      "concept_id": "concept-07-compendium-workspace",
+      "path": "reference/selected_concepts/03_A2_Compendium_Workspace_Take_1.png",
+      "sha256": "7dcc2caaa8758da8b966d9fe64821f653522d873e3f35089297188a77a38643b",
+      "size_bytes": 1370307,
+      "width": 1448,
+      "height": 1086,
+      "mode": "RGB",
+      "authority": "layout_hierarchy_navigation_only",
+      "used_for": "layout, hierarchy, navigation geometry, density, and motion metaphor only; not pixel copy or settings/data authority",
+      "retheme_required": false,
+      "implementation": "Atlas Compendium Workspace"
+    },
+    {
+      "concept_id": "concept-08-directory-take-3",
+      "path": "reference/selected_concepts/04_A1_Directory_Take_3.png",
+      "sha256": "d372331eef77095bc3c1420fdbcb98f2ee12e3170628f472f20d5e92ef986920",
+      "size_bytes": 1212778,
+      "width": 1448,
+      "height": 1086,
+      "mode": "RGB",
+      "authority": "layout_hierarchy_navigation_only",
+      "used_for": "layout, hierarchy, navigation geometry, density, and motion metaphor only; not pixel copy or settings/data authority",
+      "retheme_required": false,
+      "implementation": "Horizon Directory / Take 3"
+    },
+    {
+      "concept_id": "concept-09-tome-tabs",
+      "path": "reference/selected_concepts/05_Tome_Tabs_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+      "sha256": "4b9b5d30be4f55d236504216c4c23f7e6f4d40dfa2a18921ce762c727daf6450",
+      "size_bytes": 3656533,
+      "width": 1448,
+      "height": 1086,
+      "mode": "RGBA",
+      "authority": "layout_only_retheme_required",
+      "used_for": "layout, hierarchy, navigation geometry, density, and motion metaphor only; not pixel copy or settings/data authority",
+      "retheme_required": true,
+      "implementation": "Chapter Tabs"
+    },
+    {
+      "concept_id": "concept-10-command-suite",
+      "path": "reference/selected_concepts/06_Command_Suite_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+      "sha256": "3da8a5bd4aee9dd5d1fad85b108a4d561d343e77435cd28a0361fb46211afeee",
+      "size_bytes": 2656116,
+      "width": 1448,
+      "height": 1086,
+      "mode": "RGBA",
+      "authority": "layout_only_retheme_required",
+      "used_for": "layout, hierarchy, navigation geometry, density, and motion metaphor only; not pixel copy or settings/data authority",
+      "retheme_required": true,
+      "implementation": "Command Suite"
+    },
+    {
+      "concept_id": "concept-11-tabbed-organizer",
+      "path": "reference/selected_concepts/07_Tabbed_Organizer_LAYOUT_ONLY_RETHEME_REQUIRED.png",
+      "sha256": "9ffc03dcdfc9b4c9d2d8d3de9a1f26e3570bc5e25ba078d63e68841654737f61",
+      "size_bytes": 3216207,
+      "width": 1448,
+      "height": 1086,
+      "mode": "RGBA",
+      "authority": "layout_only_retheme_required",
+      "used_for": "layout, hierarchy, navigation geometry, density, and motion metaphor only; not pixel copy or settings/data authority",
+      "retheme_required": true,
+      "implementation": "Layered Tab Organizer"
+    }
+  ],
+  "supersessions_applied": [
+    {
+      "old_rule": "build four concepts",
+      "new_rule": "add seven new concepts numbered 05 through 11"
+    },
+    {
+      "old_rule": "repair or refine existing concepts when omissions are found",
+      "new_rule": "concepts 01 through 04 are frozen; omissions are corrected only in new concepts and their new reports"
+    },
+    {
+      "old_rule": "manager coverage may be collective across concepts and shared_grammar may count",
+      "new_rule": "every new concept individually demonstrates every non-deferred manager; shared_grammar is forbidden as coverage"
+    },
+    {
+      "old_rule": "editable global/project/goal/host scope or general project inheritance may be shown",
+      "new_rule": "all editable settings apply to the current Project; no general scope selector, inheritance, linked settings, or profiles"
+    },
+    {
+      "old_rule": "reference visual materials may be copied",
+      "new_rule": "Tome Tabs, Command Suite, and Tabbed Organizer are layout-only and must be rethemed to Puppet Master"
+    },
+    {
+      "old_rule": "search may route through a grouped list using visual position",
+      "new_rule": "search routes only by immutable result ID and exact destination object"
+    }
+  ],
+  "legacy_assumptions_superseded": [
+    "build four concepts",
+    "repair or refine existing concepts when omissions are found",
+    "manager coverage may be collective across concepts and shared_grammar may count",
+    "editable global/project/goal/host scope or general project inheritance may be shown",
+    "reference visual materials may be copied",
+    "search may route through a grouped list using visual position"
+  ],
+  "target_truth": {
+    "settings_inventory_schema_id": "pm.settings_inventory.v1",
+    "settings_inventory_schema_version": "1.0.0",
+    "settings_count": 828,
+    "category_count": 12,
+    "known_stale_scope_note": "Inventory contains legacy scope metadata such as global; new concept UX is current-Project-only and must record future schema impact without editing canon.",
+    "new_ui_projection": "Every editable value is for the current Project; legacy inventory scope metadata is not exposed as an editing selector."
+  },
+  "isolation_evidence": {
+    "no_iframe": true,
+    "no_href_or_src_to_concepts_01_04": true,
+    "no_foreign_visible_renderer": true,
+    "shared_headless_only": "_seven/lib/pmv2.js plus inventory/search/state contracts; every visible Home, navigation, manager, search dropdown, narrow transformation, and motion layer is concept-specific.",
+    "frozen_01_04_hash_baseline": "_seven/frozen-baseline.json",
+    "frozen_files_checked": 49,
+    "frozen_mismatches": 0,
+    "same_page_manager_routes_exercised": 329,
+    "same_page_manager_routes_passed": 329
+  },
+  "affected_concepts": [
+    "concept-05-directory-take-1",
+    "concept-06-directory-take-2",
+    "concept-07-compendium-workspace",
+    "concept-08-directory-take-3",
+    "concept-09-tome-tabs",
+    "concept-10-command-suite",
+    "concept-11-tabbed-organizer"
+  ],
+  "audit_repairs": [
+    {
+      "id": "AUD-001",
+      "severity": "major",
+      "status": "repaired",
+      "finding": "Copy workflow retained stale scope/inheritance terminology that could imply an ongoing cross-project relationship.",
+      "repair": "Changed the workflow to a Destination-oriented, current-Project-only one-time copy contract and explicit independent-project wording.",
+      "evidence": [
+        "_seven/lib/pmv2.js",
+        "concept-05-directory-take-1/concept-05-directory-take-1.js through concept-11-tabbed-organizer/concept-11-tabbed-organizer.js"
+      ]
+    },
+    {
+      "id": "AUD-002",
+      "severity": "major",
+      "status": "repaired",
+      "finding": "The expanded gallery initially omitted the six authored review-width presets expected by the original render contract.",
+      "repair": "Restored exact 760/900/1280/1700/2200/2500 width controls and functional preview-width application.",
+      "evidence": [
+        "index.html",
+        "verify/render-contract.test.mjs"
+      ]
+    },
+    {
+      "id": "AUD-003",
+      "severity": "major",
+      "status": "repaired",
+      "finding": "Aggregate candidate-command summaries omitted cmd.settings.search.pick_result although detailed command census rows classified it as a new candidate.",
+      "repair": "Added cmd.settings.search.pick_result to new_candidates in all seven candidate-command-delta.json files.",
+      "evidence": [
+        "concept-05-directory-take-1/candidate-command-delta.json",
+        "concept-06-directory-take-2/candidate-command-delta.json",
+        "concept-07-compendium-workspace/candidate-command-delta.json",
+        "concept-08-directory-take-3/candidate-command-delta.json",
+        "concept-09-tome-tabs/candidate-command-delta.json",
+        "concept-10-command-suite/candidate-command-delta.json",
+        "concept-11-tabbed-organizer/candidate-command-delta.json"
+      ]
+    }
+  ],
+  "test_evidence": {
+    "qa_index": "_seven/SEVEN_NEW_CONCEPTS_QA.json",
+    "summary": {
+      "concepts_total": 7,
+      "concepts_pass": 7,
+      "inventory_settings_per_concept": 828,
+      "inventory_categories_per_concept": 12,
+      "product_index_rows_per_concept": 1007,
+      "synthetic_stress_rows_per_concept": 2000,
+      "search_cases_total": 112,
+      "search_cases_pass": 112,
+      "manager_routes_total": 329,
+      "manager_routes_pass": 329,
+      "coverage_families_total": 357,
+      "coverage_demonstrated_total": 294,
+      "coverage_deferred_total": 63,
+      "coverage_shared_grammar_total": 0,
+      "coverage_missing_total": 0,
+      "theme_width_cells_total": 336,
+      "theme_width_cells_pass": 336,
+      "copy_flows_total": 7,
+      "copy_flows_pass": 7,
+      "persistence_total": 7,
+      "persistence_pass": 7,
+      "synthetic_excluded_total": 7,
+      "synthetic_excluded_pass": 7,
+      "frozen_files_checked": 49,
+      "frozen_mismatches": 0
+    },
+    "themes": [
+      "Friendly Dark",
+      "Friendly Light",
+      "Glass Dark",
+      "Glass Light",
+      "Retro Dark",
+      "Retro Light",
+      "Basic Dark",
+      "Basic Light"
+    ],
+    "widths": [
+      760,
+      900,
+      1280,
+      1700,
+      2200,
+      2500
+    ],
+    "search_contract": {
+      "schema_id": "pm.settings_bakeoff.universal_search_contract.v2",
+      "placement": "prominent_on_home_and_reachable_throughout_settings",
+      "presentation": "dropdown_anchored_below_field",
+      "result_types": [
+        "setting",
+        "manager",
+        "managed_object",
+        "action",
+        "setup_or_repair_workflow",
+        "diagnostic_or_read_only_status",
+        "unavailable_capability",
+        "intentional_help_result"
+      ],
+      "required_result_fields": [
+        "immutable_result_id",
+        "human_label",
+        "result_type",
+        "complete_settings_path",
+        "destination_object",
+        "availability_or_reason_when_useful"
+      ],
+      "route_steps": [
+        "load_domain",
+        "load_page",
+        "open_manager_if_applicable",
+        "select_exact_object",
+        "select_subpage_or_section",
+        "scroll_exact_row",
+        "focus_destination",
+        "calm_non_flashing_highlight",
+        "preserve_back_to_query_and_selected_result"
+      ],
+      "forbidden_routing": [
+        "visual_array_index",
+        "grouped_list_position",
+        "display_label_only"
+      ],
+      "required_cases": [
+        "grouped_results",
+        "duplicate_labels",
+        "typo_fuzzy_match",
+        "unavailable_result",
+        "manager_object",
+        "deep_setting_row",
+        "back_restores_query"
+      ]
+    }
+  },
+  "limitations": [
+    "The concepts are deterministic HTML/Chromium evidence, not a native Slint 1.17.1 implementation certification.",
+    "No physical Ivy Bridge-era hardware or equivalent old-hardware certification was performed.",
+    "The complete Chromium interaction run preceded a tooling-container restart; the target was deterministically reconstructed from the same source and revalidated with hashes, static checks, Node tests, and packet/ConceptHub validators."
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "schema_id": "pm.settings_concept_impact_register.v1",
+  "concept_id": "concept-10-command-suite",
+  "concept_name": "Conductor",
+  "model": "fable",
+  "generated": "2026-08-20",
+  "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+  "plan_owner_impacts": [
+    {
+      "owner": "Plans/FinalGUISpec.md",
+      "kind": "extends",
+      "evidence": "Conductor proves a keyboard-first multi-pane Settings composition: a persistent numbered command index, left-to-right drill panes (index / category / rows-or-manager), a persistent breadcrumb path bar, a key-hint status strip, and an exact setting editor that opens beneath its context row instead of a modal. The spec should adopt the explicit pane-count state machine (3/2/1 panes by width) as a recognized narrow model."
+    },
+    {
+      "owner": "Plans/settings_inventory.json",
+      "kind": "consumes",
+      "evidence": "All 828 rows render from PM2_INVENTORY via store.rowsFor/resolveRow; the concept adds no rows and hides none. Legacy scope metadata is surfaced only inside the editor's Details drawer as impact-analysis prose, never as a scope control."
+    },
+    {
+      "owner": "Plans/UI_Command_Catalog.md",
+      "kind": "extends",
+      "evidence": "Keyboard grammar demonstrated end to end: ArrowUp/Down move within a pane, Enter/ArrowRight drill, ArrowLeft/Backspace retreat one Settings level, Ctrl/Cmd+K focuses search, Escape runs the popup-to-Home ladder. Candidate command ids are registered in candidate-command-delta.json; none are minted as canon."
+    },
+    {
+      "owner": "Plans/Permissions_System.md",
+      "kind": "consumes",
+      "evidence": "Permissions & FileSafe renders through the shared m.permissions view model (sections projected into the Conductor Q/A grid and compact tables); managed rows carry origin in the row-state note and the Details drawer."
+    },
+    {
+      "owner": "Plans/CLI_Bridged_Providers.md",
+      "kind": "consumes",
+      "evidence": "Installation rosters show selected/shadowed/manual-only flags with their honest notes, ask-first updates run through the install-update trigger, verification-failed history renders in the provider Activity log, and the Cursor CLI setup tab shows official source + exact host choice with sign-in as a separate step. All provider state strings come from PMProvider resolvers."
+    },
+    {
+      "owner": "Plans/Multi-Account.md",
+      "kind": "consumes",
+      "evidence": "Provider account rosters render enabled/priority/sticky/use-next metadata inside the roster detail drawer; sign-in ownership comes from resolveAuthBoundary and is shown as the accounts-section note."
+    },
+    {
+      "owner": "Plans/storage-plan.md",
+      "kind": "consumes",
+      "evidence": "m.hosting renders as a reserved owner shell with the honest hosted-on card; no storage actions are fabricated."
+    },
+    {
+      "owner": "Settings copy/import lifecycle owner",
+      "kind": "extends",
+      "evidence": "The copy transaction is presented as four advancing panels (source / categories / preview / confirm+receipt) with a typed COPY confirm, truthful staged op phases (restore point, determinate apply, verify), and a receipt whose rollback genuinely restores via PM2.copy.rollback. One-time language is explicit in the intro and the receipt; no sync affordance exists."
+    },
+    {
+      "owner": "Plans/Models_System.md",
+      "kind": "consumes",
+      "evidence": "Model tables render the shared columns (context, modes, tools, route) with requested-vs-effective routing surfaced in the Routing & fallback section; capability words are never derived from model names in this concept."
+    }
+  ],
+  "settings_inventory_impacts": [
+    {
+      "id": "legacyScope metadata",
+      "kind": "projection",
+      "note": "legacyScope arrays are rendered only as a human sentence in the editor Details drawer ('Before the project-only model this lived at ... scope'). Candidate impact: the inventory should eventually drop or re-key this metadata once the project-only migration is canonized."
+    },
+    {
+      "id": "type:action rows",
+      "kind": "observation",
+      "note": "69 action-typed rows render as Run buttons returning honest simulated receipts. Several duplicate manager actions (for example doctor checks); a future inventory pass could cross-link them to their owning manager id so concepts can route instead of simulating."
+    },
+    {
+      "id": "collection-valued rows (list/keyvalue)",
+      "kind": "observation",
+      "note": "64 list/keyvalue rows show their current entries read-only in the editor with an honest note that the collection is managed in its owning surface. The inventory could carry an owningManager hint to make that jump explicit."
+    }
+  ],
+  "concept_local_state": true,
+  "note": "Everything above is a concept-register observation. Canon is never minted here; the implementation audit adjudicates."
+}

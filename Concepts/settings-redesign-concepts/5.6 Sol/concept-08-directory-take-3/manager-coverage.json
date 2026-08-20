@@ -1,0 +1,273 @@
+{
+  "schema_id": "pm.settings_concept_manager_coverage.v2",
+  "concept_id": "concept-08-directory-take-3",
+  "model": "5.6 Sol",
+  "packet": "PM_Settings_Seven_New_Concepts_Bakeoff_2026-08-18",
+  "groups": [
+    {
+      "id": "required_demonstrated",
+      "managers": [
+        {
+          "name": "Settings Home",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Settings Search",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Settings Workspace",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Ordinary setting grammar",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Provider / Account / Model / Installation",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Context & Instructions",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Memory",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Personas",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Goal & Automation",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Crew",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Permissions & FileSafe",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Back Seat Driver",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Notifications & Sounds",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Sound Library / Uploads / Packs",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Appearance / themes / fonts / motion",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Spellcheck & Dictionaries",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Desktop / Tray / Window",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Teacher / Help",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Doctor",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "File Manager / Editor",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Terminal",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "LSP",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Formatters",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Commands & Shortcuts",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "MCP",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Skills",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Plugins",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Tools",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Testing & Debug",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Storage & Retention",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Backup & Restore",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Settings Lifecycle",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "History & Sessions",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Runtime Artifacts / Project Outputs",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Source Control / Worktrees",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "GitHub Actions",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Containers & Registries",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Web / Search / Fetch / Crawl",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Project Search Index",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Workspace Cleanup",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "Media & Output",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        },
+        {
+          "name": "DRY Method visible state where exposed",
+          "classification": "demonstrated",
+          "note": "Concept-native surface using PMv2 headless semantics."
+        }
+      ]
+    },
+    {
+      "id": "deferred_named_owner",
+      "managers": [
+        {
+          "name": "Product Onboarding",
+          "classification": "deferred_named_owner",
+          "note": "Reachable insertion; owner Onboarding module; return via Back/Close; no fabricated backend."
+        },
+        {
+          "name": "Installation / Deployment",
+          "classification": "deferred_named_owner",
+          "note": "Reachable insertion; owner Installer / Deployment module; return via Back/Close; no fabricated backend."
+        },
+        {
+          "name": "Server Claim / Bootstrap",
+          "classification": "deferred_named_owner",
+          "note": "Reachable insertion; owner Server backbone; return via Back/Close; no fabricated backend."
+        },
+        {
+          "name": "Servers / Execution Hosts / Clients",
+          "classification": "deferred_named_owner",
+          "note": "Reachable insertion; owner Server backbone; return via Back/Close; no fabricated backend."
+        },
+        {
+          "name": "Project Hosting & Files",
+          "classification": "deferred_named_owner",
+          "note": "Reachable insertion; owner Project Hosting module; return via Back/Close; no fabricated backend."
+        },
+        {
+          "name": "Remote Access",
+          "classification": "deferred_named_owner",
+          "note": "Reachable insertion; owner Remote Access module; return via Back/Close; no fabricated backend."
+        },
+        {
+          "name": "Project Sync / Move",
+          "classification": "deferred_named_owner",
+          "note": "Reachable insertion; owner Project Sync module; return via Back/Close; no fabricated backend."
+        },
+        {
+          "name": "Puppet Master application/content updates",
+          "classification": "deferred_named_owner",
+          "note": "Reachable insertion; owner Update owner; return via Back/Close; no fabricated backend."
+        },
+        {
+          "name": "Full Server backup owner flow",
+          "classification": "deferred_named_owner",
+          "note": "Reachable insertion; owner Server backup owner; return via Back/Close; no fabricated backend."
+        }
+      ]
+    }
+  ]
+}

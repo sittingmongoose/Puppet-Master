@@ -1,57 +1,11 @@
-<!doctype html>
-<html lang="en" data-theme="friendly-dark" data-reduced-motion="0">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <link rel="icon" href="data:,">
-  <title>5.6 Sol — Puppet Master Settings Bakeoff Workspace</title>
-  <link rel="stylesheet" href="_shared/themes.css">
-  <link rel="stylesheet" href="styles/gallery.css">
-</head>
-<body>
-  <header class="gallery-head">
-    <div>
-      <span class="gallery-kicker">Puppet Master Settings redesign</span>
-      <h1 data-concept-model="5.6 Sol">5.6 Sol — Four-concept bakeoff</h1>
-      <p>One normalized fixture, four different ways to find, understand, and manage Settings. Controls below broadcast the same review state to every live concept.</p>
-    </div>
-    <span class="gallery-model" data-concept-model="5.6 Sol">5.6 Sol</span>
-  </header>
-
-  <form class="review-controls" aria-label="Shared concept review controls">
-    <label>Scenario<select name="scenario"><option value="normal">Normal home</option><option value="attention">Needs attention</option><option value="calm">Calm state</option><option value="setup">Setup in progress</option><option value="loading">Loading state</option><option value="refreshing">Refreshing catalogues</option><option value="degraded">Degraded with last-known-good data</option><option value="managed">Managed workspace</option><option value="unavailable">Unavailable dependency</option><option value="error">Error state</option><option value="usage-exhausted">Included usage exhausted</option><option value="effective-difference">Requested and effective values differ</option></select></label>
-    <label>Theme<select name="theme"><option value="friendly-dark">Friendly Dark</option><option value="friendly-light">Friendly Light</option><option value="glass-dark">Glass Dark</option><option value="glass-light">Glass Light</option><option value="retro-dark">Retro Dark</option><option value="retro-light">Retro Light</option><option value="basic-dark">Basic Dark</option><option value="basic-light">Basic Light</option></select></label>
-    <label class="width-control">Page width <output name="widthOutput">1280 px</output><input name="width" type="range" min="760" max="2500" step="10" value="1280" list="widthPresets"><datalist id="widthPresets"><option value="760"><option value="900"><option value="1280"><option value="1700"><option value="2200"><option value="2500"></datalist></label>
-    <label class="check-control"><input name="rail" type="checkbox" checked> Project rail</label>
-    <label class="check-control"><input name="chat" type="checkbox"> Assistant panel</label>
-    <label class="check-control"><input name="reduced" type="checkbox"> Reduced motion</label>
-  </form>
-
-  <main class="gallery-grid">
-    <article class="concept-card">
-      <header><div><span>Directory thesis</span><h2>5.6 Sol — Index House</h2></div><a href="concept-01-index-house.html" target="_blank" rel="noopener">Open standalone</a></header>
-      <p>Stable addresses, a room index, a continuous document, and an evidence inspector.</p>
-      <div class="frame-stage"><iframe title="5.6 Sol — Index House live concept" src="concept-01-index-house.html"></iframe></div>
-    </article>
-    <article class="concept-card">
-      <header><div><span>Operational thesis</span><h2>5.6 Sol — Switchboard</h2></div><a href="concept-02-switchboard.html" target="_blank" rel="noopener">Open standalone</a></header>
-      <p>Readiness signals, destination bays, operating stations, and effective-state trays.</p>
-      <div class="frame-stage"><iframe title="5.6 Sol — Switchboard live concept" src="concept-02-switchboard.html"></iframe></div>
-    </article>
-    <article class="concept-card">
-      <header><div><span>Goal-oriented thesis</span><h2>5.6 Sol — Wayfinder</h2></div><a href="concept-03-wayfinder.html" target="_blank" rel="noopener">Open standalone</a></header>
-      <p>Human outcomes become routes with checkpoints, expert branches, and current-location cues.</p>
-      <div class="frame-stage"><iframe title="5.6 Sol — Wayfinder live concept" src="concept-03-wayfinder.html"></iframe></div>
-    </article>
-    <article class="concept-card">
-      <header><div><span>Reference thesis</span><h2>5.6 Sol — Ledger</h2></div><a href="concept-04-ledger.html" target="_blank" rel="noopener">Open standalone</a></header>
-      <p>A dense register, explicit reference columns, chapter minimap, and comparative manager views.</p>
-      <div class="frame-stage"><iframe title="5.6 Sol — Ledger live concept" src="concept-04-ledger.html"></iframe></div>
-    </article>
-  </main>
-
-  <footer class="gallery-foot">5.6 Sol · Four unranked interactive concepts · Simulated external actions are labeled in-product</footer>
-  <script src="_shared/concept-hub-bridge.js"></script>
-  <script type="module" src="_shared/gallery.mjs"></script>
-</body>
-</html>
+<!doctype html><html lang="en" data-theme="friendly-dark" data-motion="full" data-concept-model="5.6 Sol"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="icon" href="data:,"> <title>5.6 Sol — Puppet Master Settings Bakeoff Workspace</title><link rel="stylesheet" href="_seven/css/pm-themes.css"><link rel="stylesheet" href="_seven/css/pm-shell.css"><style>.sol-gallery{height:100%;overflow:auto;background:var(--pm-bg);color:var(--pm-ink);padding:clamp(24px,4vw,58px);font-family:var(--pm-font)}.sol-gallery-inner{max-width:1480px;margin:auto}.sol-gallery-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:start;padding-bottom:24px;border-bottom:1px solid var(--pm-line)}.sol-gallery-kicker,.sol-gallery-num{color:var(--pm-ink-faint);font-size:11px;font-weight:750;letter-spacing:.12em;text-transform:uppercase}.sol-gallery h1{margin:8px 0;font-size:clamp(30px,4vw,56px);letter-spacing:-.035em;line-height:1.02}.sol-gallery-lede{max-width:76ch;margin:0;color:var(--pm-ink-dim);font-size:14px;line-height:1.65}.sol-gallery-meta{display:grid;justify-items:end;gap:10px}.sol-gallery-model{border:1px solid var(--pm-line);border-radius:999px;padding:7px 11px;background:var(--pm-bg-raised);color:var(--pm-accent);font-size:12px}.sol-gallery-review{display:grid;gap:5px;color:var(--pm-ink-faint);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}.sol-gallery-review select{min-width:156px;border:1px solid var(--pm-line);border-radius:var(--pm-radius-m);background:var(--pm-bg-raised);color:var(--pm-ink);padding:8px 30px 8px 10px;font:inherit;letter-spacing:0;text-transform:none}.sol-gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px;margin-top:24px}.sol-gallery-card{min-width:0;display:flex;flex-direction:column;gap:8px;padding:18px;border:1px solid var(--pm-line);border-radius:var(--pm-radius-l);background:var(--pm-bg-raised);box-shadow:var(--pm-shadow-1);transition:transform calc(170ms * var(--pm-motion-scale,1)) ease,border-color calc(170ms * var(--pm-motion-scale,1)) ease}.sol-gallery-card:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--pm-accent) 42%,var(--pm-line))}.sol-gallery-card h2{margin:0;font-size:18px;line-height:1.2}.sol-gallery-card p{flex:1;margin:0;color:var(--pm-ink-dim);font-size:13px;line-height:1.55}.sol-gallery-card a{width:max-content;color:var(--pm-accent);font-size:13px;font-weight:700;text-decoration:none}.sol-gallery-card a:hover{text-decoration:underline}.sol-gallery-foot{margin-top:28px;padding-top:18px;border-top:1px solid var(--pm-line);color:var(--pm-ink-faint);font-size:12px}@media(max-width:760px){.sol-gallery-head{grid-template-columns:1fr}.sol-gallery-meta{justify-items:start}.sol-gallery-model{justify-self:start}}</style></head><body><main class="sol-gallery"><div class="sol-gallery-inner"><header class="sol-gallery-head"><div><div class="sol-gallery-kicker">Puppet Master Settings redesign</div><h1>Eleven complete Settings concepts</h1><p class="sol-gallery-lede">The original four concepts remain frozen. Concepts 05–11 add seven independent systems built from the selected directory, compendium, chapter-tab, command-suite, and organizer layouts. Each new concept indexes all 828 current settings, owns its managers, and keeps every edit on this project.</p></div><div class="sol-gallery-meta"><span class="sol-gallery-model" data-concept-model="5.6 Sol">5.6 Sol</span><label class="sol-gallery-review">Review width<select id="solReviewWidth" aria-label="Review width"><option value="760">760 px</option><option value="900">900 px</option><option value="1280">1280 px</option><option value="1700">1700 px</option><option value="2200">2200 px</option><option value="2500">2500 px</option></select></label></div></header><section class="sol-gallery-grid" aria-label="Settings concepts"><article class="sol-gallery-card"><div class="sol-gallery-num">Concept 01</div><h2>Index House</h2><p>Editorial directory and evidence room</p><a href="concept-01-index-house.html">Open standalone <span aria-hidden="true">→</span></a></article>
+<article class="sol-gallery-card"><div class="sol-gallery-num">Concept 02</div><h2>Switchboard</h2><p>Operational readiness and destination bays</p><a href="concept-02-switchboard.html">Open standalone <span aria-hidden="true">→</span></a></article>
+<article class="sol-gallery-card"><div class="sol-gallery-num">Concept 03</div><h2>Wayfinder</h2><p>Goal-oriented routes and checkpoints</p><a href="concept-03-wayfinder.html">Open standalone <span aria-hidden="true">→</span></a></article>
+<article class="sol-gallery-card"><div class="sol-gallery-num">Concept 04</div><h2>Ledger</h2><p>Dense reference register and comparative views</p><a href="concept-04-ledger.html">Open standalone <span aria-hidden="true">→</span></a></article>
+<article class="sol-gallery-card"><div class="sol-gallery-num">Concept 05</div><h2>Meridian Directory / Take 1</h2><p>Search, compact attention, and a precise two-column destination directory.</p><a href="concept-05-directory-take-1.html">Open standalone <span aria-hidden="true">→</span></a></article>
+<article class="sol-gallery-card"><div class="sol-gallery-num">Concept 06</div><h2>Editorial Directory / Take 2</h2><p>A calm single-column index opening into a stable rail and restrained detail sheet.</p><a href="concept-06-directory-take-2.html">Open standalone <span aria-hidden="true">→</span></a></article>
+<article class="sol-gallery-card"><div class="sol-gallery-num">Concept 07</div><h2>Atlas Compendium Workspace</h2><p>A first-class faceted All Settings catalogue with domain and manager context.</p><a href="concept-07-compendium-workspace.html">Open standalone <span aria-hidden="true">→</span></a></article>
+<article class="sol-gallery-card"><div class="sol-gallery-num">Concept 08</div><h2>Horizon Directory / Take 3</h2><p>A bright spacious directory with larger destinations and provider quick actions.</p><a href="concept-08-directory-take-3.html">Open standalone <span aria-hidden="true">→</span></a></article>
+<article class="sol-gallery-card"><div class="sol-gallery-num">Concept 09</div><h2>Chapter Tabs</h2><p>A modern layered page canvas with persistent chapter tabs and no novelty skin.</p><a href="concept-09-tome-tabs.html">Open standalone <span aria-hidden="true">→</span></a></article>
+<article class="sol-gallery-card"><div class="sol-gallery-num">Concept 10</div><h2>Command Suite</h2><p>A keyboard-first human-language multi-pane drill-down, not a terminal.</p><a href="concept-10-command-suite.html">Open standalone <span aria-hidden="true">→</span></a></article>
+<article class="sol-gallery-card"><div class="sol-gallery-num">Concept 11</div><h2>Layered Tab Organizer</h2><p>Modern category tabs and stacked sheets without paper or binder skeuomorphism.</p><a href="concept-11-tabbed-organizer.html">Open standalone <span aria-hidden="true">→</span></a></article></section><footer class="sol-gallery-foot">5.6 Sol · Eleven unranked interactive concepts · Concepts 05–11 use actual inventory plus isolated synthetic stress data.</footer></div></main><script src="_seven/lib/pm-bridge.js"></script><script>(()=>{const control=document.getElementById("solReviewWidth");const inner=document.querySelector(".sol-gallery-inner");if(!control||!inner)return;control.value="1280";const apply=()=>{inner.style.width=`min(100%, ${control.value}px)`;inner.dataset.reviewWidth=control.value};control.addEventListener("change",apply);apply()})();</script></body></html>

@@ -1,0 +1,636 @@
+{
+  "schema": "pm2.manager_coverage.v2",
+  "conceptId": "c07",
+  "concept": "concept-07-compendium-workspace",
+  "generated": "2026-08-20",
+  "families": [
+    {
+      "family": "Settings Home",
+      "surface": "home route",
+      "status": "demonstrated",
+      "route": "#/home",
+      "entryPoints": [
+        "workspace rail \"Home\"",
+        "breadcrumb \"Settings\"",
+        "Escape ladder terminus"
+      ],
+      "evidence": "Welcome header with Project identity, hero universal search, at most one critical banner (offline / usage-exhausted / doom-loop), compact Needs-attention list, 12 area cards as dominant content, All Settings + Copy as subordinate utilities, Recently changed feed."
+    },
+    {
+      "family": "Settings Search",
+      "surface": "search surface",
+      "status": "demonstrated",
+      "route": "#/search/<query>",
+      "entryPoints": [
+        "hero field on Home",
+        "persistent topbar field on every other surface",
+        "Ctrl/Cmd+K"
+      ],
+      "evidence": "Anchored dropdown beneath the field with grouped results (label, kind, full path, availability), rid-only routing, full landing sequence with pm2-located, Back restores query and results via the #/search route; no-results and typo cases handled."
+    },
+    {
+      "family": "Settings Workspace",
+      "surface": "workspace routes",
+      "status": "demonstrated",
+      "route": "#/dest/<cat>[/<sub>]",
+      "entryPoints": [
+        "workspace rail areas",
+        "Home area cards",
+        "breadcrumbs"
+      ],
+      "evidence": "Persistent left workspace rail on every surface; domain pages combine overview fact strip, curated Key settings, full subgroup sections (4-8 row runs with More/Advanced disclosures), and a related-managers panel."
+    },
+    {
+      "family": "Ordinary setting grammar",
+      "surface": "store.resolveRow rendering",
+      "status": "demonstrated",
+      "route": "#/dest/<cat> rows + #/setting/<id>",
+      "entryPoints": [
+        "every inventory row on domain pages and in the All Settings compendium"
+      ],
+      "evidence": "Rows render title + one concise explanation + live control (toggle/select/number/slider/text/action) + pm-chip-value state chip; states managed/unavailable/restart/reconnect/changed-elsewhere/error with honest notes; Details drawer holds legacy-scope note, defaults, related."
+    },
+    {
+      "family": "Provider / Account / Model / Installation",
+      "managerId": "m.providers",
+      "status": "demonstrated",
+      "route": "#/manager/m.providers",
+      "entryPoints": [
+        "Related managers panel on AI Brains & Providers (#/dest/ai)",
+        "universal search (m:m.providers)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: roster) with integrated list/detail object pages and tabs; actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Context & Instructions",
+      "managerId": "m.context",
+      "status": "demonstrated",
+      "route": "#/manager/m.context",
+      "entryPoints": [
+        "Related managers panel on Memory & Context (#/dest/memory)",
+        "universal search (m:m.context)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: form, table, overview); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Memory",
+      "managerId": "m.memory",
+      "status": "demonstrated",
+      "route": "#/manager/m.memory",
+      "entryPoints": [
+        "Related managers panel on Memory & Context (#/dest/memory)",
+        "universal search (m:m.memory)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: overview, roster); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Personas",
+      "managerId": "m.personas",
+      "status": "demonstrated",
+      "route": "#/manager/m.personas",
+      "entryPoints": [
+        "Related managers panel on Personas (#/dest/personas)",
+        "universal search (m:m.personas)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: overview, roster, preview); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Goal & Automation",
+      "managerId": "m.goal",
+      "status": "demonstrated",
+      "route": "#/manager/m.goal",
+      "entryPoints": [
+        "Related managers panel on Planning & Verification (#/dest/planning)",
+        "universal search (m:m.goal)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (sections); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Crew",
+      "managerId": "m.crew",
+      "status": "demonstrated",
+      "route": "#/manager/m.crew",
+      "entryPoints": [
+        "Related managers panel on Branching & Collaboration (#/dest/branching)",
+        "universal search (m:m.crew)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: overview, roster) with integrated list/detail object pages and tabs; actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Permissions & FileSafe",
+      "managerId": "m.permissions",
+      "status": "demonstrated",
+      "route": "#/manager/m.permissions",
+      "entryPoints": [
+        "Related managers panel on Permissions & Safety (#/dest/safety)",
+        "universal search (m:m.permissions)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: form, table, overview, health); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Back Seat Driver",
+      "managerId": "m.bsd",
+      "status": "demonstrated",
+      "route": "#/manager/m.bsd",
+      "entryPoints": [
+        "Related managers panel on Permissions & Safety (#/dest/safety)",
+        "universal search (m:m.bsd)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: form, overview, health); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Notifications & Sounds",
+      "managerId": "m.notifications",
+      "status": "demonstrated",
+      "route": "#/manager/m.notifications",
+      "entryPoints": [
+        "Related managers panel on General & Appearance (#/dest/general)",
+        "universal search (m:m.notifications)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: form, roster, table, log); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Sound Library / Uploads / Packs",
+      "managerId": "m.sounds",
+      "status": "demonstrated",
+      "route": "#/manager/m.sounds",
+      "entryPoints": [
+        "Related managers panel on General & Appearance (#/dest/general)",
+        "universal search (m:m.sounds)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: overview, table, roster); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Appearance / themes / fonts / motion",
+      "managerId": "m.appearance",
+      "status": "demonstrated",
+      "route": "#/manager/m.appearance",
+      "entryPoints": [
+        "Related managers panel on General & Appearance (#/dest/general)",
+        "universal search (m:m.appearance)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: form, roster, overview); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Spellcheck & Dictionaries",
+      "managerId": "m.spellcheck",
+      "status": "demonstrated",
+      "route": "#/manager/m.spellcheck",
+      "entryPoints": [
+        "Related managers panel on General & Appearance (#/dest/general)",
+        "universal search (m:m.spellcheck)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: form, table, roster); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Desktop / Tray / Window",
+      "managerId": "m.desktop",
+      "status": "demonstrated",
+      "route": "#/manager/m.desktop",
+      "entryPoints": [
+        "Related managers panel on General & Appearance (#/dest/general)",
+        "universal search (m:m.desktop)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: form, overview); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Teacher / Help",
+      "managerId": "m.teacher",
+      "status": "demonstrated",
+      "route": "#/manager/m.teacher",
+      "entryPoints": [
+        "Related managers panel on General & Appearance (#/dest/general)",
+        "universal search (m:m.teacher)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: overview, roster); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Doctor",
+      "managerId": "m.doctor",
+      "status": "demonstrated",
+      "route": "#/manager/m.doctor",
+      "entryPoints": [
+        "Related managers panel on System & Advanced (#/dest/system)",
+        "universal search (m:m.doctor)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: health, log, overview); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "File Manager / Editor",
+      "managerId": "m.files",
+      "status": "demonstrated",
+      "route": "#/manager/m.files",
+      "entryPoints": [
+        "Related managers panel on Code & Execution (#/dest/code)",
+        "universal search (m:m.files)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: form, roster, health); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Terminal",
+      "managerId": "m.terminal",
+      "status": "demonstrated",
+      "route": "#/manager/m.terminal",
+      "entryPoints": [
+        "Related managers panel on Code & Execution (#/dest/code)",
+        "universal search (m:m.terminal)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: roster, overview); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "LSP",
+      "managerId": "m.lsp",
+      "status": "demonstrated",
+      "route": "#/manager/m.lsp",
+      "entryPoints": [
+        "Related managers panel on Code & Execution (#/dest/code)",
+        "universal search (m:m.lsp)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: roster, overview); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Formatters",
+      "managerId": "m.formatters",
+      "status": "demonstrated",
+      "route": "#/manager/m.formatters",
+      "entryPoints": [
+        "Related managers panel on Code & Execution (#/dest/code)",
+        "universal search (m:m.formatters)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: form, table, preview); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Commands & Shortcuts",
+      "managerId": "m.commands",
+      "status": "demonstrated",
+      "route": "#/manager/m.commands",
+      "entryPoints": [
+        "Related managers panel on Skills, Plugins & Commands (#/dest/extensions)",
+        "universal search (m:m.commands)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: table, roster, health); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "MCP",
+      "managerId": "m.mcp",
+      "status": "demonstrated",
+      "route": "#/manager/m.mcp",
+      "entryPoints": [
+        "Related managers panel on System & Advanced (#/dest/system)",
+        "universal search (m:m.mcp)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: roster, overview); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Skills",
+      "managerId": "m.skills",
+      "status": "demonstrated",
+      "route": "#/manager/m.skills",
+      "entryPoints": [
+        "Related managers panel on Skills, Plugins & Commands (#/dest/extensions)",
+        "universal search (m:m.skills)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: roster, overview); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Plugins",
+      "managerId": "m.plugins",
+      "status": "demonstrated",
+      "route": "#/manager/m.plugins",
+      "entryPoints": [
+        "Related managers panel on Skills, Plugins & Commands (#/dest/extensions)",
+        "universal search (m:m.plugins)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: roster); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Tools",
+      "managerId": "m.tools",
+      "status": "demonstrated",
+      "route": "#/manager/m.tools",
+      "entryPoints": [
+        "Related managers panel on Skills, Plugins & Commands (#/dest/extensions)",
+        "universal search (m:m.tools)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: table, overview); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Testing & Debug",
+      "managerId": "m.testing",
+      "status": "demonstrated",
+      "route": "#/manager/m.testing",
+      "entryPoints": [
+        "Related managers panel on System & Advanced (#/dest/system)",
+        "universal search (m:m.testing)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: table, overview); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Storage & Retention",
+      "managerId": "m.storage",
+      "status": "demonstrated",
+      "route": "#/manager/m.storage",
+      "entryPoints": [
+        "Related managers panel on System & Advanced (#/dest/system)",
+        "universal search (m:m.storage)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: health, table, roster, log); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Backup & Restore",
+      "managerId": "m.backup",
+      "status": "demonstrated",
+      "route": "#/manager/m.backup",
+      "entryPoints": [
+        "Related managers panel on System & Advanced (#/dest/system)",
+        "universal search (m:m.backup)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: overview, roster, form, health); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Settings Lifecycle",
+      "managerId": "m.lifecycle",
+      "status": "demonstrated",
+      "route": "#/manager/m.lifecycle",
+      "entryPoints": [
+        "Related managers panel on System & Advanced (#/dest/system)",
+        "universal search (m:m.lifecycle)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: overview, steps, preview, log, form); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "History & Sessions",
+      "managerId": "m.history",
+      "status": "demonstrated",
+      "route": "#/manager/m.history",
+      "entryPoints": [
+        "Related managers panel on System & Advanced (#/dest/system)",
+        "universal search (m:m.history)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: roster, form); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Runtime Artifacts / Project Outputs",
+      "managerId": "m.artifacts",
+      "status": "demonstrated",
+      "route": "#/manager/m.artifacts",
+      "entryPoints": [
+        "Related managers panel on System & Advanced (#/dest/system)",
+        "universal search (m:m.artifacts)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: roster, overview); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Source Control / Worktrees",
+      "managerId": "m.sourceControl",
+      "status": "demonstrated",
+      "route": "#/manager/m.sourceControl",
+      "entryPoints": [
+        "Related managers panel on Branching & Collaboration (#/dest/branching)",
+        "universal search (m:m.sourceControl)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: roster, form); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "GitHub Actions",
+      "managerId": "m.actions",
+      "status": "demonstrated",
+      "route": "#/manager/m.actions",
+      "entryPoints": [
+        "Related managers panel on Branching & Collaboration (#/dest/branching)",
+        "universal search (m:m.actions)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: overview, health, log); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Containers & Registries",
+      "managerId": "m.containers",
+      "status": "demonstrated",
+      "route": "#/manager/m.containers",
+      "entryPoints": [
+        "Related managers panel on Code & Execution (#/dest/code)",
+        "universal search (m:m.containers)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: roster, overview); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Web / Search / Fetch / Crawl",
+      "managerId": "m.web",
+      "status": "demonstrated",
+      "route": "#/manager/m.web",
+      "entryPoints": [
+        "Related managers panel on Web & Search (#/dest/web)",
+        "universal search (m:m.web)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: roster, form, overview); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Project Search Index",
+      "managerId": "m.searchIndex",
+      "status": "demonstrated",
+      "route": "#/manager/m.searchIndex",
+      "entryPoints": [
+        "Related managers panel on Web & Search (#/dest/web)",
+        "universal search (m:m.searchIndex)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: health, form, log); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Workspace Cleanup",
+      "managerId": "m.cleanup",
+      "status": "demonstrated",
+      "route": "#/manager/m.cleanup",
+      "entryPoints": [
+        "Related managers panel on System & Advanced (#/dest/system)",
+        "universal search (m:m.cleanup)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: table, steps, preview); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Media & Output",
+      "managerId": "m.media",
+      "status": "demonstrated",
+      "route": "#/manager/m.media",
+      "entryPoints": [
+        "Related managers panel on Media & Output (#/dest/media)",
+        "universal search (m:m.media)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: roster); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "DRY Method visible state where exposed",
+      "managerId": "m.dry",
+      "status": "demonstrated",
+      "route": "#/manager/m.dry",
+      "entryPoints": [
+        "Related managers panel on Planning & Verification (#/dest/planning)",
+        "universal search (m:m.dry)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Lazy model(store) rendered in the c07 block grammar (section kinds: health, overview); actions run through def.actions(store) with truthful staged ops."
+    },
+    {
+      "family": "Product Onboarding",
+      "managerId": "m.onboarding",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.onboarding",
+      "entryPoints": [
+        "Related managers panel on System & Advanced (#/dest/system)",
+        "universal search (m:m.onboarding)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Reachable insertion shell: owner panel (canonical owner, deep link, reachable-from, return contract) + honest read-only model rendered from def.model(store); no fabricated actions.",
+      "owner": "Product Onboarding owner thread (first-run flow owner; separate from Installation/Deployment and Server Claim/Bootstrap)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.onboarding/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Installation / Deployment",
+      "managerId": "m.deployment",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.deployment",
+      "entryPoints": [
+        "Related managers panel on System & Advanced (#/dest/system)",
+        "universal search (m:m.deployment)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Reachable insertion shell: owner panel (canonical owner, deep link, reachable-from, return contract) + honest read-only model rendered from def.model(store); no fabricated actions.",
+      "owner": "Release_Supply_Chain.md (installer and deployment supply chain)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.deployment/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Server Claim / Bootstrap",
+      "managerId": "m.serverClaim",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.serverClaim",
+      "entryPoints": [
+        "Related managers panel on System & Advanced (#/dest/system)",
+        "universal search (m:m.serverClaim)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Reachable insertion shell: owner panel (canonical owner, deep link, reachable-from, return contract) + honest read-only model rendered from def.model(store); no fabricated actions.",
+      "owner": "Server Backbone return (Post-Return Reconciliation v6)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.serverClaim/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Servers / Execution Hosts / Clients",
+      "managerId": "m.servers",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.servers",
+      "entryPoints": [
+        "Related managers panel on System & Advanced (#/dest/system)",
+        "universal search (m:m.servers)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Reachable insertion shell: owner panel (canonical owner, deep link, reachable-from, return contract) + honest read-only model rendered from def.model(store); no fabricated actions.",
+      "owner": "Server Backbone return (Post-Return Reconciliation v6, sections 4-5)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.servers/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Project Hosting & Files",
+      "managerId": "m.hosting",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.hosting",
+      "entryPoints": [
+        "Related managers panel on System & Advanced (#/dest/system)",
+        "universal search (m:m.hosting)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Reachable insertion shell: owner panel (canonical owner, deep link, reachable-from, return contract) + honest read-only model rendered from def.model(store); no fabricated actions.",
+      "owner": "storage-plan.md",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.hosting/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Remote Access",
+      "managerId": "m.remote",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.remote",
+      "entryPoints": [
+        "Related managers panel on System & Advanced (#/dest/system)",
+        "universal search (m:m.remote)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Reachable insertion shell: owner panel (canonical owner, deep link, reachable-from, return contract) + honest read-only model rendered from def.model(store); no fabricated actions.",
+      "owner": "Server Backbone return, section 10",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.remote/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Project Sync / Move",
+      "managerId": "m.projectSync",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.projectSync",
+      "entryPoints": [
+        "Related managers panel on System & Advanced (#/dest/system)",
+        "universal search (m:m.projectSync)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Reachable insertion shell: owner panel (canonical owner, deep link, reachable-from, return contract) + honest read-only model rendered from def.model(store); no fabricated actions.",
+      "owner": "storage-plan.md (Project Sync owner)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.projectSync/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Puppet Master application/content updates",
+      "managerId": "m.appUpdates",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.appUpdates",
+      "entryPoints": [
+        "Related managers panel on System & Advanced (#/dest/system)",
+        "universal search (m:m.appUpdates)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Reachable insertion shell: owner panel (canonical owner, deep link, reachable-from, return contract) + honest read-only model rendered from def.model(store); no fabricated actions.",
+      "owner": "Release_Supply_Chain.md",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.appUpdates/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Full Server backup owner flow",
+      "managerId": "m.serverBackup",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.serverBackup",
+      "entryPoints": [
+        "Related managers panel on System & Advanced (#/dest/system)",
+        "universal search (m:m.serverBackup)",
+        "All Settings compendium (record kind: manager)"
+      ],
+      "evidence": "Reachable insertion shell: owner panel (canonical owner, deep link, reachable-from, return contract) + honest read-only model rendered from def.model(store); no fabricated actions.",
+      "owner": "storage-plan.md",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.serverBackup/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    }
+  ]
+}

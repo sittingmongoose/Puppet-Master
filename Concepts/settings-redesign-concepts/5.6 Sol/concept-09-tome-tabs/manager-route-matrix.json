@@ -1,0 +1,985 @@
+{
+  "schema_id": "pm.settings_manager_route_matrix.v1",
+  "concept_id": "concept-09-tome-tabs",
+  "routes": [
+    {
+      "manager": "Settings Home",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native",
+      "back_close": true
+    },
+    {
+      "manager": "Settings Search",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native",
+      "back_close": true
+    },
+    {
+      "manager": "Settings Workspace",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native",
+      "back_close": true
+    },
+    {
+      "manager": "Ordinary setting grammar",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native",
+      "back_close": true
+    },
+    {
+      "manager": "Provider / Account / Model / Installation",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:providers",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:providers",
+      "back_close": true
+    },
+    {
+      "manager": "Context & Instructions",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:context",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:context",
+      "back_close": true
+    },
+    {
+      "manager": "Memory",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:memory",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:memory",
+      "back_close": true
+    },
+    {
+      "manager": "Personas",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:personas",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:personas",
+      "back_close": true
+    },
+    {
+      "manager": "Goal & Automation",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:goal",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:goal",
+      "back_close": true
+    },
+    {
+      "manager": "Crew",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:crew",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:crew",
+      "back_close": true
+    },
+    {
+      "manager": "Permissions & FileSafe",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:permissions",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:permissions",
+      "back_close": true
+    },
+    {
+      "manager": "Back Seat Driver",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:bsd",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:bsd",
+      "back_close": true
+    },
+    {
+      "manager": "Notifications & Sounds",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:notifications",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:notifications",
+      "back_close": true
+    },
+    {
+      "manager": "Sound Library / Uploads / Packs",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:soundLibrary",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:soundLibrary",
+      "back_close": true
+    },
+    {
+      "manager": "Appearance / themes / fonts / motion",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:appearance",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:appearance",
+      "back_close": true
+    },
+    {
+      "manager": "Spellcheck & Dictionaries",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:spellcheck",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:spellcheck",
+      "back_close": true
+    },
+    {
+      "manager": "Desktop / Tray / Window",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:desktop",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:desktop",
+      "back_close": true
+    },
+    {
+      "manager": "Teacher / Help",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:teacher",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:teacher",
+      "back_close": true
+    },
+    {
+      "manager": "Doctor",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:doctor",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:doctor",
+      "back_close": true
+    },
+    {
+      "manager": "File Manager / Editor",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:fileManager",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:fileManager",
+      "back_close": true
+    },
+    {
+      "manager": "Terminal",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:terminal",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:terminal",
+      "back_close": true
+    },
+    {
+      "manager": "LSP",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:lsp",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:lsp",
+      "back_close": true
+    },
+    {
+      "manager": "Formatters",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:formatters",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:formatters",
+      "back_close": true
+    },
+    {
+      "manager": "Commands & Shortcuts",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:commands",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:commands",
+      "back_close": true
+    },
+    {
+      "manager": "MCP",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:mcp",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:mcp",
+      "back_close": true
+    },
+    {
+      "manager": "Skills",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:skills",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:skills",
+      "back_close": true
+    },
+    {
+      "manager": "Plugins",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:plugins",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:plugins",
+      "back_close": true
+    },
+    {
+      "manager": "Tools",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:tools",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:tools",
+      "back_close": true
+    },
+    {
+      "manager": "Testing & Debug",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:testing",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:testing",
+      "back_close": true
+    },
+    {
+      "manager": "Storage & Retention",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:storage",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:storage",
+      "back_close": true
+    },
+    {
+      "manager": "Backup & Restore",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:backup",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:backup",
+      "back_close": true
+    },
+    {
+      "manager": "Settings Lifecycle",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:lifecycle",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:lifecycle",
+      "back_close": true
+    },
+    {
+      "manager": "History & Sessions",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:history",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:history",
+      "back_close": true
+    },
+    {
+      "manager": "Runtime Artifacts / Project Outputs",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:artifacts",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:artifacts",
+      "back_close": true
+    },
+    {
+      "manager": "Source Control / Worktrees",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:worktrees",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:worktrees",
+      "back_close": true
+    },
+    {
+      "manager": "GitHub Actions",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:githubActions",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:githubActions",
+      "back_close": true
+    },
+    {
+      "manager": "Containers & Registries",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:containers",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:containers",
+      "back_close": true
+    },
+    {
+      "manager": "Web / Search / Fetch / Crawl",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:web",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:web",
+      "back_close": true
+    },
+    {
+      "manager": "Project Search Index",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:searchIndex",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:searchIndex",
+      "back_close": true
+    },
+    {
+      "manager": "Workspace Cleanup",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:cleanup",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:cleanup",
+      "back_close": true
+    },
+    {
+      "manager": "Media & Output",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:media",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:media",
+      "back_close": true
+    },
+    {
+      "manager": "DRY Method visible state where exposed",
+      "entry": "domain + search",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "concept_local_route": "native:dryMethod",
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:dryMethod",
+      "back_close": true
+    },
+    {
+      "manager": "Product Onboarding",
+      "entry": "search + deferred owner surface",
+      "concept_local_route": "native:onboarding",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:onboarding",
+      "back_close": true
+    },
+    {
+      "manager": "Installation / Deployment",
+      "entry": "search + deferred owner surface",
+      "concept_local_route": "native:installation",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:installation",
+      "back_close": true
+    },
+    {
+      "manager": "Server Claim / Bootstrap",
+      "entry": "search + deferred owner surface",
+      "concept_local_route": "native:serverClaim",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:serverClaim",
+      "back_close": true
+    },
+    {
+      "manager": "Servers / Execution Hosts / Clients",
+      "entry": "search + deferred owner surface",
+      "concept_local_route": "native:servers",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:servers",
+      "back_close": true
+    },
+    {
+      "manager": "Project Hosting & Files",
+      "entry": "search + deferred owner surface",
+      "concept_local_route": "native:projectHosting",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:projectHosting",
+      "back_close": true
+    },
+    {
+      "manager": "Remote Access",
+      "entry": "search + deferred owner surface",
+      "concept_local_route": "native:remoteAccess",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:remoteAccess",
+      "back_close": true
+    },
+    {
+      "manager": "Project Sync / Move",
+      "entry": "search + deferred owner surface",
+      "concept_local_route": "native:projectSync",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:projectSync",
+      "back_close": true
+    },
+    {
+      "manager": "Puppet Master application/content updates",
+      "entry": "search + deferred owner surface",
+      "concept_local_route": "native:appUpdates",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:appUpdates",
+      "back_close": true
+    },
+    {
+      "manager": "Full Server backup owner flow",
+      "entry": "search + deferred owner surface",
+      "concept_local_route": "native:fullServerBackup",
+      "shell_retained": true,
+      "back": "previous Settings location",
+      "close": "opening surface",
+      "narrow": "edge tabs wrap; layered leaves hide; roster stacks",
+      "pass": true,
+      "iframe": false,
+      "foreign_concept": false,
+      "isolation": {
+        "iframe": false,
+        "concept_01_04": false,
+        "shared_grammar": false
+      },
+      "route": "native:fullServerBackup",
+      "back_close": true
+    }
+  ],
+  "layout": "persistent-edge-tabs + layered-canvas",
+  "theme": "pm-themes tokens",
+  "families": 51,
+  "iframe": false,
+  "isolation": {
+    "iframe": false,
+    "concept_01_04": false,
+    "shared_grammar": false,
+    "back_close": true
+  }
+}
