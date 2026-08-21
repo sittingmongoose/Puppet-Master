@@ -1,0 +1,114 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "-B",
+    "r9_control_plane_stabilization_v1/formal_candidate_v9005/runner.py",
+    "simulate",
+    "--run-root",
+    "exit003-invalid-authority",
+    "--scenario",
+    "clean"
+  ],
+  "case_root_absent_before_construction": true,
+  "component_after_tamper": [
+    {
+      "bytes": 39866,
+      "name": "evidence_recorder.py",
+      "sha256": "7f8ca2d19750a65ac71b711f13ed4fb1205eab0711b945463561a5f3f35a9e52"
+    },
+    {
+      "bytes": 95000,
+      "name": "offline_verifier.py",
+      "sha256": "5ee52fa60374eed16f54f7264b4b9b6903c57391fa46ac1bfc7ea9e5eb246570"
+    },
+    {
+      "bytes": 59338,
+      "name": "runner.py",
+      "sha256": "452c53e0e7c2c50900d5bbb0c975ee67614cc112fb6e3002cd0c564ecfabeece"
+    },
+    {
+      "bytes": 786548,
+      "name": "semantic_bundle.json",
+      "sha256": "eed249131ae56b424d9e7e274acc295ba78e51e5146f5b460981160bf5c591f2"
+    }
+  ],
+  "component_before_tamper": [
+    {
+      "bytes": 39866,
+      "name": "evidence_recorder.py",
+      "sha256": "7f8ca2d19750a65ac71b711f13ed4fb1205eab0711b945463561a5f3f35a9e52"
+    },
+    {
+      "bytes": 95000,
+      "name": "offline_verifier.py",
+      "sha256": "5ee52fa60374eed16f54f7264b4b9b6903c57391fa46ac1bfc7ea9e5eb246570"
+    },
+    {
+      "bytes": 59338,
+      "name": "runner.py",
+      "sha256": "452c53e0e7c2c50900d5bbb0c975ee67614cc112fb6e3002cd0c564ecfabeece"
+    },
+    {
+      "bytes": 786546,
+      "name": "semantic_bundle.json",
+      "sha256": "11139c2b52a2fe900f2976a34f7712d8f05d5b2991ce8cc26d5cfc4e1ef871c2"
+    }
+  ],
+  "cwd": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-012-successor-exit-003/cases/invalid-authority-zero-backend",
+  "environment_overrides": {
+    "LC_ALL": "C",
+    "PW_R9_EVIDENCE_ROOT": "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-012-successor-exit-003/cases/invalid-authority-zero-backend/subject-root/evidence",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "evidence_inventory_before_invocation": [],
+  "expectation": {
+    "admitted": false,
+    "backend_invocations": 0,
+    "evidence_writes": 0
+  },
+  "invocation_policy": {
+    "attempts": 1,
+    "best_of": false,
+    "relaunches": 0,
+    "reopens": 0,
+    "replacements": 0,
+    "retries": 0
+  },
+  "prepared_utc": "2026-08-20T23:33:23.230488Z",
+  "scenario_id": "validate-before-dependency-use",
+  "schema_id": "pw-r9-exit-003-invalid-authority-preflight-v1",
+  "source": {
+    "regression_id": "R9-REG-015",
+    "required_current_pass": {
+      "credit": "SIMULATION_ONLY_ZERO_EMPIRICAL_OR_QUALIFICATION_CREDIT",
+      "meaning": "The event trace begins with local parse and full data/controller/verifier identity validation; invalid authority causes zero backend or external dependency execution.",
+      "result": "PASS"
+    },
+    "variant_id": "invalid-authority-zero-backend"
+  },
+  "supporting_authority_inventory": [
+    {
+      "bytes": 7024,
+      "name": "r9_goal_operating_contract_v1.json",
+      "sha256": "764dd27b3f472a90eef0f8493e63ac8fb349fe05a3a97dc4673a4a835e6e8dbd"
+    },
+    {
+      "bytes": 5909,
+      "name": "r9_subject_transport_addendum_subagent_invocations_v1.json",
+      "sha256": "7b5186b3c9f244488a75695b34b0d06e79ee6b720acb934fc3767315c4b005d8"
+    },
+    {
+      "bytes": 4780,
+      "name": "r9_subject_transport_subagent_route_capability_receipt_v1.json",
+      "sha256": "3d523eac087e691b2336a6ab878dbfe64b8359891831dc866641039f97f8646a"
+    }
+  ],
+  "tamper": {
+    "after": "pw-r9-minimal-controller-architecture-v999",
+    "before": "pw-r9-minimal-controller-architecture-v2",
+    "canonical_storage": "recursively sorted minified UTF-8 JSON with exactly one LF",
+    "logical_equal_except_target": true,
+    "op": "replace",
+    "pointer": "/lineage/migration_source/schema_ids/architecture"
+  }
+}

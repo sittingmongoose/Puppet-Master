@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-012-successor-exit-003/cases/invalid-control-check-only/formal_candidate_v9006/runner.py", line 171, in <module>
+    _ROOT,_,_,_=_bootstrap()
+                ~~~~~~~~~~^^
+  File "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-012-successor-exit-003/cases/invalid-control-check-only/formal_candidate_v9006/runner.py", line 138, in _bootstrap
+    raise _Invalid("x")
+_Invalid: x

@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/tmp/pm-i012-git-02-n4naq1kq/work/successor_20260813/r9_control_plane_stabilization_v1/iteration_012/runner.py", line 171, in <module>
+    _ROOT,_,_,_=_bootstrap()
+                ~~~~~~~~~~^^
+  File "/tmp/pm-i012-git-02-n4naq1kq/work/successor_20260813/r9_control_plane_stabilization_v1/iteration_012/runner.py", line 145, in _bootstrap
+    raise _Invalid(f"component inventory mismatch: {sorted(names)}")
+_Invalid: component inventory mismatch: ['evidence_recorder.py', 'extra-role.bin', 'offline_verifier.py', 'runner.py', 'semantic_bundle.json']

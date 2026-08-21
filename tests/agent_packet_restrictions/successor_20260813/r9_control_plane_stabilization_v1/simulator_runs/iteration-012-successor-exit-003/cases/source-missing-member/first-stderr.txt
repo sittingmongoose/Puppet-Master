@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-012-successor-exit-003/cases/source-missing-member/r9_control_plane_stabilization_v1/formal_candidate_v9001/runner.py", line 171, in <module>
+    _ROOT,_,_,_=_bootstrap()
+                ~~~~~~~~~~^^
+  File "/mnt/Cursor/PuppetMaster/tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-012-successor-exit-003/cases/source-missing-member/r9_control_plane_stabilization_v1/formal_candidate_v9001/runner.py", line 145, in _bootstrap
+    raise _Invalid(f"component inventory mismatch: {sorted(names)}")
+_Invalid: component inventory mismatch: ['evidence_recorder.py', 'offline_verifier.py', 'runner.py']

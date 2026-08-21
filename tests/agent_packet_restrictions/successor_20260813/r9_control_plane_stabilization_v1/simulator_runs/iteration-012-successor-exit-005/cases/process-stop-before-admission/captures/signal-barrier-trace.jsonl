@@ -1,0 +1,4 @@
+{"blocked":["SIGINT","SIGTERM"],"kind":"child_signal_mask_ready","pid":1587777,"sequence":1}
+{"kind":"signal_send_success","method":"pidfd_send_signal","owned_direct_child":true,"pid":1587777,"sequence":2,"signal":"SIGTERM"}
+{"exec_release_with_signal_blocked":true,"kind":"pending_signal_verified_before_exec","pid":1587777,"sequence":3,"signal":"SIGTERM","sigpending":true}
+{"kind":"primary_exit","normal_exit":true,"pid":1587777,"returncode":2,"sequence":4}
