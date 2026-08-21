@@ -9,4 +9,4 @@ advisors:
     model: google-antigravity/claude-opus-4-6:high
     enabled: false
   - name: Advisor 4
-    model: cursor/default
+    model: anthropic/claude-opus-5:max
