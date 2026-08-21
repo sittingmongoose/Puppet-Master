@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"01a02588-eb5b-7032-96fc-30c383cbe80d"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"protocol_id\":\"PW-R6-DECOMPOSED-20260814.4\",\"stage\":\"S60_UNIT\",\"role\":\"provenance\",\"candidate_edge_id\":\"I-E99\",\"candidate_lineage_sha256\":\"674e30f2fea25eb546341f694763e7bad2bf5a36a75974cb20d394519aaacabf\",\"integration_candidate_sha256\":\"172a06fcd142a4ab4ab6a1bde0c5684398e5db15d4def2b4c0ed506c052364a1\",\"verdict\":\"unsupported\",\"classification\":\"provenance_gap\",\"source_record_ids\":[\"A-S11\",\"B-S07\"],\"claim_boundary\":\"bounded_single_new_edge_specialist_only\",\"external_audit_status\":\"excluded\",\"forbidden_action_violations\":[]}"}}
+{"type":"turn.completed","usage":{"input_tokens":18537,"cached_input_tokens":15744,"cache_write_input_tokens":0,"output_tokens":523,"reasoning_output_tokens":343}}
