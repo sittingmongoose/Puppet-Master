@@ -1,0 +1,69 @@
+{
+  "schema_id": "pm.settings_candidate_dry_delta.v1",
+  "concept_id": "c08-beacon",
+  "stem": "concept-08-directory-take-3",
+  "model": "fable",
+  "note": "Status per packet DRY family: concretized (this concept renders a native composition of the role), reused (consumed via shared data/semantics without new composition), not-exercised. Variance notes are the anti-clone evidence: same product behavior, deliberately different composition from the sibling concepts.",
+  "entries": [
+    {
+      "family": "SettingsDestination",
+      "status": "concretized",
+      "concept_component": "c08-card / c08-card-link (seven large Home cards)",
+      "variance_notes": "FEWER, LARGER cards: 7 icon/title/purpose cards over the 12 categories, each listing its member categories or subgroups as destination rows with counts. Not a 12-tile grid, not a rail, not an editorial list — a broad two-column directory that stays bounded at 2500px."
+    },
+    {
+      "family": "SettingsNotice",
+      "status": "concretized",
+      "concept_component": "c08-banner + c08-attn",
+      "variance_notes": "Exactly one scenario-gated banner (offline/usage-exhausted/invocation-failed/first-run), deduplicated from the compact 2-4 row attention panel beneath the hero search; status words carry tone by weight/underline, never color alone."
+    },
+    {
+      "family": "SettingsWorkspaceShell",
+      "status": "concretized",
+      "concept_component": "c08-bar + c08-measure",
+      "variance_notes": "No persistent side rail. One sticky beacon bar (named Back pill, breadcrumb, persistent compact search, Close Settings) over a single centered measure; Home is bar-less with a hero search instead."
+    },
+    {
+      "family": "SettingsSearch",
+      "status": "concretized",
+      "concept_component": "c08-search-wrap + c08-drop",
+      "variance_notes": "Roomy result cards (label + kind pill + full path + object note + availability line) in a dropdown anchored under whichever field is active; hot-row keyboard movement; no-results card carries guidance links instead of a dead end."
+    },
+    {
+      "family": "SettingRow",
+      "status": "concretized",
+      "concept_component": "c08-row",
+      "variance_notes": "Airy rows: title + one wrapped explanation + right-aligned control cluster; interactive controls suppress value-echo chips; state notes as an indented line with icon; Details drawer holds scope/related/raw-id."
+    },
+    {
+      "family": "ManagerSurface",
+      "status": "concretized",
+      "concept_component": "c08-mgr-head + c08-statgrid + c08-items + c08-tabs",
+      "variance_notes": "Summary-first: overview sections become status-card grids (the provider answer block), rosters become item cards with inline honest actions, tabs sit beneath the quick-action row. Deferred owners render as owner-note shells in the same grammar."
+    },
+    {
+      "family": "AllSettingsIndex",
+      "status": "concretized",
+      "concept_component": "c08-all (facet bar + windowed list)",
+      "variance_notes": "Secondary utility here (c07 owns it as primary): five facets + name filter over fixed-height windowed rows (~27 live nodes against 2,828 records under stress); stress fixtures visibly marked."
+    },
+    {
+      "family": "CopyTransaction",
+      "status": "concretized",
+      "concept_component": "c08-copy (full-width page)",
+      "variance_notes": "A page, not a dialog: step rail across the top, selectable category tiles with counts, wide five-column preview table, sticky confirm bar naming the restore point, receipt panel with rollback."
+    },
+    {
+      "family": "StatesDrawer",
+      "status": "reused",
+      "concept_component": "PM2.states.mountDrawer (shared chrome)",
+      "variance_notes": "Test affordance, not Settings UI — shared by contract."
+    },
+    {
+      "family": "DRY Method visible state",
+      "status": "reused",
+      "concept_component": "m.dry rendered through the generic Beacon section renderer",
+      "variance_notes": "Read-only projection of the shared owner's state; no new composition beyond Beacon's card/row grammar and no fabricated actions."
+    }
+  ]
+}

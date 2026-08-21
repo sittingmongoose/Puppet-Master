@@ -1,0 +1,641 @@
+{
+  "schema": "pm2.manager_coverage.v2",
+  "conceptId": "c08",
+  "stem": "concept-08-directory-take-3",
+  "generated": "2026-08-20",
+  "note": "Beacon (A1 Directory / Take 3). Every route below was walked by tools/boot-check.js with zero console errors at 1280/900/760/2500. Home groups the 12 inventory categories into 7 large cards (mapping in impact-register.json); every category keeps its own #/dest route listed on its owning card.",
+  "families": [
+    {
+      "family": "Settings Home",
+      "surface": "home route",
+      "status": "demonstrated",
+      "route": "#/home",
+      "entryPoints": [
+        "boot default",
+        "breadcrumb 'Settings'",
+        "Back ladder terminus",
+        "Esc ladder terminus"
+      ],
+      "evidence": "Project identity as context, hero universal search, at most one scenario-gated banner, compact 2-4 item attention list, seven large domain cards with per-category sub-listings and counts (the dominant content), subordinate utilities (All Settings, Copy, Recent changes)."
+    },
+    {
+      "family": "Settings Search",
+      "surface": "search surface (hero field on Home, persistent bar field everywhere else, Ctrl/Cmd+K)",
+      "status": "demonstrated",
+      "route": "#/search/<query>",
+      "entryPoints": [
+        "Home hero field",
+        "beacon bar field on every non-Home surface",
+        "Ctrl/Cmd+K",
+        "deep link #/search/<query>"
+      ],
+      "evidence": "Anchored dropdown with grouped roomy result cards (label, kind, full path, object note, availability). Routing by rid/dest only; landing sequence scrolls/focuses/highlights the exact element (pm2-located); browser Back restores query AND result list (verified: 24/24 recorded cases in search-route-matrix.json)."
+    },
+    {
+      "family": "Settings Workspace",
+      "surface": "workspace routes",
+      "status": "demonstrated",
+      "route": "#/dest/<cat>[/<sub>] + #/all",
+      "entryPoints": [
+        "Home domain cards",
+        "breadcrumbs",
+        "All Settings utility"
+      ],
+      "evidence": "12 domain pages: header with counts, manager destination blocks, subgroup-sectioned rows (~4-8 visible per group) with advanced tier behind a per-subgroup disclosure; All Settings is the faceted, windowed long-tail index (virtualized; 27 live rows against 2,828 records under stress)."
+    },
+    {
+      "family": "Ordinary setting grammar",
+      "surface": "store.resolveRow rendering",
+      "status": "demonstrated",
+      "route": "#/dest/<cat> rows + #/setting/<id>",
+      "entryPoints": [
+        "every domain page row",
+        "manager form fields",
+        "All Settings rows"
+      ],
+      "evidence": "Title + one explanation + control + only needed status. Working toggle/select(popup menu)/number/slider/text/multiselect controls through store.setValue with honest validation errors; chips use the pm-chip-value vocabulary; Details drawer holds project-only scope note, related features, and the raw id."
+    },
+    {
+      "family": "Provider / Account / Model / Installation",
+      "managerId": "m.providers",
+      "status": "demonstrated",
+      "route": "#/manager/m.providers",
+      "entryPoints": [
+        "#/dest/ai manager block (data-manager=m.providers)",
+        "universal search (m:m.providers)",
+        "Home card 'Providers & AI' → AI Brains & Providers"
+      ],
+      "evidence": "summary-first: per-provider status-card grid (connected, account, models, usage-end, routing) + explicit quick actions (Set up, Sign in/reconnect, Refresh, Check for updates, Repair when truly offered) + tabs (accounts/models/limits/routing/installs/setup/activity/advanced). Multi-install selected/shadowed, unknown-owner manual-only, ask-first update, verification-failed→rolled-back, usage-unavailable-but-ready, and the explicit official-source Cursor CLI setup all render from the shared provider data."
+    },
+    {
+      "family": "Context & Instructions",
+      "managerId": "m.context",
+      "status": "demonstrated",
+      "route": "#/manager/m.context",
+      "entryPoints": [
+        "#/dest/memory manager block (data-manager=m.context)",
+        "universal search (m:m.context)",
+        "Home card 'Planning & Memory' → Memory & Context"
+      ],
+      "evidence": "form/overview sections render as Beacon setting rows and status cards; fields deep-link to their inventory rows; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Memory",
+      "managerId": "m.memory",
+      "status": "demonstrated",
+      "route": "#/manager/m.memory",
+      "entryPoints": [
+        "#/dest/memory manager block (data-manager=m.memory)",
+        "universal search (m:m.memory)",
+        "Home card 'Planning & Memory' → Memory & Context"
+      ],
+      "evidence": "roster sections render as Beacon item cards with data-object-id, status words, honest per-item actions, and detail drawers; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Personas",
+      "managerId": "m.personas",
+      "status": "demonstrated",
+      "route": "#/manager/m.personas",
+      "entryPoints": [
+        "#/dest/personas manager block (data-manager=m.personas)",
+        "universal search (m:m.personas)",
+        "Home card 'Planning & Memory' → Personas"
+      ],
+      "evidence": "roster sections render as Beacon item cards with data-object-id, status words, honest per-item actions, and detail drawers; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Goal & Automation",
+      "managerId": "m.goal",
+      "status": "demonstrated",
+      "route": "#/manager/m.goal",
+      "entryPoints": [
+        "#/dest/planning manager block (data-manager=m.goal)",
+        "universal search (m:m.goal)",
+        "Home card 'Planning & Memory' → Planning & Verification"
+      ],
+      "evidence": "form/overview sections render as Beacon setting rows and status cards; fields deep-link to their inventory rows; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Crew",
+      "managerId": "m.crew",
+      "status": "demonstrated",
+      "route": "#/manager/m.crew",
+      "entryPoints": [
+        "#/dest/branching manager block (data-manager=m.crew)",
+        "universal search (m:m.crew)",
+        "Home card 'Code & Collaboration' → Branching & Collaboration"
+      ],
+      "evidence": "roster sections render as Beacon item cards with data-object-id, status words, honest per-item actions, and detail drawers; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Permissions & FileSafe",
+      "managerId": "m.permissions",
+      "status": "demonstrated",
+      "route": "#/manager/m.permissions",
+      "entryPoints": [
+        "#/dest/safety manager block (data-manager=m.permissions)",
+        "universal search (m:m.permissions)",
+        "Home card 'Safety' → Permissions & Safety"
+      ],
+      "evidence": "form/overview sections render as Beacon setting rows and status cards; fields deep-link to their inventory rows; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Back Seat Driver",
+      "managerId": "m.bsd",
+      "status": "demonstrated",
+      "route": "#/manager/m.bsd",
+      "entryPoints": [
+        "#/dest/safety manager block (data-manager=m.bsd)",
+        "universal search (m:m.bsd)",
+        "Home card 'Safety' → Permissions & Safety"
+      ],
+      "evidence": "form/overview sections render as Beacon setting rows and status cards; fields deep-link to their inventory rows; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Notifications & Sounds",
+      "managerId": "m.notifications",
+      "status": "demonstrated",
+      "route": "#/manager/m.notifications",
+      "entryPoints": [
+        "#/dest/general manager block (data-manager=m.notifications)",
+        "universal search (m:m.notifications)",
+        "Home card 'Everyday & Appearance' → General & Appearance"
+      ],
+      "evidence": "roster sections render as Beacon item cards with data-object-id, status words, honest per-item actions, and detail drawers; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Sound Library / Uploads / Packs",
+      "managerId": "m.sounds",
+      "status": "demonstrated",
+      "route": "#/manager/m.sounds",
+      "entryPoints": [
+        "#/dest/general manager block (data-manager=m.sounds)",
+        "universal search (m:m.sounds)",
+        "Home card 'Everyday & Appearance' → General & Appearance"
+      ],
+      "evidence": "catalog items render as Beacon item cards with status words; actions run truthful staged ops; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Appearance / themes / fonts / motion",
+      "managerId": "m.appearance",
+      "status": "demonstrated",
+      "route": "#/manager/m.appearance",
+      "entryPoints": [
+        "#/dest/general manager block (data-manager=m.appearance)",
+        "universal search (m:m.appearance)",
+        "Home card 'Everyday & Appearance' → General & Appearance"
+      ],
+      "evidence": "form/overview sections render as Beacon setting rows and status cards; fields deep-link to their inventory rows; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Spellcheck & Dictionaries",
+      "managerId": "m.spellcheck",
+      "status": "demonstrated",
+      "route": "#/manager/m.spellcheck",
+      "entryPoints": [
+        "#/dest/general manager block (data-manager=m.spellcheck)",
+        "universal search (m:m.spellcheck)",
+        "Home card 'Everyday & Appearance' → General & Appearance"
+      ],
+      "evidence": "form/overview sections render as Beacon setting rows and status cards; fields deep-link to their inventory rows; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Desktop / Tray / Window",
+      "managerId": "m.desktop",
+      "status": "demonstrated",
+      "route": "#/manager/m.desktop",
+      "entryPoints": [
+        "#/dest/general manager block (data-manager=m.desktop)",
+        "universal search (m:m.desktop)",
+        "Home card 'Everyday & Appearance' → General & Appearance"
+      ],
+      "evidence": "form/overview sections render as Beacon setting rows and status cards; fields deep-link to their inventory rows; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Teacher / Help",
+      "managerId": "m.teacher",
+      "status": "demonstrated",
+      "route": "#/manager/m.teacher",
+      "entryPoints": [
+        "#/dest/general manager block (data-manager=m.teacher)",
+        "universal search (m:m.teacher)",
+        "Home card 'Everyday & Appearance' → General & Appearance"
+      ],
+      "evidence": "catalog items render as Beacon item cards with status words; actions run truthful staged ops; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Doctor",
+      "managerId": "m.doctor",
+      "status": "demonstrated",
+      "route": "#/manager/m.doctor",
+      "entryPoints": [
+        "#/dest/system manager block (data-manager=m.doctor)",
+        "universal search (m:m.doctor)",
+        "Home card 'Extensions & System' → System & Advanced"
+      ],
+      "evidence": "read-only health projection: 10-check status-card grid with honest tones and deep links; opening it never re-runs checks"
+    },
+    {
+      "family": "File Manager / Editor",
+      "managerId": "m.files",
+      "status": "demonstrated",
+      "route": "#/manager/m.files",
+      "entryPoints": [
+        "#/dest/code manager block (data-manager=m.files)",
+        "universal search (m:m.files)",
+        "Home card 'Code & Collaboration' → Code & Execution"
+      ],
+      "evidence": "form/overview sections render as Beacon setting rows and status cards; fields deep-link to their inventory rows; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Terminal",
+      "managerId": "m.terminal",
+      "status": "demonstrated",
+      "route": "#/manager/m.terminal",
+      "entryPoints": [
+        "#/dest/code manager block (data-manager=m.terminal)",
+        "universal search (m:m.terminal)",
+        "Home card 'Code & Collaboration' → Code & Execution"
+      ],
+      "evidence": "roster sections render as Beacon item cards with data-object-id, status words, honest per-item actions, and detail drawers; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "LSP",
+      "managerId": "m.lsp",
+      "status": "demonstrated",
+      "route": "#/manager/m.lsp",
+      "entryPoints": [
+        "#/dest/code manager block (data-manager=m.lsp)",
+        "universal search (m:m.lsp)",
+        "Home card 'Code & Collaboration' → Code & Execution"
+      ],
+      "evidence": "roster sections render as Beacon item cards with data-object-id, status words, honest per-item actions, and detail drawers; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Formatters",
+      "managerId": "m.formatters",
+      "status": "demonstrated",
+      "route": "#/manager/m.formatters",
+      "entryPoints": [
+        "#/dest/code manager block (data-manager=m.formatters)",
+        "universal search (m:m.formatters)",
+        "Home card 'Code & Collaboration' → Code & Execution"
+      ],
+      "evidence": "catalog items render as Beacon item cards with status words; actions run truthful staged ops; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Commands & Shortcuts",
+      "managerId": "m.commands",
+      "status": "demonstrated",
+      "route": "#/manager/m.commands",
+      "entryPoints": [
+        "#/dest/extensions manager block (data-manager=m.commands)",
+        "universal search (m:m.commands)",
+        "Home card 'Extensions & System' → Skills, Plugins & Commands"
+      ],
+      "evidence": "catalog items render as Beacon item cards with status words; actions run truthful staged ops; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "MCP",
+      "managerId": "m.mcp",
+      "status": "demonstrated",
+      "route": "#/manager/m.mcp",
+      "entryPoints": [
+        "#/dest/system manager block (data-manager=m.mcp)",
+        "universal search (m:m.mcp)",
+        "Home card 'Extensions & System' → System & Advanced"
+      ],
+      "evidence": "roster sections render as Beacon item cards with data-object-id, status words, honest per-item actions, and detail drawers; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Skills",
+      "managerId": "m.skills",
+      "status": "demonstrated",
+      "route": "#/manager/m.skills",
+      "entryPoints": [
+        "#/dest/extensions manager block (data-manager=m.skills)",
+        "universal search (m:m.skills)",
+        "Home card 'Extensions & System' → Skills, Plugins & Commands"
+      ],
+      "evidence": "catalog items render as Beacon item cards with status words; actions run truthful staged ops; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Plugins",
+      "managerId": "m.plugins",
+      "status": "demonstrated",
+      "route": "#/manager/m.plugins",
+      "entryPoints": [
+        "#/dest/extensions manager block (data-manager=m.plugins)",
+        "universal search (m:m.plugins)",
+        "Home card 'Extensions & System' → Skills, Plugins & Commands"
+      ],
+      "evidence": "catalog items render as Beacon item cards with status words; actions run truthful staged ops; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Tools",
+      "managerId": "m.tools",
+      "status": "demonstrated",
+      "route": "#/manager/m.tools",
+      "entryPoints": [
+        "#/dest/extensions manager block (data-manager=m.tools)",
+        "universal search (m:m.tools)",
+        "Home card 'Extensions & System' → Skills, Plugins & Commands"
+      ],
+      "evidence": "catalog items render as Beacon item cards with status words; actions run truthful staged ops; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Testing & Debug",
+      "managerId": "m.testing",
+      "status": "demonstrated",
+      "route": "#/manager/m.testing",
+      "entryPoints": [
+        "#/dest/system manager block (data-manager=m.testing)",
+        "universal search (m:m.testing)",
+        "Home card 'Extensions & System' → System & Advanced"
+      ],
+      "evidence": "form/overview sections render as Beacon setting rows and status cards; fields deep-link to their inventory rows; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Storage & Retention",
+      "managerId": "m.storage",
+      "status": "demonstrated",
+      "route": "#/manager/m.storage",
+      "entryPoints": [
+        "#/dest/system manager block (data-manager=m.storage)",
+        "universal search (m:m.storage)",
+        "Home card 'Extensions & System' → System & Advanced"
+      ],
+      "evidence": "check grid of Beacon status cards, each deep-linking to its owning destination; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Backup & Restore",
+      "managerId": "m.backup",
+      "status": "demonstrated",
+      "route": "#/manager/m.backup",
+      "entryPoints": [
+        "#/dest/system manager block (data-manager=m.backup)",
+        "universal search (m:m.backup)",
+        "Home card 'Extensions & System' → System & Advanced"
+      ],
+      "evidence": "roster sections render as Beacon item cards with data-object-id, status words, honest per-item actions, and detail drawers; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Settings Lifecycle",
+      "managerId": "m.lifecycle",
+      "status": "demonstrated",
+      "route": "#/manager/m.lifecycle",
+      "entryPoints": [
+        "#/dest/system manager block (data-manager=m.lifecycle)",
+        "universal search (m:m.lifecycle)",
+        "Home card 'Extensions & System' → System & Advanced"
+      ],
+      "evidence": "import/export/reset/migration/rollback sections; fx.import-conflict renders the staged-import conflict honestly"
+    },
+    {
+      "family": "History & Sessions",
+      "managerId": "m.history",
+      "status": "demonstrated",
+      "route": "#/manager/m.history",
+      "entryPoints": [
+        "#/dest/system manager block (data-manager=m.history)",
+        "universal search (m:m.history)",
+        "Home card 'Extensions & System' → System & Advanced"
+      ],
+      "evidence": "roster sections render as Beacon item cards with data-object-id, status words, honest per-item actions, and detail drawers; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Runtime Artifacts / Project Outputs",
+      "managerId": "m.artifacts",
+      "status": "demonstrated",
+      "route": "#/manager/m.artifacts",
+      "entryPoints": [
+        "#/dest/system manager block (data-manager=m.artifacts)",
+        "universal search (m:m.artifacts)",
+        "Home card 'Extensions & System' → System & Advanced"
+      ],
+      "evidence": "roster sections render as Beacon item cards with data-object-id, status words, honest per-item actions, and detail drawers; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Source Control / Worktrees",
+      "managerId": "m.sourceControl",
+      "status": "demonstrated",
+      "route": "#/manager/m.sourceControl",
+      "entryPoints": [
+        "#/dest/branching manager block (data-manager=m.sourceControl)",
+        "universal search (m:m.sourceControl)",
+        "Home card 'Code & Collaboration' → Branching & Collaboration"
+      ],
+      "evidence": "roster sections render as Beacon item cards with data-object-id, status words, honest per-item actions, and detail drawers; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "GitHub Actions",
+      "managerId": "m.actions",
+      "status": "demonstrated",
+      "route": "#/manager/m.actions",
+      "entryPoints": [
+        "#/dest/branching manager block (data-manager=m.actions)",
+        "universal search (m:m.actions)",
+        "Home card 'Code & Collaboration' → Branching & Collaboration"
+      ],
+      "evidence": "check grid of Beacon status cards, each deep-linking to its owning destination; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Containers & Registries",
+      "managerId": "m.containers",
+      "status": "demonstrated",
+      "route": "#/manager/m.containers",
+      "entryPoints": [
+        "#/dest/code manager block (data-manager=m.containers)",
+        "universal search (m:m.containers)",
+        "Home card 'Code & Collaboration' → Code & Execution"
+      ],
+      "evidence": "roster sections render as Beacon item cards with data-object-id, status words, honest per-item actions, and detail drawers; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Web / Search / Fetch / Crawl",
+      "managerId": "m.web",
+      "status": "demonstrated",
+      "route": "#/manager/m.web",
+      "entryPoints": [
+        "#/dest/web manager block (data-manager=m.web)",
+        "universal search (m:m.web)",
+        "Home card 'Web & Media' → Web & Search"
+      ],
+      "evidence": "roster sections render as Beacon item cards with data-object-id, status words, honest per-item actions, and detail drawers; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Project Search Index",
+      "managerId": "m.searchIndex",
+      "status": "demonstrated",
+      "route": "#/manager/m.searchIndex",
+      "entryPoints": [
+        "#/dest/web manager block (data-manager=m.searchIndex)",
+        "universal search (m:m.searchIndex)",
+        "Home card 'Web & Media' → Web & Search"
+      ],
+      "evidence": "check grid of Beacon status cards, each deep-linking to its owning destination; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Workspace Cleanup",
+      "managerId": "m.cleanup",
+      "status": "demonstrated",
+      "route": "#/manager/m.cleanup",
+      "entryPoints": [
+        "#/dest/system manager block (data-manager=m.cleanup)",
+        "universal search (m:m.cleanup)",
+        "Home card 'Extensions & System' → System & Advanced"
+      ],
+      "evidence": "staged preview/confirm surfaces with truthful op progress; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "Media & Output",
+      "managerId": "m.media",
+      "status": "demonstrated",
+      "route": "#/manager/m.media",
+      "entryPoints": [
+        "#/dest/media manager block (data-manager=m.media)",
+        "universal search (m:m.media)",
+        "Home card 'Web & Media' → Media & Output"
+      ],
+      "evidence": "roster sections render as Beacon item cards with data-object-id, status words, honest per-item actions, and detail drawers; actions run through def.actions(store) as truthful staged ops/receipts"
+    },
+    {
+      "family": "DRY Method visible state where exposed",
+      "managerId": "m.dry",
+      "status": "demonstrated",
+      "route": "#/manager/m.dry",
+      "entryPoints": [
+        "#/dest/planning manager block (data-manager=m.dry)",
+        "universal search (m:m.dry)",
+        "Home card 'Planning & Memory' → Planning & Verification"
+      ],
+      "evidence": "read-only projection of shared-owner DRY state; no fabricated actions"
+    },
+    {
+      "family": "Product Onboarding",
+      "managerId": "m.onboarding",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.onboarding",
+      "entryPoints": [
+        "#/dest/system manager block (data-manager=m.onboarding)",
+        "universal search (m:m.onboarding)",
+        "Home card 'Extensions & System' → System & Advanced"
+      ],
+      "evidence": "Reachable insertion shell: owner + insertion contract + honest read-only sections rendered as Beacon status cards; no fabricated actions. numbered step cards with official-source note and exact host/environment choice",
+      "owner": "Product Onboarding owner thread (first-run flow owner; separate from Installation/Deployment and Server Claim/Bootstrap)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.onboarding/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Installation / Deployment",
+      "managerId": "m.deployment",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.deployment",
+      "entryPoints": [
+        "#/dest/system manager block (data-manager=m.deployment)",
+        "universal search (m:m.deployment)",
+        "Home card 'Extensions & System' → System & Advanced"
+      ],
+      "evidence": "Reachable insertion shell: owner + insertion contract + honest read-only sections rendered as Beacon status cards; no fabricated actions. numbered step cards with official-source note and exact host/environment choice",
+      "owner": "Release_Supply_Chain.md (installer and deployment supply chain)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.deployment/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Server Claim / Bootstrap",
+      "managerId": "m.serverClaim",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.serverClaim",
+      "entryPoints": [
+        "#/dest/system manager block (data-manager=m.serverClaim)",
+        "universal search (m:m.serverClaim)",
+        "Home card 'Extensions & System' → System & Advanced"
+      ],
+      "evidence": "Reachable insertion shell: owner + insertion contract + honest read-only sections rendered as Beacon status cards; no fabricated actions. numbered step cards with official-source note and exact host/environment choice",
+      "owner": "Server Backbone return (Post-Return Reconciliation v6)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.serverClaim/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Servers / Execution Hosts / Clients",
+      "managerId": "m.servers",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.servers",
+      "entryPoints": [
+        "#/dest/system manager block (data-manager=m.servers)",
+        "universal search (m:m.servers)",
+        "Home card 'Extensions & System' → System & Advanced"
+      ],
+      "evidence": "Reachable insertion shell: owner + insertion contract + honest read-only sections rendered as Beacon status cards; no fabricated actions. roster sections render as Beacon item cards with data-object-id, status words, honest per-item actions, and detail drawers",
+      "owner": "Server Backbone return (Post-Return Reconciliation v6, sections 4-5)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.servers/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Project Hosting & Files",
+      "managerId": "m.hosting",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.hosting",
+      "entryPoints": [
+        "#/dest/system manager block (data-manager=m.hosting)",
+        "universal search (m:m.hosting)",
+        "Home card 'Extensions & System' → System & Advanced"
+      ],
+      "evidence": "Reachable insertion shell: owner + insertion contract + honest read-only sections rendered as Beacon status cards; no fabricated actions. form/overview sections render as Beacon setting rows and status cards; fields deep-link to their inventory rows",
+      "owner": "storage-plan.md",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.hosting/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Remote Access",
+      "managerId": "m.remote",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.remote",
+      "entryPoints": [
+        "#/dest/system manager block (data-manager=m.remote)",
+        "universal search (m:m.remote)",
+        "Home card 'Extensions & System' → System & Advanced"
+      ],
+      "evidence": "Reachable insertion shell: owner + insertion contract + honest read-only sections rendered as Beacon status cards; no fabricated actions. roster sections render as Beacon item cards with data-object-id, status words, honest per-item actions, and detail drawers",
+      "owner": "Server Backbone return, section 10",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.remote/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Project Sync / Move",
+      "managerId": "m.projectSync",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.projectSync",
+      "entryPoints": [
+        "#/dest/system manager block (data-manager=m.projectSync)",
+        "universal search (m:m.projectSync)",
+        "Home card 'Extensions & System' → System & Advanced"
+      ],
+      "evidence": "Reachable insertion shell: owner + insertion contract + honest read-only sections rendered as Beacon status cards; no fabricated actions. staged preview/confirm surfaces with truthful op progress",
+      "owner": "storage-plan.md (Project Sync owner)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.projectSync/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Puppet Master application/content updates",
+      "managerId": "m.appUpdates",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.appUpdates",
+      "entryPoints": [
+        "#/dest/system manager block (data-manager=m.appUpdates)",
+        "universal search (m:m.appUpdates)",
+        "Home card 'Extensions & System' → System & Advanced"
+      ],
+      "evidence": "Reachable insertion shell: owner + insertion contract + honest read-only sections rendered as Beacon status cards; no fabricated actions. check grid of Beacon status cards, each deep-linking to its owning destination",
+      "owner": "Release_Supply_Chain.md",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.appUpdates/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Full Server backup owner flow",
+      "managerId": "m.serverBackup",
+      "status": "deferred_named_owner",
+      "route": "#/manager/m.serverBackup",
+      "entryPoints": [
+        "#/dest/system manager block (data-manager=m.serverBackup)",
+        "universal search (m:m.serverBackup)",
+        "Home card 'Extensions & System' → System & Advanced"
+      ],
+      "evidence": "Reachable insertion shell: owner + insertion contract + honest read-only sections rendered as Beacon status cards; no fabricated actions. staged preview/confirm surfaces with truthful op progress",
+      "owner": "storage-plan.md",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.serverBackup/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    }
+  ]
+}

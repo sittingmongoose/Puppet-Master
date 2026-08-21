@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en" data-theme="puppet-dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
+  <title>Puppet Master · Assistant Chat 5.6 Pro</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div id="app" class="app-shell" aria-busy="true">
+    <header class="global-bar">
+      <div class="brand-lockup">
+        <button class="icon-button rail-toggle" data-action="toggle-rail" aria-label="Toggle project rail" title="Toggle project rail"></button>
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">Puppet Master</span>
+        <span class="surface-name">Assistant Concept Lab</span>
+      </div>
+      <div class="global-actions">
+        <button class="quiet-button" data-action="open-demo-studio"><span data-icon="sparkles"></span> Demo Studio</button>
+        <button class="icon-button" data-action="open-mixer" aria-label="Open concept mixer" title="Open concept mixer"><span data-icon="sliders"></span></button>
+        <button class="icon-button" data-action="open-theme-menu" aria-label="Choose theme" title="Choose theme"><span data-icon="palette"></span></button>
+      </div>
+    </header>
+
+    <main class="workspace-shell">
+      <aside class="project-rail" data-region="project-rail">
+        <button class="rail-icon active" title="Assistant"><span data-icon="chat"></span></button>
+        <button class="rail-icon" title="Files"><span data-icon="files"></span></button>
+        <button class="rail-icon" title="Plans"><span data-icon="plan"></span></button>
+        <button class="rail-icon" title="Usage"><span data-icon="chart"></span></button>
+        <span class="rail-spacer"></span>
+        <button class="rail-icon" title="Settings"><span data-icon="settings"></span></button>
+      </aside>
+
+      <section class="editor-workspace" data-region="editor">
+        <div class="editor-topbar">
+          <div class="editor-tabs" id="editor-tabs"></div>
+          <div class="editor-actions">
+            <button class="icon-button small" data-action="split-editor" title="Split editor"><span data-icon="split"></span></button>
+            <button class="icon-button small" data-action="close-editor" title="Close editor"><span data-icon="close"></span></button>
+          </div>
+        </div>
+        <div class="editor-breadcrumbs" id="editor-breadcrumbs"></div>
+        <div class="editor-canvas" id="editor-canvas"></div>
+      </section>
+
+      <div class="workspace-resizer" data-resize="assistant" role="separator" aria-label="Resize assistant"></div>
+
+      <section class="assistant-dock" data-region="assistant">
+        <header class="assistant-header">
+          <div class="assistant-title-row">
+            <button class="icon-button history-toggle" data-action="toggle-history" title="Show or hide thread history"><span data-icon="sidebar"></span></button>
+            <div class="thread-title-wrap">
+              <div class="thread-title-line">
+                <h1 id="active-thread-title">Query Performance</h1>
+                <span class="thread-live-status" id="active-thread-status"><i></i><span>Working</span></span>
+              </div>
+              <div class="thread-meta" id="active-thread-meta">Agent · Sonnet 4.6 · 2m 06s</div>
+            </div>
+            <div class="assistant-header-actions">
+              <button class="context-ring-button" data-action="open-context" title="Context usage: 64%">
+                <svg viewBox="0 0 42 42" aria-hidden="true">
+                  <circle class="context-track" cx="21" cy="21" r="16"></circle>
+                  <circle class="context-value" cx="21" cy="21" r="16" pathLength="100"></circle>
+                </svg>
+                <span>64</span>
+              </button>
+              <button class="icon-button" data-action="open-thread-search" title="Search threads"><span data-icon="search"></span></button>
+              <button class="icon-button" data-action="open-demo-studio" title="Trigger a demo"><span data-icon="bolt"></span></button>
+              <button class="icon-button" data-action="open-thread-menu" title="Thread options"><span data-icon="more"></span></button>
+            </div>
+          </div>
+        </header>
+
+        <div class="assistant-body" id="assistant-body">
+          <aside class="thread-history pinned" id="thread-history" data-pinned="true">
+            <div class="history-toolbar">
+              <button class="new-thread-button" data-action="new-thread"><span data-icon="plus"></span><span>New thread</span></button>
+              <button class="icon-button small" data-action="open-thread-search" title="Search threads"><span data-icon="search"></span></button>
+              <button class="icon-button small" data-action="unpin-history" title="Unpin thread history"><span data-icon="pin"></span></button>
+            </div>
+            <div class="history-filter" id="history-filter-wrap" hidden>
+              <span data-icon="search"></span>
+              <input id="history-filter" type="search" placeholder="Search all threads…" autocomplete="off" />
+              <button class="icon-button tiny" data-action="clear-history-filter" title="Clear search"><span data-icon="close"></span></button>
+            </div>
+            <div class="history-scroll" id="history-scroll"></div>
+            <footer class="history-footer">
+              <button class="history-footer-button" data-action="toggle-archived"><span data-icon="archive"></span><span>Archived</span><span class="history-count" id="archived-count">6</span></button>
+            </footer>
+          </aside>
+
+          <div class="panel-resizer history-resizer" data-resize="history" role="separator" aria-label="Resize thread history"></div>
+
+          <aside class="activity-detail-dock" id="activity-detail-dock" hidden>
+            <div class="activity-detail-header">
+              <div class="activity-detail-heading"><span id="activity-detail-icon"></span><div><strong id="activity-detail-title">Goal</strong><small id="activity-detail-subtitle">Current objective</small></div></div>
+              <div class="activity-detail-actions">
+                <button class="icon-button tiny" data-action="unpin-activity" title="Unpin panel"><span data-icon="unpin"></span></button>
+                <button class="icon-button tiny" data-action="close-activity" title="Close panel"><span data-icon="close"></span></button>
+              </div>
+            </div>
+            <div class="activity-detail-scroll" id="activity-detail-content"></div>
+          </aside>
+          <div class="panel-resizer activity-resizer" data-resize="activity" role="separator" aria-label="Resize activity details" hidden></div>
+
+          <section class="chat-surface" id="chat-surface">
+            <div class="chat-scroll" id="chat-scroll">
+              <div class="transcript" id="transcript"></div>
+              <div class="scroll-anchor" id="scroll-anchor"></div>
+            </div>
+
+            <div class="jump-latest" id="jump-latest" hidden>
+              <button data-action="jump-latest"><span data-icon="down"></span> Jump to latest</button>
+            </div>
+
+            <div class="chat-activity-zone" id="chat-activity-zone">
+              <div class="chat-activity-bar" id="chat-activity-bar"></div>
+            </div>
+
+            <footer class="composer-shell" id="composer-shell">
+              <div class="active-capabilities" id="active-capabilities"></div>
+              <div class="composer-input-wrap">
+                <textarea id="composer-input" rows="1" placeholder="Ask Puppet Master anything…" spellcheck="true"></textarea>
+                <div class="composer-primary-actions">
+                  <button class="icon-button composer-attach" data-action="attach" title="Attach files"><span data-icon="paperclip"></span></button>
+                  <button class="send-button" data-action="send" title="Send message"><span data-icon="send"></span></button>
+                </div>
+              </div>
+              <div class="composer-controls">
+                <div class="selector-group" id="selector-group">
+                  <button class="text-selector" data-selector="persona"><span id="persona-label">Product Manager</span><span data-icon="chevron"></span></button>
+                  <button class="text-selector model-selector" data-selector="model"><span id="model-label">Sonnet 4.6</span><span class="fast-indicator" id="fast-indicator" hidden data-icon="bolt"></span><span data-icon="chevron"></span></button>
+                  <button class="text-selector" data-selector="mode"><span id="mode-label">Agent</span><span data-icon="chevron"></span></button>
+                  <button class="text-selector worktree-selector" data-selector="worktree"><span data-icon="branch"></span><span id="worktree-label">main</span><span data-icon="chevron"></span></button>
+                  <button class="text-selector" data-selector="permissions"><span id="permissions-label">Auto</span><span data-icon="chevron"></span></button>
+                  <button class="wand-button" data-selector="wand" title="Assistant capabilities"><span data-icon="wand"></span></button>
+                </div>
+                <div class="composer-status" id="composer-status"><span>⌘ ↵ to send</span></div>
+              </div>
+            </footer>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="status-bar">
+      <div><span class="status-dot online"></span><span>Agent · Claude · Sonnet 4.6</span></div>
+      <div><span data-icon="branch"></span><span id="status-worktree">main</span><span class="status-separator">·</span><span>Local server</span></div>
+      <div><span id="status-message">Ready</span><button class="status-info" title="Runtime details">i</button></div>
+    </footer>
+  </div>
+
+  <div id="overlay-root" class="overlay-root"></div>
+  <div id="toast-root" class="toast-root"></div>
+
+  <template id="popover-template">
+    <div class="pm-popover" role="dialog"><div class="popover-content"></div></div>
+  </template>
+  <template id="modal-template">
+    <div class="modal-layer"><div class="modal-scrim"></div><section class="pm-modal" role="dialog"><div class="modal-content"></div></section></div>
+  </template>
+
+  <script src="./data.js"></script>
+  <script src="./audit-inventory.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

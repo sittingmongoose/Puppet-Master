@@ -1,0 +1,87 @@
+{
+  "schema_id": "pm.settings_candidate_wiring_delta.v1",
+  "concept_id": "c08-beacon",
+  "stem": "concept-08-directory-take-3",
+  "model": "fable",
+  "note": "Keystone traces. Every trace is concept-local demo state and says so; nothing here masquerades as production wiring.",
+  "traces": [
+    {
+      "ui_element_id": "c08.row.control.set",
+      "ui_command_id": "cmd.settings.value.set",
+      "canonical_owner": "Settings schema/registry",
+      "validation_permission": "store.setValue validates by type/options/bounds; managed and unavailable rows render disabled controls and never dispatch",
+      "mutation_or_operation": "values[id] = validated value; changedFromDefault recomputed; recents prepended",
+      "expected_event_types": ["value", "receipt"],
+      "receipt": "Setting updated — <label> is now <value>",
+      "ui_projection": "Row re-renders with new value; extra-meaning chips only (managed/differs/recommended/not-set); invalid input shows an inline field error and keeps the old value",
+      "recovery_deep_link": "#/setting/<settingId>",
+      "demo_binding": { "interaction": "data-act toggle/menu/multi/num/text/range on [data-setting-id] rows" },
+      "concept_local_state": true
+    },
+    {
+      "ui_element_id": "c08.search.result.select",
+      "ui_command_id": "cmd.settings.search.select_result",
+      "canonical_owner": "Settings Search",
+      "validation_permission": "rid must resolve in the live index; routing never uses array position or label",
+      "mutation_or_operation": "push #/search/<query> (silent), then PM2.route.go(dest, {focus: rid}); landing re-resolves the rid for sectionId, scrolls, focuses, applies pm2-located (decays 1.9s; reduced-motion single step)",
+      "expected_event_types": ["hashchange x2"],
+      "receipt": "none (navigation)",
+      "ui_projection": "Exact row/object/section highlighted in place; unavailable dests toast their reason instead of dead-ending",
+      "recovery_deep_link": "#/search/<query> (browser Back restores query AND result list — verified 24/24)",
+      "demo_binding": { "interaction": "click/Enter on [data-rid] result cards" },
+      "concept_local_state": true
+    },
+    {
+      "ui_element_id": "c08.copy.apply",
+      "ui_command_id": "cmd.settings.copy.apply",
+      "canonical_owner": "Project copy owner (packet section 04)",
+      "validation_permission": "token-addressed staged preview only; unavailable and conflict rows are never written",
+      "mutation_or_operation": "PM2.copy.apply(token): restore point → one synchronous write pass → per-id verify; verify failure restores automatically",
+      "expected_event_types": ["op (queued/running phases/done)", "value {batch}", "copy {applied}", "receipt"],
+      "receipt": "Settings copied from <source> — n values applied atomically and verified; restore point named",
+      "ui_projection": "Step rail advances to Apply & receipt; receipt panel with receiptId/restorePointId and a working Roll back button (walked: 11 adds applied, rollback restored exactly)",
+      "recovery_deep_link": "#/copy",
+      "demo_binding": { "interaction": "data-act=copy-apply in the sticky confirm bar" },
+      "concept_local_state": true
+    },
+    {
+      "ui_element_id": "c08.provider.quickactions",
+      "ui_command_id": "cmd.provider.install.* / cmd.provider.refresh",
+      "canonical_owner": "Plans/CLI_Bridged_Providers.md",
+      "validation_permission": "actions render only when truly offered (Set up needs setupOffer; Repair needs a repair-offering installation; manual-only refuses with the ownership reason)",
+      "mutation_or_operation": "PM2.states.trigger(provider-refresh|reconnect|install-scan|install-repair, ref) — truthful staged ops with named phases; determinate progress only with a real denominator",
+      "expected_event_types": ["op", "provider", "receipt"],
+      "receipt": "per trigger (e.g. Catalog refreshed, Provider reconnected)",
+      "ui_projection": "Op strip at the stage foot shows phase/progress; manager model invalidated and re-rendered on completion",
+      "recovery_deep_link": "#/manager/m.providers/<providerId>/<tab>",
+      "demo_binding": { "interaction": "data-act=trigger buttons + data-act=item-action on installation cards" },
+      "concept_local_state": true
+    },
+    {
+      "ui_element_id": "c08.setting.missing",
+      "ui_command_id": "cmd.settings.setting.focus (unknown-id terminal)",
+      "canonical_owner": "Settings schema/registry",
+      "validation_permission": "settingId not in PM2_INVENTORY",
+      "mutation_or_operation": "none — read-only fallback surface",
+      "expected_event_types": ["none"],
+      "receipt": "none",
+      "ui_projection": "Honest 'not in this project's settings' page with the linked id in a technical detail block and guidance links (All Settings, Home); breadcrumb 'Settings / Not found'; nothing changed by following the link",
+      "recovery_deep_link": "#/all",
+      "demo_binding": { "interaction": "#/setting/<stale-id> deep link" },
+      "concept_local_state": true
+    },
+    {
+      "ui_element_id": "c08.domain.advanced.disclose",
+      "ui_command_id": "cmd.settings.subcategory.select (advanced tier)",
+      "canonical_owner": "Settings Workspace",
+      "validation_permission": "none (pure view state)",
+      "mutation_or_operation": "ui.advOpen['<cat>/<sub>'] toggled; deep links to advanced rows auto-open the owning disclosure before locating",
+      "expected_event_types": ["none"],
+      "receipt": "none",
+      "ui_projection": "Per-subgroup 'Show N advanced settings' expander keeps visible groups at ~4-8 rows",
+      "recovery_deep_link": "#/dest/<cat>/<sub>",
+      "demo_binding": { "interaction": "data-act=toggle-adv" },
+      "concept_local_state": true
+    }
+  ]
+}

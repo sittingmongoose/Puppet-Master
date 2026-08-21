@@ -30,6 +30,16 @@
   color: var(--text-primary);
 }
 .c06 button { font-family: inherit; color: inherit; }
+
+/* Shell page-tab overflow (audit F4/F5/F7, re-audit round 2): the first fix
+   here ellipsized per-tab, which at 760 collapsed labels to one or two
+   characters ("Da...", "P..."). Unreadable stubs read as breakage, so the
+   strip now drops whole trailing tabs instead — the shared correction in
+   _shared2/pm2-tokens.css owns that behaviour for every concept. These two
+   lines only keep the strip from forcing the titlebar wider; no truncation
+   policy is expressed locally any more. */
+.pm-page-tabs { min-width: 0; overflow: hidden; }
+.pm-page-tab { min-width: 0; white-space: nowrap; }
 .c06 button:focus-visible,
 .c06 input:focus-visible,
 .c06 a:focus-visible,
@@ -104,6 +114,11 @@
   background: transparent;
   text-align: left;
   font-size: var(--fs-sm);
+  /* One weight step above body so the domain name still leads its own count:
+     the calibrated --text-muted on the tally is darker than the label's
+     --text-secondary in friendly-light, and weight (not colour) carries the
+     label back to the front. The current item stays clearly apart at 700. */
+  font-weight: 500;
   line-height: 1.4;
   padding: 6px 10px;
   border-radius: var(--radius-sm);
@@ -196,8 +211,9 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 24ch;
+  max-width: 40ch; /* sanity cap only; truncation is space-driven (audit F1-F3) */
 }
+.c06-crumb[aria-current="page"] { flex-shrink: .35; } /* current page yields last */
 .c06-crumb:hover { color: var(--text-primary); text-decoration-color: currentColor; }
 .c06-crumb[aria-current="page"] { color: var(--text-primary); font-weight: 600; text-decoration: none; cursor: default; }
 .c06-crumb-sep { color: var(--text-muted); flex: none; }
@@ -233,11 +249,16 @@
 }
 .c06-close:hover { color: var(--text-primary); border-color: var(--c06-rule-strong); }
 
-/* topbar compact search */
+/* topbar compact search.
+   Audit F1-F3: the search field grows from a 140px basis toward its cap
+   only out of genuinely free space, so the breadcrumb trail keeps its
+   natural width and full crumbs render whenever they fit; crumbs only
+   ellipsize once the search is already at its minimum. */
 .c06-topsearch {
   position: relative;
   z-index: 80; /* the anchored dropdown must beat sibling rise-animation stacking contexts */
-  flex: 0 1 340px;
+  flex: 4 1 140px;
+  max-width: 340px;
   min-width: 140px;
 }
 .c06-topsearch input {
@@ -312,7 +333,9 @@
   align-items: baseline;
   gap: 10px;
 }
-.c06-h2 .c06-count { font-family: var(--body-font); font-size: var(--fs-sm); color: var(--text-muted); font-weight: 400; }
+/* Same reason as .c06-dest-count: the heading's tally sits on the meta tier
+   so the calibrated muted ink cannot read as body copy beside the heading. */
+.c06-h2 .c06-count { font-family: var(--body-font); font-size: var(--fs-xs); color: var(--text-muted); font-weight: 400; }
 .c06-h3 {
   margin: 0;
   font-family: var(--c06-display);
@@ -529,8 +552,15 @@
   font-weight: 700;
   line-height: 1.3;
 }
+/* Meta tier. The calibrated light-theme --text-muted is now darker than
+   --text-secondary, so a row's tally would read louder than its description
+   if it stayed one step below body size. Hierarchy is restored by size, not
+   colour: the tally drops to the concept's established 10px meta tier
+   (the same step as .c06-kicker / .c06-index-path / .c06-rail-count), so
+   title (20/700) > description (12) > tally (10) holds in every theme. */
 .c06-dest-count {
-  font-size: var(--fs-xs);
+  font-size: var(--fs-2xs);
+  letter-spacing: .02em;
   color: var(--text-muted);
   white-space: nowrap;
 }
@@ -550,6 +580,10 @@
   background: none;
   padding: 0;
   font-size: var(--fs-sm);
+  /* The utility line around these links is --text-muted, which the light-theme
+     calibration made darker than the link's --text-secondary; weight keeps the
+     link the strongest thing in its own sentence. */
+  font-weight: 500;
   color: var(--text-secondary);
   cursor: pointer;
   text-decoration: underline;
@@ -1217,3 +1251,49 @@
 .c06-root.c06-narrow .c06-kv-line { grid-template-columns: minmax(0, 1fr); }
 .c06-root.c06-narrow .c06-kv-note { grid-column: 1; }
 .c06-root.c06-narrow .c06-home-search input { font-size: var(--fs-xl); }
+
+/* ---------------- retro register: printed-terminal character ----------
+   Audit F8: retro-dark read as basic-dark with a green pill. Longform's
+   retro presentation now leans on what the retro token set provides —
+   the Orbitron display voice, dashed data-sheet rules, hard offset
+   shells, accent-inked kickers and folios. Everything routes through
+   pm-shell theme tokens; no hardcoded colors, no scanlines. */
+[data-theme^="retro"] .c06 {
+  --c06-display: var(--display-font); /* Orbitron display voice for headings */
+}
+[data-theme^="retro"] .c06 .c06-h1 { letter-spacing: .03em; }
+[data-theme^="retro"] .c06 .c06-kicker,
+[data-theme^="retro"] .c06 .c06-group-head,
+[data-theme^="retro"] .c06 .c06-drop-group-head,
+[data-theme^="retro"] .c06 .c06-copy-steps .is-here {
+  color: var(--accent-primary);
+  letter-spacing: .2em;
+}
+[data-theme^="retro"] .c06 .c06-rule-strong {
+  border-top: var(--border-width) solid var(--accent-primary);
+  opacity: 1;
+}
+[data-theme^="retro"] .c06 .c06-headrule::after { border-bottom: 1px dashed var(--border); }
+/* dashed row separators: the retro list voice, unmistakably not basic */
+[data-theme^="retro"] .c06 .c06-dest,
+[data-theme^="retro"] .c06 .c06-attn-item,
+[data-theme^="retro"] .c06 .c06-row,
+[data-theme^="retro"] .c06 .c06-entry,
+[data-theme^="retro"] .c06 .c06-manager-row,
+[data-theme^="retro"] .c06 .c06-fold,
+[data-theme^="retro"] .c06 .c06-src { border-bottom-style: dashed; }
+[data-theme^="retro"] .c06 .c06-dest-num,
+[data-theme^="retro"] .c06 .c06-steps li::before { color: var(--accent-primary); }
+/* hard offset shells straight from the retro elevation tokens */
+[data-theme^="retro"] .c06 .c06-banner,
+[data-theme^="retro"] .c06 .c06-sheet,
+[data-theme^="retro"] .c06 .c06-copy {
+  border-color: var(--border);
+  box-shadow: var(--elev-2);
+}
+[data-theme^="retro"] .c06 .c06-rail { border-right-style: dashed; }
+[data-theme^="retro"] .c06 .c06-rail-link[aria-current="true"] {
+  box-shadow: inset 0 0 0 1px var(--border), var(--elev-1);
+}
+[data-theme^="retro"] .c06 .c06-home-search input { border-bottom-style: dashed; }
+[data-theme^="retro"] .c06 .c06-home-search input:focus { border-bottom-style: solid; }

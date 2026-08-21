@@ -1,0 +1,14 @@
+{
+  "overall": "FAIL",
+  "checks": [
+    {
+      "name": "runner",
+      "status": "FAIL",
+      "detail": {
+        "error": "Error: Playwright unavailable\n    at pw (file:///mnt/data/work/pm56_pro_reaudit/tests/standalone-smoke.mjs:4:203)\n    at async file:///mnt/data/work/pm56_pro_reaudit/tests/standalone-smoke.mjs:6:13"
+      }
+    }
+  ],
+  "console": [],
+  "page": []
+}

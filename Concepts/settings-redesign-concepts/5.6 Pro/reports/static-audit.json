@@ -1,0 +1,322 @@
+{
+  "overall": "FAIL",
+  "passed": 60,
+  "failed": 3,
+  "checks": [
+    {
+      "label": "file:index.html:nonempty",
+      "status": "PASS",
+      "detail": "10504 bytes"
+    },
+    {
+      "label": "file:styles.css:nonempty",
+      "status": "PASS",
+      "detail": "83147 bytes"
+    },
+    {
+      "label": "file:data.js:nonempty",
+      "status": "PASS",
+      "detail": "33521 bytes"
+    },
+    {
+      "label": "file:app.js:nonempty",
+      "status": "PASS",
+      "detail": "179664 bytes"
+    },
+    {
+      "label": "javascript:data.js:syntax",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "label": "javascript:app.js:syntax",
+      "status": "FAIL",
+      "detail": "/mnt/data/work/pm56_pro_reaudit/app.js:86\n    warning:'<path d=\"M12 3 2.8 20h18.4z\"/><path d=\"M12 9v5M12 17h.01\"/>\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\nSyntaxError: Invalid or unexpected token\n    at wrapSafe (node:internal/modules/cjs/loader:1662:18)\n    at checkSyntax (node:internal/main/check_syntax:78:3)\n\nNode.js v22.16.0\n"
+    },
+    {
+      "label": "css:balanced-braces",
+      "status": "PASS",
+      "detail": "802 opens / 802 closes"
+    },
+    {
+      "label": "html:single-overlay-root",
+      "status": "PASS",
+      "detail": "1"
+    },
+    {
+      "label": "feature:history pinned default",
+      "status": "PASS",
+      "detail": "historyPinned\\s*:\\s*true"
+    },
+    {
+      "label": "feature:archive support",
+      "status": "PASS",
+      "detail": "archiv"
+    },
+    {
+      "label": "feature:thread search",
+      "status": "PASS",
+      "detail": "thread.{0,20}search|search.{0,20}thread"
+    },
+    {
+      "label": "feature:overlay manager",
+      "status": "PASS",
+      "detail": "class\\s+OverlayManager|OverlayManager\\s*="
+    },
+    {
+      "label": "feature:overlay positioning",
+      "status": "PASS",
+      "detail": "getBoundingClientRect"
+    },
+    {
+      "label": "feature:portal root",
+      "status": "PASS",
+      "detail": "overlay-root"
+    },
+    {
+      "label": "feature:eight themes",
+      "status": "PASS",
+      "detail": "glass-light"
+    },
+    {
+      "label": "feature:worktree selector",
+      "status": "PASS",
+      "detail": "worktree"
+    },
+    {
+      "label": "feature:permissions selector",
+      "status": "PASS",
+      "detail": "Ask for approval|Full Access"
+    },
+    {
+      "label": "feature:wand",
+      "status": "PASS",
+      "detail": "Context Lens|context-lens"
+    },
+    {
+      "label": "feature:goal mode",
+      "status": "PASS",
+      "detail": "Goal Mode|goal-mode"
+    },
+    {
+      "label": "feature:thought stream",
+      "status": "PASS",
+      "detail": "Thought Stream|thought-stream"
+    },
+    {
+      "label": "feature:subcompact apply",
+      "status": "PASS",
+      "detail": "Apply Subcompact|apply-subcompact"
+    },
+    {
+      "label": "feature:model favorites",
+      "status": "PASS",
+      "detail": "Favorites"
+    },
+    {
+      "label": "feature:configured providers",
+      "status": "PASS",
+      "detail": "configured"
+    },
+    {
+      "label": "feature:fast mode",
+      "status": "PASS",
+      "detail": "Fast mode|fast-mode|Fast"
+    },
+    {
+      "label": "feature:effort sidecar",
+      "status": "PASS",
+      "detail": "effort"
+    },
+    {
+      "label": "feature:working animation",
+      "status": "PASS",
+      "detail": "Working Animation|working-animation"
+    },
+    {
+      "label": "feature:web search state",
+      "status": "PASS",
+      "detail": "web-search|Web Search"
+    },
+    {
+      "label": "feature:web fetch state",
+      "status": "PASS",
+      "detail": "web-fetch|Web Fetch"
+    },
+    {
+      "label": "feature:browser control state",
+      "status": "PASS",
+      "detail": "browser-control|Browser Control"
+    },
+    {
+      "label": "feature:bash state",
+      "status": "PASS",
+      "detail": "Bash|bash"
+    },
+    {
+      "label": "feature:program testing",
+      "status": "PASS",
+      "detail": "program-test|Program Test"
+    },
+    {
+      "label": "feature:subagents",
+      "status": "PASS",
+      "detail": "subagent"
+    },
+    {
+      "label": "feature:activity bar",
+      "status": "PASS",
+      "detail": "activity-bar"
+    },
+    {
+      "label": "feature:activity detail",
+      "status": "PASS",
+      "detail": "activity-detail"
+    },
+    {
+      "label": "feature:goal domain",
+      "status": "PASS",
+      "detail": "goal"
+    },
+    {
+      "label": "feature:todo domain",
+      "status": "PASS",
+      "detail": "todo"
+    },
+    {
+      "label": "feature:changes domain",
+      "status": "PASS",
+      "detail": "change"
+    },
+    {
+      "label": "feature:artifacts domain",
+      "status": "PASS",
+      "detail": "artifact"
+    },
+    {
+      "label": "feature:read-only child thread",
+      "status": "PASS",
+      "detail": "read.only|read-only"
+    },
+    {
+      "label": "feature:exact change range",
+      "status": "PASS",
+      "detail": "changeRange|lineRange|range"
+    },
+    {
+      "label": "feature:plan card",
+      "status": "PASS",
+      "detail": "plan-card"
+    },
+    {
+      "label": "feature:approve and build",
+      "status": "PASS",
+      "detail": "Approve And Build"
+    },
+    {
+      "label": "feature:revise",
+      "status": "PASS",
+      "detail": "Revise"
+    },
+    {
+      "label": "feature:questionnaire",
+      "status": "PASS",
+      "detail": "questionnaire"
+    },
+    {
+      "label": "feature:question queue",
+      "status": "PASS",
+      "detail": "questionQueue|queued question|question-queue"
+    },
+    {
+      "label": "feature:mermaid",
+      "status": "PASS",
+      "detail": "mermaid"
+    },
+    {
+      "label": "feature:interactive visualizer",
+      "status": "PASS",
+      "detail": "visualizer"
+    },
+    {
+      "label": "feature:generated image",
+      "status": "PASS",
+      "detail": "generated-image|Generated Image"
+    },
+    {
+      "label": "feature:slash goal",
+      "status": "PASS",
+      "detail": "/goal"
+    },
+    {
+      "label": "feature:slash plan",
+      "status": "PASS",
+      "detail": "/plan"
+    },
+    {
+      "label": "feature:slash deep plan",
+      "status": "PASS",
+      "detail": "/deep-plan|/deepplan"
+    },
+    {
+      "label": "feature:slash debug",
+      "status": "PASS",
+      "detail": "/debug"
+    },
+    {
+      "label": "feature:long collapse",
+      "status": "PASS",
+      "detail": "collapse|expanded"
+    },
+    {
+      "label": "no generic resend",
+      "status": "PASS",
+      "detail": "generic Resend absent"
+    },
+    {
+      "label": "feature:eight recipes",
+      "status": "PASS",
+      "detail": "recipes"
+    },
+    {
+      "label": "feature:component families",
+      "status": "PASS",
+      "detail": "families"
+    },
+    {
+      "label": "feature:demo triggers",
+      "status": "PASS",
+      "detail": "triggerDemo|demoTriggers|PM56_DEMO"
+    },
+    {
+      "label": "feature:context details",
+      "status": "PASS",
+      "detail": "Context More Details|context-details"
+    },
+    {
+      "label": "icons:no-emoji-interface-glyphs",
+      "status": "PASS",
+      "detail": "0 emoji codepoints"
+    },
+    {
+      "label": "history:not-hover-hidden",
+      "status": "PASS",
+      "detail": "[]"
+    },
+    {
+      "label": "css:overlay-fixed",
+      "status": "FAIL",
+      "detail": ""
+    },
+    {
+      "label": "css:overlay-overflow-visible",
+      "status": "FAIL",
+      "detail": ""
+    },
+    {
+      "label": "css:sidecar-animation",
+      "status": "PASS",
+      "detail": ""
+    }
+  ]
+}

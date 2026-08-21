@@ -1,0 +1,107 @@
+{
+ "schema_id": "pm.settings_concept_impact_register.v1",
+ "concept_id": "concept-09-tome-tabs",
+ "model": "fable",
+ "generated": "2026-08-20",
+ "note": "Concept register only. Everything here is provisional and concept-local; canon is adjudicated by the implementation audit, never minted here.",
+ "plan_owner_impacts": [
+  {
+   "owner": "Plans/FinalGUISpec.md",
+   "kind": "extends",
+   "evidence": "Chapters navigation model: a persistent right-edge chapter tab spine (Home + the 12 canonical categories, numbered 01-12) plus layered page depth — deeper navigation pushes a sheet whose under-layer stays visible as a slim named edge on the leading side; clicking an edge peels back. The spec would need to define the layer-stack state machine (plan -> reconcile -> push/peel), the under-edge affordance, and the narrow transformation (spine becomes a top strip, layers become full-width push)."
+  },
+  {
+   "owner": "Plans/FinalGUISpec.md",
+   "kind": "extends",
+   "evidence": "Escape ladder implemented exactly as popup -> search dropdown -> open detail drawer -> manager object detail -> one layer out -> stop at Home; tab switches inside a manager replace the history entry (scrollspy semantics) so browser Back always returns one Settings level."
+  },
+  {
+   "owner": "Plans/settings_inventory.json",
+   "kind": "conflicts",
+   "evidence": "The rev-2 canonical deep-link probe id system.health.diagnostics-verbosity does not exist in the 828-row PM2_INVENTORY (system.health.* has platform-diagnostics, doctor-summary, telemetry, …). The concept answers the stale id with an honest 'not in this project's settings' chapter notice; harness probes should standardize on system.health.platform-diagnostics."
+  },
+  {
+   "owner": "Plans/settings_inventory.json",
+   "kind": "extends",
+   "evidence": "legacyScope metadata is consumed strictly as history: it renders only inside the row Details drawer as prose ('Before the project-only model this lived at … scope'), never as a scope control — matching the project-only statute."
+  },
+  {
+   "owner": "Plans/Provider_System (CLI bridged providers)",
+   "kind": "extends",
+   "evidence": "Provider manager renders the shared answer-block verbatim: connected state, account in use, what is included, on-exhaust behavior, models, setup/repair — with accounts/models/limits/routing/installs/setup/activity/advanced as manager-local tabs on the object page. Unknown-owner Ollama exposes a disabled update action whose refusal reason is rendered in DOM text, not hover-only."
+  },
+  {
+   "owner": "Plans/Copy_Settings (project copy policy)",
+   "kind": "extends",
+   "evidence": "Stepwise copy as stacked step sheets (the concept's layer metaphor inside the transaction): source -> categories -> preview -> confirm/apply. One-time language throughout; credential references copied by reference with the shared no-secret note; restore point staged before writes; rollback restores exactly and reports honestly."
+  },
+  {
+   "owner": "Plans/ObservableWork owner",
+   "kind": "extends",
+   "evidence": "A bare op handle returned by a manager action (PM2.states.op created but not staged by the shared module) is driven by the concept through an honest queued -> running -> done indeterminate sequence; determinate bars appear only when the op event carries completed/total (copy apply does)."
+  }
+ ],
+ "settings_inventory_impacts": [
+  { "row": "system.health.diagnostics-verbosity", "status": "missing_from_inventory", "note": "Stale rev-2 probe id; concept degrades honestly (chapter notice). Either mint the row or retire the probe." },
+  { "row": "permissions.approvals.rule-count", "status": "referenced_not_in_inventory", "note": "fx.import-conflict's second conflict points at this id, which is not an inventory row; its conflict card renders but the dest link degrades to the chapter notice." },
+  { "row": "general.sounds.master-volume", "status": "referenced_not_in_inventory", "note": "Same source: fixture conflict references a sounds row that the 828-row inventory does not carry under that id." },
+  { "row": "general.visual.glass-transparency", "status": "state_dependency", "note": "Row is unavailable unless a Glass theme is active (store co-exhibit); the row renders the reason inline." }
+ ],
+ "settings_schema_impacts": [
+  { "area": "value states", "note": "Rows render seven states (normal/managed/unavailable/error/restart-required/reconnect-required/changed-elsewhere) from resolveRow + pm2-states rowStates; the schema needs these as first-class row states, not booleans." },
+  { "area": "notices feed", "note": "Fixture overlays announce themselves via data.notices (pm2-fx-*); the concept surfaces those in the Home attention list. A real schema needs a typed notice -> destination contract (target.settingId / managerId / cat plus a primary act verb)." },
+  { "area": "collection controls", "note": "list/keyvalue rows carry structured values with no editing grammar in the shared modules; the concept shows honest summaries + drawer contents. Schema should either define an editing grammar or mark them manager-owned." }
+ ],
+ "command_id_impacts": [
+  { "pointer": "candidate-command-delta.json (6 provisional ids, all concept_local_state)" }
+ ],
+ "wiring_impacts": [
+  { "pointer": "candidate-wiring-delta.json (10 keystone traces, all concept_local_state)" }
+ ],
+ "dry_component_impacts": [
+  { "pointer": "candidate-dry-delta.json (42 + 9 family entries)" }
+ ],
+ "schema_event_storage_impacts": [
+  { "area": "localStorage", "note": "Only pm.settingsConcepts.fable.c09-chapters.* (shell prefs via PMShell + store scenario/fixture pins). No other keys written." },
+  { "area": "events", "note": "Subscribes to scenario/fixtures/stress/change/value/value-error/op/receipt/copy; re-renders the top layer via one rAF-coalesced rebuild and marks under layers stale (re-rendered on peel)." },
+  { "area": "URL state", "note": "Search state rides in #/search/<query> via replaceState while typing, so Back from a landing restores the query and its results without polluting history." }
+ ],
+ "migration_supersession_impacts": [
+  { "supersedes": "chip/bloom Settings architecture", "note": "Superseded by the persistent chapter spine + layered canvas (consistent with the packet supersessions list)." },
+  { "supersedes": "global previous/next-manager navigation", "note": "Absent by design; managers are reached through their chapter or search, never as slides." },
+  { "supersedes": "rev-2 probe id system.health.diagnostics-verbosity", "note": "Replaced by system.health.platform-diagnostics in this concept's matrices." }
+ ],
+ "slint_port_impacts": [
+  { "area": "layer stack", "note": "Layers are plain data ({key, kind, state}); render is a reconcile over the plan. Maps to a Slint stack of components with x-translate transitions; the settle pattern uses fixed timers, never transitionend." },
+  { "area": "virtualization", "note": "All Settings windows 828+2000 rows over fixed 56px row height with top/bottom spacers — direct ListView equivalent; only ~19 rows live in the DOM." },
+  { "area": "search dropdown", "note": "Bounded (limit 40), synchronous latest-request-wins queries, keyboard state (active index) held in a plain struct." },
+  { "area": "popup menus", "note": "Collision handling is measured once at open (flip up near the bottom edge, clamp horizontally) — portable to Slint Popup positioning." },
+  { "area": "effects budget", "note": "Zero backdrop-filter layers in concept CSS (the shell titlebar owns the single allowed one); shadows are theme tokens only." },
+  { "area": "reduced motion", "note": "All transitions ride the three shell kill switches; push/peel become instant swaps with under-edges still rendered; the locator becomes a single opacity step." }
+ ],
+ "test_fixtures": [
+  { "id": "boot-check-battery", "proof": "PASS at 1280/760/2500, glass-light, retro-dark, scenario=first-run, scenario=offline, fixture=fx.import-conflict (13 routes each, zero console errors)." },
+  { "id": "search-matrix", "proof": "24 recorded cases in search-route-matrix.json, all walked live." },
+  { "id": "manager-sweep", "proof": "47/47 routes in manager-route-matrix.json walked live." },
+  { "id": "copy-transaction", "proof": "Preview -> apply -> receipt -> rollback executed against PM2.copy (receipt rcpt.copy.1, restore point rp.copy.1)." },
+  { "id": "stress", "proof": "2,828 records reported, 19 DOM rows, synthetic records badged." }
+ ],
+ "deferred_named_owners": [
+  { "area": "Product Onboarding", "owner": "Product Onboarding owner thread", "note": "Insertion shell at #/manager/m.onboarding with return contract rendered." },
+  { "area": "Installation / Deployment", "owner": "Release_Supply_Chain.md", "note": "Shell at #/manager/m.deployment." },
+  { "area": "Server Claim / Bootstrap", "owner": "Server Backbone (Post-Return Reconciliation v6)", "note": "Shell at #/manager/m.serverClaim." },
+  { "area": "Servers / Execution Hosts / Clients", "owner": "Server Backbone", "note": "Shell at #/manager/m.servers." },
+  { "area": "Project Hosting & Files", "owner": "Hosting owner module", "note": "Shell at #/manager/m.hosting." },
+  { "area": "Remote Access", "owner": "Remote access owner module", "note": "Shell at #/manager/m.remote." },
+  { "area": "Project Sync / Move", "owner": "Project sync owner module", "note": "Shell at #/manager/m.projectSync." },
+  { "area": "Puppet Master application/content updates", "owner": "App update owner module", "note": "Shell at #/manager/m.appUpdates." },
+  { "area": "Full Server backup owner flow", "owner": "Server backup owner module", "note": "Shell at #/manager/m.serverBackup." }
+ ],
+ "unresolved_questions": [
+  "Should the Home attention list cap at 4 when fixture notices are active, or is exceeding the baseline cap acceptable for additive test overlays (current behavior)?",
+  "Tab switches inside a manager use replaceState; should object selection ALSO replace instead of push, or is detail-as-history-entry (current) the right Back grammar?",
+  "The stale diagnostics-verbosity id: mint the inventory row or retire the probe — which way does the census go?",
+  "store.attention() keys off the persisted scenario key and ignores URL-applied scenarios; concepts each re-derive the list from PM2.states.activeScenario(). Should pm2-store expose an active-scenario-aware attention()?",
+  "fx.import-conflict references two setting ids that are not inventory rows; should fixtures be constrained to real ids?"
+ ]
+}

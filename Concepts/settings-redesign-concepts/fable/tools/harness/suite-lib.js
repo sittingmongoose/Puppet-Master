@@ -280,6 +280,121 @@ function typeQuery(page, q) {
   }, q);
 }
 
+/* One-shot snapshot of the rendered, visible [data-rid] results. */
+function collectRids(page) {
+  return page.evaluate(function () {
+    var out = [];
+    var els = document.querySelectorAll("[data-rid]");
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      var r = el.getBoundingClientRect();
+      if (r.width < 2 || r.height < 2) continue;
+      var cs = getComputedStyle(el);
+      if (cs.visibility === "hidden" || cs.display === "none") continue;
+      out.push({
+        rid: el.getAttribute("data-rid"),
+        text: (el.innerText || "").replace(/\s+/g, " ").trim().slice(0, 160)
+      });
+      if (out.length >= 60) break;
+    }
+    return out;
+  });
+}
+
+function readSearchValue(page) {
+  return page.evaluate(function () {
+    var el = window.__pmHarnessSearchEl;
+    return (el && document.contains(el)) ? el.value : null;
+  });
+}
+
+/* Clear the resolved search input through REAL key events: select-all
+ * (Ctrl+A, modifiers:2) + Backspace (windowsVirtualKeyCode:8), with a direct
+ * value-setter fallback if the field still holds text. Clearing first lets
+ * the caller snapshot the post-clear dropdown, so re-running the SAME query
+ * is not misread as a stale dropdown. Returns true when focused + empty. */
+async function clearSearchViaKeys(page) {
+  const focused = await page.evaluate(function () {
+    var el = window.__pmHarnessSearchEl;
+    if (!el || !document.contains(el)) return false;
+    el.focus();
+    return document.activeElement === el || el.contains(document.activeElement);
+  });
+  if (!focused) return false;
+
+  const key = (params) => page.send("Input.dispatchKeyEvent", params);
+  await key({ type: "keyDown", modifiers: 2, key: "a", code: "KeyA", windowsVirtualKeyCode: 65 });
+  await key({ type: "keyUp", modifiers: 2, key: "a", code: "KeyA", windowsVirtualKeyCode: 65 });
+  await key({ type: "keyDown", key: "Backspace", code: "Backspace", windowsVirtualKeyCode: 8 });
+  await key({ type: "keyUp", key: "Backspace", code: "Backspace", windowsVirtualKeyCode: 8 });
+
+  if ((await readSearchValue(page)) !== "") {
+    // select-all+backspace did not clear (non-editable quirk); clear directly
+    await page.evaluate(function () {
+      var el = window.__pmHarnessSearchEl;
+      if (!el) return;
+      var proto = el.tagName === "TEXTAREA" ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype;
+      var d = Object.getOwnPropertyDescriptor(proto, "value");
+      if (d && d.set) d.set.call(el, ""); else el.value = "";
+      el.dispatchEvent(new Event("input", { bubbles: true }));
+    });
+  }
+  return true;
+}
+
+/* Type one keyDown(+text)/keyUp pair per character into the already-cleared,
+ * focused input. Falls back to the native value-setter + input event only
+ * when the key events produced no value change. Returns { ok, method }. */
+async function typeCharsViaKeys(page, q) {
+  const key = (params) => page.send("Input.dispatchKeyEvent", params);
+  for (const ch of String(q)) {
+    await key({ type: "keyDown", key: ch, text: ch });
+    await key({ type: "keyUp", key: ch });
+  }
+  if ((await readSearchValue(page)) === q) return { ok: true, method: "key-events" };
+
+  const fell = await typeQuery(page, q);
+  return { ok: !!fell, method: fell ? "value+input-event (key events produced no value change)" : null };
+}
+
+/* Clear + type in one call (kept for callers that need no mid-point). */
+async function typeQueryKeys(page, q) {
+  const cleared = await clearSearchViaKeys(page);
+  if (!cleared) return { ok: false, method: null };
+  return typeCharsViaKeys(page, q);
+}
+
+/* Wait until the rendered [data-rid] set DIFFERS from the pre-query snapshot,
+ * or an explicit no-results phrase shows with an empty set. Distinguishes a
+ * stale dropdown (previous query's results still showing) from real output.
+ * Resolves {changed:true, results, marker?} or false on timeout. */
+function waitResultsChanged(page, prevRids, timeoutMs) {
+  return pollInPage(page, function (prevSig) {
+    var out = [];
+    var els = document.querySelectorAll("[data-rid]");
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      var r = el.getBoundingClientRect();
+      if (r.width < 2 || r.height < 2) continue;
+      var cs = getComputedStyle(el);
+      if (cs.visibility === "hidden" || cs.display === "none") continue;
+      out.push({
+        rid: el.getAttribute("data-rid"),
+        text: (el.innerText || "").replace(/\s+/g, " ").trim().slice(0, 160)
+      });
+      if (out.length >= 60) break;
+    }
+    var sig = out.map(function (r2) { return r2.rid; }).join("\n");
+    if (sig !== prevSig) return { changed: true, results: out };
+    if (out.length === 0) {
+      var t = (document.body.innerText || "").replace(/\s+/g, " ");
+      var m = /no (results?|matches?)|nothing (found|matched|matches)|couldn.t find|didn.t (find|match)|can.t find|0 results/i.exec(t);
+      if (m) return { changed: true, results: [], marker: m[0].slice(0, 60) };
+    }
+    return null;
+  }, prevRids.join("\n"), timeoutMs || 3000, 100);
+}
+
 /* Poll for rendered, visible [data-rid] results. Returns [{rid,text}] or false. */
 function waitResults(page, timeoutMs) {
   return pollInPage(page, function () {
@@ -410,6 +525,7 @@ module.exports = {
   fileUrl, buildHash, isHarnessNoise, snapDiagnostics,
   pollInPage, waitReady, waitRouteTokens, settle, routeAttr,
   bootConcept, hashRoute, scanOverflow, shellCheck, bodyTextSansDrawer,
-  findSearchInput, typeQuery, waitResults, clickRid,
+  findSearchInput, typeQuery, typeQueryKeys, clearSearchViaKeys,
+  typeCharsViaKeys, collectRids, waitResults, waitResultsChanged, clickRid,
   screenshotSafe, safeClosePage, forEachConcept
 };

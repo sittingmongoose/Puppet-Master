@@ -27,7 +27,10 @@ const SCENARIOS = [
  * general.startup.restore-panel. */
 const FIXTURES = [
   { fx: "fx.import-conflict", route: "manager/m.lifecycle", token: "m.lifecycle", marker: "conflict" },
-  { fx: "fx.validation-error", route: "dest/web/fetch", token: "web", marker: "valid|whole number" },
+  /* marker includes bare "error": a visible Error chip/badge on the row's
+   * group is an honest acknowledgement even when the row itself sits in a
+   * collapsed advanced fold (markerFound records what actually matched) */
+  { fx: "fx.validation-error", route: "dest/web/fetch", token: "web", marker: "valid|whole number|error" },
   { fx: "fx.restart-required", route: "dest/general/visual", token: "general", marker: "restart" },
   { fx: "fx.reconnect-required", route: "dest/system/mcp", token: "system", marker: "reconnect" },
   { fx: "fx.changed-elsewhere", route: "dest/general/startup", token: "general", marker: "changed" },

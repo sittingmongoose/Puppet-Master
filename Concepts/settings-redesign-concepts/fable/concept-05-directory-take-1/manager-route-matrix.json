@@ -1,0 +1,1040 @@
+{
+  "schema": "pm2.manager_route_matrix.v1",
+  "conceptId": "c05",
+  "concept": "Waypoint",
+  "stem": "concept-05-directory-take-1",
+  "generated": "2026-08-20",
+  "method": "Every route walked live at 1280 and 760 plus a first-run pass in headless Chromium; shell hooks, back label, narrow push, rail suppression, console silence, and non-blank render asserted per route.",
+  "managers": [
+    {
+      "managerId": "m.providers",
+      "family": "Provider / Account / Model / Installation",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/ai Workspaces list (AI Brains & Providers)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.providers",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › AI Brains & Providers › AI Providers), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to AI Brains & Providers",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "one-pane push: roster list first, object detail pushes over it with an in-page back to the list; in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)",
+        "fx.reconnect-required (declared; visibly exercised for m.providers and m.lifecycle in the driver)",
+        "fx.rollback-complete (declared; visibly exercised for m.providers and m.lifecycle in the driver)",
+        "fx.changed-elsewhere (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.context",
+      "family": "Context & Instructions",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/memory Workspaces list (Memory & Context)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.context",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › Memory & Context › Context & Instructions), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to Memory & Context",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)",
+        "fx.long-text (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.memory",
+      "family": "Memory",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/memory Workspaces list (Memory & Context)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.memory",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › Memory & Context › Memory), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to Memory & Context",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.long-text (declared; visibly exercised for m.providers and m.lifecycle in the driver)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.personas",
+      "family": "Personas",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/personas Workspaces list (Personas)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.personas",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › Personas › Personas), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to Personas",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.import-conflict (declared; visibly exercised for m.providers and m.lifecycle in the driver)",
+        "fx.long-text (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.goal",
+      "family": "Goal & Automation",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/planning Workspaces list (Planning & Verification)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.goal",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › Planning & Verification › Goals & Automation), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to Planning & Verification",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.changed-elsewhere (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.crew",
+      "family": "Crew",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/branching Workspaces list (Branching & Collaboration)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.crew",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › Branching & Collaboration › Crews), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to Branching & Collaboration",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "one-pane push: roster list first, object detail pushes over it with an in-page back to the list; in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.permissions",
+      "family": "Permissions & FileSafe",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/safety Workspaces list (Permissions & Safety)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.permissions",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › Permissions & Safety › Permissions & FileSafe), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to Permissions & Safety",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.doom-loop-tripped (declared; visibly exercised for m.providers and m.lifecycle in the driver)",
+        "fx.changed-elsewhere (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.bsd",
+      "family": "Back Seat Driver",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/safety Workspaces list (Permissions & Safety)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.bsd",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › Permissions & Safety › Back Seat Driver), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to Permissions & Safety",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.changed-elsewhere (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.notifications",
+      "family": "Notifications & Sounds",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/general Workspaces list (General & Appearance)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.notifications",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › General & Appearance › Notifications & Sounds), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to General & Appearance",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.validation-error (declared; visibly exercised for m.providers and m.lifecycle in the driver)",
+        "fx.reconnect-required (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.sounds",
+      "family": "Sound Library / Uploads / Packs",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/general Workspaces list (General & Appearance)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.sounds",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › General & Appearance › Sound Library), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to General & Appearance",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.import-conflict (declared; visibly exercised for m.providers and m.lifecycle in the driver)",
+        "fx.validation-error (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.appearance",
+      "family": "Appearance / themes / fonts / motion",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/general Workspaces list (General & Appearance)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.appearance",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › General & Appearance › Appearance), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to General & Appearance",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.theme-fallback (declared; visibly exercised for m.providers and m.lifecycle in the driver)",
+        "fx.restart-required (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.spellcheck",
+      "family": "Spellcheck & Dictionaries",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/general Workspaces list (General & Appearance)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.spellcheck",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › General & Appearance › Spellcheck & Dictionaries), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to General & Appearance",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.long-text (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.desktop",
+      "family": "Desktop / Tray / Window",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/general Workspaces list (General & Appearance)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.desktop",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › General & Appearance › Desktop & Window), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to General & Appearance",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.restart-required (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.teacher",
+      "family": "Teacher / Help",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/general Workspaces list (General & Appearance)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.teacher",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › General & Appearance › Teacher & Help), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to General & Appearance",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.long-text (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.doctor",
+      "family": "Doctor",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.doctor",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › System & Advanced › Doctor), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.storage-pressure (declared; visibly exercised for m.providers and m.lifecycle in the driver)",
+        "fx.index-failed (declared; visibly exercised for m.providers and m.lifecycle in the driver)",
+        "fx.doom-loop-tripped (declared; visibly exercised for m.providers and m.lifecycle in the driver)",
+        "fx.reconnect-required (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.files",
+      "family": "File Manager / Editor",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/code Workspaces list (Code & Execution)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.files",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › Code & Execution › Files & Editor), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to Code & Execution",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.terminal",
+      "family": "Terminal",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/code Workspaces list (Code & Execution)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.terminal",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › Code & Execution › Terminal), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to Code & Execution",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.lsp",
+      "family": "LSP",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/code Workspaces list (Code & Execution)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.lsp",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › Code & Execution › Language Servers), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to Code & Execution",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.formatters",
+      "family": "Formatters",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/code Workspaces list (Code & Execution)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.formatters",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › Code & Execution › Formatters), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to Code & Execution",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.commands",
+      "family": "Commands & Shortcuts",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/extensions Workspaces list (Skills, Plugins & Commands)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.commands",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › Skills, Plugins & Commands › Commands & Shortcuts), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to Skills, Plugins & Commands",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.mcp",
+      "family": "MCP",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.mcp",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › System & Advanced › MCP Servers), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.reconnect-required (declared; visibly exercised for m.providers and m.lifecycle in the driver)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.skills",
+      "family": "Skills",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/extensions Workspaces list (Skills, Plugins & Commands)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.skills",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › Skills, Plugins & Commands › Skills), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to Skills, Plugins & Commands",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.plugins",
+      "family": "Plugins",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/extensions Workspaces list (Skills, Plugins & Commands)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.plugins",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › Skills, Plugins & Commands › Plugins), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to Skills, Plugins & Commands",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.tools",
+      "family": "Tools",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/extensions Workspaces list (Skills, Plugins & Commands)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.tools",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › Skills, Plugins & Commands › Agent Tools), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to Skills, Plugins & Commands",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.testing",
+      "family": "Testing & Debug",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.testing",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › System & Advanced › Testing & Debug), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.storage",
+      "family": "Storage & Retention",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.storage",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › System & Advanced › Storage & Retention), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.storage-pressure (declared; visibly exercised for m.providers and m.lifecycle in the driver)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.backup",
+      "family": "Backup & Restore",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.backup",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › System & Advanced › Backup & Restore), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.lifecycle",
+      "family": "Settings Lifecycle",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.lifecycle",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › System & Advanced › Settings Lifecycle), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.import-conflict (declared; visibly exercised for m.providers and m.lifecycle in the driver)",
+        "fx.rollback-complete (declared; visibly exercised for m.providers and m.lifecycle in the driver)",
+        "fx.validation-error (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.history",
+      "family": "History & Sessions",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.history",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › System & Advanced › History & Sessions), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.artifacts",
+      "family": "Runtime Artifacts / Project Outputs",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.artifacts",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › System & Advanced › Runtime Artifacts), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)",
+        "fx.storage-pressure (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.sourceControl",
+      "family": "Source Control / Worktrees",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/branching Workspaces list (Branching & Collaboration)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.sourceControl",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › Branching & Collaboration › Source Control & Worktrees), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to Branching & Collaboration",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.actions",
+      "family": "GitHub Actions",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/branching Workspaces list (Branching & Collaboration)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.actions",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › Branching & Collaboration › GitHub Actions), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to Branching & Collaboration",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.containers",
+      "family": "Containers & Registries",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/code Workspaces list (Code & Execution)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.containers",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › Code & Execution › Containers & Registries), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to Code & Execution",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.web",
+      "family": "Web / Search / Fetch / Crawl",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/web Workspaces list (Web & Search)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.web",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › Web & Search › Web & Research), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to Web & Search",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.credit-guard (declared; visibly exercised for m.providers and m.lifecycle in the driver)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.searchIndex",
+      "family": "Project Search Index",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/web Workspaces list (Web & Search)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.searchIndex",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › Web & Search › Project Search Index), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to Web & Search",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.index-failed (declared; visibly exercised for m.providers and m.lifecycle in the driver)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.cleanup",
+      "family": "Workspace Cleanup",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.cleanup",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › System & Advanced › Workspace Cleanup), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.media",
+      "family": "Media & Output",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/media Workspaces list (Media & Output)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.media",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › Media & Output › Media & Output), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to Media & Output",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.loading-cached (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.dry",
+      "family": "DRY Method visible state where exposed",
+      "status": "demonstrated",
+      "entryPoints": [
+        "dest/planning Workspaces list (Planning & Verification)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.dry",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › Planning & Verification › Single Owners), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to Planning & Verification",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane stacked document (section headings in reading order); in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline",
+        "scenario:first-run (honest empty state)",
+        "fx.doom-loop-tripped (declared; visibly exercised for m.providers and m.lifecycle in the driver)"
+      ],
+      "pass": true
+    },
+    {
+      "managerId": "m.onboarding",
+      "family": "Product Onboarding",
+      "status": "deferred_named_owner",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.onboarding",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › System & Advanced › Onboarding), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane read-only shell; in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline (read-only shell)",
+        "scenario:first-run"
+      ],
+      "pass": true,
+      "owner": "Product Onboarding owner thread (first-run flow owner; separate from Installation/Deployment and Server Claim/Bootstrap)"
+    },
+    {
+      "managerId": "m.deployment",
+      "family": "Installation / Deployment",
+      "status": "deferred_named_owner",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.deployment",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › System & Advanced › Installation & Deployment), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane read-only shell; in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline (read-only shell)",
+        "scenario:first-run"
+      ],
+      "pass": true,
+      "owner": "Release_Supply_Chain.md (installer and deployment supply chain)"
+    },
+    {
+      "managerId": "m.serverClaim",
+      "family": "Server Claim / Bootstrap",
+      "status": "deferred_named_owner",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.serverClaim",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › System & Advanced › Server Claim), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane read-only shell; in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline (read-only shell)",
+        "scenario:first-run"
+      ],
+      "pass": true,
+      "owner": "Server Backbone return (Post-Return Reconciliation v6)"
+    },
+    {
+      "managerId": "m.servers",
+      "family": "Servers / Execution Hosts / Clients",
+      "status": "deferred_named_owner",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.servers",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › System & Advanced › Servers & Hosts), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane read-only shell; in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline (read-only shell)",
+        "scenario:first-run"
+      ],
+      "pass": true,
+      "owner": "Server Backbone return (Post-Return Reconciliation v6, sections 4-5)"
+    },
+    {
+      "managerId": "m.hosting",
+      "family": "Project Hosting & Files",
+      "status": "deferred_named_owner",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.hosting",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › System & Advanced › Project Hosting & Files), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane read-only shell; in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline (read-only shell)",
+        "scenario:first-run"
+      ],
+      "pass": true,
+      "owner": "storage-plan.md"
+    },
+    {
+      "managerId": "m.remote",
+      "family": "Remote Access",
+      "status": "deferred_named_owner",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.remote",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › System & Advanced › Remote Access), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane read-only shell; in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline (read-only shell)",
+        "scenario:first-run"
+      ],
+      "pass": true,
+      "owner": "Server Backbone return, section 10"
+    },
+    {
+      "managerId": "m.projectSync",
+      "family": "Project Sync / Move",
+      "status": "deferred_named_owner",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.projectSync",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › System & Advanced › Project Sync & Move), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane read-only shell; in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline (read-only shell)",
+        "scenario:first-run"
+      ],
+      "pass": true,
+      "owner": "storage-plan.md (Project Sync owner)"
+    },
+    {
+      "managerId": "m.appUpdates",
+      "family": "Puppet Master application/content updates",
+      "status": "deferred_named_owner",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.appUpdates",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › System & Advanced › App Updates), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane read-only shell; in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline (read-only shell)",
+        "scenario:first-run"
+      ],
+      "pass": true,
+      "owner": "Release_Supply_Chain.md"
+    },
+    {
+      "managerId": "m.serverBackup",
+      "family": "Full Server backup owner flow",
+      "status": "deferred_named_owner",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup related-workspaces strip",
+        "universal search"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.serverBackup",
+      "shellRetained": "yes — top bar with named Back, breadcrumb (Settings › System & Advanced › Full Server Backup), persistent search, project identity, Close Settings; in-stage settings rail at wide widths",
+      "backTarget": "Back to System & Advanced",
+      "closeTarget": "Close Settings -> honest simulated receipt 'Returns to the Dashboard' (no real app shell exists)",
+      "narrowBehavior": "single-pane read-only shell; in-stage rail hidden (verified at 760)",
+      "statesShown": [
+        "scenario:baseline (read-only shell)",
+        "scenario:first-run"
+      ],
+      "pass": true,
+      "owner": "storage-plan.md"
+    },
+    {
+      "managerId": "m.providers",
+      "family": "Provider / Account / Model / Installation",
+      "status": "demonstrated",
+      "entryPoints": [
+        "roster item",
+        "search object/workflow results",
+        "focus rids"
+      ],
+      "route": "concept-05-directory-take-1.html#/manager/m.providers/<providerId>/<tab>",
+      "shellRetained": "yes — breadcrumb extends to Settings › AI Brains & Providers › AI Providers › <provider>",
+      "backTarget": "Back to AI Providers (manager roster)",
+      "closeTarget": "Close Settings -> simulated receipt",
+      "narrowBehavior": "object page pushes over the roster; in-page 'AI Providers' back returns to the list",
+      "statesShown": [
+        "accounts tab landing via o:m.providers/claude.key (driver)",
+        "installs tab: selected / shadowed / manual-only cards",
+        "setup tab: official source + host choices (Cursor CLI)",
+        "activity + fx.loading-cached refresh line (driver)",
+        "tab routes at /overview /accounts /models /limits /routing /installs /setup /activity /advanced"
+      ],
+      "pass": true
+    }
+  ]
+}

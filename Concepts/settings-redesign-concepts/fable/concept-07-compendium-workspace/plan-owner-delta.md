@@ -12,11 +12,11 @@ Concept register only. Nothing here edits canon; the audit adjudicates.
 | Performance decision register (2026-08-13) | extends | Reference implementation of the long-tail budget: 2,828 records windowed to fewer than 40 live DOM rows, O(n) facet recounts, latest-request-wins search, lazy manager hydration. |
 | Plans/CLI_Bridged_Providers.md | reuses | Provider list/detail renders shared resolver states verbatim: selected/shadowed installs, unknown-owner manual-only, ask-first updates with verify checklists, verification-failed -> rolled-back history, official-source Cursor CLI setup. |
 | Project-copy policy | extends | The preview showpiece contract: five outcome counts, per-area breakdown, expandable current->incoming diff rows with per-kind stories, credential-by-reference note, conflicts never auto-applied, receipt + exact rollback. |
-| Settings schema/registry | conflicts | Harness probe id `system.health.diagnostics-verbosity` is absent from pm2-inventory; c07 lands honestly on System & Advanced with an explanation. The rev-2 vs pm2 census should be reconciled before that id is treated as canonical. |
+| Settings schema/registry | conflicts | Legacy rev-2 probe id `system.health.diagnostics-verbosity` is absent from pm2-inventory; c07 lands honestly on System & Advanced with an explanation. boot-check now probes both this stale id (honest fallback required) and the real `system.health.platform-diagnostics` (exact landing required) — c07 passes both. The rev-2 vs pm2 census should still be reconciled. |
 
 ## 2. Notes for the audit
 
 1. Every trace in candidate-wiring-delta.json is flagged `concept_local_state`; no production wiring is claimed.
 2. Inventory `action`-type rows execute as simulated receipts only — the concept never fakes success beyond the honest "simulated" wording.
-3. The compendium's record-kind facet counts managers/diagnostics from the shared registry (42 demonstrated + 9 deferred owner shells); deferred shells stay read-only with owner + insertion contract rendered.
+3. The compendium's record-kind facet counts all 47 shared-registry entries (38 demonstrated managers + 9 deferred owner shells; 41 index as record kind "manager" and the 6 health/diagnostic-archetype ones as "diagnostic"); deferred shells stay read-only with owner + insertion contract rendered. The remaining 4 of the 42 demonstrated families (Home, Search, Workspace, row grammar) are concept surfaces, not registry entries.
 4. Legacy `global` scope metadata is surfaced only inside the row Details drawer as the impact-analysis note; no scope selector exists anywhere.

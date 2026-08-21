@@ -53,7 +53,15 @@
   }
   function nav(dest, params) { window.PM2.route.go(dest, params ? { params: params } : undefined); }
 
-  function scenario() { return String(store.get('scenario') || 'baseline'); }
+  function scenario() {
+    /* URL-applied scenarios (no pin=1) are never persisted to the store key,
+       so the states module is the authority when it is loaded. */
+    var S = window.PM2.states;
+    if (S && typeof S.activeScenario === 'function') {
+      try { return String(S.activeScenario() || 'baseline'); } catch (e) { /* fall through */ }
+    }
+    return String(store.get('scenario') || 'baseline');
+  }
   function fixtures() { return arr(store.get('fixtures')); }
   function hasFx(id) { return fixtures().indexOf(id) >= 0; }
 
@@ -137,7 +145,8 @@
     recentsOpen: false,
     ops: {},
     menu: null,            /* {anchor, items, onPick, current} while a popup menu is open */
-    locateTimer: 0
+    locateTimer: 0,
+    searchBlurTimer: 0     /* pending polite dropdown close; cancelled by any navigation */
   };
 
   var KIND_WORDS = {
@@ -169,7 +178,8 @@
     if (r === 'manager') return { kind: 'manager', managerId: d.managerId || null, objectId: d.objectId || null, tab: d.tab || null, sectionId: d.sectionId || null };
     if (r === 'setting') {
       var rec = INV.byId[d.settingId];
-      return { kind: 'setting', settingId: d.settingId || null, cat: rec ? rec.cat : (d.cat || 'system'), sub: rec ? rec.sub : null };
+      if (!rec) return { kind: 'missing-setting', settingId: d.settingId || null };
+      return { kind: 'setting', settingId: d.settingId, cat: rec.cat, sub: rec.sub };
     }
     if (r === 'search') return { kind: 'search', query: String(d.query || '') };
     if (r === 'all') return { kind: 'all' };
@@ -192,7 +202,10 @@
       return { dest: { route: 'home' }, label: 'Settings Home' };
     }
     if (v.kind === 'setting') return { dest: { route: 'dest', cat: v.cat }, label: catTitle(v.cat) };
-    if (v.kind === 'dest') return { dest: { route: 'home' }, label: 'Settings Home' };
+    if (v.kind === 'dest') {
+      if (v.sub) return { dest: { route: 'dest', cat: v.cat }, label: catTitle(v.cat) };
+      return { dest: { route: 'home' }, label: 'Settings Home' };
+    }
     return { dest: { route: 'home' }, label: 'Settings Home' };
   }
 
@@ -216,7 +229,8 @@
         var pg = vm && vm.pages ? vm.pages[v.objectId] : null;
         parts.push({ label: pg ? pg.title : v.objectId, here: true });
       }
-    } else if (v.kind === 'all') parts.push({ label: 'All Settings', here: true });
+    } else if (v.kind === 'missing-setting') parts.push({ label: 'Not found', here: true });
+    else if (v.kind === 'all') parts.push({ label: 'All Settings', here: true });
     else if (v.kind === 'copy') parts.push({ label: 'Copy from another project', here: true });
     else if (v.kind === 'search') parts.push({ label: 'Search', here: true });
     if (!parts[parts.length - 1].here) parts[parts.length - 1].here = true;
@@ -229,6 +243,9 @@
 
   function openDest(dest) {
     closeMenu();
+    /* A navigation decides the dropdown state on its own; no timer scheduled
+       against the previous surface may fire after this point. */
+    cancelSearchBlur();
     var d = obj(dest);
     ui.view = viewFromDest(d);
     if (ui.view.kind === 'search') {
@@ -249,38 +266,67 @@
   }
 
   /* Deep-link landing: scroll the exact element, focus it, mark it with
-     the calm decaying pm2-located treatment. */
+     the calm decaying pm2-located treatment. The URL route grammar carries
+     manager/object/tab but NOT sectionId, so a focus rid is resolved back
+     through the search index to recover the full destination. */
   function locate(dest) {
     var d = obj(dest);
     var target = null;
     var focus = String(d.focus || '');
 
     function q(sel) { return els.page ? els.page.querySelector(sel) : null; }
+    function byObjOrSection(id) {
+      if (!id) return null;
+      return q('[data-object-id="' + cssEsc(id) + '"]') || q('[data-section="' + cssEsc(id) + '"]');
+    }
 
-    if (focus) {
-      if (focus.indexOf('s:') === 0) target = q('[data-setting-id="' + cssEsc(focus.slice(2)) + '"]');
-      else if (focus.indexOf('o:') === 0 || focus.indexOf('u:') === 0 || focus.indexOf('d:') === 0) {
-        var tail = focus.slice(2).split('/').slice(1).join('/');
-        if (tail) target = q('[data-object-id="' + cssEsc(tail) + '"]') || q('[data-section="' + cssEsc(tail) + '"]');
-      } else if (focus.indexOf('h:') === 0) {
-        target = q('[data-object-id="' + cssEsc(focus.slice(2)) + '"]') || q('[data-section="' + cssEsc(focus.slice(2)) + '"]');
-      } else if (!/^[amw]:/.test(focus)) {
-        target = q('[data-setting-id="' + cssEsc(focus) + '"]') || q('[data-object-id="' + cssEsc(focus) + '"]');
+    /* Recover the search result's full dest from the rid. */
+    var rdest = null;
+    if (focus && focus.indexOf(':') > 0) {
+      try {
+        var rr = window.PM2.search.resolveRid(focus);
+        if (rr) rdest = obj(rr.dest);
+      } catch (e) { rdest = null; }
+    }
+    rdest = rdest || {};
+
+    var settingId = d.settingId || rdest.settingId ||
+      (focus.indexOf('s:') === 0 ? focus.slice(2) : null) ||
+      (focus && focus.indexOf(':') < 0 ? focus : null);
+
+    /* 1. exact inventory row (auto-open the advanced disclosure if needed) */
+    if (settingId) {
+      target = q('[data-setting-id="' + cssEsc(settingId) + '"]');
+      if (!target) {
+        var rec = INV.byId[settingId];
+        if (rec) {
+          ui.advOpen[rec.cat + '/' + rec.sub] = true;
+          render();
+          target = q('[data-setting-id="' + cssEsc(settingId) + '"]');
+        }
       }
     }
-    if (!target && d.settingId) target = q('[data-setting-id="' + cssEsc(d.settingId) + '"]');
-    if (!target && d.settingId) {
-      /* advanced-tier row hiding behind the disclosure: open it and re-render */
-      var rec = INV.byId[d.settingId];
-      if (rec) {
-        ui.advOpen[rec.cat + '/' + rec.sub] = true;
-        render();
-        target = q('[data-setting-id="' + cssEsc(d.settingId) + '"]');
-      }
+    /* 2. exact section item (accounts row, installation, model, credential) */
+    if (!target) target = byObjOrSection(rdest.sectionId || d.sectionId);
+    /* 3. rid tail (o:/u:/d: object ids, h: topic ids) */
+    if (!target && /^[oud]:/.test(focus)) {
+      target = byObjOrSection(focus.slice(2).split('/').slice(1).join('/'));
     }
-    if (!target && d.sectionId) target = q('[data-object-id="' + cssEsc(d.sectionId) + '"]') || q('[data-section="' + cssEsc(d.sectionId) + '"]');
-    if (!target && d.objectId) target = q('[data-object-id="' + cssEsc(d.objectId) + '"]');
+    if (!target && focus.indexOf('h:') === 0) target = byObjOrSection(focus.slice(2));
+    /* 4. the managed object itself */
+    if (!target) target = byObjOrSection(rdest.objectId && rdest.objectId !== d.objectId ? rdest.objectId : null);
+    if (!target && d.objectId && ui.view.kind === 'manager' && !(ui.view.tab)) {
+      target = q('[data-object-id="' + cssEsc(d.objectId) + '"]');
+    }
+    /* 5. a domain subgroup */
     if (!target && d.sub && ui.view.kind === 'dest') target = q('[data-section="sub.' + cssEsc(d.sub) + '"]');
+    /* 6. manager fallbacks: the active tab's section, then the header —
+       a manager-level result still gets a real landing element. */
+    if (!target && ui.view.kind === 'manager' && (focus || d.objectId || d.tab)) {
+      var tabId = d.tab || rdest.tab;
+      if (tabId) target = q('[data-section="' + cssEsc(tabId) + '"]');
+      if (!target) target = q('.c08-mgr-head');
+    }
     if (!target) {
       if (d.reason) toast('Not available right now — ' + d.reason);
       return;
@@ -315,6 +361,7 @@
     var html = '';
     if (v.kind === 'home' || v.kind === 'search') html = homeHtml();
     else if (v.kind === 'dest' || v.kind === 'setting') html = domainHtml(v.cat);
+    else if (v.kind === 'missing-setting') html = missingSettingHtml(v.settingId);
     else if (v.kind === 'manager') html = managerHtml(v);
     else if (v.kind === 'all') html = allHtml();
     else if (v.kind === 'copy') html = copyHtml();
@@ -333,7 +380,11 @@
   function renderBar() {
     if (!els.bar) return;
     var v = ui.view;
-    if (v.kind === 'home' || v.kind === 'search') { els.bar.hidden = true; els.bar.innerHTML = ''; return; }
+    if (v.kind === 'home') { els.bar.hidden = true; els.bar.innerHTML = ''; return; }
+    /* The search surface keeps the beacon bar too (packet 03 location
+       contract: Back to <named location> on every destination) — but its
+       search field IS the hero right below, so the bar omits its own. */
+    var isSearch = v.kind === 'search';
     els.bar.hidden = false;
     var parent = parentOf(v);
     var crumbs = crumbsFor(v);
@@ -346,12 +397,13 @@
     els.bar.innerHTML =
       '<div class="c08-measure"><div class="c08-bar-inner">' +
         (parent
-          ? '<button type="button" class="c08-bar-back" data-act="go" data-go="' + esc(goHash(parent.dest)) + '">' +
+          ? '<button type="button" class="c08-bar-back" data-pm2-back data-act="go" data-go="' + esc(goHash(parent.dest)) + '"' +
+              ' aria-label="Back to ' + esc(parent.label) + '">' +
               ico('arrowL') + '<span>' + esc(parent.label) + '</span></button>'
           : '') +
         '<nav class="c08-crumbs" aria-label="Breadcrumb">' + ch + '</nav>' +
         '<span class="c08-bar-spacer"></span>' +
-        searchHtml('bar') +
+        (isSearch ? '' : searchHtml('bar')) +
         '<button type="button" class="c08-close" data-act="close-settings">' + ico('close') + '<span>Close Settings</span></button>' +
       '</div></div>';
     hydrate(els.bar);
@@ -365,7 +417,7 @@
   function searchHtml(where) {
     return '<div class="c08-search-wrap" data-search="' + where + '">' +
       '<i class="c08-search-ico" data-ico="search"></i>' +
-      '<input class="c08-search-input" type="text" role="combobox" aria-expanded="' + (ui.search.open ? 'true' : 'false') + '"' +
+      '<input class="c08-search-input" data-pm2-search-input type="text" role="combobox" aria-expanded="' + (ui.search.open ? 'true' : 'false') + '"' +
         ' aria-label="Search settings" autocomplete="off" spellcheck="false"' +
         ' placeholder="Search settings, managers, providers, help…" value="' + esc(ui.search.query) + '">' +
       '<span class="c08-search-kbd"><kbd>Ctrl</kbd><kbd>K</kbd></span>' +
@@ -377,6 +429,12 @@
     var where = (ui.view.kind === 'home' || ui.view.kind === 'search') ? 'hero' : 'bar';
     var scope = where === 'hero' ? els.page : els.bar;
     return scope ? scope.querySelector('.c08-search-wrap[data-search="' + where + '"]') : null;
+  }
+
+  /* Drops a pending polite-close so it can never fire against a surface that
+     has since been replaced (see the focusout binding). */
+  function cancelSearchBlur() {
+    if (ui.searchBlurTimer) { clearTimeout(ui.searchBlurTimer); ui.searchBlurTimer = 0; }
   }
 
   function restoreSearchField() {
@@ -471,34 +529,75 @@
   /* Home                                                                */
   /* ------------------------------------------------------------------ */
 
-  function bannerHtml() {
+  /* At most ONE critical banner, only in scenarios that warrant one.
+     Returns {html, noticeId} so the attention list can skip the same item. */
+  function bannerInfo() {
     var scn = scenario();
     var warranted = { 'offline': 1, 'usage-exhausted': 1, 'invocation-failed': 1, 'first-run': 1 };
-    if (!warranted[scn]) return '';
+    if (!warranted[scn]) return { html: '', noticeId: null };
     var notice = null;
+    /* Prefer the scenario's own pushed notice (unshifted to the front). */
     arr(store.data.notices).some(function (n) {
-      if (n && (n.kind === 'attention' || n.kind === 'setup')) { notice = n; return true; }
+      if (n && String(n.id).indexOf('pm2-scn') === 0) { notice = n; return true; }
       return false;
     });
-    var head, body, dest;
+    if (!notice) {
+      arr(store.data.notices).some(function (n) {
+        if (n && (n.kind === 'attention' || n.kind === 'setup')) { notice = n; return true; }
+        return false;
+      });
+    }
+    var head, body, dest, noticeId = null;
     if (notice) {
       head = notice.headline; body = notice.consequence;
-      var t = obj(notice.target);
-      dest = t.cat ? { route: 'dest', cat: t.cat, sub: t.sub || null } : { route: 'dest', cat: 'ai' };
+      dest = noticeDest(notice);
+      noticeId = notice.id;
     } else if (scn === 'offline') {
       head = 'No network connection detected';
       body = 'Provider status, web search, and update checks are paused. Cached values stay visible and everything resumes with the connection.';
       dest = { route: 'dest', cat: 'web' };
     } else {
-      return '';
+      return { html: '', noticeId: null };
     }
-    return '<div class="c08-banner" role="status">' + ico(scn === 'first-run' ? 'sparkle' : 'warning') +
+    var html = '<div class="c08-banner" role="status">' + ico(scn === 'first-run' ? 'sparkle' : 'warning') +
       '<div class="c08-banner-text"><strong>' + esc(head) + '</strong><span>' + esc(body) + '</span></div>' +
       '<button type="button" class="c08-btn" data-act="go" data-go="' + esc(goHash(dest)) + '">Open</button></div>';
+    return { html: html, noticeId: noticeId };
   }
 
-  function attnHtml() {
-    var items = store.attention();
+  /* Map a scenario notice target (v1 or v2 vocabulary) onto a route dest. */
+  function noticeDest(n) {
+    var t = obj(obj(n).target);
+    if (t.cat) return { route: 'dest', cat: t.cat, sub: t.sub || null };
+    if (t.settingId) return { route: 'setting', settingId: t.settingId };
+    if (t.providerId) return { route: 'manager', managerId: 'm.providers', objectId: t.providerId };
+    if (t.manager === 'providers') return { route: 'manager', managerId: 'm.providers' };
+    return { route: 'dest', cat: 'ai' };
+  }
+
+  /* The compact attention list. store.attention() is curated but reads only
+     the PERSISTED scenario key; when a URL applied the scenario ephemerally
+     the mutated data.notices are the honest source instead. */
+  function attentionItems() {
+    var scn = scenario();
+    if (scn === 'calm' || scn === 'first-run') return [];
+    if (scn === String(store.get('scenario') || 'baseline')) return store.attention();
+    var out = [];
+    arr(store.data.notices).forEach(function (n) {
+      if (!n || !n.headline) return;
+      out.push({
+        id: n.id, statusWord: n.statusWord || (n.kind === 'setup' ? 'Setup' : 'Attention'),
+        headline: n.headline, consequence: n.consequence || '',
+        dest: noticeDest(n)
+      });
+    });
+    return out.slice(0, scn === 'attention-heavy' || scn === 'invocation-failed' ? 8 : 4);
+  }
+
+  function attnHtml(skipNoticeId) {
+    var items = attentionItems().filter(function (it) {
+      return !skipNoticeId || it.id !== skipNoticeId;
+    });
     if (!items.length) {
       if (scenario() === 'first-run') {
         return '<div class="c08-attn"><div class="c08-attn-head">' + ico('checkCircle') + 'Needs attention</div>' +
@@ -559,6 +658,7 @@
     var proj = obj(store.data.project);
     var firstRun = scenario() === 'first-run';
     var recents = firstRun ? [] : store.recents();
+    var banner = bannerInfo();
     var html = '<div class="c08-home c08-measure">' +
       '<header class="c08-mast"><div class="c08-mast-text">' +
         '<h1 class="c08-title">Settings</h1>' +
@@ -567,11 +667,13 @@
           '<span class="c08-project-role">· ' + esc(proj.role || '') + '</span>' +
           '<span class="c08-project-role">· every change here applies to this project only</span>' +
         '</div></div>' +
-        '<button type="button" class="c08-close" data-act="close-settings">' + ico('close') + '<span>Close Settings</span></button>' +
+        (ui.view.kind === 'search'
+          ? '' /* the beacon bar above already carries Close on the search surface */
+          : '<button type="button" class="c08-close" data-act="close-settings">' + ico('close') + '<span>Close Settings</span></button>') +
       '</header>' +
       '<div class="c08-hero">' + searchHtml('hero') + '</div>' +
-      bannerHtml() +
-      attnHtml() +
+      banner.html +
+      attnHtml(banner.noticeId) +
       '<section class="c08-cards" aria-label="Settings areas">' +
         CARDS.map(function (c) { return cardHtml(c, counts); }).join('') +
       '</section>' +
@@ -707,6 +809,19 @@
       '<span class="c08-mgr-block-blurb">' + esc(def.blurb || '') + '</span>' +
       '<span class="c08-mgr-block-word">' + (deferred ? 'Reserved · named owner' : 'Manager') + '</span></span>' +
     '</button>';
+  }
+
+  /* Honest surface for a deep link whose setting id is not in this
+     project's inventory (stale bookmark, older export, other version). */
+  function missingSettingHtml(settingId) {
+    return '<div class="c08-measure"><div class="c08-empty" style="margin-top:48px;max-width:720px">' +
+      '<strong>That setting is not in this project&rsquo;s settings</strong>' +
+      'The link points at a setting Puppet Master does not have here. It may come from an older export, a different version, or a renamed setting &mdash; nothing was changed by following it.' +
+      '<dl class="c08-row-details" style="margin-top:12px;border-top:0;padding:10px 0 0"><div><dt>Linked id</dt><dd>' + esc(settingId || '(empty)') + '</dd></div></dl>' +
+      '<div class="c08-drop-links">' +
+        '<button type="button" class="c08-btn" data-act="go" data-go="' + esc(goHash({ route: 'all' })) + '">' + ico('list') + 'Browse all 828 settings</button>' +
+        '<button type="button" class="c08-btn c08-btn-quiet" data-act="go" data-go="' + esc(goHash({ route: 'home' })) + '">Settings Home</button>' +
+      '</div></div></div>';
   }
 
   function domainHtml(cat) {
@@ -970,6 +1085,7 @@
     else if (kind === 'steps') body = stepsHtml(s);
     else if (kind === 'log') body = logHtml(s);
     else if (kind === 'health') body = healthHtml(s);
+    else if (kind === 'preview' && (s.counts || arr(s.conflicts).length)) body = importPreviewHtml(s);
     else {
       /* overview + preview + any future kind: items/rows as status cards,
          fields as form rows, entries as a log */
@@ -996,6 +1112,62 @@
       '</section>';
     }
     return '<section class="c08-sect" data-section="' + esc(s.id) + '">' + head + body + '</section>';
+  }
+
+  /* The Settings Lifecycle staged-import preview: shared modules emit it as
+     {state, source, counts:{add,change,conflict,invalid,legacyMigrated},
+      conflicts[], invalid, legacyMigrated, restorePointId, note} rather than
+     items/rows, so the generic fallback cannot render it. */
+  function importPreviewHtml(s) {
+    var src = obj(s.source);
+    var counts = obj(s.counts);
+    var html = '';
+    if (src.file) {
+      html += '<p class="c08-sect-desc">Staged file <strong>' + esc(src.file) + '</strong>' +
+        (src.createdOn ? ' from ' + esc(src.createdOn) : '') +
+        (src.mode ? ' · ' + esc(src.mode) : '') +
+        (s.state ? ' · ' + esc(String(s.state)) : '') + '.</p>';
+    }
+    var cards = [
+      { label: 'Will be added', value: counts.add },
+      { label: 'Will change', value: counts.change },
+      { label: 'Conflicts', value: counts.conflict, tone: counts.conflict ? 'attention' : '' },
+      { label: 'Invalid entries', value: counts.invalid, tone: counts.invalid ? 'attention' : '' },
+      { label: 'Migrated from legacy keys', value: counts.legacyMigrated }
+    ].filter(function (c) { return c.value != null; });
+    if (cards.length) {
+      html += '<div class="c08-statgrid">' + cards.map(function (c) {
+        return statCardHtml({ label: c.label, valueLabel: String(c.value), tone: c.tone || '' });
+      }).join('') + '</div>';
+    }
+    var conflicts = arr(s.conflicts);
+    if (conflicts.length) {
+      html += tableHtml({
+        columns: [
+          { id: 'setting', label: 'Conflicting setting' },
+          { id: 'local', label: 'This project' },
+          { id: 'incoming', label: 'Incoming' },
+          { id: 'note', label: 'Why it conflicts' }
+        ],
+        rows: conflicts.map(function (c) {
+          var rec = INV.byId[c.settingId];
+          return {
+            id: c.settingId,
+            dest: c.dest,
+            cells: {
+              setting: rec ? rec.label : c.settingId,
+              local: c.local != null ? c.local : '—',
+              incoming: c.incoming != null ? c.incoming : '—',
+              note: c.note || 'Both sides changed this value.'
+            }
+          };
+        })
+      });
+      html += '<p class="c08-sect-desc">Conflicts are kept out of an apply until you choose a side; the restore point' +
+        (s.restorePointId ? ' (' + esc(s.restorePointId) + ')' : '') + ' covers a full rollback.</p>';
+    }
+    if (s.note) html += '<p class="c08-sect-desc">' + esc(s.note) + '</p>';
+    return html || '<div class="c08-empty" style="margin-top:12px"><strong>Nothing staged</strong>No import preview is waiting right now.</div>';
   }
 
   function actionsRowHtml(def) {
@@ -1244,9 +1416,14 @@
     var order = { source: 0, cats: 1, preview: 2, receipt: 3 };
     return '<div class="c08-copy-steps">' + steps.map(function (s, i) {
       var state = order[step] === i ? 'active' : (order[step] > i ? 'done' : 'todo');
-      return (i ? '<span class="c08-copy-step-sep">' + ico('chevR') + '</span>' : '') +
+      /* The connector is emitted INSIDE the cell of the step it leads into, so
+         it can never be left behind at a wrap boundary; below 1000px the
+         stylesheet drops connectors altogether (see .c08-copy-step-sep). */
+      return '<span class="c08-copy-step-cell">' +
+        (i ? '<span class="c08-copy-step-sep" aria-hidden="true">' + ico('chevR') + '</span>' : '') +
         '<span class="c08-copy-step" data-state="' + state + '"><span class="c08-step-n">' +
-        (state === 'done' ? ico('check') : s.n) + '</span>' + esc(s.label) + '</span>';
+        (state === 'done' ? ico('check') : s.n) + '</span>' + esc(s.label) + '</span>' +
+      '</span>';
     }).join('') + '</div>';
   }
 
@@ -1290,7 +1467,7 @@
         '<button type="button" class="c08-detail-btn" data-act="copy-no-cats">Select none</button></div>' +
         '<div class="c08-cat-tiles">' + tiles + '</div>' +
         '<div class="c08-copy-bar"><span class="c08-copy-bar-note">Whole categories only at this step — the preview shows every individual value before anything applies.</span>' +
-          '<button type="button" class="c08-btn c08-btn-quiet" data-act="copy-back-src">Back</button>' +
+          '<button type="button" class="c08-btn c08-btn-quiet" data-pm2-back data-act="copy-back-src">Back</button>' +
           '<button type="button" class="c08-btn c08-btn-primary" data-act="copy-to-preview"' + (picked ? '' : ' disabled') + '>Preview changes</button></div>';
     } else if (c.step === 'preview') {
       var p = c.preview;
@@ -1319,7 +1496,7 @@
       }).join('') + '</tbody></table></div>' +
       '<div class="c08-copy-bar"><span class="c08-copy-bar-note">' +
         'Applying creates restore point first, then writes ' + (counts.add + counts.replace) + ' value' + ((counts.add + counts.replace) === 1 ? '' : 's') + ' atomically and verifies each one. Unavailable and conflicting values are never applied.</span>' +
-        '<button type="button" class="c08-btn c08-btn-quiet" data-act="copy-back-cats">Back</button>' +
+        '<button type="button" class="c08-btn c08-btn-quiet" data-pm2-back data-act="copy-back-cats">Back</button>' +
         '<button type="button" class="c08-btn c08-btn-primary" data-act="copy-apply"' + (c.busy ? ' disabled' : '') + '>' +
         (c.busy ? 'Applying…' : 'Create restore point & apply') + '</button></div>';
       if (c.failed) {
@@ -1766,13 +1943,25 @@
       }
     });
 
-    /* focusout closes the dropdown politely (unless focus moved inside) */
+    /* focusout closes the dropdown politely (unless focus moved inside).
+       The wait exists so a click that lands INSIDE the dropdown is not treated
+       as leaving it — but the timer must never outlive the surface it was
+       scheduled on. Picking a result moves focus out AND navigates, and Back
+       can re-open the search surface within the wait; a stale timer then closed
+       the freshly restored dropdown (the intermittent
+       route-*-back-restores failure). It is now cancellable, cancelled by
+       cancelSearchBlur() on every navigation, and refuses to act on a wrap that
+       is no longer the live one. */
     els.root.addEventListener('focusout', function (ev) {
       var wrap = ev.target.closest ? ev.target.closest('.c08-search-wrap') : null;
       if (!wrap) return;
-      setTimeout(function () {
+      cancelSearchBlur();
+      ui.searchBlurTimer = setTimeout(function () {
+        ui.searchBlurTimer = 0;
+        if (!document.contains(wrap)) return;          /* re-rendered since */
+        if (wrap !== activeSearchWrap()) return;       /* not the live wrap */
         var active = document.activeElement;
-        if (ui.search.open && wrap && !wrap.contains(active)) {
+        if (ui.search.open && !wrap.contains(active)) {
           ui.search.open = false;
           renderDrop();
         }
@@ -1945,6 +2134,12 @@
     els.page = document.getElementById('c08Page');
     els.ops = document.getElementById('c08Ops');
     els.toasts = document.getElementById('c08Toasts');
+    /* Toasts are position:fixed and centred on the viewport. The stage now
+       carries a mask (the States-dot safe band, see the concept CSS) and a
+       masked element becomes the containing block for fixed descendants, so
+       the host has to live outside it or the toasts would shift up-right and
+       fade at the scroll edge. Re-parenting is visually a no-op otherwise. */
+    document.body.appendChild(els.toasts);
 
     bindEvents();
     subscribe();

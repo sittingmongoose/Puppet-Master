@@ -19,7 +19,11 @@
   line-height: var(--line-height);
 }
 
-.c11-root button {
+/* zero-specificity resets: :where() keeps them below every .c11-* component
+   rule — a bare `.c11-root button` (0,1,1) silently out-ranked single-class
+   components like .c11-tab/.c11-btn (0,1,0) and stripped their padding,
+   borders and backgrounds (the ≥1280 "run-on tab strip" failure) */
+:where(.c11-root button) {
   font: inherit;
   color: inherit;
   background: none;
@@ -28,7 +32,7 @@
   cursor: pointer;
   text-align: left;
 }
-.c11-root input {
+:where(.c11-root input) {
   font: inherit;
   color: var(--text-primary);
 }
@@ -94,7 +98,9 @@
   padding: 6px 12px;
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-sm);
-  background: var(--surface-elevated);
+  /* the token surface alone can vanish against the sheet in the friendly
+     themes; a text-primary tint keeps the button silhouette in every theme */
+  background: color-mix(in srgb, var(--text-primary) 7%, var(--surface-elevated));
   color: var(--text-primary);
   font-weight: 600;
   font-size: var(--fs-sm);
@@ -248,7 +254,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 15px 9px;
+  padding: 8px 14px 9px;
   border: 1px solid color-mix(in srgb, var(--text-primary) 12%, transparent);
   border-bottom: var(--border-width) solid transparent;
   border-radius: var(--radius-md) var(--radius-md) 0 0;
@@ -280,6 +286,11 @@
   background: var(--accent-primary);
 }
 .c11-tab-home i[data-ico] { width: 14px; height: 14px; }
+/* a tab the strip cannot draw whole is never drawn at all: fitTabs() marks the
+   trailing tabs that would cross the scroller's right edge and they move to the
+   "More" menu, which already lists every destination. A half-tab with its right
+   border and radius sliced flat read as a rendering fault, not as an affordance. */
+.c11-tab.is-overflow { display: none; }
 
 /* edge fades signal hidden tabs (paint with the page background token) */
 .c11-tabrow.has-fade-l::before,
@@ -392,6 +403,10 @@
   padding-bottom: 4px;
   min-height: 30px;
 }
+/* display:flex would out-rank the hidden attribute's UA rule; the row is
+   hidden outright on Home, where the pile is one rung deep and the lone
+   "Home" chip only repeated the active "Home" tab directly above it. */
+.c11-crumbrow[hidden] { display: none; }
 .c11-back { flex: 0 0 auto; border-width: 1px; padding: 4px 10px; font-size: var(--fs-xs); }
 .c11-back[hidden] { display: none; }
 .c11-crumbs { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; min-width: 0; }
@@ -571,7 +586,8 @@
 .c11-tile {
   display: flex;
   align-items: flex-start;
-  gap: 11px;
+  flex-wrap: wrap;      /* lets the meta drop to its own line when cramped */
+  gap: 5px 11px;
   padding: 12px 14px;
   border: var(--border-width) solid var(--border-light);
   border-radius: var(--radius-md);
@@ -598,9 +614,24 @@
   background: var(--surface-elevated);
 }
 .c11-tile-ico i[data-ico] { width: 18px; height: 18px; }
-.c11-tile-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.c11-tile-title { font-weight: 700; }
+/* a small flex-basis (not auto) keeps the wrapping tile on one line at the wide
+   widths: the hypothetical main size stays well inside the card, so only the
+   deliberate 100% meta basis can force a second line */
+.c11-tile-main { flex: 1 1 120px; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+/* the title is the only run that can out-measure its column; break-word is the
+   last-resort guard that keeps a long word inside the box instead of letting it
+   overrun the meta column (the 900px "Permissions|62" collision) */
+.c11-tile-title { font-weight: 700; min-width: 0; overflow-wrap: break-word; }
+/* Own row, full card measure, indented to line up under the title. Inside the
+   title's column the clamp had only whatever the nowrap meta left over — as
+   little as 148px, ~27 characters a line, which cut the longest descriptions
+   mid-word and lost the point of the sentence. Across the whole card the
+   measure is ~285px at the 1280 three-column grid, so every one of the twelve
+   inventory descriptions (longest 69 characters) finishes inside two lines. */
 .c11-tile-desc {
+  flex: 1 0 100%;
+  min-width: 0;
+  padding-left: 45px;   /* 34px icon + 11px flex gap */
   font-size: var(--fs-xs);
   color: var(--text-secondary);
   display: -webkit-box;
@@ -623,6 +654,34 @@
   border-radius: var(--radius-pill);
   padding: 0 7px;
   line-height: 1.7;
+}
+
+/* Stack the meta under the title as soon as the CARD is cramped, not merely
+   when the whole stage is narrow: the grid is auto-fill minmax(280px,1fr), so
+   columns land anywhere between ~280px and ~360px, and below ~340px the
+   nowrap meta column starves the title into three and four line breaks with a
+   stranded ampersand. A container query tracks the real card width, so the
+   layout switches continuously instead of at one stage breakpoint. The
+   .is-narrow rules below repeat these declarations at higher specificity so
+   the fix survives even where container queries are unsupported. */
+.c11-tile { container-type: inline-size; }
+@container (max-width: 310px) {   /* 310px of CONTENT box = a ~338px card */
+  .c11-tile-main { flex: 1 1 120px; }
+  /* Once the meta drops to a row of its own it would otherwise sit between the
+     title and the sentence that explains it. Order keeps the reading order
+     title -> description -> counts at every card width. */
+  .c11-tile-desc { order: 2; }
+  .c11-tile-meta {
+    order: 3;
+    flex: 1 0 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 4px 8px;
+    padding-left: 45px;   /* 34px icon + 11px flex gap: aligns under the title */
+  }
+  .c11-tile-tab { white-space: nowrap; }
 }
 
 .c11-home-cols {
@@ -862,11 +921,17 @@
 .c11-row-more:hover { color: var(--text-primary); background: var(--accent-soft); }
 .c11-row-more i[data-ico] { width: 14px; height: 14px; }
 
+/* The track has to be a shape before it can be a state. --border-width is 0px
+   in both glass themes, so the track lost its outline entirely and its
+   --surface-alt fill sits within a couple of percent of the card behind it:
+   nothing but the knob said "switch", and off-state read as an unexplained
+   dot. max() keeps the retro themes' 2px rule and the plain themes' 1px while
+   guaranteeing a hairline everywhere. */
 .c11-switch {
   position: relative;
   width: 38px;
   height: 21px;
-  border: var(--border-width) solid var(--border);
+  border: max(1px, var(--border-width)) solid var(--border);
   border-radius: var(--radius-pill);
   background: var(--surface-alt);
   flex: 0 0 auto;
@@ -887,6 +952,14 @@
 .c11-switch.is-on { background: var(--accent-soft); border-color: var(--accent-primary); }
 .c11-switch.is-on .c11-switch-knob { transform: translateX(17px); background: var(--accent-primary); }
 .c11-switch[disabled] { opacity: .5; cursor: not-allowed; }
+/* Glass grounds are translucent, so --border (14% white / 16% ink) all but
+   dissolves against them once it is only a hairline. --text-muted is the
+   dimmest token in the family that still has to be legible on these surfaces,
+   which makes it the right weight for a track edge: present, not shouting.
+   These sit after .c11-switch.is-on and match its specificity, so the on-state
+   accent edge is restated here rather than left to be out-ranked. */
+[data-theme^="glass"] .c11-switch { border-color: var(--text-muted); }
+[data-theme^="glass"] .c11-switch.is-on { border-color: var(--accent-primary); }
 
 .c11-valbtn {
   display: inline-flex;
@@ -990,14 +1063,23 @@
 
 .c11-msec { margin-bottom: 22px; }
 .c11-msec.is-advanced { opacity: .92; }
-.c11-rgroup {
+/* Group labels on manager sheets. The selector carries .c11-root deliberately:
+   the heading reset above is `.c11-root h1, .c11-root h2, .c11-root h3` (0,1,1)
+   and it silently out-ranked a bare `.c11-rgroup` (0,1,0), so the declared
+   margins here computed to 0 and the label butted straight against the
+   paragraph above it — reading as a fourth body line, not a heading. Space
+   above must beat the body copy's own line-height (18.6px at --fs-sm) and must
+   clearly exceed the space below, so the label binds to the cards it labels. */
+.c11-root .c11-rgroup {
   font-size: var(--fs-sm);
   font-weight: 700;
   letter-spacing: .05em;
   text-transform: uppercase;
   color: var(--text-muted);
-  margin: 12px 0 6px;
+  margin: 20px 0 8px;
 }
+/* …unless it opens its container, where there is nothing to separate from. */
+.c11-root .c11-rgroup:first-child { margin-top: 0; }
 
 .c11-lines { display: flex; flex-direction: column; }
 .c11-line {
@@ -1080,6 +1162,7 @@
 .c11-table tbody tr:hover td { background: color-mix(in srgb, var(--text-primary) 3%, transparent); }
 .c11-table b { font-weight: 700; }
 .c11-td-acts { text-align: right; white-space: nowrap; }
+.c11-td-note { font-size: var(--fs-2xs); font-weight: 400; color: var(--text-muted); margin-top: 2px; max-width: 46ch; }
 .c11-tr-detail td { background: var(--surface-alt); }
 
 .c11-steps { margin: 8px 0 0; padding-left: 24px; }
@@ -1339,7 +1422,10 @@
   flex: 0 0 auto;
   width: 15px;
   height: 15px;
-  border: var(--border-width) solid var(--border);
+  /* fixed 2px text-secondary ring: the token pair (--border-width is 0px in
+     the glass themes, --border near-invisible on the pale cards) left the
+     source list with no radio affordance at all */
+  border: 2px solid var(--text-secondary);
   border-radius: 50%;
   background: var(--surface-elevated);
 }
@@ -1504,6 +1590,17 @@
 .c11-root.is-narrow .c11-searchwrap { order: 3; flex: 1 1 100%; max-width: none; }
 .c11-root.is-narrow .c11-role { display: none; }
 .c11-root.is-narrow .c11-home-cols { grid-template-columns: minmax(0, 1fr); }
+/* narrow: attention entries become simple stacked full-width cards — the wide
+   row (fixed status column + no-wrap flex) crushed the text at these widths */
+.c11-root.is-narrow .c11-attn-item {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 10px 12px;
+}
+.c11-root.is-narrow .c11-attn-item > .pm-status-word { flex: 0 0 auto; }
+.c11-root.is-narrow .c11-attn-main { width: 100%; flex: 0 0 auto; }
+.c11-root.is-narrow .c11-attn-item > .c11-btn { align-self: flex-start; }
 .c11-root.is-narrow .c11-copy-panes { grid-template-columns: minmax(0, 1fr); }
 .c11-root.is-narrow .c11-providers { grid-template-columns: minmax(0, 1fr); }
 .c11-root.is-narrow .c11-prov-roster {
@@ -1514,6 +1611,25 @@
 .c11-root.is-narrow .c11-dom-counts { display: none; }
 .c11-root.is-narrow .c11-tile-desc { display: none; }
 .c11-root.is-narrow .c11-tilegrid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+/* narrow tiles: the count/tab meta drops to its own line under the title.
+   Side by side it took ~40% of a 250px column and left the title a ~65px
+   measure — enough to strand the ampersand on its own line and, for the
+   longest words, to overrun the meta outright. Stacked, the title keeps the
+   full card measure and the meta stays right where the eye expects it. */
+.c11-root.is-narrow .c11-tile { flex-wrap: wrap; row-gap: 5px; }
+.c11-root.is-narrow .c11-tile-main { flex: 1 1 120px; }
+.c11-root.is-narrow .c11-tile-desc { order: 2; }
+.c11-root.is-narrow .c11-tile-meta {
+  order: 3;
+  flex: 1 0 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px 8px;
+  padding-left: 45px;   /* 34px icon + 11px flex gap: aligns under the title */
+}
+.c11-root.is-narrow .c11-tile-tab { white-space: nowrap; }
 
 .c11-root.is-tight .c11-baracts .c11-btn span { display: none; }
 .c11-root.is-tight .c11-bar, .c11-root.is-tight .c11-tabrow,
@@ -1524,7 +1640,6 @@
 .c11-root.is-tight .c11-more span { display: none; }
 .c11-root.is-tight .c11-tabrow.has-fade-r::after { right: 54px; }
 .c11-root.is-tight .c11-row-side { margin-left: 0; flex-wrap: wrap; }
-.c11-root.is-tight .c11-attn-item > .pm-status-word { flex-basis: 100%; }
 .c11-root.is-tight .c11-diff { grid-template-columns: minmax(0, 1fr); }
 .c11-root.is-tight .c11-kv-line span:first-child { flex-basis: 120px; }
 .c11-root.is-tight .c11-log-at { flex-basis: 90px; }
@@ -1532,3 +1647,35 @@
 /* retro themes: square silhouettes come from the radius tokens; keep the
    accent underline honest with the hard-offset shadow language */
 [data-theme^="retro"] .c11-tile:hover, [data-theme^="retro"] .c11-provcard:hover { box-shadow: var(--elev-2); }
+
+/* ================= contrast repairs (token-level) ================= */
+
+/* the shared default-kind value chip reads at ~2.3-2.9:1 in friendly-light and
+   basic-dark (muted text, transparent pill); lift it to text-secondary and give
+   the pill silhouette a real border so current values stay legible everywhere */
+.c11-root .pm-chip-value[data-kind="default"] {
+  color: var(--text-secondary);
+  border-color: var(--border);
+}
+
+/* ================= stage scrollport vs the fixed States dot =================
+
+   The States affordance (pm2-states.js) is position:fixed, 34px above the
+   viewport bottom and ~32px tall, so it hangs 42px above the 24px status bar —
+   i.e. straight over the stage's scrollport, where it painted on top of
+   whichever row happened to be scrolled under it (the glass themes are
+   translucent, so the row bled through the dot).
+
+   Bottom PADDING cannot fix that: padding lives inside the scroll box and
+   travels with the content, so it only clears the very last row. A bottom
+   BORDER sits outside the scrollport instead — the scrollport itself gets 48px
+   shorter, the dot ends up below every scrollable pixel, and no row can reach
+   it at any scroll position. Transparent, so the shell background shows through
+   exactly as it does under the status bar. */
+.pm-stage { border-bottom: 48px solid transparent; }
+
+/* ================= shell page-tab clipping (760) ================= */
+
+.pm-page-tabs{min-width:0;overflow:hidden}
+.pm-page-tab{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pm-page-tab.is-active{flex-shrink:0}

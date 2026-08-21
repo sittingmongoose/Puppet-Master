@@ -1,0 +1,165 @@
+{
+ "schema": "pm2.test_evidence.builder.v1",
+ "conceptId": "concept-10-command-suite",
+ "conceptName": "Conductor",
+ "model": "fable",
+ "builder_run": "2026-08-20",
+ "note": "Builder self-run checks. The Phase-C harness is the final writer.",
+ "syntax": {
+  "node_check": "PASS (concept-10-command-suite.js)"
+ },
+ "boot_check": {
+  "tool": "tools/boot-check.js (sandbox CDP driver, file://)",
+  "default_walk_1280": "PASS - 12 routes, zero console errors/warnings, zero exceptions, no overflow",
+  "width_760": "PASS - 12 routes (one-pane mode, embedded index Home, Back names parent)",
+  "width_2500": "PASS - 12 routes (bounded 2260px strip, no deserts)",
+  "all_manager_routes": "PASS - 47 manager routes walked in two batches (38 demonstrated incl. provider deep tabs claude/installs, cursor/setup, free-community/routes + 9 deferred shells)",
+  "scenario_first_run": "PASS - home, dest/ai, manager/m.providers, all, copy (guidance empty states, no recents)",
+  "scenario_offline": "PASS - home (one critical banner), dest/web, m.providers, m.web (unavailable reasons, last-known-good)",
+  "fixture_import_conflict": "PASS - home (Setup notice), m.lifecycle (staged preview), copy"
+ },
+ "search_walk": {
+  "tool": "scratchpad c10-search-walk.js (real UI: dropdown click -> landing -> history.back)",
+  "result": "ALL 22 cases PASS, zero console issues (see search-route-matrix.json)",
+  "covers": [
+   "grouped kinds",
+   "duplicate labels (API key x3, Rate limits pages)",
+   "typos (notifcations/apperance/permisions)",
+   "no-results flux capacitor",
+   "unavailable (WSL off, video)",
+   "manager objects (installation, sound pack, worktree)",
+   "deep rows",
+   "workflows (setup.cursor-cli, signin.claude, repair)",
+   "help topic",
+   "action",
+   "back-restores query AND result list on every case"
+  ]
+ },
+ "state_probe": {
+  "tool": "scratchpad c10-state-probe.js",
+  "stress": "2,828 records indexed; 34 DOM rows at any time (windowed); synthetic rows visibly tagged 'Stress fixture' after deep scroll",
+  "validation_error_fixture": "row web.fetch.cost-hard-cap shows Error state word + honest note ('last saved value still in effect')",
+  "copy_end_to_end": "typed COPY arms apply; staged op (restore point -> determinate apply -> verify); receipt rcpt.copy.1 + restore point rp.copy.1; rollback restored all 31 values exactly",
+  "escape_ladder": "setting/ai.models.default-model -> dest/ai/models -> dest/ai -> home -> stops at home",
+  "keyboard": "ArrowDown/Up move pane focus; Enter opens (dest route change); ArrowLeft retreats one level; Ctrl+K focuses the universal search",
+  "console": "zero errors/warnings across every probe"
+ },
+ "visual_selfcheck": {
+  "method": "boot-check --shots to a temp dir outside the repo; every PNG viewed and defects fixed before re-shooting",
+  "viewed": [
+   "home (baseline)",
+   "dest/ai (3-pane drill)",
+   "dest/ai/accounts (rows tables)",
+   "manager/m.providers (4-column Miller layout)",
+   "manager/m.providers/claude/installs (object page, installation flags)",
+   "all (virtualized compendium)",
+   "copy (2x2 advancing panels)",
+   "search dropdown (api key)",
+   "setting deep link with inline editor + pm2-located",
+   "retro-dark home",
+   "glass-light editor",
+   "760 narrow home + rows"
+  ],
+  "fixed_after_viewing": [
+   "attention list capped to contract size (fixture notices only merge in)",
+   "item title/sub stacking",
+   "3-pane threshold at 1280",
+   "object pages reclaim the domain pane's width",
+   "tab restyle for narrow columns",
+   "dropdown spacing + setting-result dedupe",
+   "manager nav meta truncation"
+  ],
+  "retheme_audit": "no green monochrome, no CRT effects, no fake prompt, no code-only labels; mono only in Details drawers / receipt ids / deferred deep links; all colors via pm-shell tokens"
+ },
+ "deep_link_spot_checks": {
+  "setting_system.health.diagnostics-verbosity": "id is NOT in PM2_INVENTORY (828 rows) - honest fallback: All Settings with an explicit 'not in this project's inventory' note; boots clean (in default boot-check walk)",
+  "search_notifcations": "typo tolerated; grouped results; walked in search matrix",
+  "manager_m.providers": "boots clean; roster + attention + actions strip",
+  "copy_instant": "copy?instant=1 in default walk; instant timescale settles staged ops immediately",
+  "all_stress": "all?stress=1 probed (see state_probe.stress)"
+ },
+ "performance_notes": {
+  "hydration": "manager view models computed on first entry (registry cache); Home touches only counts + attention + recents",
+  "virtualization": "All Settings windowed at 34px rows; section tables page at 24 rows with explicit Show more; search dropdown bounded to 40 results",
+  "latest_request_wins": "search input debounced 120ms over the synchronous shared index",
+  "no_probe_storms": "no provider/tool calls at boot; ops run only on explicit user action"
+ },
+ "known_limits": [
+  "Roster item actions without a matching shared trigger (verify, per-item rollback) return honest simulated receipts",
+  "manager-route-matrix 'pass' is from clean boot-check walks + viewed screenshots of representative managers, not a per-manager pixel audit",
+  "In one-pane mode the copy stages stack vertically with only the active stage expanded"
+ ],
+ "visual_audit_fix_2026-08-20": {
+  "note": "X10 fixer pass for the 7 confirmed Phase-C visual-audit findings. CSS-only (concept-10-command-suite.css); zero JS changes, keyboard model and pane logic untouched.",
+  "fixes": {
+   "f1_f2_attention_crush_major": "Manager detail Q/A grids now recompose against the ACTUAL detail-column width: .c10-mgr-main is a size container (Chromium 151 harness) and @container (max-width:620px) stacks .c10-qa to a full-width label-above-description layout. 'Needs attention' body copy reads at full measure at 1280 in friendly/glass/basic/retro; wide columns keep the aligned two-column form.",
+   "f6_f7_page_tab_overflow_major": ".pm-page-tabs{min-width:0;overflow:hidden}, .pm-page-tab{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}, .pm-page-tab.is-active{flex-shrink:0} added in concept CSS. At 760 tabs shrink with clean ellipses (no mid-glyph fragments) and the active Settings tab stays fully visible in all themes incl. retro.",
+   "f4_f5_wide_width_balance_minor": "Replaced the 2260px centered .c10-body cap (which left a left-anchored interior plus orphan background gutters at 2500) with full-width strip + per-surface bounded CENTERED content columns: .c10-home (1020), .c10-mgr-main-inner (940), .c10-ov (860), .c10-rows (1240), and a shared 1640px column for .c10-facets/.c10-vhead/.c10-vlist. 2200/2500 home now balanced, no deserts, no rail-side gap.",
+   "f3_copilot_pill_truncation_minor": ".c10-mgr-nav .c10-item-meta wraps (white-space:normal, max-width:104px, no ellipsis) so 'Signed in, cannot invoke' renders in full in basic themes at 760 and 1280; object titles keep room beside the wrapped pill."
+  },
+  "verify": {
+   "node_check": "PASS",
+   "boot_check": "PASS friendly-dark 760/1280/2500 (13 routes each), retro-dark 760 home, friendly-dark 2200 home, basic-dark 1280 home+m.providers - zero console errors, no overflow",
+   "suites": "matrix 6/6, managers 49/49, state 17/17 (concept-10, friendly-dark, 1280)",
+   "shots_reviewed": "friendly-dark-1280-manager (attention stacked full width), basic-dark-1280-manager (attention + full pill), friendly/retro-dark-760-home (tabs), friendly-dark-2200/2500-home (balanced), friendly-dark-2500 all/manager, 1280 home/dest-ai no-regression; temp shots deleted after review"
+  }
+ },
+ "visual_audit_fix_round2_2026-08-21": {
+  "note": "Second-round fixer pass for the 18 re-audit findings. Two of them (the duplicated Back and the squeezed 1280 breadcrumb/search) were regressions introduced by round 1's persistent top Back; both are resolved by making the Back single per surface rather than by removing the hook. Shell-chrome findings (900px basic nav, light-theme muted/nav tokens) are owned by _shared2/pm2-tokens.css and were verified, not re-fixed here.",
+  "fixes": {
+   "f3_f6_f9_f11_f14_f18_single_back_and_top_bar": "One visible Back per surface at every width. .c10-back-top is display:none in is-mode1 and is-mode2 (their pane heads already carry a [data-pm2-back]); All Settings and Copy now request their own pane-head Back at mode 2 (allPane/copyPane withBack) so the two-pane widths never lose the hook. At three-pane widths the top Back keeps the hook and, below 1400px of stage (new .is-tight root class, set from stage.clientWidth in render()), shows the short label 'Back' with the full 'Back to <parent>' preserved as aria-label. Top-bar flex reweighted: .c10-crumbs flex 1 1 auto, .c10-minisearch flex 0 20 300px, so the search field gives up width long before the trail; .c10-crumb:first-child and .c10-crumb.is-here shrink at 0.15 so root and current location survive last. Project chip drops its role text at mode 2 as well as mode 1. Result at 1280: full 'Settings > AI Brains & Providers > AI Providers' in every theme, full search placeholder; at 760 the toolbar Back is gone and the placeholder shortens to 'Search settings…' (plus text-overflow:ellipsis on the input, so a squeezed field fades instead of slicing a glyph).",
+   "f2_command_index_fit": ".c10-pane-index sizes to content (flex 0 0 auto; width auto; min-width 268px; max-width 340px) instead of a hard 268px, so all twelve COMMAND INDEX labels render in full in all 8 themes at every width >= 1000 (glass previously ellipsized 06/07/11 even at 2500).",
+   "f1_f5_f8_f17_copy_stage_guidance": "stageShell takes a hint: at one-pane width a collapsed stage renders its guidance sentence in a .c10-stagep-body.is-collapsed instead of an empty band, so steps 2/3/4 explain themselves at 760 exactly as at 1280. .c10-locked-note moved from --text-muted to --text-secondary and the .is-locked{opacity:.55} fade was removed (locked state is already carried by the stage number and title). Measured after: glass-light 9.38:1, friendly-dark 6.14:1, basic-dark 6.23:1 (were 1.64-2.41:1).",
+   "f4_attention_open_affordance": ".c10-att-go is now an outlined pill (--text-primary on the row surface, accent-tinted border, accent icon, hover fill) instead of 10px --text-muted. friendly-light 9.30:1 and glass-light 7.31:1 (were 2.04 / 2.11-2.33). The same lesson was applied to the manager's inline .c10-qa-jump 'Open' (accent blended 40% into --text-primary + standing underline): glass-light 4.74:1, was ~2.75.",
+   "f10_compendium_value_at_760": ".c10.is-mode1 keeps the compendium's VALUE column and header row: the row becomes a two-column, two-line grid (name over location, value right-aligned across both lines), TYPE and TIER drop because both survive as facet filters above. Row height 46px at narrow, matched by ROWH_NARROW in the script so the virtual-list spacer maths stays exact. The value cell moved to its own .c10-vval class at --fs-xs/--text-secondary (5.29:1) since it is the payload of the index, not metadata.",
+   "f13_domain_overview_at_760": "catPane takes inlineOverview: at one- and two-pane widths the domain route now carries the blurb, the settings/changed/everyday/advanced stat row and the KEY SETTINGS table inline (the same content the third pane shows at 1280), replacing the 'Overview' link that pointed at the page you were already on. Residual whitespace on dest/ai is data-driven (that domain has 3 sections, 1 manager, 2 curated settings) and matches the 1280 layout for the same route; dest/general and dest/safety fill the viewport.",
+   "f15_model_id_humanized": "humanValue() maps vendor-prefixed model slugs to their human names (anthropic/claude-opus-4 -> Claude Opus 4) wherever a value is displayed - row chips, the compendium VALUE column, editor options and the Recommended note - so the KEY SETTINGS table matches Recent changes. The raw string stays available as a new 'Stored value' mono line in the row's Details drawer.",
+   "f16_manager_note_contrast": ".c10-sec-note moved from --text-muted to --text-secondary: full sentences of explanation are body copy, not meta. basic-dark 6.33:1, retro-dark 7.10:1, friendly-dark 6.30:1 (were 2.93-4.23:1).",
+   "f7_f12_shell_chrome_verified": "The 900px basic nav truncation and the light-theme inactive-nav contrast are fixed in _shared2/pm2-tokens.css (whole-tab drop below 1000px; friendly-light --text-muted #5F5866). Verified in basic-dark-900-home ('Dashboard Projects Usage Settings' in full) and friendly-light-1280-home (5.99:1 nominal); no local override needed.",
+   "states_dot_clearance": "Coordinator note: the fixed States affordance reaches 11px above this concept's key bar. .c10-pane gains padding-bottom:12px so every pane's scroll VIEWPORT ends above it - trailing padding would only clear the last row and still let rows pass under the button mid-scroll. Verified by scrolling all six route surfaces to the bottom at 760/900/1280/2500: no leaf content intersects the button rect, and no key-bar content sits under it either."
+  },
+  "verify": {
+   "node_check": "PASS",
+   "boot_check": "PASS 760 / 900 / 1000 / 1280 / 2500 (13 routes each) - zero console errors or warnings, zero exceptions, no overflow",
+   "managers_suite": "49/49 (node tools/harness/run-suite.js managers --concepts=10), re-run after the final edit; a visible [data-pm2-back] remains on every non-Home surface",
+   "other_suites": "search 21/21, matrix 113/113, state 17/17 - re-run after the edits (the mini-search placeholder is now width-dependent)",
+   "back_crumb_sweep": "4 themes x 11 widths (760/880/900/1000/1100/1200/1280/1450/1560/1700/2200/2500) x 8 routes: exactly one visible [data-pm2-back] on every non-Home surface and none on Home; no top-bar overflow; no COMMAND INDEX label truncated anywhere; crumb truncation only at 1000-1100px on the four-level setting route, and only on intermediate crumbs (root and current always whole)",
+   "shots_reviewed": "friendly-dark-760 manager/copy/all/dest-ai/dest-general/home, glass-dark-1280-manager, basic-dark-1280-manager, glass-dark-2500-home, glass-light-1280 home/copy, glass-light-1000-manager, glass-light-2200-home, friendly-light-1280-home, friendly-light-2500-home, friendly-dark-1280 copy/all, basic-dark 760 copy/dest-ai/manager, basic-dark-900-home, basic-dark-1280-dest-ai, retro-dark 1280-home + 760-manager, retro-light-760-dest-ai; temp shots deleted after review"
+  }
+ },
+ "visual_audit_fix_final_2026-08-21": {
+  "note": "Final sign-off pass. Three findings, two of them MAJOR regressions introduced by the round-2 fixes (the widened .c10-pane-index narrowed the right pane; the new 760 KEY SETTINGS stack exposed a long-standing specificity bug). Findings 2 and 3 are the same defect measured on different themes and are fixed by one change. The three central _shared2/pm2-tokens.css fixes noted in the same brief (::placeholder theming, friendly-dark --text-muted #9E98A8, light-theme + basic-dark --accent-error) were verified present at pm2-tokens.css lines 140-143 / 48 / 79-84 and deliberately NOT re-done here — that file is not owned by this concept.",
+  "fixes": {
+   "f1_domain_overview_count_never_clipped": "MAJOR / regression. In the glass themes at 1280 the right-pane SECTIONS count for 'Accounts & Sign-in' rendered as '4' while the same screen's middle column said '44'. Cause: .c10-mgr-row was grid-template-columns 20px 1fr auto 14px, and .c10-item-meta carries overflow:hidden, which zeroes its automatic minimum size — so the nowrap description in the 1fr track claimed everything and collapsed the count cell to one glyph, with no ellipsis to warn the reader. Fix: (a) the text track is now minmax(0, 1fr) so the DESCRIPTION is what yields; (b) the wrapper span gained a class, .c10-mgr-text { min-width: 0 }, so its content can actually shrink (JS: both .c10-mgr-row emitters in catOverviewPane); (c) .c10-mgr-row > .c10-item-meta and > .c10-word now set min-width:max-content, max-width:none, overflow:visible, text-overflow:clip — a count or status word cannot be squeezed at all, in any theme at any width; (d) .c10-mgr-title gained display:block + ellipsis so a long section title truncates honestly instead of overflowing. Measured (live getBoundingClientRect, file:// CDP): glass-dark-1280 and glass-light-1280 'Accounts & Sign-in' meta width 5.58px vs scrollWidth 16px (CLIPPED) -> 12.73px vs scrollWidth 13px (NOT clipped); 40 and 28 unchanged at 12.73px. Description now ellipsizes with a visible '…' instead. friendly-dark-1280 unchanged (11.13px, never clipped, description still fits in full). Verified visually at 2x on glass-dark-1280, glass-light-1280, friendly-dark-1280 and glass-dark-900: 44 + 40 + 28 = 112, matching the pane's own '112 settings'.",
+   "f2_f3_narrow_row_rhythm_binds_value_to_its_own_label": "MAJOR / regression, covering findings 2 (basic-dark 760) and 3 (glass-light 760) — one defect, all eight themes. At one-pane width .c10-row stacks the value UNDER its own name, so vertical rhythm is the only cue for which value belongs to which setting; measured gaps were 10px INSIDE a row and 0px BETWEEN rows, so every value read as the value of the NEXT setting ('Default Model: Not set' when Default Model is Claude Opus 4). Root cause is a CSS specificity trap, not the round-2 layout: `.c10 button` (0,1,1) out-specifies the authored `.c10-row { padding: 5px 10px; border-bottom: 1px solid }` (0,1,0), so rows shipped with computed padding 0px and border-bottom-width 0px while the 10px grid `gap` still applied between the two stacked lines. Fix (scoped to one-pane width so the wide table is untouched): .c10.is-mode1 .c10-row now sets row-gap:2px, padding:7px 10px 8px and border-bottom:1px solid var(--border-light) at a winning specificity (0,3,0), with .c10.is-mode1 .c10-rows > .c10-row:last-child dropping the trailing hairline. The state word also moved from grid-row 1/span 2 to grid-row 1 (align-self:center) so 'Reconnect' / '—' sits on its setting's NAME line instead of floating in the gutter between name and value. Measured after (live boxes at 760): intra-row name->value gap 2.5px, inter-row value->next-name gap 16.5px — a 6.6:1 ratio in the correct direction, replacing the previous 10px-vs-0px inversion. Identical in basic-dark, friendly-dark and glass-light at 760, and at 900 (also one-pane). The same rhythm now applies to the full rows pane at 760, not just the KEY SETTINGS block: dest/ai/accounts measures 2.5px vs 16.5px on every row.",
+   "scope_note": "Only concept-10-command-suite.css and concept-10-command-suite.js were edited. No .html, no _shared/, no _shared2/, no other concept, no tools/, no hub index."
+  },
+  "verification": {
+   "node_check": "PASS (node --check concept-10-command-suite.js)",
+   "boot_check": "PASS at 760, 900, 1280 and 2500 (13 routes each, no console error/warning, no page exception, no horizontal overflow)",
+   "harness_managers": "49/49 (node tools/harness/run-suite.js managers --concepts=10) — unchanged",
+   "harness_matrix": "113/113 (node tools/harness/run-suite.js matrix --concepts=10) — unchanged",
+   "screenshots_reviewed": "Regenerated over file:// and read back at 2x/3x: glass-dark-1280-dest-ai and glass-light-1280-dest-ai (count reads 44), friendly-dark-760-dest-ai and basic-dark-760-dest-ai (value/label grouping unambiguous, gaps measured), friendly-dark-1280-dest-ai (no regression), plus glass-light-760, retro-light-760, basic-light-900, retro-dark-2500 and basic-dark-760 rows pane as spot checks. Temp shots deleted after review."
+  }
+ },
+ "visual_audit_fix_round4_2026-08-21": {
+  "note": "Full-coverage sweep (112 screenshots) round. Four MAJOR layout findings, all fixed. Findings 2, 3 and 4 turned out to share ONE root cause with the round-3 finding-2 defect and are fixed at source this time rather than patched per-surface: the button reset at the top of the stylesheet was authored as `.c10 button` (0,1,1) and out-specified every single-class rule on the concept's interactive surfaces (0,1,0). It is now wrapped as `:where(.c10 button)` (0,0,0). Also confirmed the three central _shared2/pm2-tokens.css fixes named in the brief and deliberately NOT re-done here (that file is not owned by this concept): retro-light --accent-lime #1B6E34 (pm2-tokens.css line 83, and retro maps --accent-primary onto it, so it is the colour of every t-setup/t-progress status word and every Back control on that face), glass-light --accent-warning #6E4700 / --accent-orange #6E3B00 (lines 72-73), glass-dark --text-muted rgba(237,231,248,0.72) (line 89). Verified by eye at 2x on retro-light-1280-manager (Not signed in / Refreshing / Signed in, cannot invoke / Ready all legible on cream) and glass-light-1280-dest-ai + glass-light-760-dest-ai (Reconnect state cell and the 44/40/28 counts legible on the lilac mesh).",
+  "root_cause": "`.c10 button { padding:0; border:none; background:none; color:inherit; text-align:left }` was (0,1,1). Nearly every surface in this concept IS a <button> with one class: .c10-item, .c10-mgr-row, .c10-row, .c10-att-row, .c10-recent-row, .c10-vrow, .c10-ix-item, .c10-btn, .c10-util, .c10-res, .c10-check, .c10-src, .c10-tab, .c10-facet-check, .c10-opt, .c10-more, .c10-advbar, .c10-ro-top, .c10-citem-top, .c10-catpick, .c10-countchip, .c10-crumb, .c10-back, .c10-close, .c10-editor-close, .c10-detail-toggle, .c10-qa-jump. Every one of those rules is (0,1,0), so the reset beat all of them; only :hover / .is-active rules (0,2,0) ever won, which is why hover backgrounds appeared while the padding they were drawn for did not. Census taken live (getComputedStyle over every .c10 button on 10 routes x 760/1280/2200, file:// CDP): 26 of 27 distinct button classes computed padding 0px 0px 0px 0px and border-width 0px on all four edges, background transparent — the single exception being .c10-row at one-pane width, where round 3's .c10.is-mode1 override (0,3,0) had been added specifically to out-specify the reset. What the reset was silently suppressing, beyond the three findings below: .c10-thead is authored `padding: 4px 10px` to line its column labels up with .c10-row's `padding: 5px 10px`, so with the row padding eaten the SETTING/VALUE/STATE headers sat 10px right of the column they name; .c10-vrow lost its border-bottom, so the 828-row compendium had no row hairlines at all and .c10-vhead sat 16px off its own columns; .c10-att-row, .c10-mgr-row, .c10-check, .c10-src and .c10-btn lost border + border-radius + surface-elevated background, so cards and buttons rendered as flat text; .c10-recent-row and .c10-res lost their separators. All of that is restored by the one-line change.",
+  "fixes": {
+   "f1_wide_width_composes_instead_of_deserting": "MAJOR. At 2200/2500 the content column stayed capped while the pane grew, so the composition was a rail pinned far left plus an island. Measured before (friendly-dark-2500-home, live boxes): COMMAND INDEX rail 72-340 (268px), content pane 340-2500 (2160px), .c10-home 910-1930 (1020px) -> 570.0px of empty band on EACH side of the only content on screen. Fix, in three moves. (a) The concept script now stamps `is-wide` at stage >= 1560 and `is-ultra` at stage >= 2000 (real stage width, so the shell's icon rail is already discounted) alongside the existing is-mode1/2/3 + is-tight ladder. (b) The panes take part of the width: .c10-pane-index min-width 296, .c10-pane-cat 340/380, .c10-mgr-nav 290/320. (c) Every content column's cap rises in two steps AND the two surfaces that are lists-of-lists recompose into two columns: .c10-home becomes a 2-col grid (masthead/search/banner span both; Needs attention + Utilities left, Recent changes right) capped 1400/1840; the domain overview's manager and section card lists get a .c10-ovlist wrapper that goes 2-up (new wrapper emitted by catOverviewPane); .c10-ov 1180/1480; .c10-rows 1480/1720; the compendium's facets/head/list 1640/1960; .c10-mgr-main-inner 1120/1320 with the Q/A definition list pairing up 2-across at ultra so an answer never runs past ~55 characters. Measured after (all live getBoundingClientRect over file://): 1700 home — index 72-368, pane 368-1700, .c10-home 368-1700 = the full pane, dead band 0.0px. 2200 home — pane 368-2200, home 368-2200, dead band 0.0px. 2500 home — pane 368-2500 (2132px), home 514-2354 (1840px), band 146.0px per side (6.9% of the pane, symmetric) and the space is spent on a genuine second column rather than left blank. Same sweep on the other wide routes at 2500: dest/ai overview 884-2364 in pane 748-2500 (136.0px per side, section cards 2-up), dest/ai/accounts rows 890-2358 in 748-2500 (16.0px), manager m.providers inner 1124-2444 in main 1088-2480 (36.0px, Needs-attention Q/A 2-up), all 1960px list in a 2132px pane (86.0px), copy 390-2500 = full pane (0.0px). Verified visually at 1700/2200/2500 on friendly-dark and retro-light, and 2200 glass-dark for the compendium.",
+   "f2_one_left_text_margin_at_760": "MAJOR. At 760 the SECTIONS / MANAGERS / OBJECTS / All-Settings row lists hung outside the page's own left text margin and butted against the icon rail. Measured before (friendly-dark-760-dest-ai): .c10-item title x = 36.0, which is exactly the pane's left edge and 0.0px clear of the icon rail, while the pane title measured 50.0 and the SECTIONS label text 52.0 — a 16px overhang. Cause: .c10-item's authored `padding: 7px 10px 7px 16px` was one of the declarations the reset ate. Fix: the :where() reset restores it, .c10-item's padding is retuned to `7px 9px 7px 15px` so 15 + its 1px transparent border lands on exactly 16 (the border used to add a stray pixel), .c10-ix-item likewise 6px 7px, .c10-pane-head moves 14 -> 16, and .c10-rows drops from `0 14px` to `0 6px` so 6 + .c10-row's own 10px padding also lands on 16 (the row's hover band still bleeds 6px past the margin, which is the intent). Measured after, one margin everywhere: friendly-dark-760-dest-ai pane title 52.0, SECTIONS/MANAGERS/KEY SETTINGS label text 52.0, every .c10-item title 52.0, every .c10-row name 52.0. Same at basic-dark-760-manager (52.0 across OBJECTS label, object names, the AI Providers h1 and the manager body — the one-pane manager body's padding-inline is now 16 to match the roster above it), glass-light-760 (52.0), basic-dark-900 (88.0 = 72 rail + 16), and at 1280 in all three panes (369.5 / 669.5 columns, pane title == label text == row name).",
+   "f3_sections_list_row_separation": "MAJOR. On the domain page the SECTIONS list read as one undifferentiated block: the gap from a section title to its own description equalled the gap to the next section. Measured before (friendly-dark-1280-dest-ai, live boxes): .c10-mgr-row computed padding 0px on all four edges, border-width 0px, background rgba(0,0,0,0); title bottom 341.6 -> its own description top 341.6 = 0.0px, description bottom 355.6 -> next row's title top 361.6 = 6.0px. Proximity carried almost no signal, and there was no card edge to carry it instead. Same root cause as finding 2 — .c10-mgr-row's authored `padding: 8px 10px; border: 1px solid var(--border-light); border-radius; background: var(--surface-elevated)` was suppressed wholesale. Measured after (same screen): computed padding 8px 10px, border-bottom 1px solid, background surface-elevated; title -> own description 0.0px, description -> next row's title 24.0px, i.e. the row's own two lines are 24x closer to each other than to the neighbouring row, and each row additionally carries a border and a fill. Verified on friendly-dark, glass-light and retro-light at 1280 and on friendly-dark at 2200 (where the same cards sit 2-up). Collateral, same fix: the KEY SETTINGS table's column headers now sit exactly over their columns — thead first cell 900.0 vs row name 900.0 and thead third cell 2236.0 vs row state 2236.0 at 2500, 669.5/669.5 and 1152.0/1152.0 at 1280 (they were 10px apart, the width of the suppressed .c10-row padding).",
+   "f4_one_pane_roster_binds_name_to_status": "MAJOR. At 760 a manager OBJECTS row is the full window width, so with .c10-item's grid at `1fr auto 14px` the provider name sat at the far left and its status flush right with nothing between them. Measured before (basic-dark-760-manager/m.providers): the name cell stretched 36.0-695.1 while the word 'Claude' is only 46.3px wide, and the status cell started at 703.1 — 620.8px of empty space inside one row, no divider, no leader, no banding. Fix (one-pane only, so the multi-pane rosters are untouched): .c10.is-mode1 .c10-item switches to `minmax(0,auto) minmax(0,1fr) 14px` with a 12px column gap, so the name column shrinks to its content and the status sits immediately beside the thing it describes; the meta cell is left-aligned, uncapped, and still wraps rather than ellipsizing (the 2026-08-20 'Signed in, cannot invoke' finding stays honoured); and every row carries `box-shadow: inset 0 -1px 0 var(--border-light)` — an inset rule rather than a border so it cannot fight .c10-item.is-active's border-color. Measured after: name 53.0-99.3, status 111.3-146.2 — a 12.0px gap instead of 620.8px, i.e. 52x tighter, with a hairline binding the whole row. Verified on basic-dark-760, friendly-dark-760, glass-light-760 and basic-dark-900.",
+   "f5_glass_search_overlay_occludes": "Found while verifying finding 1 at wide widths, fixed in the same pass. On the glass faces --surface-elevated is ~0.73 alpha, and .c10-drop — the concept's only true OVERLAY, the search result list that floats over Home — inherited it, so at glass-light-2500 the NEEDS ATTENTION rows and their Open pills read straight through the result list, text over text. The taller result rows this pass restored (finding 3's root cause also gave .c10-res back its 7px 14px 8px padding and its separators) made the overlapped area bigger, so it was fixed rather than left. pm-shell reserves 'the single allowed backdrop-filter layer' for the titlebar, so the panel is made to occlude by painting the theme background under its own translucent surface instead of by blurring: `[data-theme^=\"glass\"] .c10-drop { background-color: var(--background); background-image: linear-gradient(var(--surface-elevated), var(--surface-elevated)) }`. Inline elevated surfaces (editor drawers, roster cards) keep their translucency on purpose — they never cover anything. Verified at glass-light-2500-search and friendly-dark-1280-search (unchanged on the non-glass faces).",
+   "scope_note": "Only concept-10-command-suite.css and concept-10-command-suite.js were edited, plus this evidence file. No .html, no _shared/, no _shared2/, no other concept, no tools/, no hub index. JS edits: the is-wide/is-ultra class stamp in render(); identity classes on the four Home sections (is-attention / is-index / is-recent / is-utils) so the wide grid can place them; a .c10-ovlist wrapper around the domain overview's manager and section card lists; and the embedded key-settings table's inline `style=\"padding:0\"` replaced by a `.c10-rows.is-embedded` class so the stylesheet owns its margin."
+  },
+  "verification": {
+   "node_check": "PASS (node --check concept-10-command-suite.js)",
+   "boot_check": "PASS at 760, 900, 1280, 1700, 2200 and 2500 (13 routes each, no console error/warning, no page exception, no horizontal overflow). Re-run end-to-end after the final alignment pass, not just after the first edit, plus a glass-light run at 2500.",
+   "harness_matrix": "113/113 (node tools/harness/run-suite.js matrix --concepts=10) — unchanged; re-run after the last edit",
+   "harness_managers": "49/49 (node tools/harness/run-suite.js managers --concepts=10) — unchanged; re-run after the last edit",
+   "computed_style_census": "Before/after getComputedStyle census over every .c10 button across 10 routes x 3 widths, used to prove the reset's blast radius and to check nothing else regressed when it was defanged.",
+   "screenshots_reviewed": "Regenerated over file:// and read back: friendly-dark-2500-home, friendly-dark-2200-home, friendly-dark-1700-home, friendly-dark-760-dest-ai, basic-dark-760-manager-m.providers, friendly-dark-1280-dest-ai, retro-light-1280-manager-m.providers, glass-light-1280-dest-ai, glass-light-760-dest-ai, retro-light-2500-home, basic-light-1700-dest-ai-accounts, glass-dark-2200-all, friendly-light-1280-copy, basic-dark-900-dest-ai, glass-light-2500-search and friendly-dark-1280-search, plus the pre-fix counterparts for side-by-side comparison. Temp shots deleted after review."
+  }
+ }
+}

@@ -71,9 +71,9 @@ function makeElement(tag) {
   return el;
 }
 
-function makeSandbox() {
+function makeSandbox(sharedStorage) {
   var listeners = {};
-  var storage = {};
+  var storage = sharedStorage || {};
   var posted = [];
 
   var w = {};
@@ -131,10 +131,11 @@ function makeSandbox() {
     getItem: function (k) { return Object.prototype.hasOwnProperty.call(storage, k) ? storage[k] : null; },
     setItem: function (k, v) { storage[k] = String(v); },
     removeItem: function (k) { delete storage[k]; },
-    clear: function () { storage = {}; },
+    clear: function () { Object.keys(storage).forEach(function (k) { delete storage[k]; }); },
     key: function (i) { return Object.keys(storage)[i] || null; },
     get length() { return Object.keys(storage).length; }
   };
+  w.__storage = storage;
 
   w.parent = {
     postMessage: function (msg) { posted.push(msg); }
@@ -372,6 +373,88 @@ if (PM2.store && typeof PM2.store.init === 'function') {
   ok(att.every(function (a) {
     return a.id && a.statusWord && a.headline && a.consequence && a.dest && a.dest.route;
   }), 'attention items carry id/statusWord/headline/consequence/dest');
+
+  /* ---- value persistence across reloads ---- */
+  section('pm2-store persistence');
+  var VKEY = 'pm.settingsConcepts.fable.c00-smoke.values';
+  ok(typeof store.clearPersistedValues === 'function', 'store.clearPersistedValues exists');
+  var persistedRaw = ctx.window.localStorage.getItem(VKEY);
+  if (ok(!!persistedRaw, 'setValue writes the persisted values key')) {
+    var persisted = JSON.parse(persistedRaw);
+    ok(persisted['general.visual.font-size'] &&
+       persisted['general.visual.font-size'].value === 16 &&
+       persisted['general.visual.font-size'].changedAt &&
+       persisted['general.visual.font-size'].by === 'You',
+      'persisted entries carry value/changedAt/by');
+  }
+
+  /* simulated reload: fresh context, same localStorage backing store */
+  function reloadStore() {
+    var ctx2 = makeSandbox(ctx.__storage);
+    ['_shared/pm-demo-data.js', '_shared/pm-demo-data-ext.js',
+     '_shared2/pm2-inventory.js', '_shared2/pm2-store.js'].forEach(function (rel) {
+      vm.runInContext(fs.readFileSync(path.join(ROOT, rel), 'utf8'), ctx2, { filename: rel + ' (reload)' });
+    });
+    return ctx2.window.PM2.store.init('c00-smoke');
+  }
+  var store2 = reloadStore();
+  ok(store2.getValue('general.visual.font-size') === 16, 'value survives a reload');
+  var reRow = store2.resolveRow('general.visual.font-size');
+  ok(reRow && reRow.changedFromDefault === true, 'rehydrated value is marked changedFromDefault');
+  eq(Object.keys(store2.values).length, 828, 'rehydrated values map still covers 828 ids');
+
+  /* reverting a seeded divergence must survive a reload too */
+  var revert = store2.setValue('ai.models.default-model', 'anthropic/claude-sonnet-4');
+  ok(revert && revert.ok === true, 'revert to the inventory default is accepted');
+  var store3 = reloadStore();
+  ok(store3.getValue('ai.models.default-model') === 'anthropic/claude-sonnet-4',
+    'reverted divergence survives a reload');
+  ok(store3.resolveRow('ai.models.default-model').changedFromDefault === false,
+    'reverted value is honestly not changedFromDefault');
+
+  /* explicit clear */
+  store3.clearPersistedValues();
+  ok(ctx.window.localStorage.getItem(VKEY) === null, 'clearPersistedValues removes the key');
+
+  /* first-run scenario reset clears persisted values (standalone hook path) */
+  var store4 = reloadStore();
+  store4.setValue('general.visual.font-size', 18);
+  ok(ctx.window.localStorage.getItem(VKEY) !== null, 'persisted key back after a new change');
+  store4._setSession('scenario', 'first-run');
+  ok(ctx.window.localStorage.getItem(VKEY) === null, 'first-run scenario clears persisted values');
+  store4._setSession('scenario', 'baseline');
+
+  /* ---- session mirror + scenario-honest recents ---- */
+  section('pm2-store session + recents');
+  ok(store.session && typeof store.session.scenario === 'string' &&
+     Array.isArray(store.session.fixtures) && typeof store.session.stress === 'boolean',
+    'store.session mirror exists ({scenario, fixtures, stress})');
+
+  var store5 = reloadStore();
+  eq(store5.session.scenario, 'baseline', 'session starts at baseline');
+  store5._setSession('scenario', 'first-run');
+  eq(store5.session.scenario, 'first-run', 'session mirrors ephemeral scenario writes');
+  eq(store5.recents().length, 0, 'first-run shows an empty recents feed');
+  store5._setSession('scenario', 'baseline');
+  ok(store5.recents().length >= 6, 'returning to baseline restores the seeded feed');
+
+  /* states-style event with persist:false: persisted key stays stale, mirror
+     and readers stay current */
+  store5.emit('scenario', 'attention-heavy');
+  eq(store5.session.scenario, 'attention-heavy', 'session mirrors event-applied scenario');
+  ok(store5.get('scenario') === 'baseline' || store5.get('scenario') === undefined,
+    'persisted scenario key semantics unchanged (still un-pinned)');
+  ok(store5.attention().length > 4, 'attention() reads the mirror, not the stale key');
+
+  /* a states-driven rebuild rolls values back, so live recents clear too */
+  store5.emit('scenario', 'baseline');
+  store5.setValue('general.visual.font-size', 19);
+  ok(store5.recents()[0].settingId === 'general.visual.font-size', 'live change tops the feed');
+  store5.emit('scenario', 'baseline'); /* rebuild signal */
+  ok(store5.recents()[0].settingId !== 'general.visual.font-size',
+    'scenario rebuild clears live recents (rolled-back change gone)');
+  ok(store5.recents().length >= 6, 'seeded feed remains after a non-first-run rebuild');
+  store5.clearPersistedValues();
 } else {
   warn('PM2.store not loaded; store assertions skipped');
 }

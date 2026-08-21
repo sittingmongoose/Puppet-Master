@@ -23,6 +23,7 @@
   var rootEl = null;
   var layersEl = null;
   var spineEl = null;
+  var spineWrapEl = null;
   var opsEl = null;
 
   var MOTION_MS = 320;       /* settle timer; never depends on transitionend */
@@ -137,7 +138,18 @@
   }
   function statesApi() { return (window.PM2 && window.PM2.states) ? window.PM2.states : null; }
 
-  function scenario() { return str(store.get('scenario')) || 'baseline'; }
+  function scenario() {
+    /* URL-applied scenarios (no pin=1) never persist to the store key, so
+       PM2.states is the authority; the store key is the fallback. */
+    var S = statesApi();
+    if (S && typeof S.activeScenario === 'function') {
+      try {
+        var a = S.activeScenario();
+        if (a) { return str(a); }
+      } catch (e) { /* fall through */ }
+    }
+    return str(store.get('scenario')) || 'baseline';
+  }
 
   function receiptOut(label, detail) {
     var S = statesApi();
@@ -261,6 +273,9 @@
       if (ch === 'home') { goDest({ route: 'home' }); }
       else { goDest({ route: 'dest', cat: ch }); }
     });
+    spineEl.addEventListener('scroll', updateSpineFade, { passive: true });
+    updateSpineFade();
+
     spineEl.addEventListener('keydown', function (ev) {
       if (ev.key !== 'ArrowDown' && ev.key !== 'ArrowUp' &&
           ev.key !== 'ArrowLeft' && ev.key !== 'ArrowRight' &&
@@ -276,6 +291,17 @@
       else if (ev.key === 'End') { next = tabs.length - 1; }
       tabs[next].focus();
     });
+  }
+
+  /* Narrow-strip continuation affordance: stamp has-left/has-right on the
+     wrap while more tabs exist past that edge (CSS renders the edge fades on
+     the non-scrolling wrap, so they stay pinned while the strip scrolls). */
+  function updateSpineFade() {
+    if (!spineWrapEl || !spineEl) { return; }
+    var maxLeft = spineEl.scrollWidth - spineEl.clientWidth;
+    var scrollable = ui.narrow && maxLeft > 1;
+    spineWrapEl.classList.toggle('has-left', scrollable && spineEl.scrollLeft > 1);
+    spineWrapEl.classList.toggle('has-right', scrollable && spineEl.scrollLeft < maxLeft - 1);
   }
 
   function updateSpine() {
@@ -306,7 +332,7 @@
     el.setAttribute('data-depth', String(depth));
     el.setAttribute('data-layer-key', entry.key);
     el.innerHTML =
-      '<button class="c09-layer-edge" type="button" ' +
+      '<button class="c09-layer-edge" type="button" data-pm2-back ' +
         'aria-label="Back to ' + esc(layerTitle(entry)) + '" tabindex="-1">' +
         '<span class="c09-layer-edge-label">' + esc(layerTitle(entry)) + '</span></button>' +
       '<div class="c09-layer-page"></div>';
@@ -548,7 +574,7 @@
     var h = '<header class="c09-head">';
     h += '<div class="c09-head-row">';
     if (back) {
-      h += '<button class="c09-back" data-act="back">' + ico('undo') +
+      h += '<button class="c09-back" data-act="back" data-pm2-back>' + ico('undo') +
         '<span>Back to ' + esc(back.label) + '</span></button>';
     }
     h += breadcrumbHtml(layer);
@@ -600,7 +626,7 @@
   function searchFieldHtml(ownerKey, hero) {
     return '<div class="c09-search' + (hero ? ' c09-search-hero' : '') + '" data-owner="' + esc(ownerKey) + '">' +
       '<div class="c09-search-box">' + ico('search') +
-      '<input type="text" class="c09-search-input" role="combobox" aria-expanded="false" ' +
+      '<input type="text" data-pm2-search-input class="c09-search-input" role="combobox" aria-expanded="false" ' +
         'aria-autocomplete="list" autocomplete="off" spellcheck="false" ' +
         'placeholder="' + (hero ? 'Search all settings, managers, accounts, actions, and help' : 'Search settings') + '" ' +
         'aria-label="Search settings">' +
@@ -828,16 +854,60 @@
     return null;
   }
 
-  var ATT_TONES = { 'Sign in': 'setup', 'Update': 'setup', 'Cleanup': 'attention' };
+  var ATT_TONES = { 'Sign in': 'setup', 'Update': 'setup', 'Cleanup': 'attention', 'Setup': 'setup', 'Ready': 'ok' };
+
+  /* store.attention() keys off the persisted scenario key; URL-applied
+     scenarios bypass it, so align the list with the ACTIVE scenario here. */
+  function normalizeAttention(att, sc) {
+    if (sc === 'calm' || sc === 'first-run') { return []; }
+    var items = att.slice();
+    if (sc === 'usage-exhausted') {
+      items = items.map(function (a) {
+        if (a.id !== 'att.usage-window') { return a; }
+        return { id: a.id, statusWord: 'Waiting',
+          headline: 'Claude usage window is exhausted',
+          consequence: 'New runs queue or fall back to the secondary route until the 6:00 PM reset.',
+          dest: { route: 'dest', cat: 'ai', sub: 'usage' } };
+      });
+    }
+    if (sc === 'offline') {
+      var hasOffline = false;
+      items.forEach(function (a) { if (a.id === 'att.offline') { hasOffline = true; } });
+      if (!hasOffline) {
+        items.unshift({ id: 'att.offline', statusWord: 'Offline',
+          headline: 'No network connection detected',
+          consequence: 'Provider status, web search, and update checks are paused until the connection returns.',
+          dest: { route: 'dest', cat: 'web', sub: 'providers' } });
+      }
+      items = items.slice(0, 4);
+    }
+    return items;
+  }
 
   function renderHome(layer, page) {
     var counts = null;
     try { counts = store.counts(); } catch (e) { counts = { total: 0, changed: 0, byCategory: [] }; }
+    var sc = scenario();
     var att = [];
-    try { att = store.attention(); } catch (e) { att = []; }
+    try { att = normalizeAttention(store.attention(), sc); } catch (e) { att = []; }
+    /* fixture overlays announce themselves through data.notices (pm2-fx-*);
+       they belong in the attention list so the state is visible from Home */
+    try {
+      arr(store.data.notices).forEach(function (n) {
+        if (!n || String(n.id).indexOf('pm2-fx-') !== 0) { return; }
+        var t = obj(n.target);
+        var dest = { route: 'home' };
+        var act = obj(n.primary).act;
+        if (act === 'open-lifecycle') { dest = { route: 'manager', managerId: 'm.lifecycle' }; }
+        else if (t.settingId) { dest = { route: 'setting', settingId: t.settingId }; }
+        else if (t.managerId) { dest = { route: 'manager', managerId: t.managerId }; }
+        else if (t.cat) { dest = { route: 'dest', cat: t.cat, sub: t.sub || null }; }
+        att.push({ id: n.id, statusWord: n.statusWord || 'Notice',
+          headline: n.headline || '', consequence: n.consequence || '', dest: dest });
+      });
+    } catch (e) { /* notices optional */ }
     var recents = [];
     try { recents = store.recents(); } catch (e) { recents = []; }
-    var sc = scenario();
     var firstRun = sc === 'first-run';
     var banner = bannerFor(sc);
 
@@ -1359,6 +1429,10 @@
     if (/^[a-z0-9]+(?:[_-][a-z0-9]+)+$/.test(s)) {
       return s.replace(/[_-]+/g, ' ').replace(/(^|\s)([a-z])/g, function (m, sp, ch) { return sp + ch.toUpperCase(); });
     }
+    if (/^[a-z]/.test(s) && s.indexOf(' ') < 0 && s.length <= 24) {
+      /* single-word internal states read better capitalized in status words */
+      return s.charAt(0).toUpperCase() + s.slice(1);
+    }
     return s;
   }
 
@@ -1373,11 +1447,18 @@
     el.setAttribute('role', 'menu');
     var html = '';
     arr(spec.items).forEach(function (it, i) {
-      html += '<button class="c09-menu-item" role="' + (it.kind === 'check' ? 'menuitemcheckbox' : 'menuitemradio') + '" ' +
-        'aria-checked="' + (it.checked ? 'true' : 'false') + '" data-opt="' + esc(it.id) + '" data-i="' + i + '"' +
+      var isAction = it.kind === 'action';
+      var role = it.kind === 'check' ? 'menuitemcheckbox' : (isAction ? 'menuitem' : 'menuitemradio');
+      html += '<button class="c09-menu-item' + (it.sub ? ' has-sub' : '') + '" role="' + role + '" ' +
+        (isAction ? '' : 'aria-checked="' + (it.checked ? 'true' : 'false') + '" ') +
+        'data-opt="' + esc(it.id) + '" data-i="' + i + '"' +
         (it.disabled ? ' aria-disabled="true"' : '') + '>' +
-        '<span class="c09-menu-mark">' + ico('check') + '</span>' +
-        '<span class="c09-menu-label">' + esc(it.label) + '</span>' +
+        (isAction
+          ? '<span class="c09-menu-ico">' + ico(it.ico || 'play') + '</span>'
+          : '<span class="c09-menu-mark">' + ico('check') + '</span>') +
+        '<span class="c09-menu-label">' + esc(it.label) +
+        (it.sub ? '<span class="c09-menu-sub">' + esc(it.sub) + '</span>' : '') +
+        '</span>' +
         (it.note ? '<span class="c09-menu-note">' + esc(it.note) + '</span>' : '') +
         '</button>';
     });
@@ -1487,9 +1568,10 @@
       return;
     }
 
+    var actionSplit = splitActions(def, actions);
     if (actions.length) {
       h += '<div class="c09-actions" role="group" aria-label="' + esc(def.title) + ' actions">';
-      actions.forEach(function (a) {
+      actionSplit.primary.forEach(function (a) {
         if (a.available) {
           h += '<button class="c09-btn c09-action" data-action-id="' + esc(a.id) + '">' +
             ico(a.ico || 'play') + esc(a.label) + '</button>';
@@ -1499,6 +1581,13 @@
             '<span class="c09-action-reason">' + esc(a.reason || 'Not available right now.') + '</span></span>';
         }
       });
+      if (actionSplit.overflow.length) {
+        h += '<button class="c09-btn c09-action-menu" data-action-menu ' +
+          'aria-haspopup="menu" aria-expanded="false">' +
+          ico('wrench') + 'Maintenance' +
+          '<span class="c09-badge">' + actionSplit.overflow.length + '</span>' +
+          '<span class="c09-caret" aria-hidden="true"></span></button>';
+      }
       h += '</div>';
     }
 
@@ -1517,8 +1606,29 @@
     h += '</div>';
     page.innerHTML = h;
     wireHead(layer, page);
-    wireManager(layer, page, def, vm, actions);
+    wireManager(layer, page, def, vm, actions, actionSplit.overflow);
     hydrate(page);
+  }
+
+  /* Which actions stay visible on a busy manager page. Everything else moves
+     behind the Maintenance overflow (the concept's popup-menu device), so the
+     page opens with its few high-value actions instead of a button wall. */
+  var PRIMARY_ACTION_IDS = {
+    'm.providers': ['act.provider-refresh', 'act.setup.cursor-cli']
+  };
+
+  function splitActions(def, actions) {
+    var list = arr(actions);
+    if (list.length <= 5) { return { primary: list, overflow: [] }; }
+    var ids = PRIMARY_ACTION_IDS[def.id] || null;
+    var primary = [];
+    var overflow = [];
+    list.forEach(function (a, i) {
+      var keep = ids ? ids.indexOf(a.id) >= 0 : (i < 3);
+      if (keep) { primary.push(a); } else { overflow.push(a); }
+    });
+    if (!primary.length) { return { primary: list, overflow: [] }; }
+    return { primary: primary, overflow: overflow };
   }
 
   function deferredShellHtml(def, vm) {
@@ -1769,8 +1879,10 @@
     }
     h += '<ol class="c09-steps">';
     arr(sec.steps).forEach(function (s) {
-      h += '<li><strong>' + esc(s.label || '') + '</strong>' +
-        (s.detail ? '<span class="c09-step-detail">' + esc(s.detail) + '</span>' : '') + '</li>';
+      var stepLabel = s.label || s.title || '';
+      var stepDetail = s.detail || s.note || '';
+      h += '<li><strong>' + esc(stepLabel) + '</strong>' +
+        (stepDetail ? '<span class="c09-step-detail">' + esc(stepDetail) + '</span>' : '') + '</li>';
     });
     h += '</ol>';
     if (sec.policyNote) {
@@ -1834,11 +1946,65 @@
   }
 
   function previewHtml(sec, ctx) {
-    var p = obj(sec.preview);
-    return '<figure class="c09-preview">' +
-      '<blockquote>' + esc(p.text || '') + '</blockquote>' +
-      (p.tokens ? '<figcaption>' + esc(p.tokens) + '</figcaption>' : '') +
-      '</figure>';
+    /* Simple text capsule previews (personas). */
+    if (sec.preview) {
+      var p = obj(sec.preview);
+      return '<figure class="c09-preview">' +
+        '<blockquote>' + esc(p.text || '') + '</blockquote>' +
+        (p.tokens ? '<figcaption>' + esc(p.tokens) + '</figcaption>' : '') +
+        '</figure>';
+    }
+    /* Staged-transaction previews (settings lifecycle import). */
+    var h = '';
+    if (sec.state) {
+      h += '<p class="c09-ov-status"><span class="pm-status-word" data-tone="' +
+        (sec.state === 'staged' ? 'setup' : (sec.state === 'rolled-back' ? 'ok' : 'muted')) + '">' +
+        esc(optionLabel(sec.state)) + '</span>' +
+        (sec.note ? ' <span class="c09-dim">' + esc(sec.note) + '</span>' : '') + '</p>';
+    }
+    if (sec.source) { h += kvHtml(sec.source); }
+    var counts = obj(sec.counts);
+    var countKeys = Object.keys(counts);
+    if (countKeys.length) {
+      h += '<div class="c09-pv-counts">';
+      countKeys.forEach(function (k) {
+        h += '<span class="c09-pv-count" data-kind="' + esc(k) + '"><strong>' + esc(String(counts[k])) + '</strong> ' +
+          esc(optionLabel(k)) + '</span>';
+      });
+      h += '</div>';
+    }
+    if (arr(sec.conflicts).length) {
+      h += '<h4 class="c09-roster-h">Conflicts to decide</h4><div class="c09-cards">';
+      arr(sec.conflicts).forEach(function (c) {
+        h += '<div class="c09-card" data-object-id="' + esc(c.settingId) + '">' +
+          '<div class="c09-card-line">' +
+          (c.dest ? '<button class="c09-card-main has-dest" data-dest="' + esc(JSON.stringify(c.dest)) + '">' : '<div class="c09-card-main">') +
+          '<span class="c09-card-label">' + esc(c.settingId) + '</span>' +
+          '<span class="c09-card-sub">Here: ' + esc(String(c.local)) + ' · Incoming: ' + esc(String(c.incoming)) + '</span>' +
+          (c.dest ? '</button>' : '</div>') +
+          '<span class="c09-card-side"><span class="pm-status-word" data-tone="attention">Conflict</span></span>' +
+          '</div>' + (c.note ? '<p class="c09-card-note">' + esc(c.note) + '</p>' : '') + '</div>';
+      });
+      h += '</div>';
+    }
+    if (arr(sec.invalid).length) {
+      h += '<h4 class="c09-roster-h">Will be skipped</h4>';
+      arr(sec.invalid).forEach(function (x) {
+        h += '<p class="c09-card-note"><code class="c09-code">' + esc(x.key) + '</code> — ' + esc(x.reason || '') + '</p>';
+      });
+    }
+    if (arr(sec.legacyMigrated).length) {
+      h += '<h4 class="c09-roster-h">Migrated from older names</h4>';
+      arr(sec.legacyMigrated).forEach(function (x) {
+        h += '<p class="c09-card-note"><code class="c09-code">' + esc(x.from) + '</code> → <code class="c09-code">' +
+          esc(x.to) + '</code>' + (x.note ? ' — ' + esc(x.note) : '') + '</p>';
+      });
+    }
+    if (sec.restorePointId) {
+      h += '<p class="c09-callout c09-callout-quiet">' + ico('disk') +
+        '<span>Restore point <code class="c09-code">' + esc(sec.restorePointId) + '</code> is staged; nothing applies until the conflicts are decided.</span></p>';
+    }
+    return h || '<p class="c09-empty">' + ico('info') + 'Nothing staged right now.</p>';
   }
 
   /* Generic key/value drawer for roster item detail objects. Intentionally
@@ -1872,9 +2038,14 @@
 
   /* ---------------- manager wiring ---------------- */
 
-  function wireManager(layer, page, def, vm, actions) {
+  function wireManager(layer, page, def, vm, actions, overflowActions) {
     page.addEventListener('click', function (ev) {
       var t;
+      t = ev.target.closest('[data-action-menu]');
+      if (t) {
+        openActionMenu(t, overflowActions, actions);
+        return;
+      }
       t = ev.target.closest('[data-action-id]');
       if (t && !t.disabled) {
         runAction(actions, t.getAttribute('data-action-id'));
@@ -1952,6 +2123,25 @@
     var params = null;
     if (dest.sectionId) { params = { focus: dest.sectionId }; }
     goDest(dest, params);
+  }
+
+  /* The Maintenance overflow: secondary manager actions as a popup menu.
+     Unavailable actions stay listed (honesty) with their reason bound to the
+     item itself as a caption, never floating between unrelated actions. */
+  function openActionMenu(invoker, overflowActions, allActions) {
+    openMenu(invoker, {
+      items: arr(overflowActions).map(function (a) {
+        return {
+          id: a.id, label: a.label, kind: 'action', ico: a.ico || 'play',
+          disabled: !a.available,
+          sub: a.available ? null : (a.reason || 'Not available right now.')
+        };
+      }),
+      onPick: function (actionId) {
+        runAction(allActions, actionId);
+        return false;
+      }
+    });
   }
 
   /* Actions return truthful staged ops or honest simulated receipts. A bare
@@ -2256,7 +2446,7 @@
           '<span>' + esc(c.title || c.cat) + '</span><span class="c09-copy-cat-n">' + fmtInt(c.count) + '</span></label>';
       });
       h += '</div>';
-      h += '<div class="c09-step-nav"><button class="c09-btn" data-copy-back="1">Back</button>' +
+      h += '<div class="c09-step-nav"><button class="c09-btn" data-copy-back="1" data-pm2-back aria-label="Back to ' + COPY_STEPS[0] + '">Back</button>' +
         '<button class="c09-mini-btn" data-copy-allcats>' + (cs.catIds.length === arr(src.categorySummaries).length ? 'Clear all' : 'Select all') + '</button>' +
         '<button class="c09-btn c09-btn-primary" data-copy-preview' + (cs.catIds.length ? '' : ' disabled') + '>Preview the copy</button></div>';
     } else if (stepN === 3 && cs.preview) {
@@ -2293,7 +2483,7 @@
       h += '<p class="c09-callout">' + ico('key') + '<span>' + esc(pv.credentialNote || '') + '</span></p>';
       h += '<p class="c09-callout c09-callout-quiet">' + ico('disk') +
         '<span>A restore point is created automatically before anything is written, so the whole copy can be rolled back in one step.</span></p>';
-      h += '<div class="c09-step-nav"><button class="c09-btn" data-copy-back="2">Back</button>' +
+      h += '<div class="c09-step-nav"><button class="c09-btn" data-copy-back="2" data-pm2-back aria-label="Back to ' + COPY_STEPS[1] + '">Back</button>' +
         '<button class="c09-btn c09-btn-primary" data-copy-next="4">Continue to confirm</button></div>';
     } else if (stepN === 4 && cs.preview) {
       var pv2 = cs.preview;
@@ -2330,7 +2520,7 @@
               : '<span class="c09-op-fill" style="width:' + pct + '%"></span>') +
             '</span>' + (pct != null ? '<span class="c09-op-pct">' + pct + '%</span>' : '') + '</div>';
         }
-        h += '<div class="c09-step-nav"><button class="c09-btn" data-copy-back="3"' + (cs.applying ? ' disabled' : '') + '>Back</button>' +
+        h += '<div class="c09-step-nav"><button class="c09-btn" data-copy-back="3" data-pm2-back aria-label="Back to ' + COPY_STEPS[2] + '"' + (cs.applying ? ' disabled' : '') + '>Back</button>' +
           '<button class="c09-btn c09-btn-primary" data-copy-apply' + (cs.applying ? ' disabled' : '') + '>' +
           (cs.applying ? 'Applying…' : 'Create restore point & apply') + '</button></div>';
       }
@@ -2759,6 +2949,7 @@
         rootEl.classList.toggle('is-narrow', narrow);
         applyStackClasses();
       }
+      updateSpineFade();
     }
     if (typeof window.ResizeObserver === 'function') {
       var ro = new window.ResizeObserver(function () { apply(); });
@@ -2781,9 +2972,11 @@
     rootEl.innerHTML =
       '<div class="c09-canvas"><div class="c09-layers" id="c09Layers"></div>' +
       '<div class="c09-ops" id="c09Ops" aria-live="polite"></div></div>' +
-      '<nav class="c09-spine" id="c09Spine" aria-label="Settings chapters"></nav>';
+      '<div class="c09-spine-wrap" id="c09SpineWrap">' +
+      '<nav class="c09-spine" id="c09Spine" aria-label="Settings chapters"></nav></div>';
     stage.appendChild(rootEl);
     layersEl = rootEl.querySelector('#c09Layers');
+    spineWrapEl = rootEl.querySelector('#c09SpineWrap');
     spineEl = rootEl.querySelector('#c09Spine');
     opsEl = rootEl.querySelector('#c09Ops');
 

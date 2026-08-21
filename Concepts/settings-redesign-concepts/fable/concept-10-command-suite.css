@@ -25,7 +25,35 @@
 }
 [data-theme^="glass"] .c10 { background: transparent; }
 
-.c10 button {
+/* Shell page-tab overflow hardening (visual audit 2026-08-20): at 760 the
+   titlebar nav used to clip labels mid-word (stray glyph fragments) and in
+   some themes pushed the active Settings tab out of view entirely. Tabs now
+   shrink with an ellipsis; the active tab never shrinks, so the current
+   location stays fully visible at every width. */
+.pm-page-tabs { min-width: 0; overflow: hidden; }
+.pm-page-tab { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pm-page-tab.is-active { flex-shrink: 0; }
+
+/* Audit 2026-08-21 (final sweep) finding 3 — ROOT CAUSE, fixed at source.
+   This reset used to be authored as `.c10 button`, specificity (0,1,1). Almost
+   every interactive surface in this concept IS a <button> carrying a single
+   class — .c10-item, .c10-mgr-row, .c10-row, .c10-att-row, .c10-recent-row,
+   .c10-vrow, .c10-ix-item, .c10-btn, .c10-util, .c10-res, .c10-check, .c10-src,
+   .c10-tab, .c10-facet-check, .c10-opt … — and every one of those rules is
+   (0,1,0), so the reset silently BEAT all of them. Measured consequences, all
+   themes, all widths: list rows shipped with padding 0 (so they hung ~16px
+   outside the page's own left text margin and butted against the icon rail),
+   card rows shipped with no border, no background and no radius (so SECTIONS /
+   MANAGERS read as one undifferentiated block with 0px between a title and its
+   own description), the All-Settings table shipped with no row hairlines, and
+   .c10-thead — authored with `padding: 4px 10px` to line its column labels up
+   with `.c10-row`'s `padding: 5px 10px` — sat 10px off its own columns. Only
+   :hover / .is-active rules (0,2,0) ever won, which is why hover backgrounds
+   appeared while the padding they were sized for did not.
+   `:where()` contributes zero specificity, so the reset is now (0,0,0): it
+   still neutralises the UA button styling (author origin always beats UA) for
+   unclassed buttons, and every authored class rule wins as intended. */
+:where(.c10 button) {
   font-family: inherit;
   color: inherit;
   background: none;
@@ -73,6 +101,9 @@
   background: color-mix(in srgb, var(--surface-elevated) 55%, transparent);
 }
 
+/* The path trail is the only statement of where you are, so it shrinks last:
+   the compact search beside it carries a far larger shrink weight and gives
+   up its width first. */
 .c10-crumbs {
   display: flex;
   align-items: center;
@@ -93,10 +124,14 @@
   white-space: nowrap;
   flex: 0 1 auto;
 }
+/* the root of the trail is eight characters; truncating it buys nothing */
+.c10-crumb:first-child { flex-shrink: 0.15; }
 button.c10-crumb:hover { background: var(--accent-soft); color: var(--text-primary); }
 .c10-crumb.is-here {
   color: var(--text-primary);
   font-weight: 600;
+  /* where you are now survives the squeeze; ancestors give way first */
+  flex-shrink: 0.15;
 }
 .c10-crumb-sep {
   color: var(--text-muted);
@@ -138,7 +173,9 @@ button.c10-crumb:hover { background: var(--accent-soft); color: var(--text-prima
 .c10-close i[data-ico] { width: 13px; height: 13px; }
 
 /* compact persistent search (non-home surfaces) */
-.c10-minisearch { position: relative; flex: 0 1 300px; min-width: 150px; }
+/* shrink weight 20 against the trail's 1: the field gives up its width long
+   before the path trail gives up a character */
+.c10-minisearch { position: relative; flex: 0 20 300px; min-width: 150px; }
 .c10-minisearch input {
   width: 100%;
   font-family: inherit;
@@ -148,8 +185,9 @@ button.c10-crumb:hover { background: var(--accent-soft); color: var(--text-prima
   border: 1px solid var(--border-light);
   border-radius: var(--radius-sm);
   padding: 5px 9px 5px 28px;
+  text-overflow: ellipsis;   /* a squeezed field fades out, never slices a glyph */
 }
-.c10-minisearch input::placeholder { color: var(--text-muted); }
+.c10-minisearch input::placeholder { color: var(--text-muted); text-overflow: ellipsis; }
 .c10-minisearch > i[data-ico] {
   position: absolute;
   left: 8px; top: 50%;
@@ -168,8 +206,11 @@ button.c10-crumb:hover { background: var(--accent-soft); color: var(--text-prima
   gap: 0;
   overflow: hidden;
   width: 100%;
-  max-width: 2260px;      /* ultrawide stays composed, no deserts */
-  margin: 0 auto;
+  /* Ultrawide composure (audit 2026-08-20): the strip itself spans the full
+     width — no floating strip, no orphan background gutters beside the icon
+     rail. Each flexible surface bounds and CENTERS its own content column
+     (.c10-home, .c10-mgr-main-inner, .c10-ov, .c10-rows, .c10-all children),
+     so 2200/2500 stay balanced instead of left-anchored deserts. */
 }
 
 .c10-pane {
@@ -179,14 +220,28 @@ button.c10-crumb:hover { background: var(--accent-soft); color: var(--text-prima
   min-width: 0;
   border-right: 1px solid var(--border-light);
   background: var(--surface);
+  /* The shared States affordance is fixed to the window's bottom-right corner
+     and reaches 11px above this concept's key bar. Every pane ends its scroll
+     VIEWPORT above that band — trailing padding would only clear the final row
+     and still let rows pass under the button mid-scroll. */
+  padding-bottom: 12px;
 }
 [data-theme^="glass"] .c10-pane {
   background: color-mix(in srgb, var(--surface-elevated) 38%, transparent);
 }
 .c10-pane:last-child { border-right: none; }
 
-/* pane widths per role; the last content pane flexes */
-.c10-pane-index { flex: 0 0 268px; width: 268px; }
+/* pane widths per role; the last content pane flexes.
+   The command index is the only statement of the top-level taxonomy, so it
+   sizes to its longest label instead of clipping it — the wider display faces
+   (glass, retro) take the extra width, the narrow ones stay at the 268px
+   baseline, and the cap keeps the rail from crowding the content panes. */
+.c10-pane-index {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 268px;
+  max-width: 340px;
+}
 .c10-pane-cat   { flex: 0 0 300px; width: 300px; }
 .c10-pane-flex  { flex: 1 1 auto; }
 
@@ -203,9 +258,13 @@ button.c10-crumb:hover { background: var(--accent-soft); color: var(--text-prima
   to   { opacity: 1; transform: none; }
 }
 
+/* One left text margin per pane: 16px. The command index already used it
+   (.c10-ix-group 8 + .c10-ix-item 8), .c10-sec-label and .c10-item use it, and
+   with the reset above no longer eating .c10-item's padding the pane title now
+   lines up with the list beneath it instead of sitting 2px to its left. */
 .c10-pane-head {
   flex: 0 0 auto;
-  padding: 10px 14px 8px;
+  padding: 10px 16px 8px;
   border-bottom: 1px solid var(--border-light);
   min-height: 52px;
   display: flex;
@@ -279,6 +338,23 @@ button.c10-crumb:hover { background: var(--accent-soft); color: var(--text-prima
 }
 .c10-back:hover { background: var(--accent-soft); }
 .c10-back i[data-ico] { width: 13px; height: 13px; }
+.c10-back-top {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  border: 1px solid var(--border-light);
+  background: var(--surface);
+  padding: 3px 8px 3px 4px;
+}
+/* Below ~1400px of stage the full "Back to <parent>" label costs the crumb
+   trail more room than it is worth; the short label keeps the control while
+   the aria-label still names the destination. */
+.c10-back-short { display: none; }
+.c10.is-tight .c10-back-top .c10-back-full { display: none; }
+.c10.is-tight .c10-back-top .c10-back-short { display: inline; }
+/* One- and two-pane widths: every pane head carries its own Back, so the top
+   bar drops its copy — one visible Back per surface, never two. */
+.c10.is-mode1 .c10-back-top,
+.c10.is-mode2 .c10-back-top { display: none; }
 
 /* ================= command index ================= */
 
@@ -300,7 +376,9 @@ button.c10-crumb:hover { background: var(--accent-soft); color: var(--text-prima
   align-items: center;
   gap: 8px;
   width: 100%;
-  padding: 6px 8px;
+  /* 7 + the 1px transparent border lands on the same 16px column as
+     .c10-ix-label (8 of .c10-ix-group + 8 of its own padding). */
+  padding: 6px 7px;
   border-radius: var(--radius-sm);
   border: 1px solid transparent;
   color: var(--text-secondary);
@@ -367,7 +445,10 @@ button.c10-crumb:hover { background: var(--accent-soft); color: var(--text-prima
   align-items: center;
   gap: 8px;
   width: 100%;
-  padding: 7px 10px 7px 16px;
+  /* 15 + the 1px transparent border = the same 16px text margin .c10-sec-label
+     and .c10-pane-head use, so a list row's title starts on exactly the same
+     vertical as the label above it and the pane title above that. */
+  padding: 7px 9px 7px 15px;
   border: 1px solid transparent;
   color: var(--text-secondary);
   transition: background var(--motion-fast) var(--ease-default);
@@ -408,6 +489,19 @@ button.c10-crumb:hover { background: var(--accent-soft); color: var(--text-prima
 .c10-item .c10-chev { color: var(--text-muted); display: inline-flex; }
 .c10-item .c10-chev i[data-ico] { width: 12px; height: 12px; }
 
+/* Manager objects column (audit 2026-08-20 finding 3): status words must
+   never lose their meaning-bearing tail ('Signed in, cannot i…'). In the
+   objects nav the meta wraps to a second line instead of ellipsizing, sized
+   so the object title keeps room beside it. */
+.c10-mgr-nav .c10-item-meta {
+  max-width: 104px;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  line-height: 1.35;
+}
+.c10-mgr-nav .c10-item-meta .c10-word { white-space: normal; }
+
 /* ================= status words / tones ================= */
 
 .c10-word { font-size: var(--fs-2xs); font-weight: 700; white-space: nowrap; }
@@ -423,6 +517,8 @@ button.c10-crumb:hover { background: var(--accent-soft); color: var(--text-prima
 .c10-home {
   padding: 22px clamp(16px, 3.5vw, 46px) 40px;
   max-width: 1020px;
+  /* wide viewports: keep the column centered in its pane, never left-anchored */
+  margin-inline: auto;
 }
 .c10-home-head { margin-bottom: 14px; }
 .c10-home-title {
@@ -521,13 +617,27 @@ kbd.c10-kbd {
 .c10-att-main { min-width: 0; }
 .c10-att-head { display: block; font-size: var(--fs-sm); font-weight: 600; color: var(--text-primary); }
 .c10-att-why { display: block; font-size: var(--fs-xs); color: var(--text-secondary); line-height: 1.45; }
+/* The only action on the row must not be the faintest text on the page. The
+   accent hue alone measures 2.7-3.1:1 on the light surfaces, so the affordance
+   is carried by an outlined pill with primary-strength text instead. */
 .c10-att-go {
   font-size: var(--fs-2xs);
-  color: var(--text-muted);
+  font-weight: 700;
+  letter-spacing: .02em;
+  color: var(--text-primary);
+  border: 1px solid color-mix(in srgb, var(--accent-primary) 55%, var(--border-light));
+  border-radius: var(--radius-pill);
+  padding: 2px 9px;
   display: inline-flex;
   align-items: center;
-  gap: 3px;
+  gap: 4px;
   white-space: nowrap;
+  align-self: center;
+}
+.c10-att-go i[data-ico] { color: var(--accent-primary); }
+.c10-att-row:hover .c10-att-go {
+  background: var(--accent-soft);
+  border-color: var(--accent-primary);
 }
 .c10-att-go i[data-ico] { width: 11px; height: 11px; }
 
@@ -611,8 +721,22 @@ kbd.c10-kbd {
   box-shadow: var(--elev-3);
   max-height: min(56vh, 520px);
   overflow-y: auto;
+  /* set below for the glass faces */
   overflow-x: hidden;
   padding: 6px 0 8px;
+}
+/* Glass faces: this dropdown is the concept's only true OVERLAY — it floats
+   over Home instead of sitting in the flow, and --surface-elevated is ~0.73
+   alpha on those faces, so the attention rows underneath read straight through
+   the result list (worst at the wide widths, where the panel is tallest). The
+   shell reserves the one permitted backdrop-filter layer for the titlebar, so
+   the panel is made to occlude by painting the theme background UNDER its own
+   translucent surface rather than by blurring what is behind it. Inline
+   elevated surfaces (editor drawers, cards) keep the translucency on purpose —
+   they never cover anything. */
+[data-theme^="glass"] .c10-drop {
+  background-color: var(--background);
+  background-image: linear-gradient(var(--surface-elevated), var(--surface-elevated));
 }
 .c10-minisearch .c10-drop { min-width: 420px; left: auto; right: 0; max-width: min(560px, calc(100vw - 40px)); }
 
@@ -704,7 +828,14 @@ kbd.c10-kbd {
 
 /* ================= settings tables (rows pane) ================= */
 
-.c10-rows { padding: 0 14px; }
+/* 6 here + 10 of .c10-row padding = the same 16px left text margin every other
+   list on the page uses, so the table's first column starts on the page margin
+   while the row hover/selection band still bleeds 6px past it on both sides. */
+.c10-rows { padding: 0 6px; max-width: 1240px; margin-inline: auto; }
+/* the key-settings table embedded inside a domain overview: the overview
+   already supplies the 16px margin, so the table only pulls its own 10px row
+   padding back out to land on it. */
+.c10-rows.is-embedded { padding: 0; max-width: none; margin-inline: -10px; }
 
 .c10-thead {
   display: grid;
@@ -994,7 +1125,11 @@ kbd.c10-kbd {
 
 /* ================= category overview pane ================= */
 
-.c10-ov { padding: 4px 16px 20px; max-width: 860px; }
+.c10-ov { padding: 4px 16px 20px; max-width: 860px; margin-inline: auto; }
+/* the same overview, riding inside the domain list when there is no second
+   pane to hold it (one- and two-pane widths) */
+.c10-ov.is-inline { padding: 2px 16px 0; margin-inline: 0; }
+.c10-ov.is-inline .c10-ov-blurb { margin: 4px 0 8px; }
 .c10-ov-blurb { font-size: var(--fs-sm); color: var(--text-secondary); line-height: 1.55; margin: 6px 0 12px; max-width: 68ch; }
 .c10-ov-stats {
   display: flex;
@@ -1006,9 +1141,16 @@ kbd.c10-kbd {
 }
 .c10-ov-stats strong { color: var(--text-primary); font-size: var(--fs-md); font-weight: 700; margin-right: 4px; }
 
+/* Audit 2026-08-21 finding 1: the third cell of this row carries a COUNT
+   ("44 sections") or a status word, and a count that loses a digit is worse
+   than no count at all — it silently reports a different number than the
+   same screen shows elsewhere. With `1fr` in column 2 the nowrap description
+   claimed the whole track and squeezed the count cell to one glyph in the
+   narrower glass panes. minmax(0, 1fr) lets the DESCRIPTION yield instead,
+   and the guarantees below stop the count/word cell shrinking at all. */
 .c10-mgr-row {
   display: grid;
-  grid-template-columns: 20px 1fr auto 14px;
+  grid-template-columns: 20px minmax(0, 1fr) auto 14px;
   gap: 10px;
   align-items: center;
   width: 100%;
@@ -1022,7 +1164,18 @@ kbd.c10-kbd {
 }
 .c10-mgr-row:hover { background: var(--accent-soft); color: var(--text-primary); }
 .c10-mgr-row i[data-ico] { width: 15px; height: 15px; }
-.c10-mgr-title { font-size: var(--fs-sm); font-weight: 700; color: var(--text-primary); }
+/* the text cell: it, and only it, absorbs the squeeze */
+.c10-mgr-text { min-width: 0; }
+.c10-mgr-title {
+  display: block;
+  min-width: 0;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .c10-mgr-sub {
   font-size: var(--fs-2xs);
   color: var(--text-muted);
@@ -1030,6 +1183,17 @@ kbd.c10-kbd {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+/* the count / status cell: never clipped, in any theme at any width. The
+   base .c10-item-meta caps at 120px with overflow:hidden, which zeroes its
+   automatic minimum size and lets the auto track collapse under it; here the
+   digits define the floor instead. */
+.c10-mgr-row > .c10-item-meta,
+.c10-mgr-row > .c10-word {
+  min-width: max-content;
+  max-width: none;
+  overflow: visible;
+  text-overflow: clip;
 }
 .c10-mgr-row .c10-chev { color: var(--text-muted); display: inline-flex; }
 .c10-mgr-row .c10-chev i[data-ico] { width: 12px; height: 12px; }
@@ -1056,8 +1220,13 @@ kbd.c10-kbd {
   min-height: 0;
   overflow-y: auto;
   padding: 14px 20px 40px;
+  /* size container: Q/A grids below recompose against the ACTUAL detail
+     column width (which is narrow at 1280 in the multi-pane strip), not the
+     viewport (Chromium >= 105; harness runs 151). */
+  container-type: inline-size;
+  container-name: c10-mgr-main;
 }
-.c10-mgr-main-inner { max-width: 940px; }
+.c10-mgr-main-inner { max-width: 940px; margin-inline: auto; }
 
 .c10-mgr-head { margin-bottom: 10px; }
 .c10-mgr-h1 {
@@ -1110,7 +1279,8 @@ kbd.c10-kbd {
   margin-bottom: 8px;
 }
 .c10-sec-title { font-size: var(--fs-md); font-weight: 700; color: var(--text-primary); }
-.c10-sec-note { font-size: var(--fs-xs); color: var(--text-muted); line-height: 1.5; margin: 0 0 8px; max-width: 74ch; }
+/* Full sentences of explanation, not meta: secondary, never tertiary. */
+.c10-sec-note { font-size: var(--fs-xs); color: var(--text-secondary); line-height: 1.5; margin: 0 0 8px; max-width: 74ch; }
 
 /* overview items: aligned Q/A grid */
 .c10-qa { display: grid; grid-template-columns: minmax(170px, 240px) 1fr; gap: 0; }
@@ -1125,13 +1295,29 @@ kbd.c10-kbd {
 .c10-qa-a { color: var(--text-primary); min-width: 0; }
 .c10-qa-a .c10-qa-note { display: block; font-size: var(--fs-xs); color: var(--text-secondary); }
 .c10-qa-a.t-muted { color: var(--text-muted); }
+/* Same lesson as the Home attention rows: the accent hue alone measures
+   2.7-3.1:1 on the light surfaces, so the inline jump blends toward the body
+   ink and carries a standing underline instead of relying on colour. */
 button.c10-qa-jump {
   font-size: var(--fs-2xs);
   font-weight: 600;
-  color: var(--accent-primary);
+  color: color-mix(in srgb, var(--accent-primary) 40%, var(--text-primary));
+  text-decoration: underline;
+  text-underline-offset: 2px;
   margin-left: 6px;
 }
 button.c10-qa-jump:hover { text-decoration: underline; }
+
+/* Narrow manager detail column (audit 2026-08-20 findings 1-2): when the
+   detail column is squeezed by the multi-pane strip (~390px at 1280), the
+   two-column Q/A grid crushed 'Needs attention' body copy into a 110-140px
+   ribbon wrapping 2-4 words per line. Below 620px of detail-column width the
+   grid recomposes to a full-width stacked layout — label above description —
+   so body copy reads normally in every theme. */
+@container c10-mgr-main (max-width: 620px) {
+  .c10-qa { grid-template-columns: 1fr; }
+  .c10-qa-q { border-bottom: none; padding-bottom: 0; }
+}
 
 /* roster items */
 .c10-ro-item {
@@ -1276,6 +1462,13 @@ button.c10-ro-top:hover { background: var(--accent-soft); }
 /* ================= All Settings (virtualized compendium) ================ */
 
 .c10-all { display: flex; flex-direction: column; min-height: 0; flex: 1 1 auto; }
+/* ultrawide: the compendium toolbar, header row, and list share one bounded,
+   centered column so 2200/2500 never leave a left-anchored desert */
+.c10-facets, .c10-vhead, .c10-vlist {
+  width: 100%;
+  max-width: 1640px;
+  margin-inline: auto;
+}
 .c10-facets {
   display: flex;
   gap: 8px;
@@ -1343,6 +1536,8 @@ button.c10-ro-top:hover { background: var(--accent-soft); }
 .c10-vrow .c10-vname { font-weight: 600; color: var(--text-primary); }
 .c10-vrow .c10-vpath { font-size: var(--fs-2xs); color: var(--text-muted); }
 .c10-vrow .c10-vtype { font-size: var(--fs-2xs); color: var(--text-muted); }
+/* the stored value is the payload of this index, not metadata about it */
+.c10-vrow .c10-vval { font-size: var(--fs-xs); color: var(--text-secondary); }
 .c10-vrow.is-stress .c10-vname { color: var(--text-secondary); }
 .c10-stress-tag {
   font-size: var(--fs-2xs);
@@ -1436,8 +1631,10 @@ button.c10-ro-top:hover { background: var(--accent-soft); }
 .c10-stagep-t { font-size: var(--fs-sm); font-weight: 700; color: var(--text-primary); }
 .c10-stagep.is-locked .c10-stagep-t { color: var(--text-muted); }
 .c10-stagep-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 10px 14px 24px; }
-.c10-stagep.is-locked .c10-stagep-body { opacity: .55; }
-.c10-locked-note { font-size: var(--fs-xs); color: var(--text-muted); line-height: 1.5; }
+/* A locked stage is signalled by its number and title, not by fading the one
+   sentence that explains what the stage will do. */
+.c10-stagep-body.is-collapsed { flex: 0 0 auto; overflow: visible; padding: 8px 14px 12px; }
+.c10-locked-note { font-size: var(--fs-xs); color: var(--text-secondary); line-height: 1.5; }
 
 .c10-src {
   display: block;
@@ -1632,12 +1829,84 @@ html[data-reduced-motion="1"] .pm2-located {
   background-color: color-mix(in srgb, var(--accent-primary) 12%, transparent);
 }
 
+/* ================= wide widths =================
+   Audit 2026-08-21 round-3 finding 1. Below, `is-wide` is stage >= 1560 and
+   `is-ultra` is stage >= 2000 (both set by the concept script off the real
+   stage width, not the viewport, so the shell's icon rail is already
+   discounted). The old wide behaviour bounded each content column at its
+   reading width and centred it inside a pane that kept growing: at 2500 the
+   pane was 2160px and the column 1020px, so 570px of nothing sat on each side
+   of Home while the COMMAND INDEX rail stayed pinned to the far left. The
+   packet forbids that. Three moves, in order of effect:
+     1. the panes themselves take some of the width (index, domain, roster nav);
+     2. every content column's cap rises in two steps, so at 1700 and 2200 the
+        column simply fills its pane and there is no band at all;
+     3. Home and the domain overview RECOMPOSE into two columns, so the wider
+        column is carrying content rather than stretching one list across it.
+   Slint: this is the same responsive-layout switch as the mode1/2/3 ladder —
+   a state on the root with different HorizontalLayout preferred-widths. */
+.c10.is-wide .c10-pane-index { min-width: 296px; max-width: 360px; }
+.c10.is-wide .c10-pane-cat { flex-basis: 340px; width: 340px; }
+.c10.is-ultra .c10-pane-cat { flex-basis: 380px; width: 380px; }
+.c10.is-wide .c10-mgr-nav { flex-basis: 290px; width: 290px; }
+.c10.is-ultra .c10-mgr-nav { flex-basis: 320px; width: 320px; }
+
+/* Home: masthead, search and banner stay full-bleed across the column; the
+   sections below pair up — attention over utilities on the left, the recent
+   ledger on the right. */
+.c10.is-wide .c10-home {
+  max-width: 1400px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 44px;
+  align-items: start;
+}
+.c10.is-ultra .c10-home { max-width: 1840px; column-gap: 56px; }
+.c10.is-wide .c10-home-head,
+.c10.is-wide .c10-bigsearch,
+.c10.is-wide .c10-banner,
+.c10.is-wide .c10-refresh-note { grid-column: 1 / -1; }
+.c10.is-wide .c10-bigsearch { max-width: 900px; }
+.c10.is-wide .c10-home-sec.is-attention,
+.c10.is-wide .c10-home-sec.is-utils { grid-column: 1; }
+.c10.is-wide .c10-home-sec.is-recent { grid-column: 2; }
+
+/* Domain overview: the manager and section card lists go two-up, so a card is
+   ~700px at 2500 instead of 1480px with its count marooned at the far edge. */
+.c10.is-wide .c10-ov { max-width: 1180px; }
+.c10.is-ultra .c10-ov { max-width: 1480px; }
+.c10.is-wide .c10-ovlist {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 12px;
+}
+
+/* Tables and rosters just widen; they are real multi-column data and read
+   better with the room. */
+.c10.is-wide .c10-rows { max-width: 1480px; }
+.c10.is-ultra .c10-rows { max-width: 1720px; }
+.c10.is-wide .c10-facets,
+.c10.is-wide .c10-vhead,
+.c10.is-wide .c10-vlist { max-width: 1640px; }
+.c10.is-ultra .c10-facets,
+.c10.is-ultra .c10-vhead,
+.c10.is-ultra .c10-vlist { max-width: 1960px; }
+.c10.is-wide .c10-mgr-main-inner { max-width: 1120px; }
+.c10.is-ultra .c10-mgr-main-inner { max-width: 1320px; }
+/* At ultra width a single question/answer pair would run to ~120 characters,
+   so the definition list pairs up two-across instead of stretching. */
+.c10.is-ultra .c10-qa {
+  grid-template-columns: minmax(150px, 210px) minmax(0, 1fr) minmax(150px, 210px) minmax(0, 1fr);
+  column-gap: 24px;
+}
+
 /* ================= narrow widths =================
    JS drives the pane count; these rules keep panes honest when squeezed. */
 .c10.is-mode1 .c10-pane { flex: 1 1 auto; width: auto; border-right: none; }
 .c10.is-mode1 .c10-minisearch { flex: 1 1 auto; }
 .c10.is-mode1 .c10-crumbs { display: none; }
-.c10.is-mode1 .c10-project .c10-project-role { display: none; }
+.c10.is-mode1 .c10-project .c10-project-role,
+.c10.is-mode2 .c10-project .c10-project-role { display: none; }
 .c10.is-mode1 .c10-home { padding: 16px 16px 32px; }
 .c10.is-mode1 .c10-mgr { flex-direction: column; }
 .c10.is-mode1 .c10-mgr-nav {
@@ -1647,13 +1916,83 @@ html[data-reduced-motion="1"] .pm2-located {
   border-right: none;
   border-bottom: 1px solid var(--border-light);
 }
+/* one pane: the roster sits ABOVE the detail instead of beside it, so the two
+   have to share one left margin rather than each keeping its own */
+.c10.is-mode1 .c10-mgr-main { padding-inline: 16px; }
 .c10.is-mode1 .c10-qa { grid-template-columns: 1fr; }
 .c10.is-mode1 .c10-qa-q { border-bottom: none; padding-bottom: 0; }
 .c10.is-mode1 .c10-thead { display: none; }
-.c10.is-mode1 .c10-row { grid-template-columns: 1fr auto; grid-auto-rows: auto; }
+/* Audit 2026-08-21 round-3 finding 4: at one-pane width a roster row is the
+   full width of the window, so an object name (left) and its status (flush
+   right) ended up ~620px apart with nothing between them — two separate texts,
+   not one row. Two bindings, together: the name column stops stretching so the
+   status sits immediately beside the thing it describes, and every row carries
+   a hairline so the pairing survives even when a long name pushes the status
+   away. The rule is inset by an inset box-shadow rather than a border so it
+   cannot fight .c10-item.is-active's border-color. */
+.c10.is-mode1 .c10-item {
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr) 14px;
+  column-gap: 12px;
+  box-shadow: inset 0 -1px 0 var(--border-light);
+}
+.c10.is-mode1 .c10-item .c10-item-meta {
+  justify-self: start;
+  text-align: left;
+  max-width: none;
+  /* the meaning-bearing tail of a status ('Signed in, cannot invoke') wraps
+     rather than ellipsizing — audit 2026-08-20 finding 3, still binding */
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  line-height: 1.35;
+}
+/* Audit 2026-08-21 round-3 finding 2: at one-pane width the value stacks UNDER
+   its own name, so vertical rhythm is the only thing that says which value goes
+   with which setting. (The button reset at the top of this file used to eat the
+   base `.c10-row` padding/border-bottom outright — that is fixed at source now,
+   see the :where() note there — but the one-pane rhythm still needs its own
+   numbers, because the stacked layout wants a tighter row-gap than the grid
+   `gap` and a slightly taller fence.) The value hugs its own label; each row is
+   fenced by padding plus a hairline. */
+.c10.is-mode1 .c10-row {
+  grid-template-columns: 1fr auto;
+  grid-auto-rows: auto;
+  row-gap: 2px;
+  padding: 7px 10px 8px;
+  border-bottom: 1px solid var(--border-light);
+}
+.c10.is-mode1 .c10-rows > .c10-row:last-child { border-bottom: none; }
 .c10.is-mode1 .c10-row .c10-row-value { grid-column: 1; font-size: var(--fs-xs); }
-.c10.is-mode1 .c10-row .c10-row-state { grid-column: 2; grid-row: 1 / span 2; }
-.c10.is-mode1 .c10-vhead { display: none; }
-.c10.is-mode1 .c10-vrow { grid-template-columns: 1.4fr 1fr; }
-.c10.is-mode1 .c10-vrow > span:nth-child(n+3) { display: none; }
+/* the state word belongs to the NAME line, not to the gutter between the two */
+.c10.is-mode1 .c10-row .c10-row-state { grid-column: 2; grid-row: 1; align-self: center; }
+/* Compendium at one-pane width: the point of the index is the value, so the
+   VALUE column stays and the location stacks under the setting name. Type and
+   tier are the two facets that survive as filters above, so they are the two
+   that drop. Row height must match ROWH_NARROW in the concept script. */
+.c10.is-mode1 .c10-vhead {
+  grid-template-columns: minmax(0, 1fr) minmax(84px, .5fr);
+  padding-right: 16px;
+}
+.c10.is-mode1 .c10-vhead > span:nth-child(2),
+.c10.is-mode1 .c10-vhead > span:nth-child(3),
+.c10.is-mode1 .c10-vhead > span:nth-child(4) { display: none; }
+.c10.is-mode1 .c10-vhead > span:nth-child(5) { text-align: right; }
+.c10.is-mode1 .c10-vrow {
+  grid-template-columns: minmax(0, 1fr) minmax(84px, .5fr);
+  grid-template-rows: auto auto;
+  align-content: center;
+  row-gap: 1px;
+  height: 46px;
+  padding-right: 16px;
+}
+.c10.is-mode1 .c10-vrow > span:nth-child(1) { grid-column: 1; grid-row: 1; }
+.c10.is-mode1 .c10-vrow > span:nth-child(2) { grid-column: 1; grid-row: 2; }
+.c10.is-mode1 .c10-vrow > span:nth-child(3),
+.c10.is-mode1 .c10-vrow > span:nth-child(4) { display: none; }
+.c10.is-mode1 .c10-vrow > span:nth-child(5) {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  text-align: right;
+  align-self: center;
+}
 .c10.is-mode2 .c10-mgr-nav { flex-basis: 220px; width: 220px; }

@@ -1,0 +1,17 @@
+# Critical Browser Audit
+
+**Overall:** FAIL
+
+- Passed: 0
+- Failed: 1
+- Screenshots: 0
+
+## Failures
+
+- `{"name":"runner:complete","detail":{"error":"Error: Playwright unavailable\n    at loadPW (file:///mnt/data/work/pm56_pro_reaudit/tests/critical-browser-audit.mjs:10:209)\n    at async file:///mnt/data/work/pm56_pro_reaudit/tests/critical-browser-audit.mjs:22:11"}}`
+
+## Checks
+
+| Check | Status |
+|---|---|
+| runner:complete | FAIL |

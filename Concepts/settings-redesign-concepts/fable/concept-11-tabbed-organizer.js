@@ -99,6 +99,20 @@
     for (var i = 0; i < cs.length; i++) if (cs[i].id === id) return cs[i];
     return null;
   }
+  /* Subgroups carry {id, title, desc}. Ordinary copy must never print the id
+     ("visual"); it prints the title ("Visual Style"). Anything that shows a
+     category/subgroup path goes through subTitle so the two can never drift. */
+  function subById(cat, subId) {
+    var c = catById(cat);
+    if (!c || !subId) return null;
+    var gs = arr(c.subgroups);
+    for (var i = 0; i < gs.length; i++) if (gs[i].id === subId) return gs[i];
+    return null;
+  }
+  function subTitle(cat, subId) {
+    var g = subById(cat, subId);
+    return g ? (g.title || g.id) : (subId || '');
+  }
   function settingById(id) {
     if (!settingById._ix) {
       settingById._ix = {};
@@ -106,19 +120,34 @@
     }
     return settingById._ix[id] || null;
   }
-  /* Extra demo rows that live in the legacy PM_DATA settings map but not in
-     the v2 inventory (the canonical deep-link probe among them). Rendered as
-     concept-local rows in their grafted domain; edits update the demo record
-     and produce an honest simulated receipt. */
-  var EXTRA_ROWS = { 'system.health.diagnostics-verbosity': { cat: 'system', sub: 'health' } };
+  /* Legacy-graft mechanism, intentionally EMPTY: ids that exist only in the
+     old rev-2 demo dataset (e.g. system.health.diagnostics-verbosity) are NOT
+     part of this project's 828-row inventory, so deep links to them get the
+     honest not-in-this-project surface instead of a fabricated row. */
+  var EXTRA_ROWS = {};
   function extraRecord(id) {
     if (!EXTRA_ROWS[id]) return null;
     var rec = obj(obj(store.data).settings)[id];
     return rec && rec.id ? rec : null;
   }
 
-  function scenario() { return str(store.get('scenario')) || 'baseline'; }
-  function fixtures() { return arr(store.get('fixtures')); }
+  /* URL-applied scenarios/fixtures are persist:false, so the store keys can
+     be stale — always prefer the live PM2.states view. (Rendering otherwise
+     reads store.data flags, resolveRow states, and notices, never these.) */
+  function scenario() {
+    try {
+      var S = window.PM2.states;
+      if (S && typeof S.activeScenario === 'function') return str(S.activeScenario()) || 'baseline';
+    } catch (e) { /* states optional */ }
+    return str(store.get('scenario')) || 'baseline';
+  }
+  function fixtures() {
+    try {
+      var S = window.PM2.states;
+      if (S && typeof S.activeFixtures === 'function') return arr(S.activeFixtures());
+    } catch (e) { /* states optional */ }
+    return arr(store.get('fixtures'));
+  }
   function hasFx(id) { return fixtures().indexOf(id) >= 0; }
 
   function managers() { return window.PM2.managers; }
@@ -234,7 +263,7 @@
         '</div>' +
         '<div class="c11-searchwrap" id="c11SearchWrap">' +
           '<span class="c11-search-ico">' + ico('search') + '</span>' +
-          '<input id="c11Search" class="c11-search" type="text" role="combobox" aria-expanded="false" ' +
+          '<input id="c11Search" data-pm2-search-input class="c11-search" type="text" role="combobox" aria-expanded="false" ' +
             'aria-label="Search settings" autocomplete="off" spellcheck="false" ' +
             'placeholder="Search settings, managers, actions…">' +
           '<kbd class="c11-kbd">Ctrl K</kbd>' +
@@ -254,7 +283,7 @@
       '<div class="c11-refresh" id="c11Refresh" hidden></div>' +
       '<div class="c11-ops" id="c11Ops" hidden></div>' +
       '<div class="c11-crumbrow" id="c11CrumbRow">' +
-        '<button type="button" class="c11-btn c11-back" id="c11Back" data-act="back">' + ico('undo') + '<span></span></button>' +
+        '<button type="button" class="c11-btn c11-back" id="c11Back" data-act="back" data-pm2-back>' + ico('undo') + '<span></span></button>' +
         '<nav class="c11-crumbs" id="c11Crumbs" aria-label="Sheet pile"></nav>' +
       '</div>' +
       '<div class="c11-sheaf" id="c11Sheaf"><div class="c11-sheet" id="c11Sheet" data-depth="1"></div></div>';
@@ -293,12 +322,58 @@
         '<span>' + esc(g.label) + '</span></button>';
     });
     els.tabs.innerHTML = html;
+    /* renderChrome() rewrites this strip on every route change, so the Home
+       tab's leading icon has to be re-filled here. Without it the <i> kept its
+       14px box and 6px gap but painted nothing — 20px of dead space that read
+       as lopsided padding on the first tab only. */
+    hydrate(els.tabs);
+    fitTabs();
     /* keep the active tab visible in the scrollable strip */
-    var active = els.tabs.querySelector('.c11-tab.is-active');
+    var active = els.tabs.querySelector('.c11-tab.is-active:not(.is-overflow)');
     if (active && typeof active.scrollIntoView === 'function') {
       try { active.scrollIntoView({ block: 'nearest', inline: 'nearest' }); } catch (e) { /* older engines */ }
     }
     updateTabFades();
+  }
+
+  /* Whole tabs or none: a tab that would be sliced by the scroller's right edge
+     is hidden instead (CSS .is-overflow) and stays reachable through the "More"
+     menu, which already lists every destination. Fitting is measured against the
+     ROW's free width — never against the strip's own box — so hiding a tab can
+     never feed back into the measurement and oscillate. */
+  function fitTabs() {
+    if (!els.tabs) return;
+    var strip = els.tabs;
+    var kids = strip.querySelectorAll('.c11-tab');
+    if (!kids.length) return;
+    var i;
+    for (i = 0; i < kids.length; i++) kids[i].classList.remove('is-overflow');
+
+    var row = strip.parentNode;
+    if (!row || !row.clientWidth) return;
+    var rs = window.getComputedStyle(row);
+    var rowGap = parseFloat(rs.columnGap) || 0;
+    var avail = row.clientWidth - (parseFloat(rs.paddingLeft) || 0) - (parseFloat(rs.paddingRight) || 0);
+    if (els.more && els.more.offsetWidth) avail -= els.more.offsetWidth + rowGap;
+    if (!(avail > 0)) return;
+    var gap = parseFloat(window.getComputedStyle(strip).columnGap) || 0;
+
+    var widths = [], activeIx = 0;
+    for (i = 0; i < kids.length; i++) {
+      widths.push(kids[i].getBoundingClientRect().width);
+      if (kids[i].classList.contains('is-active')) activeIx = i;
+    }
+
+    var keep = {}, used = 0, taken = 0;
+    function take(ix) { used += widths[ix] + (taken ? gap : 0); keep[ix] = true; taken++; }
+    take(0);                              /* Home is always a way back */
+    if (activeIx !== 0) take(activeIx);   /* the active tab is never dropped */
+    for (i = 1; i < kids.length; i++) {
+      if (keep[i]) continue;
+      if (used + widths[i] + gap > avail + 0.5) break;   /* keep the run contiguous */
+      take(i);
+    }
+    for (i = 0; i < kids.length; i++) if (!keep[i]) kids[i].classList.add('is-overflow');
   }
 
   function activeGroupId() {
@@ -331,6 +406,18 @@
 
   function renderCrumbs() {
     ui.stack = buildStack(ui.dest);
+    /* On Home the pile is one rung deep, so the strip printed a lone "Home"
+       chip immediately under the already-active "Home" tab — the same word
+       twice, saying nothing the tab had not. The row is dropped there and
+       returns the moment the pile is worth reading. */
+    var lone = ui.stack.length < 2;
+    els.crumbRow.hidden = lone;
+    if (lone) {
+      els.crumbs.innerHTML = '';
+      els.back.hidden = true;
+      els.sheet.setAttribute('data-depth', '1');
+      return;
+    }
     var html = '';
     ui.stack.forEach(function (lvl, i) {
       var top = i === ui.stack.length - 1;
@@ -569,6 +656,7 @@
         root.classList.toggle('is-narrow', narrow);
         root.classList.toggle('is-tight', tight);
       }
+      fitTabs();
       updateTabFades();
     }
     if (window.ResizeObserver) {
@@ -672,17 +760,29 @@
 
     /* the 12 category tiles — dominant content */
     html += '<section class="c11-cats" aria-label="Settings categories"><h2>Categories' +
-      '<span class="c11-h-note">' + fmtInt(counts.total) + ' settings across 12 categories · 9 tabs above group them</span></h2>' +
+      /* The old wording ("9 tabs above group them") counted tabs the reader
+         could not see: the strip drops whole tabs into the More menu as it
+         narrows, so at 760 only two or three are on screen. The sentence now
+         describes the grouping scheme and the guaranteed way to reach any
+         category, both of which are true at every width. */
+      '<span class="c11-h-note">' + fmtInt(counts.total) +
+      ' settings across 12 categories · the tab strip groups them into 9, and More lists every one</span></h2>' +
       '<div class="c11-tilegrid">';
     arr(counts.byCategory).forEach(function (c) {
       var g = groupForCat(c.id);
       html += '<button type="button" class="c11-tile" data-act="tile-go" data-cat="' + attr(c.id) + '">' +
         '<span class="c11-tile-ico">' + ico(c.icon || 'gear') + '</span>' +
-        '<span class="c11-tile-main"><span class="c11-tile-title">' + esc(c.title) + '</span>' +
-        '<span class="c11-tile-desc">' + esc(c.desc || '') + '</span></span>' +
+        '<span class="c11-tile-main"><span class="c11-tile-title">' + esc(c.title) + '</span></span>' +
         '<span class="c11-tile-meta">' + fmtInt(c.total) + (c.changed ? ' · ' + fmtInt(c.changed) + ' changed' : '') +
         (g && g.cats.length > 1 ? '<span class="c11-tile-tab">' + esc(g.label) + ' tab</span>' : '') +
-        '</span></button>';
+        '</span>' +
+        /* The description is a sibling of the title, not a child of it: sharing
+           the title's flex column meant the nowrap count/tab column stole its
+           measure, and the widest metas ("828 · 12 changed" + a tab pill) left
+           it a ~148px ribbon that clamped mid-word. On its own full-width row
+           it gets the whole card measure and the two lines finish the sentence. */
+        (c.desc ? '<span class="c11-tile-desc">' + esc(c.desc) + '</span>' : '') +
+        '</button>';
     });
     html += '</div></section>';
 
@@ -876,7 +976,7 @@
       var max = r.control.max != null ? ' max="' + r.control.max + '"' : '';
       return '<span class="c11-numwrap"><input type="number" class="c11-num" data-role="row-number" data-id="' + attr(r.id) +
         '" value="' + attr(r.value == null ? '' : r.value) + '"' + min + max + dis +
-        ' aria-label="' + attr(r.label) + '"></span>' + rowChips(r, true);
+        ' aria-label="' + attr(r.label) + '"></span>' + changedMark(r) + rowChips(r, true);
     }
     if (t === 'slider') {
       var lo = r.control.min != null ? r.control.min : 0;
@@ -888,12 +988,13 @@
       }
       return '<span class="c11-sliderwrap"><input type="range" class="c11-slider" data-role="row-slider" data-id="' + attr(r.id) +
         '" value="' + attr(r.value) + '" min="' + lo + '" max="' + hi + '" step="' + step + '"' + dis +
-        ' aria-label="' + attr(r.label) + '"><span class="c11-slider-val">' + esc(r.valueLabel) + '</span></span>' + rowChips(r, false);
+        ' aria-label="' + attr(r.label) + '"><span class="c11-slider-val">' + esc(r.valueLabel) + '</span></span>' +
+        changedMark(r) + rowChips(r, true);
     }
     if (t === 'text' || t === 'path') {
       return '<span class="c11-textwrap"><input type="text" class="c11-text" data-role="row-text" data-id="' + attr(r.id) +
         '" value="' + attr(r.value == null ? '' : r.value) + '"' + dis +
-        ' aria-label="' + attr(r.label) + '" placeholder="Not set"></span>' + rowChips(r, true, true);
+        ' aria-label="' + attr(r.label) + '" placeholder="Not set"></span>' + changedMark(r) + rowChips(r, true, true);
     }
     if (t === 'action') {
       return '<button type="button" class="c11-btn c11-btn-small" data-act="row-action" data-id="' + attr(r.id) + '"' + dis + '>' +
@@ -902,6 +1003,13 @@
     /* list / keyvalue: summary chip + details drawer holds the entries */
     return '<button type="button" class="c11-valbtn" data-act="row-details" data-id="' + attr(r.id) + '"' + dis + '>' +
       '<span>' + esc(r.valueLabel || 'View') + '</span>' + ico('eye') + '</button>' + rowChips(r, false);
+  }
+
+  /* Input-style controls show the value in the field itself; this small mark
+     keeps changed-from-default visible without repeating the value. */
+  function changedMark(r) {
+    if (!r.changedFromDefault || r.state === 'managed' || r.state === 'unavailable') return '';
+    return chipHtml('custom', 'Changed');
   }
 
   function rowChips(r, skipValue, skipNotSet) {
@@ -1015,7 +1123,7 @@
     var s = settingById(settingId);
     var x = EXTRA_ROWS[settingId];
     if (!s && !x) {
-      renderMissing('No setting called “' + settingId + '” exists in this project. It may have been renamed — try the search box above, or browse All Settings.');
+      renderMissing('“' + settingId + '” is not in this project’s settings. It may have been renamed or retired in a newer inventory — try the search box above, or browse All Settings to find its replacement.');
       if (done) done();
       return;
     }
@@ -1050,7 +1158,7 @@
       '<h1>Not here</h1><p>' + esc(msg) + '</p>' +
       '<div class="c11-missing-acts">' +
       '<button type="button" class="c11-btn" data-act="util-all">Browse All Settings</button>' +
-      '<button type="button" class="c11-btn c11-btn-quiet" data-act="go-home">Back to Home</button></div></div>';
+      '<button type="button" class="c11-btn c11-btn-quiet" data-act="go-home" data-pm2-back>Back to Home</button></div></div>';
     hydrate(els.sheet);
   }
 
@@ -1068,7 +1176,9 @@
     var vm = safeModel(def);
     if (!vm) { renderMissing('The ' + def.title + ' manager could not load its data.'); return; }
     if (def.id === 'm.providers') { renderProviders(def, vm, objectId, tab, sectionHint); return; }
-    renderGenericManager(def, vm, objectId);
+    /* several shared defs address objects via dest.sectionId rather than the
+       route objectId (m.sounds, m.notifications, ...) — either works here */
+    renderGenericManager(def, vm, objectId || sectionHint);
   }
 
   function managerHeadHtml(def, vm, extra) {
@@ -1295,9 +1405,19 @@
   }
 
   function tableHtml(def, sec) {
-    var cols = arr(sec.columns);
-    var rows = arr(sec.rows);
+    /* Shape-tolerant: columns are strings OR {id,label}; rows live under
+       sec.rows OR sec.items; cells are an array OR an object keyed by
+       column id. (The shared managers use every combination.) */
+    var cols = arr(sec.columns).map(function (c, i) {
+      return (typeof c === 'string') ? { id: 'col' + i, label: c } : obj(c);
+    });
+    var rows = arr(sec.rows).length ? arr(sec.rows) : arr(sec.items);
     if (!rows.length) return '<div class="c11-empty">' + esc(sec.emptyNote || 'Nothing here yet.') + '</div>';
+    function cellVal(r, c, ci) {
+      if (Array.isArray(r.cells)) return r.cells[ci];
+      if (r.cells && typeof r.cells === 'object') return r.cells[c.id];
+      return ci === 0 ? (r.label || r.id) : null;
+    }
     var html = '<div class="c11-tablewrap"><table class="c11-table"><thead><tr>';
     cols.forEach(function (c) { html += '<th>' + esc(c.label) + '</th>'; });
     html += '<th></th></tr></thead><tbody>';
@@ -1306,12 +1426,18 @@
       var open = !!ui.secOpen[key];
       html += '<tr data-object-id="' + attr(r.id) + '" tabindex="-1">';
       cols.forEach(function (c, ci) {
-        var v = obj(r.cells)[c.id];
-        html += '<td>' + (ci === 0 ? '<b>' + esc(v == null ? '—' : v) + '</b>' + flagChips(obj(r.flags)) : esc(v == null ? '—' : v)) + '</td>';
+        var v = cellVal(r, c, ci);
+        if (ci === 0) {
+          html += '<td><b>' + esc(v == null ? '—' : v) + '</b>' + flagChips(obj(r.flags)) +
+            (r.note || r.stateNote ? '<div class="c11-td-note">' + esc(r.note || r.stateNote) + '</div>' : '') + '</td>';
+        } else {
+          html += '<td>' + esc(v == null ? '—' : v) + '</td>';
+        }
       });
       html += '<td class="c11-td-acts">' +
         (r.detail ? '<button type="button" class="c11-row-more" data-act="ritem-toggle" data-key="' + attr(key) +
           '" aria-expanded="' + open + '" title="Detail">' + ico(open ? 'minus' : 'plus') + '</button>' : '') +
+        (r.dest && r.dest.route === 'setting' ? destBtn(r.dest, 'Open setting') : '') +
         '</td></tr>';
       if (open && r.detail) {
         html += '<tr class="c11-tr-detail"><td colspan="' + (cols.length + 1) + '">' + kvDumpHtml(r.detail) +
@@ -1343,7 +1469,9 @@
     }
     html += '<ol class="c11-steps">';
     arr(sec.steps).forEach(function (s2) {
-      html += '<li><b>' + esc(s2.label) + '</b>' + (s2.detail ? '<span>' + esc(s2.detail) + '</span>' : '') + '</li>';
+      var label = s2.label || s2.title || '';
+      var detail = s2.detail || s2.note || '';
+      html += '<li><b>' + esc(label) + '</b>' + (detail ? '<span>' + esc(detail) + '</span>' : '') + '</li>';
     });
     html += '</ol>';
     return html;
@@ -1353,6 +1481,9 @@
     var html = '';
     if (arr(sec.sources).length) {
       arr(sec.sources).forEach(function (s2) { html += rosterItemHtml(def, s2); });
+    }
+    if (arr(sec.items).length) {
+      arr(sec.items).forEach(function (s2) { html += rosterItemHtml(def, s2); });
     }
     var entries = arr(sec.entries);
     var plain = arr(sec.log);
@@ -1371,7 +1502,7 @@
         html += '<div class="c11-log-line"><span class="c11-log-what">' + esc(String(line)) + '</span></div>';
       });
       html += '</div>';
-    } else if (!arr(sec.sources).length) {
+    } else if (!arr(sec.sources).length && !arr(sec.items).length) {
       html += '<div class="c11-empty">' + esc(sec.emptyNote || 'Nothing recorded yet.') + '</div>';
     }
     return html;
@@ -1401,7 +1532,22 @@
         esc(sec.state === 'staged' ? 'Staged — waiting for review' :
             sec.state === 'rolled-back' ? 'Rolled back' :
             sec.state === 'applied' ? 'Applied' :
-            sec.state === 'dormant' ? 'No import staged' : String(sec.state)) + '</span></div>';
+            sec.state === 'dormant' ? 'No import staged' :
+            sec.state === 'never-run' ? 'Never run' :
+            sec.state === 'complete' ? 'Complete' : String(sec.state)) + '</span></div>';
+    }
+    if (sec.summary) {
+      html += '<div class="c11-line"><span class="c11-line-label">Summary</span><span class="c11-line-value">' +
+        esc(String(sec.summary)) + '</span></div>';
+    }
+    if (arr(sec.skipped).length) {
+      html += '<h3 class="c11-rgroup">Always skipped</h3>';
+      arr(sec.skipped).forEach(function (sk) {
+        var label = (sk && typeof sk === 'object') ? (sk.label || sk.path || sk.id || '') : String(sk);
+        var why = (sk && typeof sk === 'object') ? (sk.reason || sk.note || '') : '';
+        html += '<div class="c11-line"><span class="c11-line-label">' + esc(label) + '</span>' +
+          (why ? '<span class="c11-line-note">' + esc(why) + '</span>' : '') + '</div>';
+      });
     }
     if (sec.source) {
       html += '<div class="c11-line"><span class="c11-line-label">Source</span><span class="c11-line-value">' +
@@ -1531,7 +1677,7 @@
     if (activeTab === 'setup') {
       var setupAct = null;
       safeActions(def).forEach(function (a) {
-        if (a.id === 'act.setup.cursor-cli' && objectId === 'cursor') setupAct = a;
+        if (a.id === 'act.setup.cursor-cli' && /cursor/.test(objectId)) setupAct = a;
       });
       if (setupAct) {
         html += '<div class="c11-setup-cta"><button type="button" class="c11-btn c11-btn-primary" data-act="mgr-run" ' +
@@ -1627,6 +1773,17 @@
     'restart-required': 'Restart required', 'reconnect-required': 'Reconnect required',
     'changed-elsewhere': 'Changed elsewhere', error: 'Validation error'
   };
+  /* The control-kind and tier facets are stored as internal enum values
+     ('keyvalue', 'multiselect', 'advanced'). The menu and the button both read
+     their words from here so no raw enum ever reaches the surface. */
+  var TYPE_ORDER = ['toggle', 'select', 'radio', 'number', 'slider', 'text',
+                    'path', 'list', 'multiselect', 'keyvalue', 'action'];
+  var TYPE_LABELS = {
+    toggle: 'Toggle', select: 'Dropdown', radio: 'Radio choice', number: 'Number',
+    slider: 'Slider', text: 'Text', path: 'File path', list: 'List',
+    multiselect: 'Multi-select', keyvalue: 'Key and value pairs', action: 'Action'
+  };
+  var TIER_LABELS = { simple: 'Simple', advanced: 'Advanced' };
 
   function allIndexRows() {
     if (ui.allCache && ui.allCache.epoch === ui.epoch) return ui.allCache.rows;
@@ -1686,8 +1843,8 @@
       '<div class="c11-all-tools">' +
       '<input type="text" class="c11-all-q" id="c11AllQ" value="' + attr(f.q) + '" placeholder="Filter this list…" aria-label="Filter All Settings">' +
       facetBtn('facet-cat', catLabel, !!f.cat) +
-      facetBtn('facet-type', f.type ? ('Type: ' + f.type) : 'Type', !!f.type) +
-      facetBtn('facet-tier', f.tier ? ('Tier: ' + f.tier) : 'Tier', !!f.tier) +
+      facetBtn('facet-type', f.type ? ('Control: ' + (TYPE_LABELS[f.type] || f.type)) : 'Control', !!f.type) +
+      facetBtn('facet-tier', f.tier ? ('Tier: ' + (TIER_LABELS[f.tier] || f.tier)) : 'Tier', !!f.tier) +
       facetBtn('facet-state', f.state ? STATE_LABELS[f.state] : 'State', !!f.state) +
       facetBtn('facet-changed', f.changed === 'changed' ? 'Changed from default' : f.changed === 'default' ? 'On defaults' : 'Changed?', !!f.changed) +
       ((f.cat || f.type || f.tier || f.state || f.changed || f.q)
@@ -1730,7 +1887,7 @@
       html += '<button type="button" class="c11-all-row' + (r.stress ? ' is-stress' : '') + '" style="top:' + (i * ALL_ROW_H) + 'px" ' +
         'data-act="all-open" data-setting-id="' + attr(r.id) + '"' + (r.stress ? ' data-stress="1"' : '') + '>' +
         '<span class="c11-all-main"><b>' + esc(r.label) + '</b><i>' +
-        esc((c ? c.title : r.cat) + (r.sub ? ' › ' + r.sub : '')) + '</i></span>' +
+        esc((c ? c.title : r.cat) + (r.sub ? ' › ' + subTitle(r.cat, r.sub) : '')) + '</i></span>' +
         '<span class="c11-all-side">' +
         (r.stress ? chipHtml('not-configured', 'Stress fixture')
           : ((r.changed ? chipHtml('custom', r.valueLabel || 'Custom') : chipHtml('default', r.valueLabel || 'Default')) +
@@ -1748,12 +1905,11 @@
       items.push(opt('', 'Any category', f.cat));
       arr(inventory().categories).forEach(function (c) { items.push(opt(c.id, c.title, f.cat)); });
     } else if (which === 'type') {
-      items.push(opt('', 'Any type', f.type));
-      ['toggle', 'select', 'radio', 'number', 'slider', 'text', 'path', 'list', 'multiselect', 'keyvalue', 'action'].forEach(function (t) {
-        items.push(opt(t, t.charAt(0).toUpperCase() + t.slice(1), f.type));
-      });
+      items.push(opt('', 'Any control', f.type));
+      TYPE_ORDER.forEach(function (t) { items.push(opt(t, TYPE_LABELS[t] || t, f.type)); });
     } else if (which === 'tier') {
-      items = [opt('', 'Any tier', f.tier), opt('simple', 'Simple', f.tier), opt('advanced', 'Advanced', f.tier)];
+      items = [opt('', 'Any tier', f.tier), opt('simple', TIER_LABELS.simple, f.tier),
+               opt('advanced', TIER_LABELS.advanced, f.tier)];
     } else if (which === 'state') {
       Object.keys(STATE_LABELS).forEach(function (k) { items.push(opt(k, STATE_LABELS[k], f.state)); });
     } else if (which === 'changed') {
@@ -1820,7 +1976,9 @@
     /* right pane: category choice + preview */
     html += '<section class="c11-copy-choose" aria-label="Categories to copy"><h2>2 · Choose categories</h2>';
     if (!selected) {
-      html += '<div class="c11-empty">Pick a source project on the left. Its categories and counts appear here.</div>';
+      /* The two panes sit side by side when there is room and stack when there
+         is not, so the copy cannot name a direction — it names the step. */
+      html += '<div class="c11-empty">Pick a source project in step 1. Its categories and counts appear here.</div>';
     } else {
       var picked = 0, total = 0;
       html += '<div class="c11-copy-cats">';
@@ -1912,7 +2070,7 @@
       '<div class="c11-copy-apply"><span class="c11-line-note">Restore point first · atomic apply · verification · receipt with rollback. One time only — future changes in ' +
       esc(pv.sourceName) + ' never propagate here.</span>' +
       '<span class="c11-copy-footacts">' +
-      '<button type="button" class="c11-btn" data-act="copy-back">Back to selection</button>' +
+      '<button type="button" class="c11-btn" data-act="copy-back" data-pm2-back>Back to selection</button>' +
       '<button type="button" class="c11-btn c11-btn-primary" data-act="copy-apply"' + (c.busy ? ' disabled' : '') + '>' +
       (c.busy ? 'Applying…' : 'Create restore point and apply') + '</button></span></div></div>';
     els.sheet.innerHTML = html;
@@ -2137,6 +2295,7 @@
 
   function open(dest) {
     var d = obj(dest);
+    var hadFocus = !!d.focus;
     closeMenu(false);
     if (d.route !== 'search') closeDrop();
 
@@ -2196,6 +2355,15 @@
     if (focusSetting) {
       var t = els.sheet.querySelector('[data-setting-id="' + cssEscape(focusSetting) + '"]');
       if (t) landOn(t);
+    } else if (hadFocus && ui.dest.route === 'manager' && !root.querySelector('.pm2-located')) {
+      /* focus-driven navigation with no finer target: land on the sheet head
+         (manager page, or the provider detail head when a provider is open) */
+      var t2 = null;
+      if (ui.dest.objectId && els.sheet.querySelector('.c11-prov-detail')) {
+        t2 = els.sheet.querySelector('.c11-prov-head h1');
+      }
+      if (!t2) t2 = els.sheet.querySelector('.c11-mgr-head h1') || els.sheet.querySelector('h1');
+      if (t2) landOn(t2);
     }
     return null;
   }
@@ -2211,7 +2379,7 @@
       var s = settingById(d.settingId);
       var x = EXTRA_ROWS[d.settingId];
       if (s || x) renderDomain(s ? s.cat : x.cat, ui.domSub[s ? s.cat : x.cat] || '');
-      else renderMissing('No setting called “' + d.settingId + '” exists in this project.');
+      else renderMissing('“' + d.settingId + '” is not in this project’s settings. It may have been renamed or retired — try the search box above, or browse All Settings.');
     }
     else if (d.route === 'search') { renderHome(); }
     else renderHome();
@@ -2236,6 +2404,16 @@
     root.addEventListener('input', onInput);
     root.addEventListener('keydown', onRootKeydown);
     els.tabs.addEventListener('scroll', updateTabFades, { passive: true });
+
+    /* tab metrics move with the theme (each face has its own type) and again
+       when the webfonts land, so the fit is re-measured on both */
+    if (window.MutationObserver) {
+      var mo = new MutationObserver(function () { fitTabs(); updateTabFades(); });
+      mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-density'] });
+    }
+    if (document.fonts && document.fonts.ready && typeof document.fonts.ready.then === 'function') {
+      document.fonts.ready.then(function () { fitTabs(); updateTabFades(); });
+    }
 
     document.addEventListener('mousedown', function (ev) {
       if (ui.menu && ui.menu.el && !ui.menu.el.contains(ev.target) &&

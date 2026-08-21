@@ -3,6 +3,9 @@
    Plain data over the 828-row PM2_INVENTORY: current-Project values, row view
    models, per-category counts, recents feed, attention list. No DOM access;
    window.localStorage only (namespaced pm.settingsConcepts.fable.<conceptId>.*).
+   User value changes persist under <ns>values and rehydrate on init, so
+   edits survive a reload; the first-run scenario clears them. Scenario and
+   fixture state stays ephemeral (owned by pm2-states).
    Slint note: the store maps to a model bus; resolveRow output is a pure
    struct a Slint component can render without further lookups. No emoji. */
 (function () {
@@ -428,7 +431,52 @@
       };
     });
 
-    var recents = SEEDED_RECENTS.map(function (r) {
+    /* ---- persisted user value changes (survive reload) ----
+       Every successful setValue is recorded under <ns>values as
+       {id: {value, changedAt, by}} and rehydrated here, after default +
+       divergence seeding, so user edits win over seeded demo data. Only
+       user value changes persist - scenarios/fixtures stay ephemeral
+       (pm2-states owns its own keys). */
+    var persistedMap = {};
+    function writePersisted() {
+      try {
+        if (Object.keys(persistedMap).length === 0) {
+          window.localStorage.removeItem(ns + 'values');
+        } else {
+          window.localStorage.setItem(ns + 'values', JSON.stringify(persistedMap));
+        }
+      } catch (e) { /* storage unavailable; in-memory values still work */ }
+    }
+    (function rehydrate() {
+      var raw = null;
+      try { raw = window.localStorage.getItem(ns + 'values'); } catch (e) { return; }
+      if (!raw) return;
+      var saved;
+      try { saved = JSON.parse(raw); } catch (e) { return; }
+      if (!saved || typeof saved !== 'object') return;
+      Object.keys(saved).forEach(function (id) {
+        var setting = byId[id];
+        var rec = saved[id];
+        if (!setting || !rec || typeof rec !== 'object' || !('value' in rec)) return;
+        var res = validate(setting, rec.value);
+        if (!res.ok) return; /* stale or malformed entries are dropped */
+        values[id] = {
+          value: res.value,
+          changedFromDefault: !sameJson(res.value, setting.default === undefined ? null : setting.default),
+          changedAt: str(rec.changedAt) || undefined,
+          by: str(rec.by) || 'You',
+          source: 'persisted'
+        };
+        persistedMap[id] = { value: clone(res.value), changedAt: values[id].changedAt, by: values[id].by };
+      });
+    })();
+
+    /* Recent-change feed. Seeded demo entries and live setValue entries are
+       kept apart so scenario resets stay honest: first-run (or any scenario
+       rebuild that empties data.recents) hides the seeded feed, and a
+       states-driven rebuild clears the live feed because the value changes
+       it described were rolled back with the rebuild. */
+    var seededRecents = SEEDED_RECENTS.map(function (r) {
       var s = byId[r.settingId] || {};
       return {
         settingId: r.settingId,
@@ -438,6 +486,7 @@
         when: r.when, by: r.by, note: r.note || null
       };
     });
+    var liveRecents = [];
 
     var store = {
       conceptId: cid,
@@ -507,7 +556,13 @@
         entry.source = source;
         countsCache = null;
 
-        recents.unshift({
+        /* Persist the user's change so it survives a reload. Reverts of
+           seeded demo divergences are stored too - the record, not the
+           changedFromDefault flag, is what must survive. */
+        persistedMap[id] = { value: clone(res.value), changedAt: when, by: 'You' };
+        writePersisted();
+
+        liveRecents.unshift({
           settingId: id,
           label: str(setting.label) || id,
           cat: str(setting.cat), sub: str(setting.sub),
@@ -515,7 +570,7 @@
           toLabel: formatValue(setting, res.value),
           when: when, by: 'You', note: null
         });
-        if (recents.length > 40) recents.length = 40;
+        if (liveRecents.length > 40) liveRecents.length = 40;
 
         store.emit('value', {
           id: id, value: res.value, previous: previous,
@@ -671,11 +726,29 @@
       },
 
       recents: function () {
-        return recents.slice();
+        /* Scenario-honest feed: first-run is a clean workspace, and a
+           scenario rebuild that emptied data.recents is a systematic empty -
+           in both cases only changes made after that point (live entries)
+           may appear. Live entries themselves are cleared whenever a
+           states-driven rebuild rolls the values back (see the 'scenario'
+           listener below). */
+        var sc = currentScenario(store);
+        var systematicEmpty = sc === 'first-run' ||
+          (Array.isArray(store.data.recents) && store.data.recents.length === 0);
+        if (systematicEmpty) return liveRecents.slice();
+        return liveRecents.concat(seededRecents).slice(0, 40);
+      },
+
+      /* Drops the persisted user value changes (localStorage only - the
+         current in-memory values are untouched). Used by the States drawer,
+         tests, and the first-run scenario reset. */
+      clearPersistedValues: function () {
+        persistedMap = {};
+        try { window.localStorage.removeItem(ns + 'values'); } catch (e) { /* ignore */ }
       },
 
       attention: function () {
-        var scenario = str(store.get('scenario')) || 'baseline';
+        var scenario = currentScenario(store);
         if (scenario === 'calm' || scenario === 'first-run') return [];
         var items = BASE_ATTENTION.map(clone);
         if (scenario === 'usage-exhausted') {
@@ -702,11 +775,45 @@
       }
     };
 
-    /* keep counts honest when values or scenario state change */
+    /* ---- session mirror ----
+       store.session = {scenario, fixtures, stress} is the ALWAYS-CURRENT view
+       of applied test state, updated on every scenario/fixtures/stress
+       application regardless of persistence - including URL-applied state
+       running with persist:false, where store.get('scenario') would go
+       stale. Concepts should read store.session (or listen to the events);
+       the persisted keys keep their existing meaning (pinned state only)
+       and are not written here. */
+    store.session = {
+      scenario: str(store.get('scenario')) || 'baseline',
+      fixtures: arr(store.get('fixtures')).slice(),
+      stress: store.get('stress') === true
+    };
+
+    /* keep counts honest when values or scenario state change; the first-run
+       scenario is a clean-workspace reset, so it also drops the persisted
+       user value changes (coordinated with pm2-states' applyScenario). */
+    function onScenarioChanged(id, rebuilt) {
+      countsCache = null;
+      if (typeof id === 'string' && id) store.session.scenario = id;
+      /* A states-driven rebuild rolled values back to the scenario baseline,
+         so the live recents describing rolled-back changes must go too. */
+      if (rebuilt) liveRecents.length = 0;
+      if (id === 'first-run') store.clearPersistedValues();
+    }
     store.on('value', function () { countsCache = null; });
-    store.on('scenario', function () { countsCache = null; });
+    store.on('scenario', function (p) {
+      onScenarioChanged(typeof p === 'string' ? p : str(obj(p).id) || str(obj(p).scenario), true);
+    });
+    store.on('fixtures', function (p) {
+      countsCache = null;
+      var ids = Array.isArray(p) ? p : arr(obj(p).ids);
+      store.session.fixtures = ids.slice();
+    });
     store.on('change', function (p) {
-      if (p && (p.key === 'scenario' || p.key === 'fixtures' || p.key === 'stress')) countsCache = null;
+      if (!p) return;
+      if (p.key === 'scenario') onScenarioChanged(str(p.value), false);
+      else if (p.key === 'fixtures') { countsCache = null; store.session.fixtures = arr(p.value).slice(); }
+      else if (p.key === 'stress') { countsCache = null; store.session.stress = p.value === true; }
     });
 
     singleton = store;
@@ -721,6 +828,36 @@
     } catch (e) { /* states drawer is optional */ }
 
     return store;
+  }
+
+  /* ---- current test-state resolution (read-through) ----
+     Order of truth: PM2.states.activeScenario()/activeFixtures() when the
+     states module is loaded (always current, including URL-applied
+     persist:false state), else the store.session mirror, else the persisted
+     store key. Everything in this file that branches on scenario/fixtures
+     resolves through these two helpers. */
+  function currentScenario(store) {
+    try {
+      var S = window.PM2.states;
+      if (S && typeof S.activeScenario === 'function') {
+        var sc = S.activeScenario();
+        if (typeof sc === 'string' && sc) return sc;
+        if (sc && typeof sc === 'object' && sc.id) return String(sc.id);
+      }
+    } catch (e) { /* states optional */ }
+    if (store.session && store.session.scenario) return store.session.scenario;
+    return str(store.get('scenario')) || 'baseline';
+  }
+  function currentFixtures(store) {
+    try {
+      var S = window.PM2.states;
+      if (S && typeof S.activeFixtures === 'function') {
+        var fx = S.activeFixtures();
+        if (Array.isArray(fx)) return fx;
+      }
+    } catch (e) { /* states optional */ }
+    if (store.session && Array.isArray(store.session.fixtures)) return store.session.fixtures;
+    return arr(store.get('fixtures'));
   }
 
   /* Active row state from baseline rules + scenario + fixtures (last wins). */
@@ -746,15 +883,14 @@
     }
     BASELINE_RULES.forEach(apply);
 
-    var scenario = str(store.get('scenario')) || 'baseline';
+    var scenario = currentScenario(store);
     if (scenario === 'calm' || scenario === 'first-run') {
       /* calm and first-run present a clean workspace: no pending states */
       if (state !== 'unavailable') { state = 'normal'; note = null; }
     }
     arr(SCENARIO_RULES[scenario]).forEach(apply);
 
-    var fixtures = store.get('fixtures');
-    arr(fixtures).forEach(function (fid) {
+    arr(currentFixtures(store)).forEach(function (fid) {
       arr(FIXTURE_RULES[fid]).forEach(apply);
     });
 

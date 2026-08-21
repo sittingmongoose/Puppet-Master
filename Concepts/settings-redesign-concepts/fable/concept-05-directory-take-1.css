@@ -37,7 +37,23 @@
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  padding: 0 clamp(14px, 3vw, 40px) 56px;
+  padding: 0 clamp(14px, 3vw, 40px) 28px;
+  /* The scroll box itself stops above the fixed harness affordance parked in
+     the bottom-right corner (pm2-states.js drawer dot: 32px tall, 34px up from
+     the window bottom, of which ~42px intrudes past the statusbar). Padding
+     alone would not do it — padding scrolls with the content, so only the very
+     last row would ever clear the dot. Shortening the viewport keeps every row,
+     at every scroll offset, outside the dot's footprint. */
+  margin-bottom: 44px;
+  /* the new scroll edge fades instead of guillotining a half-row, so it reads
+     as "more below"; the 28px bottom padding keeps the fade off real content
+     once the reader is at the end of the page */
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 22px), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 22px), transparent);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
   scrollbar-width: thin;
   scrollbar-color: color-mix(in srgb, var(--text-primary) 16%, transparent) transparent;
 }
@@ -90,10 +106,27 @@
   color: var(--text-secondary);
   cursor: pointer;
   white-space: nowrap;
+  /* Never flex-shaved: the label decides this button's width, so the text
+     can't spill outside the border when the row runs short. */
+  flex: 0 0 auto;
+  min-width: 0;
 }
 .c05-back:hover { background: var(--accent-soft); color: var(--text-primary); }
 .c05-back-arrow { font-size: var(--fs-md); line-height: 1; }
-.c05.is-narrow .c05-back-label { max-width: 120px; overflow: hidden; text-overflow: ellipsis; }
+.c05-back-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* Space-driven truncation (audit fix: a fixed 120px clamp in narrow
+     layouts ellipsized "Back to AI Brains & Providers" while ~170-190px of
+     header sat empty to its right). At rest the label holds its full text —
+     the max-content floor also defeats sub-pixel flex rounding that would
+     paint a spurious ellipsis. The topbar search field surrenders width
+     first (flex-shrink 4 down to its floor), then the crumb trail; only a
+     shortfall that survives both makes syncBackFit() set .is-back-tight and
+     assign an integer max-width here. */
+  min-width: max-content;
+}
+.c05.is-back-tight .c05-back-label { min-width: 0; }
 
 .c05-crumbs {
   display: flex;
@@ -102,6 +135,10 @@
   min-width: 0;
   overflow: hidden;
   font-size: var(--fs-sm);
+  /* Crumbs surrender space last: the topbar search field absorbs the
+     shortfall first (see .c05-search-top), so full crumb text renders
+     whenever it fits (audit fix). */
+  flex-shrink: 0.01;
 }
 .c05-crumb {
   border: 0;
@@ -113,11 +150,24 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 190px;
+  /* Space-driven truncation (audit fix: fixed max-width over-truncated in
+     wide-font themes). At rest every crumb holds its full text — the
+     max-content floor also defeats sub-pixel flex-basis rounding that
+     would otherwise paint a spurious ellipsis. When the trail genuinely
+     overflows, syncCrumbTight() sets .is-crumb-tight and assigns integer
+     max-widths, truncating the longest ancestors first; flex-shrink stays
+     0 so untruncated crumbs are never sub-pixel-shaved into an ellipsis. */
+  min-width: max-content;
+  flex: 0 0 auto;
 }
+.c05.is-crumb-tight .c05-crumb { min-width: 0; }
 .c05-crumb:hover { color: var(--text-primary); background: var(--accent-soft); }
-.c05-crumb.is-here { color: var(--text-primary); font-weight: 600; cursor: default; }
-.c05-crumb-sep { color: var(--text-muted); }
+.c05-crumb.is-here {
+  color: var(--text-primary);
+  font-weight: 600;
+  cursor: default;
+}
+.c05-crumb-sep { color: var(--text-muted); flex: 0 0 auto; }
 
 .c05-identity {
   display: inline-flex;
@@ -407,6 +457,10 @@
   height: 32px;
   width: min(340px, 34vw);
   border-width: 1px;
+  /* First to give up width when the topbar runs short, down to a floor
+     that keeps the field usable; breadcrumbs keep their full text. */
+  flex-shrink: 4;
+  min-width: 170px;
 }
 .c05.is-narrow .c05-search-top { width: min(220px, 40vw); }
 .c05-search-ico { display: inline-flex; color: var(--text-muted); }
@@ -442,7 +496,9 @@
   left: 0;
   right: 0;
   z-index: 70;
-  background: var(--surface-elevated);
+  /* layered fill: translucent glass surfaces get an opaque base so results
+     never bleed into the page beneath (no extra backdrop-filter layer) */
+  background: linear-gradient(var(--surface-elevated), var(--surface-elevated)), var(--background);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   box-shadow: var(--elev-3);
@@ -858,6 +914,48 @@
 .c05-drawer-list li { margin: 1px 0; overflow-wrap: anywhere; }
 
 .c05-adv-sec { margin-top: 14px; }
+.c05-fold-flag {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 10px;
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+  padding: 1px 8px;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+}
+.c05-fold-flag[data-tone="error"] {
+  color: var(--accent-error);
+  border-color: color-mix(in srgb, var(--accent-error) 50%, transparent);
+}
+.c05-fold-flag[data-tone="attention"] {
+  color: var(--accent-warning);
+  border-color: color-mix(in srgb, var(--accent-warning) 50%, transparent);
+}
+
+.c05-avail-note {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  border: 1px solid color-mix(in srgb, var(--accent-warning) 45%, transparent);
+  background: color-mix(in srgb, var(--accent-warning) 8%, transparent);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  margin: 8px 0;
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  max-width: 86ch;
+}
+.c05-avail-note strong { color: var(--text-primary); }
+.c05-avail-word {
+  flex: 0 0 auto;
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--accent-warning);
+}
 .c05-adv-toggle {
   display: inline-flex;
   align-items: center;
@@ -982,7 +1080,7 @@
   max-width: 320px;
   max-height: 320px;
   overflow-y: auto;
-  background: var(--surface-elevated);
+  background: linear-gradient(var(--surface-elevated), var(--surface-elevated)), var(--background);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   box-shadow: var(--elev-3);
@@ -1379,7 +1477,11 @@
   border-bottom: 1px solid var(--border-light);
   min-width: 0;
 }
-.c05-all-row.is-synthetic { opacity: .72; }
+/* stress-fixture filler rows read as secondary through a tinted band and a
+   softer label weight, never through opacity dimming (which pushed their
+   label + section path below the token contrast they were tuned for) */
+.c05-all-row.is-synthetic { background: color-mix(in srgb, var(--text-primary) 5%, transparent); }
+.c05-all-row.is-synthetic .c05-all-label { font-weight: 500; color: var(--text-secondary); }
 .c05-all-main {
   flex: 1 1 auto;
   min-width: 0;
@@ -1442,7 +1544,7 @@ button.c05-all-main:hover .c05-all-label { color: var(--accent-primary); }
   max-height: min(88%, 780px);
   display: flex;
   flex-direction: column;
-  background: var(--surface-elevated);
+  background: linear-gradient(var(--surface-elevated), var(--surface-elevated)), var(--background);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-lg);
   box-shadow: var(--elev-3);
@@ -1664,3 +1766,30 @@ button.c05-all-main:hover .c05-all-label { color: var(--accent-primary); }
 .c05.is-narrow .c05-panel { width: calc(100% - 16px); max-height: 94%; }
 .c05.is-narrow .c05-copy-item-cat { display: none; }
 .c05.is-narrow .c05-log-at { width: 84px; }
+
+/* ================= visual-audit fixes (2026-08-20) ================= */
+
+/* Shell page-tabs: at narrow widths the tabs shrink with an ellipsis
+   instead of hard mid-word clipping, and the active Settings tab never
+   shrinks. Per-page override of the _shared/pm-shell.css chrome styling
+   (this stylesheet only loads on this concept's page). */
+.pm-page-tabs { min-width: 0; overflow: hidden; }
+.pm-page-tab { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pm-page-tab.is-active { flex-shrink: 0; }
+
+/* Unavailable value chips: the shared line-through struck the value digits
+   themselves (e.g. Glass Transparency "0.55" on the All Settings route).
+   Keep the "struck" silhouette, but as a short tick separated from the
+   label by the chip's flex gap, so no value text is ever overstruck. */
+.c05 .pm-chip-value[data-kind="unavailable"] { text-decoration: none; }
+.c05 .pm-chip-value[data-kind="unavailable"]::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 8px;
+  height: 0;
+  border-top: 1px solid currentColor;
+}
+
+/* When the topbar search field yields width to the breadcrumbs, its
+   placeholder ellipsizes instead of hard-clipping mid-word. */
+.c05-search-input:placeholder-shown { text-overflow: ellipsis; }

@@ -75,6 +75,27 @@ Boot order: `PMShell.init` → `PM2.store.init(conceptId)` → build UI → `PM2
 All `_shared2` modules attach to `window.PM2` and are plain ES5-compatible IIFEs (match `_shared`
 style; no modules, no deps). Demo "now" stays **2026-08-05**.
 
+## `pm2-tokens.css` — token calibration + shell chrome (the ONE shared stylesheet)
+
+Loaded by each concept page **after** its own stylesheet. The differentiation clause still holds:
+this file contains no Home, navigation, manager, dropdown, or copy styling — only
+
+1. **Theme-token calibration** for contrast failures inherited from the frozen
+   `_shared/pm-shell.css` palette, found by pixel measurement during the visual audit:
+   light-theme `--text-muted` (friendly-light 2.79:1, glass-light 2.64:1), glass-light
+   `--text-secondary` (3.7-4.0:1), basic-dark `--text-muted` on elevated surfaces (2.85:1),
+   retro-dark `--accent-blue` (1.82:1 status dots, never lightened for the dark face), and
+   light-theme `--accent-warning`/`--accent-orange` (2.2-3.8:1). Concepts 01-04 do not load this
+   file, so the frozen originals are untouched; the defects are recorded as candidate impacts
+   (IMP-UI-2/3/4) for the canonical theme owner rather than fixed in canon here.
+2. **Shared fake-shell chrome**: the page-tab strip drops whole trailing tabs below 1000px
+   (never ellipsizing labels to one-character stubs) and always keeps the active tab intact;
+   the States drawer button stays a quiet translucent icon dot at every width so it cannot
+   occlude page content. Concepts still owe their scroll regions ~64px bottom padding so the
+   last row can clear the fixed bottom-right corner.
+
+Anything beyond those two categories does not belong in this file.
+
 ## `pm2-inventory.js` — `window.PM2_INVENTORY` (generated; do not hand-edit)
 
 `{schema, settingsCount:828, categories:[12 × {id,title,icon,desc,subgroups:[3 × {id,title,desc}]}],`
@@ -249,6 +270,9 @@ Deep-link grammar (rev-2 contract carried forward):
 ## Test hooks (all concepts, required — the shared harness depends on these)
 
 - Every rendered search result element: `data-rid="<rid>"`.
+- Every universal-search input (hero, topbar, mini — not facet/filter fields): `data-pm2-search-input`.
+- The primary Back affordance on every non-Home surface: `data-pm2-back` (accessible name still
+  reads "Back to <named location>").
 - Manager navigation entries: `data-manager="m.x"`; workspace rows: `data-setting-id`;
   sections: `data-section`; manager objects: `data-object-id`; tabs: `data-tab`.
 - The exact landing target of a deep link gets class `pm2-located` (styling per concept, calm,

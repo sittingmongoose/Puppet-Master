@@ -1,0 +1,93 @@
+{
+ "schema_id": "pm.settings_candidate_command_delta.v1",
+ "concept_id": "concept-09-tome-tabs",
+ "model": "fable",
+ "note": "Everything here is provisional. Canon is never minted in a concept register; the implementation audit censuses the catalog and adjudicates exact ids.",
+ "census": {
+  "canon_source": "Plans/UI_Command_Catalog.md",
+  "approx_ids": 732,
+  "families": 56,
+  "flags": [
+   {
+    "id": "cmd.settings.bloom.open",
+    "disposition": "retire",
+    "note": "The chip/bloom no-sidebar architecture is superseded by the persistent chapter spine + layered canvas; keep only a compatibility alias to cmd.settings.open if telemetry shows callers."
+   },
+   {
+    "id": "cmd.settings.manager.next / cmd.settings.manager.prev",
+    "disposition": "retire",
+    "note": "Global previous/next-manager navigation is removed by the packet; Chapters reaches managers through their chapter or search, never as slides."
+   }
+  ],
+  "preserve": [
+   "cmd.settings.open",
+   "cmd.settings.search",
+   "cmd.settings.close",
+   "cmd.settings.copy-from-project",
+   "cmd.settings.all",
+   "cmd.settings.reveal (deep link to a setting id)",
+   "cmd.manager.open (id-addressed manager entry)"
+  ]
+ },
+ "families_exercised": [
+  "settings navigation (chapter spine, layered push/peel, breadcrumb, Back/Close)",
+  "universal search (query, result routing by rid/dest, back-restore)",
+  "value mutation (setValue via toggle/select/multiselect/number/slider/text)",
+  "manager actions (staged ops + honest refusals through def.actions)",
+  "copy transaction (preview/apply/rollback)"
+ ],
+ "families_exercised_note": "Demo bindings run through PM2.route.go / store.setValue / PM2.states ops — no concept-local command bus was invented.",
+ "new_candidates": [
+  {
+   "id": "cmd.settings.chapter.open",
+   "distinguishes": "Opens chapter <cat> as a layer-1 sheet (spine tab, TOC entry, under-edge peel target). Distinct from cmd.settings.reveal because it addresses the chapter, not a row.",
+   "provisional": true,
+   "payload": "{ cat, sub? }",
+   "note": "concept_local_state: true — the chapter/layer geometry exists only in this concept."
+  },
+  {
+   "id": "cmd.settings.layer.peel",
+   "distinguishes": "Peels the top layer back to a named under-layer (edge-strip click / in-UI Back / Escape at layer level). One Settings level, deterministic.",
+   "provisional": true,
+   "payload": "{ toKey }",
+   "note": "concept_local_state: true."
+  },
+  {
+   "id": "cmd.settings.advanced.toggle",
+   "distinguishes": "Opens/closes one subgroup's advanced tier disclosure; deep links to advanced rows auto-open it.",
+   "provisional": true,
+   "payload": "{ cat, sub, open }",
+   "note": "concept_local_state: true."
+  },
+  {
+   "id": "cmd.manager.tab.select",
+   "distinguishes": "Selects a manager-local tab on an object page with replaceState history semantics.",
+   "provisional": true,
+   "payload": "{ managerId, objectId, tab }",
+   "note": "concept_local_state: true — replace-vs-push adjudication belongs to the audit."
+  },
+  {
+   "id": "cmd.settings.copy.step",
+   "distinguishes": "Moves the one-time copy transaction between its four stacked step sheets (never skipping preview before apply).",
+   "provisional": true,
+   "payload": "{ step: 1|2|3|4 }",
+   "note": "concept_local_state: true."
+  },
+  {
+   "id": "cmd.settings.use-recommended",
+   "distinguishes": "Applies a row's recommended value from the Details drawer (only when editable and different).",
+   "provisional": true,
+   "payload": "{ settingId }",
+   "note": "concept_local_state: true; writes through store.setValue like any edit."
+  }
+ ],
+ "drift_census_2026_08_13": {
+  "authority": "August 13 performance decision register (carried by the packet)",
+  "note": "No new progress owners and no second ResourceGovernor were introduced; the concept renders op events, it never fabricates them.",
+  "entries": [
+   { "ids": ["cmd.settings.chapter.open", "cmd.settings.layer.peel"], "disposition": "propose", "note": "Navigation pair unique to the Chapters geometry." },
+   { "ids": ["cmd.manager.tab.select"], "disposition": "propose", "note": "History semantics (replace) documented in impact register." },
+   { "ids": ["cmd.settings.bloom.open"], "disposition": "retire", "note": "Superseded architecture (packet supersessions.json)." }
+  ]
+ }
+}

@@ -1,0 +1,644 @@
+{
+  "schema": "pm2.manager_coverage.v2",
+  "conceptId": "c05",
+  "concept": "Waypoint",
+  "stem": "concept-05-directory-take-1",
+  "model": "fable",
+  "generated": "2026-08-20",
+  "note": "42 families + 9 deferred owner shells. Routes verified by tools/boot-check.js (12-route walk, widths 760/1280/2500, glass-light + retro-dark) and a 43-check interactive driver.",
+  "families": [
+    {
+      "family": "Settings Home",
+      "surface": "home route",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/home",
+      "entryPoints": [
+        "default route",
+        "breadcrumb 'Settings'",
+        "Back ladder terminus",
+        "Esc ladder terminus"
+      ],
+      "evidence": "Directory-first Home: project identity as context, large search hero, at most one critical banner (scenario/fixture gated), compact Needs-attention block (2-4 baseline, expandable under attention-heavy), two-column grid of the 12 category destination cards with store.counts() facts as the dominant content, subdued utility footer (All Settings, Copy Settings, recent changes). First-run renders the honest empty state (setup banner, no attention, 'Nothing has been changed yet')."
+    },
+    {
+      "family": "Settings Search",
+      "surface": "search surface",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/search/<query>",
+      "entryPoints": [
+        "Home hero field",
+        "persistent top-bar field on every non-Home surface",
+        "Ctrl/Cmd+K",
+        "#/search deep links"
+      ],
+      "evidence": "Dropdown anchored beneath the field (opaque layered fill, bounded height, keyboard navigation), grouped results with label, kind, full path, availability; routing strictly by rid/dest; the full landing sequence ends in the calm decaying pm2-located treatment; Back restores the query AND the result list via a real #/search history entry (verified in driver). Typo (notifcations), duplicate-label API keys, no-results (flux capacitor), unavailable results all handled."
+    },
+    {
+      "family": "Settings Workspace",
+      "surface": "workspace routes",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/dest/<cat>[/<sub>]",
+      "entryPoints": [
+        "Home destination cards (card-transfer morph)",
+        "in-stage left settings rail at domain level",
+        "breadcrumb",
+        "search results"
+      ],
+      "evidence": "Domain overview = clear destination rows (subgroup rows with counts/samples + Workspaces list); subgroup pages render tiered inventory rows (Essentials / Everyday / Advanced disclosure, hairline break every 8 rows). All 828 rows reachable by browsing; #/all provides the faceted virtualized long-tail index as a secondary utility."
+    },
+    {
+      "family": "Ordinary setting grammar",
+      "surface": "store.resolveRow rendering",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/dest/general/visual",
+      "entryPoints": [
+        "every subgroup page",
+        "manager form sections bound to settingIds",
+        "#/setting/<id> deep links"
+      ],
+      "evidence": "Rows render title + one concise explanation + live control (switch, popup-menu select/multiselect, number, slider, text/path, action receipt) + pm-chip-value state chips only where needed; stateNote rail for managed/unavailable/restart/reconnect/changed-elsewhere/error; validation errors inline (verified: run-token-budget minimum); legacy scope note, related features, and search terms behind the Details drawer."
+    },
+    {
+      "family": "Provider / Account / Model / Installation",
+      "managerId": "m.providers",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.providers",
+      "entryPoints": [
+        "dest/ai Workspaces list (AI Brains & Providers)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.providers plus objects/actions)"
+      ],
+      "evidence": "Roster-detail workspace: grouped connection roster in the left pane (status dots), per-provider object pages with tabs (At a glance answers-first, Accounts, Models table, Plans/limits incl. usage-unavailable-but-ready, Routing & fallback with what-next ladder, Installation and updates showing selected/shadowed/manual-only + verify-checklist history, Setup with official source + host choices, Activity incl. verification-failed-then-rolled-back entries, Advanced). Actions strip runs truthful staged ops; Ollama update refuses with the unknown-owner reason; Cursor CLI setup is an explicit user-triggered install action."
+    },
+    {
+      "family": "Context & Instructions",
+      "managerId": "m.context",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.context",
+      "entryPoints": [
+        "dest/memory Workspaces list (Memory & Context)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.context plus objects/actions)"
+      ],
+      "evidence": "Preference-document composition: section nav left, stacked form/table/overview sections right; settingId-bound fields render the full live row grammar. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Memory",
+      "managerId": "m.memory",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.memory",
+      "entryPoints": [
+        "dest/memory Workspaces list (Memory & Context)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.memory plus objects/actions)"
+      ],
+      "evidence": "Roster-detail composition: item roster in the manager's left pane (data-object-id entries), detail sections right; list/form at wide widths, push at narrow. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Personas",
+      "managerId": "m.personas",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.personas",
+      "entryPoints": [
+        "dest/personas Workspaces list (Personas)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.personas plus objects/actions)"
+      ],
+      "evidence": "Roster-detail composition: item roster in the manager's left pane (data-object-id entries), detail sections right; list/form at wide widths, push at narrow. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Goal & Automation",
+      "managerId": "m.goal",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.goal",
+      "entryPoints": [
+        "dest/planning Workspaces list (Planning & Verification)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.goal plus objects/actions)"
+      ],
+      "evidence": "Preference-document composition: section nav left, stacked form/table/overview sections right; settingId-bound fields render the full live row grammar. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Crew",
+      "managerId": "m.crew",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.crew",
+      "entryPoints": [
+        "dest/branching Workspaces list (Branching & Collaboration)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.crew plus objects/actions)"
+      ],
+      "evidence": "Roster-detail composition: item roster in the manager's left pane (data-object-id entries), detail sections right; list/form at wide widths, push at narrow. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Permissions & FileSafe",
+      "managerId": "m.permissions",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.permissions",
+      "entryPoints": [
+        "dest/safety Workspaces list (Permissions & Safety)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.permissions plus objects/actions)"
+      ],
+      "evidence": "Preference-document workspace: section nav left, stacked sections right (rules table, per-persona limits, FileSafe health checks). Managed-workspace scenario renders the whole safety domain read-only with managed chips and origin in row Details."
+    },
+    {
+      "family": "Back Seat Driver",
+      "managerId": "m.bsd",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.bsd",
+      "entryPoints": [
+        "dest/safety Workspaces list (Permissions & Safety)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.bsd plus objects/actions)"
+      ],
+      "evidence": "Preference-document composition: section nav left, stacked form/table/overview sections right; settingId-bound fields render the full live row grammar. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Notifications & Sounds",
+      "managerId": "m.notifications",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.notifications",
+      "entryPoints": [
+        "dest/general Workspaces list (General & Appearance)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.notifications plus objects/actions)"
+      ],
+      "evidence": "Roster-detail composition: item roster in the manager's left pane (data-object-id entries), detail sections right; list/form at wide widths, push at narrow. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Sound Library / Uploads / Packs",
+      "managerId": "m.sounds",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.sounds",
+      "entryPoints": [
+        "dest/general Workspaces list (General & Appearance)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.sounds plus objects/actions)"
+      ],
+      "evidence": "Catalog archetype: sound roster with per-item detail drawers; preview/upload/pack actions run as staged ops via the actions strip."
+    },
+    {
+      "family": "Appearance / themes / fonts / motion",
+      "managerId": "m.appearance",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.appearance",
+      "entryPoints": [
+        "dest/general Workspaces list (General & Appearance)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.appearance plus objects/actions)"
+      ],
+      "evidence": "Preference-document composition: section nav left, stacked form/table/overview sections right; settingId-bound fields render the full live row grammar. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Spellcheck & Dictionaries",
+      "managerId": "m.spellcheck",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.spellcheck",
+      "entryPoints": [
+        "dest/general Workspaces list (General & Appearance)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.spellcheck plus objects/actions)"
+      ],
+      "evidence": "Preference-document composition: section nav left, stacked form/table/overview sections right; settingId-bound fields render the full live row grammar. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Desktop / Tray / Window",
+      "managerId": "m.desktop",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.desktop",
+      "entryPoints": [
+        "dest/general Workspaces list (General & Appearance)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.desktop plus objects/actions)"
+      ],
+      "evidence": "Preference-document composition: section nav left, stacked form/table/overview sections right; settingId-bound fields render the full live row grammar. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Teacher / Help",
+      "managerId": "m.teacher",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.teacher",
+      "entryPoints": [
+        "dest/general Workspaces list (General & Appearance)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.teacher plus objects/actions)"
+      ],
+      "evidence": "Catalog of help topics; topics are also indexed as h: search results (help results verified in the search corpus)."
+    },
+    {
+      "family": "Doctor",
+      "managerId": "m.doctor",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.doctor",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.doctor plus objects/actions)"
+      ],
+      "evidence": "Read-only health projection: check rows with tone dots, state words, and notes; no fabricated fixes — repair-style actions run as truthful staged ops only where the def offers them."
+    },
+    {
+      "family": "File Manager / Editor",
+      "managerId": "m.files",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.files",
+      "entryPoints": [
+        "dest/code Workspaces list (Code & Execution)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.files plus objects/actions)"
+      ],
+      "evidence": "Preference-document composition: section nav left, stacked form/table/overview sections right; settingId-bound fields render the full live row grammar. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Terminal",
+      "managerId": "m.terminal",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.terminal",
+      "entryPoints": [
+        "dest/code Workspaces list (Code & Execution)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.terminal plus objects/actions)"
+      ],
+      "evidence": "Roster-detail composition: item roster in the manager's left pane (data-object-id entries), detail sections right; list/form at wide widths, push at narrow. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "LSP",
+      "managerId": "m.lsp",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.lsp",
+      "entryPoints": [
+        "dest/code Workspaces list (Code & Execution)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.lsp plus objects/actions)"
+      ],
+      "evidence": "Roster-detail composition: item roster in the manager's left pane (data-object-id entries), detail sections right; list/form at wide widths, push at narrow. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Formatters",
+      "managerId": "m.formatters",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.formatters",
+      "entryPoints": [
+        "dest/code Workspaces list (Code & Execution)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.formatters plus objects/actions)"
+      ],
+      "evidence": "Catalog composition: inventory roster with per-item detail drawers, tables capped at 40 rows with honest paging. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Commands & Shortcuts",
+      "managerId": "m.commands",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.commands",
+      "entryPoints": [
+        "dest/extensions Workspaces list (Skills, Plugins & Commands)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.commands plus objects/actions)"
+      ],
+      "evidence": "Catalog composition: inventory roster with per-item detail drawers, tables capped at 40 rows with honest paging. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "MCP",
+      "managerId": "m.mcp",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.mcp",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.mcp plus objects/actions)"
+      ],
+      "evidence": "Roster-detail composition: item roster in the manager's left pane (data-object-id entries), detail sections right; list/form at wide widths, push at narrow. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Skills",
+      "managerId": "m.skills",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.skills",
+      "entryPoints": [
+        "dest/extensions Workspaces list (Skills, Plugins & Commands)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.skills plus objects/actions)"
+      ],
+      "evidence": "Catalog composition: inventory roster with per-item detail drawers, tables capped at 40 rows with honest paging. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Plugins",
+      "managerId": "m.plugins",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.plugins",
+      "entryPoints": [
+        "dest/extensions Workspaces list (Skills, Plugins & Commands)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.plugins plus objects/actions)"
+      ],
+      "evidence": "Catalog composition: inventory roster with per-item detail drawers, tables capped at 40 rows with honest paging. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Tools",
+      "managerId": "m.tools",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.tools",
+      "entryPoints": [
+        "dest/extensions Workspaces list (Skills, Plugins & Commands)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.tools plus objects/actions)"
+      ],
+      "evidence": "Catalog composition: inventory roster with per-item detail drawers, tables capped at 40 rows with honest paging. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Testing & Debug",
+      "managerId": "m.testing",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.testing",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.testing plus objects/actions)"
+      ],
+      "evidence": "Preference-document composition: section nav left, stacked form/table/overview sections right; settingId-bound fields render the full live row grammar. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Storage & Retention",
+      "managerId": "m.storage",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.storage",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.storage plus objects/actions)"
+      ],
+      "evidence": "Read-only health projection: tone-dotted check rows with notes; no invented remedies. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Backup & Restore",
+      "managerId": "m.backup",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.backup",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.backup plus objects/actions)"
+      ],
+      "evidence": "Roster-detail composition: item roster in the manager's left pane (data-object-id entries), detail sections right; list/form at wide widths, push at narrow. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Settings Lifecycle",
+      "managerId": "m.lifecycle",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.lifecycle",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.lifecycle plus objects/actions)"
+      ],
+      "evidence": "Transaction archetype rendered as sections incl. import steps and staged import preview; fx.import-conflict stages the preview and surfaces the single Home banner whose action deep-links here (verified in driver)."
+    },
+    {
+      "family": "History & Sessions",
+      "managerId": "m.history",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.history",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.history plus objects/actions)"
+      ],
+      "evidence": "Roster-detail composition: item roster in the manager's left pane (data-object-id entries), detail sections right; list/form at wide widths, push at narrow. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Runtime Artifacts / Project Outputs",
+      "managerId": "m.artifacts",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.artifacts",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.artifacts plus objects/actions)"
+      ],
+      "evidence": "Roster-detail composition: item roster in the manager's left pane (data-object-id entries), detail sections right; list/form at wide widths, push at narrow. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Source Control / Worktrees",
+      "managerId": "m.sourceControl",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.sourceControl",
+      "entryPoints": [
+        "dest/branching Workspaces list (Branching & Collaboration)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.sourceControl plus objects/actions)"
+      ],
+      "evidence": "Roster-detail composition: item roster in the manager's left pane (data-object-id entries), detail sections right; list/form at wide widths, push at narrow. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "GitHub Actions",
+      "managerId": "m.actions",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.actions",
+      "entryPoints": [
+        "dest/branching Workspaces list (Branching & Collaboration)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.actions plus objects/actions)"
+      ],
+      "evidence": "Read-only health projection: tone-dotted check rows with notes; no invented remedies. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Containers & Registries",
+      "managerId": "m.containers",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.containers",
+      "entryPoints": [
+        "dest/code Workspaces list (Code & Execution)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.containers plus objects/actions)"
+      ],
+      "evidence": "Roster-detail composition: item roster in the manager's left pane (data-object-id entries), detail sections right; list/form at wide widths, push at narrow. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Web / Search / Fetch / Crawl",
+      "managerId": "m.web",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.web",
+      "entryPoints": [
+        "dest/web Workspaces list (Web & Search)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.web plus objects/actions)"
+      ],
+      "evidence": "Roster-detail composition: item roster in the manager's left pane (data-object-id entries), detail sections right; list/form at wide widths, push at narrow. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Project Search Index",
+      "managerId": "m.searchIndex",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.searchIndex",
+      "entryPoints": [
+        "dest/web Workspaces list (Web & Search)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.searchIndex plus objects/actions)"
+      ],
+      "evidence": "Read-only health projection: tone-dotted check rows with notes; no invented remedies. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Workspace Cleanup",
+      "managerId": "m.cleanup",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.cleanup",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.cleanup plus objects/actions)"
+      ],
+      "evidence": "Transaction archetype: staged steps and preview sections; every run goes through def.actions -> truthful staged ops. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "Media & Output",
+      "managerId": "m.media",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.media",
+      "entryPoints": [
+        "dest/media Workspaces list (Media & Output)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.media plus objects/actions)"
+      ],
+      "evidence": "Roster-detail composition: item roster in the manager's left pane (data-object-id entries), detail sections right; list/form at wide widths, push at narrow. Model computed lazily on first entry via def.model(store); actions surfaced in the left-pane Actions strip with visible unavailability reasons."
+    },
+    {
+      "family": "DRY Method visible state where exposed",
+      "managerId": "m.dry",
+      "status": "demonstrated",
+      "route": "concept-05-directory-take-1.html#/manager/m.dry",
+      "entryPoints": [
+        "dest/planning Workspaces list (Planning & Verification)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.dry plus objects/actions)"
+      ],
+      "evidence": "Read-only projection of the shared owners (ResourceGovernor, ObservableWork, doom-loop, FileSafe floor) with fx.doom-loop-tripped reflected through the def's states."
+    },
+    {
+      "family": "Product Onboarding",
+      "managerId": "m.onboarding",
+      "status": "deferred_named_owner",
+      "route": "concept-05-directory-take-1.html#/manager/m.onboarding",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.onboarding plus objects/actions)"
+      ],
+      "evidence": "Reachable insertion shell inside the Settings shell: named owner, insertion contract (deep link, reachable-from, return contract), honest read-only 'what will live here' sections; zero fabricated actions (actions() is empty, verified for m.servers in the driver).",
+      "owner": "Product Onboarding owner thread (first-run flow owner; separate from Installation/Deployment and Server Claim/Bootstrap)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.onboarding/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Installation / Deployment",
+      "managerId": "m.deployment",
+      "status": "deferred_named_owner",
+      "route": "concept-05-directory-take-1.html#/manager/m.deployment",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.deployment plus objects/actions)"
+      ],
+      "evidence": "Reachable insertion shell inside the Settings shell: named owner, insertion contract (deep link, reachable-from, return contract), honest read-only 'what will live here' sections; zero fabricated actions (actions() is empty, verified for m.servers in the driver).",
+      "owner": "Release_Supply_Chain.md (installer and deployment supply chain)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.deployment/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Server Claim / Bootstrap",
+      "managerId": "m.serverClaim",
+      "status": "deferred_named_owner",
+      "route": "concept-05-directory-take-1.html#/manager/m.serverClaim",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.serverClaim plus objects/actions)"
+      ],
+      "evidence": "Reachable insertion shell inside the Settings shell: named owner, insertion contract (deep link, reachable-from, return contract), honest read-only 'what will live here' sections; zero fabricated actions (actions() is empty, verified for m.servers in the driver).",
+      "owner": "Server Backbone return (Post-Return Reconciliation v6)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.serverClaim/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Servers / Execution Hosts / Clients",
+      "managerId": "m.servers",
+      "status": "deferred_named_owner",
+      "route": "concept-05-directory-take-1.html#/manager/m.servers",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.servers plus objects/actions)"
+      ],
+      "evidence": "Reachable insertion shell inside the Settings shell: named owner, insertion contract (deep link, reachable-from, return contract), honest read-only 'what will live here' sections; zero fabricated actions (actions() is empty, verified for m.servers in the driver).",
+      "owner": "Server Backbone return (Post-Return Reconciliation v6, sections 4-5)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.servers/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Project Hosting & Files",
+      "managerId": "m.hosting",
+      "status": "deferred_named_owner",
+      "route": "concept-05-directory-take-1.html#/manager/m.hosting",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.hosting plus objects/actions)"
+      ],
+      "evidence": "Reachable insertion shell inside the Settings shell: named owner, insertion contract (deep link, reachable-from, return contract), honest read-only 'what will live here' sections; zero fabricated actions (actions() is empty, verified for m.servers in the driver).",
+      "owner": "storage-plan.md",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.hosting/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Remote Access",
+      "managerId": "m.remote",
+      "status": "deferred_named_owner",
+      "route": "concept-05-directory-take-1.html#/manager/m.remote",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.remote plus objects/actions)"
+      ],
+      "evidence": "Reachable insertion shell inside the Settings shell: named owner, insertion contract (deep link, reachable-from, return contract), honest read-only 'what will live here' sections; zero fabricated actions (actions() is empty, verified for m.servers in the driver).",
+      "owner": "Server Backbone return, section 10",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.remote/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Project Sync / Move",
+      "managerId": "m.projectSync",
+      "status": "deferred_named_owner",
+      "route": "concept-05-directory-take-1.html#/manager/m.projectSync",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.projectSync plus objects/actions)"
+      ],
+      "evidence": "Reachable insertion shell inside the Settings shell: named owner, insertion contract (deep link, reachable-from, return contract), honest read-only 'what will live here' sections; zero fabricated actions (actions() is empty, verified for m.servers in the driver).",
+      "owner": "storage-plan.md (Project Sync owner)",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.projectSync/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Puppet Master application/content updates",
+      "managerId": "m.appUpdates",
+      "status": "deferred_named_owner",
+      "route": "concept-05-directory-take-1.html#/manager/m.appUpdates",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.appUpdates plus objects/actions)"
+      ],
+      "evidence": "Reachable insertion shell inside the Settings shell: named owner, insertion contract (deep link, reachable-from, return contract), honest read-only 'what will live here' sections; zero fabricated actions (actions() is empty, verified for m.servers in the driver).",
+      "owner": "Release_Supply_Chain.md",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.appUpdates/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    },
+    {
+      "family": "Full Server backup owner flow",
+      "managerId": "m.serverBackup",
+      "status": "deferred_named_owner",
+      "route": "concept-05-directory-take-1.html#/manager/m.serverBackup",
+      "entryPoints": [
+        "dest/system Workspaces list (System & Advanced)",
+        "subgroup-page related-workspaces strip",
+        "universal search (m:m.serverBackup plus objects/actions)"
+      ],
+      "evidence": "Reachable insertion shell inside the Settings shell: named owner, insertion contract (deep link, reachable-from, return contract), honest read-only 'what will live here' sections; zero fabricated actions (actions() is empty, verified for m.servers in the driver).",
+      "owner": "storage-plan.md",
+      "returnContract": "This destination stays inside the Settings shell with breadcrumb, Back, and Close. When the owner module lands, deep links of the form manager/m.serverBackup/<objectId> resolve here, and Back returns to whatever surface opened it — including a search query and its results."
+    }
+  ]
+}

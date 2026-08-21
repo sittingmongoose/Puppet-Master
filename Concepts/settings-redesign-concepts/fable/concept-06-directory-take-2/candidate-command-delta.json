@@ -1,0 +1,69 @@
+{
+  "schema_id": "pm.settings_candidate_command_delta.v1",
+  "concept_id": "concept-06-directory-take-2",
+  "model": "fable",
+  "note": "Everything here is provisional. Canon is never minted in a concept register; the implementation audit censuses Plans/UI_Command_Catalog.md and adjudicates exact ids. Longform deliberately reuses the shared-v2 dest grammar for every navigation, so most interactions map onto existing candidate families rather than new ids.",
+  "census": {
+    "canon_source": "Plans/UI_Command_Catalog.md",
+    "approx_ids": 732,
+    "families": 56,
+    "flags": [
+      {
+        "id": "cmd.settings.navigate",
+        "disposition": "reuse",
+        "note": "One dest-object payload {route, cat?, sub?, managerId?, objectId?, tab?, settingId?, query?, focus?} covers rail links, breadcrumbs, destination rows, manager rows, search selection, recents, and copy-done. No per-destination command ids are needed."
+      },
+      {
+        "id": "cmd.settings.open_notifications / cmd.settings.open_storage_retention",
+        "disposition": "supersede-into-family",
+        "note": "Longform never needed a single hard-coded open-X command; both aliases collapse into cmd.settings.navigate {dest}."
+      },
+      {
+        "id": "cmd.settings.search.query",
+        "disposition": "reuse-flag",
+        "note": "Query text plus limit; results route only by rid/dest. The focus=<rid> route param is the one addition to census (carries the exact landing element through a hash navigation)."
+      },
+      {
+        "id": "cmd.settings.copy.*",
+        "disposition": "reuse",
+        "note": "sources/preview/apply/rollback map 1:1 onto PM2.copy; apply is a staged op (restore-point, apply, verify) and rollback takes the receipt id."
+      }
+    ],
+    "preserve": [
+      "cmd.project.open_settings",
+      "cmd.settings.suggestion.dismiss"
+    ]
+  },
+  "families_exercised": [
+    "navigation",
+    "search",
+    "value-mutation",
+    "copy-transaction",
+    "manager-actions",
+    "state-simulation"
+  ],
+  "families_exercised_note": "Value mutation always runs through store.setValue (validation, receipts, recents); manager actions always run through def.actions(store).run; nothing dispatches by label or index anywhere in the concept.",
+  "new_candidates": [
+    {
+      "id": "cmd.settings.navigate.focus",
+      "distinguishes": "navigation-with-landing",
+      "provisional": true,
+      "payload": "{ dest, focus: <rid> }",
+      "note": "Selection of a search result must survive a route hop and still land on the exact element (row, object anchor, tab section, action link). Longform encodes the rid in the focus param and re-resolves it after render; the catalog needs one canonical way to say 'navigate and locate'."
+    },
+    {
+      "id": "cmd.settings.fold.toggle",
+      "distinguishes": "disclosure-state",
+      "provisional": true,
+      "payload": "{ foldKey: <cat>/<sub>/(more|adv), open: bool }",
+      "note": "Longform's More/Advanced ruled folds are explicit disclosure state, auto-opened by deep links to hidden rows. If other surfaces adopt tiered folds, the open-state mutation should have one id rather than per-concept ad-hoc state."
+    },
+    {
+      "id": "cmd.settings.close",
+      "distinguishes": "exit",
+      "provisional": true,
+      "payload": "{ returnTo: origin-surface }",
+      "note": "Close Settings returns to whatever opened Settings (simulated receipt in the concept). Distinct from the Escape ladder, which stops at Home and never exits."
+    }
+  ]
+}

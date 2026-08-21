@@ -71,7 +71,16 @@
     for (var i = 0; i < arr(c.subgroups).length; i++) if (c.subgroups[i].id === subId) return c.subgroups[i];
     return null;
   }
-  function scenario() { return str(store.get('scenario')) || 'baseline'; }
+  function scenario() {
+    /* The store key can be stale for URL-applied (persist:false) scenarios;
+       the states module is the authority. */
+    try {
+      var S = window.PM2.states;
+      var a = S && typeof S.activeScenario === 'function' ? S.activeScenario() : null;
+      if (a) return str(a);
+    } catch (e) { /* states optional */ }
+    return str(store.get('scenario')) || 'baseline';
+  }
   function fixtures() { return arr(store.get('fixtures')); }
   function hasFx(id) { return fixtures().indexOf(id) >= 0; }
   function reducedMotion() {
@@ -233,26 +242,35 @@
     if (kind === 'setting') {
       var rec = invRecord(d.settingId);
       if (rec) { ui.view.cat = rec.cat; ui.view.sub = rec.sub; }
-      else {
-        /* Shared-data gap workaround: the canonical deep-link probe
-           system.health.diagnostics-verbosity lives in the _shared ext
-           dataset but not in the 828-row PM2_INVENTORY. Serve such ids
-           honestly as read-only extension rows on their domain page. */
-        var ext = obj(store.data.settings)[d.settingId];
-        if (ext) {
-          var parts = String(d.settingId).split('.');
-          ui.view.cat = parts[0];
-          ui.view.sub = parts[1] || null;
-          ui.view.extSetting = d.settingId;
-        }
-      }
+      /* Unknown/stale ids (e.g. the rev-2 probe id that never made the
+         828-row inventory) render an honest not-found surface instead of
+         pretending the row exists — see renderMissingSetting. */
     }
     renderCurrent({});
     return applyLanding(d);
   }
 
+  /* Shared-module workaround: pm2-route applies URL scenarios via
+     PM2.states.applyScenario(id, {persist:false}), which skips writing the
+     'scenario' store key entirely — so store.get('scenario') (and therefore
+     store.attention()'s internal gating) still says 'baseline'. Mirror the
+     ACTIVE scenario into the non-persisted session key so the store's own
+     scenario-dependent answers stay honest. Guarded against loops: only
+     writes on an actual mismatch. */
+  function syncScenarioKey() {
+    try {
+      var S = window.PM2.states;
+      var active = S && typeof S.activeScenario === 'function' ? S.activeScenario() : null;
+      if (active && str(store.get('scenario')) !== active &&
+          typeof store._setSession === 'function') {
+        store._setSession('scenario', active);
+      }
+    } catch (e) { /* states optional */ }
+  }
+
   function renderCurrent(opts) {
     var o = obj(opts);
+    syncScenarioKey();
     var top = o.preserveScroll ? els.scroll.scrollTop : 0;
     var v = ui.view;
     els.root.setAttribute('data-view', v.kind);
@@ -260,6 +278,7 @@
     renderTopbar();
     if (v.kind === 'dest' && v.cat) renderDest(v.cat, v.sub);
     else if (v.kind === 'setting' && v.cat) renderDest(v.cat, v.sub);
+    else if (v.kind === 'setting') renderMissingSetting(v.settingId);
     else if (v.kind === 'manager' && v.managerId) renderManager(v.managerId, v.objectId, v.tab);
     else if (v.kind === 'all') renderAll();
     else if (v.kind === 'copy') renderCopy();
@@ -282,15 +301,31 @@
         if (!target && rd.settingId) target = findSettingRow(rd.settingId);
         if (!target && rd.objectId) target = findObject(rd.objectId);
       }
+      if (!target && focusRid.indexOf('a:') === 0) {
+        target = els.article.querySelector('[data-action-id="' + cssEscape(focusRid.slice(2)) + '"]');
+      }
       if (!target) {
-        var plain = focusRid.replace(/^s:/, '');
+        var plain = focusRid.replace(/^[a-z]:/, '');
         target = findSettingRow(plain) || findByItemId(plain);
+      }
+      if (!target && res && res.dest &&
+          (res.dest.route === 'manager' || res.dest.route === 'dest') &&
+          !res.dest.objectId && !res.dest.sectionId) {
+        /* manager- or domain-level result: the page itself is the landing —
+           locate calmly on its editorial header */
+        target = els.article.querySelector('.c06-h1');
       }
     }
     if (!target && d.route === 'setting' && d.settingId) target = findSettingRow(d.settingId);
     if (!target && d.route === 'manager') {
       if (d.sectionId) target = findByItemId(d.sectionId);
       if (!target && d.objectId) target = findObject(d.objectId);
+      if (!target && !d.objectId) {
+        /* whole-manager landing (search result of kind manager, or a bare
+           deep link): the page itself is the destination — locate calmly
+           on its editorial header, identically for both paths */
+        target = els.article.querySelector('.c06-h1');
+      }
     }
     if (!target && d.route === 'search') {
       openSearchSurface(d.query || '');
@@ -465,8 +500,8 @@
     var parent = parentOf(v);
     var h = '';
     if (parent && v.kind !== 'home') {
-      h += '<button type="button" class="c06-back" data-act="goto" data-goto="' + attrJson(parent.dest) +
-           '" title="Back to ' + esc(parent.label) + '">‹ ' + esc(parent.label) + '</button>';
+      h += '<button type="button" class="c06-back" data-pm2-back data-act="goto" data-goto="' + attrJson(parent.dest) +
+           '" title="Back to ' + esc(parent.label) + '" aria-label="Back to ' + esc(parent.label) + '">‹ ' + esc(parent.label) + '</button>';
     }
     /* narrow crumb selector replaces the rail */
     h += '<div class="c06-crumbsel"><button type="button" class="c06-crumbsel-btn" data-act="crumbsel" aria-haspopup="menu">' +
@@ -483,7 +518,7 @@
     if (hasFx('fx.loading-cached')) {
       h += '<span class="c06-refresh-note" role="status">Refreshing — showing cached values</span>';
     }
-    h += '<div class="c06-topsearch"><input type="text" id="c06TopSearch" placeholder="Search settings…" ' +
+    h += '<div class="c06-topsearch"><input type="text" id="c06TopSearch" data-pm2-search-input placeholder="Search settings…" ' +
          'aria-label="Search settings" autocomplete="off" spellcheck="false">' +
          '<div class="c06-drop" id="c06DropTop" hidden></div></div>';
     h += '<button type="button" class="c06-close" data-act="close-settings">Close Settings</button>';
@@ -509,7 +544,7 @@
          '<hr class="c06-rule-strong"></header>';
 
     h += '<div class="c06-home-search' + rise() + '">' +
-         '<input type="text" id="c06HomeSearch" placeholder="Search settings, providers, models, tools…" ' +
+         '<input type="text" id="c06HomeSearch" data-pm2-search-input placeholder="Search settings, providers, models, tools…" ' +
          'aria-label="Search settings" autocomplete="off" spellcheck="false">' +
          '<div class="c06-drop" id="c06DropHome" hidden></div></div>' +
          '<p class="c06-search-hint">Type to search everything — settings, managers, accounts, actions, ' +
@@ -810,24 +845,44 @@
       more.map(function (r) { return rowHtml(r, ''); }).join(''));
     if (advanced.length) h += foldHtml(advKey, 'Advanced', advanced.length,
       advanced.map(function (r) { return rowHtml(r, ''); }).join(''));
-    /* read-only extension-dataset row (deep-link probe workaround) */
-    if (ui.view.extSetting) {
-      var ext = obj(store.data.settings)[ui.view.extSetting];
-      if (ext && ui.view.extSetting.indexOf(catId + '.' + sg.id + '.') === 0) {
-        h += rowHtml({
-          id: ext.id, label: ext.label, desc: ext.desc,
-          control: { type: 'ext' }, value: ext.value,
-          valueLabel: String(ext.value == null ? '—' : ext.value),
-          changedFromDefault: ext.valueSource === 'custom',
-          badges: [], chips: [],
-          state: 'normal', tier: 'simple',
-          stateNote: 'Served by the shared demo extension dataset, outside the 828-row inventory. Shown read-only here.',
-          detail: { legacyScopeNote: 'Extension dataset record.', related: [], searchTerms: arr(ext.search) }
-        }, '');
-      }
-    }
     h += '</section>';
     return h;
+  }
+
+  /* Honest not-found surface for stale/unknown setting deep links — the
+     link is diagnosed, never faked and never a blank page. */
+  function renderMissingSetting(id) {
+    var rise = mkRise();
+    var raw = str(id);
+    var parts = raw.split('.');
+    var cat = catById(parts[0]);
+    var lastWord = (parts[parts.length - 1] || '').replace(/-/g, ' ');
+    var h = '<header class="' + rise() + '">' +
+      '<p class="c06-kicker">Settings · ' + esc(store.data.project.name) + '</p>' +
+      '<h1 class="c06-h1">Not in this project’s settings</h1>' +
+      '<p class="c06-lede">The link you followed points at a setting this project does not have. ' +
+      'It may have been renamed, retired, or it belongs to a different inventory revision.</p>' +
+      '<p class="c06-factline">Requested id: <span style="font-family:var(--mono-font)">' + esc(raw) + '</span></p>' +
+      '<hr class="c06-rule-strong"></header>';
+    h += '<div class="c06-empty' + rise() + '"><strong>Where to look instead.</strong> ' +
+      'Nothing was changed and nothing is broken — the destination just is not here.</div>';
+    h += '<div class="c06-utils c06-section"><div class="c06-utils-line">';
+    if (cat) {
+      h += '<button type="button" class="c06-util-link" data-act="goto" data-goto="' +
+        attrJson({ route: 'dest', cat: cat.id }) + '">Browse ' + esc(cat.title) + '</button>' +
+        '<span class="c06-util-dot">·</span>';
+    }
+    if (lastWord) {
+      h += '<button type="button" class="c06-util-link" data-act="goto" data-goto="' +
+        attrJson({ route: 'search', query: lastWord }) + '">Search for “' + esc(lastWord) + '”</button>' +
+        '<span class="c06-util-dot">·</span>';
+    }
+    h += '<button type="button" class="c06-util-link" data-act="goto" data-goto="' + attrJson({ route: 'all' }) + '">All Settings — the complete index</button>' +
+      '<span class="c06-util-dot">·</span>' +
+      '<button type="button" class="c06-util-link" data-act="goto" data-goto="' + attrJson({ route: 'home' }) + '">Settings Home</button>';
+    h += '</div></div>';
+    els.article.innerHTML = h;
+    window.PMShell.status('Setting not found — ' + raw);
   }
 
   function foldHtml(key, label, count, bodyHtml) {
@@ -937,7 +992,10 @@
       return '<button type="button" class="c06-actbtn" data-act="setting-action" data-id="' + esc(r.id) + '"' + dis + '>' +
              esc(r.valueLabel || 'Open') + '</button>';
     }
-    /* list / keyvalue: summary only; entries live in Details (read-only) */
+    /* list / keyvalue: summary only; entries live in Details (read-only).
+       When managed/unavailable the chips list already carries the value
+       chip, so the control slot stays empty (no duplication). */
+    if (locked) return '';
     return '<span class="pm-chip-value" data-kind="' + (r.changedFromDefault ? 'custom' : 'default') + '">' +
            esc(r.valueLabel || '—') + '</span>';
   }
@@ -1094,7 +1152,7 @@
                (a.reason ? ' <span class="c06-action-reason">' + esc(a.reason) + '</span>' : '') + '</span>';
         } else {
           h += '<button type="button" class="c06-action-link" data-act="mgr-action" data-mgr="' + esc(def.id) +
-               '" data-action-id="' + esc(a.id) + '">' + esc(a.label) + '</button>';
+               '" data-action-id="' + esc(a.id) + '" data-item-id="' + esc(a.id) + '">' + esc(a.label) + '</button>';
         }
       });
       h += '</div>';
@@ -1223,6 +1281,7 @@
       h += '</div>';
       return h;
     }
+    arr(sec.checks).forEach(function (ck) { h += entryHtml(ck, ctx); });
     var list = arr(sec.items).length ? arr(sec.items) : arr(sec.rows);
     if (list.length) {
       /* rows/items: entry treatment when they look like resources, kv otherwise */
@@ -1695,7 +1754,7 @@
            '<span>' + esc(c.title) + '</span><span class="c06-cat-n">' + c.count + (c.count === 1 ? ' value' : ' values') + '</span></label>';
     });
     h += '<div class="c06-copy-foot">' +
-         '<button type="button" class="c06-btn" data-act="copy-step" data-step="source">Back</button>' +
+         '<button type="button" class="c06-btn" data-pm2-back data-act="copy-step" data-step="source" aria-label="Back to choosing a source project">Back</button>' +
          '<button type="button" class="c06-btn is-primary" data-act="copy-preview"' + (anyChecked ? '' : ' disabled') + '>Preview the copy</button>' +
          '</div>';
     return h;
@@ -1735,7 +1794,7 @@
     h += '<p class="c06-section-note">Applying first writes a restore point, then applies everything at once, then verifies the result. ' +
          'Unavailable and conflicting values are never applied. One rollback undoes the whole transaction.</p>';
     h += '<div class="c06-copy-foot">' +
-         '<button type="button" class="c06-btn" data-act="copy-step" data-step="categories">Back</button>' +
+         '<button type="button" class="c06-btn" data-pm2-back data-act="copy-step" data-step="categories" aria-label="Back to choosing categories">Back</button>' +
          '<button type="button" class="c06-btn is-primary" data-act="copy-apply">Create restore point &amp; apply</button>' +
          '</div>';
     return h;
@@ -1759,7 +1818,7 @@
     if (!res.ok) {
       h += '<div class="c06-receipt"><strong>Nothing changed.</strong>' +
            '<p>' + esc(res.error || 'Verification failed, so the restore point was applied automatically.') + '</p></div>';
-      h += '<div class="c06-copy-foot"><button type="button" class="c06-btn" data-act="copy-step" data-step="preview">Back to the preview</button></div>';
+      h += '<div class="c06-copy-foot"><button type="button" class="c06-btn" data-pm2-back data-act="copy-step" data-step="preview">Back to the preview</button></div>';
       return h;
     }
     h += '<div class="c06-receipt"><strong>Copied and verified.</strong>' +

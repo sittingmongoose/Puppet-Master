@@ -1,0 +1,156 @@
+{
+  "schema": "pm2.test_evidence.builder.v1",
+  "conceptId": "c05",
+  "concept": "Waypoint",
+  "stem": "concept-05-directory-take-1",
+  "model": "fable",
+  "generated": "2026-08-20",
+  "writer": "builder self-run checks; the Phase-C harness is the final writer",
+  "boot_checks": [
+    {
+      "cmd": "node tools/boot-check.js concept-05-directory-take-1.html",
+      "result": "PASS (1280px, 12 routes)"
+    },
+    {
+      "cmd": "node tools/boot-check.js concept-05-directory-take-1.html --width=760",
+      "result": "PASS (760px, 12 routes)"
+    },
+    {
+      "cmd": "node tools/boot-check.js concept-05-directory-take-1.html --width=2500",
+      "result": "PASS (2500px, 12 routes)"
+    },
+    {
+      "cmd": "node tools/boot-check.js concept-05-directory-take-1.html --scenario=first-run",
+      "result": "PASS"
+    },
+    {
+      "cmd": "node tools/boot-check.js concept-05-directory-take-1.html --scenario=offline",
+      "result": "PASS"
+    },
+    {
+      "cmd": "node tools/boot-check.js concept-05-directory-take-1.html --fixture=fx.import-conflict",
+      "result": "PASS"
+    },
+    {
+      "cmd": "node tools/boot-check.js concept-05-directory-take-1.html --theme=glass-light",
+      "result": "PASS"
+    },
+    {
+      "cmd": "node tools/boot-check.js concept-05-directory-take-1.html --theme=retro-dark",
+      "result": "PASS"
+    },
+    {
+      "cmd": "node tools/boot-check.js ... --routes=home,setting/system.health.platform-diagnostics,setting/system.health.diagnostics-verbosity,manager/m.providers,copy,all",
+      "result": "PASS (both the real probe id and the stale rev-2 id; the stale id renders the honest not-found search surface, zero console noise)"
+    }
+  ],
+  "interactive_driver": {
+    "tool": "scratchpad c05-drive.js over the sandbox CDP driver (file://, headless Chromium)",
+    "result": "all 48 checks passed",
+    "checks": [
+      "home: 12 destination cards, 2-4 attention items baseline, hero search, route stamp",
+      "search: typo dropdown (notifcations) -> selection lands with pm2-located + focus; Back restores query AND result list on #/search",
+      "search: flux capacitor renders the honest no-results state with an All Settings escape",
+      "edits: toggle flips and re-renders without scroll loss; select opens a collision-safe layered menu; menu pick commits; number below minimum shows the inline validation error",
+      "esc ladder: popup menu -> dropdown -> one level out -> stops at Home",
+      "copy: 5 sources -> categories -> preview (all five count kinds, per-category table, item inspection, credential note) -> staged atomic apply with restore point -> verified receipt -> rollback restores and says so",
+      "deep links: setting/system.health.platform-diagnostics lands located with the advanced fold auto-opened; the stale rev-2 id system.health.diagnostics-verbosity (absent from PM2_INVENTORY) renders an honest not-found banner over closest matches, never a blank page",
+      "providers: roster objects + 9 actions; disabled Ollama update shows its unknown-owner reason inline; credential rid o:m.providers/claude.key lands on the accounts tab located",
+      "u: unavailable-capability results: click path and focus-rid deep link land identically - both stamp pm2-located and surface the availability reason note",
+      "scenarios: first-run (setup banner, empty recents, no attention), offline (web rows unavailable with reasons), managed-workspace (read-only rows + managed chips), fx.import-conflict (single banner whose action opens m.lifecycle), fx.loading-cached (cached activity + refresh line), fx.validation-error (fold summary flags the hidden error; opened fold shows the row-level error)",
+      "all settings: virtualized window stays under 80 live rows while scrolled, stress total reads 2,828 with synthetic rows marked 'Stress fixture', changed facet narrows to the ~31 divergences",
+      "narrow 760: manager list-first push, object detail with named in-page back, top Back names the location, in-stage rail hidden (never overlays)",
+      "ctrl+k focuses the search field from any surface",
+      "deferred shell m.servers: named owner, insertion contract, read-only, zero actions",
+      "console: no errors or warnings across the whole walk"
+    ]
+  },
+  "matrix_walks": {
+    "search_route_matrix": "22/22 cases walked live (see search-route-matrix.json); every case includes landing element identity, focus, highlight, and Back-restores verdicts",
+    "manager_route_matrix": "47 manager routes + provider object-route walked at 1280 and 760 plus a first-run pass each (see manager-route-matrix.json); all pass, zero console noise"
+  },
+  "visual_selfcheck": {
+    "method": "boot-check --shots plus a custom CDP walk into a /tmp scratch dir; every PNG inspected by eye (Read tool), dir deleted after",
+    "surfaces_reviewed": [
+      "Home friendly-dark 1280 and 760 (one-column)",
+      "Home glass-light with the anchored dropdown open (fixed: dropdown/menu/panel get an opaque layered fill so glass never bleeds through)",
+      "dest/system and dest/safety/rules in retro-dark (fixed: enum values and badges title-cased - no raw 'custom'/'ask'/'adjudication')",
+      "providers manager front + Claude accounts tab + installs tab at 2500 (bounded 1200px column, no deserts)",
+      "copy preview step in friendly-light (fixed: source dates humanized from raw ISO)",
+      "All Settings with stress in basic-light"
+    ],
+    "widths_eyeballed": [
+      760,
+      1280,
+      2500
+    ]
+  },
+  "shared_module_notes": [
+    "pm2-store recents() ignores the first-run scenario reset (data.recents is cleared but the module-level feed is not); the concept gates the Recent-changes footer on the active scenario instead",
+    "URL-applied scenarios/fixtures run with persist:false, so store.get('scenario'|'fixtures') goes stale against PM2.states.activeScenario(); the concept mirrors scenario events into the session cache via store._setSession (no persistence)",
+    "PM2.copy.rollback returns a Promise (apply too) - callers must await it",
+    "system.health.diagnostics-verbosity does not exist in the 828-row PM2_INVENTORY; the real probe row is system.health.platform-diagnostics"
+  ],
+  "honesty": "Nothing in this file is projected: every listed command was run and every listed check executed against the built page in this session.",
+  "fix_notes_2026_08_20": {
+    "writer": "visual-audit fix pass (B05 follow-up), 2026-08-20",
+    "findings_fixed": [
+      "Shell page-tab clipping at 760 (friendly + basic): per-page override in concept CSS - .pm-page-tab now min-width:0 with ellipsis, active Settings tab flex-shrink:0. Tabs ellipsize instead of hard mid-word clips; 'Usage' no longer clipped to 'Us'/'U' without affordance; active Settings tab always fully visible.",
+      "Breadcrumb over-truncation at 1280 (glass + basic): removed the fixed 190px crumb max-width. Crumbs now hold full text (min-width:max-content) and syncCrumbTight() in concept JS makes truncation space-driven - it widens the trail past the engine's under-measured max-content when the row has slack (spacer + search field above its 170px floor), and only when genuinely tight assigns integer max-widths, truncating the longest ancestors first; the current page crumb yields last. Full 'Settings > AI Brains & Providers > AI Providers' now renders at 1280 in glass/basic/retro.",
+      "All Settings value badge strike-through ('0.55'): the shared .pm-chip-value[data-kind=unavailable] line-through struck the value digits. Concept CSS now renders the struck silhouette as a short leading tick (::before, separated by the chip's flex gap) with text-decoration:none, so no value text is ever overstruck, all themes."
+    ],
+    "contract_fix": "Added data-pm2-back to every Back affordance: workspace header Back (data-act=back), narrow manager push-mode back-to-list (data-act=mgr-list, with aria-label 'Back to <manager>'), and the copy-flow step Back (data-act=copy-back). DOM-verified visible [data-pm2-back] on manager route at 1280 and 760 (including narrow detail pane).",
+    "polish": "Topbar search placeholder ellipsizes (input:placeholder-shown) instead of hard-clipping when the field yields width to the crumbs.",
+    "verification": [
+      "node --check PASS on concept JS",
+      "boot-check PASS at 760/1280/2500 (13 routes each)",
+      "regenerated + visually inspected home/manager/all shots for friendly-dark-760, basic-dark-760, glass-dark-1280, basic-dark-1280, retro-dark-1280: all three findings gone, no new defects; floating States pill unchanged",
+      "tight-window stress at 960/1000/1100 (4-crumb manager object trail): no horizontal overflow, only longest ancestor ellipsized, current page crumb never truncated or clipped"
+    ]
+  },
+  "fix_notes_2026_08_21": {
+    "writer": "second-round visual-audit fix pass (X05), 2026-08-21",
+    "scope": "concept-05-directory-take-1.css only; no JS/HTML change was needed. Three of the four re-audit findings were token defects fixed centrally in _shared2/pm2-tokens.css (loaded after this concept's stylesheet); this pass re-verified them at this concept's own surfaces with pixel measurements and fixed the one layout finding plus one local opacity dimming.",
+    "findings_verified_fixed_centrally": [
+      "retro-dark blue status token (was 1.82:1 dots / 2.06:1 'Not signed in' label on the providers manager): the concept never re-derives --accent-blue for text - .c05-status[data-tone=setup] takes the raw token for color and only mixes it for the decorative border - so the central fix reaches the pixels. Measured on the fresh retro-dark-1280 manager/m.providers shot: the three middle-rail status dots are #4D93FF on #252525 = 5.06:1 (was 1.82:1), and the 'Not signed in' pill label is #4D93FF on #1A1A1A = 5.75:1 (was 2.06:1) against the green sibling at 12.75:1. Same-family spread is now ~2.5x, not ~6x.",
+      "basic-dark muted grey (was 2.85:1): --text-muted now resolves to #9BA3AF. basic-dark-1280 home card meta 5.41:1, chip row 5.41:1, Needs-Attention subtitle 5.41:1 (all were 2.85:1 peak); basic-dark-1280 All Settings section-path line 7.36:1 on the page surface.",
+      "light-theme muted text (was 1.6-2.3:1): friendly-light All Settings section-path line now peaks 4.24:1 (common-ink 2.27:1, from 1.64:1) and the shell nav label 4.33:1 (was 2.24:1); glass-light path line 6.95:1 and nav 7.90:1 (were 2.61/2.76:1). The light/dark asymmetry the finding measured is inverted: the friendly-dark siblings measure 3.53:1 and 3.48:1 on the same rows, so light is no longer the weaker half. The residual gap to the nominal token value is antialiasing on --fs-2xs text, identical in both light and dark."
+    ],
+    "findings_fixed_here": [
+      "States drawer affordance overlapping page content (retro manager route at 1280): the central layer turned the chip into a quiet 42x32 translucent dot, but at scroll-top it still clipped the bottom-right 18x6px of an 'Open' jump link. Bottom padding could not fix this - padding scrolls with the content, so it only ever clears the very last row. Instead the scroll box itself is now shorter: .c05-main gets margin-bottom:44px (the dot intrudes ~42px past the statusbar), so the fixed dot sits outside the scrolling pane at every scroll offset. Its in-pane bottom padding was trimmed 56px -> 28px, and the new scroll edge carries a 22px mask-image fade so it reads as 'more below' rather than a guillotined half-row; the 28px padding keeps that fade off real content at max scroll (verified: last All Settings row still measures 15.29:1 ink, unchanged from the first row).",
+      "Opacity dimming of informational text: .c05-all-row.is-synthetic dropped the whole stress-fixture row (label + section path) to opacity .72, which under-cut the token contrast those rows were tuned for. Replaced with token styling - a 5% --text-primary tint band plus --text-secondary weight-500 label - so the row still reads as secondary next to its 'Stress fixture' tag. Measured with stress data loaded: friendly-light synthetic label 3.71:1 / path 3.85:1 peak-ink (nominal tokens 6.0/5.9:1), basic-dark 6.45:1 both.",
+      "Swept the rest of the stylesheet: no hardcoded hex/rgba colors and no color-mix re-derivation of any text color exist in this concept (66 uses of --text-muted, 36 --text-secondary, 33 --text-primary, all raw token references). The remaining opacity uses are disabled-control states (WCAG-exempt), motion keyframes, and decorative link/rail icons - the icons were measured rather than assumed: rail glyphs at opacity .8 read 4.89:1 in friendly-light and 8.30:1 in retro-dark, well over the 3:1 non-text bar, so they were left alone."
+    ],
+    "verification": [
+      "node --check PASS on concept-05-directory-take-1.js (unchanged file)",
+      "boot-check PASS at 760 / 1280 / 2500, 13 routes each, zero console noise",
+      "paint-level overlap probe (dot made pointer-transparent, document.elementFromPoint sampled on a 6px grid across the dot's whole rect, at scroll top / mid / bottom) across 11 theme x route x width cases incl. retro-dark + retro-light manager/m.providers @1280, basic-dark home + all @1280, friendly-light all + dest/ai @1280, friendly-dark home + manager/m.permissions @760, glass-light copy @1280, basic-light search @1280, retro-dark setting deep link @2500: every sample lands on the empty .c05-body gutter (or the copy-route scrim), never on concept content - PROBE PASS",
+      "regenerated and eyeballed shots: retro-dark-1280 manager/m.providers (top and mid-scroll), basic-dark-1280 home + all, friendly-light-1280 all, glass-light-1280 all, friendly-dark-760 home, friendly-dark-1280 all (dark reference), plus stress-loaded All Settings in friendly-light and basic-dark. No new defects; the All Settings list keeps its clean 12-row fit, the mask fade shows no artifacts on the glass mesh, and the page-tab strip collapses to whole tabs at 760 with no character stubs.",
+      "temp shot directory deleted after inspection"
+    ]
+  },
+  "fix_notes_2026_08_21_signoff": {
+    "writer": "final sign-off fix pass (X05), 2026-08-21",
+    "scope": "concept-05-directory-take-1.css + .js only. One confirmed minor from the closing adversarial review (header Back-label clipping at 760), plus re-verification of the token corrections that landed centrally in _shared2/pm2-tokens.css after the sign-off screenshots were taken.",
+    "finding_fixed_here": {
+      "finding": "[minor] clipping - at 760 the header 'Back to ...' button ellipsized its label while ~170-190px of empty header sat immediately to its right, dropping the words that carry the meaning ('Back to AI Brains & ...' lost 'Providers'). Present on all sixteen non-home 760 shots of the audited themes.",
+      "root_cause": ".c05.is-narrow .c05-back-label carried an unconditional max-width:120px. The clamp was width-class driven, not space driven, so it fired whenever the layout was narrow regardless of how much room the row actually had. The full label needs only 17-37px more than the clamped width, against 168-186px of free space.",
+      "fix": "Removed the fixed clamp. .c05-back-label now carries overflow:hidden + text-overflow:ellipsis with min-width:max-content, so at rest it always renders its whole text (the max-content floor also defeats the sub-pixel flex rounding that would otherwise paint a spurious ellipsis, the same hazard the crumb trail hit). .c05-back is pinned flex:0 0 auto so the button can never be flex-shaved out from under its own text. The row's real yielders go first: the topbar search field already shrinks at flex-shrink 4 to its 170px floor, then the crumb trail truncates via syncCrumbTight(). Only a shortfall that survives both reaches the label: the new syncBackFit() measures the trailing element's overhang past the header's content edge and, if positive, adds .is-back-tight (which releases the max-content floor) and assigns an integer max-width equal to the overhang, never taking the label below a 96px floor that keeps 'Back to' plus the leading word readable. The button's title attribute already carries the full text for that case. The two clamps can never chase each other: syncTopFit() clears the Back clamp, runs the crumb pass, then runs the Back pass, so every measurement is taken from the fully untruncated state. syncTopFit() replaced syncCrumbTight() at both call sites (updateLayout, renderTop).",
+      "measured_after": "CDP geometry probe over all 8 themes x the 4 non-home routes at 760 (32 cases): label.scrollWidth == clientWidth in every one (truncated=false, .is-back-tight never set), labels reading in full as 'Back to Settings Home' / 'Back to AI Brains & Providers'. Button widths 164-215px depending on theme font; the freed space now sits in the flexible spacer (113-184px), and the trailing element lands exactly on the header content edge (lastRight == contentRight == 748) with docOverflow 0 in all 32. Pixel decode of the regenerated shots agrees: basic-dark-760 dest/ai back box x48-224 with ink to x213 (was box x48-207, ink ending x174 at an ellipsis), retro-light-760 manager/m.providers box x48-246 with ink to x235 (was 48-209 / ink 181).",
+      "still_ellipsizes_when_genuinely_tight": "At 520 the cascade is visible in order: the search field is at its 170px floor first, and only then does the label clamp (truncated=true, .is-back-tight set, 'Back to AI Brai...'), with the row still fitting inside the header padding and docOverflow 0."
+    },
+    "central_token_fixes_reverified_here": [
+      "friendly-dark --text-muted was lifted to #9E98A8 in _shared2/pm2-tokens.css after the sign-off shots were taken. This concept re-derives no text token anywhere (zero --text-muted / --text-secondary / --accent-error definitions in its stylesheet; 66 raw --text-muted references), so the correction reaches the pixels. Computed styles on a fresh friendly-dark run: --text-muted resolves to #9E98A8 and .c05-card-facts (card meta), .c05-card-subs (chip rows) and .c05-attn-why (attention subtitles) all compute to rgb(158,152,168) at opacity 1 on the rgb(50,46,58) card, i.e. 4.73:1 nominal, 5.88:1 on the page surface - both over AA. Peak-ink pixel measurement on friendly-dark-1280 home: card meta 4.33:1, chip row 3.70:1, attention subtitle 4.39:1, All Settings section path 4.46:1 (first and last row alike); the residual gap to the nominal value is antialiasing coverage on --fs-xs/--fs-2xs text, not a colour defect - the same token at --fs-md (the hero search placeholder) peaks 4.60:1 against its 4.73:1 nominal.",
+      "Themed ::placeholder: this concept sets .c05-search-input::placeholder to var(--text-muted) itself, so it inherits the calibrated value rather than the UA grey, and does not conflict with the .pm-shell input::placeholder rule added centrally.",
+      "Light-theme --accent-error correction: this concept consumes --accent-error raw for text (.c05-row-note[data-tone=error], .c05-fold-flag[data-tone=error]) and only colour-mixes it for decorative borders, so the central darkening applies unchanged."
+    ],
+    "verification": [
+      "node --check PASS on concept-05-directory-take-1.js",
+      "boot-check PASS at 760 / 1280 / 2500, 13 routes each, zero console noise",
+      "boot-check PASS at 520 on manager/m.providers, dest/ai, all, copy (tight-path regression: no horizontal overflow once the label clamps)",
+      "CDP geometry + computed-colour probe, 8 themes x 4 non-home routes at 760 plus 520 and 1280 controls (see measured_after)",
+      "regenerated and eyeballed shots: basic-dark-760 dest/ai, retro-light-760 manager/m.providers, basic-light-760 all, friendly-dark-760 copy (all four show the full Back label), friendly-dark-1280 home and friendly-dark-1280 all (muted card meta / chip rows / attention subtitles now read at AA), plus retro-light-520 manager/m.providers for the genuinely-tight case",
+      "temp shot directory deleted after inspection"
+    ]
+  }
+}

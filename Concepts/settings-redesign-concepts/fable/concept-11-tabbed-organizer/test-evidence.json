@@ -1,0 +1,378 @@
+{
+ "schema": "pm2.test_evidence.builder.v1",
+ "conceptId": "c11-sheaf",
+ "concept": "fable · 11 Sheaf (concept-11-tabbed-organizer)",
+ "generated": "2026-08-20",
+ "author": "builder self-run checks (the Phase-C harness is the final writer)",
+ "syntax": {
+  "node_check": "PASS (node --check concept-11-tabbed-organizer.js)"
+ },
+ "bootChecks": [
+  {
+   "run": "default 13 routes @1280 (incl. both setting probes)",
+   "result": "PASS"
+  },
+  {
+   "run": "default 13 routes @760",
+   "result": "PASS"
+  },
+  {
+   "run": "default 13 routes @2500",
+   "result": "PASS"
+  },
+  {
+   "run": "glass-light @1280 (home, dest/ai, provider models tab, all, search)",
+   "result": "PASS"
+  },
+  {
+   "run": "retro-dark @1280 (home, dest/ai, provider models tab, copy)",
+   "result": "PASS"
+  },
+  {
+   "run": "scenario=first-run (home, dest/ai, m.providers, all, copy)",
+   "result": "PASS"
+  },
+  {
+   "run": "scenario=offline (home, dest/web, m.providers, dest/ai)",
+   "result": "PASS"
+  },
+  {
+   "run": "scenario=attention-heavy (home)",
+   "result": "PASS"
+  },
+  {
+   "run": "fixture=fx.import-conflict (home, m.lifecycle)",
+   "result": "PASS"
+  },
+  {
+   "run": "fixture=fx.loading-cached,fx.long-text (home, dest/general, provider activity tab)",
+   "result": "PASS"
+  }
+ ],
+ "bootCheckNotes": "Every run: zero console errors/warnings, zero page exceptions, route stamp verified, no body/stage horizontal overflow, non-blank text on every route.",
+ "deepLinkSpotChecks": [
+  {
+   "link": "#/setting/system.health.platform-diagnostics",
+   "result": "PASS — row found, pm2-located, scrolled into view, keyboard focus on the row, route stamped, crumbs Home > System & Advanced"
+  },
+  {
+   "link": "#/setting/system.health.diagnostics-verbosity (stale rev-2 id, not in the 828-row inventory)",
+   "result": "PASS — honest 'not in this project's settings' surface with search guidance and All Settings / Home escapes; no console errors; not blank"
+  },
+  {
+   "link": "#/search/notifcations",
+   "result": "PASS — typo-tolerant results render with data-rid"
+  },
+  {
+   "link": "#/search/flux capacitor",
+   "result": "PASS — no-results guidance with escape actions, no dead end"
+  },
+  {
+   "link": "#/manager/m.providers",
+   "result": "PASS — roster with grouped provider cards"
+  },
+  {
+   "link": "#/copy?instant=1",
+   "result": "PASS — copy panes render, 5 sources, instant timescale honored"
+  }
+ ],
+ "interactiveWalk": {
+  "driver": "scratch CDP driver (walk-c11.js) over file://, results archived in search-route-matrix.json",
+  "searchCases": "22 of 22 PASS — grouped kinds, duplicate labels (API key x2, Rate Limits), typo probes (notifcations/apperance/permisions), no-results guidance, unavailable capability with reason, manager results, deep object rows (installation, model, sound pack, cleanup category, MCP server, teacher topic), setup workflow w:setup.cursor-cli, action result, curated + advanced-disclosure rows; every case verified Back restores the query AND the result list",
+  "copyTransaction": "PASS — source select > category counts > preview (kind chips + per-category + item inspection + credential note) > apply: receipt rcpt.copy.1, restore point rp.copy.1, 31 values written, verified; rollback restored all values and flipped the receipt to rolled-back",
+  "valueEdit": "PASS — deep link landed with pm2-located; 50 into Per-Run Token Budget produced the inline validation error 'must be at least 1,000' (last saved value kept); 90000 applied and the row shows the Changed (custom) chip; receipt toast fired",
+  "escapeLadder": "PASS — manager/m.providers/claude/models > manager/m.providers > dest/ai > home > home (stops at Home, never closes Settings)"
+ },
+ "performanceChecks": {
+  "stress": "PASS — ?stress=1 adds 2,000 zz-stress records: All Settings shows '2,828 of 2,828' with only 14 live DOM rows at the top AND after scrolling to the bottom (windowed); search stays bounded at 30 results and stress hits are labeled 'Stress fixture'",
+  "virtualization": "All Settings uses an absolute-positioned window over a fixed-height spacer; ~30 rows maximum in the DOM",
+  "lazyManagers": "def.model(store) is only called when a manager sheet renders (registry caches per store; store events invalidate)",
+  "subscriptions": "one set of page-level store subscriptions; leaving a manager drops its DOM, no per-manager listeners to leak"
+ },
+ "narrowChecks": {
+  "providerDetail@760": "PASS — roster pane hidden, one-pane push, crumb pile Home > AI Brains & Providers > AI Providers > Claude, Back to AI Providers label, no horizontal overflow",
+  "tabStrip@760": "scrollable with edge fades + More menu listing every destination",
+  "copy@760": "panes stack vertically (verified in boot-check 760 walk + narrow shots)"
+ },
+ "statesWalked": {
+  "scenarios": [
+   "baseline",
+   "calm (via drawer during development)",
+   "attention-heavy",
+   "usage-exhausted (attention wording swap)",
+   "first-run",
+   "offline",
+   "managed-workspace (managed safety rows + policy notice)",
+   "invocation-failed (notice + provider status)"
+  ],
+  "scenarioEvidence": "first-run: empty attention, guidance copy, empty rosters honest; offline: single critical banner, web/provider rows unavailable with reasons, last-known-good catalogs readable; attention-heavy: expanded attention list; managed-workspace: managed chips + origin in Details",
+  "fixtures": "fx.import-conflict (staged preview + Home notice), fx.rollback-complete, fx.loading-cached (refresh strip + cached values visible), fx.long-text (wrapping verified via boot-check overflow gates), fx.restart-required, fx.reconnect-required, fx.validation-error, fx.changed-elsewhere, fx.theme-fallback, fx.storage-pressure (critical banner), fx.credit-guard, fx.index-failed, fx.doom-loop-tripped — all render through store.data.rowStates/notices into rows, attention, and managers",
+  "providerStates": "usage-unavailable-but-ready (overview + limits), multi-install selected/shadowed (installs tab flags + shadow note), unknown-owner manual-only (no update action + honest refusal), update-available ask-first (Codex action), verification-failed-then-rolled-back (activity history), explicit official-source Cursor CLI setup tab"
+ },
+ "visualSelfCheck": {
+  "method": "boot-check --shots to a temp dir outside the repo; every PNG opened and inspected with the Read tool; temp dir deleted afterward",
+  "themesViewed": [
+   "friendly-dark (default)",
+   "glass-light",
+   "retro-dark"
+  ],
+  "widthsViewed": [
+   760,
+   1280,
+   2500
+  ],
+  "surfacesViewed": [
+   "Home",
+   "dest/ai + dest/memory (lens)",
+   "providers roster",
+   "provider detail models/installs tabs",
+   "All Settings",
+   "copy panes + preview + receipt",
+   "search dropdown open",
+   "no-results guidance",
+   "deferred owner shell (m.onboarding)",
+   "narrow home/domain/provider"
+  ],
+  "rethemeAudit": "zero paper/folder/binder/staple/manila/office decoration in any theme — modern PM tabs, flat panels, token surfaces only"
+ },
+ "knownLimitations": [
+  "list/keyvalue collection rows show current entries read-only in the Details drawer with an honest note (collection editing belongs to the full product).",
+  "The stale rev-2 probe id renders the honest missing surface by design; the real health row is the landing probe.",
+  "Help results (h:) surface for teacher-topic phrasings (e.g. 'fallback', 'guide'); generic words like 'help' rank settings first by the shared scorer."
+ ],
+ "sharedModuleBugsFound": [
+  "None blocking. Two shared-data facts worth recording: (1) manager section shapes are heterogeneous (table sections may use items/string columns/array cells; steps use title/note elsewhere label/detail) — renderers must be shape-tolerant; (2) several defs address objects via dest.sectionId while others use dest.objectId — concept routers must accept both."
+ ],
+ "fixWave2026_08_20": {
+  "date": "2026-08-20",
+  "trigger": "visual audit: 23 confirmed findings (15 blockers) + contract audit data-pm2-back gap",
+  "rootCauses": [
+   "Attention cards (15 blockers): .c11-root.is-tight .c11-attn-item > .pm-status-word { flex-basis:100% } inside a no-wrap flex row forced the status word full-width and crushed the text column against the viewport edge at 760/900 in every theme.",
+   "Tab strip >=1280 (4 major): the .c11-root button reset at specificity (0,1,1) out-ranked every single-class component rule (.c11-tab, .c11-btn, .c11-subtab, .c11-ptab, ... at (0,1,0)), stripping padding/border/background; at 760/900 the higher-specificity .c11-root.is-tight .c11-tab rule masked it.",
+   "Contrast (3 minor): shared .pm-chip-value[data-kind=default] uses --text-muted (2.2-2.9:1 in friendly-light/basic-dark); .c11-src-radio ring used var(--border-width) (0px in glass themes) + var(--border) (near-invisible on pale cards)."
+  ],
+  "fixes": [
+   "CSS: button/input resets wrapped in :where() so component rules win at every width; tab strip now renders boxed tabs with aligned active indicator at 760-2500.",
+   "CSS: removed the broken is-tight status-word rule; added .c11-root.is-narrow .c11-attn-item stacked column layout (status word / headline / description / action, all full-width) for stage <1020px.",
+   "CSS: .c11-root .pm-chip-value[data-kind=default] overridden to text-secondary + --border border (measured 5.27:1 basic-dark, 5.21:1 friendly-light, was 2.2-2.9:1).",
+   "CSS: .c11-src-radio ring now fixed 2px solid var(--text-secondary).",
+   "CSS: shell page-tab clipping guard (.pm-page-tabs/.pm-page-tab min-width:0 + ellipsis, active tab flex-shrink:0).",
+   "JS: data-pm2-back added to all three Back affordances (crumb-row Back, missing-view Back to Home, copy-pane Back to selection)."
+  ],
+  "verification": [
+   "node --check PASS; boot-check PASS 13 routes @760/900/1280/2500 (and re-run @760/1280 after final CSS change).",
+   "Screenshots viewed: home @760+900 in friendly-dark/glass-dark/retro-light/basic-light (stacked attention cards, categories above fold, no clipping, no States-pill collision); home @1280+2200 in friendly-dark/basic-dark/retro-light (boxed tabs, aligned indicator); all @1280 friendly-light+basic-dark (pills legible, pixel-measured); copy @760/1280 glass-light + basic-light (radios visible, selected state verified); dest/ai @1280 friendly-dark and manager/m.providers @1280 glass-light regression-clean.",
+   "DOM probe: visible [data-pm2-back] present on manager/m.providers at 1280 and 760."
+  ]
+ },
+ "fixWave2_2026_08_21": {
+  "date": "2026-08-21",
+  "trigger": "second-round visual audit: 6 confirmed findings (3 major, 3 minor) surviving or emerging after the 2026-08-20 wave",
+  "centralFixesRelied_on": [
+   "_shared2/pm2-tokens.css (loaded after this concept's CSS) corrects light-theme --accent-warning/--accent-orange and basic-dark --text-muted; both were verified to reach this concept's own surfaces rather than being re-derived locally (see verification).",
+   "The States drawer affordance is now a quiet translucent icon dot (pm2-tokens.css), which removes the pill-sized occlusion of list rows."
+  ],
+  "findings": [
+   {
+    "id": "R2-1",
+    "severity": "major",
+    "claim": "At 900px the 'Permissions & Safety' category-card title collided with its own '62 · 3 changed' meta (zero background columns between the runs).",
+    "rootCause": "The tile is a flex row [icon | title+desc | meta]; the meta is white-space:nowrap flex:0 0 auto, so at the is-narrow 220px-min grid it left the title a ~65px measure. .c11-tile-main carries min-width:0, so an over-long word overran its box instead of being contained, and landed on top of the meta.",
+    "fix": "CSS. The tile now wraps (.c11-tile flex-wrap:wrap, .c11-tile-main flex-basis 120px so only a deliberate 100% basis can force a second line) and a container query on the CARD - @container (max-width:310px) of content box, i.e. a card under ~338px - drops the count/tab meta onto its own line under the title, aligned to the title's left edge. The title then keeps the full card measure. .c11-tile-title also gained overflow-wrap:break-word as a last-resort guard so a long word can never leave its box at any width. The .is-narrow rules repeat the same declarations at higher specificity as a no-container-query fallback.",
+    "proof": "DOM measurement at 900/basic-light, 'Permissions & Safety': title ink right 801.6 vs meta left 636 on the SAME line before (gap -2.2px, i.e. overlap); after, the meta sits 5px BELOW the title bottom and the title ink stays inside its box. Swept 900/1100/1160/1280/1700/2500: zero same-line title/meta pairs with a gap under 19px at every width, and no negative gaps anywhere. Screenshots basic-light-900-home + friendly-dark-900-home."
+   },
+   {
+    "id": "R2-2",
+    "severity": "minor",
+    "claim": "At 900px Home card titles broke into three lines with the ampersand stranded alone on the middle line.",
+    "rootCause": "Same squeezed title measure as R2-1.",
+    "fix": "Same card-level container query. Because it tracks the card rather than one stage breakpoint, it also catches the two bands the audit did not shoot: a stage just above the is-narrow threshold (~1100, 299px columns) and the four-column layouts at 1700/2500 (320px columns), both of which had the same starved title measure.",
+    "proof": "Line counts per title (Range.getClientRects): before 3/3/3 at 900 for 'AI Brains & Providers', 'Memory & Context', 'Planning & Verification', and 4 lines for 'Planning & Verification' at 1100. After: max 2 lines at 900 and 1100, max 1 line at 1160/1700/2500, ampersand never alone. 1280 keeps the audited inline-meta layout untouched (min horizontal title-to-meta gap 19.2px basic / 28px friendly). Screenshots basic-light-900-home, friendly-dark-900-home, glass-light-900-home, basic-light-1700-home."
+   },
+   {
+    "id": "R2-3",
+    "severity": "major",
+    "claim": "friendly-light amber status/action strings measured ~2.2:1 (chips 1.87:1).",
+    "rootCause": "Shared theme token --accent-warning (#D9A62A) was never darkened for the light faces. This concept consumes the token directly (.c11-op-word, .c11-row-note, .c11-ritem-note and the shared .pm-status-word) with no color-mix, opacity or hardcoded amber of its own, so the central token fix lands unmodified.",
+    "fix": "None needed locally; verified the central token reaches these surfaces.",
+    "proof": "Pixel measurement of the re-shot PNGs (pure-node PNG decoder, glyph-core vs modal background): friendly-light-1280-dest-ai '.c11-row-note[data-tone=setup]' rgb(138,90,0) on white = 5.93:1 (was 2.22:1); friendly-light-1280-manager-m.providers route links 5.93:1 and the 'Not signed in'/'Not installed' chips rgb(138,90,0) on rgb(240,234,229) = 4.97:1 (was 1.87:1)."
+   },
+   {
+    "id": "R2-4",
+    "severity": "major",
+    "claim": "basic-dark muted text on the elevated card surface measured 2.85:1 (Unavailable chip 2.58:1).",
+    "rootCause": "Shared basic-dark reused basic-light's --text-muted (#6B7280). This concept never redefines --text-muted and applies it directly.",
+    "fix": "None needed locally; verified the central token reaches these surfaces.",
+    "proof": "basic-dark-1280-all: All Settings row subtitle rgb(155,163,175) on rgb(45,45,45) = 5.41:1 (was 2.85:1); 'Unavailable' chip 4.89:1 (was 2.58:1). basic-dark-1280-home card meta 6.91:1."
+   },
+   {
+    "id": "R2-5",
+    "severity": "minor",
+    "claim": "In the glass themes the translucent States affordance let the list row beneath bleed through it.",
+    "rootCause": "The States affordance is position:fixed at bottom:34px and ~32px tall, so it hangs 42px above the 24px status bar - i.e. inside the stage's scrollport, painting over whichever row happened to be scrolled under it. In the glass themes it is translucent, so that row bled through it.",
+    "fix": "CSS: .pm-stage { border-bottom: 48px solid transparent; } - a border sits OUTSIDE the scrollport, so the scrollport itself becomes 48px shorter and the dot ends up below every scrollable pixel. Bottom PADDING was tried first and rejected: padding lives inside the scroll box and travels with the content, so it only clears the very last row, while the audit shot is at scroll-top with the covered row mid-list. The transparent border shows the shell background, which is the same --background the concept root paints, so the gutter reads as an extension of the status-bar strip.",
+    "proof": "Paint-level probe at 45% scroll in every scroller, seven theme/width/route combinations (glass-dark 1280 all, glass-light 1280 home, friendly-dark 1280 dest/ai, basic-dark 1280 manager/m.providers, glass-dark 900 all, glass-dark 760 copy, basic-light 2500 all): the stage scrollport now ends at y=828 while the dot occupies y=834-866, so nothing scrollable reaches it. Pixel proof on the re-shot PNGs (mid-scroll): in the dot's band (y 830-874, x 100-1200) the luminance range collapses to 0-8 (basic-light flat 236, friendly-dark flat 32, glass-dark 24-31 mesh gradient) against 189-229 in the content band just above the cut - i.e. no glyph ink paints in the dot's band at all. Note: document.elementFromPoint still names .c11-root inside the scroller's border area (a Chrome hit-testing quirk - the overflow clip governs painting), which is why the verdict is taken from pixels. Screenshots: glass-dark-1280-all plus mid-scroll variants in glass-dark, basic-light and friendly-dark."
+   },
+   {
+    "id": "R2-6",
+    "severity": "minor",
+    "claim": "At exactly 1280px in the basic themes the last tab ('System') was clipped flat by the tab scroller - right border and radius cut, plus a dark sliver behind 'More'.",
+    "rootCause": "The strip is an overflow-x scroller; at 1280 the basic faces needed 1078px in a 1068px box, so the final 10.6px of the tab - exactly its border and corner - were sliced.",
+    "fix": "JS fitTabs() + CSS .c11-tab.is-overflow{display:none}: a tab that cannot be drawn whole is not drawn at all and moves to the 'More' menu, which already lists every destination. Fitting is measured against the tab ROW's free width (row width minus its padding, the More button and the gap), never against the strip's own box, so hiding a tab cannot feed back into the measurement and oscillate. Home and the ACTIVE tab are always kept. Tab horizontal padding also trimmed 15px -> 14px, which is enough for all ten tabs to fit whole at 1280 in the widest (basic) faces. Re-fit runs on width change, on data-theme/data-density change (each face has its own type metrics) and on document.fonts.ready.",
+    "proof": "DOM: 1280/basic-dark scrollWidth 1078 vs clientWidth 1068 with the System tab overhanging by 10.6px before; after, scrollWidth == clientWidth == 1058 and the System tab's right edge is exactly the strip's right edge (0px overhang). Pixel scan at y=130: after basic-dark has the tab border column (lum 51) at x=1155 followed by page background, and basic-light has it (lum 201) at the same column, where the before shot has no border column at all. 760/dest/system probe: Collaboration/Media & Web/Extensions drop to More while the ACTIVE System tab stays drawn whole. 2500: all ten tabs, no clipping."
+   }
+  ],
+  "filesTouched": [
+   "concept-11-tabbed-organizer.css",
+   "concept-11-tabbed-organizer.js"
+  ],
+  "verification": [
+   "node --check concept-11-tabbed-organizer.js PASS.",
+   "boot-check PASS, 13 routes, at 760 / 900 / 1280 / 2500, re-run after every CSS change (no console errors, no exceptions, no overflow).",
+   "Harness suites for concept 11 after the final change: matrix all widths x all themes 113/113, managers 49/49, state 17/17, regression 7/7.",
+   "Screenshots regenerated and viewed: basic-light-900-home, friendly-dark-900-home, glass-light-900-home, basic-light-1700-home (card collision + title wrapping), friendly-light-1280-home, friendly-light-1280-dest-ai, friendly-light-1280-manager-m.providers (amber), basic-dark-1280-all + basic-dark-1280-home (muted text), glass-dark-1280-all plus mid-scroll variants in glass-dark/glass-light/basic-light/friendly-dark (States clearance), basic-dark-1280-home + basic-light-1280-home + basic-light-760-dest-system + basic-light-2500-home (tab end handling). Temp shots deleted after inspection."
+  ]
+ },
+ "signOffFixes_2026_08_21": {
+  "date": "2026-08-21",
+  "trigger": "FINAL sign-off findings for concept-11: 3 confirmed minors, of which two (density on the manager group label) were the same defect reported independently by two viewers. Both were verified by measurement, not taken on trust.",
+  "centralFixesRelied_on": [
+   "_shared2/pm2-tokens.css (loaded AFTER this concept's CSS) now themes ::placeholder with opacity:1, lifts friendly-dark --text-muted to #9E98A8, and corrects the light-theme and basic-dark --accent-error. Verified as reaching this concept rather than re-derived locally: computed at the concept's own search input, friendly-dark --text-muted #9E98A8 with ::placeholder rgb(158,152,168); --accent-error basic-dark #FF8A85, friendly-light #B3341C, glass-light #9B2F45, retro-light #A3231F, basic-light #C62828. This concept's own .c11-search::placeholder rule resolves to the same var(--text-muted) token, so it carries the central fix instead of fighting it. Nothing was re-fixed here."
+  ],
+  "findings": [
+   {
+    "id": "F3-1",
+    "severity": "minor",
+    "category": "density",
+    "claim": "On the manager route the group label 'INSTALLED TOOLS AND SIGNED-IN APPS' had effectively no space above it: it butted against the last line of the Connections intro paragraph and read as a fourth body line rather than a heading. Separation was smaller than the paragraph's own line spacing. Reported twice (glass-dark / friendly-light, and basic-light / basic-dark).",
+    "rootCause": "A specificity defect, not a spacing choice. The concept's heading reset '.c11-root h1, .c11-root h2, .c11-root h3 { margin: 0 }' is (0,1,1) and sits at the top of the file; '.c11-rgroup { margin: 12px 0 6px }' is only (0,1,0), so its declared margins computed to 0px on every group label in the concept. Measured before the fix at 1280/friendly-dark: marginTop '0px', marginBottom '0px', box gap to the preceding <p> exactly 0.00px. This is the same failure mode the file already documents at its :where() button reset - an element-qualified reset silently out-ranking a single-class component rule.",
+    "fix": "CSS only. The rule is now '.c11-root .c11-rgroup' (0,2,0), which outranks the reset, with margin 20px 0 8px, plus '.c11-root .c11-rgroup:first-child { margin-top: 0 }' so a label that opens its container is not pushed off its own section. Space above is deliberately larger than the body copy's line-height and ~2.5x the space below, so the label binds to the cards it labels rather than to the paragraph above it.",
+    "proof": "DOM at 1280/friendly-dark, manager/m.providers: computed marginTop 0px -> 20px and marginBottom 0px -> 8px; gap above the label 0.0px -> 20.0px, gap below 0.0px -> 8.0px. Baseline-to-baseline from the paragraph's last line to the label 16.5px -> 36.5px against the paragraph's own 18.6px leading - i.e. the label had been set TIGHTER than body leading and is now ~2x it. Pixel ink-band scan (x=126-700) of the regenerated shots confirms it. friendly-dark-1280-manager-m.providers: intro lines 620-629 and 639-646, label 674-682, first card border 695 - blank run above the label 27px vs 9px between the paragraph's own lines and 12px below the label. basic-dark-1280 and basic-light-1280-manager-m.providers: intro 647-659 and 666-678, label 704-712, card 724 - blank run above 25px vs 6px intra-paragraph and 11px below (before: 8px above vs 12px intra-paragraph). EVERY group label was checked, not only the reported one: all five on m.providers ('Installed tools and signed-in apps', 'Connected accounts', 'API connections', 'Server connections', 'Free and community models') and all three that only appear under fixture=fx.import-conflict on m.lifecycle ('Conflicts', 'Invalid entries', 'Migrated legacy keys') now measure 20px above / 8px below. A sweep of the other 27 managers found no further group labels to check. None is a first-child, so the guard rule never fires in the shipped states."
+   },
+   {
+    "id": "F3-2",
+    "severity": "minor",
+    "category": "alignment",
+    "claim": "The first tab ('Home') carried ~35px of empty padding on its left but only 15px on its right, so its label sat visibly off-centre in its tab box and off-centre from the active indicator bar. Every other tab was symmetric. Present in all themes, at 760 and 1280, and also when Home was NOT the active tab.",
+    "rootCause": "Not padding and not a strip inset: an icon that never painted. renderTabs() writes the Home tab as ico('grid') + <span>Home</span>, i.e. an <i data-ico=\"grid\"> that PMIcons.hydrate() has to fill with an SVG. mount() hydrated the root once, but renderChrome() -> renderTabs() rewrites els.tabs.innerHTML on EVERY route render and never re-hydrated, so from the first render onward the <i> kept its 14px box and the tab's 6px gap while painting nothing. Measured before the fix: icon element box x=113-127 with innerHTML '' and no <svg> child - exactly the 20px of dead space the viewers pixel-scanned as empty tab fill.",
+    "fix": "JS only, one line: hydrate(els.tabs) immediately after els.tabs.innerHTML = html in renderTabs(), with a comment naming why the strip has to re-hydrate. No padding, width or indicator geometry was touched, so tab fitting (fitTabs / .is-overflow) is unaffected - the 14px box was already in the layout, it just had nothing in it.",
+    "proof": "DOM: the icon host now carries an <svg> at exactly x=113-127 (same box, now painted). Pixel column scan of the regenerated shots over the tab text band (y=119-142, i.e. below the indicator bar): friendly-dark-1280-home Home tab interior 99-181, content ink 114-167 (icon 114-125, label 133-167) = 15px left / 14px right, content centre 140.5 vs box centre 140.0 vs active-indicator bar 108-172 centre 140.0 - all within 0.5px. Neighbouring 'General' tab interior 188-262, ink 202-247 = 14/15, so the first tab now matches its neighbours. basic-light-1280-home: interior 99-186, content ink 114-172 = 15/14, content centre 143.0 vs box centre 142.5. friendly-dark-760-home (tight density): Home box 48-122, content ink 59-112 = 9/9, matching 'General' at 9/10. Before the fix the same scans read 35px empty left vs 15px right at 1280 and 32/11 at 760."
+   }
+  ],
+  "filesTouched": [
+   "concept-11-tabbed-organizer.css",
+   "concept-11-tabbed-organizer.js"
+  ],
+  "verification": [
+   "node --check concept-11-tabbed-organizer.js PASS.",
+   "boot-check PASS on the default 13 routes at 760 / 900 / 1280 / 2500 - no console errors, no page exceptions, no missed route stamps, no horizontal overflow.",
+   "boot-check PASS on home + manager/m.providers for friendly-dark, basic-dark and basic-light at 1280, and home for friendly-dark at 760; those runs produced the inspection shots.",
+   "Screenshots regenerated and VIEWED: friendly-dark-1280-manager-m.providers and basic-dark-1280-manager-m.providers (group-label separation, measured against the paragraph's line-height), friendly-dark-1280-home and basic-light-1280-home (first-tab centring and indicator alignment), friendly-dark-760-home (no regression at the tight density). Temp shots deleted after inspection."
+  ],
+  "residualObservations": [
+   "Not a sign-off finding and deliberately NOT changed in this wave: '.c11-sec-desc { margin-bottom: 9px }' (0,1,0) is dead for the same reason F3-1 was - '.c11-root p { margin: 0 }' (0,1,1) outranks it, so every section description computes marginBottom 0px. The group-label spacing above is set to read correctly without it, so nothing is visually wrong today; reviving the 9px would shift every manager and domain section by 9px, which is not a change to make at final sign-off. Worth folding into the next structural pass, most cleanly by wrapping the p / h1-h3 resets in :where() the way the button reset already is."
+  ]
+ },
+ "signOffFixes2_2026_08_21": {
+  "date": "2026-08-21",
+  "trigger": "LAST fix pass for concept-11 after a full-coverage visual sweep (all 112 screenshots viewed): one MAJOR packet violation (raw internal ids in ordinary UI copy) and five minors. Every claim below was measured in the running page, not inferred from the source.",
+  "centralFixesRelied_on": [
+   "_shared2/pm2-tokens.css (loaded AFTER this concept's CSS) darkened retro-light --accent-lime, darkened glass-light --accent-warning/--accent-orange, and gave glass-dark --text-muted headroom. Verified as REACHING this concept rather than re-derived locally: computed on .c11-root at 1280/dest/general, retro-light --accent-lime #1B6E34; glass-light --accent-warning #6E4700 and --accent-orange #6E3B00; glass-dark --text-muted rgba(237,231,248,0.72) and glass-light --text-muted rgba(46,38,63,0.86). Nothing was re-fixed here. The new glass toggle-track rule deliberately consumes the corrected --text-muted so it inherits that central fix instead of hard-coding a colour."
+  ],
+  "findings": [
+   {
+    "id": "F4-1",
+    "severity": "major",
+    "category": "packet violation - raw internal ids in ordinary copy",
+    "claim": "Every row of the All Settings index printed the raw internal subgroup id under the setting label: 'General & Appearance > visual' instead of 'General & Appearance > Visual Style'. The packet forbids raw internal ids/enums in ordinary prose.",
+    "rootCause": "The virtualised All-Settings painter built its path string straight from the row record: esc((c ? c.title : r.cat) + (r.sub ? ' > ' + r.sub : '')). r.sub is copied verbatim out of PM2_INVENTORY.settings[].sub, which is the id half of the {id, title, desc} subgroup triple. The category half was already resolved through catById(...).title, so only the subgroup rung leaked - which is why it read as a formatting quirk rather than a data bug. The concept had no id->title resolver for subgroups at all; the domain sheet renders g2.title because it iterates the subgroup OBJECTS, and the search dropdown is clean because _shared2/pm2-search.js resolves titles itself.",
+    "fix": "JS. Added subById(cat, subId)/subTitle(cat, subId) next to catById so a subgroup id can never be printed unresolved, and routed the All-Settings path through it. Swept the rest of the concept for the same class of defect and found two more surfaces printing internal ENUM values in the faceted toolbar: the control-kind facet button rendered 'Type: keyvalue' / 'Type: multiselect' and the tier facet rendered 'Tier: advanced', both lowercase machine values. Added TYPE_LABELS / TIER_LABELS / TYPE_ORDER tables and pointed BOTH the facet buttons and their menus at them, so the word on the button is by construction the word in the menu ('Control: Key and value pairs', 'Control: Multi-select', 'Tier: Advanced'). The button label also changed from 'Type' to 'Control', which is what the facet actually filters on.",
+    "proof": "DOM at 1280, route all: the first eight painted rows read 'General & Appearance > visual' before and 'General & Appearance > Visual Style' after; identical in friendly-dark and basic-dark. Facet strip reads ['Category','Control','Tier','State','Changed?']. WHOLE-CONCEPT SWEEP, not a spot check: a TreeWalker over every painted text node on 13 routes (home, all, copy, dest/general, dest/ai, dest/system, dest/memory, three managers, two searches, one setting deep link) x 3 widths (760/1280/2500) split each string on the crumb separators and flagged any segment that exactly matches a category or subgroup id and is not a real title: 0 hits over all 39 route-width combinations. NEGATIVE CONTROL for the detector itself: re-running the identical sweep with one synthetic 'General & Appearance > visual' paragraph injected into the sheet flagged it on 39/39 combinations, so the zero is a real zero and not a broken probe. Shots: friendly-dark-1280-all, basic-dark-1280-all. Menus and overlays were swept separately, because a route walk only sees what is painted: with the five All-Settings facet menus open, with the search dropdown showing results for 'theme', and with the More menu open, the same scan found 0 raw ids; the search dropdown's own crumb rows read 'Settings > General & Appearance > Visual Style > Theme'. That scan carries its own negative control too - injecting the synthetic string into the open .c11-menu flagged it in all five facet menus (5 hits) while the clean run reports 0.",
+    "filesTouched": [
+     "concept-11-tabbed-organizer.js"
+    ]
+   },
+   {
+    "id": "F4-2",
+    "severity": "minor",
+    "category": "copy - direction that is not always true",
+    "claim": "Copy Settings step 2 read 'Pick a source project on the left.' The two panes sit side by side only while there is room; below the stacking width they stack and the source list is ABOVE, not left.",
+    "rootCause": "The empty-state string named a screen position instead of the step it refers to, so it was tied to one of the two layouts the pane deliberately supports.",
+    "fix": "Copy only: 'Pick a source project in step 1. Its categories and counts appear here.' The panes are already numbered '1 - Copy from' and '2 - Choose categories' on screen, so the sentence now points at a label the reader can see in either layout.",
+    "proof": "DOM at 760 (stacked - source list above), route copy: .c11-copy-choose .c11-empty reads 'Pick a source project in step 1. Its categories and counts appear here.' Shot: friendly-dark-760-copy, which also shows the '1 - COPY FROM' heading sitting above '2 - CHOOSE CATEGORIES'.",
+    "filesTouched": [
+     "concept-11-tabbed-organizer.js"
+    ]
+   },
+   {
+    "id": "F4-3",
+    "severity": "minor",
+    "category": "copy - count that is not true at every width",
+    "claim": "The CATEGORIES meta line said '828 settings across 12 categories - 9 tabs above group them' at widths where only two to six of those tabs are on screen; the rest have been folded into the More menu.",
+    "rootCause": "The sentence counted tabs as if the strip were fixed, but fitTabs() drops whole tabs into the More menu as the row narrows (whole tabs or none - a tab that would be sliced by the scroller's right edge is hidden instead). Measured group tabs actually painted, out of 9: 6 at 760, 7 at 900, 8 at 1100, 9 at 1280/1600/2500. The number 9 describes the GROUPING, never the visible count, so the old sentence was false below 1280 - exactly the band the reviewer flagged.",
+    "fix": "Copy only: '828 settings across 12 categories - the tab strip groups them into 9, and More lists every one.' Both halves are true at every width: 9 is the size of TAB_GROUPS, and the More menu enumerates all twelve categories with their group as a note, at every width, including when nothing overflowed.",
+    "proof": "DOM .c11-h-note renders the new sentence verbatim at 760/900/1100/1280/1600/2500 while the visible group-tab count in the same runs walks 6, 7, 8, 9, 9, 9 - the sentence no longer moves with the layout. The second half was measured too rather than assumed: opening the More menu at 760 and at 2500 yields the identical list of all twelve categories (General & Appearance ... System & Advanced), each annotated with its group, so 'More lists every one' is true at the narrow end where it matters. Shots: friendly-dark-1280-home (9 tabs + More) and friendly-dark-760-copy (6 tabs + More).",
+    "filesTouched": [
+     "concept-11-tabbed-organizer.js"
+    ]
+   },
+   {
+    "id": "F4-4",
+    "severity": "minor",
+    "category": "measure - clamp cutting mid-word",
+    "claim": "Category-card descriptions clamped mid-word in the 1280 three-column grid, losing the end of the sentence.",
+    "rootCause": "Measured, not guessed. The description was a CHILD of .c11-tile-main, so it shared a flex column with the title while the nowrap .c11-tile-meta column (count + 'x changed' + an optional group-tab pill) took its width off the same row. The measure therefore varied per card with the length of the META, not with the card: at 1280 the twelve cards are all 359.3px wide, yet the description boxes measured between 148.5px and 206.8px. 'Memory & Context' - the card carrying both a 'Memory & Planning tab' pill and a 66-character description - got the 148.5px ribbon, ~27 characters a line, and clamped at 2 lines with scrollHeight 51px against clientHeight 34px, i.e. a whole third line dropped mid-word.",
+    "fix": "CSS + JS. The description is now a SIBLING of the title block rather than a child, laid out as its own full-width flex row (flex: 1 0 100%) indented 45px so it lines up under the title. The measure is now the card, not the leftover, so it no longer depends on the meta at all. Where the card is narrow enough for the container query (<=310px content) to drop the meta onto its own row too, order:2/order:3 keeps the reading order title -> description -> counts instead of letting the counts wedge between them.",
+    "proof": "Measured at 760/900/1280/1600/2500, all twelve cards each time, comparing scrollHeight against clientHeight per description box. Before: description widths 148.5-206.8px at 1280 and one clipped card. After: every description box is the same width per width (329px at 1280, 290px at 1600 and 2500) and clipped count is 0 at every width; at 760 and 900 the description is display:none by the existing is-narrow rule, unchanged. The longest of the twelve inventory descriptions is 69 characters ('Health checks, connections to outside tools, and power-user switches.') and finishes inside two lines at the new measure. Shots: friendly-dark-1280-home, friendly-dark-2500-home.",
+    "filesTouched": [
+     "concept-11-tabbed-organizer.js",
+     "concept-11-tabbed-organizer.css"
+    ]
+   },
+   {
+    "id": "F4-5",
+    "severity": "minor",
+    "category": "redundancy",
+    "claim": "On the Home route the breadcrumb strip held a single chip 'Home' directly beneath the already-active 'Home' tab - the same word twice, one line apart, telling the reader nothing new.",
+    "rootCause": "buildStack() seeds the pile with a Home rung and returns it unchanged for the home route, so renderCrumbs() painted a one-rung pile. A one-rung pile is not a path; it is a label.",
+    "fix": "JS + CSS. renderCrumbs() now treats a pile shorter than two rungs as nothing to say: it empties the nav, hides the Back button, pins data-depth to 1 and hides the whole crumb row. The CSS needed a companion rule - .c11-crumbrow[hidden] { display: none } - because the row's own display:flex out-ranks the hidden attribute's UA rule and the band would otherwise still occupy its 30px min-height. The strip returns the instant the pile is worth reading (All Settings, Copy, any category, any manager).",
+    "proof": "DOM at 760/900/1280/1600/2500 on route home: #c11CrumbRow hidden=true AND computed display 'none' (both were checked - hidden alone would have been a no-op against display:flex), chip count 0. Same probe on routes all and copy: hidden=false, 2 chips, text 'Home > All Settings' / 'Home > Copy Settings'. Shots: friendly-dark-1280-home (no strip) against friendly-dark-1280-all and friendly-dark-760-copy (strip present with a real path).",
+    "filesTouched": [
+     "concept-11-tabbed-organizer.js",
+     "concept-11-tabbed-organizer.css"
+    ]
+   },
+   {
+    "id": "F4-6",
+    "severity": "minor",
+    "category": "affordance - toggle track invisible in the glass themes",
+    "claim": "The toggle track had no perceivable boundary against the surface in the glass themes; only the knob signalled state, so an off switch read as an unexplained dot.",
+    "rootCause": "Two tokens failing together, both measured. (1) The rule was 'border: var(--border-width) solid var(--border)' and --border-width is 0px in BOTH glass themes, so the track had literally no outline - not a faint one. (2) The fallback signal, the track fill --surface-alt, sits within a hair of the card behind it: sampled at 8x on the real page, track fill vs the surface immediately above it is 1.05:1 in glass-light and 1.04:1 in glass-dark. Fill was never going to carry the shape.",
+    "fix": "CSS only, token-based. border-width is now max(1px, var(--border-width)), which leaves the retro themes' 2px rule and the plain themes' 1px exactly as they were while guaranteeing a hairline where the token is 0px. Colour: the glass themes take --text-muted for the track edge - the dimmest token in the family that is still required to be legible on these grounds, so it is the right weight for an edge and it rides the central --text-muted correction rather than hard-coding a value. The on-state accent edge is restated at matching specificity so it is not out-ranked.",
+    "proof": "Computed border-top-width per theme on the same control: glass-light 0px -> 1px, glass-dark 0px -> 1px, friendly-dark 1px (unchanged), basic-dark 1px (unchanged), retro-light 2px (unchanged) - the max() guard changes only the themes that had none. Pixel proof from 8x crops of the OFF switch on dest/general, before/after generated in the same session by injecting a stylesheet that restores the old declaration, so the pair differs only in that rule: strongest boundary pixel vs the surface above the track, glass-light 1.05:1 -> 7.76:1, glass-dark 1.04:1 -> 6.68:1. The track FILL is unchanged at 1.05:1 / 1.04:1 in both shots, which is the direct evidence that the fill never was the boundary. Shots: glass-light-1280-dest-ai, glass-light-1280-dest-general, glass-dark-1280-dest-general, plus the four 8x before/after crops.",
+    "filesTouched": [
+     "concept-11-tabbed-organizer.css"
+    ]
+   }
+  ],
+  "verification": {
+   "syntax": "node --check concept-11-tabbed-organizer.js - clean",
+   "bootCheck": "PASS at 760, 900, 1280 and 2500 (friendly-dark, 13 routes each): zero console errors/warnings, zero page exceptions, every route stamp verified, no horizontal overflow. Re-run after the final CSS order:2/order:3 change, not only before it.",
+   "harness": "matrix 113/113 and managers 49/49 for concept-11 - the required baselines, held. Also re-ran search 21/21 and state 17/17 since the facet labels and the crumb row are in their reach.",
+   "shotsViewed": [
+    "friendly-dark-1280-all",
+    "basic-dark-1280-all",
+    "friendly-dark-760-copy",
+    "friendly-dark-1280-home",
+    "friendly-dark-2500-home",
+    "glass-light-1280-dest-ai",
+    "glass-light-1280-dest-general",
+    "glass-dark-1280-dest-general",
+    "retro-light-900-home",
+    "8x before/after crops of the off-state toggle in glass-light and glass-dark"
+   ],
+   "tempArtifacts": "All screenshots and probe scripts were written outside the repo and deleted after inspection. Nothing was added to the evidence directory but this note."
+  },
+  "scope": "Only concept-11-tabbed-organizer.js and .css were edited. _shared/, _shared2/, tools/, the hub index, every other concept and every .html were left untouched."
+ }
+}
