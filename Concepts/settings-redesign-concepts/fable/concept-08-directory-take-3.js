@@ -1177,9 +1177,13 @@
     var html = '<div class="c08-actions"><span class="c08-actions-label">Actions</span>';
     acts.forEach(function (a) {
       if (a.available === false) {
-        html += '<button type="button" class="c08-btn" disabled title="' + esc(a.reason || 'Not available right now.') + '">' +
+        /* The disabled button and its reason are one block (see
+           .c08-action-unavail): as bare siblings of the wrapping flex row a
+           wrap could strand the sentence beside unrelated enabled buttons. */
+        html += '<span class="c08-action-unavail">' +
+          '<button type="button" class="c08-btn" disabled title="' + esc(a.reason || 'Not available right now.') + '">' +
           (a.ico ? ico(a.ico) : '') + esc(a.label) + '</button>' +
-          '<span class="c08-action-reason">' + esc(a.reason || '') + '</span>';
+          '<span class="c08-action-reason">' + esc(a.reason || '') + '</span></span>';
       } else {
         html += '<button type="button" class="c08-btn" data-act="mgr-action" data-actid="' + esc(a.id) + '">' +
           (a.ico ? ico(a.ico) : '') + esc(a.label) + '</button>';

@@ -25,16 +25,26 @@
  *    basic-light (5.05:1) already pass and are left alone.
  * ------------------------------------------------------------------ */
 [data-theme="friendly-light"] {
-  --text-muted: #5F5866;   /* was #9A93A0 — now ~5.9:1 on #FBF7F3 */
+  --text-muted: #5F5866;   /* was #9A93A0 — now 6.41:1 on #FBF7F3 */
+  /* Raising muted to clear AA pushed it PAST --text-secondary (5.33:1), which
+     inverted the hierarchy: meta out-inked the body copy it annotates (caught
+     independently by two auditors). Restore the order by strengthening
+     secondary rather than weakening muted, so no tier loses contrast. */
+  --text-secondary: #4E4857;   /* 8.25:1 on #FBF7F3, 7.37:1 on the card wash */
 }
 [data-theme="glass-light"] {
-  --text-muted: rgba(46, 38, 63, 0.86);  /* was .55 alpha — now ~5.6:1 over the mesh */
+  /* .55 measured 2.64:1. Raising it fixed the failure but overshot: at .86 the
+     muted/secondary pair drew level with --text-primary (7.03:1 on #E4CDE4),
+     flattening the whole ramp. These alphas clear AA and keep the order
+     primary 7.03 > secondary 6.41 > muted 5.13. */
+  --text-muted: rgba(46, 38, 63, 0.72);
 }
 
 /* Body/description copy in glass-light sits on a darkened mesh gradient and
-   measured 3.70-3.98:1; nudge the secondary token to clear the same bar. */
+   measured 3.70-3.98:1; nudge secondary to clear the bar without passing
+   --text-primary (a .94 alpha reached 9.3:1 and inverted the ramp). */
 [data-theme="glass-light"] {
-  --text-secondary: rgba(38, 30, 54, 0.94);
+  --text-secondary: rgba(38, 30, 54, 0.80);
 }
 
 /* Dark-theme tertiary text: basic-dark reuses basic-light's #6B7280, which
@@ -42,7 +52,10 @@
    measures 3.66:1 on its own elevated surface (#322E3A) — the one dark face
    the first calibration pass missed. */
 [data-theme="basic-dark"] {
-  --text-muted: #9BA3AF;   /* ~5.6:1 on #2D2D2D */
+  --text-muted: #9BA3AF;   /* 5.41:1 on #2D2D2D, 7.36:1 on #121212 */
+  /* Same inversion as friendly-light: the lifted muted overtook secondary
+     (#A0A0A0, 7.16:1). Strengthen secondary to re-establish the order. */
+  --text-secondary: #BFC4CB;   /* 10.68:1 on #121212, 7.85:1 on #2D2D2D */
 }
 [data-theme="friendly-dark"] {
   --text-muted: #9E98A8;   /* 4.73:1 on #322E3A, 5.87:1 on #211E26 */
@@ -61,10 +74,15 @@
 
 /* Amber/orange status text on the light cream and white surfaces measured
    2.2-3.8:1. Darken the warning/orange ramps for light themes only. */
-[data-theme="friendly-light"],
-[data-theme="basic-light"] {
+[data-theme="friendly-light"] {
   --accent-warning: #8A5A00;
   --accent-orange: #8A4B00;
+}
+/* basic-light's roster/card surfaces sit between its #EAECEF ground and white,
+   where the shared light amber measured only 4.43:1 — it needs its own step. */
+[data-theme="basic-light"] {
+  --accent-warning: #7A4E00;
+  --accent-orange: #7A4200;
 }
 /* glass-light's lavender mesh is darker than the other light grounds, so the
    shared light-theme amber only reaches 3.99:1 there — it needs its own step. */
@@ -100,6 +118,9 @@
 [data-theme="friendly-light"] { --accent-error: #B3341C; }  /* was #E8654C — 3.08:1 on bg */
 [data-theme="glass-light"]    { --accent-error: #9B2F45; }  /* was #C0566B — 2.96:1 on bg */
 [data-theme="retro-light"]    { --accent-error: #A3231F; }  /* was #D32F2F — 4.39:1 on bg */
+/* basic-light was skipped by the first error pass; #C62828 measures 4.45:1 on
+   its roster card surface. */
+[data-theme="basic-light"]    { --accent-error: #B01E1E; }
 /* basic-dark's #EF5350 clears the page background but only reaches 3.95:1 on
    the elevated card surface where status words actually sit. */
 [data-theme="basic-dark"]     { --accent-error: #FF8A85; }
@@ -108,6 +129,23 @@
    quiet chrome by design, so nudge just past the bar without brightening it
    into competition with page content. */
 [data-theme="friendly-dark"] .pm-statusbar { color: #9C96A6; }
+
+/* ------------------------------------------------------------------ *
+ * 2c. Unavailable VALUE chips.
+ *     The shared rule strikes the chip text through. On a status or kind word
+ *     that reads correctly, but on a value chip it draws a line straight
+ *     across the data — "0.55" renders as struck digits and reads as deleted
+ *     or erroneous rather than inactive. Values are data: never strike them.
+ *     The chip keeps its muted ink and takes a dashed edge so it still has its
+ *     own silhouette (distinct from the dotted UNDERLINE the "differs" kind
+ *     uses). Status words, kind words and disabled action links are untouched —
+ *     this is scoped to .pm-chip-value only. (0,2,0) beats the shell rule.
+ * ------------------------------------------------------------------ */
+.pm-shell .pm-chip-value[data-kind="unavailable"] {
+  text-decoration: none;
+  border-style: dashed;
+  border-color: var(--border);
+}
 
 /* ------------------------------------------------------------------ *
  * 3. Fake-shell page-tab strip.
@@ -149,6 +187,20 @@
 }
 @media (max-width: 800px) {
   .pm-shell .pm-page-tab:not(.is-active) { display: none; }
+}
+
+/* ------------------------------------------------------------------ *
+ * 2b. Quiet status words.
+ *     `.pm-status-word[data-tone="ok"]` is --fs-xs at weight 500. The token
+ *     itself passes (friendly-light --text-secondary is 4.35:1 on the card
+ *     surface), but at 11px the Quicksand/Nunito strokes never reach full
+ *     coverage, so the rendered ink measured only 3.73:1 in friendly-light.
+ *     Thickening the stroke fixes the coverage without distorting the colour
+ *     semantics of the status vocabulary. (0,3,0) to beat the shell rule.
+ * ------------------------------------------------------------------ */
+.pm-shell .pm-status-word[data-tone="ok"],
+.pm-shell .pm-status-word[data-tone="muted"] {
+  font-weight: 600;
 }
 
 /* ------------------------------------------------------------------ *

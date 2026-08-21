@@ -5,6 +5,25 @@
    (pane crossfades only; the landing highlight originates at the row).
    Every color comes from pm-shell theme tokens; c07- prefix only. */
 
+/* ============================ on-accent ink ============================ */
+/* Anything painted ON an --accent-primary fill (the primary button label)
+   needs a foreground chosen against THAT FILL, not against the page. The old
+   `color: var(--background)` was the page ground, so it only ever worked where
+   the ground happens to contrast with the accent — the four dark faces and the
+   two whose accent is a deep blue. In friendly-light and glass-light the accent
+   is mid-luminance, so a near-white label landed on light blue / lavender and
+   measured 2.90:1 and 2.66:1 enabled (1.81:1 / 1.69:1 once the old
+   opacity-crushed disabled skin composited it toward the ground).
+   The ink below is 12% of each face's OWN accent over black — a dark, hue-
+   matched ink — measured against that face's --accent-primary:
+     retro-dark 12.82:1 · basic-dark 8.25:1 · glass-dark 8.03:1
+     friendly-dark 9.38:1 · friendly-light 6.08:1 · glass-light 4.86:1
+   retro-light (#0047AB) and basic-light (#0056B3) are deep blues that want the
+   light ink instead; --surface-elevated gives 7.89:1 and 7.04:1 there. */
+:root { --c07-on-accent: color-mix(in srgb, var(--accent-primary) 12%, #000); }
+[data-theme="retro-light"],
+[data-theme="basic-light"] { --c07-on-accent: var(--surface-elevated); }
+
 /* ============================ stage plumbing ============================ */
 
 .pm-stage { overflow: hidden; }
@@ -192,19 +211,39 @@
   white-space: nowrap;
   transition: background var(--motion-fast) var(--ease-default), box-shadow var(--motion-fast) var(--ease-default);
 }
-.c07-btn:hover { background: var(--accent-soft); }
+.c07-btn:hover:not([disabled]) { background: var(--accent-soft); }
 .c07-btn i[data-ico] { width: 14px; height: 14px; }
 .c07-btn.c07-btn-primary {
   background: var(--accent-primary);
   border-color: var(--accent-primary);
-  color: var(--background);
+  color: var(--c07-on-accent);
 }
-.c07-btn.c07-btn-primary:hover { box-shadow: var(--elev-hover); background: var(--accent-primary); }
+.c07-btn.c07-btn-primary:hover:not([disabled]) { box-shadow: var(--elev-hover); background: var(--accent-primary); }
 .c07-btn.c07-btn-quiet { border-color: transparent; background: transparent; color: var(--text-secondary); }
-.c07-btn.c07-btn-quiet:hover { background: var(--accent-soft); color: var(--text-primary); }
-.c07-btn[disabled] { opacity: .55; cursor: not-allowed; }
-.c07-btn[disabled]:hover { background: var(--surface-elevated); box-shadow: none; }
-.c07-btn.c07-btn-primary[disabled]:hover { background: var(--accent-primary); }
+.c07-btn.c07-btn-quiet:hover:not([disabled]) { background: var(--accent-soft); color: var(--text-primary); }
+/* Disabled used to be a .55-opacity crush of the enabled skin. Opacity
+   composites the WHOLE control toward whatever is behind it, so the fill and
+   the label drift to the ground together and the label's own contrast
+   collapses — that is what made the copy-route CTA measure 1.8:1 and 1.7:1 in
+   the two light faces even though the ink above is correct. Paint the state
+   from tokens instead: recessed, flat, and readable everywhere.
+   --text-secondary rather than --text-muted, measured on --surface-alt:
+     friendly-light 4.98:1 · basic-dark 6.72:1 · retro-dark 6.69:1
+     friendly-dark 7.13:1 · retro-light 8.07:1 · basic-light 8.86:1
+   (--text-muted would have failed at 2.61 / 3.64 / 4.25 in three of them). */
+.c07-btn[disabled],
+.c07-btn.c07-btn-primary[disabled] {
+  cursor: not-allowed;
+  opacity: 1;
+  background: var(--surface-alt);
+  /* borderless is the disabled cue now that the label is at full strength:
+     every actionable button in this concept carries a 1px edge (or, for the
+     quiet variant, no fill at all), so a filled-but-edgeless control reads as
+     inert without dimming anything. */
+  border-color: transparent;
+  color: var(--text-secondary);
+  box-shadow: none;
+}
 
 /* ============================ content scroller ============================ */
 
@@ -434,8 +473,18 @@
 
 /* ============================ home ============================ */
 
+/* ONE home measure.
+   The stacked home blocks used to cap at three different widths off a shared
+   left edge — search 760px, the attention list and banner 900px, the area grid
+   uncapped — so at 1700 their right edges landed 228px apart and at 2500 the
+   staircase reached 328px. The blocks are siblings in one column and must share
+   one right edge, so they now all inherit the pane's own bounded measure
+   (--c07-pane 1180px, 1280px above 2000px, less 26px of pane padding each
+   side). That keeps the four-column area grid at 2200/2500 — a hard cap of
+   900px would have cost a column — while the right margin reads as a single
+   line at every preset. */
 .c07-home-head { margin-bottom: 18px; }
-.c07-hero-search { max-width: 760px; margin: 0 0 20px; }
+.c07-hero-search { max-width: none; margin: 0 0 20px; }
 
 .c07-banner {
   display: flex;
@@ -446,13 +495,13 @@
   border-radius: var(--radius-md);
   padding: 10px 14px;
   margin: 0 0 18px;
-  max-width: 900px;
+  max-width: none;   /* one home measure — see .c07-hero-search */
 }
 .c07-banner i[data-ico] { width: 16px; height: 16px; color: var(--accent-warning); margin-top: 2px; }
 .c07-banner strong { font-size: var(--fs-sm); display: block; }
 .c07-banner span { font-size: var(--fs-xs); color: var(--text-secondary); }
 
-.c07-attn { margin: 0 0 22px; max-width: 900px; }
+.c07-attn { margin: 0 0 22px; max-width: none; }   /* one home measure */
 .c07-attn-item {
   appearance: none;
   display: flex;
@@ -491,7 +540,9 @@
   appearance: none;
   display: flex;
   gap: 12px;
-  align-items: flex-start;
+  /* stretch, not flex-start: the body column below has to be as tall as the
+     equal-height card so its footer can be pushed to the bottom edge. */
+  align-items: stretch;
   padding: 12px 14px;
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
@@ -506,7 +557,21 @@
   border-color: color-mix(in srgb, var(--accent-primary) 40%, var(--border-light));
   box-shadow: var(--elev-1);
 }
-.c07-cat-card i[data-ico] { width: 18px; height: 18px; color: var(--text-secondary); margin-top: 2px; }
+.c07-cat-card i[data-ico] {
+  width: 18px; height: 18px; color: var(--text-secondary);
+  margin-top: 2px; align-self: flex-start; flex: 0 0 auto;
+}
+/* Cards stretch to equal height in a row, so a one-line description used to
+   leave its "N settings · M changed" footer floating 16px above the footers of
+   its two-line neighbours — a ragged baseline across the row with unequal dead
+   space beneath. The body is a column and the footer takes the auto top margin,
+   the same technique .c07-rail-foot already uses. */
+.c07-cat-card .c07-cat-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-width: 0;
+}
 .c07-cat-card .c07-cat-name { font-size: var(--fs-md); font-weight: 700; display: block; }
 .c07-cat-card .c07-cat-desc {
   font-size: var(--fs-xs);
@@ -519,13 +584,14 @@
   font-family: var(--mono-font);
   font-size: var(--fs-2xs);
   color: var(--text-muted);
+  margin-top: auto;
 }
 
 .c07-home-utils {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 10px;
-  max-width: 900px;
+  max-width: none;   /* one home measure */
   margin-bottom: 24px;
 }
 .c07-util {
@@ -548,7 +614,7 @@
 .c07-util strong { font-weight: 700; }
 .c07-util span { font-size: var(--fs-2xs); color: var(--text-muted); display: block; }
 
-.c07-recents { max-width: 900px; }
+.c07-recents { max-width: none; }   /* one home measure */
 .c07-recent-row {
   appearance: none;
   display: flex;
@@ -953,6 +1019,14 @@ html[data-reduced-motion="1"] .pm2-located.c07-locate {
   text-transform: uppercase;
   color: var(--text-muted);
 }
+/* Scope caption for a facet group whose counts share a label set with another
+   column on the same screen (AREA vs the rail's per-area settings counts). */
+.c07-facet-note {
+  margin: 0 0 5px;
+  font-size: var(--fs-2xs);
+  line-height: 1.45;
+  color: var(--text-muted);
+}
 .c07-facet {
   appearance: none;
   display: flex;
@@ -1151,7 +1225,17 @@ html[data-reduced-motion="1"] .pm2-located.c07-locate {
 }
 .c07-obj:hover { background: var(--accent-soft); }
 .c07-obj.is-active { border-color: var(--accent-primary); background: var(--accent-soft); }
-.c07-obj .c07-obj-name { font-size: var(--fs-sm); font-weight: 700; display: flex; align-items: baseline; gap: 8px; }
+/* The roster column is a fixed 250px, so a long name beside a long status word
+   used to shrink BOTH flex children at once and wrap them in parallel — the
+   row read as an interleaved 2x2 of fragments ("GitHub | Signed in, cannot /
+   Copilot | invoke"). Let the line break BETWEEN them instead: flex-wrap moves
+   the status onto its own line and each string stays whole. */
+.c07-obj .c07-obj-name {
+  font-size: var(--fs-sm); font-weight: 700;
+  display: flex; align-items: baseline; flex-wrap: wrap;
+  column-gap: 8px; row-gap: 1px; min-width: 0;
+}
+.c07-obj .c07-obj-name > * { min-width: 0; }
 .c07-obj .c07-obj-sub { font-size: var(--fs-2xs); color: var(--text-muted); display: block; margin-top: 1px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .c07-obj-grouplabel {
   font-family: var(--display-font);
@@ -1210,21 +1294,57 @@ html[data-reduced-motion="1"] .pm2-located.c07-locate {
 .c07-kv dd { margin: 0; font-size: var(--fs-sm); color: var(--text-primary); min-width: 0; overflow-wrap: anywhere; }
 .c07-kv dd .c07-note { display: block; margin-top: 1px; }
 
+/* An item is a head group (name · lede · status) plus a right-hand side, with
+   any notes and the detail drawer on their own full-width rows below.
+   The head USED to be loose children of a WRAPPING FLEX row, so an over-long
+   lede was pushed onto the next flex line by itself and dragged the side icon
+   down with it: the name was stranded on a line of its own, 36px from its own
+   sentence while that sentence sat 28px from the following paragraph, and the
+   icon aligned to the lede instead of the name.
+   A two-column grid is the honest structure and removes the whole class of
+   wrap-order accidents — where a flex line break depends on every sibling's
+   hypothetical width (the notes' own `max-width: 84ch` was enough to pull a
+   note up onto the head's line and crush the head to zero in one face). Row 1
+   is head + side; everything after it spans both columns. */
 .c07-item {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: baseline;
-  gap: 10px;
+  column-gap: 10px;
+  row-gap: 8px;
   padding: 7px 4px;
   border-bottom: 1px solid var(--border-light);
   min-width: 0;
-  flex-wrap: wrap;
 }
+.c07-item > * { grid-column: 1 / -1; min-width: 0; }
 .c07-item:last-child { border-bottom: 0; }
+/* head: name, optional sub, lede and status on one wrapping line whose row-gap
+   is 1px, so a lede that has to wrap still reads as the name's own sentence —
+   an order of magnitude tighter than the 8px that separates it from the
+   paragraph below. */
+.c07-item > .c07-item-head {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  column-gap: 10px;
+  row-gap: 1px;
+  min-width: 0;
+}
+.c07-item > .c07-item-label { grid-column: 1; }
 .c07-item .c07-item-label { font-size: var(--fs-sm); font-weight: 600; }
 .c07-item .c07-item-sub { font-size: var(--fs-2xs); color: var(--text-muted); }
 .c07-item .c07-item-val { font-size: var(--fs-sm); color: var(--text-secondary); min-width: 0; overflow-wrap: anywhere; }
-.c07-item .c07-item-note { flex-basis: 100%; font-size: var(--fs-xs); color: var(--text-muted); line-height: 1.5; max-width: 84ch; }
-.c07-item .c07-item-side { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+.c07-item .c07-item-note { font-size: var(--fs-xs); color: var(--text-muted); line-height: 1.5; max-width: 84ch; }
+.c07-item > .c07-item-side {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-self: end;
+}
 .c07-item-open {
   appearance: none; border: 0; background: transparent; color: var(--text-muted);
   cursor: pointer; padding: 2px 4px; border-radius: var(--radius-xs); font: inherit; font-size: var(--fs-2xs);
@@ -1561,3 +1681,21 @@ html[data-reduced-motion="1"] .pm2-located.c07-locate {
    the titlebar controls off the edge; the per-tab ellipsis rules are gone so
    nothing competes with the shared rule. */
 .pm-page-tabs { min-width: 0; overflow: hidden; }
+
+/* Value chips whose ink is --text-muted sit on the shared chip wash
+   (4% of --text-primary over the surface), which is lighter than the surface
+   the muted token was calibrated against, so two dark faces slip under the bar
+   for the chip's 11px/500 text:
+     retro-dark    #909090 on the #2C2C2C wash = 4.374:1 (4.80:1 off-chip)
+     friendly-dark #9E98A8 on the #393541 wash = 4.268:1 (4.73:1 off-chip)
+   and on the "unavailable" kind the line-through eats what little is left.
+   The other six clear it (basic-light 5.53 · basic-dark 4.89 · retro-light 7.05
+   · friendly-light 6.43 · glass-light 9.66 · glass-dark 8.53), so lift only
+   these two faces to --text-secondary: 5.74:1 and 5.54:1. Silhouette still
+   carries the meaning — the dotted border and the strike are untouched. */
+[data-theme="retro-dark"] .c07-root .pm-chip-value[data-kind="unavailable"],
+[data-theme="retro-dark"] .c07-root .pm-chip-value[data-kind="not-configured"],
+[data-theme="friendly-dark"] .c07-root .pm-chip-value[data-kind="unavailable"],
+[data-theme="friendly-dark"] .c07-root .pm-chip-value[data-kind="not-configured"] {
+  color: var(--text-secondary);
+}

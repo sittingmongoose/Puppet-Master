@@ -68,6 +68,25 @@
     'openai/gpt-5': 'GPT-5',
     'gemini/gemini-2.5-pro': 'Gemini 2.5 Pro'
   };
+  /* Control kinds. The inventory stores widget enums ('select', 'toggle',
+     'keyvalue', 'multiselect'); those are implementation words, not names a
+     settings user has for anything. Audit 2026-08-21 round-4 finding 6: the
+     All Settings TYPE column printed them raw down every row while the very
+     next cell in the same row humanised the tier enum ('everyday' /
+     'advanced') — one standard applied twice, inconsistently. All Settings is
+     a first-class destination in the command index (828 records) with plain
+     user prose in its header, not an intentionally-technical drawer, so the
+     packet's drawer exception does not cover it. The column and its own facet
+     filter now read the human name (the filter's option VALUES stay the raw
+     enum, so nothing about the filtering changes), and the raw enum stays
+     available where the packet does allow it: the row's Details drawer. */
+  var TYPE_LABELS = {
+    toggle: 'Toggle', select: 'Dropdown', radio: 'Radio choice', number: 'Number',
+    slider: 'Slider', text: 'Text', path: 'File path', list: 'List',
+    multiselect: 'Multi-select', keyvalue: 'Key/value pairs', action: 'Action'
+  };
+  function typeLabel(t) { return TYPE_LABELS[t] || String(t == null ? '' : t); }
+
   var ACRONYMS = { gpt: 'GPT', ai: 'AI', api: 'API', gpu: 'GPU', cpu: 'CPU', llm: 'LLM' };
   function humanValue(v) {
     var s = String(v == null ? '' : v);
@@ -353,6 +372,42 @@
     return 3;
   }
 
+  /* The whole width vocabulary of the root element, as one string.
+     is-tight: the top bar has to carry Back + crumbs + search + project +
+     Close in one row. Below ~1400px of stage the Back control drops to its
+     short label so the breadcrumb trail stays whole in every theme face.
+     is-wide / is-ultra: above ~1560 and ~2000 of stage the three-pane strip
+     stops being able to spend the extra width, and a fixed content column
+     centred in a 2000px pane is a desert with a rail pinned to its left. At
+     these two steps the panes widen, the content columns widen with them, and
+     Home / the domain overview recompose into two columns so the width
+     carries content instead of emptiness.
+     Audit 2026-08-21 round-4 findings 4/5: this used to live inline in
+     render(), so the classes were only ever recomputed when render() ran, and
+     the width watcher below only ran render() when the MODE changed (900 /
+     1150). Crossing 1400, 1560 or 2000 changed nothing, so a page booted at
+     1280 and resized to 2500 kept `is-mode3 is-tight` and every one of the
+     wide rules stayed inert — and the converse stranded `is-wide is-ultra` on
+     a 900px column. The string is computed here and applied by BOTH render()
+     and the watcher. */
+  function rootClass() {
+    var w = stage ? stage.clientWidth : 1280;
+    var mode = w < 900 ? 1 : (w < 1150 ? 2 : 3);
+    var wide = w >= 2000 ? ' is-wide is-ultra' : (w >= 1560 ? ' is-wide' : '');
+    return 'c10 is-mode' + mode + (w < 1400 ? ' is-tight' : '') + wide;
+  }
+
+  /* Cheap width sync: the is-tight / is-wide / is-ultra steps are pure CSS, so
+     when only they change the class is swapped in place and no re-render (and
+     no scroll/focus churn) is needed. A mode change does restructure the pane
+     strip, so that still goes through render(). */
+  function syncWidthClass() {
+    if (!root) return false;
+    var cls = rootClass();
+    if (root.className !== cls) { root.className = cls; return true; }
+    return false;
+  }
+
   function renderSoon() {
     if (ui.renderQueued) return;
     ui.renderQueued = true;
@@ -367,18 +422,7 @@
   function render() {
     if (!root) return;
     ui.mode = computeMode();
-    /* is-tight: the top bar has to carry Back + crumbs + search + project +
-       Close in one row. Below ~1400px of stage the Back control drops to its
-       short label so the breadcrumb trail stays whole in every theme face. */
-    var stageW = stage ? stage.clientWidth : 1280;
-    /* is-wide / is-ultra: above ~1560 and ~2000 of stage the three-pane strip
-       stops being able to spend the extra width, and a fixed content column
-       centred in a 2000px pane is a desert with a rail pinned to its left. At
-       these two steps the panes widen, the content columns widen with them, and
-       Home / the domain overview recompose into two columns so the width
-       carries content instead of emptiness. */
-    var wide = stageW >= 2000 ? ' is-wide is-ultra' : (stageW >= 1560 ? ' is-wide' : '');
-    root.className = 'c10 is-mode' + ui.mode + (stageW < 1400 ? ' is-tight' : '') + wide;
+    root.className = rootClass();
     var focusFid = document.activeElement && document.activeElement.getAttribute
       ? document.activeElement.getAttribute('data-fid') : null;
 
@@ -522,7 +566,13 @@
         ico('undo') + 'Back to ' + esc(backLabel) + '</button></div>';
     }
     h += '<div class="c10-eyebrow">' + esc(eyebrow) + '</div>';
-    h += '<div class="c10-pane-title">' + esc(title) +
+    /* The title is its own span rather than a bare text node so the header can
+       treat the name and the count as two atoms: audit 2026-08-21 round-4
+       finding 10 — as a bare text node the name was an anonymous flex item
+       that wrapped independently of the count, so the basic faces rendered
+       'AI Brains &' / 'Providers' beside '112' / 'settings' on four mismatched
+       baselines. See .c10-pane-title in the stylesheet. */
+    h += '<div class="c10-pane-title"><span class="c10-pane-title-t">' + esc(title) + '</span>' +
       (count != null ? '<span class="c10-count">' + esc(count) + '</span>' : '') + '</div>';
     if (sub) h += '<div class="c10-pane-sub">' + esc(sub) + '</div>';
     h += '</header>';
@@ -1051,6 +1101,11 @@
     if (dOpen) {
       h += '<div class="c10-detail-body"><dl class="c10-kv">';
       h += '<dt>Setting id</dt><dd><span class="c10-mono">' + esc(row.id) + '</span></dd>';
+      /* the one place the packet allows the raw control enum to show */
+      if (obj(row.control).type) {
+        h += '<dt>Control</dt><dd>' + esc(typeLabel(obj(row.control).type)) +
+          ' <span class="c10-mono">' + esc(obj(row.control).type) + '</span></dd>';
+      }
       if (typeof row.value === 'string' && humanValue(row.value) !== row.value) {
         h += '<dt>Stored value</dt><dd><span class="c10-mono">' + esc(row.value) + '</span></dd>';
       }
@@ -1495,7 +1550,12 @@
     var pages = obj(vm.pages);
     var keys = Object.keys(pages);
     if (keys.length) {
-      h += '<div class="c10-sec-label">Objects<span class="c10-rule"></span></div>';
+      /* Audit 2026-08-21 round-4 finding 7: at one-pane width the roster is
+         height-capped and showed 4 of 9 objects with nothing saying so. The
+         label now carries the total, so the list states its own size whether
+         or not the reader scrolls it. */
+      h += '<div class="c10-sec-label">Objects<span class="c10-rule"></span>' +
+        '<span class="c10-sec-count">' + fmtInt(keys.length) + '</span></div>';
       keys.forEach(function (k) {
         var p = pages[k];
         var st = obj(p.status);
@@ -1672,11 +1732,11 @@
         return '<option value="' + esc(c.id) + '"' + (f.cat === c.id ? ' selected' : '') + '>' + esc(c.title) + '</option>';
       }).join('') + '</select></label>' +
       '<label class="c10-facet">Type <select id="c10AllType"><option value="">All</option>' +
-      typeOpts.map(function (t) { return '<option value="' + t + '"' + (f.type === t ? ' selected' : '') + '>' + t + '</option>'; }).join('') +
+      typeOpts.map(function (t) { return '<option value="' + t + '"' + (f.type === t ? ' selected' : '') + '>' + esc(typeLabel(t)) + '</option>'; }).join('') +
       '</select></label>' +
       '<label class="c10-facet">Tier <select id="c10AllTier"><option value="">All</option>' +
-      '<option value="simple"' + (f.tier === 'simple' ? ' selected' : '') + '>everyday</option>' +
-      '<option value="advanced"' + (f.tier === 'advanced' ? ' selected' : '') + '>advanced</option></select></label>' +
+      '<option value="simple"' + (f.tier === 'simple' ? ' selected' : '') + '>Everyday</option>' +
+      '<option value="advanced"' + (f.tier === 'advanced' ? ' selected' : '') + '>Advanced</option></select></label>' +
       '<label class="c10-facet">State <select id="c10AllState"><option value="">All</option>' +
       stateOpts.map(function (s) { return '<option value="' + s + '"' + (f.state === s ? ' selected' : '') + '>' + s + '</option>'; }).join('') +
       '</select></label>' +
@@ -1723,8 +1783,8 @@
         (r.stress ? ' data-act="stress-row"' : goAttr({ route: 'setting', settingId: r.id })) + '>' +
         '<span class="c10-vname">' + esc(r.label) + (r.stress ? '<span class="c10-stress-tag">Stress fixture</span>' : '') + '</span>' +
         '<span class="c10-vpath">' + esc(catTitle(r.cat)) + (r.stress ? ' \u203A Stress overlay' : ' \u203A ' + esc(subTitle(r.cat, r.sub))) + '</span>' +
-        '<span class="c10-vtype">' + esc(r.type) + '</span>' +
-        '<span class="c10-vtype">' + esc(r.tier === 'simple' ? 'everyday' : 'advanced') + '</span>' +
+        '<span class="c10-vtype">' + esc(typeLabel(r.type)) + '</span>' +
+        '<span class="c10-vtype">' + esc(r.tier === 'simple' ? 'Everyday' : 'Advanced') + '</span>' +
         '<span class="' + (r.changed ? 'c10-vname' : 'c10-vval') + '">' + esc(humanValue(r.valueLabel) || '\u2014') + '</span>' +
         '</button>';
     }
@@ -1782,7 +1842,18 @@
 
   function copyStage1(sources, narrow) {
     var c = ui.copy;
-    var inner = '';
+    /* Audit 2026-08-21 round-4 finding 8: this sentence used to be appended
+       AFTER the five source cards, and in the four-column strip at 1280 the
+       stage body is a fixed-height box the cards very nearly fill — so the
+       sentence was sliced through its baseline by the box's bottom edge, its
+       descenders gone, with the panel divider immediately under the cut. It
+       reads as a rule about what the list below offers, so it belongs above
+       the list: first in the box it can never be the thing that is clipped,
+       and what scrolls instead is the card list, which is honest scrolling.
+       (The card metrics below were also trimmed so the five cards fit the box
+       outright in every theme.) */
+    var inner = '<div class="c10-locked-note" style="margin-bottom:8px">' +
+      'Only values the source changed from its defaults are offered.</div>';
     sources.forEach(function (s) {
       inner += '<button type="button" class="c10-src' + (c.sourceId === s.id ? ' is-active' : '') + '" data-act="copy-src:' + esc(s.id) + '">' +
         '<span class="c10-src-name">' + esc(s.name) + (s.legacy ? '<span class="c10-legacy-tag">Legacy export</span>' : '') + '</span>' +
@@ -1790,7 +1861,6 @@
         arr(s.categorySummaries).reduce(function (a, x) { return a + x.count; }, 0) + ' divergent values in ' +
         arr(s.categorySummaries).length + ' categories</div></button>';
     });
-    inner += '<div class="c10-locked-note" style="margin-top:8px">Only values the source changed from its defaults are offered.</div>';
     return stageShell(1, 'Select source', { active: c.stage === 0, done: c.stage > 0, reached: true }, inner, narrow,
       c.stage > 0 ? 'Source chosen. Tap this step to pick a different project.'
                   : 'Only values the source changed from its defaults are offered.');
@@ -2620,18 +2690,22 @@
     root.addEventListener('change', onChange);
     document.addEventListener('keydown', onKeydown);
 
-    /* width watcher: explicit mode machine, no CSS-media-derived semantics */
+    /* width watcher: explicit mode machine, no CSS-media-derived semantics.
+       It watches the FULL width vocabulary, not just the pane-count mode — a
+       mode change restructures the pane strip and needs a render, while the
+       tight / wide / ultra steps are pure CSS and only need the class swapped.
+       (Watching the mode alone is what left every wide rule inert; see the
+       rootClass() note above.) */
+    function onStageResize() {
+      var m = computeMode();
+      if (m !== ui.mode) { renderSoon(); return; }
+      syncWidthClass();
+    }
     if (window.ResizeObserver) {
-      var ro = new ResizeObserver(function () {
-        var m = computeMode();
-        if (m !== ui.mode) renderSoon();
-      });
+      var ro = new ResizeObserver(onStageResize);
       ro.observe(stage);
     } else {
-      window.addEventListener('resize', function () {
-        var m = computeMode();
-        if (m !== ui.mode) renderSoon();
-      });
+      window.addEventListener('resize', onStageResize);
     }
 
     subscribe();

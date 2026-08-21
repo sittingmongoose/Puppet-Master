@@ -21,7 +21,11 @@
   font-size: var(--fs-md);
   line-height: 1.45;
 }
-.c05 button { font-family: inherit; color: inherit; }
+/* Zero-specificity reset. As `.c05 button` this was (0,1,1) and silently
+   out-ranked every single-class component colour rule (.c05-jump, .c05-crumb,
+   .c05-btn, .c05-back, .c05-tab, .c05-rail-item and 8 more), so accents and
+   muted crumbs rendered as plain body ink. `:where()` makes it (0,0,0). */
+:where(.c05 button) { font-family: inherit; color: inherit; }
 
 .c05-body {
   flex: 1 1 auto;
@@ -199,8 +203,18 @@
 /* ================= in-stage settings rail ================= */
 
 .c05-rail {
-  flex: 0 0 208px;
-  width: 208px;
+  /* Content-sized, not a fixed 208px (audit fix — truncated nav labels).
+     The old fixed basis ellipsized "Branching & Collaboration" and
+     "Skills, Plugins & Commands" at 1280 while ~360px of rail sat empty below
+     the last item and the content pane beside it had width to spare. The rail
+     now takes its own max-content width, floored at the original 208px so
+     short-label themes keep the familiar column, and ceilinged at 276px so a
+     wide-font theme can never eat the page. .is-tight still pins it narrow —
+     there the shortfall is real. */
+  flex: 0 0 auto;
+  width: max-content;
+  min-width: 208px;
+  max-width: 276px;
   min-height: 0;
   overflow-y: auto;
   padding: 14px 10px 20px;
@@ -211,7 +225,7 @@
 }
 .c05-rail[hidden] { display: none; }
 .c05.is-narrow .c05-rail { display: none; }
-.c05.is-tight .c05-rail { flex-basis: 176px; width: 176px; }
+.c05.is-tight .c05-rail { width: 176px; min-width: 176px; max-width: 176px; }
 
 .c05-rail-head {
   font-size: var(--fs-2xs);
@@ -253,6 +267,12 @@
   margin: 0 auto;
   padding-top: 22px;
 }
+/* The non-home routes take the same two wide steps as Home, but a smaller one:
+   their rows pair a label on the left with a control on the right, so measure
+   stays bounded rather than stretching that pairing across the stage. 1400 /
+   1560 matches the caps concepts 07 and 08 already carry. */
+.c05.is-wide .c05-page { max-width: 1400px; }
+.c05.is-ultra .c05-page { max-width: 1560px; }
 
 .c05-sec-head {
   font-size: var(--fs-2xs);
@@ -410,6 +430,65 @@
   margin: 0 auto;
   padding-top: 28px;
 }
+
+/* ---- wide-width composition (audit fix: dead desert) ----------------------
+   Home carried a hard 1080px cap and the stylesheet had no step above
+   is-tight, so the same 1080px column rendered at 1280, 1700, 2200 and 2500:
+   34% / 49% / 56% of the settings pane was empty background, the destination
+   grid stayed 2-up, and six of the twelve destinations were pushed below the
+   fold at the widest sizes while the titlebar and header spanned the full
+   viewport around them.
+   Two steps now compose that width instead of padding it:
+   - is-wide (stage 1300-1959): the column opens to 1780px and the directory
+     goes 3-up, cards ~400-590px (the design was drawn at 535px).
+   - is-ultra (stage >= 1960): the page becomes a two-column composition —
+     directory left (auto-fill, 3-up then 4-up, cards 400-490px), utility band
+     promoted from a footer strip into a real right-hand panel (All Settings /
+     Copy Settings / Recent changes) — inside a 2160px bound, so 2200 fills to
+     its padding and 2500 keeps ~11% side margin, the same proportion the
+     uncontested 1280 layout already has. All twelve destinations sit above the
+     fold at 2200 and 2500 with a 900px-tall window. */
+.c05.is-wide .c05-home { max-width: 1780px; }
+.c05.is-wide .c05-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.c05.is-ultra .c05-home {
+  max-width: 2160px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(292px, 360px);
+  column-gap: 26px;
+  align-content: start;
+  /* panels size to their content instead of stretching to the tallest row */
+  align-items: start;
+}
+/* head, hero search, banner and the attention band stay full-bleed rows; the
+   directory and the utility panel share the split row beneath them. Source
+   order already places attention above both, so plain row auto-placement
+   lands the grid in column 1 and the panel in column 2 of the same row. */
+.c05.is-ultra .c05-home-head,
+.c05.is-ultra .c05-home > .c05-search,
+.c05.is-ultra .c05-banner,
+.c05.is-ultra .c05-attn { grid-column: 1 / -1; }
+.c05.is-ultra .c05-grid {
+  grid-column: 1;
+  /* auto-fill rather than a fixed count so the column ladder has no cliff at
+     the is-wide -> is-ultra boundary (where the utility panel takes ~386px out
+     of the main column in one step): 3-up at the bottom of the band, 4-up from
+     ~2200 on, cards 400-490px throughout. 4-up is what puts all twelve
+     destinations above the 900px fold at 2200 and 2500. */
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+}
+.c05.is-ultra .c05-foot {
+  grid-column: 2;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 0;
+  border-top: 0;
+  padding: 13px 15px 15px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  background: var(--surface-elevated);
+}
+.c05.is-ultra .c05-foot-col { flex: 0 0 auto; }
 .c05-home-head { margin-bottom: 18px; }
 .c05-home-kicker {
   font-size: var(--fs-xs);
@@ -882,21 +961,53 @@
 .c05-row-note[data-tone="changed-elsewhere"] { border-left-color: color-mix(in srgb, var(--accent-warning) 55%, transparent); }
 .c05-row-changed { font-size: var(--fs-2xs); color: var(--text-muted); margin-top: 2px; }
 
+/* Details disclosure (audit fix — grouping). The old recipe was the concept's
+   section-heading recipe exactly: uppercase, letter-spaced, weight 600,
+   --fs-2xs, no border, no chevron. Sitting flush at the left margin directly
+   above a hairline and the next entry's name, it labelled the block BELOW it
+   instead of controlling the entry above. It is now unmistakably a control and
+   unmistakably attached upwards: sentence case with no letter-spacing (so it
+   shares no typographic recipe with .c05-sec-head / .c05-roster-group /
+   .c05-attn-head), a pill border, a caret that points down when collapsed and
+   up when expanded, and a 12px indent off the entry's left edge (14px measured
+   to the control's box) so it reads as a child of the entry it belongs to
+   rather than a peer heading. Vertically it is pulled tight to the entry above
+   — 4px measured from that entry's own note — while .c05-roster-item's bottom
+   padding keeps 8px plus the hairline below it, so it now sits nearer the
+   block it controls than the block it does not. */
 .c05-row-details {
-  border: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-pill);
   background: transparent;
-  color: var(--text-muted);
-  font-size: var(--fs-2xs);
+  color: var(--text-secondary);
+  font-size: var(--fs-xs);
   font-weight: 600;
-  letter-spacing: .04em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   cursor: pointer;
-  padding: 3px 0 2px;
+  padding: 1px 10px 2px;
+  margin: 2px 0 0 12px;
 }
-.c05-row-details:hover { color: var(--text-primary); }
+.c05-row-details::after {
+  content: "\203A";
+  display: inline-block;
+  font-size: var(--fs-sm);
+  line-height: 1;
+  color: var(--text-muted);
+  transform: rotate(90deg);
+  transition: transform var(--motion-fast) var(--ease-default);
+}
+.c05-row-details[aria-expanded="true"]::after { transform: rotate(-90deg); }
+.c05-row-details:hover { color: var(--text-primary); border-color: var(--border); background: var(--accent-soft); }
+.c05-row-details:hover::after { color: var(--text-primary); }
 .c05-row-drawer {
   border-top: 1px dashed var(--border-light);
   padding: 6px 0 4px;
+  /* hangs under its own trigger, not at the entry's left margin */
+  margin: 3px 0 0 12px;
   font-size: var(--fs-xs);
   color: var(--text-secondary);
 }
@@ -1118,6 +1229,10 @@
   padding-top: 20px;
 }
 .c05.is-tight .c05-mgr { grid-template-columns: 244px minmax(0, 1fr); }
+/* wide steps, same bounded reasoning as .c05-page: the extra width lands in the
+   detail pane, where the key/value rows use it, not in dead margin */
+.c05.is-wide .c05-mgr { max-width: 1440px; }
+.c05.is-ultra .c05-mgr { max-width: 1620px; grid-template-columns: 320px minmax(0, 1fr); }
 .c05-mgr.is-push { grid-template-columns: minmax(0, 1fr); }
 
 .c05-mgr-list {
@@ -1249,27 +1364,70 @@
 
 .c05-sec { margin: 14px 0 6px; }
 .c05-kv-list { display: flex; flex-direction: column; }
+/* Key/value pairing (audit fix — proximity + inconsistent field alignment).
+   The old recipe was a wrapping flex row whose key carried a fixed
+   `width: min(240px, 38%)`, which produced TWO layouts inside one list:
+   - short value: the value column was pinned 249px from the key's left edge,
+     so "Cursor CLI" (58px) sat 190px away from the value it owns;
+   - long value: flex line-breaking fired on the hypothetical content width
+     before `min-width:0` shrinking could apply, dropping the value onto a
+     full-width line at the SAME left margin as the key, 20px below it and
+     17px above the muted note — i.e. equidistant between the thing it belongs
+     to and the thing it does not.
+   Every row is now the same two-track grid whose first track is the key's own
+   content width (capped at 240px), so the value always begins exactly one
+   12px gutter after its key and can never break to its own line: long values
+   wrap inside track 2 and hang under themselves. Ink is un-inverted too — the
+   key is --text-primary at 700 against a 400-weight value on the same ink and
+   a --text-muted note (see .c05-kv-v for why the value is not stepped down by
+   token) — and the note is pushed 10px down against the pair's 0px internal
+   gap, so proximity now binds the value to its key. */
 .c05-kv {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
+  column-gap: 12px;
+  row-gap: 0;
   align-items: baseline;
-  gap: 12px;
-  flex-wrap: wrap;
-  padding: 6px 2px;
+  padding: 7px 2px;
   border-bottom: 1px solid var(--border-light);
   min-width: 0;
 }
 .c05-kv:last-child { border-bottom: 0; }
-.c05-kv[data-tone="muted"] { color: var(--text-muted); }
+.c05-kv[data-tone="muted"] .c05-kv-k,
+.c05-kv[data-tone="muted"] .c05-kv-v { color: var(--text-muted); }
 .c05-kv-k {
-  flex: 0 0 auto;
-  width: min(240px, 38%);
+  grid-column: 1;
+  max-width: 240px;
+  min-width: 0;
   font-size: var(--fs-sm);
-  font-weight: 600;
-  color: var(--text-secondary);
+  font-weight: 700;
+  color: var(--text-primary);
+  overflow-wrap: anywhere;
 }
-.c05.is-narrow .c05-kv-k { width: 100%; }
-.c05-kv-v { flex: 1 1 auto; min-width: 0; font-size: var(--fs-sm); overflow-wrap: anywhere; }
-.c05-kv-note { flex-basis: 100%; font-size: var(--fs-xs); color: var(--text-muted); max-width: 80ch; }
+.c05-kv-v {
+  grid-column: 2;
+  min-width: 0;
+  font-size: var(--fs-sm);
+  /* deliberately no colour: the value inherits the same --text-primary ink as
+     its key and is separated by weight alone (700 vs 400). A --text-secondary
+     value was tried and rejected — glass-light's --text-secondary composites
+     DARKER than its --text-primary (7.44:1 vs 5.60:1 on the pane), which would
+     have re-created the very ink inversion this fix exists to remove, in one
+     theme. Weight can't invert; ink tokens can. */
+  overflow-wrap: anywhere;
+}
+/* narrow: one track, key over value, but the pair still stays 10px tighter to
+   each other than to the note beneath */
+.c05.is-narrow .c05-kv { grid-template-columns: minmax(0, 1fr); }
+.c05.is-narrow .c05-kv-k,
+.c05.is-narrow .c05-kv-v { grid-column: 1; }
+.c05-kv-note {
+  grid-column: 1 / -1;
+  margin-top: 10px;
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  max-width: 80ch;
+}
 
 .c05-whatnext {
   border: 1px dashed var(--border-light);

@@ -234,6 +234,16 @@
     var w = stage.clientWidth || window.innerWidth;
     rootEl.classList.toggle('is-narrow', w < 920);
     rootEl.classList.toggle('is-tight', w >= 920 && w < 1200);
+    /* Wide steps (audit fix — dead desert at 1700/2200/2500). Home used to be
+       capped at 1080px with no breakpoint above 1200, so 34/49/56% of the pane
+       was empty background while the destination grid stayed 2-up and half the
+       twelve destinations sat below the fold. The first step deliberately
+       starts at 1300 rather than at the 1080 cap: the 1208-wide stage a 1280
+       window produces is the audited reference layout (2-up, 535px cards, 11%
+       margin) and stays untouched, while the band that would otherwise stretch
+       to 28% empty just under 1500 is picked up. */
+    rootEl.classList.toggle('is-wide', w >= 1300 && w < 1960);
+    rootEl.classList.toggle('is-ultra', w >= 1960);
     syncTopFit();
   }
 

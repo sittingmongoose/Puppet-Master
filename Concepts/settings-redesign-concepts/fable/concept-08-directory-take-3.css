@@ -977,7 +977,39 @@
   letter-spacing: .07em;
   margin-right: 3px;
 }
-.c08-action-reason { font-size: var(--fs-xs); color: var(--text-muted); font-style: italic; }
+/* An unavailable action carries a sentence saying why. As a bare sibling flex
+   item of .c08-actions the sentence took the same 9px gap the buttons take,
+   so at 1280 a wrap put it on the row of two unrelated enabled buttons,
+   vertically centred on their baseline like a borderless third button, while
+   the disabled button it explains sat on the row above (measured: prose ends
+   x=805, next button starts x=815 — a 9px gap against a 9-10px button gap).
+   The disabled action and its reason are now one column block owning a full
+   flex line, so a wrap can never separate them, and the reason is indented
+   behind a rule so it reads as that action's note and not as a caption for
+   whatever button follows.
+   No max-width on the block itself: in flex layout a max-width shrinks the
+   item's hypothetical main size, so the 100% basis would stop forcing a line
+   of its own and an unrelated button could still share the row. The measure
+   cap belongs on the sentence. */
+.c08-action-unavail {
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  margin: 2px 0;
+}
+.c08-action-reason {
+  display: block;
+  margin-left: 12px;
+  padding-left: 10px;
+  border-left: 2px solid var(--border);
+  font-size: var(--fs-xs);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  font-style: italic;
+  max-width: 62ch;
+}
 
 /* status card grid (overview sections; the provider answer block) */
 .c08-statgrid {
@@ -1560,7 +1592,13 @@
 
 @media (max-width: 900px) {
   .c08-cards { grid-template-columns: 1fr; }
-  .c08-measure { padding: 0 16px; }
+  /* Inline padding only. As the `padding: 0 16px` shorthand this rule sat
+     later in the file than `.c08-home { padding-top: clamp(28px,4.5vh,56px) }`
+     at the same (0,1,0) specificity, so below 900px it reset Home's top
+     padding to zero and the "Settings" H1 came to rest 4-5px under the shell
+     titlebar instead of ~40-47px. Only Home was hit — the domain and manager
+     heads carry their own padding-top as children of .c08-measure. */
+  .c08-measure { padding-left: 16px; padding-right: 16px; }
   .c08-bar-inner { flex-wrap: wrap; gap: 8px; padding-bottom: 8px; }
   .c08-crumbs { display: none; }
   .c08-bar .c08-search-wrap { order: 5; flex: 1 1 100%; }

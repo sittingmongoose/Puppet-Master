@@ -231,5 +231,43 @@
   "keyboard-only walkthrough was not script-driven (focus styles and Esc ladder implemented and spot-tested via the search/menu handlers; the Phase-C harness should assert them)",
   "remaining four themes (friendly-light, glass-dark, retro-light, basic-*) rely on token discipline; only the two breaker themes were screenshot-inspected",
   "the copy verify-failure branch (automatic restore) is implemented per PM2.copy's contract but was not forced in a walk"
- ]
+ ],
+ "independent_audit_fixes_round3": {
+  "date": "2026-08-21",
+  "source": "independent audit of the committed code (3 confirmed findings for concept-08, all major)",
+  "method": "Shots regenerated over file:// CDP at 1280x900, 900x900 and 760x900 with webfonts blocked (the same pipeline the audit's own shots came from) and decoded with a pure-python PNG reader. Vertical gaps are first-row-with-ink measured against the page ground; horizontal runs are column ink scans. Temp shots deleted after inspection.",
+  "fixes": [
+   {
+    "finding": "A3-2 (major, layout-spacing): Home lost its entire top padding at <=900px -- the 'Settings' H1 sat 5-6px under the shell titlebar instead of ~47px.",
+    "root_cause": "Home renders as <div class=\"c08-home c08-measure\">. .c08-home{padding-top:clamp(28px,4.5vh,56px)} (css:151) was clobbered by the shorthand .c08-measure{padding:0 16px} inside @media (max-width:900px) (css:1563) -- same (0,1,0) specificity, later in source, and the shorthand resets padding-top to 0. Only Home was affected; the domain and manager heads are children of .c08-measure and carry their own padding-top.",
+    "change": "concept CSS: the narrow-width rule is now .c08-measure{padding-left:16px;padding-right:16px} -- inline longhands, so it can no longer reset any element's vertical padding. Nothing else in the media block changed.",
+    "measured": {
+     "friendly-dark-760-home": "first ink y=44 (gap 5px from the titlebar edge at y=39) -> y=85 (gap 46px)",
+     "friendly-dark-900-home": "y=44 (gap 5) -> y=85 (gap 46)",
+     "basic-dark-760-home": "y=44 (gap 5) -> y=85 (gap 46)",
+     "retro-light-900-home": "y=45 (gap 6) -> y=86 (gap 47)",
+     "friendly-dark-1280-home (control)": "y=86 (gap 47) -> y=86 (gap 47), unchanged"
+    },
+    "verified": "friendly-dark-760-home, friendly-dark-900-home, basic-dark-760-home and retro-light-900-home regenerated, measured as above and inspected: the narrow Home now carries the same 46-47px top gap the 1280 reference has, and the 1280 reference measures identically to before the change (first ink y=86, gap 47px)."
+   },
+   {
+    "finding": "A3-1 / A3-3 (major x2, proximity-grouping): on the AI Providers manager at 1280 the italic 'could not prove which installer owns this binary...' note detached from the disabled action it explains and laid inline against unrelated content -- it ended 9-10px from 'Repair the Copilot extension', the same gap used between two buttons, and rendered vertically centred on that button's row like a borderless third button.",
+    "root_cause": "actionsRowHtml() emitted <span class=\"c08-action-reason\"> as a bare sibling flex item of .c08-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}, so the sentence took the button gap and a wrap could separate it from the button it belongs to.",
+    "change": "The one-wrapper pattern the sibling concepts already use for this exact case (concept-06 and concept-09 enclose the disabled control and its reason in a single wrapper; concept-07 uses a separate reason block) - concept-08 was the outlier. JS: the disabled button and its reason are wrapped in one <span class=\"c08-action-unavail\">. CSS: .c08-action-unavail is a column flex block with flex:0 0 100% and no max-width on the block itself (a max-width shrinks a flex item's hypothetical main size and would stop the 100% basis forcing a line of its own; the measure cap lives on the sentence instead); .c08-action-reason becomes display:block with margin-left:12px, padding-left:10px, a 2px border-left rule and max-width:62ch.",
+    "measured": {
+     "friendly-dark-1280 actions block bands": "disabled button y297-333 x123-366; reason y339-372 x135-539; next button row y384-420 x123-526. Owner-to-reason gap 6px, reason-to-next-row gap 12px -- proximity now 2:1 in favour of the owner.",
+     "basic-dark-1280": "disabled button y319-355 x123-398; reason y361-394 x135-567; next buttons y406-429 x123-579 (same 6px / 12px)",
+     "retro-dark-1280 and glass-dark-1280": "same structure; the reason never shares a wrap-row with a button in any theme",
+     "prose-to-button horizontal gap": "was 9px against a 9-10px button-to-button gap; the reason no longer shares a row with any button, so the ambiguity is gone rather than re-tuned"
+    },
+    "verified": "friendly-dark-1280, friendly-light-1280, basic-dark-1280, retro-dark-1280, glass-dark-1280 and basic-dark-760 manager/m.providers regenerated, band-measured as above and inspected: in every theme and at both widths the disabled 'Update the local Ollama runtime' owns its own row with its sentence indented behind a rule directly beneath it, and 'Repair the Copilot extension' / 'Set up the Cursor CLI' start a fresh row. The reason's own ink measures 4.64:1 peak in friendly-dark (unchanged colour and size; only its placement moved)."
+   }
+  ],
+  "verification": {
+   "node_check": "PASS (node --check concept-08-directory-take-3.js)",
+   "boot_check": "PASS at --width=760, 900, 1280 and 2500 (13 routes each, zero console errors/warnings, zero exceptions, no horizontal overflow)",
+   "harness": "matrix 113/113, managers 49/49 (node tools/harness/run-suite.js <suite> --concepts=08)",
+   "shots": "regenerated over file:// CDP into a /tmp scratchpad outside the repo, inspected, measured and deleted"
+  }
+ }
 }

@@ -231,5 +231,62 @@
       ],
       "temp_artifacts": "all screenshots, probe JSON and crops written to a /tmp scratchpad outside the repo and deleted after inspection"
     }
+  },
+  "independent_audit_fixes_round3": {
+    "date": "2026-08-21",
+    "source": "independent audit of the committed code (5 confirmed findings for concept-06: 2 major, 3 minor)",
+    "method": "Every figure below is a peak-ink measurement taken from a freshly regenerated PNG decoded with a pure-python PNG reader: the darkest/brightest pixel inside the text rect against that rect's modal background, WCAG relative-luminance ratio. 'modal' is the most common non-ground colour in the same rect - when modal == peak the glyphs reach their declared token exactly. Shots were taken over file:// CDP at 1280x900 and 760x900 with webfonts blocked, exactly as the audit's own shots were, so the numbers are directly comparable to the finding text. Temp shots deleted after inspection.",
+    "fixes": [
+      {
+        "finding": "A3-1 (major, contrast): in both friendly themes the 10px meta tier (--fs-2xs on --text-muted) rendered below the 4.5:1 small-text floor across the rail counts, eyebrow, destination tallies, index breadcrumbs and copy step nav; the same roles in glass/basic/retro reached their declared token exactly.",
+        "root_cause": "Size and weight, not hue. The friendly faces are the only ones whose --body-font resolves to an installed 'Quicksand' (the others fall through to the system face); Quicksand's thin geometric stems never reach full pixel coverage at 10px/400. The token itself passes (friendly-light #5F5866 = 6.41:1, friendly-dark #9E98A8 = 5.88:1).",
+        "change": "concept CSS: the tier is now two custom properties on .c06 -- --c06-fs-meta (default var(--fs-2xs)) and --c06-fw-meta (default 400) -- --c06-fs-meta replaces var(--fs-2xs) in all 21 tier rules, and --c06-fw-meta is carried by 21 declarations (the 19 tier rules that declared no weight of their own, .c06-rail-count whose explicit 400 became the variable, and the 'Recommended' chip); .c06-table th keeps its own 600. [data-theme=\"friendly-dark\"] .c06, [data-theme=\"friendly-light\"] .c06 raise them to 11.5px / 600. 11.5px sits between --fs-xs (11px) and --fs-sm (12px) so the tier still reads a full step under the 12px description line. Size alone was measured to be insufficient (the rail count '95' peaks at 4.28:1 at 11.5px/400 and only 4.85:1 at 13px, which would already be louder than the description); Quicksand 600 resolves to its Bold face. .c06-rail-link takes the matching 600 step in the friendly faces only (:not([aria-current]) so the current item keeps its 700), so the label still leads its own count on size.",
+        "measured": {
+          "friendly-light-1280-home rail count '95'": "3.04:1 -> 5.99:1 (ink 95,88,102 = the declared token; modal == peak)",
+          "friendly-light-1280-home rail count '112'": "3.62:1 -> 5.99:1",
+          "friendly-light-1280-home eyebrow": "4.24:1 (modal 2.27) -> 6.41:1 (modal == peak)",
+          "friendly-light-1280-home destination tally": "4.24:1 (modal 2.71) -> 6.31-6.41:1",
+          "friendly-light-1280-all index breadcrumb": "4.24:1 (modal 2.27) -> 6.41:1 (modal == peak)",
+          "friendly-dark-1280-home rail counts": "3.48/3.85:1 -> 5.50:1 (ink 158,152,168 = the declared token)",
+          "friendly-dark-1280-all index breadcrumb": "4.46:1 (modal 2.60) -> 5.88:1 (modal == peak)",
+          "friendly-dark-1280-copy inactive step nav": "3.69:1 (modal 2.34) -> 4.73:1 (modal == peak; 4.73 is the token's nominal on --surface-elevated)",
+          "friendly-dark-1280-copy 'updated yesterday'": "3.76:1 (modal 2.28) -> 4.73:1 (modal == peak)"
+        },
+        "verified": "friendly-light-1280-home, friendly-dark-1280-home, friendly-light-1280-all, friendly-dark-1280-all and friendly-dark-1280-copy regenerated, measured as above and inspected. Every friendly meta role now renders the declared --text-muted token exactly (modal == peak) and clears 4.5:1; no non-friendly theme changed (--c06-fs-meta/--c06-fw-meta resolve to the previous 10px / inherited-400 there)."
+      },
+      {
+        "finding": "A3-2 / A3-5 (major + minor, hierarchy inversion): on the All Settings index the 'Recommended' state chip was rendered far louder than the setting's own value chip beside it, so each row read as the annotation first.",
+        "root_cause": "Shared _shared/pm-shell.css demotes .pm-chip-value[data-kind=\"default\"] (--text-muted, weight 500, transparent ground) and promotes [data-kind=\"recommended\"] (--text-primary + a 45% accent border). The store only emits the 'recommended' chip when the value is unchanged, so it can only ever appear next to a demoted 'default' chip; the index is the one surface with no control, so that demoted chip is the sole carrier of the value.",
+        "change": "concept CSS only (the shared file is not ours to edit): .c06 .pm-chip-value[data-kind=\"default\"] takes the chip vocabulary's loud end (--text-primary, weight 600, the neutral chip ground, solid --border) -- the same treatment [data-kind=\"custom\"] already has, so a changed value never reads quieter than an unchanged one -- and .c06 .pm-chip-value[data-kind=\"recommended\"] takes the quiet end (--text-muted, weight var(--c06-fw-meta), no ground). Both stay at the shared 11px chip size so neither wins on scale. The accent-tinted border is kept but dotted, so 'Recommended' still carries its own silhouette rather than colour alone.",
+        "measured": {
+          "friendly-dark-1280-all 'Theme' row (value vs Recommended)": "5.31:1 vs 13.00:1 -> 13.00:1 vs 5.88:1",
+          "friendly-light-1280-all": "5.51:1 vs 8.20:1 -> 8.20:1 vs 6.41:1",
+          "basic-light-1280-all": "5.05:1 vs 13.54:1 -> 13.54:1 vs 5.05:1"
+        },
+        "verified": "friendly-dark-1280-all, friendly-light-1280-all, basic-light-1280-all and friendly-dark-760-all regenerated and inspected: the value chip leads every row and 'Recommended' reads as a quiet dotted annotation. Both chips still clear 4.5:1 in every measured theme."
+      },
+      {
+        "finding": "A3-3 / A3-4 (minor x2, grouping + proximity): on the manager route the disabled action's explanatory sentence was laid inline inside the action-link row, splitting the link list and wrapping flush with the link column so its continuation read as another link.",
+        "root_cause": "JS emitted the disabled button and its reason inside a bare <span> that became a full-width flex item of .c06-actions (display:flex; flex-wrap:wrap; gap:6px 18px), so the inline sentence wrapped to the flex line's left edge. The author's own measure cap, .c06-action-reason{max-width:60ch}, was inert on a non-replaced inline box.",
+        "change": "JS: the wrapper span now carries class c06-action-unavail. CSS: .c06-action-unavail is a column flex block with flex:0 0 100% (no max-width on the block itself -- a max-width shrinks a flex item's hypothetical main size and would stop the 100% basis forcing a line of its own), so no link can trail the sentence; .c06-action-reason becomes display:block with margin-left:14px, padding-left:10px, a 2px border-left rule, line-height 1.55 and max-width:58ch.",
+        "measured": {
+          "friendly-dark-1280 action block, first-ink x per line": "before: struck action + reason on one line at x=434 running to x=1122, continuation orphaned at x=435 (link rag = x=434). after: struck action alone y332-341 x=434-614; reason lines y350-361 and y368-379 both at x=461; next link row y392-405 back at x=434.",
+          "friendly-dark-1280 spacing": "before: 26px between the sentence's own lines vs 25px to the next (unrelated) link row -- inverted proximity. after: 18px owner-to-reason and reason-line-to-reason-line vs 24px reason-to-next-link-row.",
+          "basic-light-1280 continuation first-ink x": "399 (1px from the link rag at 398) -> 425 (27px inside it, behind the rule at x~411)"
+        },
+        "verified": "friendly-dark-1280, basic-light-1280 and friendly-light-760 manager/m.providers regenerated and inspected in each: the disabled action owns its own row, its sentence sits under it indented behind a rule, and the following links start a fresh row at the link column's left edge."
+      },
+      {
+        "finding": "carry-over check on the earlier `.c06 button` specificity repair (the reset was (0,1,1) and out-ranked every single-class component colour rule; it is now :where(.c06 button))",
+        "change": "no further change needed",
+        "verified": "Two checks. (1) Fallout probe: with and without the old (0,1,1) rule re-injected, every .c06 button on 9 routes x 5 themes was diffed on computed colour and font-family. Eight classes change, each from the defeated inherit to the colour its own rule always declared: .c06-rail-link/.c06-back/.c06-close/.c06-fold-btn primary->secondary, .c06-crumb muted->secondary, .c06-util-link muted->secondary, .c06-quiet-link/.c06-rail-util primary->muted. No font-family changed. (2) Accent probe over 9 routes x all 8 themes, 160 (theme,class) pairs: zero .c06 buttons compute an accent token as their text colour, so nothing that should stay neutral now shows accent. Pixel re-measure of the affected rail roles in all 8 themes: label 4.98-10.79:1, count 4.73-7.45:1, rail utility 4.73-7.70:1 -- lowest is basic-light 4.73:1, every value clears 4.5:1."
+      }
+    ],
+    "verification": {
+      "node_check": "PASS (node --check concept-06-directory-take-2.js)",
+      "boot_check": "PASS at --width=760, 900, 1280 and 2500 (13 routes each, zero console errors/warnings, zero exceptions, no horizontal overflow)",
+      "harness": "matrix 113/113, managers 49/49 (node tools/harness/run-suite.js <suite> --concepts=06)",
+      "shots": "regenerated over file:// CDP into a /tmp scratchpad outside the repo, inspected, measured and deleted"
+    }
   }
 }

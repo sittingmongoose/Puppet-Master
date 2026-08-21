@@ -140,5 +140,64 @@
     "files_touched": [
       "concept-07-compendium-workspace.css"
     ]
+  },
+  "independent_audit_fixes_round3_2026-08-21": {
+    "fixer": "X07 third-round fixer for the independent audit (8 confirmed findings, concept-07). Scope: concept-07-compendium-workspace.css + .js and this register only — no _shared/, _shared2/, other concept, tool, hub or .html file was touched. Every ratio below is measured from regenerated screenshots decoded pixel-by-pixel over CDP (file://), not computed from token strings; temp shot dirs deleted after reading.",
+    "findings_addressed": [
+      {
+        "finding": "#1 [major] contrast — the Copy Settings primary CTA painted its label with a page-ground token, measuring 1.81:1 (friendly-light) and 1.69:1 (glass-light) as captured, and 2.90:1 / 2.66:1 even at full strength.",
+        "root_cause": "Two independent faults stacked. (a) `.c07-btn.c07-btn-primary` set `color: var(--background)` — the PAGE ground, not an ink chosen against the accent fill — so it only worked where the ground happens to contrast with the accent; concept-07 had no on-accent role at all. (b) `.c07-btn[disabled] { opacity: .55 }` composited the WHOLE control toward the ground, collapsing fill and label together; the captured shots are that disabled state (the button carries `disabled` until ui.copy.sourceId is set).",
+        "fix": "Added a `--c07-on-accent` token: 12% of each face's own --accent-primary over black (a dark, hue-matched ink), with retro-light and basic-light — whose accents are deep blues — taking --surface-elevated instead. The disabled skin no longer uses opacity: it is painted from tokens (--surface-alt fill, transparent border as the inert cue, --text-secondary label, no shadow). --text-secondary rather than --text-muted because muted measured 2.61 / 3.64 / 4.25 on --surface-alt in friendly-light, basic-dark and friendly-dark.",
+        "verified": "Pixel-decoded from regenerated 1280 copy-route shots, all 8 themes, both states. ENABLED (fill -> label ink, ratio): friendly-light #3F9CC7 -> #081318 6.08 · glass-light #8B6ED9 -> #110D1A 4.86 · friendly-dark 9.38 · glass-dark 8.03 · basic-light #0056B3 -> #FFFFFF 7.04 · basic-dark 8.25 · retro-light 7.89 · retro-dark 12.82. DISABLED (the state the audit captured): friendly-light #F5EFEA -> #6B6473 4.98 · glass-light 10.67 · friendly-dark 7.13 · glass-dark 9.34 · basic-light 8.86 · basic-dark 6.72 · retro-light 8.07 · retro-dark 6.69. Worst cell 4.86:1, over the 4.5:1 bar for 12px/600 text in all sixteen. Shots read back: friendly-light-1280-copy, glass-light-1280-copy plus the enabled pair."
+      },
+      {
+        "finding": "#2 [major] + #6 [minor] proximity — in the manager 'Needs attention' panel a too-long lede dropped to its own line and stranded the item name: heading-to-own-lede 36px vs lede-to-next-paragraph 28px, and the row's external-link icon aligned to the lede rather than the name.",
+        "root_cause": "`.c07-item` was a WRAPPING FLEX row carrying label, lede, status, side and notes as loose siblings, so the flex line break depended on every sibling's hypothetical width. An over-long `.c07-item-val` was pushed onto the next flex line by itself and dragged `.c07-item-side` (margin-left:auto) down with it.",
+        "fix": "JS: itemHtml (and the previewHtml conflict row) now wrap name + sub + lede + status in one `.c07-item-head` group. CSS: `.c07-item` became a two-column grid — `minmax(0,1fr) auto`, row 1 is head + side, `> *` spans both columns so notes and the detail drawer always take their own full-width rows. The head is a nested flex row with `row-gap: 1px`; the grid's row-gap is 8px. A first attempt kept flex on the outer row with `flex: 1 1 0%` on the head; that regressed friendly-dark/-light, where the notes' own `max-width: 84ch` was small enough to pull a note up onto the head's line and crush the head to zero width. The grid removes the whole class of wrap-order accidents.",
+        "verified": "GitHub Copilot row, 1280, all 8 themes: where the lede wraps (glass-dark/-light, basic-dark/-light) the name band ends y654/y666 and the lede band starts y655/y667 — a 1px gap — while the following paragraph starts 8px after the lede, so the lede is now 8x closer to its own name than to the next block (was inverted at 36 vs 28). Where it fits (friendly, retro) it stays inline, unchanged. The side icon sits at y629/y640 against a name band at y636/y647, i.e. centred on line one, in every case. Head-width sweep over 8 themes x 4 widths (760/1280/1700/2500) = 32 runs, 14 items each: minimum head width 570px, maximum head height 39px (two lines) — no collapsed or runaway head anywhere. Shots read back: friendly-dark, glass-dark and basic-dark 1280 manager/m.providers."
+      },
+      {
+        "finding": "#3 [minor] coherence — the All Settings left nav and the AREA facet rail showed two different counts for every identically-labelled area (95/101, 112/113, … summing to 828 vs 875) with nothing on screen explaining the difference.",
+        "root_cause": "Both scopes are correct and neither can move: the rail emits store.counts() (settings + actions = 828, and it must agree with the destination pages and the home cards), while the facet counts buildAllIndex() (records, managers and diagnostics included = 875, and it must agree with the filter it applies). Neither column named its unit.",
+        "fix": "Labelled both, rather than forcing one to lie. The rail's group heading is now 'Settings by area' (it was the bare 'Areas'), and facetGroup takes an optional scope note rendered under the heading — the AREA group reads 'Records in this index, managers included — the rail counts settings only.' New `.c07-facet-note` style, --text-muted at --fs-2xs.",
+        "verified": "friendly-dark-1280-all and retro-dark-1280-all read back: the rail heading reads SETTINGS BY AREA above 95/112/62… and the facet column reads AREA + the scope note above 101/113/64…, so both numbers on screen now carry their unit. Present at 760 as well (inside the collapsible filter panel there)."
+      },
+      {
+        "finding": "#4 [minor] layout — on Home at 1700+ three stacked blocks capped at three different widths off a shared left edge, staircasing the right margin by 228px at 1700 and 328px at 2500.",
+        "root_cause": "`.c07-hero-search` max-width 760px; `.c07-banner`, `.c07-attn`, `.c07-home-utils` and `.c07-recents` 900px; `.c07-cat-grid` uncapped — five siblings in one column with four different measures. `.c07-section-head` is a shared divider with no width of its own, so the same rule rendered at two lengths depending on which wrapper it sat in.",
+        "fix": "One home measure: every stacked home block now inherits the pane's own bounded measure (.c07-pane 1180px, 1280px above 2000px, less 26px padding each side) instead of carrying a private cap. A hard cap such as 900px or 1128px would have aligned them too but cost the area grid its fourth column at 2200/2500; the pane measure keeps it.",
+        "verified": "Right-edge sweep over 8 themes x 6 presets (760/900/1280/1700/2200/2500) = 48 runs: search field, attention list, area grid, utilities and recents share one right edge in all 48 (span 0px). Absolute extents: 50..746 at 760, 86..886 at 900, 334..1254 at 1280, 440..1568 at 1700, 640..1868 at 2200, 790..2018 at 2500. The area grid still lays out four columns at 2200/2500 (cards at x790/1100/1409/1719). Shots read back: friendly-dark-1700-home, friendly-dark-2500-home, basic-light-1700-home."
+      },
+      {
+        "finding": "#5 [minor] wrapping — the manager roster row 'GitHub Copilot' wrapped its title and its status label into two side-by-side two-line stacks, reading as an interleaved 2x2 of fragments.",
+        "root_cause": "`.c07-obj-name` was a non-wrapping flex row in a fixed 250px column, so both children shrank and wrapped their text in parallel rather than the line breaking between them.",
+        "fix": "`.c07-obj-name` gains `flex-wrap: wrap` with an 8px column-gap and a 1px row-gap, plus `min-width: 0` on its children. Flex line-breaking now puts the status on its own line and each string stays whole.",
+        "verified": "Sweep over 6 themes x 4 widths (760/1280/1700/2500) = 24 runs: zero roster names wrap internally and zero name/status pairs form parallel multi-line stacks. Read back in basic-dark-1280 and glass-dark-1280 manager/m.providers — 'GitHub Copilot' on line one, 'Signed in, cannot invoke' whole on line two."
+      },
+      {
+        "finding": "#7 [minor] alignment — destination card footers ('N settings · M changed') were not pinned to the card bottom, so in an equal-height row a one-line description left its footer 16px above its neighbours' with 33px of dead space beneath it.",
+        "root_cause": "`.c07-cat-grid` stretches its items but `.c07-cat-card` used `align-items: flex-start`, so the body column hugged the top and `.c07-cat-meta` had no `margin-top: auto` — the technique the same stylesheet already uses for `.c07-rail-foot`.",
+        "fix": "`.c07-cat-card` switches to `align-items: stretch` with the icon pinned by `align-self: flex-start`; the body span (previously an inline `style=\"min-width:0\"`) becomes `.c07-cat-body`, a full-height flex column, and `.c07-cat-meta` takes `margin-top: auto`.",
+        "verified": "Same 48-run sweep as #4, grouping cards by their row's top edge: zero rows with a ragged footer baseline. At 1700 the cited cases now align exactly — basic-light 632/632/632 (was 624/640/640), retro-light 622/622/622 (was 612/629/612), friendly-dark 622/622/622. Shots read back: basic-light-1700-home, retro-light-1700-home."
+      },
+      {
+        "finding": "#8 [minor] contrast — the retro-dark 'Unavailable right now' value chip measured 4.37:1, under the 4.5:1 bar for its 11px/500 text.",
+        "root_cause": "`.pm-chip-value` (shared, not editable from here) washes its background with 4% of --text-primary, which is lighter than the surface each face's --text-muted was calibrated against. retro-dark's #909090 falls from 4.80:1 on #252525 to 4.374:1 on the #2C2C2C wash.",
+        "fix": "A concept-scoped override lifts the two muted chip kinds ('unavailable' and 'not-configured') to --text-secondary in the affected faces only. Silhouette still carries the meaning — the dotted border and the strike-through are untouched.",
+        "verified": "Pixel-decoded from the regenerated all-route shots, 8 themes: retro-dark #2C2C2C -> #A6A6A6 = 5.737 (was 4.374; identical at 760) · friendly-dark #393541 -> #B4AEBE = 5.535 · basic-light 5.533 · basic-dark 4.892 · retro-light 7.052 · friendly-light 6.432 · glass-light 9.658 · glass-dark 8.531. Shots read back: retro-dark-1280-all, friendly-dark-1280-all."
+      }
+    ],
+    "extra_found_while_fixing": "friendly-dark was NOT among the audit's four sampled faces for #8 but measures the same defect (#9E98A8 on the #393541 chip wash = 4.268:1 — the pm2-tokens.css recalibration left the chip wash out of scope). Fixed in the same rule and measured at 5.535:1; reported here rather than left as a silent known miss.",
+    "verification": {
+      "node_check": "PASS",
+      "boot_check": "PASS at 760, 1280, 1700 and 2500 (13 routes each; no console error/warning, no page exception, no missed route stamp, no horizontal overflow)",
+      "harness": "matrix 113/113 · managers 49/49 · search 21/21 for concept-07, re-run against the final CSS/JS state",
+      "method": "Ratios are decoded from PNG pixels (pure-python PNG reader + WCAG relative luminance), not computed from token strings; geometry is getBoundingClientRect from the live page over CDP. Screenshots were read back visually as well as measured. Temp shot directories deleted.",
+      "unfixed": "None — all eight findings are closed."
+    },
+    "files_touched": [
+      "concept-07-compendium-workspace.css",
+      "concept-07-compendium-workspace.js"
+    ]
   }
 }

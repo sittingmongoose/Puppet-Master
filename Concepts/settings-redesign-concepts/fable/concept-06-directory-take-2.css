@@ -20,6 +20,30 @@
   --c06-ink-faint: color-mix(in srgb, var(--text-primary) 3%, transparent);
   --c06-rule: var(--border-light);
   --c06-rule-strong: var(--border);
+  /* Meta tier (counts, kickers, paths, tallies, reasons). It used to be the
+     raw 10px --fs-2xs step everywhere. Measured on the matrix shots that step
+     is safe in the basic/retro/glass faces — their 10px renders reach the
+     declared --text-muted token exactly (glass-light 7.38:1, basic-light
+     4.73:1) — but the friendly faces set 'Quicksand' as --body-font, whose
+     thin geometric stems never reach full pixel coverage at 10px: the same
+     roles measured 3.0-4.2:1 against a 6.4:1 nominal token, i.e. below the
+     4.5:1 small-text floor even though the token itself passes. The friendly
+     faces also run the largest body step (--base-font-size 14.5px), so the
+     10px meta tier was proportionally the smallest of any theme. Fix is size
+     and weight, not hue. The tier is now two variables, raised in the two
+     friendly faces only:
+       size   11.5px — between --fs-xs (11px) and --fs-sm (12px), so the tier
+                       still reads a full step under the 12px description line
+                       and the established hierarchy is unchanged;
+       weight 600    — measured on this render pipeline, size alone is not
+                       enough for the shortest strings (the rail count "95"
+                       peaks at 4.28:1 at 11.5px/400 and only 4.85:1 at 13px,
+                       which would already be louder than the description).
+                       Quicksand's 600 resolves to its Bold face and the same
+                       strings then render the declared token exactly:
+                       friendly-light 5.99-6.41:1, friendly-dark 5.50-5.88:1. */
+  --c06-fs-meta: var(--fs-2xs);
+  --c06-fw-meta: 400;
   height: 100%;
   min-height: 0;
   display: flex;
@@ -29,7 +53,12 @@
   line-height: var(--c06-lh);
   color: var(--text-primary);
 }
-.c06 button { font-family: inherit; color: inherit; }
+[data-theme="friendly-dark"] .c06,
+[data-theme="friendly-light"] .c06 { --c06-fs-meta: 11.5px; --c06-fw-meta: 600; }
+
+/* Zero-specificity reset — see the c05 note: as `.c06 button` this was (0,1,1)
+   and out-ranked every single-class component colour rule. */
+:where(.c06 button) { font-family: inherit; color: inherit; }
 
 /* Shell page-tab overflow (audit F4/F5/F7, re-audit round 2): the first fix
    here ellipsized per-tab, which at 760 collapsed labels to one or two
@@ -117,7 +146,11 @@
   /* One weight step above body so the domain name still leads its own count:
      the calibrated --text-muted on the tally is darker than the label's
      --text-secondary in friendly-light, and weight (not colour) carries the
-     label back to the front. The current item stays clearly apart at 700. */
+     label back to the front. The current item stays clearly apart at 700.
+     In the friendly faces the count carries the meta tier's 600 (it has to,
+     to reach its declared ink at that size), so the label takes the matching
+     step there — see the --c06-fw-meta rule below — and keeps the lead on
+     size instead. */
   font-weight: 500;
   line-height: 1.4;
   padding: 6px 10px;
@@ -129,6 +162,7 @@
   gap: 8px;
   transition: background var(--motion-fast) var(--ease-default), color var(--motion-fast) var(--ease-default);
 }
+[data-theme^="friendly"] .c06 .c06-rail-link:not([aria-current="true"]) { font-weight: 600; }
 .c06-rail-link:hover { background: var(--c06-ink-soft); color: var(--text-primary); }
 .c06-rail-link[aria-current="true"] {
   color: var(--text-primary);
@@ -137,9 +171,9 @@
 }
 .c06-rail-link .c06-rail-count {
   margin-left: auto;
-  font-size: var(--fs-2xs);
+  font-size: var(--c06-fs-meta);
   color: var(--text-muted);
-  font-weight: 400;
+  font-weight: var(--c06-fw-meta);
 }
 .c06-rail-rule { border-top: 1px solid var(--c06-rule); margin: 10px 18px; }
 .c06-rail-foot {
@@ -232,7 +266,8 @@
 .c06-top-spacer { flex: 1 1 0; min-width: 8px; }
 .c06-refresh-note {
   flex: none;
-  font-size: var(--fs-2xs);
+  font-size: var(--c06-fs-meta);
+  font-weight: var(--c06-fw-meta);
   color: var(--text-muted);
   font-style: italic;
 }
@@ -291,7 +326,8 @@
 
 /* ---------------- editorial headings ---------------- */
 .c06-kicker {
-  font-size: var(--fs-2xs);
+  font-size: var(--c06-fs-meta);
+  font-weight: var(--c06-fw-meta);
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -384,7 +420,8 @@
 }
 .c06-search-hint kbd {
   font-family: var(--mono-font);
-  font-size: var(--fs-2xs);
+  font-size: var(--c06-fs-meta);
+  font-weight: var(--c06-fw-meta);
   border: 1px solid var(--c06-rule);
   border-radius: var(--radius-xs);
   padding: 0 4px;
@@ -410,7 +447,8 @@
 .c06-drop[hidden] { display: none; }
 .c06-drop-meta {
   padding: 6px 16px 4px;
-  font-size: var(--fs-2xs);
+  font-size: var(--c06-fs-meta);
+  font-weight: var(--c06-fw-meta);
   color: var(--text-muted);
 }
 .c06-drop-group {
@@ -418,7 +456,8 @@
 }
 .c06-drop-group-head {
   padding: 8px 16px 3px;
-  font-size: var(--fs-2xs);
+  font-size: var(--c06-fs-meta);
+  font-weight: var(--c06-fw-meta);
   letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -453,7 +492,8 @@
 .c06-result-sub { font-size: var(--fs-xs); color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .c06-result-path {
   margin-top: 1px;
-  font-size: var(--fs-2xs);
+  font-size: var(--c06-fs-meta);
+  font-weight: var(--c06-fw-meta);
   color: var(--text-muted);
   white-space: nowrap;
   overflow: hidden;
@@ -461,7 +501,8 @@
 }
 .c06-result-avail {
   margin-top: 2px;
-  font-size: var(--fs-2xs);
+  font-size: var(--c06-fs-meta);
+  font-weight: var(--c06-fw-meta);
   color: var(--text-secondary);
   font-style: italic;
   max-width: 60ch;
@@ -555,11 +596,13 @@
 /* Meta tier. The calibrated light-theme --text-muted is now darker than
    --text-secondary, so a row's tally would read louder than its description
    if it stayed one step below body size. Hierarchy is restored by size, not
-   colour: the tally drops to the concept's established 10px meta tier
-   (the same step as .c06-kicker / .c06-index-path / .c06-rail-count), so
-   title (20/700) > description (12) > tally (10) holds in every theme. */
+   colour: the tally drops to the concept's established meta tier
+   (--c06-fs-meta, the same step as .c06-kicker / .c06-index-path /
+   .c06-rail-count), so title (20/700) > description (12) > tally holds in
+   every theme. */
 .c06-dest-count {
-  font-size: var(--fs-2xs);
+  font-size: var(--c06-fs-meta);
+  font-weight: var(--c06-fw-meta);
   letter-spacing: .02em;
   color: var(--text-muted);
   white-space: nowrap;
@@ -633,7 +676,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.c06-manager-kind { flex: none; font-size: var(--fs-2xs); color: var(--text-muted); font-style: italic; }
+.c06-manager-kind { flex: none; font-size: var(--c06-fs-meta); font-weight: var(--c06-fw-meta); color: var(--text-muted); font-style: italic; }
 
 /* inventory rows */
 .c06-sub { margin-top: 40px; }
@@ -672,7 +715,8 @@
 .c06-row-foot { grid-column: 1 / -1; margin-top: 4px; display: flex; gap: 14px; align-items: baseline; }
 .c06-quiet-link {
   appearance: none; border: 0; background: none; padding: 0;
-  font-size: var(--fs-2xs);
+  font-size: var(--c06-fs-meta);
+  font-weight: var(--c06-fw-meta);
   color: var(--text-muted);
   cursor: pointer;
   text-decoration: underline;
@@ -840,7 +884,7 @@
   flex: none;
   width: 1.2em;
 }
-.c06-fold-btn .c06-fold-count { margin-left: auto; font-size: var(--fs-2xs); color: var(--text-muted); }
+.c06-fold-btn .c06-fold-count { margin-left: auto; font-size: var(--c06-fs-meta); font-weight: var(--c06-fw-meta); color: var(--text-muted); }
 .c06-fold-body { padding: 0 0 4px; }
 .c06-fold-body[hidden] { display: none; }
 
@@ -865,7 +909,41 @@
   cursor: not-allowed;
   font-weight: 400;
 }
-.c06-action-reason { font-size: var(--fs-2xs); color: var(--text-muted); font-style: italic; max-width: 60ch; }
+/* An unavailable action carries a sentence saying why. It used to be a bare
+   inline span inside the wrapping flex row, so the sentence took a whole
+   flex line, ran the full container width and wrapped flush with the action
+   links (first ink x=399 against x=398 for the links above and below it) —
+   the continuation read as one more unlabelled action, and its own 26px
+   inter-line spacing was wider than the 25px separating it from the next
+   real link, i.e. inverted proximity. The declared `max-width: 60ch` never
+   applied either: it is inert on a non-replaced inline box.
+   The pair is now one column block that owns a full flex line, so no link
+   can trail the sentence, and the sentence is indented behind a rule inside
+   that block so it belongs to its action and not to the link column.
+   No max-width on the block itself: in flex layout a max-width shrinks the
+   item's hypothetical main size, so the 100% basis would stop forcing a line
+   of its own and a following link could still share the row. The measure cap
+   belongs on the sentence. */
+.c06-action-unavail {
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  margin: 2px 0;
+}
+.c06-action-reason {
+  display: block;
+  margin-left: 14px;
+  padding-left: 10px;
+  border-left: 2px solid var(--c06-rule-strong);
+  font-size: var(--c06-fs-meta);
+  font-weight: var(--c06-fw-meta);
+  line-height: 1.55;
+  color: var(--text-muted);
+  font-style: italic;
+  max-width: 58ch;
+}
 .c06-opline {
   margin-top: 10px;
   padding: 8px 12px;
@@ -915,7 +993,8 @@
 .c06-entry-note { margin-top: 2px; font-size: var(--fs-xs); color: var(--text-secondary); max-width: 64ch; }
 .c06-group-head {
   margin-top: 18px;
-  font-size: var(--fs-2xs);
+  font-size: var(--c06-fs-meta);
+  font-weight: var(--c06-fw-meta);
   letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -974,7 +1053,7 @@
 .c06-table { border-collapse: collapse; width: 100%; font-size: var(--fs-sm); }
 .c06-table th {
   text-align: left;
-  font-size: var(--fs-2xs);
+  font-size: var(--c06-fs-meta);
   letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -1083,15 +1162,55 @@
   text-overflow: ellipsis;
 }
 .c06-index-path {
-  font-size: var(--fs-2xs);
+  font-size: var(--c06-fs-meta);
+  font-weight: var(--c06-fw-meta);
   color: var(--text-muted);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .c06-index-side { display: flex; align-items: center; gap: 6px; }
+
+/* Chip emphasis: content before annotation.
+   pm-shell's base chip scale demotes [data-kind="default"] (--text-muted,
+   weight 500, transparent ground) and promotes [data-kind="recommended"]
+   (--text-primary + a 45% accent border). On surfaces where a control renders
+   the value that is fine — the loud chip is the only chip. On the All Settings
+   index no control exists, so the dim 'default' chip is the sole carrier of
+   the setting's value and it sat beside a near-white 'Recommended' badge:
+   measured 5.31:1 vs 13.00:1 in friendly-dark, 5.05:1 vs 13.54:1 in
+   basic-light, and 'recommended' is emitted only when the value is unchanged,
+   so it can never appear except next to a demoted chip. The order is inverted
+   locally, at the same 11px chip size so neither chip wins on scale: the value
+   takes the chip vocabulary's loud end (--text-primary, weight 600, the neutral
+   chip ground — the same treatment [data-kind="custom"] already has, so a
+   changed value never reads quieter than an unchanged one) and the annotation
+   takes the quiet end (--text-muted, no ground). The accent-tinted border is
+   kept — dotted rather than solid — so 'Recommended' still carries its own
+   silhouette rather than colour alone. Measured after, value vs annotation:
+   13.00:1 vs 5.88:1 (friendly-dark), 8.20 vs 6.41 (friendly-light), 13.54 vs
+   5.05 (basic-light) — the pre-fix pairs were 5.31/13.00, 5.51/8.20 and
+   5.05/13.54. */
+.c06 .pm-chip-value[data-kind="default"] {
+  color: var(--text-primary);
+  font-weight: 600;
+  background: color-mix(in srgb, var(--text-primary) 4%, transparent);
+  border-color: var(--border);
+}
+.c06 .pm-chip-value[data-kind="recommended"] {
+  color: var(--text-muted);
+  /* The tier weight, for the same reason the meta tier carries one: at 11px
+     Quicksand only reaches its declared ink at 600. Everywhere else this is
+     400, which demotes the annotation further still. */
+  font-weight: var(--c06-fw-meta);
+  letter-spacing: .02em;
+  background: transparent;
+  border-style: dotted;
+  border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent);
+}
 .c06-index-stress {
-  font-size: var(--fs-2xs);
+  font-size: var(--c06-fs-meta);
+  font-weight: var(--c06-fw-meta);
   color: var(--text-muted);
   font-style: italic;
   border: 1px dotted var(--c06-rule-strong);
@@ -1113,7 +1232,8 @@
   display: flex;
   gap: 14px;
   margin: 14px 0 0;
-  font-size: var(--fs-2xs);
+  font-size: var(--c06-fs-meta);
+  font-weight: var(--c06-fw-meta);
   letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -1138,7 +1258,7 @@
 .c06-src:hover { background: var(--c06-ink-faint); }
 .c06-src.is-selected { background: var(--accent-soft); border-radius: var(--radius-sm); }
 .c06-src-name { font-family: var(--c06-display); font-weight: 700; font-size: var(--fs-md); }
-.c06-src-when { font-size: var(--fs-2xs); color: var(--text-muted); white-space: nowrap; }
+.c06-src-when { font-size: var(--c06-fs-meta); font-weight: var(--c06-fw-meta); color: var(--text-muted); white-space: nowrap; }
 .c06-src-sum { grid-column: 1 / -1; font-size: var(--fs-xs); color: var(--text-secondary); }
 .c06-cat-check {
   display: flex;
@@ -1150,7 +1270,7 @@
   font-size: var(--fs-sm);
 }
 .c06-cat-check input { accent-color: var(--accent-primary); }
-.c06-cat-check .c06-cat-n { margin-left: auto; font-size: var(--fs-2xs); color: var(--text-muted); }
+.c06-cat-check .c06-cat-n { margin-left: auto; font-size: var(--c06-fs-meta); font-weight: var(--c06-fw-meta); color: var(--text-muted); }
 .c06-copy-counts {
   display: flex;
   flex-wrap: wrap;
@@ -1179,7 +1299,7 @@
   cursor: pointer;
 }
 .c06-copy-item:hover { background: var(--c06-ink-faint); }
-.c06-copy-kind { font-size: var(--fs-2xs); letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); }
+.c06-copy-kind { font-size: var(--c06-fs-meta); font-weight: var(--c06-fw-meta); letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); }
 .c06-copy-item[data-kind="conflict"] .c06-copy-kind,
 .c06-copy-item[data-kind="unavailable"] .c06-copy-kind { color: var(--accent-warning); font-weight: 700; }
 .c06-copy-item-label { color: var(--text-primary); font-weight: 600; }

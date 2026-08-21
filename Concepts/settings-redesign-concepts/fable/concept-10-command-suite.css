@@ -25,6 +25,40 @@
 }
 [data-theme^="glass"] .c10 { background: transparent; }
 
+/* --------------- accent INK (audit 2026-08-21 round-4 finding 1) ---------------
+   --accent-primary is a brand token of the frozen shell and it is calibrated
+   for FILLS, not for small text. On the two light faces that resolve it to a
+   pale hue it never reaches the 4.5:1 small-text bar on any surface the
+   concept paints on: glass-light #8B6ED9 measures 2.79-3.34:1 (the 'Sign in'
+   attention kind, 'Not signed in' / 'Refreshing' roster statuses, the
+   'Back to Settings Home' link, the COMMAND INDEX changed-counts) and
+   friendly-light #3F9CC7 measures 2.71-3.09:1, which is its ceiling on the
+   theme's own lightest surface. The central token pass darkened
+   --accent-warning / --accent-orange / --accent-error and believed that
+   covered the attention words, but 'Sign in' renders from --accent-primary.
+   So: one concept-scoped INK token. Every place this stylesheet paints the
+   accent as TEXT or as an icon stroke reads --c10-accent-ink; every FILL
+   (the stage-number chip, toggle dots, the meter bar, focus outlines,
+   borders and the soft wash) keeps --accent-primary untouched, so the brand
+   colour of the filled controls is unchanged and nothing outside .c10 is
+   affected. The two darkened values keep their face's hue.
+   Decoded back out of the rendered screenshots (exact token-RGB plateaus
+   against the real surrounding surface, so these are ink values and not
+   antialiasing fringe):
+     glass-light  #553AA0 -> 6.26:1 on (234,217,237) in the roster,
+                             7.17:1 on (242,234,250) under Home's 'Sign in',
+                             6.60:1 on (239,223,241) on the 760 Back link
+     friendly-light #1F6B8C -> 5.93:1 on #FFFFFF in all three of those places
+                               (5.20:1 computed against --surface-alt, the
+                               darkest surface that face paints on)
+   The six dark faces and the two dark-blue light faces (basic-light #0047AB,
+   retro-light #0056B3) already pass, so they simply inherit the brand token.
+   Slint: a second named brush in the palette — `accent-ink` for text runs,
+   `accent` for fills. */
+.c10 { --c10-accent-ink: var(--accent-primary); }
+[data-theme="glass-light"] .c10 { --c10-accent-ink: #553AA0; }
+[data-theme="friendly-light"] .c10 { --c10-accent-ink: #1F6B8C; }
+
 /* Shell page-tab overflow hardening (visual audit 2026-08-20): at 760 the
    titlebar nav used to clip labels mid-word (stray glyph fragments) and in
    some themes pushed the active Settings tab out of view entirely. Tabs now
@@ -152,7 +186,7 @@ button.c10-crumb:hover { background: var(--accent-soft); color: var(--text-prima
   padding: 3px 10px;
   white-space: nowrap;
 }
-.c10-project i[data-ico] { width: 13px; height: 13px; color: var(--accent-primary); }
+.c10-project i[data-ico] { width: 13px; height: 13px; color: var(--c10-accent-ink); }
 .c10-project strong { color: var(--text-primary); font-weight: 700; }
 .c10-project .c10-project-role { color: var(--text-muted); }
 
@@ -283,19 +317,34 @@ button.c10-crumb:hover { background: var(--accent-soft); color: var(--text-prima
   align-items: center;
   gap: 8px;
 }
+/* Audit 2026-08-21 round-4 finding 10: the pane title used to be a bare text
+   node plus a count span in a nowrap-less baseline flex row. In the basic
+   faces (--letter-spacing .02em) 'AI Brains & Providers' + '112 settings'
+   overruns the 300px domain pane by ~5px, and BOTH items then wrapped
+   independently: 'AI Brains &' / 'Providers' beside '112' / 'settings', on
+   four baselines, reading as 'AI Brains & 112 / Providers settings'.
+   Fix: the name is its own atom, the count never splits mid-phrase, and the
+   row is allowed to wrap — so when they do not fit side by side the count
+   drops whole onto its own line under a whole title instead of interleaving.
+   Retro/friendly, which do fit, are unchanged. */
 .c10-pane-title {
   font-size: var(--fs-lg);
   font-weight: 700;
   color: var(--text-primary);
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: 8px;
+  column-gap: 8px;
+  row-gap: 0;
   min-width: 0;
 }
+.c10-pane-title .c10-pane-title-t { min-width: 0; }
 .c10-pane-title .c10-count {
   font-size: var(--fs-xs);
   font-weight: 500;
   color: var(--text-muted);
+  white-space: nowrap;
+  flex: 0 0 auto;
 }
 .c10-pane-sub {
   font-size: var(--fs-xs);
@@ -332,7 +381,7 @@ button.c10-crumb:hover { background: var(--accent-soft); color: var(--text-prima
   gap: 5px;
   font-size: var(--fs-xs);
   font-weight: 600;
-  color: var(--accent-primary);
+  color: var(--c10-accent-ink);
   padding: 2px 6px 2px 2px;
   border-radius: var(--radius-sm);
 }
@@ -399,7 +448,7 @@ button.c10-crumb:hover { background: var(--accent-soft); color: var(--text-prima
   color: var(--text-muted);
   text-align: right;
 }
-.c10-ix-item.is-active .c10-ix-num { color: var(--accent-primary); }
+.c10-ix-item.is-active .c10-ix-num { color: var(--c10-accent-ink); }
 .c10-ix-item i[data-ico] { width: 15px; height: 15px; }
 .c10-ix-title {
   font-size: var(--fs-sm);
@@ -414,7 +463,7 @@ button.c10-crumb:hover { background: var(--accent-soft); color: var(--text-prima
   color: var(--text-muted);
   white-space: nowrap;
 }
-.c10-ix-meta .is-changed { color: var(--accent-primary); font-weight: 600; }
+.c10-ix-meta .is-changed { color: var(--c10-accent-ink); font-weight: 600; }
 .c10-ix-util .c10-ix-item { padding-top: 5px; padding-bottom: 5px; }
 .c10-ix-util .c10-ix-title { font-weight: 500; }
 
@@ -437,6 +486,16 @@ button.c10-crumb:hover { background: var(--accent-soft); color: var(--text-prima
   flex: 1;
   height: 1px;
   background: var(--border-light);
+}
+/* how many rows the section holds, flush right of its own rule */
+.c10-sec-label .c10-sec-count {
+  font-family: var(--body-font);
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--text-muted);
+  flex: 0 0 auto;
 }
 
 .c10-item {
@@ -490,9 +549,21 @@ button.c10-crumb:hover { background: var(--accent-soft); color: var(--text-prima
 .c10-item .c10-chev i[data-ico] { width: 12px; height: 12px; }
 
 /* Manager objects column (audit 2026-08-20 finding 3): status words must
-   never lose their meaning-bearing tail ('Signed in, cannot i…'). In the
-   objects nav the meta wraps to a second line instead of ellipsizing, sized
-   so the object title keeps room beside it. */
+   never lose their meaning-bearing tail ('Signed in, cannot i…'), so the meta
+   wraps rather than ellipsizing.
+   Audit 2026-08-21 round-4 finding 9: side by side inside the 250px roster
+   that cost the OBJECT NAME its own text. The column pays 26px of row padding
+   and border, 16px of gaps and 14px for the open-in chevron, and the meta was
+   capped at 104px — leaving the 1fr title column exactly 90px, so the basic
+   and glass faces rendered 'GitHub Cop…' and 'Free & community m…' beside a
+   two-line status that was WIDER than the truncated name it describes. The
+   primary identifier of a row cannot be the text that gets sacrificed.
+   In the narrow roster (every multi-pane width) the status now sits on its own
+   line directly UNDER its object name: the name gets the full 202px column and
+   stops ellipsizing in every face, and the pairing is still immediate because
+   the two lines are adjacent inside one fenced row. One-pane width keeps the
+   side-by-side arrangement — there the row is the width of the window, so
+   stacking would put 700px of nothing beside both lines. */
 .c10-mgr-nav .c10-item-meta {
   max-width: 104px;
   white-space: normal;
@@ -502,14 +573,38 @@ button.c10-crumb:hover { background: var(--accent-soft); color: var(--text-prima
 }
 .c10-mgr-nav .c10-item-meta .c10-word { white-space: normal; }
 
+.c10:not(.is-mode1) .c10-mgr-nav .c10-item {
+  grid-template-columns: minmax(0, 1fr) 14px;
+  column-gap: 8px;
+  row-gap: 1px;
+  align-items: center;
+}
+.c10:not(.is-mode1) .c10-mgr-nav .c10-item .c10-item-main { grid-column: 1; grid-row: 1; }
+.c10:not(.is-mode1) .c10-mgr-nav .c10-item .c10-item-meta {
+  grid-column: 1;
+  grid-row: 2;
+  justify-self: start;
+  text-align: left;
+  max-width: none;
+}
+.c10:not(.is-mode1) .c10-mgr-nav .c10-item .c10-chev {
+  grid-column: 2;
+  grid-row: 1 / -1;
+  align-self: center;
+}
+/* rows whose meta is blank (the manager Overview entry) must not reserve a
+   second line; the three cells are explicitly placed above, so dropping one
+   cannot shift the others */
+.c10:not(.is-mode1) .c10-mgr-nav .c10-item .c10-item-meta:empty { display: none; }
+
 /* ================= status words / tones ================= */
 
 .c10-word { font-size: var(--fs-2xs); font-weight: 700; white-space: nowrap; }
 .c10-word.t-ok        { color: var(--text-secondary); }
 .c10-word.t-attention { color: var(--accent-warning); }
 .c10-word.t-error     { color: var(--accent-error); }
-.c10-word.t-setup     { color: var(--accent-primary); }
-.c10-word.t-progress  { color: var(--accent-primary); }
+.c10-word.t-setup     { color: var(--c10-accent-ink); }
+.c10-word.t-progress  { color: var(--c10-accent-ink); }
 .c10-word.t-muted     { color: var(--text-muted); font-weight: 500; }
 
 /* ================= home workspace ================= */
@@ -634,7 +729,7 @@ kbd.c10-kbd {
   white-space: nowrap;
   align-self: center;
 }
-.c10-att-go i[data-ico] { color: var(--accent-primary); }
+.c10-att-go i[data-ico] { color: var(--c10-accent-ink); }
 .c10-att-row:hover .c10-att-go {
   background: var(--accent-soft);
   border-color: var(--accent-primary);
@@ -923,7 +1018,7 @@ kbd.c10-kbd {
   padding: 7px 10px;
   font-size: var(--fs-xs);
   font-weight: 600;
-  color: var(--accent-primary);
+  color: var(--c10-accent-ink);
 }
 .c10-more:hover { background: var(--accent-soft); }
 
@@ -987,7 +1082,7 @@ kbd.c10-kbd {
 .c10-statenote.t-error { border-color: color-mix(in srgb, var(--accent-error) 45%, var(--border-light)); }
 .c10-statenote.t-error i[data-ico] { color: var(--accent-error); }
 .c10-statenote.t-attention i[data-ico] { color: var(--accent-warning); }
-.c10-statenote.t-managed i[data-ico] { color: var(--accent-primary); }
+.c10-statenote.t-managed i[data-ico] { color: var(--c10-accent-ink); }
 
 /* controls */
 .c10-ctl { margin-bottom: 10px; }
@@ -1301,7 +1396,7 @@ kbd.c10-kbd {
 button.c10-qa-jump {
   font-size: var(--fs-2xs);
   font-weight: 600;
-  color: color-mix(in srgb, var(--accent-primary) 40%, var(--text-primary));
+  color: color-mix(in srgb, var(--c10-accent-ink) 55%, var(--text-primary));
   text-decoration: underline;
   text-underline-offset: 2px;
   margin-left: 6px;
@@ -1347,7 +1442,7 @@ button.c10-ro-top:hover { background: var(--accent-soft); }
   border-radius: var(--radius-pill);
   padding: 0 7px;
 }
-.c10-ro-flag.is-selected { color: var(--accent-primary); border-color: color-mix(in srgb, var(--accent-primary) 45%, transparent); }
+.c10-ro-flag.is-selected { color: var(--c10-accent-ink); border-color: color-mix(in srgb, var(--accent-primary) 45%, transparent); }
 .c10-ro-actions { display: flex; gap: 5px; flex-wrap: wrap; padding: 0 10px 9px; }
 .c10-ro-detail { border-top: 1px solid var(--border-light); padding: 8px 10px 10px; }
 
@@ -1396,7 +1491,7 @@ button.c10-ro-top:hover { background: var(--accent-soft); }
   font-family: var(--display-font);
   font-size: var(--fs-xs);
   font-weight: 700;
-  color: var(--accent-primary);
+  color: var(--c10-accent-ink);
   text-align: right;
 }
 .c10-step-t { font-size: var(--fs-sm); font-weight: 600; color: var(--text-primary); }
@@ -1507,7 +1602,7 @@ button.c10-ro-top:hover { background: var(--accent-soft); }
 
 .c10-vhead {
   display: grid;
-  grid-template-columns: minmax(190px, 1.6fr) minmax(150px, 1.2fr) 84px 92px minmax(100px, .9fr);
+  grid-template-columns: minmax(190px, 1.6fr) minmax(150px, 1.2fr) 112px 92px minmax(100px, .9fr);
   gap: 10px;
   padding: 5px 26px 5px 16px;
   font-family: var(--display-font);
@@ -1521,7 +1616,7 @@ button.c10-ro-top:hover { background: var(--accent-soft); }
 .c10-vlist { flex: 1 1 auto; min-height: 0; overflow-y: auto; position: relative; }
 .c10-vrow {
   display: grid;
-  grid-template-columns: minmax(190px, 1.6fr) minmax(150px, 1.2fr) 84px 92px minmax(100px, .9fr);
+  grid-template-columns: minmax(190px, 1.6fr) minmax(150px, 1.2fr) 112px 92px minmax(100px, .9fr);
   gap: 10px;
   align-items: center;
   width: 100%;
@@ -1627,10 +1722,10 @@ button.c10-ro-top:hover { background: var(--accent-soft); }
   background: var(--accent-primary);
   border-color: var(--accent-primary);
 }
-.c10-stagep.is-done .c10-stagep-n { color: var(--accent-primary); border-color: var(--accent-primary); }
+.c10-stagep.is-done .c10-stagep-n { color: var(--c10-accent-ink); border-color: var(--accent-primary); }
 .c10-stagep-t { font-size: var(--fs-sm); font-weight: 700; color: var(--text-primary); }
 .c10-stagep.is-locked .c10-stagep-t { color: var(--text-muted); }
-.c10-stagep-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 10px 14px 24px; }
+.c10-stagep-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 8px 14px 10px; }
 /* A locked stage is signalled by its number and title, not by fading the one
    sentence that explains what the stage will do. */
 .c10-stagep-body.is-collapsed { flex: 0 0 auto; overflow: visible; padding: 8px 14px 12px; }
@@ -1641,14 +1736,17 @@ button.c10-ro-top:hover { background: var(--accent-soft); }
   width: 100%;
   border: 1px solid var(--border-light);
   border-radius: var(--radius-sm);
-  padding: 8px 10px;
-  margin-bottom: 6px;
+  /* trimmed with round-4 finding 8: the five source cards now fit the fixed
+     four-column stage box outright instead of overrunning it by ~30-47px */
+  padding: 6px 10px;
+  margin-bottom: 4px;
   background: var(--surface-elevated);
 }
+.c10-src:last-child { margin-bottom: 0; }
 .c10-src:hover { background: var(--accent-soft); }
 .c10-src.is-active { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 55%, transparent); background: var(--accent-soft); }
 .c10-src-name { font-size: var(--fs-sm); font-weight: 700; color: var(--text-primary); display: flex; gap: 6px; align-items: baseline; flex-wrap: wrap; }
-.c10-src-meta { font-size: var(--fs-2xs); color: var(--text-muted); margin-top: 1px; }
+.c10-src-meta { font-size: var(--fs-2xs); color: var(--text-muted); margin-top: 1px; line-height: 1.35; }
 .c10-legacy-tag {
   font-size: var(--fs-2xs);
   font-weight: 600;
@@ -1709,7 +1807,7 @@ button.c10-ro-top:hover { background: var(--accent-soft); }
 }
 button.c10-citem-top:hover { background: var(--accent-soft); }
 .c10-citem-kind { font-size: var(--fs-2xs); font-weight: 700; text-transform: capitalize; }
-.c10-citem-kind.k-add { color: var(--accent-primary); }
+.c10-citem-kind.k-add { color: var(--c10-accent-ink); }
 .c10-citem-kind.k-replace { color: var(--text-primary); }
 .c10-citem-kind.k-unchanged { color: var(--text-muted); }
 .c10-citem-kind.k-unavailable { color: var(--text-muted); }
@@ -1748,7 +1846,7 @@ button.c10-citem-top:hover { background: var(--accent-soft); }
   padding: 6px 10px;
   background: var(--surface);
 }
-.c10-op-line i[data-ico] { width: 13px; height: 13px; color: var(--accent-primary); flex: 0 0 auto; }
+.c10-op-line i[data-ico] { width: 13px; height: 13px; color: var(--c10-accent-ink); flex: 0 0 auto; }
 .c10-meter {
   flex: 1 1 auto;
   height: 5px;
@@ -1766,7 +1864,7 @@ button.c10-citem-top:hover { background: var(--accent-soft); }
   background: color-mix(in srgb, var(--accent-primary) 6%, transparent);
 }
 .c10-receipt-title { font-size: var(--fs-sm); font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 7px; }
-.c10-receipt-title i[data-ico] { width: 14px; height: 14px; color: var(--accent-primary); }
+.c10-receipt-title i[data-ico] { width: 14px; height: 14px; color: var(--c10-accent-ink); }
 .c10-receipt-line { font-size: var(--fs-xs); color: var(--text-secondary); line-height: 1.55; margin-top: 4px; }
 
 /* ================= footer: key hints + status strip ================= */
@@ -1807,7 +1905,7 @@ button.c10-citem-top:hover { background: var(--accent-soft); }
   gap: 6px;
   max-width: 46%;
 }
-.c10-foot-status i[data-ico] { width: 12px; height: 12px; color: var(--accent-primary); flex: 0 0 auto; }
+.c10-foot-status i[data-ico] { width: 12px; height: 12px; color: var(--c10-accent-ink); flex: 0 0 auto; }
 
 /* ================= exact-landing locator =================
    Calm, non-flashing, decays. Reduced motion: the pm-shell kill switches
@@ -1909,12 +2007,26 @@ html[data-reduced-motion="1"] .pm2-located {
 .c10.is-mode2 .c10-project .c10-project-role { display: none; }
 .c10.is-mode1 .c10-home { padding: 16px 16px 32px; }
 .c10.is-mode1 .c10-mgr { flex-direction: column; }
+/* Audit 2026-08-21 round-4 finding 7: the one-pane roster is height-capped so
+   the object detail below it still has a workspace, but at 34% it showed 4 of
+   9 provider objects and ended in a ~10px band of empty scroll pinched between
+   the last row's hairline and the container's own — which reads as a stray
+   blank row, not as "the list continues". Three changes, together: the cap
+   rises to 46% (7 of 9 at 760x900, and short rosters now fit whole), the 24px
+   of internal bottom padding that produced most of the empty band goes away at
+   this width, and the pane edge is a full-strength --border rather than a
+   second --border-light hairline identical to the row rules, so the boundary
+   reads as the end of the pane instead of as another row. The total is stated
+   on the section label itself (see managerNavHtml), so nothing is silent even
+   before the reader scrolls. */
 .c10.is-mode1 .c10-mgr-nav {
   flex: 0 0 auto;
   width: auto;
-  max-height: 34%;
+  max-height: 46%;
+  padding-bottom: 0;
   border-right: none;
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border);
+  overscroll-behavior: contain;
 }
 /* one pane: the roster sits ABOVE the detail instead of beside it, so the two
    have to share one left margin rather than each keeping its own */
@@ -1922,20 +2034,33 @@ html[data-reduced-motion="1"] .pm2-located {
 .c10.is-mode1 .c10-qa { grid-template-columns: 1fr; }
 .c10.is-mode1 .c10-qa-q { border-bottom: none; padding-bottom: 0; }
 .c10.is-mode1 .c10-thead { display: none; }
-/* Audit 2026-08-21 round-3 finding 4: at one-pane width a roster row is the
-   full width of the window, so an object name (left) and its status (flush
-   right) ended up ~620px apart with nothing between them — two separate texts,
-   not one row. Two bindings, together: the name column stops stretching so the
-   status sits immediately beside the thing it describes, and every row carries
-   a hairline so the pairing survives even when a long name pushes the status
-   away. The rule is inset by an inset box-shadow rather than a border so it
-   cannot fight .c10-item.is-active's border-color. */
-.c10.is-mode1 .c10-item {
+/* One-pane row fence. At one-pane width every list row is the full width of
+   the window, so a row needs a hairline of its own or a two-line row reads as
+   two rows. Inset by box-shadow rather than a border so it cannot fight
+   .c10-item.is-active's border-color. This part is safe for every list. */
+.c10.is-mode1 .c10-item { box-shadow: inset 0 -1px 0 var(--border-light); }
+
+/* Audit 2026-08-21 round-3 finding 4: at one-pane width a ROSTER row is the
+   full width of the window, so an object name (left) and its status phrase
+   (flush right) ended up ~620px apart with nothing between them — two separate
+   texts, not one row. The name column stops stretching so the status sits
+   immediately beside the thing it describes.
+   Audit 2026-08-21 round-4 findings 2/3: this regrid was written for the
+   manager roster but was keyed on the bare `.c10-item`, so it also caught the
+   domain overview's SECTIONS list, whose meta is a bare COUNT, not a phrase.
+   A count pushed hard against the end of its own description sentence reads as
+   a trailing word of the prose ('…and how multiple accounts are used. 44'),
+   the three counts land at three different x (a ~107px ragged spread, so no
+   column to scan), and 157-300px of dead row is left before the row's
+   open-in icon. Counts are a column; phrases are a companion. So the regrid is
+   now scoped to `.c10-mgr-nav` — the roster — and every other one-pane list
+   keeps the base `1fr auto 14px` grid with its meta right-aligned in a clean
+   column immediately left of the icon, exactly as it reads at 1280. */
+.c10.is-mode1 .c10-mgr-nav .c10-item {
   grid-template-columns: minmax(0, auto) minmax(0, 1fr) 14px;
   column-gap: 12px;
-  box-shadow: inset 0 -1px 0 var(--border-light);
 }
-.c10.is-mode1 .c10-item .c10-item-meta {
+.c10.is-mode1 .c10-mgr-nav .c10-item .c10-item-meta {
   justify-self: start;
   text-align: left;
   max-width: none;
